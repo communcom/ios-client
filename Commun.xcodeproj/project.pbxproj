@@ -41,6 +41,8 @@
 		57840A0C223FAC1B00338FD5 /* BadgeWithCounterViewBigSized.xib in Resources */ = {isa = PBXBuildFile; fileRef = 578409FD223FAC1B00338FD5 /* BadgeWithCounterViewBigSized.xib */; };
 		57840A0D223FAC1B00338FD5 /* BadgeWithCounterViewStandardSized.xib in Resources */ = {isa = PBXBuildFile; fileRef = 578409FE223FAC1B00338FD5 /* BadgeWithCounterViewStandardSized.xib */; };
 		57840A0E223FAC1B00338FD5 /* BadgeWithCounterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 578409FF223FAC1B00338FD5 /* BadgeWithCounterView.swift */; };
+		57840A12223FB4D700338FD5 /* SortingWidgetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57840A10223FB4D700338FD5 /* SortingWidgetCell.swift */; };
+		57840A13223FB4D700338FD5 /* SortingWidgetCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 57840A11223FB4D700338FD5 /* SortingWidgetCell.xib */; };
 		AC807D304CD3E671C23FAE12 /* Pods_Commun.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C30DAF8A0C2BCAAC2DA4F5F7 /* Pods_Commun.framework */; };
 /* End PBXBuildFile section */
 
@@ -84,6 +86,8 @@
 		578409FD223FAC1B00338FD5 /* BadgeWithCounterViewBigSized.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BadgeWithCounterViewBigSized.xib; sourceTree = "<group>"; };
 		578409FE223FAC1B00338FD5 /* BadgeWithCounterViewStandardSized.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BadgeWithCounterViewStandardSized.xib; sourceTree = "<group>"; };
 		578409FF223FAC1B00338FD5 /* BadgeWithCounterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BadgeWithCounterView.swift; sourceTree = "<group>"; };
+		57840A10223FB4D700338FD5 /* SortingWidgetCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortingWidgetCell.swift; sourceTree = "<group>"; };
+		57840A11223FB4D700338FD5 /* SortingWidgetCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SortingWidgetCell.xib; sourceTree = "<group>"; };
 		8F718AA90733822C063D8D9F /* Pods-Commun.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Commun.release.xcconfig"; path = "Pods/Target Support Files/Pods-Commun/Pods-Commun.release.xcconfig"; sourceTree = "<group>"; };
 		C30DAF8A0C2BCAAC2DA4F5F7 /* Pods_Commun.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Commun.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -133,7 +137,7 @@
 				578409EA223FAC0000338FD5 /* Vendor */,
 				576DC91F223E42B200EDED41 /* Extensions */,
 				572F81A5223C164C0007F2F9 /* Fonts */,
-				576DC91C223E421A00EDED41 /* Cell */,
+				576DC91C223E421A00EDED41 /* Cells */,
 				571B1508223A937200630C8F /* Controllers */,
 				571B14F7223A935C00630C8F /* Main.storyboard */,
 				571B14FD223A935D00630C8F /* Assets.xcassets */,
@@ -208,14 +212,15 @@
 			path = FeedPageVC;
 			sourceTree = "<group>";
 		};
-		576DC91C223E421A00EDED41 /* Cell */ = {
+		576DC91C223E421A00EDED41 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				57840A0F223FB49600338FD5 /* SortingWidgetCell */,
 				572F819F223C164B0007F2F9 /* PostCardCell */,
 				572F81A2223C164B0007F2F9 /* PostCardMediaCell */,
 				572F81AC223C16940007F2F9 /* EditorWidgetCell */,
 			);
-			path = Cell;
+			path = Cells;
 			sourceTree = "<group>";
 		};
 		576DC91F223E42B200EDED41 /* Extensions */ = {
@@ -296,6 +301,15 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		57840A0F223FB49600338FD5 /* SortingWidgetCell */ = {
+			isa = PBXGroup;
+			children = (
+				57840A10223FB4D700338FD5 /* SortingWidgetCell.swift */,
+				57840A11223FB4D700338FD5 /* SortingWidgetCell.xib */,
+			);
+			path = SortingWidgetCell;
+			sourceTree = "<group>";
+		};
 		9D3E817BE4550764E6E23B1C /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -374,6 +388,7 @@
 				57840A0D223FAC1B00338FD5 /* BadgeWithCounterViewStandardSized.xib in Resources */,
 				571B14FE223A935D00630C8F /* Assets.xcassets in Resources */,
 				576DC91E223E429C00EDED41 /* FeedPageVC.storyboard in Resources */,
+				57840A13223FB4D700338FD5 /* SortingWidgetCell.xib in Resources */,
 				571B14F9223A935C00630C8F /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -459,6 +474,7 @@
 				57840A06223FAC1B00338FD5 /* SegmentioCellWithImageOverLabel.swift in Sources */,
 				576DC923223E4A4C00EDED41 /* FeedPageVC+UITableViewDataSource.swift in Sources */,
 				572F81AF223C16940007F2F9 /* EditorWidgetCell.swift in Sources */,
+				57840A12223FB4D700338FD5 /* SortingWidgetCell.swift in Sources */,
 				57840A02223FAC1B00338FD5 /* SegmentioCell.swift in Sources */,
 				57840A09223FAC1B00338FD5 /* SegmentioOptions.swift in Sources */,
 				571B14F4223A935C00630C8F /* AppDelegate.swift in Sources */,
