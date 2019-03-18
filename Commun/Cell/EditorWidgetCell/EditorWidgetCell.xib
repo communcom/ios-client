@@ -12,11 +12,11 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="64" id="KGk-i7-Jjw" customClass="EditorWidgetCell" customModule="Commun" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="64"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="72" id="KGk-i7-Jjw" customClass="EditorWidgetCell" customModule="Commun" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="72"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="63.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="71.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="q14-0H-qtJ">
@@ -52,8 +52,17 @@
                             <action selector="mediaButtonTap:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="RW8-cS-LpI"/>
                         </connections>
                     </button>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pc8-4o-5db">
+                        <rect key="frame" x="0.0" y="64.5" width="320" height="8"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="8" id="8lS-Vu-Coc"/>
+                        </constraints>
+                    </view>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="pc8-4o-5db" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="2gv-gr-oIE"/>
+                    <constraint firstItem="pc8-4o-5db" firstAttribute="top" secondItem="q14-0H-qtJ" secondAttribute="bottom" constant="12" id="45d-w2-3UK"/>
                     <constraint firstItem="EZO-HM-3Ut" firstAttribute="centerY" secondItem="q14-0H-qtJ" secondAttribute="centerY" id="9Bx-Y3-4uA"/>
                     <constraint firstItem="q14-0H-qtJ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="KQX-rn-7Lv"/>
                     <constraint firstItem="q14-0H-qtJ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="12" id="MtS-nW-OCo"/>
@@ -61,6 +70,8 @@
                     <constraint firstItem="EZO-HM-3Ut" firstAttribute="leading" secondItem="q14-0H-qtJ" secondAttribute="trailing" constant="16" id="lce-jB-Uqz"/>
                     <constraint firstItem="5lN-6f-qph" firstAttribute="centerY" secondItem="q14-0H-qtJ" secondAttribute="centerY" id="qvZ-wm-8iT"/>
                     <constraint firstAttribute="bottom" secondItem="q14-0H-qtJ" secondAttribute="bottom" constant="12" id="wP2-1O-TJu"/>
+                    <constraint firstAttribute="trailing" secondItem="pc8-4o-5db" secondAttribute="trailing" id="yqt-ve-OId"/>
+                    <constraint firstAttribute="bottom" secondItem="pc8-4o-5db" secondAttribute="bottom" id="zdd-Jb-vv1"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
