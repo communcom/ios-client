@@ -1,14 +1,20 @@
 PODS:
   - Alamofire (4.8.1)
+  - CyberSwift (1.0.1):
+    - Localize-Swift (~> 2.0)
+    - Starscream (~> 3.0)
+  - Localize-Swift (2.0.0)
   - RxAtomic (4.4.2)
   - RxCocoa (4.4.2):
     - RxSwift (>= 4.4.2, ~> 4.4)
   - RxSwift (4.4.2):
     - RxAtomic (>= 4.4.2, ~> 4.4)
+  - Starscream (3.0.6)
   - Swinject (2.6.0)
 
 DEPENDENCIES:
   - Alamofire
+  - CyberSwift (from `https://github.com/Monserg/cyber-ios.git`)
   - RxCocoa (~> 4.0)
   - RxSwift (~> 4.0)
   - Swinject
@@ -16,18 +22,32 @@ DEPENDENCIES:
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Alamofire
+    - Localize-Swift
     - RxAtomic
     - RxCocoa
     - RxSwift
+    - Starscream
     - Swinject
+
+EXTERNAL SOURCES:
+  CyberSwift:
+    :git: https://github.com/Monserg/cyber-ios.git
+
+CHECKOUT OPTIONS:
+  CyberSwift:
+    :commit: 361382a7bf860cf4600e20083b173f52adaa5e1d
+    :git: https://github.com/Monserg/cyber-ios.git
 
 SPEC CHECKSUMS:
   Alamofire: 16ce2c353fb72865124ddae8a57c5942388f4f11
+  CyberSwift: 24089b070b1eb1022ab1b3b568cb0a225b2aef7d
+  Localize-Swift: c798ec9286494866f7068f85f7c71283ac5bdab4
   RxAtomic: d00e97c10db88c6f08540e0bf2752fc5a2404167
   RxCocoa: 477990dc3b4c3ff55fb0ac77e1cc06244e0aaec8
   RxSwift: 74c29b693c8e42b0f64400e8b06564575742d649
+  Starscream: ef3ece99d765eeccb67de105bfa143f929026cf5
   Swinject: 48a96cda93633cf2860697b4ce76ab5db9ebaca2
 
-PODFILE CHECKSUM: febcbba3a0d32c6572bb0e2c53faa30d76ee7ad9
+PODFILE CHECKSUM: 27dc9435de88977e665b8c940db760c0c1ba8141
 
 COCOAPODS: 1.5.3
