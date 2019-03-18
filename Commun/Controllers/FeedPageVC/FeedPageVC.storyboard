@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Feed PageVC-->
+        <scene sceneID="JFv-rT-rOG">
+            <objects>
+                <viewController storyboardIdentifier="FeedPageVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="vaU-K6-LmS" customClass="FeedPageVC" customModule="Commun" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="snL-eb-zak">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="8YX-tZ-48z">
+                                <rect key="frame" x="0.0" y="72" width="375" height="595"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </tableView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SzI-hD-53X">
+                                <rect key="frame" x="0.0" y="20" width="375" height="52"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="401-J0-fJh">
+                                        <rect key="frame" x="0.0" y="44" width="375" height="8"/>
+                                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="8" id="xcC-q8-BEH"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LW0-TT-GUg" customClass="Segmentio" customModule="Commun" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="401-J0-fJh" secondAttribute="trailing" id="6x3-x1-GWD"/>
+                                    <constraint firstItem="LW0-TT-GUg" firstAttribute="top" secondItem="SzI-hD-53X" secondAttribute="top" id="HGg-Xl-SxQ"/>
+                                    <constraint firstItem="401-J0-fJh" firstAttribute="leading" secondItem="SzI-hD-53X" secondAttribute="leading" id="Ibx-aC-RJd"/>
+                                    <constraint firstItem="401-J0-fJh" firstAttribute="top" secondItem="LW0-TT-GUg" secondAttribute="bottom" id="QkW-yv-r3j"/>
+                                    <constraint firstAttribute="bottom" secondItem="401-J0-fJh" secondAttribute="bottom" id="Zyd-Ii-sXJ"/>
+                                    <constraint firstAttribute="trailing" secondItem="LW0-TT-GUg" secondAttribute="trailing" id="bH4-8S-dW2"/>
+                                    <constraint firstAttribute="height" constant="52" id="ikK-cq-Q6K"/>
+                                    <constraint firstItem="LW0-TT-GUg" firstAttribute="leading" secondItem="SzI-hD-53X" secondAttribute="leading" id="vt5-Y9-MAW"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="8YX-tZ-48z" firstAttribute="leading" secondItem="4yY-LD-OlZ" secondAttribute="leading" id="3q2-Ru-yMI"/>
+                            <constraint firstItem="4yY-LD-OlZ" firstAttribute="bottom" secondItem="8YX-tZ-48z" secondAttribute="bottom" id="Fzv-B5-zeB"/>
+                            <constraint firstItem="SzI-hD-53X" firstAttribute="top" secondItem="4yY-LD-OlZ" secondAttribute="top" id="SLS-N7-y1x"/>
+                            <constraint firstItem="8YX-tZ-48z" firstAttribute="top" secondItem="SzI-hD-53X" secondAttribute="bottom" id="Vvi-6X-HS6"/>
+                            <constraint firstItem="4yY-LD-OlZ" firstAttribute="trailing" secondItem="8YX-tZ-48z" secondAttribute="trailing" id="bfN-me-FMU"/>
+                            <constraint firstItem="4yY-LD-OlZ" firstAttribute="trailing" secondItem="SzI-hD-53X" secondAttribute="trailing" id="lvB-fh-I6C"/>
+                            <constraint firstItem="SzI-hD-53X" firstAttribute="leading" secondItem="4yY-LD-OlZ" secondAttribute="leading" id="mei-pj-Zwg"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="4yY-LD-OlZ"/>
+                    </view>
+                    <connections>
+                        <outlet property="segmentioView" destination="LW0-TT-GUg" id="jt7-AG-jlE"/>
+                        <outlet property="tableView" destination="8YX-tZ-48z" id="qId-Qf-2c1"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ngs-5r-vXj" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5.5999999999999996" y="146.17691154422789"/>
+        </scene>
+    </scenes>
+</document>

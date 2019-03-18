@@ -8,7 +8,15 @@
 
 import UIKit
 
-class PostCardMediaCell: UITableViewCell {
+protocol PostCardCellDelegate {
+    // Делагат еще буду дорабатывать по мере работы над информацией.
+    func didTapMenuButton()
+    func didTapUpButton()
+    func didTapDownButton()
+    func didTapShareButton()
+}
+
+class PostCardCell: UITableViewCell {
 
     @IBOutlet weak var avatarImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
@@ -18,14 +26,12 @@ class PostCardMediaCell: UITableViewCell {
     @IBOutlet weak var numberOfCommentsLabel: UILabel!
     @IBOutlet weak var numberOfSharesLabel: UILabel!
     @IBOutlet weak var commentTextField: UITextField!
-    @IBOutlet weak var mediaImageView: UIImageView!
-    
     
     var delegate: PostCardCellDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        self.selectionStyle = .none
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
