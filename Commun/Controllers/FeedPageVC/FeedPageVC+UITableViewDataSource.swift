@@ -7,18 +7,15 @@
 //
 
 import UIKit
+import CyberSwift
 
 extension FeedPageVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 100
+        return cells.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.row % 2 == 0 {
-            return tableView.dequeueReusableCell(withIdentifier: "PostCardCell") as! UITableViewCell
-        } else {
-            return tableView.dequeueReusableCell(withIdentifier: "PostCardMediaCell") as! UITableViewCell
-        }
+        return cells[indexPath.row]
     }
     
 }

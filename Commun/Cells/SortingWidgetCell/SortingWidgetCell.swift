@@ -7,23 +7,17 @@
 //
 
 import UIKit
+import CyberSwift
 
 enum FeedType: String {
     case new = "New"
     case top = "Top"
 }
 
-enum SortTimeType: String {
-    case past24 = "Past 24 hours"
-    case pastWeek = "Past week"
-    case pastMonth = "Past month"
-    case pastYear = "Past year"
-    case allTile = "Of all tile"
-}
 
 protocol SortingWidgetDelegate {
     func sortingWidget(_ widget: SortingWidgetCell, didSelectFeedTypeButton withTypes: [FeedType])
-    func sortingWidget(_ widget: SortingWidgetCell, didSelectSortTimeButton withSortTypes: [SortTimeType])
+    func sortingWidget(_ widget: SortingWidgetCell, didSelectSortTimeButton withSortTypes: [FeedTimeFrameMode])
 }
 
 class SortingWidgetCell: UITableViewCell {
@@ -36,8 +30,11 @@ class SortingWidgetCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        feedTypeButton.layer.borderColor = #colorLiteral(red: 0.9372549057, green: 0.9372549057, blue: 0.9568627477, alpha: 1)
-        sortTimeButton.layer.borderColor = #colorLiteral(red: 0.9372549057, green: 0.9372549057, blue: 0.9568627477, alpha: 1)
+        feedTypeButton.layer.borderColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+        sortTimeButton.layer.borderColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+        
+        feedTypeButton.layer.borderWidth = 1.0
+        sortTimeButton.layer.borderWidth = 1.0
         
         feedTypeButton.layer.cornerRadius = 4.0
         sortTimeButton.layer.cornerRadius = 4.0
@@ -54,7 +51,7 @@ class SortingWidgetCell: UITableViewCell {
         feedTypeButton.setTitle(type.rawValue, for: .normal)
     }
     
-    func setSortType(withType type: SortTimeType) {
+    func setSortType(withType type: FeedTimeFrameMode) {
         sortTimeButton.backgroundColor = #colorLiteral(red: 0.9372549057, green: 0.9372549057, blue: 0.9568627477, alpha: 1)
         sortTimeButton.setTitle(type.rawValue, for: .normal)
     }
