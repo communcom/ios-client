@@ -15,4 +15,16 @@ extension UIViewController {
         return st.instantiateViewController(withIdentifier: identifier)
     }
     
+    
+    func showActionSheet(title: String? = nil, message: String? = nil, actions: [UIAlertAction] = []) {
+        let alert = UIAlertController(title: title, message: nil, preferredStyle: .actionSheet)
+        
+        for action in actions {
+            alert.addAction(action)
+        }
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        
+        self.present(alert, animated: true, completion: nil)
+    }
 }

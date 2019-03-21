@@ -9,6 +9,12 @@
 import UIKit
 
 extension FeedPageVC: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if indexPath.row >= cells.count - 5 {
+            viewModel.loadFeed()
+        }
+    }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
     }

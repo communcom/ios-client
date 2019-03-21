@@ -9,14 +9,24 @@ PODS:
     - RxSwift (>= 4.4.2, ~> 4.4)
   - RxSwift (4.4.2):
     - RxAtomic (>= 4.4.2, ~> 4.4)
+  - SDWebImage (4.4.6):
+    - SDWebImage/Core (= 4.4.6)
+  - SDWebImage/Core (4.4.6)
   - Starscream (3.0.6)
+  - SwifterSwift/Foundation (4.6.0)
+  - SwifterSwift/SwiftStdlib (4.6.0)
+  - SwifterSwift/UIKit (4.6.0)
   - Swinject (2.6.0)
 
 DEPENDENCIES:
   - Alamofire
-  - CyberSwift (from `https://github.com/Monserg/cyber-ios.git`)
+  - CyberSwift (from `https://github.com/GolosChain/cyberSwift.git`)
   - RxCocoa (~> 4.0)
   - RxSwift (~> 4.0)
+  - SDWebImage (~> 4.0)
+  - SwifterSwift/Foundation
+  - SwifterSwift/SwiftStdlib
+  - SwifterSwift/UIKit
   - Swinject
 
 SPEC REPOS:
@@ -26,28 +36,32 @@ SPEC REPOS:
     - RxAtomic
     - RxCocoa
     - RxSwift
+    - SDWebImage
     - Starscream
+    - SwifterSwift
     - Swinject
 
 EXTERNAL SOURCES:
   CyberSwift:
-    :git: https://github.com/Monserg/cyber-ios.git
+    :git: https://github.com/GolosChain/cyberSwift.git
 
 CHECKOUT OPTIONS:
   CyberSwift:
-    :commit: 361382a7bf860cf4600e20083b173f52adaa5e1d
-    :git: https://github.com/Monserg/cyber-ios.git
+    :commit: b5628890cae3ee02e6f6a5e52c9d6d8f91a25ce4
+    :git: https://github.com/GolosChain/cyberSwift.git
 
 SPEC CHECKSUMS:
   Alamofire: 16ce2c353fb72865124ddae8a57c5942388f4f11
-  CyberSwift: 24089b070b1eb1022ab1b3b568cb0a225b2aef7d
+  CyberSwift: 09f5fbcd52df8226c308e4f76537e4db2787abe7
   Localize-Swift: c798ec9286494866f7068f85f7c71283ac5bdab4
   RxAtomic: d00e97c10db88c6f08540e0bf2752fc5a2404167
   RxCocoa: 477990dc3b4c3ff55fb0ac77e1cc06244e0aaec8
   RxSwift: 74c29b693c8e42b0f64400e8b06564575742d649
+  SDWebImage: 3f3f0c02f09798048c47a5ed0a13f17b063572d8
   Starscream: ef3ece99d765eeccb67de105bfa143f929026cf5
+  SwifterSwift: 812ffec6f301922f5430e75be3f2939ea3a80024
   Swinject: 48a96cda93633cf2860697b4ce76ab5db9ebaca2
 
-PODFILE CHECKSUM: 27dc9435de88977e665b8c940db760c0c1ba8141
+PODFILE CHECKSUM: 9845e8fac76fa34d46817e092b0c6e996802a4bf
 
 COCOAPODS: 1.5.3

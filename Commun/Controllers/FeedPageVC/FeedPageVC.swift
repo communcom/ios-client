@@ -8,6 +8,7 @@
 
 import UIKit
 import CyberSwift
+import RxSwift
 
 class FeedPageVC: UIViewController {
 
@@ -16,11 +17,16 @@ class FeedPageVC: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var segmentioView: Segmentio!
     
+    var cells: [UITableViewCell] = []
+    
+    let disposeBag = DisposeBag()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         navigationController?.navigationBar.barTintColor = .white
         
+        tableView.register(UINib(nibName: "SortingWidgetCell", bundle: nil), forCellReuseIdentifier: "SortingWidgetCell")
         tableView.register(UINib(nibName: "PostCardCell", bundle: nil), forCellReuseIdentifier: "PostCardCell")
         tableView.register(UINib(nibName: "PostCardMediaCell", bundle: nil), forCellReuseIdentifier: "PostCardMediaCell")
         tableView.register(UINib(nibName: "EditorWidgetCell", bundle: nil), forCellReuseIdentifier: "EditorWidgetCell")
@@ -36,6 +42,8 @@ class FeedPageVC: UIViewController {
         tableView.delegate = self
         
         tableView.rowHeight = UITableView.automaticDimension
+        
+        tableView.tableFooterView = UIView()
         
         let indicator = SegmentioIndicatorOptions(type: .bottom,
                                                   ratio: 1,
@@ -79,24 +87,7 @@ class FeedPageVC: UIViewController {
         
         segmentioView.selectedSegmentioIndex = 0
         
-        
-        RestAPIManager.instance.loadFeed(userID:                     Config.currentUser.nickName,
-                                         communityID:                "gls",
-                                         //                                         paginationSequenceKey:      "9ea01401-b195-4925-81b3-9e8ee8b73d74|20",
-            completion:                 { (feed, errorAPI) in
-                guard errorAPI == nil else {
-                    Logger.log(message: errorAPI!.localizedDescription, event: .error)
-                    return
-                }
-                
-                guard feed?.sequenceKey != nil else {
-                    Logger.log(message: "Feed is finished.", event: .error)
-                    return
-                }
-                
-                Logger.log(message: "Response: \n\t\(feed!.items!)", event: .debug)
-        })
-        
+        makeSubscriptions()
     }
 
 }

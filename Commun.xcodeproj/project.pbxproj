@@ -43,6 +43,13 @@
 		57840A0E223FAC1B00338FD5 /* BadgeWithCounterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 578409FF223FAC1B00338FD5 /* BadgeWithCounterView.swift */; };
 		57840A12223FB4D700338FD5 /* SortingWidgetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57840A10223FB4D700338FD5 /* SortingWidgetCell.swift */; };
 		57840A13223FB4D700338FD5 /* SortingWidgetCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 57840A11223FB4D700338FD5 /* SortingWidgetCell.xib */; };
+		57840A1B2240DB9400338FD5 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57840A1A2240DB9400338FD5 /* NetworkService.swift */; };
+		57840A202240DDEB00338FD5 /* Container.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57840A1F2240DDEB00338FD5 /* Container.swift */; };
+		57A9518F2241253A0020F55D /* FeedPageVC+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A9518E2241253A0020F55D /* FeedPageVC+Rx.swift */; };
+		57A9519122416B5D0020F55D /* FeedPageVC+Utilites.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A9519022416B5D0020F55D /* FeedPageVC+Utilites.swift */; };
+		57A951932241760C0020F55D /* FeedPageVC+EditorWidgetDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A951922241760C0020F55D /* FeedPageVC+EditorWidgetDelegate.swift */; };
+		57A95195224176F00020F55D /* FeedPageVC+SortingWidgetDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A95194224176F00020F55D /* FeedPageVC+SortingWidgetDelegate.swift */; };
+		57A95197224178010020F55D /* FeedPageVC+PostCardCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A95196224178010020F55D /* FeedPageVC+PostCardCellDelegate.swift */; };
 		AC807D304CD3E671C23FAE12 /* Pods_Commun.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C30DAF8A0C2BCAAC2DA4F5F7 /* Pods_Commun.framework */; };
 /* End PBXBuildFile section */
 
@@ -88,6 +95,13 @@
 		578409FF223FAC1B00338FD5 /* BadgeWithCounterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BadgeWithCounterView.swift; sourceTree = "<group>"; };
 		57840A10223FB4D700338FD5 /* SortingWidgetCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortingWidgetCell.swift; sourceTree = "<group>"; };
 		57840A11223FB4D700338FD5 /* SortingWidgetCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SortingWidgetCell.xib; sourceTree = "<group>"; };
+		57840A1A2240DB9400338FD5 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
+		57840A1F2240DDEB00338FD5 /* Container.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Container.swift; sourceTree = "<group>"; };
+		57A9518E2241253A0020F55D /* FeedPageVC+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FeedPageVC+Rx.swift"; sourceTree = "<group>"; };
+		57A9519022416B5D0020F55D /* FeedPageVC+Utilites.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FeedPageVC+Utilites.swift"; sourceTree = "<group>"; };
+		57A951922241760C0020F55D /* FeedPageVC+EditorWidgetDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FeedPageVC+EditorWidgetDelegate.swift"; sourceTree = "<group>"; };
+		57A95194224176F00020F55D /* FeedPageVC+SortingWidgetDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FeedPageVC+SortingWidgetDelegate.swift"; sourceTree = "<group>"; };
+		57A95196224178010020F55D /* FeedPageVC+PostCardCellDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FeedPageVC+PostCardCellDelegate.swift"; sourceTree = "<group>"; };
 		8F718AA90733822C063D8D9F /* Pods-Commun.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Commun.release.xcconfig"; path = "Pods/Target Support Files/Pods-Commun/Pods-Commun.release.xcconfig"; sourceTree = "<group>"; };
 		C30DAF8A0C2BCAAC2DA4F5F7 /* Pods_Commun.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Commun.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -134,6 +148,8 @@
 			isa = PBXGroup;
 			children = (
 				571B14F3223A935C00630C8F /* AppDelegate.swift */,
+				57840A182240DAFF00338FD5 /* Assembly */,
+				57840A192240DB1200338FD5 /* Services */,
 				578409EA223FAC0000338FD5 /* Vendor */,
 				576DC91F223E42B200EDED41 /* Extensions */,
 				572F81A5223C164C0007F2F9 /* Fonts */,
@@ -204,9 +220,14 @@
 			isa = PBXGroup;
 			children = (
 				576DC91A223E41F600EDED41 /* FeedPageViewModel.swift */,
+				57A9518E2241253A0020F55D /* FeedPageVC+Rx.swift */,
 				576DC918223E41E800EDED41 /* FeedPageVC.swift */,
+				57A95196224178010020F55D /* FeedPageVC+PostCardCellDelegate.swift */,
+				57A95194224176F00020F55D /* FeedPageVC+SortingWidgetDelegate.swift */,
+				57A951922241760C0020F55D /* FeedPageVC+EditorWidgetDelegate.swift */,
 				576DC922223E4A4C00EDED41 /* FeedPageVC+UITableViewDataSource.swift */,
 				576DC924223E4A9600EDED41 /* FeedPageVC+UITableViewDelegate.swift */,
+				57A9519022416B5D0020F55D /* FeedPageVC+Utilites.swift */,
 				576DC91D223E429C00EDED41 /* FeedPageVC.storyboard */,
 			);
 			path = FeedPageVC;
@@ -308,6 +329,22 @@
 				57840A11223FB4D700338FD5 /* SortingWidgetCell.xib */,
 			);
 			path = SortingWidgetCell;
+			sourceTree = "<group>";
+		};
+		57840A182240DAFF00338FD5 /* Assembly */ = {
+			isa = PBXGroup;
+			children = (
+				57840A1F2240DDEB00338FD5 /* Container.swift */,
+			);
+			path = Assembly;
+			sourceTree = "<group>";
+		};
+		57840A192240DB1200338FD5 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				57840A1A2240DB9400338FD5 /* NetworkService.swift */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 		9D3E817BE4550764E6E23B1C /* Pods */ = {
@@ -433,7 +470,9 @@
 				"${BUILT_PRODUCTS_DIR}/RxAtomic/RxAtomic.framework",
 				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
 				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 				"${BUILT_PRODUCTS_DIR}/Starscream/Starscream.framework",
+				"${BUILT_PRODUCTS_DIR}/SwifterSwift/SwifterSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/Swinject/Swinject.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
@@ -446,7 +485,9 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxAtomic.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Starscream.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwifterSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Swinject.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -469,6 +510,7 @@
 				57840A08223FAC1B00338FD5 /* RoundImageView.swift in Sources */,
 				572F81A7223C164C0007F2F9 /* PostCardCell.swift in Sources */,
 				57840A03223FAC1B00338FD5 /* SegmentioCellWithImageAfterLabel.swift in Sources */,
+				57A95195224176F00020F55D /* FeedPageVC+SortingWidgetDelegate.swift in Sources */,
 				571B150B223A94DE00630C8F /* TabBarVC.swift in Sources */,
 				57840A05223FAC1B00338FD5 /* SegmentioCellWithLabel.swift in Sources */,
 				576DC925223E4A9600EDED41 /* FeedPageVC+UITableViewDelegate.swift in Sources */,
@@ -476,15 +518,21 @@
 				57840A00223FAC1B00338FD5 /* SegmentioCellWithImageBeforeLabel.swift in Sources */,
 				57840A0A223FAC1B00338FD5 /* Segmentio.swift in Sources */,
 				57840A01223FAC1B00338FD5 /* SegmentioCellWithImageUnderLabel.swift in Sources */,
+				57A95197224178010020F55D /* FeedPageVC+PostCardCellDelegate.swift in Sources */,
 				57840A0E223FAC1B00338FD5 /* BadgeWithCounterView.swift in Sources */,
+				57A9519122416B5D0020F55D /* FeedPageVC+Utilites.swift in Sources */,
+				57A951932241760C0020F55D /* FeedPageVC+EditorWidgetDelegate.swift in Sources */,
+				57840A202240DDEB00338FD5 /* Container.swift in Sources */,
 				57840A06223FAC1B00338FD5 /* SegmentioCellWithImageOverLabel.swift in Sources */,
 				576DC923223E4A4C00EDED41 /* FeedPageVC+UITableViewDataSource.swift in Sources */,
 				572F81AF223C16940007F2F9 /* EditorWidgetCell.swift in Sources */,
 				57840A12223FB4D700338FD5 /* SortingWidgetCell.swift in Sources */,
+				57A9518F2241253A0020F55D /* FeedPageVC+Rx.swift in Sources */,
 				57840A02223FAC1B00338FD5 /* SegmentioCell.swift in Sources */,
 				57840A09223FAC1B00338FD5 /* SegmentioOptions.swift in Sources */,
 				571B14F4223A935C00630C8F /* AppDelegate.swift in Sources */,
 				57840A0B223FAC1B00338FD5 /* BadgeViewPresenter.swift in Sources */,
+				57840A1B2240DB9400338FD5 /* NetworkService.swift in Sources */,
 				576DC91B223E41F600EDED41 /* FeedPageViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
