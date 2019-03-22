@@ -1,8 +1,11 @@
 PODS:
   - Alamofire (4.8.1)
+  - Crashlytics (3.12.0):
+    - Fabric (~> 1.9.0)
   - CyberSwift (1.0.1):
     - Localize-Swift (~> 2.0)
     - Starscream (~> 3.0)
+  - Fabric (1.9.0)
   - Localize-Swift (2.0.0)
   - RxAtomic (4.4.2)
   - RxCocoa (4.4.2):
@@ -20,7 +23,9 @@ PODS:
 
 DEPENDENCIES:
   - Alamofire
+  - Crashlytics
   - CyberSwift (from `https://github.com/GolosChain/cyberSwift.git`)
+  - Fabric
   - RxCocoa (~> 4.0)
   - RxSwift (~> 4.0)
   - SDWebImage (~> 4.0)
@@ -32,6 +37,8 @@ DEPENDENCIES:
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Alamofire
+    - Crashlytics
+    - Fabric
     - Localize-Swift
     - RxAtomic
     - RxCocoa
@@ -52,7 +59,9 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   Alamofire: 16ce2c353fb72865124ddae8a57c5942388f4f11
-  CyberSwift: 09f5fbcd52df8226c308e4f76537e4db2787abe7
+  Crashlytics: 07fb167b1694128c1c9a5a5cc319b0e9c3ca0933
+  CyberSwift: f052095e406deb0b790630610cbaf93bbf4b2c35
+  Fabric: f988e33c97f08930a413e08123064d2e5f68d655
   Localize-Swift: c798ec9286494866f7068f85f7c71283ac5bdab4
   RxAtomic: d00e97c10db88c6f08540e0bf2752fc5a2404167
   RxCocoa: 477990dc3b4c3ff55fb0ac77e1cc06244e0aaec8
@@ -62,6 +71,6 @@ SPEC CHECKSUMS:
   SwifterSwift: 812ffec6f301922f5430e75be3f2939ea3a80024
   Swinject: 48a96cda93633cf2860697b4ce76ab5db9ebaca2
 
-PODFILE CHECKSUM: 9845e8fac76fa34d46817e092b0c6e996802a4bf
+PODFILE CHECKSUM: 788b18f2c49eeeede2ef9a5a8cf396601a8930f1
 
-COCOAPODS: 1.5.3
+COCOAPODS: 1.7.0.beta.2

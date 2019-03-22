@@ -7,6 +7,9 @@ target 'Commun' do
 
   pod 'CyberSwift', :git => "https://github.com/GolosChain/cyberSwift.git" # "https://github.com/Monserg/cyber-ios.git"
   
+  pod 'Fabric'
+  pod 'Crashlytics'
+  
   pod 'RxSwift',    '~> 4.0'
   pod 'RxCocoa',    '~> 4.0'
   pod 'Alamofire'
