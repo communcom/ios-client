@@ -17,9 +17,8 @@ class TabBarVC: UITabBarController {
         // Do any additional setup after loading the view.
         self.view.backgroundColor = .white
         
-        let feed = FeedPageVC.instanceController(fromStoryboard: "FeedPageVC", withIdentifier: "FeedPageVC")
+        let feed = controllerContainer.resolve(FeedPageVC.self)!
         feed.tabBarItem = UITabBarItem(title: "Feed", image: UIImage(named: "feed"), tag: 0)
-        let feedNav = UINavigationController(rootViewController: feed)
         
         let comunities = UIViewController()
         comunities.tabBarItem = UITabBarItem(title: "Сomunities", image: UIImage(named: "comunities"), tag: 1)
@@ -33,7 +32,7 @@ class TabBarVC: UITabBarController {
         let notifications = UIViewController()
         notifications.tabBarItem = UITabBarItem(title: "Notifications", image: UIImage(named: "notifications"), tag: 4)
         
-        self.viewControllers = [feedNav, comunities, profile, wallet, notifications]
+        self.viewControllers = [feed, comunities, profile, wallet, notifications]
         
         self.tabBar.tintColor = #colorLiteral(red: 0.4156862745, green: 0.5019607843, blue: 0.9607843137, alpha: 1)
         UITabBar.appearance().barTintColor = .white

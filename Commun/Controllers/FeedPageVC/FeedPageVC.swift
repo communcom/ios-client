@@ -12,7 +12,7 @@ import RxSwift
 
 class FeedPageVC: UIViewController {
 
-    var viewModel = FeedPageViewModel()
+    var viewModel: FeedPageViewModel!
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var segmentioView: Segmentio!
@@ -24,6 +24,8 @@ class FeedPageVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        viewModel = FeedPageViewModel()
+        
         navigationController?.navigationBar.barTintColor = .white
         
         tableView.register(UINib(nibName: "SortingWidgetCell", bundle: nil), forCellReuseIdentifier: "SortingWidgetCell")
