@@ -1,21 +1,13 @@
 PODS:
   - Alamofire (4.8.1)
-  - BigInt (3.1.0):
-    - SipHash (~> 1.2)
-  - CyberSwift (1.0.4):
-    - eosswift (~> 1.5)
+  - Crashlytics (3.12.0):
+    - Fabric (~> 1.9.0)
+  - CyberSwift (1.0.1):
     - Localize-Swift (~> 2.0)
-    - RxBlocking (~> 4.0)
     - Starscream (~> 3.0)
-  - eosswift (1.5):
-    - BigInt (~> 3.1.0)
-    - RxCocoa (~> 4.0)
-    - RxSwift (~> 4.0)
+  - Fabric (1.9.0)
   - Localize-Swift (2.0.0)
   - RxAtomic (4.4.2)
-  - RxBlocking (4.4.2):
-    - RxAtomic (>= 4.4.2, ~> 4.4)
-    - RxSwift (>= 4.4.2, ~> 4.4)
   - RxCocoa (4.4.2):
     - RxSwift (>= 4.4.2, ~> 4.4)
   - RxSwift (4.4.2):
@@ -23,7 +15,6 @@ PODS:
   - SDWebImage (4.4.6):
     - SDWebImage/Core (= 4.4.6)
   - SDWebImage/Core (4.4.6)
-  - SipHash (1.2.2)
   - Starscream (3.0.6)
   - SwifterSwift/Foundation (4.6.0)
   - SwifterSwift/SwiftStdlib (4.6.0)
@@ -32,7 +23,11 @@ PODS:
 
 DEPENDENCIES:
   - Alamofire
+  - Crashlytics
   - CyberSwift (from `https://github.com/GolosChain/cyberSwift.git`)
+  - Fabric
+  - RxCocoa (~> 4.0)
+  - RxSwift (~> 4.0)
   - SDWebImage (~> 4.0)
   - SwifterSwift/Foundation
   - SwifterSwift/SwiftStdlib
@@ -42,15 +37,13 @@ DEPENDENCIES:
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Alamofire
-    - BigInt
-    - eosswift
+    - Crashlytics
+    - Fabric
     - Localize-Swift
     - RxAtomic
-    - RxBlocking
     - RxCocoa
     - RxSwift
     - SDWebImage
-    - SipHash
     - Starscream
     - SwifterSwift
     - Swinject
@@ -61,25 +54,23 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   CyberSwift:
-    :commit: 9b95e510ff5512dfac395990a93c7230ab27174b
+    :commit: b5628890cae3ee02e6f6a5e52c9d6d8f91a25ce4
     :git: https://github.com/GolosChain/cyberSwift.git
 
 SPEC CHECKSUMS:
   Alamofire: 16ce2c353fb72865124ddae8a57c5942388f4f11
-  BigInt: 76b5dfdfa3e2e478d4ffdf161aeede5502e2742f
-  CyberSwift: 115cf16de2361641289aaf327bceff25f9bfccd7
-  eosswift: 1b20d506c340725f6eb8192dda0f98330aa6535a
+  Crashlytics: 07fb167b1694128c1c9a5a5cc319b0e9c3ca0933
+  CyberSwift: f052095e406deb0b790630610cbaf93bbf4b2c35
+  Fabric: f988e33c97f08930a413e08123064d2e5f68d655
   Localize-Swift: c798ec9286494866f7068f85f7c71283ac5bdab4
   RxAtomic: d00e97c10db88c6f08540e0bf2752fc5a2404167
-  RxBlocking: e96fdda1473d81332a6ed2cface935dc2167a122
   RxCocoa: 477990dc3b4c3ff55fb0ac77e1cc06244e0aaec8
   RxSwift: 74c29b693c8e42b0f64400e8b06564575742d649
   SDWebImage: 3f3f0c02f09798048c47a5ed0a13f17b063572d8
-  SipHash: fad90a4683e420c52ef28063063dbbce248ea6d4
   Starscream: ef3ece99d765eeccb67de105bfa143f929026cf5
   SwifterSwift: 812ffec6f301922f5430e75be3f2939ea3a80024
   Swinject: 48a96cda93633cf2860697b4ce76ab5db9ebaca2
 
-PODFILE CHECKSUM: f119b7385169a097d0419fabd54edf91ca5ca1e8
+PODFILE CHECKSUM: 788b18f2c49eeeede2ef9a5a8cf396601a8930f1
 
-COCOAPODS: 1.5.3
+COCOAPODS: 1.7.0.beta.2

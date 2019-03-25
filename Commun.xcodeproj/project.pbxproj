@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -463,6 +463,7 @@
 			buildConfigurationList = 571B1505223A935D00630C8F /* Build configuration list for PBXNativeTarget "Commun" */;
 			buildPhases = (
 				2B094F7FBE2B576A1C8566B2 /* [CP] Check Pods Manifest.lock */,
+				B17D9AFE2244E44200CCBA24 /* ShellScript */,
 				571B14EC223A935C00630C8F /* Sources */,
 				571B14ED223A935C00630C8F /* Frameworks */,
 				571B14EE223A935C00630C8F /* Resources */,
@@ -565,6 +566,23 @@
 			files = (
 			);
 			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Commun/Pods-Commun-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Commun/Pods-Commun-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Commun/Pods-Commun-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B17D9AFE2244E44200CCBA24 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Commun/Pods-Commun-frameworks.sh",
@@ -583,7 +601,6 @@
 				"${BUILT_PRODUCTS_DIR}/Swinject/Swinject.framework",
 				"${BUILT_PRODUCTS_DIR}/eosswift/eosswift.framework",
 			);
-			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 			);
 			outputPaths = (
@@ -604,8 +621,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Commun/Pods-Commun-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
+			shellScript = "\"${PODS_ROOT}/Fabric/run\" a31221dc945d82768ff8fba65613cdf825d49797 2911e05e27da2b2ebe58e753cbac383d0dda0a1e102e4bd1bc30abe7d75f94e9\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -810,6 +826,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 5G8856SBG8;
 				INFOPLIST_FILE = Commun/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -821,7 +838,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -832,6 +849,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 5G8856SBG8;
 				INFOPLIST_FILE = Commun/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -843,7 +861,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
