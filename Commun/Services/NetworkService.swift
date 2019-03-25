@@ -65,17 +65,27 @@ class NetworkService: NSObject {
         
     }
     
-    func getPost() {
-        RestAPIManager.instance.loadPost(userID:        "tst3guarnodu",
-                                         permlink:      "hestiafightswithantigoneagainstmnemosyne",
-                                         refBlockNum:   497518,
-                                         completion:    { (post, errorAPI) in
-                                            guard errorAPI == nil else {
-                                                Logger.log(message: errorAPI!.caseInfo.message.localized(), event: .error)
-                                                return
-                                            }
-                                            
-                                            Logger.log(message: "Response: \n\t\(post!)", event: .debug)
+    func getPost(withPermLink permLink: String, withRefBlock block: UInt64, forUser user: String) -> Observable<ResponseAPIContentGetPost> {
+        return Observable.create({ observer -> Disposable in
+            
+            RestAPIManager.instance.loadPost(userID:        user,
+                                             permlink:      permLink,
+                                             refBlockNum:   block,
+                                             completion:    { (post, errorAPI) in
+                                                guard errorAPI == nil else {
+                                                    Logger.log(message: errorAPI!.caseInfo.message.localized(), event: .error)
+                                                    return
+                                                }
+                                                
+                                                if let post = post {
+                                                    Logger.log(message: "Response: \n\t\(post)", event: .debug)
+                                                    observer.onNext(post)
+                                                }
+                                                
+                                                observer.onCompleted()
+            })
+            
+            return Disposables.create()
         })
     }
     
@@ -91,18 +101,25 @@ class NetworkService: NSObject {
         })
     }
     
-    func getPostComment() {
-        RestAPIManager.instance.loadPostComments(nickName:                  "tst1xrhojmka",
-                                                 permlink:                  "demeterfightswithandromedaagainstepimetheus",
-                                                 refBlockNum:               520095,
-                                                 paginationSequenceKey:     nil,
-                                                 completion:                { (comments, errorAPI) in
-                                                    guard errorAPI == nil else {
-                                                        Logger.log(message: errorAPI!.caseInfo.message.localized(), event: .error)
-                                                        return
-                                                    }
-                                                    
-                                                    Logger.log(message: "Response: \n\t\(comments!)", event: .debug)
+    func getPostComment(withPermLink permLink: String, withRefBlock block: UInt64, forUser user: String) -> Observable<ResponseAPIContentGetComments> {
+        return Observable.create({ observer -> Disposable in
+            RestAPIManager.instance.loadPostComments(nickName:                  user,
+                                                     permlink:                  permLink,
+                                                     refBlockNum:               block,
+                                                     paginationSequenceKey:     nil,
+                                                     completion:                { (comments, errorAPI) in
+                                                        guard errorAPI == nil else {
+                                                            Logger.log(message: errorAPI!.caseInfo.message.localized(), event: .error)
+                                                            return
+                                                        }
+                                                        
+                                                        if let comments = comments {
+                                                            Logger.log(message: "Response: \n\t\(comments)", event: .debug)
+                                                            observer.onNext(comments)
+                                                        }
+                                                        observer.onCompleted()
+            })
+            return Disposables.create()
         })
     }
 }

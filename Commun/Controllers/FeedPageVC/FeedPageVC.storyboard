@@ -19,11 +19,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="8YX-tZ-48z">
-                                <rect key="frame" x="0.0" y="72" width="375" height="595"/>
+                                <rect key="frame" x="0.0" y="122" width="375" height="545"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SzI-hD-53X">
-                                <rect key="frame" x="0.0" y="20" width="375" height="52"/>
+                                <rect key="frame" x="0.0" y="70" width="375" height="52"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="401-J0-fJh">
                                         <rect key="frame" x="0.0" y="44" width="375" height="8"/>
@@ -49,14 +49,35 @@
                                     <constraint firstItem="LW0-TT-GUg" firstAttribute="leading" secondItem="SzI-hD-53X" secondAttribute="leading" id="vt5-Y9-MAW"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="W62-HV-wwc">
+                                <rect key="frame" x="0.0" y="20" width="375" height="50"/>
+                                <subviews>
+                                    <searchBar contentMode="redraw" searchBarStyle="minimal" placeholder="Search" translatesAutoresizingMaskIntoConstraints="NO" id="p9b-c0-gmd">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </searchBar>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="p9b-c0-gmd" firstAttribute="leading" secondItem="W62-HV-wwc" secondAttribute="leading" id="4Ld-i1-wpw"/>
+                                    <constraint firstAttribute="bottom" secondItem="p9b-c0-gmd" secondAttribute="bottom" id="AX9-mQ-EIL"/>
+                                    <constraint firstItem="p9b-c0-gmd" firstAttribute="top" secondItem="W62-HV-wwc" secondAttribute="top" id="EQX-xe-c3E"/>
+                                    <constraint firstAttribute="trailing" secondItem="p9b-c0-gmd" secondAttribute="trailing" id="INm-qC-bmR"/>
+                                    <constraint firstAttribute="height" constant="50" id="ifU-M9-zI4"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="8YX-tZ-48z" firstAttribute="leading" secondItem="4yY-LD-OlZ" secondAttribute="leading" id="3q2-Ru-yMI"/>
+                            <constraint firstItem="SzI-hD-53X" firstAttribute="top" secondItem="W62-HV-wwc" secondAttribute="bottom" id="9S2-yo-meA"/>
                             <constraint firstItem="4yY-LD-OlZ" firstAttribute="bottom" secondItem="8YX-tZ-48z" secondAttribute="bottom" id="Fzv-B5-zeB"/>
-                            <constraint firstItem="SzI-hD-53X" firstAttribute="top" secondItem="4yY-LD-OlZ" secondAttribute="top" id="SLS-N7-y1x"/>
+                            <constraint firstItem="W62-HV-wwc" firstAttribute="top" secondItem="4yY-LD-OlZ" secondAttribute="top" id="GLx-Uo-L2J"/>
+                            <constraint firstItem="W62-HV-wwc" firstAttribute="leading" secondItem="4yY-LD-OlZ" secondAttribute="leading" id="ThR-AH-GW9"/>
                             <constraint firstItem="8YX-tZ-48z" firstAttribute="top" secondItem="SzI-hD-53X" secondAttribute="bottom" id="Vvi-6X-HS6"/>
+                            <constraint firstItem="8YX-tZ-48z" firstAttribute="top" secondItem="SzI-hD-53X" secondAttribute="bottom" id="Wja-QZ-REL"/>
                             <constraint firstItem="4yY-LD-OlZ" firstAttribute="trailing" secondItem="8YX-tZ-48z" secondAttribute="trailing" id="bfN-me-FMU"/>
+                            <constraint firstItem="4yY-LD-OlZ" firstAttribute="trailing" secondItem="W62-HV-wwc" secondAttribute="trailing" id="jpM-pv-Mqs"/>
                             <constraint firstItem="4yY-LD-OlZ" firstAttribute="trailing" secondItem="SzI-hD-53X" secondAttribute="trailing" id="lvB-fh-I6C"/>
                             <constraint firstItem="SzI-hD-53X" firstAttribute="leading" secondItem="4yY-LD-OlZ" secondAttribute="leading" id="mei-pj-Zwg"/>
                         </constraints>
