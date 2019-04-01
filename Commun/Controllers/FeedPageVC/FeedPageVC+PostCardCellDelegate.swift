@@ -10,23 +10,20 @@ import UIKit
 
 extension FeedPageVC: PostCardCellDelegate {
     
-    func didTapMenuButton() {
+    func didTapMenuButton(forPost post: ResponseAPIContentGetPost) {
         showAlert(title: "TODO", message: "Нажата кнопка контекстного меню")
     }
     
-    func didTapUpButton() {
+    func didTapUpButton(forPost post: ResponseAPIContentGetPost) {
         showAlert(title: "TODO", message: "Голос вверх")
     }
     
-    func didTapDownButton() {
+    func didTapDownButton(forPost post: ResponseAPIContentGetPost) {
         showAlert(title: "TODO", message: "Голос вниз")
     }
     
-    func didTapShareButton() {
+    func didTapShareButton(forPost post: ResponseAPIContentGetPost) {
         showAlert(title: "TODO", message: "Кнопка шары")
     }
-    
-    
-    
-    
+
 }

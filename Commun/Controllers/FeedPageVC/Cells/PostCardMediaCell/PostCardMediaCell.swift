@@ -35,18 +35,18 @@ class PostCardMediaCell: UITableViewCell {
     }
     
     @IBAction func menuButtonTap(_ sender: Any) {
-        delegate?.didTapMenuButton()
+//        delegate?.didTapMenuButton(forPost: <#ResponseAPIContentGetPost#>)
     }
     
     @IBAction func upButtonTap(_ sender: Any) {
-        delegate?.didTapUpButton()
+//        delegate?.didTapUpButton()
     }
     
     @IBAction func downButtonTap(_ sender: Any) {
-        delegate?.didTapDownButton()
+//        delegate?.didTapDownButton()
     }
     
     @IBAction func shareButtonTap(_ sender: Any) {
-        delegate?.didTapShareButton()
+//        delegate?.didTapShareButton()
     }
 }
