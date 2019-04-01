@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SF-Pro-Text-Regular.otf">
+            <string>SFProText-Regular</string>
+        </array>
+    </customFonts>
+    <scenes>
+        <!--Welcome ItemVC-->
+        <scene sceneID="k6y-0g-LZ8">
+            <objects>
+                <viewController storyboardIdentifier="WelcomeItemVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="5KY-Vm-tg1" customClass="WelcomeItemVC" customModule="Commun" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="jxb-H6-87Y">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4hf-Xy-fUy">
+                                <rect key="frame" x="160" y="577" width="55" height="33"/>
+                                <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="17"/>
+                                <state key="normal" title="Sign in">
+                                    <color key="titleColor" red="0.41568627450980389" green="0.50196078431372548" blue="0.96078431372549022" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="signInButtonTap:" destination="5KY-Vm-tg1" eventType="touchUpInside" id="9mf-zQ-tD8"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Buk-XO-4hl">
+                                <rect key="frame" x="42.5" y="491" width="290" height="56"/>
+                                <color key="backgroundColor" red="0.41568627450000001" green="0.50196078430000002" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="56" id="60w-ID-Hr5"/>
+                                    <constraint firstAttribute="width" constant="290" id="cP8-XJ-3A8"/>
+                                </constraints>
+                                <state key="normal" title="Sign up">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="12"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="signUpButtonTap:" destination="5KY-Vm-tg1" eventType="touchUpInside" id="gSL-QX-xDW"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3CJ-6s-wWW">
+                                <rect key="frame" x="16" y="410" width="343" height="41"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="21" id="cCI-4T-hy1"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="34"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="5qA-Cf-04c">
+                                <rect key="frame" x="0.0" y="20" width="375" height="350"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="3CJ-6s-wWW" firstAttribute="leading" secondItem="Pw3-pA-u1U" secondAttribute="leading" constant="16" id="6h4-oX-1rb"/>
+                            <constraint firstItem="5qA-Cf-04c" firstAttribute="top" secondItem="Pw3-pA-u1U" secondAttribute="top" id="8Gw-IU-xax"/>
+                            <constraint firstItem="Pw3-pA-u1U" firstAttribute="trailing" secondItem="5qA-Cf-04c" secondAttribute="trailing" id="JC9-n4-Pe4"/>
+                            <constraint firstItem="Pw3-pA-u1U" firstAttribute="trailing" secondItem="3CJ-6s-wWW" secondAttribute="trailing" constant="16" id="TZ8-4G-O1j"/>
+                            <constraint firstItem="3CJ-6s-wWW" firstAttribute="top" secondItem="5qA-Cf-04c" secondAttribute="bottom" constant="40" id="Umv-ZR-K0t"/>
+                            <constraint firstItem="5qA-Cf-04c" firstAttribute="leading" secondItem="Pw3-pA-u1U" secondAttribute="leading" id="Z5C-TL-bGj"/>
+                            <constraint firstItem="4hf-Xy-fUy" firstAttribute="centerX" secondItem="Pw3-pA-u1U" secondAttribute="centerX" id="f6N-5p-zz9"/>
+                            <constraint firstItem="Buk-XO-4hl" firstAttribute="top" secondItem="3CJ-6s-wWW" secondAttribute="bottom" constant="40" id="lb8-zF-28R"/>
+                            <constraint firstItem="4hf-Xy-fUy" firstAttribute="top" secondItem="Buk-XO-4hl" secondAttribute="bottom" constant="30" id="qCq-BI-ymM"/>
+                            <constraint firstItem="Buk-XO-4hl" firstAttribute="centerX" secondItem="Pw3-pA-u1U" secondAttribute="centerX" id="qlj-5m-B65"/>
+                            <constraint firstItem="Pw3-pA-u1U" firstAttribute="bottom" secondItem="4hf-Xy-fUy" secondAttribute="bottom" constant="57" id="sB7-AB-TmJ"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="Pw3-pA-u1U"/>
+                    </view>
+                    <connections>
+                        <outlet property="imageView" destination="5qA-Cf-04c" id="diO-Hm-1Yj"/>
+                        <outlet property="textLabel" destination="3CJ-6s-wWW" id="jNw-Lc-NPG"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bmw-c8-ekX" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="68" y="180"/>
+        </scene>
+    </scenes>
+</document>

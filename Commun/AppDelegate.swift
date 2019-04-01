@@ -20,18 +20,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         window = UIWindow(frame: UIScreen.main.bounds)
-        
+        NetworkService.shared.connect()
         Fabric.with([Crashlytics.self])
 
-        let tabBarVC = TabBarVC()
-        window?.rootViewController = tabBarVC
+        if UserDefaults.standard.value(forKey: "UserLoged") as? Bool == true {
+            let tabBarVC = TabBarVC()
+            window?.rootViewController = tabBarVC
+        } else {
+            let welcomeVC = WelcomeScreenVC.instanceController(fromStoryboard: "WelcomeScreenVC", withIdentifier: "WelcomeScreenVC")
+            let welcomeNav = UINavigationController(rootViewController: welcomeVC)
+            window?.rootViewController = welcomeNav
+        
+            let navigationBarAppearace = UINavigationBar.appearance()
+            navigationBarAppearace.tintColor = #colorLiteral(red: 0.4156862745, green: 0.5019607843, blue: 0.9607843137, alpha: 1)
+        }
+    
         window?.makeKeyAndVisible()
         
         application.applicationIconBadgeNumber = 0
-        
-        NetworkService.shared.connect()
-//        NetworkService.shared.getUserComment()
-//        NetworkService.shared.getPostComment()
+
         
         return true
     }

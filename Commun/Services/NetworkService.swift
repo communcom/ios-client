@@ -15,19 +15,11 @@ class NetworkService: NSObject {
     static let shared = NetworkService()
     
     func connect() {
-        if !Config.webSocket.isConnected {
-            Config.webSocket.connect()
-            
-            if Config.webSocket.delegate == nil {
-                Config.webSocket.delegate = WebSocketManager.instance
-            }
-        }
+        WebSocketManager.instance.connect()
     }
     
     func disconnect() {
-        if Config.webSocket.isConnected {
-            Config.webSocket.disconnect()
-        }
+        WebSocketManager.instance.disconnect()
     }
     
     func loadFeed(_ paginationKey: String?, withSortType sortType: FeedTimeFrameMode = .all, withFeedType type: FeedSortMode = .popular) -> Observable<ResponseAPIContentGetFeed> {
@@ -121,5 +113,59 @@ class NetworkService: NSObject {
             })
             return Disposables.create()
         })
+    }
+    
+    func signIn() -> Observable<String> {
+        return Observable.create({ observer -> Disposable in
+            RestAPIManager.instance.authorize(userNickName: Config.currentUser.nickName, userActiveKey: Config.currentUser.activeKey,
+                                              completion: { (authAuthorize, errorAPI) in
+                guard errorAPI == nil else {
+                    Logger.log(message: errorAPI!.caseInfo.message.localized(), event: .error)
+                    return
+                }
+                
+                if let permission = authAuthorize?.permission {
+                    observer.onNext(permission)
+                    Logger.log(message: permission, event: .debug)
+                }
+                observer.onCompleted()
+            })
+            
+            return Disposables.create()
+        })
+    }
+    
+    func voteMessage(isDownvote: Bool, permlink: String) {
+//        EOSManager.voteMessage(isDownvote:      isDownvote,
+//                               voter:           Config.currentUser.nickName,
+//                               author:          Config.currentUser.nickName,
+//                               permlink:        permlink,
+//                               weight:          10_000,
+//                               completion:      { (response, error) in
+//                                guard error == nil else {
+//                                    print(error!.localizedDescription)
+//                                    return
+//                                }
+//
+//                                print(response!.statusCode)
+//                                print(response!.success)
+//                                print(response!.body!)
+//        })
+    }
+    
+    func upvotePost(permlink: String) {
+//        EOSManager.unvotePost(voter:          Config.accountNickDestroyer2k,
+//                              author:         Config.accountNickDestroyer2k,
+//                              permlink:       permlink,
+//                              completion:     { (response, error) in
+//                                guard error == nil else {
+//                                    print(error!.localizedDescription)
+//                                    return
+//                                }
+//
+//                                print(response!.statusCode)
+//                                print(response!.success)
+//                                print(response!.body!)
+//        })
     }
 }

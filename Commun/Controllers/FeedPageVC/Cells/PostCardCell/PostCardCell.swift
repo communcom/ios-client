@@ -12,10 +12,10 @@ import SDWebImage
 
 protocol PostCardCellDelegate {
     // Делагат еще буду дорабатывать по мере работы над информацией.
-    func didTapMenuButton()
-    func didTapUpButton()
-    func didTapDownButton()
-    func didTapShareButton()
+    func didTapMenuButton(forPost post: ResponseAPIContentGetPost)
+    func didTapUpButton(forPost post: ResponseAPIContentGetPost)
+    func didTapDownButton(forPost post: ResponseAPIContentGetPost)
+    func didTapShareButton(forPost post: ResponseAPIContentGetPost)
 }
 
 class PostCardCell: UITableViewCell {
@@ -48,19 +48,27 @@ class PostCardCell: UITableViewCell {
     
     
     @IBAction func menuButtonTap(_ sender: Any) {
-        delegate?.didTapMenuButton()
+        if let post = post {
+            delegate?.didTapMenuButton(forPost: post)
+        }
     }
     
     @IBAction func upButtonTap(_ sender: Any) {
-        delegate?.didTapUpButton()
+        if let post = post {
+            delegate?.didTapUpButton(forPost: post)
+        }
     }
     
     @IBAction func downButtonTap(_ sender: Any) {
-        delegate?.didTapDownButton()
+        if let post = post {
+            delegate?.didTapDownButton(forPost: post)
+        }
     }
     
     @IBAction func shareButtonTap(_ sender: Any) {
-        delegate?.didTapShareButton()
+        if let post = post {
+            delegate?.didTapShareButton(forPost: post)
+        }
     }
 }
 
