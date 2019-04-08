@@ -24,11 +24,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Fabric.with([Crashlytics.self])
 
         if UserDefaults.standard.value(forKey: "UserLoged") as? Bool == true {
-            let tabBarVC = TabBarVC()
-            window?.rootViewController = tabBarVC
+            window?.rootViewController = controllerContainer.resolve(TabBarVC.self)
         } else {
-            let welcomeVC = WelcomeScreenVC.instanceController(fromStoryboard: "WelcomeScreenVC", withIdentifier: "WelcomeScreenVC")
-            let welcomeNav = UINavigationController(rootViewController: welcomeVC)
+            let welcomeVC = controllerContainer.resolve(WelcomeScreenVC.self)
+            let welcomeNav = UINavigationController(rootViewController: welcomeVC!)
             window?.rootViewController = welcomeNav
         
             let navigationBarAppearace = UINavigationBar.appearance()

@@ -11,11 +11,17 @@ import UIKit
 extension PostPageVC: CommentCellDelegate {
     
     func cell(_ cell: CommentCell, didTapUpVoteButtonForComment comment: ResponseAPIContentGetComment) {
-        showAlert(title: "TODO", message: "Upvote comment")
+        NetworkService.shared.voteMessage(voteType: .upvote,
+                                          messagePermlink: comment.contentId.permlink,
+                                          messageAuthor: comment.author?.username ?? "",
+                                          refBlockNum: comment.contentId.refBlockNum)
     }
     
     func cell(_ cell: CommentCell, didTapDownVoteButtonForComment comment: ResponseAPIContentGetComment) {
-        showAlert(title: "TODO", message: "Downvote comment")
+        NetworkService.shared.voteMessage(voteType: .downvote,
+                                          messagePermlink: comment.contentId.permlink,
+                                          messageAuthor: comment.author?.username ?? "",
+                                          refBlockNum: comment.contentId.refBlockNum)
     }
     
     func cell(_ cell: CommentCell, didTapReplyButtonForComment comment: ResponseAPIContentGetComment) {
