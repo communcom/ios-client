@@ -16,9 +16,7 @@ class SignInViewModel {
     
     func signIn(withLogin login: String, withApiKey key: String) {
         if checkCorrectUserData(login: login, key: key) {
-            Config.currentUser.nickName = login
-            Config.currentUser.activeKey = key
-            NetworkService.shared.signIn().subscribe(onNext: { [weak self] permission in
+            NetworkService.shared.signIn(login: "vbjdktidppoq", key: "5JA54JMgG4herXK85re6CSyPvmBs1X9EZ1qKwrqyrYVNaR1GKTS").subscribe(onNext: { [weak self] permission in
                 if permission == "active" {
                     UserDefaults.standard.set(true, forKey: "UserLoged")
                     self?.errorSubject.onCompleted()

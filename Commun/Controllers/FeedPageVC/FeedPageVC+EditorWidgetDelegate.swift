@@ -11,7 +11,9 @@ import UIKit
 extension FeedPageVC: EditorWidgetDelegate {
     
     func editorWidgetDidTapInputButton() {
-        showAlert(title: "TODO", message: "Переход на EditorPage")
+        let editorVC = controllerContainer.resolve(EditorPageVC.self)
+        let nav = UINavigationController(rootViewController: editorVC!)
+        present(nav, animated: true, completion: nil)
     }
     
     func editorWidgetDidTapMediaButton() {

@@ -16,12 +16,13 @@ extension FeedPageVC: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let postPageVC = controllerContainer.resolve(PostPageVC.self) {
-            postPageVC.viewModel.postForRequest = viewModel.items.value[indexPath.row - 2]
-            present(postPageVC, animated: true, completion: nil)
-        } else {
-            showAlert(title: "Error", message: "Something went wrong")
+        if indexPath.row >= 2 {
+            if let postPageVC = controllerContainer.resolve(PostPageVC.self) {
+                postPageVC.viewModel.postForRequest = viewModel.items.value[indexPath.row - 2]
+                present(postPageVC, animated: true, completion: nil)
+            } else {
+                showAlert(title: "Error", message: "Something went wrong")
+            }
         }
-        
     }
 }

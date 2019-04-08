@@ -115,9 +115,9 @@ class NetworkService: NSObject {
         })
     }
     
-    func signIn() -> Observable<String> {
+    func signIn(login: String, key: String) -> Observable<String> {
         return Observable.create({ observer -> Disposable in
-            RestAPIManager.instance.authorize(userNickName: Config.currentUser.nickName, userActiveKey: Config.currentUser.activeKey,
+            RestAPIManager.instance.authorize(userNickName: login, userActiveKey: key,
                                               completion: { (authAuthorize, errorAPI) in
                 guard errorAPI == nil else {
                     Logger.log(message: errorAPI!.caseInfo.message.localized(), event: .error)
@@ -125,6 +125,8 @@ class NetworkService: NSObject {
                 }
                 
                 if let permission = authAuthorize?.permission {
+                    Config.currentUser.nickName = login
+                    Config.currentUser.activeKey = key
                     observer.onNext(permission)
                     Logger.log(message: permission, event: .debug)
                 }
@@ -135,37 +137,48 @@ class NetworkService: NSObject {
         })
     }
     
-    func voteMessage(isDownvote: Bool, permlink: String) {
-//        EOSManager.voteMessage(isDownvote:      isDownvote,
-//                               voter:           Config.currentUser.nickName,
-//                               author:          Config.currentUser.nickName,
-//                               permlink:        permlink,
-//                               weight:          10_000,
-//                               completion:      { (response, error) in
-//                                guard error == nil else {
-//                                    print(error!.localizedDescription)
-//                                    return
-//                                }
-//
-//                                print(response!.statusCode)
-//                                print(response!.success)
-//                                print(response!.body!)
-//        })
+    func voteMessage(voteType: VoteType, messagePermlink: String, messageAuthor: String, refBlockNum: UInt64) {
+        RestAPIManager.instance.message(voteType:        voteType,
+                           author:          messageAuthor,
+                           permlink:        messagePermlink,
+                           weight:          voteType == .unvote ? 0 : 10_000,
+                           refBlockNum:     refBlockNum,
+                           completion:      { (response, error) in
+                            
+                            guard error == nil else {
+                                print(error.debugDescription)
+                                return
+                            }
+                            
+                            print(response!.statusCode)
+                            print(response!.success)
+                            print(response!.body!)
+        })
     }
     
-    func upvotePost(permlink: String) {
-//        EOSManager.unvotePost(voter:          Config.accountNickDestroyer2k,
-//                              author:         Config.accountNickDestroyer2k,
-//                              permlink:       permlink,
-//                              completion:     { (response, error) in
-//                                guard error == nil else {
-//                                    print(error!.localizedDescription)
-//                                    return
-//                                }
-//
-//                                print(response!.statusCode)
-//                                print(response!.success)
-//                                print(response!.body!)
-//        })
+    func sendPost(withTitle title: String, withText text: String, metaData json: String, withTags tags: [String]) -> Observable<Bool> {
+        return Observable<Bool>.create { observer -> Disposable in
+            
+            RestAPIManager.instance.publish(message:        text,
+                                            headline:       title,
+                                            tags:           tags,
+                                            metaData:       json,
+                                            completion:     { (response, error) in
+                                                guard error == nil else {
+                                                    print(error!.caseInfo.message)
+                                                    return
+                                                }
+                                                
+                                                if let resp = response {
+                                                    print(resp.statusCode)
+                                                    print(resp.success)
+                                                    print(resp.body!)
+                                                    observer.onNext(resp.success)
+                                                }
+                                                observer.onCompleted()
+            })
+            
+            return Disposables.create()
+        }
     }
 }
