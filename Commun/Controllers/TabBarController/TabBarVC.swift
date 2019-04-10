@@ -29,7 +29,7 @@ class TabBarVC: UITabBarController {
         let wallet = UIViewController()
         wallet.tabBarItem = UITabBarItem(title: "Wallet", image: UIImage(named: "wallet"), tag: 3)
         
-        let notifications = UIViewController()
+        let notifications = controllerContainer.resolve(NotificationsPageVC.self)!
         notifications.tabBarItem = UITabBarItem(title: "Notifications", image: UIImage(named: "notifications"), tag: 4)
         
         self.viewControllers = [feed, comunities, profile, wallet, notifications]

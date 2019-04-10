@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3BE2FA07225DF8050013F32F /* NotificationsPageVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3BE2FA06225DF8050013F32F /* NotificationsPageVC.storyboard */; };
+		3BE2FA09225DFB5B0013F32F /* NotificationsPageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BE2FA08225DFB5B0013F32F /* NotificationsPageVC.swift */; };
 		5700611A2253CA96007700DA /* EditorContentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570061182253CA96007700DA /* EditorContentCell.swift */; };
 		5700611B2253CA96007700DA /* EditorContentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 570061192253CA96007700DA /* EditorContentCell.xib */; };
 		5700611F2253CDDF007700DA /* EditorMediaCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5700611D2253CDDF007700DA /* EditorMediaCell.swift */; };
@@ -102,6 +104,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3BE2FA06225DF8050013F32F /* NotificationsPageVC.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = NotificationsPageVC.storyboard; sourceTree = "<group>"; };
+		3BE2FA08225DFB5B0013F32F /* NotificationsPageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsPageVC.swift; sourceTree = "<group>"; };
 		4F0772CC6D820AD11B1FF48A /* Pods_Commun.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Commun.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		570061182253CA96007700DA /* EditorContentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorContentCell.swift; sourceTree = "<group>"; };
 		570061192253CA96007700DA /* EditorContentCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EditorContentCell.xib; sourceTree = "<group>"; };
@@ -255,6 +259,15 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		3BE2FA05225DF7DC0013F32F /* NotificationsPageVC */ = {
+			isa = PBXGroup;
+			children = (
+				3BE2FA06225DF8050013F32F /* NotificationsPageVC.storyboard */,
+				3BE2FA08225DFB5B0013F32F /* NotificationsPageVC.swift */,
+			);
+			path = NotificationsPageVC;
+			sourceTree = "<group>";
+		};
 		570061172253CA83007700DA /* EditorContentCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -329,6 +342,7 @@
 				57B6FC23224A9E4900BCFDDA /* WelcomeScreenVC */,
 				5725173A2243E4510033125C /* PostPageVC */,
 				576DC917223E41CA00EDED41 /* FeedPageVC */,
+				3BE2FA05225DF7DC0013F32F /* NotificationsPageVC */,
 				571B1509223A94CD00630C8F /* TabBarController */,
 			);
 			path = Controllers;
@@ -812,6 +826,7 @@
 				576DC91E223E429C00EDED41 /* FeedPageVC.storyboard in Resources */,
 				57840A13223FB4D700338FD5 /* SortingWidgetCell.xib in Resources */,
 				57C33A452244D32300073FAE /* VotesCell.xib in Resources */,
+				3BE2FA07225DF8050013F32F /* NotificationsPageVC.storyboard in Resources */,
 				570061252253D3B3007700DA /* EditorLinkCell.xib in Resources */,
 				571B14F9223A935C00630C8F /* Main.storyboard in Resources */,
 			);
@@ -946,6 +961,7 @@
 				57840A00223FAC1B00338FD5 /* SegmentioCellWithImageBeforeLabel.swift in Sources */,
 				57840A0A223FAC1B00338FD5 /* Segmentio.swift in Sources */,
 				571710A32253DF0100A5D07C /* EditorPageVC+UITableViewDataSource.swift in Sources */,
+				3BE2FA09225DFB5B0013F32F /* NotificationsPageVC.swift in Sources */,
 				57840A01223FAC1B00338FD5 /* SegmentioCellWithImageUnderLabel.swift in Sources */,
 				57A95197224178010020F55D /* FeedPageVC+PostCardCellDelegate.swift in Sources */,
 				57840A0E223FAC1B00338FD5 /* BadgeWithCounterView.swift in Sources */,
