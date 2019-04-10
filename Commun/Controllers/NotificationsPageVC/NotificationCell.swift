@@ -9,16 +9,24 @@
 import UIKit
 
 class NotificationCell: UITableViewCell {
-
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
+    @IBOutlet weak var avatarImage: UIImageView!
+    @IBOutlet weak var notificationTypeImage: UIImageView!
+    
+    // Constraint for notificationTypeImage
+    @IBOutlet weak var nTIBottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak var nTILeadingConstraint: NSLayoutConstraint!
+    
+    // Methods
+    // func configure(with model: )
+    
+    func configureWithOutAvatar() {
+        nTILeadingConstraint.isActive = false
+        nTIBottomConstraint.isActive = false
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+    
+    override func prepareForReuse() {
+        nTIBottomConstraint.isActive = true
+        nTILeadingConstraint.isActive = true
+        super.prepareForReuse()
     }
-
 }
