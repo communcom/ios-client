@@ -30,9 +30,12 @@ class TabBarVC: UITabBarController {
         wallet.tabBarItem = UITabBarItem(title: "Wallet", image: UIImage(named: "wallet"), tag: 3)
         
         let notifications = controllerContainer.resolve(NotificationsPageVC.self)!
-        notifications.tabBarItem = UITabBarItem(title: "Notifications", image: UIImage(named: "notifications"), tag: 4)
         
-        self.viewControllers = [feed, comunities, profile, wallet, notifications]
+        let notificationsNC = UINavigationController(rootViewController: notifications)
+        
+        notificationsNC.tabBarItem = UITabBarItem(title: "Notifications", image: UIImage(named: "notifications"), tag: 4)
+        
+        self.viewControllers = [feed, comunities, profile, wallet, notificationsNC]
         
         self.tabBar.tintColor = #colorLiteral(red: 0.4156862745, green: 0.5019607843, blue: 0.9607843137, alpha: 1)
         UITabBar.appearance().barTintColor = .white
