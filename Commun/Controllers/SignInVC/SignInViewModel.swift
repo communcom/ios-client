@@ -19,6 +19,7 @@ class SignInViewModel {
         return NetworkService.shared.signIn(login: "vbjdktidppoq", key: "5JA54JMgG4herXK85re6CSyPvmBs1X9EZ1qKwrqyrYVNaR1GKTS")
             .flatMap { (permission) -> Observable<String> in
                 if permission != "active" {throw SignInError.unknown}
+                UserDefaults.standard.set(true, forKey: "UserLoged")
                 return Observable<String>.just(permission)
             }
     }
