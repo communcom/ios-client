@@ -10,26 +10,16 @@ import Foundation
 import RxSwift
 
 class SignInViewModel {
-    let disposeBag = DisposeBag()
-    
-    var errorSubject = PublishSubject<String>()
-    
-    func signIn(withLogin login: String, withApiKey key: String) {
-        if checkCorrectUserData(login: login, key: key) {
-            NetworkService.shared.signIn(login: "vbjdktidppoq", key: "5JA54JMgG4herXK85re6CSyPvmBs1X9EZ1qKwrqyrYVNaR1GKTS").subscribe(onNext: { [weak self] permission in
-                if permission == "active" {
-                    UserDefaults.standard.set(true, forKey: "UserLoged")
-                    self?.errorSubject.onCompleted()
-                }
-            }, onError: { [weak self] _ in
-                    self?.errorSubject.onNext("Wrong Login and Key")
-            }).disposed(by: disposeBag)
-        } else {
-            errorSubject.onNext("Wrong Login and Key")
-        }
+    enum SignInError: Error {
+        case unknown
     }
     
-    func checkCorrectUserData(login: String, key: String) -> Bool {
-        return login.count > 3 && key.count > 10  // Надо узнать минимальное клличество символов.
+    func signIn(withLogin login: String, withApiKey key: String) -> Observable<String> {
+        #warning("login with real logic")
+        return NetworkService.shared.signIn(login: "vbjdktidppoq", key: "5JA54JMgG4herXK85re6CSyPvmBs1X9EZ1qKwrqyrYVNaR1GKTS")
+            .flatMap { (permission) -> Observable<String> in
+                if permission != "active" {throw SignInError.unknown}
+                return Observable<String>.just(permission)
+            }
     }
 }

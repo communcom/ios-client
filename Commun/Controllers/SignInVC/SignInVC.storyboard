@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -77,9 +77,6 @@
                                         <integer key="value" value="12"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <action selector="signInButtonTap:" destination="0VS-9d-Fuq" eventType="touchUpInside" id="9AB-vh-Xmp"/>
-                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UPF-Wo-Yxb">
                                 <rect key="frame" x="104.5" y="396" width="166" height="30"/>
@@ -87,9 +84,6 @@
                                 <state key="normal" title="Don't have an account?">
                                     <color key="titleColor" red="0.41568627450980389" green="0.50196078431372548" blue="0.96078431372549022" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
-                                <connections>
-                                    <action selector="dontHaveAccountButtonTap:" destination="0VS-9d-Fuq" eventType="touchUpInside" id="RiP-ow-pkU"/>
-                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -116,6 +110,7 @@
                         <outlet property="keyTextField" destination="Ehc-OL-uc5" id="FIj-48-p3b"/>
                         <outlet property="loginTextField" destination="EqX-kD-2N7" id="EkN-HR-es8"/>
                         <outlet property="signInButton" destination="yNT-VG-Edc" id="wPn-2M-fac"/>
+                        <outlet property="signUpButton" destination="UPF-Wo-Yxb" id="BPM-TA-kAQ"/>
                         <outlet property="welcomeLabel" destination="D6A-sD-8ox" id="PA9-LC-wUE"/>
                     </connections>
                 </viewController>
