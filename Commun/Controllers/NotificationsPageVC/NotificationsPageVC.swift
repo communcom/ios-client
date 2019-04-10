@@ -39,12 +39,27 @@ class NotificationsPageVC: UIViewController {
     }
     
     func bindViewModel() {
-        searchBar.rx.text
+        // Search by keyword
+        searchBar.rx.searchButtonClicked
+            .withLatestFrom(searchBar.rx.text.orEmpty)
+            .filter {$0.count > 0}
 //            .flatMapLatest(<#T##selector: (String?) throws -> ObservableConvertibleType##(String?) throws -> ObservableConvertibleType#>)
             .subscribe(onNext: { (string) in
                 print(string)
             })
             .disposed(by: bag)
+        
+        // Discard keyboard
+        Observable.merge(tableView.rx.didScroll.asObservable(), searchBar.rx.searchButtonClicked.asObservable())
+            .bind(to: resignFirstResponder)
+            .disposed(by: bag)
+        
+    }
+    
+    private var resignFirstResponder: AnyObserver<Void> {
+        return Binder(self) { me, _ in
+            me.searchBar.resignFirstResponder()
+            }.asObserver()
     }
     
 }
