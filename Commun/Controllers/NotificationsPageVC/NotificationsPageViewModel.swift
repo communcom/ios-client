@@ -8,9 +8,24 @@
 
 import UIKit
 import RxSwift
-import Action
-
+import RxCocoa
 
 struct NotificationsPageViewModel {
     let bag = DisposeBag()
+    let list = BehaviorRelay<[ResponseAPIOnlineNotification]>(value: [])
+    
+    private let fetcher = NotificationsFetcher()
+    
+    func reload() {
+        fetcher.reset()
+        fetchNext()
+    }
+    
+    func fetchNext() {
+        fetcher.fetchNext()
+            .asDriver(onErrorJustReturn: [])
+            .map {self.list.value + $0}
+            .drive(list)
+            .disposed(by: bag)
+    }
 }

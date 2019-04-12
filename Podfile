@@ -15,6 +15,7 @@ target 'Commun' do
   pod 'Alamofire'
   pod 'Swinject'
   pod 'SDWebImage', '~> 4.0'
+  pod 'IPImage'
   
   pod 'SwifterSwift/SwiftStdlib'   # Standard Library Extensions
   pod 'SwifterSwift/Foundation'    # Foundation Extensions

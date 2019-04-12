@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import IPImage
+import SDWebImage
 
 class NotificationCell: UITableViewCell {
     @IBOutlet weak var avatarImage: UIImageView!
@@ -17,9 +19,21 @@ class NotificationCell: UITableViewCell {
     @IBOutlet weak var nTILeadingConstraint: NSLayoutConstraint!
     
     // Methods
-    // func configure(with model: )
+    func configure(with notification: ResponseAPIOnlineNotification) {
+        // Configure image
+        if let user = notification.actor {
+            let ipImage = IPImage(text: user.id, radius: 0).generateImage()
+            if let avatarURL = user.avatarUrl {
+                avatarImage.sd_setImage(with: URL(string: avatarURL), placeholderImage: ipImage)
+            } else {
+                avatarImage.image = ipImage
+            }
+        } else {
+            setNoAvatar()
+        }
+    }
     
-    func configureWithOutAvatar() {
+    private func setNoAvatar() {
         nTILeadingConstraint.isActive = false
         nTIBottomConstraint.isActive = false
     }

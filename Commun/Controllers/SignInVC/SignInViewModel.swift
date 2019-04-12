@@ -16,7 +16,7 @@ class SignInViewModel {
     
     func signIn(withLogin login: String, withApiKey key: String) -> Observable<String> {
         #warning("login with real logic")
-        return NetworkService.shared.signIn(login: "vbjdktidppoq", key: "5JA54JMgG4herXK85re6CSyPvmBs1X9EZ1qKwrqyrYVNaR1GKTS")
+        return NetworkService.shared.signIn(login: "tst5heiuatrh", key: "5Kix7qdwGSBBVRwn5QH6q7rYdk2EKzWUfpB8tyiTqpMDGbJFVUg")
             .flatMap { (permission) -> Observable<String> in
                 if permission != "active" {throw SignInError.unknown}
                 UserDefaults.standard.set(true, forKey: "UserLoged")

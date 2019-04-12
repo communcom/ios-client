@@ -25,9 +25,18 @@ class NotificationsPageVC: UIViewController {
         tableView.estimatedRowHeight = 80
         tableView.tableFooterView = UIView()
         
+        // initialize viewModel
+        viewModel = NotificationsPageViewModel()
+        
+        // fetchNext
+        viewModel.fetchNext()
+        
         bindViewModel()
     }
     
+    @IBAction func test(_ sender: Any) {
+        viewModel.fetchNext()
+    }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: false)
@@ -50,9 +59,28 @@ class NotificationsPageVC: UIViewController {
             .disposed(by: bag)
         
         // Discard keyboard
-        Observable.merge(tableView.rx.didScroll.asObservable(), searchBar.rx.searchButtonClicked.asObservable())
+        Observable.merge(
+                tableView.rx.didScroll.asObservable(),
+                searchBar.rx.searchButtonClicked.asObservable()
+            )
             .bind(to: resignFirstResponder)
             .disposed(by: bag)
+        
+        // Bind value to tableView
+        viewModel.list.bind(to: tableView.rx.items(
+            cellIdentifier: "NotificationCell",
+            cellType: NotificationCell.self)
+            ) {index, model, cell in
+                print(index)
+                cell.configure(with: model)
+                
+                // fetchNext when reach last 5 items
+                if index >= self.viewModel.list.value.count - 5 {
+                    self.viewModel.fetchNext()
+                }
+            }
+            .disposed(by: bag)
+        
         
     }
     
