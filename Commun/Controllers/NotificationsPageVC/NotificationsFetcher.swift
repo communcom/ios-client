@@ -54,5 +54,9 @@ class NotificationsFetcher {
                 // Return data
                 return Single<[ResponseAPIOnlineNotification]>.just(historyResponse.data)
             })
+            .catchError({ (error) -> Single<[ResponseAPIOnlineNotification]> in
+                self.isFetching = false
+                return Single.never()
+            })
     }
 }
