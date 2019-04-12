@@ -11,9 +11,7 @@ import RxSwift
 import RxCocoa
 import CyberSwift
 
-class NotificationsFetcher {
-    // MARK: - Rx stuffs
-    let bag = DisposeBag()
+class NotificationsFetcher { 
     
     // MARK: - Parammeters
     var isFetching = false
@@ -28,7 +26,7 @@ class NotificationsFetcher {
         fromId = nil
     }
     
-    func fetchNext() -> Single<[ResponseAPIOnlineNotification]> {
+    func fetchNext() -> Single<[ResponseAPIOnlineNotificationData]> {
         // Prevent duplicate request
         if self.isFetching || self.reachedTheEnd {return Single.never()}
         
@@ -37,7 +35,7 @@ class NotificationsFetcher {
         
         // Send request
         return NetworkService.shared.getNotifications(fromId: fromId)
-            .flatMap({[weak self] historyResponse -> Single<[ResponseAPIOnlineNotification]> in
+            .flatMap({[weak self] historyResponse -> Single<[ResponseAPIOnlineNotificationData]> in
                 guard let strongSelf = self else {return Single.never()}
                 
                 // Mark isFetching as false
@@ -48,13 +46,14 @@ class NotificationsFetcher {
                     strongSelf.reachedTheEnd = true
                 } else {
                     // Assign fromId
+                    print(historyResponse.data.count)
                     strongSelf.fromId = historyResponse.data.last?._id
                 }
                 
                 // Return data
-                return Single<[ResponseAPIOnlineNotification]>.just(historyResponse.data)
+                return Single<[ResponseAPIOnlineNotificationData]>.just(historyResponse.data)
             })
-            .catchError({ (error) -> Single<[ResponseAPIOnlineNotification]> in
+            .catchError({ (error) -> Single<[ResponseAPIOnlineNotificationData]> in
                 self.isFetching = false
                 return Single.never()
             })

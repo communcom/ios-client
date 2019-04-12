@@ -19,7 +19,7 @@ class NotificationCell: UITableViewCell {
     @IBOutlet weak var nTILeadingConstraint: NSLayoutConstraint!
     
     // Methods
-    func configure(with notification: ResponseAPIOnlineNotification) {
+    func configure(with notification: ResponseAPIOnlineNotificationData) {
         // Configure image
         if let user = notification.actor {
             let ipImage = IPImage(text: user.id, radius: 0).generateImage()

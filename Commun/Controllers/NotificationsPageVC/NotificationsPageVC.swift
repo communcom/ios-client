@@ -24,6 +24,7 @@ class NotificationsPageVC: UIViewController {
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 80
         tableView.tableFooterView = UIView()
+        tableView.register(UINib(nibName: "NotificationCell", bundle: nil), forCellReuseIdentifier: "NotificationCell")
         
         // initialize viewModel
         viewModel = NotificationsPageViewModel()
@@ -32,10 +33,6 @@ class NotificationsPageVC: UIViewController {
         viewModel.fetchNext()
         
         bindViewModel()
-    }
-    
-    @IBAction func test(_ sender: Any) {
-        viewModel.fetchNext()
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)

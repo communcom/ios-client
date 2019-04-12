@@ -12,7 +12,7 @@ import RxCocoa
 
 struct NotificationsPageViewModel {
     let bag = DisposeBag()
-    let list = BehaviorRelay<[ResponseAPIOnlineNotification]>(value: [])
+    let list = BehaviorRelay<[ResponseAPIOnlineNotificationData]>(value: [])
     
     private let fetcher = NotificationsFetcher()
     
