@@ -9,6 +9,7 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import CyberSwift
 
 
 class NotificationsPageVC: UIViewController {
@@ -60,6 +61,22 @@ class NotificationsPageVC: UIViewController {
                     self.viewModel.fetchNext()
                 }
             }
+            .disposed(by: bag)
+        
+        // tableView
+        tableView.rx.modelSelected(ResponseAPIOnlineNotificationData.self)
+            .subscribe(onNext: {[weak self] notification in
+                // mark as read
+                self?.viewModel.markAsRead(notification).execute()
+                
+                // navigate to post page
+                if let _ = notification.post,
+                    let postPageVC = controllerContainer.resolve(PostPageVC.self) {
+                    self?.present(postPageVC, animated: true, completion: nil)
+                } else {
+                    self?.showAlert(title: "Error".localized(), message: "Something went wrong".localized())
+                }
+            })
             .disposed(by: bag)
     }
     

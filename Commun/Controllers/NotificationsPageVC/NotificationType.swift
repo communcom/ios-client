@@ -14,7 +14,6 @@ enum NotificationType: String {
     case upvote = "upvote"
     case downvote = "downvote"
     case subscribe = "subscribe"
-    case unsubscribe = "unsubscribe"
     case transfer = "transfer"
     case reply = "reply"
     case mention = "mention"
@@ -55,15 +54,6 @@ enum NotificationType: String {
             #warning("missing icon")
             detail.icon = nil
             break
-        case .unsubscribe:
-            let text = NSMutableAttributedString()
-                .bold(notification.actor!.id)
-                .normal(" ")
-                .normal("unsubscribed you".localized())
-            detail.text = text
-            #warning("missing icon")
-            detail.icon = nil
-            break
         case .transfer:
             #warning("missing number of coins")
             let text = NSMutableAttributedString()
@@ -71,23 +61,48 @@ enum NotificationType: String {
                 .normal(" ")
                 .normal("transfer you".localized())
                 .normal(" XX coins")
+            detail.text = text
             detail.icon = UIImage(named: "NotificationTransfer")
             break
         case .reply:
-            #warning("missing comment")
             let text = NSMutableAttributedString()
                 .bold(notification.actor!.id)
-                .normal(" ")
-                .normal("replied to your comment".localized())
+            
+            if let comment = notification.comment {
+                text.normal(" ")
+                    .normal("replied to your comment".localized())
+                    .normal(": ")
+                    .bold(comment.body)
+            } else if let post = notification.post {
+                text.normal(" ")
+                    .normal("commented on a post".localized())
+                    .normal(": ")
+                    .bold(post.title)
+            }
+            
             detail.text = text
             detail.icon = UIImage(named: "NotificationComment")
             break
         case .mention:
-            #warning("missing comment")
             let text = NSMutableAttributedString()
                 .bold(notification.actor!.id)
                 .normal(" ")
-                .normal("mentioned you in a comment".localized())
+                .normal("mentioned you".localized())
+            
+            if let post = notification.post {
+                text.normal(" ")
+                    .normal("in a post".localized())
+                    .normal(": ")
+                    .bold(post.title)
+            }
+            
+            if let comment = notification.comment {
+                text.normal(" ")
+                    .normal("in a comment".localized())
+                    .normal(": ")
+                    .bold(comment.body)
+            }
+            
             detail.text = text
             #warning("missing icon")
             detail.icon = nil

@@ -9,6 +9,7 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import Action
 
 struct NotificationsPageViewModel {
     let bag = DisposeBag()
@@ -28,5 +29,12 @@ struct NotificationsPageViewModel {
             .map {self.list.value + $0}
             .drive(list)
             .disposed(by: bag)
+    }
+    
+    func markAsRead(_ item: ResponseAPIOnlineNotificationData) -> CocoaAction {
+        return CocoaAction {
+            // TODO: markAsRead
+            return Observable.empty()
+        }
     }
 }
