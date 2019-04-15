@@ -18,6 +18,7 @@ struct NotificationsPageViewModel {
     
     func reload() {
         fetcher.reset()
+        list.accept([])
         fetchNext()
     }
     

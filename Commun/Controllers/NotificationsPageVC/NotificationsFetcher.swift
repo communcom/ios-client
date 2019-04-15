@@ -46,7 +46,6 @@ class NotificationsFetcher {
                     strongSelf.reachedTheEnd = true
                 } else {
                     // Assign fromId
-                    print(historyResponse.data.count)
                     strongSelf.fromId = historyResponse.data.last?._id
                 }
                 

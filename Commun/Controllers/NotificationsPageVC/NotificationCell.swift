@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import IPImage
+import UIImageView_Letters
 import SDWebImage
 
 class NotificationCell: UITableViewCell {
@@ -20,13 +20,14 @@ class NotificationCell: UITableViewCell {
     
     // Methods
     func configure(with notification: ResponseAPIOnlineNotificationData) {
-        // Configure image
+        // Configure user's image
         if let user = notification.actor {
-            let ipImage = IPImage(text: user.id, radius: 0).generateImage()
             if let avatarURL = user.avatarUrl {
-                avatarImage.sd_setImage(with: URL(string: avatarURL), placeholderImage: ipImage)
+                avatarImage.sd_setImage(with: URL(string: avatarURL)) { (_, error, _, _) in
+                    self.avatarImage.setImageWith(user.id, color: #colorLiteral(red: 0.4156862745, green: 0.5019607843, blue: 0.9607843137, alpha: 1))
+                }
             } else {
-                avatarImage.image = ipImage
+                avatarImage.setImageWith(user.id, color: #colorLiteral(red: 0.4156862745, green: 0.5019607843, blue: 0.9607843137, alpha: 1))
             }
         } else {
             setNoAvatar()
