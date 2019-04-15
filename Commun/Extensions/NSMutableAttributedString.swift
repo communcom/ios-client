@@ -9,18 +9,17 @@
 import Foundation
 
 extension NSMutableAttributedString {
-    @discardableResult func bold(_ text: String) -> NSMutableAttributedString {
-        let attrs: [NSAttributedString.Key: Any] = [.font: UIFont(name: "AvenirNext-Medium", size: 12)!]
-        let boldString = NSMutableAttributedString(string:text, attributes: attrs)
+    @discardableResult func bold(_ text: String, font: UIFont = UIFont.systemFont(ofSize: 15, weight: .medium)) -> NSMutableAttributedString {
+        let attrs: [NSAttributedString.Key: Any] = [.font: font]
+        let boldString = NSAttributedString(string:text, attributes: attrs)
         append(boldString)
-        
         return self
     }
     
-    @discardableResult func normal(_ text: String) -> NSMutableAttributedString {
-        let normal = NSAttributedString(string: text)
+    @discardableResult func normal(_ text: String, font: UIFont = UIFont.systemFont(ofSize: 15)) -> NSMutableAttributedString {
+        let attrs: [NSAttributedString.Key: Any] = [.font: font]
+        let normal = NSAttributedString(string: text, attributes: attrs)
         append(normal)
-        
         return self
     }
 }

@@ -25,6 +25,10 @@ class NotificationsPageVC: UIViewController {
         tableView.tableFooterView = UIView()
         tableView.register(UINib(nibName: "NotificationCell", bundle: nil), forCellReuseIdentifier: "NotificationCell")
         
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
+        tableView.refreshControl = refreshControl
+        
         // configure navigation bar
         title = "Notifications".localized()
         
@@ -39,10 +43,15 @@ class NotificationsPageVC: UIViewController {
     }
     
     func bindViewModel() {
+        
         // Bind value to tableView
-        viewModel.list.bind(to: tableView.rx.items(
-            cellIdentifier: "NotificationCell",
-            cellType: NotificationCell.self)
+        viewModel.list
+            .do(onNext: {[weak self]_ in
+                self?.tableView.refreshControl?.endRefreshing()
+            })
+            .bind(to: tableView.rx.items(
+                cellIdentifier: "NotificationCell",
+                cellType: NotificationCell.self)
             ) {index, model, cell in
                 print(index)
                 cell.configure(with: model)
@@ -53,5 +62,9 @@ class NotificationsPageVC: UIViewController {
                 }
             }
             .disposed(by: bag)
+    }
+    
+    @objc func refresh() {
+        viewModel.reload()
     }
 }

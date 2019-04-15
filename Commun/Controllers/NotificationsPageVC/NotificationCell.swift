@@ -47,9 +47,6 @@ class NotificationCell: UITableViewCell {
         // Set text for labels
         contentLabel.attributedText = detail.text
         
-        
-        
-        
     }
     
     private func setNoAvatar() {
