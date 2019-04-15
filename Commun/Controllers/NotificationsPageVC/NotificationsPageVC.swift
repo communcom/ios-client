@@ -76,8 +76,11 @@ class NotificationsPageVC: UIViewController {
                 self?.viewModel.markAsRead(notification).execute()
                 
                 // navigate to post page
-                if let _ = notification.post,
+                if let post = notification.post,
                     let postPageVC = controllerContainer.resolve(PostPageVC.self) {
+                    postPageVC.viewModel.permlink = post.contentId.permlink
+                    postPageVC.viewModel.refBlockNum = post.contentId.refBlockNum
+                    postPageVC.viewModel.userId = post.contentId.userId
                     self?.present(postPageVC, animated: true, completion: nil)
                 } else {
                     self?.showAlert(title: "Error".localized(), message: "Something went wrong".localized())
