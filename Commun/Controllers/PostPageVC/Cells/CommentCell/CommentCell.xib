@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -61,6 +61,7 @@
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YVW-q8-bUL">
                         <rect key="frame" x="72" y="81.5" width="28" height="28"/>
+                        <accessibility key="accessibilityConfiguration" identifier="CommentCellUpvoteButton"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="28" id="ACe-Tv-lGJ"/>
                             <constraint firstAttribute="height" constant="28" id="Y3p-J6-p6Q"/>
@@ -78,6 +79,7 @@
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EWF-Yc-pSQ">
                         <rect key="frame" x="133" y="81.5" width="28" height="28"/>
+                        <accessibility key="accessibilityConfiguration" identifier="CommentCellUnvoteButton"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="28" id="2eE-8d-axL"/>
                             <constraint firstAttribute="height" constant="28" id="P2a-HN-Pdl"/>
@@ -89,6 +91,7 @@
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="djA-OD-aYa">
                         <rect key="frame" x="185" y="80.5" width="40" height="30"/>
+                        <accessibility key="accessibilityConfiguration" identifier="CommentCellReplyButton"/>
                         <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
                         <state key="normal" title="Reply">
                             <color key="titleColor" red="0.60784313725490191" green="0.62352941176470589" blue="0.63529411764705879" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -135,8 +138,8 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="Down" width="512" height="512"/>
-        <image name="Up" width="512" height="512"/>
+        <image name="Down" width="170.66667175292969" height="170.66667175292969"/>
+        <image name="Up" width="170.66667175292969" height="170.66667175292969"/>
         <image name="tux" width="327" height="370"/>
     </resources>
 </document>

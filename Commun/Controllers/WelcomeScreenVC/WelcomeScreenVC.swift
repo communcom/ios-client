@@ -87,7 +87,7 @@ class WelcomeScreenVC: UIPageViewController {
 
 extension WelcomeScreenVC: UIPageViewControllerDataSource {
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
-        guard let viewControllerIndex = pages.index(of: viewController) else { return nil }
+        guard let viewControllerIndex = pages.firstIndex(of: viewController) else { return nil }
         
         let previousIndex = viewControllerIndex - 1
         
@@ -103,7 +103,7 @@ extension WelcomeScreenVC: UIPageViewControllerDataSource {
     }
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
-        guard let viewControllerIndex = pages.index(of: viewController) else { return nil }
+        guard let viewControllerIndex = pages.firstIndex(of: viewController) else { return nil }
         
         let nextIndex = viewControllerIndex + 1
         
@@ -125,7 +125,7 @@ extension WelcomeScreenVC: UIPageViewControllerDataSource {
 extension WelcomeScreenVC: UIPageViewControllerDelegate {
     func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
         if let vc = viewControllers?.first {
-             let viewControllerIndex = pages.index(of: vc)
+             let viewControllerIndex = pages.firstIndex(of: vc)
             pageControl?.progress = CGFloat(viewControllerIndex ?? 0)
         }
     }
