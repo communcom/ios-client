@@ -1,0 +1,40 @@
+{
+  "name": "CyberSwift",
+  "platforms": {
+    "ios": "11.0"
+  },
+  "swift_version": "4.2",
+  "summary": "Swift framework for Cyberway.golos.io",
+  "homepage": "https://cyberway.golos.io/",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE.md"
+  },
+  "authors": "msm72",
+  "source_files": [
+    "CyberSwift",
+    "CyberSwift/**/*.{h,m,swift}"
+  ],
+  "version": "1.0.6",
+  "source": {
+    "git": "https://github.com/GolosChain/cyber-ios.git",
+    "tag": "1.0.6"
+  },
+  "dependencies": {
+    "Locksmith": [
+
+    ],
+    "eosswift": [
+      "~> 1.5"
+    ],
+    "RxBlocking": [
+      "~> 4.0"
+    ],
+    "Starscream": [
+      "~> 3.0"
+    ],
+    "Localize-Swift": [
+      "~> 2.0"
+    ]
+  }
+}

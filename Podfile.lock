@@ -76,7 +76,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   CyberSwift:
-    :commit: 5ca3339edb59bf846523cdb9f767cf69fd40f8b6
+    :commit: ce14d28bae5010fee7ccf5f221b478b58f4f9d13
     :git: https://github.com/GolosChain/cyberSwift.git
   IHProgressHUD:
     :commit: 6c160f4ef2e9b924de58c8df3382a57ced957dfd
@@ -86,10 +86,10 @@ SPEC CHECKSUMS:
   Alamofire: ae5c501addb7afdbb13687d7f2f722c78734c2d3
   BigInt: 76b5dfdfa3e2e478d4ffdf161aeede5502e2742f
   Crashlytics: 07fb167b1694128c1c9a5a5cc319b0e9c3ca0933
-  CyberSwift: ab0bb1dbf08e2e6ab8762201e04310493dded090
+  CyberSwift: 3c7096a9b2054e3c1893e3c1f4028b101ac01919
   eosswift: 22bc931fd65bbd446c3f828233b8fd2916cec4a7
   Fabric: f988e33c97f08930a413e08123064d2e5f68d655
-  IHProgressHUD: a01846bfbb581c761c79747c67b08387c3bdfae3
+  IHProgressHUD: 49ce4eb85bb47952f04adcfc04ea7473286cf677
   Localize-Swift: c798ec9286494866f7068f85f7c71283ac5bdab4
   Locksmith: e9bebbaaa4cee3c511bc358a44f843c3fe00e21f
   PinCodeInputView: 0a7361aaec76b639ff6521f1b6c38ed27b8144e3
@@ -104,4 +104,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 03f78916cfe8c107a8c06f4d0993b7c904fe4bda
 
-COCOAPODS: 1.5.3
+COCOAPODS: 1.7.0.beta.3

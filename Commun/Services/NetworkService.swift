@@ -211,7 +211,7 @@ class NetworkService: NSObject {
         return Observable<String>.create({ observer -> Disposable in
             let isDebugMode: Bool   =   appBuildConfig == AppBuildConfig.debug
             
-            RestAPIManager.instance.resendSmsCode(nickName:        phone,
+            RestAPIManager.instance.resendSmsCode(phone:        phone,
                                                   isDebugMode:  isDebugMode,
                                                   completion:   { (result, errorAPI) in
                                                     guard errorAPI == nil else {
