@@ -11,6 +11,7 @@
 		3BCDB4092260D43700739F7E /* NotificationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCDB4082260D43700739F7E /* NotificationType.swift */; };
 		3BCDB40F2261176600739F7E /* NotificationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3BCDB40E2261166F00739F7E /* NotificationCell.xib */; };
 		3BCDB4112264862100739F7E /* NSMutableAttributedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCDB4102264862100739F7E /* NSMutableAttributedString.swift */; };
+		3BCDB41322649A6F00739F7E /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCDB41222649A6F00739F7E /* Date.swift */; };
 		3BE2FA07225DF8050013F32F /* NotificationsPageVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3BE2FA06225DF8050013F32F /* NotificationsPageVC.storyboard */; };
 		3BE2FA0B225E00C00013F32F /* NotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BE2FA0A225E00C00013F32F /* NotificationCell.swift */; };
 		3BE2FA0E225E042F0013F32F /* NotificationsPageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BE2FA0C225E042F0013F32F /* NotificationsPageVC.swift */; };
@@ -114,6 +115,7 @@
 		3BCDB4082260D43700739F7E /* NotificationType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationType.swift; sourceTree = "<group>"; };
 		3BCDB40E2261166F00739F7E /* NotificationCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NotificationCell.xib; sourceTree = "<group>"; };
 		3BCDB4102264862100739F7E /* NSMutableAttributedString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSMutableAttributedString.swift; sourceTree = "<group>"; };
+		3BCDB41222649A6F00739F7E /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		3BE2FA06225DF8050013F32F /* NotificationsPageVC.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = NotificationsPageVC.storyboard; sourceTree = "<group>"; };
 		3BE2FA0A225E00C00013F32F /* NotificationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCell.swift; sourceTree = "<group>"; };
 		3BE2FA0C225E042F0013F32F /* NotificationsPageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsPageVC.swift; sourceTree = "<group>"; };
@@ -506,6 +508,7 @@
 			children = (
 				576DC920223E42C800EDED41 /* UIViewControllerExtension.swift */,
 				3BCDB4102264862100739F7E /* NSMutableAttributedString.swift */,
+				3BCDB41222649A6F00739F7E /* Date.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -994,6 +997,7 @@
 				57F9CAAC225B489000AC9ACA /* EditorPageVC+Rx.swift in Sources */,
 				57FB17A2224C093A00563BF7 /* SignInVC.swift in Sources */,
 				57840A06223FAC1B00338FD5 /* SegmentioCellWithImageOverLabel.swift in Sources */,
+				3BCDB41322649A6F00739F7E /* Date.swift in Sources */,
 				3BCDB4062260A9E200739F7E /* NotificationsFetcher.swift in Sources */,
 				57F5CFC62244E53B005A09AE /* PostPageVC+UITableViewDataSource.swift in Sources */,
 				576DC923223E4A4C00EDED41 /* FeedPageVC+UITableViewDataSource.swift in Sources */,

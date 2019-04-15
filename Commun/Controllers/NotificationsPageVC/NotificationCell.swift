@@ -10,12 +10,15 @@ import UIKit
 import UIImageView_Letters
 import SDWebImage
 import RxSwift
+import DateToolsSwift
 
 class NotificationCell: UITableViewCell {
     
     @IBOutlet weak var avatarImage: UIImageView!
     @IBOutlet weak var notificationTypeImage: UIImageView!
     @IBOutlet weak var contentLabel: UILabel!
+    @IBOutlet weak var timestampLabel: UILabel!
+    @IBOutlet weak var categoryLabel: UILabel!
     
     // Constraint for notificationTypeImage
     @IBOutlet weak var nTIBottomConstraint: NSLayoutConstraint!
@@ -47,6 +50,7 @@ class NotificationCell: UITableViewCell {
         // Set text for labels
         contentLabel.attributedText = detail.text
         
+        timestampLabel.text = Date.from(string: notification.timestamp).shortTimeAgoSinceNow
     }
     
     private func setNoAvatar() {

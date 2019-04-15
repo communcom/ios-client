@@ -53,7 +53,6 @@ class NotificationsPageVC: UIViewController {
                 cellIdentifier: "NotificationCell",
                 cellType: NotificationCell.self)
             ) {index, model, cell in
-                print(index)
                 cell.configure(with: model)
                 
                 // fetchNext when reach last 5 items

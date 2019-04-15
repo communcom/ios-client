@@ -41,8 +41,8 @@
                             <constraint firstAttribute="height" constant="20" id="NHD-bh-UZc"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="4 hr ago in Photographers" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gx9-UZ-sQ9">
-                        <rect key="frame" x="92" y="11" width="286" height="16"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="4 hr" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gx9-UZ-sQ9">
+                        <rect key="frame" x="92" y="11" width="25" height="16"/>
                         <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="13"/>
                         <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
@@ -53,18 +53,34 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ago in" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aPg-G5-Sta">
+                        <rect key="frame" x="120" y="11" width="38" height="16"/>
+                        <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="13"/>
+                        <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Photographers" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dRJ-xb-IRW">
+                        <rect key="frame" x="161" y="11" width="91" height="16"/>
+                        <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="13"/>
+                        <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <constraints>
                     <constraint firstItem="Lzc-GI-b3q" firstAttribute="top" secondItem="gx9-UZ-sQ9" secondAttribute="bottom" constant="2" id="1wK-8x-vmp"/>
                     <constraint firstItem="ADc-w3-AHF" firstAttribute="centerY" secondItem="rdl-Qk-RkQ" secondAttribute="centerY" priority="999" id="4yU-rQ-QGX"/>
+                    <constraint firstItem="dRJ-xb-IRW" firstAttribute="centerY" secondItem="gx9-UZ-sQ9" secondAttribute="centerY" id="7Xs-Pe-JAF"/>
                     <constraint firstAttribute="bottomMargin" relation="greaterThanOrEqual" secondItem="Lzc-GI-b3q" secondAttribute="bottom" constant="8" id="8Td-pc-6aO"/>
                     <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="rdl-Qk-RkQ" secondAttribute="bottom" constant="12.5" id="D0d-Nq-Hi1"/>
                     <constraint firstItem="ADc-w3-AHF" firstAttribute="leading" secondItem="rdl-Qk-RkQ" secondAttribute="leading" constant="-4" id="DK0-Wg-oCL"/>
                     <constraint firstItem="gx9-UZ-sQ9" firstAttribute="top" secondItem="exI-k6-TGh" secondAttribute="topMargin" id="EOq-JQ-u0A"/>
                     <constraint firstItem="Lzc-GI-b3q" firstAttribute="leading" secondItem="gx9-UZ-sQ9" secondAttribute="leading" id="N68-d7-1mB"/>
+                    <constraint firstItem="dRJ-xb-IRW" firstAttribute="leading" secondItem="aPg-G5-Sta" secondAttribute="trailing" constant="3" id="TLt-m2-vdT"/>
                     <constraint firstItem="rdl-Qk-RkQ" firstAttribute="leading" secondItem="exI-k6-TGh" secondAttribute="leadingMargin" id="Tyl-IH-hTW"/>
+                    <constraint firstItem="aPg-G5-Sta" firstAttribute="centerY" secondItem="gx9-UZ-sQ9" secondAttribute="centerY" id="Up4-Ri-DMB"/>
                     <constraint firstAttribute="trailingMargin" secondItem="Lzc-GI-b3q" secondAttribute="trailing" constant="16" id="VLW-Kx-b3d"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="gx9-UZ-sQ9" secondAttribute="trailing" constant="16" id="Wjo-A0-0Z4"/>
+                    <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="dRJ-xb-IRW" secondAttribute="trailing" constant="16" id="VS8-Iz-BXy"/>
+                    <constraint firstItem="aPg-G5-Sta" firstAttribute="leading" secondItem="gx9-UZ-sQ9" secondAttribute="trailing" constant="3" id="Z35-il-1ih"/>
                     <constraint firstItem="rdl-Qk-RkQ" firstAttribute="top" secondItem="exI-k6-TGh" secondAttribute="topMargin" id="mGe-P0-GrJ"/>
                     <constraint firstItem="gx9-UZ-sQ9" firstAttribute="leading" secondItem="rdl-Qk-RkQ" secondAttribute="trailing" constant="16" id="miq-wi-ZrU"/>
                     <constraint firstItem="ADc-w3-AHF" firstAttribute="centerX" secondItem="rdl-Qk-RkQ" secondAttribute="centerX" priority="999" id="o8S-XX-RI5"/>
@@ -73,10 +89,12 @@
             </tableViewCellContentView>
             <connections>
                 <outlet property="avatarImage" destination="rdl-Qk-RkQ" id="op4-IF-RDb"/>
+                <outlet property="categoryLabel" destination="dRJ-xb-IRW" id="d9l-Lc-8ZM"/>
                 <outlet property="contentLabel" destination="Lzc-GI-b3q" id="dKN-b8-SPK"/>
                 <outlet property="nTIBottomConstraint" destination="NHD-bh-UZc" id="bHb-mS-M6a"/>
                 <outlet property="nTILeadingConstraint" destination="ALB-K4-Dg4" id="uRx-7A-sda"/>
                 <outlet property="notificationTypeImage" destination="ADc-w3-AHF" id="nBw-9R-tR4"/>
+                <outlet property="timestampLabel" destination="gx9-UZ-sQ9" id="HXf-IS-SGa"/>
             </connections>
         </tableViewCell>
     </objects>
