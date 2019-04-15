@@ -78,7 +78,7 @@ enum NotificationType: String {
             let text = NSMutableAttributedString()
                 .bold(notification.actor!.id)
                 .normal(" ")
-                .normal("replied your comment".localized())
+                .normal("replied to your comment".localized())
             detail.text = text
             detail.icon = UIImage(named: "NotificationComment")
             break
