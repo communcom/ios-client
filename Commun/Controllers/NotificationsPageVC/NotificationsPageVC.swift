@@ -64,8 +64,14 @@ class NotificationsPageVC: UIViewController {
             .disposed(by: bag)
         
         // tableView
-        tableView.rx.modelSelected(ResponseAPIOnlineNotificationData.self)
-            .subscribe(onNext: {[weak self] notification in
+        Observable.zip(
+                tableView.rx.itemSelected,
+                tableView.rx.modelSelected(ResponseAPIOnlineNotificationData.self)
+            )
+            .do(onNext: {[weak self] indexPath, _ in
+                self?.tableView.deselectRow(at: indexPath, animated: false)
+            })
+            .subscribe(onNext: {[weak self] _, notification in
                 // mark as read
                 self?.viewModel.markAsRead(notification).execute()
                 
