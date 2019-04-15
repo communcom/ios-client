@@ -28,7 +28,7 @@ class NotificationCell: UITableViewCell {
     func configure(with notification: ResponseAPIOnlineNotificationData) {
         // Fresh detect
         // TODO: Observe fresh changes
-        if notification.fresh {contentView.backgroundColor = #colorLiteral(red: 0.9725490196, green: 0.9764705882, blue: 1, alpha: 1)}
+        if notification.unread {contentView.backgroundColor = #colorLiteral(red: 0.9725490196, green: 0.9764705882, blue: 1, alpha: 1)}
         
         // Configure user's image
         if let user = notification.actor {
