@@ -56,14 +56,8 @@ class TabBarVC: UITabBarController {
         // Get number of fresh notifications
         viewModel.getFreshCount()
             .asDriver(onErrorJustReturn: 0)
-            .drive(onNext: {freshCount in
-                guard let notificationsTab = self.tabBar.items?.last else {return}
-                guard freshCount > 0 else {
-                    notificationsTab.badgeValue = nil
-                    return
-                }
-                self.tabBar.items?.last?.badgeValue = "\(freshCount)"
-            })
+            .map {$0 > 0 ? "\($0)" : nil}
+            .drive(tabBar.items!.last!.rx.badgeValue)
             .disposed(by: bag)
     }
 }
