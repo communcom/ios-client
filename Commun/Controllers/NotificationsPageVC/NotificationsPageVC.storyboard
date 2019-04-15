@@ -19,35 +19,27 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="HGZ-3B-2hS">
-                                <rect key="frame" x="0.0" y="100" width="414" height="796"/>
+                                <rect key="frame" x="0.0" y="44" width="414" height="852"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </tableView>
-                            <searchBar contentMode="redraw" searchBarStyle="minimal" placeholder="Search" translatesAutoresizingMaskIntoConstraints="NO" id="zmj-TL-Bge">
-                                <rect key="frame" x="0.0" y="44" width="414" height="56"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </searchBar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="zmj-TL-Bge" firstAttribute="leading" secondItem="tvZ-8o-jgR" secondAttribute="leading" id="EEN-Bd-1IW"/>
-                            <constraint firstItem="zmj-TL-Bge" firstAttribute="trailing" secondItem="tvZ-8o-jgR" secondAttribute="trailing" id="MVy-9K-IcX"/>
+                            <constraint firstItem="HGZ-3B-2hS" firstAttribute="top" secondItem="tvZ-8o-jgR" secondAttribute="top" id="O16-88-hgK"/>
                             <constraint firstItem="HGZ-3B-2hS" firstAttribute="trailing" secondItem="tvZ-8o-jgR" secondAttribute="trailing" id="OHZ-fE-UDy"/>
                             <constraint firstAttribute="bottom" secondItem="HGZ-3B-2hS" secondAttribute="bottom" id="Q4I-B7-yhQ"/>
-                            <constraint firstItem="zmj-TL-Bge" firstAttribute="top" secondItem="tvZ-8o-jgR" secondAttribute="top" id="evj-op-Ot0"/>
-                            <constraint firstItem="HGZ-3B-2hS" firstAttribute="top" secondItem="zmj-TL-Bge" secondAttribute="bottom" id="gEL-bn-FXH"/>
                             <constraint firstItem="HGZ-3B-2hS" firstAttribute="leading" secondItem="tvZ-8o-jgR" secondAttribute="leading" id="gwN-fT-tZ2"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="tvZ-8o-jgR"/>
                     </view>
                     <navigationItem key="navigationItem" id="qmB-7T-xmx"/>
                     <connections>
-                        <outlet property="searchBar" destination="zmj-TL-Bge" id="ani-4Z-OM7"/>
                         <outlet property="tableView" destination="HGZ-3B-2hS" id="dsQ-Y5-aZ8"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CUu-3v-sef" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="478" y="-71"/>
+            <point key="canvasLocation" x="476.81159420289856" y="-71.651785714285708"/>
         </scene>
     </scenes>
 </document>

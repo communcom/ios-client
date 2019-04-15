@@ -10,6 +10,7 @@
 		3BCDB4062260A9E200739F7E /* NotificationsFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCDB4052260A9E200739F7E /* NotificationsFetcher.swift */; };
 		3BCDB4092260D43700739F7E /* NotificationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCDB4082260D43700739F7E /* NotificationType.swift */; };
 		3BCDB40F2261176600739F7E /* NotificationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3BCDB40E2261166F00739F7E /* NotificationCell.xib */; };
+		3BCDB4112264862100739F7E /* NSMutableAttributedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCDB4102264862100739F7E /* NSMutableAttributedString.swift */; };
 		3BE2FA07225DF8050013F32F /* NotificationsPageVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3BE2FA06225DF8050013F32F /* NotificationsPageVC.storyboard */; };
 		3BE2FA0B225E00C00013F32F /* NotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BE2FA0A225E00C00013F32F /* NotificationCell.swift */; };
 		3BE2FA0E225E042F0013F32F /* NotificationsPageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BE2FA0C225E042F0013F32F /* NotificationsPageVC.swift */; };
@@ -112,6 +113,7 @@
 		3BCDB4052260A9E200739F7E /* NotificationsFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsFetcher.swift; sourceTree = "<group>"; };
 		3BCDB4082260D43700739F7E /* NotificationType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationType.swift; sourceTree = "<group>"; };
 		3BCDB40E2261166F00739F7E /* NotificationCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NotificationCell.xib; sourceTree = "<group>"; };
+		3BCDB4102264862100739F7E /* NSMutableAttributedString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSMutableAttributedString.swift; sourceTree = "<group>"; };
 		3BE2FA06225DF8050013F32F /* NotificationsPageVC.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = NotificationsPageVC.storyboard; sourceTree = "<group>"; };
 		3BE2FA0A225E00C00013F32F /* NotificationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCell.swift; sourceTree = "<group>"; };
 		3BE2FA0C225E042F0013F32F /* NotificationsPageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsPageVC.swift; sourceTree = "<group>"; };
@@ -503,6 +505,7 @@
 			isa = PBXGroup;
 			children = (
 				576DC920223E42C800EDED41 /* UIViewControllerExtension.swift */,
+				3BCDB4102264862100739F7E /* NSMutableAttributedString.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -956,6 +959,7 @@
 				5700611A2253CA96007700DA /* EditorContentCell.swift in Sources */,
 				571B14FC223A935C00630C8F /* Commun.xcdatamodeld in Sources */,
 				576DC921223E42C800EDED41 /* UIViewControllerExtension.swift in Sources */,
+				3BCDB4112264862100739F7E /* NSMutableAttributedString.swift in Sources */,
 				57DE5BDE225208A4008566B9 /* EditorPageViewModel.swift in Sources */,
 				574095822247A8A300E40E51 /* PostPageVC+CommentCellDelegate.swift in Sources */,
 				57DE5BED225225E4008566B9 /* EditorPageVC+Utilites.swift in Sources */,
