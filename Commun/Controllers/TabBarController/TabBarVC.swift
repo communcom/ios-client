@@ -7,9 +7,11 @@
 //
 
 import UIKit
+import RxSwift
 
 class TabBarVC: UITabBarController {
-
+    let viewModel = TabBarViewModel()
+    let bag = DisposeBag()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,6 +47,23 @@ class TabBarVC: UITabBarController {
         // Config styles
         self.tabBar.tintColor = #colorLiteral(red: 0.4156862745, green: 0.5019607843, blue: 0.9607843137, alpha: 1)
         UITabBar.appearance().barTintColor = .white
+        
+        // bind view model
+        bindViewModel()
     }
 
+    func bindViewModel() {
+        // Get number of fresh notifications
+        viewModel.getFreshCount()
+            .asDriver(onErrorJustReturn: 0)
+            .drive(onNext: {freshCount in
+                guard let notificationsTab = self.tabBar.items?.last else {return}
+                guard freshCount > 0 else {
+                    notificationsTab.badgeValue = nil
+                    return
+                }
+                self.tabBar.items?.last?.badgeValue = "\(freshCount)"
+            })
+            .disposed(by: bag)
+    }
 }

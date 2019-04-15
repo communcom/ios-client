@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3B0544542264CED2006AF015 /* TabBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B0544532264CED2006AF015 /* TabBarViewModel.swift */; };
 		3BCDB4062260A9E200739F7E /* NotificationsFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCDB4052260A9E200739F7E /* NotificationsFetcher.swift */; };
 		3BCDB4092260D43700739F7E /* NotificationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCDB4082260D43700739F7E /* NotificationType.swift */; };
 		3BCDB40F2261176600739F7E /* NotificationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3BCDB40E2261166F00739F7E /* NotificationCell.xib */; };
@@ -111,6 +112,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3B0544532264CED2006AF015 /* TabBarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewModel.swift; sourceTree = "<group>"; };
 		3BCDB4052260A9E200739F7E /* NotificationsFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsFetcher.swift; sourceTree = "<group>"; };
 		3BCDB4082260D43700739F7E /* NotificationType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationType.swift; sourceTree = "<group>"; };
 		3BCDB40E2261166F00739F7E /* NotificationCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NotificationCell.xib; sourceTree = "<group>"; };
@@ -371,6 +373,7 @@
 			isa = PBXGroup;
 			children = (
 				571B150A223A94DE00630C8F /* TabBarVC.swift */,
+				3B0544532264CED2006AF015 /* TabBarViewModel.swift */,
 			);
 			path = TabBarController;
 			sourceTree = "<group>";
@@ -1019,6 +1022,7 @@
 				57840A1B2240DB9400338FD5 /* NetworkService.swift in Sources */,
 				572517322243935C0033125C /* ControllerContainer.swift in Sources */,
 				576DC91B223E41F600EDED41 /* FeedPageViewModel.swift in Sources */,
+				3B0544542264CED2006AF015 /* TabBarViewModel.swift in Sources */,
 				574095862247AAB100E40E51 /* WriteCommentCell.swift in Sources */,
 				57DE5BDC2252088C008566B9 /* EditorPageVC.swift in Sources */,
 				57C33A472244DA7E00073FAE /* PostPageVC+VotesCellDelegate.swift in Sources */,

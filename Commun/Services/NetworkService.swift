@@ -202,4 +202,20 @@ class NetworkService: NSObject {
             return Disposables.create()
         }
     }
+    
+    func getFreshNotifications() -> Single<ResponseAPIOnlineNotifyHistoryFresh> {
+        return Single<ResponseAPIOnlineNotifyHistoryFresh>.create {single in
+            RestAPIManager.instance.getOnlineNotifyHistoryFresh(completion: { (response, error) in
+                guard error == nil else {
+                    single(.error(error!))
+                    return
+                }
+                if let res = response {
+                    single(.success(res))
+                    return
+                }
+            })
+            return Disposables.create()
+        }
+    }
 }
