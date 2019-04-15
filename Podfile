@@ -9,17 +9,20 @@ target 'Commun' do
   
   pod 'Fabric'
   pod 'Crashlytics'
-  
+
   pod 'RxSwift',    '~> 4.0'
   pod 'RxCocoa',    '~> 4.0'
   pod 'Alamofire'
   pod 'Swinject'
-  pod 'SDWebImage', '~> 4.0'
+  pod 'SDWebImage', '~> 5.0'
   
   pod 'SwifterSwift/SwiftStdlib'   # Standard Library Extensions
   pod 'SwifterSwift/Foundation'    # Foundation Extensions
   pod 'SwifterSwift/UIKit'         # UIKit Extensions
   
   pod 'IHProgressHUD', :git => 'https://github.com/Swiftify-Corp/IHProgressHUD.git'
+  
+  pod 'PinCodeInputView'
+  
   
 end

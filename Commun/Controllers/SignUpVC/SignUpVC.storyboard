@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SF-Pro-Text-Regular.otf">
+            <string>SFProText-Regular</string>
+        </array>
+    </customFonts>
+    <scenes>
+        <!--Sign UpVC-->
+        <scene sceneID="Gtp-zL-1qW">
+            <objects>
+                <viewController storyboardIdentifier="SignUpVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="a91-Oj-U95" customClass="SignUpVC" customModule="Commun" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="18N-xE-ytB">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Phone number" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="HNR-uY-C2j" customClass="FormTextField" customModule="Commun" customModuleProvider="target">
+                                <rect key="frame" x="43" y="163" width="328" height="56"/>
+                                <color key="backgroundColor" red="0.95294117649999999" green="0.96078431369999995" blue="0.98039215690000003" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="56" id="td2-B8-do4"/>
+                                </constraints>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="17"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="inset">
+                                        <real key="value" value="16"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RMd-69-gyH">
+                                <rect key="frame" x="42" y="766" width="330" height="56"/>
+                                <color key="backgroundColor" red="0.41568627450980389" green="0.50196078431372548" blue="0.96078431372549022" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="56" id="q0o-yK-EMY"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="17"/>
+                                <state key="normal" title="Next">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UPD-Sp-KD5">
+                                <rect key="frame" x="43" y="91" width="328" height="56"/>
+                                <color key="backgroundColor" red="0.95294117647058818" green="0.96078431372549022" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="56" id="sjn-3w-A0j"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="17"/>
+                                <inset key="contentEdgeInsets" minX="16" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                <state key="normal" title="Select country">
+                                    <color key="titleColor" red="0.60784313725490191" green="0.62352941176470589" blue="0.63529411764705879" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                </state>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="HNR-uY-C2j" firstAttribute="trailing" secondItem="UPD-Sp-KD5" secondAttribute="trailing" id="Clp-qa-XSt"/>
+                            <constraint firstItem="UPD-Sp-KD5" firstAttribute="leading" secondItem="IXi-8R-Udd" secondAttribute="leading" constant="43" id="Fd6-TC-JJO"/>
+                            <constraint firstItem="RMd-69-gyH" firstAttribute="leading" secondItem="IXi-8R-Udd" secondAttribute="leading" constant="42" id="GOk-Zc-B58"/>
+                            <constraint firstItem="UPD-Sp-KD5" firstAttribute="top" secondItem="IXi-8R-Udd" secondAttribute="top" constant="47" id="GXR-Gn-0Bt"/>
+                            <constraint firstItem="IXi-8R-Udd" firstAttribute="trailing" secondItem="RMd-69-gyH" secondAttribute="trailing" constant="42" id="KRY-Rd-DmO"/>
+                            <constraint firstItem="IXi-8R-Udd" firstAttribute="trailing" secondItem="UPD-Sp-KD5" secondAttribute="trailing" constant="43" id="KX3-Dr-Nux"/>
+                            <constraint firstItem="HNR-uY-C2j" firstAttribute="leading" secondItem="UPD-Sp-KD5" secondAttribute="leading" id="L5c-qd-RD1"/>
+                            <constraint firstItem="HNR-uY-C2j" firstAttribute="width" secondItem="UPD-Sp-KD5" secondAttribute="width" id="O3E-oo-FLy"/>
+                            <constraint firstItem="HNR-uY-C2j" firstAttribute="top" secondItem="UPD-Sp-KD5" secondAttribute="bottom" constant="16" id="WOa-i0-fgp"/>
+                            <constraint firstItem="IXi-8R-Udd" firstAttribute="bottom" secondItem="RMd-69-gyH" secondAttribute="bottom" constant="40" id="ZDm-RO-fZ2"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="IXi-8R-Udd"/>
+                    </view>
+                    <connections>
+                        <outlet property="countryButton" destination="UPD-Sp-KD5" id="l2c-0i-9G8"/>
+                        <outlet property="nextButton" destination="RMd-69-gyH" id="ybk-W5-dTd"/>
+                        <outlet property="nextButtonBottomConstraint" destination="ZDm-RO-fZ2" id="Nq3-fp-2JP"/>
+                        <outlet property="phoneNumberTextField" destination="HNR-uY-C2j" id="l3H-hk-H3G"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="QRs-xG-QsA" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="148" y="94"/>
+        </scene>
+    </scenes>
+</document>

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SF-Pro-Text-Regular.otf">
+            <string>SFProText-Regular</string>
+        </array>
+    </customFonts>
+    <scenes>
+        <!--Confirm UserVC-->
+        <scene sceneID="In5-5Y-HX5">
+            <objects>
+                <viewController storyboardIdentifier="ConfirmUserVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="NlB-Y1-YqX" customClass="ConfirmUserVC" customModule="Commun" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="ML7-X3-dGA">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter SMS-code" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5dt-9p-v3W">
+                                <rect key="frame" x="16" y="63" width="131.5" height="20"/>
+                                <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bYW-xi-lTa">
+                                <rect key="frame" x="73" y="133" width="268" height="56"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="56" id="vTq-XG-f0G"/>
+                                </constraints>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6zJ-W6-fmM">
+                                <rect key="frame" x="119.5" y="224" width="175" height="30"/>
+                                <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
+                                <state key="normal" title="Resend verification code">
+                                    <color key="titleColor" red="0.41568627450980389" green="0.50196078431372548" blue="0.96078431372549022" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="waw-lP-Yrt">
+                                <rect key="frame" x="42" y="305" width="330" height="56"/>
+                                <color key="backgroundColor" red="0.41568627450980389" green="0.50196078431372548" blue="0.96078431372549022" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="56" id="0GE-4a-SSx"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="17"/>
+                                <state key="normal" title="Next">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="8"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="5dt-9p-v3W" firstAttribute="leading" secondItem="zEB-iN-I0i" secondAttribute="leading" constant="16" id="1tD-WO-XIW"/>
+                            <constraint firstItem="zEB-iN-I0i" firstAttribute="trailing" secondItem="waw-lP-Yrt" secondAttribute="trailing" constant="42" id="3jE-FM-RTi"/>
+                            <constraint firstItem="6zJ-W6-fmM" firstAttribute="centerX" secondItem="zEB-iN-I0i" secondAttribute="centerX" id="NYX-uX-DJ6"/>
+                            <constraint firstItem="6zJ-W6-fmM" firstAttribute="top" secondItem="bYW-xi-lTa" secondAttribute="bottom" constant="35" id="OIf-uN-r9L"/>
+                            <constraint firstItem="waw-lP-Yrt" firstAttribute="leading" secondItem="zEB-iN-I0i" secondAttribute="leading" constant="42" id="PXE-SK-guq"/>
+                            <constraint firstItem="bYW-xi-lTa" firstAttribute="leading" secondItem="zEB-iN-I0i" secondAttribute="leading" constant="73" id="UZ4-wx-ehj"/>
+                            <constraint firstItem="waw-lP-Yrt" firstAttribute="top" secondItem="6zJ-W6-fmM" secondAttribute="bottom" constant="51" id="c1U-Qn-YuT"/>
+                            <constraint firstItem="zEB-iN-I0i" firstAttribute="trailing" secondItem="bYW-xi-lTa" secondAttribute="trailing" constant="73" id="cSv-US-tRF"/>
+                            <constraint firstItem="bYW-xi-lTa" firstAttribute="top" secondItem="5dt-9p-v3W" secondAttribute="bottom" constant="50" id="kPy-LG-FWb"/>
+                            <constraint firstItem="5dt-9p-v3W" firstAttribute="top" secondItem="zEB-iN-I0i" secondAttribute="top" constant="19" id="orP-we-dbJ"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="zEB-iN-I0i"/>
+                    </view>
+                    <connections>
+                        <outlet property="nextButton" destination="waw-lP-Yrt" id="Iv0-hI-KCM"/>
+                        <outlet property="pinCodeView" destination="bYW-xi-lTa" id="mgP-Ro-2Kc"/>
+                        <outlet property="resendButton" destination="6zJ-W6-fmM" id="gtL-Fu-R5f"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Sv0-oJ-wJx" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-91" y="5"/>
+        </scene>
+    </scenes>
+</document>
