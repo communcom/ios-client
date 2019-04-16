@@ -24,6 +24,9 @@ class NotificationCell: UITableViewCell {
     @IBOutlet weak var nTIBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var nTILeadingConstraint: NSLayoutConstraint!
     
+    // Colors for non-avatar user
+    static var nonAvatarColor = [String: UIColor]()
+    
     // Methods
     func configure(with notification: ResponseAPIOnlineNotificationData) {
         // Fresh detect
@@ -32,12 +35,17 @@ class NotificationCell: UITableViewCell {
         
         // Configure user's image
         if let user = notification.actor {
+            var color = NotificationCell.nonAvatarColor[user.id]
+            if color == nil {
+                color = UIColor.random
+                NotificationCell.nonAvatarColor[user.id] = color!
+            }
             if let avatarURL = user.avatarUrl {
                 avatarImage.sd_setImage(with: URL(string: avatarURL)) { (_, error, _, _) in
-                    self.avatarImage.setImageWith(user.id, color: #colorLiteral(red: 0.4156862745, green: 0.5019607843, blue: 0.9607843137, alpha: 1))
+                    self.avatarImage.setImageWith(user.id, color: color!)
                 }
             } else {
-                avatarImage.setImageWith(user.id, color: #colorLiteral(red: 0.4156862745, green: 0.5019607843, blue: 0.9607843137, alpha: 1))
+                avatarImage.setImageWith(user.id, color: color!)
             }
         } else {
             setNoAvatar(for: notification)
