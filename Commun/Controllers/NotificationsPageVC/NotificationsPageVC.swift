@@ -32,6 +32,11 @@ class NotificationsPageVC: UIViewController {
         
         // configure navigation bar
         title = "Notifications".localized()
+        let navigationBar = navigationController?.navigationBar
+        navigationBar?.barTintColor = UIColor.white
+        navigationBar?.isTranslucent = false
+        navigationBar?.setBackgroundImage(UIImage(), for: .default)
+        navigationBar?.shadowImage = UIImage()
         
         // initialize viewModel
         viewModel = NotificationsPageViewModel()

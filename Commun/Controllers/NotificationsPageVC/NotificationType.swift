@@ -104,8 +104,7 @@ enum NotificationType: String {
             }
             
             detail.text = text
-            #warning("missing icon")
-            detail.icon = nil
+            detail.icon = UIImage(named: "NotificationMention")
             break
         case .reward:
             let text = NSMutableAttributedString()
@@ -113,7 +112,7 @@ enum NotificationType: String {
                 .normal(": ")
                 .bold(notification.post!.title)
             detail.text = text
-            detail.icon = UIImage(named: "NotificationRewards")
+            detail.icon = UIImage(named: "NotificationRewardsForPost")
             break
         case .votesReward:
             #warning("missing votes type")
@@ -122,7 +121,7 @@ enum NotificationType: String {
                 .normal(": ")
                 .bold("VOTES")
             detail.text = text
-            detail.icon = UIImage(named: "NotificationRewards")
+            detail.icon = UIImage(named: "NotificationRewardsForVotes")
             break
         }
         return detail

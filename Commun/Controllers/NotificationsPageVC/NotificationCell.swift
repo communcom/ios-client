@@ -40,7 +40,7 @@ class NotificationCell: UITableViewCell {
                 avatarImage.setImageWith(user.id, color: #colorLiteral(red: 0.4156862745, green: 0.5019607843, blue: 0.9607843137, alpha: 1))
             }
         } else {
-            setNoAvatar()
+            setNoAvatar(for: notification)
         }
         
         // Configure image for notificationType
@@ -53,16 +53,25 @@ class NotificationCell: UITableViewCell {
         timestampLabel.text = Date.from(string: notification.timestamp).shortTimeAgoSinceNow
     }
     
-    private func setNoAvatar() {
+    private func setNoAvatar(for notification: ResponseAPIOnlineNotificationData) {
         nTILeadingConstraint.isActive = false
         nTIBottomConstraint.isActive = false
-        avatarImage.image = UIImage(named: "NotificationNoAvatar")
+        var imageName = "NotificationNoAvatar"
+        if let type = NotificationType(rawValue: notification.eventType) {
+            if type == .reward || type == .votesReward {
+                imageName = "NotificationNoAvatarOrange"
+            } else {
+                imageName = "NotificationNoAvatarBlue"
+            }
+        }
+        avatarImage.image = UIImage(named: imageName)
     }
     
     override func prepareForReuse() {
         nTIBottomConstraint.isActive = true
         nTILeadingConstraint.isActive = true
         contentView.backgroundColor = UIColor.white
+        avatarImage.image = UIImage(named: "NotificationNoAvatar")
         super.prepareForReuse()
     }
 }
