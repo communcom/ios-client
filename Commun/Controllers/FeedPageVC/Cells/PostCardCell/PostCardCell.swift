@@ -79,6 +79,7 @@ extension PostCardCell {
         
         self.titleLabel.text = post.content.title
         self.mainTextLabel.text = post.content.body.preview
+        self.accessibilityLabel = "PostCardCell"
         
 //        self.avatarImageView.sd_setImage(with: post.community.avatarUrl?.url, completed: nil)
 //        self.likeCounterLabel.text = "\(post.payout.rShares.stringValue ?? "0")"

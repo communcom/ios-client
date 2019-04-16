@@ -24,15 +24,17 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="227.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yxa-RM-ecb">
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yxa-RM-ecb" userLabel="Background View">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="227.5"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <accessibility key="accessibilityConfiguration" identifier="PostCardCellBackgroundView" label="PostCardCellBackgroundView"/>
                         <constraints>
                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="227.5" id="Nnh-ZH-BQq"/>
                         </constraints>
                     </view>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tux" translatesAutoresizingMaskIntoConstraints="NO" id="Ycg-ed-cff">
                         <rect key="frame" x="16" y="14" width="40" height="40"/>
+                        <accessibility key="accessibilityConfiguration" identifier="PostCardCellAvatarImageView" label="PostCardCellAvatarImageView"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="40" id="8E5-9d-8GQ"/>
                             <constraint firstAttribute="width" constant="40" id="nOt-qI-uyB"/>
@@ -45,12 +47,14 @@
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ICX-s9-6dm">
                         <rect key="frame" x="72" y="18" width="176" height="18"/>
+                        <accessibility key="accessibilityConfiguration" identifier="PostCardCellTitleLabel" label="PostCardCellTitleLabel"/>
                         <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2By-LQ-DfR">
                         <rect key="frame" x="72" y="38" width="47" height="16"/>
+                        <accessibility key="accessibilityConfiguration" identifier="PostCardCellSubtitleLabel" label="PostCardCellSubtitleLabel"/>
                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                         <color key="textColor" red="0.60784313725490191" green="0.62352941176470589" blue="0.63529411764705879" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
@@ -69,6 +73,7 @@
                     </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t1b-fE-pfp">
                         <rect key="frame" x="16" y="80" width="288" height="20.5"/>
+                        <accessibility key="accessibilityConfiguration" identifier="PostCardCellMainTextLabel" label="PostCardCellMainTextLabel"/>
                         <constraints>
                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="20.5" id="D2P-en-JzA"/>
                             <constraint firstAttribute="height" relation="lessThanOrEqual" constant="65" id="QWw-VP-Zbh"/>
@@ -79,6 +84,7 @@
                     </label>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Group 101.1" translatesAutoresizingMaskIntoConstraints="NO" id="iSB-ET-CHf">
                         <rect key="frame" x="16" y="128.5" width="16" height="16"/>
+                        <accessibility key="accessibilityConfiguration" identifier="PostCardCellGroupImageView" label="PostCardCellGroupImageView"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="16" id="Opw-kY-GSE"/>
                             <constraint firstAttribute="width" constant="16" id="k8R-TG-EMf"/>
@@ -86,12 +92,14 @@
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kiT-nP-6oC">
                         <rect key="frame" x="40" y="128.5" width="8.5" height="16"/>
+                        <accessibility key="accessibilityConfiguration" identifier="PostCardCellLikeCountLabel" label="PostCardCellLikeCountLabel"/>
                         <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="13"/>
                         <color key="textColor" red="0.41568627450980389" green="0.50196078431372548" blue="0.96078431372549022" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0 Shares" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jus-YZ-IbU">
                         <rect key="frame" x="244" y="128.5" width="60" height="16"/>
+                        <accessibility key="accessibilityConfiguration" identifier="PostCardCellSharesCountLabel" label="PostCardCellSharesCountLabel"/>
                         <constraints>
                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="60" id="7Xy-H1-giP"/>
                         </constraints>
@@ -101,6 +109,7 @@
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0 Comments" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wEL-E2-SmX">
                         <rect key="frame" x="142" y="128.5" width="78" height="16"/>
+                        <accessibility key="accessibilityConfiguration" identifier="PostCardCellCommentsCountLabel" label="PostCardCellCommentsCountLabel"/>
                         <constraints>
                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="60" id="PgY-NI-pc4"/>
                         </constraints>
@@ -201,6 +210,7 @@
                     <constraint firstItem="ahx-nL-77K" firstAttribute="top" secondItem="0DU-Io-mHz" secondAttribute="bottom" constant="17" id="zxf-Vf-fAb"/>
                 </constraints>
             </tableViewCellContentView>
+            <accessibility key="accessibilityConfiguration" identifier="PostCardCell" label="PostCardCell"/>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="avatarImageView" destination="Ycg-ed-cff" id="uy7-KF-FlE"/>
