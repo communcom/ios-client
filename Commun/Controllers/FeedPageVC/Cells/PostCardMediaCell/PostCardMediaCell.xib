@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -55,8 +55,9 @@
                         <color key="textColor" red="0.60784313725490191" green="0.62352941176470589" blue="0.63529411764705879" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ApL-HH-Dm0">
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ApL-HH-Dm0" userLabel="More Button">
                         <rect key="frame" x="264" y="6" width="56" height="56"/>
+                        <accessibility key="accessibilityConfiguration" identifier="PostCardMediaCellMoreButton" label="PostCardMediaCellMoreButton"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="56" id="NUn-Ln-8cS"/>
                             <constraint firstAttribute="height" constant="56" id="hPu-MY-jQK"/>
@@ -106,8 +107,9 @@
                         <color key="textColor" red="0.60784313729999995" green="0.62352941179999999" blue="0.63529411759999999" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0DU-Io-mHz">
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0DU-Io-mHz" userLabel="Upvote Button">
                         <rect key="frame" x="16" y="449.5" width="36" height="36"/>
+                        <accessibility key="accessibilityConfiguration" identifier="PostCardMediaCellUpvoteButton" label="PostCardMediaCellUpvoteButton"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="36" id="IED-oe-5bZ"/>
                             <constraint firstAttribute="height" constant="36" id="pXn-IT-Dej"/>
@@ -117,23 +119,26 @@
                             <action selector="upButtonTap:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="xgc-v2-NVG"/>
                         </connections>
                     </button>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fMs-g5-fNp">
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fMs-g5-fNp" userLabel="Unvote Button">
                         <rect key="frame" x="64" y="449.5" width="36" height="36"/>
+                        <accessibility key="accessibilityConfiguration" identifier="PostCardMediaCellUnvoteButton" label="PostCardMediaCellUnvoteButton"/>
                         <state key="normal" image="Down"/>
                         <connections>
                             <action selector="downButtonTap:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="noF-bd-ANX"/>
                         </connections>
                     </button>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EQe-sX-b19">
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EQe-sX-b19" userLabel="Share Button">
                         <rect key="frame" x="268" y="449.5" width="36" height="36"/>
+                        <accessibility key="accessibilityConfiguration" identifier="PostCardMediaCellShareButton" label="PostCardMediaCellShareButton"/>
                         <state key="normal" image="share"/>
                         <connections>
                             <action selector="shareButtonTap:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="GZt-Hz-6VL"/>
                         </connections>
                     </button>
-                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Add a comment" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="LYz-EB-ZsG">
+                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Add a comment" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="LYz-EB-ZsG" userLabel="Add Comment Text Field">
                         <rect key="frame" x="112" y="452.5" width="144" height="30"/>
                         <color key="backgroundColor" red="0.95294117647058818" green="0.96078431372549022" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
+                        <accessibility key="accessibilityConfiguration" identifier="PostCardMediaCellAddCommentTextField" label="PostCardMediaCellAddCommentTextField"/>
                         <nil key="textColor"/>
                         <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
                         <textInputTraits key="textInputTraits"/>
@@ -219,10 +224,10 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="Down" width="512" height="512"/>
-        <image name="Group 101.1" width="512" height="512"/>
-        <image name="Up" width="512" height="512"/>
-        <image name="points" width="512" height="512"/>
-        <image name="share" width="512" height="512"/>
+        <image name="Down" width="170.66667175292969" height="170.66667175292969"/>
+        <image name="Group 101.1" width="170.66667175292969" height="170.66667175292969"/>
+        <image name="Up" width="170.66667175292969" height="170.66667175292969"/>
+        <image name="points" width="170.66667175292969" height="170.66667175292969"/>
+        <image name="share" width="170.66667175292969" height="170.66667175292969"/>
     </resources>
 </document>

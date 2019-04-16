@@ -55,8 +55,9 @@
                         <color key="textColor" red="0.60784313725490191" green="0.62352941176470589" blue="0.63529411764705879" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ApL-HH-Dm0">
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ApL-HH-Dm0" userLabel="More Button">
                         <rect key="frame" x="264" y="6" width="56" height="56"/>
+                        <accessibility key="accessibilityConfiguration" identifier="PostCardCellMoreButton" label="PostCardCellMoreButton"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="56" id="NUn-Ln-8cS"/>
                             <constraint firstAttribute="height" constant="56" id="hPu-MY-jQK"/>
@@ -109,7 +110,7 @@
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0DU-Io-mHz">
                         <rect key="frame" x="16" y="166.5" width="36" height="36"/>
-                        <accessibility key="accessibilityConfiguration" identifier="PostCardCellUpvoteButton"/>
+                        <accessibility key="accessibilityConfiguration" identifier="PostCardCellUpvoteButton" label="PostCardCellUpvoteButton"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="36" id="IED-oe-5bZ"/>
                             <constraint firstAttribute="height" constant="36" id="pXn-IT-Dej"/>
@@ -119,25 +120,26 @@
                             <action selector="upButtonTap:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="xgc-v2-NVG"/>
                         </connections>
                     </button>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fMs-g5-fNp">
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fMs-g5-fNp" userLabel="Unvote Button">
                         <rect key="frame" x="64" y="166.5" width="36" height="36"/>
-                        <accessibility key="accessibilityConfiguration" identifier="PostCardCellUnvoteButton"/>
+                        <accessibility key="accessibilityConfiguration" identifier="PostCardCellUnvoteButton" label="PostCardCellUnvoteButton"/>
                         <state key="normal" image="Down"/>
                         <connections>
                             <action selector="downButtonTap:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="noF-bd-ANX"/>
                         </connections>
                     </button>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EQe-sX-b19">
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EQe-sX-b19" userLabel="Share Button">
                         <rect key="frame" x="268" y="166.5" width="36" height="36"/>
-                        <accessibility key="accessibilityConfiguration" identifier="PostCardCellShareButton"/>
+                        <accessibility key="accessibilityConfiguration" identifier="PostCardCellShareButton" label="PostCardCellShareButton"/>
                         <state key="normal" image="share"/>
                         <connections>
                             <action selector="shareButtonTap:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="GZt-Hz-6VL"/>
                         </connections>
                     </button>
-                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Add a comment" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="LYz-EB-ZsG">
+                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Add a comment" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="LYz-EB-ZsG" userLabel="Add Comment Text Field">
                         <rect key="frame" x="112" y="169.5" width="144" height="30"/>
                         <color key="backgroundColor" red="0.95294117647058818" green="0.96078431372549022" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
+                        <accessibility key="accessibilityConfiguration" identifier="PostCardCellAddCommentTextField" label="PostCardCellAddCommentTextField"/>
                         <nil key="textColor"/>
                         <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
                         <textInputTraits key="textInputTraits"/>
