@@ -51,8 +51,7 @@ enum NotificationType: String {
                 .normal(" ")
                 .normal("subscribed you".localized())
             detail.text = text
-            #warning("missing icon")
-            detail.icon = nil
+            detail.icon = UIImage(named: "NotificationSubscribe")
             break
         case .transfer:
             #warning("missing number of coins")

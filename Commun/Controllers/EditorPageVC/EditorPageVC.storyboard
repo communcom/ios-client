@@ -31,6 +31,7 @@
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aeQ-gX-bWx">
                                         <rect key="frame" x="16" y="19" width="29" height="17"/>
+                                        <accessibility key="accessibilityConfiguration" identifier="EditorPageAdultButton" label="EditorPageAdultButton"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="29" id="gAH-Nj-Ddt"/>
                                             <constraint firstAttribute="height" constant="17" id="reZ-0u-ZGM"/>
@@ -40,8 +41,9 @@
                                             <action selector="adultButtonTap" destination="AvE-EB-OTN" eventType="touchUpInside" id="itZ-NP-8kU"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nwa-Mp-egE">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nwa-Mp-egE" userLabel="Photo Button">
                                         <rect key="frame" x="71" y="18.5" width="20" height="18"/>
+                                        <accessibility key="accessibilityConfiguration" identifier="EditorPagePhotoButton" label="EditorPagePhotoButton"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="20" id="LzT-Oh-312"/>
                                             <constraint firstAttribute="height" constant="18" id="heR-KI-1IM"/>
@@ -83,6 +85,7 @@
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="94b-Gg-NR2">
                                 <rect key="frame" x="16" y="110" width="343" height="50"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <accessibility key="accessibilityConfiguration" identifier="EditorPageTitleTextField" label="EditorPageTitleTextField"/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="50" id="IR0-zR-OCF"/>
                                 </constraints>
@@ -92,6 +95,7 @@
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="AQZ-x5-R6W">
                                 <rect key="frame" x="16" y="176" width="343" height="50"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <accessibility key="accessibilityConfiguration" identifier="EditorPageContentTextView" label="EditorPageContentTextView"/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="50" id="VZB-2H-oHA"/>
                                 </constraints>
