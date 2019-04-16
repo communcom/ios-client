@@ -87,8 +87,6 @@ class NotificationsPageVC: UIViewController {
                     postPageVC.viewModel.refBlockNum = post.contentId.refBlockNum
                     postPageVC.viewModel.userId = post.contentId.userId
                     self?.present(postPageVC, animated: true, completion: nil)
-                } else {
-                    self?.showAlert(title: "Error".localized(), message: "Something went wrong".localized())
                 }
             })
             .disposed(by: bag)

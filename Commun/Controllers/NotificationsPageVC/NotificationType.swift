@@ -54,12 +54,11 @@ enum NotificationType: String {
             detail.icon = UIImage(named: "NotificationSubscribe")
             break
         case .transfer:
-            #warning("missing number of coins")
             let text = NSMutableAttributedString()
                 .bold(notification.actor!.id)
                 .normal(" ")
-                .normal("transfer you".localized())
-                .normal(" XX coins")
+                .normal("transfered you".localized())
+                .normal(" \(notification.value!.amount) \(notification.value!.currency)")
             detail.text = text
             detail.icon = UIImage(named: "NotificationTransfer")
             break
