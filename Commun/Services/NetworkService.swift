@@ -218,4 +218,21 @@ class NetworkService: NSObject {
             return Disposables.create()
         }
     }
+    
+    func markAllAsViewed() -> Single<ResponseAPINotifyMarkAllAsViewed> {
+        return Single<ResponseAPINotifyMarkAllAsViewed>.create {single in
+            RestAPIManager.instance.notifyMarkAllAsViewed(completion: { (response, error) in
+                guard error == nil else {
+                    single(.error(error!))
+                    return
+                }
+                
+                if let res = response {
+                    single(.success(res))
+                    return
+                }
+            })
+            return Disposables.create()
+        }
+    }
 }

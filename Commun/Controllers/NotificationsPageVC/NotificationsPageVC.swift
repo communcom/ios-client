@@ -49,9 +49,20 @@ class NotificationsPageVC: UIViewController {
     }
     
     func bindViewModel() {
+        let list = viewModel.list
+        
+        // Mark all as viewed
+        list.take(1)
+            .flatMap {_ in
+                return NetworkService.shared.markAllAsViewed()
+            }
+            .map {_ in nil}
+            .catchErrorJustReturn(nil)
+            .bind(to: tabBarItem!.rx.badgeValue)
+            .disposed(by: bag)
         
         // Bind value to tableView
-        viewModel.list
+        list
             .do(onNext: {[weak self]_ in
                 self?.tableView.refreshControl?.endRefreshing()
             })
