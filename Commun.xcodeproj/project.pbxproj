@@ -3,10 +3,12 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 50;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3BAF69C322675B420055CCEB /* ProfilePageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BAF69C222675B420055CCEB /* ProfilePageVC.swift */; };
+		3BAF69C522675B540055CCEB /* ProfilePageVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3BAF69C422675B540055CCEB /* ProfilePageVC.storyboard */; };
 		5700611A2253CA96007700DA /* EditorContentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570061182253CA96007700DA /* EditorContentCell.swift */; };
 		5700611B2253CA96007700DA /* EditorContentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 570061192253CA96007700DA /* EditorContentCell.xib */; };
 		5700611F2253CDDF007700DA /* EditorMediaCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5700611D2253CDDF007700DA /* EditorMediaCell.swift */; };
@@ -102,6 +104,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3BAF69C222675B420055CCEB /* ProfilePageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePageVC.swift; sourceTree = "<group>"; };
+		3BAF69C422675B540055CCEB /* ProfilePageVC.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ProfilePageVC.storyboard; sourceTree = "<group>"; };
 		4F0772CC6D820AD11B1FF48A /* Pods_Commun.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Commun.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		570061182253CA96007700DA /* EditorContentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorContentCell.swift; sourceTree = "<group>"; };
 		570061192253CA96007700DA /* EditorContentCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EditorContentCell.xib; sourceTree = "<group>"; };
@@ -255,6 +259,15 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		3BAF69C122675ADB0055CCEB /* ProfilePageVC */ = {
+			isa = PBXGroup;
+			children = (
+				3BAF69C222675B420055CCEB /* ProfilePageVC.swift */,
+				3BAF69C422675B540055CCEB /* ProfilePageVC.storyboard */,
+			);
+			path = ProfilePageVC;
+			sourceTree = "<group>";
+		};
 		570061172253CA83007700DA /* EditorContentCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -329,6 +342,7 @@
 				57B6FC23224A9E4900BCFDDA /* WelcomeScreenVC */,
 				5725173A2243E4510033125C /* PostPageVC */,
 				576DC917223E41CA00EDED41 /* FeedPageVC */,
+				3BAF69C122675ADB0055CCEB /* ProfilePageVC */,
 				571B1509223A94CD00630C8F /* TabBarController */,
 			);
 			path = Controllers;
@@ -805,6 +819,7 @@
 				572F81AA223C164C0007F2F9 /* PostCardMediaCell.xib in Resources */,
 				572F81A8223C164C0007F2F9 /* PostCardCell.xib in Resources */,
 				57C33A4C2244DB1E00073FAE /* TextContentCell.xib in Resources */,
+				3BAF69C522675B540055CCEB /* ProfilePageVC.storyboard in Resources */,
 				57FB179B224BFBD700563BF7 /* LICENSE in Resources */,
 				57840A0D223FAC1B00338FD5 /* BadgeWithCounterViewStandardSized.xib in Resources */,
 				571B14FE223A935D00630C8F /* Assets.xcassets in Resources */,
@@ -848,11 +863,44 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Commun/Pods-Commun-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Commun/Pods-Commun-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/BigInt/BigInt.framework",
+				"${BUILT_PRODUCTS_DIR}/CyberSwift/CyberSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/IHProgressHUD/IHProgressHUD.framework",
+				"${BUILT_PRODUCTS_DIR}/Localize-Swift/Localize_Swift.framework",
+				"${BUILT_PRODUCTS_DIR}/Locksmith/Locksmith.framework",
+				"${BUILT_PRODUCTS_DIR}/RxBlocking/RxBlocking.framework",
+				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
+				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
+				"${BUILT_PRODUCTS_DIR}/SipHash/SipHash.framework",
+				"${BUILT_PRODUCTS_DIR}/Starscream/Starscream.framework",
+				"${BUILT_PRODUCTS_DIR}/SwifterSwift/SwifterSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/Swinject/Swinject.framework",
+				"${BUILT_PRODUCTS_DIR}/eosswift/eosswift.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Commun/Pods-Commun-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BigInt.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CyberSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IHProgressHUD.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Localize_Swift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Locksmith.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxBlocking.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SipHash.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Starscream.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwifterSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Swinject.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/eosswift.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -928,6 +976,7 @@
 				572F81AF223C16940007F2F9 /* EditorWidgetCell.swift in Sources */,
 				57840A12223FB4D700338FD5 /* SortingWidgetCell.swift in Sources */,
 				5725173C2243E4640033125C /* PostPageVC.swift in Sources */,
+				3BAF69C322675B420055CCEB /* ProfilePageVC.swift in Sources */,
 				57A9518F2241253A0020F55D /* FeedPageVC+Rx.swift in Sources */,
 				57DE5BEA2252240E008566B9 /* TitleCell.swift in Sources */,
 				57B6FC27224A9E8700BCFDDA /* WelcomeScreenVC.swift in Sources */,

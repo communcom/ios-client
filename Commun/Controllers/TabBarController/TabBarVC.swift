@@ -25,7 +25,7 @@ class TabBarVC: UITabBarController {
         comunities.tabBarItem = UITabBarItem(title: "Сomunities", image: UIImage(named: "comunities"), tag: 1)
         comunities.accessibilityLabel = "TabBarComunitiesTabBarItem"
 
-        let profile = UIViewController()
+        let profile = controllerContainer.resolve(ProfilePageVC.self)!
         profile.tabBarItem = UITabBarItem(title: "Profile", image: UIImage(named: "profile"), tag: 2)
         profile.accessibilityLabel = "TabBarProfileTabBarItem"
 
