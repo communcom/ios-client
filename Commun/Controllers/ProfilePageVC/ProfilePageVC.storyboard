@@ -307,16 +307,31 @@
                                     <viewLayoutGuide key="safeArea" id="S2O-hC-5ww"/>
                                 </view>
                             </tableView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="iku-D9-AKz">
+                                <rect key="frame" x="197" y="443" width="20" height="20"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="iku-D9-AKz" firstAttribute="centerX" secondItem="e12-D3-bCz" secondAttribute="centerX" id="Be4-5O-Aj5"/>
                             <constraint firstAttribute="bottom" secondItem="fdx-8K-eYs" secondAttribute="bottom" id="FDs-vw-Uki"/>
                             <constraint firstItem="fdx-8K-eYs" firstAttribute="leading" secondItem="e12-D3-bCz" secondAttribute="leading" id="akV-Xz-RF8"/>
+                            <constraint firstItem="iku-D9-AKz" firstAttribute="centerY" secondItem="e12-D3-bCz" secondAttribute="centerY" id="f9L-C5-LVe"/>
                             <constraint firstItem="fdx-8K-eYs" firstAttribute="top" secondItem="4qE-go-fVJ" secondAttribute="top" id="gBK-zG-Eut"/>
                             <constraint firstItem="fdx-8K-eYs" firstAttribute="trailing" secondItem="e12-D3-bCz" secondAttribute="trailing" id="oA4-Ha-Fpd"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="e12-D3-bCz"/>
                     </view>
+                    <connections>
+                        <outlet property="activityIndicator" destination="iku-D9-AKz" id="fKf-u2-hPa"/>
+                        <outlet property="communitiesCountLabel" destination="bNu-7d-aQd" id="e1d-Aq-6Bb"/>
+                        <outlet property="followersCountLabel" destination="8lu-a4-7V6" id="SUz-Hj-F36"/>
+                        <outlet property="followingsCountLabel" destination="P9F-R4-4qL" id="EKc-hS-8Fz"/>
+                        <outlet property="joinedDateLabel" destination="zzx-Z4-0fu" id="MgC-8m-t2m"/>
+                        <outlet property="tableView" destination="fdx-8K-eYs" id="QxY-nc-Ere"/>
+                        <outlet property="userAvatarImage" destination="CgS-tE-PNM" id="QEG-tC-AOi"/>
+                        <outlet property="userNameLabel" destination="jeD-UU-yV5" id="5IN-Or-dKc"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6FK-Fx-Xwv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

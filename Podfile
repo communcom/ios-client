@@ -16,6 +16,8 @@ target 'Commun' do
   pod 'Swinject'
   pod 'SDWebImage', '~> 4.0'
   
+  pod 'UIImageView-Letters'
+  
   pod 'SwifterSwift/SwiftStdlib'   # Standard Library Extensions
   pod 'SwifterSwift/Foundation'    # Foundation Extensions
   pod 'SwifterSwift/UIKit'         # UIKit Extensions
