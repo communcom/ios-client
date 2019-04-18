@@ -165,7 +165,7 @@ class NetworkService: NSObject {
     func sendPost(withTitle title: String, withText text: String, metaData json: String, withTags tags: [String]) -> Observable<Bool> {
         return Observable<Bool>.create { observer -> Disposable in
             
-            RestAPIManager.instance.publish(message:        text,
+            RestAPIManager.instance.create(message:        text,
                                             headline:       title,
                                             tags:           tags,
                                             metaData:       json,
@@ -192,6 +192,54 @@ class NetworkService: NSObject {
     func getUserProfile() -> Single<ResponseAPIContentGetProfile> {
         return Single<ResponseAPIContentGetProfile>.create {single in
             RestAPIManager.instance.getProfile(nickName: Config.currentUser.nickName ?? "", completion: { (response, error) in
+                guard error == nil else {
+                    single(.error(error!))
+                    return
+                }
+                if let res = response {
+                    single(.success(res))
+                    return
+                }
+            })
+            return Disposables.create()
+        }
+    }
+    
+    func getNotifications(fromId: String? = nil, markAsViewed: Bool = true, freshOnly: Bool = false) -> Single<ResponseAPIOnlineNotifyHistory> {
+        return Single<ResponseAPIOnlineNotifyHistory>.create {single in
+            RestAPIManager.instance.getOnlineNotifyHistory(fromId: fromId, freshOnly: false, completion: { (response, error) in
+                guard error == nil else {
+                    single(.error(error!))
+                    return
+                }
+                if let res = response {
+                    single(.success(res))
+                    return
+                }
+            })
+            return Disposables.create()
+        }
+    }
+    
+    func getFreshNotifications() -> Single<ResponseAPIOnlineNotifyHistoryFresh> {
+        return Single<ResponseAPIOnlineNotifyHistoryFresh>.create {single in
+            RestAPIManager.instance.getOnlineNotifyHistoryFresh(completion: { (response, error) in
+                guard error == nil else {
+                    single(.error(error!))
+                    return
+                }
+                if let res = response {
+                    single(.success(res))
+                    return
+                }
+            })
+            return Disposables.create()
+        }
+    }
+    
+    func markAllAsViewed() -> Single<ResponseAPINotifyMarkAllAsViewed> {
+        return Single<ResponseAPINotifyMarkAllAsViewed>.create {single in
+            RestAPIManager.instance.notifyMarkAllAsViewed(completion: { (response, error) in
                 guard error == nil else {
                     single(.error(error!))
                     return

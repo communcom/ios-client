@@ -15,6 +15,9 @@ target 'Commun' do
   pod 'Alamofire'
   pod 'Swinject'
   pod 'SDWebImage', '~> 4.0'
+  pod 'Action'
+  pod 'UIImageView-Letters'
+  pod 'DateToolsSwift'
   
   pod 'UIImageView-Letters'
   

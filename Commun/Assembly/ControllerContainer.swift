@@ -52,6 +52,11 @@ let controllerContainer: Container = {
         let vc = ProfilePageVC.instanceController(fromStoryboard: "ProfilePageVC", withIdentifier: "ProfilePageVC") as! ProfilePageVC
         return vc
     })
+
+    container.register(NotificationsPageVC.self, factory: { r in
+        let vc = NotificationsPageVC.instanceController(fromStoryboard: "NotificationsPageVC", withIdentifier: "NotificationsPageVC") as! NotificationsPageVC
+        return vc
+    })
     
     return container
 }()
