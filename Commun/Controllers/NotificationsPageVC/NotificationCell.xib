@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SF-Pro-Text-Regular.otf">
+            <string>SFProText-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="NotificationCell" rowHeight="80" id="ovv-r8-2FW" customClass="NotificationCell" customModule="Commun" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="80"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ovv-r8-2FW" id="exI-k6-TGh">
+                <rect key="frame" x="0.0" y="0.0" width="414" height="79.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="NotificationAvatarPlaceholder" translatesAutoresizingMaskIntoConstraints="NO" id="rdl-Qk-RkQ">
+                        <rect key="frame" x="20" y="11" width="56" height="56"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="56" id="Nxy-6a-wCr"/>
+                            <constraint firstAttribute="width" constant="56" id="ro4-3e-GNq"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                <real key="value" value="28"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </imageView>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="NotificationComment" translatesAutoresizingMaskIntoConstraints="NO" id="ADc-w3-AHF">
+                        <rect key="frame" x="16" y="51" width="20" height="20"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="20" id="ALB-K4-Dg4"/>
+                            <constraint firstAttribute="height" constant="20" id="NHD-bh-UZc"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="4 hr" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gx9-UZ-sQ9">
+                        <rect key="frame" x="92" y="11" width="25" height="16"/>
+                        <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="13"/>
+                        <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lzc-GI-b3q">
+                        <rect key="frame" x="92" y="29" width="286" height="18"/>
+                        <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ago in" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aPg-G5-Sta">
+                        <rect key="frame" x="120" y="11" width="38" height="16"/>
+                        <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="13"/>
+                        <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Photographers" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dRJ-xb-IRW">
+                        <rect key="frame" x="161" y="11" width="91" height="16"/>
+                        <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="13"/>
+                        <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="Lzc-GI-b3q" firstAttribute="top" secondItem="gx9-UZ-sQ9" secondAttribute="bottom" constant="2" id="1wK-8x-vmp"/>
+                    <constraint firstItem="ADc-w3-AHF" firstAttribute="centerY" secondItem="rdl-Qk-RkQ" secondAttribute="centerY" priority="999" id="4yU-rQ-QGX"/>
+                    <constraint firstItem="dRJ-xb-IRW" firstAttribute="centerY" secondItem="gx9-UZ-sQ9" secondAttribute="centerY" id="7Xs-Pe-JAF"/>
+                    <constraint firstAttribute="bottomMargin" relation="greaterThanOrEqual" secondItem="Lzc-GI-b3q" secondAttribute="bottom" constant="8" id="8Td-pc-6aO"/>
+                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="rdl-Qk-RkQ" secondAttribute="bottom" constant="12.5" id="D0d-Nq-Hi1"/>
+                    <constraint firstItem="ADc-w3-AHF" firstAttribute="leading" secondItem="rdl-Qk-RkQ" secondAttribute="leading" constant="-4" id="DK0-Wg-oCL"/>
+                    <constraint firstItem="gx9-UZ-sQ9" firstAttribute="top" secondItem="exI-k6-TGh" secondAttribute="topMargin" id="EOq-JQ-u0A"/>
+                    <constraint firstItem="Lzc-GI-b3q" firstAttribute="leading" secondItem="gx9-UZ-sQ9" secondAttribute="leading" id="N68-d7-1mB"/>
+                    <constraint firstItem="dRJ-xb-IRW" firstAttribute="leading" secondItem="aPg-G5-Sta" secondAttribute="trailing" constant="3" id="TLt-m2-vdT"/>
+                    <constraint firstItem="rdl-Qk-RkQ" firstAttribute="leading" secondItem="exI-k6-TGh" secondAttribute="leadingMargin" id="Tyl-IH-hTW"/>
+                    <constraint firstItem="aPg-G5-Sta" firstAttribute="centerY" secondItem="gx9-UZ-sQ9" secondAttribute="centerY" id="Up4-Ri-DMB"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="Lzc-GI-b3q" secondAttribute="trailing" constant="16" id="VLW-Kx-b3d"/>
+                    <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="dRJ-xb-IRW" secondAttribute="trailing" constant="16" id="VS8-Iz-BXy"/>
+                    <constraint firstItem="aPg-G5-Sta" firstAttribute="leading" secondItem="gx9-UZ-sQ9" secondAttribute="trailing" constant="3" id="Z35-il-1ih"/>
+                    <constraint firstItem="rdl-Qk-RkQ" firstAttribute="top" secondItem="exI-k6-TGh" secondAttribute="topMargin" id="mGe-P0-GrJ"/>
+                    <constraint firstItem="gx9-UZ-sQ9" firstAttribute="leading" secondItem="rdl-Qk-RkQ" secondAttribute="trailing" constant="16" id="miq-wi-ZrU"/>
+                    <constraint firstItem="ADc-w3-AHF" firstAttribute="centerX" secondItem="rdl-Qk-RkQ" secondAttribute="centerX" priority="999" id="o8S-XX-RI5"/>
+                    <constraint firstItem="ADc-w3-AHF" firstAttribute="bottom" secondItem="rdl-Qk-RkQ" secondAttribute="bottom" constant="4" id="uTg-LU-E9V"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="avatarImage" destination="rdl-Qk-RkQ" id="op4-IF-RDb"/>
+                <outlet property="categoryLabel" destination="dRJ-xb-IRW" id="d9l-Lc-8ZM"/>
+                <outlet property="contentLabel" destination="Lzc-GI-b3q" id="dKN-b8-SPK"/>
+                <outlet property="nTIBottomConstraint" destination="NHD-bh-UZc" id="bHb-mS-M6a"/>
+                <outlet property="nTILeadingConstraint" destination="ALB-K4-Dg4" id="uRx-7A-sda"/>
+                <outlet property="notificationTypeImage" destination="ADc-w3-AHF" id="nBw-9R-tR4"/>
+                <outlet property="timestampLabel" destination="gx9-UZ-sQ9" id="HXf-IS-SGa"/>
+            </connections>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="NotificationAvatarPlaceholder" width="56" height="56"/>
+        <image name="NotificationComment" width="20" height="20"/>
+    </resources>
+</document>
