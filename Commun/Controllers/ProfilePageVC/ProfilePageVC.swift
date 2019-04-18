@@ -32,6 +32,16 @@ class ProfilePageVC: UIViewController {
         activityIndicator.startAnimating()
         tableView.isHidden = true
         
+        // Configure tableView
+        tableView.register(UINib(nibName: "PostCardCell", bundle: nil), forCellReuseIdentifier: "PostCardCell")
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.tableFooterView = UIView()
+        
+        // RefreshControl
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
+        tableView.refreshControl = refreshControl
+        
         // bind view model
         bindViewModel()
         
@@ -49,22 +59,31 @@ class ProfilePageVC: UIViewController {
             })
             .disposed(by: bag)
         
-        // TODO: Bind table view
+        // Bind table view
+        #warning("for comments later")
+        viewModel.posts
+            .bind(to: tableView.rx.items(
+                cellIdentifier: "PostCardCell",
+                cellType: PostCardCell.self)
+            ) { index, model, cell in
+                cell.delegate = self
+                cell.post = model
+                cell.setupFromPost(model)
+                
+                // fetchNext when reaching last 5 items
+                if index >= self.viewModel.posts.value.count - 5 {
+                    self.viewModel.fetchNext()
+                }
+            }
+            .disposed(by: bag)
+    }
+    
+    @objc func refresh() {
+        viewModel.reload()
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

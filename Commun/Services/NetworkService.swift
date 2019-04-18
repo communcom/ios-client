@@ -22,11 +22,12 @@ class NetworkService: NSObject {
         WebSocketManager.instance.disconnect()
     }
     
-    func loadFeed(_ paginationKey: String?, withSortType sortType: FeedTimeFrameMode = .all, withFeedType type: FeedSortMode = .popular) -> Observable<ResponseAPIContentGetFeed> {
+    func loadFeed(_ paginationKey: String?, withSortType sortType: FeedTimeFrameMode = .all, withFeedType type: FeedSortMode = .popular, withFeedTypeMode typeMode: FeedTypeMode = .community) -> Observable<ResponseAPIContentGetFeed> {
         
         return Observable.create({ observer -> Disposable in
             
-            RestAPIManager.instance.loadFeed(userID: Config.currentUser.nickName,
+            RestAPIManager.instance.loadFeed(typeMode: typeMode,
+                                             userID: Config.currentUser.nickName,
                                              communityID: "gls",
                                              timeFrameMode: sortType,
                                              sortMode: type,
@@ -34,7 +35,7 @@ class NetworkService: NSObject {
                                              completion: { (feed, errorAPI) in
                                                 guard errorAPI == nil else {
                                                     Logger.log(message: errorAPI!.caseInfo.message.localized(), event: .error)
-                                                    //                        observer.onError(errorAPI!)
+                                                    observer.onError(errorAPI!)
                                                     return
                                                 }
                                                 

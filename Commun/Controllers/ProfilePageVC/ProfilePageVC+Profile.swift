@@ -17,12 +17,12 @@ extension ProfilePageVC {
         if let avatarUrl = profile.personal.avatarUrl {
             userAvatarImage.sd_setImage(with: URL(string: avatarUrl)) { (_, error, _, _) in
                 if (error != nil) {
-                    // TODO: Placeholder image
+                    // Placeholder image
                     self.userAvatarImage.setImageWith(profile.username, color: #colorLiteral(red: 0.9997546077, green: 0.6376479864, blue: 0.2504218519, alpha: 1))
                 }
             }
         } else {
-            // TODO: Placeholder image
+            // Placeholder image
             self.userAvatarImage.setImageWith(profile.username, color: #colorLiteral(red: 0.9997546077, green: 0.6376479864, blue: 0.2504218519, alpha: 1))
         }
         
