@@ -21,6 +21,7 @@ class ProfilePageVC: UIViewController {
     @IBOutlet weak var followersCountLabel: UILabel!
     @IBOutlet weak var followingsCountLabel: UILabel!
     @IBOutlet weak var communitiesCountLabel: UILabel!
+    @IBOutlet weak var segmentio: Segmentio!
     
     let bag = DisposeBag()
     let viewModel = ProfilePageViewModel()
@@ -41,6 +42,16 @@ class ProfilePageVC: UIViewController {
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
         tableView.refreshControl = refreshControl
+        
+        // Segmentio
+        let items: [SegmentioItem] =
+            ProfilePageSegmentioItem.AllCases()
+                .map {SegmentioItem(title: $0.rawValue, image: nil)}
+        
+        segmentio.setup(
+            content: items,
+            style: SegmentioStyle.onlyLabel,
+            options: SegmentioOptions.default)
         
         // bind view model
         bindViewModel()

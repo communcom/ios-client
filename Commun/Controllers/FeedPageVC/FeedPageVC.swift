@@ -47,45 +47,9 @@ class FeedPageVC: UIViewController {
         
         tableView.tableFooterView = UIView()
         
-        let indicator = SegmentioIndicatorOptions(type: .bottom,
-                                                  ratio: 1,
-                                                  height: 2,
-                                                  color: #colorLiteral(red: 0.4235294118, green: 0.5137254902, blue: 0.9294117647, alpha: 1))
-        let states = SegmentioStates(
-            defaultState: SegmentioState(
-                backgroundColor: .clear,
-                titleFont: UIFont(name: "SF Pro Text", size: 15) ?? UIFont.systemFont(ofSize: UIFont.smallSystemFontSize),
-                titleTextColor: #colorLiteral(red: 0.6078431373, green: 0.6235294118, blue: 0.6352941176, alpha: 1)
-            ),
-            selectedState: SegmentioState(
-                backgroundColor: .clear,
-                titleFont: UIFont(name: "SF Pro Text", size: 15) ?? UIFont.systemFont(ofSize: UIFont.smallSystemFontSize),
-                titleTextColor: .black
-            ),
-            highlightedState: SegmentioState(
-                backgroundColor: .clear,
-                titleFont: UIFont(name: "SF Pro Text", size: 15) ?? UIFont.boldSystemFont(ofSize: UIFont.smallSystemFontSize),
-                titleTextColor: .black
-            )
-        )
-        
-        let options = SegmentioOptions(backgroundColor: .white,
-                                       segmentPosition: .dynamic,
-                                       scrollEnabled: false,
-                                       indicatorOptions: indicator,
-                                       horizontalSeparatorOptions: SegmentioHorizontalSeparatorOptions(type: .bottom,
-                                                                                                       height: 0,
-                                                                                                       color: #colorLiteral(red: 0.4235294118, green: 0.5137254902, blue: 0.9294117647, alpha: 1)),
-                                       verticalSeparatorOptions: nil,
-                                       imageContentMode: .scaleAspectFit,
-                                       labelTextAlignment: .center,
-                                       labelTextNumberOfLines: 0,
-                                       segmentStates: states,
-                                       animationDuration: 0.5)
-        
         segmentioView.setup(content: [SegmentioItem(title: "All", image: nil), SegmentioItem(title: "My Feed", image: nil)],
                             style: SegmentioStyle.onlyLabel,
-                            options: options)
+                            options: SegmentioOptions.default)
         
         segmentioView.selectedSegmentioIndex = 0
         
