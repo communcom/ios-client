@@ -8,6 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		3B0544542264CED2006AF015 /* TabBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B0544532264CED2006AF015 /* TabBarViewModel.swift */; };
+		3B197C5D2269FDFF008CF10D /* Decodable+MockObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B197C5C2269FDFF008CF10D /* Decodable+MockObjects.swift */; };
+		3B197C5F2269FEEE008CF10D /* ResponseAPIContentGetFeedResult.json in Resources */ = {isa = PBXBuildFile; fileRef = 3B197C5E2269FEEE008CF10D /* ResponseAPIContentGetFeedResult.json */; };
+		3B197C62226A031B008CF10D /* ResponseAPIContentGetProfileResult.json in Resources */ = {isa = PBXBuildFile; fileRef = 3B197C61226A031B008CF10D /* ResponseAPIContentGetProfileResult.json */; };
+		3B197C64226A1A8E008CF10D /* ResponseAPIContentGetCommentsResult.json in Resources */ = {isa = PBXBuildFile; fileRef = 3B197C63226A1A8E008CF10D /* ResponseAPIContentGetCommentsResult.json */; };
+		3B197C6D226A2B83008CF10D /* ResponseAPIContentGetCommentsResult.json in Resources */ = {isa = PBXBuildFile; fileRef = 3B197C6A226A2B83008CF10D /* ResponseAPIContentGetCommentsResult.json */; };
+		3B197C6E226A2B83008CF10D /* ResponseAPIContentGetProfileResult.json in Resources */ = {isa = PBXBuildFile; fileRef = 3B197C6B226A2B83008CF10D /* ResponseAPIContentGetProfileResult.json */; };
+		3B197C6F226A2B83008CF10D /* ResponseAPIContentGetFeedResult.json in Resources */ = {isa = PBXBuildFile; fileRef = 3B197C6C226A2B83008CF10D /* ResponseAPIContentGetFeedResult.json */; };
 		3BCDB4062260A9E200739F7E /* NotificationsFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCDB4052260A9E200739F7E /* NotificationsFetcher.swift */; };
 		3BCDB4092260D43700739F7E /* NotificationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCDB4082260D43700739F7E /* NotificationType.swift */; };
 		3BCDB40F2261176600739F7E /* NotificationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3BCDB40E2261166F00739F7E /* NotificationCell.xib */; };
@@ -17,10 +24,6 @@
 		3BE2FA0B225E00C00013F32F /* NotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BE2FA0A225E00C00013F32F /* NotificationCell.swift */; };
 		3BE2FA0E225E042F0013F32F /* NotificationsPageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BE2FA0C225E042F0013F32F /* NotificationsPageVC.swift */; };
 		3BE2FA0F225E042F0013F32F /* NotificationsPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BE2FA0D225E042F0013F32F /* NotificationsPageViewModel.swift */; };
-		3B197C5D2269FDFF008CF10D /* Decodable+MockObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B197C5C2269FDFF008CF10D /* Decodable+MockObjects.swift */; };
-		3B197C5F2269FEEE008CF10D /* ResponseAPIContentGetFeedResult.json in Resources */ = {isa = PBXBuildFile; fileRef = 3B197C5E2269FEEE008CF10D /* ResponseAPIContentGetFeedResult.json */; };
-		3B197C62226A031B008CF10D /* ResponseAPIContentGetProfileResult.json in Resources */ = {isa = PBXBuildFile; fileRef = 3B197C61226A031B008CF10D /* ResponseAPIContentGetProfileResult.json */; };
-		3B197C64226A1A8E008CF10D /* ResponseAPIContentGetCommentsResult.json in Resources */ = {isa = PBXBuildFile; fileRef = 3B197C63226A1A8E008CF10D /* ResponseAPIContentGetCommentsResult.json */; };
 		5700611A2253CA96007700DA /* EditorContentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570061182253CA96007700DA /* EditorContentCell.swift */; };
 		5700611B2253CA96007700DA /* EditorContentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 570061192253CA96007700DA /* EditorContentCell.xib */; };
 		5700611F2253CDDF007700DA /* EditorMediaCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5700611D2253CDDF007700DA /* EditorMediaCell.swift */; };
@@ -117,6 +120,13 @@
 
 /* Begin PBXFileReference section */
 		3B0544532264CED2006AF015 /* TabBarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewModel.swift; sourceTree = "<group>"; };
+		3B197C5C2269FDFF008CF10D /* Decodable+MockObjects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Decodable+MockObjects.swift"; sourceTree = "<group>"; };
+		3B197C5E2269FEEE008CF10D /* ResponseAPIContentGetFeedResult.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ResponseAPIContentGetFeedResult.json; sourceTree = "<group>"; };
+		3B197C61226A031B008CF10D /* ResponseAPIContentGetProfileResult.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ResponseAPIContentGetProfileResult.json; sourceTree = "<group>"; };
+		3B197C63226A1A8E008CF10D /* ResponseAPIContentGetCommentsResult.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ResponseAPIContentGetCommentsResult.json; sourceTree = "<group>"; };
+		3B197C6A226A2B83008CF10D /* ResponseAPIContentGetCommentsResult.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ResponseAPIContentGetCommentsResult.json; sourceTree = "<group>"; };
+		3B197C6B226A2B83008CF10D /* ResponseAPIContentGetProfileResult.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ResponseAPIContentGetProfileResult.json; sourceTree = "<group>"; };
+		3B197C6C226A2B83008CF10D /* ResponseAPIContentGetFeedResult.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ResponseAPIContentGetFeedResult.json; sourceTree = "<group>"; };
 		3BCDB4052260A9E200739F7E /* NotificationsFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsFetcher.swift; sourceTree = "<group>"; };
 		3BCDB4082260D43700739F7E /* NotificationType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationType.swift; sourceTree = "<group>"; };
 		3BCDB40E2261166F00739F7E /* NotificationCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NotificationCell.xib; sourceTree = "<group>"; };
@@ -126,10 +136,6 @@
 		3BE2FA0A225E00C00013F32F /* NotificationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCell.swift; sourceTree = "<group>"; };
 		3BE2FA0C225E042F0013F32F /* NotificationsPageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsPageVC.swift; sourceTree = "<group>"; };
 		3BE2FA0D225E042F0013F32F /* NotificationsPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsPageViewModel.swift; sourceTree = "<group>"; };
-		3B197C5C2269FDFF008CF10D /* Decodable+MockObjects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Decodable+MockObjects.swift"; sourceTree = "<group>"; };
-		3B197C5E2269FEEE008CF10D /* ResponseAPIContentGetFeedResult.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ResponseAPIContentGetFeedResult.json; sourceTree = "<group>"; };
-		3B197C61226A031B008CF10D /* ResponseAPIContentGetProfileResult.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ResponseAPIContentGetProfileResult.json; sourceTree = "<group>"; };
-		3B197C63226A1A8E008CF10D /* ResponseAPIContentGetCommentsResult.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ResponseAPIContentGetCommentsResult.json; sourceTree = "<group>"; };
 		4F0772CC6D820AD11B1FF48A /* Pods_Commun.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Commun.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		570061182253CA96007700DA /* EditorContentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorContentCell.swift; sourceTree = "<group>"; };
 		570061192253CA96007700DA /* EditorContentCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EditorContentCell.xib; sourceTree = "<group>"; };
@@ -283,17 +289,28 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
-		3BE2FA05225DF7DC0013F32F /* NotificationsPageVC */ = {
-		3B197C602269FF0A008CF10D /* mockJSONs */ = {
+		3B197C66226A2B3C008CF10D /* Recovered References */ = {
 			isa = PBXGroup;
 			children = (
 				3B197C5E2269FEEE008CF10D /* ResponseAPIContentGetFeedResult.json */,
 				3B197C61226A031B008CF10D /* ResponseAPIContentGetProfileResult.json */,
 				3B197C63226A1A8E008CF10D /* ResponseAPIContentGetCommentsResult.json */,
 			);
-			path = mockJSONs;
+			name = "Recovered References";
 			sourceTree = "<group>";
 		};
+		3B197C69226A2B6D008CF10D /* Mocking */ = {
+			isa = PBXGroup;
+			children = (
+				3B197C5C2269FDFF008CF10D /* Decodable+MockObjects.swift */,
+				3B197C6A226A2B83008CF10D /* ResponseAPIContentGetCommentsResult.json */,
+				3B197C6C226A2B83008CF10D /* ResponseAPIContentGetFeedResult.json */,
+				3B197C6B226A2B83008CF10D /* ResponseAPIContentGetProfileResult.json */,
+			);
+			path = Mocking;
+			sourceTree = "<group>";
+		};
+		3BE2FA05225DF7DC0013F32F /* NotificationsPageVC */ = {
 			isa = PBXGroup;
 			children = (
 				3BE2FA06225DF8050013F32F /* NotificationsPageVC.storyboard */,
@@ -341,6 +358,7 @@
 				571B14F1223A935C00630C8F /* Products */,
 				3473647ABA0904219AF41E71 /* Pods */,
 				7B93A43127B50B70E39EAAF3 /* Frameworks */,
+				3B197C66226A2B3C008CF10D /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -627,9 +645,8 @@
 		57840A192240DB1200338FD5 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				3B197C69226A2B6D008CF10D /* Mocking */,
 				57840A1A2240DB9400338FD5 /* NetworkService.swift */,
-				3B197C5C2269FDFF008CF10D /* Decodable+MockObjects.swift */,
-				3B197C602269FF0A008CF10D /* mockJSONs */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -866,6 +883,7 @@
 				57FB179B224BFBD700563BF7 /* LICENSE in Resources */,
 				57840A0D223FAC1B00338FD5 /* BadgeWithCounterViewStandardSized.xib in Resources */,
 				3B197C5F2269FEEE008CF10D /* ResponseAPIContentGetFeedResult.json in Resources */,
+				3B197C6F226A2B83008CF10D /* ResponseAPIContentGetFeedResult.json in Resources */,
 				571B14FE223A935D00630C8F /* Assets.xcassets in Resources */,
 				5725173E2243E49C0033125C /* PostPageVC.storyboard in Resources */,
 				3B197C62226A031B008CF10D /* ResponseAPIContentGetProfileResult.json in Resources */,
@@ -876,7 +894,9 @@
 				570061252253D3B3007700DA /* EditorLinkCell.xib in Resources */,
 				3B197C64226A1A8E008CF10D /* ResponseAPIContentGetCommentsResult.json in Resources */,
 				571B14F9223A935C00630C8F /* Main.storyboard in Resources */,
+				3B197C6D226A2B83008CF10D /* ResponseAPIContentGetCommentsResult.json in Resources */,
 				3BCDB40F2261176600739F7E /* NotificationCell.xib in Resources */,
+				3B197C6E226A2B83008CF10D /* ResponseAPIContentGetProfileResult.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
