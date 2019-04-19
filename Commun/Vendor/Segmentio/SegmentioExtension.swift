@@ -43,7 +43,7 @@ extension SegmentioOptions {
                                        labelTextAlignment: .center,
                                        labelTextNumberOfLines: 0,
                                        segmentStates: states,
-                                       animationDuration: 0.5)
+                                       animationDuration: 0.2)
         
         return options
     }

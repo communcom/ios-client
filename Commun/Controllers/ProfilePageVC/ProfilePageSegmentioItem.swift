@@ -12,4 +12,7 @@ enum ProfilePageSegmentioItem: String, CaseIterable {
     case posts = "Posts"
     case comments = "Comments"
     
+    static var allCases: [ProfilePageSegmentioItem] {
+        return [.posts, .comments]
+    }
 }

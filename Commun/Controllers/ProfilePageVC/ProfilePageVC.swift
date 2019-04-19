@@ -53,13 +53,15 @@ class ProfilePageVC: UIViewController {
         tableView.refreshControl = refreshControl
         
         // Segmentio
-        let segmentedItems = ProfilePageSegmentioItem.AllCases()
-        let items: [SegmentioItem] = segmentedItems.map {SegmentioItem(title: $0.rawValue, image: nil)}
+        let segmentedItems = ProfilePageSegmentioItem.allCases
+        let items: [SegmentioItem] = segmentedItems.map {SegmentioItem(title: $0.rawValue.localized(), image: nil)}
         
         segmentio.setup(
             content: items,
             style: SegmentioStyle.onlyLabel,
             options: SegmentioOptions.default)
+        
+        segmentio.selectedSegmentioIndex = 0
         
         segmentio.valueDidChange = {_, index in
             self.viewModel.segmentedItem.accept(segmentedItems[index])
