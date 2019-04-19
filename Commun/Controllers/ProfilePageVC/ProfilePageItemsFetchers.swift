@@ -12,9 +12,7 @@ import RxSwift
 
 class PostsFetcher: ItemsFetcher<ResponseAPIContentGetPost> {
     override var request: Single<[ResponseAPIContentGetPost]>! {
-        return ResponseAPIContentGetFeedResult.observableWithMockData()
-            .map {$0.result!}
-//            NetworkService.shared.loadFeed(sequenceKey, withFeedType: .time, withFeedTypeMode: .byUser)
+        return NetworkService.shared.loadFeed(sequenceKey, withFeedType: .time, withFeedTypeMode: .byUser)
             .do(onNext: { (result) in
                 // assign next sequenceKey
                 self.sequenceKey = result.sequenceKey

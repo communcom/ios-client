@@ -36,57 +36,25 @@ extension ProfilePageVC {
             .drive(self.rx.profile)
             .disposed(by: bag)
         
-        // Bind posts
-        let posts = viewModel.items.skip(1)
-            .filter({ (items) -> Bool in
-                if let _ = items as? [ResponseAPIContentGetPost] {return true}
-                return false
-            })
-            .map {$0 as! [ResponseAPIContentGetPost]}
-        
-        posts
-            .bind(to: tableView.rx.items(
-                cellIdentifier: "PostCardCell",
-                cellType: PostCardCell.self)
-            ) { index, model, cell in
-                cell.delegate = self
-                cell.post = model
-                cell.setupFromPost(model)
-                
-                // fetchNext when reaching last 5 items
-                if index >= self.tableView.numberOfRows() - 5 {
-                    self.viewModel.fetchNext()
+        // Bind items
+        viewModel.items.skip(1)
+            .bind(to: tableView.rx.items) {table, index, element in
+                if let post = element as? ResponseAPIContentGetPost {
+                    let cell = self.tableView.dequeueReusableCell(withIdentifier: "PostCardCell") as! PostCardCell
+                    cell.delegate = self
+                    cell.post = post
+                    cell.setupFromPost(post)
+                    return cell
                 }
+                
+                if let comment = element as? ResponseAPIContentGetComment {
+                    let cell = self.tableView.dequeueReusableCell(withIdentifier: "CommentCell") as! CommentCell
+                    cell.setupFromComment(comment)
+                    return cell
+                }
+                
+                fatalError("Unknown cell type")
             }
             .disposed(by: bag)
-        
-        #warning("onSelectItems action")
-        
-        // Bind comments
-//        self.tableView.delegate = nil
-//        self.tableView.dataSource = nil
-//        let comments = viewModel.items.skip(1)
-//            .filter { (items) -> Bool in
-//                if let _ = items as? [ResponseAPIContentGetComment] {return true}
-//                return false
-//            }
-//            .map {$0 as! [ResponseAPIContentGetComment]}
-//        
-//        comments
-//            .bind(to: tableView.rx.items(
-//                cellIdentifier: "CommentCell",
-//                cellType: CommentCell.self)
-//            ) { index, model, cell in
-//                #warning("delegates")
-//                cell.setupFromComment(model)
-//                
-//                // fetchNext when reaching last 5 items
-//                if index >= self.tableView.numberOfRows() - 5 {
-//                    self.viewModel.fetchNext()
-//                }
-//            }
-//            .disposed(by: bag)
-//        
-//        #warning("onSelectItems action")
     }
 }
