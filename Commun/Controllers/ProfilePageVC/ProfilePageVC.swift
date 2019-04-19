@@ -28,10 +28,8 @@ class ProfilePageVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Initial state
+        // Indicator settings
         activityIndicator.hidesWhenStopped = true
-        activityIndicator.startAnimating()
-        tableView.isHidden = true
         
         // Configure tableView
         tableView.register(UINib(nibName: "PostCardCell", bundle: nil), forCellReuseIdentifier: "PostCardCell")
@@ -61,16 +59,27 @@ class ProfilePageVC: UIViewController {
     }
     
     func bindViewModel() {
-        // retrieve profile
-        viewModel.profile
-            .filter {$0 != nil}
-            .map {$0!}
-            .subscribe(onNext: {profile in
-                self.showProfile(profile)
-            })
+        let profile = viewModel.profile.asDriver()
+        
+        // Bind state
+        let isProfileMissing = profile.map {$0 == nil}
+        
+        isProfileMissing
+            .drive(tableView.rx.isHidden)
             .disposed(by: bag)
         
-        // Bind table view
+        isProfileMissing
+            .drive(activityIndicator.rx.isAnimating)
+            .disposed(by: bag)
+        
+        // Got profile
+        let nonNilProfile = profile.filter {$0 != nil}.map {$0!}
+        
+        nonNilProfile
+            .drive(self.rx.profile)
+            .disposed(by: bag)
+        
+        // Bind items
         #warning("for comments later")
         viewModel.posts
             .bind(to: tableView.rx.items(
