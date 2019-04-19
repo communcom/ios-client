@@ -35,31 +35,45 @@ class ProfilePageViewModel {
         nonNilProfile
             .withLatestFrom(segmentedItem)
             .flatMapLatest { (item: ProfilePageSegmentioItem) -> Single<[Decodable]> in
+                // Empty table
+                self.items.accept([])
+                
+                // Cast itemsFetcher
                 switch item {
                 case .posts:
-                    let customFetcher = PostsFetcher()
-                    self.itemsFetcher = customFetcher
-                    customFetcher.reset()
-                    return customFetcher.fetchNext()
-                        .map {$0 as [ResponseAPIContentGetPost]}
+                    // Reset fetcher
+                    guard let fetcher = self.itemsFetcher as? PostsFetcher else {return Single.never()}
+                    fetcher.reset()
                     
+                    // FetchNext items
+                    return fetcher.fetchNext()
+                        .map {$0 as [ResponseAPIContentGetPost]}
                 case .comments:
                     #warning("Fetcher for comments")
-                    let customFetcher = ItemsFetcher<ResponseAPIContentGetComment>()
-                    self.itemsFetcher = customFetcher
-                    customFetcher.reset()
-                    return customFetcher.fetchNext()
-                        .map {$0 as [ResponseAPIContentGetComment]}
+                    return Single.never()
                 }
             }
             .asDriver(onErrorJustReturn: [])
             .drive(items)
             .disposed(by: bag)
         
-        // Retrive items after segemented changes
+        // Retrieve items after segemented changes
         segmentedItem
-            .subscribe(onNext: {_ in
-                self.resetItems()
+            .subscribe(onNext: {item in
+                // Re-create fetcher
+                switch item {
+                case .posts:
+                    let customFetcher = PostsFetcher()
+                    self.itemsFetcher = customFetcher
+                case .comments:
+                    #warning("Fetcher for comments")
+                    let customFetcher = ItemsFetcher<ResponseAPIContentGetComment>()
+                    self.itemsFetcher = customFetcher
+                }
+                // Empty table
+                self.items.accept([])
+                
+                // Fetch next
                 self.fetchNext()
             })
             .disposed(by: bag)
@@ -68,9 +82,6 @@ class ProfilePageViewModel {
     func reload() {
         // reload profile
         profile.accept(nil)
-        
-        // reset items
-        resetItems()
         
         // reload profile
         loadProfile()
@@ -89,19 +100,6 @@ class ProfilePageViewModel {
     }
     
     // MARK: - For items in tableView
-    private func resetItems() {
-        switch segmentedItem.value {
-        case .posts:
-            guard let fetcher = itemsFetcher as? PostsFetcher else {return}
-            fetcher.reset()
-        case .comments:
-            #warning("Fetcher for comments")
-            guard let fetcher = itemsFetcher as? ItemsFetcher<ResponseAPIContentGetComment> else {return}
-            fetcher.reset()
-        }
-        items.accept([])
-    }
-
     func fetchNext() {
         let single: Single<[Decodable]>
         switch segmentedItem.value {
@@ -110,8 +108,7 @@ class ProfilePageViewModel {
             single = fetcher.fetchNext().map {$0 as [ResponseAPIContentGetPost]}
         case .comments:
             #warning("Fetcher for comments")
-            guard let fetcher = itemsFetcher as? ItemsFetcher<ResponseAPIContentGetComment> else {return}
-            single = fetcher.fetchNext().map {$0 as [ResponseAPIContentGetComment]}
+            single = Single.never()
         }
         single
             .asDriver(onErrorJustReturn: [])
