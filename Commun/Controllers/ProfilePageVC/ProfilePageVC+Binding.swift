@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CyberSwift
 
 extension ProfilePageVC {
     func bindViewModel() {
@@ -59,7 +60,33 @@ extension ProfilePageVC {
             }
             .disposed(by: bag)
         
+        #warning("onSelectItems action")
+        
         // Bind comments
-        #warning("for comments later")
+//        self.tableView.delegate = nil
+//        self.tableView.dataSource = nil
+//        let comments = viewModel.items.skip(1)
+//            .filter { (items) -> Bool in
+//                if let _ = items as? [ResponseAPIContentGetComment] {return true}
+//                return false
+//            }
+//            .map {$0 as! [ResponseAPIContentGetComment]}
+//        
+//        comments
+//            .bind(to: tableView.rx.items(
+//                cellIdentifier: "CommentCell",
+//                cellType: CommentCell.self)
+//            ) { index, model, cell in
+//                #warning("delegates")
+//                cell.setupFromComment(model)
+//                
+//                // fetchNext when reaching last 5 items
+//                if index >= self.tableView.numberOfRows() - 5 {
+//                    self.viewModel.fetchNext()
+//                }
+//            }
+//            .disposed(by: bag)
+//        
+//        #warning("onSelectItems action")
     }
 }

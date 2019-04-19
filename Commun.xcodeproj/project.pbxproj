@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		3B197C532269BE0E008CF10D /* SegmentioExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B197C522269BE0E008CF10D /* SegmentioExtension.swift */; };
 		3B197C552269BF74008CF10D /* ProfilePageSegmentioItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B197C542269BF74008CF10D /* ProfilePageSegmentioItem.swift */; };
-		3B197C572269CEEF008CF10D /* PostsFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B197C562269CEEF008CF10D /* PostsFetcher.swift */; };
+		3B197C572269CEEF008CF10D /* ProfilePageItemsFetchers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B197C562269CEEF008CF10D /* ProfilePageItemsFetchers.swift */; };
 		3B197C5B2269EF3F008CF10D /* ProfilePageVC+Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B197C5A2269EF3F008CF10D /* ProfilePageVC+Binding.swift */; };
 		3B2F2269226892C5006B589E /* NotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B2F2262226892C4006B589E /* NotificationCell.swift */; };
 		3B2F226A226892C5006B589E /* NotificationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3B2F2263226892C4006B589E /* NotificationCell.xib */; };
@@ -124,7 +124,7 @@
 /* Begin PBXFileReference section */
 		3B197C522269BE0E008CF10D /* SegmentioExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentioExtension.swift; sourceTree = "<group>"; };
 		3B197C542269BF74008CF10D /* ProfilePageSegmentioItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePageSegmentioItem.swift; sourceTree = "<group>"; };
-		3B197C562269CEEF008CF10D /* PostsFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostsFetcher.swift; sourceTree = "<group>"; };
+		3B197C562269CEEF008CF10D /* ProfilePageItemsFetchers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePageItemsFetchers.swift; sourceTree = "<group>"; };
 		3B197C5A2269EF3F008CF10D /* ProfilePageVC+Binding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProfilePageVC+Binding.swift"; sourceTree = "<group>"; };
 		3B2F2262226892C4006B589E /* NotificationCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationCell.swift; sourceTree = "<group>"; };
 		3B2F2263226892C4006B589E /* NotificationCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NotificationCell.xib; sourceTree = "<group>"; };
@@ -312,7 +312,7 @@
 		3BAF69C122675ADB0055CCEB /* ProfilePageVC */ = {
 			isa = PBXGroup;
 			children = (
-				3B197C562269CEEF008CF10D /* PostsFetcher.swift */,
+				3B197C562269CEEF008CF10D /* ProfilePageItemsFetchers.swift */,
 				3BAF69C222675B420055CCEB /* ProfilePageVC.swift */,
 				3B197C5A2269EF3F008CF10D /* ProfilePageVC+Binding.swift */,
 				3BAF69D0226792C60055CCEB /* ProfilePageVC+Rx.swift */,
@@ -1059,7 +1059,7 @@
 				3BAF69C322675B420055CCEB /* ProfilePageVC.swift in Sources */,
 				57A9518F2241253A0020F55D /* FeedPageVC+Rx.swift in Sources */,
 				57DE5BEA2252240E008566B9 /* TitleCell.swift in Sources */,
-				3B197C572269CEEF008CF10D /* PostsFetcher.swift in Sources */,
+				3B197C572269CEEF008CF10D /* ProfilePageItemsFetchers.swift in Sources */,
 				3B197C552269BF74008CF10D /* ProfilePageSegmentioItem.swift in Sources */,
 				57B6FC27224A9E8700BCFDDA /* WelcomeScreenVC.swift in Sources */,
 				3BAF69D1226792C60055CCEB /* ProfilePageVC+Rx.swift in Sources */,

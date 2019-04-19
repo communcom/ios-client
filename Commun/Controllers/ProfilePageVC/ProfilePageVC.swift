@@ -44,6 +44,7 @@ class ProfilePageVC: UIViewController {
         
         // Configure tableView
         tableView.register(UINib(nibName: "PostCardCell", bundle: nil), forCellReuseIdentifier: "PostCardCell")
+        tableView.register(UINib(nibName: "CommentCell", bundle: nil), forCellReuseIdentifier: "CommentCell")
         tableView.rowHeight = UITableView.automaticDimension
         tableView.tableFooterView = UIView()
         

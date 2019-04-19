@@ -49,8 +49,13 @@ class ProfilePageViewModel {
                     return fetcher.fetchNext()
                         .map {$0 as [ResponseAPIContentGetPost]}
                 case .comments:
-                    #warning("Fetcher for comments")
-                    return Single.never()
+                    // Reset fetcher
+                    guard let fetcher = self.itemsFetcher as? CommentsFetcher else {return Single.never()}
+                    fetcher.reset()
+                    
+                    // FetchNext items
+                    return fetcher.fetchNext()
+                        .map {$0 as [ResponseAPIContentGetComment]}
                 }
             }
             .asDriver(onErrorJustReturn: [])
@@ -66,8 +71,7 @@ class ProfilePageViewModel {
                     let customFetcher = PostsFetcher()
                     self.itemsFetcher = customFetcher
                 case .comments:
-                    #warning("Fetcher for comments")
-                    let customFetcher = ItemsFetcher<ResponseAPIContentGetComment>()
+                    let customFetcher = CommentsFetcher()
                     self.itemsFetcher = customFetcher
                 }
                 // Empty table
@@ -107,8 +111,8 @@ class ProfilePageViewModel {
             guard let fetcher = itemsFetcher as? PostsFetcher else {return}
             single = fetcher.fetchNext().map {$0 as [ResponseAPIContentGetPost]}
         case .comments:
-            #warning("Fetcher for comments")
-            single = Single.never()
+            guard let fetcher = itemsFetcher as? CommentsFetcher else {return}
+            single = fetcher.fetchNext().map {$0 as [ResponseAPIContentGetComment]}
         }
         single
             .asDriver(onErrorJustReturn: [])
