@@ -28,6 +28,17 @@ class ProfilePageVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        // setup view
+        setUpViews()
+        
+        // bind view model
+        bindViewModel()
+        
+        // load profile
+        viewModel.loadProfile()
+    }
+    
+    func setUpViews() {
         // Indicator settings
         activityIndicator.hidesWhenStopped = true
         
@@ -42,60 +53,17 @@ class ProfilePageVC: UIViewController {
         tableView.refreshControl = refreshControl
         
         // Segmentio
-        let items: [SegmentioItem] =
-            ProfilePageSegmentioItem.AllCases()
-                .map {SegmentioItem(title: $0.rawValue, image: nil)}
+        let segmentedItems = ProfilePageSegmentioItem.AllCases()
+        let items: [SegmentioItem] = segmentedItems.map {SegmentioItem(title: $0.rawValue, image: nil)}
         
         segmentio.setup(
             content: items,
             style: SegmentioStyle.onlyLabel,
             options: SegmentioOptions.default)
         
-        // bind view model
-        bindViewModel()
-        
-        // load profile
-        viewModel.loadProfile()
-    }
-    
-    func bindViewModel() {
-        let profile = viewModel.profile.asDriver()
-        
-        // Bind state
-        let isProfileMissing = profile.map {$0 == nil}
-        
-        isProfileMissing
-            .drive(tableView.rx.isHidden)
-            .disposed(by: bag)
-        
-        isProfileMissing
-            .drive(activityIndicator.rx.isAnimating)
-            .disposed(by: bag)
-        
-        // Got profile
-        let nonNilProfile = profile.filter {$0 != nil}.map {$0!}
-        
-        nonNilProfile
-            .drive(self.rx.profile)
-            .disposed(by: bag)
-        
-        // Bind items
-        #warning("for comments later")
-        viewModel.posts
-            .bind(to: tableView.rx.items(
-                cellIdentifier: "PostCardCell",
-                cellType: PostCardCell.self)
-            ) { index, model, cell in
-                cell.delegate = self
-                cell.post = model
-                cell.setupFromPost(model)
-                
-                // fetchNext when reaching last 5 items
-                if index >= self.viewModel.posts.value.count - 5 {
-                    self.viewModel.fetchNext()
-                }
-            }
-            .disposed(by: bag)
+        segmentio.valueDidChange = {_, index in
+            self.viewModel.segmentedItem.accept(segmentedItems[index])
+        }
     }
     
     @objc func refresh() {

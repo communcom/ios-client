@@ -12,41 +12,56 @@ import RxCocoa
 import CyberSwift
 
 class ProfilePageViewModel {
+    // Subjects
     let profile = BehaviorRelay<ResponseAPIContentGetProfile?>(value: nil)
+    let items = BehaviorRelay<[Decodable]>(value: [])
+    let segmentedItem = BehaviorRelay<ProfilePageSegmentioItem>(value: .posts)
     
-    let posts = BehaviorRelay<[ResponseAPIContentGetPost]>(value: [])
-    private let postsFetcher = PostsFetcher()
+    // Fetcher
+    private var itemsFetcher: AnyObject!
     
-//    let comments = BehaviorRelay<[ResponseAPIContentGetPost]
-    
+    // Bag
     let bag = DisposeBag()
     
     init() {
-        let nonNilProfile = profile.filter {$0 != nil}
-            .map {$0!}
-            .share()
-        
-        // Retrieve post after receiving profile
-        nonNilProfile
-            .flatMapLatest {profile -> Single<[ResponseAPIContentGetPost]> in
-                self.postsFetcher.reset()
-                return self.postsFetcher.fetchNext()
-            }
-            .asDriver(onErrorJustReturn: [])
-            .drive(posts)
-            .disposed(by: bag)
-        
-        // Retrieve comment
-        #warning("retrieve comment")
-        
+        bindElements()
     }
     
-    #warning("fetchNext comments")
-    func fetchNext() {
-        postsFetcher.fetchNext()
+    func bindElements() {
+        let nonNilProfile = profile.filter {$0 != nil}
+            .map {$0!}
+        
+        // Retrieve items after receiving profile
+        nonNilProfile
+            .withLatestFrom(segmentedItem)
+            .flatMapLatest { (item: ProfilePageSegmentioItem) -> Single<[Decodable]> in
+                switch item {
+                case .posts:
+                    let customFetcher = PostsFetcher()
+                    self.itemsFetcher = customFetcher
+                    customFetcher.reset()
+                    return customFetcher.fetchNext()
+                        .map {$0 as [ResponseAPIContentGetPost]}
+                    
+                case .comments:
+                    #warning("Fetcher for comments")
+                    let customFetcher = ItemsFetcher<ResponseAPIContentGetComment>()
+                    self.itemsFetcher = customFetcher
+                    customFetcher.reset()
+                    return customFetcher.fetchNext()
+                        .map {$0 as [ResponseAPIContentGetComment]}
+                }
+            }
             .asDriver(onErrorJustReturn: [])
-            .map {self.posts.value + $0}
-            .drive(posts)
+            .drive(items)
+            .disposed(by: bag)
+        
+        // Retrive items after segemented changes
+        segmentedItem
+            .subscribe(onNext: {_ in
+                self.resetItems()
+                self.fetchNext()
+            })
             .disposed(by: bag)
     }
     
@@ -54,17 +69,14 @@ class ProfilePageViewModel {
         // reload profile
         profile.accept(nil)
         
-        // reload posts
-        postsFetcher.reset()
-        posts.accept([])
-        
-        // reload comments
-        #warning("reload comments")
+        // reset items
+        resetItems()
         
         // reload profile
         loadProfile()
     }
     
+    // MARK: - For profile view
     func loadProfile() {
         NetworkService.shared.getUserProfile()
             .subscribe(onSuccess: { (profile) in
@@ -73,6 +85,38 @@ class ProfilePageViewModel {
                 #warning("handle error")
                 print(error)
             }
+            .disposed(by: bag)
+    }
+    
+    // MARK: - For items in tableView
+    private func resetItems() {
+        switch segmentedItem.value {
+        case .posts:
+            guard let fetcher = itemsFetcher as? PostsFetcher else {return}
+            fetcher.reset()
+        case .comments:
+            #warning("Fetcher for comments")
+            guard let fetcher = itemsFetcher as? ItemsFetcher<ResponseAPIContentGetComment> else {return}
+            fetcher.reset()
+        }
+        items.accept([])
+    }
+
+    func fetchNext() {
+        let single: Single<[Decodable]>
+        switch segmentedItem.value {
+        case .posts:
+            guard let fetcher = itemsFetcher as? PostsFetcher else {return}
+            single = fetcher.fetchNext().map {$0 as [ResponseAPIContentGetPost]}
+        case .comments:
+            #warning("Fetcher for comments")
+            guard let fetcher = itemsFetcher as? ItemsFetcher<ResponseAPIContentGetComment> else {return}
+            single = fetcher.fetchNext().map {$0 as [ResponseAPIContentGetComment]}
+        }
+        single
+            .asDriver(onErrorJustReturn: [])
+            .map {self.items.value + $0}
+            .drive(items)
             .disposed(by: bag)
     }
 }
