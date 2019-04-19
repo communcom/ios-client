@@ -9,9 +9,6 @@
 /* Begin PBXBuildFile section */
 		3B0544542264CED2006AF015 /* TabBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B0544532264CED2006AF015 /* TabBarViewModel.swift */; };
 		3B197C5D2269FDFF008CF10D /* Decodable+MockObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B197C5C2269FDFF008CF10D /* Decodable+MockObjects.swift */; };
-		3B197C5F2269FEEE008CF10D /* ResponseAPIContentGetFeedResult.json in Resources */ = {isa = PBXBuildFile; fileRef = 3B197C5E2269FEEE008CF10D /* ResponseAPIContentGetFeedResult.json */; };
-		3B197C62226A031B008CF10D /* ResponseAPIContentGetProfileResult.json in Resources */ = {isa = PBXBuildFile; fileRef = 3B197C61226A031B008CF10D /* ResponseAPIContentGetProfileResult.json */; };
-		3B197C64226A1A8E008CF10D /* ResponseAPIContentGetCommentsResult.json in Resources */ = {isa = PBXBuildFile; fileRef = 3B197C63226A1A8E008CF10D /* ResponseAPIContentGetCommentsResult.json */; };
 		3B197C6D226A2B83008CF10D /* ResponseAPIContentGetCommentsResult.json in Resources */ = {isa = PBXBuildFile; fileRef = 3B197C6A226A2B83008CF10D /* ResponseAPIContentGetCommentsResult.json */; };
 		3B197C6E226A2B83008CF10D /* ResponseAPIContentGetProfileResult.json in Resources */ = {isa = PBXBuildFile; fileRef = 3B197C6B226A2B83008CF10D /* ResponseAPIContentGetProfileResult.json */; };
 		3B197C6F226A2B83008CF10D /* ResponseAPIContentGetFeedResult.json in Resources */ = {isa = PBXBuildFile; fileRef = 3B197C6C226A2B83008CF10D /* ResponseAPIContentGetFeedResult.json */; };
@@ -882,17 +879,14 @@
 				57C33A4C2244DB1E00073FAE /* TextContentCell.xib in Resources */,
 				57FB179B224BFBD700563BF7 /* LICENSE in Resources */,
 				57840A0D223FAC1B00338FD5 /* BadgeWithCounterViewStandardSized.xib in Resources */,
-				3B197C5F2269FEEE008CF10D /* ResponseAPIContentGetFeedResult.json in Resources */,
 				3B197C6F226A2B83008CF10D /* ResponseAPIContentGetFeedResult.json in Resources */,
 				571B14FE223A935D00630C8F /* Assets.xcassets in Resources */,
 				5725173E2243E49C0033125C /* PostPageVC.storyboard in Resources */,
-				3B197C62226A031B008CF10D /* ResponseAPIContentGetProfileResult.json in Resources */,
 				576DC91E223E429C00EDED41 /* FeedPageVC.storyboard in Resources */,
 				57840A13223FB4D700338FD5 /* SortingWidgetCell.xib in Resources */,
 				57C33A452244D32300073FAE /* VotesCell.xib in Resources */,
 				3BE2FA07225DF8050013F32F /* NotificationsPageVC.storyboard in Resources */,
 				570061252253D3B3007700DA /* EditorLinkCell.xib in Resources */,
-				3B197C64226A1A8E008CF10D /* ResponseAPIContentGetCommentsResult.json in Resources */,
 				571B14F9223A935C00630C8F /* Main.storyboard in Resources */,
 				3B197C6D226A2B83008CF10D /* ResponseAPIContentGetCommentsResult.json in Resources */,
 				3BCDB40F2261176600739F7E /* NotificationCell.xib in Resources */,
