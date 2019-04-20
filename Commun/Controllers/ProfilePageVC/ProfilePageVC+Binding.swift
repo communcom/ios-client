@@ -49,6 +49,7 @@ extension ProfilePageVC {
                 
                 if let comment = element as? ResponseAPIContentGetComment {
                     let cell = self.tableView.dequeueReusableCell(withIdentifier: "CommentCell") as! CommentCell
+                    cell.delegate = self
                     cell.setupFromComment(comment)
                     return cell
                 }
