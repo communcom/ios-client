@@ -20,7 +20,7 @@ class SignInViewModel {
         return NetworkService.shared.signIn(login: Config.accountNickTest, key: Config.activeKeyTest)
             .flatMap { (permission) -> Observable<String> in
                 if permission != "active" {throw SignInError.unknown}
-                UserDefaults.standard.set(true, forKey: "UserLoged")
+                UserDefaults.standard.set(true, forKey: Config.isCurrentUserLoggedKey)
                 return Observable<String>.just(permission)
             }
     }

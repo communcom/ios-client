@@ -23,7 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         NetworkService.shared.connect()
         Fabric.with([Crashlytics.self])
 
-        if UserDefaults.standard.value(forKey: "UserLoged") as? Bool == true {
+        if UserDefaults.standard.value(forKey: Config.isCurrentUserLoggedKey) as? Bool == true {
             window?.rootViewController = controllerContainer.resolve(TabBarVC.self)
         } else {
             let welcomeVC = controllerContainer.resolve(WelcomeScreenVC.self)

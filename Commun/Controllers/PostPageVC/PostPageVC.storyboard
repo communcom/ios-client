@@ -31,8 +31,9 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xxf-Yw-cnd">
                                 <rect key="frame" x="0.0" y="20" width="375" height="56"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="epW-Br-j8v">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="epW-Br-j8v" userLabel="Back Button">
                                         <rect key="frame" x="8" y="18" width="12" height="20"/>
+                                        <accessibility key="accessibilityConfiguration" identifier="PostPageBackButton" label="PostPageBackButton"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="12" id="Sn4-fu-Sfi"/>
                                             <constraint firstAttribute="height" constant="20" id="dSu-uA-NKK"/>
@@ -52,21 +53,19 @@
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ComunityName" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z2m-2G-cmH">
                                         <rect key="frame" x="92" y="10" width="108.5" height="18"/>
-                                        <accessibility key="accessibilityConfiguration" identifier="PostPageComunityNameLabel"/>
                                         <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3h ago" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RsM-Yt-jdM">
                                         <rect key="frame" x="92" y="30" width="42.5" height="16"/>
-                                        <accessibility key="accessibilityConfiguration" identifier="PostPageTimeLabel"/>
                                         <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="13"/>
                                         <color key="textColor" red="0.60784313725490191" green="0.62352941176470589" blue="0.63529411764705879" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ESO-Mb-GPX">
                                         <rect key="frame" x="335" y="16" width="24" height="24"/>
-                                        <accessibility key="accessibilityConfiguration" identifier="PostPageMoreButton"/>
+                                        <accessibility key="accessibilityConfiguration" identifier="PostPageMoreButton" label="PostPageMoreButton"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="24" id="jGp-02-Pr9"/>
                                             <constraint firstAttribute="width" constant="24" id="nDE-gx-Fhk"/>

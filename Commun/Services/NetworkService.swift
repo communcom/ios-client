@@ -275,4 +275,53 @@ class NetworkService: NSObject {
             return Disposables.create()
         })
     }
+    
+    func getNotifications(fromId: String? = nil, markAsViewed: Bool = true, freshOnly: Bool = false) -> Single<ResponseAPIOnlineNotifyHistory> {
+        return Single<ResponseAPIOnlineNotifyHistory>.create {single in
+            RestAPIManager.instance.getOnlineNotifyHistory(fromId: fromId, freshOnly: false, completion: { (response, error) in
+                guard error == nil else {
+                    single(.error(error!))
+                    return
+                }
+                if let res = response {
+                    single(.success(res))
+                    return
+                }
+            })
+            return Disposables.create()
+        }
+    }
+    
+    func getFreshNotifications() -> Single<ResponseAPIOnlineNotifyHistoryFresh> {
+        return Single<ResponseAPIOnlineNotifyHistoryFresh>.create {single in
+            RestAPIManager.instance.getOnlineNotifyHistoryFresh(completion: { (response, error) in
+                guard error == nil else {
+                    single(.error(error!))
+                    return
+                }
+                if let res = response {
+                    single(.success(res))
+                    return
+                }
+            })
+            return Disposables.create()
+        }
+    }
+    
+    func markAllAsViewed() -> Single<ResponseAPINotifyMarkAllAsViewed> {
+        return Single<ResponseAPINotifyMarkAllAsViewed>.create {single in
+            RestAPIManager.instance.notifyMarkAllAsViewed(completion: { (response, error) in
+                guard error == nil else {
+                    single(.error(error!))
+                    return
+                }
+                
+                if let res = response {
+                    single(.success(res))
+                    return
+                }
+            })
+            return Disposables.create()
+        }
+    }
 }

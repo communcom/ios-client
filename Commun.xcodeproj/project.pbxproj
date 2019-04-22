@@ -7,6 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3B0544542264CED2006AF015 /* TabBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B0544532264CED2006AF015 /* TabBarViewModel.swift */; };
+		3B197C5D2269FDFF008CF10D /* Decodable+MockObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B197C5C2269FDFF008CF10D /* Decodable+MockObjects.swift */; };
+		3B197C6D226A2B83008CF10D /* ResponseAPIContentGetCommentsResult.json in Resources */ = {isa = PBXBuildFile; fileRef = 3B197C6A226A2B83008CF10D /* ResponseAPIContentGetCommentsResult.json */; };
+		3B197C6E226A2B83008CF10D /* ResponseAPIContentGetProfileResult.json in Resources */ = {isa = PBXBuildFile; fileRef = 3B197C6B226A2B83008CF10D /* ResponseAPIContentGetProfileResult.json */; };
+		3B197C6F226A2B83008CF10D /* ResponseAPIContentGetFeedResult.json in Resources */ = {isa = PBXBuildFile; fileRef = 3B197C6C226A2B83008CF10D /* ResponseAPIContentGetFeedResult.json */; };
+		3BCDB4062260A9E200739F7E /* NotificationsFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCDB4052260A9E200739F7E /* NotificationsFetcher.swift */; };
+		3BCDB4092260D43700739F7E /* NotificationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCDB4082260D43700739F7E /* NotificationType.swift */; };
+		3BCDB40F2261176600739F7E /* NotificationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3BCDB40E2261166F00739F7E /* NotificationCell.xib */; };
+		3BCDB4112264862100739F7E /* NSMutableAttributedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCDB4102264862100739F7E /* NSMutableAttributedString.swift */; };
+		3BCDB41322649A6F00739F7E /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCDB41222649A6F00739F7E /* Date.swift */; };
+		3BE2FA07225DF8050013F32F /* NotificationsPageVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3BE2FA06225DF8050013F32F /* NotificationsPageVC.storyboard */; };
+		3BE2FA0B225E00C00013F32F /* NotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BE2FA0A225E00C00013F32F /* NotificationCell.swift */; };
+		3BE2FA0E225E042F0013F32F /* NotificationsPageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BE2FA0C225E042F0013F32F /* NotificationsPageVC.swift */; };
+		3BE2FA0F225E042F0013F32F /* NotificationsPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BE2FA0D225E042F0013F32F /* NotificationsPageViewModel.swift */; };
 		5700611A2253CA96007700DA /* EditorContentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570061182253CA96007700DA /* EditorContentCell.swift */; };
 		5700611B2253CA96007700DA /* EditorContentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 570061192253CA96007700DA /* EditorContentCell.xib */; };
 		5700611F2253CDDF007700DA /* EditorMediaCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5700611D2253CDDF007700DA /* EditorMediaCell.swift */; };
@@ -121,6 +135,23 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3B0544532264CED2006AF015 /* TabBarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewModel.swift; sourceTree = "<group>"; };
+		3B197C5C2269FDFF008CF10D /* Decodable+MockObjects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Decodable+MockObjects.swift"; sourceTree = "<group>"; };
+		3B197C5E2269FEEE008CF10D /* ResponseAPIContentGetFeedResult.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ResponseAPIContentGetFeedResult.json; sourceTree = "<group>"; };
+		3B197C61226A031B008CF10D /* ResponseAPIContentGetProfileResult.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ResponseAPIContentGetProfileResult.json; sourceTree = "<group>"; };
+		3B197C63226A1A8E008CF10D /* ResponseAPIContentGetCommentsResult.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ResponseAPIContentGetCommentsResult.json; sourceTree = "<group>"; };
+		3B197C6A226A2B83008CF10D /* ResponseAPIContentGetCommentsResult.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ResponseAPIContentGetCommentsResult.json; sourceTree = "<group>"; };
+		3B197C6B226A2B83008CF10D /* ResponseAPIContentGetProfileResult.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ResponseAPIContentGetProfileResult.json; sourceTree = "<group>"; };
+		3B197C6C226A2B83008CF10D /* ResponseAPIContentGetFeedResult.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ResponseAPIContentGetFeedResult.json; sourceTree = "<group>"; };
+		3BCDB4052260A9E200739F7E /* NotificationsFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsFetcher.swift; sourceTree = "<group>"; };
+		3BCDB4082260D43700739F7E /* NotificationType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationType.swift; sourceTree = "<group>"; };
+		3BCDB40E2261166F00739F7E /* NotificationCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NotificationCell.xib; sourceTree = "<group>"; };
+		3BCDB4102264862100739F7E /* NSMutableAttributedString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSMutableAttributedString.swift; sourceTree = "<group>"; };
+		3BCDB41222649A6F00739F7E /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
+		3BE2FA06225DF8050013F32F /* NotificationsPageVC.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = NotificationsPageVC.storyboard; sourceTree = "<group>"; };
+		3BE2FA0A225E00C00013F32F /* NotificationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCell.swift; sourceTree = "<group>"; };
+		3BE2FA0C225E042F0013F32F /* NotificationsPageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsPageVC.swift; sourceTree = "<group>"; };
+		3BE2FA0D225E042F0013F32F /* NotificationsPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsPageViewModel.swift; sourceTree = "<group>"; };
 		4F0772CC6D820AD11B1FF48A /* Pods_Commun.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Commun.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		570061182253CA96007700DA /* EditorContentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorContentCell.swift; sourceTree = "<group>"; };
 		570061192253CA96007700DA /* EditorContentCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EditorContentCell.xib; sourceTree = "<group>"; };
@@ -293,6 +324,41 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		3B197C66226A2B3C008CF10D /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				3B197C5E2269FEEE008CF10D /* ResponseAPIContentGetFeedResult.json */,
+				3B197C61226A031B008CF10D /* ResponseAPIContentGetProfileResult.json */,
+				3B197C63226A1A8E008CF10D /* ResponseAPIContentGetCommentsResult.json */,
+			);
+			name = "Recovered References";
+			sourceTree = "<group>";
+		};
+		3B197C69226A2B6D008CF10D /* Mocking */ = {
+			isa = PBXGroup;
+			children = (
+				3B197C5C2269FDFF008CF10D /* Decodable+MockObjects.swift */,
+				3B197C6A226A2B83008CF10D /* ResponseAPIContentGetCommentsResult.json */,
+				3B197C6C226A2B83008CF10D /* ResponseAPIContentGetFeedResult.json */,
+				3B197C6B226A2B83008CF10D /* ResponseAPIContentGetProfileResult.json */,
+			);
+			path = Mocking;
+			sourceTree = "<group>";
+		};
+		3BE2FA05225DF7DC0013F32F /* NotificationsPageVC */ = {
+			isa = PBXGroup;
+			children = (
+				3BE2FA06225DF8050013F32F /* NotificationsPageVC.storyboard */,
+				3BCDB40E2261166F00739F7E /* NotificationCell.xib */,
+				3BE2FA0A225E00C00013F32F /* NotificationCell.swift */,
+				3BE2FA0C225E042F0013F32F /* NotificationsPageVC.swift */,
+				3BE2FA0D225E042F0013F32F /* NotificationsPageViewModel.swift */,
+				3BCDB4052260A9E200739F7E /* NotificationsFetcher.swift */,
+				3BCDB4082260D43700739F7E /* NotificationType.swift */,
+			);
+			path = NotificationsPageVC;
+			sourceTree = "<group>";
+		};
 		570061172253CA83007700DA /* EditorContentCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -327,6 +393,7 @@
 				571B14F1223A935C00630C8F /* Products */,
 				3473647ABA0904219AF41E71 /* Pods */,
 				7B93A43127B50B70E39EAAF3 /* Frameworks */,
+				3B197C66226A2B3C008CF10D /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -372,6 +439,7 @@
 				57B6FC23224A9E4900BCFDDA /* WelcomeScreenVC */,
 				5725173A2243E4510033125C /* PostPageVC */,
 				576DC917223E41CA00EDED41 /* FeedPageVC */,
+				3BE2FA05225DF7DC0013F32F /* NotificationsPageVC */,
 				571B1509223A94CD00630C8F /* TabBarController */,
 			);
 			path = Controllers;
@@ -381,6 +449,7 @@
 			isa = PBXGroup;
 			children = (
 				571B150A223A94DE00630C8F /* TabBarVC.swift */,
+				3B0544532264CED2006AF015 /* TabBarViewModel.swift */,
 			);
 			path = TabBarController;
 			sourceTree = "<group>";
@@ -554,6 +623,8 @@
 			children = (
 				576DC920223E42C800EDED41 /* UIViewControllerExtension.swift */,
 				5721E87022650AC0003BE04B /* StringExtension.swift */,
+				3BCDB4102264862100739F7E /* NSMutableAttributedString.swift */,
+				3BCDB41222649A6F00739F7E /* Date.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -652,6 +723,7 @@
 		57840A192240DB1200338FD5 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				3B197C69226A2B6D008CF10D /* Mocking */,
 				57840A1A2240DB9400338FD5 /* NetworkService.swift */,
 			);
 			path = Services;
@@ -933,15 +1005,20 @@
 				57C33A4C2244DB1E00073FAE /* TextContentCell.xib in Resources */,
 				57FB179B224BFBD700563BF7 /* LICENSE in Resources */,
 				57840A0D223FAC1B00338FD5 /* BadgeWithCounterViewStandardSized.xib in Resources */,
+				3B197C6F226A2B83008CF10D /* ResponseAPIContentGetFeedResult.json in Resources */,
 				571B14FE223A935D00630C8F /* Assets.xcassets in Resources */,
 				5725173E2243E49C0033125C /* PostPageVC.storyboard in Resources */,
 				576DC91E223E429C00EDED41 /* FeedPageVC.storyboard in Resources */,
 				57840A13223FB4D700338FD5 /* SortingWidgetCell.xib in Resources */,
 				5787C0CF226515BC00568CEC /* LoadKeysVC.storyboard in Resources */,
 				57C33A452244D32300073FAE /* VotesCell.xib in Resources */,
+				3BE2FA07225DF8050013F32F /* NotificationsPageVC.storyboard in Resources */,
 				570061252253D3B3007700DA /* EditorLinkCell.xib in Resources */,
 				571B14F9223A935C00630C8F /* Main.storyboard in Resources */,
 				578B94DC2263CBE300FB5BC6 /* ConfirmUserVC.storyboard in Resources */,
+				3B197C6D226A2B83008CF10D /* ResponseAPIContentGetCommentsResult.json in Resources */,
+				3BCDB40F2261176600739F7E /* NotificationCell.xib in Resources */,
+				3B197C6E226A2B83008CF10D /* ResponseAPIContentGetProfileResult.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1039,6 +1116,7 @@
 				575AECB122606F6600A7EC2D /* SelectCountryVC.swift in Sources */,
 				571B14FC223A935C00630C8F /* Commun.xcdatamodeld in Sources */,
 				576DC921223E42C800EDED41 /* UIViewControllerExtension.swift in Sources */,
+				3BCDB4112264862100739F7E /* NSMutableAttributedString.swift in Sources */,
 				57DE5BDE225208A4008566B9 /* EditorPageViewModel.swift in Sources */,
 				574095822247A8A300E40E51 /* PostPageVC+CommentCellDelegate.swift in Sources */,
 				5787C0C422650F9D00568CEC /* SetUserVC.swift in Sources */,
@@ -1052,6 +1130,8 @@
 				57840A08223FAC1B00338FD5 /* RoundImageView.swift in Sources */,
 				57FB179D224BFBD700563BF7 /* PillPageControl.swift in Sources */,
 				5700611F2253CDDF007700DA /* EditorMediaCell.swift in Sources */,
+				3BE2FA0E225E042F0013F32F /* NotificationsPageVC.swift in Sources */,
+				3BE2FA0F225E042F0013F32F /* NotificationsPageViewModel.swift in Sources */,
 				572F81A7223C164C0007F2F9 /* PostCardCell.swift in Sources */,
 				57840A03223FAC1B00338FD5 /* SegmentioCellWithImageAfterLabel.swift in Sources */,
 				5787C0CD2265153600568CEC /* LoadKeysViewModel.swift in Sources */,
@@ -1069,11 +1149,15 @@
 				57A95197224178010020F55D /* FeedPageVC+PostCardCellDelegate.swift in Sources */,
 				57840A0E223FAC1B00338FD5 /* BadgeWithCounterView.swift in Sources */,
 				57A9519122416B5D0020F55D /* FeedPageVC+Utilites.swift in Sources */,
+				3BCDB4092260D43700739F7E /* NotificationType.swift in Sources */,
 				57A951932241760C0020F55D /* FeedPageVC+EditorWidgetDelegate.swift in Sources */,
+				3BE2FA0B225E00C00013F32F /* NotificationCell.swift in Sources */,
 				57840A202240DDEB00338FD5 /* Container.swift in Sources */,
 				57F9CAAC225B489000AC9ACA /* EditorPageVC+Rx.swift in Sources */,
 				57FB17A2224C093A00563BF7 /* SignInVC.swift in Sources */,
 				57840A06223FAC1B00338FD5 /* SegmentioCellWithImageOverLabel.swift in Sources */,
+				3BCDB41322649A6F00739F7E /* Date.swift in Sources */,
+				3BCDB4062260A9E200739F7E /* NotificationsFetcher.swift in Sources */,
 				57F5CFC62244E53B005A09AE /* PostPageVC+UITableViewDataSource.swift in Sources */,
 				576DC923223E4A4C00EDED41 /* FeedPageVC+UITableViewDataSource.swift in Sources */,
 				57B6FC2C224A9F2800BCFDDA /* WelcomeItemVC.swift in Sources */,
@@ -1098,8 +1182,10 @@
 				57CBD95E225517B4000BA8CC /* EditorPageVC+Actions.swift in Sources */,
 				57840A1B2240DB9400338FD5 /* NetworkService.swift in Sources */,
 				572517322243935C0033125C /* ControllerContainer.swift in Sources */,
+				3B197C5D2269FDFF008CF10D /* Decodable+MockObjects.swift in Sources */,
 				576DC91B223E41F600EDED41 /* FeedPageViewModel.swift in Sources */,
 				575945A122607F1F004041C9 /* CountryCell.swift in Sources */,
+				3B0544542264CED2006AF015 /* TabBarViewModel.swift in Sources */,
 				574095862247AAB100E40E51 /* WriteCommentCell.swift in Sources */,
 				57DE5BDC2252088C008566B9 /* EditorPageVC.swift in Sources */,
 				57C33A472244DA7E00073FAE /* PostPageVC+VotesCellDelegate.swift in Sources */,

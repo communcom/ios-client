@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -49,8 +49,9 @@
                         <color key="textColor" red="0.60784313729999995" green="0.62352941179999999" blue="0.63529411759999999" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0mQ-vl-hBD">
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0mQ-vl-hBD" userLabel="Upvote Button">
                         <rect key="frame" x="16" y="50" width="36" height="36"/>
+                        <accessibility key="accessibilityConfiguration" identifier="VotesCellUpvoteButton" label="VotesCellUpvoteButton"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="36" id="qfJ-NQ-SGs"/>
                             <constraint firstAttribute="width" constant="36" id="z8k-7y-bL7"/>
@@ -60,8 +61,9 @@
                             <action selector="upvoteButtonTap:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Dul-MM-TGf"/>
                         </connections>
                     </button>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yaq-I5-eqZ">
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yaq-I5-eqZ" userLabel="Unvote Button">
                         <rect key="frame" x="64" y="50" width="36" height="36"/>
+                        <accessibility key="accessibilityConfiguration" identifier="VotesCellUnvoteButton" label="VotesCellUnvoteButton"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="36" id="TzJ-o0-CZo"/>
                             <constraint firstAttribute="height" constant="36" id="c7W-Im-k7b"/>
@@ -71,8 +73,9 @@
                             <action selector="downvoteButtonTap:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="9kh-Mt-37b"/>
                         </connections>
                     </button>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BzZ-Nx-Dbg">
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BzZ-Nx-Dbg" userLabel="Share Button">
                         <rect key="frame" x="268" y="50" width="36" height="36"/>
+                        <accessibility key="accessibilityConfiguration" identifier="VotesCellShareButton" label="VotesCellShareButton"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="36" id="NyV-Kc-mxr"/>
                             <constraint firstAttribute="height" constant="36" id="nHd-Tw-gaM"/>
@@ -111,9 +114,9 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="Down" width="512" height="512"/>
-        <image name="Group 101.1" width="512" height="512"/>
-        <image name="Up" width="512" height="512"/>
-        <image name="share" width="512" height="512"/>
+        <image name="Down" width="170.66667175292969" height="170.66667175292969"/>
+        <image name="Group 101.1" width="170.66667175292969" height="170.66667175292969"/>
+        <image name="Up" width="170.66667175292969" height="170.66667175292969"/>
+        <image name="share" width="170.66667175292969" height="170.66667175292969"/>
     </resources>
 </document>
