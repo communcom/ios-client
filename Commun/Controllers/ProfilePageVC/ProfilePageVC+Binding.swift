@@ -139,6 +139,9 @@ extension ProfilePageVC {
                 })
         }
     }
+    
+    // Copy referral button
+    #warning("Action for copy referral button")
 }
 
 extension ProfilePageVC: RxMediaPickerDelegate {

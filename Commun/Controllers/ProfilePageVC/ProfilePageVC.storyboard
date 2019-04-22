@@ -396,6 +396,7 @@
                         <outlet property="activityIndicator" destination="iku-D9-AKz" id="fKf-u2-hPa"/>
                         <outlet property="avatarSelectButton" destination="UX7-zH-tx1" id="y9f-3U-ppT"/>
                         <outlet property="communitiesCountLabel" destination="bNu-7d-aQd" id="e1d-Aq-6Bb"/>
+                        <outlet property="copyReferralLinkButton" destination="kqh-z7-9H2" id="64l-YQ-YJk"/>
                         <outlet property="coverSelectButton" destination="oS7-qC-7Er" id="LXq-MX-KPf"/>
                         <outlet property="followersCountLabel" destination="8lu-a4-7V6" id="SUz-Hj-F36"/>
                         <outlet property="followingsCountLabel" destination="P9F-R4-4qL" id="EKc-hS-8Fz"/>

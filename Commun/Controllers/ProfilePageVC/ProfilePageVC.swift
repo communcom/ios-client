@@ -27,6 +27,8 @@ class ProfilePageVC: UIViewController {
     @IBOutlet weak var coverSelectButton: UIButton!
     @IBOutlet weak var avatarSelectButton: UIButton!
     
+    @IBOutlet weak var copyReferralLinkButton: UIButton!
+    
     var mediaPicker: RxMediaPicker!
     
     let bag = DisposeBag()
