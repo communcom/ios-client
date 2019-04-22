@@ -61,11 +61,15 @@ class ConfirmUserVC: UIViewController {
         setupActions()
     }
 
+    override func viewWillLayoutSubviews() {
+        pinCodeInputView.frame = pinCodeView.bounds
+    }
+    
     func setupActions() {
         resendButton.rx.tap.subscribe(onNext: { _ in
             if let viewModel = self.viewModel {
-                viewModel.resendCode().subscribe(onNext: { _ in
-                    // Resend
+                viewModel.resendCode().subscribe(onNext: { flag in
+                    self.showAlert(title: "Resend code", message: flag ? "Success" : "Failed")
                 }).disposed(by: self.disposeBag)
             }
         }).disposed(by: disposeBag)
@@ -74,19 +78,19 @@ class ConfirmUserVC: UIViewController {
             if let vc = controllerContainer.resolve(SetUserVC.self) {
                 self.navigationController?.pushViewController(vc)
             }
-//            if let viewModel = self.viewModel {
-//                viewModel.checkPin(self.pinCodeInputView.text).subscribe(onNext: { success in
-//                    // Next
-//                    if success {
-//                        if let vc = controllerContainer.resolve(SetUserVC.self) {
-//                            self.navigationController?.pushViewController(vc)
-//                        }
-//                    } else {
-//                        self.showAlert(title: "Error", message: "Something went wrongs")
-//                    }
-//                    
-//                }).disposed(by: self.disposeBag)
-//            }
+            if let viewModel = self.viewModel {
+                viewModel.checkPin(self.pinCodeInputView.text).subscribe(onNext: { success in
+                    // Next
+                    if success {
+                        if let vc = controllerContainer.resolve(SetUserVC.self) {
+                            self.navigationController?.pushViewController(vc)
+                        }
+                    } else {
+                        self.showAlert(title: "Error", message: "Incorrect code")
+                    }
+                    
+                }).disposed(by: self.disposeBag)
+            }
         }).disposed(by: disposeBag)
     }
 }

@@ -9,6 +9,7 @@
 import Foundation
 import RxSwift
 import RxCocoa
+import PhoneNumberKit
 
 class SignUpViewModel {
     
@@ -17,7 +18,7 @@ class SignUpViewModel {
     
     let phone = BehaviorRelay<String>(value: "")
     
-    let selectedCountry = BehaviorRelay<County?>(value: nil)
+    let selectedCountry = BehaviorRelay<Country?>(value: nil)
     
     let errorSubject = PublishSubject<String>()
     
@@ -40,6 +41,23 @@ class SignUpViewModel {
     func signUp() -> Observable<UInt64> {
         return NetworkService.shared.signUp(withPhone: phone.value).map { result -> UInt64 in
             return result.code
+        }
+    }
+    
+    func validatePhoneNumber() -> Bool {
+        var phone = self.phone.value
+        
+        if phone.contains("+") == false {
+            phone = "+\(phone)"
+        }
+        
+        let phoneNumberKit = PhoneNumberKit()
+        do {
+            let _ = try phoneNumberKit.parse(phone, withRegion: selectedCountry.value?.shortCode ?? "", ignoreType: true)
+            return true
+        }
+        catch {
+            return false
         }
     }
 }

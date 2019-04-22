@@ -8,12 +8,16 @@
 
 import UIKit
 import RxSwift
+import RxCocoa
 
 class SignUpVC: UIViewController {
 
     let viewModel = SignUpViewModel()
     
     @IBOutlet weak var countryButton: UIButton!
+    @IBOutlet weak var selectCountryLabel: UILabel!
+    @IBOutlet weak var countryLabel: UILabel!
+    @IBOutlet weak var countryImageView: UIImageView!
     @IBOutlet weak var phoneNumberTextField: FormTextField!
     @IBOutlet weak var nextButton: UIButton!
     @IBOutlet weak var nextButtonBottomConstraint: NSLayoutConstraint!
@@ -26,21 +30,34 @@ class SignUpVC: UIViewController {
         self.title = "Sign up"
         self.navigationController?.navigationBar.prefersLargeTitles = true
         
-        countryButton.layer.cornerRadius = 10
+//        countryButton.layer.cornerRadius = 10
         phoneNumberTextField.layer.cornerRadius = 12
         nextButton.layer.cornerRadius = 8
         
         phoneNumberTextField.clipsToBounds = true
+        
+        countryImageView.layer.cornerRadius = 12
+        countryImageView.clipsToBounds = true
         
         setupBindings()
         setupActions()
     }
     
     func setupBindings() {
-        viewModel.country.asObservable().bind(to: countryButton.rx.title(for: .normal)).disposed(by: disposeBag)
+        let country = viewModel.country.asObservable()
+        country.bind(to: countryLabel.rx.text).disposed(by: disposeBag)
+        
+        country.map { country -> Bool in
+            return country != "Select country"
+        }.subscribe(onNext: { [weak self] flag in
+            self?.selectCountryLabel.isHidden = flag
+            self?.countryLabel.isHidden = !flag
+            self?.countryImageView.isHidden = !flag
+        }).disposed(by: disposeBag)
+        
         viewModel.phone.asObservable().bind(to: phoneNumberTextField.rx.text).disposed(by: disposeBag)
         viewModel.flagUrl.subscribe(onNext: { [weak self] url in
-            self?.countryButton.sd_setImage(with: url, for: .normal, completed: nil)
+            self?.countryImageView.sd_setImage(with: url, completed: nil)
         }).disposed(by: disposeBag)
         
         self.phoneNumberTextField.rx.text.map({ text -> String in
@@ -58,15 +75,35 @@ class SignUpVC: UIViewController {
         }).disposed(by: disposeBag)
         
         nextButton.rx.tap.subscribe(onNext: { [weak self] _ in
-            if let vc = controllerContainer.resolve(ConfirmUserVC.self) {
-                let nav = UINavigationController(rootViewController: vc)
-                self?.present(nav, animated: true, completion: nil)
+            if self?.viewModel.validatePhoneNumber() ?? false {
+                self?.viewModel.signUp().subscribe(onNext: { code in
+                    if let vc = controllerContainer.resolve(ConfirmUserVC.self) {
+                        vc.viewModel = ConfirmUserViewModel(pinHash: "\(code)".md5() ?? "", phone: self?.viewModel.phone.value ?? "")
+                        let nav = UINavigationController(rootViewController: vc)
+                        self?.present(nav, animated: true, completion: nil)
+                    }
+
+                }).disposed(by: self!.disposeBag)
+            } else {
+                self?.showAlert(title: "Error", message: "Worng phone number")
             }
-            
-//            self?.viewModel.signUp().subscribe(onNext: { code in
-//                self?.showAlert(title: "CODE", message: "\(code)")
-//                print("code \(code)")
-//            }).disposed(by: self!.disposeBag)
         }).disposed(by: disposeBag)
+        
+        NotificationCenter.default.rx.notification(UIResponder.keyboardWillShowNotification, object: nil).subscribe(onNext: { [weak self] notification in
+            if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+                let keyboardRectangle = keyboardFrame.cgRectValue
+                let keyboardHeight = keyboardRectangle.height
+                self?.nextButtonBottomConstraint.constant = keyboardHeight
+            }
+        }).disposed(by: disposeBag)
+        
+        NotificationCenter.default.rx.notification(UIResponder.keyboardWillHideNotification, object: nil).subscribe(onNext: { [weak self] notification in
+            if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+                let keyboardRectangle = keyboardFrame.cgRectValue
+                let keyboardHeight = keyboardRectangle.height
+                self?.nextButtonBottomConstraint.constant = keyboardHeight
+            }
+        }).disposed(by: disposeBag)
+        
     }
 }

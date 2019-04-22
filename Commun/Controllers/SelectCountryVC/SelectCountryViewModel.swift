@@ -9,13 +9,14 @@
 import Foundation
 import RxSwift
 import RxCocoa
+import CyberSwift
 
 class SelectCountryViewModel {
     
     let search = BehaviorRelay<String>(value: "")
-    let countries = BehaviorRelay<[County]>(value: PhoneCode.getCountries())
+    let countries = BehaviorRelay<[Country]>(value: PhoneCode.getCountries())
     
-    let selectedCountry = BehaviorRelay<County?>(value: nil)
+    let selectedCountry = BehaviorRelay<Country?>(value: nil)
     
     let disposeBag = DisposeBag()
     
@@ -24,8 +25,8 @@ class SelectCountryViewModel {
         
         search.filter { text -> Bool in
             return text.count > 0
-        }.map { text -> [County] in
-            var result: [County] = []
+        }.map { text -> [Country] in
+            var result: [Country] = []
             for country in countries {
                 if country.label.capitalized.contains(text.capitalized) {
                     result.append(country)
@@ -36,7 +37,7 @@ class SelectCountryViewModel {
         
         search.filter { text -> Bool in
             return text.count == 0
-        }.map { _ -> [County] in
+        }.map { _ -> [Country] in
                 return countries
         }.bind(to: self.countries).disposed(by: disposeBag)
         

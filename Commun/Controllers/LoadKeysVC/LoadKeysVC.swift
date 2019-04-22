@@ -25,7 +25,14 @@ class LoadKeysVC: UIViewController {
 
     func makeActions() {
         downloadKeysButton.rx.tap.subscribe(onNext: { _ in
-            
+            self.viewModel!.saveKeys().subscribe(onNext: { flag in
+                if flag {
+                    UserDefaults.standard.set(true, forKey: "UserLoged")
+                    self.present(TabBarVC(), animated: true, completion: nil)
+                } else {
+                    self.showAlert(title: "Error", message: "Something went wrong")
+                }
+            }).disposed(by: self.disposeBag)
         }).disposed(by: disposeBag)
     }
     

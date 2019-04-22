@@ -6,7 +6,7 @@ target 'Commun' do
   use_frameworks!
 
   pod 'CyberSwift', :git => "https://github.com/GolosChain/cyberSwift.git" # "https://github.com/Monserg/cyber-ios.git"
-  
+
   pod 'Fabric'
   pod 'Crashlytics'
 
@@ -20,9 +20,9 @@ target 'Commun' do
   pod 'SwifterSwift/Foundation'    # Foundation Extensions
   pod 'SwifterSwift/UIKit'         # UIKit Extensions
   
-  pod 'IHProgressHUD', :git => 'https://github.com/Swiftify-Corp/IHProgressHUD.git'
-  
+#  pod 'IHProgressHUD', :git => 'https://github.com/Swiftify-Corp/IHProgressHUD.git'
+
   pod 'PinCodeInputView'
-  
+  pod 'PhoneNumberKit', '~> 2.6'
   
 end

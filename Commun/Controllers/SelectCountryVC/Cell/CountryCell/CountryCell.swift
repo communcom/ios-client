@@ -25,7 +25,7 @@ class CountryCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
     
-    func setupCountry(_ country: County) {
+    func setupCountry(_ country: Country) {
         countryImage.sd_setImage(with: country.flagURL, completed: nil)
         countryLabel.text = "\(country.label) (\(country.phoneCode))"
     }

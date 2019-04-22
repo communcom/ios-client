@@ -165,24 +165,24 @@ class NetworkService: NSObject {
     func sendPost(withTitle title: String, withText text: String, metaData json: String, withTags tags: [String]) -> Observable<Bool> {
         return Observable<Bool>.create { observer -> Disposable in
             
-            RestAPIManager.instance.publish(message:        text,
-                                            headline:       title,
-                                            tags:           tags,
-                                            metaData:       json,
-                                            completion:     { (response, error) in
-                                                guard error == nil else {
-                                                    print(error!.caseInfo.message)
-                                                    return
-                                                }
-                                                
-                                                if let resp = response {
-                                                    print(resp.statusCode)
-                                                    print(resp.success)
-                                                    print(resp.body!)
-                                                    observer.onNext(resp.success)
-                                                }
-                                                observer.onCompleted()
-            })
+//            RestAPIManager.instance.publish(message:        text,
+//                                            headline:       title,
+//                                            tags:           tags,
+//                                            metaData:       json,
+//                                            completion:     { (response, error) in
+//                                                guard error == nil else {
+//                                                    print(error!.caseInfo.message)
+//                                                    return
+//                                                }
+//                                                
+//                                                if let resp = response {
+//                                                    print(resp.statusCode)
+//                                                    print(resp.success)
+//                                                    print(resp.body!)
+//                                                    observer.onNext(resp.success)
+//                                                }
+//                                                observer.onCompleted()
+//            })
             
             return Disposables.create()
         }
@@ -251,6 +251,25 @@ class NetworkService: NSObject {
                                                 }
                                                 
                                                 observer.onCompleted()
+            })
+            
+            return Disposables.create()
+        })
+    }
+    
+    func saveKeys(nickName: String) -> Observable<Bool> {
+        return Observable.create({ observer -> Disposable in
+            
+            RestAPIManager.instance.toBlockChain(nickName:      nickName,
+                                                 completion:    { (result, errorAPI) in
+                                                    guard errorAPI == nil else {
+                                                        Logger.log(message: errorAPI!.caseInfo.message.localized(), event: .error)
+                                                        return
+                                                    }
+                                                    
+                                                    Logger.log(message: "Response: \n\t\(result.description)", event: .debug)
+                                                    observer.onNext(result)
+                                                    observer.onCompleted()
             })
             
             return Disposables.create()

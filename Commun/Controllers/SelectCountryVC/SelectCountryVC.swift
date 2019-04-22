@@ -54,7 +54,7 @@ class SelectCountryVC: UIViewController {
     func setupActions() {
         if let viewModel = viewModel {
             searchController.searchBar.rx.text.orEmpty.bind(to: viewModel.search).disposed(by: disposeBag)
-            tableView.rx.modelSelected(County.self).bind(to: viewModel.selectedCountry).disposed(by: disposeBag)
+            tableView.rx.modelSelected(Country.self).bind(to: viewModel.selectedCountry).disposed(by: disposeBag)
             tableView.rx.itemSelected.subscribe(onNext: { _ in
                 self.navigationController?.dismiss(animated: true, completion: nil)
             }).disposed(by: disposeBag)

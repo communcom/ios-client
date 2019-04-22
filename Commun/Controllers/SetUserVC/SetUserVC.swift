@@ -40,9 +40,12 @@ class SetUserVC: UIViewController {
     
     func makeActions() {
         nextButton.rx.tap.subscribe(onNext: { _ in
-            if let vc = controllerContainer.resolve(LoadKeysVC.self) {
-                self.present(vc, animated: true, completion: nil)
-            }
+            self.viewModel!.setUser().subscribe(onNext: { flag in
+                if let vc = controllerContainer.resolve(LoadKeysVC.self) {
+                    vc.viewModel = LoadKeysViewModel(nickName: self.userNameTextField.text ?? "")
+                    self.present(vc, animated: true, completion: nil)
+                }
+            }).disposed(by: self.disposeBag)
         }).disposed(by: disposeBag)
     }
 }

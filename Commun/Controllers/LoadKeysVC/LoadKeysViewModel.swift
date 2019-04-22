@@ -7,7 +7,19 @@
 //
 
 import Foundation
+import RxSwift
+import RxCocoa
 
 class LoadKeysViewModel {
+    
+    let nickname = BehaviorRelay<String>(value: "")
+    
+    init(nickName: String) {
+        nickname.accept(nickName)
+    }
+    
+    func saveKeys() -> Observable<Bool> {
+        return NetworkService.shared.saveKeys(nickName: nickname.value)
+    }
     
 }
