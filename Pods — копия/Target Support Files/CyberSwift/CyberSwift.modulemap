@@ -1,0 +1,6 @@
+framework module CyberSwift {
+  umbrella header "CyberSwift-umbrella.h"
+
+  export *
+  module * { export * }
+}

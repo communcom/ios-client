@@ -9,6 +9,7 @@
 import Foundation
 import CyberSwift
 import RxSwift
+import SwifterSwift
 
 class NetworkService: NSObject {
     
@@ -164,27 +165,115 @@ class NetworkService: NSObject {
     func sendPost(withTitle title: String, withText text: String, metaData json: String, withTags tags: [String]) -> Observable<Bool> {
         return Observable<Bool>.create { observer -> Disposable in
             
-            RestAPIManager.instance.publish(message:        text,
-                                            headline:       title,
-                                            tags:           tags,
-                                            metaData:       json,
-                                            completion:     { (response, error) in
-                                                guard error == nil else {
-                                                    print(error!.caseInfo.message)
+//            RestAPIManager.instance.publish(message:        text,
+//                                            headline:       title,
+//                                            tags:           tags,
+//                                            metaData:       json,
+//                                            completion:     { (response, error) in
+//                                                guard error == nil else {
+//                                                    print(error!.caseInfo.message)
+//                                                    return
+//                                                }
+//                                                
+//                                                if let resp = response {
+//                                                    print(resp.statusCode)
+//                                                    print(resp.success)
+//                                                    print(resp.body!)
+//                                                    observer.onNext(resp.success)
+//                                                }
+//                                                observer.onCompleted()
+//            })
+            
+            return Disposables.create()
+        }
+    }
+    
+    func signUp(withPhone phone: String) -> Observable<ResponseAPIRegistrationFirstStep> {
+        return Observable.create({ observer -> Disposable in
+            RestAPIManager.instance.firstStep(phone:        phone,
+                                              completion:   { (result, errorAPI) in
+                                                guard errorAPI == nil else {
+                                                    Logger.log(message: errorAPI!.caseInfo.message.localized(), event: .error)
                                                     return
                                                 }
                                                 
-                                                if let resp = response {
-                                                    print(resp.statusCode)
-                                                    print(resp.success)
-                                                    print(resp.body!)
-                                                    observer.onNext(resp.success)
+                                                if let result = result {
+                                                    Logger.log(message: "Response: \n\t\(result)", event: .debug)
+                                                    observer.onNext(result)
                                                 }
+                                                observer.onCompleted()
+            })
+            return Disposables.create()
+        })
+    }
+    
+    func resendSmsCode(phone: String) -> Observable<String> {
+        return Observable<String>.create({ observer -> Disposable in
+            let isDebugMode: Bool   =   appBuildConfig == AppBuildConfig.debug
+            
+            RestAPIManager.instance.resendSmsCode(phone:        phone,
+                                                  isDebugMode:  isDebugMode,
+                                                  completion:   { (result, errorAPI) in
+                                                    guard errorAPI == nil else {
+                                                        Logger.log(message: errorAPI!.caseInfo.message.localized(), event: .error)
+                                                        return
+                                                    }
+                                                    
+                                                    if let result = result {
+                                                        Logger.log(message: "Response: \n\t\(result.code)", event: .debug)
+                                                        observer.onNext("\(result.code ?? 0)")
+                                                    }
+                                                    observer.onCompleted()
+            })
+            return Disposables.create()
+        }).map({ code -> String in
+            return code.md5() ?? ""
+        })
+    }
+    
+    func setUser(name: String, phone: String) -> Observable<String> {
+        return Observable.create({ observer -> Disposable in
+            
+            let isDebugMode: Bool   =   appBuildConfig == AppBuildConfig.debug
+            
+            RestAPIManager.instance.setUser(name:           name,
+                                            phone:          phone,
+                                            isDebugMode:    isDebugMode,
+                                            completion:     { (result, errorAPI) in
+                                                guard errorAPI == nil else {
+                                                    Logger.log(message: errorAPI!.caseInfo.message.localized(), event: .error)
+                                                    return
+                                                }
+                                                
+                                                if let result = result {
+                                                    Logger.log(message: "Response: \n\t\(result.status)", event: .debug)
+                                                    observer.onNext(result.status)
+                                                }
+                                                
                                                 observer.onCompleted()
             })
             
             return Disposables.create()
-        }
+        })
+    }
+    
+    func saveKeys(nickName: String) -> Observable<Bool> {
+        return Observable.create({ observer -> Disposable in
+            
+            RestAPIManager.instance.toBlockChain(nickName:      nickName,
+                                                 completion:    { (result, errorAPI) in
+                                                    guard errorAPI == nil else {
+                                                        Logger.log(message: errorAPI!.caseInfo.message.localized(), event: .error)
+                                                        return
+                                                    }
+                                                    
+                                                    Logger.log(message: "Response: \n\t\(result.description)", event: .debug)
+                                                    observer.onNext(result)
+                                                    observer.onCompleted()
+            })
+            
+            return Disposables.create()
+        })
     }
     
     func getNotifications(fromId: String? = nil, markAsViewed: Bool = true, freshOnly: Bool = false) -> Single<ResponseAPIOnlineNotifyHistory> {

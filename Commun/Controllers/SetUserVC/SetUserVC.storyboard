@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SF-Pro-Text-Regular.otf">
+            <string>SFProText-Regular</string>
+        </array>
+    </customFonts>
+    <scenes>
+        <!--Set UserVC-->
+        <scene sceneID="xj9-29-XH9">
+            <objects>
+                <viewController storyboardIdentifier="SetUserVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="IVB-kA-cp0" customClass="SetUserVC" customModule="Commun" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="x7M-Uk-FDw">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Create your username" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kdi-h6-fMh">
+                                <rect key="frame" x="16" y="63" width="177.5" height="20"/>
+                                <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Zrb-vq-uwO">
+                                <rect key="frame" x="42" y="135" width="330" height="56"/>
+                                <color key="backgroundColor" red="0.95294117647058818" green="0.96078431372549022" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="56" id="c9D-pZ-l6v"/>
+                                </constraints>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="596-PJ-wLC">
+                                <rect key="frame" x="42" y="766" width="330" height="56"/>
+                                <color key="backgroundColor" red="0.41568627450000001" green="0.50196078430000002" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="56" id="udn-Yp-jdq"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="17"/>
+                                <state key="normal" title="Next">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="8"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="596-PJ-wLC" firstAttribute="leading" secondItem="j0s-Hr-oj6" secondAttribute="leading" constant="42" id="6sf-Hx-ryW"/>
+                            <constraint firstItem="Zrb-vq-uwO" firstAttribute="top" secondItem="Kdi-h6-fMh" secondAttribute="bottom" constant="52" id="7bl-EF-REx"/>
+                            <constraint firstItem="Kdi-h6-fMh" firstAttribute="leading" secondItem="j0s-Hr-oj6" secondAttribute="leading" constant="16" id="RMh-Zd-kCZ"/>
+                            <constraint firstItem="Kdi-h6-fMh" firstAttribute="top" secondItem="j0s-Hr-oj6" secondAttribute="top" constant="19" id="RsZ-iQ-wFh"/>
+                            <constraint firstItem="j0s-Hr-oj6" firstAttribute="bottom" secondItem="596-PJ-wLC" secondAttribute="bottom" constant="40" id="Sbb-2I-0lW"/>
+                            <constraint firstItem="j0s-Hr-oj6" firstAttribute="trailing" secondItem="Zrb-vq-uwO" secondAttribute="trailing" constant="42" id="Z2M-gY-y4x"/>
+                            <constraint firstItem="j0s-Hr-oj6" firstAttribute="trailing" secondItem="596-PJ-wLC" secondAttribute="trailing" constant="42" id="nbg-L6-Ql7"/>
+                            <constraint firstItem="Zrb-vq-uwO" firstAttribute="leading" secondItem="j0s-Hr-oj6" secondAttribute="leading" constant="42" id="r78-HX-ccA"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="j0s-Hr-oj6"/>
+                    </view>
+                    <connections>
+                        <outlet property="nextButton" destination="596-PJ-wLC" id="CqU-Ch-Lhn"/>
+                        <outlet property="userNameTextField" destination="Zrb-vq-uwO" id="q1i-ss-1WT"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8wN-X2-GYM" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="39" y="320"/>
+        </scene>
+    </scenes>
+</document>

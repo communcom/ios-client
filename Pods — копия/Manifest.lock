@@ -1,0 +1,107 @@
+PODS:
+  - Alamofire (4.8.2)
+  - BigInt (3.1.0):
+    - SipHash (~> 1.2)
+  - Crashlytics (3.12.0):
+    - Fabric (~> 1.9.0)
+  - CyberSwift (1.0.6):
+    - eosswift (~> 1.5)
+    - Localize-Swift (~> 2.0)
+    - Locksmith
+    - RxBlocking (~> 4.0)
+    - Starscream (~> 3.0)
+  - eosswift (1.6.0):
+    - BigInt (~> 3.1.0)
+    - RxCocoa (~> 4.0)
+    - RxSwift (~> 4.0)
+  - Fabric (1.9.0)
+  - IHProgressHUD (0.1.4)
+  - Localize-Swift (2.0.0)
+  - Locksmith (4.0.0)
+  - PinCodeInputView (1.0.0)
+  - RxBlocking (4.5.0):
+    - RxSwift (>= 4.4.2, ~> 4.4)
+  - RxCocoa (4.5.0):
+    - RxSwift (>= 4.4.2, ~> 4.4)
+  - RxSwift (4.5.0)
+  - SDWebImage (5.0.1):
+    - SDWebImage/Core (= 5.0.1)
+  - SDWebImage/Core (5.0.1)
+  - SipHash (1.2.2)
+  - Starscream (3.1.0)
+  - SwifterSwift/Foundation (5.0.0)
+  - SwifterSwift/SwiftStdlib (5.0.0)
+  - SwifterSwift/UIKit (5.0.0)
+  - Swinject (2.6.0)
+
+DEPENDENCIES:
+  - Alamofire
+  - Crashlytics
+  - CyberSwift (from `https://github.com/GolosChain/cyberSwift.git`)
+  - Fabric
+  - IHProgressHUD (from `https://github.com/Swiftify-Corp/IHProgressHUD.git`)
+  - PinCodeInputView
+  - RxCocoa (~> 4.0)
+  - RxSwift (~> 4.0)
+  - SDWebImage (~> 5.0)
+  - SwifterSwift/Foundation
+  - SwifterSwift/SwiftStdlib
+  - SwifterSwift/UIKit
+  - Swinject
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - Alamofire
+    - BigInt
+    - Crashlytics
+    - eosswift
+    - Fabric
+    - Localize-Swift
+    - Locksmith
+    - PinCodeInputView
+    - RxBlocking
+    - RxCocoa
+    - RxSwift
+    - SDWebImage
+    - SipHash
+    - Starscream
+    - SwifterSwift
+    - Swinject
+
+EXTERNAL SOURCES:
+  CyberSwift:
+    :git: https://github.com/GolosChain/cyberSwift.git
+  IHProgressHUD:
+    :git: https://github.com/Swiftify-Corp/IHProgressHUD.git
+
+CHECKOUT OPTIONS:
+  CyberSwift:
+    :commit: ce14d28bae5010fee7ccf5f221b478b58f4f9d13
+    :git: https://github.com/GolosChain/cyberSwift.git
+  IHProgressHUD:
+    :commit: 6c160f4ef2e9b924de58c8df3382a57ced957dfd
+    :git: https://github.com/Swiftify-Corp/IHProgressHUD.git
+
+SPEC CHECKSUMS:
+  Alamofire: ae5c501addb7afdbb13687d7f2f722c78734c2d3
+  BigInt: 76b5dfdfa3e2e478d4ffdf161aeede5502e2742f
+  Crashlytics: 07fb167b1694128c1c9a5a5cc319b0e9c3ca0933
+  CyberSwift: ab0bb1dbf08e2e6ab8762201e04310493dded090
+  eosswift: 22bc931fd65bbd446c3f828233b8fd2916cec4a7
+  Fabric: f988e33c97f08930a413e08123064d2e5f68d655
+  IHProgressHUD: a01846bfbb581c761c79747c67b08387c3bdfae3
+  Localize-Swift: c798ec9286494866f7068f85f7c71283ac5bdab4
+  Locksmith: e9bebbaaa4cee3c511bc358a44f843c3fe00e21f
+  PinCodeInputView: 0a7361aaec76b639ff6521f1b6c38ed27b8144e3
+  RxBlocking: 79413e4d916f44bb3e113c5b2cc059e36fe58910
+  RxCocoa: cbf70265dc65a981d4ac982e513c10cf23df24a0
+  RxSwift: f172070dfd1a93d70a9ab97a5a01166206e1c575
+  SDWebImage: 27dd2c9ea07a2252f94557c9fbb6105ee94b74c9
+  SipHash: fad90a4683e420c52ef28063063dbbce248ea6d4
+  Starscream: 08172b481e145289c4930cb567230fb55897cfa4
+  SwifterSwift: 96f90594b370802f01647c2b1229c74a84ffafee
+  Swinject: 48a96cda93633cf2860697b4ce76ab5db9ebaca2
+
+PODFILE CHECKSUM: 03f78916cfe8c107a8c06f4d0993b7c904fe4bda
+
+COCOAPODS: 1.5.3
