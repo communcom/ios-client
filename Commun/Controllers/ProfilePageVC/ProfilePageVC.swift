@@ -29,8 +29,6 @@ class ProfilePageVC: UIViewController {
     
     @IBOutlet weak var copyReferralLinkButton: UIButton!
     
-    var mediaPicker: RxMediaPicker!
-    
     let bag = DisposeBag()
     let viewModel = ProfilePageViewModel()
     

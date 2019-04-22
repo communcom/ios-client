@@ -29,7 +29,6 @@ target 'Commun' do
   pod 'SwifterSwift/UIKit'         # UIKit Extensions
   
   pod 'IHProgressHUD', :git => 'https://github.com/Swiftify-Corp/IHProgressHUD.git'
-  
-  pod 'RxMediaPicker', :git => 'https://github.com/pygd/RxMediaPicker'
+  pod 'TLPhotoPicker'
   
 end

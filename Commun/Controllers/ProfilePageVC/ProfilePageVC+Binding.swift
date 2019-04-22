@@ -11,7 +11,7 @@ import UIKit
 import CyberSwift
 import Action
 import RxSwift
-import RxMediaPicker
+import TLPhotoPicker
 
 extension ProfilePageVC {
     enum ImageType {
@@ -102,7 +102,6 @@ extension ProfilePageVC {
             .disposed(by: bag)
         
         // Image selectors
-        mediaPicker = RxMediaPicker(delegate: self)
         coverSelectButton.rx.action = onUpdate(.cover)
         avatarSelectButton.rx.action = onUpdate(.avatar)
         
@@ -124,8 +123,20 @@ extension ProfilePageVC {
     // Image selection
     func onUpdate(_ imageType: ImageType) -> CocoaAction {
         return Action {_ in
-            return self.mediaPicker.selectImage(source: .photoLibrary, editable: false)
-                .flatMap({ (image, _) -> Observable<Void> in
+            let vc = TLPhotosPickerViewController()
+            var configure = TLPhotosPickerConfigure()
+            configure.singleSelectedMode = true
+            configure.allowedLivePhotos = false
+            configure.allowedVideo = false
+            configure.allowedVideoRecording = false
+            configure.mediaType = .image
+            vc.configure = configure
+            self.present(vc, animated: true, completion: nil)
+            
+            return vc.rx.didSelectAssets
+                .filter {$0.count > 0 && $0[0].type == TLPHAsset.AssetType.photo && $0[0].fullResolutionImage != nil}
+                .map {$0[0].fullResolutionImage!}
+                .do(onNext: {image in
                     switch imageType {
                     case .avatar:
                         self.viewModel.avatarImage.accept(image)
@@ -135,21 +146,11 @@ extension ProfilePageVC {
                         break
                     }
                     #warning("Send image change request to server")
-                    return .just(())
                 })
+                .map {_ in}
         }
     }
     
     // Copy referral button
     #warning("Action for copy referral button")
-}
-
-extension ProfilePageVC: RxMediaPickerDelegate {
-    func present(picker: UIImagePickerController) {
-        present(picker, animated: true, completion: nil)
-    }
-    
-    func dismiss(picker: UIImagePickerController) {
-        dismiss(animated: true, completion: nil)
-    }
 }
