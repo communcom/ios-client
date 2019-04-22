@@ -343,9 +343,17 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
+		3B51581F226E1D3700108F17 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
 		3BAF69C122675ADB0055CCEB /* ProfilePageVC */ = {
 			isa = PBXGroup;
 			children = (
+				3B51581F226E1D3700108F17 /* ViewControllers */,
 				3B51581A226DE27200108F17 /* Cells */,
 				3B197C562269CEEF008CF10D /* ProfilePageItemsFetchers.swift */,
 				3BAF69C222675B420055CCEB /* ProfilePageVC.swift */,

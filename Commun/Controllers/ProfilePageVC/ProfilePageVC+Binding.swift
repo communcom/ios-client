@@ -102,8 +102,8 @@ extension ProfilePageVC {
             .disposed(by: bag)
         
         // Image selectors
-        coverSelectButton.rx.action = onUpdate(.cover)
-        avatarSelectButton.rx.action = onUpdate(.avatar)
+        coverSelectButton.rx.action = onUpdateCover()
+//        avatarSelectButton.rx.action = onUpdate(.avatar)
         
         // Bind image
         viewModel.avatarImage
@@ -121,7 +121,7 @@ extension ProfilePageVC {
     
     // MARK: - Actions
     // Image selection
-    func onUpdate(_ imageType: ImageType) -> CocoaAction {
+    func onUpdateCover() -> CocoaAction {
         return Action {_ in
             let vc = TLPhotosPickerViewController()
             var configure = TLPhotosPickerConfigure()
@@ -137,14 +137,8 @@ extension ProfilePageVC {
                 .filter {$0.count > 0 && $0[0].type == TLPHAsset.AssetType.photo && $0[0].fullResolutionImage != nil}
                 .map {$0[0].fullResolutionImage!}
                 .do(onNext: {image in
-                    switch imageType {
-                    case .avatar:
-                        self.viewModel.avatarImage.accept(image)
-                        break
-                    case .cover:
-                        self.viewModel.coverImage.accept(image)
-                        break
-                    }
+                    #warning("drag and drop cover")
+                    self.viewModel.coverImage.accept(image)
                     #warning("Send image change request to server")
                 })
                 .map {_ in}
