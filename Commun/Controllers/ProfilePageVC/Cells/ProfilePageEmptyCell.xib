@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SF-Pro-Text-Semibold.otf">
+            <string>SFProText-Semibold</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="ProfilePageEmptyCell" rowHeight="159" id="5Eb-7S-IHC" customClass="ProfilePageEmptyCell" customModule="Commun" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="374" height="214"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="5Eb-7S-IHC" id="C65-9P-JSl">
+                <rect key="frame" x="0.0" y="0.0" width="374" height="213.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ProfilePageItemsEmptyComment" translatesAutoresizingMaskIntoConstraints="NO" id="oti-Yu-VeX">
+                        <rect key="frame" x="167" y="50" width="40" height="40"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="40" id="IIK-MJ-s4z"/>
+                            <constraint firstAttribute="width" constant="40" id="g0I-FK-rMb"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Comments" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f4G-Xb-dMz">
+                        <rect key="frame" x="111" y="114" width="152.5" height="26.5"/>
+                        <fontDescription key="fontDescription" name="SFProText-Semibold" family="SF Pro Text" pointSize="22"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You have not made any comment" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tDD-ex-6Rk">
+                        <rect key="frame" x="73.5" y="140.5" width="227.5" height="18"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="oti-Yu-VeX" firstAttribute="top" secondItem="C65-9P-JSl" secondAttribute="top" constant="50" id="7tc-gX-Yqw"/>
+                    <constraint firstItem="f4G-Xb-dMz" firstAttribute="centerX" secondItem="C65-9P-JSl" secondAttribute="centerX" id="cox-1t-RX6"/>
+                    <constraint firstAttribute="bottom" secondItem="tDD-ex-6Rk" secondAttribute="bottom" constant="55" id="fJP-u3-YgQ"/>
+                    <constraint firstItem="tDD-ex-6Rk" firstAttribute="top" secondItem="f4G-Xb-dMz" secondAttribute="bottom" id="hAV-ps-bku"/>
+                    <constraint firstItem="oti-Yu-VeX" firstAttribute="centerX" secondItem="C65-9P-JSl" secondAttribute="centerX" id="iso-y0-ldY"/>
+                    <constraint firstItem="tDD-ex-6Rk" firstAttribute="centerX" secondItem="C65-9P-JSl" secondAttribute="centerX" id="lcn-Pa-1Vu"/>
+                    <constraint firstItem="f4G-Xb-dMz" firstAttribute="top" secondItem="oti-Yu-VeX" secondAttribute="bottom" constant="24" id="mH3-R3-N0I"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="descriptionLabel" destination="tDD-ex-6Rk" id="QiH-cF-vJJ"/>
+                <outlet property="titleLabel" destination="f4G-Xb-dMz" id="AY0-Gc-85C"/>
+            </connections>
+            <point key="canvasLocation" x="-216.66666666666669" y="57.254464285714285"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="ProfilePageItemsEmptyComment" width="30" height="28"/>
+    </resources>
+</document>

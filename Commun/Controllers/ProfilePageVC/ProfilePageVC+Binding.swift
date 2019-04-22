@@ -46,7 +46,19 @@ extension ProfilePageVC {
         
         // Bind items
         viewModel.items.skip(1)
+            .map { items -> [AnyObject?] in
+                if items.count == 0 {
+                    return [nil]
+                }
+                return items as [AnyObject?]
+            }
             .bind(to: tableView.rx.items) {table, index, element in
+                if element == nil {
+                    let cell = self.tableView.dequeueReusableCell(withIdentifier: "ProfilePageEmptyCell") as! ProfilePageEmptyCell
+                    cell.setUp(with: self.viewModel.segmentedItem.value)
+                    return cell
+                }
+                
                 if let post = element as? ResponseAPIContentGetPost {
                     let cell = self.tableView.dequeueReusableCell(withIdentifier: "PostCardCell") as! PostCardCell
                     cell.delegate = self
