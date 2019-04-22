@@ -11,17 +11,23 @@ import RxSwift
 import CyberSwift
 import SDWebImage
 import UIImageView_Letters
+import RxMediaPicker
 
 class ProfilePageVC: UIViewController {
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var userAvatarImage: UIImageView!
+    @IBOutlet weak var userCoverImage: UIImageView!
     @IBOutlet weak var userNameLabel: UILabel!
     @IBOutlet weak var joinedDateLabel: UILabel!
     @IBOutlet weak var followersCountLabel: UILabel!
     @IBOutlet weak var followingsCountLabel: UILabel!
     @IBOutlet weak var communitiesCountLabel: UILabel!
     @IBOutlet weak var segmentio: Segmentio!
+    @IBOutlet weak var coverSelectButton: UIButton!
+    @IBOutlet weak var avatarSelectButton: UIButton!
+    
+    var mediaPicker: RxMediaPicker!
     
     let bag = DisposeBag()
     let viewModel = ProfilePageViewModel()

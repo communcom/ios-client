@@ -324,13 +324,16 @@
                     </view>
                     <connections>
                         <outlet property="activityIndicator" destination="iku-D9-AKz" id="fKf-u2-hPa"/>
+                        <outlet property="avatarSelectButton" destination="UX7-zH-tx1" id="y9f-3U-ppT"/>
                         <outlet property="communitiesCountLabel" destination="bNu-7d-aQd" id="e1d-Aq-6Bb"/>
+                        <outlet property="coverSelectButton" destination="oS7-qC-7Er" id="LXq-MX-KPf"/>
                         <outlet property="followersCountLabel" destination="8lu-a4-7V6" id="SUz-Hj-F36"/>
                         <outlet property="followingsCountLabel" destination="P9F-R4-4qL" id="EKc-hS-8Fz"/>
                         <outlet property="joinedDateLabel" destination="zzx-Z4-0fu" id="MgC-8m-t2m"/>
                         <outlet property="segmentio" destination="Fg1-OO-KT1" id="PB0-WF-RFV"/>
                         <outlet property="tableView" destination="fdx-8K-eYs" id="QxY-nc-Ere"/>
                         <outlet property="userAvatarImage" destination="CgS-tE-PNM" id="QEG-tC-AOi"/>
+                        <outlet property="userCoverImage" destination="RFx-YH-sbl" id="bGg-kB-8Dv"/>
                         <outlet property="userNameLabel" destination="jeD-UU-yV5" id="5IN-Or-dKc"/>
                     </connections>
                 </viewController>

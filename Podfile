@@ -30,4 +30,6 @@ target 'Commun' do
   
   pod 'IHProgressHUD', :git => 'https://github.com/Swiftify-Corp/IHProgressHUD.git'
   
+  pod 'RxMediaPicker', :git => 'https://github.com/pygd/RxMediaPicker'
+  
 end

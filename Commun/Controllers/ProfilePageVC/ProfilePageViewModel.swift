@@ -17,6 +17,9 @@ class ProfilePageViewModel {
     let items = BehaviorRelay<[Decodable]>(value: [])
     let segmentedItem = BehaviorRelay<ProfilePageSegmentioItem>(value: .posts)
     
+    let coverImage = BehaviorRelay<UIImage?>(value: nil)
+    let avatarImage = BehaviorRelay<UIImage?>(value: nil)
+    
     // Fetcher
     private var itemsFetcher: AnyObject!
     

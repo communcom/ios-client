@@ -7,9 +7,17 @@
 //
 
 import Foundation
+import UIKit
 import CyberSwift
+import Action
+import RxSwift
+import RxMediaPicker
 
 extension ProfilePageVC {
+    enum ImageType {
+        case cover, avatar
+    }
+    
     func bindViewModel() {
         let profile = viewModel.profile.asDriver()
         
@@ -57,5 +65,53 @@ extension ProfilePageVC {
                 fatalError("Unknown cell type")
             }
             .disposed(by: bag)
+        
+        // Image selectors
+        mediaPicker = RxMediaPicker(delegate: self)
+        coverSelectButton.rx.action = onUpdate(.cover)
+        avatarSelectButton.rx.action = onUpdate(.avatar)
+        
+        // Bind image
+        viewModel.avatarImage
+            .asDriver(onErrorJustReturn: nil)
+            .filter {$0 != nil}
+            .drive(userAvatarImage.rx.image)
+            .disposed(by: bag)
+        
+        viewModel.coverImage
+            .asDriver(onErrorJustReturn: nil)
+            .filter {$0 != nil}
+            .drive(userCoverImage.rx.image)
+            .disposed(by: bag)
+    }
+    
+    // MARK: - Actions
+    // Image selection
+    func onUpdate(_ imageType: ImageType) -> CocoaAction {
+        return Action {_ in
+            return self.mediaPicker.selectImage(source: .photoLibrary, editable: false)
+                .flatMap({ (image, _) -> Observable<Void> in
+                    switch imageType {
+                    case .avatar:
+                        self.viewModel.avatarImage.accept(image)
+                        break
+                    case .cover:
+                        self.viewModel.coverImage.accept(image)
+                        break
+                    }
+                    #warning("Send image change request to server")
+                    return .just(())
+                })
+        }
+    }
+}
+
+extension ProfilePageVC: RxMediaPickerDelegate {
+    func present(picker: UIImagePickerController) {
+        present(picker, animated: true, completion: nil)
+    }
+    
+    func dismiss(picker: UIImagePickerController) {
+        dismiss(animated: true, completion: nil)
     }
 }
