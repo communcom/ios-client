@@ -78,6 +78,29 @@ extension ProfilePageVC {
             }
             .disposed(by: bag)
         
+        // OnItemSelected
+        tableView.rx.itemSelected
+            .subscribe(onNext: {indexPath in
+                let cell = self.tableView.cellForRow(at: indexPath)
+                switch cell {
+                case is PostCardCell:
+                    if let postPageVC = controllerContainer.resolve(PostPageVC.self),
+                        let post = self.viewModel.items.value[indexPath.row] as? ResponseAPIContentGetPost{
+                        postPageVC.viewModel.postForRequest = post
+                        self.present(postPageVC, animated: true, completion: nil)
+                    } else {
+                        self.showAlert(title: "Error", message: "Something went wrong")
+                    }
+                    break
+                case is CommentCell:
+                    #warning("Tap a comment")
+                    break
+                default:
+                    break
+                }
+            })
+            .disposed(by: bag)
+        
         // Image selectors
         mediaPicker = RxMediaPicker(delegate: self)
         coverSelectButton.rx.action = onUpdate(.cover)
