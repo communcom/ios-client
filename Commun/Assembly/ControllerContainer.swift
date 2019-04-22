@@ -43,8 +43,28 @@ let controllerContainer: Container = {
         return vc
     })
     
+    container.register(SignUpVC.self, factory: { r in
+        let vc = SignUpVC.instanceController(fromStoryboard: "SignUpVC", withIdentifier: "SignUpVC") as! SignUpVC
+        return vc
+    })
+    
     container.register(EditorPageVC.self, factory: { r in
         let vc = SignInVC.instanceController(fromStoryboard: "EditorPageVC", withIdentifier: "EditorPageVC") as! EditorPageVC
+        return vc
+    })
+    
+    container.register(SelectCountryVC.self, factory: { r in
+        let vc = SelectCountryVC.instanceController(fromStoryboard: "SelectCountryVC", withIdentifier: "SelectCountryVC") as! SelectCountryVC
+        return vc
+    })
+    
+    container.register(SetUserVC.self, factory: { r in
+        let vc = SetUserVC.instanceController(fromStoryboard: "SetUserVC", withIdentifier: "SetUserVC") as! SetUserVC
+        return vc
+    })
+    
+    container.register(LoadKeysVC.self, factory: { r in
+        let vc = LoadKeysVC.instanceController(fromStoryboard: "LoadKeysVC", withIdentifier: "LoadKeysVC") as! LoadKeysVC
         return vc
     })
     
