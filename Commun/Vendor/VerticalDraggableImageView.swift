@@ -37,9 +37,11 @@ class VerticalDraggableImageView: UIImageView {
         // Count pan distance
         let distance = location.y - beganLocation!.y
         beganLocation = location
-        lastY = lastY + distance/self.height
+        let newLastY = lastY + distance/self.height
         
         // Check if out of bound
+        if abs(newLastY*self.width) > abs(self.height/2) {return}
+        lastY = newLastY
         self.layer.contentsRect = CGRect(x: 0, y: lastY, width: 1, height: 1)
     }
 }
