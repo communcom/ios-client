@@ -12,7 +12,7 @@ import RxCocoa
 import CyberSwift
 
 class ProfileEditCoverVC: UIViewController {
-    @IBOutlet weak var coverImage: UIImageView!
+    @IBOutlet weak var coverImage: VerticalDraggableImageView!
     @IBOutlet weak var avatarImage: UIImageView!
     @IBOutlet weak var userNameLabel: UILabel!
     @IBOutlet weak var joinedDateLabel: UILabel!

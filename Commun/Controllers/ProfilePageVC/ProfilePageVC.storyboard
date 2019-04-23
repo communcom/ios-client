@@ -439,7 +439,7 @@
                                     </navigationItem>
                                 </items>
                             </navigationBar>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ProfilePageCover" translatesAutoresizingMaskIntoConstraints="NO" id="8cF-Ek-qIg">
+                            <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ProfilePageCover" translatesAutoresizingMaskIntoConstraints="NO" id="8cF-Ek-qIg" customClass="VerticalDraggableImageView" customModule="Commun" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="88" width="414" height="160"/>
                                 <color key="backgroundColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
