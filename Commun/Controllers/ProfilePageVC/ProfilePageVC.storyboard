@@ -475,20 +475,55 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <view alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QXx-ix-XZS">
+                                <rect key="frame" x="86" y="137" width="242" height="37.5"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="QXx-ix-XZS" secondAttribute="height" multiplier="103:16" id="9Kt-WB-XBJ"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="4"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ProfilePageCoverDragIcon" translatesAutoresizingMaskIntoConstraints="NO" id="zbE-KA-5Nk">
+                                <rect key="frame" x="102" y="145" width="21.5" height="21.5"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="zbE-KA-5Nk" secondAttribute="height" id="yMU-Fm-Cv0"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Drag to move cover photo" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ell-cV-JLU">
+                                <rect key="frame" x="131.5" y="145" width="180.5" height="21.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="zbE-KA-5Nk" firstAttribute="leading" secondItem="QXx-ix-XZS" secondAttribute="leading" constant="16" id="2BQ-oN-SQ0"/>
+                            <constraint firstItem="ell-cV-JLU" firstAttribute="trailing" secondItem="QXx-ix-XZS" secondAttribute="trailing" constant="-16" id="2Dx-b2-cT7"/>
+                            <constraint firstItem="zbE-KA-5Nk" firstAttribute="bottom" secondItem="QXx-ix-XZS" secondAttribute="bottom" constant="-8" id="3EI-YQ-vJg"/>
+                            <constraint firstItem="QXx-ix-XZS" firstAttribute="centerX" secondItem="8cF-Ek-qIg" secondAttribute="centerX" id="73X-4e-vJH"/>
                             <constraint firstItem="jaP-Rf-dLD" firstAttribute="centerX" secondItem="lkO-cg-dmd" secondAttribute="centerX" id="7Yi-rr-eCE"/>
+                            <constraint firstItem="QXx-ix-XZS" firstAttribute="centerY" secondItem="8cF-Ek-qIg" secondAttribute="centerY" constant="-25" id="ArD-M5-cNW"/>
+                            <constraint firstItem="lkO-cg-dmd" firstAttribute="trailing" secondItem="QXx-ix-XZS" secondAttribute="trailing" constant="86" id="Bak-QT-DNJ"/>
+                            <constraint firstItem="ell-cV-JLU" firstAttribute="leading" secondItem="zbE-KA-5Nk" secondAttribute="trailing" constant="8" id="Da6-Qd-CQU"/>
                             <constraint firstItem="Hob-rx-vjU" firstAttribute="leading" secondItem="lkO-cg-dmd" secondAttribute="leading" id="INm-Al-wkd"/>
                             <constraint firstItem="Hob-rx-vjU" firstAttribute="trailing" secondItem="lkO-cg-dmd" secondAttribute="trailing" id="LaB-wr-oQK"/>
                             <constraint firstItem="drm-pZ-Nvs" firstAttribute="top" secondItem="jaP-Rf-dLD" secondAttribute="bottom" constant="10" id="R0v-h0-cDV"/>
                             <constraint firstItem="jaP-Rf-dLD" firstAttribute="bottom" secondItem="8cF-Ek-qIg" secondAttribute="bottom" constant="50" id="Szn-uX-e0q"/>
                             <constraint firstItem="4iA-4Y-1yt" firstAttribute="top" secondItem="drm-pZ-Nvs" secondAttribute="bottom" constant="4" id="WEW-c2-zmG"/>
                             <constraint firstItem="4iA-4Y-1yt" firstAttribute="centerX" secondItem="lkO-cg-dmd" secondAttribute="centerX" id="go8-LK-rnn"/>
+                            <constraint firstItem="QXx-ix-XZS" firstAttribute="leading" secondItem="lkO-cg-dmd" secondAttribute="leading" constant="86" id="i1E-QT-GyF"/>
                             <constraint firstItem="8cF-Ek-qIg" firstAttribute="trailing" secondItem="lkO-cg-dmd" secondAttribute="trailing" id="jrV-yT-ZDQ"/>
+                            <constraint firstItem="zbE-KA-5Nk" firstAttribute="top" secondItem="QXx-ix-XZS" secondAttribute="top" constant="8" id="kF8-cf-agC"/>
                             <constraint firstItem="8cF-Ek-qIg" firstAttribute="top" secondItem="Hob-rx-vjU" secondAttribute="bottom" id="pFA-Y9-K3c"/>
                             <constraint firstItem="drm-pZ-Nvs" firstAttribute="centerX" secondItem="lkO-cg-dmd" secondAttribute="centerX" id="qC7-Ca-Eeo"/>
                             <constraint firstItem="Hob-rx-vjU" firstAttribute="top" secondItem="lkO-cg-dmd" secondAttribute="top" id="trg-Au-ezq"/>
+                            <constraint firstItem="ell-cV-JLU" firstAttribute="top" secondItem="QXx-ix-XZS" secondAttribute="top" constant="8" id="vOi-0U-FF1"/>
+                            <constraint firstItem="ell-cV-JLU" firstAttribute="bottom" secondItem="QXx-ix-XZS" secondAttribute="bottom" constant="-8" id="vc6-Wa-5u7"/>
                             <constraint firstItem="8cF-Ek-qIg" firstAttribute="leading" secondItem="lkO-cg-dmd" secondAttribute="leading" id="xot-0V-RRT"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="lkO-cg-dmd"/>
@@ -582,6 +617,7 @@
         <image name="ProfilePageAvatarExclude" width="375" height="375"/>
         <image name="ProfilePageCover" width="375" height="145"/>
         <image name="ProfilePageCoverCamera" width="30" height="30"/>
+        <image name="ProfilePageCoverDragIcon" width="15" height="15"/>
         <image name="ProfilePageCoverGradient" width="373" height="88"/>
         <image name="ProfilePageInviteFriendsPicture" width="296" height="217"/>
         <image name="ProfilePageSettings" width="24" height="24"/>
