@@ -66,6 +66,12 @@ class ProfileEditCoverVC: UIViewController {
     }
     
     @IBAction func doneButtonDidTap(_ sender: Any) {
-        didSelectImage.onNext(coverImage.image!)
+        //scale image to fit the imageView's width (maintaining aspect ratio), but allow control over the image's Y position
+        UIGraphicsBeginImageContext(coverImage.bounds.size);
+        coverImage.layer.render(in: UIGraphicsGetCurrentContext()!)
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext();
+        
+        didSelectImage.onNext(image ?? coverImage.image!)
     }
 }
