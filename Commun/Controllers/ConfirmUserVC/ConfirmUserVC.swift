@@ -75,14 +75,12 @@ class ConfirmUserVC: UIViewController {
         }).disposed(by: disposeBag)
         
         nextButton.rx.tap.subscribe(onNext: { _ in
-            if let vc = controllerContainer.resolve(SetUserVC.self) {
-                self.navigationController?.pushViewController(vc)
-            }
             if let viewModel = self.viewModel {
                 viewModel.checkPin(self.pinCodeInputView.text).subscribe(onNext: { success in
                     // Next
                     if success {
                         if let vc = controllerContainer.resolve(SetUserVC.self) {
+                            vc.viewModel = SetUserViewModel(phone: self.viewModel?.phone.value ?? "")
                             self.navigationController?.pushViewController(vc)
                         }
                     } else {

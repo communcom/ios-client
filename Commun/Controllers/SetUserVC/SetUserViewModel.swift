@@ -15,7 +15,9 @@ class SetUserViewModel {
     let userName = BehaviorRelay<String>(value: "")
     let phone = BehaviorRelay<String>(value: "")
     
-    
+    init(phone: String) {
+        self.phone.accept(phone)
+    }
     
     func setUser() -> Observable<Bool> {
         return NetworkService.shared.setUser(name: userName.value, phone: phone.value).map({ result -> Bool in
