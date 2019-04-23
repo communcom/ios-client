@@ -9,12 +9,20 @@
 import UIKit
 
 protocol CommentCellDelegate {
-    func cell(_ cell: CommentCell, didTapUpVoteButtonForComment comment: ResponseAPIContentGetComment)
-    func cell(_ cell: CommentCell, didTapDownVoteButtonForComment comment: ResponseAPIContentGetComment)
-    func cell(_ cell: CommentCell, didTapReplyButtonForComment comment: ResponseAPIContentGetComment)
+    func cell(_ cell: CommentCellProtocol, didTapUpVoteButtonForComment comment: ResponseAPIContentGetComment)
+    func cell(_ cell: CommentCellProtocol, didTapDownVoteButtonForComment comment: ResponseAPIContentGetComment)
+    func cell(_ cell: CommentCellProtocol, didTapReplyButtonForComment comment: ResponseAPIContentGetComment)
 }
 
-class CommentCell: UITableViewCell {
+protocol CommentCellProtocol {
+    func upVoteButtonTap(_ sender: Any)
+    
+    func downVoteButtonTap(_ sender: Any)
+    
+    func replyButtonTap(_ sender: Any)
+}
+
+class CommentCell: UITableViewCell, CommentCellProtocol {
 
     @IBOutlet weak var avatarImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
@@ -37,8 +45,19 @@ class CommentCell: UITableViewCell {
     func setupFromComment(_ comment: ResponseAPIContentGetComment) {
         self.comment = comment
         
+        if let html = comment.content.embeds.first?.result.html {
+            let htmlData = NSString(string: html).data(using: String.Encoding.unicode.rawValue)
+            let options = [NSAttributedString.DocumentReadingOptionKey.documentType:
+                NSAttributedString.DocumentType.html]
+            let attributedString = try? NSMutableAttributedString(data: htmlData ?? Data(),
+                                                                  options: options,
+                                                                  documentAttributes: nil)
+            contentLabel.attributedText = attributedString
+        } else {
+            contentLabel.text = comment.content.body.full
+        }
+        
         nameLabel.text = comment.author?.username ?? ""
-        contentLabel.text = comment.content.body.full
         voteCountLabel.text = "\(comment.payout.rShares)"
     }
     

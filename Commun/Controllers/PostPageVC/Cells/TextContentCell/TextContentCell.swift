@@ -26,6 +26,6 @@ class TextContentCell: UITableViewCell {
     
     func setupFromPost(_ post: ResponseAPIContentGetPost) {
         titleLabel.text = post.content.title
-        contentLabel.text = post.content.body.full
+        contentLabel.text = ""//post.content.body.full
     }
 }
