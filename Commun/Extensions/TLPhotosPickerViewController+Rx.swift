@@ -11,7 +11,17 @@ import TLPhotoPicker
 import RxCocoa
 import RxSwift
 
-@objc extension TLPhotosPickerViewController: HasDelegate {
+class CustomTLPhotosPickerVC: TLPhotosPickerViewController {
+    override func doneButtonTap() {
+        self.delegate?.dismissPhotoPicker(withTLPHAssets: self.selectedAssets)
+    }
+    
+    override func cancelButtonTap() {
+        self.delegate?.dismissPhotoPicker(withTLPHAssets: [])
+    }
+}
+
+extension TLPhotosPickerViewController: HasDelegate {
     public typealias Delegate = TLPhotosPickerViewControllerDelegate
 }
 

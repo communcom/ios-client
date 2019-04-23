@@ -122,25 +122,54 @@ extension ProfilePageVC {
     // MARK: - Actions
     // Image selection
     func onUpdateCover() -> CocoaAction {
-        return Action {_ in
-            let vc = TLPhotosPickerViewController()
+        return CocoaAction {_ in
+            let pickerVC = CustomTLPhotosPickerVC()
             var configure = TLPhotosPickerConfigure()
             configure.singleSelectedMode = true
             configure.allowedLivePhotos = false
             configure.allowedVideo = false
             configure.allowedVideoRecording = false
             configure.mediaType = .image
-            vc.configure = configure
-            self.present(vc, animated: true, completion: nil)
+            pickerVC.configure = configure
+            self.present(pickerVC, animated: true, completion: nil)
             
-            return vc.rx.didSelectAssets
-                .filter {$0.count > 0 && $0[0].type == TLPHAsset.AssetType.photo && $0[0].fullResolutionImage != nil}
-                .map {$0[0].fullResolutionImage!}
+            return pickerVC.rx.didSelectAssets
+                .flatMap { assets -> Observable<UIImage?> in
+                    if assets.count == 0 || assets[0].type != TLPHAsset.AssetType.photo || assets[0].fullResolutionImage == nil {
+                        pickerVC.dismiss(animated: true, completion: nil)
+                        return .just(nil)
+                    }
+                    
+                    let image = assets[0].fullResolutionImage!
+                    
+                    let coverEditVC = controllerContainer.resolve(ProfileEditCoverVC.self)!
+                    
+                    self.viewModel.profile.filter {$0 != nil}.map {$0!}
+                        .bind(to: coverEditVC.profile)
+                        .disposed(by: self.bag)
+                    
+                    pickerVC.present(coverEditVC, animated: true
+                        , completion: {
+                            coverEditVC.coverImage.image = image
+                    })
+                    
+                    return coverEditVC.didSelectImage
+                        .flatMap({ (image) -> Single<UIImage?> in
+                            coverEditVC.dismiss(animated: true, completion: {
+                                pickerVC.dismiss(animated: true, completion: nil)
+                            })
+                            return .just(image)
+                        })
+                }
                 .do(onNext: {image in
-                    #warning("drag and drop cover")
-                    self.viewModel.coverImage.accept(image)
+                    if image != nil {
+                        self.viewModel.coverImage.accept(image)
+                    }
                     #warning("Send image change request to server")
                 })
+                .take(1)
+                .ignoreElements()
+                .asObservable()
                 .map {_ in}
         }
     }

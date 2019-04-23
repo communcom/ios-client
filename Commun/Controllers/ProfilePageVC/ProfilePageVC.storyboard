@@ -412,10 +412,10 @@
             </objects>
             <point key="canvasLocation" x="-388.40579710144931" y="-60.267857142857139"/>
         </scene>
-        <!--View Controller-->
+        <!--Profile Edit CoverVC-->
         <scene sceneID="L0Z-X9-HlM">
             <objects>
-                <viewController id="DTZ-LL-dd5" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ProfileEditCoverVC" id="DTZ-LL-dd5" customClass="ProfileEditCoverVC" customModule="Commun" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Dkf-uD-aTJ">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -426,41 +426,25 @@
                                 <color key="barTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <items>
                                     <navigationItem title="Change position" id="Cy3-QU-YAQ">
-                                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="Hcc-pJ-Mt7"/>
-                                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="3hI-WI-Org"/>
+                                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="Hcc-pJ-Mt7">
+                                            <connections>
+                                                <action selector="cancelButtonDidTap:" destination="DTZ-LL-dd5" id="QOF-55-TLY"/>
+                                            </connections>
+                                        </barButtonItem>
+                                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="3hI-WI-Org">
+                                            <connections>
+                                                <action selector="doneButtonDidTap:" destination="DTZ-LL-dd5" id="W6Y-DH-ogJ"/>
+                                            </connections>
+                                        </barButtonItem>
                                     </navigationItem>
                                 </items>
                             </navigationBar>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="8cF-Ek-qIg">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ProfilePageCover" translatesAutoresizingMaskIntoConstraints="NO" id="8cF-Ek-qIg">
                                 <rect key="frame" x="0.0" y="88" width="414" height="185.5"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="8cF-Ek-qIg" secondAttribute="height" multiplier="375:168" id="d16-Ie-zUs"/>
                                 </constraints>
                             </imageView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bac-4c-mMr">
-                                <rect key="frame" x="0.0" y="273.5" width="414" height="622.5"/>
-                                <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ProfilePageCoverDragIcon" translatesAutoresizingMaskIntoConstraints="NO" id="OTf-bj-Mbr">
-                                        <rect key="frame" x="197" y="277" width="20" height="20"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="20" id="g85-Gg-aOg"/>
-                                            <constraint firstAttribute="height" constant="20" id="hxQ-Ap-5fc"/>
-                                        </constraints>
-                                    </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="To change the position of the photo cover, drag it." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="25q-71-qMp">
-                                        <rect key="frame" x="97" y="305" width="220.5" height="40"/>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
-                                        <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                                <constraints>
-                                    <constraint firstItem="25q-71-qMp" firstAttribute="centerX" secondItem="Bac-4c-mMr" secondAttribute="centerX" id="9RL-3G-Avb"/>
-                                    <constraint firstItem="OTf-bj-Mbr" firstAttribute="centerY" secondItem="Bac-4c-mMr" secondAttribute="centerY" constant="-24" id="JWc-IA-efw"/>
-                                    <constraint firstItem="25q-71-qMp" firstAttribute="top" secondItem="OTf-bj-Mbr" secondAttribute="bottom" constant="8" id="Rsa-Tu-eOg"/>
-                                    <constraint firstItem="OTf-bj-Mbr" firstAttribute="centerX" secondItem="Bac-4c-mMr" secondAttribute="centerX" id="mmp-ma-QHg"/>
-                                </constraints>
-                            </view>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ProfilePageUserAvatar" translatesAutoresizingMaskIntoConstraints="NO" id="jaP-Rf-dLD">
                                 <rect key="frame" x="157" y="223.5" width="100" height="100"/>
                                 <constraints>
@@ -494,10 +478,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="Bac-4c-mMr" firstAttribute="leading" secondItem="lkO-cg-dmd" secondAttribute="leading" id="32H-Np-xz8"/>
                             <constraint firstItem="jaP-Rf-dLD" firstAttribute="centerX" secondItem="lkO-cg-dmd" secondAttribute="centerX" id="7Yi-rr-eCE"/>
-                            <constraint firstItem="Bac-4c-mMr" firstAttribute="trailing" secondItem="lkO-cg-dmd" secondAttribute="trailing" id="Ahe-ZM-KYZ"/>
-                            <constraint firstAttribute="bottom" secondItem="Bac-4c-mMr" secondAttribute="bottom" id="I1j-jY-lSz"/>
                             <constraint firstItem="Hob-rx-vjU" firstAttribute="leading" secondItem="lkO-cg-dmd" secondAttribute="leading" id="INm-Al-wkd"/>
                             <constraint firstItem="Hob-rx-vjU" firstAttribute="trailing" secondItem="lkO-cg-dmd" secondAttribute="trailing" id="LaB-wr-oQK"/>
                             <constraint firstItem="drm-pZ-Nvs" firstAttribute="top" secondItem="jaP-Rf-dLD" secondAttribute="bottom" constant="10" id="R0v-h0-cDV"/>
@@ -505,7 +486,6 @@
                             <constraint firstItem="4iA-4Y-1yt" firstAttribute="top" secondItem="drm-pZ-Nvs" secondAttribute="bottom" constant="4" id="WEW-c2-zmG"/>
                             <constraint firstItem="4iA-4Y-1yt" firstAttribute="centerX" secondItem="lkO-cg-dmd" secondAttribute="centerX" id="go8-LK-rnn"/>
                             <constraint firstItem="8cF-Ek-qIg" firstAttribute="trailing" secondItem="lkO-cg-dmd" secondAttribute="trailing" id="jrV-yT-ZDQ"/>
-                            <constraint firstItem="Bac-4c-mMr" firstAttribute="top" secondItem="8cF-Ek-qIg" secondAttribute="bottom" id="nXf-hn-FxD"/>
                             <constraint firstItem="8cF-Ek-qIg" firstAttribute="top" secondItem="Hob-rx-vjU" secondAttribute="bottom" id="pFA-Y9-K3c"/>
                             <constraint firstItem="drm-pZ-Nvs" firstAttribute="centerX" secondItem="lkO-cg-dmd" secondAttribute="centerX" id="qC7-Ca-Eeo"/>
                             <constraint firstItem="Hob-rx-vjU" firstAttribute="top" secondItem="lkO-cg-dmd" secondAttribute="top" id="trg-Au-ezq"/>
@@ -513,6 +493,12 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="lkO-cg-dmd"/>
                     </view>
+                    <connections>
+                        <outlet property="avatarImage" destination="jaP-Rf-dLD" id="WrC-Dj-csm"/>
+                        <outlet property="coverImage" destination="8cF-Ek-qIg" id="ubK-vM-XAz"/>
+                        <outlet property="joinedDateLabel" destination="4iA-4Y-1yt" id="Ar7-IT-yd4"/>
+                        <outlet property="userNameLabel" destination="drm-pZ-Nvs" id="glf-Uh-1kQ"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mW2-Qn-yPL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -596,7 +582,6 @@
         <image name="ProfilePageAvatarExclude" width="375" height="375"/>
         <image name="ProfilePageCover" width="375" height="145"/>
         <image name="ProfilePageCoverCamera" width="30" height="30"/>
-        <image name="ProfilePageCoverDragIcon" width="20" height="20"/>
         <image name="ProfilePageCoverGradient" width="373" height="88"/>
         <image name="ProfilePageInviteFriendsPicture" width="296" height="217"/>
         <image name="ProfilePageSettings" width="24" height="24"/>
