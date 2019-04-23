@@ -22,4 +22,11 @@ extension NSMutableAttributedString {
         append(normal)
         return self
     }
+    
+    @discardableResult func gray(_ text: String, font: UIFont = UIFont.systemFont(ofSize: 15)) -> NSMutableAttributedString {
+        let attrs: [NSAttributedString.Key: Any] = [.font: font]
+        let normal = NSAttributedString(string: text, attributes: attrs).colored(with: UIColor.gray)
+        append(normal)
+        return self
+    }
 }
