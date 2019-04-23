@@ -11,7 +11,6 @@ import RxSwift
 import CyberSwift
 import SDWebImage
 import UIImageView_Letters
-import RxMediaPicker
 
 class ProfilePageVC: UIViewController {
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
