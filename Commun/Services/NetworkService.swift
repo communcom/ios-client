@@ -324,4 +324,34 @@ class NetworkService: NSObject {
             return Disposables.create()
         }
     }
+    
+    func userVerify(phone: String, code: String) -> Observable<Bool> {
+        
+        return Observable<String>.create({ observer -> Disposable in
+            
+            let isDebugMode: Bool   =   appBuildConfig == AppBuildConfig.debug
+            
+            RestAPIManager.instance.verify(phone:           phone,
+                                           code:            code,
+                                           isDebugMode:     isDebugMode,
+                                           completion:      { (result, errorAPI) in
+                                            guard errorAPI == nil else {
+                                                Logger.log(message: errorAPI!.caseInfo.message.localized(), event: .error)
+                                                return
+                                            }
+                                            
+                                            if let result = result {
+                                                Logger.log(message: "Response: \n\t\(result.status)", event: .debug)
+                                                observer.onNext(result.status)
+                                            }
+                                            
+                                            observer.onCompleted()
+            })
+            
+            return Disposables.create()
+        }).map({ result -> Bool in
+            return result == "OK"
+        })
+        
+    }
 }

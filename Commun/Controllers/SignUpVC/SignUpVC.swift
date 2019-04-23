@@ -78,7 +78,7 @@ class SignUpVC: UIViewController {
             if self?.viewModel.validatePhoneNumber() ?? false {
                 self?.viewModel.signUp().subscribe(onNext: { code in
                     if let vc = controllerContainer.resolve(ConfirmUserVC.self) {
-                        vc.viewModel = ConfirmUserViewModel(pinHash: "\(code)".md5() ?? "", phone: self?.viewModel.phone.value ?? "")
+                        vc.viewModel = ConfirmUserViewModel(code: "\(code)", phone: self?.viewModel.phone.value ?? "")
                         let nav = UINavigationController(rootViewController: vc)
                         self?.present(nav, animated: true, completion: nil)
                     }

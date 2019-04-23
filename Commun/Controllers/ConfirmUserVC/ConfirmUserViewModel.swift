@@ -12,19 +12,19 @@ import RxCocoa
 
 class ConfirmUserViewModel {
     
-    var pincodeHash = BehaviorRelay<String>(value: "")
+    var pincode = BehaviorRelay<String>(value: "")
     var phone = BehaviorRelay<String>(value: "")
     
     let disposeBag = DisposeBag()
     
-    init(pinHash: String, phone: String) {
-        self.pincodeHash.accept(pinHash)
+    init(code: String, phone: String) {
+        self.pincode.accept(code)
         self.phone.accept(phone)
     }
     
     func resendCode() -> Observable<Bool> {
         let resendObservable = NetworkService.shared.resendSmsCode(phone: phone.value)
-        resendObservable.bind(to: pincodeHash).disposed(by: disposeBag)
+        resendObservable.bind(to: pincode).disposed(by: disposeBag)
         return resendObservable.map({ code -> Bool in
             return code != ""
         })
@@ -32,7 +32,11 @@ class ConfirmUserViewModel {
     }
     
     func checkPin(_ code: String) -> Observable<Bool> {
-        let isEqual = code.md5() == pincodeHash.value
+        let isEqual = code == pincode.value
         return Observable<Bool>.just(isEqual)
+    }
+    
+    func verifyUser() -> Observable<Bool> {
+        return NetworkService.shared.userVerify(phone: phone.value, code: pincode.value)
     }
 }

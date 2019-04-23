@@ -79,10 +79,16 @@ class ConfirmUserVC: UIViewController {
                 viewModel.checkPin(self.pinCodeInputView.text).subscribe(onNext: { success in
                     // Next
                     if success {
-                        if let vc = controllerContainer.resolve(SetUserVC.self) {
-                            vc.viewModel = SetUserViewModel(phone: self.viewModel?.phone.value ?? "")
-                            self.navigationController?.pushViewController(vc)
-                        }
+                        viewModel.verifyUser().subscribe(onNext: { flag in
+                            if flag {
+                                if let vc = controllerContainer.resolve(SetUserVC.self) {
+                                    vc.viewModel = SetUserViewModel(phone: self.viewModel?.phone.value ?? "")
+                                    self.navigationController?.pushViewController(vc)
+                                }
+                            } else {
+                                self.showAlert(title: "Error", message: "Verify error")
+                            }
+                        }).disposed(by: self.disposeBag)
                     } else {
                         self.showAlert(title: "Error", message: "Incorrect code")
                     }
