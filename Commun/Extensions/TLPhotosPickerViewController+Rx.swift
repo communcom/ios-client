@@ -18,6 +18,7 @@ class CustomTLPhotosPickerVC: TLPhotosPickerViewController {
     
     override func cancelButtonTap() {
         self.delegate?.dismissPhotoPicker(withTLPHAssets: [])
+        self.dismiss(animated: true, completion: nil)
     }
 }
 

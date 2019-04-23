@@ -136,7 +136,6 @@ extension ProfilePageVC {
             return pickerVC.rx.didSelectAssets
                 .flatMap { assets -> Observable<UIImage?> in
                     if assets.count == 0 || assets[0].type != TLPHAsset.AssetType.photo || assets[0].fullResolutionImage == nil {
-                        pickerVC.dismiss(animated: true, completion: nil)
                         return .just(nil)
                     }
                     
