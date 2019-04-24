@@ -10,6 +10,9 @@
 		3B0E9C5E226F02AC002AB1C2 /* ProfileEditCoverVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B0E9C5D226F02AC002AB1C2 /* ProfileEditCoverVC.swift */; };
 		3B0E9C64226F4A0C002AB1C2 /* VerticalDraggableImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B0E9C63226F4A0C002AB1C2 /* VerticalDraggableImageView.swift */; };
 		3B0E9C66227050E3002AB1C2 /* UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B0E9C65227050E3002AB1C2 /* UIImageView.swift */; };
+		3B0E9C6C2270634B002AB1C2 /* ProfileChooseAvatarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B0E9C6B2270634B002AB1C2 /* ProfileChooseAvatarVC.swift */; };
+		3B0E9C6E227063F6002AB1C2 /* ProfilePageVC+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B0E9C6D227063F6002AB1C2 /* ProfilePageVC+Actions.swift */; };
+		3B0E9C7122706985002AB1C2 /* ProfileChooseAvatarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B0E9C7022706985002AB1C2 /* ProfileChooseAvatarViewModel.swift */; };
 		3B197C532269BE0E008CF10D /* SegmentioExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B197C522269BE0E008CF10D /* SegmentioExtension.swift */; };
 		3B197C552269BF74008CF10D /* ProfilePageSegmentioItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B197C542269BF74008CF10D /* ProfilePageSegmentioItem.swift */; };
 		3B197C572269CEEF008CF10D /* ProfilePageItemsFetchers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B197C562269CEEF008CF10D /* ProfilePageItemsFetchers.swift */; };
@@ -161,6 +164,9 @@
 		3B0E9C5D226F02AC002AB1C2 /* ProfileEditCoverVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditCoverVC.swift; sourceTree = "<group>"; };
 		3B0E9C63226F4A0C002AB1C2 /* VerticalDraggableImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalDraggableImageView.swift; sourceTree = "<group>"; };
 		3B0E9C65227050E3002AB1C2 /* UIImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageView.swift; sourceTree = "<group>"; };
+		3B0E9C6B2270634B002AB1C2 /* ProfileChooseAvatarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileChooseAvatarVC.swift; sourceTree = "<group>"; };
+		3B0E9C6D227063F6002AB1C2 /* ProfilePageVC+Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProfilePageVC+Actions.swift"; sourceTree = "<group>"; };
+		3B0E9C7022706985002AB1C2 /* ProfileChooseAvatarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileChooseAvatarViewModel.swift; sourceTree = "<group>"; };
 		3B197C522269BE0E008CF10D /* SegmentioExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentioExtension.swift; sourceTree = "<group>"; };
 		3B197C542269BF74008CF10D /* ProfilePageSegmentioItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePageSegmentioItem.swift; sourceTree = "<group>"; };
 		3B197C562269CEEF008CF10D /* ProfilePageItemsFetchers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePageItemsFetchers.swift; sourceTree = "<group>"; };
@@ -368,6 +374,15 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		3B0E9C6F22706965002AB1C2 /* ProfileChooseAvatarVC */ = {
+			isa = PBXGroup;
+			children = (
+				3B0E9C6B2270634B002AB1C2 /* ProfileChooseAvatarVC.swift */,
+				3B0E9C7022706985002AB1C2 /* ProfileChooseAvatarViewModel.swift */,
+			);
+			path = ProfileChooseAvatarVC;
+			sourceTree = "<group>";
+		};
 		3B197C83226A33BF008CF10D /* Mocking */ = {
 			isa = PBXGroup;
 			children = (
@@ -406,6 +421,7 @@
 			isa = PBXGroup;
 			children = (
 				3B0E9C5D226F02AC002AB1C2 /* ProfileEditCoverVC.swift */,
+				3B0E9C6F22706965002AB1C2 /* ProfileChooseAvatarVC */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -418,6 +434,7 @@
 				3B197C562269CEEF008CF10D /* ProfilePageItemsFetchers.swift */,
 				3BAF69C222675B420055CCEB /* ProfilePageVC.swift */,
 				3B197C5A2269EF3F008CF10D /* ProfilePageVC+Binding.swift */,
+				3B0E9C6D227063F6002AB1C2 /* ProfilePageVC+Actions.swift */,
 				3BAF69D0226792C60055CCEB /* ProfilePageVC+Rx.swift */,
 				3BAF69CC22677E440055CCEB /* ProfilePageViewModel.swift */,
 				3BAF69C422675B540055CCEB /* ProfilePageVC.storyboard */,
@@ -1325,7 +1342,9 @@
 				57A951932241760C0020F55D /* FeedPageVC+EditorWidgetDelegate.swift in Sources */,
 				57840A202240DDEB00338FD5 /* Container.swift in Sources */,
 				57F9CAAC225B489000AC9ACA /* EditorPageVC+Rx.swift in Sources */,
+				3B0E9C6E227063F6002AB1C2 /* ProfilePageVC+Actions.swift in Sources */,
 				57FB17A2224C093A00563BF7 /* SignInVC.swift in Sources */,
+				3B0E9C7122706985002AB1C2 /* ProfileChooseAvatarViewModel.swift in Sources */,
 				57840A06223FAC1B00338FD5 /* SegmentioCellWithImageOverLabel.swift in Sources */,
 				3B0E9C5E226F02AC002AB1C2 /* ProfileEditCoverVC.swift in Sources */,
 				57F5CFC62244E53B005A09AE /* PostPageVC+UITableViewDataSource.swift in Sources */,
@@ -1351,6 +1370,7 @@
 				578B94DA2263CBD800FB5BC6 /* ConfirmUserVC.swift in Sources */,
 				57840A09223FAC1B00338FD5 /* SegmentioOptions.swift in Sources */,
 				571B14F4223A935C00630C8F /* AppDelegate.swift in Sources */,
+				3B0E9C6C2270634B002AB1C2 /* ProfileChooseAvatarVC.swift in Sources */,
 				57C33A442244D32300073FAE /* VotesCell.swift in Sources */,
 				577B8BFD2255F2F50016FE76 /* EditorPageVC+EditorContentCellDelegate.swift in Sources */,
 				5787C0CB2265152900568CEC /* LoadKeysVC.swift in Sources */,

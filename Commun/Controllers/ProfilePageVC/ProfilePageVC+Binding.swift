@@ -9,14 +9,9 @@
 import Foundation
 import UIKit
 import CyberSwift
-import Action
 import RxSwift
-import TLPhotoPicker
 
 extension ProfilePageVC {
-    enum ImageType {
-        case cover, avatar
-    }
     
     func bindViewModel() {
         let profile = viewModel.profile.asDriver()
@@ -103,7 +98,7 @@ extension ProfilePageVC {
         
         // Image selectors
         coverSelectButton.rx.action = onUpdateCover()
-//        avatarSelectButton.rx.action = onUpdate(.avatar)
+        avatarSelectButton.rx.action = onUpdateAvatar()
         
         // Bind image
         viewModel.avatarImage
@@ -117,60 +112,6 @@ extension ProfilePageVC {
             .filter {$0 != nil}
             .drive(userCoverImage.rx.image)
             .disposed(by: bag)
-    }
-    
-    // MARK: - Actions
-    // Image selection
-    func onUpdateCover() -> CocoaAction {
-        return CocoaAction {_ in
-            let pickerVC = CustomTLPhotosPickerVC()
-            var configure = TLPhotosPickerConfigure()
-            configure.singleSelectedMode = true
-            configure.allowedLivePhotos = false
-            configure.allowedVideo = false
-            configure.allowedVideoRecording = false
-            configure.mediaType = .image
-            pickerVC.configure = configure
-            self.present(pickerVC, animated: true, completion: nil)
-            
-            return pickerVC.rx.didSelectAssets
-                .flatMap { assets -> Observable<UIImage?> in
-                    if assets.count == 0 || assets[0].type != TLPHAsset.AssetType.photo || assets[0].fullResolutionImage == nil {
-                        return .just(nil)
-                    }
-                    
-                    let image = assets[0].fullResolutionImage!
-                    
-                    let coverEditVC = controllerContainer.resolve(ProfileEditCoverVC.self)!
-                    
-                    self.viewModel.profile.filter {$0 != nil}.map {$0!}
-                        .bind(to: coverEditVC.profile)
-                        .disposed(by: self.bag)
-                    
-                    pickerVC.present(coverEditVC, animated: true
-                        , completion: {
-                            coverEditVC.coverImage.image = image
-                    })
-                    
-                    return coverEditVC.didSelectImage
-                        .flatMap({ (image) -> Single<UIImage?> in
-                            coverEditVC.dismiss(animated: true, completion: {
-                                pickerVC.dismiss(animated: true, completion: nil)
-                            })
-                            return .just(image)
-                        })
-                }
-                .do(onNext: {image in
-                    if image != nil {
-                        self.viewModel.coverImage.accept(image)
-                    }
-                    #warning("Send image change request to server")
-                })
-                .take(1)
-                .ignoreElements()
-                .asObservable()
-                .map {_ in}
-        }
     }
     
     // Copy referral button

@@ -10,7 +10,6 @@ import UIKit
 import RxSwift
 import CyberSwift
 import SDWebImage
-import UIImageView_Letters
 
 class ProfilePageVC: UIViewController {
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
