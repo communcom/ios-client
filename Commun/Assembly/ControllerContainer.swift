@@ -92,6 +92,11 @@ let controllerContainer: Container = {
         let vc = ProfileChooseAvatarVC.instanceController(fromStoryboard: "ProfilePageVC", withIdentifier: "ProfileChooseAvatarVC") as! ProfileChooseAvatarVC
         return vc
     })
+    
+    container.register(ProfileEditBioVC.self, factory: { r in
+        let vc = ProfileEditBioVC.instanceController(fromStoryboard: "ProfilePageVC", withIdentifier: "ProfileEditBioVC") as! ProfileEditBioVC
+        return vc
+    })
 
     // Notifications scene
     container.register(NotificationsPageVC.self, factory: { r in

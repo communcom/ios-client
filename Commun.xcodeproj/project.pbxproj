@@ -14,6 +14,7 @@
 		3B0E9C6E227063F6002AB1C2 /* ProfilePageVC+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B0E9C6D227063F6002AB1C2 /* ProfilePageVC+Actions.swift */; };
 		3B0E9C7122706985002AB1C2 /* ProfileChooseAvatarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B0E9C7022706985002AB1C2 /* ProfileChooseAvatarViewModel.swift */; };
 		3B0E9C732270785E002AB1C2 /* PhotoLibraryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B0E9C722270785E002AB1C2 /* PhotoLibraryCell.swift */; };
+		3B0E9C752270C691002AB1C2 /* ProfileEditBioVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B0E9C742270C691002AB1C2 /* ProfileEditBioVC.swift */; };
 		3B197C532269BE0E008CF10D /* SegmentioExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B197C522269BE0E008CF10D /* SegmentioExtension.swift */; };
 		3B197C552269BF74008CF10D /* ProfilePageSegmentioItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B197C542269BF74008CF10D /* ProfilePageSegmentioItem.swift */; };
 		3B197C572269CEEF008CF10D /* ProfilePageItemsFetchers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B197C562269CEEF008CF10D /* ProfilePageItemsFetchers.swift */; };
@@ -169,6 +170,7 @@
 		3B0E9C6D227063F6002AB1C2 /* ProfilePageVC+Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProfilePageVC+Actions.swift"; sourceTree = "<group>"; };
 		3B0E9C7022706985002AB1C2 /* ProfileChooseAvatarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileChooseAvatarViewModel.swift; sourceTree = "<group>"; };
 		3B0E9C722270785E002AB1C2 /* PhotoLibraryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibraryCell.swift; sourceTree = "<group>"; };
+		3B0E9C742270C691002AB1C2 /* ProfileEditBioVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditBioVC.swift; sourceTree = "<group>"; };
 		3B197C522269BE0E008CF10D /* SegmentioExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentioExtension.swift; sourceTree = "<group>"; };
 		3B197C542269BF74008CF10D /* ProfilePageSegmentioItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePageSegmentioItem.swift; sourceTree = "<group>"; };
 		3B197C562269CEEF008CF10D /* ProfilePageItemsFetchers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePageItemsFetchers.swift; sourceTree = "<group>"; };
@@ -425,6 +427,7 @@
 			children = (
 				3B0E9C5D226F02AC002AB1C2 /* ProfileEditCoverVC.swift */,
 				3B0E9C6F22706965002AB1C2 /* ProfileChooseAvatarVC */,
+				3B0E9C742270C691002AB1C2 /* ProfileEditBioVC.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -1338,6 +1341,7 @@
 				3B197C5B2269EF3F008CF10D /* ProfilePageVC+Binding.swift in Sources */,
 				571710A32253DF0100A5D07C /* EditorPageVC+UITableViewDataSource.swift in Sources */,
 				57840A01223FAC1B00338FD5 /* SegmentioCellWithImageUnderLabel.swift in Sources */,
+				3B0E9C752270C691002AB1C2 /* ProfileEditBioVC.swift in Sources */,
 				57A95197224178010020F55D /* FeedPageVC+PostCardCellDelegate.swift in Sources */,
 				57840A0E223FAC1B00338FD5 /* BadgeWithCounterView.swift in Sources */,
 				57727E69226E4EAB000C9F1F /* HtmlCell.swift in Sources */,

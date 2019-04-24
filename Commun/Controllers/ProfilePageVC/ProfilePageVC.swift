@@ -91,12 +91,15 @@ class ProfilePageVC: UIViewController {
     
     @IBAction func bioLableDidTouch(_ sender: Any) {
         self.showActionSheet(title: "Change".localized() + "profile description".localized(), actions: [
-                UIAlertAction(title: "Edit".localized(), style: .default, handler: { (_) in
-                    #warning("Edit bio")
-                    }),
-                UIAlertAction(title: "Delete".localized(), style: .destructive, handler: { (_) in
-                    #warning("Delete bio")
-                }),
-            ])
+            UIAlertAction(title: "Edit".localized(), style: .default, handler: { (_) in
+                let editBioVC = controllerContainer.resolve(ProfileEditBioVC.self)!
+                editBioVC.bio = self.viewModel.profile.value?.personal.biography
+                self.present(editBioVC, animated: true, completion: nil)
+                #warning("observe didConfirmBio")
+            }),
+            UIAlertAction(title: "Delete".localized(), style: .destructive, handler: { (_) in
+                #warning("Delete bio")
+            }),
+        ])
     }
 }
