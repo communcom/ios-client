@@ -653,7 +653,9 @@
                     <connections>
                         <outlet property="avatarImageView" destination="G0v-Ih-Sla" id="gxh-ci-mtc"/>
                         <outlet property="avatarScrollView" destination="cWO-YU-pEf" id="iCx-ZM-WET"/>
+                        <outlet property="cancelButton" destination="AsR-Cp-Z8E" id="kVB-qL-XQm"/>
                         <outlet property="collectionView" destination="wWE-La-Qnk" id="YUY-Z3-LoB"/>
+                        <outlet property="doneButton" destination="3XE-ch-LV0" id="DTl-D7-bBO"/>
                         <outlet property="requestAccessButton" destination="nrW-xH-jrY" id="xXP-tr-tvt"/>
                     </connections>
                 </viewController>

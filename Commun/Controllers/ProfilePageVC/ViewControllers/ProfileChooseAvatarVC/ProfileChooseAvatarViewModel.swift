@@ -17,6 +17,7 @@ struct ProfileChooseAvatarViewModel {
     let avatar = BehaviorRelay<UIImage?>(value: nil)
     let authorizationStatus = BehaviorRelay<PHAuthorizationStatus>(value: PHPhotoLibrary.authorizationStatus())
     let phAssets = BehaviorRelay<[PHAsset]>(value: [])
+    let didSelectImage = PublishSubject<UIImage?>()
     
     func onRequestPermission() -> CocoaAction {
         return CocoaAction {
@@ -40,6 +41,32 @@ struct ProfileChooseAvatarViewModel {
                 
                 return Disposables.create()
             }
+        }
+    }
+    
+    func onSelected(with scrollView: UIScrollView) -> CocoaAction {
+        return CocoaAction {_ in
+            UIGraphicsBeginImageContextWithOptions(scrollView.bounds.size, true, UIScreen.main.scale);
+            //this is the key
+            let offset:CGPoint = scrollView.contentOffset;
+            
+            let context = UIGraphicsGetCurrentContext()!
+            context.translateBy(x: -offset.x, y: -offset.y)
+            
+            scrollView.layer.render(in: context)
+            
+            let image = UIGraphicsGetImageFromCurrentImageContext()
+            UIGraphicsEndImageContext();
+            
+            self.didSelectImage.onNext(image)
+            return .just(())
+        }
+    }
+    
+    func onCancel() -> CocoaAction {
+        return CocoaAction {_ in
+            self.didSelectImage.onNext(nil)
+            return .just(())
         }
     }
     

@@ -70,7 +70,18 @@ extension ProfilePageVC {
             self.present(chooseAvatarVC, animated: true, completion: {
                 chooseAvatarVC.viewModel.avatar.accept(self.userAvatarImage.image)
             })
-            return .just(())
+            
+            return chooseAvatarVC.viewModel.didSelectImage
+                .do(onNext: {image in
+                    if image != nil {
+                        self.viewModel.avatarImage.accept(image)
+                    }
+                    #warning("Send image change request to server")
+                })
+                .take(1)
+                .ignoreElements()
+                .asObservable()
+                .map {_ in}
         }
     }
 }

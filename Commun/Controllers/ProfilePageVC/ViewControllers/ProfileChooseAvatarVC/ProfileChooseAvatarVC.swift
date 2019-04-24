@@ -16,6 +16,8 @@ class ProfileChooseAvatarVC: UIViewController {
     @IBOutlet weak var avatarScrollView: UIScrollView!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var requestAccessButton: UIButton!
+    @IBOutlet weak var doneButton: UIBarButtonItem!
+    @IBOutlet weak var cancelButton: UIBarButtonItem!
     
     var viewModel = ProfileChooseAvatarViewModel()
     private let bag = DisposeBag()
@@ -84,9 +86,19 @@ class ProfileChooseAvatarVC: UIViewController {
                 option.isSynchronous = true
                 option.deliveryMode = .highQualityFormat
                 manager.requestImage(for: asset, targetSize: self.avatarImageView.size, contentMode: .aspectFit, options: option) { (image, _) in
-                    #warning("adding zoomable view")
                     self.avatarImageView.image = image
                 }
+            })
+            .disposed(by: bag)
+        
+        // bind button
+        doneButton.rx.action = viewModel.onSelected(with: self.avatarScrollView)
+        cancelButton.rx.action = viewModel.onCancel()
+        
+        // dismiss
+        viewModel.didSelectImage
+            .subscribe(onNext: {_ in
+                self.dismiss(animated: true, completion: nil)
             })
             .disposed(by: bag)
     }
