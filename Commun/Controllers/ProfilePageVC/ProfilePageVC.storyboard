@@ -562,18 +562,18 @@
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="wWE-La-Qnk">
                                 <rect key="frame" x="0.0" y="502" width="414" height="394"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="GwI-8k-Q8V">
-                                    <size key="itemSize" width="119" height="104"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="NzU-aN-cc2">
+                                    <size key="itemSize" width="50" height="50"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="LZp-il-hHW">
-                                        <rect key="frame" x="0.0" y="0.0" width="119" height="104"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
-                                            <rect key="frame" x="0.0" y="0.0" width="119" height="104"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </view>
                                     </collectionViewCell>
@@ -602,6 +602,11 @@
                                     <constraint firstItem="E6j-i5-oFa" firstAttribute="leading" secondItem="6nw-bj-tc3" secondAttribute="leading" id="tHm-lr-YhC"/>
                                 </constraints>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nrW-xH-jrY">
+                                <rect key="frame" x="103.5" y="684" width="207" height="30"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
+                                <state key="normal" title="Allow access to photo library"/>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -617,6 +622,8 @@
                             <constraint firstAttribute="bottom" secondItem="wWE-La-Qnk" secondAttribute="bottom" id="dsh-Je-4JR"/>
                             <constraint firstItem="wWE-La-Qnk" firstAttribute="trailing" secondItem="dvz-pB-kSV" secondAttribute="trailing" id="j0A-lM-oKv"/>
                             <constraint firstItem="6nw-bj-tc3" firstAttribute="trailing" secondItem="dvz-pB-kSV" secondAttribute="trailing" id="pFJ-Sh-hJh"/>
+                            <constraint firstItem="nrW-xH-jrY" firstAttribute="centerX" secondItem="wWE-La-Qnk" secondAttribute="centerX" id="q1V-x6-a4e"/>
+                            <constraint firstItem="nrW-xH-jrY" firstAttribute="centerY" secondItem="wWE-La-Qnk" secondAttribute="centerY" id="s7Y-hH-yvq"/>
                             <constraint firstItem="6nw-bj-tc3" firstAttribute="width" secondItem="ElT-l7-2TL" secondAttribute="width" id="zCV-C0-8Pl"/>
                             <constraint firstItem="qve-N3-QQi" firstAttribute="trailing" secondItem="dvz-pB-kSV" secondAttribute="trailing" id="ztJ-8D-qtH"/>
                         </constraints>
@@ -624,6 +631,8 @@
                     </view>
                     <connections>
                         <outlet property="avatarImageView" destination="G0v-Ih-Sla" id="gxh-ci-mtc"/>
+                        <outlet property="collectionView" destination="wWE-La-Qnk" id="YUY-Z3-LoB"/>
+                        <outlet property="requestAccessButton" destination="nrW-xH-jrY" id="xXP-tr-tvt"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zub-GA-37r" userLabel="First Responder" sceneMemberID="firstResponder"/>
