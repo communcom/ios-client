@@ -18,6 +18,8 @@ class ProfilePageVC: UIViewController {
     @IBOutlet weak var userCoverImage: UIImageView!
     @IBOutlet weak var userNameLabel: UILabel!
     @IBOutlet weak var joinedDateLabel: UILabel!
+    @IBOutlet weak var bioLabel: UILabel!
+    @IBOutlet weak var addBioButton: UIButton!
     @IBOutlet weak var followersCountLabel: UILabel!
     @IBOutlet weak var followingsCountLabel: UILabel!
     @IBOutlet weak var communitiesCountLabel: UILabel!

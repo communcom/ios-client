@@ -30,6 +30,16 @@ extension Reactive where Base: ProfilePageVC {
             // user name
             profilePageVC.userNameLabel.text = profile.username
             
+            // bio
+            if let bio = profile.personal.biography {
+                profilePageVC.addBioButton.isHidden = true
+                profilePageVC.bioLabel.isHidden = false
+                profilePageVC.bioLabel.text = bio
+            } else {
+                profilePageVC.addBioButton.isHidden = false
+                profilePageVC.bioLabel.isHidden = true
+            }
+            
             // join date
             let dateFormatter = DateFormatter()
             dateFormatter.dateStyle = .long

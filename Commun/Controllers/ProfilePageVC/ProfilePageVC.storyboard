@@ -266,12 +266,20 @@
                                                 <constraint firstAttribute="height" constant="56" id="b6B-Bi-5tQ"/>
                                             </constraints>
                                         </view>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oe9-4A-of4">
+                                            <rect key="frame" x="16" y="289.5" width="382" height="20.5"/>
+                                            <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                     </subviews>
                                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <constraints>
                                         <constraint firstItem="S2O-hC-5ww" firstAttribute="trailing" secondItem="f8F-Po-a8Z" secondAttribute="trailing" constant="16" id="0mu-4j-dad"/>
                                         <constraint firstItem="f8F-Po-a8Z" firstAttribute="top" secondItem="zzx-Z4-0fu" secondAttribute="bottom" constant="16" id="2uO-nL-9Vn"/>
                                         <constraint firstItem="jeD-UU-yV5" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="S2O-hC-5ww" secondAttribute="leading" constant="16" id="4DS-1y-Sdb"/>
+                                        <constraint firstItem="oe9-4A-of4" firstAttribute="leading" secondItem="S2O-hC-5ww" secondAttribute="leading" constant="16" id="4VM-zn-JmC"/>
+                                        <constraint firstItem="S2O-hC-5ww" firstAttribute="trailing" secondItem="oe9-4A-of4" secondAttribute="trailing" constant="16" id="4f7-wF-wxu"/>
                                         <constraint firstItem="V04-yx-8oY" firstAttribute="leading" secondItem="S2O-hC-5ww" secondAttribute="leading" constant="16" id="5C8-rz-6EI"/>
                                         <constraint firstItem="Bwp-67-r1B" firstAttribute="centerX" secondItem="S2O-hC-5ww" secondAttribute="centerX" id="84w-fB-TLi"/>
                                         <constraint firstItem="S2O-hC-5ww" firstAttribute="trailing" secondItem="oS7-qC-7Er" secondAttribute="trailing" constant="16" id="9QU-vf-woN"/>
@@ -280,10 +288,12 @@
                                         <constraint firstItem="RFx-YH-sbl" firstAttribute="top" secondItem="Gqs-OY-wbe" secondAttribute="top" id="Ohv-Zu-K0b"/>
                                         <constraint firstItem="UX7-zH-tx1" firstAttribute="trailing" secondItem="CgS-tE-PNM" secondAttribute="trailing" constant="3" id="QGs-zY-za4"/>
                                         <constraint firstItem="S2O-hC-5ww" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="jeD-UU-yV5" secondAttribute="trailing" constant="16" id="QJ5-M3-JC6"/>
+                                        <constraint firstItem="SP3-2b-y27" firstAttribute="top" relation="greaterThanOrEqual" secondItem="oe9-4A-of4" secondAttribute="bottom" constant="25" id="Qbh-5b-NAh"/>
                                         <constraint firstItem="UX7-zH-tx1" firstAttribute="bottom" secondItem="CgS-tE-PNM" secondAttribute="bottom" constant="3" id="SDD-m9-Nba"/>
                                         <constraint firstItem="T0P-yu-iEL" firstAttribute="trailing" secondItem="S2O-hC-5ww" secondAttribute="trailing" id="Vq7-Xz-pLG"/>
                                         <constraint firstItem="f8F-Po-a8Z" firstAttribute="leading" secondItem="S2O-hC-5ww" secondAttribute="leading" constant="16" id="Zwe-cT-ccr"/>
                                         <constraint firstItem="Bwp-67-r1B" firstAttribute="top" secondItem="SP3-2b-y27" secondAttribute="bottom" constant="4" id="bwM-bo-bDL"/>
+                                        <constraint firstItem="oe9-4A-of4" firstAttribute="top" secondItem="zzx-Z4-0fu" secondAttribute="bottom" constant="16" id="ctC-UK-QFu"/>
                                         <constraint firstItem="RFx-YH-sbl" firstAttribute="leading" secondItem="S2O-hC-5ww" secondAttribute="leading" id="fL2-nu-o80"/>
                                         <constraint firstItem="Fg1-OO-KT1" firstAttribute="trailing" secondItem="S2O-hC-5ww" secondAttribute="trailing" id="i5D-bK-pT8"/>
                                         <constraint firstItem="T0P-yu-iEL" firstAttribute="leading" secondItem="S2O-hC-5ww" secondAttribute="leading" id="nea-YI-jTz"/>
@@ -400,6 +410,8 @@
                     <size key="freeformSize" width="414" height="1500"/>
                     <connections>
                         <outlet property="activityIndicator" destination="iku-D9-AKz" id="fKf-u2-hPa"/>
+                        <outlet property="addBioButton" destination="f8F-Po-a8Z" id="Nfa-RQ-OeR"/>
+                        <outlet property="bioLabel" destination="oe9-4A-of4" id="Pn4-t7-rAz"/>
                         <outlet property="communitiesCountLabel" destination="bNu-7d-aQd" id="e1d-Aq-6Bb"/>
                         <outlet property="copyReferralLinkButton" destination="kqh-z7-9H2" id="64l-YQ-YJk"/>
                         <outlet property="followersCountLabel" destination="8lu-a4-7V6" id="SUz-Hj-F36"/>
