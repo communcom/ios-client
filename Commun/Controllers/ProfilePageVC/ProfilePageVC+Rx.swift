@@ -19,12 +19,12 @@ extension Reactive where Base: ProfilePageVC {
                 profilePageVC.userAvatarImage.sd_setImage(with: URL(string: avatarUrl)) { (_, error, _, _) in
                     if (error != nil) {
                         // Placeholder image
-                        profilePageVC.userAvatarImage.setImageWith(profile.username, color: #colorLiteral(red: 0.9997546077, green: 0.6376479864, blue: 0.2504218519, alpha: 1))
+                        profilePageVC.userAvatarImage.setNonAvatarImageWithId(profile.username)
                     }
                 }
             } else {
                 // Placeholder image
-                profilePageVC.userAvatarImage.setImageWith(profile.username, color: #colorLiteral(red: 0.9997546077, green: 0.6376479864, blue: 0.2504218519, alpha: 1))
+                profilePageVC.userAvatarImage.setNonAvatarImageWithId(profile.username)
             }
             
             // user name
