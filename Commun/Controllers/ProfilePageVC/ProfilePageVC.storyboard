@@ -563,19 +563,33 @@
                                 <rect key="frame" x="0.0" y="502" width="414" height="394"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="NzU-aN-cc2">
-                                    <size key="itemSize" width="50" height="50"/>
+                                    <size key="itemSize" width="138" height="132"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="LZp-il-hHW">
-                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PhotoLibraryCell" id="LZp-il-hHW" customClass="PhotoLibraryCell" customModule="Commun" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="138" height="132"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
-                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="138" height="132"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="GGa-9V-Hrf">
+                                                    <rect key="frame" x="0.0" y="0.0" width="138" height="132"/>
+                                                </imageView>
+                                            </subviews>
                                         </view>
+                                        <constraints>
+                                            <constraint firstItem="GGa-9V-Hrf" firstAttribute="leading" secondItem="LZp-il-hHW" secondAttribute="leading" id="NDJ-qz-EG7"/>
+                                            <constraint firstAttribute="bottom" secondItem="GGa-9V-Hrf" secondAttribute="bottom" id="fqw-II-UDW"/>
+                                            <constraint firstItem="GGa-9V-Hrf" firstAttribute="top" secondItem="LZp-il-hHW" secondAttribute="top" id="kQE-lN-FQi"/>
+                                            <constraint firstAttribute="trailing" secondItem="GGa-9V-Hrf" secondAttribute="trailing" id="nzN-fG-QBx"/>
+                                        </constraints>
+                                        <connections>
+                                            <outlet property="imageView" destination="GGa-9V-Hrf" id="TNG-p6-HfZ"/>
+                                        </connections>
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>

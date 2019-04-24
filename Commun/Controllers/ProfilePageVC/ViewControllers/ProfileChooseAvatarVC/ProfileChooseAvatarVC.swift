@@ -54,7 +54,7 @@ class ProfileChooseAvatarVC: UIViewController {
                 case .authorized:
                     self.requestAccessButton.isHidden = true
                     self.collectionView.isHidden = false
-                    #warning("fetch and show")
+                    self.viewModel.fetchAllImage()
                 default:
                     self.requestAccessButton.isHidden = false
                     self.collectionView.isHidden = true
@@ -64,6 +64,16 @@ class ProfileChooseAvatarVC: UIViewController {
         
         // request button
         requestAccessButton.rx.action = viewModel.onRequestPermission()
+        
+        // bind assets to collectionView
+        self.viewModel.phAssets
+            .bind(to: collectionView.rx.items(
+                cellIdentifier: "PhotoLibraryCell",
+                cellType: PhotoLibraryCell.self))
+            { index, asset, cell in
+                cell.setUp(with: asset)
+            }
+            .disposed(by: bag)
     }
     
     func layoutForCollectionView() -> UICollectionViewFlowLayout {

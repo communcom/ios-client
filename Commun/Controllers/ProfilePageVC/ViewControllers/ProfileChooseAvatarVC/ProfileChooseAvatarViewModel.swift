@@ -14,8 +14,9 @@ import Action
 import RxSwift
 
 struct ProfileChooseAvatarViewModel {
-    var avatar = BehaviorRelay<UIImage?>(value: nil)
-    var authorizationStatus = BehaviorRelay<PHAuthorizationStatus>(value: PHPhotoLibrary.authorizationStatus())
+    let avatar = BehaviorRelay<UIImage?>(value: nil)
+    let authorizationStatus = BehaviorRelay<PHAuthorizationStatus>(value: PHPhotoLibrary.authorizationStatus())
+    let phAssets = BehaviorRelay<[PHAsset]>(value: [])
     
     func onRequestPermission() -> CocoaAction {
         return CocoaAction {
@@ -40,5 +41,21 @@ struct ProfileChooseAvatarViewModel {
                 return Disposables.create()
             }
         }
+    }
+    
+    func fetchAllImage() {
+        let options = PHFetchOptions()
+        options.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
+        #warning("Remove limit later")
+        options.fetchLimit = 20
+        
+        let allPhotos = PHAsset.fetchAssets(with: .image, options: options)
+        
+        var assets = [PHAsset]()
+        
+        for i in 0..<allPhotos.count {
+            assets.append(allPhotos[i])
+        }
+        phAssets.accept(assets)
     }
 }
