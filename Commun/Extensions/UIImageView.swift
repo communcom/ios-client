@@ -7,17 +7,20 @@
 //
 
 import Foundation
+import UIImageView_Letters
 
 fileprivate var nonAvatarColors = [String: UIColor]()
 
-extension UIColor {
-    static func avatarColorForUserWithId(_ id: String) -> UIColor {
+extension UIImageView {
+    func setNonAvatarImageWithId(_ id: String) {
         var color = nonAvatarColors[id]
         if color == nil {
             repeat {
                 color = UIColor.random
             } while nonAvatarColors.contains {$1==color}
+            nonAvatarColors[id] = color
         }
-        return color!
+        
+        setImageWith(id, color: color)
     }
 }
