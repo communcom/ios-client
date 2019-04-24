@@ -354,4 +354,17 @@ class NetworkService: NSObject {
         })
         
     }
+    
+    func setBasicOptions(lang: Language) {
+        RestAPIManager.instance.setBasicOptions(language:       lang.code,
+                                                nsfwContent:    .alwaysAlert,
+                                                completion:     { (result, errorAPI) in
+                                                    guard errorAPI == nil else {
+                                                        Logger.log(message: errorAPI!.caseInfo.message.localized(), event: .error)
+                                                        return
+                                                    }
+                                                    
+                                                    Logger.log(message: "result: \n\t\(result!)", event: .debug)
+        })
+    }
 }
