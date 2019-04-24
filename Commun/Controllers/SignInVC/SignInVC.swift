@@ -9,7 +9,7 @@
 import UIKit
 import RxSwift
 import RxCocoa
-import IHProgressHUD
+//import IHProgressHUD
 
 typealias LoginCredential = (login: String, key: String)
 
@@ -64,20 +64,20 @@ class SignInVC: UIViewController {
         signInButton.rx.tap
             .withLatestFrom(validator.filter(checkCorrectDataAndSetupButton))
             .flatMapLatest({ (cred) -> Observable<String> in
-                IHProgressHUD.set(foregroundColor: #colorLiteral(red: 0.4156862745, green: 0.5019607843, blue: 0.9607843137, alpha: 1))
-                IHProgressHUD.show()
+//                IHProgressHUD.set(foregroundColor: #colorLiteral(red: 0.4156862745, green: 0.5019607843, blue: 0.9607843137, alpha: 1))
+//                IHProgressHUD.show()
                 return self.viewModel.signIn(withLogin: cred.login, withApiKey: cred.key)
                     .catchError {[weak self] _ in
-                        DispatchQueue.global(qos: .default).async(execute: {
-                            IHProgressHUD.dismiss()
-                        })
+//                        DispatchQueue.global(qos: .default).async(execute: {
+//                            IHProgressHUD.dismiss()
+//                        })
                         self?.showAlert(title: nil, message: "Login error.\nPlease try again later")
                         return Observable<String>.empty()
                     }
             })
             .subscribe {[weak self] completable in
                 DispatchQueue.global(qos: .default).async(execute: {
-                    IHProgressHUD.dismiss()
+//                    IHProgressHUD.dismiss()
                 })
                 switch completable {
                 case .completed, .error(_):

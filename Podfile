@@ -31,4 +31,7 @@ target 'Commun' do
   pod 'IHProgressHUD', :git => 'https://github.com/Swiftify-Corp/IHProgressHUD.git'
   pod 'TLPhotoPicker'
   
+  pod 'PinCodeInputView'
+  pod 'PhoneNumberKit', '~> 2.6'
+  
 end

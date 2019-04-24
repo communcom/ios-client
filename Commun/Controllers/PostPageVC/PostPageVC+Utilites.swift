@@ -14,6 +14,14 @@ extension PostPageVC {
         if let post = viewModel.post.value {
             var resultCells: [UITableViewCell] = []
             
+            if post.content.embeds.first?.result.type == "video" {
+                if let html = post.content.embeds.first?.result.html {
+                    let htmlContentCell = tableView.dequeueReusableCell(withIdentifier: "MediaHtmlCell") as! MediaHtmlCell
+                    htmlContentCell.setupHtml(html)
+                    resultCells.append(htmlContentCell)
+                }
+            }
+            
             let voteCell = tableView.dequeueReusableCell(withIdentifier: "VotesCell") as! VotesCell
             voteCell.delegate = self
             voteCell.setupFromPost(post)
@@ -23,8 +31,14 @@ extension PostPageVC {
             contentCell.setupFromPost(post)
             resultCells.append(contentCell)
             
+            let htmlContentCell = tableView.dequeueReusableCell(withIdentifier: "HtmlCell") as! HtmlCell
+            htmlContentCell.setupHtml(post.content.body.full ?? "")
+            resultCells.append(htmlContentCell)
+            
             cells = resultCells
             tableView.reloadData()
+            
+            
         }
         
     }
@@ -32,10 +46,17 @@ extension PostPageVC {
     func makeComments() {
         var result: [UITableViewCell] = []
         for comment in viewModel.comments.value {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell") as! CommentCell
-            cell.setupFromComment(comment)
-            cell.delegate = self
-            result.append(cell)
+            if comment.content.embeds.first?.result.type == "video" {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "MediaCommentCell") as! MediaCommentCell
+                cell.setupFromComment(comment)
+                cell.delegate = self
+                result.append(cell)
+            } else {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell") as! CommentCell
+                cell.setupFromComment(comment)
+                cell.delegate = self
+                result.append(cell)
+            }
         }
         
         let commentCell = tableView.dequeueReusableCell(withIdentifier: "WriteCommentCell") as! WriteCommentCell

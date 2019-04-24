@@ -10,21 +10,21 @@ import UIKit
 
 extension UIViewController: CommentCellDelegate {
     
-    func cell(_ cell: CommentCell, didTapUpVoteButtonForComment comment: ResponseAPIContentGetComment) {
+    func cell(_ cell: CommentCellProtocol, didTapUpVoteButtonForComment comment: ResponseAPIContentGetComment) {
         NetworkService.shared.voteMessage(voteType: .upvote,
                                           messagePermlink: comment.contentId.permlink,
                                           messageAuthor: comment.author?.username ?? "",
                                           refBlockNum: comment.contentId.refBlockNum)
     }
     
-    func cell(_ cell: CommentCell, didTapDownVoteButtonForComment comment: ResponseAPIContentGetComment) {
+    func cell(_ cell: CommentCellProtocol, didTapDownVoteButtonForComment comment: ResponseAPIContentGetComment) {
         NetworkService.shared.voteMessage(voteType: .downvote,
                                           messagePermlink: comment.contentId.permlink,
                                           messageAuthor: comment.author?.username ?? "",
                                           refBlockNum: comment.contentId.refBlockNum)
     }
     
-    func cell(_ cell: CommentCell, didTapReplyButtonForComment comment: ResponseAPIContentGetComment) {
+    func cell(_ cell: CommentCellProtocol, didTapReplyButtonForComment comment: ResponseAPIContentGetComment) {
         showAlert(title: "TODO", message: "Reply comment")
     }
     

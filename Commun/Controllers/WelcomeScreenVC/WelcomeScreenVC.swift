@@ -134,12 +134,11 @@ extension WelcomeScreenVC: UIPageViewControllerDelegate {
 extension WelcomeScreenVC: WelcomeItemDelegate {
     
     func welcomeItemDidTapSignIn() {
-//        present(SignInVC.instanceController(fromStoryboard: "SignInVC", withIdentifier: "SignInVC"), animated: true, completion: nil)
-        self.navigationController?.pushViewController(SignInVC.instanceController(fromStoryboard: "SignInVC", withIdentifier: "SignInVC"))
+        self.navigationController?.pushViewController(controllerContainer.resolve(SignInVC.self)!)
     }
     
     func welcomeItemDidTapSignUp() {
-        showAlert(title: "TODO", message: "SignUp")
+        self.navigationController?.pushViewController(controllerContainer.resolve(SignUpVC.self)!)
     }
     
 }

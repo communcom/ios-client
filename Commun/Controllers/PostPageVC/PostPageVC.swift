@@ -30,6 +30,9 @@ class PostPageVC: UIViewController {
         tableView.register(UINib(nibName: "TextContentCell", bundle: nil), forCellReuseIdentifier: "TextContentCell")
         tableView.register(UINib(nibName: "CommentCell", bundle: nil), forCellReuseIdentifier: "CommentCell")
         tableView.register(UINib(nibName: "WriteCommentCell", bundle: nil), forCellReuseIdentifier: "WriteCommentCell")
+        tableView.register(UINib(nibName: "HtmlCell", bundle: nil), forCellReuseIdentifier: "HtmlCell")
+        tableView.register(UINib(nibName: "MediaHtmlCell", bundle: nil), forCellReuseIdentifier: "MediaHtmlCell")
+        tableView.register(UINib(nibName: "MediaCommentCell", bundle: nil), forCellReuseIdentifier: "MediaCommentCell")
         
         tableView.dataSource = self
         tableView.delegate = self
