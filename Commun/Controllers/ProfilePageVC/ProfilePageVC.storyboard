@@ -266,11 +266,15 @@
                                                 <constraint firstAttribute="height" constant="56" id="b6B-Bi-5tQ"/>
                                             </constraints>
                                         </view>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oe9-4A-of4">
-                                            <rect key="frame" x="16" y="289.5" width="382" height="20.5"/>
+                                        <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oe9-4A-of4">
+                                            <rect key="frame" x="16" y="289.5" width="382" height="56"/>
+                                            <gestureRecognizers/>
                                             <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
+                                            <connections>
+                                                <outletCollection property="gestureRecognizers" destination="9CN-08-Yu5" appends="YES" id="obk-fw-hWb"/>
+                                            </connections>
                                         </label>
                                     </subviews>
                                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -288,7 +292,7 @@
                                         <constraint firstItem="RFx-YH-sbl" firstAttribute="top" secondItem="Gqs-OY-wbe" secondAttribute="top" id="Ohv-Zu-K0b"/>
                                         <constraint firstItem="UX7-zH-tx1" firstAttribute="trailing" secondItem="CgS-tE-PNM" secondAttribute="trailing" constant="3" id="QGs-zY-za4"/>
                                         <constraint firstItem="S2O-hC-5ww" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="jeD-UU-yV5" secondAttribute="trailing" constant="16" id="QJ5-M3-JC6"/>
-                                        <constraint firstItem="SP3-2b-y27" firstAttribute="top" relation="greaterThanOrEqual" secondItem="oe9-4A-of4" secondAttribute="bottom" constant="25" id="Qbh-5b-NAh"/>
+                                        <constraint firstItem="SP3-2b-y27" firstAttribute="top" secondItem="oe9-4A-of4" secondAttribute="bottom" constant="25" id="Qbh-5b-NAh"/>
                                         <constraint firstItem="UX7-zH-tx1" firstAttribute="bottom" secondItem="CgS-tE-PNM" secondAttribute="bottom" constant="3" id="SDD-m9-Nba"/>
                                         <constraint firstItem="T0P-yu-iEL" firstAttribute="trailing" secondItem="S2O-hC-5ww" secondAttribute="trailing" id="Vq7-Xz-pLG"/>
                                         <constraint firstItem="f8F-Po-a8Z" firstAttribute="leading" secondItem="S2O-hC-5ww" secondAttribute="leading" constant="16" id="Zwe-cT-ccr"/>
@@ -425,6 +429,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6FK-Fx-Xwv" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="9CN-08-Yu5">
+                    <connections>
+                        <action selector="bioLableDidTouch:" destination="9sa-e9-4fu" id="8Lm-UM-FGe"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="-388.40579710144931" y="-60.267857142857139"/>
         </scene>

@@ -88,4 +88,15 @@ class ProfilePageVC: UIViewController {
     @IBAction func changeAvatarBtnDidTouch(_ sender: Any) {
         openActionSheet(cover: false)
     }
+    
+    @IBAction func bioLableDidTouch(_ sender: Any) {
+        self.showActionSheet(title: "Change".localized() + "profile description".localized(), actions: [
+                UIAlertAction(title: "Edit".localized(), style: .default, handler: { (_) in
+                    #warning("Edit bio")
+                    }),
+                UIAlertAction(title: "Delete".localized(), style: .destructive, handler: { (_) in
+                    #warning("Delete bio")
+                }),
+            ])
+    }
 }

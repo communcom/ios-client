@@ -14,6 +14,11 @@ extension Reactive where Base: ProfilePageVC {
     /// Bind profile to view.
     var profile: Binder<ResponseAPIContentGetProfile> {
         return Binder(self.base) { profilePageVC, profile in
+            // cover image
+            if let coverUrl = profile.personal.coverUrl {
+                profilePageVC.userCoverImage.sd_setImage(with: URL(string: coverUrl), placeholderImage: UIImage(named: "ProfilePageCover"))
+            }
+            
             // profile image
             if let avatarUrl = profile.personal.avatarUrl {
                 profilePageVC.userAvatarImage.sd_setImage(with: URL(string: avatarUrl)) { (_, error, _, _) in
