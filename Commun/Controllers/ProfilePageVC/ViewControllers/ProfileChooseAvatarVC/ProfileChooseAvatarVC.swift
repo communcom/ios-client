@@ -74,6 +74,20 @@ class ProfileChooseAvatarVC: UIViewController {
                 cell.setUp(with: asset)
             }
             .disposed(by: bag)
+        
+        // item selected
+        self.collectionView.rx.modelSelected(PHAsset.self)
+            .subscribe(onNext: {asset in
+                let manager = PHImageManager.default()
+                let option = PHImageRequestOptions()
+                option.isSynchronous = true
+                option.deliveryMode = .highQualityFormat
+                manager.requestImage(for: asset, targetSize: self.avatarImageView.size, contentMode: .aspectFit, options: option) { (image, _) in
+                    #warning("adding zoomable view")
+                    self.avatarImageView.image = image
+                }
+            })
+            .disposed(by: bag)
     }
     
     func layoutForCollectionView() -> UICollectionViewFlowLayout {
