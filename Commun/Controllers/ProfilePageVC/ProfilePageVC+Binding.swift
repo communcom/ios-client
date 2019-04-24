@@ -96,10 +96,6 @@ extension ProfilePageVC {
             })
             .disposed(by: bag)
         
-        // Image selectors
-        coverSelectButton.rx.action = onUpdateCover()
-        avatarSelectButton.rx.action = onUpdateAvatar()
-        
         // Bind image
         viewModel.avatarImage
             .asDriver(onErrorJustReturn: nil)

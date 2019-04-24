@@ -22,8 +22,6 @@ class ProfilePageVC: UIViewController {
     @IBOutlet weak var followingsCountLabel: UILabel!
     @IBOutlet weak var communitiesCountLabel: UILabel!
     @IBOutlet weak var segmentio: Segmentio!
-    @IBOutlet weak var coverSelectButton: UIButton!
-    @IBOutlet weak var avatarSelectButton: UIButton!
     
     @IBOutlet weak var copyReferralLinkButton: UIButton!
     
@@ -81,4 +79,11 @@ class ProfilePageVC: UIViewController {
         return .lightContent
     }
 
+    @IBAction func changeCoverBtnDidTouch(_ sender: Any) {
+        openActionSheet(cover: true)
+    }
+    
+    @IBAction func changeAvatarBtnDidTouch(_ sender: Any) {
+        openActionSheet(cover: false)
+    }
 }

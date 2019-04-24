@@ -64,6 +64,9 @@
                                                 <constraint firstAttribute="width" constant="30" id="ZXi-ei-DzO"/>
                                             </constraints>
                                             <state key="normal" image="ProfilePageCoverCamera"/>
+                                            <connections>
+                                                <action selector="changeCoverBtnDidTouch:" destination="9sa-e9-4fu" eventType="touchUpInside" id="dUa-j5-cb3"/>
+                                            </connections>
                                         </button>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UX7-zH-tx1">
                                             <rect key="frame" x="230" y="183" width="30" height="30"/>
@@ -72,6 +75,9 @@
                                                 <constraint firstAttribute="height" constant="30" id="x9U-kN-8oE"/>
                                             </constraints>
                                             <state key="normal" image="ProfilePageUserAvatarCamera"/>
+                                            <connections>
+                                                <action selector="changeAvatarBtnDidTouch:" destination="9sa-e9-4fu" eventType="touchUpInside" id="ThY-C9-71Z"/>
+                                            </connections>
                                         </button>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="sergey.marchenko" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jeD-UU-yV5">
                                             <rect key="frame" x="98.5" y="220" width="217.5" height="31.5"/>
@@ -394,10 +400,8 @@
                     <size key="freeformSize" width="414" height="1500"/>
                     <connections>
                         <outlet property="activityIndicator" destination="iku-D9-AKz" id="fKf-u2-hPa"/>
-                        <outlet property="avatarSelectButton" destination="UX7-zH-tx1" id="y9f-3U-ppT"/>
                         <outlet property="communitiesCountLabel" destination="bNu-7d-aQd" id="e1d-Aq-6Bb"/>
                         <outlet property="copyReferralLinkButton" destination="kqh-z7-9H2" id="64l-YQ-YJk"/>
-                        <outlet property="coverSelectButton" destination="oS7-qC-7Er" id="LXq-MX-KPf"/>
                         <outlet property="followersCountLabel" destination="8lu-a4-7V6" id="SUz-Hj-F36"/>
                         <outlet property="followingsCountLabel" destination="P9F-R4-4qL" id="EKc-hS-8Fz"/>
                         <outlet property="joinedDateLabel" destination="zzx-Z4-0fu" id="MgC-8m-t2m"/>
