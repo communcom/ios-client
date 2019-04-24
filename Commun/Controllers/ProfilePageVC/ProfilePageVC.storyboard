@@ -560,7 +560,7 @@
                                 </items>
                             </navigationBar>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="wWE-La-Qnk">
-                                <rect key="frame" x="0.0" y="502" width="414" height="394"/>
+                                <rect key="frame" x="0.0" y="504" width="414" height="392"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="NzU-aN-cc2">
                                     <size key="itemSize" width="138" height="132"/>
@@ -594,7 +594,7 @@
                                 </cells>
                             </collectionView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nrW-xH-jrY">
-                                <rect key="frame" x="103.5" y="684" width="207" height="30"/>
+                                <rect key="frame" x="103.5" y="685" width="207" height="30"/>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
                                 <state key="normal" title="Allow access to photo library"/>
                             </button>
@@ -637,7 +637,7 @@
                             <constraint firstItem="wWE-La-Qnk" firstAttribute="leading" secondItem="dvz-pB-kSV" secondAttribute="leading" id="Q15-3v-Sff"/>
                             <constraint firstAttribute="bottom" secondItem="wWE-La-Qnk" secondAttribute="bottom" id="TBw-4A-Wsf"/>
                             <constraint firstItem="wWE-La-Qnk" firstAttribute="trailing" secondItem="dvz-pB-kSV" secondAttribute="trailing" id="atg-5u-KaP"/>
-                            <constraint firstItem="wWE-La-Qnk" firstAttribute="top" secondItem="cWO-YU-pEf" secondAttribute="bottom" id="baE-aV-Xgk"/>
+                            <constraint firstItem="wWE-La-Qnk" firstAttribute="top" secondItem="cWO-YU-pEf" secondAttribute="bottom" constant="2" id="baE-aV-Xgk"/>
                             <constraint firstAttribute="bottom" secondItem="wWE-La-Qnk" secondAttribute="bottom" id="dsh-Je-4JR"/>
                             <constraint firstItem="wWE-La-Qnk" firstAttribute="trailing" secondItem="dvz-pB-kSV" secondAttribute="trailing" id="j0A-lM-oKv"/>
                             <constraint firstItem="nrW-xH-jrY" firstAttribute="centerX" secondItem="wWE-La-Qnk" secondAttribute="centerX" id="q1V-x6-a4e"/>

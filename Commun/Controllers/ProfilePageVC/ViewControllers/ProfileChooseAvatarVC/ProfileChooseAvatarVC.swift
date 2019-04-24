@@ -109,9 +109,9 @@ class ProfileChooseAvatarVC: UIViewController {
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         layout.sectionInsetReference = .fromSafeArea
         layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        layout.itemSize = CGSize(width: screenWidth/itemsInARow, height: screenWidth/itemsInARow)
-        layout.minimumInteritemSpacing = 0
-        layout.minimumLineSpacing = 0
+        layout.itemSize = CGSize(width: screenWidth/itemsInARow - 2, height: screenWidth/itemsInARow - 2)
+        layout.minimumInteritemSpacing = 2
+        layout.minimumLineSpacing = 2
         return layout
     }
 }
