@@ -593,58 +593,66 @@
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6nw-bj-tc3">
-                                <rect key="frame" x="0.0" y="88" width="414" height="414"/>
-                                <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="G0v-Ih-Sla">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="414"/>
-                                    </imageView>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ProfilePageAvatarExclude" translatesAutoresizingMaskIntoConstraints="NO" id="E6j-i5-oFa">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="414"/>
-                                    </imageView>
-                                </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="6nw-bj-tc3" secondAttribute="height" id="4Qp-H4-8td"/>
-                                    <constraint firstAttribute="bottom" secondItem="E6j-i5-oFa" secondAttribute="bottom" id="9K8-lK-5bL"/>
-                                    <constraint firstAttribute="trailing" secondItem="E6j-i5-oFa" secondAttribute="trailing" id="ACD-73-6D4"/>
-                                    <constraint firstItem="G0v-Ih-Sla" firstAttribute="top" secondItem="6nw-bj-tc3" secondAttribute="top" id="C1O-JP-daR"/>
-                                    <constraint firstItem="E6j-i5-oFa" firstAttribute="top" secondItem="6nw-bj-tc3" secondAttribute="top" id="Esc-Gd-t0K"/>
-                                    <constraint firstAttribute="trailing" secondItem="G0v-Ih-Sla" secondAttribute="trailing" id="NrM-2q-uza"/>
-                                    <constraint firstAttribute="bottom" secondItem="G0v-Ih-Sla" secondAttribute="bottom" id="Vlj-ML-3mZ"/>
-                                    <constraint firstItem="G0v-Ih-Sla" firstAttribute="leading" secondItem="6nw-bj-tc3" secondAttribute="leading" id="amq-3j-nfb"/>
-                                    <constraint firstItem="E6j-i5-oFa" firstAttribute="leading" secondItem="6nw-bj-tc3" secondAttribute="leading" id="tHm-lr-YhC"/>
-                                </constraints>
-                            </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nrW-xH-jrY">
                                 <rect key="frame" x="103.5" y="684" width="207" height="30"/>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
                                 <state key="normal" title="Allow access to photo library"/>
                             </button>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" maximumZoomScale="4" translatesAutoresizingMaskIntoConstraints="NO" id="cWO-YU-pEf">
+                                <rect key="frame" x="0.0" y="88" width="414" height="414"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="G0v-Ih-Sla">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="414"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="G0v-Ih-Sla" secondAttribute="height" multiplier="1:1" id="RKa-gf-RcY"/>
+                                        </constraints>
+                                    </imageView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="G0v-Ih-Sla" firstAttribute="leading" secondItem="cWO-YU-pEf" secondAttribute="leading" id="7Ey-OJ-0Fv"/>
+                                    <constraint firstItem="G0v-Ih-Sla" firstAttribute="top" secondItem="cWO-YU-pEf" secondAttribute="top" id="CIC-Sq-CsO"/>
+                                    <constraint firstAttribute="trailing" secondItem="G0v-Ih-Sla" secondAttribute="trailing" id="JZ9-ae-WwC"/>
+                                    <constraint firstAttribute="width" secondItem="cWO-YU-pEf" secondAttribute="height" multiplier="1:1" id="Kj5-Xm-nkl"/>
+                                    <constraint firstAttribute="bottom" secondItem="G0v-Ih-Sla" secondAttribute="bottom" id="hFB-AC-eDd"/>
+                                    <constraint firstItem="G0v-Ih-Sla" firstAttribute="width" secondItem="cWO-YU-pEf" secondAttribute="width" id="qZH-fx-Eyt"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="delegate" destination="RCm-RG-Dsz" id="Hff-fo-Rei"/>
+                                </connections>
+                            </scrollView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ProfilePageAvatarExclude" translatesAutoresizingMaskIntoConstraints="NO" id="E6j-i5-oFa">
+                                <rect key="frame" x="0.0" y="88" width="414" height="414"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="E6j-i5-oFa" secondAttribute="height" multiplier="1:1" id="8QY-Am-RZi"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="qve-N3-QQi" firstAttribute="leading" secondItem="dvz-pB-kSV" secondAttribute="leading" id="0wu-Ob-6qy"/>
-                            <constraint firstItem="wWE-La-Qnk" firstAttribute="top" secondItem="6nw-bj-tc3" secondAttribute="bottom" id="9Fe-sH-YOH"/>
+                            <constraint firstItem="cWO-YU-pEf" firstAttribute="top" secondItem="qve-N3-QQi" secondAttribute="bottom" id="27r-BL-Q2C"/>
+                            <constraint firstItem="E6j-i5-oFa" firstAttribute="trailing" secondItem="dvz-pB-kSV" secondAttribute="trailing" id="GXG-xk-6Ms"/>
                             <constraint firstItem="wWE-La-Qnk" firstAttribute="leading" secondItem="dvz-pB-kSV" secondAttribute="leading" id="MZF-MI-q9C"/>
                             <constraint firstItem="qve-N3-QQi" firstAttribute="top" secondItem="dvz-pB-kSV" secondAttribute="top" id="MkO-Vf-dRq"/>
                             <constraint firstItem="wWE-La-Qnk" firstAttribute="leading" secondItem="dvz-pB-kSV" secondAttribute="leading" id="Q15-3v-Sff"/>
                             <constraint firstAttribute="bottom" secondItem="wWE-La-Qnk" secondAttribute="bottom" id="TBw-4A-Wsf"/>
-                            <constraint firstItem="6nw-bj-tc3" firstAttribute="top" secondItem="qve-N3-QQi" secondAttribute="bottom" id="W4W-3O-xeT"/>
                             <constraint firstItem="wWE-La-Qnk" firstAttribute="trailing" secondItem="dvz-pB-kSV" secondAttribute="trailing" id="atg-5u-KaP"/>
-                            <constraint firstItem="6nw-bj-tc3" firstAttribute="leading" secondItem="dvz-pB-kSV" secondAttribute="leading" id="dYm-Fu-Osj"/>
+                            <constraint firstItem="wWE-La-Qnk" firstAttribute="top" secondItem="cWO-YU-pEf" secondAttribute="bottom" id="baE-aV-Xgk"/>
                             <constraint firstAttribute="bottom" secondItem="wWE-La-Qnk" secondAttribute="bottom" id="dsh-Je-4JR"/>
                             <constraint firstItem="wWE-La-Qnk" firstAttribute="trailing" secondItem="dvz-pB-kSV" secondAttribute="trailing" id="j0A-lM-oKv"/>
-                            <constraint firstItem="6nw-bj-tc3" firstAttribute="trailing" secondItem="dvz-pB-kSV" secondAttribute="trailing" id="pFJ-Sh-hJh"/>
                             <constraint firstItem="nrW-xH-jrY" firstAttribute="centerX" secondItem="wWE-La-Qnk" secondAttribute="centerX" id="q1V-x6-a4e"/>
+                            <constraint firstItem="cWO-YU-pEf" firstAttribute="trailing" secondItem="dvz-pB-kSV" secondAttribute="trailing" id="q3i-A6-oSV"/>
+                            <constraint firstItem="cWO-YU-pEf" firstAttribute="leading" secondItem="dvz-pB-kSV" secondAttribute="leading" id="rTP-U3-meo"/>
                             <constraint firstItem="nrW-xH-jrY" firstAttribute="centerY" secondItem="wWE-La-Qnk" secondAttribute="centerY" id="s7Y-hH-yvq"/>
-                            <constraint firstItem="6nw-bj-tc3" firstAttribute="width" secondItem="ElT-l7-2TL" secondAttribute="width" id="zCV-C0-8Pl"/>
+                            <constraint firstItem="E6j-i5-oFa" firstAttribute="top" secondItem="qve-N3-QQi" secondAttribute="bottom" id="uZI-RD-QKD"/>
+                            <constraint firstItem="E6j-i5-oFa" firstAttribute="leading" secondItem="dvz-pB-kSV" secondAttribute="leading" id="z2f-ft-LSu"/>
                             <constraint firstItem="qve-N3-QQi" firstAttribute="trailing" secondItem="dvz-pB-kSV" secondAttribute="trailing" id="ztJ-8D-qtH"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="dvz-pB-kSV"/>
                     </view>
                     <connections>
                         <outlet property="avatarImageView" destination="G0v-Ih-Sla" id="gxh-ci-mtc"/>
+                        <outlet property="avatarScrollView" destination="cWO-YU-pEf" id="iCx-ZM-WET"/>
                         <outlet property="collectionView" destination="wWE-La-Qnk" id="YUY-Z3-LoB"/>
                         <outlet property="requestAccessButton" destination="nrW-xH-jrY" id="xXP-tr-tvt"/>
                     </connections>

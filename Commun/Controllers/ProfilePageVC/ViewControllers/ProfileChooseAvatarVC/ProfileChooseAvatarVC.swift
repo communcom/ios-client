@@ -13,6 +13,7 @@ import PhotosUI
 
 class ProfileChooseAvatarVC: UIViewController {
     @IBOutlet weak var avatarImageView: UIImageView!
+    @IBOutlet weak var avatarScrollView: UIScrollView!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var requestAccessButton: UIButton!
     
@@ -101,5 +102,10 @@ class ProfileChooseAvatarVC: UIViewController {
         layout.minimumLineSpacing = 0
         return layout
     }
+}
 
+extension ProfileChooseAvatarVC: UIScrollViewDelegate {
+    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
+        return avatarImageView
+    }
 }
