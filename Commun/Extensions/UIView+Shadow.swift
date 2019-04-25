@@ -21,7 +21,7 @@ extension UIView {
                 layer.shadowPath = nil
             } else {
                 layer.masksToBounds = false
-                layer.shadowOffset = CGSize(width: 10, height: 10)
+                layer.shadowOffset = CGSize(width: 5, height: 5)
                 layer.shadowOpacity = 0.1
                 layer.shadowPath = UIBezierPath(rect: self.bounds).cgPath
             }
