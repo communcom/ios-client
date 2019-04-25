@@ -36,10 +36,11 @@ extension ProfilePageVC {
             headerRect.size.height = -self.tableView.contentOffset.y
             
             let scale = headerRect.size.height / originHeight
-            self.userCoverImage.transform = CGAffineTransform(scaleX: scale, y: scale)
+            self.headerView.transform = CGAffineTransform(scaleX: scale, y: scale)
+        } else {
+            headerView.transform = CGAffineTransform(scaleX: 1, y: 1)
         }
         headerView.frame = headerRect
         headerView.layoutIfNeeded()
-        
     }
 }
