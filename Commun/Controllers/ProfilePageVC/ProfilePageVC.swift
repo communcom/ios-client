@@ -30,6 +30,9 @@ class ProfilePageVC: UIViewController {
     let bag = DisposeBag()
     let viewModel = ProfilePageViewModel()
     
+    // reconstruct headerView for parallax
+    var headerView: UIView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // setup view
@@ -54,6 +57,7 @@ class ProfilePageVC: UIViewController {
         
         // RefreshControl
         let refreshControl = UIRefreshControl()
+        refreshControl.tintColor = .white
         refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
         tableView.refreshControl = refreshControl
         
@@ -71,6 +75,9 @@ class ProfilePageVC: UIViewController {
         segmentio.valueDidChange = {_, index in
             self.viewModel.segmentedItem.accept(segmentedItems[index])
         }
+        
+        // Parallax
+        self.constructParallax()
     }
     
     @objc func refresh() {

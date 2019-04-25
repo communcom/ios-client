@@ -10,6 +10,7 @@ import Foundation
 import TLPhotoPicker
 import Action
 import RxSwift
+import CyberSwift
 
 extension ProfilePageVC {
     // MARK: - Covers + Avatar
@@ -71,9 +72,8 @@ extension ProfilePageVC {
             }
             .subscribe(onNext: {image in
                 if image != nil {
-                    self.viewModel.coverImage.accept(image)
+                    self.update(.cover, with: image!)
                 }
-                #warning("Send image change request to server")
             })
             .disposed(by: bag)
     }
@@ -93,11 +93,24 @@ extension ProfilePageVC {
         return chooseAvatarVC.viewModel.didSelectImage
             .subscribe(onNext: {image in
                 if image != nil {
-                    self.viewModel.avatarImage.accept(image)
+                    self.update(.avatar, with: image!)
                 }
-                #warning("Send image change request to server")
             })
             .disposed(by: bag)
+    }
+    
+    private func update(_ imageType: ImageType, with newImage: UIImage) {
+        guard let imageView = (imageType == .cover) ? self.userCoverImage : self.userAvatarImage else {return}
+        
+        let originalImage = imageView.image
+        imageView.image = newImage
+        
+        NetworkService.shared.uploadImage(newImage, imageType: imageType)
+            .subscribe(onError: {_ in
+                self.showAlert(title: "Error".localized(), message: "Something went wrong".localized())
+                imageView.image = originalImage
+            })
+            .disposed(by: self.bag)
     }
     
     // MARK: - Biography

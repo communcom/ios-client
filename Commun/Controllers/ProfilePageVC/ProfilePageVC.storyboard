@@ -36,11 +36,8 @@
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="598"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
-                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ProfilePageCover" translatesAutoresizingMaskIntoConstraints="NO" id="RFx-YH-sbl">
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ProfilePageCover" translatesAutoresizingMaskIntoConstraints="NO" id="RFx-YH-sbl">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="160"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" secondItem="RFx-YH-sbl" secondAttribute="height" multiplier="375:145" id="5Z4-Tw-nWP"/>
-                                            </constraints>
                                         </imageView>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ProfilePageUserAvatar" translatesAutoresizingMaskIntoConstraints="NO" id="CgS-tE-PNM">
                                             <rect key="frame" x="157" y="110" width="100" height="100"/>
@@ -305,6 +302,7 @@
                                         <constraint firstItem="Bwp-67-r1B" firstAttribute="top" secondItem="SP3-2b-y27" secondAttribute="bottom" constant="4" id="bwM-bo-bDL"/>
                                         <constraint firstItem="oe9-4A-of4" firstAttribute="top" secondItem="zzx-Z4-0fu" secondAttribute="bottom" constant="16" id="ctC-UK-QFu"/>
                                         <constraint firstItem="RFx-YH-sbl" firstAttribute="leading" secondItem="S2O-hC-5ww" secondAttribute="leading" id="fL2-nu-o80"/>
+                                        <constraint firstItem="RFx-YH-sbl" firstAttribute="height" secondItem="Gqs-OY-wbe" secondAttribute="height" multiplier="160/598" id="fey-gb-Owy"/>
                                         <constraint firstItem="Fg1-OO-KT1" firstAttribute="trailing" secondItem="S2O-hC-5ww" secondAttribute="trailing" id="i5D-bK-pT8"/>
                                         <constraint firstItem="T0P-yu-iEL" firstAttribute="leading" secondItem="S2O-hC-5ww" secondAttribute="leading" id="nea-YI-jTz"/>
                                         <constraint firstItem="Fg1-OO-KT1" firstAttribute="leading" secondItem="S2O-hC-5ww" secondAttribute="leading" id="nj8-Wt-hxM"/>
@@ -328,25 +326,25 @@
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Invite Friends" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rqw-Dq-yqW">
-                                            <rect key="frame" x="133.5" y="30" width="147" height="27"/>
+                                            <rect key="frame" x="141" y="30" width="132" height="26"/>
                                             <fontDescription key="fontDescription" name="SFProText-Semibold" family="SF Pro Text" pointSize="22"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="When they register we give you" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZzG-m0-CWD">
-                                            <rect key="frame" x="96" y="73" width="222" height="18"/>
+                                            <rect key="frame" x="102.5" y="72" width="209.5" height="18"/>
                                             <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
                                             <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0,1 COMMUN" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hxK-Ze-23h">
-                                            <rect key="frame" x="158.5" y="91" width="97.5" height="18"/>
+                                            <rect key="frame" x="159.5" y="90" width="95.5" height="18"/>
                                             <fontDescription key="fontDescription" name="SFProText-Semibold" family="SF Pro Text" pointSize="15"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ProfilePageInviteFriendsPicture" translatesAutoresizingMaskIntoConstraints="NO" id="CVF-hW-TDs">
-                                            <rect key="frame" x="40" y="138" width="334" height="216"/>
+                                            <rect key="frame" x="40" y="137" width="334" height="216"/>
                                         </imageView>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kqh-z7-9H2">
                                             <rect key="frame" x="43" y="321" width="328" height="56"/>
@@ -549,9 +547,6 @@
                             <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ProfilePageCover" translatesAutoresizingMaskIntoConstraints="NO" id="8cF-Ek-qIg" customClass="VerticalDraggableImageView" customModule="Commun" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="88" width="414" height="160"/>
                                 <color key="backgroundColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="8cF-Ek-qIg" secondAttribute="height" multiplier="375:145" id="d16-Ie-zUs"/>
-                                </constraints>
                             </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ProfilePageUserAvatar" translatesAutoresizingMaskIntoConstraints="NO" id="jaP-Rf-dLD">
                                 <rect key="frame" x="157" y="198" width="100" height="100"/>
@@ -613,6 +608,7 @@
                             <constraint firstItem="zbE-KA-5Nk" firstAttribute="leading" secondItem="QXx-ix-XZS" secondAttribute="leading" constant="16" id="2BQ-oN-SQ0"/>
                             <constraint firstItem="ell-cV-JLU" firstAttribute="trailing" secondItem="QXx-ix-XZS" secondAttribute="trailing" constant="-16" id="2Dx-b2-cT7"/>
                             <constraint firstItem="zbE-KA-5Nk" firstAttribute="bottom" secondItem="QXx-ix-XZS" secondAttribute="bottom" constant="-8" id="3EI-YQ-vJg"/>
+                            <constraint firstItem="8cF-Ek-qIg" firstAttribute="height" secondItem="Dkf-uD-aTJ" secondAttribute="height" multiplier="160/896" id="3fe-dN-pj3"/>
                             <constraint firstItem="QXx-ix-XZS" firstAttribute="centerX" secondItem="8cF-Ek-qIg" secondAttribute="centerX" id="73X-4e-vJH"/>
                             <constraint firstItem="jaP-Rf-dLD" firstAttribute="centerX" secondItem="lkO-cg-dmd" secondAttribute="centerX" id="7Yi-rr-eCE"/>
                             <constraint firstItem="QXx-ix-XZS" firstAttribute="centerY" secondItem="8cF-Ek-qIg" secondAttribute="centerY" constant="-25" id="ArD-M5-cNW"/>

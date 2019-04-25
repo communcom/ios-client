@@ -375,4 +375,16 @@ class NetworkService: NSObject {
         })
         
     }
+    
+    //  MARK: - Contract `gls.social`
+    func uploadImage(_ image: UIImage, imageType: ImageType) -> Completable {
+        return Completable.create {completable in
+            RestAPIManager.instance.posting(image: image, imageType: imageType, responseHandling: { (chainResponse) in
+                completable(.completed)
+            }, errorHandling: { (error) in
+                completable(.error(error))
+            })
+            return Disposables.create()
+        }
+    }
 }

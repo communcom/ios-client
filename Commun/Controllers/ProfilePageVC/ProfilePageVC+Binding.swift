@@ -96,19 +96,6 @@ extension ProfilePageVC {
             })
             .disposed(by: bag)
         
-        // Bind image
-        viewModel.avatarImage
-            .asDriver(onErrorJustReturn: nil)
-            .filter {$0 != nil}
-            .drive(userAvatarImage.rx.image)
-            .disposed(by: bag)
-        
-        viewModel.coverImage
-            .asDriver(onErrorJustReturn: nil)
-            .filter {$0 != nil}
-            .drive(userCoverImage.rx.image)
-            .disposed(by: bag)
-        
         // Send request when got an update on ui
         viewModel.updateSubject
             .subscribe(onNext: {params in
