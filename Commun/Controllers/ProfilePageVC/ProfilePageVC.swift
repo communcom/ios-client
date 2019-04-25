@@ -99,7 +99,7 @@ class ProfilePageVC: UIViewController {
                 self.onUpdateBio()
             }),
             UIAlertAction(title: "Delete".localized(), style: .destructive, handler: { (_) in
-                #warning("Delete bio")
+                self.onUpdateBio(delete: true)
             }),
         ])
     }

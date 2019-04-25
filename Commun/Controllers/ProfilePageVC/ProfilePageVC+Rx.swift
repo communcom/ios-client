@@ -55,6 +55,9 @@ extension Reactive where Base: ProfilePageVC {
             profilePageVC.followingsCountLabel.text = "\(profile.subscriptions.userIds.count)"
             profilePageVC.communitiesCountLabel.text = "\(profile.subscriptions.communities.count)"
             #warning("missing followers count")
+            
+            // save params
+            profilePageVC.viewModel.updatemetaParams = profile.personal.blockchainParams
         }
     }
     

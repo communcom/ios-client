@@ -108,8 +108,18 @@ extension ProfilePageVC {
             .filter {$0 != nil}
             .drive(userCoverImage.rx.image)
             .disposed(by: bag)
+        
+        // Send request when got an update on ui
+        viewModel.updateSubject
+            .subscribe(onNext: {params in
+                #warning("Send request to server")
+                
+                // On error, show error and refresh
+//                self.viewModel.profile.accept(self.viewModel.profile.value)
+            })
+            .disposed(by: bag)
+        
+        // Copy referral button
+        #warning("Action for copy referral button")
     }
-    
-    // Copy referral button
-    #warning("Action for copy referral button")
 }

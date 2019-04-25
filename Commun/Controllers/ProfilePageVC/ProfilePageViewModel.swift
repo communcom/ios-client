@@ -20,6 +20,10 @@ class ProfilePageViewModel {
     let coverImage = BehaviorRelay<UIImage?>(value: nil)
     let avatarImage = BehaviorRelay<UIImage?>(value: nil)
     
+    // Params for update request
+    var updatemetaParams: [String: String?]?
+    let updateSubject = PublishSubject<[String: String?]>()
+    
     // Fetcher
     private var itemsFetcher: AnyObject!
     

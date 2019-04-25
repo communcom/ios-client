@@ -16,16 +16,22 @@ extension ProfilePageVC {
     func openActionSheet(cover: Bool) {
         self.showActionSheet(title: "Change".localized() + " " + (cover ? "Cover".localized() : "profile photo".localized()), actions: [
             UIAlertAction(title: "Choose from gallery".localized(), style: .default, handler: { _ in
-                if (cover == true) {self.onUpdateCover()}
-                else {self.onUpdateAvatar()}
+                cover ? self.onUpdateCover() : self.onUpdateAvatar()
             }),
             UIAlertAction(title: "Delete current".localized() + " " + (cover ? "Cover".localized() : "profile photo".localized()), style: .destructive, handler: { _ in
-                #warning("on delete cover or avatar")
+                cover ? self.onUpdateCover(delete: true) : self.onUpdateAvatar(delete: true)
             })])
     }
     
     
-    func onUpdateCover() {
+    func onUpdateCover(delete: Bool = false) {
+        if delete {
+            guard var params = viewModel.updatemetaParams else {return}
+            params["cover_image"] = nil
+            viewModel.updateSubject.onNext(params)
+            return
+        }
+        
         let pickerVC = CustomTLPhotosPickerVC()
         var configure = TLPhotosPickerConfigure()
         configure.singleSelectedMode = true
@@ -72,7 +78,13 @@ extension ProfilePageVC {
             .disposed(by: bag)
     }
     
-    func onUpdateAvatar() {
+    func onUpdateAvatar(delete: Bool = false) {
+        if delete {
+            guard var params = viewModel.updatemetaParams else {return}
+            params["profile_image"] = nil
+            viewModel.updateSubject.onNext(params)
+            return
+        }
         let chooseAvatarVC = controllerContainer.resolve(ProfileChooseAvatarVC.self)!
         self.present(chooseAvatarVC, animated: true, completion: {
             chooseAvatarVC.viewModel.avatar.accept(self.userAvatarImage.image)
@@ -89,7 +101,14 @@ extension ProfilePageVC {
     }
     
     // MARK: - Biography
-    func onUpdateBio(new: Bool = false) {
+    func onUpdateBio(new: Bool = false, delete: Bool = false) {
+        if delete {
+            guard var params = viewModel.updatemetaParams else {return}
+            params["about"] = nil
+            viewModel.updateSubject.onNext(params)
+            return
+        }
+        
         let editBioVC = controllerContainer.resolve(ProfileEditBioVC.self)!
         if !new {
             editBioVC.bio = self.bioLabel.text
@@ -99,7 +118,9 @@ extension ProfilePageVC {
         editBioVC.didConfirm
             .subscribe(onNext: {bio in
                 self.bioLabel.text = bio
-                #warning("Send bio change request to server")
+                guard var params = self.viewModel.updatemetaParams else {return}
+                params["about"] = bio
+                self.viewModel.updateSubject.onNext(params)
             })
             .disposed(by: bag)
     }
