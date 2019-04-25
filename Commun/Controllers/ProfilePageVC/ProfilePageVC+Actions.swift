@@ -12,6 +12,7 @@ import Action
 import RxSwift
 
 extension ProfilePageVC {
+    // MARK: - Covers + Avatar
     func openActionSheet(cover: Bool) {
         self.showActionSheet(title: "Change".localized() + " " + (cover ? "Cover".localized() : "profile photo".localized()), actions: [
             UIAlertAction(title: "Choose from gallery".localized(), style: .default, handler: { _ in
@@ -19,7 +20,7 @@ extension ProfilePageVC {
                 else {self.onUpdateAvatar()}
             }),
             UIAlertAction(title: "Delete current".localized() + " " + (cover ? "Cover".localized() : "profile photo".localized()), style: .destructive, handler: { _ in
-                
+                #warning("on delete cover or avatar")
             })])
     }
     
@@ -83,6 +84,22 @@ extension ProfilePageVC {
                     self.viewModel.avatarImage.accept(image)
                 }
                 #warning("Send image change request to server")
+            })
+            .disposed(by: bag)
+    }
+    
+    // MARK: - Biography
+    func onUpdateBio(new: Bool = false) {
+        let editBioVC = controllerContainer.resolve(ProfileEditBioVC.self)!
+        if !new {
+            editBioVC.bio = self.bioLabel.text
+        }
+        self.present(editBioVC, animated: true, completion: nil)
+        
+        editBioVC.didConfirm
+            .subscribe(onNext: {bio in
+                self.bioLabel.text = bio
+                #warning("Send bio change request to server")
             })
             .disposed(by: bag)
     }

@@ -89,13 +89,14 @@ class ProfilePageVC: UIViewController {
         openActionSheet(cover: false)
     }
     
+    @IBAction func addBioButtonDidTouch(_ sender: Any) {
+        self.onUpdateBio(new: true)
+    }
+    
     @IBAction func bioLableDidTouch(_ sender: Any) {
         self.showActionSheet(title: "Change".localized() + "profile description".localized(), actions: [
             UIAlertAction(title: "Edit".localized(), style: .default, handler: { (_) in
-                let editBioVC = controllerContainer.resolve(ProfileEditBioVC.self)!
-                editBioVC.bio = self.viewModel.profile.value?.personal.biography
-                self.present(editBioVC, animated: true, completion: nil)
-                #warning("observe didConfirmBio")
+                self.onUpdateBio()
             }),
             UIAlertAction(title: "Delete".localized(), style: .destructive, handler: { (_) in
                 #warning("Delete bio")
