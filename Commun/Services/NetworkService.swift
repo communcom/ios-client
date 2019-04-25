@@ -83,16 +83,21 @@ class NetworkService: NSObject {
         })
     }
     
-    func getUserComment() {
-        RestAPIManager.instance.loadUserComments(nickName:      "tst3guarnodu",
-                                                 completion:    { (comments, errorAPI) in
-                                                    guard errorAPI == nil else {
-                                                        Logger.log(message: errorAPI!.caseInfo.message.localized(), event: .error)
-                                                        return
-                                                    }
-                                                    
-                                                    Logger.log(message: "Response: \n\t\(comments!)", event: .debug)
-        })
+    func getUserComments() -> Single<ResponseAPIContentGetComments> {
+        return Single.create {single in
+            RestAPIManager.instance.loadUserComments(completion: { (response, error) in
+                guard error == nil else {
+                    Logger.log(message: error!.caseInfo.message.localized(), event: .error)
+                    single(.error(error!))
+                    return
+                }
+                if let res = response {
+                    single(.success(res))
+                    return
+                }
+            })
+            return Disposables.create()
+        }
     }
     
     func getPostComment(withPermLink permLink: String, withRefBlock block: UInt64, forUser user: String) -> Observable<ResponseAPIContentGetComments> {
@@ -221,7 +226,7 @@ class NetworkService: NSObject {
                                                     
                                                     if let result = result {
                                                         Logger.log(message: "Response: \n\t\(result.code)", event: .debug)
-                                                        observer.onNext("\(result.code ?? 0)")
+                                                        observer.onNext("\(result.code )")
                                                     }
                                                     observer.onCompleted()
             })

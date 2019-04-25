@@ -24,7 +24,11 @@ class PostsFetcher: ItemsFetcher<ResponseAPIContentGetPost> {
 
 class CommentsFetcher: ItemsFetcher<ResponseAPIContentGetComment> {
     override var request: Single<[ResponseAPIContentGetComment]>! {
-        return Observable.just([])
-            .asSingle()
+        return NetworkService.shared.getUserComments()
+            .do(onSuccess: { (result) in
+                // assign next sequenceKey
+                self.sequenceKey = result.sequenceKey
+            })
+            .map {$0.items ?? []}
     }
 }
