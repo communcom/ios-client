@@ -78,6 +78,15 @@ let controllerContainer: Container = {
         return vc
     })
     
+    container.register(SettingsVC.self, factory: { r in
+        let vc = SettingsVC.instanceController(fromStoryboard: "SettingsVC", withIdentifier: "SettingsVC") as! SettingsVC
+        return vc
+    })
+    
+    container.register(LanguageVC.self, factory: { r in
+        let vc = LanguageVC.instanceController(fromStoryboard: "LanguageVC", withIdentifier: "LanguageVC") as! LanguageVC
+        return vc
+    })
     
     return container
 }()
