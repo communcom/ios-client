@@ -17,8 +17,9 @@ class ProfileEditBioVC: UIViewController {
     @IBOutlet weak var textViewPlaceholder: UILabel!
     
     var bio: String?
-    let didConfirm = PublishSubject<String?>()
+    let didConfirm = PublishSubject<String>()
     private let bag = DisposeBag()
+    private let charactersLimit = 100
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,33 +33,43 @@ class ProfileEditBioVC: UIViewController {
     
     func bindUI() {
         // Bind textView
-        let emptyState = textView.rx.text
-            .map {$0?.count != 0}
+        let nonEmpty = textView.rx.text.orEmpty
+            .map {$0.count != 0}
         
-        emptyState.bind(to: postButton.rx.isEnabled)
+        nonEmpty.bind(to: postButton.rx.isEnabled)
             .disposed(by: bag)
         
-        emptyState.bind(to: textViewPlaceholder.rx.isHidden)
+        nonEmpty.bind(to: textViewPlaceholder.rx.isHidden)
             .disposed(by: bag)
         
-        textView.rx.text
+        textView.rx.text.orEmpty
             .subscribe(onNext: {text in
-                self.characterCountLabel.text = "\(text?.count ?? 0)/100"
+                self.characterCountLabel.text = "\(text.count)/100"
             })
             .disposed(by: bag)
+        
+        textView.rx.text.orEmpty
+            .filter {$0.count > self.charactersLimit}
+            .subscribe(onNext: limitCharacters())
+            .disposed(by: bag)
+    }
     
-        #warning("limit characters in textView")
+    func limitCharacters() -> (_ newText: String) -> Void {
+        return { newText in
+            self.textView.text = String(newText.prefix(self.charactersLimit))
+        }
     }
     
     @IBAction func postButtonDidTouch(_ sender: Any) {
         if textView.text != bio {
             didConfirm.onNext(textView.text)
         }
+        didConfirm.onCompleted()
         dismiss(animated: true, completion: nil)
     }
     
     @IBAction func cancelButtonDidTouch(_ sender: Any) {
-        didConfirm.onNext(nil)
+        didConfirm.onCompleted()
         dismiss(animated: true, completion: nil)
     }
 }
