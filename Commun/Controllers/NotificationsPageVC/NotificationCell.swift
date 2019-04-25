@@ -50,6 +50,8 @@ class NotificationCell: UITableViewCell {
         contentLabel.attributedText = detail.text
         
         timestampLabel.text = Date.from(string: notification.timestamp).shortTimeAgoSinceNow
+        
+        categoryLabel.text = notification.community?.name
     }
     
     private func setNoAvatar(for notification: ResponseAPIOnlineNotificationData) {
