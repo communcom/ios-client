@@ -103,7 +103,7 @@ extension ProfilePageVC {
         if delete {
             viewModel.update(["profile_image": nil])
                 .subscribe(onCompleted: {
-                    self.userCoverImage.setNonAvatarImageWithId(self.viewModel.profile.value!.userId)
+                    self.userAvatarImage.setNonAvatarImageWithId(self.viewModel.profile.value!.userId)
                 }) { _ in
                     self.showGeneralError()
                 }
