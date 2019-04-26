@@ -44,6 +44,7 @@
 		3BAF69D522686A1B0055CCEB /* ItemsFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BAF69D422686A1B0055CCEB /* ItemsFetcher.swift */; };
 		3BB86B412271B5D8008F1C64 /* ResponseAPIContentGetProfilePersonal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BB86B402271B5D8008F1C64 /* ResponseAPIContentGetProfilePersonal.swift */; };
 		3BB86B47227222DE008F1C64 /* ProfilePage+Parallax.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BB86B46227222DE008F1C64 /* ProfilePage+Parallax.swift */; };
+		3BB86B4922734AE4008F1C64 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BB86B4822734AE4008F1C64 /* UIColor.swift */; };
 		5700611A2253CA96007700DA /* EditorContentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570061182253CA96007700DA /* EditorContentCell.swift */; };
 		5700611B2253CA96007700DA /* EditorContentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 570061192253CA96007700DA /* EditorContentCell.xib */; };
 		5700611F2253CDDF007700DA /* EditorMediaCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5700611D2253CDDF007700DA /* EditorMediaCell.swift */; };
@@ -214,6 +215,7 @@
 		3BAF69D422686A1B0055CCEB /* ItemsFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemsFetcher.swift; sourceTree = "<group>"; };
 		3BB86B402271B5D8008F1C64 /* ResponseAPIContentGetProfilePersonal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseAPIContentGetProfilePersonal.swift; sourceTree = "<group>"; };
 		3BB86B46227222DE008F1C64 /* ProfilePage+Parallax.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProfilePage+Parallax.swift"; sourceTree = "<group>"; };
+		3BB86B4822734AE4008F1C64 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		4F0772CC6D820AD11B1FF48A /* Pods_Commun.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Commun.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		570061182253CA96007700DA /* EditorContentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorContentCell.swift; sourceTree = "<group>"; };
 		570061192253CA96007700DA /* EditorContentCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EditorContentCell.xib; sourceTree = "<group>"; };
@@ -768,6 +770,7 @@
 				5721E87022650AC0003BE04B /* StringExtension.swift */,
 				3B0E9C65227050E3002AB1C2 /* UIImageView.swift */,
 				3BB86B402271B5D8008F1C64 /* ResponseAPIContentGetProfilePersonal.swift */,
+				3BB86B4822734AE4008F1C64 /* UIColor.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1441,6 +1444,7 @@
 				5797E0F8225DDA400026C4D5 /* SignUpVC.swift in Sources */,
 				576DC925223E4A9600EDED41 /* FeedPageVC+UITableViewDelegate.swift in Sources */,
 				572F81A9223C164C0007F2F9 /* PostCardMediaCell.swift in Sources */,
+				3BB86B4922734AE4008F1C64 /* UIColor.swift in Sources */,
 				57840A00223FAC1B00338FD5 /* SegmentioCellWithImageBeforeLabel.swift in Sources */,
 				57840A0A223FAC1B00338FD5 /* Segmentio.swift in Sources */,
 				3B2F227122689308006B589E /* TabBarViewModel.swift in Sources */,

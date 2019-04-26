@@ -45,6 +45,16 @@ class ProfilePageVC: UIViewController {
         viewModel.loadProfile()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: animated)
+    }
+    
     func setUpViews() {
         // Indicator settings
         activityIndicator.hidesWhenStopped = true
@@ -113,6 +123,6 @@ class ProfilePageVC: UIViewController {
     
     @IBAction func settingsButtonDidTouch(_ sender: Any) {
         let settingsVC = controllerContainer.resolve(SettingsVC.self)!
-        self.showDetailViewController(settingsVC, sender: nil)
+        self.show(settingsVC, sender: nil)
     }
 }

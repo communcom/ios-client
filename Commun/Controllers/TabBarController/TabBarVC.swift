@@ -31,8 +31,10 @@ class TabBarVC: UITabBarController {
 
         // Profile Tab
         let profile = controllerContainer.resolve(ProfilePageVC.self)!
-        profile.tabBarItem = UITabBarItem(title: "Profile", image: UIImage(named: "profile"), tag: 2)
-        profile.accessibilityLabel = "TabBarProfileTabBarItem"
+        let profileNC = UINavigationController(rootViewController: profile)
+        profileNC.tabBarItem = UITabBarItem(title: "Profile", image: UIImage(named: "profile"), tag: 2)
+        profileNC.accessibilityLabel = "TabBarProfileTabBarItem"
+        profileNC.navigationBar.tintColor = UIColor.appMainColor
 
         // Wallet Tab
         let wallet = UIViewController()
@@ -47,7 +49,7 @@ class TabBarVC: UITabBarController {
         notifications.accessibilityLabel = "TabBarNotificationsTabBarItem"
         
         // Set up controllers
-        self.viewControllers = [feed, comunities, profile, wallet, notificationsNC]
+        self.viewControllers = [feed, comunities, profileNC, wallet, notificationsNC]
         
         // Config styles
         self.tabBar.tintColor = #colorLiteral(red: 0.4156862745, green: 0.5019607843, blue: 0.9607843137, alpha: 1)
