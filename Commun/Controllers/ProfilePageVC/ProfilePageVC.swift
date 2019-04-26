@@ -110,4 +110,9 @@ class ProfilePageVC: UIViewController {
             }),
         ])
     }
+    
+    @IBAction func settingsButtonDidTouch(_ sender: Any) {
+        let settingsVC = controllerContainer.resolve(SettingsVC.self)!
+        self.showDetailViewController(settingsVC, sender: nil)
+    }
 }

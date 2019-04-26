@@ -35,7 +35,7 @@ class TabBarVC: UITabBarController {
         profile.accessibilityLabel = "TabBarProfileTabBarItem"
 
         // Wallet Tab
-        let wallet = UINavigationController(rootViewController: controllerContainer.resolve(SettingsVC.self)!)
+        let wallet = UIViewController()
         wallet.tabBarItem = UITabBarItem(title: "Wallet", image: UIImage(named: "wallet"), tag: 3)
         wallet.accessibilityLabel = "TabBarWalletTabBarItem"
         
