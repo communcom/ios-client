@@ -10,6 +10,7 @@ import Foundation
 import CyberSwift
 import RxSwift
 import SwifterSwift
+import Alamofire
 
 class NetworkService: NSObject {
     
@@ -379,11 +380,28 @@ class NetworkService: NSObject {
     //  MARK: - Contract `gls.social`
     func uploadImage(_ image: UIImage) -> Single<String> {
         return .create {single in
-            RestAPIManager.instance.posting(image: image, responseHandling: { (url) in
-                single(.success(url))
-            }, errorHandling: { (error) in
-                single(.error(error))
+            let imgData = image.jpegData(compressionQuality: 1)!
+            
+            Alamofire.upload(multipartFormData: { (data) in
+                data.append(imgData, withName: "file", fileName: "file.jpeg", mimeType: "image/jpeg")
+            }, to: "https://img.golos.io/upload", encodingCompletion: { (result) in
+                
+                switch result {
+                case .success(let upload, _, _):
+                    upload.responseJSON(completionHandler: { (response) in
+                        guard let json = response.result.value as? [String: Any],
+                            let url = json["url"] as? String else {
+                                Logger.log(message: "Upload failed: \(String(describing: response.result.value))", event: .error)
+                                return single(.error(ErrorAPI.requestFailed(message: "upload failed")))
+                        }
+                        single(.success(url))
+                    })
+                    
+                case .failure(let encodingError):
+                    print(encodingError)
+                }
             })
+            
             return Disposables.create()
         }
     }

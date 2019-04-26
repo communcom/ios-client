@@ -53,9 +53,9 @@ extension ProfilePageVC {
         self.present(pickerVC, animated: true, completion: nil)
             
         pickerVC.rx.didSelectAssets
-            .flatMap { assets -> Observable<UIImage?> in
+            .flatMap { assets -> Observable<UIImage> in
                 if assets.count == 0 || assets[0].type != TLPHAsset.AssetType.photo || assets[0].fullResolutionImage == nil {
-                    return .just(nil)
+                    return .empty()
                 }
                 
                 let image = assets[0].fullResolutionImage!
@@ -72,15 +72,12 @@ extension ProfilePageVC {
                 })
                 
                 return coverEditVC.didSelectImage
-                    .flatMap({ (image) -> Single<UIImage?> in
+                    .do(onNext: {_ in
                         coverEditVC.dismiss(animated: true, completion: {
                             pickerVC.dismiss(animated: true, completion: nil)
                         })
-                        return .just(image)
                     })
             }
-            .filter {$0 != nil}
-            .map {$0!}
             // Upload image
             .flatMap {image -> Single<String> in
                 self.userCoverImage.image = image
@@ -91,7 +88,9 @@ extension ProfilePageVC {
             // Catch error and reverse image
             .subscribe(onError: {error in
                 self.userCoverImage.image = originalImage
-                self.showGeneralError()
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
+                    self.showGeneralError()
+                }
             })
             .disposed(by: bag)
     }
