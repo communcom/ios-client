@@ -43,6 +43,7 @@
 		3BAF69D1226792C60055CCEB /* ProfilePageVC+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BAF69D0226792C60055CCEB /* ProfilePageVC+Rx.swift */; };
 		3BAF69D522686A1B0055CCEB /* ItemsFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BAF69D422686A1B0055CCEB /* ItemsFetcher.swift */; };
 		3BB86B412271B5D8008F1C64 /* ResponseAPIContentGetProfilePersonal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BB86B402271B5D8008F1C64 /* ResponseAPIContentGetProfilePersonal.swift */; };
+		3BB86B47227222DE008F1C64 /* ProfilePage+Parallax.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BB86B46227222DE008F1C64 /* ProfilePage+Parallax.swift */; };
 		5700611A2253CA96007700DA /* EditorContentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570061182253CA96007700DA /* EditorContentCell.swift */; };
 		5700611B2253CA96007700DA /* EditorContentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 570061192253CA96007700DA /* EditorContentCell.xib */; };
 		5700611F2253CDDF007700DA /* EditorMediaCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5700611D2253CDDF007700DA /* EditorMediaCell.swift */; };
@@ -200,6 +201,7 @@
 		3BAF69D0226792C60055CCEB /* ProfilePageVC+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProfilePageVC+Rx.swift"; sourceTree = "<group>"; };
 		3BAF69D422686A1B0055CCEB /* ItemsFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemsFetcher.swift; sourceTree = "<group>"; };
 		3BB86B402271B5D8008F1C64 /* ResponseAPIContentGetProfilePersonal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseAPIContentGetProfilePersonal.swift; sourceTree = "<group>"; };
+		3BB86B46227222DE008F1C64 /* ProfilePage+Parallax.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProfilePage+Parallax.swift"; sourceTree = "<group>"; };
 		4F0772CC6D820AD11B1FF48A /* Pods_Commun.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Commun.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		570061182253CA96007700DA /* EditorContentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorContentCell.swift; sourceTree = "<group>"; };
 		570061192253CA96007700DA /* EditorContentCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EditorContentCell.xib; sourceTree = "<group>"; };
@@ -441,6 +443,7 @@
 				3B51581A226DE27200108F17 /* Cells */,
 				3B197C562269CEEF008CF10D /* ProfilePageItemsFetchers.swift */,
 				3BAF69C222675B420055CCEB /* ProfilePageVC.swift */,
+				3BB86B46227222DE008F1C64 /* ProfilePage+Parallax.swift */,
 				3B197C5A2269EF3F008CF10D /* ProfilePageVC+Binding.swift */,
 				3B0E9C6D227063F6002AB1C2 /* ProfilePageVC+Actions.swift */,
 				3BAF69D0226792C60055CCEB /* ProfilePageVC+Rx.swift */,
@@ -1380,6 +1383,7 @@
 				3B197C8A226A33CF008CF10D /* Decodable+MockObjects.swift in Sources */,
 				578B94DA2263CBD800FB5BC6 /* ConfirmUserVC.swift in Sources */,
 				57840A09223FAC1B00338FD5 /* SegmentioOptions.swift in Sources */,
+				3BB86B47227222DE008F1C64 /* ProfilePage+Parallax.swift in Sources */,
 				571B14F4223A935C00630C8F /* AppDelegate.swift in Sources */,
 				3B0E9C6C2270634B002AB1C2 /* ProfileChooseAvatarVC.swift in Sources */,
 				57C33A442244D32300073FAE /* VotesCell.swift in Sources */,

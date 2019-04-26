@@ -18,8 +18,7 @@ class ProfilePageViewModel {
     let segmentedItem = BehaviorRelay<ProfilePageSegmentioItem>(value: .posts)
     
     // Params for update request
-    var updatemetaParams: [String: String?]?
-    let updateSubject = PublishSubject<[String: String?]>()
+    private var updatemetaParams: [String: String?] = [:]
     
     // Fetcher
     private var itemsFetcher: AnyObject!
@@ -34,6 +33,13 @@ class ProfilePageViewModel {
     func bindElements() {
         let nonNilProfile = profile.filter {$0 != nil}
             .map {$0!}
+        
+        // Save param
+        nonNilProfile
+            .subscribe(onNext: {profile in
+                self.updatemetaParams = profile.personal.blockchainParams
+            })
+            .disposed(by: bag)
         
         // Retrieve items after receiving profile
         nonNilProfile
@@ -68,7 +74,7 @@ class ProfilePageViewModel {
         
         // Retrieve items after segemented changes
         segmentedItem
-            .subscribe(onNext: {item in
+            .flatMapLatest {item -> Single<[Decodable]> in
                 // Re-create fetcher
                 switch item {
                 case .posts:
@@ -81,9 +87,11 @@ class ProfilePageViewModel {
                 // Empty table
                 self.items.accept([])
                 
-                // Fetch next
-                self.fetchNext()
-            })
+                return self.fetchNextSingle()
+            }
+            .asDriver(onErrorJustReturn: [])
+            .map {self.items.value + $0}
+            .drive(items)
             .disposed(by: bag)
     }
     
@@ -109,19 +117,38 @@ class ProfilePageViewModel {
     
     // MARK: - For items in tableView
     func fetchNext() {
-        let single: Single<[Decodable]>
-        switch segmentedItem.value {
-        case .posts:
-            guard let fetcher = itemsFetcher as? PostsFetcher else {return}
-            single = fetcher.fetchNext().map {$0 as [ResponseAPIContentGetPost]}
-        case .comments:
-            guard let fetcher = itemsFetcher as? CommentsFetcher else {return}
-            single = fetcher.fetchNext().map {$0 as [ResponseAPIContentGetComment]}
-        }
-        single
+        fetchNextSingle()
             .asDriver(onErrorJustReturn: [])
             .map {self.items.value + $0}
             .drive(items)
             .disposed(by: bag)
+    }
+    
+    private func fetchNextSingle() -> Single<[Decodable]> {
+        let single: Single<[Decodable]>
+        switch segmentedItem.value {
+        case .posts:
+            guard let fetcher = itemsFetcher as? PostsFetcher else {return .never()}
+            single = fetcher.fetchNext().map {$0 as [ResponseAPIContentGetPost]}
+        case .comments:
+            guard let fetcher = itemsFetcher as? CommentsFetcher else {return .never()}
+            single = fetcher.fetchNext().map {$0 as [ResponseAPIContentGetComment]}
+        }
+        return single
+    }
+    
+    // MARK: - Update actions
+    func update(_ params: [String: String?]) -> Completable {
+        // save original for reverse
+        let originalParams = updatemetaParams
+        
+        // change params
+        updatemetaParams.merge(params) { (_, new) in new }
+        
+        // send request
+        return NetworkService.shared.updateMeta(params: updatemetaParams)
+            .do(onError: {_ in
+                self.updatemetaParams = originalParams
+            })
     }
 }

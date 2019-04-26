@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 import CyberSwift
 import RxSwift
+import RxCocoa
 
 extension ProfilePageVC {
     
@@ -38,6 +39,12 @@ extension ProfilePageVC {
         nonNilProfile
             .drive(self.rx.profile)
             .disposed(by: bag)
+        
+        // Bind bios
+        let bioText = bioLabel.rx.observe(String.self, "text")
+        
+        bioText.map{$0 == nil}.bind(to: bioLabel.rx.isHidden).disposed(by: bag)
+        bioText.map{$0 != nil}.bind(to: addBioButton.rx.isHidden).disposed(by: bag)
         
         // Bind items
         viewModel.items.skip(1)
@@ -93,16 +100,6 @@ extension ProfilePageVC {
                 default:
                     break
                 }
-            })
-            .disposed(by: bag)
-        
-        // Send request when got an update on ui
-        viewModel.updateSubject
-            .subscribe(onNext: {params in
-                #warning("Send request to server")
-                
-                // On error, show error and refresh
-//                self.viewModel.profile.accept(self.viewModel.profile.value)
             })
             .disposed(by: bag)
         

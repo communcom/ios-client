@@ -36,14 +36,7 @@ extension Reactive where Base: ProfilePageVC {
             profilePageVC.userNameLabel.text = profile.username
             
             // bio
-            if let bio = profile.personal.biography {
-                profilePageVC.addBioButton.isHidden = true
-                profilePageVC.bioLabel.isHidden = false
-                profilePageVC.bioLabel.text = bio
-            } else {
-                profilePageVC.addBioButton.isHidden = false
-                profilePageVC.bioLabel.isHidden = true
-            }
+            profilePageVC.bioLabel.text = profile.personal.biography
             
             // join date
             let dateFormatter = DateFormatter()
@@ -55,9 +48,6 @@ extension Reactive where Base: ProfilePageVC {
             profilePageVC.followingsCountLabel.text = "\(profile.subscriptions.userIds.count)"
             profilePageVC.communitiesCountLabel.text = "\(profile.subscriptions.communities.count)"
             #warning("missing followers count")
-            
-            // save params
-            profilePageVC.viewModel.updatemetaParams = profile.personal.blockchainParams
         }
     }
     

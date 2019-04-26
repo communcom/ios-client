@@ -26,13 +26,22 @@ extension ProfilePageVC {
     
     
     func onUpdateCover(delete: Bool = false) {
+        // Save originalImage for reverse when update failed
+        let originalImage = userCoverImage.image
+        
+        // If deleting
         if delete {
-            guard var params = viewModel.updatemetaParams else {return}
-            params["cover_image"] = nil
-            viewModel.updateSubject.onNext(params)
+            viewModel.update(["cover_image": nil])
+                .subscribe(onCompleted: {
+                    self.userCoverImage.image = UIImage(named: "ProfilePageCover")
+                }) { _ in
+                    self.showGeneralError()
+                }
+                .disposed(by: bag)
             return
         }
         
+        // If updating
         let pickerVC = CustomTLPhotosPickerVC()
         var configure = TLPhotosPickerConfigure()
         configure.singleSelectedMode = true
@@ -70,55 +79,77 @@ extension ProfilePageVC {
                         return .just(image)
                     })
             }
-            .subscribe(onNext: {image in
-                if image != nil {
-                    self.update(.cover, with: image!)
-                }
+            .filter {$0 != nil}
+            .map {$0!}
+            // Upload image
+            .flatMap {image -> Single<String> in
+                self.userCoverImage.image = image
+                return NetworkService.shared.uploadImage(image)
+            }
+            // Save to db
+            .flatMap {self.viewModel.update(["cover_image": $0])}
+            // Catch error and reverse image
+            .subscribe(onError: {error in
+                self.userCoverImage.image = originalImage
+                self.showGeneralError()
             })
             .disposed(by: bag)
     }
     
     func onUpdateAvatar(delete: Bool = false) {
+        // Save image for reversing when update failed
+        let originalImage = self.userAvatarImage.image
+        
+        // On deleting
         if delete {
-            guard var params = viewModel.updatemetaParams else {return}
-            params["profile_image"] = nil
-            viewModel.updateSubject.onNext(params)
+            viewModel.update(["profile_image": nil])
+                .subscribe(onCompleted: {
+                    self.userCoverImage.setNonAvatarImageWithId(self.viewModel.profile.value!.userId)
+                }) { _ in
+                    self.showGeneralError()
+                }
+                .disposed(by: bag)
             return
         }
+        
+        // On updating
         let chooseAvatarVC = controllerContainer.resolve(ProfileChooseAvatarVC.self)!
         self.present(chooseAvatarVC, animated: true, completion: {
             chooseAvatarVC.viewModel.avatar.accept(self.userAvatarImage.image)
         })
         
         return chooseAvatarVC.viewModel.didSelectImage
-            .subscribe(onNext: {image in
-                if image != nil {
-                    self.update(.avatar, with: image!)
-                }
+            .filter {$0 != nil}
+            .map {$0!}
+            // Upload image
+            .flatMap { image -> Single<String> in
+                self.userAvatarImage.image = image
+                return NetworkService.shared.uploadImage(image)
+            }
+            // Save to db
+            .flatMap {self.viewModel.update(["profile_image": $0])}
+            // Catch error and reverse image
+            .subscribe(onError: {error in
+                self.userAvatarImage.image = originalImage
+                self.showGeneralError()
             })
             .disposed(by: bag)
     }
     
-    private func update(_ imageType: ImageType, with newImage: UIImage) {
-        guard let imageView = (imageType == .cover) ? self.userCoverImage : self.userAvatarImage else {return}
-        
-        let originalImage = imageView.image
-        imageView.image = newImage
-        
-        NetworkService.shared.uploadImage(newImage, imageType: imageType)
-            .subscribe(onError: {_ in
-                self.showAlert(title: "Error".localized(), message: "Something went wrong".localized())
-                imageView.image = originalImage
-            })
-            .disposed(by: self.bag)
-    }
-    
     // MARK: - Biography
     func onUpdateBio(new: Bool = false, delete: Bool = false) {
+        // Save original bio for reversing
+        let originalBio = self.bioLabel.text
+        
+        // On deleting
         if delete {
-            guard var params = viewModel.updatemetaParams else {return}
-            params["about"] = nil
-            viewModel.updateSubject.onNext(params)
+            viewModel.update(["about": nil])
+                .subscribe(onCompleted: {
+                    self.bioLabel.text = nil
+                }) { _ in
+                    self.showGeneralError()
+                }
+                .disposed(by: bag)
             return
         }
         
@@ -129,11 +160,13 @@ extension ProfilePageVC {
         self.present(editBioVC, animated: true, completion: nil)
         
         editBioVC.didConfirm
-            .subscribe(onNext: {bio in
+            .flatMap {bio -> Completable in
                 self.bioLabel.text = bio
-                guard var params = self.viewModel.updatemetaParams else {return}
-                params["about"] = bio
-                self.viewModel.updateSubject.onNext(params)
+                return self.viewModel.update(["about": bio])
+            }
+            .subscribe(onError: {error in
+                self.bioLabel.text = originalBio
+                self.showGeneralError()
             })
             .disposed(by: bag)
     }

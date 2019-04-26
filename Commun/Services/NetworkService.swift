@@ -377,13 +377,25 @@ class NetworkService: NSObject {
     }
     
     //  MARK: - Contract `gls.social`
-    func uploadImage(_ image: UIImage, imageType: ImageType) -> Completable {
-        return Completable.create {completable in
-            RestAPIManager.instance.posting(image: image, imageType: imageType, responseHandling: { (chainResponse) in
-                completable(.completed)
+    func uploadImage(_ image: UIImage) -> Single<String> {
+        return .create {single in
+            RestAPIManager.instance.posting(image: image, responseHandling: { (url) in
+                single(.success(url))
             }, errorHandling: { (error) in
-                completable(.error(error))
+                single(.error(error))
             })
+            return Disposables.create()
+        }
+    }
+    
+    //  Update updatemeta
+    func updateMeta(params: [String: String?]) -> Completable {
+        return .create {completable in
+            #warning("fix later")
+            completable(.completed)
+//            RestAPIManager.instance.update(userProfileMetaArgs: params, responseHandling: { (<#ChainResponse<TransactionCommitted>#>) in
+//                <#code#>
+//            }, errorHandling: <#T##(Error) -> Void#>)
             return Disposables.create()
         }
     }
