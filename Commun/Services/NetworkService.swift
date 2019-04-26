@@ -389,16 +389,24 @@ class NetworkService: NSObject {
                 switch result {
                 case .success(let upload, _, _):
                     upload.responseJSON(completionHandler: { (response) in
-                        guard let json = response.result.value as? [String: Any],
-                            let url = json["url"] as? String else {
-                                Logger.log(message: "Upload failed: \(String(describing: response.result.value))", event: .error)
-                                return single(.error(ErrorAPI.requestFailed(message: "upload failed")))
+                        switch response.result {
+                        case .success(let value):
+                            guard let json = value as? [String: Any],
+                                let url = json["url"] as? String else {
+                                    Logger.log(message: "Upload failed: \(String(describing: response.result))", event: .error)
+                                    return single(.error(ErrorAPI.requestFailed(message: "upload failed")))
+                            }
+                            single(.success(url))
+                            break
+                        case .failure(let error):
+                            Logger.log(message: error.localizedDescription, event: .error)
+                            single(.error(error))
+                            break
                         }
-                        single(.success(url))
                     })
                     
                 case .failure(let encodingError):
-                    print(encodingError)
+                    single(.error(encodingError))
                 }
             })
             
