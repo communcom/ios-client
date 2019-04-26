@@ -18,7 +18,7 @@ enum NotificationType: String {
     case reply = "reply"
     case mention = "mention"
     case reward = "reward"
-    case votesReward = "votesReward"
+    case curatorReward = "curatorReward"
     
     func getDetail(from notification: ResponseAPIOnlineNotificationData) -> NotificationTypeDetail {
         var detail = NotificationTypeDetail(text: nil, icon: nil)
@@ -106,18 +106,19 @@ enum NotificationType: String {
             break
         case .reward:
             let text = NSMutableAttributedString()
+                .bold("+\(notification.value!.amount) \(notification.value!.currency). ")
                 .normal("Reward for post".localized())
                 .normal(": ")
                 .bold(notification.post!.title)
             detail.text = text
             detail.icon = UIImage(named: "NotificationRewardsForPost")
             break
-        case .votesReward:
-            #warning("missing votes type")
+        case .curatorReward:
             let text = NSMutableAttributedString()
+                .bold("+\(notification.value!.amount) \(notification.value!.currency). ")
                 .normal("Reward for votes".localized())
                 .normal(": ")
-                .bold("VOTES")
+                .bold(notification.post!.title)
             detail.text = text
             detail.icon = UIImage(named: "NotificationRewardsForVotes")
             break

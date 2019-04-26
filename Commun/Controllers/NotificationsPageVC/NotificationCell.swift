@@ -20,8 +20,8 @@ class NotificationCell: UITableViewCell {
     @IBOutlet weak var categoryLabel: UILabel!
     
     // Constraint for notificationTypeImage
-    @IBOutlet weak var nTIBottomConstraint: NSLayoutConstraint!
-    @IBOutlet weak var nTILeadingConstraint: NSLayoutConstraint!
+    @IBOutlet var nTIBottomConstraint: NSLayoutConstraint!
+    @IBOutlet var nTILeadingConstraint: NSLayoutConstraint!
     
     // Methods
     func configure(with notification: ResponseAPIOnlineNotificationData) {
@@ -29,8 +29,17 @@ class NotificationCell: UITableViewCell {
         // TODO: Observe fresh changes
         if notification.unread {contentView.backgroundColor = #colorLiteral(red: 0.9725490196, green: 0.9764705882, blue: 1, alpha: 1)}
         
+        guard let type = NotificationType(rawValue: notification.eventType) else {
+            avatarImage.image = UIImage(named: "NotificationAvatarPlaceholder")
+            notificationTypeImage.image = UIImage(named: "NotificationMention")
+            contentLabel.text = "You have a new notification".localized()
+            return
+        }
+    
         // Configure user's image
-        if let user = notification.actor {
+        
+        if let user = notification.actor,
+            type != NotificationType.curatorReward && type != NotificationType.reward {
             if let avatarURL = user.avatarUrl {
                 avatarImage.sd_setImage(with: URL(string: avatarURL)) { (_, error, _, _) in
                     self.avatarImage.setNonAvatarImageWithId(user.id)
@@ -43,11 +52,13 @@ class NotificationCell: UITableViewCell {
         }
         
         // Configure image for notificationType
-        let detail = NotificationType(rawValue: notification.eventType)!.getDetail(from: notification)
+        
+        let detail = type.getDetail(from: notification)
         notificationTypeImage.image = detail.icon
         
         // Set text for labels
         contentLabel.attributedText = detail.text
+        
         
         timestampLabel.text = Date.from(string: notification.timestamp).shortTimeAgoSinceNow
         
@@ -59,13 +70,14 @@ class NotificationCell: UITableViewCell {
         nTIBottomConstraint.isActive = false
         var imageName = "NotificationNoAvatar"
         if let type = NotificationType(rawValue: notification.eventType) {
-            if type == .reward || type == .votesReward {
+            if type == .reward || type == .curatorReward {
                 imageName = "NotificationNoAvatarOrange"
             } else {
                 imageName = "NotificationNoAvatarBlue"
             }
         }
         avatarImage.image = UIImage(named: imageName)
+        self.notificationTypeImage.updateConstraints()
     }
     
     override func prepareForReuse() {
