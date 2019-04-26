@@ -425,4 +425,12 @@ class NetworkService: NSObject {
             return Disposables.create()
         }
     }
+    
+    // MARK: - options
+    func setBasicOptions(lang: Language) {
+        RestAPIManager.instance.setBasicOptions(language: lang.code, nsfwContent: .alwaysAlert, responseHandling: { (result) in
+            
+        }) { (errorAPI) in
+        }
+    }
 }

@@ -1,0 +1,184 @@
+//
+//  SettingsVC.swift
+//  Commun
+//
+//  Created by Maxim Prigozhenkov on 22/04/2019.
+//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//
+
+import UIKit
+import CyberSwift
+
+class SettingsVC: UIViewController {
+
+    @IBOutlet weak var tableView: UITableView!
+    
+    var generalCells: [UITableViewCell] = []
+    var notificationCells: [UITableViewCell] = []
+    var passwordsCells: [UITableViewCell] = []
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        tableView.register(UINib(nibName: "GeneralSettingCell", bundle: nil), forCellReuseIdentifier: "GeneralSettingCell")
+        tableView.register(UINib(nibName: "NotificationSettingCell", bundle: nil), forCellReuseIdentifier: "NotificationSettingCell")
+        tableView.register(UINib(nibName: "ChangePasswordCell", bundle: nil), forCellReuseIdentifier: "ChangePasswordCell")
+        
+        tableView.dataSource = self
+        tableView.delegate = self
+        
+        tableView.rowHeight = UITableView.automaticDimension//56
+        
+        self.title = "Settings"
+        
+        makeCells()
+    }
+
+}
+
+extension SettingsVC {
+    
+    func makeCells() {
+        // General
+        let language = tableView.dequeueReusableCell(withIdentifier: "GeneralSettingCell") as! GeneralSettingCell
+        language.setupCell(setting: GeneralSetting(name: "Interface language", value: "English"))
+        generalCells.append(language)
+        
+        let content = tableView.dequeueReusableCell(withIdentifier: "GeneralSettingCell") as! GeneralSettingCell
+        content.setupCell(setting: GeneralSetting(name: "NSFW content", value: "Always alert"))
+        generalCells.append(content)
+        
+        // Notifications
+        for type in [NotificationSettingType.upvote, NotificationSettingType.downvote, NotificationSettingType.points, NotificationSettingType.comment, NotificationSettingType.mention, NotificationSettingType.rewardsPosts, NotificationSettingType.rewardsVote, NotificationSettingType.following, NotificationSettingType.repos] {
+            let notificationCell = tableView.dequeueReusableCell(withIdentifier: "NotificationSettingCell") as! NotificationSettingCell
+            notificationCell.setupCell(withType: type)
+            notificationCells.append(notificationCell)
+            
+        }
+        
+        for (key, value) in KeychainManager.loadData(forUserNickName: Config.currentUser.nickName ?? "", withKey: Config.currentUser.activeKey ?? "") ?? [:] {
+            // Пока нет паролей...
+        }
+        
+        let changePasswordCell = tableView.dequeueReusableCell(withIdentifier: "ChangePasswordCell") as! ChangePasswordCell
+        changePasswordCell.delegate = self
+        passwordsCells.append(changePasswordCell)
+        
+        tableView.reloadData()
+    }
+    
+}
+
+extension SettingsVC: UITableViewDataSource {
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 3
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if section == 0 {
+            return generalCells.count
+        }
+        if section == 1 {
+            return notificationCells.count
+        }
+        if section == 2 {
+            return passwordsCells.count
+        }
+        return 0
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if indexPath.section == 0 {
+            return generalCells[indexPath.row]
+        }
+        if indexPath.section == 1 {
+            return notificationCells[indexPath.row]
+        }
+        if indexPath.section == 2 {
+            return passwordsCells[indexPath.row]
+        }
+        return UITableViewCell()
+    }
+    
+}
+
+extension SettingsVC: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 56
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.section == 0 {
+            if indexPath.row == 0 {
+                if let vc = controllerContainer.resolve(LanguageVC.self) {
+                    vc.delegate = self
+                    let nav = UINavigationController(rootViewController: vc)
+                    self.present(nav, animated: true, completion: nil)
+                }
+                
+            }
+            else if indexPath.row == 1 {
+                let alert = UIAlertController(title: nil, message: "Select alert", preferredStyle: .actionSheet)
+                alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+                alert.addAction(UIAlertAction(title: "Always alert", style: .default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+            }
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let view = UIView()
+        view.backgroundColor = .white
+        
+        let label = UILabel(frame: CGRect(x: 16, y: 15, width: self.view.frame.width, height: 30))
+        
+        switch section {
+        case 0:
+            label.text = "General"
+            break
+        case 1:
+            label.text = "Notifications"
+            break
+        case 2:
+            label.text = "Passwords"
+            break
+        default:
+            label.text = ""
+        }
+        
+        label.font = .systemFont(ofSize: 22)
+        view.addSubview(label)
+        
+        return view
+    }
+    
+}
+
+extension SettingsVC: ChangePasswordCellDelegate {
+    
+    func changePasswordDidTap() {
+        let alert = UIAlertController(title: "Change all password",
+                                      message: "Changing passwords will save your wallet if someine saw your password.",
+                                      preferredStyle: .alert)
+        alert.addTextField { field in
+            field.placeholder = "Paste owner password"
+        }
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Update", style: .default, handler: { _ in
+            print("Update password")
+        }))
+        present(alert, animated: true, completion: nil)
+    }
+    
+}
+
+extension SettingsVC: LanguageVCDelegate {
+    
+    func didSelectLanguage(_ language: Language) {
+        NetworkService.shared.setBasicOptions(lang: language)
+    }
+    
+}
