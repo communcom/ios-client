@@ -4,6 +4,7 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -91,8 +92,8 @@
                 <outlet property="avatarImage" destination="rdl-Qk-RkQ" id="op4-IF-RDb"/>
                 <outlet property="categoryLabel" destination="dRJ-xb-IRW" id="d9l-Lc-8ZM"/>
                 <outlet property="contentLabel" destination="Lzc-GI-b3q" id="dKN-b8-SPK"/>
-                <outlet property="nTIBottomConstraint" destination="NHD-bh-UZc" id="bHb-mS-M6a"/>
-                <outlet property="nTILeadingConstraint" destination="ALB-K4-Dg4" id="uRx-7A-sda"/>
+                <outlet property="nTIBottomConstraint" destination="uTg-LU-E9V" id="qBh-Gg-nZZ"/>
+                <outlet property="nTILeadingConstraint" destination="DK0-Wg-oCL" id="5Na-Cg-7YH"/>
                 <outlet property="notificationTypeImage" destination="ADc-w3-AHF" id="nBw-9R-tR4"/>
                 <outlet property="timestampLabel" destination="gx9-UZ-sQ9" id="HXf-IS-SGa"/>
             </connections>
