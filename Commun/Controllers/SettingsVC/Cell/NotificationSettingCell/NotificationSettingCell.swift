@@ -25,6 +25,20 @@ enum NotificationSettingType: String {
         return UserDefaults.standard.bool(forKey: self.rawValue)
     }
     
+    static func getOptions(_ options: ResponseAPIGetOptionsNotifyShow) {
+        #warning("types message, witnessVote, witnessCancelVote missing")
+        let standard = UserDefaults.standard
+        standard.set(options.upvote, forKey: NotificationSettingType.upvote.rawValue)
+        standard.set(options.downvote, forKey: NotificationSettingType.downvote.rawValue)
+        standard.set(options.transfer, forKey: NotificationSettingType.points.rawValue)
+        standard.set(options.reply, forKey: NotificationSettingType.comment.rawValue)
+        standard.set(options.subscribe, forKey: NotificationSettingType.following.rawValue)
+        standard.set(options.mention, forKey: NotificationSettingType.mention.rawValue)
+        standard.set(options.repost, forKey: NotificationSettingType.repost.rawValue)
+        standard.set(options.reward, forKey: NotificationSettingType.rewardsPosts.rawValue)
+        standard.set(options.curatorReward, forKey: NotificationSettingType.rewardsVote.rawValue)
+    }
+    
     static func getNoticeOptions() -> RequestParameterAPI.NoticeOptions {
         #warning("types message, witnessVote, witnessCancelVote missing")
         return RequestParameterAPI.NoticeOptions(

@@ -427,6 +427,18 @@ class NetworkService: NSObject {
     }
     
     // MARK: - options
+    func getOptions() -> Completable {
+        return .create {completable in
+            RestAPIManager.instance.getOptions(responseHandling: { (options) in
+                NotificationSettingType.getOptions(options.notify.show)
+                completable(.completed)
+            }, errorHandling: { (errorAPI) in
+                completable(.error(errorAPI))
+            })
+            return Disposables.create()
+        }
+    }
+    
     func setBasicOptions(lang: Language) {
         RestAPIManager.instance.setBasicOptions(language: lang.code, nsfwContent: .alwaysAlert, responseHandling: { (result) in
             
