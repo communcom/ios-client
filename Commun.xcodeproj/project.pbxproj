@@ -748,12 +748,12 @@
 				576DC91A223E41F600EDED41 /* FeedPageViewModel.swift */,
 				576DC918223E41E800EDED41 /* FeedPageVC.swift */,
 				3B635F802277375A006DAAB2 /* FeedPageVC+Binding.swift */,
+				57A9519022416B5D0020F55D /* FeedPageVC+Utilites.swift */,
 				57A95196224178010020F55D /* FeedPageVC+PostCardCellDelegate.swift */,
 				57A95194224176F00020F55D /* FeedPageVC+SortingWidgetDelegate.swift */,
 				57A951922241760C0020F55D /* FeedPageVC+EditorWidgetDelegate.swift */,
 				576DC922223E4A4C00EDED41 /* FeedPageVC+UITableViewDataSource.swift */,
 				576DC924223E4A9600EDED41 /* FeedPageVC+UITableViewDelegate.swift */,
-				57A9519022416B5D0020F55D /* FeedPageVC+Utilites.swift */,
 				576DC91D223E429C00EDED41 /* FeedPageVC.storyboard */,
 			);
 			path = FeedPageVC;

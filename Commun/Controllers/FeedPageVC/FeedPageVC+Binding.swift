@@ -13,6 +13,16 @@ extension FeedPageVC {
         // segmentioView
         segmentioView.valueDidChange = {_, index in
             self.viewModel.feedTypeMode.accept(index == 0 ? .community : .byUser)
+            
+            // if feed is community then sort by popular
+            if index == 0 {
+                self.viewModel.feedType.accept(.popular)
+            }
+            
+            // if feed is my feed, then sort by time
+            if index == 1 {
+                self.viewModel.feedType.accept(.time)
+            }
         }
         
         // items
