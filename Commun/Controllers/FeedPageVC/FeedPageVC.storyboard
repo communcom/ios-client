@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="SF-Pro-Text-Regular.otf">
+            <string>SFProText-Regular</string>
+        </array>
+    </customFonts>
     <scenes>
         <!--Feed PageVC-->
         <scene sceneID="JFv-rT-rOG">
@@ -21,6 +26,132 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="8YX-tZ-48z">
                                 <rect key="frame" x="0.0" y="122" width="375" height="545"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <view key="tableHeaderView" contentMode="scaleToFill" id="64B-KR-TBH">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="136"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <subviews>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QUh-zf-Whk">
+                                            <rect key="frame" x="0.0" y="64" width="375" height="8"/>
+                                            <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="8" id="XIN-mZ-GmB"/>
+                                            </constraints>
+                                        </view>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tux" translatesAutoresizingMaskIntoConstraints="NO" id="Z7e-MC-AaW">
+                                            <rect key="frame" x="16" y="12" width="40" height="40"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="40" id="K18-NN-wUy"/>
+                                                <constraint firstAttribute="height" constant="40" id="lWN-gx-2wx"/>
+                                            </constraints>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                    <real key="value" value="20"/>
+                                                </userDefinedRuntimeAttribute>
+                                            </userDefinedRuntimeAttributes>
+                                        </imageView>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vuH-5V-8Nx">
+                                            <rect key="frame" x="72" y="16" width="99" height="32"/>
+                                            <accessibility key="accessibilityConfiguration" identifier="EditorWidgetCellWhatsNewButton" label="EditorWidgetCellWhatsNewButton"/>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                            <state key="normal" title="What's new?">
+                                                <color key="titleColor" red="0.76862745099999996" green="0.76862745099999996" blue="0.76862745099999996" alpha="1" colorSpace="calibratedRGB"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="postButtonDidTouch:" destination="vaU-K6-LmS" eventType="touchUpInside" id="19w-KE-ezS"/>
+                                            </connections>
+                                        </button>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rH2-Vj-Raa" userLabel="Photo Button">
+                                            <rect key="frame" x="335" y="20" width="24" height="24"/>
+                                            <accessibility key="accessibilityConfiguration" identifier="EditorWidgetCellPhotoButton" label="EditorWidgetCellPhotoButton"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="24" id="CGS-9K-gET"/>
+                                                <constraint firstAttribute="width" constant="24" id="nOp-81-aKm"/>
+                                            </constraints>
+                                            <state key="normal" image="photo_solid"/>
+                                            <connections>
+                                                <action selector="photoButtonDidTouch:" destination="vaU-K6-LmS" eventType="touchUpInside" id="sCr-cW-f9p"/>
+                                            </connections>
+                                        </button>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RTF-ao-7Xs">
+                                            <rect key="frame" x="0.0" y="128" width="375" height="8"/>
+                                            <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="8" id="Bzl-Jy-2ex"/>
+                                            </constraints>
+                                        </view>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="d57-yH-JCE">
+                                            <rect key="frame" x="75" y="84" width="100" height="28"/>
+                                            <accessibility key="accessibilityConfiguration" identifier="SortingWidgetCellSortTimeButton" label="SortingWidgetCellSortTimeButton"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="lVX-i2-Ybw"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="13"/>
+                                            <inset key="titleEdgeInsets" minX="4" minY="0.0" maxX="4" maxY="0.0"/>
+                                            <state key="normal" title="Past">
+                                                <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            </state>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                    <color key="value" red="0.89715927839999998" green="0.90465003249999998" blue="0.92825001480000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                    <real key="value" value="1"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                    <real key="value" value="4"/>
+                                                </userDefinedRuntimeAttribute>
+                                            </userDefinedRuntimeAttributes>
+                                            <connections>
+                                                <action selector="sortByTimeButtonDidTouch:" destination="vaU-K6-LmS" eventType="touchUpInside" id="K1v-2B-uY9"/>
+                                            </connections>
+                                        </button>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YpZ-V0-RF5">
+                                            <rect key="frame" x="16" y="84" width="47" height="28"/>
+                                            <accessibility key="accessibilityConfiguration" identifier="SortingWidgetCellFeedTypeButton" label="SortingWidgetCellFeedTypeButton"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="47" id="KMt-VL-ISn"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="13"/>
+                                            <state key="normal" title="Top">
+                                                <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            </state>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                    <color key="value" red="0.89715927839279175" green="0.90465003252029419" blue="0.9282500147819519" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                    <real key="value" value="1"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                    <real key="value" value="4"/>
+                                                </userDefinedRuntimeAttribute>
+                                            </userDefinedRuntimeAttributes>
+                                            <connections>
+                                                <action selector="sortByTypeButtonDidTouch:" destination="vaU-K6-LmS" eventType="touchUpInside" id="Uxu-il-fDw"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <constraints>
+                                        <constraint firstItem="YpZ-V0-RF5" firstAttribute="top" secondItem="QUh-zf-Whk" secondAttribute="bottom" constant="12" id="12q-Vv-MtC"/>
+                                        <constraint firstItem="d57-yH-JCE" firstAttribute="height" secondItem="YpZ-V0-RF5" secondAttribute="height" id="9Qg-uc-kt2"/>
+                                        <constraint firstAttribute="trailing" secondItem="RTF-ao-7Xs" secondAttribute="trailing" id="EiP-G8-TrW"/>
+                                        <constraint firstItem="RTF-ao-7Xs" firstAttribute="top" secondItem="YpZ-V0-RF5" secondAttribute="bottom" constant="16" id="GHb-fr-AzW"/>
+                                        <constraint firstItem="QUh-zf-Whk" firstAttribute="leading" secondItem="64B-KR-TBH" secondAttribute="leading" id="GWd-fF-EEz"/>
+                                        <constraint firstAttribute="trailing" secondItem="QUh-zf-Whk" secondAttribute="trailing" id="Ozc-uK-hQc"/>
+                                        <constraint firstItem="d57-yH-JCE" firstAttribute="leading" secondItem="YpZ-V0-RF5" secondAttribute="trailing" constant="12" id="PwN-ob-3Mu"/>
+                                        <constraint firstItem="QUh-zf-Whk" firstAttribute="top" secondItem="Z7e-MC-AaW" secondAttribute="bottom" constant="12" id="PxR-LH-EQF"/>
+                                        <constraint firstItem="vuH-5V-8Nx" firstAttribute="centerY" secondItem="Z7e-MC-AaW" secondAttribute="centerY" id="TrK-3b-tDC"/>
+                                        <constraint firstItem="RTF-ao-7Xs" firstAttribute="leading" secondItem="64B-KR-TBH" secondAttribute="leading" id="V32-9T-kWn"/>
+                                        <constraint firstItem="d57-yH-JCE" firstAttribute="centerY" secondItem="YpZ-V0-RF5" secondAttribute="centerY" id="WNj-z6-Zh6"/>
+                                        <constraint firstItem="YpZ-V0-RF5" firstAttribute="leading" secondItem="64B-KR-TBH" secondAttribute="leading" constant="16" id="Wkz-6v-m8L"/>
+                                        <constraint firstItem="Z7e-MC-AaW" firstAttribute="leading" secondItem="64B-KR-TBH" secondAttribute="leading" constant="16" id="Zq5-yJ-CAk"/>
+                                        <constraint firstAttribute="trailing" secondItem="rH2-Vj-Raa" secondAttribute="trailing" constant="16" id="cPm-zf-v2G"/>
+                                        <constraint firstItem="vuH-5V-8Nx" firstAttribute="leading" secondItem="Z7e-MC-AaW" secondAttribute="trailing" constant="16" id="jZj-Pe-fI7"/>
+                                        <constraint firstItem="rH2-Vj-Raa" firstAttribute="centerY" secondItem="Z7e-MC-AaW" secondAttribute="centerY" id="oUR-d6-OQQ"/>
+                                        <constraint firstItem="Z7e-MC-AaW" firstAttribute="top" secondItem="64B-KR-TBH" secondAttribute="top" constant="12" id="yHm-s9-ipP"/>
+                                    </constraints>
+                                </view>
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SzI-hD-53X">
                                 <rect key="frame" x="0.0" y="70" width="375" height="52"/>
@@ -85,6 +216,8 @@
                     </view>
                     <connections>
                         <outlet property="segmentioView" destination="LW0-TT-GUg" id="jt7-AG-jlE"/>
+                        <outlet property="sortByTimeButton" destination="d57-yH-JCE" id="I7M-4v-dAk"/>
+                        <outlet property="sortByTypeButton" destination="YpZ-V0-RF5" id="KS2-5T-fKN"/>
                         <outlet property="tableView" destination="8YX-tZ-48z" id="qId-Qf-2c1"/>
                     </connections>
                 </viewController>
@@ -93,4 +226,8 @@
             <point key="canvasLocation" x="5.5999999999999996" y="146.17691154422789"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="photo_solid" width="24" height="24"/>
+        <image name="tux" width="327" height="370"/>
+    </resources>
 </document>
