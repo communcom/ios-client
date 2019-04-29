@@ -53,7 +53,8 @@ class FeedPageVC: UIViewController {
         
         segmentioView.selectedSegmentioIndex = 0
         
-        makeSubscriptions()
+        // bind ui
+        bindUI()
     }
 
 }

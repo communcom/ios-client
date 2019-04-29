@@ -17,7 +17,7 @@ extension FeedPageVC {
         sortWidget.delegate = self
         resultCells.append(sortWidget)
         
-        switch viewModel.sortType {
+        switch viewModel.sortType.value {
         case .day:
             sortWidget.sortTimeButton.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
             sortWidget.sortTimeButton.setTitle("Past 24 hours", for: .normal)

@@ -24,19 +24,19 @@ extension FeedPageVC: SortingWidgetDelegate {
     func sortingWidget(_ widget: SortingWidgetCell, didSelectSortTimeButton withSortTypes: [FeedTimeFrameMode]) {
         showActionSheet(actions: [
             UIAlertAction(title: "Past 24 hours", style: .default, handler: { _ in
-                self.viewModel.updateFeedWithFrameMode(.day)
+                self.viewModel.sortType.accept(.day)
             }),
             UIAlertAction(title: "Past Week", style: .default, handler: { _ in
-                self.viewModel.updateFeedWithFrameMode(.week)
+                self.viewModel.sortType.accept(.week)
             }),
             UIAlertAction(title: "Past Month", style: .default, handler: { _ in
-                self.viewModel.updateFeedWithFrameMode(.month)
+                self.viewModel.sortType.accept(.month)
             }),
             UIAlertAction(title: "Past Year", style: .default, handler: { _ in
-                self.viewModel.updateFeedWithFrameMode(.year)
+                self.viewModel.sortType.accept(.year)
             }),
             UIAlertAction(title: "Of All Time", style: .default, handler: { _ in
-                self.viewModel.updateFeedWithFrameMode(.all)
+                self.viewModel.sortType.accept(.all)
             })
         ])
     }
