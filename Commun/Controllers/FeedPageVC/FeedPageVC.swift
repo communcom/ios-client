@@ -19,8 +19,6 @@ class FeedPageVC: UIViewController {
     @IBOutlet weak var sortByTypeButton: UIButton!
     @IBOutlet weak var sortByTimeButton: UIButton!
     
-    var cells: [UITableViewCell] = []
-    
     let disposeBag = DisposeBag()
     
     override func viewDidLoad() {
@@ -39,9 +37,6 @@ class FeedPageVC: UIViewController {
         
         let searchField: UITextField = searchBar.value(forKey: "searchField") as! UITextField
         searchField.backgroundColor = #colorLiteral(red: 0.9529411765, green: 0.9607843137, blue: 0.9803921569, alpha: 1)
-        
-        tableView.dataSource = self
-        tableView.delegate = self
         
         tableView.rowHeight = UITableView.automaticDimension
         

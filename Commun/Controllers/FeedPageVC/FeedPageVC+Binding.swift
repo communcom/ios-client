@@ -42,9 +42,21 @@ extension FeedPageVC {
         
         // items
         viewModel.items
-            .bind { (list) in
-                self.makeCells()
+            .bind(to: tableView.rx.items(
+                cellIdentifier: "PostCardCell",
+                cellType: PostCardCell.self)) { index, model, cell in
+                    if index >= self.viewModel.items.value.count - 5 {
+                        self.viewModel.fetchNext()
+                    }
+                    cell.setupFromPost(model)
             }
+            .disposed(by: disposeBag)
+        
+        tableView.rx.modelSelected(ResponseAPIContentGetPost.self)
+            .subscribe(onNext: {post in
+                let postPageVC = controllerContainer.resolve(PostPageVC.self)!
+                postPageVC.viewModel.postForRequest = post
+            })
             .disposed(by: disposeBag)
     }
 }

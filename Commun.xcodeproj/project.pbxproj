@@ -93,8 +93,6 @@
 		576DC91B223E41F600EDED41 /* FeedPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576DC91A223E41F600EDED41 /* FeedPageViewModel.swift */; };
 		576DC91E223E429C00EDED41 /* FeedPageVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 576DC91D223E429C00EDED41 /* FeedPageVC.storyboard */; };
 		576DC921223E42C800EDED41 /* UIViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576DC920223E42C800EDED41 /* UIViewControllerExtension.swift */; };
-		576DC923223E4A4C00EDED41 /* FeedPageVC+UITableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576DC922223E4A4C00EDED41 /* FeedPageVC+UITableViewDataSource.swift */; };
-		576DC925223E4A9600EDED41 /* FeedPageVC+UITableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576DC924223E4A9600EDED41 /* FeedPageVC+UITableViewDelegate.swift */; };
 		57727E69226E4EAB000C9F1F /* HtmlCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57727E67226E4EAB000C9F1F /* HtmlCell.swift */; };
 		57727E6A226E4EAB000C9F1F /* HtmlCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 57727E68226E4EAB000C9F1F /* HtmlCell.xib */; };
 		577B8BFD2255F2F50016FE76 /* EditorPageVC+EditorContentCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577B8BFC2255F2F50016FE76 /* EditorPageVC+EditorContentCellDelegate.swift */; };
@@ -128,7 +126,6 @@
 		5797E0FA225DDA490026C4D5 /* SignUpVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5797E0F9225DDA490026C4D5 /* SignUpVC.storyboard */; };
 		57A1CA632270FC4700E2A1E3 /* LanguageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A1CA622270FC4700E2A1E3 /* LanguageVC.swift */; };
 		57A1CA652270FCF000E2A1E3 /* LanguageVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 57A1CA642270FCF000E2A1E3 /* LanguageVC.storyboard */; };
-		57A9519122416B5D0020F55D /* FeedPageVC+Utilites.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A9519022416B5D0020F55D /* FeedPageVC+Utilites.swift */; };
 		57A95197224178010020F55D /* FeedPageVC+PostCardCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A95196224178010020F55D /* FeedPageVC+PostCardCellDelegate.swift */; };
 		57B6FC25224A9E5600BCFDDA /* WelcomeScreenVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 57B6FC24224A9E5600BCFDDA /* WelcomeScreenVC.storyboard */; };
 		57B6FC27224A9E8700BCFDDA /* WelcomeScreenVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B6FC26224A9E8700BCFDDA /* WelcomeScreenVC.swift */; };
@@ -265,8 +262,6 @@
 		576DC91A223E41F600EDED41 /* FeedPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedPageViewModel.swift; sourceTree = "<group>"; };
 		576DC91D223E429C00EDED41 /* FeedPageVC.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = FeedPageVC.storyboard; sourceTree = "<group>"; };
 		576DC920223E42C800EDED41 /* UIViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtension.swift; sourceTree = "<group>"; };
-		576DC922223E4A4C00EDED41 /* FeedPageVC+UITableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FeedPageVC+UITableViewDataSource.swift"; sourceTree = "<group>"; };
-		576DC924223E4A9600EDED41 /* FeedPageVC+UITableViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FeedPageVC+UITableViewDelegate.swift"; sourceTree = "<group>"; };
 		57727E67226E4EAB000C9F1F /* HtmlCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HtmlCell.swift; sourceTree = "<group>"; };
 		57727E68226E4EAB000C9F1F /* HtmlCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HtmlCell.xib; sourceTree = "<group>"; };
 		577B8BFC2255F2F50016FE76 /* EditorPageVC+EditorContentCellDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EditorPageVC+EditorContentCellDelegate.swift"; sourceTree = "<group>"; };
@@ -300,7 +295,6 @@
 		5797E0F9225DDA490026C4D5 /* SignUpVC.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SignUpVC.storyboard; sourceTree = "<group>"; };
 		57A1CA622270FC4700E2A1E3 /* LanguageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageVC.swift; sourceTree = "<group>"; };
 		57A1CA642270FCF000E2A1E3 /* LanguageVC.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LanguageVC.storyboard; sourceTree = "<group>"; };
-		57A9519022416B5D0020F55D /* FeedPageVC+Utilites.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FeedPageVC+Utilites.swift"; sourceTree = "<group>"; };
 		57A95196224178010020F55D /* FeedPageVC+PostCardCellDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FeedPageVC+PostCardCellDelegate.swift"; sourceTree = "<group>"; };
 		57B6FC24224A9E5600BCFDDA /* WelcomeScreenVC.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = WelcomeScreenVC.storyboard; sourceTree = "<group>"; };
 		57B6FC26224A9E8700BCFDDA /* WelcomeScreenVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeScreenVC.swift; sourceTree = "<group>"; };
@@ -729,10 +723,7 @@
 				576DC91A223E41F600EDED41 /* FeedPageViewModel.swift */,
 				576DC918223E41E800EDED41 /* FeedPageVC.swift */,
 				3B635F802277375A006DAAB2 /* FeedPageVC+Binding.swift */,
-				57A9519022416B5D0020F55D /* FeedPageVC+Utilites.swift */,
 				57A95196224178010020F55D /* FeedPageVC+PostCardCellDelegate.swift */,
-				576DC922223E4A4C00EDED41 /* FeedPageVC+UITableViewDataSource.swift */,
-				576DC924223E4A9600EDED41 /* FeedPageVC+UITableViewDelegate.swift */,
 				576DC91D223E429C00EDED41 /* FeedPageVC.storyboard */,
 			);
 			path = FeedPageVC;
@@ -1420,7 +1411,6 @@
 				57E515A52270EA7900A6F6DB /* GeneralSettingCell.swift in Sources */,
 				57840A05223FAC1B00338FD5 /* SegmentioCellWithLabel.swift in Sources */,
 				5797E0F8225DDA400026C4D5 /* SignUpVC.swift in Sources */,
-				576DC925223E4A9600EDED41 /* FeedPageVC+UITableViewDelegate.swift in Sources */,
 				572F81A9223C164C0007F2F9 /* PostCardMediaCell.swift in Sources */,
 				3BB86B4922734AE4008F1C64 /* UIColor.swift in Sources */,
 				57840A00223FAC1B00338FD5 /* SegmentioCellWithImageBeforeLabel.swift in Sources */,
@@ -1434,7 +1424,6 @@
 				57E515AA2270EBB900A6F6DB /* NotificationSettingCell.swift in Sources */,
 				57840A0E223FAC1B00338FD5 /* BadgeWithCounterView.swift in Sources */,
 				57727E69226E4EAB000C9F1F /* HtmlCell.swift in Sources */,
-				57A9519122416B5D0020F55D /* FeedPageVC+Utilites.swift in Sources */,
 				3B0E9C64226F4A0C002AB1C2 /* VerticalDraggableImageView.swift in Sources */,
 				57E515B62270F7B200A6F6DB /* ChangePasswordCell.swift in Sources */,
 				57A1CA632270FC4700E2A1E3 /* LanguageVC.swift in Sources */,
@@ -1447,7 +1436,6 @@
 				3B0E9C5E226F02AC002AB1C2 /* ProfileEditCoverVC.swift in Sources */,
 				57F5CFC62244E53B005A09AE /* PostPageVC+UITableViewDataSource.swift in Sources */,
 				3B197C532269BE0E008CF10D /* SegmentioExtension.swift in Sources */,
-				576DC923223E4A4C00EDED41 /* FeedPageVC+UITableViewDataSource.swift in Sources */,
 				57B6FC2C224A9F2800BCFDDA /* WelcomeItemVC.swift in Sources */,
 				3BAF69CD22677E440055CCEB /* ProfilePageViewModel.swift in Sources */,
 				575AECAC226066F800A7EC2D /* FormTextField.swift in Sources */,
