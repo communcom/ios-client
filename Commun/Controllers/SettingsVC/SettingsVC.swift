@@ -7,11 +7,14 @@
 //
 
 import UIKit
+import RxSwift
 import CyberSwift
 
 class SettingsVC: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
+    
+    private let bag = DisposeBag()
     
     var generalCells: [UITableViewCell] = []
     var notificationCells: [UITableViewCell] = []
@@ -31,6 +34,13 @@ class SettingsVC: UIViewController {
         
         self.title = "Settings"
         
+        // get options
+        NetworkService.shared.getOptions()
+            .subscribe(onCompleted: {
+                self.makeCells()
+            })
+            .disposed(by: bag)
+        
         makeCells()
     }
 
@@ -40,6 +50,7 @@ extension SettingsVC {
     
     func makeCells() {
         // General
+        generalCells = []
         let language = tableView.dequeueReusableCell(withIdentifier: "GeneralSettingCell") as! GeneralSettingCell
         language.setupCell(setting: GeneralSetting(name: "Interface language", value: "English"))
         generalCells.append(language)
@@ -49,6 +60,7 @@ extension SettingsVC {
         generalCells.append(content)
         
         // Notifications
+        notificationCells = []
         for type in NotificationSettingType.allCases {
             let notificationCell = tableView.dequeueReusableCell(withIdentifier: "NotificationSettingCell") as! NotificationSettingCell
             notificationCell.setupCell(withType: type)
@@ -60,6 +72,8 @@ extension SettingsVC {
             // Пока нет паролей...
         }
         
+        // PasswordsCells
+        passwordsCells = []
         let changePasswordCell = tableView.dequeueReusableCell(withIdentifier: "ChangePasswordCell") as! ChangePasswordCell
         changePasswordCell.delegate = self
         passwordsCells.append(changePasswordCell)
