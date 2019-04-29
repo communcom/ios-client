@@ -32,6 +32,7 @@ class FeedPageViewModel {
         #warning("handle error")
         Observable.combineLatest(sortType, feedType, feedTypeMode)
             .flatMapLatest({ (sortType, feedType, feedTypeMode) -> Single<[ResponseAPIContentGetPost]> in
+                self.items.accept([])
                 self.fetcher.reset()
                 self.fetcher.sortType = sortType
                 self.fetcher.feedType = feedType
