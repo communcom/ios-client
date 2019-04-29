@@ -415,13 +415,13 @@ class NetworkService: NSObject {
     }
     
     //  Update updatemeta
-    func updateMeta(params: [String: String?]) -> Completable {
+    func updateMeta(params: [String: String]) -> Completable {
         return .create {completable in
-            #warning("fix later")
-            completable(.completed)
-//            RestAPIManager.instance.update(userProfileMetaArgs: params, responseHandling: { (<#ChainResponse<TransactionCommitted>#>) in
-//                <#code#>
-//            }, errorHandling: <#T##(Error) -> Void#>)
+            RestAPIManager.instance.update(userProfile: params, responseHandling: { (_) in
+                completable(.completed)
+            }, errorHandling: { (error) in
+                completable(.error(error))
+            })
             return Disposables.create()
         }
     }

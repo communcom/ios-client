@@ -31,7 +31,7 @@ extension ProfilePageVC {
         
         // If deleting
         if delete {
-            NetworkService.shared.updateMeta(params: ["cover_image": nil])
+            NetworkService.shared.updateMeta(params: ["cover_image": ""])
                 .subscribe(onCompleted: {
                     self.userCoverImage.image = UIImage(named: "ProfilePageCover")
                 }) { _ in
@@ -101,7 +101,7 @@ extension ProfilePageVC {
         
         // On deleting
         if delete {
-            NetworkService.shared.updateMeta(params: ["profile_image": nil])
+            NetworkService.shared.updateMeta(params: ["profile_image": ""])
                 .subscribe(onCompleted: {
                     self.userAvatarImage.setNonAvatarImageWithId(self.viewModel.profile.value!.userId)
                 }) { _ in
@@ -142,7 +142,7 @@ extension ProfilePageVC {
         
         // On deleting
         if delete {
-            NetworkService.shared.updateMeta(params: ["about": nil])
+            NetworkService.shared.updateMeta(params: ["about": ""])
                 .subscribe(onCompleted: {
                     self.bioLabel.text = nil
                 }) { _ in
