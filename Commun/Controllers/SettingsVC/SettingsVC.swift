@@ -49,7 +49,7 @@ extension SettingsVC {
         generalCells.append(content)
         
         // Notifications
-        for type in [NotificationSettingType.upvote, NotificationSettingType.downvote, NotificationSettingType.points, NotificationSettingType.comment, NotificationSettingType.mention, NotificationSettingType.rewardsPosts, NotificationSettingType.rewardsVote, NotificationSettingType.following, NotificationSettingType.repos] {
+        for type in NotificationSettingType.allCases {
             let notificationCell = tableView.dequeueReusableCell(withIdentifier: "NotificationSettingCell") as! NotificationSettingCell
             notificationCell.setupCell(withType: type)
             notificationCell.delegate = self

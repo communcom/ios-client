@@ -10,7 +10,7 @@ import UIKit
 import CyberSwift
 import RxSwift
 
-enum NotificationSettingType: String, CaseIterable {
+enum NotificationSettingType: String {
     case upvote = "Upvote"
     case downvote = "Downvote"
     case points = "Points transfer"
@@ -19,7 +19,7 @@ enum NotificationSettingType: String, CaseIterable {
     case rewardsPosts = "Rewards for posts"
     case rewardsVote = "Rewards for vote"
     case following = "Following"
-    case repos = "Repos"
+    case repost = "Repost"
     
     func toBool() -> Bool {
         return UserDefaults.standard.bool(forKey: self.rawValue)
@@ -35,13 +35,17 @@ enum NotificationSettingType: String, CaseIterable {
             subscribe: NotificationSettingType.following.toBool(),
             unsubscribe: false,
             mention: NotificationSettingType.mention.toBool(),
-            repost: NotificationSettingType.repos.toBool(),
+            repost: NotificationSettingType.repost.toBool(),
             reward: NotificationSettingType.rewardsPosts.toBool(),
             curatorReward: NotificationSettingType.rewardsVote.toBool(),
             message: false, //NotificationSettingType.downvote.toBool(),
             witnessVote: false, //NotificationSettingType.downvote.toBool(),
             witnessCancelVote: false //NotificationSettingType.downvote.toBool(),
         )
+    }
+    
+    static var allCases: [NotificationSettingType] {
+        return [.upvote, .downvote, .points, .comment, .mention, .rewardsVote, .rewardsPosts, .following, .repost]
     }
 }
 
