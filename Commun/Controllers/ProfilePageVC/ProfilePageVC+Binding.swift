@@ -12,7 +12,7 @@ import CyberSwift
 import RxSwift
 import RxCocoa
 
-extension ProfilePageVC {
+extension ProfilePageVC: PostCardCellDelegate {
     
     func bindViewModel() {
         let profile = viewModel.profile.asDriver()

@@ -8,7 +8,7 @@
 
 import UIKit
 
-extension UIViewController: PostCardCellDelegate {
+extension PostCardCellDelegate where Self: UIViewController {
     
     func didTapMenuButton(forPost post: ResponseAPIContentGetPost) {
         showAlert(title: "TODO", message: "Нажата кнопка контекстного меню")

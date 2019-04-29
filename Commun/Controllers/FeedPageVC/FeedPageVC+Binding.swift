@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension FeedPageVC {
+extension FeedPageVC: PostCardCellDelegate {
     func bindUI() {
         // segmentioView
         segmentioView.valueDidChange = {_, index in
@@ -49,6 +49,8 @@ extension FeedPageVC {
                         self.viewModel.fetchNext()
                     }
                     cell.setupFromPost(model)
+                    cell.post = model
+                    cell.delegate = self
             }
             .disposed(by: disposeBag)
         
