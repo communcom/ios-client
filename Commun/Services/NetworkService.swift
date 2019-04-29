@@ -10,6 +10,7 @@ import Foundation
 import CyberSwift
 import RxSwift
 import SwifterSwift
+import Alamofire
 
 class NetworkService: NSObject {
     
@@ -23,11 +24,12 @@ class NetworkService: NSObject {
         WebSocketManager.instance.disconnect()
     }
     
-    func loadFeed(_ paginationKey: String?, withSortType sortType: FeedTimeFrameMode = .all, withFeedType type: FeedSortMode = .popular) -> Observable<ResponseAPIContentGetFeed> {
+    func loadFeed(_ paginationKey: String?, withSortType sortType: FeedTimeFrameMode = .all, withFeedType type: FeedSortMode = .popular, withFeedTypeMode typeMode: FeedTypeMode = .community) -> Observable<ResponseAPIContentGetFeed> {
         
         return Observable.create({ observer -> Disposable in
             
-            RestAPIManager.instance.loadFeed(userID: Config.currentUser.nickName,
+            RestAPIManager.instance.loadFeed(typeMode: typeMode,
+                                             userID: Config.currentUser.nickName,
                                              communityID: "gls",
                                              timeFrameMode: sortType,
                                              sortMode: type,
@@ -35,7 +37,7 @@ class NetworkService: NSObject {
                                              completion: { (feed, errorAPI) in
                                                 guard errorAPI == nil else {
                                                     Logger.log(message: errorAPI!.caseInfo.message.localized(), event: .error)
-                                                    //                        observer.onError(errorAPI!)
+                                                    observer.onError(errorAPI!)
                                                     return
                                                 }
                                                 
@@ -82,16 +84,21 @@ class NetworkService: NSObject {
         })
     }
     
-    func getUserComment() {
-        RestAPIManager.instance.loadUserComments(nickName:      "tst3guarnodu",
-                                                 completion:    { (comments, errorAPI) in
-                                                    guard errorAPI == nil else {
-                                                        Logger.log(message: errorAPI!.caseInfo.message.localized(), event: .error)
-                                                        return
-                                                    }
-                                                    
-                                                    Logger.log(message: "Response: \n\t\(comments!)", event: .debug)
-        })
+    func getUserComments() -> Single<ResponseAPIContentGetComments> {
+        return Single.create {single in
+            RestAPIManager.instance.loadUserComments(completion: { (response, error) in
+                guard error == nil else {
+                    Logger.log(message: error!.caseInfo.message.localized(), event: .error)
+                    single(.error(error!))
+                    return
+                }
+                if let res = response {
+                    single(.success(res))
+                    return
+                }
+            })
+            return Disposables.create()
+        }
     }
     
     func getPostComment(withPermLink permLink: String, withRefBlock block: UInt64, forUser user: String) -> Observable<ResponseAPIContentGetComments> {
@@ -164,7 +171,6 @@ class NetworkService: NSObject {
     
     func sendPost(withTitle title: String, withText text: String, metaData json: String, withTags tags: [String]) -> Observable<Bool> {
         return Observable<Bool>.create { observer -> Disposable in
-            
 //            RestAPIManager.instance.publish(message:        text,
 //                                            headline:       title,
 //                                            tags:           tags,
@@ -221,7 +227,7 @@ class NetworkService: NSObject {
                                                     
                                                     if let result = result {
                                                         Logger.log(message: "Response: \n\t\(result.code)", event: .debug)
-                                                        observer.onNext("\(result.code ?? 0)")
+                                                        observer.onNext("\(result.code )")
                                                     }
                                                     observer.onCompleted()
             })
@@ -276,6 +282,23 @@ class NetworkService: NSObject {
         })
     }
     
+    
+    func getUserProfile() -> Single<ResponseAPIContentGetProfile> {
+        return Single<ResponseAPIContentGetProfile>.create {single in
+            RestAPIManager.instance.getProfile(nickName: Config.currentUser.nickName ?? "", completion: { (response, error) in
+                guard error == nil else {
+                    single(.error(error!))
+                    return
+                }
+                if let res = response {
+                    single(.success(res))
+                    return
+                }
+            })
+            return Disposables.create()
+        }
+    }
+    
     func getNotifications(fromId: String? = nil, markAsViewed: Bool = true, freshOnly: Bool = false) -> Single<ResponseAPIOnlineNotifyHistory> {
         return Single<ResponseAPIOnlineNotifyHistory>.create {single in
             RestAPIManager.instance.getOnlineNotifyHistory(fromId: fromId, freshOnly: false, completion: { (response, error) in
@@ -315,7 +338,6 @@ class NetworkService: NSObject {
                     single(.error(error!))
                     return
                 }
-                
                 if let res = response {
                     single(.success(res))
                     return
@@ -355,11 +377,71 @@ class NetworkService: NSObject {
         
     }
     
+    //  MARK: - Contract `gls.social`
+    func uploadImage(_ image: UIImage) -> Single<String> {
+        return .create {single in
+            let imgData = image.jpegData(compressionQuality: 1)!
+            
+            Alamofire.upload(multipartFormData: { (data) in
+                data.append(imgData, withName: "file", fileName: "file.jpeg", mimeType: "image/jpeg")
+            }, to: "https://img.golos.io/upload", encodingCompletion: { (result) in
+                
+                switch result {
+                case .success(let upload, _, _):
+                    upload.responseJSON(completionHandler: { (response) in
+                        switch response.result {
+                        case .success(let value):
+                            guard let json = value as? [String: Any],
+                                let url = json["url"] as? String else {
+                                    Logger.log(message: "Upload failed: \(String(describing: response.result))", event: .error)
+                                    return single(.error(ErrorAPI.requestFailed(message: "upload failed")))
+                            }
+                            single(.success(url))
+                            break
+                        case .failure(let error):
+                            Logger.log(message: error.localizedDescription, event: .error)
+                            single(.error(error))
+                            break
+                        }
+                    })
+                    
+                case .failure(let encodingError):
+                    single(.error(encodingError))
+                }
+            })
+            
+            return Disposables.create()
+        }
+    }
+    
+    //  Update updatemeta
+    func updateMeta(params: [String: String]) -> Completable {
+        return .create {completable in
+            RestAPIManager.instance.update(userProfile: params, responseHandling: { (_) in
+                completable(.completed)
+            }, errorHandling: { (error) in
+                completable(.error(error))
+            })
+            return Disposables.create()
+        }
+    }
+    
+    // MARK: - options
     func setBasicOptions(lang: Language) {
         RestAPIManager.instance.setBasicOptions(language: lang.code, nsfwContent: .alwaysAlert, responseHandling: { (result) in
             
         }) { (errorAPI) in
-            
+        }
+    }
+    
+    func setOptions(options: RequestParameterAPI.NoticeOptions, type: NoticeType) -> Completable {
+        return .create {completable in
+            RestAPIManager.instance.set(options: options, type: type, responseHandling: { (_) in
+                completable(.completed)
+            }, errorHandling: { (error) in
+                completable(.error(error))
+            })
+            return Disposables.create()
         }
     }
 }

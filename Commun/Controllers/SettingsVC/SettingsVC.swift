@@ -49,11 +49,11 @@ extension SettingsVC {
         generalCells.append(content)
         
         // Notifications
-        for type in [NotificationSettingType.upvote, NotificationSettingType.downvote, NotificationSettingType.points, NotificationSettingType.comment, NotificationSettingType.mention, NotificationSettingType.rewardsPosts, NotificationSettingType.rewardsVote, NotificationSettingType.following, NotificationSettingType.repos] {
+        for type in NotificationSettingType.allCases {
             let notificationCell = tableView.dequeueReusableCell(withIdentifier: "NotificationSettingCell") as! NotificationSettingCell
             notificationCell.setupCell(withType: type)
+            notificationCell.delegate = self
             notificationCells.append(notificationCell)
-            
         }
         
         for (key, value) in KeychainManager.loadData(forUserNickName: Config.currentUser.nickName ?? "", withKey: Config.currentUser.activeKey ?? "") ?? [:] {
@@ -160,7 +160,7 @@ extension SettingsVC: ChangePasswordCellDelegate {
     
     func changePasswordDidTap() {
         let alert = UIAlertController(title: "Change all password",
-                                      message: "Changing passwords will save your wallet if someine saw your password.",
+                                      message: "Changing passwords will save your wallet if someone saw your password.",
                                       preferredStyle: .alert)
         alert.addTextField { field in
             field.placeholder = "Paste owner password"
@@ -181,4 +181,14 @@ extension SettingsVC: LanguageVCDelegate {
         NetworkService.shared.setBasicOptions(lang: language)
     }
     
+}
+
+extension SettingsVC: NotificationSettingCellDelegate {
+    func didFailWithError(error: Error) {
+        var message = error.localizedDescription
+        if let error = error as? ErrorAPI {
+            message = error.caseInfo.message
+        }
+        self.showAlert(title: "Error".localized(), message: message)
+    }
 }

@@ -22,11 +22,14 @@ target 'Commun' do
   pod 'UIImageView-Letters'
   pod 'DateToolsSwift'
   
+  pod 'UIImageView-Letters'
+  
   pod 'SwifterSwift/SwiftStdlib'   # Standard Library Extensions
   pod 'SwifterSwift/Foundation'    # Foundation Extensions
   pod 'SwifterSwift/UIKit'         # UIKit Extensions
   
   pod 'IHProgressHUD', :git => 'https://github.com/Swiftify-Corp/IHProgressHUD.git'
+  pod 'TLPhotoPicker'
   
   pod 'PinCodeInputView'
   pod 'PhoneNumberKit', '~> 2.6'

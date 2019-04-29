@@ -8,7 +8,7 @@
 
 import UIKit
 
-extension PostPageVC: CommentCellDelegate {
+extension UIViewController: CommentCellDelegate {
     
     func cell(_ cell: CommentCellProtocol, didTapUpVoteButtonForComment comment: ResponseAPIContentGetComment) {
         NetworkService.shared.voteMessage(voteType: .upvote,

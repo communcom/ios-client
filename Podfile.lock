@@ -56,6 +56,7 @@ PODS:
   - SwifterSwift/SwiftStdlib (5.0.0)
   - SwifterSwift/UIKit (5.0.0)
   - Swinject (2.6.0)
+  - TLPhotoPicker (1.8.6)
   - UIImageView-Letters (1.1.4)
 
 DEPENDENCIES:
@@ -75,6 +76,7 @@ DEPENDENCIES:
   - SwifterSwift/SwiftStdlib
   - SwifterSwift/UIKit
   - Swinject
+  - TLPhotoPicker
   - UIImageView-Letters
 
 SPEC REPOS:
@@ -103,6 +105,7 @@ SPEC REPOS:
     - Starscream
     - SwifterSwift
     - Swinject
+    - TLPhotoPicker
     - UIImageView-Letters
 
 EXTERNAL SOURCES:
@@ -113,7 +116,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   CyberSwift:
-    :commit: 13b3b72a90f822161676f4ad6b25c4ceec315b7c
+    :commit: 84bcab1f61afebab9b5232cc1b789a588650055f
     :git: https://github.com/GolosChain/cyberSwift.git
   IHProgressHUD:
     :commit: 6c160f4ef2e9b924de58c8df3382a57ced957dfd
@@ -126,12 +129,12 @@ SPEC CHECKSUMS:
   Checksum: f1aa56a27dea5db4006c819e2e129ee6aeb1d9af
   Crashlytics: 07fb167b1694128c1c9a5a5cc319b0e9c3ca0933
   CryptoSwift: d81eeaa59dc5a8d03720fe919a6fd07b51f7439f
-  CyberSwift: f559cf2324b229a194c086d23c7822b830feb31f
+  CyberSwift: 4f43a0b51dccf77ce3d10a858b7f295dbe1890f8
   DateToolsSwift: 875d97ff9e3a5d54abdd67a269b3f51c757b71ab
   eosswift: 22bc931fd65bbd446c3f828233b8fd2916cec4a7
   Fabric: f988e33c97f08930a413e08123064d2e5f68d655
   GoloCrypto: 3f60e824b57ca657be702fb2cf4bd1f7a379257a
-  IHProgressHUD: 49ce4eb85bb47952f04adcfc04ea7473286cf677
+  IHProgressHUD: a01846bfbb581c761c79747c67b08387c3bdfae3
   Localize-Swift: c798ec9286494866f7068f85f7c71283ac5bdab4
   Locksmith: e9bebbaaa4cee3c511bc358a44f843c3fe00e21f
   PhoneNumberKit: 167ee1f0bbb6efce7c62559e620eae745595532f
@@ -146,8 +149,9 @@ SPEC CHECKSUMS:
   Starscream: 08172b481e145289c4930cb567230fb55897cfa4
   SwifterSwift: 96f90594b370802f01647c2b1229c74a84ffafee
   Swinject: 48a96cda93633cf2860697b4ce76ab5db9ebaca2
+  TLPhotoPicker: c5aefdc9beaca82116d7855924f1d8abdd055f79
   UIImageView-Letters: f62db28076797adf3560ab7410647dc6899b9eef
 
-PODFILE CHECKSUM: 903d42db6a6d3b70e454b653d95fc5f1d5542f11
+PODFILE CHECKSUM: ba325e3cd7fff6ef57886b6f9d487c1086eaa781
 
-COCOAPODS: 1.7.0.beta.3
+COCOAPODS: 1.6.0.beta.2
