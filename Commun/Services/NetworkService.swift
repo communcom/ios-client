@@ -433,4 +433,15 @@ class NetworkService: NSObject {
         }) { (errorAPI) in
         }
     }
+    
+    func setOptions(options: RequestParameterAPI.NoticeOptions, type: NoticeType) -> Completable {
+        return .create {completable in
+            RestAPIManager.instance.set(options: options, type: type, responseHandling: { (_) in
+                completable(.completed)
+            }, errorHandling: { (error) in
+                completable(.error(error))
+            })
+            return Disposables.create()
+        }
+    }
 }

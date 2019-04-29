@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import CyberSwift
+import RxSwift
 
 enum NotificationSettingType: String, CaseIterable {
     case upvote = "Upvote"
@@ -18,6 +20,33 @@ enum NotificationSettingType: String, CaseIterable {
     case rewardsVote = "Rewards for vote"
     case following = "Following"
     case repos = "Repos"
+    
+    func toBool() -> Bool {
+        return UserDefaults.standard.bool(forKey: self.rawValue)
+    }
+    
+    static func getNoticeOptions() -> RequestParameterAPI.NoticeOptions {
+        #warning("types message, witnessVote, witnessCancelVote missing")
+        return RequestParameterAPI.NoticeOptions(
+            upvote: NotificationSettingType.upvote.toBool(),
+            downvote: NotificationSettingType.downvote.toBool(),
+            transfer: NotificationSettingType.points.toBool(),
+            reply: NotificationSettingType.comment.toBool(),
+            subscribe: NotificationSettingType.following.toBool(),
+            unsubscribe: false,
+            mention: NotificationSettingType.mention.toBool(),
+            repost: NotificationSettingType.repos.toBool(),
+            reward: NotificationSettingType.rewardsPosts.toBool(),
+            curatorReward: NotificationSettingType.rewardsVote.toBool(),
+            message: false, //NotificationSettingType.downvote.toBool(),
+            witnessVote: false, //NotificationSettingType.downvote.toBool(),
+            witnessCancelVote: false //NotificationSettingType.downvote.toBool(),
+        )
+    }
+}
+
+protocol NotificationSettingCellDelegate: class {
+    func didFailWithError(error: Error)
 }
 
 class NotificationSettingCell: UITableViewCell {
@@ -27,6 +56,9 @@ class NotificationSettingCell: UITableViewCell {
     @IBOutlet weak var notificationEnabledSwitcher: UISwitch!
     
     private var type: NotificationSettingType?
+    private var bag = DisposeBag()
+    
+    weak var delegate: NotificationSettingCellDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -50,8 +82,17 @@ class NotificationSettingCell: UITableViewCell {
     }
     
     @IBAction func changeSwitcher(_ sender: UISwitch) {
-        UserDefaults.standard.set(sender.isOn, forKey: type?.rawValue ?? "")
+        guard let type = type else {return}
+        UserDefaults.standard.set(sender.isOn, forKey: type.rawValue)
+        
+        let options = NotificationSettingType.getNoticeOptions()
+        
+        NetworkService.shared.setOptions(options: options, type: .notify)
+            .subscribe(onError: {error in
+                UserDefaults.standard.set(!sender.isOn, forKey: type.rawValue)
+                sender.setOn(!sender.isOn, animated: true)
+                self.delegate?.didFailWithError(error: error)
+            })
+            .disposed(by: bag)
     }
-    
-    
 }
