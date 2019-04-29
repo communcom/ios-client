@@ -45,8 +45,8 @@ extension Reactive where Base: ProfilePageVC {
             profilePageVC.joinedDateLabel.text = ("Joined".localized() + " " + dateString)
             
             // count labels
-            profilePageVC.followingsCountLabel.text = "\(profile.subscriptions.userIds.count)"
-            profilePageVC.communitiesCountLabel.text = "\(profile.subscriptions.communities.count)"
+            profilePageVC.followingsCountLabel.text = "\(profile.subscribers.usersCount)"
+            profilePageVC.communitiesCountLabel.text = "\(profile.subscribers.communitiesCount)"
             #warning("missing followers count")
         }
     }
