@@ -31,7 +31,7 @@ extension ProfilePageVC {
         
         // If deleting
         if delete {
-            viewModel.update(["cover_image": nil])
+            NetworkService.shared.updateMeta(params: ["cover_image": nil])
                 .subscribe(onCompleted: {
                     self.userCoverImage.image = UIImage(named: "ProfilePageCover")
                 }) { _ in
@@ -84,7 +84,7 @@ extension ProfilePageVC {
                 return NetworkService.shared.uploadImage(image)
             }
             // Save to db
-            .flatMap {self.viewModel.update(["cover_image": $0])}
+            .flatMap {NetworkService.shared.updateMeta(params: ["cover_image": $0])}
             // Catch error and reverse image
             .subscribe(onError: {error in
                 self.userCoverImage.image = originalImage
@@ -101,7 +101,7 @@ extension ProfilePageVC {
         
         // On deleting
         if delete {
-            viewModel.update(["profile_image": nil])
+            NetworkService.shared.updateMeta(params: ["profile_image": nil])
                 .subscribe(onCompleted: {
                     self.userAvatarImage.setNonAvatarImageWithId(self.viewModel.profile.value!.userId)
                 }) { _ in
@@ -126,7 +126,7 @@ extension ProfilePageVC {
                 return NetworkService.shared.uploadImage(image)
             }
             // Save to db
-            .flatMap {self.viewModel.update(["profile_image": $0])}
+            .flatMap {NetworkService.shared.updateMeta(params: ["profile_image": $0])}
             // Catch error and reverse image
             .subscribe(onError: {error in
                 self.userAvatarImage.image = originalImage
@@ -142,7 +142,7 @@ extension ProfilePageVC {
         
         // On deleting
         if delete {
-            viewModel.update(["about": nil])
+            NetworkService.shared.updateMeta(params: ["about": nil])
                 .subscribe(onCompleted: {
                     self.bioLabel.text = nil
                 }) { _ in
@@ -161,7 +161,7 @@ extension ProfilePageVC {
         editBioVC.didConfirm
             .flatMap {bio -> Completable in
                 self.bioLabel.text = bio
-                return self.viewModel.update(["about": bio])
+                return NetworkService.shared.updateMeta(params: ["about": bio])
             }
             .subscribe(onError: {error in
                 self.bioLabel.text = originalBio

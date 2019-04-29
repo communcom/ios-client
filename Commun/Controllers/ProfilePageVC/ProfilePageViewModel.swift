@@ -17,9 +17,6 @@ class ProfilePageViewModel {
     let items = BehaviorRelay<[Decodable]>(value: [])
     let segmentedItem = BehaviorRelay<ProfilePageSegmentioItem>(value: .posts)
     
-    // Params for update request
-    private var updatemetaParams: [String: String?] = [:]
-    
     // Fetcher
     private var itemsFetcher: AnyObject!
     
@@ -33,13 +30,6 @@ class ProfilePageViewModel {
     func bindElements() {
         let nonNilProfile = profile.filter {$0 != nil}
             .map {$0!}
-        
-        // Save param
-        nonNilProfile
-            .subscribe(onNext: {profile in
-                self.updatemetaParams = profile.personal.blockchainParams
-            })
-            .disposed(by: bag)
         
         // Retrieve items after receiving profile
         nonNilProfile
@@ -135,20 +125,5 @@ class ProfilePageViewModel {
             single = fetcher.fetchNext().map {$0 as [ResponseAPIContentGetComment]}
         }
         return single
-    }
-    
-    // MARK: - Update actions
-    func update(_ params: [String: String?]) -> Completable {
-        // save original for reverse
-        let originalParams = updatemetaParams
-        
-        // change params
-        updatemetaParams.merge(params) { (_, new) in new }
-        
-        // send request
-        return NetworkService.shared.updateMeta(params: updatemetaParams)
-            .do(onError: {_ in
-                self.updatemetaParams = originalParams
-            })
     }
 }
