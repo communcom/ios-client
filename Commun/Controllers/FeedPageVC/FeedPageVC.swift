@@ -16,8 +16,8 @@ class FeedPageVC: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var segmentioView: Segmentio!
-    
-    var cells: [UITableViewCell] = []
+    @IBOutlet weak var sortByTypeButton: UIButton!
+    @IBOutlet weak var sortByTimeButton: UIButton!
     
     let disposeBag = DisposeBag()
     
@@ -28,10 +28,8 @@ class FeedPageVC: UIViewController {
         
         navigationController?.navigationBar.barTintColor = .white
         
-        tableView.register(UINib(nibName: "SortingWidgetCell", bundle: nil), forCellReuseIdentifier: "SortingWidgetCell")
         tableView.register(UINib(nibName: "PostCardCell", bundle: nil), forCellReuseIdentifier: "PostCardCell")
         tableView.register(UINib(nibName: "PostCardMediaCell", bundle: nil), forCellReuseIdentifier: "PostCardMediaCell")
-        tableView.register(UINib(nibName: "EditorWidgetCell", bundle: nil), forCellReuseIdentifier: "EditorWidgetCell")
         
         let searchBar = UISearchBar(frame: self.view.bounds)
         searchBar.placeholder = "Search"
@@ -39,9 +37,6 @@ class FeedPageVC: UIViewController {
         
         let searchField: UITextField = searchBar.value(forKey: "searchField") as! UITextField
         searchField.backgroundColor = #colorLiteral(red: 0.9529411765, green: 0.9607843137, blue: 0.9803921569, alpha: 1)
-        
-        tableView.dataSource = self
-        tableView.delegate = self
         
         tableView.rowHeight = UITableView.automaticDimension
         
@@ -53,7 +48,36 @@ class FeedPageVC: UIViewController {
         
         segmentioView.selectedSegmentioIndex = 0
         
-        makeSubscriptions()
+        // bind ui
+        bindUI()
     }
 
+    @IBAction func postButtonDidTouch(_ sender: Any) {
+        let editorVC = controllerContainer.resolve(EditorPageVC.self)
+        let nav = UINavigationController(rootViewController: editorVC!)
+        present(nav, animated: true, completion: nil)
+    }
+    
+    @IBAction func photoButtonDidTouch(_ sender: Any) {
+        showAlert(title: "TODO", message: "Photo button")
+    }
+    
+    @IBAction func sortByTypeButtonDidTouch(_ sender: Any) {
+        showActionSheet(actions: [
+            UIAlertAction(title: "Top", style: .default, handler: { _ in
+                self.showAlert(title: "TODO", message: "FILTER")
+            }),
+            UIAlertAction(title: "New", style: .default, handler: { _ in
+                self.showAlert(title: "TODO", message: "FILTER")
+            })])
+
+    }
+    
+    @IBAction func sortByTimeButtonDidTouch(_ sender: Any) {
+        showActionSheet(actions: FeedTimeFrameMode.allCases.map { mode in
+            UIAlertAction(title: mode.toString(), style: .default, handler: { (_) in
+                self.viewModel.sortType.accept(mode)
+            })
+        })
+    }
 }

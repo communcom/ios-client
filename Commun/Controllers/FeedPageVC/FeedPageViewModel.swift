@@ -8,47 +8,56 @@
 
 import Foundation
 import RxSwift
+import RxCocoa
 import CyberSwift
 
 class FeedPageViewModel {
     
-    private let disposeBag = DisposeBag()
+    private let bag = DisposeBag()
     
-    var items = Variable<[ResponseAPIContentGetPost]>([])
-    var errors = PublishSubject<Error>()
+    let items = BehaviorRelay<[ResponseAPIContentGetPost]>(value: [])
     
-    var paginationKey: String? = ""
-    var isLoading: Bool = false
+    let sortType = BehaviorRelay<FeedTimeFrameMode>(value: .all)
+    let feedType = BehaviorRelay<FeedSortMode>(value: .popular)
+    let feedTypeMode = BehaviorRelay<FeedTypeMode>(value: .community)
     
-    var sortType: FeedTimeFrameMode = .all
-    var feedType: FeedSortMode = .popular
+    let fetcher = PostsFetcher(sortType: .all, feedType: .popular, feedTypeMode: .community)
     
     init() {
-       loadFeed()
+        // bind filter
+        bindFilter()
     }
     
-    func loadFeed() {
-        if !isLoading && paginationKey != nil {
-            isLoading = true
-            
-             NetworkService.shared.loadFeed(paginationKey, withSortType: sortType, withFeedType: feedType).subscribe(onNext: { [weak self] feed in
-                var newItems = self?.items.value ?? []
-                newItems.append(contentsOf: feed.items ?? [])
-                self?.items.value = newItems
-                self?.paginationKey = feed.sequenceKey
-                self?.isLoading = false
-            }, onError: { [weak self] error in
-                self?.paginationKey = nil
-                self?.isLoading = false
-            }).disposed(by: disposeBag)
-        }
+    func bindFilter() {
+        #warning("handle error")
+        Observable.combineLatest(sortType, feedType, feedTypeMode)
+            .flatMapLatest({ (sortType, feedType, feedTypeMode) -> Single<[ResponseAPIContentGetPost]> in
+                self.items.accept([])
+                self.fetcher.reset()
+                self.fetcher.sortType = sortType
+                self.fetcher.feedType = feedType
+                self.fetcher.feedTypeMode = feedTypeMode
+                return self.fetcher.fetchNext()
+                    .catchErrorJustReturn([])
+            })
+            .asDriver(onErrorJustReturn: [])
+            .drive(items)
+            .disposed(by: bag)
+        
     }
     
-    func updateFeedWithFrameMode(_ mode: FeedTimeFrameMode) {
-        sortType = mode
-        self.paginationKey = ""
-        items.value = []
-        loadFeed()
+    func fetchNext() {
+        fetcher.fetchNext()
+            .subscribe(onSuccess: { (list) in
+                self.items.accept(self.items.value + list)
+            }) { (error) in
+                #warning("handle error")
+            }
+            .disposed(by: bag)
     }
     
+    @objc func reload() {
+        fetcher.reset()
+        fetchNext()
+    }
 }

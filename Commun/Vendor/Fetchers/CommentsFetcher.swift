@@ -10,18 +10,6 @@ import Foundation
 import CyberSwift
 import RxSwift
 
-class PostsFetcher: ItemsFetcher<ResponseAPIContentGetPost> {
-    override var request: Single<[ResponseAPIContentGetPost]>! {
-        return NetworkService.shared.loadFeed(sequenceKey, withFeedType: .time, withFeedTypeMode: .byUser)
-            .do(onNext: { (result) in
-                // assign next sequenceKey
-                self.sequenceKey = result.sequenceKey
-            })
-            .map {$0.items ?? []}
-            .asSingle()
-    }
-}
-
 class CommentsFetcher: ItemsFetcher<ResponseAPIContentGetComment> {
     override var request: Single<[ResponseAPIContentGetComment]>! {
         return NetworkService.shared.getUserComments()

@@ -9,7 +9,7 @@
 import UIKit
 import Fabric
 import CoreData
-import CyberSwift
+@_exported import CyberSwift
 import Crashlytics
 
 @UIApplicationMain
