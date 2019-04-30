@@ -441,7 +441,7 @@ class NetworkService: NSObject {
     
     func setBasicOptions(lang: Language) {
         RestAPIManager.instance.setBasicOptions(language: lang.code, nsfwContent: .alwaysAlert, responseHandling: { (result) in
-            
+
         }) { (errorAPI) in
         }
     }
