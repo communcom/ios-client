@@ -9,23 +9,45 @@
 import UIKit
 
 class WelcomeScreenVC: UIPageViewController {
-
+    // MARK: - Properties
     var currentPage = 0
     var pageControl: PillPageControl?
-    
+    var router: (NSObjectProtocol & SignUpRoutingLogic)?
+
     fileprivate lazy var pages: [UIViewController] = {
-        return [
-            self.getItemWithIndex(0),
-            self.getItemWithIndex(1),
-            self.getItemWithIndex(2),
-        ]
-        }() as! [UIViewController]
+        return  [
+                    self.getItemWithIndex(0),
+                    self.getItemWithIndex(1),
+                    self.getItemWithIndex(2),
+                ]
+    }() as! [UIViewController]
     
+    
+    // MARK: - Class Initialization
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        
+        setup()
+    }
+    
+    deinit {
+        Logger.log(message: "Success", event: .severe)
+    }
+    
+    
+    // MARK: - Setup
+    private func setup() {
+        let router                  =   SignUpRouter()
+        router.viewController       =   self
+        self.router                 =   router
+    }
+    
+    
+    // MARK: - Class Functions
     override func viewDidLoad() {
         super.viewDidLoad()
 
         self.view.backgroundColor = .white
-        
         
         self.dataSource = self
         self.delegate = self
@@ -41,8 +63,7 @@ class WelcomeScreenVC: UIPageViewController {
         
         self.view.addSubview(pageControl!)
         
-        if let firstVC = pages.first
-        {
+        if let firstVC = pages.first {
             setViewControllers([firstVC], direction: .forward, animated: true, completion: nil)
         }
         
@@ -64,6 +85,7 @@ class WelcomeScreenVC: UIPageViewController {
             first.view.tag = 0
             first.delegate = self
             return first
+        
         case 1:
             let second = WelcomeItemVC.instanceController(fromStoryboard: "WelcomeItemVC", withIdentifier: "WelcomeItemVC") as! WelcomeItemVC
             second.image = UIImage(named: "Mask Group-2")
@@ -71,6 +93,7 @@ class WelcomeScreenVC: UIPageViewController {
             second.view.tag = 1
             second.delegate = self
             return second
+        
         case 2:
             let thrid = WelcomeItemVC.instanceController(fromStoryboard: "WelcomeItemVC", withIdentifier: "WelcomeItemVC") as! WelcomeItemVC
             thrid.image = UIImage(named: "Mask Group-3")
@@ -78,6 +101,7 @@ class WelcomeScreenVC: UIPageViewController {
             thrid.view.tag = 2
             thrid.delegate = self
             return thrid
+        
         default:
             return nil
         }
@@ -85,18 +109,15 @@ class WelcomeScreenVC: UIPageViewController {
 }
 
 
+// MARK: - UIPageViewControllerDataSource
 extension WelcomeScreenVC: UIPageViewControllerDataSource {
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
         guard let viewControllerIndex = pages.firstIndex(of: viewController) else { return nil }
         
         let previousIndex = viewControllerIndex - 1
         
-        if previousIndex < 0 {
-            return nil
-        }
-        
-        guard previousIndex >= 0          else { return pages.last }
-        
+        if previousIndex < 0 { return nil }
+        guard previousIndex >= 0 else { return pages.last }
         guard pages.count > previousIndex else { return nil        }
         
         return pages[previousIndex]
@@ -107,21 +128,16 @@ extension WelcomeScreenVC: UIPageViewControllerDataSource {
         
         let nextIndex = viewControllerIndex + 1
         
-        if nextIndex > 2 {
-            return nil
-        }
-        
-        
-        
+        if nextIndex > 2 { return nil }
         guard nextIndex < pages.count else { return pages.first }
-        
         guard pages.count > nextIndex else { return nil         }
         
         return pages[nextIndex]
     }
-
 }
 
+
+// MARK: - UIPageViewControllerDelegate
 extension WelcomeScreenVC: UIPageViewControllerDelegate {
     func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
         if let vc = viewControllers?.first {
@@ -131,14 +147,14 @@ extension WelcomeScreenVC: UIPageViewControllerDelegate {
     }
 }
 
+
+// MARK: - UIPageViewControllerDelegate
 extension WelcomeScreenVC: WelcomeItemDelegate {
-    
     func welcomeItemDidTapSignIn() {
         self.navigationController?.pushViewController(controllerContainer.resolve(SignInVC.self)!)
     }
     
     func welcomeItemDidTapSignUp() {
-        self.navigationController?.pushViewController(controllerContainer.resolve(SignUpVC.self)!)
+        self.router?.routeToNext(scene: "SignUpVC")
     }
-    
 }

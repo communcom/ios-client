@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -168,6 +168,7 @@
 		57FB17A2224C093A00563BF7 /* SignInVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FB17A1224C093A00563BF7 /* SignInVC.swift */; };
 		57FB17A4224C15C400563BF7 /* SignInViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FB17A3224C15C400563BF7 /* SignInViewModel.swift */; };
 		7472E4613CDA904305E42A4F /* Pods_Commun.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F0772CC6D820AD11B1FF48A /* Pods_Commun.framework */; };
+		B17A970C228002440081B8E0 /* SignUpRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17A970B228002440081B8E0 /* SignUpRouter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -370,6 +371,7 @@
 		57FB17A3224C15C400563BF7 /* SignInViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewModel.swift; sourceTree = "<group>"; };
 		8F30C81783ED457B84BCC641 /* Pods-Commun.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Commun.release.xcconfig"; path = "Pods/Target Support Files/Pods-Commun/Pods-Commun.release.xcconfig"; sourceTree = "<group>"; };
 		AE43B2305FC441D96462E0AB /* Pods-Commun.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Commun.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Commun/Pods-Commun.debug.xcconfig"; sourceTree = "<group>"; };
+		B17A970B228002440081B8E0 /* SignUpRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpRouter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -525,6 +527,7 @@
 			children = (
 				571B14F3223A935C00630C8F /* AppDelegate.swift */,
 				57840A182240DAFF00338FD5 /* Assembly */,
+				B17A970A228002140081B8E0 /* Common */,
 				57840A192240DB1200338FD5 /* Services */,
 				578409EA223FAC0000338FD5 /* Vendor */,
 				576DC91F223E42B200EDED41 /* Extensions */,
@@ -543,22 +546,22 @@
 		571B1508223A937200630C8F /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				57A1CA612270FC3300E2A1E3 /* LanguageVC */,
-				57E5159A2270E5C700A6F6DB /* SettingsVC */,
-				5787C0C92265151A00568CEC /* LoadKeysVC */,
-				5787C0C222650F8A00568CEC /* SetUserVC */,
 				578B94D82263CBC300FB5BC6 /* ConfirmUserVC */,
-				575AECAF22606F5200A7EC2D /* SelectCountryVC */,
-				5797E0F6225DDA260026C4D5 /* SignUpVC */,
 				57DE5BDA2252086C008566B9 /* EditorPageVC */,
+				576DC917223E41CA00EDED41 /* FeedPageVC */,
+				57A1CA612270FC3300E2A1E3 /* LanguageVC */,
+				5787C0C92265151A00568CEC /* LoadKeysVC */,
+				3B2F225322689252006B589E /* NotificationsPageVC */,
+				5725173A2243E4510033125C /* PostPageVC */,
+				3BAF69C122675ADB0055CCEB /* ProfilePageVC */,
+				575AECAF22606F5200A7EC2D /* SelectCountryVC */,
+				57E5159A2270E5C700A6F6DB /* SettingsVC */,
+				5787C0C222650F8A00568CEC /* SetUserVC */,
 				57FB179E224C077300563BF7 /* SignInVC */,
+				5797E0F6225DDA260026C4D5 /* SignUpVC */,
+				571B1509223A94CD00630C8F /* TabBarController */,
 				57B6FC28224A9E9900BCFDDA /* WelcomeItemVC */,
 				57B6FC23224A9E4900BCFDDA /* WelcomeScreenVC */,
-				5725173A2243E4510033125C /* PostPageVC */,
-				576DC917223E41CA00EDED41 /* FeedPageVC */,
-				3BAF69C122675ADB0055CCEB /* ProfilePageVC */,
-				3B2F225322689252006B589E /* NotificationsPageVC */,
-				571B1509223A94CD00630C8F /* TabBarController */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -1116,6 +1119,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		B17A970A228002140081B8E0 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				B17A970B228002440081B8E0 /* SignUpRouter.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1331,6 +1342,7 @@
 				574095822247A8A300E40E51 /* PostPageVC+CommentCellDelegate.swift in Sources */,
 				3B2F227322689334006B589E /* NSMutableAttributedString.swift in Sources */,
 				3B2F226B226892C5006B589E /* NotificationsPageViewModel.swift in Sources */,
+				B17A970C228002440081B8E0 /* SignUpRouter.swift in Sources */,
 				5787C0C422650F9D00568CEC /* SetUserVC.swift in Sources */,
 				5721E87122650AC0003BE04B /* StringExtension.swift in Sources */,
 				3B0E9C732270785E002AB1C2 /* PhotoLibraryCell.swift in Sources */,

@@ -85,7 +85,7 @@ class SignUpVC: UIViewController {
 
                 }).disposed(by: self!.disposeBag)
             } else {
-                self?.showAlert(title: "Error", message: "Worng phone number")
+                self?.showAlert(title: "Error", message: "Wrong phone number")
             }
         }).disposed(by: disposeBag)
         
