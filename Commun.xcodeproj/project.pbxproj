@@ -3,10 +3,12 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3B02CD1F228965AF0078BB52 /* CommentCellDelegate+UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B02CD1E228965AF0078BB52 /* CommentCellDelegate+UIViewController.swift */; };
+		3B02CD21228966170078BB52 /* VotesCellDelegate+UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B02CD20228966170078BB52 /* VotesCellDelegate+UIViewController.swift */; };
 		3B0E9C5E226F02AC002AB1C2 /* ProfileEditCoverVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B0E9C5D226F02AC002AB1C2 /* ProfileEditCoverVC.swift */; };
 		3B0E9C64226F4A0C002AB1C2 /* VerticalDraggableImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B0E9C63226F4A0C002AB1C2 /* VerticalDraggableImageView.swift */; };
 		3B0E9C66227050E3002AB1C2 /* UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B0E9C65227050E3002AB1C2 /* UIImageView.swift */; };
@@ -79,7 +81,6 @@
 		572F81AB223C164C0007F2F9 /* SF-Pro-Text-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 572F81A6223C164C0007F2F9 /* SF-Pro-Text-Regular.otf */; };
 		5740957F2247768C00E40E51 /* CommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5740957D2247768C00E40E51 /* CommentCell.swift */; };
 		574095802247768C00E40E51 /* CommentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5740957E2247768C00E40E51 /* CommentCell.xib */; };
-		574095822247A8A300E40E51 /* PostPageVC+CommentCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574095812247A8A300E40E51 /* PostPageVC+CommentCellDelegate.swift */; };
 		574095862247AAB100E40E51 /* WriteCommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574095842247AAB100E40E51 /* WriteCommentCell.swift */; };
 		574095872247AAB100E40E51 /* WriteCommentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 574095852247AAB100E40E51 /* WriteCommentCell.xib */; };
 		575945A122607F1F004041C9 /* CountryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5759459F22607F1F004041C9 /* CountryCell.swift */; };
@@ -133,7 +134,6 @@
 		57B6FC2C224A9F2800BCFDDA /* WelcomeItemVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B6FC2B224A9F2800BCFDDA /* WelcomeItemVC.swift */; };
 		57C33A442244D32300073FAE /* VotesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57C33A422244D32300073FAE /* VotesCell.swift */; };
 		57C33A452244D32300073FAE /* VotesCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 57C33A432244D32300073FAE /* VotesCell.xib */; };
-		57C33A472244DA7E00073FAE /* PostPageVC+VotesCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57C33A462244DA7E00073FAE /* PostPageVC+VotesCellDelegate.swift */; };
 		57C33A4B2244DB1E00073FAE /* TextContentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57C33A492244DB1E00073FAE /* TextContentCell.swift */; };
 		57C33A4C2244DB1E00073FAE /* TextContentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 57C33A4A2244DB1E00073FAE /* TextContentCell.xib */; };
 		57CBD95C225511BD000BA8CC /* UITextView+Placeholder.m in Sources */ = {isa = PBXBuildFile; fileRef = 57CBD95B225511BD000BA8CC /* UITextView+Placeholder.m */; };
@@ -171,6 +171,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3B02CD1E228965AF0078BB52 /* CommentCellDelegate+UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CommentCellDelegate+UIViewController.swift"; sourceTree = "<group>"; };
+		3B02CD20228966170078BB52 /* VotesCellDelegate+UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VotesCellDelegate+UIViewController.swift"; sourceTree = "<group>"; };
 		3B0E9C5D226F02AC002AB1C2 /* ProfileEditCoverVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditCoverVC.swift; sourceTree = "<group>"; };
 		3B0E9C63226F4A0C002AB1C2 /* VerticalDraggableImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalDraggableImageView.swift; sourceTree = "<group>"; };
 		3B0E9C65227050E3002AB1C2 /* UIImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageView.swift; sourceTree = "<group>"; };
@@ -246,7 +248,6 @@
 		572F81A6223C164C0007F2F9 /* SF-Pro-Text-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Regular.otf"; sourceTree = "<group>"; };
 		5740957D2247768C00E40E51 /* CommentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentCell.swift; sourceTree = "<group>"; };
 		5740957E2247768C00E40E51 /* CommentCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CommentCell.xib; sourceTree = "<group>"; };
-		574095812247A8A300E40E51 /* PostPageVC+CommentCellDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PostPageVC+CommentCellDelegate.swift"; sourceTree = "<group>"; };
 		574095842247AAB100E40E51 /* WriteCommentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteCommentCell.swift; sourceTree = "<group>"; };
 		574095852247AAB100E40E51 /* WriteCommentCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WriteCommentCell.xib; sourceTree = "<group>"; };
 		5759459F22607F1F004041C9 /* CountryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryCell.swift; sourceTree = "<group>"; };
@@ -303,7 +304,6 @@
 		57BB5CA922550B4300F0B88B /* Commun-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Commun-Bridging-Header.h"; sourceTree = "<group>"; };
 		57C33A422244D32300073FAE /* VotesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VotesCell.swift; sourceTree = "<group>"; };
 		57C33A432244D32300073FAE /* VotesCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VotesCell.xib; sourceTree = "<group>"; };
-		57C33A462244DA7E00073FAE /* PostPageVC+VotesCellDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PostPageVC+VotesCellDelegate.swift"; sourceTree = "<group>"; };
 		57C33A492244DB1E00073FAE /* TextContentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextContentCell.swift; sourceTree = "<group>"; };
 		57C33A4A2244DB1E00073FAE /* TextContentCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TextContentCell.xib; sourceTree = "<group>"; };
 		57CBD95A225511BD000BA8CC /* UITextView+Placeholder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITextView+Placeholder.h"; sourceTree = "<group>"; };
@@ -597,9 +597,7 @@
 				5725173F2243E4D70033125C /* PostPageViewModel.swift */,
 				5725173B2243E4640033125C /* PostPageVC.swift */,
 				57F5CFC12244E3BE005A09AE /* PostPageVC+Rx.swift */,
-				574095812247A8A300E40E51 /* PostPageVC+CommentCellDelegate.swift */,
 				57F5CFC52244E53B005A09AE /* PostPageVC+UITableViewDataSource.swift */,
-				57C33A462244DA7E00073FAE /* PostPageVC+VotesCellDelegate.swift */,
 				57F5CFC32244E3C7005A09AE /* PostPageVC+Utilites.swift */,
 				5725173D2243E49C0033125C /* PostPageVC.storyboard */,
 			);
@@ -668,6 +666,7 @@
 			children = (
 				5740957D2247768C00E40E51 /* CommentCell.swift */,
 				5740957E2247768C00E40E51 /* CommentCell.xib */,
+				3B02CD1E228965AF0078BB52 /* CommentCellDelegate+UIViewController.swift */,
 			);
 			path = CommentCell;
 			sourceTree = "<group>";
@@ -944,6 +943,7 @@
 			children = (
 				57C33A422244D32300073FAE /* VotesCell.swift */,
 				57C33A432244D32300073FAE /* VotesCell.xib */,
+				3B02CD20228966170078BB52 /* VotesCellDelegate+UIViewController.swift */,
 			);
 			path = VotesCell;
 			sourceTree = "<group>";
@@ -1328,7 +1328,6 @@
 				571B14FC223A935C00630C8F /* Commun.xcdatamodeld in Sources */,
 				576DC921223E42C800EDED41 /* UIViewControllerExtension.swift in Sources */,
 				57DE5BDE225208A4008566B9 /* EditorPageViewModel.swift in Sources */,
-				574095822247A8A300E40E51 /* PostPageVC+CommentCellDelegate.swift in Sources */,
 				3B2F227322689334006B589E /* NSMutableAttributedString.swift in Sources */,
 				3B2F226B226892C5006B589E /* NotificationsPageViewModel.swift in Sources */,
 				5787C0C422650F9D00568CEC /* SetUserVC.swift in Sources */,
@@ -1379,6 +1378,7 @@
 				3B0E9C7122706985002AB1C2 /* ProfileChooseAvatarViewModel.swift in Sources */,
 				57840A06223FAC1B00338FD5 /* SegmentioCellWithImageOverLabel.swift in Sources */,
 				3B0E9C5E226F02AC002AB1C2 /* ProfileEditCoverVC.swift in Sources */,
+				3B02CD1F228965AF0078BB52 /* CommentCellDelegate+UIViewController.swift in Sources */,
 				57F5CFC62244E53B005A09AE /* PostPageVC+UITableViewDataSource.swift in Sources */,
 				3B197C532269BE0E008CF10D /* SegmentioExtension.swift in Sources */,
 				57B6FC2C224A9F2800BCFDDA /* WelcomeItemVC.swift in Sources */,
@@ -1411,6 +1411,7 @@
 				57CBD95E225517B4000BA8CC /* EditorPageVC+Actions.swift in Sources */,
 				3B2F226D226892C5006B589E /* NotificationsFetcher.swift in Sources */,
 				3B2F2269226892C5006B589E /* NotificationCell.swift in Sources */,
+				3B02CD21228966170078BB52 /* VotesCellDelegate+UIViewController.swift in Sources */,
 				57840A1B2240DB9400338FD5 /* NetworkService.swift in Sources */,
 				5721AE3E226E50FD00133BFF /* MediaHtmlCell.swift in Sources */,
 				572517322243935C0033125C /* ControllerContainer.swift in Sources */,
@@ -1419,7 +1420,6 @@
 				574095862247AAB100E40E51 /* WriteCommentCell.swift in Sources */,
 				57DE5BDC2252088C008566B9 /* EditorPageVC.swift in Sources */,
 				3B2F226E226892C5006B589E /* NotificationType.swift in Sources */,
-				57C33A472244DA7E00073FAE /* PostPageVC+VotesCellDelegate.swift in Sources */,
 				5721AE45226E556500133BFF /* MediaCommentCell.swift in Sources */,
 				570061242253D3B3007700DA /* EditorLinkCell.swift in Sources */,
 				571B8241225B31A000823F02 /* EditorPageVC+UITextViewDelegate.swift in Sources */,

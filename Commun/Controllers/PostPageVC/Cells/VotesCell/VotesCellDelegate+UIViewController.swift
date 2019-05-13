@@ -1,15 +1,14 @@
 //
-//  PostPageVC+VotesCellDelegate.swift
+//  VotesCellDelegate.swift
 //  Commun
 //
-//  Created by Maxim Prigozhenkov on 21/03/2019.
+//  Created by Chung Tran on 13/05/2019.
 //  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
 //
 
-import UIKit
+import Foundation
 
-extension PostPageVC: VotesCellDelegate {
-    
+extension VotesCellDelegate where Self: UIViewController {
     func cell(_ voteCell: VotesCell, didTapUpvotePost post: ResponseAPIContentGetPost) {
         showAlert(title: "TODO", message: "Upvote")
     }
@@ -21,5 +20,4 @@ extension PostPageVC: VotesCellDelegate {
     func cell(_ voteCell: VotesCell, didTapSharePost post: ResponseAPIContentGetPost) {
         showAlert(title: "TODO", message: "Share")
     }
-    
 }

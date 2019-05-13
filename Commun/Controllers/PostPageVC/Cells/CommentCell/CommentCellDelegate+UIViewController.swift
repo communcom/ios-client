@@ -1,15 +1,14 @@
 //
-//  PostPageVC+CommentCellDelegate.swift
+//  CommentCellDelegate+UIViewController.swift
 //  Commun
 //
-//  Created by Maxim Prigozhenkov on 24/03/2019.
+//  Created by Chung Tran on 13/05/2019.
 //  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
 //
 
-import UIKit
+import Foundation
 
-extension UIViewController: CommentCellDelegate {
-    
+extension CommentCellDelegate where Self: UIViewController {
     func cell(_ cell: CommentCellProtocol, didTapUpVoteButtonForComment comment: ResponseAPIContentGetComment) {
         NetworkService.shared.voteMessage(voteType: .upvote,
                                           messagePermlink: comment.contentId.permlink,
@@ -27,5 +26,4 @@ extension UIViewController: CommentCellDelegate {
     func cell(_ cell: CommentCellProtocol, didTapReplyButtonForComment comment: ResponseAPIContentGetComment) {
         showAlert(title: "TODO", message: "Reply comment")
     }
-    
 }
