@@ -55,6 +55,10 @@ extension ProfilePageVC: PostCardCellDelegate, CommentCellDelegate {
                 return items as [AnyObject?]
             }
             .bind(to: tableView.rx.items) {table, index, element in
+                if index >= self.viewModel.items.value.count - 5 {
+                    self.viewModel.fetchNext()
+                }
+                
                 if element == nil {
                     let cell = self.tableView.dequeueReusableCell(withIdentifier: "ProfilePageEmptyCell") as! ProfilePageEmptyCell
                     cell.setUp(with: self.viewModel.segmentedItem.value)
