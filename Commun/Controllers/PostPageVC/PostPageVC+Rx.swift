@@ -7,18 +7,25 @@
 //
 
 import UIKit
-import RxSwift
+import CyberSwift
+import RxCocoa
 
-extension PostPageVC {
+extension PostPageVC: PostHeaderViewDelegate {
     
-    func setupSubscriptions() {
-        viewModel.post.asObservable().subscribe(onNext: { [weak self] _ in
-            self?.makeCells()
-        }).disposed(by: disposeBag)
-        
-        viewModel.comments.asObservable().subscribe(onNext: { [weak self] _ in
-            self?.makeComments()
-        }).disposed(by: disposeBag)
+    func bindUI() {
+        viewModel.post
+            .filter {$0 != nil}
+            .map {$0!}
+            .subscribe(onNext: {post in
+                // Create tableHeaderView
+                guard let headerView = UINib(nibName: "PostHeaderView", bundle: nil).instantiate(withOwner: self, options: nil).first as? PostHeaderView else {return}
+                headerView.post = post
+                headerView.delegate = self
+            
+                // Assign table header view
+                self.tableView.tableHeaderView = headerView
+            })
+            .disposed(by: disposeBag)
     }
     
 }

@@ -8,32 +8,55 @@
 
 import Foundation
 import RxSwift
+import RxCocoa
 
 class PostPageViewModel {
-    
+    // MARK: - Inputs
     var postForRequest: ResponseAPIContentGetPost?
     var permlink: String?
     var refBlockNum: UInt64?
     var userId: String?
     
-    var post = Variable<ResponseAPIContentGetPost?>(nil)
-    var comments = Variable<[ResponseAPIContentGetComment]>([])
+    // MARK: - Objects
+    let post = BehaviorRelay<ResponseAPIContentGetPost?>(value: nil)
+    let comments = BehaviorRelay<[ResponseAPIContentGetComment]>(value: [])
     
     let disposeBag = DisposeBag()
+    let fetcher = CommentsFetcher()
     
+    // MARK: - Methods
     func loadPost() {
-        NetworkService.shared.getPost(withPermLink: postForRequest?.contentId.permlink ?? permlink ?? "",
-                                      withRefBlock: postForRequest?.contentId.refBlockNum ?? refBlockNum ?? 0,
-                                      forUser: postForRequest?.contentId.userId ?? userId ?? "").subscribe(onNext: { [weak self] post in
-            self?.post.value = post
-        }).disposed(by: disposeBag)
+        let permLink = postForRequest?.contentId.permlink ?? permlink ?? ""
+        let refBlock = postForRequest?.contentId.refBlockNum ?? refBlockNum ?? 0
+        let userId = postForRequest?.contentId.userId ?? self.userId ?? ""
+        
+        // Bind post
+        NetworkService.shared.getPost(withPermLink: permLink,
+                                      withRefBlock: refBlock,
+                                      forUser: userId)
+            .bind(to: post)
+            .disposed(by: disposeBag)
+        
+        // Configure fetcher
+        fetcher.permlink = permLink
+        fetcher.refBlockNum = refBlock
+        fetcher.userId = userId
     }
     
-    func loadComments() {
-        NetworkService.shared.getPostComment(withPermLink: postForRequest?.contentId.permlink ?? "",
-                                             withRefBlock: postForRequest?.contentId.refBlockNum ?? 0,
-                                             forUser: postForRequest?.contentId.userId ?? "").subscribe(onNext: { [weak self] comments in
-            self?.comments.value = comments.items ?? []
-        }).disposed(by: disposeBag)
+    func fetchNext() {
+        fetcher.fetchNext()
+            .catchError { (error) -> Single<[ResponseAPIContentGetComment]> in
+                #warning("handle error")
+                return .just([])
+            }
+            .subscribe(onSuccess: { (list) in
+                self.comments.accept(self.comments.value + list)
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    @objc func reload() {
+        fetcher.reset()
+        fetchNext()
     }
 }
