@@ -29,6 +29,8 @@ class PostPageVC: UIViewController, CommentCellDelegate {
         tableView.register(UINib(nibName: "WriteCommentCell", bundle: nil), forCellReuseIdentifier: "WriteCommentCell")
         tableView.register(UINib(nibName: "MediaCommentCell", bundle: nil), forCellReuseIdentifier: "MediaCommentCell")
         
+        tableView.register(UINib(nibName: "EmptyCell", bundle: nil), forCellReuseIdentifier: "EmptyCell")
+        
         tableView.rowHeight = UITableView.automaticDimension
         
         comunityNameLabel.text = viewModel.postForRequest?.community.name

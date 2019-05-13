@@ -28,7 +28,19 @@ extension PostPageVC: PostHeaderViewDelegate {
             .disposed(by: disposeBag)
         
         viewModel.comments
+            .map { items -> [ResponseAPIContentGetComment?] in
+                if items.count == 0 {
+                    return [nil]
+                }
+                return items
+            }
             .bind(to: tableView.rx.items) { table, index, comment in
+                guard let comment = comment else {
+                    let cell = self.tableView.dequeueReusableCell(withIdentifier: "EmptyCell") as! EmptyCell
+                    cell.setUpEmptyComment()
+                    return cell
+                }
+                
                 if index >= self.viewModel.comments.value.count - 5 {
                     self.viewModel.fetchNext()
                 }
@@ -47,6 +59,11 @@ extension PostPageVC: PostHeaderViewDelegate {
             }
             .disposed(by: disposeBag)
         
+        tableView.rx.setDelegate(self)
+            .disposed(by: disposeBag)
+        
     }
+    
+    
     
 }
