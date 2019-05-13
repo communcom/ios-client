@@ -196,7 +196,6 @@
 		B1EA02EE2289882A00835244 /* SF-Pro-Text-LightItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 57F9CAA9225B3AB100AC9ACA /* SF-Pro-Text-LightItalic.otf */; };
 		B1EA02EF2289882A00835244 /* SF-Pro-Text-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 57F9CA92225B3A9900AC9ACA /* SF-Pro-Text-Medium.otf */; };
 		B1EA02F02289882A00835244 /* SF-Pro-Text-MediumItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 57F9CAA3225B3AAD00AC9ACA /* SF-Pro-Text-MediumItalic.otf */; };
-		B1EA02F12289882A00835244 /* SF-Pro-Text-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 57F9CA93225B3A9900AC9ACA /* SF-Pro-Text-Regular.otf */; };
 		B1EA02F22289882A00835244 /* SF-Pro-Text-RegularItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 57F9CAA1225B3AAA00AC9ACA /* SF-Pro-Text-RegularItalic.otf */; };
 		B1EA02F32289882A00835244 /* SF-Pro-Text-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 57F9CA94225B3A9900AC9ACA /* SF-Pro-Text-Semibold.otf */; };
 		B1EA02F42289882A00835244 /* SF-Pro-Text-SemiboldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 57F9CAA6225B3AAF00AC9ACA /* SF-Pro-Text-SemiboldItalic.otf */; };
@@ -1294,7 +1293,6 @@
 				5787C0CF226515BC00568CEC /* LoadKeysVC.storyboard in Resources */,
 				B1EA02E12289882A00835244 /* SF-Pro-Display-Regular.otf in Resources */,
 				B1EA02DA2289882A00835244 /* SF-Pro-Display-BoldItalic.otf in Resources */,
-				B1EA02F12289882A00835244 /* SF-Pro-Text-Regular.otf in Resources */,
 				B1EA02E52289882A00835244 /* SF-Pro-Display-Thin.otf in Resources */,
 				57C33A452244D32300073FAE /* VotesCell.xib in Resources */,
 				570061252253D3B3007700DA /* EditorLinkCell.xib in Resources */,

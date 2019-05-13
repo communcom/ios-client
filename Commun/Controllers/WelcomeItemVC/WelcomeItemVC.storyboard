@@ -64,7 +64,7 @@
                                     </label>
                                 </subviews>
                             </stackView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Buk-XO-4hl">
+                            <button clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Buk-XO-4hl" userLabel="Sign Up Button ">
                                 <rect key="frame" x="42.666666666666657" y="634" width="290" height="56"/>
                                 <color key="backgroundColor" red="0.41568627450000001" green="0.50196078430000002" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <accessibility key="accessibilityConfiguration" identifier="WelcomeItemSignUpButton" label="WelcomeItemSignUpButton"/>
@@ -80,7 +80,7 @@
                                     <action selector="signUpButtonTap:" destination="5KY-Vm-tg1" eventType="touchUpInside" id="gSL-QX-xDW"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4hf-Xy-fUy">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4hf-Xy-fUy" userLabel="Sign In Button">
                                 <rect key="frame" x="42.666666666666657" y="720" width="290" height="21"/>
                                 <accessibility key="accessibilityConfiguration" identifier="WelcomeItemSignInButton" label="WelcomeItemSignInButton"/>
                                 <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="17"/>
@@ -133,6 +133,8 @@
                     </view>
                     <connections>
                         <outlet property="imageView" destination="5qA-Cf-04c" id="diO-Hm-1Yj"/>
+                        <outlet property="signInButton" destination="4hf-Xy-fUy" id="UNo-Rq-GGu"/>
+                        <outlet property="signUpButton" destination="Buk-XO-4hl" id="yGq-D7-mhE"/>
                         <outlet property="textLabel1" destination="4Vy-HJ-G7q" id="IZw-H1-i28"/>
                         <outlet property="textLabel2" destination="Olt-DR-JC5" id="p6Z-CK-Tky"/>
                         <outlet property="textLabel3" destination="MCG-Ss-lsu" id="gGt-rQ-sb5"/>

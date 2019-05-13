@@ -21,6 +21,27 @@ class WelcomeItemVC: UIViewController {
     @IBOutlet weak var textLabel3: UILabel!
     @IBOutlet weak var imageView: UIImageView!
 
+    @IBOutlet weak var signUpButton: UIButton! {
+        didSet {
+            self.signUpButton.tune(withTitle:     "Sign up".localized(),
+                                   hexColors:     [whiteColorPickers, lightGrayWhiteColorPickers, lightGrayWhiteColorPickers, lightGrayWhiteColorPickers],
+                                   font:          UIFont(name: "SFProText-Semibold", size: 17.0 * Config.heightRatio),
+                                   alignment:     .center)
+            
+            self.signUpButton.layer.cornerRadius = 12.0 * Config.heightRatio
+            self.signUpButton.clipsToBounds = true
+        }
+    }
+    
+    @IBOutlet weak var signInButton: UIButton! {
+        didSet {
+            self.signInButton.tune(withTitle:     "Sign in".localized(),
+                                   hexColors:     [softBlueColorPickers, verySoftBlueColorPickers, verySoftBlueColorPickers, verySoftBlueColorPickers],
+                                   font:          UIFont(name: "SFProText-Semibold", size: 17.0 * Config.heightRatio),
+                                   alignment:     .center)
+        }
+    }
+    
     @IBOutlet var textLabelsCollection: [UILabel]! {
         didSet {
             self.textLabelsCollection.forEach({
