@@ -1,0 +1,34 @@
+/* 
+  Localizable.strings
+  Commun
+
+  Created by msm72 on 5/13/19.
+  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+*/
+
+// Labels
+"Hundreds"                                  =   "Hundreds";
+"of thematic"                               =   "of thematic";
+"communities"                               =   "communities";
+"Subscribe to your"                         =   "Subscribe to your";
+"favorite communities"                      =   "favorite communities";
+"Read! upvote!"                             =   "Read! upvote!";
+"comment!"                                  =   "comment!";
+
+
+// Buttons
+"Sign up"                                   =   "Sign up";
+"Sign in"                                   =   "Sign in";
+
+
+// Titles
+"Info"                                      =   "Info";
+"Error"                                     =   "Error";
+
+
+// Placeholders
+"Enter Login Placeholder"                   =   "Enter your login";
+
+
+// Error message
+"Developer error!"                          =   "Developer error!";

@@ -16,10 +16,13 @@ PODS:
     - GoloCrypto
     - Localize-Swift (~> 2.0)
     - Locksmith
-    - RxBlocking (~> 4.0)
+    - RxBlocking
+    - RxCocoa
     - RxStarscream
+    - RxSwift
     - secp256k1.swift
     - Starscream (~> 3.0)
+    - SwiftTheme
   - DateToolsSwift (4.0.0)
   - eosswift (1.6.0):
     - BigInt (~> 3.1.0)
@@ -55,6 +58,7 @@ PODS:
   - SwifterSwift/Foundation (5.0.0)
   - SwifterSwift/SwiftStdlib (5.0.0)
   - SwifterSwift/UIKit (5.0.0)
+  - SwiftTheme (0.4.4)
   - Swinject (2.6.0)
   - TLPhotoPicker (1.8.6)
   - UIImageView-Letters (1.1.4)
@@ -69,8 +73,6 @@ DEPENDENCIES:
   - IHProgressHUD (from `https://github.com/Swiftify-Corp/IHProgressHUD.git`)
   - PhoneNumberKit (~> 2.6)
   - PinCodeInputView
-  - RxCocoa (~> 4.0)
-  - RxSwift (~> 4.0)
   - SDWebImage (~> 4.0)
   - SwifterSwift/Foundation
   - SwifterSwift/SwiftStdlib
@@ -104,6 +106,7 @@ SPEC REPOS:
     - SipHash
     - Starscream
     - SwifterSwift
+    - SwiftTheme
     - Swinject
     - TLPhotoPicker
     - UIImageView-Letters
@@ -116,7 +119,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   CyberSwift:
-    :commit: 3765264442ef2ad2313cd026c18901c21c45a4c7
+    :commit: 46887037bde609d58aabee278fdd404200452a8f
     :git: https://github.com/GolosChain/cyberSwift.git
   IHProgressHUD:
     :commit: 6c160f4ef2e9b924de58c8df3382a57ced957dfd
@@ -129,7 +132,7 @@ SPEC CHECKSUMS:
   Checksum: f1aa56a27dea5db4006c819e2e129ee6aeb1d9af
   Crashlytics: 07fb167b1694128c1c9a5a5cc319b0e9c3ca0933
   CryptoSwift: d81eeaa59dc5a8d03720fe919a6fd07b51f7439f
-  CyberSwift: f559cf2324b229a194c086d23c7822b830feb31f
+  CyberSwift: 8f1c207a0ee60bc2310560eab27f53c86bf47996
   DateToolsSwift: 875d97ff9e3a5d54abdd67a269b3f51c757b71ab
   eosswift: 22bc931fd65bbd446c3f828233b8fd2916cec4a7
   Fabric: f988e33c97f08930a413e08123064d2e5f68d655
@@ -148,10 +151,11 @@ SPEC CHECKSUMS:
   SipHash: fad90a4683e420c52ef28063063dbbce248ea6d4
   Starscream: 08172b481e145289c4930cb567230fb55897cfa4
   SwifterSwift: 96f90594b370802f01647c2b1229c74a84ffafee
+  SwiftTheme: a381f983da92153908b7a9eeb961b18b6d94d614
   Swinject: 48a96cda93633cf2860697b4ce76ab5db9ebaca2
   TLPhotoPicker: c5aefdc9beaca82116d7855924f1d8abdd055f79
   UIImageView-Letters: f62db28076797adf3560ab7410647dc6899b9eef
 
-PODFILE CHECKSUM: ba325e3cd7fff6ef57886b6f9d487c1086eaa781
+PODFILE CHECKSUM: 9ad11a8daf5d9927ea4c4f9f7383daf0799abe6d
 
 COCOAPODS: 1.7.0.beta.3

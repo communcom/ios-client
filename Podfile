@@ -13,8 +13,6 @@ target 'Commun' do
   pod 'Fabric'
   pod 'Crashlytics'
   
-  pod 'RxSwift',    '~> 4.0'
-  pod 'RxCocoa',    '~> 4.0'
   pod 'Alamofire'
   pod 'Swinject'
   pod 'SDWebImage', '~> 4.0'

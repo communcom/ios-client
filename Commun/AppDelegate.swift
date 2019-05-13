@@ -14,31 +14,49 @@ import Crashlytics
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
+    // MARK: - Properties
     var window: UIWindow?
 
 
+    // MARK: - Class Functions
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         window = UIWindow(frame: UIScreen.main.bounds)
-        NetworkService.shared.connect()
+        window?.theme_backgroundColor = whiteBlackColorPickers
+
+        // Run WebSocket
+        WebSocketManager.instance.connect()
+        
+        _ = WebSocketManager.instance.completed.subscribe(onNext:   { [weak self] success in
+            Logger.log(message: "Sign: \n\t\(success)", event: .debug)
+
+            guard success else { return }
+
+            guard let strongSelf = self else { return }
+            
+            // Lenta
+            if UserDefaults.standard.value(forKey: Config.isCurrentUserLoggedKey) as? Bool == true {
+                strongSelf.window?.rootViewController = controllerContainer.resolve(TabBarVC.self)
+            }
+            
+            // Sign In/Up
+            else {
+                let welcomeVC = controllerContainer.resolve(WelcomeScreenVC.self)
+                let welcomeNav = UINavigationController(rootViewController: welcomeVC!)
+                strongSelf.window?.rootViewController = welcomeNav
+                
+                let navigationBarAppearace = UINavigationBar.appearance()
+                navigationBarAppearace.tintColor = #colorLiteral(red: 0.4156862745, green: 0.5019607843, blue: 0.9607843137, alpha: 1)
+            }
+            
+            strongSelf.window?.makeKeyAndVisible()
+            application.applicationIconBadgeNumber = 0
+        },
+                                                          onError:  { (error) in
+                                                            Logger.log(message: "Error: \(error.localizedDescription)", event: .error)
+        })
+
         Fabric.with([Crashlytics.self])
 
-        if UserDefaults.standard.value(forKey: Config.isCurrentUserLoggedKey) as? Bool == true {
-            window?.rootViewController = controllerContainer.resolve(TabBarVC.self)
-        } else {
-            let welcomeVC = controllerContainer.resolve(WelcomeScreenVC.self)
-            let welcomeNav = UINavigationController(rootViewController: welcomeVC!)
-            window?.rootViewController = welcomeNav
-        
-            let navigationBarAppearace = UINavigationBar.appearance()
-            navigationBarAppearace.tintColor = #colorLiteral(red: 0.4156862745, green: 0.5019607843, blue: 0.9607843137, alpha: 1)
-        }
-    
-        window?.makeKeyAndVisible()
-        
-        application.applicationIconBadgeNumber = 0
-
-        
         return true
     }
 

@@ -26,6 +26,7 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Ds-uG-24V">
                                 <rect key="frame" x="42" y="732" width="330" height="56"/>
                                 <color key="backgroundColor" red="0.41568627450000001" green="0.50196078430000002" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                                <accessibility key="accessibilityConfiguration" identifier="LoadKeysDownloadButton" label="LoadKeysDownloadButton"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="56" id="bah-tZ-hkV"/>
                                 </constraints>
@@ -39,8 +40,11 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </button>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="KeysImage" translatesAutoresizingMaskIntoConstraints="NO" id="7gm-kh-Lcv">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="KeysImage" translatesAutoresizingMaskIntoConstraints="NO" id="7gm-kh-Lcv" userLabel="Cover Image View">
                                 <rect key="frame" x="87" y="218" width="240" height="240"/>
+                                <accessibility key="accessibilityConfiguration" identifier="LoadKeysCoverImageView" label="LoadKeysCoverImageView">
+                                    <bool key="isElement" value="YES"/>
+                                </accessibility>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="240" id="4l4-ab-KkU"/>
                                     <constraint firstAttribute="width" constant="240" id="9DE-bg-L4y"/>
@@ -48,12 +52,14 @@
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Master key has been generated" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b1F-hH-fOd">
                                 <rect key="frame" x="81" y="490" width="252" height="20"/>
+                                <accessibility key="accessibilityConfiguration" identifier="LoadKeysMasterKeyLabel" label="LoadKeysMasterKeyLabel"/>
                                 <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You need Master Key for Log in. Please, download it." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Rr-2M-ki7">
                                 <rect key="frame" x="86" y="526" width="242" height="41"/>
+                                <accessibility key="accessibilityConfiguration" identifier="LoadKeysYouNeedLabel" label="LoadKeysYouNeedLabel"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.60784313725490191" green="0.62352941176470589" blue="0.63529411764705879" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>

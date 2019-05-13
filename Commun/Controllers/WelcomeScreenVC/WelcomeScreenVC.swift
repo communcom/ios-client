@@ -7,12 +7,12 @@
 //
 
 import UIKit
+import CyberSwift
 
 class WelcomeScreenVC: UIPageViewController {
     // MARK: - Properties
     var currentPage = 0
     var pageControl: PillPageControl?
-    var router: (NSObjectProtocol & SignUpRoutingLogic)?
 
     fileprivate lazy var pages: [UIViewController] = {
         return  [
@@ -21,26 +21,6 @@ class WelcomeScreenVC: UIPageViewController {
                     self.getItemWithIndex(2),
                 ]
     }() as! [UIViewController]
-    
-    
-    // MARK: - Class Initialization
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        
-        setup()
-    }
-    
-    deinit {
-        Logger.log(message: "Success", event: .severe)
-    }
-    
-    
-    // MARK: - Setup
-    private func setup() {
-        let router                  =   SignUpRouter()
-        router.viewController       =   self
-        self.router                 =   router
-    }
     
     
     // MARK: - Class Functions
@@ -74,32 +54,17 @@ class WelcomeScreenVC: UIPageViewController {
         switch index {
         case 0:
             let first = WelcomeItemVC.instanceController(fromStoryboard: "WelcomeItemVC", withIdentifier: "WelcomeItemVC") as! WelcomeItemVC
-            first.image = UIImage(named: "Mask Group")
-//            first.text = "Hundreds of thematic communities"
-            let attributedString = NSMutableAttributedString(string: "Hundreds\nof thematic communities\n")
-            let attributes1: [NSAttributedString.Key : Any] = [
-                .foregroundColor: #colorLiteral(red: 0.4156862745, green: 0.5019607843, blue: 0.9607843137, alpha: 1)
-            ]
-            attributedString.addAttributes(attributes1, range: NSRange(location: 9, length: 23))
-            first.attrString = attributedString
-            first.view.tag = 0
-            first.delegate = self
+            first.item = 0
             return first
         
         case 1:
             let second = WelcomeItemVC.instanceController(fromStoryboard: "WelcomeItemVC", withIdentifier: "WelcomeItemVC") as! WelcomeItemVC
-            second.image = UIImage(named: "Mask Group-2")
-            second.text = "Subscribe to your favorite communities"
-            second.view.tag = 1
-            second.delegate = self
+            second.item = 1
             return second
         
         case 2:
             let thrid = WelcomeItemVC.instanceController(fromStoryboard: "WelcomeItemVC", withIdentifier: "WelcomeItemVC") as! WelcomeItemVC
-            thrid.image = UIImage(named: "Mask Group-3")
-            thrid.text = "Read! upvote! comment!"
-            thrid.view.tag = 2
-            thrid.delegate = self
+            thrid.item = 2
             return thrid
         
         default:
@@ -144,17 +109,5 @@ extension WelcomeScreenVC: UIPageViewControllerDelegate {
              let viewControllerIndex = pages.firstIndex(of: vc)
             pageControl?.progress = CGFloat(viewControllerIndex ?? 0)
         }
-    }
-}
-
-
-// MARK: - UIPageViewControllerDelegate
-extension WelcomeScreenVC: WelcomeItemDelegate {
-    func welcomeItemDidTapSignIn() {
-        self.navigationController?.pushViewController(controllerContainer.resolve(SignInVC.self)!)
-    }
-    
-    func welcomeItemDidTapSignUp() {
-        self.router?.routeToNext(scene: "SignUpVC")
     }
 }

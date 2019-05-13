@@ -9,19 +9,15 @@
 import UIKit
 import CyberSwift
 
-// MARK: - Input & Output protocols
+// MARK: - SignUpRoutingLogic protocol
 @objc protocol SignUpRoutingLogic {
-    func routeToNext(scene: String)
+    func routeToSignInScene()
+    func routeToSignUpNextScene()
 }
-
-//protocol SignUpDataPassing {
-//    var dataStore: SignUpDataStore? { get }
-//}
 
 class SignUpRouter: NSObject, SignUpRoutingLogic {
     // MARK: - Properties
     weak var viewController: UIViewController?
-//    var dataStore: SignUpDataStore?
     
     
     // MARK: - Class Initialization
@@ -31,25 +27,46 @@ class SignUpRouter: NSObject, SignUpRoutingLogic {
     
     
     // MARK: - Routing
-    func routeToNext(scene: String) {
-        switch scene {
-        case "SignUpVC":
-            self.viewController?.navigationController?.pushViewController(controllerContainer.resolve(SignUpVC.self)!)
-            
-        default:
-            break
-        }
+    func routeToSignInScene() {
+        self.viewController?.navigationController?.pushViewController(controllerContainer.resolve(SignInVC.self)!)
     }
     
-    
-    // MARK: - Navigation
-    //    func navigateToSomewhere(source: TestShowViewController, destination: SomewhereViewController) {
-    //        source.show(destination, sender: nil)
-    //    }
-    
-    
-    // MARK: - Passing data
-    //    func passDataToSomewhere(source: TestShowDataStore, destination: inout SomewhereDataStore) {
-    //        destination.name = source.name
-    //    }
+    func routeToSignUpNextScene() {
+        guard let phone = UserDefaults.standard.string(forKey: Config.registrationUserPhoneKey), phone != "" else {
+            self.viewController?.navigationController?.pushViewController(controllerContainer.resolve(SignUpVC.self)!)
+            return
+        }
+
+        guard let json = KeychainManager.loadAllData(byUserPhone: phone), let state = json[Config.registrationStepKey] as? String else { return }
+        
+        switch state {
+        // ConfirmUserVC
+        case "verify":
+            if  let confirmUserVC = controllerContainer.resolve(ConfirmUserVC.self), let smsCode = json[Config.registrationSmsCodeKey] as? UInt64 {
+                confirmUserVC.viewModel = ConfirmUserViewModel(code: "\(smsCode)", phone: phone)
+                let confirmUserNC = UINavigationController(rootViewController: confirmUserVC)
+                self.viewController?.present(confirmUserNC, animated: true, completion: nil)
+            }
+            
+        // SetUserVC
+        case "setUsername":
+            if let setUserVC = controllerContainer.resolve(SetUserVC.self) {
+                setUserVC.viewModel = SetUserViewModel(phone: phone)
+                self.viewController?.navigationController?.pushViewController(setUserVC)
+            }
+
+        // LoadKeysVC
+        case "toBlockChain":
+            DispatchQueue.main.async {
+                if let loadKeysVC = controllerContainer.resolve(LoadKeysVC.self), let nickName = json[Config.registrationUserNameKey] as? String {
+                    loadKeysVC.viewModel = LoadKeysViewModel(nickName: nickName)
+                    self.viewController?.present(loadKeysVC, animated: true, completion: nil)
+                }
+            }
+
+        // SignUpVC
+        default:
+            self.viewController?.navigationController?.pushViewController(controllerContainer.resolve(SignUpVC.self)!)
+        }
+    }
 }

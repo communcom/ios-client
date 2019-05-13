@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="portrait">
+    <device id="retina5_9" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -10,6 +10,9 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
+        <array key="SF-Pro-Display-Bold.otf">
+            <string>SFProDisplay-Bold</string>
+        </array>
         <array key="SF-Pro-Text-Regular.otf">
             <string>SFProText-Regular</string>
         </array>
@@ -20,31 +23,51 @@
             <objects>
                 <viewController storyboardIdentifier="WelcomeItemVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="5KY-Vm-tg1" customClass="WelcomeItemVC" customModule="Commun" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="jxb-H6-87Y">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4hf-Xy-fUy">
-                                <rect key="frame" x="160" y="577" width="55" height="33"/>
-                                <accessibility key="accessibilityConfiguration" identifier="WelcomeSignInButton" label="WelcomeSignInButton"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="5qA-Cf-04c" userLabel="Cover Image View">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="375"/>
+                                <accessibility key="accessibilityConfiguration" identifier="WelcomeItemCoverImageView" label="WelcomeItemCoverImageView">
+                                    <bool key="isElement" value="YES"/>
+                                </accessibility>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="33" id="ZfT-jb-hvK"/>
+                                    <constraint firstAttribute="width" secondItem="5qA-Cf-04c" secondAttribute="height" multiplier="1:1" id="xaq-59-0mx"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="17"/>
-                                <state key="normal" title="Sign in">
-                                    <color key="titleColor" red="0.41568627450980389" green="0.50196078431372548" blue="0.96078431372549022" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="signInButtonTap:" destination="5KY-Vm-tg1" eventType="touchUpInside" id="9mf-zQ-tD8"/>
-                                </connections>
-                            </button>
+                            </imageView>
+                            <stackView contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="eqe-C2-Gc0" userLabel="Labels Stack View">
+                                <rect key="frame" x="16" y="472" width="343" height="122"/>
+                                <subviews>
+                                    <label clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label 1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Vy-HJ-G7q" userLabel="Label 1">
+                                        <rect key="frame" x="0.0" y="0.0" width="343" height="39.333333333333336"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <accessibility key="accessibilityConfiguration" label="WelcomeItemLabelsStackViewLabel1"/>
+                                        <fontDescription key="fontDescription" name="SFProDisplay-Bold" family="SF Pro Display" pointSize="34"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label 2" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Olt-DR-JC5" userLabel="Label 2">
+                                        <rect key="frame" x="0.0" y="41.333333333333371" width="343" height="39.333333333333343"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <accessibility key="accessibilityConfiguration" identifier="WelcomeItemLabelsStackViewLabel2" label="WelcomeItemLabelsStackViewLabel2"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label 3" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MCG-Ss-lsu" userLabel="Label 3">
+                                        <rect key="frame" x="0.0" y="82.666666666666629" width="343" height="39.333333333333343"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <accessibility key="accessibilityConfiguration" identifier="WelcomeItemLabelsStackViewLabel3" label="WelcomeItemLabelsStackViewLabel3"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Buk-XO-4hl">
-                                <rect key="frame" x="42.5" y="491" width="290" height="56"/>
+                                <rect key="frame" x="42.666666666666657" y="634" width="290" height="56"/>
                                 <color key="backgroundColor" red="0.41568627450000001" green="0.50196078430000002" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <accessibility key="accessibilityConfiguration" identifier="WelcomeSignUpButton" label="WelcomeSignUpButton"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="56" id="60w-ID-Hr5"/>
-                                    <constraint firstAttribute="width" constant="290" id="cP8-XJ-3A8"/>
-                                </constraints>
+                                <accessibility key="accessibilityConfiguration" identifier="WelcomeItemSignUpButton" label="WelcomeItemSignUpButton"/>
                                 <state key="normal" title="Sign up">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
@@ -57,38 +80,70 @@
                                     <action selector="signUpButtonTap:" destination="5KY-Vm-tg1" eventType="touchUpInside" id="gSL-QX-xDW"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Line1 Line2 Line3" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3CJ-6s-wWW">
-                                <rect key="frame" x="16" y="329" width="343" height="122"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="122" id="8No-nC-vJX"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="34"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="5qA-Cf-04c">
-                                <rect key="frame" x="0.0" y="20" width="375" height="269"/>
-                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4hf-Xy-fUy">
+                                <rect key="frame" x="42.666666666666657" y="720" width="290" height="21"/>
+                                <accessibility key="accessibilityConfiguration" identifier="WelcomeItemSignInButton" label="WelcomeItemSignInButton"/>
+                                <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="17"/>
+                                <state key="normal" title="Sign in">
+                                    <color key="titleColor" red="0.41568627450980389" green="0.50196078431372548" blue="0.96078431372549022" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="signInButtonTap:" destination="5KY-Vm-tg1" eventType="touchUpInside" id="9mf-zQ-tD8"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="Pw3-pA-u1U" firstAttribute="bottom" secondItem="4hf-Xy-fUy" secondAttribute="bottom" constant="57" id="3MC-6d-G0G"/>
-                            <constraint firstItem="3CJ-6s-wWW" firstAttribute="leading" secondItem="Pw3-pA-u1U" secondAttribute="leading" constant="16" id="6h4-oX-1rb"/>
-                            <constraint firstItem="5qA-Cf-04c" firstAttribute="top" secondItem="Pw3-pA-u1U" secondAttribute="top" id="8Gw-IU-xax"/>
+                            <constraint firstItem="Pw3-pA-u1U" firstAttribute="bottom" secondItem="4hf-Xy-fUy" secondAttribute="bottom" constant="37" identifier="WelcomeItemSignInButtonBottomConstraint" id="3MC-6d-G0G"/>
+                            <constraint firstItem="5qA-Cf-04c" firstAttribute="top" secondItem="Pw3-pA-u1U" secondAttribute="top" constant="-44" id="8Gw-IU-xax"/>
                             <constraint firstItem="Pw3-pA-u1U" firstAttribute="trailing" secondItem="5qA-Cf-04c" secondAttribute="trailing" id="JC9-n4-Pe4"/>
-                            <constraint firstItem="Pw3-pA-u1U" firstAttribute="trailing" secondItem="3CJ-6s-wWW" secondAttribute="trailing" constant="16" id="TZ8-4G-O1j"/>
-                            <constraint firstItem="3CJ-6s-wWW" firstAttribute="top" secondItem="5qA-Cf-04c" secondAttribute="bottom" constant="40" id="Umv-ZR-K0t"/>
+                            <constraint firstItem="eqe-C2-Gc0" firstAttribute="centerX" secondItem="jxb-H6-87Y" secondAttribute="centerX" id="L25-JN-uUt"/>
+                            <constraint firstItem="eqe-C2-Gc0" firstAttribute="top" secondItem="5qA-Cf-04c" secondAttribute="bottom" priority="750" constant="40" identifier="WelcomeItemLabelsStackViewTopConstraint" id="Ova-gW-YnO"/>
+                            <constraint firstItem="Buk-XO-4hl" firstAttribute="top" secondItem="eqe-C2-Gc0" secondAttribute="bottom" constant="40" identifier="WelcomeItemSignUpTopConstraint" id="T7H-Bo-Bkq"/>
+                            <constraint firstItem="Buk-XO-4hl" firstAttribute="width" secondItem="jxb-H6-87Y" secondAttribute="width" multiplier="290:375" identifier="WelcomeItemSignUpButtonWidthConstraint" id="Y4J-ef-cAg"/>
                             <constraint firstItem="5qA-Cf-04c" firstAttribute="leading" secondItem="Pw3-pA-u1U" secondAttribute="leading" id="Z5C-TL-bGj"/>
                             <constraint firstItem="4hf-Xy-fUy" firstAttribute="centerX" secondItem="Pw3-pA-u1U" secondAttribute="centerX" id="f6N-5p-zz9"/>
-                            <constraint firstItem="Buk-XO-4hl" firstAttribute="top" secondItem="3CJ-6s-wWW" secondAttribute="bottom" constant="40" id="lb8-zF-28R"/>
-                            <constraint firstItem="4hf-Xy-fUy" firstAttribute="top" secondItem="Buk-XO-4hl" secondAttribute="bottom" constant="30" id="qCq-BI-ymM"/>
+                            <constraint firstItem="eqe-C2-Gc0" firstAttribute="width" secondItem="jxb-H6-87Y" secondAttribute="width" multiplier="343:375" identifier="WelcomeItemLabelsStackViewWidthConstraint" id="gOi-uT-GTO"/>
+                            <constraint firstItem="Buk-XO-4hl" firstAttribute="height" secondItem="jxb-H6-87Y" secondAttribute="height" multiplier="56:812" identifier="WelcomeItemSignUpButtonHeightConstraint" id="juC-D5-guV"/>
+                            <constraint firstItem="4hf-Xy-fUy" firstAttribute="height" secondItem="jxb-H6-87Y" secondAttribute="height" multiplier="21:812" identifier="WelcomeItemSignInButtonHeightConstraint" id="ldU-Hn-YT9"/>
+                            <constraint firstItem="eqe-C2-Gc0" firstAttribute="height" secondItem="jxb-H6-87Y" secondAttribute="height" multiplier="122:812" identifier="WelcomeItemLabelsStackViewHeightConstraint" id="o6O-Lb-tIH"/>
+                            <constraint firstItem="4hf-Xy-fUy" firstAttribute="top" secondItem="Buk-XO-4hl" secondAttribute="bottom" constant="30" identifier="WelcomeItemSignInButtonTopConstraint" id="qCq-BI-ymM"/>
                             <constraint firstItem="Buk-XO-4hl" firstAttribute="centerX" secondItem="Pw3-pA-u1U" secondAttribute="centerX" id="qlj-5m-B65"/>
+                            <constraint firstItem="4hf-Xy-fUy" firstAttribute="width" secondItem="Buk-XO-4hl" secondAttribute="width" id="vGy-63-9Gr"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Pw3-pA-u1U"/>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="gOi-uT-GTO"/>
+                                <exclude reference="o6O-Lb-tIH"/>
+                                <exclude reference="Y4J-ef-cAg"/>
+                                <exclude reference="juC-D5-guV"/>
+                                <exclude reference="ldU-Hn-YT9"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=regular-widthClass=compact">
+                            <mask key="constraints">
+                                <include reference="gOi-uT-GTO"/>
+                                <include reference="o6O-Lb-tIH"/>
+                                <include reference="Y4J-ef-cAg"/>
+                                <include reference="juC-D5-guV"/>
+                                <include reference="ldU-Hn-YT9"/>
+                            </mask>
+                        </variation>
                     </view>
                     <connections>
                         <outlet property="imageView" destination="5qA-Cf-04c" id="diO-Hm-1Yj"/>
-                        <outlet property="textLabel" destination="3CJ-6s-wWW" id="jNw-Lc-NPG"/>
+                        <outlet property="textLabel1" destination="4Vy-HJ-G7q" id="IZw-H1-i28"/>
+                        <outlet property="textLabel2" destination="Olt-DR-JC5" id="p6Z-CK-Tky"/>
+                        <outlet property="textLabel3" destination="MCG-Ss-lsu" id="gGt-rQ-sb5"/>
+                        <outletCollection property="heightsCollection" destination="qCq-BI-ymM" collectionClass="NSMutableArray" id="ikV-bq-AGA"/>
+                        <outletCollection property="heightsCollection" destination="3MC-6d-G0G" collectionClass="NSMutableArray" id="JOX-dW-YUb"/>
+                        <outletCollection property="heightsCollection" destination="Ova-gW-YnO" collectionClass="NSMutableArray" id="Kgm-vn-CVC"/>
+                        <outletCollection property="heightsCollection" destination="T7H-Bo-Bkq" collectionClass="NSMutableArray" id="hCa-PF-owm"/>
+                        <outletCollection property="textLabelsCollection" destination="4Vy-HJ-G7q" collectionClass="NSMutableArray" id="asJ-RA-ewQ"/>
+                        <outletCollection property="textLabelsCollection" destination="Olt-DR-JC5" collectionClass="NSMutableArray" id="Krs-Nh-y9n"/>
+                        <outletCollection property="textLabelsCollection" destination="MCG-Ss-lsu" collectionClass="NSMutableArray" id="7Dx-ad-QJ4"/>
+                        <outletCollection property="heightsCollection" destination="8Gw-IU-xax" collectionClass="NSMutableArray" id="TT1-kd-RbL"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bmw-c8-ekX" userLabel="First Responder" sceneMemberID="firstResponder"/>

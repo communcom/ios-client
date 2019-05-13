@@ -11,13 +11,16 @@ import RxSwift
 import RxCocoa
 
 class LoadKeysVC: UIViewController {
-
-    @IBOutlet weak var downloadKeysButton: UIButton!
-    
+    // MARK: - Properties
     var viewModel: LoadKeysViewModel?
-    
     let disposeBag = DisposeBag()
     
+    
+    // MARK: - IBOutlets
+    @IBOutlet weak var downloadKeysButton: UIButton!
+    
+    
+    // MARK: - Class Functions
     override func viewDidLoad() {
         super.viewDidLoad()
         makeActions()
@@ -35,5 +38,4 @@ class LoadKeysVC: UIViewController {
             }).disposed(by: self.disposeBag)
         }).disposed(by: disposeBag)
     }
-    
 }

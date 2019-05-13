@@ -9,16 +9,42 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import CyberSwift
 
 class SetUserVC: UIViewController {
+    // MARK: - Properties
+    var viewModel: SetUserViewModel?
+    let disposeBag = DisposeBag()
+    
+    var router: (NSObjectProtocol & SignUpRoutingLogic)?
 
+    
+    // MARK: - IBOutlets
     @IBOutlet weak var userNameTextField: UITextField!
     @IBOutlet weak var nextButton: UIButton!
     
-    var viewModel: SetUserViewModel?
     
-    let disposeBag = DisposeBag()
+    // MARK: - Class Initialization
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        
+        setup()
+    }
     
+    deinit {
+        Logger.log(message: "Success", event: .severe)
+    }
+    
+    
+    // MARK: - Setup
+    private func setup() {
+        let router                  =   SignUpRouter()
+        router.viewController       =   self
+        self.router                 =   router
+    }
+    
+    
+    // MARK: - Class Functions
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -27,7 +53,7 @@ class SetUserVC: UIViewController {
         self.title = "Sign up"
         
         setBindings()
-        makeActions()
+//        makeActions()
     }
 
     func setBindings() {
@@ -38,14 +64,33 @@ class SetUserVC: UIViewController {
         }
     }
     
-    func makeActions() {
-        nextButton.rx.tap.subscribe(onNext: { _ in
-            self.viewModel!.setUser().subscribe(onNext: { flag in
-                if let vc = controllerContainer.resolve(LoadKeysVC.self) {
-                    vc.viewModel = LoadKeysViewModel(nickName: self.userNameTextField.text ?? "")
-                    self.present(vc, animated: true, completion: nil)
-                }
-            }).disposed(by: self.disposeBag)
-        }).disposed(by: disposeBag)
+//    func makeActions() {
+//        nextButton.rx.tap.subscribe(onNext: { _ in
+//            self.viewModel!.setUser().subscribe(onNext: { flag in
+//                self.router?.routeToSignUpNextScene()
+//            }).disposed(by: self.disposeBag)
+//        }).disposed(by: disposeBag)
+//    }
+    
+    
+    // MARK: - Actions
+    @IBAction func nextButtonTapped(_ sender: UIButton) {
+        guard let phone = UserDefaults.standard.string(forKey: Config.registrationUserPhoneKey) else { return }
+
+        guard let userName = self.userNameTextField.text else {
+            self.showAlert(title: "Error", message: "Enter user name")
+            return
+        }
+        
+        RestAPIManager.instance.setUser(nickName:           userName,
+                                        phone:              phone,
+                                        responseHandling:   { [weak self] result in
+                                            guard let strongSelf = self else { return }
+                                            strongSelf.router?.routeToSignUpNextScene()
+        },
+                                        errorHandling:      { [weak self] errorAPI in
+                                            guard let strongSelf = self else { return }
+                                            strongSelf.showAlert(title: "Error", message: errorAPI.caseInfo.message)
+        })
     }
 }
