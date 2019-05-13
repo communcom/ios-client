@@ -78,6 +78,7 @@ class ProfilePageViewModel {
                 self.items.accept([])
                 
                 return self.fetchNextSingle()
+                    .catchErrorJustReturn([])
             }
             .asDriver(onErrorJustReturn: [])
             .map {self.items.value + $0}
