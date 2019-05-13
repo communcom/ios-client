@@ -57,8 +57,6 @@ class PostHeaderView: UIView {
                                                               documentAttributes: nil)
         postContentLabel.attributedText = attributedString
         
-        #warning("adjust height of post")
-        
         // Notify to delegate to update content
         resetHeight()
         self.layoutSubviews()
