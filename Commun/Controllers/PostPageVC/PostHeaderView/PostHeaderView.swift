@@ -69,7 +69,7 @@ class PostHeaderView: UIView {
         height += self.postTitleLabel.height
         height += 32
         height += postContentLabel.attributedText?.size().height ?? 0
-        height += 41
+        height += 41 + 16 + 26.5 + 16
         self.height = height
     }
     

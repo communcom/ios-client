@@ -59,9 +59,6 @@ extension PostPageVC: PostHeaderViewDelegate {
             }
             .disposed(by: disposeBag)
         
-        tableView.rx.setDelegate(self)
-            .disposed(by: disposeBag)
-        
     }
     
     

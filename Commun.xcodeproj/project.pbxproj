@@ -152,7 +152,6 @@
 		57E515B62270F7B200A6F6DB /* ChangePasswordCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E515B42270F7B200A6F6DB /* ChangePasswordCell.swift */; };
 		57E515B72270F7B200A6F6DB /* ChangePasswordCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 57E515B52270F7B200A6F6DB /* ChangePasswordCell.xib */; };
 		57F5CFC22244E3BE005A09AE /* PostPageVC+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F5CFC12244E3BE005A09AE /* PostPageVC+Rx.swift */; };
-		57F5CFC62244E53B005A09AE /* PostPageVC+HeaderForSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F5CFC52244E53B005A09AE /* PostPageVC+HeaderForSection.swift */; };
 		57F9CAAC225B489000AC9ACA /* EditorPageVC+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F9CAAB225B489000AC9ACA /* EditorPageVC+Rx.swift */; };
 		57FB179B224BFBD700563BF7 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 57FB1796224BFBD700563BF7 /* LICENSE */; };
 		57FB179C224BFBD700563BF7 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 57FB1797224BFBD700563BF7 /* README.md */; };
@@ -316,7 +315,6 @@
 		57E515B42270F7B200A6F6DB /* ChangePasswordCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordCell.swift; sourceTree = "<group>"; };
 		57E515B52270F7B200A6F6DB /* ChangePasswordCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChangePasswordCell.xib; sourceTree = "<group>"; };
 		57F5CFC12244E3BE005A09AE /* PostPageVC+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PostPageVC+Rx.swift"; sourceTree = "<group>"; };
-		57F5CFC52244E53B005A09AE /* PostPageVC+HeaderForSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PostPageVC+HeaderForSection.swift"; sourceTree = "<group>"; };
 		57F9CA8D225B3A9200AC9ACA /* SF-Pro-Display-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-Thin.otf"; sourceTree = "<group>"; };
 		57F9CA8E225B3A9400AC9ACA /* SF-Pro-Display-BlackItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-BlackItalic.otf"; sourceTree = "<group>"; };
 		57F9CA8F225B3A9400AC9ACA /* SF-Pro-Display-RegularItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-RegularItalic.otf"; sourceTree = "<group>"; };
@@ -585,7 +583,6 @@
 				5725173F2243E4D70033125C /* PostPageViewModel.swift */,
 				5725173B2243E4640033125C /* PostPageVC.swift */,
 				57F5CFC12244E3BE005A09AE /* PostPageVC+Rx.swift */,
-				57F5CFC52244E53B005A09AE /* PostPageVC+HeaderForSection.swift */,
 				5725173D2243E49C0033125C /* PostPageVC.storyboard */,
 			);
 			path = PostPageVC;
@@ -1384,7 +1381,6 @@
 				57840A06223FAC1B00338FD5 /* SegmentioCellWithImageOverLabel.swift in Sources */,
 				3B0E9C5E226F02AC002AB1C2 /* ProfileEditCoverVC.swift in Sources */,
 				3B02CD1F228965AF0078BB52 /* CommentCellDelegate+UIViewController.swift in Sources */,
-				57F5CFC62244E53B005A09AE /* PostPageVC+HeaderForSection.swift in Sources */,
 				3B197C532269BE0E008CF10D /* SegmentioExtension.swift in Sources */,
 				57B6FC2C224A9F2800BCFDDA /* WelcomeItemVC.swift in Sources */,
 				3BAF69CD22677E440055CCEB /* ProfilePageViewModel.swift in Sources */,
