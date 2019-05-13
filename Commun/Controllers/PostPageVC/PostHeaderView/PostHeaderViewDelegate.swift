@@ -9,17 +9,12 @@
 import Foundation
 
 protocol PostHeaderViewDelegate: class {
-    func postHeaderViewDidUpdateContent(_ postHeaderView: PostHeaderView)
     func didUpVotePost(_ post: ResponseAPIContentGetPost)
     func didDownVotePost(_ post: ResponseAPIContentGetPost)
     func sharePost(_ post: ResponseAPIContentGetPost)
 }
 
 extension PostHeaderViewDelegate where Self: UIViewController {
-    func postHeaderViewDidUpdateContent(_ postHeaderView: PostHeaderView) {
-        // TODO:
-    }
-    
     func didUpVotePost(_ post: ResponseAPIContentGetPost) {
         showAlert(title: "Upvote", message: "TODO")
     }

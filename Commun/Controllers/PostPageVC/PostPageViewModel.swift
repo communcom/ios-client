@@ -26,6 +26,7 @@ class PostPageViewModel {
     
     // MARK: - Methods
     func loadPost() {
+        if postForRequest != nil {post.accept(postForRequest)}
         let permLink = postForRequest?.contentId.permlink ?? permlink ?? ""
         let refBlock = postForRequest?.contentId.refBlockNum ?? refBlockNum ?? 0
         let userId = postForRequest?.contentId.userId ?? self.userId ?? ""

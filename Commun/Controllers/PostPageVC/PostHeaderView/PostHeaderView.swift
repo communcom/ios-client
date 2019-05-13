@@ -40,6 +40,7 @@ class PostHeaderView: UIView {
             let html = post.content.embeds.first?.result.html {
             webView.loadHTMLString(html, baseURL: nil)
             webViewHeightConstraint.constant = UIScreen.main.bounds.width * 283/375
+            webView.scrollView.contentInset = UIEdgeInsets(top: -8, left: -8, bottom: -8, right: -8)
         } else {
             webViewHeightConstraint.constant = 0
         }
@@ -59,8 +60,17 @@ class PostHeaderView: UIView {
         #warning("adjust height of post")
         
         // Notify to delegate to update content
+        resetHeight()
         self.layoutSubviews()
-        delegate?.postHeaderViewDidUpdateContent(self)
+    }
+    
+    func resetHeight() {
+        var height = webView.height + 112
+        height += self.postTitleLabel.height
+        height += 32
+        height += postContentLabel.attributedText?.size().height ?? 0
+        height += 41
+        self.height = height
     }
     
     // Actions
