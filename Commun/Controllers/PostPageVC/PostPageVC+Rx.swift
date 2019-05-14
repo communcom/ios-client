@@ -14,8 +14,6 @@ extension PostPageVC: PostHeaderViewDelegate {
     
     func bindUI() {
         viewModel.post
-            .filter {$0 != nil}
-            .map {$0!}
             .subscribe(onNext: {post in
                 // Create tableHeaderView
                 guard let headerView = UINib(nibName: "PostHeaderView", bundle: nil).instantiate(withOwner: self, options: nil).first as? PostHeaderView else {return}

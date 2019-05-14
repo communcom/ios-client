@@ -29,18 +29,31 @@ class PostHeaderView: UIView {
     // Post
     var post: ResponseAPIContentGetPost? {
         didSet {
-            guard let post = post else {return}
+            guard let post = post else {
+                setLoading()
+                return
+            }
             setUpWith(post)
         }
     }
     
+    @IBOutlet weak var loadingView: UIView!
+    func setLoading() {
+        loadingView.isHidden = false
+        self.height = 200
+        layoutSubviews()
+    }
+    
     func setUpWith(_ post: ResponseAPIContentGetPost) {
+        loadingView.isHidden = true
         // Show media
         if post.content.embeds.first?.result.type == "video",
             let html = post.content.embeds.first?.result.html {
             webView.loadHTMLString(html, baseURL: nil)
             webViewHeightConstraint.constant = UIScreen.main.bounds.width * 283/375
             webView.scrollView.contentInset = UIEdgeInsets(top: -8, left: -8, bottom: -8, right: -8)
+            webView.scrollView.isScrollEnabled = false
+            webView.scrollView.bouncesZoom = false
         } else {
             webViewHeightConstraint.constant = 0
         }
@@ -49,7 +62,8 @@ class PostHeaderView: UIView {
         postTitleLabel.text = post.content.title
         
         // Show content
-        let htmlData = NSString(string: post.content.body.full ?? "").data(using: String.Encoding.unicode.rawValue)
+        let html = "<span style=\"font-family: -apple-system; text-align: justify; font-size: 17\">\(post.content.body.full ?? "")</span>"
+        let htmlData = NSString(string: html).data(using: String.Encoding.unicode.rawValue)
         let options = [NSAttributedString.DocumentReadingOptionKey.documentType:
             NSAttributedString.DocumentType.html]
         let attributedString = try? NSMutableAttributedString(data: htmlData ?? Data(),
