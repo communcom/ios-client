@@ -11,6 +11,7 @@
 		3B02CD282289B23E0078BB52 /* PostHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B02CD272289B23E0078BB52 /* PostHeaderView.swift */; };
 		3B02CD2A2289B2620078BB52 /* PostHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3B02CD292289B2620078BB52 /* PostHeaderView.xib */; };
 		3B02CD2C2289BF510078BB52 /* PostHeaderViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B02CD2B2289BF510078BB52 /* PostHeaderViewDelegate.swift */; };
+		3B02CD2E228AB4580078BB52 /* NotificationsFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B02CD2D228AB4580078BB52 /* NotificationsFetcher.swift */; };
 		3B0E9C5E226F02AC002AB1C2 /* ProfileEditCoverVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B0E9C5D226F02AC002AB1C2 /* ProfileEditCoverVC.swift */; };
 		3B0E9C64226F4A0C002AB1C2 /* VerticalDraggableImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B0E9C63226F4A0C002AB1C2 /* VerticalDraggableImageView.swift */; };
 		3B0E9C66227050E3002AB1C2 /* UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B0E9C65227050E3002AB1C2 /* UIImageView.swift */; };
@@ -31,7 +32,6 @@
 		3B2F226A226892C5006B589E /* NotificationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3B2F2263226892C4006B589E /* NotificationCell.xib */; };
 		3B2F226B226892C5006B589E /* NotificationsPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B2F2264226892C4006B589E /* NotificationsPageViewModel.swift */; };
 		3B2F226C226892C5006B589E /* NotificationsPageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B2F2265226892C4006B589E /* NotificationsPageVC.swift */; };
-		3B2F226D226892C5006B589E /* NotificationsFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B2F2266226892C4006B589E /* NotificationsFetcher.swift */; };
 		3B2F226E226892C5006B589E /* NotificationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B2F2267226892C4006B589E /* NotificationType.swift */; };
 		3B2F226F226892C5006B589E /* NotificationsPageVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3B2F2268226892C5006B589E /* NotificationsPageVC.storyboard */; };
 		3B2F227122689308006B589E /* TabBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B2F227022689308006B589E /* TabBarViewModel.swift */; };
@@ -167,6 +167,7 @@
 		3B02CD272289B23E0078BB52 /* PostHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostHeaderView.swift; sourceTree = "<group>"; };
 		3B02CD292289B2620078BB52 /* PostHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PostHeaderView.xib; sourceTree = "<group>"; };
 		3B02CD2B2289BF510078BB52 /* PostHeaderViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostHeaderViewDelegate.swift; sourceTree = "<group>"; };
+		3B02CD2D228AB4580078BB52 /* NotificationsFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsFetcher.swift; sourceTree = "<group>"; };
 		3B0E9C5D226F02AC002AB1C2 /* ProfileEditCoverVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditCoverVC.swift; sourceTree = "<group>"; };
 		3B0E9C63226F4A0C002AB1C2 /* VerticalDraggableImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalDraggableImageView.swift; sourceTree = "<group>"; };
 		3B0E9C65227050E3002AB1C2 /* UIImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageView.swift; sourceTree = "<group>"; };
@@ -187,7 +188,6 @@
 		3B2F2263226892C4006B589E /* NotificationCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NotificationCell.xib; sourceTree = "<group>"; };
 		3B2F2264226892C4006B589E /* NotificationsPageViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationsPageViewModel.swift; sourceTree = "<group>"; };
 		3B2F2265226892C4006B589E /* NotificationsPageVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationsPageVC.swift; sourceTree = "<group>"; };
-		3B2F2266226892C4006B589E /* NotificationsFetcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationsFetcher.swift; sourceTree = "<group>"; };
 		3B2F2267226892C4006B589E /* NotificationType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationType.swift; sourceTree = "<group>"; };
 		3B2F2268226892C5006B589E /* NotificationsPageVC.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = NotificationsPageVC.storyboard; sourceTree = "<group>"; };
 		3B2F227022689308006B589E /* TabBarViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarViewModel.swift; sourceTree = "<group>"; };
@@ -413,7 +413,6 @@
 			children = (
 				3B2F2262226892C4006B589E /* NotificationCell.swift */,
 				3B2F2263226892C4006B589E /* NotificationCell.xib */,
-				3B2F2266226892C4006B589E /* NotificationsFetcher.swift */,
 				3B2F2268226892C5006B589E /* NotificationsPageVC.storyboard */,
 				3B2F2265226892C4006B589E /* NotificationsPageVC.swift */,
 				3B2F2264226892C4006B589E /* NotificationsPageViewModel.swift */,
@@ -448,6 +447,7 @@
 				3BAF69D422686A1B0055CCEB /* ItemsFetcher.swift */,
 				3B635F7E22772D87006DAAB2 /* PostsFetcher.swift */,
 				3B197C562269CEEF008CF10D /* CommentsFetcher.swift */,
+				3B02CD2D228AB4580078BB52 /* NotificationsFetcher.swift */,
 			);
 			path = Fetchers;
 			sourceTree = "<group>";
@@ -1351,6 +1351,7 @@
 				3B635F8322774A37006DAAB2 /* FeedTimeFrameMode.swift in Sources */,
 				578B94DE2263CC0E00FB5BC6 /* ConfirmUserViewModel.swift in Sources */,
 				57E515B12270F4EA00A6F6DB /* PasswordCell.swift in Sources */,
+				3B02CD2E228AB4580078BB52 /* NotificationsFetcher.swift in Sources */,
 				571B150B223A94DE00630C8F /* TabBarVC.swift in Sources */,
 				3B2F226C226892C5006B589E /* NotificationsPageVC.swift in Sources */,
 				3BAF69CF226787940055CCEB /* Date.swift in Sources */,
@@ -1410,7 +1411,6 @@
 				57840A0B223FAC1B00338FD5 /* BadgeViewPresenter.swift in Sources */,
 				575AECAE22606D0800A7EC2D /* SignUpViewModel.swift in Sources */,
 				57CBD95E225517B4000BA8CC /* EditorPageVC+Actions.swift in Sources */,
-				3B2F226D226892C5006B589E /* NotificationsFetcher.swift in Sources */,
 				3B2F2269226892C5006B589E /* NotificationCell.swift in Sources */,
 				57840A1B2240DB9400338FD5 /* NetworkService.swift in Sources */,
 				572517322243935C0033125C /* ControllerContainer.swift in Sources */,
