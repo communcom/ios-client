@@ -53,7 +53,7 @@
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ComunityName" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z2m-2G-cmH">
                                         <rect key="frame" x="92" y="10" width="108.5" height="18"/>
-                                        <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
+                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -75,14 +75,22 @@
                                             <action selector="moreButtonTap:" destination="e29-hK-EV2" eventType="touchUpInside" id="jj0-lR-Od4"/>
                                         </connections>
                                     </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="by Sergey" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AUu-SG-Yxw">
+                                        <rect key="frame" x="138" y="30" width="62" height="16"/>
+                                        <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="13"/>
+                                        <color key="textColor" red="0.60784313729999995" green="0.62352941179999999" blue="0.63529411759999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="ESO-Mb-GPX" firstAttribute="centerY" secondItem="xxf-Yw-cnd" secondAttribute="centerY" id="4Dc-0p-HiE"/>
                                     <constraint firstItem="RsM-Yt-jdM" firstAttribute="leading" secondItem="Z2m-2G-cmH" secondAttribute="leading" id="9hM-lI-o1W"/>
+                                    <constraint firstItem="AUu-SG-Yxw" firstAttribute="centerY" secondItem="RsM-Yt-jdM" secondAttribute="centerY" id="B5D-6n-tAj"/>
                                     <constraint firstItem="RsM-Yt-jdM" firstAttribute="top" secondItem="Z2m-2G-cmH" secondAttribute="bottom" constant="2" id="KIK-uz-oIA"/>
                                     <constraint firstAttribute="height" constant="56" id="P2e-hR-1BQ"/>
                                     <constraint firstItem="epW-Br-j8v" firstAttribute="centerY" secondItem="xxf-Yw-cnd" secondAttribute="centerY" id="R0I-1s-okT"/>
+                                    <constraint firstItem="AUu-SG-Yxw" firstAttribute="leading" secondItem="RsM-Yt-jdM" secondAttribute="trailing" constant="3.5" id="R3d-mp-ebT"/>
                                     <constraint firstItem="JAo-Iq-Wdc" firstAttribute="centerY" secondItem="epW-Br-j8v" secondAttribute="centerY" id="ZG7-Tm-63A"/>
                                     <constraint firstItem="Z2m-2G-cmH" firstAttribute="top" secondItem="xxf-Yw-cnd" secondAttribute="top" constant="10" id="bss-0a-iur"/>
                                     <constraint firstItem="epW-Br-j8v" firstAttribute="leading" secondItem="xxf-Yw-cnd" secondAttribute="leading" constant="8" id="gA1-9t-B9M"/>
@@ -130,8 +138,10 @@
                         <viewLayoutGuide key="safeArea" id="Pgb-4l-LXo"/>
                     </view>
                     <connections>
+                        <outlet property="byUserLabel" destination="AUu-SG-Yxw" id="lrc-9d-vRE"/>
                         <outlet property="comunityNameLabel" destination="Z2m-2G-cmH" id="GD7-ht-eGw"/>
                         <outlet property="tableView" destination="Dx8-8W-zVf" id="OtS-57-Afj"/>
+                        <outlet property="timeAgoLabel" destination="RsM-Yt-jdM" id="Azv-hd-vTh"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="W7N-3w-8Gb" userLabel="First Responder" sceneMemberID="firstResponder"/>

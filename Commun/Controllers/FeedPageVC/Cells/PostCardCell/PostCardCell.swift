@@ -22,7 +22,8 @@ class PostCardCell: UITableViewCell {
 
     @IBOutlet weak var avatarImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var subtitleLabel: UILabel!
+    @IBOutlet weak var timeAgoLabel: UILabel!
+    @IBOutlet weak var authorNameLabel: UILabel!
     @IBOutlet weak var mainTextLabel: UILabel!
     @IBOutlet weak var likeCounterLabel: UILabel!
     @IBOutlet weak var numberOfCommentsLabel: UILabel!
@@ -31,6 +32,8 @@ class PostCardCell: UITableViewCell {
     
     @IBOutlet weak var upvoteButton: UIButton!
     
+    @IBOutlet weak var embededImageView: UIImageView!
+    @IBOutlet weak var embededViewHeightConstraint: NSLayoutConstraint!
     var delegate: PostCardCellDelegate?
     var post: ResponseAPIContentGetPost?
     
@@ -76,10 +79,28 @@ extension PostCardCell {
     
     func setupFromPost(_ post: ResponseAPIContentGetPost) {
 //        self.post = post
+        #warning("author's avatar")
+        if let id = post.author?.userId {
+            self.avatarImageView.setNonAvatarImageWithId(id)
+        }
         
         self.titleLabel.text = post.content.title
+        self.timeAgoLabel.text = Date.timeAgo(string: post.meta.time)
+        
+        self.authorNameLabel.text = "by".localized() + " " + (post.author?.username ?? post.author?.userId ?? "")
+        
         self.mainTextLabel.text = post.content.body.preview
         self.accessibilityLabel = "PostCardCell"
+        
+        let embeds = post.content.embeds
+        
+        if embeds.count > 0,
+            let imageURL = embeds[0].result.thumbnail_url {
+            embededImageView.sd_setImage(with: URL(string: imageURL))
+            embededViewHeightConstraint.constant = 31/40 * UIScreen.main.bounds.width
+        } else {
+            embededViewHeightConstraint.constant = 0
+        }
         
 //        self.avatarImageView.sd_setImage(with: post.community.avatarUrl?.url, completed: nil)
 //        self.likeCounterLabel.text = "\(post.payout.rShares.stringValue ?? "0")"

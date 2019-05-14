@@ -76,8 +76,7 @@
 		5725173E2243E49C0033125C /* PostPageVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5725173D2243E49C0033125C /* PostPageVC.storyboard */; };
 		572517402243E4D70033125C /* PostPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5725173F2243E4D70033125C /* PostPageViewModel.swift */; };
 		572F81A7223C164C0007F2F9 /* PostCardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572F81A0223C164B0007F2F9 /* PostCardCell.swift */; };
-		572F81A9223C164C0007F2F9 /* PostCardMediaCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572F81A3223C164B0007F2F9 /* PostCardMediaCell.swift */; };
-		572F81AA223C164C0007F2F9 /* PostCardMediaCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 572F81A4223C164B0007F2F9 /* PostCardMediaCell.xib */; };
+		572F81A8223C164C0007F2F9 /* PostCardCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 572F81A1223C164B0007F2F9 /* PostCardCell.xib */; };
 		572F81AB223C164C0007F2F9 /* SF-Pro-Text-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 572F81A6223C164C0007F2F9 /* SF-Pro-Text-Regular.otf */; };
 		5740957F2247768C00E40E51 /* CommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5740957D2247768C00E40E51 /* CommentCell.swift */; };
 		574095802247768C00E40E51 /* CommentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5740957E2247768C00E40E51 /* CommentCell.xib */; };
@@ -269,8 +268,6 @@
 		5725173F2243E4D70033125C /* PostPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostPageViewModel.swift; sourceTree = "<group>"; };
 		572F81A0223C164B0007F2F9 /* PostCardCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostCardCell.swift; sourceTree = "<group>"; };
 		572F81A1223C164B0007F2F9 /* PostCardCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PostCardCell.xib; sourceTree = "<group>"; };
-		572F81A3223C164B0007F2F9 /* PostCardMediaCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostCardMediaCell.swift; sourceTree = "<group>"; };
-		572F81A4223C164B0007F2F9 /* PostCardMediaCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PostCardMediaCell.xib; sourceTree = "<group>"; };
 		572F81A6223C164C0007F2F9 /* SF-Pro-Text-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Regular.otf"; sourceTree = "<group>"; };
 		5740957D2247768C00E40E51 /* CommentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentCell.swift; sourceTree = "<group>"; };
 		5740957E2247768C00E40E51 /* CommentCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CommentCell.xib; sourceTree = "<group>"; };
@@ -639,15 +636,6 @@
 			path = PostCardCell;
 			sourceTree = "<group>";
 		};
-		572F81A2223C164B0007F2F9 /* PostCardMediaCell */ = {
-			isa = PBXGroup;
-			children = (
-				572F81A3223C164B0007F2F9 /* PostCardMediaCell.swift */,
-				572F81A4223C164B0007F2F9 /* PostCardMediaCell.xib */,
-			);
-			path = PostCardMediaCell;
-			sourceTree = "<group>";
-		};
 		572F81A5223C164C0007F2F9 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
@@ -757,7 +745,6 @@
 			isa = PBXGroup;
 			children = (
 				572F819F223C164B0007F2F9 /* PostCardCell */,
-				572F81A2223C164B0007F2F9 /* PostCardMediaCell */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -1229,7 +1216,6 @@
 				57B6FC2A224A9EAA00BCFDDA /* WelcomeItemVC.storyboard in Resources */,
 				57FB17A0224C092700563BF7 /* SignInVC.storyboard in Resources */,
 				3B197C88226A33CF008CF10D /* ResponseAPIContentGetProfileResult.json in Resources */,
-				572F81AA223C164C0007F2F9 /* PostCardMediaCell.xib in Resources */,
 				B1EA02F32289882A00835244 /* SF-Pro-Text-Semibold.otf in Resources */,
 				B1EA02E92289882A00835244 /* SF-Pro-Text-Bold.otf in Resources */,
 				B1EA02E62289882A00835244 /* SF-Pro-Display-ThinItalic.otf in Resources */,
@@ -1447,7 +1433,6 @@
 				57E515A52270EA7900A6F6DB /* GeneralSettingCell.swift in Sources */,
 				57840A05223FAC1B00338FD5 /* SegmentioCellWithLabel.swift in Sources */,
 				5797E0F8225DDA400026C4D5 /* SignUpVC.swift in Sources */,
-				572F81A9223C164C0007F2F9 /* PostCardMediaCell.swift in Sources */,
 				3BB86B4922734AE4008F1C64 /* UIColor.swift in Sources */,
 				57840A00223FAC1B00338FD5 /* SegmentioCellWithImageBeforeLabel.swift in Sources */,
 				57840A0A223FAC1B00338FD5 /* Segmentio.swift in Sources */,
