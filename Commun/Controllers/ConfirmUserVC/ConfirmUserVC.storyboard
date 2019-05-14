@@ -30,6 +30,12 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jAK-lA-DMe" userLabel="SMS Code Label">
+                                <rect key="frame" x="170" y="98" width="35.333333333333343" height="17"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bYW-xi-lTa">
                                 <rect key="frame" x="73.666666666666686" y="133" width="228" height="56"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -72,7 +78,9 @@
                             <constraint firstItem="6zJ-W6-fmM" firstAttribute="centerX" secondItem="zEB-iN-I0i" secondAttribute="centerX" id="NYX-uX-DJ6"/>
                             <constraint firstItem="6zJ-W6-fmM" firstAttribute="top" secondItem="bYW-xi-lTa" secondAttribute="bottom" constant="35" identifier="ConfirmUserResendButtonTopConstraint" id="OIf-uN-r9L" userLabel="ConfirmUserResendSmsCodeButtonTopConstraint"/>
                             <constraint firstItem="bYW-xi-lTa" firstAttribute="height" secondItem="ML7-X3-dGA" secondAttribute="height" multiplier="56:812" identifier="ConfirmUserPinCodeViewHeightConstraint" id="RZe-Nj-cWO"/>
+                            <constraint firstItem="jAK-lA-DMe" firstAttribute="centerX" secondItem="ML7-X3-dGA" secondAttribute="centerX" id="TIU-CW-Zpe"/>
                             <constraint firstItem="bYW-xi-lTa" firstAttribute="centerX" secondItem="ML7-X3-dGA" secondAttribute="centerX" id="TxS-xO-Dhs"/>
+                            <constraint firstItem="bYW-xi-lTa" firstAttribute="top" secondItem="jAK-lA-DMe" secondAttribute="bottom" constant="18" id="ZjL-IC-jZ2"/>
                             <constraint firstItem="waw-lP-Yrt" firstAttribute="top" secondItem="6zJ-W6-fmM" secondAttribute="bottom" constant="51" identifier="ConfirmUserNextButtonTopConstraint" id="c1U-Qn-YuT" userLabel="ConfirmUserNextButtonTopConstraint"/>
                             <constraint firstItem="bYW-xi-lTa" firstAttribute="top" secondItem="5dt-9p-v3W" secondAttribute="bottom" constant="50" identifier="ConfirmUserPicCodeViewTopConstraint" id="kPy-LG-FWb" userLabel="ConfirmUserPinCodeViewTopConstraint"/>
                             <constraint firstItem="waw-lP-Yrt" firstAttribute="height" secondItem="ML7-X3-dGA" secondAttribute="height" multiplier="56:812" identifier="ConfirmUserNextButtonHeightConstraint" id="nFo-HL-5dh"/>
@@ -102,11 +110,13 @@
                         <outlet property="pinCodeView" destination="bYW-xi-lTa" id="mgP-Ro-2Kc"/>
                         <outlet property="resendButton" destination="6zJ-W6-fmM" id="gtL-Fu-R5f"/>
                         <outlet property="smsCodeLabel" destination="5dt-9p-v3W" id="AES-zC-Jyb"/>
+                        <outlet property="testSmsCodeLabel" destination="jAK-lA-DMe" id="8qQ-9h-ayO"/>
                         <outletCollection property="heightsCollection" destination="orP-we-dbJ" collectionClass="NSMutableArray" id="e81-i1-vZa"/>
                         <outletCollection property="heightsCollection" destination="kPy-LG-FWb" collectionClass="NSMutableArray" id="dMl-Lu-Ymp"/>
                         <outletCollection property="heightsCollection" destination="OIf-uN-r9L" collectionClass="NSMutableArray" id="vVc-aJ-SaZ"/>
                         <outletCollection property="heightsCollection" destination="c1U-Qn-YuT" collectionClass="NSMutableArray" id="A2M-uI-W5B"/>
                         <outletCollection property="widthsCollection" destination="1tD-WO-XIW" collectionClass="NSMutableArray" id="b6k-uz-F8R"/>
+                        <outletCollection property="heightsCollection" destination="ZjL-IC-jZ2" collectionClass="NSMutableArray" id="ufZ-0j-yad"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Sv0-oJ-wJx" userLabel="First Responder" sceneMemberID="firstResponder"/>

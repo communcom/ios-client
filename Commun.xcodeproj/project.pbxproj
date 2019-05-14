@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 50;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -121,7 +121,6 @@
 		578B94DC2263CBE300FB5BC6 /* ConfirmUserVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 578B94DB2263CBE300FB5BC6 /* ConfirmUserVC.storyboard */; };
 		578B94DE2263CC0E00FB5BC6 /* ConfirmUserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 578B94DD2263CC0E00FB5BC6 /* ConfirmUserViewModel.swift */; };
 		5797E0F8225DDA400026C4D5 /* SignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5797E0F7225DDA400026C4D5 /* SignUpVC.swift */; };
-		5797E0FA225DDA490026C4D5 /* SignUpVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5797E0F9225DDA490026C4D5 /* SignUpVC.storyboard */; };
 		57A1CA632270FC4700E2A1E3 /* LanguageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A1CA622270FC4700E2A1E3 /* LanguageVC.swift */; };
 		57A1CA652270FCF000E2A1E3 /* LanguageVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 57A1CA642270FCF000E2A1E3 /* LanguageVC.storyboard */; };
 		57A95197224178010020F55D /* PostCardCellDelegate+UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A95196224178010020F55D /* PostCardCellDelegate+UIViewController.swift */; };
@@ -159,6 +158,8 @@
 		57FB17A2224C093A00563BF7 /* SignInVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FB17A1224C093A00563BF7 /* SignInVC.swift */; };
 		57FB17A4224C15C400563BF7 /* SignInViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FB17A3224C15C400563BF7 /* SignInViewModel.swift */; };
 		7472E4613CDA904305E42A4F /* Pods_Commun.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F0772CC6D820AD11B1FF48A /* Pods_Commun.framework */; };
+		B170AC15228AFBDA00C6FFBC /* SignUpVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5797E0F9225DDA490026C4D5 /* SignUpVC.storyboard */; };
+		B170AC16228AFBF500C6FFBC /* PostCardCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 572F81A1223C164B0007F2F9 /* PostCardCell.xib */; };
 		B17A970C228002440081B8E0 /* SignUpRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17A970B228002440081B8E0 /* SignUpRouter.swift */; };
 		B1EA02D32289734800835244 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B1EA02D52289734800835244 /* Localizable.strings */; };
 		B1EA02D72289882300835244 /* SF-Pro-Display-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = 57F9CA9C225B3AA400AC9ACA /* SF-Pro-Display-Black.otf */; };
@@ -751,16 +752,16 @@
 		576DC91F223E42B200EDED41 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				576DC920223E42C800EDED41 /* UIViewControllerExtension.swift */,
-				3BAF69CA226773000055CCEB /* UIView+Shadow.swift */,
 				3BAF69CE226787940055CCEB /* Date.swift */,
-				3B2F227222689334006B589E /* NSMutableAttributedString.swift */,
-				3B51581D226E0D3A00108F17 /* TLPhotosPickerViewController+Rx.swift */,
-				5721E87022650AC0003BE04B /* StringExtension.swift */,
-				3B0E9C65227050E3002AB1C2 /* UIImageView.swift */,
-				3BB86B402271B5D8008F1C64 /* ResponseAPIContentGetProfilePersonal.swift */,
-				3BB86B4822734AE4008F1C64 /* UIColor.swift */,
 				3B635F8222774A37006DAAB2 /* FeedTimeFrameMode.swift */,
+				3B2F227222689334006B589E /* NSMutableAttributedString.swift */,
+				3BB86B402271B5D8008F1C64 /* ResponseAPIContentGetProfilePersonal.swift */,
+				5721E87022650AC0003BE04B /* StringExtension.swift */,
+				3B51581D226E0D3A00108F17 /* TLPhotosPickerViewController+Rx.swift */,
+				3BB86B4822734AE4008F1C64 /* UIColor.swift */,
+				3B0E9C65227050E3002AB1C2 /* UIImageView.swift */,
+				3BAF69CA226773000055CCEB /* UIView+Shadow.swift */,
+				576DC920223E42C800EDED41 /* UIViewControllerExtension.swift */,
 				3B02CD33228ADC100078BB52 /* UIWebView.swift */,
 			);
 			path = Extensions;
@@ -1190,7 +1191,6 @@
 				575AECB522606FA600A7EC2D /* SelectCountryVC.storyboard in Resources */,
 				B1EA02EA2289882A00835244 /* SF-Pro-Text-BoldItalic.otf in Resources */,
 				B1EA02E22289882A00835244 /* SF-Pro-Display-RegularItalic.otf in Resources */,
-				57727E6A226E4EAB000C9F1F /* HtmlCell.xib in Resources */,
 				B1EA02E72289882A00835244 /* SF-Pro-Display-Ultralight.otf in Resources */,
 				3B2F226F226892C5006B589E /* NotificationsPageVC.storyboard in Resources */,
 				572F81AB223C164C0007F2F9 /* SF-Pro-Text-Regular.otf in Resources */,
@@ -1211,7 +1211,6 @@
 				3B197C8B226A33CF008CF10D /* ResponseAPIContentGetFeedResult.json in Resources */,
 				57A1CA652270FCF000E2A1E3 /* LanguageVC.storyboard in Resources */,
 				B1EA02DC2289882A00835244 /* SF-Pro-Display-HeavyItalic.otf in Resources */,
-				5721AE3F226E50FD00133BFF /* MediaHtmlCell.xib in Resources */,
 				57DE5BE622522060008566B9 /* ComunityCell.xib in Resources */,
 				5787C0C822650FC200568CEC /* SetUserVC.storyboard in Resources */,
 				57B6FC2A224A9EAA00BCFDDA /* WelcomeItemVC.storyboard in Resources */,
@@ -1220,18 +1219,15 @@
 				B1EA02F32289882A00835244 /* SF-Pro-Text-Semibold.otf in Resources */,
 				B1EA02E92289882A00835244 /* SF-Pro-Text-Bold.otf in Resources */,
 				B1EA02E62289882A00835244 /* SF-Pro-Display-ThinItalic.otf in Resources */,
+				B170AC16228AFBF500C6FFBC /* PostCardCell.xib in Resources */,
 				B1EA02F02289882A00835244 /* SF-Pro-Text-MediumItalic.otf in Resources */,
 				57E515A12270E66900A6F6DB /* SettingsVC.storyboard in Resources */,
 				3B02CD2A2289B2620078BB52 /* PostHeaderView.xib in Resources */,
-				572F81A8223C164C0007F2F9 /* PostCardCell.xib in Resources */,
-				5797E0FA225DDA490026C4D5 /* SignUpVC.storyboard in Resources */,
 				B1EA02DE2289882A00835244 /* SF-Pro-Display-LightItalic.otf in Resources */,
-				572F81A8223C164C0007F2F9 /* PostCardCell.xib in Resources */,
-				5797E0FA225DDA490026C4D5 /* SignUpVC.storyboard in Resources */,
-				57C33A4C2244DB1E00073FAE /* TextContentCell.xib in Resources */,
 				B1EA02EE2289882A00835244 /* SF-Pro-Text-LightItalic.otf in Resources */,
 				B1EA02E02289882A00835244 /* SF-Pro-Display-MediumItalic.otf in Resources */,
 				3BAF69C522675B540055CCEB /* ProfilePageVC.storyboard in Resources */,
+				B170AC15228AFBDA00C6FFBC /* SignUpVC.storyboard in Resources */,
 				57FB179B224BFBD700563BF7 /* LICENSE in Resources */,
 				57840A0D223FAC1B00338FD5 /* BadgeWithCounterViewStandardSized.xib in Resources */,
 				571B14FE223A935D00630C8F /* Assets.xcassets in Resources */,
@@ -1248,7 +1244,6 @@
 				B1EA02E12289882A00835244 /* SF-Pro-Display-Regular.otf in Resources */,
 				B1EA02DA2289882A00835244 /* SF-Pro-Display-BoldItalic.otf in Resources */,
 				B1EA02E52289882A00835244 /* SF-Pro-Display-Thin.otf in Resources */,
-				57C33A452244D32300073FAE /* VotesCell.xib in Resources */,
 				570061252253D3B3007700DA /* EditorLinkCell.xib in Resources */,
 				B1EA02EB2289882A00835244 /* SF-Pro-Text-Heavy.otf in Resources */,
 				B1EA02DD2289882A00835244 /* SF-Pro-Display-Light.otf in Resources */,
