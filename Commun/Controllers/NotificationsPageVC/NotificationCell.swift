@@ -9,7 +9,6 @@
 import UIKit
 import SDWebImage
 import RxSwift
-import DateToolsSwift
 
 class NotificationCell: UITableViewCell {
     
@@ -60,7 +59,7 @@ class NotificationCell: UITableViewCell {
         contentLabel.attributedText = detail.text
         
         
-        timestampLabel.text = Date.from(string: notification.timestamp).shortTimeAgoSinceNow
+        timestampLabel.text = Date.timeAgo(string: notification.timestamp)
         
         categoryLabel.text = notification.community?.name
     }

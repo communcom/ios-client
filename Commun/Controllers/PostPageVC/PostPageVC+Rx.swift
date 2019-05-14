@@ -15,6 +15,13 @@ extension PostPageVC: PostHeaderViewDelegate {
     func bindUI() {
         viewModel.post
             .subscribe(onNext: {post in
+                // Time ago & community
+                self.comunityNameLabel.text = post?.community.name
+                if let timeString = post?.meta.time {
+                    self.timeAgoLabel.text = Date.timeAgo(string: timeString)
+                }
+                self.byUserLabel.text = "by".localized() + " " + (post?.author?.username ?? post?.author?.userId ?? "")
+                
                 // Create tableHeaderView
                 guard let headerView = UINib(nibName: "PostHeaderView", bundle: nil).instantiate(withOwner: self, options: nil).first as? PostHeaderView else {return}
                 headerView.post = post

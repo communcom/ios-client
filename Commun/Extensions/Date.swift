@@ -6,6 +6,7 @@
 //  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
 //
 import Foundation
+import DateToolsSwift
 
 extension Date {
     static func from(string: String) -> Date {
@@ -34,5 +35,9 @@ extension Date {
         
         // Nothing worked!
         return Date()
+    }
+    
+    static func timeAgo(string: String) -> String {
+        return Date.from(string: string).shortTimeAgoSinceNow + " " + "ago".localized()
     }
 }

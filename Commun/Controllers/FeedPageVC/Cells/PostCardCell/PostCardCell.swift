@@ -9,7 +9,6 @@
 import UIKit
 import CyberSwift
 import SDWebImage
-import DateToolsSwift
 
 protocol PostCardCellDelegate {
     // Делагат еще буду дорабатывать по мере работы над информацией.
@@ -86,7 +85,7 @@ extension PostCardCell {
         }
         
         self.titleLabel.text = post.content.title
-        self.timeAgoLabel.text = Date.from(string: post.meta.time).shortTimeAgoSinceNow + " " + "ago".localized()
+        self.timeAgoLabel.text = Date.timeAgo(string: post.meta.time)
         
         self.authorNameLabel.text = "by".localized() + " " + (post.author?.username ?? post.author?.userId ?? "")
         
