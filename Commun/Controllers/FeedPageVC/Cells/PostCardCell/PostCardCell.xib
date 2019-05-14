@@ -17,18 +17,45 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="228" id="KGk-i7-Jjw" customClass="PostCardCell" customModule="Commun" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="228"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="442" id="KGk-i7-Jjw" customClass="PostCardCell" customModule="Commun" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="442"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="227.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="441.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yxa-RM-ecb" userLabel="Background View">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="227.5"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="441.5"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5vT-Zh-8Yc">
+                                <rect key="frame" x="0.0" y="126" width="320" height="216.5"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="UVz-za-s49">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="204.5"/>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="UVz-za-s49" firstAttribute="leading" secondItem="5vT-Zh-8Yc" secondAttribute="leading" id="AOS-eN-kMo"/>
+                                    <constraint firstAttribute="trailing" secondItem="UVz-za-s49" secondAttribute="trailing" id="Bfw-TC-jBE"/>
+                                    <constraint firstItem="UVz-za-s49" firstAttribute="top" secondItem="5vT-Zh-8Yc" secondAttribute="top" id="KlW-w3-AXe"/>
+                                    <constraint firstAttribute="height" constant="216.5" id="YjY-cR-8HU"/>
+                                    <constraint firstAttribute="bottom" secondItem="UVz-za-s49" secondAttribute="bottom" constant="12" id="oZo-Hb-wyJ"/>
+                                </constraints>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sergey" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C9N-L8-TzR">
+                                <rect key="frame" x="117" y="38" width="43" height="16"/>
+                                <accessibility key="accessibilityConfiguration" identifier="PostCardCellSubtitleLabel" label="PostCardCellSubtitleLabel"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                <color key="textColor" red="0.60784313729999995" green="0.62352941179999999" blue="0.63529411759999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <accessibility key="accessibilityConfiguration" identifier="PostCardCellBackgroundView" label="PostCardCellBackgroundView"/>
                         <constraints>
+                            <constraint firstAttribute="trailing" secondItem="5vT-Zh-8Yc" secondAttribute="trailing" id="1F8-WB-Tgs"/>
+                            <constraint firstItem="5vT-Zh-8Yc" firstAttribute="leading" secondItem="yxa-RM-ecb" secondAttribute="leading" id="M9Y-h3-NwN"/>
                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="227.5" id="Nnh-ZH-BQq"/>
                         </constraints>
                     </view>
@@ -48,12 +75,12 @@
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ICX-s9-6dm">
                         <rect key="frame" x="72" y="18" width="176" height="18"/>
                         <accessibility key="accessibilityConfiguration" identifier="PostCardCellTitleLabel" label="PostCardCellTitleLabel"/>
-                        <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
+                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2By-LQ-DfR">
-                        <rect key="frame" x="72" y="38" width="47" height="16"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="4h ago" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2By-LQ-DfR">
+                        <rect key="frame" x="72" y="38" width="43" height="16"/>
                         <accessibility key="accessibilityConfiguration" identifier="PostCardCellSubtitleLabel" label="PostCardCellSubtitleLabel"/>
                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                         <color key="textColor" red="0.60784313725490191" green="0.62352941176470589" blue="0.63529411764705879" alpha="1" colorSpace="calibratedRGB"/>
@@ -74,16 +101,12 @@
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t1b-fE-pfp">
                         <rect key="frame" x="16" y="80" width="288" height="20.5"/>
                         <accessibility key="accessibilityConfiguration" identifier="PostCardCellMainTextLabel" label="PostCardCellMainTextLabel"/>
-                        <constraints>
-                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="20.5" id="D2P-en-JzA"/>
-                            <constraint firstAttribute="height" relation="lessThanOrEqual" constant="65" id="QWw-VP-Zbh"/>
-                        </constraints>
-                        <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="17"/>
+                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Group 101.1" translatesAutoresizingMaskIntoConstraints="NO" id="iSB-ET-CHf">
-                        <rect key="frame" x="16" y="128.5" width="16" height="16"/>
+                        <rect key="frame" x="16" y="342.5" width="16" height="16"/>
                         <accessibility key="accessibilityConfiguration" identifier="PostCardCellGroupImageView" label="PostCardCellGroupImageView"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="16" id="Opw-kY-GSE"/>
@@ -91,14 +114,14 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kiT-nP-6oC">
-                        <rect key="frame" x="40" y="128.5" width="8.5" height="16"/>
+                        <rect key="frame" x="40" y="342.5" width="8.5" height="16"/>
                         <accessibility key="accessibilityConfiguration" identifier="PostCardCellLikeCountLabel" label="PostCardCellLikeCountLabel"/>
                         <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="13"/>
                         <color key="textColor" red="0.41568627450980389" green="0.50196078431372548" blue="0.96078431372549022" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0 Shares" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jus-YZ-IbU">
-                        <rect key="frame" x="244" y="128.5" width="60" height="16"/>
+                        <rect key="frame" x="244" y="342.5" width="60" height="16"/>
                         <accessibility key="accessibilityConfiguration" identifier="PostCardCellSharesCountLabel" label="PostCardCellSharesCountLabel"/>
                         <constraints>
                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="60" id="7Xy-H1-giP"/>
@@ -108,7 +131,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0 Comments" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wEL-E2-SmX">
-                        <rect key="frame" x="142" y="128.5" width="78" height="16"/>
+                        <rect key="frame" x="142" y="342.5" width="78" height="16"/>
                         <accessibility key="accessibilityConfiguration" identifier="PostCardCellCommentsCountLabel" label="PostCardCellCommentsCountLabel"/>
                         <constraints>
                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="60" id="PgY-NI-pc4"/>
@@ -118,7 +141,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0DU-Io-mHz">
-                        <rect key="frame" x="16" y="166.5" width="36" height="36"/>
+                        <rect key="frame" x="16" y="380.5" width="36" height="36"/>
                         <accessibility key="accessibilityConfiguration" identifier="PostCardCellUpvoteButton" label="PostCardCellUpvoteButton"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="36" id="IED-oe-5bZ"/>
@@ -130,7 +153,7 @@
                         </connections>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fMs-g5-fNp" userLabel="Unvote Button">
-                        <rect key="frame" x="64" y="166.5" width="36" height="36"/>
+                        <rect key="frame" x="64" y="380.5" width="36" height="36"/>
                         <accessibility key="accessibilityConfiguration" identifier="PostCardCellUnvoteButton" label="PostCardCellUnvoteButton"/>
                         <state key="normal" image="Down"/>
                         <connections>
@@ -138,7 +161,7 @@
                         </connections>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EQe-sX-b19" userLabel="Share Button">
-                        <rect key="frame" x="268" y="166.5" width="36" height="36"/>
+                        <rect key="frame" x="268" y="380.5" width="36" height="36"/>
                         <accessibility key="accessibilityConfiguration" identifier="PostCardCellShareButton" label="PostCardCellShareButton"/>
                         <state key="normal" image="share"/>
                         <connections>
@@ -146,7 +169,7 @@
                         </connections>
                     </button>
                     <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Add a comment" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="LYz-EB-ZsG" userLabel="Add Comment Text Field">
-                        <rect key="frame" x="112" y="169.5" width="144" height="30"/>
+                        <rect key="frame" x="112" y="383.5" width="144" height="30"/>
                         <color key="backgroundColor" red="0.95294117647058818" green="0.96078431372549022" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
                         <accessibility key="accessibilityConfiguration" identifier="PostCardCellAddCommentTextField" label="PostCardCellAddCommentTextField"/>
                         <nil key="textColor"/>
@@ -159,7 +182,7 @@
                         </userDefinedRuntimeAttributes>
                     </textField>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ahx-nL-77K">
-                        <rect key="frame" x="0.0" y="219.5" width="320" height="8"/>
+                        <rect key="frame" x="0.0" y="433.5" width="320" height="8"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="8" id="5hA-zd-wRe"/>
@@ -171,21 +194,23 @@
                     <constraint firstItem="kiT-nP-6oC" firstAttribute="centerY" secondItem="iSB-ET-CHf" secondAttribute="centerY" id="1iQ-N1-Ngl"/>
                     <constraint firstItem="Ycg-ed-cff" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="14" id="2dg-wI-93b"/>
                     <constraint firstItem="t1b-fE-pfp" firstAttribute="top" secondItem="Ycg-ed-cff" secondAttribute="bottom" constant="26" id="3MW-mH-dGS"/>
-                    <constraint firstItem="iSB-ET-CHf" firstAttribute="top" secondItem="t1b-fE-pfp" secondAttribute="bottom" constant="28" id="6Sw-BB-FZ0"/>
                     <constraint firstItem="fMs-g5-fNp" firstAttribute="centerY" secondItem="0DU-Io-mHz" secondAttribute="centerY" id="7Qp-pR-26H"/>
                     <constraint firstItem="EQe-sX-b19" firstAttribute="width" secondItem="fMs-g5-fNp" secondAttribute="width" id="8dz-T5-8yM"/>
+                    <constraint firstItem="C9N-L8-TzR" firstAttribute="centerY" secondItem="2By-LQ-DfR" secondAttribute="centerY" id="A0n-8X-So2"/>
                     <constraint firstItem="LYz-EB-ZsG" firstAttribute="leading" secondItem="fMs-g5-fNp" secondAttribute="trailing" constant="12" id="AMh-MH-Wb7"/>
                     <constraint firstItem="0DU-Io-mHz" firstAttribute="leading" secondItem="iSB-ET-CHf" secondAttribute="leading" id="AVZ-pr-nio"/>
                     <constraint firstItem="Jus-YZ-IbU" firstAttribute="centerY" secondItem="iSB-ET-CHf" secondAttribute="centerY" id="AhL-hZ-9qQ"/>
                     <constraint firstAttribute="trailing" secondItem="Jus-YZ-IbU" secondAttribute="trailing" constant="16" id="CKf-U0-IX8"/>
                     <constraint firstItem="ICX-s9-6dm" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="18" id="CnC-L4-iMC"/>
                     <constraint firstItem="ApL-HH-Dm0" firstAttribute="centerY" secondItem="Ycg-ed-cff" secondAttribute="centerY" id="DgX-ca-iTF"/>
+                    <constraint firstItem="5vT-Zh-8Yc" firstAttribute="top" secondItem="t1b-fE-pfp" secondAttribute="bottom" constant="25.5" id="DpW-62-cep"/>
                     <constraint firstAttribute="trailing" secondItem="ApL-HH-Dm0" secondAttribute="trailing" id="I1o-SO-8gx"/>
                     <constraint firstAttribute="bottom" secondItem="ahx-nL-77K" secondAttribute="bottom" id="IAY-X4-2mD"/>
                     <constraint firstItem="yxa-RM-ecb" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="IEI-Io-dxQ"/>
                     <constraint firstItem="EQe-sX-b19" firstAttribute="centerY" secondItem="fMs-g5-fNp" secondAttribute="centerY" id="Iuj-tS-Fic"/>
                     <constraint firstItem="Jus-YZ-IbU" firstAttribute="leading" secondItem="wEL-E2-SmX" secondAttribute="trailing" constant="24" id="JeN-WW-pOI"/>
                     <constraint firstItem="ICX-s9-6dm" firstAttribute="leading" secondItem="Ycg-ed-cff" secondAttribute="trailing" constant="16" id="KAL-Tj-Bvy"/>
+                    <constraint firstItem="C9N-L8-TzR" firstAttribute="leading" secondItem="2By-LQ-DfR" secondAttribute="trailing" constant="2" id="Kih-fa-gsI"/>
                     <constraint firstItem="2By-LQ-DfR" firstAttribute="leading" secondItem="ICX-s9-6dm" secondAttribute="leading" id="LS9-cK-Nvi"/>
                     <constraint firstItem="2By-LQ-DfR" firstAttribute="top" secondItem="ICX-s9-6dm" secondAttribute="bottom" constant="2" id="Llc-XJ-kQ5"/>
                     <constraint firstItem="EQe-sX-b19" firstAttribute="height" secondItem="fMs-g5-fNp" secondAttribute="height" id="NKT-Nr-I3B"/>
@@ -198,6 +223,7 @@
                     <constraint firstItem="yxa-RM-ecb" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="fxG-s0-cKX"/>
                     <constraint firstItem="Ycg-ed-cff" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="hWl-fJ-xYQ"/>
                     <constraint firstAttribute="bottom" secondItem="yxa-RM-ecb" secondAttribute="bottom" id="ifT-ZR-PSe"/>
+                    <constraint firstItem="iSB-ET-CHf" firstAttribute="top" secondItem="5vT-Zh-8Yc" secondAttribute="bottom" id="kBZ-Cb-joH"/>
                     <constraint firstItem="fMs-g5-fNp" firstAttribute="width" secondItem="0DU-Io-mHz" secondAttribute="width" id="mZk-zK-jgT"/>
                     <constraint firstItem="EQe-sX-b19" firstAttribute="leading" secondItem="LYz-EB-ZsG" secondAttribute="trailing" constant="12" id="nCU-42-b1b"/>
                     <constraint firstAttribute="trailing" secondItem="yxa-RM-ecb" secondAttribute="trailing" id="p4D-td-H4Q"/>
@@ -213,17 +239,20 @@
             <accessibility key="accessibilityConfiguration" identifier="PostCardCell" label="PostCardCell"/>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="authorNameLabel" destination="C9N-L8-TzR" id="Qn4-tN-Kpn"/>
                 <outlet property="avatarImageView" destination="Ycg-ed-cff" id="uy7-KF-FlE"/>
                 <outlet property="commentTextField" destination="LYz-EB-ZsG" id="db4-6T-iXL"/>
+                <outlet property="embededImageView" destination="UVz-za-s49" id="bIr-c2-jRn"/>
+                <outlet property="embededViewHeightConstraint" destination="YjY-cR-8HU" id="jVf-3t-fYx"/>
                 <outlet property="likeCounterLabel" destination="kiT-nP-6oC" id="RCs-fD-VZd"/>
                 <outlet property="mainTextLabel" destination="t1b-fE-pfp" id="i1h-MC-N8n"/>
                 <outlet property="numberOfCommentsLabel" destination="wEL-E2-SmX" id="bli-rq-VW7"/>
                 <outlet property="numberOfSharesLabel" destination="Jus-YZ-IbU" id="FNN-rn-qbi"/>
-                <outlet property="subtitleLabel" destination="2By-LQ-DfR" id="ClU-Ka-bJI"/>
+                <outlet property="timeAgoLabel" destination="2By-LQ-DfR" id="rDT-ag-YtM"/>
                 <outlet property="titleLabel" destination="ICX-s9-6dm" id="r39-If-Xm3"/>
                 <outlet property="upvoteButton" destination="0DU-Io-mHz" id="4ZN-hG-BCa"/>
             </connections>
-            <point key="canvasLocation" x="137.59999999999999" y="237.48125937031486"/>
+            <point key="canvasLocation" x="137.59999999999999" y="333.7331334332834"/>
         </tableViewCell>
     </objects>
     <resources>
