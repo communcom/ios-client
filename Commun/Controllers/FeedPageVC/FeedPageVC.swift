@@ -42,12 +42,25 @@ class FeedPageVC: UIViewController {
         
         tableView.tableFooterView = UIView()
         
+        // Segmentio update
         segmentioView.setup(content: [SegmentioItem(title: "All", image: nil), SegmentioItem(title: "My Feed", image: nil)],
                             style: SegmentioStyle.onlyLabel,
                             options: SegmentioOptions.default)
-        
+        segmentioView.valueDidChange = {_, index in
+            self.viewModel.feedTypeMode.accept(index == 0 ? .community : .byUser)
+            
+            // if feed is community then sort by popular
+            if index == 0 {
+                self.viewModel.feedType.accept(.popular)
+            }
+            
+            // if feed is my feed, then sort by time
+            if index == 1 {
+                self.viewModel.feedType.accept(.time)
+            }
+        }
+        // fire first filter
         segmentioView.selectedSegmentioIndex = 0
-        
         // bind ui
         bindUI()
     }
