@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -159,6 +159,38 @@
 		57FB17A2224C093A00563BF7 /* SignInVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FB17A1224C093A00563BF7 /* SignInVC.swift */; };
 		57FB17A4224C15C400563BF7 /* SignInViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FB17A3224C15C400563BF7 /* SignInViewModel.swift */; };
 		7472E4613CDA904305E42A4F /* Pods_Commun.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F0772CC6D820AD11B1FF48A /* Pods_Commun.framework */; };
+		B17A970C228002440081B8E0 /* SignUpRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17A970B228002440081B8E0 /* SignUpRouter.swift */; };
+		B1EA02D32289734800835244 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B1EA02D52289734800835244 /* Localizable.strings */; };
+		B1EA02D72289882300835244 /* SF-Pro-Display-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = 57F9CA9C225B3AA400AC9ACA /* SF-Pro-Display-Black.otf */; };
+		B1EA02D82289882A00835244 /* SF-Pro-Display-BlackItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 57F9CA8E225B3A9400AC9ACA /* SF-Pro-Display-BlackItalic.otf */; };
+		B1EA02D92289882A00835244 /* SF-Pro-Display-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 57F9CA95225B3A9A00AC9ACA /* SF-Pro-Display-Bold.otf */; };
+		B1EA02DA2289882A00835244 /* SF-Pro-Display-BoldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 57F9CA91225B3A9700AC9ACA /* SF-Pro-Display-BoldItalic.otf */; };
+		B1EA02DB2289882A00835244 /* SF-Pro-Display-Heavy.otf in Resources */ = {isa = PBXBuildFile; fileRef = 57F9CAAA225B3AB100AC9ACA /* SF-Pro-Display-Heavy.otf */; };
+		B1EA02DC2289882A00835244 /* SF-Pro-Display-HeavyItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 57F9CA9D225B3AA500AC9ACA /* SF-Pro-Display-HeavyItalic.otf */; };
+		B1EA02DD2289882A00835244 /* SF-Pro-Display-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 57F9CAA0225B3AA900AC9ACA /* SF-Pro-Display-Light.otf */; };
+		B1EA02DE2289882A00835244 /* SF-Pro-Display-LightItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 57F9CA97225B3A9C00AC9ACA /* SF-Pro-Display-LightItalic.otf */; };
+		B1EA02DF2289882A00835244 /* SF-Pro-Display-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 57F9CA9E225B3AA800AC9ACA /* SF-Pro-Display-Medium.otf */; };
+		B1EA02E02289882A00835244 /* SF-Pro-Display-MediumItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 57F9CA90225B3A9500AC9ACA /* SF-Pro-Display-MediumItalic.otf */; };
+		B1EA02E12289882A00835244 /* SF-Pro-Display-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 57F9CA98225B3A9E00AC9ACA /* SF-Pro-Display-Regular.otf */; };
+		B1EA02E22289882A00835244 /* SF-Pro-Display-RegularItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 57F9CA8F225B3A9400AC9ACA /* SF-Pro-Display-RegularItalic.otf */; };
+		B1EA02E32289882A00835244 /* SF-Pro-Display-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 57F9CA9A225B3AA100AC9ACA /* SF-Pro-Display-Semibold.otf */; };
+		B1EA02E42289882A00835244 /* SF-Pro-Display-SemiboldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 57F9CA96225B3A9B00AC9ACA /* SF-Pro-Display-SemiboldItalic.otf */; };
+		B1EA02E52289882A00835244 /* SF-Pro-Display-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 57F9CA8D225B3A9200AC9ACA /* SF-Pro-Display-Thin.otf */; };
+		B1EA02E62289882A00835244 /* SF-Pro-Display-ThinItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 57F9CAA5225B3AAE00AC9ACA /* SF-Pro-Display-ThinItalic.otf */; };
+		B1EA02E72289882A00835244 /* SF-Pro-Display-Ultralight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 57F9CA9B225B3AA100AC9ACA /* SF-Pro-Display-Ultralight.otf */; };
+		B1EA02E82289882A00835244 /* SF-Pro-Display-UltralightItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 57F9CA9F225B3AA900AC9ACA /* SF-Pro-Display-UltralightItalic.otf */; };
+		B1EA02E92289882A00835244 /* SF-Pro-Text-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 57F9CAA7225B3AAF00AC9ACA /* SF-Pro-Text-Bold.otf */; };
+		B1EA02EA2289882A00835244 /* SF-Pro-Text-BoldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 57F9CAA2225B3AAC00AC9ACA /* SF-Pro-Text-BoldItalic.otf */; };
+		B1EA02EB2289882A00835244 /* SF-Pro-Text-Heavy.otf in Resources */ = {isa = PBXBuildFile; fileRef = 57F9CAA8225B3AB000AC9ACA /* SF-Pro-Text-Heavy.otf */; };
+		B1EA02EC2289882A00835244 /* SF-Pro-Text-HeavyItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 57F9CA99225B3A9F00AC9ACA /* SF-Pro-Text-HeavyItalic.otf */; };
+		B1EA02ED2289882A00835244 /* SF-Pro-Text-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 57F9CAA4225B3AAD00AC9ACA /* SF-Pro-Text-Light.otf */; };
+		B1EA02EE2289882A00835244 /* SF-Pro-Text-LightItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 57F9CAA9225B3AB100AC9ACA /* SF-Pro-Text-LightItalic.otf */; };
+		B1EA02EF2289882A00835244 /* SF-Pro-Text-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 57F9CA92225B3A9900AC9ACA /* SF-Pro-Text-Medium.otf */; };
+		B1EA02F02289882A00835244 /* SF-Pro-Text-MediumItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 57F9CAA3225B3AAD00AC9ACA /* SF-Pro-Text-MediumItalic.otf */; };
+		B1EA02F22289882A00835244 /* SF-Pro-Text-RegularItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 57F9CAA1225B3AAA00AC9ACA /* SF-Pro-Text-RegularItalic.otf */; };
+		B1EA02F32289882A00835244 /* SF-Pro-Text-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 57F9CA94225B3A9900AC9ACA /* SF-Pro-Text-Semibold.otf */; };
+		B1EA02F42289882A00835244 /* SF-Pro-Text-SemiboldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 57F9CAA6225B3AAF00AC9ACA /* SF-Pro-Text-SemiboldItalic.otf */; };
+		B1EA0317228A965200835244 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EA0316228A965200835244 /* MainViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -352,6 +384,10 @@
 		57FB17A3224C15C400563BF7 /* SignInViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewModel.swift; sourceTree = "<group>"; };
 		8F30C81783ED457B84BCC641 /* Pods-Commun.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Commun.release.xcconfig"; path = "Pods/Target Support Files/Pods-Commun/Pods-Commun.release.xcconfig"; sourceTree = "<group>"; };
 		AE43B2305FC441D96462E0AB /* Pods-Commun.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Commun.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Commun/Pods-Commun.debug.xcconfig"; sourceTree = "<group>"; };
+		B17A970B228002440081B8E0 /* SignUpRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpRouter.swift; sourceTree = "<group>"; };
+		B1EA02D42289734800835244 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		B1EA02D62289734E00835244 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
+		B1EA0316228A965200835244 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -517,6 +553,7 @@
 			children = (
 				571B14F3223A935C00630C8F /* AppDelegate.swift */,
 				57840A182240DAFF00338FD5 /* Assembly */,
+				B17A970A228002140081B8E0 /* Common */,
 				57840A192240DB1200338FD5 /* Services */,
 				578409EA223FAC0000338FD5 /* Vendor */,
 				576DC91F223E42B200EDED41 /* Extensions */,
@@ -528,6 +565,7 @@
 				571B1502223A935D00630C8F /* Info.plist */,
 				571B14FA223A935C00630C8F /* Commun.xcdatamodeld */,
 				57BB5CA922550B4300F0B88B /* Commun-Bridging-Header.h */,
+				B1EA02D52289734800835244 /* Localizable.strings */,
 			);
 			path = Commun;
 			sourceTree = "<group>";
@@ -535,22 +573,23 @@
 		571B1508223A937200630C8F /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				57A1CA612270FC3300E2A1E3 /* LanguageVC */,
-				57E5159A2270E5C700A6F6DB /* SettingsVC */,
-				5787C0C92265151A00568CEC /* LoadKeysVC */,
-				5787C0C222650F8A00568CEC /* SetUserVC */,
 				578B94D82263CBC300FB5BC6 /* ConfirmUserVC */,
-				575AECAF22606F5200A7EC2D /* SelectCountryVC */,
-				5797E0F6225DDA260026C4D5 /* SignUpVC */,
 				57DE5BDA2252086C008566B9 /* EditorPageVC */,
+				576DC917223E41CA00EDED41 /* FeedPageVC */,
+				57A1CA612270FC3300E2A1E3 /* LanguageVC */,
+				5787C0C92265151A00568CEC /* LoadKeysVC */,
+				B1EA0315228A963200835244 /* MainVC */,
+				3B2F225322689252006B589E /* NotificationsPageVC */,
+				5725173A2243E4510033125C /* PostPageVC */,
+				3BAF69C122675ADB0055CCEB /* ProfilePageVC */,
+				575AECAF22606F5200A7EC2D /* SelectCountryVC */,
+				57E5159A2270E5C700A6F6DB /* SettingsVC */,
+				5787C0C222650F8A00568CEC /* SetUserVC */,
 				57FB179E224C077300563BF7 /* SignInVC */,
+				5797E0F6225DDA260026C4D5 /* SignUpVC */,
+				571B1509223A94CD00630C8F /* TabBarController */,
 				57B6FC28224A9E9900BCFDDA /* WelcomeItemVC */,
 				57B6FC23224A9E4900BCFDDA /* WelcomeScreenVC */,
-				5725173A2243E4510033125C /* PostPageVC */,
-				576DC917223E41CA00EDED41 /* FeedPageVC */,
-				3BAF69C122675ADB0055CCEB /* ProfilePageVC */,
-				3B2F225322689252006B589E /* NotificationsPageVC */,
-				571B1509223A94CD00630C8F /* TabBarController */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -824,9 +863,9 @@
 		5787C0C222650F8A00568CEC /* SetUserVC */ = {
 			isa = PBXGroup;
 			children = (
-				5787C0C522650FA500568CEC /* SetUserViewModel.swift */,
-				5787C0C322650F9D00568CEC /* SetUserVC.swift */,
 				5787C0C722650FC200568CEC /* SetUserVC.storyboard */,
+				5787C0C322650F9D00568CEC /* SetUserVC.swift */,
+				5787C0C522650FA500568CEC /* SetUserViewModel.swift */,
 			);
 			path = SetUserVC;
 			sourceTree = "<group>";
@@ -1057,6 +1096,22 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		B17A970A228002140081B8E0 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				B17A970B228002440081B8E0 /* SignUpRouter.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		B1EA0315228A963200835244 /* MainVC */ = {
+			isa = PBXGroup;
+			children = (
+				B1EA0316228A965200835244 /* MainViewController.swift */,
+			);
+			path = MainVC;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1123,33 +1178,59 @@
 			files = (
 				575945A222607F1F004041C9 /* CountryCell.xib in Resources */,
 				57E515AB2270EBB900A6F6DB /* NotificationSettingCell.xib in Resources */,
+				B1EA02E42289882A00835244 /* SF-Pro-Display-SemiboldItalic.otf in Resources */,
 				574095872247AAB100E40E51 /* WriteCommentCell.xib in Resources */,
 				574095802247768C00E40E51 /* CommentCell.xib in Resources */,
 				5721AE46226E556500133BFF /* MediaCommentCell.xib in Resources */,
 				57FB179C224BFBD700563BF7 /* README.md in Resources */,
+				B1EA02E32289882A00835244 /* SF-Pro-Display-Semibold.otf in Resources */,
+				B1EA02DB2289882A00835244 /* SF-Pro-Display-Heavy.otf in Resources */,
+				B1EA02EF2289882A00835244 /* SF-Pro-Text-Medium.otf in Resources */,
+				B1EA02F22289882A00835244 /* SF-Pro-Text-RegularItalic.otf in Resources */,
 				575AECB522606FA600A7EC2D /* SelectCountryVC.storyboard in Resources */,
+				B1EA02EA2289882A00835244 /* SF-Pro-Text-BoldItalic.otf in Resources */,
+				B1EA02E22289882A00835244 /* SF-Pro-Display-RegularItalic.otf in Resources */,
+				57727E6A226E4EAB000C9F1F /* HtmlCell.xib in Resources */,
+				B1EA02E72289882A00835244 /* SF-Pro-Display-Ultralight.otf in Resources */,
 				3B2F226F226892C5006B589E /* NotificationsPageVC.storyboard in Resources */,
 				572F81AB223C164C0007F2F9 /* SF-Pro-Text-Regular.otf in Resources */,
 				57B6FC25224A9E5600BCFDDA /* WelcomeScreenVC.storyboard in Resources */,
 				57E515B22270F4EA00A6F6DB /* PasswordCell.xib in Resources */,
 				57840A0C223FAC1B00338FD5 /* BadgeWithCounterViewBigSized.xib in Resources */,
+				B1EA02D32289734800835244 /* Localizable.strings in Resources */,
+				B1EA02D92289882A00835244 /* SF-Pro-Display-Bold.otf in Resources */,
 				5700611B2253CA96007700DA /* EditorContentCell.xib in Resources */,
+				B1EA02ED2289882A00835244 /* SF-Pro-Text-Light.otf in Resources */,
+				B1EA02D82289882A00835244 /* SF-Pro-Display-BlackItalic.otf in Resources */,
 				57DE5BE0225209A0008566B9 /* EditorPageVC.storyboard in Resources */,
 				570061202253CDDF007700DA /* EditorMediaCell.xib in Resources */,
+				B1EA02F42289882A00835244 /* SF-Pro-Text-SemiboldItalic.otf in Resources */,
 				3B2F226A226892C5006B589E /* NotificationCell.xib in Resources */,
 				57DE5BEB2252240E008566B9 /* TitleCell.xib in Resources */,
 				571B1501223A935D00630C8F /* LaunchScreen.storyboard in Resources */,
 				3B197C8B226A33CF008CF10D /* ResponseAPIContentGetFeedResult.json in Resources */,
 				57A1CA652270FCF000E2A1E3 /* LanguageVC.storyboard in Resources */,
+				B1EA02DC2289882A00835244 /* SF-Pro-Display-HeavyItalic.otf in Resources */,
+				5721AE3F226E50FD00133BFF /* MediaHtmlCell.xib in Resources */,
 				57DE5BE622522060008566B9 /* ComunityCell.xib in Resources */,
 				5787C0C822650FC200568CEC /* SetUserVC.storyboard in Resources */,
 				57B6FC2A224A9EAA00BCFDDA /* WelcomeItemVC.storyboard in Resources */,
 				57FB17A0224C092700563BF7 /* SignInVC.storyboard in Resources */,
 				3B197C88226A33CF008CF10D /* ResponseAPIContentGetProfileResult.json in Resources */,
+				B1EA02F32289882A00835244 /* SF-Pro-Text-Semibold.otf in Resources */,
+				B1EA02E92289882A00835244 /* SF-Pro-Text-Bold.otf in Resources */,
+				B1EA02E62289882A00835244 /* SF-Pro-Display-ThinItalic.otf in Resources */,
+				B1EA02F02289882A00835244 /* SF-Pro-Text-MediumItalic.otf in Resources */,
 				57E515A12270E66900A6F6DB /* SettingsVC.storyboard in Resources */,
 				3B02CD2A2289B2620078BB52 /* PostHeaderView.xib in Resources */,
 				572F81A8223C164C0007F2F9 /* PostCardCell.xib in Resources */,
 				5797E0FA225DDA490026C4D5 /* SignUpVC.storyboard in Resources */,
+				B1EA02DE2289882A00835244 /* SF-Pro-Display-LightItalic.otf in Resources */,
+				572F81A8223C164C0007F2F9 /* PostCardCell.xib in Resources */,
+				5797E0FA225DDA490026C4D5 /* SignUpVC.storyboard in Resources */,
+				57C33A4C2244DB1E00073FAE /* TextContentCell.xib in Resources */,
+				B1EA02EE2289882A00835244 /* SF-Pro-Text-LightItalic.otf in Resources */,
+				B1EA02E02289882A00835244 /* SF-Pro-Display-MediumItalic.otf in Resources */,
 				3BAF69C522675B540055CCEB /* ProfilePageVC.storyboard in Resources */,
 				57FB179B224BFBD700563BF7 /* LICENSE in Resources */,
 				57840A0D223FAC1B00338FD5 /* BadgeWithCounterViewStandardSized.xib in Resources */,
@@ -1157,10 +1238,20 @@
 				3B515819226DDE8D00108F17 /* EmptyCell.xib in Resources */,
 				3B197C89226A33CF008CF10D /* ResponseAPIContentGetCommentsResult.json in Resources */,
 				57E515A62270EA7900A6F6DB /* GeneralSettingCell.xib in Resources */,
+				B1EA02EC2289882A00835244 /* SF-Pro-Text-HeavyItalic.otf in Resources */,
+				B1EA02E82289882A00835244 /* SF-Pro-Display-UltralightItalic.otf in Resources */,
 				5725173E2243E49C0033125C /* PostPageVC.storyboard in Resources */,
 				576DC91E223E429C00EDED41 /* FeedPageVC.storyboard in Resources */,
+				B1EA02D72289882300835244 /* SF-Pro-Display-Black.otf in Resources */,
+				B1EA02DF2289882A00835244 /* SF-Pro-Display-Medium.otf in Resources */,
 				5787C0CF226515BC00568CEC /* LoadKeysVC.storyboard in Resources */,
+				B1EA02E12289882A00835244 /* SF-Pro-Display-Regular.otf in Resources */,
+				B1EA02DA2289882A00835244 /* SF-Pro-Display-BoldItalic.otf in Resources */,
+				B1EA02E52289882A00835244 /* SF-Pro-Display-Thin.otf in Resources */,
+				57C33A452244D32300073FAE /* VotesCell.xib in Resources */,
 				570061252253D3B3007700DA /* EditorLinkCell.xib in Resources */,
+				B1EA02EB2289882A00835244 /* SF-Pro-Text-Heavy.otf in Resources */,
+				B1EA02DD2289882A00835244 /* SF-Pro-Display-Light.otf in Resources */,
 				57E515B72270F7B200A6F6DB /* ChangePasswordCell.xib in Resources */,
 				571B14F9223A935C00630C8F /* Main.storyboard in Resources */,
 				578B94DC2263CBE300FB5BC6 /* ConfirmUserVC.storyboard in Resources */,
@@ -1322,6 +1413,7 @@
 				57DE5BDE225208A4008566B9 /* EditorPageViewModel.swift in Sources */,
 				3B2F227322689334006B589E /* NSMutableAttributedString.swift in Sources */,
 				3B2F226B226892C5006B589E /* NotificationsPageViewModel.swift in Sources */,
+				B17A970C228002440081B8E0 /* SignUpRouter.swift in Sources */,
 				5787C0C422650F9D00568CEC /* SetUserVC.swift in Sources */,
 				5721E87122650AC0003BE04B /* StringExtension.swift in Sources */,
 				3B0E9C732270785E002AB1C2 /* PhotoLibraryCell.swift in Sources */,
@@ -1386,6 +1478,7 @@
 				3BAF69D1226792C60055CCEB /* ProfilePageVC+Rx.swift in Sources */,
 				57FB17A4224C15C400563BF7 /* SignInViewModel.swift in Sources */,
 				57840A02223FAC1B00338FD5 /* SegmentioCell.swift in Sources */,
+				B1EA0317228A965200835244 /* MainViewController.swift in Sources */,
 				3B197C8A226A33CF008CF10D /* Decodable+MockObjects.swift in Sources */,
 				578B94DA2263CBD800FB5BC6 /* ConfirmUserVC.swift in Sources */,
 				57840A09223FAC1B00338FD5 /* SegmentioOptions.swift in Sources */,
@@ -1436,6 +1529,15 @@
 				576DC916223E406F00EDED41 /* ru */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		B1EA02D52289734800835244 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B1EA02D42289734800835244 /* en */,
+				B1EA02D62289734E00835244 /* ru */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

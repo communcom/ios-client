@@ -23,37 +23,34 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Ds-uG-24V">
-                                <rect key="frame" x="42" y="732" width="330" height="56"/>
+                            <button clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Ds-uG-24V">
+                                <rect key="frame" x="47" y="726" width="320" height="62"/>
                                 <color key="backgroundColor" red="0.41568627450000001" green="0.50196078430000002" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="56" id="bah-tZ-hkV"/>
-                                </constraints>
+                                <accessibility key="accessibilityConfiguration" identifier="LoadKeysDownloadButton" label="LoadKeysDownloadButton"/>
                                 <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="17"/>
                                 <state key="normal" title="Download">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                        <integer key="value" value="8"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
                             </button>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="KeysImage" translatesAutoresizingMaskIntoConstraints="NO" id="7gm-kh-Lcv">
-                                <rect key="frame" x="87" y="218" width="240" height="240"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="image-download-keys" translatesAutoresizingMaskIntoConstraints="NO" id="7gm-kh-Lcv" userLabel="Cover Image View">
+                                <rect key="frame" x="74.5" y="218" width="265" height="265"/>
+                                <accessibility key="accessibilityConfiguration" identifier="LoadKeysCoverImageView" label="LoadKeysCoverImageView">
+                                    <bool key="isElement" value="YES"/>
+                                </accessibility>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="240" id="4l4-ab-KkU"/>
-                                    <constraint firstAttribute="width" constant="240" id="9DE-bg-L4y"/>
+                                    <constraint firstAttribute="width" secondItem="7gm-kh-Lcv" secondAttribute="height" multiplier="1:1" id="vpb-oQ-5C7"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Master key has been generated" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b1F-hH-fOd">
-                                <rect key="frame" x="81" y="490" width="252" height="20"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Master key has been generated" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b1F-hH-fOd" userLabel="Text Label 1">
+                                <rect key="frame" x="81" y="515" width="252" height="20"/>
+                                <accessibility key="accessibilityConfiguration" identifier="LoadKeysMasterKeyLabel" label="LoadKeysMasterKeyLabel"/>
                                 <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You need Master Key for Log in. Please, download it." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Rr-2M-ki7">
-                                <rect key="frame" x="86" y="526" width="242" height="41"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You need Master Key for Log in. Please, download it." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Rr-2M-ki7" userLabel="Text Label 2">
+                                <rect key="frame" x="86" y="551" width="242" height="41"/>
+                                <accessibility key="accessibilityConfiguration" identifier="LoadKeysYouNeedLabel" label="LoadKeysYouNeedLabel"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.60784313725490191" green="0.62352941176470589" blue="0.63529411764705879" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -61,20 +58,42 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="gFg-Y2-v23" firstAttribute="bottom" secondItem="2Ds-uG-24V" secondAttribute="bottom" constant="74" id="0rY-kN-hwY"/>
-                            <constraint firstItem="b1F-hH-fOd" firstAttribute="top" secondItem="7gm-kh-Lcv" secondAttribute="bottom" constant="32" id="1hV-Hl-gse"/>
-                            <constraint firstItem="2Ds-uG-24V" firstAttribute="leading" secondItem="gFg-Y2-v23" secondAttribute="leading" constant="42" id="2N4-9g-pfK"/>
+                            <constraint firstItem="gFg-Y2-v23" firstAttribute="bottom" secondItem="2Ds-uG-24V" secondAttribute="bottom" constant="74" identifier="LoadKeysDownloadButtonBottomConstraint" id="0rY-kN-hwY"/>
+                            <constraint firstItem="2Ds-uG-24V" firstAttribute="width" secondItem="JWw-Fq-mKc" secondAttribute="width" multiplier="290:375" identifier="LoadKeysDownloadButtonWidthConstraint" id="18K-to-rom"/>
+                            <constraint firstItem="b1F-hH-fOd" firstAttribute="top" secondItem="7gm-kh-Lcv" secondAttribute="bottom" constant="32" identifier="LoadKeysTextLabel1TopConstraint" id="1hV-Hl-gse"/>
                             <constraint firstItem="5Rr-2M-ki7" firstAttribute="centerX" secondItem="gFg-Y2-v23" secondAttribute="centerX" id="3le-gZ-iUS"/>
+                            <constraint firstItem="2Ds-uG-24V" firstAttribute="centerX" secondItem="JWw-Fq-mKc" secondAttribute="centerX" id="625-Va-MQq"/>
+                            <constraint firstItem="7gm-kh-Lcv" firstAttribute="width" secondItem="JWw-Fq-mKc" secondAttribute="width" multiplier="240:375" id="O0w-7m-0TJ"/>
                             <constraint firstItem="7gm-kh-Lcv" firstAttribute="centerX" secondItem="gFg-Y2-v23" secondAttribute="centerX" id="gw7-0e-S3I"/>
-                            <constraint firstItem="gFg-Y2-v23" firstAttribute="trailing" secondItem="2Ds-uG-24V" secondAttribute="trailing" constant="42" id="joW-PQ-mzc"/>
-                            <constraint firstItem="7gm-kh-Lcv" firstAttribute="top" secondItem="gFg-Y2-v23" secondAttribute="top" constant="174" id="sfv-7F-WlO"/>
-                            <constraint firstItem="5Rr-2M-ki7" firstAttribute="top" secondItem="b1F-hH-fOd" secondAttribute="bottom" constant="16" id="vkx-rK-Fjv"/>
+                            <constraint firstItem="7gm-kh-Lcv" firstAttribute="top" secondItem="gFg-Y2-v23" secondAttribute="top" constant="174" identifier="LoadKeysCoverImageViewTopConstraint" id="sfv-7F-WlO"/>
+                            <constraint firstItem="5Rr-2M-ki7" firstAttribute="top" secondItem="b1F-hH-fOd" secondAttribute="bottom" constant="16" identifier="LoadKeysTextLabel2TopConstraint" id="vkx-rK-Fjv"/>
                             <constraint firstItem="b1F-hH-fOd" firstAttribute="centerX" secondItem="gFg-Y2-v23" secondAttribute="centerX" id="xb6-RV-PPj"/>
+                            <constraint firstItem="2Ds-uG-24V" firstAttribute="height" secondItem="JWw-Fq-mKc" secondAttribute="height" multiplier="56:812" identifier="LoadKeysDownloadButtonHeightConstraint" id="z4M-VE-eK0"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="gFg-Y2-v23"/>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="O0w-7m-0TJ"/>
+                                <exclude reference="18K-to-rom"/>
+                                <exclude reference="z4M-VE-eK0"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=regular-widthClass=compact">
+                            <mask key="constraints">
+                                <include reference="O0w-7m-0TJ"/>
+                                <include reference="18K-to-rom"/>
+                                <include reference="z4M-VE-eK0"/>
+                            </mask>
+                        </variation>
                     </view>
                     <connections>
                         <outlet property="downloadKeysButton" destination="2Ds-uG-24V" id="nPj-Aw-5BJ"/>
+                        <outlet property="textLabel1" destination="b1F-hH-fOd" id="TBy-QT-yXp"/>
+                        <outlet property="textLabel2" destination="5Rr-2M-ki7" id="PoW-th-9nG"/>
+                        <outletCollection property="heightsCollection" destination="sfv-7F-WlO" collectionClass="NSMutableArray" id="W5t-Ri-mql"/>
+                        <outletCollection property="heightsCollection" destination="0rY-kN-hwY" collectionClass="NSMutableArray" id="r3B-UZ-UhL"/>
+                        <outletCollection property="heightsCollection" destination="1hV-Hl-gse" collectionClass="NSMutableArray" id="Nd1-sd-reu"/>
+                        <outletCollection property="heightsCollection" destination="vkx-rK-Fjv" collectionClass="NSMutableArray" id="rHc-MA-iL5"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RHb-mF-BAq" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -83,6 +102,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="KeysImage" width="512" height="512"/>
+        <image name="image-download-keys" width="240" height="240"/>
     </resources>
 </document>

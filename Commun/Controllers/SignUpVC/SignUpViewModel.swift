@@ -10,9 +10,10 @@ import Foundation
 import RxSwift
 import RxCocoa
 import PhoneNumberKit
+import CyberSwift
 
 class SignUpViewModel {
-    
+    // MARK: - Properties
     let country = BehaviorRelay<String>(value: "Select country")
     let flagUrl = BehaviorRelay<URL?>(value: nil)
     
@@ -24,6 +25,8 @@ class SignUpViewModel {
     
     let disposeBag = DisposeBag()
     
+    
+    // MARK: - Class Initialization
     init() {
         selectedCountry.filter { country -> Bool in
             return country != nil
@@ -38,10 +41,20 @@ class SignUpViewModel {
         }.bind(to: flagUrl).disposed(by: disposeBag)
     }
     
+    deinit {
+        Logger.log(message: "Success", event: .severe)
+    }
+    
+
+    // MARK: - Class Functions
     func signUp() -> Observable<UInt64> {
         return NetworkService.shared.signUp(withPhone: phone.value).map { result -> UInt64 in
             return result.code
         }
+    }
+
+    func checkLogin() -> Bool {
+        return self.selectedCountry.value != nil
     }
     
     func validatePhoneNumber() -> Bool {
@@ -52,11 +65,11 @@ class SignUpViewModel {
         }
         
         let phoneNumberKit = PhoneNumberKit()
+        
         do {
             let _ = try phoneNumberKit.parse(phone, withRegion: selectedCountry.value?.shortCode ?? "", ignoreType: true)
             return true
-        }
-        catch {
+        } catch {
             return false
         }
     }

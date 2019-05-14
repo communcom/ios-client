@@ -1,0 +1,57 @@
+/* 
+  Localizable.strings
+  Commun
+
+  Created by msm72 on 5/13/19.
+  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+*/
+
+// Labels
+"Hundreds"                                  =   "Hundreds";
+"of thematic"                               =   "of thematic";
+"communities"                               =   "communities";
+"Subscribe to your"                         =   "Subscribe to your";
+"favorite communities"                      =   "favorite communities";
+"Read! upvote!"                             =   "Read! upvote!";
+"comment!"                                  =   "comment!";
+"Verification"                              =   "Verification";
+"Select country"                            =   "Select country";
+"Enter SMS-code"                            =   "Enter SMS-code";
+"Create your username"                      =   "Create your username";
+"Master key has been generated"             =   "Master key has been generated";
+"You need Master Key"                       =   "You need Master Key for Log in.\nPlease, download it.";
+"Welcome,"                                  =   "Welcome,";
+"sign in to continue"                       =   "sign in to continue";
+
+
+// Buttons
+"Sign up"                                   =   "Sign up";
+"Sign in"                                   =   "Sign in";
+"Next"                                      =   "Next";
+"Back"                                      =   "Back";
+"Cancel"                                    =   "Cancel";
+"Close"                                     =   "Close";
+"Done"                                      =   "Done";
+"Download"                                  =   "Download";
+"Resend verification code"                  =   "Resend verification code";
+"Don't have an account?"                    =   "Don't have an account?";
+
+
+// Titles
+"Info"                                      =   "Info";
+"Error"                                     =   "Error";
+
+
+// Placeholders
+"Search Placeholder"                        =   "Search";
+"Select Country Placeholder"                =   "Select country";
+"Phone Number Placeholder"                  =   "Phone number";
+"Username Placeholder"                      =   "Username";
+"Login Placeholder"                         =   "Login";
+"Key Placeholder"                           =   "Key";
+
+
+// Error message
+"Developer error!"                          =   "Developer error!";
+"Wrong phone number"                        =   "Wrong phone number";
+"Enter correct user name"                   =   "Enter correct user name";

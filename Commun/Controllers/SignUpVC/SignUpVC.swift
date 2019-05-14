@@ -7,37 +7,121 @@
 //
 
 import UIKit
-import RxSwift
 import RxCocoa
+import RxSwift
+import CyberSwift
 
 class SignUpVC: UIViewController {
+    // MARK: - Properties
+    let viewModel   =   SignUpViewModel()
+    let disposeBag  =   DisposeBag()
 
-    let viewModel = SignUpViewModel()
+    var router: (NSObjectProtocol & SignUpRoutingLogic)?
+
     
+    // MARK: - IBOutlets
     @IBOutlet weak var countryButton: UIButton!
-    @IBOutlet weak var selectCountryLabel: UILabel!
-    @IBOutlet weak var countryLabel: UILabel!
-    @IBOutlet weak var countryImageView: UIImageView!
-    @IBOutlet weak var phoneNumberTextField: FormTextField!
-    @IBOutlet weak var nextButton: UIButton!
+    
+    @IBOutlet weak var countryImageView: UIImageView! {
+        didSet {
+            self.countryImageView.layer.cornerRadius = 24.0 * Config.heightRatio / 2
+            self.countryImageView.clipsToBounds = true
+        }
+    }
+    
+    @IBOutlet weak var placeholderSelectCountryLabel: UILabel! {
+        didSet {
+            self.placeholderSelectCountryLabel.tune(withText:       "Select Country Placeholder".localized(),
+                                                    hexColors:      darkGrayishBluePickers,
+                                                    font:           UIFont.init(name: "SFProText-Regular", size: 17.0 * Config.heightRatio),
+                                                    alignment:      .left,
+                                                    isMultiLines:   false)
+        }
+    }
+
+    @IBOutlet weak var countryLabel: UILabel! {
+        didSet {
+            self.countryLabel.tune(withText:       "",
+                                   hexColors:      blackWhiteColorPickers,
+                                   font:           UIFont.init(name: "SFProText-Regular", size: 17.0 * Config.heightRatio),
+                                   alignment:      .left,
+                                   isMultiLines:   false)
+        }
+    }
+
+    @IBOutlet weak var countryView: UIView! {
+        didSet {
+            self.countryView.layer.cornerRadius = 8.0 * Config.heightRatio
+            self.countryView.clipsToBounds = true
+        }
+    }
+    
+    @IBOutlet weak var phoneNumberTextField: FormTextField! {
+        didSet {
+            self.phoneNumberTextField.tune(withPlaceholder:     "Phone Number Placeholder".localized(),
+                                           textColors:          blackWhiteColorPickers,
+                                           font:                UIFont.init(name: "SFProText-Regular", size: 17.0 * Config.heightRatio),
+                                           alignment:           .left)
+            
+            self.phoneNumberTextField.inset = 16.0 * Config.widthRatio
+            self.phoneNumberTextField.layer.cornerRadius = 8.0 * Config.heightRatio
+            self.phoneNumberTextField.clipsToBounds = true
+        }
+    }
+    
+    @IBOutlet weak var nextButton: UIButton! {
+        didSet {
+            self.nextButton.tune(withTitle:     "Next".localized(),
+                                 hexColors:     [whiteColorPickers, lightGrayWhiteColorPickers, lightGrayWhiteColorPickers, lightGrayWhiteColorPickers],
+                                 font:          UIFont(name: "SFProText-Semibold", size: 17.0 * Config.heightRatio),
+                                 alignment:     .center)
+            
+            self.nextButton.layer.cornerRadius = 8.0 * Config.heightRatio
+            self.nextButton.clipsToBounds = true
+        }
+    }
+    
+    @IBOutlet var heightsCollection: [NSLayoutConstraint]! {
+        didSet {
+            self.heightsCollection.forEach({ $0.constant *= Config.heightRatio })
+        }
+    }
+
+    @IBOutlet var widthsCollection: [NSLayoutConstraint]! {
+        didSet {
+            self.widthsCollection.forEach({ $0.constant *= Config.widthRatio })
+        }
+    }
+    
     @IBOutlet weak var nextButtonBottomConstraint: NSLayoutConstraint!
     
-    let disposeBag = DisposeBag()
     
+    // MARK: - Class Initialization
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        
+        setup()
+    }
+    
+    deinit {
+        Logger.log(message: "Success", event: .severe)
+    }
+    
+    
+    // MARK: - Setup
+    private func setup() {
+        let router                  =   SignUpRouter()
+        router.viewController       =   self
+        self.router                 =   router
+    }
+    
+    
+    // MARK: - Class Functions
     override func viewDidLoad() {
         super.viewDidLoad()
 
         self.title = "Sign up"
         self.navigationController?.navigationBar.prefersLargeTitles = true
-        
-//        countryButton.layer.cornerRadius = 10
-        phoneNumberTextField.layer.cornerRadius = 12
-        nextButton.layer.cornerRadius = 8
-        
-        phoneNumberTextField.clipsToBounds = true
-        
-        countryImageView.layer.cornerRadius = 12
-        countryImageView.clipsToBounds = true
         
         setupBindings()
         setupActions()
@@ -50,7 +134,7 @@ class SignUpVC: UIViewController {
         country.map { country -> Bool in
             return country != "Select country"
         }.subscribe(onNext: { [weak self] flag in
-            self?.selectCountryLabel.isHidden = flag
+            self?.placeholderSelectCountryLabel.isHidden = flag
             self?.countryLabel.isHidden = !flag
             self?.countryImageView.isHidden = !flag
         }).disposed(by: disposeBag)
@@ -74,20 +158,15 @@ class SignUpVC: UIViewController {
             }
         }).disposed(by: disposeBag)
         
-        nextButton.rx.tap.subscribe(onNext: { [weak self] _ in
-            if self?.viewModel.validatePhoneNumber() ?? false {
-                self?.viewModel.signUp().subscribe(onNext: { code in
-                    if let vc = controllerContainer.resolve(ConfirmUserVC.self) {
-                        vc.viewModel = ConfirmUserViewModel(code: "\(code)", phone: self?.viewModel.phone.value ?? "")
-                        let nav = UINavigationController(rootViewController: vc)
-                        self?.present(nav, animated: true, completion: nil)
-                    }
-
-                }).disposed(by: self!.disposeBag)
-            } else {
-                self?.showAlert(title: "Error", message: "Worng phone number")
-            }
-        }).disposed(by: disposeBag)
+//        nextButton.rx.tap.subscribe(onNext: { [weak self] _ in
+//            if self?.viewModel.validatePhoneNumber() ?? false {
+//                self?.viewModel.signUp().subscribe(onNext: { code in
+//                    self?.router?.routeToSignUpNextScene()
+//                }).disposed(by: self!.disposeBag)
+//            } else {
+//                self?.showAlert(title: "Error", message: "Wrong phone number")
+//            }
+//        }).disposed(by: disposeBag)
         
         NotificationCenter.default.rx.notification(UIResponder.keyboardWillShowNotification, object: nil).subscribe(onNext: { [weak self] notification in
             if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
@@ -98,12 +177,46 @@ class SignUpVC: UIViewController {
         }).disposed(by: disposeBag)
         
         NotificationCenter.default.rx.notification(UIResponder.keyboardWillHideNotification, object: nil).subscribe(onNext: { [weak self] notification in
-            if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
-                let keyboardRectangle = keyboardFrame.cgRectValue
-                let keyboardHeight = keyboardRectangle.height
-                self?.nextButtonBottomConstraint.constant = keyboardHeight
-            }
+            guard let strongSelf = self else { return }
+//            if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+//                let keyboardRectangle = keyboardFrame.cgRectValue
+//                let keyboardHeight = keyboardRectangle.height
+                strongSelf.nextButtonBottomConstraint.constant = 40.0
+//            }
         }).disposed(by: disposeBag)
+    }
+    
+    
+    // MARK: - Actions
+    @IBAction func nextButtonTapped(_ sender: UIButton) {
+        guard self.viewModel.checkLogin() else {
+            self.showAlert(title: "Error".localized(), message: "Select county".localized())
+            return
+        }
+
+        guard self.viewModel.validatePhoneNumber() else {
+            self.showAlert(title: "Error".localized(), message: "Wrong phone number".localized())
+            return
+        }
         
+        RestAPIManager.instance.firstStep(phone:                self.viewModel.phone.value,
+                                          responseHandling:     { result in
+                                            self.router?.routeToSignUpNextScene()
+        },
+                                          errorHandling:        { responseAPIError in
+                                            guard responseAPIError.currentState == nil else {
+                                                self.router?.routeToSignUpNextScene()
+                                                return
+                                            }
+                                            
+                                            self.showAlert(title: "Error", message: responseAPIError.message)
+        })
+    }
+    
+    
+    // MARK: - Gestures
+    
+    @IBAction func handlingTapGesture(_ sender: UITapGestureRecognizer) {
+        self.view.endEditing(true)
     }
 }
