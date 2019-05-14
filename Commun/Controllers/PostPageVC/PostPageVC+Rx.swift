@@ -59,6 +59,7 @@ extension PostPageVC: PostHeaderViewDelegate {
         
     }
     
-    
-    
+    func headerViewDidLayoutSubviews(_ headerView: PostHeaderView) {
+        self.tableView.tableHeaderView = headerView
+    }
 }

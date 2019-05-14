@@ -9,7 +9,7 @@
 import UIKit
 import CyberSwift
 
-class PostHeaderView: UIView {
+class PostHeaderView: UIView, UIWebViewDelegate {
     // Delegate
     weak var delegate: PostHeaderViewDelegate?
     
@@ -24,7 +24,7 @@ class PostHeaderView: UIView {
     
     // Content
     @IBOutlet weak var postTitleLabel: UILabel!
-    @IBOutlet weak var postContentLabel: UILabel!
+    @IBOutlet weak var contentWebView: UIWebView!
     
     // Post
     var post: ResponseAPIContentGetPost? {
@@ -62,27 +62,29 @@ class PostHeaderView: UIView {
         postTitleLabel.text = post.content.title
         
         // Show content
-        let html = "<span style=\"font-family: -apple-system; text-align: justify; font-size: 17\">\(post.content.body.full ?? "")</span>"
-        let htmlData = NSString(string: html).data(using: String.Encoding.unicode.rawValue)
-        let options = [NSAttributedString.DocumentReadingOptionKey.documentType:
-            NSAttributedString.DocumentType.html]
-        let attributedString = try? NSMutableAttributedString(data: htmlData ?? Data(),
-                                                              options: options,
-                                                              documentAttributes: nil)
-        postContentLabel.attributedText = attributedString
+        let html = "<span style=\"word-break: hyphenate; -webkit-hyphens: auto; font-family: -apple-system; text-align: justify; font-size: 17\">\(post.content.body.full ?? "")</span>"
+        
+        contentWebView.loadHTMLString(html, baseURL: nil)
+        contentWebView.delegate = self
         
         // Notify to delegate to update content
-        resetHeight()
-        self.layoutSubviews()
+        layout()
     }
     
-    func resetHeight() {
+    func webViewDidFinishLoad(_ webView: UIWebView) {
+        layout()
+        delegate?.headerViewDidLayoutSubviews(self)
+    }
+    
+    func layout() {
         var height = webView.height + 112
         height += self.postTitleLabel.height
         height += 32
-        height += postContentLabel.attributedText?.size().height ?? 0
+        height += contentWebView.sizeThatFits(CGSize(width: 0, height: 0)).height
         height += 41 + 16 + 26.5 + 16
         self.height = height
+        
+        self.layoutSubviews()
     }
     
     // Actions

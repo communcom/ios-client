@@ -9,6 +9,7 @@
 import Foundation
 
 protocol PostHeaderViewDelegate: class {
+    func headerViewDidLayoutSubviews(_ headerView: PostHeaderView)
     func didUpVotePost(_ post: ResponseAPIContentGetPost)
     func didDownVotePost(_ post: ResponseAPIContentGetPost)
     func sharePost(_ post: ResponseAPIContentGetPost)
