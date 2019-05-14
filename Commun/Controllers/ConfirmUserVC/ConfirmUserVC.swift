@@ -30,6 +30,23 @@ class ConfirmUserVC: UIViewController {
     // MARK: - IBOutlets
     @IBOutlet weak var pinCodeView: UIView!
     
+    @IBOutlet weak var testSmsCodeLabel: UILabel! {
+        didSet {
+            guard appBuildConfig != .release else {
+                self.testSmsCodeLabel.text = nil
+                self.testSmsCodeLabel.isHidden = true
+                return
+            }
+            
+            if  let phone   =   UserDefaults.standard.string(forKey: Config.registrationUserPhoneKey),
+                let json    =   KeychainManager.loadAllData(byUserPhone: phone),
+                let smsCode =   json[Config.registrationSmsCodeKey] as? UInt64 {
+                self.testSmsCodeLabel.text = String(format: "sms code is: `%i`", smsCode)
+                self.testSmsCodeLabel.isHidden = false
+            }
+        }
+    }
+    
     @IBOutlet weak var smsCodeLabel: UILabel! {
         didSet {
             self.smsCodeLabel.tune(withText:      "Enter SMS-code".localized(),

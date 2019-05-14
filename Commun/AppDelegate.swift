@@ -20,9 +20,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     // MARK: - Class Functions
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-//        window = UIWindow(frame: UIScreen.main.bounds)
-//        window?.theme_backgroundColor = whiteBlackColorPickers
-
         // Run WebSocket
         WebSocketManager.instance.connect()
 
