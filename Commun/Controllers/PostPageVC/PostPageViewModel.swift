@@ -26,7 +26,6 @@ class PostPageViewModel {
     
     // MARK: - Methods
     func loadPost() {
-        if postForRequest != nil {post.accept(postForRequest)}
         let permLink = postForRequest?.contentId.permlink ?? permlink ?? ""
         let refBlock = postForRequest?.contentId.refBlockNum ?? refBlockNum ?? 0
         let userId = postForRequest?.contentId.userId ?? self.userId ?? ""
@@ -35,6 +34,12 @@ class PostPageViewModel {
         NetworkService.shared.getPost(withPermLink: permLink,
                                       withRefBlock: refBlock,
                                       forUser: userId)
+            .catchError({ (error) -> Observable<ResponseAPIContentGetPost> in
+                if let post = self.postForRequest {
+                    return .just(post)
+                }
+                return Observable.empty()
+            })
             .bind(to: post)
             .disposed(by: disposeBag)
         
