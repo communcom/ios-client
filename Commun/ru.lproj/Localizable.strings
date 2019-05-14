@@ -14,11 +14,27 @@
 "favorite communities"                      =   "любимые сообщества";
 "Read! upvote!"                             =   "Читайте! голосуйте!";
 "comment!"                                  =   "комментируйте!";
+"Verification"                              =   "Верификация";
+"Select country"                            =   "Выберите страну";
+"Enter SMS-code"                            =   "Введите SMS-код";
+"Create your username"                      =   "Создайте имя пользователя";
+"Master key has been generated"             =   "Мастер ключ был создан";
+"You need Master Key"                       =   "Вам нужен мастер-ключ для входа в систему.\nПожалуйста, скачайте его.";
+"Welcome,"                                  =   "Добро пожаловать,";
+"sign in to continue"                       =   "войдите, чтобы продолжить";
 
 
 // Buttons
 "Sign up"                                   =   "Зарегистрироваться";
 "Sign in"                                   =   "Войти";
+"Next"                                      =   "Дальше";
+"Back"                                      =   "Назад";
+"Cancel"                                    =   "Отменить";
+"Close"                                     =   "Закрыть";
+"Done"                                      =   "Готово";
+"Download"                                  =   "Скачать";
+"Resend verification code"                  =   "Отправить код подтверждения";
+"Don't have an account?"                    =   "У вас нет аккаунта?";
 
 
 // Titles
@@ -27,8 +43,15 @@
 
 
 // Placeholders
-"Enter Login Placeholder"                   =   "Введите ваш логин";
+"Search Placeholder"                        =   "Поиск";
+"Select Country Placeholder"                =   "Выберите страну";
+"Phone Number Placeholder"                  =   "Введите номер телефона";
+"Username Placeholder"                      =   "Введите имя пользователя";
+"Login Placeholder"                         =   "Введите имя пользователя";
+"Key Placeholder"                           =   "Введите активный ключ";
 
 
 // Error message
 "Developer error!"                          =   "Ошибка разработчика!";
+"Wrong phone number"                        =   "Неверный номер телефона";
+"Enter correct user name"                   =   "Введите корректное имя пользователя";

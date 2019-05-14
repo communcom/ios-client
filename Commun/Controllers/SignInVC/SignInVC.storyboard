@@ -23,23 +23,29 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome,  sign in to continue" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D6A-sD-8ox">
-                                <rect key="frame" x="43" y="39" width="289" height="82"/>
-                                <accessibility key="accessibilityConfiguration" identifier="SignInSignUpButton" label="SignInSignUpButton"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="82" id="lQl-Ej-i3Z"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="33"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <stackView clipsSubviews="YES" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="Bzj-h1-Hnb" userLabel="Labels Stack View">
+                                <rect key="frame" x="42.5" y="39" width="290" height="67.5"/>
+                                <subviews>
+                                    <label clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vtx-u9-enc" userLabel="Text Label 1">
+                                        <rect key="frame" x="0.0" y="0.0" width="290" height="32.5"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wEo-9X-8PC" userLabel="Text Label 2">
+                                        <rect key="frame" x="0.0" y="34.5" width="290" height="33"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Login" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="EqX-kD-2N7">
-                                <rect key="frame" x="43" y="153" width="289" height="56"/>
+                                <rect key="frame" x="42.5" y="138.5" width="290" height="46"/>
                                 <color key="backgroundColor" red="0.95294117647058818" green="0.96078431372549022" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <accessibility key="accessibilityConfiguration" identifier="SignInLogInTextField" label="SignInLogInTextField"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="56" id="01y-XU-Hdf"/>
-                                </constraints>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="17"/>
                                 <textInputTraits key="textInputTraits"/>
@@ -50,12 +56,9 @@
                                 </userDefinedRuntimeAttributes>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Key" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ehc-OL-uc5">
-                                <rect key="frame" x="43" y="221" width="289" height="56"/>
+                                <rect key="frame" x="42.5" y="196.5" width="290" height="46"/>
                                 <color key="backgroundColor" red="0.95294117649999999" green="0.96078431369999995" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <accessibility key="accessibilityConfiguration" identifier="SignInKeyTextField" label="SignInKeyTextField"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="56" id="foI-CV-Vp2"/>
-                                </constraints>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="17"/>
                                 <textInputTraits key="textInputTraits"/>
@@ -65,25 +68,17 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yNT-VG-Edc">
-                                <rect key="frame" x="43" y="317" width="289" height="56"/>
+                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yNT-VG-Edc">
+                                <rect key="frame" x="42.5" y="282.5" width="290" height="46"/>
                                 <color key="backgroundColor" red="0.41568627450980389" green="0.50196078431372548" blue="0.96078431372549022" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <accessibility key="accessibilityConfiguration" identifier="SignInSignInButton" label="SignInSignInButton"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="56" id="WJa-3M-MhK"/>
-                                </constraints>
                                 <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="17"/>
                                 <state key="normal" title="Sign in">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                        <integer key="value" value="12"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UPF-Wo-Yxb">
-                                <rect key="frame" x="104.5" y="396" width="166" height="30"/>
+                            <button clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UPF-Wo-Yxb">
+                                <rect key="frame" x="104.5" y="351.5" width="166" height="30"/>
                                 <accessibility key="accessibilityConfiguration" identifier="SignInSignUpButton" label="SignInSignUpButton"/>
                                 <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
                                 <state key="normal" title="Don't have an account?">
@@ -93,35 +88,66 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="D6A-sD-8ox" firstAttribute="top" secondItem="SrR-kD-hbX" secondAttribute="top" constant="19" id="3xZ-5c-3Am"/>
-                            <constraint firstItem="UPF-Wo-Yxb" firstAttribute="top" secondItem="yNT-VG-Edc" secondAttribute="bottom" constant="23" id="7cU-9r-YKq"/>
-                            <constraint firstItem="Ehc-OL-uc5" firstAttribute="leading" secondItem="EqX-kD-2N7" secondAttribute="leading" id="825-G3-dBi"/>
-                            <constraint firstItem="SrR-kD-hbX" firstAttribute="trailing" secondItem="D6A-sD-8ox" secondAttribute="trailing" constant="43" id="Ayd-6E-pIP"/>
-                            <constraint firstItem="D6A-sD-8ox" firstAttribute="leading" secondItem="SrR-kD-hbX" secondAttribute="leading" constant="43" id="COJ-sf-qfM"/>
-                            <constraint firstItem="EqX-kD-2N7" firstAttribute="trailing" secondItem="D6A-sD-8ox" secondAttribute="trailing" id="H82-cq-dGg"/>
-                            <constraint firstItem="yNT-VG-Edc" firstAttribute="trailing" secondItem="Ehc-OL-uc5" secondAttribute="trailing" id="OpQ-nA-pdY"/>
+                            <constraint firstItem="EqX-kD-2N7" firstAttribute="height" secondItem="xnW-BP-4Bh" secondAttribute="height" multiplier="56:812" identifier="SignInLogInTextFieldHeightConstraint" id="0KK-tl-Q2Z"/>
+                            <constraint firstItem="Bzj-h1-Hnb" firstAttribute="height" secondItem="xnW-BP-4Bh" secondAttribute="height" multiplier="82:812" identifier="SignInLabelsStackViewHeightConstraint" id="1RA-VI-b7g"/>
+                            <constraint firstItem="Bzj-h1-Hnb" firstAttribute="width" secondItem="xnW-BP-4Bh" secondAttribute="width" multiplier="290:375" identifier="SignInLabelsStackViewWidthConstraint" id="1fe-WL-3hi"/>
+                            <constraint firstItem="UPF-Wo-Yxb" firstAttribute="top" secondItem="yNT-VG-Edc" secondAttribute="bottom" constant="23" identifier="SignInActionButtonBottomConstraint" id="7cU-9r-YKq"/>
+                            <constraint firstItem="yNT-VG-Edc" firstAttribute="height" secondItem="xnW-BP-4Bh" secondAttribute="height" multiplier="56:812" identifier="SignInActionButtonHeightConstraint" id="Ne2-Gz-snL"/>
+                            <constraint firstItem="EqX-kD-2N7" firstAttribute="top" secondItem="Bzj-h1-Hnb" secondAttribute="bottom" constant="32" identifier="SignInLoginTextFieldTopConstraint" id="Pol-jE-SPA"/>
                             <constraint firstItem="Ehc-OL-uc5" firstAttribute="top" secondItem="EqX-kD-2N7" secondAttribute="bottom" constant="12" id="QTb-bD-gEb"/>
-                            <constraint firstItem="Ehc-OL-uc5" firstAttribute="trailing" secondItem="EqX-kD-2N7" secondAttribute="trailing" id="V95-hY-XJW"/>
-                            <constraint firstItem="yNT-VG-Edc" firstAttribute="leading" secondItem="Ehc-OL-uc5" secondAttribute="leading" id="cID-9a-ScR"/>
+                            <constraint firstItem="EqX-kD-2N7" firstAttribute="centerX" secondItem="xnW-BP-4Bh" secondAttribute="centerX" id="VqS-4f-E2O"/>
+                            <constraint firstItem="Bzj-h1-Hnb" firstAttribute="top" secondItem="SrR-kD-hbX" secondAttribute="top" constant="19" identifier="SignInLabelsStackViewTopConstraint" id="bUJ-T8-rUk"/>
+                            <constraint firstItem="Bzj-h1-Hnb" firstAttribute="centerX" secondItem="xnW-BP-4Bh" secondAttribute="centerX" id="eVp-Mt-6R1"/>
+                            <constraint firstItem="Ehc-OL-uc5" firstAttribute="centerX" secondItem="xnW-BP-4Bh" secondAttribute="centerX" id="f79-Av-K4d"/>
                             <constraint firstItem="UPF-Wo-Yxb" firstAttribute="centerX" secondItem="SrR-kD-hbX" secondAttribute="centerX" id="gSy-zW-vXo"/>
-                            <constraint firstItem="yNT-VG-Edc" firstAttribute="top" secondItem="Ehc-OL-uc5" secondAttribute="bottom" constant="40" id="ijC-2x-FO5"/>
-                            <constraint firstItem="EqX-kD-2N7" firstAttribute="top" secondItem="D6A-sD-8ox" secondAttribute="bottom" constant="32" id="mUa-xd-Ch9"/>
-                            <constraint firstItem="Ehc-OL-uc5" firstAttribute="centerX" secondItem="EqX-kD-2N7" secondAttribute="centerX" id="qLQ-fT-7tj"/>
-                            <constraint firstItem="EqX-kD-2N7" firstAttribute="leading" secondItem="D6A-sD-8ox" secondAttribute="leading" id="wOF-gi-boP"/>
+                            <constraint firstItem="yNT-VG-Edc" firstAttribute="top" secondItem="Ehc-OL-uc5" secondAttribute="bottom" constant="40" identifier="SignInActionButtonTopConstraint" id="ijC-2x-FO5"/>
+                            <constraint firstItem="yNT-VG-Edc" firstAttribute="centerX" secondItem="xnW-BP-4Bh" secondAttribute="centerX" id="jBo-Xk-2jB"/>
+                            <constraint firstItem="Ehc-OL-uc5" firstAttribute="height" secondItem="xnW-BP-4Bh" secondAttribute="height" multiplier="56:812" identifier="SignInKeyTextFieldHeightConstraint" id="ldZ-Aj-gdK"/>
+                            <constraint firstItem="yNT-VG-Edc" firstAttribute="width" secondItem="xnW-BP-4Bh" secondAttribute="width" multiplier="290:375" identifier="SignInActionButtonWidthConstraint" id="naJ-j0-mQJ"/>
+                            <constraint firstItem="EqX-kD-2N7" firstAttribute="width" secondItem="xnW-BP-4Bh" secondAttribute="width" multiplier="290:375" identifier="SignInLogInTextFieldWidthConstraint" id="p0w-uP-LYU"/>
+                            <constraint firstItem="Ehc-OL-uc5" firstAttribute="width" secondItem="xnW-BP-4Bh" secondAttribute="width" multiplier="290:375" identifier="SignInKeyTextFieldWidthConstraint" id="uGE-OL-QWE"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="SrR-kD-hbX"/>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="1RA-VI-b7g"/>
+                                <exclude reference="1fe-WL-3hi"/>
+                                <exclude reference="0KK-tl-Q2Z"/>
+                                <exclude reference="ldZ-Aj-gdK"/>
+                                <exclude reference="uGE-OL-QWE"/>
+                                <exclude reference="Ne2-Gz-snL"/>
+                                <exclude reference="naJ-j0-mQJ"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=regular-widthClass=compact">
+                            <mask key="constraints">
+                                <include reference="1RA-VI-b7g"/>
+                                <include reference="1fe-WL-3hi"/>
+                                <include reference="0KK-tl-Q2Z"/>
+                                <include reference="ldZ-Aj-gdK"/>
+                                <include reference="uGE-OL-QWE"/>
+                                <include reference="Ne2-Gz-snL"/>
+                                <include reference="naJ-j0-mQJ"/>
+                            </mask>
+                        </variation>
                     </view>
                     <connections>
                         <outlet property="keyTextField" destination="Ehc-OL-uc5" id="FIj-48-p3b"/>
                         <outlet property="loginTextField" destination="EqX-kD-2N7" id="EkN-HR-es8"/>
                         <outlet property="signInButton" destination="yNT-VG-Edc" id="wPn-2M-fac"/>
                         <outlet property="signUpButton" destination="UPF-Wo-Yxb" id="BPM-TA-kAQ"/>
-                        <outlet property="welcomeLabel" destination="D6A-sD-8ox" id="PA9-LC-wUE"/>
+                        <outlet property="textLabel1" destination="Vtx-u9-enc" id="6jt-PX-pY7"/>
+                        <outlet property="textLabel2" destination="wEo-9X-8PC" id="tz6-ZP-3bq"/>
+                        <outletCollection property="heightsCollection" destination="bUJ-T8-rUk" collectionClass="NSMutableArray" id="CeH-b0-kdy"/>
+                        <outletCollection property="heightsCollection" destination="Pol-jE-SPA" collectionClass="NSMutableArray" id="129-tK-ZIb"/>
+                        <outletCollection property="heightsCollection" destination="QTb-bD-gEb" collectionClass="NSMutableArray" id="aZy-Um-gQX"/>
+                        <outletCollection property="heightsCollection" destination="ijC-2x-FO5" collectionClass="NSMutableArray" id="dWg-q2-x2a"/>
+                        <outletCollection property="heightsCollection" destination="7cU-9r-YKq" collectionClass="NSMutableArray" id="kEP-JD-Kyw"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WBu-35-r9i" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="39" y="224"/>
+            <point key="canvasLocation" x="37.600000000000001" y="223.53823088455775"/>
         </scene>
     </scenes>
 </document>

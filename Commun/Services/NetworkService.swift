@@ -275,18 +275,16 @@ class NetworkService: NSObject {
     
     func saveKeys(nickName: String) -> Observable<Bool> {
         return Observable.create({ observer -> Disposable in
-            
-//            RestAPIManager.instance.toBlockChain(nickName:      nickName,
-//                                                 completion:    { (result, errorAPI) in
-//                                                    guard errorAPI == nil else {
-//                                                        Logger.log(message: errorAPI!.caseInfo.message.localized(), event: .error)
-//                                                        return
-//                                                    }
-//
-//                                                    Logger.log(message: "Response: \n\t\(result.description)", event: .debug)
-//                                                    observer.onNext(result)
-//                                                    observer.onCompleted()
-//            })
+            RestAPIManager.instance.toBlockChain(nickName:          nickName,
+                                                 phone:             UserDefaults.standard.value(forKey: Config.registrationUserPhoneKey) as? String ?? "",
+                                                 responseHandling:  { result in
+                                                    Logger.log(message: "Response: \n\t\(result.description)", event: .debug)
+                                                    observer.onNext(result)
+                                                    observer.onCompleted()
+            },
+                                                 errorHandling:     { errorAPI in
+                                                    Logger.log(message: errorAPI.caseInfo.message.localized(), event: .error)
+            })
             
             return Disposables.create()
         })

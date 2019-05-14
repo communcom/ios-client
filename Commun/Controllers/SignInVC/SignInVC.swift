@@ -9,22 +9,93 @@
 import UIKit
 import RxSwift
 import RxCocoa
-//import IHProgressHUD
+import CyberSwift
 
 typealias LoginCredential = (login: String, key: String)
 
 class SignInVC: UIViewController {
-    
-    @IBOutlet weak var loginTextField: UITextField!
-    @IBOutlet weak var keyTextField: UITextField!
-    @IBOutlet weak var signInButton: UIButton!
-    @IBOutlet weak var signUpButton: UIButton!
-    @IBOutlet weak var welcomeLabel: UILabel!
-    
+    // MARK: - Properties
     let viewModel = SignInViewModel()
-    
     let disposeBag = DisposeBag()
+
+    // Handlers
+    var handlerSignUp: ((Bool) -> Void)?
     
+    
+    // MARK: - IBOutlets
+    @IBOutlet weak var textLabel1: UILabel! {
+        didSet {
+            self.textLabel1.tune(withText:      "Welcome,".localized(),
+                                 hexColors:     blackWhiteColorPickers,
+                                 font:          UIFont(name: "SFProDisplay-Bold", size: 34.0 * Config.heightRatio),
+                                 alignment:     .left,
+                                 isMultiLines:  false)
+        }
+    }
+    
+    @IBOutlet weak var textLabel2: UILabel! {
+        didSet {
+            self.textLabel2.tune(withText:      "sign in to continue".localized(),
+                                 hexColors:     softBlueColorPickers,
+                                 font:          UIFont(name: "SFProDisplay-Bold", size: 34.0 * Config.heightRatio),
+                                 alignment:     .left,
+                                 isMultiLines:  false)
+        }
+    }
+    
+    @IBOutlet weak var loginTextField: UITextField! {
+        didSet {
+            self.loginTextField.tune(withPlaceholder:   "Login Placeholder".localized(),
+                                     textColors:        blackWhiteColorPickers,
+                                     font:              UIFont(name: "SFProText-Regular", size: 17.0 * Config.heightRatio),
+                                     alignment:         .left)
+            
+            self.loginTextField.layer.cornerRadius = 12.0 * Config.heightRatio
+            self.loginTextField.clipsToBounds = true
+        }
+    }
+    
+    @IBOutlet weak var keyTextField: UITextField! {
+        didSet {
+            self.keyTextField.tune(withPlaceholder:   "Key Placeholder".localized(),
+                                   textColors:        blackWhiteColorPickers,
+                                   font:              UIFont(name: "SFProText-Regular", size: 17.0 * Config.heightRatio),
+                                   alignment:         .left)
+
+            self.keyTextField.layer.cornerRadius = 12.0 * Config.heightRatio
+            self.keyTextField.clipsToBounds = true
+        }
+    }
+    
+    @IBOutlet weak var signInButton: UIButton! {
+        didSet {
+            self.signInButton.tune(withTitle:     "Sign in".localized(),
+                                   hexColors:     [whiteBlackColorPickers, veryLightGrayColorPickers, veryLightGrayColorPickers, veryLightGrayColorPickers],
+                                   font:          UIFont(name: "SFProText-Semibold", size: 17.0 * Config.heightRatio),
+                                   alignment:     .center)
+            
+            self.signInButton.layer.cornerRadius = 8.0 * Config.heightRatio
+            self.signInButton.clipsToBounds = true
+        }
+    }
+    
+    @IBOutlet weak var signUpButton: UIButton! {
+        didSet {
+            self.signUpButton.tune(withTitle:     "Don't have an account?".localized(),
+                                   hexColors:     [softBlueColorPickers, verySoftBlueColorPickers, verySoftBlueColorPickers, verySoftBlueColorPickers],
+                                   font:          UIFont(name: "SFProText-Semibold", size: 15.0 * Config.heightRatio),
+                                   alignment:     .center)
+        }
+    }
+    
+    @IBOutlet var heightsCollection: [NSLayoutConstraint]! {
+        didSet {
+            self.heightsCollection.forEach({ $0.constant *= Config.heightRatio })
+        }
+    }
+
+    
+    // MARK: - Class Functions
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -37,16 +108,7 @@ class SignInVC: UIViewController {
         keyTextField.leftView = keyPaddingView
         keyTextField.leftViewMode = .always
         
-        
-        makeSubscriptions()
-        
-        let attributedString = NSMutableAttributedString(string: "Welcome,\nsign in to continue")
-        
-        let attributes1: [NSAttributedString.Key : Any] = [
-            .foregroundColor: #colorLiteral(red: 0.4156862745, green: 0.5019607843, blue: 0.9607843137, alpha: 1)
-        ]
-        attributedString.addAttributes(attributes1, range: NSRange(location: 9, length: 19))
-        welcomeLabel.attributedText = attributedString
+        makeSubscriptions()        
     }
     
     func makeSubscriptions() {
@@ -64,21 +126,13 @@ class SignInVC: UIViewController {
         signInButton.rx.tap
             .withLatestFrom(validator.filter(checkCorrectDataAndSetupButton))
             .flatMapLatest({ (cred) -> Observable<String> in
-//                IHProgressHUD.set(foregroundColor: #colorLiteral(red: 0.4156862745, green: 0.5019607843, blue: 0.9607843137, alpha: 1))
-//                IHProgressHUD.show()
                 return self.viewModel.signIn(withLogin: cred.login, withApiKey: cred.key)
                     .catchError {[weak self] _ in
-//                        DispatchQueue.global(qos: .default).async(execute: {
-//                            IHProgressHUD.dismiss()
-//                        })
                         self?.showAlert(title: nil, message: "Login error.\nPlease try again later")
                         return Observable<String>.empty()
                     }
             })
             .subscribe {[weak self] completable in
-                DispatchQueue.global(qos: .default).async(execute: {
-//                    IHProgressHUD.dismiss()
-                })
                 switch completable {
                 case .completed, .error(_):
                     break
@@ -90,7 +144,11 @@ class SignInVC: UIViewController {
         
         signUpButton.rx.tap
             .subscribe(onNext: { [weak self] _ in
-                self?.showAlert(title: "TODO", message: "SignUp")
+                guard let strongSelf = self else { return }
+                
+                strongSelf.navigationController?.popViewController(animated: true, {
+                    strongSelf.handlerSignUp!(true)
+                })
             })
             .disposed(by: disposeBag)
         
@@ -102,6 +160,7 @@ class SignInVC: UIViewController {
             signInButton.backgroundColor = #colorLiteral(red: 0.4235294118, green: 0.5137254902, blue: 0.9294117647, alpha: 1)
             return true
         }
+        
         signInButton.isEnabled = false
         signInButton.backgroundColor = #colorLiteral(red: 0.4156862745, green: 0.5019607843, blue: 0.9607843137, alpha: 0.3834813784)
         return false

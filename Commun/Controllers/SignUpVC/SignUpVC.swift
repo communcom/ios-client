@@ -21,27 +21,75 @@ class SignUpVC: UIViewController {
     
     // MARK: - IBOutlets
     @IBOutlet weak var countryButton: UIButton!
-    @IBOutlet weak var selectCountryLabel: UILabel!
-    @IBOutlet weak var countryLabel: UILabel!
     
     @IBOutlet weak var countryImageView: UIImageView! {
         didSet {
-            self.countryImageView.layer.cornerRadius    =   12.0
-            self.countryImageView.clipsToBounds         =   true
+            self.countryImageView.layer.cornerRadius = 24.0 * Config.heightRatio / 2
+            self.countryImageView.clipsToBounds = true
         }
     }
-   
+    
+    @IBOutlet weak var placeholderSelectCountryLabel: UILabel! {
+        didSet {
+            self.placeholderSelectCountryLabel.tune(withText:       "Select Country Placeholder".localized(),
+                                                    hexColors:      darkGrayishBluePickers,
+                                                    font:           UIFont.init(name: "SFProText-Regular", size: 17.0 * Config.heightRatio),
+                                                    alignment:      .left,
+                                                    isMultiLines:   false)
+        }
+    }
+
+    @IBOutlet weak var countryLabel: UILabel! {
+        didSet {
+            self.countryLabel.tune(withText:       "",
+                                   hexColors:      blackWhiteColorPickers,
+                                   font:           UIFont.init(name: "SFProText-Regular", size: 17.0 * Config.heightRatio),
+                                   alignment:      .left,
+                                   isMultiLines:   false)
+        }
+    }
+
+    @IBOutlet weak var countryView: UIView! {
+        didSet {
+            self.countryView.layer.cornerRadius = 8.0 * Config.heightRatio
+            self.countryView.clipsToBounds = true
+        }
+    }
+    
     @IBOutlet weak var phoneNumberTextField: FormTextField! {
         didSet {
-            self.phoneNumberTextField.layer.cornerRadius    =   12.0
-            self.phoneNumberTextField.clipsToBounds         =   true
+            self.phoneNumberTextField.tune(withPlaceholder:     "Phone Number Placeholder".localized(),
+                                           textColors:          blackWhiteColorPickers,
+                                           font:                UIFont.init(name: "SFProText-Regular", size: 17.0 * Config.heightRatio),
+                                           alignment:           .left)
+            
+            self.phoneNumberTextField.inset = 16.0 * Config.widthRatio
+            self.phoneNumberTextField.layer.cornerRadius = 8.0 * Config.heightRatio
+            self.phoneNumberTextField.clipsToBounds = true
         }
     }
     
     @IBOutlet weak var nextButton: UIButton! {
         didSet {
-            self.nextButton.layer.cornerRadius  =   8.0
-            self.nextButton.clipsToBounds       =   true
+            self.nextButton.tune(withTitle:     "Next".localized(),
+                                 hexColors:     [whiteColorPickers, lightGrayWhiteColorPickers, lightGrayWhiteColorPickers, lightGrayWhiteColorPickers],
+                                 font:          UIFont(name: "SFProText-Semibold", size: 17.0 * Config.heightRatio),
+                                 alignment:     .center)
+            
+            self.nextButton.layer.cornerRadius = 8.0 * Config.heightRatio
+            self.nextButton.clipsToBounds = true
+        }
+    }
+    
+    @IBOutlet var heightsCollection: [NSLayoutConstraint]! {
+        didSet {
+            self.heightsCollection.forEach({ $0.constant *= Config.heightRatio })
+        }
+    }
+
+    @IBOutlet var widthsCollection: [NSLayoutConstraint]! {
+        didSet {
+            self.widthsCollection.forEach({ $0.constant *= Config.widthRatio })
         }
     }
     
@@ -86,7 +134,7 @@ class SignUpVC: UIViewController {
         country.map { country -> Bool in
             return country != "Select country"
         }.subscribe(onNext: { [weak self] flag in
-            self?.selectCountryLabel.isHidden = flag
+            self?.placeholderSelectCountryLabel.isHidden = flag
             self?.countryLabel.isHidden = !flag
             self?.countryImageView.isHidden = !flag
         }).disposed(by: disposeBag)
@@ -141,8 +189,13 @@ class SignUpVC: UIViewController {
     
     // MARK: - Actions
     @IBAction func nextButtonTapped(_ sender: UIButton) {
+        guard self.viewModel.checkLogin() else {
+            self.showAlert(title: "Error".localized(), message: "Select county".localized())
+            return
+        }
+
         guard self.viewModel.validatePhoneNumber() else {
-            self.showAlert(title: "Error", message: "Wrong phone number")
+            self.showAlert(title: "Error".localized(), message: "Wrong phone number".localized())
             return
         }
         

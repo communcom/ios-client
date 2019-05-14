@@ -20,34 +20,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     // MARK: - Class Functions
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        window = UIWindow(frame: UIScreen.main.bounds)
-        window?.theme_backgroundColor = whiteBlackColorPickers
+//        window = UIWindow(frame: UIScreen.main.bounds)
+//        window?.theme_backgroundColor = whiteBlackColorPickers
 
         // Run WebSocket
         WebSocketManager.instance.connect()
-        
+
         _ = WebSocketManager.instance.completed.subscribe(onNext:   { [weak self] success in
             Logger.log(message: "Sign: \n\t\(success)", event: .debug)
 
             guard success else { return }
 
             guard let strongSelf = self else { return }
-            
+
             // Lenta
             if UserDefaults.standard.value(forKey: Config.isCurrentUserLoggedKey) as? Bool == true {
                 strongSelf.window?.rootViewController = controllerContainer.resolve(TabBarVC.self)
             }
-            
+
             // Sign In/Up
             else {
                 let welcomeVC = controllerContainer.resolve(WelcomeScreenVC.self)
                 let welcomeNav = UINavigationController(rootViewController: welcomeVC!)
                 strongSelf.window?.rootViewController = welcomeNav
-                
+
                 let navigationBarAppearace = UINavigationBar.appearance()
                 navigationBarAppearace.tintColor = #colorLiteral(red: 0.4156862745, green: 0.5019607843, blue: 0.9607843137, alpha: 1)
             }
-            
+
             strongSelf.window?.makeKeyAndVisible()
             application.applicationIconBadgeNumber = 0
         },

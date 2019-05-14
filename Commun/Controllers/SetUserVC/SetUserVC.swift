@@ -20,9 +20,49 @@ class SetUserVC: UIViewController {
 
     
     // MARK: - IBOutlets
-    @IBOutlet weak var userNameTextField: UITextField!
-    @IBOutlet weak var nextButton: UIButton!
+    @IBOutlet weak var creatUsernameLabel: UILabel! {
+        didSet {
+            self.creatUsernameLabel.tune(withText:      "Create your username".localized(),
+                                         hexColors:     blackWhiteColorPickers,
+                                         font:          UIFont(name: "SFProText-Regular", size: 17.0 * Config.heightRatio),
+                                         alignment:     .left,
+                                         isMultiLines:  false)
+        }
+    }
     
+    @IBOutlet weak var userNameTextField: UITextField! {
+        didSet {
+            self.userNameTextField.tune(withPlaceholder:        "Username Placeholder".localized(),
+                                        textColors:             blackWhiteColorPickers,
+                                        font:                   UIFont.init(name: "SFProText-Regular", size: 17.0 * Config.heightRatio),
+                                        alignment:              .left)
+        }
+    }
+    
+    @IBOutlet weak var nextButton: UIButton! {
+        didSet {
+            self.nextButton.tune(withTitle:     "Next".localized(),
+                                 hexColors:     [whiteColorPickers, lightGrayWhiteColorPickers, lightGrayWhiteColorPickers, lightGrayWhiteColorPickers],
+                                 font:          UIFont(name: "SFProText-Semibold", size: 17.0 * Config.heightRatio),
+                                 alignment:     .center)
+            
+            self.nextButton.layer.cornerRadius = 8.0 * Config.heightRatio
+            self.nextButton.clipsToBounds = true
+        }
+    }
+    
+    @IBOutlet var heightsCollection: [NSLayoutConstraint]! {
+        didSet {
+            self.heightsCollection.forEach({ $0.constant *= Config.heightRatio })
+        }
+    }
+
+    @IBOutlet var widthsCollection: [NSLayoutConstraint]! {
+        didSet {
+            self.widthsCollection.forEach({ $0.constant *= Config.widthRatio })
+        }
+    }
+
     
     // MARK: - Class Initialization
     required init?(coder aDecoder: NSCoder) {
@@ -48,9 +88,8 @@ class SetUserVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.title = "Sign up".localized()
         self.navigationController?.navigationBar.prefersLargeTitles = true
-        
-        self.title = "Sign up"
         
         setBindings()
 //        makeActions()
@@ -77,12 +116,12 @@ class SetUserVC: UIViewController {
     @IBAction func nextButtonTapped(_ sender: UIButton) {
         guard let phone = UserDefaults.standard.string(forKey: Config.registrationUserPhoneKey) else { return }
 
-        guard let userName = self.userNameTextField.text else {
-            self.showAlert(title: "Error", message: "Enter user name")
+        guard let userNickName = self.viewModel?.userName.value, (self.viewModel?.checkUserName())! else {
+            self.showAlert(title: "Error".localized(), message: "Enter correct user name".localized())
             return
         }
         
-        RestAPIManager.instance.setUser(nickName:           userName,
+        RestAPIManager.instance.setUser(nickName:           userNickName,
                                         phone:              phone,
                                         responseHandling:   { [weak self] result in
                                             guard let strongSelf = self else { return }

@@ -52,6 +52,10 @@ class SignUpViewModel {
             return result.code
         }
     }
+
+    func checkLogin() -> Bool {
+        return self.selectedCountry.value != nil
+    }
     
     func validatePhoneNumber() -> Bool {
         var phone = self.phone.value

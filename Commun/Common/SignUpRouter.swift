@@ -28,7 +28,17 @@ class SignUpRouter: NSObject, SignUpRoutingLogic {
     
     // MARK: - Routing
     func routeToSignInScene() {
-        self.viewController?.navigationController?.pushViewController(controllerContainer.resolve(SignInVC.self)!)
+        if  let signInVC = controllerContainer.resolve(SignInVC.self) {
+            self.viewController?.navigationController?.pushViewController(signInVC)
+            
+            signInVC.handlerSignUp = { [weak self] success in
+                guard let strongSelf = self else { return }
+                
+                if success {
+                    strongSelf.routeToSignUpNextScene()
+                }
+            }
+        }
     }
     
     func routeToSignUpNextScene() {

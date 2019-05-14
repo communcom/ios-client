@@ -28,7 +28,7 @@ class WelcomeItemVC: UIViewController {
                                    font:          UIFont(name: "SFProText-Semibold", size: 17.0 * Config.heightRatio),
                                    alignment:     .center)
             
-            self.signUpButton.layer.cornerRadius = 12.0 * Config.heightRatio
+            self.signUpButton.layer.cornerRadius = 8.0 * Config.heightRatio
             self.signUpButton.clipsToBounds = true
         }
     }
