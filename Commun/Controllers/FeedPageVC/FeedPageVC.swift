@@ -29,7 +29,6 @@ class FeedPageVC: UIViewController {
         navigationController?.navigationBar.barTintColor = .white
         
         tableView.register(UINib(nibName: "PostCardCell", bundle: nil), forCellReuseIdentifier: "PostCardCell")
-        tableView.register(UINib(nibName: "PostCardMediaCell", bundle: nil), forCellReuseIdentifier: "PostCardMediaCell")
         
         let searchBar = UISearchBar(frame: self.view.bounds)
         searchBar.placeholder = "Search"
