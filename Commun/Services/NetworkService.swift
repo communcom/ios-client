@@ -6,16 +6,18 @@
 //  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
 //
 
-import Foundation
-import CyberSwift
 import RxSwift
-import SwifterSwift
+import Foundation
 import Alamofire
+import CyberSwift
+import SwifterSwift
 
 class NetworkService: NSObject {
-    
+    // MARK: - Properties
     static let shared = NetworkService()
     
+    
+    // MARK: - Class Functions
     func connect() {
         WebSocketManager.instance.connect()
     }
@@ -196,68 +198,76 @@ class NetworkService: NSObject {
     
     func signUp(withPhone phone: String) -> Observable<ResponseAPIRegistrationFirstStep> {
         return Observable.create({ observer -> Disposable in
-            RestAPIManager.instance.firstStep(phone:        phone,
-                                              completion:   { (result, errorAPI) in
-                                                guard errorAPI == nil else {
-                                                    Logger.log(message: errorAPI!.caseInfo.message.localized(), event: .error)
-                                                    return
-                                                }
-                                                
-                                                if let result = result {
-                                                    Logger.log(message: "Response: \n\t\(result)", event: .debug)
-                                                    observer.onNext(result)
-                                                }
-                                                observer.onCompleted()
-            })
+//            RestAPIManager.instance.firstStep(phone:        phone,
+//                                              completion:   { (result, error) in
+//                                                guard error == nil else {
+//                                                    Logger.log(message: error!.message.localized(), event: .error)
+//                                                    
+//                                                    if let state = error?.currentState {
+//                                                        observer.onNext(ResponseAPIRegistrationFirstStep(code: UInt64(error!.code), strategy: state, nextSmsRetry: ""))
+//                                                        observer.onCompleted()
+//                                                    }
+//                                                    
+//                                                    return
+//                                                }
+// 
+//                                                if let result = result {
+//                                                    Logger.log(message: "Response: \n\t\(result)", event: .debug)
+//                                                    observer.onNext(result)
+//                                                }
+//                                                
+//                                                observer.onCompleted()
+//            })
+            
             return Disposables.create()
         })
     }
     
-    func resendSmsCode(phone: String) -> Observable<String> {
-        return Observable<String>.create({ observer -> Disposable in
-            let isDebugMode: Bool   =   appBuildConfig == AppBuildConfig.debug
-            
-            RestAPIManager.instance.resendSmsCode(phone:        phone,
-                                                  isDebugMode:  isDebugMode,
-                                                  completion:   { (result, errorAPI) in
-                                                    guard errorAPI == nil else {
-                                                        Logger.log(message: errorAPI!.caseInfo.message.localized(), event: .error)
-                                                        return
-                                                    }
-                                                    
-                                                    if let result = result {
-                                                        Logger.log(message: "Response: \n\t\(result.code)", event: .debug)
-                                                        observer.onNext("\(result.code )")
-                                                    }
-                                                    observer.onCompleted()
-            })
-            return Disposables.create()
-        }).map({ code -> String in
-            return code.md5() ?? ""
-        })
-    }
+//    func resendSmsCode(phone: String) -> Observable<String> {
+//        return Observable<String>.create({ observer -> Disposable in
+//            let isDebugMode: Bool   =   appBuildConfig == AppBuildConfig.debug
+//            
+//            RestAPIManager.instance.resendSmsCode(phone:        phone,
+//                                                  isDebugMode:  isDebugMode,
+//                                                  completion:   { (result, errorAPI) in
+//                                                    guard errorAPI == nil else {
+//                                                        Logger.log(message: errorAPI!.caseInfo.message.localized(), event: .error)
+//                                                        return
+//                                                    }
+//                                                    
+//                                                    if let result = result {
+//                                                        Logger.log(message: "Response: \n\t\(result.code)", event: .debug)
+//                                                        observer.onNext("\(result.code )")
+//                                                    }
+//                                                    observer.onCompleted()
+//            })
+//            return Disposables.create()
+//        }).map({ code -> String in
+//            return code.md5() ?? ""
+//        })
+//    }
     
     func setUser(name: String, phone: String) -> Observable<String> {
         return Observable.create({ observer -> Disposable in
-            
-            let isDebugMode: Bool   =   appBuildConfig == AppBuildConfig.debug
-            
-            RestAPIManager.instance.setUser(name:           name,
-                                            phone:          phone,
-                                            isDebugMode:    isDebugMode,
-                                            completion:     { (result, errorAPI) in
-                                                guard errorAPI == nil else {
-                                                    Logger.log(message: errorAPI!.caseInfo.message.localized(), event: .error)
-                                                    return
-                                                }
-                                                
-                                                if let result = result {
-                                                    Logger.log(message: "Response: \n\t\(result.status)", event: .debug)
-                                                    observer.onNext(result.status)
-                                                }
-                                                
-                                                observer.onCompleted()
-            })
+//
+//            let isDebugMode: Bool   =   appBuildConfig == AppBuildConfig.debug
+//
+//            RestAPIManager.instance.setUser(name:           name,
+//                                            phone:          phone,
+//                                            isDebugMode:    isDebugMode,
+//                                            completion:     { (result, errorAPI) in
+//                                                guard errorAPI == nil else {
+//                                                    Logger.log(message: errorAPI!.caseInfo.message.localized(), event: .error)
+//                                                    return
+//                                                }
+//
+//                                                if let result = result {
+//                                                    Logger.log(message: "Response: \n\t\(result.status)", event: .debug)
+//                                                    observer.onNext(result.status)
+//                                                }
+//
+//                                                observer.onCompleted()
+//            })
             
             return Disposables.create()
         })
@@ -265,17 +275,15 @@ class NetworkService: NSObject {
     
     func saveKeys(nickName: String) -> Observable<Bool> {
         return Observable.create({ observer -> Disposable in
-            
-            RestAPIManager.instance.toBlockChain(nickName:      nickName,
-                                                 completion:    { (result, errorAPI) in
-                                                    guard errorAPI == nil else {
-                                                        Logger.log(message: errorAPI!.caseInfo.message.localized(), event: .error)
-                                                        return
-                                                    }
-                                                    
+            RestAPIManager.instance.toBlockChain(nickName:          nickName,
+                                                 phone:             UserDefaults.standard.value(forKey: Config.registrationUserPhoneKey) as? String ?? "",
+                                                 responseHandling:  { result in
                                                     Logger.log(message: "Response: \n\t\(result.description)", event: .debug)
                                                     observer.onNext(result)
                                                     observer.onCompleted()
+            },
+                                                 errorHandling:     { errorAPI in
+                                                    Logger.log(message: errorAPI.caseInfo.message.localized(), event: .error)
             })
             
             return Disposables.create()
@@ -351,24 +359,24 @@ class NetworkService: NSObject {
         
         return Observable<String>.create({ observer -> Disposable in
             
-            let isDebugMode: Bool   =   appBuildConfig == AppBuildConfig.debug
-            
-            RestAPIManager.instance.verify(phone:           phone,
-                                           code:            code,
-                                           isDebugMode:     isDebugMode,
-                                           completion:      { (result, errorAPI) in
-                                            guard errorAPI == nil else {
-                                                Logger.log(message: errorAPI!.caseInfo.message.localized(), event: .error)
-                                                return
-                                            }
-                                            
-                                            if let result = result {
-                                                Logger.log(message: "Response: \n\t\(result.status)", event: .debug)
-                                                observer.onNext(result.status)
-                                            }
-                                            
-                                            observer.onCompleted()
-            })
+//            let isDebugMode: Bool   =   appBuildConfig == AppBuildConfig.debug
+//            
+//            RestAPIManager.instance.verify(phone:           phone,
+//                                           code:            code,
+//                                           isDebugMode:     isDebugMode,
+//                                           completion:      { (result, errorAPI) in
+//                                            guard errorAPI == nil else {
+//                                                Logger.log(message: errorAPI!.caseInfo.message.localized(), event: .error)
+//                                                return
+//                                            }
+//                                            
+//                                            if let result = result {
+//                                                Logger.log(message: "Response: \n\t\(result.status)", event: .debug)
+//                                                observer.onNext(result.status)
+//                                            }
+//                                            
+//                                            observer.onCompleted()
+//            })
             
             return Disposables.create()
         }).map({ result -> Bool in

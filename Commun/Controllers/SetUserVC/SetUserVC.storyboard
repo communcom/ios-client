@@ -23,55 +23,74 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Create your username" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kdi-h6-fMh">
+                            <label clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Create your username" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kdi-h6-fMh" userLabel="Create your username Label">
                                 <rect key="frame" x="16" y="63" width="177.5" height="20"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <accessibility key="accessibilityConfiguration" identifier="SetUserUserNameLabel" label="SetUserUserNameLabel"/>
                                 <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Zrb-vq-uwO">
-                                <rect key="frame" x="42" y="135" width="330" height="56"/>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Zrb-vq-uwO">
+                                <rect key="frame" x="47" y="135" width="320" height="62"/>
                                 <color key="backgroundColor" red="0.95294117647058818" green="0.96078431372549022" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="56" id="c9D-pZ-l6v"/>
-                                </constraints>
+                                <accessibility key="accessibilityConfiguration" identifier="SetUserUserNameTextField" label="SetUserUserNameTextField"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="596-PJ-wLC">
-                                <rect key="frame" x="42" y="766" width="330" height="56"/>
+                            <button clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="596-PJ-wLC">
+                                <rect key="frame" x="47" y="760" width="320" height="62"/>
                                 <color key="backgroundColor" red="0.41568627450000001" green="0.50196078430000002" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="56" id="udn-Yp-jdq"/>
-                                </constraints>
+                                <accessibility key="accessibilityConfiguration" identifier="SetUserNextButton" label="SetUserNextButton"/>
                                 <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="17"/>
                                 <state key="normal" title="Next">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                        <integer key="value" value="8"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="nextButtonTapped:" destination="IVB-kA-cp0" eventType="touchUpInside" id="tZc-p9-0YU"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="596-PJ-wLC" firstAttribute="leading" secondItem="j0s-Hr-oj6" secondAttribute="leading" constant="42" id="6sf-Hx-ryW"/>
-                            <constraint firstItem="Zrb-vq-uwO" firstAttribute="top" secondItem="Kdi-h6-fMh" secondAttribute="bottom" constant="52" id="7bl-EF-REx"/>
-                            <constraint firstItem="Kdi-h6-fMh" firstAttribute="leading" secondItem="j0s-Hr-oj6" secondAttribute="leading" constant="16" id="RMh-Zd-kCZ"/>
-                            <constraint firstItem="Kdi-h6-fMh" firstAttribute="top" secondItem="j0s-Hr-oj6" secondAttribute="top" constant="19" id="RsZ-iQ-wFh"/>
-                            <constraint firstItem="j0s-Hr-oj6" firstAttribute="bottom" secondItem="596-PJ-wLC" secondAttribute="bottom" constant="40" id="Sbb-2I-0lW"/>
-                            <constraint firstItem="j0s-Hr-oj6" firstAttribute="trailing" secondItem="Zrb-vq-uwO" secondAttribute="trailing" constant="42" id="Z2M-gY-y4x"/>
-                            <constraint firstItem="j0s-Hr-oj6" firstAttribute="trailing" secondItem="596-PJ-wLC" secondAttribute="trailing" constant="42" id="nbg-L6-Ql7"/>
-                            <constraint firstItem="Zrb-vq-uwO" firstAttribute="leading" secondItem="j0s-Hr-oj6" secondAttribute="leading" constant="42" id="r78-HX-ccA"/>
+                            <constraint firstItem="Zrb-vq-uwO" firstAttribute="top" secondItem="Kdi-h6-fMh" secondAttribute="bottom" constant="52" identifier="SetUsernameTextFieldTopConstraint" id="7bl-EF-REx"/>
+                            <constraint firstItem="596-PJ-wLC" firstAttribute="width" secondItem="x7M-Uk-FDw" secondAttribute="width" multiplier="290:375" identifier="SetUsernameNextButtonWidthConstraint" id="Hi6-FX-CQx"/>
+                            <constraint firstItem="Zrb-vq-uwO" firstAttribute="width" secondItem="x7M-Uk-FDw" secondAttribute="width" multiplier="290:375" identifier="SetUsernameTextFieldWidthConstraint" id="MMB-sa-79r"/>
+                            <constraint firstItem="596-PJ-wLC" firstAttribute="height" secondItem="x7M-Uk-FDw" secondAttribute="height" multiplier="56:812" identifier="SetUsernameNextButtonHeightConstraint" id="N4E-a6-ayl"/>
+                            <constraint firstItem="Kdi-h6-fMh" firstAttribute="leading" secondItem="j0s-Hr-oj6" secondAttribute="leading" constant="16" identifier="SetUsernameCreateUsernameLeadingConstraint" id="RMh-Zd-kCZ"/>
+                            <constraint firstItem="Kdi-h6-fMh" firstAttribute="top" secondItem="j0s-Hr-oj6" secondAttribute="top" constant="19" identifier="SetUserCreateUsernameLabelTopConstraint" id="RsZ-iQ-wFh"/>
+                            <constraint firstItem="j0s-Hr-oj6" firstAttribute="bottom" secondItem="596-PJ-wLC" secondAttribute="bottom" constant="40" identifier="SetUserNextButtonBottomConstraint" id="Sbb-2I-0lW"/>
+                            <constraint firstItem="Zrb-vq-uwO" firstAttribute="centerX" secondItem="x7M-Uk-FDw" secondAttribute="centerX" id="Z78-1U-cSz"/>
+                            <constraint firstItem="596-PJ-wLC" firstAttribute="centerX" secondItem="x7M-Uk-FDw" secondAttribute="centerX" id="t73-Se-8ey"/>
+                            <constraint firstItem="Zrb-vq-uwO" firstAttribute="height" secondItem="x7M-Uk-FDw" secondAttribute="height" multiplier="56:812" identifier="SetUsernameTextFieldHeightConstraint" id="zzj-OC-we0"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="j0s-Hr-oj6"/>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="MMB-sa-79r"/>
+                                <exclude reference="zzj-OC-we0"/>
+                                <exclude reference="Hi6-FX-CQx"/>
+                                <exclude reference="N4E-a6-ayl"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=regular-widthClass=compact">
+                            <mask key="constraints">
+                                <include reference="MMB-sa-79r"/>
+                                <include reference="zzj-OC-we0"/>
+                                <include reference="Hi6-FX-CQx"/>
+                                <include reference="N4E-a6-ayl"/>
+                            </mask>
+                        </variation>
                     </view>
                     <connections>
+                        <outlet property="creatUsernameLabel" destination="Kdi-h6-fMh" id="k8w-Rw-VW2"/>
                         <outlet property="nextButton" destination="596-PJ-wLC" id="CqU-Ch-Lhn"/>
                         <outlet property="userNameTextField" destination="Zrb-vq-uwO" id="q1i-ss-1WT"/>
+                        <outletCollection property="heightsCollection" destination="Sbb-2I-0lW" collectionClass="NSMutableArray" id="FWQ-kJ-Sh8"/>
+                        <outletCollection property="heightsCollection" destination="RsZ-iQ-wFh" collectionClass="NSMutableArray" id="71y-ao-f5h"/>
+                        <outletCollection property="heightsCollection" destination="7bl-EF-REx" collectionClass="NSMutableArray" id="Tuz-Nh-8Mf"/>
+                        <outletCollection property="widthsCollection" destination="RMh-Zd-kCZ" collectionClass="NSMutableArray" id="XGN-RK-64O"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8wN-X2-GYM" userLabel="First Responder" sceneMemberID="firstResponder"/>

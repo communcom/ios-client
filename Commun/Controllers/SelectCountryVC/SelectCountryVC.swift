@@ -11,28 +11,35 @@ import RxSwift
 import CyberSwift
 
 class SelectCountryVC: UIViewController {
-
-    @IBOutlet weak var tableView: UITableView!
-    
+    // MARK: - Properties
     var viewModel: SelectCountryViewModel?
     
     let searchController = UISearchController(searchResultsController: nil)
     let disposeBag = DisposeBag()
+
     
+    // MARK: - IBOutlets
+    @IBOutlet weak var tableView: UITableView!
+    
+
+    // MARK: - Class Functions
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.title = "Select country"
+        self.title = "Select country".localized()
         
         tableView.register(UINib(nibName: "CountryCell", bundle: nil), forCellReuseIdentifier: "CountryCell")
-        tableView.rowHeight = 56
+        tableView.rowHeight = 56.0
         
-        let closeButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: nil, action: nil)
-        self.navigationItem.leftBarButtonItem = closeButton
+        // Close bar button
+        let closeButton = UIBarButtonItem(title: "Close".localized(), style: .plain, target: nil, action: nil)
+        
         closeButton.rx.tap.subscribe(onNext: { [weak self] _ in
             self?.navigationController?.dismiss(animated: true, completion: nil)
         }).disposed(by: disposeBag)
         
+        self.navigationItem.leftBarButtonItem = closeButton
+
         self.navigationItem.searchController = searchController
         self.navigationItem.hidesSearchBarWhenScrolling = false
         
@@ -61,5 +68,4 @@ class SelectCountryVC: UIViewController {
             }).disposed(by: disposeBag)
         }
     }
-    
 }
