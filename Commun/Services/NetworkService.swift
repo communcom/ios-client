@@ -84,9 +84,9 @@ class NetworkService: NSObject {
         })
     }
     
-    func getUserComments() -> Single<ResponseAPIContentGetComments> {
+    func getUserComments(_ paginationKey: String? = nil) -> Single<ResponseAPIContentGetComments> {
         return Single.create {single in
-            RestAPIManager.instance.loadUserComments(completion: { (response, error) in
+            RestAPIManager.instance.loadUserComments(paginationSequenceKey: paginationKey, completion: { (response, error) in
                 guard error == nil else {
                     Logger.log(message: error!.caseInfo.message.localized(), event: .error)
                     single(.error(error!))
@@ -101,26 +101,26 @@ class NetworkService: NSObject {
         }
     }
     
-    func getPostComment(withPermLink permLink: String, withRefBlock block: UInt64, forUser user: String) -> Observable<ResponseAPIContentGetComments> {
-        return Observable.create({ observer -> Disposable in
+    func getPostComment(_ paginationKey: String? = nil, withPermLink permLink: String, withRefBlock block: UInt64, forUser user: String) -> Single<ResponseAPIContentGetComments> {
+        return Single.create{ single in
             RestAPIManager.instance.loadPostComments(nickName:                  user,
                                                      permlink:                  permLink,
                                                      refBlockNum:               block,
-                                                     paginationSequenceKey:     nil,
-                                                     completion:                { (comments, errorAPI) in
-                                                        guard errorAPI == nil else {
-                                                            Logger.log(message: errorAPI!.caseInfo.message.localized(), event: .error)
+                                                     paginationSequenceKey:     paginationKey,
+                                                     completion:                { (response, error) in
+                                                        guard error == nil else {
+                                                            Logger.log(message: error!.caseInfo.message.localized(), event: .error)
+                                                            single(.error(error!))
                                                             return
                                                         }
                                                         
-                                                        if let comments = comments {
-                                                            Logger.log(message: "Response: \n\t\(comments)", event: .debug)
-                                                            observer.onNext(comments)
+                                                        if let res = response {
+                                                            single(.success(res))
+                                                            return
                                                         }
-                                                        observer.onCompleted()
             })
             return Disposables.create()
-        })
+        }
     }
     
     enum SignInError: Error {

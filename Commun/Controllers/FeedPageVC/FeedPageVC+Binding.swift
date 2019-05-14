@@ -58,6 +58,7 @@ extension FeedPageVC: PostCardCellDelegate {
             .subscribe(onNext: {post in
                 let postPageVC = controllerContainer.resolve(PostPageVC.self)!
                 postPageVC.viewModel.postForRequest = post
+                self.present(postPageVC, animated: true, completion: nil)
             })
             .disposed(by: disposeBag)
     }

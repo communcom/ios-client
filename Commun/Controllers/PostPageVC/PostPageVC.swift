@@ -9,7 +9,7 @@
 import UIKit
 import RxSwift
 
-class PostPageVC: UIViewController, CommentCellDelegate, VotesCellDelegate {
+class PostPageVC: UIViewController, CommentCellDelegate {
 
     var viewModel: PostPageViewModel!
     
@@ -17,31 +17,26 @@ class PostPageVC: UIViewController, CommentCellDelegate, VotesCellDelegate {
     @IBOutlet weak var comunityNameLabel: UILabel!
     
     let disposeBag = DisposeBag()
-    var cells: [UITableViewCell] = []
-    var commentCells: [UITableViewCell] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        viewModel.loadPost()
-        viewModel.loadComments()
         
-        tableView.register(UINib(nibName: "VotesCell", bundle: nil), forCellReuseIdentifier: "VotesCell")
-        tableView.register(UINib(nibName: "TextContentCell", bundle: nil), forCellReuseIdentifier: "TextContentCell")
+        // setup views
+        viewModel.loadPost()
+        viewModel.fetchNext()
+        
         tableView.register(UINib(nibName: "CommentCell", bundle: nil), forCellReuseIdentifier: "CommentCell")
         tableView.register(UINib(nibName: "WriteCommentCell", bundle: nil), forCellReuseIdentifier: "WriteCommentCell")
-        tableView.register(UINib(nibName: "HtmlCell", bundle: nil), forCellReuseIdentifier: "HtmlCell")
-        tableView.register(UINib(nibName: "MediaHtmlCell", bundle: nil), forCellReuseIdentifier: "MediaHtmlCell")
         tableView.register(UINib(nibName: "MediaCommentCell", bundle: nil), forCellReuseIdentifier: "MediaCommentCell")
         
-        tableView.dataSource = self
-        tableView.delegate = self
+        tableView.register(UINib(nibName: "EmptyCell", bundle: nil), forCellReuseIdentifier: "EmptyCell")
         
         tableView.rowHeight = UITableView.automaticDimension
         
-        setupSubscriptions()
-        
         comunityNameLabel.text = viewModel.postForRequest?.community.name
+        
+        // bind ui
+        bindUI()
     }
 
     @IBAction func moreButtonTap(_ sender: Any) {
