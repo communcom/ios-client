@@ -44,6 +44,7 @@ class PostHeaderView: UIView, UIWebViewDelegate {
         layoutSubviews()
     }
     
+    var showMedia = false
     func setUpWith(_ post: ResponseAPIContentGetPost) {
         loadingView.isHidden = true
         // Show media
@@ -54,7 +55,10 @@ class PostHeaderView: UIView, UIWebViewDelegate {
             webView.scrollView.contentInset = UIEdgeInsets(top: -8, left: -8, bottom: -8, right: -8)
             webView.scrollView.isScrollEnabled = false
             webView.scrollView.bouncesZoom = false
+            webView.delegate = self
+            showMedia = true
         } else {
+            showMedia = false
             webViewHeightConstraint.constant = 0
         }
         
@@ -66,6 +70,8 @@ class PostHeaderView: UIView, UIWebViewDelegate {
         
         contentWebView.loadHTMLString(html, baseURL: nil)
         contentWebView.delegate = self
+        contentWebView.scrollView.isScrollEnabled = false
+        contentWebView.scrollView.bouncesZoom = false
         
         // Notify to delegate to update content
         layout()
@@ -77,10 +83,13 @@ class PostHeaderView: UIView, UIWebViewDelegate {
     }
     
     func layout() {
-        var height = webView.height + 112
+        var height: CGFloat = 112.0
+        if showMedia {
+            height += webViewHeightConstraint.constant
+        }
         height += self.postTitleLabel.height
         height += 32
-        height += contentWebView.sizeThatFits(CGSize(width: 0, height: 0)).height
+        height += contentWebView.contentHeight
         height += 41 + 16 + 26.5 + 16
         self.height = height
         

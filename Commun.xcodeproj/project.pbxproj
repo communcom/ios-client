@@ -12,6 +12,7 @@
 		3B02CD2A2289B2620078BB52 /* PostHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3B02CD292289B2620078BB52 /* PostHeaderView.xib */; };
 		3B02CD2C2289BF510078BB52 /* PostHeaderViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B02CD2B2289BF510078BB52 /* PostHeaderViewDelegate.swift */; };
 		3B02CD2E228AB4580078BB52 /* NotificationsFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B02CD2D228AB4580078BB52 /* NotificationsFetcher.swift */; };
+		3B02CD34228ADC100078BB52 /* UIWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B02CD33228ADC100078BB52 /* UIWebView.swift */; };
 		3B0E9C5E226F02AC002AB1C2 /* ProfileEditCoverVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B0E9C5D226F02AC002AB1C2 /* ProfileEditCoverVC.swift */; };
 		3B0E9C64226F4A0C002AB1C2 /* VerticalDraggableImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B0E9C63226F4A0C002AB1C2 /* VerticalDraggableImageView.swift */; };
 		3B0E9C66227050E3002AB1C2 /* UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B0E9C65227050E3002AB1C2 /* UIImageView.swift */; };
@@ -168,6 +169,7 @@
 		3B02CD292289B2620078BB52 /* PostHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PostHeaderView.xib; sourceTree = "<group>"; };
 		3B02CD2B2289BF510078BB52 /* PostHeaderViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostHeaderViewDelegate.swift; sourceTree = "<group>"; };
 		3B02CD2D228AB4580078BB52 /* NotificationsFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsFetcher.swift; sourceTree = "<group>"; };
+		3B02CD33228ADC100078BB52 /* UIWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIWebView.swift; sourceTree = "<group>"; };
 		3B0E9C5D226F02AC002AB1C2 /* ProfileEditCoverVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditCoverVC.swift; sourceTree = "<group>"; };
 		3B0E9C63226F4A0C002AB1C2 /* VerticalDraggableImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalDraggableImageView.swift; sourceTree = "<group>"; };
 		3B0E9C65227050E3002AB1C2 /* UIImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageView.swift; sourceTree = "<group>"; };
@@ -734,6 +736,7 @@
 				3BB86B402271B5D8008F1C64 /* ResponseAPIContentGetProfilePersonal.swift */,
 				3BB86B4822734AE4008F1C64 /* UIColor.swift */,
 				3B635F8222774A37006DAAB2 /* FeedTimeFrameMode.swift */,
+				3B02CD33228ADC100078BB52 /* UIWebView.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1380,6 +1383,7 @@
 				57FB17A2224C093A00563BF7 /* SignInVC.swift in Sources */,
 				3B0E9C7122706985002AB1C2 /* ProfileChooseAvatarViewModel.swift in Sources */,
 				57840A06223FAC1B00338FD5 /* SegmentioCellWithImageOverLabel.swift in Sources */,
+				3B02CD34228ADC100078BB52 /* UIWebView.swift in Sources */,
 				3B0E9C5E226F02AC002AB1C2 /* ProfileEditCoverVC.swift in Sources */,
 				3B02CD1F228965AF0078BB52 /* CommentCellDelegate+UIViewController.swift in Sources */,
 				3B197C532269BE0E008CF10D /* SegmentioExtension.swift in Sources */,
