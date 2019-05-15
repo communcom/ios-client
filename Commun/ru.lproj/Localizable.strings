@@ -21,7 +21,7 @@
 "Master key has been generated"             =   "Мастер ключ был создан";
 "You need Master Key"                       =   "Вам нужен мастер-ключ для входа в систему.\nПожалуйста, скачайте его.";
 "Welcome,"                                  =   "Добро пожаловать,";
-"sign in to continue"                       =   "войдите, чтобы продолжить";
+"sign in to continue"                       =   "авторизуйтесь";
 
 
 // Buttons

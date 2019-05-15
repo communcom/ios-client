@@ -120,7 +120,7 @@ class SignUpVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.title = "Sign up"
+        self.title = "Sign up".localized()
         self.navigationController?.navigationBar.prefersLargeTitles = true
         
         setupBindings()

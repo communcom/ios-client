@@ -130,6 +130,9 @@
                                 <include reference="naJ-j0-mQJ"/>
                             </mask>
                         </variation>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="J53-Wj-8KW" appends="YES" id="lga-Vd-BTO"/>
+                        </connections>
                     </view>
                     <connections>
                         <outlet property="keyTextField" destination="Ehc-OL-uc5" id="FIj-48-p3b"/>
@@ -146,6 +149,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WBu-35-r9i" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="J53-Wj-8KW">
+                    <connections>
+                        <action selector="handlerTapGestureRecognizer:" destination="0VS-9d-Fuq" id="PyO-lv-feK"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="37.600000000000001" y="223.53823088455775"/>
         </scene>

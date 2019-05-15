@@ -165,4 +165,10 @@ class SignInVC: UIViewController {
         signInButton.backgroundColor = #colorLiteral(red: 0.4156862745, green: 0.5019607843, blue: 0.9607843137, alpha: 0.3834813784)
         return false
     }
+    
+    
+    // MARK: - Gestures
+    @IBAction func handlerTapGestureRecognizer(_ sender: UITapGestureRecognizer) {
+        self.view.endEditing(true)
+    }
 }
