@@ -9,8 +9,8 @@
 import UIKit
 import Fabric
 import CoreData
-@_exported import CyberSwift
 import Crashlytics
+@_exported import CyberSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
