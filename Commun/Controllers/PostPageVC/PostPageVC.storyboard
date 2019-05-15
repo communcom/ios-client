@@ -32,19 +32,20 @@
                                 <rect key="frame" x="0.0" y="20" width="375" height="56"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="epW-Br-j8v" userLabel="Back Button">
-                                        <rect key="frame" x="8" y="18" width="12" height="20"/>
+                                        <rect key="frame" x="0.0" y="10" width="36" height="36"/>
                                         <accessibility key="accessibilityConfiguration" identifier="PostPageBackButton" label="PostPageBackButton"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="12" id="Sn4-fu-Sfi"/>
-                                            <constraint firstAttribute="height" constant="20" id="dSu-uA-NKK"/>
+                                            <constraint firstAttribute="width" constant="36" id="Sn4-fu-Sfi"/>
+                                            <constraint firstAttribute="height" constant="36" id="dSu-uA-NKK"/>
                                         </constraints>
+                                        <inset key="contentEdgeInsets" minX="12" minY="8" maxX="12" maxY="8"/>
                                         <state key="normal" image="Back"/>
                                         <connections>
                                             <action selector="backButtonTap:" destination="e29-hK-EV2" eventType="touchUpInside" id="YLl-3U-GIb"/>
                                         </connections>
                                     </button>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tux" translatesAutoresizingMaskIntoConstraints="NO" id="JAo-Iq-Wdc">
-                                        <rect key="frame" x="36" y="8" width="40" height="40"/>
+                                        <rect key="frame" x="44" y="8" width="40" height="40"/>
                                         <accessibility key="accessibilityConfiguration" identifier="PostPageAvatarImageView"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="0BL-4M-RWn"/>
@@ -52,13 +53,13 @@
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ComunityName" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z2m-2G-cmH">
-                                        <rect key="frame" x="92" y="10" width="108.5" height="18"/>
+                                        <rect key="frame" x="100" y="10" width="108.5" height="18"/>
                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3h ago" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RsM-Yt-jdM">
-                                        <rect key="frame" x="92" y="30" width="42.5" height="16"/>
+                                        <rect key="frame" x="100" y="30" width="42.5" height="16"/>
                                         <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="13"/>
                                         <color key="textColor" red="0.60784313725490191" green="0.62352941176470589" blue="0.63529411764705879" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -76,7 +77,7 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="by Sergey" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AUu-SG-Yxw">
-                                        <rect key="frame" x="138" y="30" width="62" height="16"/>
+                                        <rect key="frame" x="146" y="30" width="62" height="16"/>
                                         <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="13"/>
                                         <color key="textColor" red="0.60784313729999995" green="0.62352941179999999" blue="0.63529411759999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -93,9 +94,9 @@
                                     <constraint firstItem="AUu-SG-Yxw" firstAttribute="leading" secondItem="RsM-Yt-jdM" secondAttribute="trailing" constant="3.5" id="R3d-mp-ebT"/>
                                     <constraint firstItem="JAo-Iq-Wdc" firstAttribute="centerY" secondItem="epW-Br-j8v" secondAttribute="centerY" id="ZG7-Tm-63A"/>
                                     <constraint firstItem="Z2m-2G-cmH" firstAttribute="top" secondItem="xxf-Yw-cnd" secondAttribute="top" constant="10" id="bss-0a-iur"/>
-                                    <constraint firstItem="epW-Br-j8v" firstAttribute="leading" secondItem="xxf-Yw-cnd" secondAttribute="leading" constant="8" id="gA1-9t-B9M"/>
+                                    <constraint firstItem="epW-Br-j8v" firstAttribute="leading" secondItem="xxf-Yw-cnd" secondAttribute="leading" id="gA1-9t-B9M"/>
                                     <constraint firstAttribute="trailing" secondItem="ESO-Mb-GPX" secondAttribute="trailing" constant="16" id="msL-I7-Pfq"/>
-                                    <constraint firstItem="JAo-Iq-Wdc" firstAttribute="leading" secondItem="epW-Br-j8v" secondAttribute="trailing" constant="16" id="nbn-g5-6Jj"/>
+                                    <constraint firstItem="JAo-Iq-Wdc" firstAttribute="leading" secondItem="epW-Br-j8v" secondAttribute="trailing" constant="8" id="nbn-g5-6Jj"/>
                                     <constraint firstItem="Z2m-2G-cmH" firstAttribute="leading" secondItem="JAo-Iq-Wdc" secondAttribute="trailing" constant="16" id="sgX-1h-tTA"/>
                                 </constraints>
                             </view>
