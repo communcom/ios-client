@@ -29,6 +29,7 @@
 		3B197C89226A33CF008CF10D /* ResponseAPIContentGetCommentsResult.json in Resources */ = {isa = PBXBuildFile; fileRef = 3B197C85226A33CF008CF10D /* ResponseAPIContentGetCommentsResult.json */; };
 		3B197C8A226A33CF008CF10D /* Decodable+MockObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B197C86226A33CF008CF10D /* Decodable+MockObjects.swift */; };
 		3B197C8B226A33CF008CF10D /* ResponseAPIContentGetFeedResult.json in Resources */ = {isa = PBXBuildFile; fileRef = 3B197C87226A33CF008CF10D /* ResponseAPIContentGetFeedResult.json */; };
+		3B28EFE2228C7C31002D4816 /* KeyboardLayoutConstraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B28EFE1228C7C31002D4816 /* KeyboardLayoutConstraint.swift */; };
 		3B2F2269226892C5006B589E /* NotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B2F2262226892C4006B589E /* NotificationCell.swift */; };
 		3B2F226A226892C5006B589E /* NotificationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3B2F2263226892C4006B589E /* NotificationCell.xib */; };
 		3B2F226B226892C5006B589E /* NotificationsPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B2F2264226892C4006B589E /* NotificationsPageViewModel.swift */; };
@@ -216,6 +217,7 @@
 		3B197C85226A33CF008CF10D /* ResponseAPIContentGetCommentsResult.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ResponseAPIContentGetCommentsResult.json; sourceTree = "<group>"; };
 		3B197C86226A33CF008CF10D /* Decodable+MockObjects.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Decodable+MockObjects.swift"; sourceTree = "<group>"; };
 		3B197C87226A33CF008CF10D /* ResponseAPIContentGetFeedResult.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ResponseAPIContentGetFeedResult.json; sourceTree = "<group>"; };
+		3B28EFE1228C7C31002D4816 /* KeyboardLayoutConstraint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardLayoutConstraint.swift; sourceTree = "<group>"; };
 		3B2F2262226892C4006B589E /* NotificationCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationCell.swift; sourceTree = "<group>"; };
 		3B2F2263226892C4006B589E /* NotificationCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NotificationCell.xib; sourceTree = "<group>"; };
 		3B2F2264226892C4006B589E /* NotificationsPageViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationsPageViewModel.swift; sourceTree = "<group>"; };
@@ -762,6 +764,7 @@
 				3BAF69CA226773000055CCEB /* UIView+Shadow.swift */,
 				576DC920223E42C800EDED41 /* UIViewControllerExtension.swift */,
 				3B02CD33228ADC100078BB52 /* UIWebView.swift */,
+				3B28EFE1228C7C31002D4816 /* KeyboardLayoutConstraint.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1342,6 +1345,7 @@
 				57840A04223FAC1B00338FD5 /* SegmentioCellWithImage.swift in Sources */,
 				57CBD9602255187B000BA8CC /* EditorPageVC+UIImagePickerController.swift in Sources */,
 				3B51581C226DE28D00108F17 /* EmptyCell.swift in Sources */,
+				3B28EFE2228C7C31002D4816 /* KeyboardLayoutConstraint.swift in Sources */,
 				3BAF69CB226773000055CCEB /* UIView+Shadow.swift in Sources */,
 				3BAF69D522686A1B0055CCEB /* ItemsFetcher.swift in Sources */,
 				5787C0C622650FA500568CEC /* SetUserViewModel.swift in Sources */,

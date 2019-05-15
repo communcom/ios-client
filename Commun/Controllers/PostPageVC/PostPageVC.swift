@@ -37,6 +37,9 @@ class PostPageVC: UIViewController, CommentCellDelegate {
         
         comunityNameLabel.text = viewModel.postForRequest?.community.name
         
+        // dismiss keyboard when dragging
+        tableView.keyboardDismissMode = .onDrag
+        
         // bind ui
         bindUI()
     }
