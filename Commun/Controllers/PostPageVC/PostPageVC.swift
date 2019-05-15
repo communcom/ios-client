@@ -18,8 +18,6 @@ class PostPageVC: UIViewController, CommentCellDelegate {
     @IBOutlet weak var timeAgoLabel: UILabel!
     @IBOutlet weak var byUserLabel: UILabel!
     
-    @IBOutlet weak var commentTextFieldBottomConstraint: NSLayoutConstraint!
-    
     let disposeBag = DisposeBag()
     
     override func viewDidLoad() {
@@ -38,6 +36,9 @@ class PostPageVC: UIViewController, CommentCellDelegate {
         tableView.rowHeight = UITableView.automaticDimension
         
         comunityNameLabel.text = viewModel.postForRequest?.community.name
+        
+        // dismiss keyboard when dragging
+        tableView.keyboardDismissMode = .onDrag
         
         // bind ui
         bindUI()

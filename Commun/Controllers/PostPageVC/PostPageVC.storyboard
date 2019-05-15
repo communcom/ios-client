@@ -59,7 +59,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3h ago" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RsM-Yt-jdM">
-                                        <rect key="frame" x="100" y="30" width="40" height="16"/>
+                                        <rect key="frame" x="100" y="30" width="42.5" height="16"/>
                                         <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="13"/>
                                         <color key="textColor" red="0.60784313725490191" green="0.62352941176470589" blue="0.63529411764705879" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -77,7 +77,7 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="by Sergey" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AUu-SG-Yxw">
-                                        <rect key="frame" x="143.5" y="30" width="58.5" height="16"/>
+                                        <rect key="frame" x="146" y="30" width="61.5" height="16"/>
                                         <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="13"/>
                                         <color key="textColor" red="0.60784313729999995" green="0.62352941179999999" blue="0.63529411759999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -132,15 +132,14 @@
                             <constraint firstAttribute="trailing" secondItem="xxf-Yw-cnd" secondAttribute="trailing" id="LXB-Za-bqo"/>
                             <constraint firstItem="xxf-Yw-cnd" firstAttribute="top" secondItem="Pgb-4l-LXo" secondAttribute="top" id="M6C-mX-Ryo"/>
                             <constraint firstItem="gxE-vT-71g" firstAttribute="top" secondItem="xxf-Yw-cnd" secondAttribute="bottom" id="Nh6-Zs-Ake"/>
+                            <constraint firstItem="Pgb-4l-LXo" firstAttribute="bottom" secondItem="PwV-3h-dZy" secondAttribute="bottom" constant="14" id="VoX-Ud-ejf" customClass="KeyboardLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                             <constraint firstItem="PwV-3h-dZy" firstAttribute="leading" secondItem="Pgb-4l-LXo" secondAttribute="leading" constant="16" id="dDY-9i-exS"/>
-                            <constraint firstAttribute="bottomMargin" secondItem="PwV-3h-dZy" secondAttribute="bottom" constant="14" id="pzp-AO-PDu"/>
                             <constraint firstItem="Dx8-8W-zVf" firstAttribute="top" secondItem="gxE-vT-71g" secondAttribute="bottom" id="vtz-i6-TwG"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Pgb-4l-LXo"/>
                     </view>
                     <connections>
                         <outlet property="byUserLabel" destination="AUu-SG-Yxw" id="lrc-9d-vRE"/>
-                        <outlet property="commentTextFieldBottomConstraint" destination="pzp-AO-PDu" id="aJ7-Mw-fnk"/>
                         <outlet property="comunityNameLabel" destination="Z2m-2G-cmH" id="GD7-ht-eGw"/>
                         <outlet property="tableView" destination="Dx8-8W-zVf" id="OtS-57-Afj"/>
                         <outlet property="timeAgoLabel" destination="RsM-Yt-jdM" id="Azv-hd-vTh"/>

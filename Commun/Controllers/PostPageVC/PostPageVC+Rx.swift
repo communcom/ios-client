@@ -19,9 +19,6 @@ extension PostPageVC: PostHeaderViewDelegate {
         
         // Observe comments
         bindComments()
-        
-        // Observe textField
-        bindCommentTextField()
     }
     
     func bindPost() {
@@ -78,21 +75,6 @@ extension PostPageVC: PostHeaderViewDelegate {
             }
             .disposed(by: disposeBag)
     }
-    
-    func bindCommentTextField() {
-        tableView.keyboardDismissMode = .onDrag
-        
-        keyboardHeight()
-            .observeOn(MainScheduler.instance)
-            .subscribe(onNext: {height in
-                self.commentTextFieldBottomConstraint.constant = height - self.view.safeAreaInsets.bottom + 14
-                UIView.animate(withDuration: 0.3, animations: {
-                    self.view.layoutIfNeeded()
-                })
-            })
-            .disposed(by: disposeBag)
-    }
-
     
     func headerViewDidLayoutSubviews(_ headerView: PostHeaderView) {
         self.tableView.tableHeaderView = headerView
