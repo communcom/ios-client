@@ -53,6 +53,7 @@
 		3BB86B412271B5D8008F1C64 /* ResponseAPIContentGetProfilePersonal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BB86B402271B5D8008F1C64 /* ResponseAPIContentGetProfilePersonal.swift */; };
 		3BB86B47227222DE008F1C64 /* ProfilePage+Parallax.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BB86B46227222DE008F1C64 /* ProfilePage+Parallax.swift */; };
 		3BB86B4922734AE4008F1C64 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BB86B4822734AE4008F1C64 /* UIColor.swift */; };
+		3BC8053F228C5B88008F24AD /* Keyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BC8053E228C5B88008F24AD /* Keyboard.swift */; };
 		5700611A2253CA96007700DA /* EditorContentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570061182253CA96007700DA /* EditorContentCell.swift */; };
 		5700611B2253CA96007700DA /* EditorContentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 570061192253CA96007700DA /* EditorContentCell.xib */; };
 		5700611F2253CDDF007700DA /* EditorMediaCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5700611D2253CDDF007700DA /* EditorMediaCell.swift */; };
@@ -240,6 +241,7 @@
 		3BB86B402271B5D8008F1C64 /* ResponseAPIContentGetProfilePersonal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseAPIContentGetProfilePersonal.swift; sourceTree = "<group>"; };
 		3BB86B46227222DE008F1C64 /* ProfilePage+Parallax.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProfilePage+Parallax.swift"; sourceTree = "<group>"; };
 		3BB86B4822734AE4008F1C64 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
+		3BC8053E228C5B88008F24AD /* Keyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keyboard.swift; sourceTree = "<group>"; };
 		4F0772CC6D820AD11B1FF48A /* Pods_Commun.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Commun.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		570061182253CA96007700DA /* EditorContentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorContentCell.swift; sourceTree = "<group>"; };
 		570061192253CA96007700DA /* EditorContentCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EditorContentCell.xib; sourceTree = "<group>"; };
@@ -762,6 +764,7 @@
 				3BAF69CA226773000055CCEB /* UIView+Shadow.swift */,
 				576DC920223E42C800EDED41 /* UIViewControllerExtension.swift */,
 				3B02CD33228ADC100078BB52 /* UIWebView.swift */,
+				3BC8053E228C5B88008F24AD /* Keyboard.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1439,6 +1442,7 @@
 				574095862247AAB100E40E51 /* WriteCommentCell.swift in Sources */,
 				57DE5BDC2252088C008566B9 /* EditorPageVC.swift in Sources */,
 				3B2F226E226892C5006B589E /* NotificationType.swift in Sources */,
+				3BC8053F228C5B88008F24AD /* Keyboard.swift in Sources */,
 				5721AE45226E556500133BFF /* MediaCommentCell.swift in Sources */,
 				570061242253D3B3007700DA /* EditorLinkCell.swift in Sources */,
 				571B8241225B31A000823F02 /* EditorPageVC+UITextViewDelegate.swift in Sources */,

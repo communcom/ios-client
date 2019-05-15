@@ -9,10 +9,22 @@
 import UIKit
 import CyberSwift
 import RxCocoa
+import RxSwift
 
 extension PostPageVC: PostHeaderViewDelegate {
     
     func bindUI() {
+        // Observe post
+        bindPost()
+        
+        // Observe comments
+        bindComments()
+        
+        // Observe textField
+        bindCommentTextField()
+    }
+    
+    func bindPost() {
         viewModel.post
             .subscribe(onNext: {post in
                 // Time ago & community
@@ -26,12 +38,14 @@ extension PostPageVC: PostHeaderViewDelegate {
                 guard let headerView = UINib(nibName: "PostHeaderView", bundle: nil).instantiate(withOwner: self, options: nil).first as? PostHeaderView else {return}
                 headerView.post = post
                 headerView.delegate = self
-            
+                
                 // Assign table header view
                 self.tableView.tableHeaderView = headerView
             })
             .disposed(by: disposeBag)
-        
+    }
+    
+    func bindComments() {
         viewModel.comments
             .map { items -> [ResponseAPIContentGetComment?] in
                 if items.count == 0 {
@@ -63,8 +77,22 @@ extension PostPageVC: PostHeaderViewDelegate {
                 }
             }
             .disposed(by: disposeBag)
-        
     }
+    
+    func bindCommentTextField() {
+        tableView.keyboardDismissMode = .onDrag
+        
+        keyboardHeight()
+            .observeOn(MainScheduler.instance)
+            .subscribe(onNext: {height in
+                self.commentTextFieldBottomConstraint.constant = height - self.view.safeAreaInsets.bottom + 14
+                UIView.animate(withDuration: 0.3, animations: {
+                    self.view.layoutIfNeeded()
+                })
+            })
+            .disposed(by: disposeBag)
+    }
+
     
     func headerViewDidLayoutSubviews(_ headerView: PostHeaderView) {
         self.tableView.tableHeaderView = headerView

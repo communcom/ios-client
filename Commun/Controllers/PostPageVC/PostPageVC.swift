@@ -18,6 +18,8 @@ class PostPageVC: UIViewController, CommentCellDelegate {
     @IBOutlet weak var timeAgoLabel: UILabel!
     @IBOutlet weak var byUserLabel: UILabel!
     
+    @IBOutlet weak var commentTextFieldBottomConstraint: NSLayoutConstraint!
+    
     let disposeBag = DisposeBag()
     
     override func viewDidLoad() {
