@@ -14,6 +14,8 @@ class ExpandableTextView: UITextView {
     private let bag = DisposeBag()
     var heightConstraint: NSLayoutConstraint!
     
+    @IBInspectable var maxHeight: CGFloat = 300
+    
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         self.rx.didChange
@@ -23,8 +25,8 @@ class ExpandableTextView: UITextView {
                 let newSize = self.sizeThatFits(CGSize(width: width,
                                                            height: CGFloat.greatestFiniteMagnitude))
                 newFrame.size = CGSize(width: width, height: newSize.height)
+                if (newFrame.size.height > self.maxHeight) {return}
                 self.frame = newFrame
-                
                 self.heightConstraint.constant = newSize.height
                 self.layoutIfNeeded()
             })
