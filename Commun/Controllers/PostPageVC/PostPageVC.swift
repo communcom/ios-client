@@ -17,6 +17,7 @@ class PostPageVC: UIViewController, CommentCellDelegate {
     @IBOutlet weak var comunityNameLabel: UILabel!
     @IBOutlet weak var timeAgoLabel: UILabel!
     @IBOutlet weak var byUserLabel: UILabel!
+    @IBOutlet weak var communityAvatarImageView: UIImageView!
     
     let disposeBag = DisposeBag()
     
