@@ -146,19 +146,19 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="JeD-sm-rpr" firstAttribute="trailing" secondItem="Pgb-4l-LXo" secondAttribute="trailing" constant="-16" id="9gn-wx-Kms"/>
                             <constraint firstItem="gxE-vT-71g" firstAttribute="leading" secondItem="Pgb-4l-LXo" secondAttribute="leading" id="Asn-MO-U9b"/>
                             <constraint firstItem="Pgb-4l-LXo" firstAttribute="trailing" secondItem="gxE-vT-71g" secondAttribute="trailing" id="BLW-ch-ZW8"/>
                             <constraint firstItem="Dx8-8W-zVf" firstAttribute="leading" secondItem="Pgb-4l-LXo" secondAttribute="leading" id="G0A-8k-1Jd"/>
                             <constraint firstItem="xxf-Yw-cnd" firstAttribute="leading" secondItem="Pgb-4l-LXo" secondAttribute="leading" id="K7x-BD-DL1"/>
+                            <constraint firstItem="Pgb-4l-LXo" firstAttribute="trailing" secondItem="JeD-sm-rpr" secondAttribute="trailing" constant="16" id="LM1-4e-PBt"/>
                             <constraint firstItem="Pgb-4l-LXo" firstAttribute="trailing" secondItem="Dx8-8W-zVf" secondAttribute="trailing" id="LQj-q6-S44"/>
                             <constraint firstAttribute="trailing" secondItem="xxf-Yw-cnd" secondAttribute="trailing" id="LXB-Za-bqo"/>
                             <constraint firstItem="xxf-Yw-cnd" firstAttribute="top" secondItem="Pgb-4l-LXo" secondAttribute="top" id="M6C-mX-Ryo"/>
                             <constraint firstItem="gxE-vT-71g" firstAttribute="top" secondItem="xxf-Yw-cnd" secondAttribute="bottom" id="Nh6-Zs-Ake"/>
                             <constraint firstItem="JeD-sm-rpr" firstAttribute="top" secondItem="Dx8-8W-zVf" secondAttribute="bottom" constant="14" id="Xyl-gU-QyY"/>
+                            <constraint firstItem="Pgb-4l-LXo" firstAttribute="bottom" secondItem="JeD-sm-rpr" secondAttribute="bottom" constant="14" id="lrA-qM-Gjp" customClass="KeyboardLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                             <constraint firstItem="JeD-sm-rpr" firstAttribute="leading" secondItem="Pgb-4l-LXo" secondAttribute="leading" constant="16" id="uv7-6D-r4f"/>
                             <constraint firstItem="Dx8-8W-zVf" firstAttribute="top" secondItem="gxE-vT-71g" secondAttribute="bottom" id="vtz-i6-TwG"/>
-                            <constraint firstItem="JeD-sm-rpr" firstAttribute="bottom" secondItem="Pgb-4l-LXo" secondAttribute="bottom" constant="-14" id="zuO-2f-VCh" customClass="KeyboardLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Pgb-4l-LXo"/>
                     </view>
