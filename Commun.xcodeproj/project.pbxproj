@@ -54,6 +54,8 @@
 		3BB86B47227222DE008F1C64 /* ProfilePage+Parallax.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BB86B46227222DE008F1C64 /* ProfilePage+Parallax.swift */; };
 		3BB86B4922734AE4008F1C64 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BB86B4822734AE4008F1C64 /* UIColor.swift */; };
 		3BDD99FE228DA59900B2A1DA /* ExpandableTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BDD99FD228DA59900B2A1DA /* ExpandableTextView.swift */; };
+		3BDD9A04228DBEC200B2A1DA /* CommentForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BDD9A03228DBEC200B2A1DA /* CommentForm.swift */; };
+		3BDD9A06228DBED000B2A1DA /* CommentForm.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3BDD9A05228DBED000B2A1DA /* CommentForm.xib */; };
 		5700611A2253CA96007700DA /* EditorContentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570061182253CA96007700DA /* EditorContentCell.swift */; };
 		5700611B2253CA96007700DA /* EditorContentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 570061192253CA96007700DA /* EditorContentCell.xib */; };
 		5700611F2253CDDF007700DA /* EditorMediaCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5700611D2253CDDF007700DA /* EditorMediaCell.swift */; };
@@ -238,6 +240,8 @@
 		3BB86B46227222DE008F1C64 /* ProfilePage+Parallax.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProfilePage+Parallax.swift"; sourceTree = "<group>"; };
 		3BB86B4822734AE4008F1C64 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		3BDD99FD228DA59900B2A1DA /* ExpandableTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandableTextView.swift; sourceTree = "<group>"; };
+		3BDD9A03228DBEC200B2A1DA /* CommentForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentForm.swift; sourceTree = "<group>"; };
+		3BDD9A05228DBED000B2A1DA /* CommentForm.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CommentForm.xib; sourceTree = "<group>"; };
 		4F0772CC6D820AD11B1FF48A /* Pods_Commun.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Commun.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		570061182253CA96007700DA /* EditorContentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorContentCell.swift; sourceTree = "<group>"; };
 		570061192253CA96007700DA /* EditorContentCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EditorContentCell.xib; sourceTree = "<group>"; };
@@ -497,6 +501,15 @@
 			path = ProfilePageVC;
 			sourceTree = "<group>";
 		};
+		3BDD9A02228DBE9D00B2A1DA /* CommentForm */ = {
+			isa = PBXGroup;
+			children = (
+				3BDD9A03228DBEC200B2A1DA /* CommentForm.swift */,
+				3BDD9A05228DBED000B2A1DA /* CommentForm.xib */,
+			);
+			path = CommentForm;
+			sourceTree = "<group>";
+		};
 		570061172253CA83007700DA /* EditorContentCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -601,6 +614,7 @@
 			isa = PBXGroup;
 			children = (
 				3B02CD262289B1D30078BB52 /* PostHeaderView */,
+				3BDD9A02228DBE9D00B2A1DA /* CommentForm */,
 				57C33A402244D2BB00073FAE /* Cells */,
 				5725173F2243E4D70033125C /* PostPageViewModel.swift */,
 				5725173B2243E4640033125C /* PostPageVC.swift */,
@@ -1190,6 +1204,7 @@
 				3B197C88226A33CF008CF10D /* ResponseAPIContentGetProfileResult.json in Resources */,
 				B1EA02F32289882A00835244 /* SF-Pro-Text-Semibold.otf in Resources */,
 				B1EA02E92289882A00835244 /* SF-Pro-Text-Bold.otf in Resources */,
+				3BDD9A06228DBED000B2A1DA /* CommentForm.xib in Resources */,
 				B1EA02E62289882A00835244 /* SF-Pro-Display-ThinItalic.otf in Resources */,
 				B170AC16228AFBF500C6FFBC /* PostCardCell.xib in Resources */,
 				B1EA02F02289882A00835244 /* SF-Pro-Text-MediumItalic.otf in Resources */,
@@ -1415,6 +1430,7 @@
 				570061242253D3B3007700DA /* EditorLinkCell.swift in Sources */,
 				571B8241225B31A000823F02 /* EditorPageVC+UITextViewDelegate.swift in Sources */,
 				57F5CFC22244E3BE005A09AE /* PostPageVC+Rx.swift in Sources */,
+				3BDD9A04228DBEC200B2A1DA /* CommentForm.swift in Sources */,
 				5740957F2247768C00E40E51 /* CommentCell.swift in Sources */,
 				3B635F7F22772D87006DAAB2 /* PostsFetcher.swift in Sources */,
 				57E5159E2270E5DE00A6F6DB /* SettingsVC.swift in Sources */,

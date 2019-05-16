@@ -40,7 +40,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Dx8-8W-zVf">
-                                <rect key="frame" x="0.0" y="76.5" width="375" height="524.5"/>
+                                <rect key="frame" x="0.0" y="76.5" width="375" height="526.5"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                             </tableView>
@@ -128,21 +128,13 @@
                                     <constraint firstAttribute="height" constant="0.5" id="AQr-zp-jhG"/>
                                 </constraints>
                             </view>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="JeD-sm-rpr" customClass="ExpandableTextView" customModule="Commun" customModuleProvider="target">
-                                <rect key="frame" x="16" y="615" width="343" height="38"/>
-                                <color key="backgroundColor" red="0.95212393999099731" green="0.95958274602890015" blue="0.97945135831832886" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="thI-Qg-Abq" customClass="CommentForm" customModule="Commun" customModuleProvider="target">
+                                <rect key="frame" x="16" y="617" width="343" height="36"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="38" id="FYm-53-dZl"/>
+                                    <constraint firstAttribute="height" constant="36" placeholder="YES" id="JfU-Ts-gQr"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Write a comment"/>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="18"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                            </textView>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -150,14 +142,14 @@
                             <constraint firstItem="Pgb-4l-LXo" firstAttribute="trailing" secondItem="gxE-vT-71g" secondAttribute="trailing" id="BLW-ch-ZW8"/>
                             <constraint firstItem="Dx8-8W-zVf" firstAttribute="leading" secondItem="Pgb-4l-LXo" secondAttribute="leading" id="G0A-8k-1Jd"/>
                             <constraint firstItem="xxf-Yw-cnd" firstAttribute="leading" secondItem="Pgb-4l-LXo" secondAttribute="leading" id="K7x-BD-DL1"/>
-                            <constraint firstItem="Pgb-4l-LXo" firstAttribute="trailing" secondItem="JeD-sm-rpr" secondAttribute="trailing" constant="16" id="LM1-4e-PBt"/>
                             <constraint firstItem="Pgb-4l-LXo" firstAttribute="trailing" secondItem="Dx8-8W-zVf" secondAttribute="trailing" id="LQj-q6-S44"/>
                             <constraint firstAttribute="trailing" secondItem="xxf-Yw-cnd" secondAttribute="trailing" id="LXB-Za-bqo"/>
                             <constraint firstItem="xxf-Yw-cnd" firstAttribute="top" secondItem="Pgb-4l-LXo" secondAttribute="top" id="M6C-mX-Ryo"/>
+                            <constraint firstItem="thI-Qg-Abq" firstAttribute="top" secondItem="Dx8-8W-zVf" secondAttribute="bottom" constant="14" id="M7J-ms-coW"/>
                             <constraint firstItem="gxE-vT-71g" firstAttribute="top" secondItem="xxf-Yw-cnd" secondAttribute="bottom" id="Nh6-Zs-Ake"/>
-                            <constraint firstItem="JeD-sm-rpr" firstAttribute="top" secondItem="Dx8-8W-zVf" secondAttribute="bottom" constant="14" id="Xyl-gU-QyY"/>
-                            <constraint firstItem="Pgb-4l-LXo" firstAttribute="bottom" secondItem="JeD-sm-rpr" secondAttribute="bottom" constant="14" id="lrA-qM-Gjp" customClass="KeyboardLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
-                            <constraint firstItem="JeD-sm-rpr" firstAttribute="leading" secondItem="Pgb-4l-LXo" secondAttribute="leading" constant="16" id="uv7-6D-r4f"/>
+                            <constraint firstItem="thI-Qg-Abq" firstAttribute="leading" secondItem="Pgb-4l-LXo" secondAttribute="leading" constant="16" id="ZAN-gb-P85"/>
+                            <constraint firstItem="Pgb-4l-LXo" firstAttribute="trailing" secondItem="thI-Qg-Abq" secondAttribute="trailing" constant="16" id="lpC-GX-aP4"/>
+                            <constraint firstItem="Pgb-4l-LXo" firstAttribute="bottom" secondItem="thI-Qg-Abq" secondAttribute="bottom" constant="14" id="tU9-2d-mxx" customClass="KeyboardLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                             <constraint firstItem="Dx8-8W-zVf" firstAttribute="top" secondItem="gxE-vT-71g" secondAttribute="bottom" id="vtz-i6-TwG"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Pgb-4l-LXo"/>
