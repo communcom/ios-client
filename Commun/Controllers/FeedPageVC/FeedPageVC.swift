@@ -15,6 +15,7 @@ class FeedPageVC: UIViewController {
     var viewModel: FeedPageViewModel!
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var userAvatarImage: UIImageView!
     @IBOutlet weak var segmentioView: Segmentio!
     @IBOutlet weak var sortByTypeButton: UIButton!
     @IBOutlet weak var sortByTimeButton: UIButton!

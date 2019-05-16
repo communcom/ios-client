@@ -219,6 +219,7 @@
                         <outlet property="sortByTimeButton" destination="d57-yH-JCE" id="I7M-4v-dAk"/>
                         <outlet property="sortByTypeButton" destination="YpZ-V0-RF5" id="KS2-5T-fKN"/>
                         <outlet property="tableView" destination="8YX-tZ-48z" id="qId-Qf-2c1"/>
+                        <outlet property="userAvatarImage" destination="Z7e-MC-AaW" id="kXZ-6Z-Ba4"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ngs-5r-vXj" userLabel="First Responder" sceneMemberID="firstResponder"/>
