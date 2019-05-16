@@ -21,42 +21,49 @@ class TabBarVC: UITabBarController {
         
         // Feed Tab
         let feed = controllerContainer.resolve(FeedPageVC.self)!
-        feed.tabBarItem = UITabBarItem(title: "Feed", image: UIImage(named: "feed"), tag: 0)
+        feed.tabBarItem = centerTabBarItem(withImageName: "feed", tag: 0)
         feed.accessibilityLabel = "TabBarFeedTabBarItem"
 
         // Comunities Tab
         let comunities = UIViewController()
-        comunities.tabBarItem = UITabBarItem(title: "Сomunities", image: UIImage(named: "comunities"), tag: 1)
+        comunities.tabBarItem = centerTabBarItem(withImageName: "comunities", tag: 1)
         comunities.accessibilityLabel = "TabBarComunitiesTabBarItem"
 
         // Profile Tab
         let profile = controllerContainer.resolve(ProfilePageVC.self)!
         let profileNC = UINavigationController(rootViewController: profile)
-        profileNC.tabBarItem = UITabBarItem(title: "Profile", image: UIImage(named: "profile"), tag: 2)
+        profileNC.tabBarItem = centerTabBarItem(withImageName: "profile", tag: 2)
         profileNC.accessibilityLabel = "TabBarProfileTabBarItem"
         profileNC.navigationBar.tintColor = UIColor.appMainColor
 
         // Wallet Tab
         let wallet = UIViewController()
-        wallet.tabBarItem = UITabBarItem(title: "Wallet", image: UIImage(named: "wallet"), tag: 3)
+        wallet.tabBarItem = centerTabBarItem(withImageName: "wallet", tag: 3)
         wallet.accessibilityLabel = "TabBarWalletTabBarItem"
         
         // Notifications Tab
         let notifications = controllerContainer.resolve(NotificationsPageVC.self)!
         let notificationsNC = UINavigationController(rootViewController: notifications)
-        notificationsNC.tabBarItem = UITabBarItem(title: "Notifications", image: UIImage(named: "notifications"), tag: 4)
+        notificationsNC.tabBarItem = centerTabBarItem(withImageName: "notifications", tag: 4)
         notificationsNC.navigationBar.prefersLargeTitles = true
         notifications.accessibilityLabel = "TabBarNotificationsTabBarItem"
         
         // Set up controllers
-        self.viewControllers = [feed, comunities, profileNC, wallet, notificationsNC]
+        self.viewControllers = [feed, comunities, wallet, notificationsNC, profileNC]
         
         // Config styles
-        self.tabBar.tintColor = #colorLiteral(red: 0.4156862745, green: 0.5019607843, blue: 0.9607843137, alpha: 1)
+        self.tabBar.unselectedItemTintColor = #colorLiteral(red: 0.8971592784, green: 0.9046500325, blue: 0.9282500148, alpha: 1)
+        self.tabBar.tintColor = UIColor.black
         UITabBar.appearance().barTintColor = .white
         
         // bind view model
         bindViewModel()
+    }
+    
+    private func centerTabBarItem(withImageName imageName: String, tag: Int) -> UITabBarItem {
+        let item = UITabBarItem(title: nil, image: UIImage(named: imageName), tag: tag)
+        item.imageInsets = UIEdgeInsets(top: 6, left: 0, bottom: -6, right: 0)
+        return item
     }
 
     func bindViewModel() {

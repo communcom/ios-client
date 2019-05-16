@@ -43,24 +43,29 @@ class FeedPageVC: UIViewController {
         tableView.tableFooterView = UIView()
         
         // Segmentio update
-        segmentioView.setup(content: [SegmentioItem(title: "All", image: nil), SegmentioItem(title: "My Feed", image: nil)],
+        segmentioView.setup(content: [SegmentioItem(title: "My Feed".localized(), image: nil), SegmentioItem(title: "Trending".localized(), image: nil)],
                             style: SegmentioStyle.onlyLabel,
                             options: SegmentioOptions.default)
         segmentioView.valueDidChange = {_, index in
-            self.viewModel.feedTypeMode.accept(index == 0 ? .community : .byUser)
-            
-            // if feed is community then sort by popular
-            if index == 0 {
-                self.viewModel.feedType.accept(.popular)
-            }
+            self.viewModel.feedTypeMode.accept(index == 0 ? .byUser : .community)
             
             // if feed is my feed, then sort by time
-            if index == 1 {
+            if index == 0 {
                 self.viewModel.feedType.accept(.time)
             }
+            
+            // if feed is community then sort by popular
+            if index == 1 {
+                self.viewModel.feedType.accept(.popular)
+            }
         }
+        
         // fire first filter
-        segmentioView.selectedSegmentioIndex = 0
+        segmentioView.selectedSegmentioIndex = 1
+        
+        // dismiss keyboard when dragging
+        tableView.keyboardDismissMode = .onDrag
+        
         // bind ui
         bindUI()
     }

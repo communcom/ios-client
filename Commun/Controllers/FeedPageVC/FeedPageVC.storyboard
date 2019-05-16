@@ -49,8 +49,8 @@
                                                 </userDefinedRuntimeAttribute>
                                             </userDefinedRuntimeAttributes>
                                         </imageView>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vuH-5V-8Nx">
-                                            <rect key="frame" x="72" y="16" width="99" height="32"/>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vuH-5V-8Nx">
+                                            <rect key="frame" x="72" y="16" width="255" height="32"/>
                                             <accessibility key="accessibilityConfiguration" identifier="EditorWidgetCellWhatsNewButton" label="EditorWidgetCellWhatsNewButton"/>
                                             <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
                                             <state key="normal" title="What's new?">
@@ -149,6 +149,7 @@
                                         <constraint firstAttribute="trailing" secondItem="rH2-Vj-Raa" secondAttribute="trailing" constant="16" id="cPm-zf-v2G"/>
                                         <constraint firstItem="vuH-5V-8Nx" firstAttribute="leading" secondItem="Z7e-MC-AaW" secondAttribute="trailing" constant="16" id="jZj-Pe-fI7"/>
                                         <constraint firstItem="rH2-Vj-Raa" firstAttribute="centerY" secondItem="Z7e-MC-AaW" secondAttribute="centerY" id="oUR-d6-OQQ"/>
+                                        <constraint firstItem="rH2-Vj-Raa" firstAttribute="leading" secondItem="vuH-5V-8Nx" secondAttribute="trailing" constant="8" id="t0U-ne-NLU"/>
                                         <constraint firstItem="Z7e-MC-AaW" firstAttribute="top" secondItem="64B-KR-TBH" secondAttribute="top" constant="12" id="yHm-s9-ipP"/>
                                     </constraints>
                                 </view>
