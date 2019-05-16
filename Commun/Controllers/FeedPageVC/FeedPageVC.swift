@@ -59,8 +59,13 @@ class FeedPageVC: UIViewController {
                 self.viewModel.feedType.accept(.popular)
             }
         }
+        
         // fire first filter
         segmentioView.selectedSegmentioIndex = 1
+        
+        // dismiss keyboard when dragging
+        tableView.keyboardDismissMode = .onDrag
+        
         // bind ui
         bindUI()
     }
