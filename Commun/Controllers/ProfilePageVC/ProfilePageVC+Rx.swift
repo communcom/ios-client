@@ -20,20 +20,10 @@ extension Reactive where Base: ProfilePageVC {
             }
             
             // profile image
-            if let avatarUrl = profile.personal.avatarUrl {
-                profilePageVC.userAvatarImage.sd_setImage(with: URL(string: avatarUrl)) { (_, error, _, _) in
-                    if (error != nil) {
-                        // Placeholder image
-                        profilePageVC.userAvatarImage.setNonAvatarImageWithId(profile.username)
-                    }
-                }
-            } else {
-                // Placeholder image
-                profilePageVC.userAvatarImage.setNonAvatarImageWithId(profile.username)
-            }
+            profilePageVC.userAvatarImage.setAvatar(urlString: profile.personal.avatarUrl, namePlaceHolder: profile.username ?? profile.userId)
             
             // user name
-            profilePageVC.userNameLabel.text = profile.username
+            profilePageVC.userNameLabel.text = profile.username ?? profile.userId
             
             // bio
             profilePageVC.bioLabel.text = profile.personal.biography

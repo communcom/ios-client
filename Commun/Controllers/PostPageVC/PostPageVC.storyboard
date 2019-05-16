@@ -140,6 +140,7 @@
                     </view>
                     <connections>
                         <outlet property="byUserLabel" destination="AUu-SG-Yxw" id="lrc-9d-vRE"/>
+                        <outlet property="communityAvatarImageView" destination="JAo-Iq-Wdc" id="7kU-x0-5tY"/>
                         <outlet property="comunityNameLabel" destination="Z2m-2G-cmH" id="GD7-ht-eGw"/>
                         <outlet property="tableView" destination="Dx8-8W-zVf" id="OtS-57-Afj"/>
                         <outlet property="timeAgoLabel" destination="RsM-Yt-jdM" id="Azv-hd-vTh"/>

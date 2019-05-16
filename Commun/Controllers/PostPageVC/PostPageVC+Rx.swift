@@ -24,6 +24,9 @@ extension PostPageVC: PostHeaderViewDelegate {
     func bindPost() {
         viewModel.post
             .subscribe(onNext: {post in
+                // Community avatar
+                self.communityAvatarImageView.setAvatar(urlString: post?.community.avatarUrl, namePlaceHolder: post?.community.name ?? "C")
+                
                 // Time ago & community
                 self.comunityNameLabel.text = post?.community.name
                 if let timeString = post?.meta.time {

@@ -39,13 +39,7 @@ class NotificationCell: UITableViewCell {
         
         if let user = notification.actor,
             type != NotificationType.curatorReward && type != NotificationType.reward {
-            if let avatarURL = user.avatarUrl {
-                avatarImage.sd_setImage(with: URL(string: avatarURL)) { (_, error, _, _) in
-                    self.avatarImage.setNonAvatarImageWithId(user.id)
-                }
-            } else {
-                avatarImage.setNonAvatarImageWithId(user.id)
-            }
+            avatarImage.setAvatar(urlString: user.avatarUrl, namePlaceHolder: user.id)
         } else {
             setNoAvatar(for: notification)
         }
