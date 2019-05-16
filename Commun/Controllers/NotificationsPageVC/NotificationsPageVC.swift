@@ -38,6 +38,9 @@ class NotificationsPageVC: UIViewController {
         navigationBar?.setBackgroundImage(UIImage(), for: .default)
         navigationBar?.shadowImage = UIImage()
         
+        // fix bug wit title in tabBarItem
+        navigationController?.tabBarItem.title = nil
+        
         // initialize viewModel
         viewModel = NotificationsPageViewModel()
         
