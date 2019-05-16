@@ -58,8 +58,8 @@ class CommentCell: UITableViewCell, CommentCellProtocol {
 //        }
 //        avatarImageView.setAvatar(urlString: comment.author., namePlaceHolder: <#T##String#>)
         #warning("set user's avatar")
-        avatarImageView.setNonAvatarImageWithId(comment.author?.username ?? "U")
-        nameLabel.text = comment.author?.username ?? ""
+        avatarImageView.setNonAvatarImageWithId(comment.author?.username ?? comment.author?.userId ?? "U")
+        nameLabel.text = comment.author?.username ?? comment.author?.userId
         timeLabel.text = Date.timeAgo(string: comment.meta.time)
         voteCountLabel.text = "\(comment.payout.rShares)"
     }
