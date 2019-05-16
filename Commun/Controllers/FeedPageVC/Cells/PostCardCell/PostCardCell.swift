@@ -79,10 +79,7 @@ extension PostCardCell {
     
     func setupFromPost(_ post: ResponseAPIContentGetPost) {
 //        self.post = post
-        #warning("author's avatar")
-        if let id = post.author?.userId {
-            self.avatarImageView.setNonAvatarImageWithId(id)
-        }
+        self.avatarImageView.setAvatar(urlString: post.community.avatarUrl, namePlaceHolder: post.community.name)
         
         self.titleLabel.text = post.content.title
         self.timeAgoLabel.text = Date.timeAgo(string: post.meta.time)
