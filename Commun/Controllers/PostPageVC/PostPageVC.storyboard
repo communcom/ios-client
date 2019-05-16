@@ -132,7 +132,7 @@
                                 <rect key="frame" x="16" y="615" width="343" height="38"/>
                                 <color key="backgroundColor" red="0.95212393999099731" green="0.95958274602890015" blue="0.97945135831832886" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="38" placeholder="YES" id="FYm-53-dZl"/>
+                                    <constraint firstAttribute="height" constant="38" id="FYm-53-dZl"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>

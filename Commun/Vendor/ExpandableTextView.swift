@@ -31,27 +31,13 @@ class ExpandableTextView: UITextView {
                 self.layoutIfNeeded()
             })
             .disposed(by: bag)
+        
+        heightConstraint = constraints.first {$0.firstAttribute == .height}
+        textContainerInset = UIEdgeInsets(top: 10, left: 16, bottom: 10, right: 16)
     }
     
     func setDelegate(_ delegate: UIScrollViewDelegate) {
         self.rx.setDelegate(delegate)
             .disposed(by: bag)
-    }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        setup()
-    }
-    
-    func setup() {
-        // Create heightConstraint if not existed
-        if heightConstraint == nil {
-            // Create heightConstraint
-            heightConstraint = NSLayoutConstraint(item: self, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 38)
-            self.addConstraint(heightConstraint)
-        }
-        
-        // Set content inset
-        textContainerInset = UIEdgeInsets(top: 10, left: 16, bottom: 10, right: 16)
     }
 }
