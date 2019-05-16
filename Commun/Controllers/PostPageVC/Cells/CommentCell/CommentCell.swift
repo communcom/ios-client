@@ -45,19 +45,22 @@ class CommentCell: UITableViewCell, CommentCellProtocol {
     func setupFromComment(_ comment: ResponseAPIContentGetComment) {
         self.comment = comment
         
-        if let html = comment.content.embeds.first?.result.html {
-            let htmlData = NSString(string: html).data(using: String.Encoding.unicode.rawValue)
-            let options = [NSAttributedString.DocumentReadingOptionKey.documentType:
-                NSAttributedString.DocumentType.html]
-            let attributedString = try? NSMutableAttributedString(data: htmlData ?? Data(),
-                                                                  options: options,
-                                                                  documentAttributes: nil)
-            contentLabel.attributedText = attributedString
-        } else {
+//        if let html = comment.content.embeds.first?.result.html {
+//            let htmlData = NSString(string: html).data(using: String.Encoding.unicode.rawValue)
+//            let options = [NSAttributedString.DocumentReadingOptionKey.documentType:
+//                NSAttributedString.DocumentType.html]
+//            let attributedString = try? NSMutableAttributedString(data: htmlData ?? Data(),
+//                                                                  options: options,
+//                                                                  documentAttributes: nil)
+//            contentLabel.attributedText = attributedString
+//        } else {
             contentLabel.text = comment.content.body.full
-        }
-        
+//        }
+//        avatarImageView.setAvatar(urlString: comment.author., namePlaceHolder: <#T##String#>)
+        #warning("set user's avatar")
+        avatarImageView.setNonAvatarImageWithId(comment.author?.username ?? "U")
         nameLabel.text = comment.author?.username ?? ""
+        timeLabel.text = Date.timeAgo(string: comment.meta.time)
         voteCountLabel.text = "\(comment.payout.rShares)"
     }
     
