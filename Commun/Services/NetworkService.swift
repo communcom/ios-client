@@ -18,13 +18,13 @@ class NetworkService: NSObject {
     
     
     // MARK: - Class Functions
-    func connect() {
-        WebSocketManager.instance.connect()
-    }
-    
-    func disconnect() {
-        WebSocketManager.instance.disconnect()
-    }
+//    func connect() {
+//        WebSocketManager.instance.connect()
+//    }
+//    
+//    func disconnect() {
+//        WebSocketManager.instance.disconnect()
+//    }
     
     func loadFeed(_ paginationKey: String?, withSortType sortType: FeedTimeFrameMode = .all, withFeedType type: FeedSortMode = .popular, withFeedTypeMode typeMode: FeedTypeMode = .community) -> Observable<ResponseAPIContentGetFeed> {
         
