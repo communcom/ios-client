@@ -36,11 +36,12 @@ class ConfirmUserViewModel {
 //    }
     
     func checkPin(_ code: String) -> Observable<Bool> {
-        #if DEBUG
+//        #if DEBUG
+        #warning("Remove 9999 in production code")
         let isEqual = (code == pincode.value) || (code == "9999")
-        #else
-        let isEqual = code == pincode.value
-        #endif
+//        #else
+//        let isEqual = code == pincode.value
+//        #endif
         return Observable<Bool>.just(isEqual)
     }
     
