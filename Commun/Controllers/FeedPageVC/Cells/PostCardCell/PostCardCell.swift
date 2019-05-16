@@ -28,7 +28,6 @@ class PostCardCell: UITableViewCell {
     @IBOutlet weak var likeCounterLabel: UILabel!
     @IBOutlet weak var numberOfCommentsLabel: UILabel!
     @IBOutlet weak var numberOfSharesLabel: UILabel!
-    @IBOutlet weak var commentTextField: UITextField!
     
     @IBOutlet weak var upvoteButton: UIButton!
     

@@ -64,17 +64,10 @@ extension PostPageVC: PostHeaderViewDelegate {
                     self.viewModel.fetchNext()
                 }
                 
-                if comment.content.embeds.first?.result.type == "video" {
-                    let cell = self.tableView.dequeueReusableCell(withIdentifier: "MediaCommentCell") as! MediaCommentCell
-                    cell.setupFromComment(comment)
-                    cell.delegate = self
-                    return cell
-                } else {
-                    let cell = self.tableView.dequeueReusableCell(withIdentifier: "CommentCell") as! CommentCell
-                    cell.setupFromComment(comment)
-                    cell.delegate = self
-                    return cell
-                }
+                let cell = self.tableView.dequeueReusableCell(withIdentifier: "CommentCell") as! CommentCell
+                cell.setupFromComment(comment)
+                cell.delegate = self
+                return cell
             }
             .disposed(by: disposeBag)
     }

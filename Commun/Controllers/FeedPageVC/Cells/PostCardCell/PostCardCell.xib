@@ -50,6 +50,24 @@
                                 <color key="textColor" red="0.60784313729999995" green="0.62352941179999999" blue="0.63529411759999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="pVB-F5-3fe" customClass="ExpandableTextView" customModule="Commun" customModuleProvider="target">
+                                <rect key="frame" x="112" y="380.5" width="145" height="36"/>
+                                <color key="backgroundColor" red="0.95212393999099731" green="0.95958274602890015" blue="0.97945135831832886" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="36" id="a2G-jE-Ive"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="18"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Write a comment..."/>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="maxHeight">
+                                        <real key="value" value="36"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <accessibility key="accessibilityConfiguration" identifier="PostCardCellBackgroundView" label="PostCardCellBackgroundView"/>
@@ -168,19 +186,6 @@
                             <action selector="shareButtonTap:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="GZt-Hz-6VL"/>
                         </connections>
                     </button>
-                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Add a comment" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="LYz-EB-ZsG" userLabel="Add Comment Text Field">
-                        <rect key="frame" x="112" y="383.5" width="144" height="30"/>
-                        <color key="backgroundColor" red="0.95294117647058818" green="0.96078431372549022" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
-                        <accessibility key="accessibilityConfiguration" identifier="PostCardCellAddCommentTextField" label="PostCardCellAddCommentTextField"/>
-                        <nil key="textColor"/>
-                        <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
-                        <textInputTraits key="textInputTraits"/>
-                        <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                <integer key="value" value="15"/>
-                            </userDefinedRuntimeAttribute>
-                        </userDefinedRuntimeAttributes>
-                    </textField>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ahx-nL-77K">
                         <rect key="frame" x="0.0" y="433.5" width="320" height="8"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
@@ -190,14 +195,15 @@
                     </view>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="EQe-sX-b19" firstAttribute="leading" secondItem="pVB-F5-3fe" secondAttribute="trailing" constant="11" id="0Sa-UQ-MdW"/>
                     <constraint firstItem="fMs-g5-fNp" firstAttribute="leading" secondItem="0DU-Io-mHz" secondAttribute="trailing" constant="12" id="0X2-S9-fLu"/>
                     <constraint firstItem="kiT-nP-6oC" firstAttribute="centerY" secondItem="iSB-ET-CHf" secondAttribute="centerY" id="1iQ-N1-Ngl"/>
                     <constraint firstItem="Ycg-ed-cff" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="14" id="2dg-wI-93b"/>
                     <constraint firstItem="t1b-fE-pfp" firstAttribute="top" secondItem="Ycg-ed-cff" secondAttribute="bottom" constant="26" id="3MW-mH-dGS"/>
+                    <constraint firstItem="pVB-F5-3fe" firstAttribute="centerY" secondItem="0DU-Io-mHz" secondAttribute="centerY" id="4B4-GZ-isH"/>
                     <constraint firstItem="fMs-g5-fNp" firstAttribute="centerY" secondItem="0DU-Io-mHz" secondAttribute="centerY" id="7Qp-pR-26H"/>
                     <constraint firstItem="EQe-sX-b19" firstAttribute="width" secondItem="fMs-g5-fNp" secondAttribute="width" id="8dz-T5-8yM"/>
                     <constraint firstItem="C9N-L8-TzR" firstAttribute="centerY" secondItem="2By-LQ-DfR" secondAttribute="centerY" id="A0n-8X-So2"/>
-                    <constraint firstItem="LYz-EB-ZsG" firstAttribute="leading" secondItem="fMs-g5-fNp" secondAttribute="trailing" constant="12" id="AMh-MH-Wb7"/>
                     <constraint firstItem="0DU-Io-mHz" firstAttribute="leading" secondItem="iSB-ET-CHf" secondAttribute="leading" id="AVZ-pr-nio"/>
                     <constraint firstItem="Jus-YZ-IbU" firstAttribute="centerY" secondItem="iSB-ET-CHf" secondAttribute="centerY" id="AhL-hZ-9qQ"/>
                     <constraint firstAttribute="trailing" secondItem="Jus-YZ-IbU" secondAttribute="trailing" constant="16" id="CKf-U0-IX8"/>
@@ -225,14 +231,13 @@
                     <constraint firstAttribute="bottom" secondItem="yxa-RM-ecb" secondAttribute="bottom" id="ifT-ZR-PSe"/>
                     <constraint firstItem="iSB-ET-CHf" firstAttribute="top" secondItem="5vT-Zh-8Yc" secondAttribute="bottom" id="kBZ-Cb-joH"/>
                     <constraint firstItem="fMs-g5-fNp" firstAttribute="width" secondItem="0DU-Io-mHz" secondAttribute="width" id="mZk-zK-jgT"/>
-                    <constraint firstItem="EQe-sX-b19" firstAttribute="leading" secondItem="LYz-EB-ZsG" secondAttribute="trailing" constant="12" id="nCU-42-b1b"/>
                     <constraint firstAttribute="trailing" secondItem="yxa-RM-ecb" secondAttribute="trailing" id="p4D-td-H4Q"/>
                     <constraint firstAttribute="trailing" secondItem="t1b-fE-pfp" secondAttribute="trailing" constant="16" id="qo9-Np-pcf"/>
                     <constraint firstItem="iSB-ET-CHf" firstAttribute="leading" secondItem="t1b-fE-pfp" secondAttribute="leading" id="ruE-sV-1uJ"/>
                     <constraint firstItem="0DU-Io-mHz" firstAttribute="top" secondItem="iSB-ET-CHf" secondAttribute="bottom" constant="22" id="tse-Vc-rvm"/>
+                    <constraint firstItem="pVB-F5-3fe" firstAttribute="leading" secondItem="fMs-g5-fNp" secondAttribute="trailing" constant="12" id="ush-Wb-hkY"/>
                     <constraint firstAttribute="trailing" secondItem="EQe-sX-b19" secondAttribute="trailing" constant="16" id="wQA-Pm-kW2"/>
                     <constraint firstItem="t1b-fE-pfp" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="x2z-qV-8Eg"/>
-                    <constraint firstItem="LYz-EB-ZsG" firstAttribute="centerY" secondItem="fMs-g5-fNp" secondAttribute="centerY" id="y4b-OE-YjG"/>
                     <constraint firstItem="ahx-nL-77K" firstAttribute="top" secondItem="0DU-Io-mHz" secondAttribute="bottom" constant="17" id="zxf-Vf-fAb"/>
                 </constraints>
             </tableViewCellContentView>
@@ -241,7 +246,6 @@
             <connections>
                 <outlet property="authorNameLabel" destination="C9N-L8-TzR" id="Qn4-tN-Kpn"/>
                 <outlet property="avatarImageView" destination="Ycg-ed-cff" id="uy7-KF-FlE"/>
-                <outlet property="commentTextField" destination="LYz-EB-ZsG" id="db4-6T-iXL"/>
                 <outlet property="embededImageView" destination="UVz-za-s49" id="bIr-c2-jRn"/>
                 <outlet property="embededViewHeightConstraint" destination="YjY-cR-8HU" id="jVf-3t-fYx"/>
                 <outlet property="likeCounterLabel" destination="kiT-nP-6oC" id="RCs-fD-VZd"/>

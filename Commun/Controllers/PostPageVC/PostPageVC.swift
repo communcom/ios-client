@@ -29,8 +29,6 @@ class PostPageVC: UIViewController, CommentCellDelegate {
         viewModel.fetchNext()
         
         tableView.register(UINib(nibName: "CommentCell", bundle: nil), forCellReuseIdentifier: "CommentCell")
-        tableView.register(UINib(nibName: "WriteCommentCell", bundle: nil), forCellReuseIdentifier: "WriteCommentCell")
-        tableView.register(UINib(nibName: "MediaCommentCell", bundle: nil), forCellReuseIdentifier: "MediaCommentCell")
         
         tableView.register(UINib(nibName: "EmptyCell", bundle: nil), forCellReuseIdentifier: "EmptyCell")
         
