@@ -35,17 +35,6 @@ class PostHeaderView: UIView, UIWebViewDelegate {
     @IBOutlet weak var downVoteButton: UIButton!
     @IBOutlet weak var shareButton: UIButton!
     
-    // Post
-    var post: ResponseAPIContentGetPost? {
-        didSet {
-            guard let post = post else {
-                setLoading()
-                return
-            }
-            setUpWith(post)
-        }
-    }
-    
     @IBOutlet weak var loadingView: UIView!
     func setLoading() {
         loadingView.isHidden = false
@@ -54,7 +43,12 @@ class PostHeaderView: UIView, UIWebViewDelegate {
     }
     
     var showMedia = false
-    func setUpWith(_ post: ResponseAPIContentGetPost) {
+    func setUpWith(_ post: ResponseAPIContentGetPost?) {
+        guard let post = post else {
+            setLoading()
+            return
+        }
+        
         loadingView.isHidden = true
         // Show media
         if post.content.embeds.first?.result.type == "video",
