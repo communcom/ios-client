@@ -152,23 +152,29 @@ class NetworkService: NSObject {
         })
     }
     
-    func voteMessage(voteType: VoteType, messagePermlink: String, messageAuthor: String, refBlockNum: UInt64) {
-        RestAPIManager.instance.message(voteType:        voteType,
-                           author:          messageAuthor,
-                           permlink:        messagePermlink,
-                           weight:          voteType == .unvote ? 0 : 10_000,
-                           refBlockNum:     refBlockNum,
-                           completion:      { (response, error) in
-                            
-                            guard error == nil else {
-                                print(error.debugDescription)
-                                return
-                            }
-                            
-                            print(response!.statusCode)
-                            print(response!.success)
-                            print(response!.body!)
-        })
+    func voteMessage(voteType: VoteType, messagePermlink: String, messageAuthor: String, refBlockNum: UInt64) -> Completable {
+        return Completable.create {completable in
+            RestAPIManager.instance.message(voteType:        voteType,
+                                            author:          messageAuthor,
+                                            permlink:        messagePermlink,
+                                            weight:          voteType == .unvote ? 0 : 10_000,
+                                            refBlockNum:     refBlockNum,
+                                            completion:      { (response, error) in
+                                                
+                                                guard error == nil else {
+                                                    completable(.error(error!))
+                                                    return
+                                                }
+                                                
+                                                if response!.success {
+                                                    completable(.completed)
+                                                    return
+                                                }
+                                                
+                                                completable(.error(ErrorAPI.requestFailed(message: "Unknown Error")))
+            })
+            return Disposables.create()
+        }
     }
     
     func sendPost(withTitle title: String, withText text: String, metaData json: String, withTags tags: [String]) -> Observable<Bool> {

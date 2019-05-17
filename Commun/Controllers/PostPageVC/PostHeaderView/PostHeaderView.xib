@@ -76,6 +76,9 @@
                         <constraint firstAttribute="height" constant="36" id="ybx-Vc-8WO"/>
                     </constraints>
                     <state key="normal" image="Down"/>
+                    <connections>
+                        <action selector="downVoteButtonDidTouch:" destination="iN0-l3-epB" eventType="touchUpInside" id="8Nz-ZN-9XX"/>
+                    </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cmd-pK-7d8" userLabel="Upvote Button">
                     <rect key="frame" x="16" y="362" width="36" height="36"/>
@@ -85,6 +88,9 @@
                         <constraint firstAttribute="width" constant="36" id="NIU-55-x0B"/>
                     </constraints>
                     <state key="normal" image="Up"/>
+                    <connections>
+                        <action selector="upVoteButtonDidTouch:" destination="iN0-l3-epB" eventType="touchUpInside" id="wLG-74-hEq"/>
+                    </connections>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Discussion - The Dangerous Path Overwatch is Headed: Giving Players" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k3o-1c-C5p">
                     <rect key="frame" x="16" y="424" width="382" height="48"/>

@@ -9,9 +9,12 @@
 import UIKit
 import CyberSwift
 import SDWebImage
+import RxSwift
 
 
-class PostCardCell: UITableViewCell {
+class PostCardCell: UITableViewCell, PostActionsDelegate {
+    var disposeBag = DisposeBag()
+    
 
     @IBOutlet weak var avatarImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
@@ -22,12 +25,11 @@ class PostCardCell: UITableViewCell {
     @IBOutlet weak var numberOfCommentsLabel: UILabel!
     @IBOutlet weak var numberOfSharesLabel: UILabel!
     
-    @IBOutlet weak var upvoteButton: UIButton!
+    @IBOutlet weak var upVoteButton: UIButton!
     @IBOutlet weak var downVoteButton: UIButton!
     
     @IBOutlet weak var embededImageView: UIImageView!
     @IBOutlet weak var embededViewHeightConstraint: NSLayoutConstraint!
-    var delegate: PostActionsDelegate?
     var post: ResponseAPIContentGetPost?
     
     override func awakeFromNib() {
@@ -44,27 +46,19 @@ class PostCardCell: UITableViewCell {
     
     
     @IBAction func menuButtonTap(_ sender: Any) {
-        if let post = post {
-            delegate?.didTapMenuButton(forPost: post)
-        }
+        didTapMenuButton()
     }
     
     @IBAction func upButtonTap(_ sender: Any) {
-        if let post = post {
-            delegate?.didTapUpButton(forPost: post)
-        }
+        upVote()
     }
     
     @IBAction func downButtonTap(_ sender: Any) {
-        if let post = post {
-            delegate?.didTapDownButton(forPost: post)
-        }
+        downVote()
     }
     
     @IBAction func shareButtonTap(_ sender: Any) {
-        if let post = post {
-            delegate?.didTapShareButton(forPost: post)
-        }
+        didTapShareButton()
     }
 }
 
@@ -103,7 +97,7 @@ extension PostCardCell {
         if post.votes.hasUpVote {
             upVoteImageName = "UpSelected"
         }
-        upvoteButton.setImage(UIImage(named: upVoteImageName), for: .normal)
+        upVoteButton.setImage(UIImage(named: upVoteImageName), for: .normal)
         
         var downVoteImageName = "Down"
         if post.votes.hasDownVote {

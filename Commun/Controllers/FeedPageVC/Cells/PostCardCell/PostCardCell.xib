@@ -255,7 +255,7 @@
                 <outlet property="numberOfSharesLabel" destination="Jus-YZ-IbU" id="FNN-rn-qbi"/>
                 <outlet property="timeAgoLabel" destination="2By-LQ-DfR" id="rDT-ag-YtM"/>
                 <outlet property="titleLabel" destination="ICX-s9-6dm" id="r39-If-Xm3"/>
-                <outlet property="upvoteButton" destination="0DU-Io-mHz" id="4ZN-hG-BCa"/>
+                <outlet property="upVoteButton" destination="0DU-Io-mHz" id="VJW-uK-5rv"/>
             </connections>
             <point key="canvasLocation" x="137.59999999999999" y="333.7331334332834"/>
         </tableViewCell>

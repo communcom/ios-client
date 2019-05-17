@@ -12,7 +12,7 @@ import CyberSwift
 import RxSwift
 import RxCocoa
 
-extension ProfilePageVC: PostActionsDelegate, CommentCellDelegate {
+extension ProfilePageVC: CommentCellDelegate {
     
     func bindViewModel() {
         let profile = viewModel.profile.asDriver()
@@ -67,7 +67,6 @@ extension ProfilePageVC: PostActionsDelegate, CommentCellDelegate {
                 
                 if let post = element as? ResponseAPIContentGetPost {
                     let cell = self.tableView.dequeueReusableCell(withIdentifier: "PostCardCell") as! PostCardCell
-                    cell.delegate = self
                     cell.post = post
                     cell.setupFromPost(post)
                     return cell
