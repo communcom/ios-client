@@ -9,6 +9,10 @@
 import UIKit
 import CyberSwift
 
+protocol PostHeaderViewDelegate: class {
+    func headerViewDidLayoutSubviews(_ headerView: PostHeaderView)
+}
+
 class PostHeaderView: UIView, UIWebViewDelegate {
     // Delegate
     weak var delegate: PostHeaderViewDelegate?
@@ -25,6 +29,11 @@ class PostHeaderView: UIView, UIWebViewDelegate {
     // Content
     @IBOutlet weak var postTitleLabel: UILabel!
     @IBOutlet weak var contentWebView: UIWebView!
+    
+    // Buttons
+    @IBOutlet weak var upVoteButton: UIButton!
+    @IBOutlet weak var downVoteButton: UIButton!
+    @IBOutlet weak var shareButton: UIButton!
     
     // Post
     var post: ResponseAPIContentGetPost? {
@@ -99,28 +108,5 @@ class PostHeaderView: UIView, UIWebViewDelegate {
         self.height = height
         
         self.layoutSubviews()
-    }
-    
-    // Actions
-    @IBAction func upvoteButtonDidTouch(_ sender: Any) {
-        guard let post = post else {return}
-        // TODO: Upvote post
-        
-        // TODO: Catch result and send result to delegate
-        delegate?.didUpVotePost(post)
-    }
-    
-    @IBAction func downVoteButtonDidTouch(_ sender: Any) {
-        guard let post = post else {return}
-        // TODO: Upvote post
-        
-        // TODO: Catch result and send result to delegate
-        delegate?.didDownVotePost(post)
-    }
-    
-    @IBAction func shareButtonDidTouch(_ sender: Any) {
-        guard let post = post else {return}
-        // Share post
-        delegate?.sharePost(post)
     }
 }

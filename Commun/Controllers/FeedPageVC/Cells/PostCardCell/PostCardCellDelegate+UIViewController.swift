@@ -31,7 +31,17 @@ extension PostCardCellDelegate where Self: UIViewController {
     }
     
     func didTapShareButton(forPost post: ResponseAPIContentGetPost) {
-        showAlert(title: "TODO", message: "Кнопка шары")
+        // text to share
+        let title = post.content.title
+        
+        // link to share
+        let textToShare = [title]
+        
+        let activityViewController = UIActivityViewController(activityItems: textToShare, applicationActivities: nil)
+        activityViewController.popoverPresentationController?.sourceView = self.view // so that iPads won't crash
+        
+        // present the view controller
+        self.present(activityViewController, animated: true, completion: nil)
     }
 
 }

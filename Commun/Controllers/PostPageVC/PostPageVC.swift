@@ -18,6 +18,7 @@ class PostPageVC: UIViewController, CommentCellDelegate {
     @IBOutlet weak var timeAgoLabel: UILabel!
     @IBOutlet weak var byUserLabel: UILabel!
     @IBOutlet weak var communityAvatarImageView: UIImageView!
+    @IBOutlet weak var moreButton: UIButton!
     @IBOutlet weak var commentForm: CommentForm!
     
     let disposeBag = DisposeBag()
@@ -42,10 +43,6 @@ class PostPageVC: UIViewController, CommentCellDelegate {
         
         // bind ui
         bindUI()
-    }
-
-    @IBAction func moreButtonTap(_ sender: Any) {
-        showAlert(title: "TODO", message: "More menu")
     }
     
     @IBAction func backButtonTap(_ sender: Any) {

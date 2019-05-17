@@ -10,7 +10,6 @@
 		3B02CD1F228965AF0078BB52 /* CommentCellDelegate+UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B02CD1E228965AF0078BB52 /* CommentCellDelegate+UIViewController.swift */; };
 		3B02CD282289B23E0078BB52 /* PostHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B02CD272289B23E0078BB52 /* PostHeaderView.swift */; };
 		3B02CD2A2289B2620078BB52 /* PostHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3B02CD292289B2620078BB52 /* PostHeaderView.xib */; };
-		3B02CD2C2289BF510078BB52 /* PostHeaderViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B02CD2B2289BF510078BB52 /* PostHeaderViewDelegate.swift */; };
 		3B02CD2E228AB4580078BB52 /* NotificationsFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B02CD2D228AB4580078BB52 /* NotificationsFetcher.swift */; };
 		3B02CD34228ADC100078BB52 /* UIWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B02CD33228ADC100078BB52 /* UIWebView.swift */; };
 		3B0E9C5E226F02AC002AB1C2 /* ProfileEditCoverVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B0E9C5D226F02AC002AB1C2 /* ProfileEditCoverVC.swift */; };
@@ -197,7 +196,6 @@
 		3B02CD1E228965AF0078BB52 /* CommentCellDelegate+UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CommentCellDelegate+UIViewController.swift"; sourceTree = "<group>"; };
 		3B02CD272289B23E0078BB52 /* PostHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostHeaderView.swift; sourceTree = "<group>"; };
 		3B02CD292289B2620078BB52 /* PostHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PostHeaderView.xib; sourceTree = "<group>"; };
-		3B02CD2B2289BF510078BB52 /* PostHeaderViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostHeaderViewDelegate.swift; sourceTree = "<group>"; };
 		3B02CD2D228AB4580078BB52 /* NotificationsFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsFetcher.swift; sourceTree = "<group>"; };
 		3B02CD33228ADC100078BB52 /* UIWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIWebView.swift; sourceTree = "<group>"; };
 		3B0E9C5D226F02AC002AB1C2 /* ProfileEditCoverVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditCoverVC.swift; sourceTree = "<group>"; };
@@ -417,7 +415,6 @@
 			children = (
 				3B02CD272289B23E0078BB52 /* PostHeaderView.swift */,
 				3B02CD292289B2620078BB52 /* PostHeaderView.xib */,
-				3B02CD2B2289BF510078BB52 /* PostHeaderViewDelegate.swift */,
 			);
 			path = PostHeaderView;
 			sourceTree = "<group>";
@@ -1406,7 +1403,6 @@
 				3B635F812277375A006DAAB2 /* FeedPageVC+Binding.swift in Sources */,
 				3B197C552269BF74008CF10D /* ProfilePageSegmentioItem.swift in Sources */,
 				3B0E9C66227050E3002AB1C2 /* UIImageView.swift in Sources */,
-				3B02CD2C2289BF510078BB52 /* PostHeaderViewDelegate.swift in Sources */,
 				57B6FC27224A9E8700BCFDDA /* WelcomeScreenVC.swift in Sources */,
 				3BAF69D1226792C60055CCEB /* ProfilePageVC+Rx.swift in Sources */,
 				57FB17A4224C15C400563BF7 /* SignInViewModel.swift in Sources */,
