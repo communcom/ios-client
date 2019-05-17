@@ -94,8 +94,8 @@
                             <action selector="downVoteButtonTap:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="ReC-fP-uRP"/>
                         </connections>
                     </button>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="djA-OD-aYa" userLabel="Reply Button">
-                        <rect key="frame" x="185" y="80.5" width="40" height="30"/>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="djA-OD-aYa" userLabel="Reply Button">
+                        <rect key="frame" x="185" y="80.5" width="65" height="30"/>
                         <accessibility key="accessibilityConfiguration" identifier="CommentCellReplyButton" label="CommentCellReplyButton"/>
                         <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
                         <state key="normal" title="Reply">
@@ -114,6 +114,7 @@
                     <constraint firstItem="S8Z-0b-bRv" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="BIS-np-xC4"/>
                     <constraint firstItem="vEd-B7-VR3" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="16" id="BX1-xE-06o"/>
                     <constraint firstItem="F53-9j-0jt" firstAttribute="centerY" secondItem="vEd-B7-VR3" secondAttribute="centerY" id="COT-15-O8g"/>
+                    <constraint firstItem="djA-OD-aYa" firstAttribute="trailing" secondItem="dho-Zk-FEu" secondAttribute="trailing" id="GCq-sF-KFa"/>
                     <constraint firstItem="wdF-tc-scc" firstAttribute="leading" secondItem="YVW-q8-bUL" secondAttribute="trailing" constant="12" id="K0T-ml-xTg"/>
                     <constraint firstItem="YVW-q8-bUL" firstAttribute="leading" secondItem="dho-Zk-FEu" secondAttribute="leading" id="KyO-S0-wLR"/>
                     <constraint firstItem="F53-9j-0jt" firstAttribute="leading" secondItem="vEd-B7-VR3" secondAttribute="trailing" constant="8" id="QsE-JY-BOa"/>
