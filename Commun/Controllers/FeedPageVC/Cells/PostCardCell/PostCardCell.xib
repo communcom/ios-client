@@ -123,7 +123,7 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Group 101.1" translatesAutoresizingMaskIntoConstraints="NO" id="iSB-ET-CHf">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="UpSelected" translatesAutoresizingMaskIntoConstraints="NO" id="iSB-ET-CHf">
                         <rect key="frame" x="16" y="342.5" width="16" height="16"/>
                         <accessibility key="accessibilityConfiguration" identifier="PostCardCellGroupImageView" label="PostCardCellGroupImageView"/>
                         <constraints>
@@ -246,6 +246,7 @@
             <connections>
                 <outlet property="authorNameLabel" destination="C9N-L8-TzR" id="Qn4-tN-Kpn"/>
                 <outlet property="avatarImageView" destination="Ycg-ed-cff" id="uy7-KF-FlE"/>
+                <outlet property="downVoteButton" destination="fMs-g5-fNp" id="yyh-mT-KxX"/>
                 <outlet property="embededImageView" destination="UVz-za-s49" id="bIr-c2-jRn"/>
                 <outlet property="embededViewHeightConstraint" destination="YjY-cR-8HU" id="jVf-3t-fYx"/>
                 <outlet property="likeCounterLabel" destination="kiT-nP-6oC" id="RCs-fD-VZd"/>
@@ -261,8 +262,8 @@
     </objects>
     <resources>
         <image name="Down" width="170.66667175292969" height="170.66667175292969"/>
-        <image name="Group 101.1" width="170.66667175292969" height="170.66667175292969"/>
         <image name="Up" width="170.66667175292969" height="170.66667175292969"/>
+        <image name="UpSelected" width="170.66667175292969" height="170.66667175292969"/>
         <image name="points" width="170.66667175292969" height="170.66667175292969"/>
         <image name="share" width="170.66667175292969" height="170.66667175292969"/>
         <image name="tux" width="327" height="370"/>

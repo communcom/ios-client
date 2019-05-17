@@ -28,7 +28,7 @@
                         <constraint firstAttribute="height" constant="312" id="MfG-w6-JhV"/>
                     </constraints>
                 </webView>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Group 101.1" translatesAutoresizingMaskIntoConstraints="NO" id="bgc-Hg-uT2">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="UpSelected" translatesAutoresizingMaskIntoConstraints="NO" id="bgc-Hg-uT2">
                     <rect key="frame" x="16" y="324" width="16" height="16"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="16" id="hQo-hr-LGd"/>
@@ -186,8 +186,8 @@
     </objects>
     <resources>
         <image name="Down" width="170.66667175292969" height="170.66667175292969"/>
-        <image name="Group 101.1" width="170.66667175292969" height="170.66667175292969"/>
         <image name="Up" width="170.66667175292969" height="170.66667175292969"/>
+        <image name="UpSelected" width="170.66667175292969" height="170.66667175292969"/>
         <image name="share" width="170.66667175292969" height="170.66667175292969"/>
     </resources>
 </document>

@@ -70,6 +70,19 @@ class PostHeaderView: UIView, UIWebViewDelegate {
         commentCountLabel.text = "\(post.stats.commentsCount) " + "Comments".localized()
         voteCountLabel.text = post.payout.rShares.stringValue
         
+        // Handle button
+        var upVoteImageName = "Up"
+        if post.votes.hasUpVote {
+            upVoteImageName = "UpSelected"
+        }
+        upVoteButton.setImage(UIImage(named: upVoteImageName), for: .normal)
+        
+        var downVoteImageName = "Down"
+        if post.votes.hasDownVote {
+            downVoteImageName = "DownSelected"
+        }
+        downVoteButton.setImage(UIImage(named: downVoteImageName), for: .normal)
+        
         // Show title
         postTitleLabel.text = post.content.title
         

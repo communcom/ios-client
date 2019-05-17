@@ -23,6 +23,7 @@ class PostCardCell: UITableViewCell {
     @IBOutlet weak var numberOfSharesLabel: UILabel!
     
     @IBOutlet weak var upvoteButton: UIButton!
+    @IBOutlet weak var downVoteButton: UIButton!
     
     @IBOutlet weak var embededImageView: UIImageView!
     @IBOutlet weak var embededViewHeightConstraint: NSLayoutConstraint!
@@ -96,6 +97,19 @@ extension PostCardCell {
         self.likeCounterLabel.text = "\(post.payout.rShares.stringValue ?? "0")"
         
         self.numberOfCommentsLabel.text = "\(post.stats.commentsCount) " + "Comments".localized()
+        
+        // Handle button
+        var upVoteImageName = "Up"
+        if post.votes.hasUpVote {
+            upVoteImageName = "UpSelected"
+        }
+        upvoteButton.setImage(UIImage(named: upVoteImageName), for: .normal)
+        
+        var downVoteImageName = "Down"
+        if post.votes.hasDownVote {
+            downVoteImageName = "DownSelected"
+        }
+        downVoteButton.setImage(UIImage(named: downVoteImageName), for: .normal)
     }
     
 }
