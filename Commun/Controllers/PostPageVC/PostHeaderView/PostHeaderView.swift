@@ -62,6 +62,11 @@ class PostHeaderView: UIView, UIWebViewDelegate {
             webViewHeightConstraint.constant = 0
         }
         
+        // Show count label
+        #warning("missing viewsCount + votesCount")
+        commentCountLabel.text = "\(post.stats.commentsCount) " + "Comments".localized()
+        voteCountLabel.text = post.payout.rShares.stringValue
+        
         // Show title
         postTitleLabel.text = post.content.title
         
