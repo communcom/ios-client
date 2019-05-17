@@ -13,6 +13,8 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CommentForm" customModule="Commun" customModuleProvider="target">
             <connections>
                 <outlet property="contentView" destination="iN0-l3-epB" id="C9h-uV-UHM"/>
+                <outlet property="sendBtnWidthConstraint" destination="Igd-LI-rWd" id="wYf-NU-hdQ"/>
+                <outlet property="textFieldToSendBtnConstraint" destination="Bhf-vL-w09" id="Wh6-ZD-ZhC"/>
                 <outlet property="textView" destination="27b-40-1Op" id="gF7-25-TMI"/>
             </connections>
         </placeholder>

@@ -7,10 +7,14 @@
 //
 
 import UIKit
+import RxSwift
 
 class CommentForm: UIView {
+    private let bag = DisposeBag()
     @IBOutlet var contentView: UIView!
     @IBOutlet weak var textView: ExpandableTextView!
+    @IBOutlet weak var textFieldToSendBtnConstraint: NSLayoutConstraint!
+    @IBOutlet weak var sendBtnWidthConstraint: NSLayoutConstraint!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -28,6 +32,24 @@ class CommentForm: UIView {
         addSubview(contentView)
         contentView.frame = self.bounds
         contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+        
+        // setup observer
+        let isTextViewEmpty = textView.rx.text.orEmpty
+            .map{$0 == ""}
+            
+        isTextViewEmpty.distinctUntilChanged()
+            .subscribe(onNext: {isEmpty in
+                if isEmpty {
+                    self.textFieldToSendBtnConstraint.constant = 0
+                    self.sendBtnWidthConstraint.constant = 0
+                } else {
+                    self.textFieldToSendBtnConstraint.constant = 16
+                    self.sendBtnWidthConstraint.constant = 36
+                }
+                UIView.animate(withDuration: 0.3, animations: {
+                    self.layoutIfNeeded()
+                })
+            })
+            .disposed(by: bag)
     }
-    
 }
