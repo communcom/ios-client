@@ -292,16 +292,20 @@ class NetworkService: NSObject {
     
     
     func getUserProfile() -> Single<ResponseAPIContentGetProfile> {
-        return Single<ResponseAPIContentGetProfile>.create {single in
-            RestAPIManager.instance.getProfile(nickName: Config.currentUser.nickName ?? "", completion: { (response, error) in
-                guard error == nil else {
-                    single(.error(error!))
-                    return
-                }
-                if let res = response {
-                    single(.success(res))
-                    return
-                }
+        return Single<ResponseAPIContentGetProfile>.create { single in
+            guard let userNickName = Config.currentUser.nickName else { return Disposables.create() }
+            
+            RestAPIManager.instance.getProfile(nickName: userNickName,
+                                               completion: { (response, error) in
+                                                guard error == nil else {
+                                                    single(.error(error!))
+                                                    return
+                                                }
+                                                
+                                                if let res = response {
+                                                    single(.success(res))
+                                                    return
+                                                }
             })
             return Disposables.create()
         }
