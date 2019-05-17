@@ -69,7 +69,7 @@ extension PostPageVC: PostHeaderViewDelegate, PostActionsDelegate {
         
         // more button
         let nonNilPost = viewModel.post.filter {$0 != nil}
-            .map {$0!}.share()
+            .map {$0!}
         
         moreButton.rx.tap
             .withLatestFrom(nonNilPost)
