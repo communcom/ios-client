@@ -10,13 +10,6 @@ import UIKit
 import CyberSwift
 import SDWebImage
 
-protocol PostCardCellDelegate {
-    // Делагат еще буду дорабатывать по мере работы над информацией.
-    func didTapMenuButton(forPost post: ResponseAPIContentGetPost)
-    func didTapUpButton(forPost post: ResponseAPIContentGetPost)
-    func didTapDownButton(forPost post: ResponseAPIContentGetPost)
-    func didTapShareButton(forPost post: ResponseAPIContentGetPost)
-}
 
 class PostCardCell: UITableViewCell {
 
@@ -30,10 +23,11 @@ class PostCardCell: UITableViewCell {
     @IBOutlet weak var numberOfSharesLabel: UILabel!
     
     @IBOutlet weak var upvoteButton: UIButton!
+    @IBOutlet weak var downVoteButton: UIButton!
     
     @IBOutlet weak var embededImageView: UIImageView!
     @IBOutlet weak var embededViewHeightConstraint: NSLayoutConstraint!
-    var delegate: PostCardCellDelegate?
+    var delegate: PostActionsDelegate?
     var post: ResponseAPIContentGetPost?
     
     override func awakeFromNib() {
@@ -99,8 +93,23 @@ extension PostCardCell {
         }
         
 //        self.avatarImageView.sd_setImage(with: post.community.avatarUrl?.url, completed: nil)
-//        self.likeCounterLabel.text = "\(post.payout.rShares.stringValue ?? "0")"
-        self.numberOfCommentsLabel.text = "\(post.stats.commentsCount) Comments"
+        #warning("change this numbers later")
+        self.likeCounterLabel.text = "\(post.payout.rShares.stringValue ?? "0")"
+        
+        self.numberOfCommentsLabel.text = "\(post.stats.commentsCount) " + "Comments".localized()
+        
+        // Handle button
+        var upVoteImageName = "Up"
+        if post.votes.hasUpVote {
+            upVoteImageName = "UpSelected"
+        }
+        upvoteButton.setImage(UIImage(named: upVoteImageName), for: .normal)
+        
+        var downVoteImageName = "Down"
+        if post.votes.hasDownVote {
+            downVoteImageName = "DownSelected"
+        }
+        downVoteButton.setImage(UIImage(named: downVoteImageName), for: .normal)
     }
     
 }

@@ -28,7 +28,7 @@
                         <constraint firstAttribute="height" constant="312" id="MfG-w6-JhV"/>
                     </constraints>
                 </webView>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Group 101.1" translatesAutoresizingMaskIntoConstraints="NO" id="bgc-Hg-uT2">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="UpSelected" translatesAutoresizingMaskIntoConstraints="NO" id="bgc-Hg-uT2">
                     <rect key="frame" x="16" y="324" width="16" height="16"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="16" id="hQo-hr-LGd"/>
@@ -67,9 +67,6 @@
                         <constraint firstAttribute="width" constant="36" id="fjQ-v0-k87"/>
                     </constraints>
                     <state key="normal" image="share"/>
-                    <connections>
-                        <action selector="shareButtonDidTouch:" destination="iN0-l3-epB" eventType="touchUpInside" id="7o8-s3-Q3s"/>
-                    </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PQn-nj-igc" userLabel="Unvote Button">
                     <rect key="frame" x="74" y="362" width="36" height="36"/>
@@ -79,9 +76,6 @@
                         <constraint firstAttribute="height" constant="36" id="ybx-Vc-8WO"/>
                     </constraints>
                     <state key="normal" image="Down"/>
-                    <connections>
-                        <action selector="downVoteButtonDidTouch:" destination="iN0-l3-epB" eventType="touchUpInside" id="yCE-Rh-RS9"/>
-                    </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cmd-pK-7d8" userLabel="Upvote Button">
                     <rect key="frame" x="16" y="362" width="36" height="36"/>
@@ -91,9 +85,6 @@
                         <constraint firstAttribute="width" constant="36" id="NIU-55-x0B"/>
                     </constraints>
                     <state key="normal" image="Up"/>
-                    <connections>
-                        <action selector="upvoteButtonDidTouch:" destination="iN0-l3-epB" eventType="touchUpInside" id="OyF-kI-85h"/>
-                    </connections>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Discussion - The Dangerous Path Overwatch is Headed: Giving Players" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k3o-1c-C5p">
                     <rect key="frame" x="16" y="424" width="382" height="48"/>
@@ -180,8 +171,11 @@
             <connections>
                 <outlet property="commentCountLabel" destination="0PA-qp-qBP" id="Sv9-bp-gOU"/>
                 <outlet property="contentWebView" destination="BBW-Hf-RpW" id="xhR-2L-Q7l"/>
+                <outlet property="downVoteButton" destination="PQn-nj-igc" id="eWq-Us-zHP"/>
                 <outlet property="loadingView" destination="pvF-WQ-yKT" id="Kps-5W-Fbk"/>
                 <outlet property="postTitleLabel" destination="k3o-1c-C5p" id="h1N-K3-JIx"/>
+                <outlet property="shareButton" destination="2w8-9u-TZr" id="3vZ-1X-0PG"/>
+                <outlet property="upVoteButton" destination="Cmd-pK-7d8" id="SJR-jP-er4"/>
                 <outlet property="viewCountLabel" destination="qc8-Sk-m8A" id="o8J-rH-9FO"/>
                 <outlet property="voteCountLabel" destination="qcT-rl-eWv" id="YIv-Px-2vc"/>
                 <outlet property="webView" destination="MWV-xi-R4s" id="cHu-RX-0v1"/>
@@ -192,8 +186,8 @@
     </objects>
     <resources>
         <image name="Down" width="170.66667175292969" height="170.66667175292969"/>
-        <image name="Group 101.1" width="170.66667175292969" height="170.66667175292969"/>
         <image name="Up" width="170.66667175292969" height="170.66667175292969"/>
+        <image name="UpSelected" width="170.66667175292969" height="170.66667175292969"/>
         <image name="share" width="170.66667175292969" height="170.66667175292969"/>
     </resources>
 </document>

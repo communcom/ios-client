@@ -8,7 +8,15 @@
 
 import UIKit
 
-extension PostCardCellDelegate where Self: UIViewController {
+protocol PostActionsDelegate {
+    // Делагат еще буду дорабатывать по мере работы над информацией.
+    func didTapMenuButton(forPost post: ResponseAPIContentGetPost)
+    func didTapUpButton(forPost post: ResponseAPIContentGetPost)
+    func didTapDownButton(forPost post: ResponseAPIContentGetPost)
+    func didTapShareButton(forPost post: ResponseAPIContentGetPost)
+}
+
+extension PostActionsDelegate where Self: UIViewController {
     
     func didTapMenuButton(forPost post: ResponseAPIContentGetPost) {
         showAlert(title: "TODO", message: "Нажата кнопка контекстного меню")
@@ -31,7 +39,22 @@ extension PostCardCellDelegate where Self: UIViewController {
     }
     
     func didTapShareButton(forPost post: ResponseAPIContentGetPost) {
-        showAlert(title: "TODO", message: "Кнопка шары")
+        guard let userId = post.author?.userId else {return}
+        // text to share
+        let title = post.content.title
+        
+        #warning("refBlockNum is being removed")
+        let link = "https://commun.com/posts/\(userId)/\(post.contentId.refBlockNum)/\(post.contentId.permlink)"
+        
+        
+        // link to share
+        let textToShare = [title, link]
+        
+        let activityViewController = UIActivityViewController(activityItems: textToShare, applicationActivities: nil)
+        activityViewController.popoverPresentationController?.sourceView = self.view // so that iPads won't crash
+        
+        // present the view controller
+        self.present(activityViewController, animated: true, completion: nil)
     }
 
 }

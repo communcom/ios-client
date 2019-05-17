@@ -11,7 +11,7 @@ import CyberSwift
 import RxCocoa
 import RxSwift
 
-extension PostPageVC: PostHeaderViewDelegate {
+extension PostPageVC: PostHeaderViewDelegate, PostActionsDelegate {
     
     func bindUI() {
         // Observe post
@@ -43,13 +43,39 @@ extension PostPageVC: PostHeaderViewDelegate {
                 
                 // Create tableHeaderView
                 guard let headerView = UINib(nibName: "PostHeaderView", bundle: nil).instantiate(withOwner: self, options: nil).first as? PostHeaderView else {return}
-                headerView.post = post
+                headerView.setUpWith(post)
                 headerView.delegate = self
+                
+                // Observe button
+                if let post = post {
+                    headerView.upVoteButton.rx.tap
+                        .subscribe({_ in self.didTapUpButton(forPost: post)})
+                        .disposed(by: self.disposeBag)
+                    
+                    headerView.downVoteButton.rx.tap
+                        .subscribe({_ in self.didTapDownButton(forPost: post)})
+                        .disposed(by: self.disposeBag)
+                    
+                    headerView.shareButton.rx.tap
+                        .subscribe({_ in self.didTapShareButton(forPost: post)})
+                        .disposed(by: self.disposeBag)
+                }
+                
                 
                 // Assign table header view
                 self.tableView.tableHeaderView = headerView
             })
             .disposed(by: disposeBag)
+        
+        // more button
+        let nonNilPost = viewModel.post.filter {$0 != nil}
+            .map {$0!}
+        
+        moreButton.rx.tap
+            .withLatestFrom(nonNilPost)
+            .subscribe(onNext: {self.didTapMenuButton(forPost: $0)})
+            .disposed(by: disposeBag)
+        
     }
     
     func bindComments() {

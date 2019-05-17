@@ -9,6 +9,10 @@
 import UIKit
 import CyberSwift
 
+protocol PostHeaderViewDelegate: class {
+    func headerViewDidLayoutSubviews(_ headerView: PostHeaderView)
+}
+
 class PostHeaderView: UIView, UIWebViewDelegate {
     // Delegate
     weak var delegate: PostHeaderViewDelegate?
@@ -26,16 +30,10 @@ class PostHeaderView: UIView, UIWebViewDelegate {
     @IBOutlet weak var postTitleLabel: UILabel!
     @IBOutlet weak var contentWebView: UIWebView!
     
-    // Post
-    var post: ResponseAPIContentGetPost? {
-        didSet {
-            guard let post = post else {
-                setLoading()
-                return
-            }
-            setUpWith(post)
-        }
-    }
+    // Buttons
+    @IBOutlet weak var upVoteButton: UIButton!
+    @IBOutlet weak var downVoteButton: UIButton!
+    @IBOutlet weak var shareButton: UIButton!
     
     @IBOutlet weak var loadingView: UIView!
     func setLoading() {
@@ -45,7 +43,12 @@ class PostHeaderView: UIView, UIWebViewDelegate {
     }
     
     var showMedia = false
-    func setUpWith(_ post: ResponseAPIContentGetPost) {
+    func setUpWith(_ post: ResponseAPIContentGetPost?) {
+        guard let post = post else {
+            setLoading()
+            return
+        }
+        
         loadingView.isHidden = true
         // Show media
         if post.content.embeds.first?.result.type == "video",
@@ -66,6 +69,19 @@ class PostHeaderView: UIView, UIWebViewDelegate {
         #warning("missing viewsCount + votesCount")
         commentCountLabel.text = "\(post.stats.commentsCount) " + "Comments".localized()
         voteCountLabel.text = post.payout.rShares.stringValue
+        
+        // Handle button
+        var upVoteImageName = "Up"
+        if post.votes.hasUpVote {
+            upVoteImageName = "UpSelected"
+        }
+        upVoteButton.setImage(UIImage(named: upVoteImageName), for: .normal)
+        
+        var downVoteImageName = "Down"
+        if post.votes.hasDownVote {
+            downVoteImageName = "DownSelected"
+        }
+        downVoteButton.setImage(UIImage(named: downVoteImageName), for: .normal)
         
         // Show title
         postTitleLabel.text = post.content.title
@@ -99,28 +115,5 @@ class PostHeaderView: UIView, UIWebViewDelegate {
         self.height = height
         
         self.layoutSubviews()
-    }
-    
-    // Actions
-    @IBAction func upvoteButtonDidTouch(_ sender: Any) {
-        guard let post = post else {return}
-        // TODO: Upvote post
-        
-        // TODO: Catch result and send result to delegate
-        delegate?.didUpVotePost(post)
-    }
-    
-    @IBAction func downVoteButtonDidTouch(_ sender: Any) {
-        guard let post = post else {return}
-        // TODO: Upvote post
-        
-        // TODO: Catch result and send result to delegate
-        delegate?.didDownVotePost(post)
-    }
-    
-    @IBAction func shareButtonDidTouch(_ sender: Any) {
-        guard let post = post else {return}
-        // Share post
-        delegate?.sharePost(post)
     }
 }

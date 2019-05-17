@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension FeedPageVC: PostCardCellDelegate {
+extension FeedPageVC: PostActionsDelegate {
     func bindUI() {
         // sortType
         viewModel.sortType
