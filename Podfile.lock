@@ -6,8 +6,8 @@ PODS:
   - BigInt (3.1.0):
     - SipHash (~> 1.2)
   - Checksum (1.0.0)
-  - Crashlytics (3.13.0):
-    - Fabric (~> 1.10.0)
+  - Crashlytics (3.13.1):
+    - Fabric (~> 1.10.1)
   - CryptoSwift (1.0.0)
   - CyberSwift (1.0.7):
     - Checksum
@@ -28,7 +28,7 @@ PODS:
     - BigInt (~> 3.1.0)
     - RxCocoa (~> 4.0)
     - RxSwift (~> 4.0)
-  - Fabric (1.10.0)
+  - Fabric (1.10.1)
   - GoloCrypto (1.0.6)
   - IHProgressHUD (0.1.4)
   - Localize-Swift (2.0.0)
@@ -66,10 +66,10 @@ PODS:
 DEPENDENCIES:
   - Action
   - Alamofire
-  - Crashlytics
+  - Crashlytics (~> 3.13.1)
   - CyberSwift (from `https://github.com/GolosChain/cyberSwift.git`)
   - DateToolsSwift
-  - Fabric
+  - Fabric (~> 1.10.1)
   - IHProgressHUD (from `https://github.com/Swiftify-Corp/IHProgressHUD.git`)
   - PhoneNumberKit (~> 2.6)
   - PinCodeInputView
@@ -130,12 +130,12 @@ SPEC CHECKSUMS:
   Alamofire: ae5c501addb7afdbb13687d7f2f722c78734c2d3
   BigInt: 76b5dfdfa3e2e478d4ffdf161aeede5502e2742f
   Checksum: f1aa56a27dea5db4006c819e2e129ee6aeb1d9af
-  Crashlytics: 1f5f752c7feac0add0cc1774756f96444fa3b1a7
+  Crashlytics: 5aa8e90dcbf2f34898b4f5a0037787531246cca0
   CryptoSwift: d81eeaa59dc5a8d03720fe919a6fd07b51f7439f
-  CyberSwift: 8f1c207a0ee60bc2310560eab27f53c86bf47996
+  CyberSwift: fa19cae8d1a9b6d9ca86cdb906b2bc21b54dd49e
   DateToolsSwift: 875d97ff9e3a5d54abdd67a269b3f51c757b71ab
   eosswift: 22bc931fd65bbd446c3f828233b8fd2916cec4a7
-  Fabric: 09de1e053eb7dc415593166ad3e53d4c88123405
+  Fabric: f6f21452846788bb44595d73e9909d79d328e617
   GoloCrypto: 3f60e824b57ca657be702fb2cf4bd1f7a379257a
   IHProgressHUD: 49ce4eb85bb47952f04adcfc04ea7473286cf677
   Localize-Swift: c798ec9286494866f7068f85f7c71283ac5bdab4
@@ -156,6 +156,6 @@ SPEC CHECKSUMS:
   TLPhotoPicker: c5aefdc9beaca82116d7855924f1d8abdd055f79
   UIImageView-Letters: f62db28076797adf3560ab7410647dc6899b9eef
 
-PODFILE CHECKSUM: 9ad11a8daf5d9927ea4c4f9f7383daf0799abe6d
+PODFILE CHECKSUM: 5dc5c4357d2fa1c331f0c846a3bd410564537954
 
-COCOAPODS: 1.7.0.rc.1
+COCOAPODS: 1.7.0.rc.2

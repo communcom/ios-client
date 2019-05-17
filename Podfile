@@ -10,9 +10,9 @@ target 'Commun' do
 
   pod 'CyberSwift', :git => "https://github.com/GolosChain/cyberSwift.git" # "https://github.com/Monserg/cyber-ios.git"
   
-  pod 'Fabric'
-  pod 'Crashlytics'
-  
+  pod 'Fabric', '~> 1.10.1'
+  pod 'Crashlytics', '~> 3.13.1'
+
   pod 'Alamofire'
   pod 'Swinject'
   pod 'SDWebImage', '~> 4.0'
