@@ -90,7 +90,7 @@
 
         label = [[UILabel alloc] init];
         label.textColor = [self.class defaultPlaceholderColor];
-        label.numberOfLines = 0;
+        label.numberOfLines = 1;
         label.userInteractionEnabled = NO;
         objc_setAssociatedObject(self, @selector(placeholderLabel), label, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 
