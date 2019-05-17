@@ -99,7 +99,9 @@ extension PostCardCell {
         }
         
 //        self.avatarImageView.sd_setImage(with: post.community.avatarUrl?.url, completed: nil)
+        #warning("change this numbers later")
         self.likeCounterLabel.text = "\(post.payout.rShares.stringValue ?? "0")"
+        
         self.numberOfCommentsLabel.text = "\(post.stats.commentsCount) " + "Comments".localized()
     }
     
