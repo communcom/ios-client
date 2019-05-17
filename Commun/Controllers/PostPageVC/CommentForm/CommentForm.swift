@@ -13,6 +13,7 @@ class CommentForm: UIView {
     private let bag = DisposeBag()
     @IBOutlet var contentView: UIView!
     @IBOutlet weak var textView: ExpandableTextView!
+    @IBOutlet weak var sendButton: UIButton!
     @IBOutlet weak var textFieldToSendBtnConstraint: NSLayoutConstraint!
     @IBOutlet weak var sendBtnWidthConstraint: NSLayoutConstraint!
     

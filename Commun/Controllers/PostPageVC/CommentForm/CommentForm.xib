@@ -14,6 +14,7 @@
             <connections>
                 <outlet property="contentView" destination="iN0-l3-epB" id="C9h-uV-UHM"/>
                 <outlet property="sendBtnWidthConstraint" destination="Igd-LI-rWd" id="wYf-NU-hdQ"/>
+                <outlet property="sendButton" destination="53C-vv-nq2" id="aDJ-hv-TUe"/>
                 <outlet property="textFieldToSendBtnConstraint" destination="Bhf-vL-w09" id="Wh6-ZD-ZhC"/>
                 <outlet property="textView" destination="27b-40-1Op" id="gF7-25-TMI"/>
             </connections>

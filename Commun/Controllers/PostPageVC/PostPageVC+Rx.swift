@@ -19,6 +19,13 @@ extension PostPageVC: PostHeaderViewDelegate {
         
         // Observe comments
         bindComments()
+        
+        // Observe commentForm
+        commentForm.rx.didSubmit
+            .subscribe(onNext: {comment in
+                self.showAlert(title: "TODO: Send comment", message: comment)
+            })
+            .disposed(by: disposeBag)
     }
     
     func bindPost() {

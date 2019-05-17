@@ -18,7 +18,9 @@ class ExpandableTextView: UITextView {
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        self.rx.didChange
+        self.rx.text
+            .skip(1)
+            .distinctUntilChanged()
             .subscribe(onNext: {_ in
                 var newFrame = self.frame
                 let width = newFrame.size.width
