@@ -10,13 +10,6 @@ import UIKit
 import CyberSwift
 import SDWebImage
 
-protocol PostCardCellDelegate {
-    // Делагат еще буду дорабатывать по мере работы над информацией.
-    func didTapMenuButton(forPost post: ResponseAPIContentGetPost)
-    func didTapUpButton(forPost post: ResponseAPIContentGetPost)
-    func didTapDownButton(forPost post: ResponseAPIContentGetPost)
-    func didTapShareButton(forPost post: ResponseAPIContentGetPost)
-}
 
 class PostCardCell: UITableViewCell {
 
@@ -33,7 +26,7 @@ class PostCardCell: UITableViewCell {
     
     @IBOutlet weak var embededImageView: UIImageView!
     @IBOutlet weak var embededViewHeightConstraint: NSLayoutConstraint!
-    var delegate: PostCardCellDelegate?
+    var delegate: PostActionsDelegate?
     var post: ResponseAPIContentGetPost?
     
     override func awakeFromNib() {
