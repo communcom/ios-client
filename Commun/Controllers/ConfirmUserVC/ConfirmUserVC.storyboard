@@ -53,7 +53,7 @@
                                 </connections>
                             </button>
                             <button clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="waw-lP-Yrt">
-                                <rect key="frame" x="42.666666666666657" y="305" width="290" height="56"/>
+                                <rect key="frame" x="42.666666666666657" y="682" width="290" height="56"/>
                                 <color key="backgroundColor" red="0.41568627450980389" green="0.50196078431372548" blue="0.96078431372549022" alpha="1" colorSpace="calibratedRGB"/>
                                 <accessibility key="accessibilityConfiguration" identifier="ConfirmUserNextButton" label="ConfirmUserNextButton"/>
                                 <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="17"/>
@@ -74,6 +74,7 @@
                         <constraints>
                             <constraint firstItem="bYW-xi-lTa" firstAttribute="width" secondItem="ML7-X3-dGA" secondAttribute="width" multiplier="228:375" identifier="ConfirmUserPinCodeViewWidthConstraint" id="1bK-Ak-uVg"/>
                             <constraint firstItem="5dt-9p-v3W" firstAttribute="leading" secondItem="zEB-iN-I0i" secondAttribute="leading" constant="16" identifier="ConfirmUserSmsCodeLabelLeadingConstraint" id="1tD-WO-XIW" userLabel="ConfirmUserEnterSmsCodeLabelLeadingConstraint"/>
+                            <constraint firstItem="zEB-iN-I0i" firstAttribute="bottom" secondItem="waw-lP-Yrt" secondAttribute="bottom" priority="999" constant="40" identifier="ConfirmUserNextButtonBottomConstraint" id="7gQ-Nt-x3O"/>
                             <constraint firstItem="waw-lP-Yrt" firstAttribute="width" secondItem="ML7-X3-dGA" secondAttribute="width" multiplier="290:375" identifier="ConfirmUserNextButtonWidthConstraint" id="K5F-pz-4KL"/>
                             <constraint firstItem="6zJ-W6-fmM" firstAttribute="centerX" secondItem="zEB-iN-I0i" secondAttribute="centerX" id="NYX-uX-DJ6"/>
                             <constraint firstItem="6zJ-W6-fmM" firstAttribute="top" secondItem="bYW-xi-lTa" secondAttribute="bottom" constant="35" identifier="ConfirmUserResendButtonTopConstraint" id="OIf-uN-r9L" userLabel="ConfirmUserResendSmsCodeButtonTopConstraint"/>
@@ -81,7 +82,7 @@
                             <constraint firstItem="jAK-lA-DMe" firstAttribute="centerX" secondItem="ML7-X3-dGA" secondAttribute="centerX" id="TIU-CW-Zpe"/>
                             <constraint firstItem="bYW-xi-lTa" firstAttribute="centerX" secondItem="ML7-X3-dGA" secondAttribute="centerX" id="TxS-xO-Dhs"/>
                             <constraint firstItem="bYW-xi-lTa" firstAttribute="top" secondItem="jAK-lA-DMe" secondAttribute="bottom" constant="18" id="ZjL-IC-jZ2"/>
-                            <constraint firstItem="waw-lP-Yrt" firstAttribute="top" secondItem="6zJ-W6-fmM" secondAttribute="bottom" constant="51" identifier="ConfirmUserNextButtonTopConstraint" id="c1U-Qn-YuT" userLabel="ConfirmUserNextButtonTopConstraint"/>
+                            <constraint firstItem="waw-lP-Yrt" firstAttribute="top" relation="greaterThanOrEqual" secondItem="6zJ-W6-fmM" secondAttribute="bottom" constant="51" identifier="ConfirmUserNextButtonTopConstraint" id="c1U-Qn-YuT" userLabel="ConfirmUserNextButtonTopConstraint"/>
                             <constraint firstItem="bYW-xi-lTa" firstAttribute="top" secondItem="5dt-9p-v3W" secondAttribute="bottom" constant="50" identifier="ConfirmUserPicCodeViewTopConstraint" id="kPy-LG-FWb" userLabel="ConfirmUserPinCodeViewTopConstraint"/>
                             <constraint firstItem="waw-lP-Yrt" firstAttribute="height" secondItem="ML7-X3-dGA" secondAttribute="height" multiplier="56:812" identifier="ConfirmUserNextButtonHeightConstraint" id="nFo-HL-5dh"/>
                             <constraint firstItem="waw-lP-Yrt" firstAttribute="centerX" secondItem="ML7-X3-dGA" secondAttribute="centerX" id="nu3-Pe-3jZ"/>
@@ -104,9 +105,13 @@
                                 <include reference="nFo-HL-5dh"/>
                             </mask>
                         </variation>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="teh-Pp-AAn" appends="YES" id="cPu-Aa-CQu"/>
+                        </connections>
                     </view>
                     <connections>
                         <outlet property="nextButton" destination="waw-lP-Yrt" id="Iv0-hI-KCM"/>
+                        <outlet property="nextButtonBottomConstraint" destination="7gQ-Nt-x3O" id="SMF-4s-S5P"/>
                         <outlet property="pinCodeView" destination="bYW-xi-lTa" id="mgP-Ro-2Kc"/>
                         <outlet property="resendButton" destination="6zJ-W6-fmM" id="gtL-Fu-R5f"/>
                         <outlet property="smsCodeLabel" destination="5dt-9p-v3W" id="AES-zC-Jyb"/>
@@ -117,9 +122,15 @@
                         <outletCollection property="heightsCollection" destination="c1U-Qn-YuT" collectionClass="NSMutableArray" id="A2M-uI-W5B"/>
                         <outletCollection property="widthsCollection" destination="1tD-WO-XIW" collectionClass="NSMutableArray" id="b6k-uz-F8R"/>
                         <outletCollection property="heightsCollection" destination="ZjL-IC-jZ2" collectionClass="NSMutableArray" id="ufZ-0j-yad"/>
+                        <outletCollection property="heightsCollection" destination="7gQ-Nt-x3O" collectionClass="NSMutableArray" id="eEb-pJ-vbf"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Sv0-oJ-wJx" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="teh-Pp-AAn">
+                    <connections>
+                        <action selector="handlerTapGestureRecognizer:" destination="NlB-Y1-YqX" id="QXG-3s-n5h"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="-91" y="5"/>
         </scene>

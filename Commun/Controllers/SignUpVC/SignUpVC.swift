@@ -11,7 +11,7 @@ import RxCocoa
 import RxSwift
 import CyberSwift
 
-class SignUpVC: UIViewController {
+class SignUpVC: UIViewController, NextButtonBottomConstraint {
     // MARK: - Properties
     let viewModel   =   SignUpViewModel()
     let disposeBag  =   DisposeBag()
@@ -93,7 +93,12 @@ class SignUpVC: UIViewController {
         }
     }
     
-    @IBOutlet weak var nextButtonBottomConstraint: NSLayoutConstraint!
+    // NextButtonBottomConstraint protocol implementation
+    @IBOutlet weak var nextButtonBottomConstraint: NSLayoutConstraint! {
+        didSet {
+            self.subscribeKeyboardEvents(constraint: self.nextButtonBottomConstraint)
+        }
+    }
     
     
     // MARK: - Class Initialization
@@ -168,22 +173,22 @@ class SignUpVC: UIViewController {
 //            }
 //        }).disposed(by: disposeBag)
         
-        NotificationCenter.default.rx.notification(UIResponder.keyboardWillShowNotification, object: nil).subscribe(onNext: { [weak self] notification in
-            if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
-                let keyboardRectangle = keyboardFrame.cgRectValue
-                let keyboardHeight = keyboardRectangle.height
-                self?.nextButtonBottomConstraint.constant = keyboardHeight
-            }
-        }).disposed(by: disposeBag)
-        
-        NotificationCenter.default.rx.notification(UIResponder.keyboardWillHideNotification, object: nil).subscribe(onNext: { [weak self] notification in
-            guard let strongSelf = self else { return }
+//        NotificationCenter.default.rx.notification(UIResponder.keyboardWillShowNotification, object: nil).subscribe(onNext: { [weak self] notification in
 //            if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
 //                let keyboardRectangle = keyboardFrame.cgRectValue
 //                let keyboardHeight = keyboardRectangle.height
-                strongSelf.nextButtonBottomConstraint.constant = 40.0
+//                self?.nextButtonBottomConstraint.constant = keyboardHeight
 //            }
-        }).disposed(by: disposeBag)
+//        }).disposed(by: disposeBag)
+//        
+//        NotificationCenter.default.rx.notification(UIResponder.keyboardWillHideNotification, object: nil).subscribe(onNext: { [weak self] notification in
+//            guard let strongSelf = self else { return }
+////            if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+////                let keyboardRectangle = keyboardFrame.cgRectValue
+////                let keyboardHeight = keyboardRectangle.height
+//                strongSelf.nextButtonBottomConstraint.constant = 40.0
+////            }
+//        }).disposed(by: disposeBag)
     }
     
     

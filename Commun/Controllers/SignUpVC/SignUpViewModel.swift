@@ -67,7 +67,7 @@ class SignUpViewModel {
         let phoneNumberKit = PhoneNumberKit()
         
         do {
-            let _ = try phoneNumberKit.parse(phone, withRegion: selectedCountry.value?.shortCode ?? "", ignoreType: true)
+            let _ = try phoneNumberKit.parse(phone, withRegion: self.selectedCountry.value?.shortCode ?? "", ignoreType: true)
             return true
         } catch {
             return false

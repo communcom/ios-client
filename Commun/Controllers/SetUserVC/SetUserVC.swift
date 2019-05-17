@@ -11,7 +11,7 @@ import RxSwift
 import RxCocoa
 import CyberSwift
 
-class SetUserVC: UIViewController {
+class SetUserVC: UIViewController, NextButtonBottomConstraint {
     // MARK: - Properties
     var viewModel: SetUserViewModel?
     let disposeBag = DisposeBag()
@@ -63,7 +63,10 @@ class SetUserVC: UIViewController {
         }
     }
 
+    // NextButtonBottomConstraint protocol implementation
+    @IBOutlet weak var nextButtonBottomConstraint: NSLayoutConstraint!
     
+
     // MARK: - Class Initialization
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -92,6 +95,7 @@ class SetUserVC: UIViewController {
         self.navigationController?.navigationBar.prefersLargeTitles = true
         
         setBindings()
+        self.subscribeKeyboardEvents(constraint: self.nextButtonBottomConstraint)
 //        makeActions()
     }
 

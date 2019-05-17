@@ -12,7 +12,7 @@ import RxCocoa
 import CyberSwift
 import PinCodeInputView
 
-class ConfirmUserVC: UIViewController {
+class ConfirmUserVC: UIViewController, NextButtonBottomConstraint {
     // MARK: - Properties
     var viewModel: ConfirmUserViewModel?
     let disposeBag = DisposeBag()
@@ -109,6 +109,13 @@ class ConfirmUserVC: UIViewController {
         }
     }
 
+    // NextButtonBottomConstraint protocol implementation
+    @IBOutlet weak var nextButtonBottomConstraint: NSLayoutConstraint! {
+        didSet {
+            self.subscribeKeyboardEvents(constraint: self.nextButtonBottomConstraint)
+        }
+    }
+    
     
     // MARK: - Class Initialization
     required init?(coder aDecoder: NSCoder) {
@@ -278,5 +285,9 @@ class ConfirmUserVC: UIViewController {
 //
 //            }).disposed(by: self.disposeBag)
 //        }
+    }
+    
+    @IBAction func handlerTapGestureRecognizer(_ sender: UITapGestureRecognizer) {
+        self.view.endEditing(true)
     }
 }
