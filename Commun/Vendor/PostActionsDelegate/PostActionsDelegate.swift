@@ -30,9 +30,8 @@ extension PostActionsDelegate {
         let originImage = post.votes.hasUpVote ? "UpSelected" : "Up"
         let newImage = originImage == "Up" ? "UpSelected": "Up"
         upVoteButton.setImage(UIImage(named: newImage), for: .normal)
-        var newPost = post
-        newPost.votes.hasUpVote = !post.votes.hasUpVote
-        self.post = newPost
+        
+        self.post!.votes.hasUpVote = !self.post!.votes.hasUpVote
         
         upVoteButton.isEnabled = false
         upVoteObserver(post)
@@ -41,6 +40,7 @@ extension PostActionsDelegate {
                     self.upVoteButton.isEnabled = true
                 },
                 onError: {_ in
+                    self.post!.votes.hasUpVote = !self.post!.votes.hasUpVote
                     UIApplication.topViewController()?.showGeneralError()
                     self.upVoteButton.setImage(UIImage(named: originImage), for: .normal)
                     self.upVoteButton.isEnabled = true
@@ -53,9 +53,7 @@ extension PostActionsDelegate {
         let originImage = post.votes.hasDownVote ? "DownSelected" : "Down"
         let newImage = originImage == "Down" ? "DownSelected": "Down"
         downVoteButton.setImage(UIImage(named: newImage), for: .normal)
-        var newPost = post
-        newPost.votes.hasDownVote = !post.votes.hasDownVote
-        self.post = newPost
+        self.post!.votes.hasDownVote = !self.post!.votes.hasDownVote
         
         downVoteButton.isEnabled = false
         downVoteObserver(post)
@@ -64,6 +62,7 @@ extension PostActionsDelegate {
                     self.downVoteButton.isEnabled = true
                 },
                 onError: {_ in
+                    self.post!.votes.hasDownVote = !self.post!.votes.hasDownVote
                     UIApplication.topViewController()?.showGeneralError()
                     self.downVoteButton.setImage(UIImage(named: originImage), for: .normal)
                     self.downVoteButton.isEnabled = true
