@@ -20,8 +20,9 @@ protocol PostActionsDelegate: class {
 extension PostActionsDelegate {
     
     func didTapMenuButton() {
-        guard let post = post else {return}
-//        showAlert(title: "TODO", message: "Нажата кнопка контекстного меню")
+        guard let post = post,
+            let topController = UIApplication.topViewController() else {return}
+        topController.showAlert(title: "TODO", message: "Нажата кнопка контекстного меню")
     }
     
     func upVote() {
@@ -32,10 +33,17 @@ extension PostActionsDelegate {
         var newPost = post
         newPost.votes.hasUpVote = !post.votes.hasUpVote
         self.post = newPost
+        
+        upVoteButton.isEnabled = false
         upVoteObserver(post)
-            .subscribe(onError: {_ in
-//                self.showGeneralError()
-                self.upVoteButton.setImage(UIImage(named: originImage), for: .normal)
+            .subscribe(
+                onCompleted: {
+                    self.upVoteButton.isEnabled = true
+                },
+                onError: {_ in
+                    UIApplication.topViewController()?.showGeneralError()
+                    self.upVoteButton.setImage(UIImage(named: originImage), for: .normal)
+                    self.upVoteButton.isEnabled = true
             })
             .disposed(by: disposeBag)
     }
@@ -48,17 +56,26 @@ extension PostActionsDelegate {
         var newPost = post
         newPost.votes.hasDownVote = !post.votes.hasDownVote
         self.post = newPost
+        
+        downVoteButton.isEnabled = false
         downVoteObserver(post)
-            .subscribe(onError: {_ in
-//                self.showGeneralError()
-                self.downVoteButton.setImage(UIImage(named: originImage), for: .normal)
+            .subscribe(
+                onCompleted: {
+                    self.downVoteButton.isEnabled = true
+                },
+                onError: {_ in
+                    UIApplication.topViewController()?.showGeneralError()
+                    self.downVoteButton.setImage(UIImage(named: originImage), for: .normal)
+                    self.downVoteButton.isEnabled = true
             })
             .disposed(by: disposeBag)
     }
     
     func didTapShareButton() {
-        guard let post = post else {return}
-        guard let userId = post.author?.userId else {return}
+        guard let post = post,
+            let userId = post.author?.userId,
+            let controller = UIApplication.topViewController()
+            else {return}
         // text to share
         let title = post.content.title
         
@@ -70,10 +87,10 @@ extension PostActionsDelegate {
         let textToShare = [title, link]
         
         let activityViewController = UIActivityViewController(activityItems: textToShare, applicationActivities: nil)
-//        activityViewController.popoverPresentationController?.sourceView = self.view // so that iPads won't crash
+        activityViewController.popoverPresentationController?.sourceView = controller.view // so that iPads won't crash
         
         // present the view controller
-//        self.present(activityViewController, animated: true, completion: nil)
+        controller.present(activityViewController, animated: true, completion: nil)
     }
 
 }

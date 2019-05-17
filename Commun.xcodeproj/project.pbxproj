@@ -57,6 +57,7 @@
 		3BDD9A06228DBED000B2A1DA /* CommentForm.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3BDD9A05228DBED000B2A1DA /* CommentForm.xib */; };
 		3BDD9A08228EA5FF00B2A1DA /* CommentForm+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BDD9A07228EA5FF00B2A1DA /* CommentForm+Rx.swift */; };
 		3BDD9A0B228EDA6F00B2A1DA /* PostActionsDelegate+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BDD9A0A228EDA6F00B2A1DA /* PostActionsDelegate+Rx.swift */; };
+		3BDD9A0F228F07EF00B2A1DA /* UIApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BDD9A0E228F07EF00B2A1DA /* UIApplication.swift */; };
 		5700611A2253CA96007700DA /* EditorContentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570061182253CA96007700DA /* EditorContentCell.swift */; };
 		5700611B2253CA96007700DA /* EditorContentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 570061192253CA96007700DA /* EditorContentCell.xib */; };
 		5700611F2253CDDF007700DA /* EditorMediaCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5700611D2253CDDF007700DA /* EditorMediaCell.swift */; };
@@ -244,6 +245,7 @@
 		3BDD9A05228DBED000B2A1DA /* CommentForm.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CommentForm.xib; sourceTree = "<group>"; };
 		3BDD9A07228EA5FF00B2A1DA /* CommentForm+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CommentForm+Rx.swift"; sourceTree = "<group>"; };
 		3BDD9A0A228EDA6F00B2A1DA /* PostActionsDelegate+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PostActionsDelegate+Rx.swift"; sourceTree = "<group>"; };
+		3BDD9A0E228F07EF00B2A1DA /* UIApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplication.swift; sourceTree = "<group>"; };
 		4F0772CC6D820AD11B1FF48A /* Pods_Commun.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Commun.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		570061182253CA96007700DA /* EditorContentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorContentCell.swift; sourceTree = "<group>"; };
 		570061192253CA96007700DA /* EditorContentCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EditorContentCell.xib; sourceTree = "<group>"; };
@@ -762,6 +764,7 @@
 				576DC920223E42C800EDED41 /* UIViewControllerExtension.swift */,
 				3B02CD33228ADC100078BB52 /* UIWebView.swift */,
 				3B28EFE1228C7C31002D4816 /* KeyboardLayoutConstraint.swift */,
+				3BDD9A0E228F07EF00B2A1DA /* UIApplication.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1390,6 +1393,7 @@
 				57A95197224178010020F55D /* PostActionsDelegate.swift in Sources */,
 				57E515AA2270EBB900A6F6DB /* NotificationSettingCell.swift in Sources */,
 				57840A0E223FAC1B00338FD5 /* BadgeWithCounterView.swift in Sources */,
+				3BDD9A0F228F07EF00B2A1DA /* UIApplication.swift in Sources */,
 				3B0E9C64226F4A0C002AB1C2 /* VerticalDraggableImageView.swift in Sources */,
 				3B02CD282289B23E0078BB52 /* PostHeaderView.swift in Sources */,
 				57E515B62270F7B200A6F6DB /* ChangePasswordCell.swift in Sources */,
