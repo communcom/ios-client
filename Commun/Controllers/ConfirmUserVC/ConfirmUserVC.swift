@@ -12,7 +12,7 @@ import RxCocoa
 import CyberSwift
 import PinCodeInputView
 
-class ConfirmUserVC: UIViewController, NextButtonBottomConstraint {
+class ConfirmUserVC: UIViewController {
     // MARK: - Properties
     var viewModel: ConfirmUserViewModel?
     let disposeBag = DisposeBag()
@@ -106,13 +106,6 @@ class ConfirmUserVC: UIViewController, NextButtonBottomConstraint {
     @IBOutlet var widthsCollection: [NSLayoutConstraint]! {
         didSet {
             self.widthsCollection.forEach({ $0.constant *= Config.widthRatio })
-        }
-    }
-
-    // NextButtonBottomConstraint protocol implementation
-    @IBOutlet weak var nextButtonBottomConstraint: NSLayoutConstraint! {
-        didSet {
-            self.subscribeKeyboardEvents(constraint: self.nextButtonBottomConstraint)
         }
     }
     

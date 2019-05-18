@@ -94,26 +94,31 @@ class SetUserVC: UIViewController, NextButtonBottomConstraint {
         self.title = "Sign up".localized()
         self.navigationController?.navigationBar.prefersLargeTitles = true
         
-        setBindings()
-        self.subscribeKeyboardEvents(constraint: self.nextButtonBottomConstraint)
-//        makeActions()
+        self.setupBindings()
+        self.setupActions()
     }
 
-    func setBindings() {
+    func setupBindings() {
         if let viewModel = viewModel {
-            userNameTextField.rx.text.map { string -> String in
-                return string ?? ""
-            }.bind(to: viewModel.userName).disposed(by: disposeBag)
+            userNameTextField.rx.text
+                .map { string -> String in
+                    return string ?? ""
+                }
+                .bind(to: viewModel.userName).disposed(by: disposeBag)
         }
     }
     
-//    func makeActions() {
-//        nextButton.rx.tap.subscribe(onNext: { _ in
-//            self.viewModel!.setUser().subscribe(onNext: { flag in
-//                self.router?.routeToSignUpNextScene()
-//            }).disposed(by: self.disposeBag)
-//        }).disposed(by: disposeBag)
-//    }
+    func setupActions() {
+        nextButton.rx.tap
+            .subscribe(onNext: { _ in
+                self.viewModel!.setUser()
+                    .subscribe(onNext: { flag in
+                        self.router?.routeToSignUpNextScene()
+                    })
+                    .disposed(by: self.disposeBag)
+            })
+            .disposed(by: disposeBag)
+    }
     
     
     // MARK: - Actions

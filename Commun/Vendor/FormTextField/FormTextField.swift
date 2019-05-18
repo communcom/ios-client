@@ -10,9 +10,11 @@ import UIKit
 
 @IBDesignable
 class FormTextField: UITextField {
-    
+    // MARK: - Properties
     @IBInspectable var inset: CGFloat = 0
     
+    
+    // MARK: - Class Functions
     override func textRect(forBounds bounds: CGRect) -> CGRect {
         return bounds.insetBy(dx: inset, dy: inset)
     }
@@ -20,5 +22,4 @@ class FormTextField: UITextField {
     override func editingRect(forBounds bounds: CGRect) -> CGRect {
         return textRect(forBounds: bounds)
     }
-    
 }

@@ -11,7 +11,7 @@ import RxCocoa
 import RxSwift
 import CyberSwift
 
-class SignUpVC: UIViewController, NextButtonBottomConstraint {
+class SignUpVC: UIViewController {
     // MARK: - Properties
     let viewModel   =   SignUpViewModel()
     let disposeBag  =   DisposeBag()
@@ -66,6 +66,7 @@ class SignUpVC: UIViewController, NextButtonBottomConstraint {
             self.phoneNumberTextField.inset = 16.0 * Config.widthRatio
             self.phoneNumberTextField.layer.cornerRadius = 8.0 * Config.heightRatio
             self.phoneNumberTextField.clipsToBounds = true
+            self.phoneNumberTextField.keyboardType = .numberPad
         }
     }
     
@@ -121,8 +122,8 @@ class SignUpVC: UIViewController, NextButtonBottomConstraint {
         self.title = "Sign up".localized()
         self.navigationController?.navigationBar.prefersLargeTitles = true
         
-        setupBindings()
-        setupActions()
+        self.setupBindings()
+        self.setupActions()
     }
     
     
@@ -142,11 +143,11 @@ class SignUpVC: UIViewController, NextButtonBottomConstraint {
             })
             .disposed(by: disposeBag)
         
-        viewModel.phone.asObservable()
+        self.viewModel.phone.asObservable()
             .bind(to: phoneNumberTextField.rx.text)
             .disposed(by: disposeBag)
         
-        viewModel.flagUrl
+        self.viewModel.flagUrl
             .subscribe(onNext: { [weak self] url in
                 self?.countryImageView.sd_setImage(with: url, completed: nil)
             })
@@ -160,7 +161,7 @@ class SignUpVC: UIViewController, NextButtonBottomConstraint {
     }
 
     func setupActions() {
-        countryButton.rx.tap
+        self.countryButton.rx.tap
             .subscribe(onNext: { [weak self] _ in
                 if let countryVC = controllerContainer.resolve(SelectCountryVC.self) {
                     countryVC.bindViewModel(SelectCountryViewModel(withModel: self!.viewModel))

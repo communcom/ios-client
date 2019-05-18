@@ -65,16 +65,13 @@
                                         <integer key="value" value="8"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <action selector="nextButtonTapped:" destination="NlB-Y1-YqX" eventType="touchUpInside" id="6nb-Tg-Ov2"/>
-                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="bYW-xi-lTa" firstAttribute="width" secondItem="ML7-X3-dGA" secondAttribute="width" multiplier="228:375" identifier="ConfirmUserPinCodeViewWidthConstraint" id="1bK-Ak-uVg"/>
                             <constraint firstItem="5dt-9p-v3W" firstAttribute="leading" secondItem="zEB-iN-I0i" secondAttribute="leading" constant="16" identifier="ConfirmUserSmsCodeLabelLeadingConstraint" id="1tD-WO-XIW" userLabel="ConfirmUserEnterSmsCodeLabelLeadingConstraint"/>
-                            <constraint firstItem="zEB-iN-I0i" firstAttribute="bottom" secondItem="waw-lP-Yrt" secondAttribute="bottom" priority="999" constant="40" identifier="ConfirmUserNextButtonBottomConstraint" id="7gQ-Nt-x3O"/>
+                            <constraint firstItem="zEB-iN-I0i" firstAttribute="bottom" secondItem="waw-lP-Yrt" secondAttribute="bottom" priority="999" constant="40" identifier="ConfirmUserNextButtonBottomConstraint" id="7gQ-Nt-x3O" customClass="KeyboardLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                             <constraint firstItem="waw-lP-Yrt" firstAttribute="width" secondItem="ML7-X3-dGA" secondAttribute="width" multiplier="290:375" identifier="ConfirmUserNextButtonWidthConstraint" id="K5F-pz-4KL"/>
                             <constraint firstItem="6zJ-W6-fmM" firstAttribute="centerX" secondItem="zEB-iN-I0i" secondAttribute="centerX" id="NYX-uX-DJ6"/>
                             <constraint firstItem="6zJ-W6-fmM" firstAttribute="top" secondItem="bYW-xi-lTa" secondAttribute="bottom" constant="35" identifier="ConfirmUserResendButtonTopConstraint" id="OIf-uN-r9L" userLabel="ConfirmUserResendSmsCodeButtonTopConstraint"/>
@@ -111,7 +108,6 @@
                     </view>
                     <connections>
                         <outlet property="nextButton" destination="waw-lP-Yrt" id="Iv0-hI-KCM"/>
-                        <outlet property="nextButtonBottomConstraint" destination="7gQ-Nt-x3O" id="SMF-4s-S5P"/>
                         <outlet property="pinCodeView" destination="bYW-xi-lTa" id="mgP-Ro-2Kc"/>
                         <outlet property="resendButton" destination="6zJ-W6-fmM" id="gtL-Fu-R5f"/>
                         <outlet property="smsCodeLabel" destination="5dt-9p-v3W" id="AES-zC-Jyb"/>

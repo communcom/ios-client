@@ -35,22 +35,4 @@ extension UIViewController {
     func showGeneralError() {
         showAlert(title: "Error".localized(), message: "Something went wrong.\nPlease try again later".localized())
     }
-
-    func subscribeKeyboardEvents(constraint: NSLayoutConstraint) {
-        NotificationCenter.default.rx.notification(UIResponder.keyboardWillShowNotification, object: nil)
-            .subscribe(onNext: { notification in
-                if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
-                    let keyboardRectangle = keyboardFrame.cgRectValue
-                    let keyboardHeight = keyboardRectangle.height
-                    constraint.constant = keyboardHeight
-                }
-            })
-            .disposed(by: DisposeBag())
-        
-        NotificationCenter.default.rx.notification(UIResponder.keyboardWillHideNotification, object: nil)
-            .subscribe(onNext: { notification in
-                constraint.constant = 40.0
-            })
-            .disposed(by: DisposeBag())
-    }
 }
