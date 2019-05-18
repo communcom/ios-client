@@ -49,7 +49,7 @@ class TabBarVC: UITabBarController {
         notifications.accessibilityLabel = "TabBarNotificationsTabBarItem"
         
         // Set up controllers
-        self.viewControllers = [feed, comunities, wallet, notificationsNC, profileNC]
+        self.viewControllers = [feed, /*comunities, wallet,*/ notificationsNC, profileNC]
         
         // Config styles
         self.tabBar.unselectedItemTintColor = #colorLiteral(red: 0.8971592784, green: 0.9046500325, blue: 0.9282500148, alpha: 1)
