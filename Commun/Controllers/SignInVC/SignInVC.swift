@@ -167,6 +167,12 @@ class SignInVC: UIViewController {
     }
     
     
+    // MARK: - Gestures
+    @IBAction func handlerTapGestureRecognizer(_ sender: UITapGestureRecognizer) {
+        self.view.endEditing(true)
+    }
+
+    
     // MARK: - Actions
     @IBAction func paramsButtonTapped(_ sender: UIButton) {
         let login                   =   Config.accountNickTest
@@ -180,11 +186,5 @@ class SignInVC: UIViewController {
         self.keyTextField.resignFirstResponder()
         
         _ = self.checkCorrectDataAndSetupButton(LoginCredential(login: login, key: activeKey))
-    }
-    
-    
-    // MARK: - Gestures
-    @IBAction func handlerTapGestureRecognizer(_ sender: UITapGestureRecognizer) {
-        self.view.endEditing(true)
     }
 }

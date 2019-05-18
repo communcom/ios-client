@@ -11,7 +11,7 @@ import RxSwift
 import RxCocoa
 import CyberSwift
 
-class SetUserVC: UIViewController, NextButtonBottomConstraint {
+class SetUserVC: UIViewController {
     // MARK: - Properties
     var viewModel: SetUserViewModel?
     let disposeBag = DisposeBag()
@@ -30,12 +30,17 @@ class SetUserVC: UIViewController, NextButtonBottomConstraint {
         }
     }
     
-    @IBOutlet weak var userNameTextField: UITextField! {
+    @IBOutlet weak var userNameTextField: FormTextField! {
         didSet {
-            self.userNameTextField.tune(withPlaceholder:        "Username Placeholder".localized(),
-                                        textColors:             blackWhiteColorPickers,
-                                        font:                   UIFont.init(name: "SFProText-Regular", size: 17.0 * Config.heightRatio),
-                                        alignment:              .left)
+            self.userNameTextField.tune(withPlaceholder:    "Username Placeholder".localized(),
+                                        textColors:         blackWhiteColorPickers,
+                                        font:               UIFont.init(name: "SFProText-Regular", size: 17.0 * Config.heightRatio),
+                                        alignment:          .left)
+            
+            self.userNameTextField.inset = 16.0 * Config.widthRatio
+            self.userNameTextField.layer.cornerRadius = 8.0 * Config.heightRatio
+            self.userNameTextField.clipsToBounds = true
+            self.userNameTextField.keyboardType = .alphabet
         }
     }
     
@@ -62,9 +67,6 @@ class SetUserVC: UIViewController, NextButtonBottomConstraint {
             self.widthsCollection.forEach({ $0.constant *= Config.widthRatio })
         }
     }
-
-    // NextButtonBottomConstraint protocol implementation
-    @IBOutlet weak var nextButtonBottomConstraint: NSLayoutConstraint!
     
 
     // MARK: - Class Initialization
@@ -98,6 +100,8 @@ class SetUserVC: UIViewController, NextButtonBottomConstraint {
         self.setupActions()
     }
 
+    
+    // MARK: - Custom Functions
     func setupBindings() {
         if let viewModel = viewModel {
             userNameTextField.rx.text
@@ -118,6 +122,12 @@ class SetUserVC: UIViewController, NextButtonBottomConstraint {
                     .disposed(by: self.disposeBag)
             })
             .disposed(by: disposeBag)
+    }
+    
+    
+    // MARK: - Gestures
+    @IBAction func handlerTapGestureRecognizer(_ sender: UITapGestureRecognizer) {
+        self.view.endEditing(true)
     }
     
     

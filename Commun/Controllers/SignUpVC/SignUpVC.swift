@@ -173,6 +173,12 @@ class SignUpVC: UIViewController {
     }
     
     
+    // MARK: - Gestures
+    @IBAction func handlingTapGesture(_ sender: UITapGestureRecognizer) {
+        self.view.endEditing(true)
+    }
+
+    
     // MARK: - Actions
     @IBAction func nextButtonTapped(_ sender: UIButton) {
         guard self.viewModel.checkLogin() else {
@@ -197,11 +203,5 @@ class SignUpVC: UIViewController {
                                             
                                             self.showAlert(title: "Error", message: responseAPIError.message)
         })
-    }
-    
-    
-    // MARK: - Gestures
-    @IBAction func handlingTapGesture(_ sender: UITapGestureRecognizer) {
-        self.view.endEditing(true)
     }
 }

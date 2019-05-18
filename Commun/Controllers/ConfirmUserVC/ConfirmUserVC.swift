@@ -187,6 +187,12 @@ class ConfirmUserVC: UIViewController {
     }
     
     
+    // MARK: - Gestures
+    @IBAction func handlerTapGestureRecognizer(_ sender: UITapGestureRecognizer) {
+        self.view.endEditing(true)
+    }
+
+    
     // MARK: - Actions
     @IBAction func resendButtonTapped(_ sender: UIButton) {
         RestAPIManager.instance.resendSmsCode(phone:                UserDefaults.standard.string(forKey: Config.registrationUserPhoneKey)!,
@@ -243,9 +249,5 @@ class ConfirmUserVC: UIViewController {
                 })
                 .disposed(by: self.disposeBag)
         }
-    }
-    
-    @IBAction func handlerTapGestureRecognizer(_ sender: UITapGestureRecognizer) {
-        self.view.endEditing(true)
     }
 }

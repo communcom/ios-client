@@ -31,7 +31,7 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Zrb-vq-uwO">
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Zrb-vq-uwO" customClass="FormTextField" customModule="Commun" customModuleProvider="target">
                                 <rect key="frame" x="47" y="135" width="320" height="62"/>
                                 <color key="backgroundColor" red="0.95294117647058818" green="0.96078431372549022" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
                                 <accessibility key="accessibilityConfiguration" identifier="SetUserUserNameTextField" label="SetUserUserNameTextField"/>
@@ -60,7 +60,7 @@
                             <constraint firstItem="596-PJ-wLC" firstAttribute="height" secondItem="x7M-Uk-FDw" secondAttribute="height" multiplier="56:812" identifier="SetUsernameNextButtonHeightConstraint" id="N4E-a6-ayl"/>
                             <constraint firstItem="Kdi-h6-fMh" firstAttribute="leading" secondItem="j0s-Hr-oj6" secondAttribute="leading" constant="16" identifier="SetUsernameCreateUsernameLeadingConstraint" id="RMh-Zd-kCZ"/>
                             <constraint firstItem="Kdi-h6-fMh" firstAttribute="top" secondItem="j0s-Hr-oj6" secondAttribute="top" constant="19" identifier="SetUserCreateUsernameLabelTopConstraint" id="RsZ-iQ-wFh"/>
-                            <constraint firstItem="j0s-Hr-oj6" firstAttribute="bottom" secondItem="596-PJ-wLC" secondAttribute="bottom" priority="999" constant="40" identifier="SetUserNextButtonBottomConstraint" id="Sbb-2I-0lW"/>
+                            <constraint firstItem="j0s-Hr-oj6" firstAttribute="bottom" secondItem="596-PJ-wLC" secondAttribute="bottom" priority="999" constant="40" identifier="SetUserNextButtonBottomConstraint" id="Sbb-2I-0lW" customClass="KeyboardLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                             <constraint firstItem="Zrb-vq-uwO" firstAttribute="centerX" secondItem="x7M-Uk-FDw" secondAttribute="centerX" id="Z78-1U-cSz"/>
                             <constraint firstItem="596-PJ-wLC" firstAttribute="centerX" secondItem="x7M-Uk-FDw" secondAttribute="centerX" id="t73-Se-8ey"/>
                             <constraint firstItem="Zrb-vq-uwO" firstAttribute="height" secondItem="x7M-Uk-FDw" secondAttribute="height" multiplier="56:812" identifier="SetUsernameTextFieldHeightConstraint" id="zzj-OC-we0"/>
@@ -82,11 +82,13 @@
                                 <include reference="N4E-a6-ayl"/>
                             </mask>
                         </variation>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="Jha-eG-Yc2" appends="YES" id="ANU-nW-owI"/>
+                        </connections>
                     </view>
                     <connections>
                         <outlet property="creatUsernameLabel" destination="Kdi-h6-fMh" id="k8w-Rw-VW2"/>
                         <outlet property="nextButton" destination="596-PJ-wLC" id="CqU-Ch-Lhn"/>
-                        <outlet property="nextButtonBottomConstraint" destination="Sbb-2I-0lW" id="ZbX-bG-UFB"/>
                         <outlet property="userNameTextField" destination="Zrb-vq-uwO" id="q1i-ss-1WT"/>
                         <outletCollection property="heightsCollection" destination="Sbb-2I-0lW" collectionClass="NSMutableArray" id="FWQ-kJ-Sh8"/>
                         <outletCollection property="heightsCollection" destination="RsZ-iQ-wFh" collectionClass="NSMutableArray" id="71y-ao-f5h"/>
@@ -95,6 +97,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8wN-X2-GYM" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="Jha-eG-Yc2">
+                    <connections>
+                        <action selector="handlerTapGestureRecognizer:" destination="IVB-kA-cp0" id="6we-yO-N0H"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="39" y="320"/>
         </scene>
