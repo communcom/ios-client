@@ -62,6 +62,7 @@ class SignUpRouter: NSObject, SignUpRoutingLogic {
         case "setUsername":
             if let setUserVC = controllerContainer.resolve(SetUserVC.self) {
                 setUserVC.viewModel = SetUserViewModel(phone: phone)
+                self.viewController?.navigationController?.navigationBar.topItem?.backBarButtonItem = UIBarButtonItem(title: "Back".localized(), style: .plain, target: nil, action: nil)
                 self.viewController?.navigationController?.pushViewController(setUserVC)
             }
 
@@ -78,5 +79,7 @@ class SignUpRouter: NSObject, SignUpRoutingLogic {
         default:
             self.viewController?.navigationController?.pushViewController(controllerContainer.resolve(SignUpVC.self)!)
         }
+        
+        self.viewController?.view.endEditing(true)
     }
 }

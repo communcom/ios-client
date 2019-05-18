@@ -78,22 +78,6 @@ class ConfirmUserVC: UIViewController {
                                    hexColors:     [softBlueColorPickers, verySoftBlueColorPickers, verySoftBlueColorPickers, verySoftBlueColorPickers],
                                    font:          UIFont(name: "SFProText-Semibold", size: 15.0 * Config.heightRatio),
                                    alignment:     .center)
-            
-            
-            guard   let phone   =   UserDefaults.standard.string(forKey: Config.registrationUserPhoneKey),
-                    let json    =   KeychainManager.loadAllData(byUserPhone: phone),
-                    let date    =   json[Config.registrationSmsNextRetryKey] as? String
-            else { return }
-
-            self.resendButton.isEnabled = false
-            
-            let dateNextSmsRetry = date.convert(toDateFormat: .nextSmsDateType)
-            let seconds = Date().seconds(date: dateNextSmsRetry)
-            let deadlineTime = DispatchTime.now() + .seconds(seconds)
-            
-            DispatchQueue.main.asyncAfter(deadline: deadlineTime) {
-                self.resendButton.isEnabled = true
-            }
         }
     }
 
@@ -140,71 +124,72 @@ class ConfirmUserVC: UIViewController {
         // Close bar button
         let closeButton = UIBarButtonItem(title: "Close".localized(), style: .plain, target: nil, action: nil)
 
-        closeButton.rx.tap.subscribe(onNext: { [weak self] _ in
-            guard let strongSelf = self else { return }
-            strongSelf.navigationController?.dismiss(animated: true, completion: nil)
-        }).disposed(by: disposeBag)
+        closeButton.rx.tap
+            .subscribe(onNext: { [weak self] _ in
+                guard let strongSelf = self else { return }
+                strongSelf.navigationController?.dismiss(animated: true, completion: nil)
+            })
+            .disposed(by: disposeBag)
         
         self.navigationItem.leftBarButtonItem = closeButton
 
-        pinCodeInputView.set(changeTextHandler: { text in
+        self.pinCodeInputView.set(changeTextHandler: { text in
             print(text)
         })
         
-        pinCodeInputView.set(
-            appearance: .init(itemSize:         CGSize(width: 48.0 * Config.widthRatio, height: 56.0 * Config.heightRatio),
-                              font:             .init(descriptor: UIFontDescriptor(name: "SFProText-Regular", size: 26.0 * Config.heightRatio), size: 26.0 * Config.heightRatio),
-                              textColor:        .black,
-                              backgroundColor:  UIColor(hexString: "F3F5FA")!,
-                              cursorColor:      UIColor(red: 69/255, green: 108/255, blue: 1, alpha: 1),
-                              cornerRadius:     8.0 * Config.heightRatio
+        self.pinCodeInputView.set(appearance: .init(itemSize:         CGSize(width: 48.0 * Config.widthRatio, height: 56.0 * Config.heightRatio),
+                                                    font:             .init(descriptor: UIFontDescriptor(name:  "SFProText-Regular",
+                                                                                                         size:  26.0 * Config.heightRatio),
+                                                                            size:   26.0 * Config.heightRatio),
+                                                    textColor:        .black,
+                                                    backgroundColor:  UIColor(hexString: "F3F5FA")!,
+                                                    cursorColor:      UIColor(red: 69/255, green: 108/255, blue: 1, alpha: 1),
+                                                    cornerRadius:     8.0 * Config.heightRatio
             )
         )
         
-        pinCodeView.addSubview(pinCodeInputView)
-        pinCodeInputView.center = pinCodeView.center
+        self.pinCodeView.addSubview(pinCodeInputView)
+        self.pinCodeInputView.center = pinCodeView.center
     }
 
-    override func viewWillLayoutSubviews() {
-        pinCodeInputView.frame = CGRect(origin: .zero, size: CGSize(width: 228.0 * Config.widthRatio, height: 56.0 * Config.heightRatio))
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        // Verify current step of registration
+        guard   let phone   =   UserDefaults.standard.string(forKey: Config.registrationUserPhoneKey),
+                let json    =   KeychainManager.loadAllData(byUserPhone: phone),
+                let step    =   json[Config.registrationStepKey] as? String,
+                step == "verify"
+        else {
+            self.resendButton.isEnabled = false
+            return
+        }
+        
+        guard let date = json[Config.registrationSmsNextRetryKey] as? String
+        else {
+            self.resendButton.isEnabled = true
+            return
+        }
+        
+        self.resendButton.isEnabled = false
+        
+        let dateNextSmsRetry = date.convert(toDateFormat: .nextSmsDateType)
+        let seconds = Date().seconds(date: dateNextSmsRetry)
+        let deadlineTime = DispatchTime.now() + .seconds(seconds)
+        
+        DispatchQueue.main.asyncAfter(deadline: deadlineTime) {
+            self.resendButton.isEnabled = true
+        }
     }
     
-//    func setupActions() {
-//        resendButton.rx.tap.subscribe(onNext: { _ in
-//            if let viewModel = self.viewModel {
-//                viewModel.resendCode().subscribe(onNext: { flag in
-//                    self.showAlert(title: "Resend code", message: flag ? "Success" : "Failed")
-//                }).disposed(by: self.disposeBag)
-//            }
-//        }).disposed(by: disposeBag)
-        
-//        nextButton.rx.tap.subscribe(onNext: { _ in
-//            if let viewModel = self.viewModel {
-//                viewModel.checkPin(self.pinCodeInputView.text).subscribe(onNext: { success in
-//                    // Next
-//                    if success {
-//                        viewModel.verifyUser().subscribe(onNext: { flag in
-//                            if flag {
-//                                self.router?.routeToSignUpNextScene()
-//                            } else {
-//                                self.showAlert(title: "Error", message: "Verify error")
-//                            }
-//                        }).disposed(by: self.disposeBag)
-//                    } else {
-//                        self.showAlert(title: "Error", message: "Incorrect code")
-//                    }
-//
-//                }).disposed(by: self.disposeBag)
-//            }
-//        }).disposed(by: disposeBag)
-//    }
+    override func viewWillLayoutSubviews() {
+        self.pinCodeInputView.frame = CGRect(origin: .zero, size: CGSize(width: 228.0 * Config.widthRatio, height: 56.0 * Config.heightRatio))
+    }
     
     
     // MARK: - Actions
     @IBAction func resendButtonTapped(_ sender: UIButton) {
-        guard let phone = UserDefaults.standard.string(forKey: Config.registrationUserPhoneKey) else { return }
-
-        RestAPIManager.instance.resendSmsCode(phone:                phone,
+        RestAPIManager.instance.resendSmsCode(phone:                UserDefaults.standard.string(forKey: Config.registrationUserPhoneKey)!,
                                               responseHandling:     { [weak self] smsCode in
                                                 guard let strongSelf = self else { return }
                                                 strongSelf.showAlert(title:       "Resend code",
@@ -222,62 +207,42 @@ class ConfirmUserVC: UIViewController {
     }
     
     @IBAction func nextButtonTapped(_ sender: UIButton) {
+        // Verify current step of registration
         guard   let phone   =   UserDefaults.standard.string(forKey: Config.registrationUserPhoneKey),
                 let json    =   KeychainManager.loadAllData(byUserPhone: phone),
-                let smsCode =   json[Config.registrationSmsCodeKey] as? UInt64
-        else { return }
+                let step    =   json[Config.registrationStepKey] as? String,
+                step == "verify"
+        else {
+            self.router?.routeToSignUpNextScene()
+            return
+        }
+        
+        // Get sms code
+        guard let smsCode = json[Config.registrationSmsCodeKey] as? UInt64 else { return }
 
         if let viewModel = self.viewModel {
-            viewModel.checkPin(self.pinCodeInputView.text).subscribe(onNext: { success in
-            // Next
-            if success {
-                RestAPIManager.instance.verify(phone:               phone,
-                                               code:                String(describing: smsCode),
-                                               responseHandling:    { [weak self] result in
-                                                guard let strongSelf = self else { return }
-                                                strongSelf.router?.routeToSignUpNextScene()
-                },
-                                               errorHandling:       { [weak self] responseAPIError in
-                                                guard let strongSelf = self else { return }
-                                                guard responseAPIError.currentState == nil else {
-                                                    strongSelf.router?.routeToSignUpNextScene()
-                                                    return
-                                                }
-                                                
-                                                strongSelf.showAlert(title: "Error", message: responseAPIError.message)
+            viewModel.checkPin(self.pinCodeInputView.text)
+                .subscribe(onNext: { success in
+                    if success {
+                        RestAPIManager.instance.verify(phone:               phone,
+                                                       code:                String(describing: smsCode),
+                                                       responseHandling:    { [weak self] result in
+                                                        guard let strongSelf = self else { return }
+                                                        strongSelf.router?.routeToSignUpNextScene()
+                            },
+                                                       errorHandling:       { [weak self] responseAPIError in
+                                                        guard let strongSelf = self else { return }
+                                                        guard responseAPIError.currentState == nil else {
+                                                            strongSelf.router?.routeToSignUpNextScene()
+                                                            return
+                                                        }
+                                                        
+                                                        strongSelf.showAlert(title: "Error", message: responseAPIError.message)
+                        })
+                    }
                 })
-                
-//                viewModel.verifyUser().subscribe(onNext: { flag in
-//                    if flag {
-//                        self.router?.routeToSignUpNextScene()
-//                    } else {
-//                        self.showAlert(title: "Error", message: "Verify error")
-//                    }
-//                }).disposed(by: self.disposeBag)
-//            } else {
-//                self.showAlert(title: "Error", message: "Incorrect code")
-            }
-            
-        }).disposed(by: self.disposeBag)
-    }
-
-//        if let viewModel = self.viewModel,
-//            viewModel.checkPin(self.pinCodeInputView.text).subscribe(onNext: { success in
-//                // Next
-//                if success {
-//                    viewModel.verifyUser().subscribe(onNext: { flag in
-//                        if flag {
-//                            self.router?.routeToSignUpNextScene()
-//                        } else {
-//                            self.showAlert(title: "Error", message: "Verify error")
-//                        }
-//                    }).disposed(by: self.disposeBag)
-//                } else {
-//                    self.showAlert(title: "Error", message: "Incorrect code")
-//                }
-//
-//            }).disposed(by: self.disposeBag)
-//        }
+                .disposed(by: self.disposeBag)
+        }
     }
     
     @IBAction func handlerTapGestureRecognizer(_ sender: UITapGestureRecognizer) {

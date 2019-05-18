@@ -9,6 +9,7 @@
 import RxSwift
 import RxCocoa
 import Foundation
+import CyberSwift
 
 class ConfirmUserViewModel {
     // MARK: - Properties
@@ -26,22 +27,8 @@ class ConfirmUserViewModel {
 
     
     // MARK: - Class Functions
-//    func resendCode() -> Observable<Bool> {
-//        let resendObservable = NetworkService.shared.resendSmsCode(phone: phone.value)
-//        resendObservable.bind(to: pincode).disposed(by: disposeBag)
-//        return resendObservable.map({ code -> Bool in
-//            return code != ""
-//        })
-//        
-//    }
-    
     func checkPin(_ code: String) -> Observable<Bool> {
-//        #if DEBUG
-        #warning("Remove 9999 in production code")
-        let isEqual = (code == pincode.value) || (code == "9999")
-//        #else
-//        let isEqual = code == pincode.value
-//        #endif
+        let isEqual = (code == pincode.value) || (code == String(describing: Config.smsCodeDebug))
         return Observable<Bool>.just(isEqual)
     }
     
