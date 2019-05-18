@@ -66,10 +66,10 @@ PODS:
 DEPENDENCIES:
   - Action
   - Alamofire
-  - Crashlytics (~> 3.13.1)
+  - Crashlytics
   - CyberSwift (from `https://github.com/GolosChain/cyberSwift.git`)
   - DateToolsSwift
-  - Fabric (~> 1.10.1)
+  - Fabric
   - IHProgressHUD (from `https://github.com/Swiftify-Corp/IHProgressHUD.git`)
   - PhoneNumberKit (~> 2.6)
   - PinCodeInputView
@@ -156,6 +156,6 @@ SPEC CHECKSUMS:
   TLPhotoPicker: c5aefdc9beaca82116d7855924f1d8abdd055f79
   UIImageView-Letters: f62db28076797adf3560ab7410647dc6899b9eef
 
-PODFILE CHECKSUM: 5dc5c4357d2fa1c331f0c846a3bd410564537954
+PODFILE CHECKSUM: 00729664ff87527787e79c59aea11237fc2e55af
 
 COCOAPODS: 1.7.0.rc.1

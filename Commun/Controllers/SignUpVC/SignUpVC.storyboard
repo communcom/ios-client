@@ -101,7 +101,7 @@
                             <constraint firstItem="KUr-0W-HC7" firstAttribute="centerX" secondItem="18N-xE-ytB" secondAttribute="centerX" id="Tfm-HM-h70"/>
                             <constraint firstItem="8i1-t5-vyl" firstAttribute="height" secondItem="18N-xE-ytB" secondAttribute="height" multiplier="24:812" identifier="SignUpCountryImageViewHeightConstraint" id="WLx-9l-C21"/>
                             <constraint firstItem="RMd-69-gyH" firstAttribute="height" secondItem="18N-xE-ytB" secondAttribute="height" multiplier="56:812" identifier="SignUpNextButtonHeightConstraint" id="YYS-DR-w7x"/>
-                            <constraint firstItem="IXi-8R-Udd" firstAttribute="bottom" secondItem="RMd-69-gyH" secondAttribute="bottom" priority="999" constant="40" identifier="SignUpNextButtonBottomConstraint" id="ZDm-RO-fZ2"/>
+                            <constraint firstItem="IXi-8R-Udd" firstAttribute="bottom" secondItem="RMd-69-gyH" secondAttribute="bottom" priority="999" constant="40" identifier="SignUpNextButtonBottomConstraint" id="ZDm-RO-fZ2" customClass="KeyboardLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                             <constraint firstItem="KUr-0W-HC7" firstAttribute="width" secondItem="RMd-69-gyH" secondAttribute="width" id="aeh-MV-p8X"/>
                             <constraint firstItem="HNR-uY-C2j" firstAttribute="top" secondItem="KUr-0W-HC7" secondAttribute="bottom" constant="16" identifier="SignUpCountryViewPhoneNumberTextFieldTopConstraint" id="gGB-Hj-kBf"/>
                             <constraint firstItem="RMd-69-gyH" firstAttribute="width" secondItem="18N-xE-ytB" secondAttribute="width" multiplier="290:375" identifier="SignUpNextButtonWidthConstraint" id="l4a-ar-QEG"/>
@@ -134,7 +134,6 @@
                         <outlet property="countryLabel" destination="5wh-Kc-wNq" id="M77-a5-pbf"/>
                         <outlet property="countryView" destination="KUr-0W-HC7" id="iSs-wB-nXW"/>
                         <outlet property="nextButton" destination="RMd-69-gyH" id="ybk-W5-dTd"/>
-                        <outlet property="nextButtonBottomConstraint" destination="ZDm-RO-fZ2" id="Nq3-fp-2JP"/>
                         <outlet property="phoneNumberTextField" destination="HNR-uY-C2j" id="l3H-hk-H3G"/>
                         <outlet property="placeholderSelectCountryLabel" destination="lVN-OB-r0Y" id="f3r-Db-8DV"/>
                         <outletCollection property="heightsCollection" destination="ZDm-RO-fZ2" collectionClass="NSMutableArray" id="qx4-vb-YUj"/>

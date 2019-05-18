@@ -92,14 +92,7 @@ class SignUpVC: UIViewController, NextButtonBottomConstraint {
             self.widthsCollection.forEach({ $0.constant *= Config.widthRatio })
         }
     }
-    
-    // NextButtonBottomConstraint protocol implementation
-    @IBOutlet weak var nextButtonBottomConstraint: NSLayoutConstraint! {
-        didSet {
-            self.subscribeKeyboardEvents(constraint: self.nextButtonBottomConstraint)
-        }
-    }
-    
+        
     
     // MARK: - Class Initialization
     required init?(coder aDecoder: NSCoder) {
@@ -132,63 +125,50 @@ class SignUpVC: UIViewController, NextButtonBottomConstraint {
         setupActions()
     }
     
+    
+    // MARK: - Custom Functions
     func setupBindings() {
         let country = viewModel.country.asObservable()
         country.bind(to: countryLabel.rx.text).disposed(by: disposeBag)
         
-        country.map { country -> Bool in
-            return country != "Select country"
-        }.subscribe(onNext: { [weak self] flag in
-            self?.placeholderSelectCountryLabel.isHidden = flag
-            self?.countryLabel.isHidden = !flag
-            self?.countryImageView.isHidden = !flag
-        }).disposed(by: disposeBag)
+        country
+            .map { country -> Bool in
+                return country != "Select country"
+            }
+            .subscribe(onNext: { [weak self] flag in
+                self?.placeholderSelectCountryLabel.isHidden = flag
+                self?.countryLabel.isHidden = !flag
+                self?.countryImageView.isHidden = !flag
+            })
+            .disposed(by: disposeBag)
         
-        viewModel.phone.asObservable().bind(to: phoneNumberTextField.rx.text).disposed(by: disposeBag)
-        viewModel.flagUrl.subscribe(onNext: { [weak self] url in
-            self?.countryImageView.sd_setImage(with: url, completed: nil)
-        }).disposed(by: disposeBag)
+        viewModel.phone.asObservable()
+            .bind(to: phoneNumberTextField.rx.text)
+            .disposed(by: disposeBag)
         
-        self.phoneNumberTextField.rx.text.map({ text -> String in
-            return text ?? ""
-        }).bind(to: viewModel.phone).disposed(by: disposeBag)
+        viewModel.flagUrl
+            .subscribe(onNext: { [weak self] url in
+                self?.countryImageView.sd_setImage(with: url, completed: nil)
+            })
+            .disposed(by: disposeBag)
+        
+        self.phoneNumberTextField.rx.text
+            .map({ text -> String in
+                return text ?? ""
+            })
+            .bind(to: viewModel.phone).disposed(by: disposeBag)
     }
 
     func setupActions() {
-        countryButton.rx.tap.subscribe(onNext: { [weak self] _ in
-            if let countryVC = controllerContainer.resolve(SelectCountryVC.self) {
-                countryVC.bindViewModel(SelectCountryViewModel(withModel: self!.viewModel))
-                let nav = UINavigationController(rootViewController: countryVC)
-                self?.present(nav, animated: true, completion: nil)
-            }
-        }).disposed(by: disposeBag)
-        
-//        nextButton.rx.tap.subscribe(onNext: { [weak self] _ in
-//            if self?.viewModel.validatePhoneNumber() ?? false {
-//                self?.viewModel.signUp().subscribe(onNext: { code in
-//                    self?.router?.routeToSignUpNextScene()
-//                }).disposed(by: self!.disposeBag)
-//            } else {
-//                self?.showAlert(title: "Error", message: "Wrong phone number")
-//            }
-//        }).disposed(by: disposeBag)
-        
-//        NotificationCenter.default.rx.notification(UIResponder.keyboardWillShowNotification, object: nil).subscribe(onNext: { [weak self] notification in
-//            if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
-//                let keyboardRectangle = keyboardFrame.cgRectValue
-//                let keyboardHeight = keyboardRectangle.height
-//                self?.nextButtonBottomConstraint.constant = keyboardHeight
-//            }
-//        }).disposed(by: disposeBag)
-//        
-//        NotificationCenter.default.rx.notification(UIResponder.keyboardWillHideNotification, object: nil).subscribe(onNext: { [weak self] notification in
-//            guard let strongSelf = self else { return }
-////            if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
-////                let keyboardRectangle = keyboardFrame.cgRectValue
-////                let keyboardHeight = keyboardRectangle.height
-//                strongSelf.nextButtonBottomConstraint.constant = 40.0
-////            }
-//        }).disposed(by: disposeBag)
+        countryButton.rx.tap
+            .subscribe(onNext: { [weak self] _ in
+                if let countryVC = controllerContainer.resolve(SelectCountryVC.self) {
+                    countryVC.bindViewModel(SelectCountryViewModel(withModel: self!.viewModel))
+                    let nav = UINavigationController(rootViewController: countryVC)
+                    self?.present(nav, animated: true, completion: nil)
+                }
+            })
+            .disposed(by: disposeBag)
     }
     
     
@@ -220,7 +200,6 @@ class SignUpVC: UIViewController, NextButtonBottomConstraint {
     
     
     // MARK: - Gestures
-    
     @IBAction func handlingTapGesture(_ sender: UITapGestureRecognizer) {
         self.view.endEditing(true)
     }
