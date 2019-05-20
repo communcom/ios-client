@@ -68,7 +68,7 @@ extension PostCardCell {
 //        self.post = post
         self.avatarImageView.setAvatar(urlString: post.community.avatarUrl, namePlaceHolder: post.community.name)
         
-        self.titleLabel.text = post.content.title
+        self.titleLabel.text = post.community.name.lowercased().uppercaseFirst
         self.timeAgoLabel.text = Date.timeAgo(string: post.meta.time)
         
         self.authorNameLabel.text = "by".localized() + " " + (post.author?.username ?? post.author?.userId ?? "")
