@@ -25,6 +25,20 @@ class ProfilePageViewModel {
     
     init() {
         bindElements()
+        
+        // observe item's change
+        segmentedItem
+            .subscribe(onNext: {segItem in
+                switch segItem {
+                case .posts:
+                    // TODO: Observe post's change
+                    break
+                case .comments:
+                    // TODO: Observe comment's change
+                    break
+                }
+            })
+            .disposed(by: bag)
     }
     
     func bindElements() {

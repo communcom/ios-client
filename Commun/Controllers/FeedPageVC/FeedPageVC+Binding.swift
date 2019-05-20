@@ -33,8 +33,7 @@ extension FeedPageVC {
                     if index >= self.viewModel.items.value.count - 5 {
                         self.viewModel.fetchNext()
                     }
-                    cell.setupFromPost(model)
-                    cell.post = model
+                    cell.setUp(with: model)
             }
             .disposed(by: disposeBag)
         

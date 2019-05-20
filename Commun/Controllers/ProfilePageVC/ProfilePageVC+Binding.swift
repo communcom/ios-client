@@ -67,8 +67,7 @@ extension ProfilePageVC: CommentCellDelegate {
                 
                 if let post = element as? ResponseAPIContentGetPost {
                     let cell = self.tableView.dequeueReusableCell(withIdentifier: "PostCardCell") as! PostCardCell
-                    cell.post = post
-                    cell.setupFromPost(post)
+                    cell.setUp(with: post)
                     return cell
                 }
                 

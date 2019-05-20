@@ -64,8 +64,9 @@ class PostCardCell: UITableViewCell, PostController {
 
 extension PostCardCell {
     
-    func setupFromPost(_ post: ResponseAPIContentGetPost) {
-//        self.post = post
+    func setUp(with post: ResponseAPIContentGetPost?) {
+        guard let post = post else {return}
+        self.post = post
         self.avatarImageView.setAvatar(urlString: post.community.avatarUrl, namePlaceHolder: post.community.name)
         
         self.titleLabel.text = post.community.name.lowercased().uppercaseFirst
