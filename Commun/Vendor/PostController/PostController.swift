@@ -132,14 +132,14 @@ extension PostController {
             let controller = UIApplication.topViewController()
             else {return}
         // text to share
-        let title = post.content.title
+        var text = post.content.title + "\n"
         
         #warning("refBlockNum is being removed")
-        let link = "https://commun.com/posts/\(userId)/\(post.contentId.refBlockNum)/\(post.contentId.permlink)"
+        text += "https://commun.com/posts/\(userId)/\(post.contentId.refBlockNum)/\(post.contentId.permlink)"
         
         
         // link to share
-        let textToShare = [title, link]
+        let textToShare = [text]
         
         let activityViewController = UIActivityViewController(activityItems: textToShare, applicationActivities: nil)
         activityViewController.popoverPresentationController?.sourceView = controller.view // so that iPads won't crash
