@@ -22,13 +22,13 @@ extension EditorPageVC {
     }
     
     @objc func postButtonTap() {
-        viewModel?.sendPost().subscribe(onNext: { [weak self] success in
-            if success {
-                self?.dismiss(animated: true, completion: nil)
-            } else {
-                self?.showAlert(title: "Error", message: "Something went wrong")
-            }
-        }).disposed(by: disposeBag)
+        viewModel?.sendPost()
+            .subscribe(onCompleted: {
+                self.dismiss(animated: true, completion: nil)
+            }, onError: { _ in
+                self.showGeneralError()
+            })
+            .disposed(by: disposeBag)
     }
     
 }

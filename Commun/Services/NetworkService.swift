@@ -177,17 +177,16 @@ class NetworkService: NSObject {
         }
     }
     
-    func sendPost(withTitle title: String, withText text: String, metaData json: String, withTags tags: [String]) -> Observable<Bool> {
-        return Observable<Bool>.create { observer -> Disposable in
+    func sendPost(withTitle title: String, withText text: String, metaData json: String, withTags tags: [String]) -> Completable {
+        return Completable.create { observer -> Disposable in
             RestAPIManager.instance.create(message:             text,
                                            tags:                tags,
                                            metaData:            json,
                                            responseHandling:    { response in
-                                            observer.onNext(response.success)
-                                            observer.onCompleted()
+                                            observer(.completed)
             },
                                            errorHandling:       { errorAPI in
-                                            observer.onError(SignInError.errorAPI(errorAPI.caseInfo.message.localized()))
+                                            observer(.error(SignInError.errorAPI(errorAPI.caseInfo.message.localized())))
                                             return
             })
 

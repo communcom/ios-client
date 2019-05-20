@@ -24,7 +24,7 @@ class EditorPageViewModel {
         isAdult.value = !isAdult.value
     }
     
-    func sendPost() -> Observable<Bool> {
+    func sendPost() -> Completable {
         let json = createJsonMetadata()
         return NetworkService.shared.sendPost(withTitle: titleText.value, withText: contentText.value, metaData: json ?? "", withTags: getTags())
     }

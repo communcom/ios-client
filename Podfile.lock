@@ -119,7 +119,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   CyberSwift:
-    :commit: 0f5a519a051a45ea51852a8df8bc17dae5257638
+    :commit: 296a2cfe46f063cf96c2534b7b687fe0123fc5fb
     :git: https://github.com/GolosChain/cyberSwift.git
   IHProgressHUD:
     :commit: 6c160f4ef2e9b924de58c8df3382a57ced957dfd
