@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension FeedPageVC: PostActionsDelegate {
+extension FeedPageVC {
     func bindUI() {
         // sortType
         viewModel.sortType
@@ -35,7 +35,6 @@ extension FeedPageVC: PostActionsDelegate {
                     }
                     cell.setupFromPost(model)
                     cell.post = model
-                    cell.delegate = self
             }
             .disposed(by: disposeBag)
         

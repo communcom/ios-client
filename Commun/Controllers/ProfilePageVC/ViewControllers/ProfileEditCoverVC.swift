@@ -40,12 +40,12 @@ class ProfileEditCoverVC: UIViewController {
                     self.avatarImage.sd_setImage(with: URL(string: avatarUrl)) { (_, error, _, _) in
                         if (error != nil) {
                             // Placeholder image
-                            self.avatarImage.setImageWith(profile.username, color: #colorLiteral(red: 0.9997546077, green: 0.6376479864, blue: 0.2504218519, alpha: 1))
+                            self.avatarImage.setNonAvatarImageWithId(profile.username ?? profile.userId)
                         }
                     }
                 } else {
                     // Placeholder image
-                    self.avatarImage.setImageWith(profile.username, color: #colorLiteral(red: 0.9997546077, green: 0.6376479864, blue: 0.2504218519, alpha: 1))
+                    self.avatarImage.setNonAvatarImageWithId(profile.username ?? profile.userId)
                 }
                 
                 // user name

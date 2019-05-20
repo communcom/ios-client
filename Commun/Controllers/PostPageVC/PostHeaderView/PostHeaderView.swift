@@ -8,12 +8,14 @@
 
 import UIKit
 import CyberSwift
+import RxSwift
 
 protocol PostHeaderViewDelegate: class {
     func headerViewDidLayoutSubviews(_ headerView: PostHeaderView)
 }
 
-class PostHeaderView: UIView, UIWebViewDelegate {
+class PostHeaderView: UIView, UIWebViewDelegate, PostActionsDelegate {
+    let disposeBag = DisposeBag()
     // Delegate
     weak var delegate: PostHeaderViewDelegate?
     
@@ -42,8 +44,10 @@ class PostHeaderView: UIView, UIWebViewDelegate {
         layoutSubviews()
     }
     
+    var post: ResponseAPIContentGetPost? 
+    
     var showMedia = false
-    func setUpWith(_ post: ResponseAPIContentGetPost?) {
+    func setUp() {
         guard let post = post else {
             setLoading()
             return
@@ -116,4 +120,12 @@ class PostHeaderView: UIView, UIWebViewDelegate {
         
         self.layoutSubviews()
     }
+    @IBAction func upVoteButtonDidTouch(_ sender: Any) {
+        upVote()
+    }
+    
+    @IBAction func downVoteButtonDidTouch(_ sender: Any) {
+        downVote()
+    }
+    
 }
