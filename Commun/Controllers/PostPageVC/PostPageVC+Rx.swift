@@ -43,7 +43,6 @@ extension PostPageVC: PostHeaderViewDelegate {
                 
                 // Create tableHeaderView
                 guard let headerView = UINib(nibName: "PostHeaderView", bundle: nil).instantiate(withOwner: self, options: nil).first as? PostHeaderView else {return}
-                headerView.post = post
                 headerView.setUp(with: post)
                 headerView.delegate = self
                 
