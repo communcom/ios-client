@@ -44,10 +44,22 @@ class PostHeaderView: UIView, UIWebViewDelegate, PostController {
         layoutSubviews()
     }
     
-    var post: ResponseAPIContentGetPost? 
+    var post: ResponseAPIContentGetPost?
+    
+    // Inititalizer
+    override required init(frame: CGRect) {
+        super.init(frame: frame)
+        observePostChange()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        observePostChange()
+    }
     
     var showMedia = false
-    func setUp() {
+    func setUp(with post: ResponseAPIContentGetPost?) {
+        self.post = post
         guard let post = post else {
             setLoading()
             return
