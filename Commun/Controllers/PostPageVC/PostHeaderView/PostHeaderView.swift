@@ -44,17 +44,29 @@ class PostHeaderView: UIView, UIWebViewDelegate, PostController {
         layoutSubviews()
     }
     
+    var fixedHeight: CGFloat?
+    
     var post: ResponseAPIContentGetPost?
     
     // Inititalizer
     override required init(frame: CGRect) {
         super.init(frame: frame)
-        observePostChange()
+        commonInit()
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+        commonInit()
+    }
+    
+    func commonInit() {
         observePostChange()
+        // Observe keyboard
+        UIResponder.keyboardHeightObservable
+            .subscribe(onNext: {keyboardHeight in
+                self.layoutAndNotify(with: keyboardHeight)
+            })
+            .disposed(by: disposeBag)
     }
     
     var showMedia = false
@@ -115,11 +127,23 @@ class PostHeaderView: UIView, UIWebViewDelegate, PostController {
     }
     
     func webViewDidFinishLoad(_ webView: UIWebView) {
-        layout()
+        layoutAndNotify()
+        if webView == contentWebView {
+            fixedHeight = self.height
+        }
+    }
+    
+    func layoutAndNotify(with keyboardHeight: CGFloat = 0) {
+        layout(with: keyboardHeight)
         delegate?.headerViewDidLayoutSubviews(self)
     }
     
-    func layout() {
+    func layout(with keyboardHeight: CGFloat = 0) {
+        if let height = fixedHeight {
+            self.height = height
+            self.layoutSubviews()
+            return
+        }
         var height: CGFloat = 112.0
         if showMedia {
             height += webViewHeightConstraint.constant
@@ -127,7 +151,11 @@ class PostHeaderView: UIView, UIWebViewDelegate, PostController {
         height += self.postTitleLabel.height
         height += 32
         height += contentWebView.contentHeight
+        height -= keyboardHeight
+        
         height += 41 + 16 + 26.5 + 16
+        
+        if self.height == height {return}
         self.height = height
         
         self.layoutSubviews()
