@@ -27,20 +27,20 @@ class FeedPageViewModel {
         // bind filter
         bindFilter()
         
-        // observePostChange
-        NotificationCenter.default.rx.notification(.init(rawValue: PostControllerPostDidChangeNotification))
-            .subscribe(onNext: {notification in
-                guard let newPost = notification.object as? ResponseAPIContentGetPost
-                    else {return}
-                
-                let indexToReplace = self.items.value.firstIndex(where: {$0.contentId.permlink == newPost.contentId.permlink})
-                
-                guard let index = indexToReplace else {return}
-                var newArray = self.items.value
-                newArray[index] = newPost
-                self.items.accept(newArray)
-            })
-            .disposed(by: bag)
+//        // observePostChange
+//        NotificationCenter.default.rx.notification(.init(rawValue: PostControllerPostDidChangeNotification))
+//            .subscribe(onNext: {notification in
+//                guard let newPost = notification.object as? ResponseAPIContentGetPost
+//                    else {return}
+//                
+//                let indexToReplace = self.items.value.firstIndex(where: {$0.contentId.permlink == newPost.contentId.permlink})
+//                
+//                guard let index = indexToReplace else {return}
+//                var newArray = self.items.value
+//                newArray[index] = newPost
+//                self.items.accept(newArray)
+//            })
+//            .disposed(by: bag)
     }
     
     func bindFilter() {
