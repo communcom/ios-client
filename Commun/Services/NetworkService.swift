@@ -179,24 +179,18 @@ class NetworkService: NSObject {
     
     func sendPost(withTitle title: String, withText text: String, metaData json: String, withTags tags: [String]) -> Observable<Bool> {
         return Observable<Bool>.create { observer -> Disposable in
-//            RestAPIManager.instance.publish(message:        text,
-//                                            headline:       title,
-//                                            tags:           tags,
-//                                            metaData:       json,
-//                                            completion:     { (response, error) in
-//                                                guard error == nil else {
-//                                                    print(error!.caseInfo.message)
-//                                                    return
-//                                                }
-//                                                
-//                                                if let resp = response {
-//                                                    print(resp.statusCode)
-//                                                    print(resp.success)
-//                                                    print(resp.body!)
-//                                                    observer.onNext(resp.success)
-//                                                }
-//                                                observer.onCompleted()
-//            })
+            RestAPIManager.instance.create(message:             text,
+                                           tags:                tags,
+                                           metaData:            json,
+                                           responseHandling:    { response in
+                                            observer.onNext(response.success)
+                                            observer.onCompleted()
+            },
+                                           errorHandling:       { errorAPI in
+                                            observer.onError(SignInError.errorAPI(errorAPI.caseInfo.message.localized()))
+                                            return
+            })
+
             
             return Disposables.create()
         }
