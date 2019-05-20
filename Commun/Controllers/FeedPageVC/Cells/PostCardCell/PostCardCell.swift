@@ -12,7 +12,7 @@ import SDWebImage
 import RxSwift
 
 
-class PostCardCell: UITableViewCell, PostActionsDelegate {
+class PostCardCell: UITableViewCell, PostController {
     var disposeBag = DisposeBag()
     
 
@@ -46,7 +46,7 @@ class PostCardCell: UITableViewCell, PostActionsDelegate {
     
     
     @IBAction func menuButtonTap(_ sender: Any) {
-        didTapMenuButton()
+        openMorePostActions()
     }
     
     @IBAction func upButtonTap(_ sender: Any) {
@@ -58,7 +58,7 @@ class PostCardCell: UITableViewCell, PostActionsDelegate {
     }
     
     @IBAction func shareButtonTap(_ sender: Any) {
-        didTapShareButton()
+        sharePost()
     }
 }
 

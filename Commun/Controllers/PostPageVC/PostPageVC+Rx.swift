@@ -56,6 +56,13 @@ extension PostPageVC: PostHeaderViewDelegate {
         let nonNilPost = viewModel.post.filter {$0 != nil}
             .map {$0!}
         
+        moreButton.rx.tap
+            .withLatestFrom(nonNilPost)
+            .subscribe(onNext: {_ in
+                guard let headerView = self.tableView.tableHeaderView as? PostHeaderView else {return}
+                headerView.openMorePostActions()
+            })
+            .disposed(by: disposeBag)
     }
     
     func bindComments() {

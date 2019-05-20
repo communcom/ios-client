@@ -10,16 +10,16 @@ import UIKit
 import RxSwift
 import CyberSwift
 
-protocol PostActionsDelegate: class {
+protocol PostController: class {
     var disposeBag: DisposeBag {get}
     var upVoteButton: UIButton! {get set}
     var downVoteButton: UIButton! {get set}
     var post: ResponseAPIContentGetPost? {get set}
 }
 
-extension PostActionsDelegate {
+extension PostController {
     
-    func didTapMenuButton() {
+    func openMorePostActions() {
         guard let post = post,
             let topController = UIApplication.topViewController() else {return}
         topController.showAlert(title: "TODO", message: "Нажата кнопка контекстного меню")
@@ -70,7 +70,7 @@ extension PostActionsDelegate {
             .disposed(by: disposeBag)
     }
     
-    func didTapShareButton() {
+    func sharePost() {
         guard let post = post,
             let userId = post.author?.userId,
             let controller = UIApplication.topViewController()

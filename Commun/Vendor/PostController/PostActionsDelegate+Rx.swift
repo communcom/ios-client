@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 import CyberSwift
 
-extension PostActionsDelegate {
+extension PostController {
     func upVoteObserver(_ post: ResponseAPIContentGetPost) -> Completable {
         var voteType = VoteType.upvote
         if post.votes.hasUpVote {voteType = .unvote}

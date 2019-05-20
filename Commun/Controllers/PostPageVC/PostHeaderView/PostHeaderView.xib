@@ -67,6 +67,9 @@
                         <constraint firstAttribute="width" constant="36" id="fjQ-v0-k87"/>
                     </constraints>
                     <state key="normal" image="share"/>
+                    <connections>
+                        <action selector="shareButtonDidTouch:" destination="iN0-l3-epB" eventType="touchUpInside" id="Q43-20-wU3"/>
+                    </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PQn-nj-igc" userLabel="Unvote Button">
                     <rect key="frame" x="74" y="362" width="36" height="36"/>

@@ -14,7 +14,7 @@ protocol PostHeaderViewDelegate: class {
     func headerViewDidLayoutSubviews(_ headerView: PostHeaderView)
 }
 
-class PostHeaderView: UIView, UIWebViewDelegate, PostActionsDelegate {
+class PostHeaderView: UIView, UIWebViewDelegate, PostController {
     let disposeBag = DisposeBag()
     // Delegate
     weak var delegate: PostHeaderViewDelegate?
@@ -128,4 +128,7 @@ class PostHeaderView: UIView, UIWebViewDelegate, PostActionsDelegate {
         downVote()
     }
     
+    @IBAction func shareButtonDidTouch(_ sender: Any) {
+        sharePost()
+    }
 }
