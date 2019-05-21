@@ -12,6 +12,9 @@ import Fabric
 import Crashlytics
 @_exported import CyberSwift
 
+let isDebugMode: Bool = true
+let smsCodeDebug: UInt64 = isDebugMode ? 9999 : 0
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     // MARK: - Properties

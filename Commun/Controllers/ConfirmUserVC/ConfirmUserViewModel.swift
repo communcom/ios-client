@@ -28,7 +28,7 @@ class ConfirmUserViewModel {
     
     // MARK: - Class Functions
     func checkPin(_ code: String) -> Observable<Bool> {
-        let isEqual = (code == pincode.value) || (code == String(describing: Config.smsCodeDebug))
+        let isEqual = (code == pincode.value) || (code == String(describing: smsCodeDebug))
         return Observable<Bool>.just(isEqual)
     }
     

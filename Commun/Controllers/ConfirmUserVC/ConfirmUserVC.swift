@@ -32,7 +32,7 @@ class ConfirmUserVC: UIViewController {
     
     @IBOutlet weak var testSmsCodeLabel: UILabel! {
         didSet {
-            guard appBuildConfig != .release else {
+            guard isDebugMode else {
                 self.testSmsCodeLabel.text = nil
                 self.testSmsCodeLabel.isHidden = true
                 return
