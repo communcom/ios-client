@@ -7,8 +7,8 @@
 //
 
 import UIKit
-import Fabric
 import CoreData
+import Fabric
 import Crashlytics
 @_exported import CyberSwift
 
@@ -52,6 +52,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                                             Logger.log(message: "Error: \(error.localizedDescription)", event: .error)
         })
 
+        
+        Crashlytics().debugMode = true
         Fabric.with([Crashlytics.self])
 
         return true

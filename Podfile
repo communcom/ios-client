@@ -10,9 +10,6 @@ target 'Commun' do
 
   pod 'CyberSwift', :git => "https://github.com/GolosChain/cyberSwift.git" # "https://github.com/Monserg/cyber-ios.git"
   
-  pod 'Fabric'
-  pod 'Crashlytics'
-
   pod 'Alamofire'
   pod 'Swinject'
   pod 'SDWebImage', '~> 4.0'
@@ -26,7 +23,7 @@ target 'Commun' do
   pod 'SwifterSwift/Foundation'    # Foundation Extensions
   pod 'SwifterSwift/UIKit'         # UIKit Extensions
   
-  pod 'IHProgressHUD', :git => 'https://github.com/Swiftify-Corp/IHProgressHUD.git'
+#  pod 'IHProgressHUD', :git => 'https://github.com/Swiftify-Corp/IHProgressHUD.git'
   pod 'TLPhotoPicker'
   
   pod 'PinCodeInputView'

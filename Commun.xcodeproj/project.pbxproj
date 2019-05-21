@@ -163,6 +163,8 @@
 		B170AC15228AFBDA00C6FFBC /* SignUpVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5797E0F9225DDA490026C4D5 /* SignUpVC.storyboard */; };
 		B170AC16228AFBF500C6FFBC /* PostCardCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 572F81A1223C164B0007F2F9 /* PostCardCell.xib */; };
 		B17A970C228002440081B8E0 /* SignUpRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17A970B228002440081B8E0 /* SignUpRouter.swift */; };
+		B1A58351229406610025D0FD /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B1A5834F229406600025D0FD /* Crashlytics.framework */; };
+		B1A58352229406610025D0FD /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B1A58350229406600025D0FD /* Fabric.framework */; };
 		B1EA02D32289734800835244 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B1EA02D52289734800835244 /* Localizable.strings */; };
 		B1EA02D72289882300835244 /* SF-Pro-Display-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = 57F9CA9C225B3AA400AC9ACA /* SF-Pro-Display-Black.otf */; };
 		B1EA02D82289882A00835244 /* SF-Pro-Display-BlackItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 57F9CA8E225B3A9400AC9ACA /* SF-Pro-Display-BlackItalic.otf */; };
@@ -391,6 +393,8 @@
 		8F30C81783ED457B84BCC641 /* Pods-Commun.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Commun.release.xcconfig"; path = "Pods/Target Support Files/Pods-Commun/Pods-Commun.release.xcconfig"; sourceTree = "<group>"; };
 		AE43B2305FC441D96462E0AB /* Pods-Commun.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Commun.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Commun/Pods-Commun.debug.xcconfig"; sourceTree = "<group>"; };
 		B17A970B228002440081B8E0 /* SignUpRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpRouter.swift; sourceTree = "<group>"; };
+		B1A5834F229406600025D0FD /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
+		B1A58350229406600025D0FD /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Fabric.framework; path = ../../../Downloads/com/Fabric.framework; sourceTree = "<group>"; };
 		B1EA02D42289734800835244 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		B1EA02D62289734E00835244 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		B1EA0316228A965200835244 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -402,7 +406,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				5721AE41226E543E00133BFF /* WebKit.framework in Frameworks */,
+				B1A58351229406610025D0FD /* Crashlytics.framework in Frameworks */,
 				7472E4613CDA904305E42A4F /* Pods_Commun.framework in Frameworks */,
+				B1A58352229406610025D0FD /* Fabric.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1099,6 +1105,8 @@
 		7B93A43127B50B70E39EAAF3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B1A5834F229406600025D0FD /* Crashlytics.framework */,
+				B1A58350229406600025D0FD /* Fabric.framework */,
 				5721AE40226E543E00133BFF /* WebKit.framework */,
 				4F0772CC6D820AD11B1FF48A /* Pods_Commun.framework */,
 			);
@@ -1132,9 +1140,8 @@
 				571B14EC223A935C00630C8F /* Sources */,
 				571B14ED223A935C00630C8F /* Frameworks */,
 				571B14EE223A935C00630C8F /* Resources */,
-				B17D9AFE2244E44200CCBA24 /* Run Fabric Script */,
 				A763FF25490FA583CA98714C /* [CP] Embed Pods Frameworks */,
-				5787C0D0226518E300568CEC /* ShellScript */,
+				B1A58353229409D30025D0FD /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -1263,23 +1270,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		5787C0D0226518E300568CEC /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n";
-		};
 		6F620BC31E84D546EB08B5B2 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1319,7 +1309,7 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Commun/Pods-Commun-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		B17D9AFE2244E44200CCBA24 /* Run Fabric Script */ = {
+		B1A58353229409D30025D0FD /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1329,14 +1319,13 @@
 			inputPaths = (
 				"$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
 			);
-			name = "Run Fabric Script";
 			outputFileListPaths = (
 			);
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Fabric/run\" a31221dc945d82768ff8fba65613cdf825d49797 2911e05e27da2b2ebe58e753cbac383d0dda0a1e102e4bd1bc30abe7d75f94e9\n";
+			shellScript = "\"${PROJECT_DIR}/Fabric.framework/run\" a31221dc945d82768ff8fba65613cdf825d49797 2911e05e27da2b2ebe58e753cbac383d0dda0a1e102e4bd1bc30abe7d75f94e9\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -1529,7 +1518,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -1624,6 +1613,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 5G8856SBG8;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = Commun/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1650,6 +1643,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 5G8856SBG8;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = Commun/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (

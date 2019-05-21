@@ -6,8 +6,6 @@ PODS:
   - BigInt (3.1.0):
     - SipHash (~> 1.2)
   - Checksum (1.0.0)
-  - Crashlytics (3.13.1):
-    - Fabric (~> 1.10.1)
   - CryptoSwift (1.0.0)
   - CyberSwift (1.0.7):
     - Checksum
@@ -28,9 +26,7 @@ PODS:
     - BigInt (~> 3.1.0)
     - RxCocoa (~> 4.0)
     - RxSwift (~> 4.0)
-  - Fabric (1.10.1)
   - GoloCrypto (1.0.6)
-  - IHProgressHUD (0.1.4)
   - Localize-Swift (2.0.0)
   - Locksmith (4.0.0)
   - PhoneNumberKit (2.6.0):
@@ -66,11 +62,8 @@ PODS:
 DEPENDENCIES:
   - Action
   - Alamofire
-  - Crashlytics
   - CyberSwift (from `https://github.com/GolosChain/cyberSwift.git`)
   - DateToolsSwift
-  - Fabric
-  - IHProgressHUD (from `https://github.com/Swiftify-Corp/IHProgressHUD.git`)
   - PhoneNumberKit (~> 2.6)
   - PinCodeInputView
   - SDWebImage (~> 4.0)
@@ -87,11 +80,9 @@ SPEC REPOS:
     - Alamofire
     - BigInt
     - Checksum
-    - Crashlytics
     - CryptoSwift
     - DateToolsSwift
     - eosswift
-    - Fabric
     - GoloCrypto
     - Localize-Swift
     - Locksmith
@@ -114,30 +105,22 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   CyberSwift:
     :git: https://github.com/GolosChain/cyberSwift.git
-  IHProgressHUD:
-    :git: https://github.com/Swiftify-Corp/IHProgressHUD.git
 
 CHECKOUT OPTIONS:
   CyberSwift:
     :commit: 296a2cfe46f063cf96c2534b7b687fe0123fc5fb
     :git: https://github.com/GolosChain/cyberSwift.git
-  IHProgressHUD:
-    :commit: 6c160f4ef2e9b924de58c8df3382a57ced957dfd
-    :git: https://github.com/Swiftify-Corp/IHProgressHUD.git
 
 SPEC CHECKSUMS:
   Action: 689181e4c3f6566844178d8a7da6fef39a9597fc
   Alamofire: ae5c501addb7afdbb13687d7f2f722c78734c2d3
   BigInt: 76b5dfdfa3e2e478d4ffdf161aeede5502e2742f
   Checksum: f1aa56a27dea5db4006c819e2e129ee6aeb1d9af
-  Crashlytics: 5aa8e90dcbf2f34898b4f5a0037787531246cca0
   CryptoSwift: d81eeaa59dc5a8d03720fe919a6fd07b51f7439f
-  CyberSwift: 8f1c207a0ee60bc2310560eab27f53c86bf47996
+  CyberSwift: fa19cae8d1a9b6d9ca86cdb906b2bc21b54dd49e
   DateToolsSwift: 875d97ff9e3a5d54abdd67a269b3f51c757b71ab
   eosswift: 22bc931fd65bbd446c3f828233b8fd2916cec4a7
-  Fabric: f6f21452846788bb44595d73e9909d79d328e617
   GoloCrypto: 3f60e824b57ca657be702fb2cf4bd1f7a379257a
-  IHProgressHUD: 49ce4eb85bb47952f04adcfc04ea7473286cf677
   Localize-Swift: c798ec9286494866f7068f85f7c71283ac5bdab4
   Locksmith: e9bebbaaa4cee3c511bc358a44f843c3fe00e21f
   PhoneNumberKit: 167ee1f0bbb6efce7c62559e620eae745595532f
@@ -156,6 +139,6 @@ SPEC CHECKSUMS:
   TLPhotoPicker: c5aefdc9beaca82116d7855924f1d8abdd055f79
   UIImageView-Letters: f62db28076797adf3560ab7410647dc6899b9eef
 
-PODFILE CHECKSUM: 00729664ff87527787e79c59aea11237fc2e55af
+PODFILE CHECKSUM: a1ebd22334aaf5bd4119464ba5874216e30c2e05
 
-COCOAPODS: 1.7.0.rc.1
+COCOAPODS: 1.7.0.rc.2
