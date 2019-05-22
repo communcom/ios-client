@@ -66,7 +66,17 @@ extension PostController {
     func openMorePostActions() {
         guard let post = post,
             let topController = UIApplication.topViewController() else {return}
-        topController.showAlert(title: "TODO", message: "Нажата кнопка контекстного меню")
+        topController.showActionSheet(title: nil, message: nil, actions: [
+            UIAlertAction(title: "Edit".localized(), style: .default, handler: { (_) in
+                topController.showAlert(title: "TODO", message: "Edit post")
+            }),
+            UIAlertAction(title: "Delete".localized(), style: .destructive, handler: { (_) in
+                topController.showAlert(title: "TODO", message: "Delete post")
+            }),
+            UIAlertAction(title: "Report", style: .destructive, handler: { (_) in
+                topController.showAlert(title: "TODO", message: "Report post")
+            })
+        ])
     }
     
     func upVote() {
