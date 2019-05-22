@@ -27,6 +27,9 @@ extension FeedPageVC {
         
         // items
         viewModel.items
+            .do(onNext: {_ in
+                self.tableView.refreshControl?.endRefreshing()
+            })
             .bind(to: tableView.rx.items(
                 cellIdentifier: "PostCardCell",
                 cellType: PostCardCell.self)) { index, model, cell in

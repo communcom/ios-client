@@ -29,8 +29,6 @@ class FeedPageVC: UIViewController {
         
         navigationController?.navigationBar.barTintColor = .white
         
-        tableView.register(UINib(nibName: "PostCardCell", bundle: nil), forCellReuseIdentifier: "PostCardCell")
-        
         let searchBar = UISearchBar(frame: self.view.bounds)
         searchBar.placeholder = "Search"
         self.navigationItem.titleView = searchBar
@@ -38,9 +36,12 @@ class FeedPageVC: UIViewController {
         let searchField: UITextField = searchBar.value(forKey: "searchField") as! UITextField
         searchField.backgroundColor = #colorLiteral(red: 0.9529411765, green: 0.9607843137, blue: 0.9803921569, alpha: 1)
         
+        // tableView
+        tableView.register(UINib(nibName: "PostCardCell", bundle: nil), forCellReuseIdentifier: "PostCardCell")
         tableView.rowHeight = UITableView.automaticDimension
-        
         tableView.tableFooterView = UIView()
+        tableView.refreshControl = UIRefreshControl()
+        tableView.refreshControl?.addTarget(self, action: #selector(refresh), for: .valueChanged)
         
         // Segmentio update
         segmentioView.setup(content: [SegmentioItem(title: "My Feed".localized(), image: nil), SegmentioItem(title: "Trending".localized(), image: nil)],
@@ -97,5 +98,9 @@ class FeedPageVC: UIViewController {
                 self.viewModel.sortType.accept(mode)
             })
         })
+    }
+    
+    @objc func refresh() {
+        viewModel.reload()
     }
 }
