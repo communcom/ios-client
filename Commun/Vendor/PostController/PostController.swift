@@ -66,17 +66,27 @@ extension PostController {
     func openMorePostActions() {
         guard let post = post,
             let topController = UIApplication.topViewController() else {return}
-        topController.showActionSheet(title: nil, message: nil, actions: [
-            UIAlertAction(title: "Edit".localized(), style: .default, handler: { (_) in
-                topController.showAlert(title: "TODO", message: "Edit post")
-            }),
-            UIAlertAction(title: "Delete".localized(), style: .destructive, handler: { (_) in
-                topController.showAlert(title: "TODO", message: "Delete post")
-            }),
+        
+        var actions = [UIAlertAction]()
+        
+        if post.author?.userId == Config.currentUser.nickName {
+            actions += [
+                UIAlertAction(title: "Edit".localized(), style: .default, handler: { (_) in
+                    topController.showAlert(title: "TODO", message: "Edit post")
+                }),
+                UIAlertAction(title: "Delete".localized(), style: .destructive, handler: { (_) in
+                    topController.showAlert(title: "TODO", message: "Delete post")
+                })
+            ]
+        }
+        
+        actions.append(
             UIAlertAction(title: "Report", style: .destructive, handler: { (_) in
                 topController.showAlert(title: "TODO", message: "Report post")
             })
-        ])
+        )
+        
+        topController.showActionSheet(title: nil, message: nil, actions: actions)
     }
     
     func upVote() {
