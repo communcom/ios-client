@@ -11,7 +11,7 @@ import CyberSwift
 import RxCocoa
 import RxSwift
 
-extension PostPageVC: PostHeaderViewDelegate {
+extension PostPageVC: PostHeaderViewDelegate, PostControllerDelegate {
     
     func bindUI() {
         // Observe post
@@ -45,6 +45,7 @@ extension PostPageVC: PostHeaderViewDelegate {
                 guard let headerView = UINib(nibName: "PostHeaderView", bundle: nil).instantiate(withOwner: self, options: nil).first as? PostHeaderView else {return}
                 headerView.setUp(with: post)
                 headerView.delegate = self
+                headerView.viewDelegate = self
                 
                 // Assign table header view
                 self.tableView.tableHeaderView = headerView
@@ -93,5 +94,9 @@ extension PostPageVC: PostHeaderViewDelegate {
     
     func headerViewDidLayoutSubviews(_ headerView: PostHeaderView) {
         self.tableView.tableHeaderView = headerView
+    }
+    
+    func postDidDeleted(post: ResponseAPIContentGetPost) {
+        self.dismiss(animated: true, completion: nil)
     }
 }

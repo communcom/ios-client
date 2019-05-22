@@ -12,12 +12,17 @@ import CyberSwift
 
 let PostControllerPostDidChangeNotification = "PostControllerPostDidChangeNotification"
 
+protocol PostControllerDelegate: class {
+    func postDidDeleted(post: ResponseAPIContentGetPost)
+}
+
 protocol PostController: class {
     var disposeBag: DisposeBag {get}
     var upVoteButton: UIButton! {get set}
     var downVoteButton: UIButton! {get set}
     var post: ResponseAPIContentGetPost? {get set}
     func setUp(with post: ResponseAPIContentGetPost?)
+    var delegate: PostControllerDelegate? {get set}
 }
 
 extension PostController {
@@ -75,7 +80,13 @@ extension PostController {
                     topController.showAlert(title: "TODO", message: "Edit post")
                 }),
                 UIAlertAction(title: "Delete".localized(), style: .destructive, handler: { (_) in
-                    topController.showAlert(title: "TODO", message: "Delete post")
+//                    NetworkService.shared.deletePost(permlink: post.contentId.permlink, refBlockNum: post.contentId.refBlockNum)
+//                        .subscribe(onCompleted: {
+//                            self.delegate?.postDidDeleted(post: post)
+//                        }, onError: { (_) in
+//                            topController.showGeneralError()
+//                        })
+//                        .disposed(by: self.disposeBag)
                 })
             ]
         }

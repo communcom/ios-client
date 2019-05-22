@@ -17,7 +17,8 @@ protocol PostHeaderViewDelegate: class {
 class PostHeaderView: UIView, UIWebViewDelegate, PostController {
     let disposeBag = DisposeBag()
     // Delegate
-    weak var delegate: PostHeaderViewDelegate?
+    weak var delegate: PostControllerDelegate?
+    weak var viewDelegate: PostHeaderViewDelegate?
     
     // Media content
     @IBOutlet weak var webView: UIWebView!
@@ -135,7 +136,7 @@ class PostHeaderView: UIView, UIWebViewDelegate, PostController {
     
     func layoutAndNotify(with keyboardHeight: CGFloat = 0) {
         layout(with: keyboardHeight)
-        delegate?.headerViewDidLayoutSubviews(self)
+        viewDelegate?.headerViewDidLayoutSubviews(self)
     }
     
     func layout(with keyboardHeight: CGFloat = 0) {
