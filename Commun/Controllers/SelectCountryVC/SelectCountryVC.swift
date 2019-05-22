@@ -45,6 +45,9 @@ class SelectCountryVC: UIViewController {
 
         self.navigationItem.searchController = searchController
         self.navigationItem.hidesSearchBarWhenScrolling = false
+        self.definesPresentationContext = true
+        searchController.obscuresBackgroundDuringPresentation = false
+
         
         setupActions()
         setupBindings()
