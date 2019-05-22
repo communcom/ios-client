@@ -11,8 +11,8 @@ import CyberSwift
 import RxSwift
 
 enum NotificationSettingType: String {
-    case upvote = "Upvote"
-    case downvote = "Downvote"
+    case vote = "Upvote"
+    case flag = "Flag"
     case points = "Points transfer"
     case comment = "Comment and reply"
     case mention = "Mention"
@@ -28,8 +28,9 @@ enum NotificationSettingType: String {
     static func getOptions(_ options: ResponseAPIGetOptionsNotifyShow) {
         #warning("types message, witnessVote, witnessCancelVote missing")
         let standard = UserDefaults.standard
-        standard.set(options.upvote, forKey: NotificationSettingType.upvote.rawValue)
-        standard.set(options.downvote, forKey: NotificationSettingType.downvote.rawValue)
+        #warning("options.upvote -> options.vote ?")
+        standard.set(options.upvote, forKey: NotificationSettingType.vote.rawValue)
+        standard.set(options.downvote, forKey: NotificationSettingType.flag.rawValue)
         standard.set(options.transfer, forKey: NotificationSettingType.points.rawValue)
         standard.set(options.reply, forKey: NotificationSettingType.comment.rawValue)
         standard.set(options.subscribe, forKey: NotificationSettingType.following.rawValue)
@@ -42,8 +43,8 @@ enum NotificationSettingType: String {
     static func getNoticeOptions() -> RequestParameterAPI.NoticeOptions {
         #warning("types message, witnessVote, witnessCancelVote missing")
         return RequestParameterAPI.NoticeOptions(
-            upvote: NotificationSettingType.upvote.toBool(),
-            downvote: NotificationSettingType.downvote.toBool(),
+            vote: NotificationSettingType.vote.toBool(),
+            flag: NotificationSettingType.flag.toBool(),
             transfer: NotificationSettingType.points.toBool(),
             reply: NotificationSettingType.comment.toBool(),
             subscribe: NotificationSettingType.following.toBool(),
@@ -59,7 +60,7 @@ enum NotificationSettingType: String {
     }
     
     static var allCases: [NotificationSettingType] {
-        return [.upvote, .downvote, .points, .comment, .mention, .rewardsVote, .rewardsPosts, .following, .repost]
+        return [.vote, .flag, .points, .comment, .mention, .rewardsVote, .rewardsPosts, .following, .repost]
     }
 }
 
