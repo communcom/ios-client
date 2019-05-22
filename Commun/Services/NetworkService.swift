@@ -88,17 +88,7 @@ class NetworkService: NSObject {
     
     func deletePost(permlink: String, refBlockNum:  UInt64) -> Completable {
         guard let currentUserId = Config.currentUser.nickName else {return .error(ErrorAPI.requestFailed(message: "Current user not found"))}
-        return Completable.create {completable in
-            RestAPIManager.instance.deleteMessage(author: currentUserId, permlink: permlink, refBlockNum: refBlockNum, completion: { (response, error) in
-                guard error == nil else {
-                    Logger.log(message: error!.caseInfo.message.localized(), event: .error)
-                    completable(.error(error!))
-                    return
-                }
-                completable(.completed)
-            })
-            return Disposables.create()
-        }
+        return RestAPIManager.instance.rx.deleteMessage(author: currentUserId, permlink: permlink, refBlockNum: refBlockNum)
     }
     
     func getUserComments(_ paginationKey: String? = nil) -> Single<ResponseAPIContentGetComments> {

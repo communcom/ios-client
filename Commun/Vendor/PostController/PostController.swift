@@ -80,13 +80,13 @@ extension PostController {
                     topController.showAlert(title: "TODO", message: "Edit post")
                 }),
                 UIAlertAction(title: "Delete".localized(), style: .destructive, handler: { (_) in
-//                    NetworkService.shared.deletePost(permlink: post.contentId.permlink, refBlockNum: post.contentId.refBlockNum)
-//                        .subscribe(onCompleted: {
-//                            self.delegate?.postDidDeleted(post: post)
-//                        }, onError: { (_) in
-//                            topController.showGeneralError()
-//                        })
-//                        .disposed(by: self.disposeBag)
+                    NetworkService.shared.deletePost(permlink: post.contentId.permlink, refBlockNum: post.contentId.refBlockNum)
+                        .subscribe(onCompleted: {
+                            self.delegate?.postDidDeleted(post: post)
+                        }, onError: { (_) in
+                            topController.showGeneralError()
+                        })
+                        .disposed(by: self.disposeBag)
                 })
             ]
         }
