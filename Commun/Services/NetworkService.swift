@@ -472,4 +472,14 @@ class NetworkService: NSObject {
             return Disposables.create()
         }
     }
+    
+    // MARK: - meta
+    // meta.recordPostView
+    func markPostAsRead(permlink: String) {
+        RestAPIManager.instance.recordPostView(permlink: permlink, responseHandling: { (_) in
+            Logger.log(message: "Marked post \"\(permlink)\" as read", event: .info)
+        }) { (error) in
+            Logger.log(message: "Can not make post as read with error: \(error)", event: .error)
+        }
+    }
 }

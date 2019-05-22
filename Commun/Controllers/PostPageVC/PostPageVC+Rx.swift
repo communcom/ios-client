@@ -56,6 +56,12 @@ extension PostPageVC: PostHeaderViewDelegate, PostControllerDelegate {
         let nonNilPost = viewModel.post.filter {$0 != nil}
             .map {$0!}
         
+        nonNilPost
+            .subscribe(onNext:{post in
+                NetworkService.shared.markPostAsRead(permlink: post.contentId.permlink)
+            })
+            .disposed(by: disposeBag)
+        
         moreButton.rx.tap
             .withLatestFrom(nonNilPost)
             .subscribe(onNext: {_ in
