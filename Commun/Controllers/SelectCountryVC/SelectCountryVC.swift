@@ -34,9 +34,12 @@ class SelectCountryVC: UIViewController {
         // Close bar button
         let closeButton = UIBarButtonItem(title: "Close".localized(), style: .plain, target: nil, action: nil)
         
-        closeButton.rx.tap.subscribe(onNext: { [weak self] _ in
-            self?.navigationController?.dismiss(animated: true, completion: nil)
-        }).disposed(by: disposeBag)
+        closeButton.rx
+            .tap
+            .subscribe(onNext: { [weak self] _ in
+                self?.navigationController?.dismiss(animated: true, completion: nil)
+            })
+            .disposed(by: disposeBag)
         
         self.navigationItem.leftBarButtonItem = closeButton
 
@@ -53,19 +56,32 @@ class SelectCountryVC: UIViewController {
     
     func setupBindings() {
         if let viewModel = viewModel {
-            viewModel.countries.bind(to: tableView.rx.items(cellIdentifier: "CountryCell")) { (index, model, cell) in
-                (cell as! CountryCell).setupCountry(model)
-            }.disposed(by: disposeBag)
+            viewModel.countries
+                .bind(to: tableView.rx.items(cellIdentifier: "CountryCell")) { (index, model, cell) in
+                    (cell as! CountryCell).setupCountry(model)
+                }
+                .disposed(by: disposeBag)
         }
     }
     
     func setupActions() {
         if let viewModel = viewModel {
-            searchController.searchBar.rx.text.orEmpty.bind(to: viewModel.search).disposed(by: disposeBag)
-            tableView.rx.modelSelected(Country.self).bind(to: viewModel.selectedCountry).disposed(by: disposeBag)
-            tableView.rx.itemSelected.subscribe(onNext: { _ in
-                self.navigationController?.dismiss(animated: true, completion: nil)
-            }).disposed(by: disposeBag)
+            searchController.searchBar.rx.text
+                .orEmpty
+                .bind(to: viewModel.search)
+                .disposed(by: disposeBag)
+            
+            tableView.rx
+                .modelSelected(Country.self)
+                .bind(to: viewModel.selectedCountry)
+                .disposed(by: disposeBag)
+            
+            tableView.rx
+                .itemSelected
+                .subscribe(onNext: { _ in
+                    self.navigationController?.dismiss(animated: true, completion: nil)
+                })
+                .disposed(by: disposeBag)
         }
     }
 }
