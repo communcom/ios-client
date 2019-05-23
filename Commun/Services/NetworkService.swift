@@ -89,6 +89,7 @@ class NetworkService: NSObject {
     func deletePost(permlink: String, refBlockNum:  UInt64) -> Completable {
         guard let currentUserId = Config.currentUser.nickName else {return .error(ErrorAPI.requestFailed(message: "Current user not found"))}
         return RestAPIManager.instance.rx.deleteMessage(author: currentUserId, permlink: permlink, refBlockNum: refBlockNum)
+            .observeOn(MainScheduler.instance)
     }
     
     func getUserComments(_ paginationKey: String? = nil) -> Single<ResponseAPIContentGetComments> {
@@ -156,28 +157,13 @@ class NetworkService: NSObject {
     }
     
     func voteMessage(voteType: VoteType, messagePermlink: String, messageAuthor: String, refBlockNum: UInt64) -> Completable {
-        return Completable.create {completable in
-            RestAPIManager.instance.message(voteType:        voteType,
-                                            author:          messageAuthor,
-                                            permlink:        messagePermlink,
-                                            weight:          voteType == .unvote ? 0 : 10_000,
-                                            refBlockNum:     refBlockNum,
-                                            completion:      { (response, error) in
-                                                
-                                                guard error == nil else {
-                                                    completable(.error(error!))
-                                                    return
-                                                }
-                                                
-                                                if response!.success {
-                                                    completable(.completed)
-                                                    return
-                                                }
-                                                
-                                                completable(.error(ErrorAPI.requestFailed(message: "Unknown Error")))
-            })
-            return Disposables.create()
-        }
+        return RestAPIManager.instance.rx.vote(
+                voteType: voteType,
+                author: messageAuthor,
+                permlink: messagePermlink,
+                weight: voteType == .unvote ? 0 : 10_000,
+                refBlockNum: refBlockNum)
+            .observeOn(MainScheduler.instance)
     }
     
     func sendPost(withTitle title: String, withText text: String, metaData json: String, withTags tags: [String]) -> Completable {
