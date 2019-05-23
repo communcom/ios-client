@@ -167,21 +167,11 @@ class NetworkService: NSObject {
     }
     
     func sendPost(withTitle title: String, withText text: String, metaData json: String, withTags tags: [String]) -> Completable {
-        return Completable.create { observer -> Disposable in
-            RestAPIManager.instance.create(message:             text,
-                                           tags:                tags,
-                                           metaData:            json,
-                                           responseHandling:    { response in
-                                            observer(.completed)
-            },
-                                           errorHandling:       { errorAPI in
-                                            observer(.error(SignInError.errorAPI(errorAPI.caseInfo.message.localized())))
-                                            return
-            })
-
-            
-            return Disposables.create()
-        }
+        return RestAPIManager.instance.rx.create(message:             text,
+                                                 tags:                tags,
+                                                 metaData:            json)
+            .flatMapToCompletable()
+            .observeOn(MainScheduler.instance)
     }
     
     func signUp(withPhone phone: String) -> Observable<ResponseAPIRegistrationFirstStep> {
