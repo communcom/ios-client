@@ -136,21 +136,19 @@ class NetworkService: NSObject {
     
     func signIn(login: String, key: String) -> Observable<String> {
         return Observable.create({ observer -> Disposable in
-            RestAPIManager.instance.authorize(userNickName: login, userActiveKey: key,
-                                              completion: { (authAuthorize, errorAPI) in
-                guard errorAPI == nil else {
-                    Logger.log(message: errorAPI!.caseInfo.message.localized(), event: .error)
-                    observer.onError(SignInError.errorAPI(errorAPI!.caseInfo.message.localized()))
-                    return
-                }
-                
-                if let permission = authAuthorize?.permission {
-                    Config.currentUser.nickName = login
-                    Config.currentUser.activeKey = key
-                    observer.onNext(permission)
-                    Logger.log(message: permission, event: .debug)
-                }
-                observer.onCompleted()
+            RestAPIManager.instance.authorize(userNickName:         login,
+                                              userActiveKey:        key,
+                                              responseHandling:     { response in
+                                                Config.currentUser.nickName = login
+                                                Config.currentUser.activeKey = key
+                                                
+                                                Logger.log(message: response.permission, event: .debug)
+                                                observer.onNext(response.permission)
+                                                observer.onCompleted()
+            },
+                                              errorHandling:        { errorAPI in
+                                                Logger.log(message: errorAPI.caseInfo.message.localized(), event: .error)
+                                                observer.onError(SignInError.errorAPI(errorAPI.caseInfo.message.localized()))
             })
             
             return Disposables.create()

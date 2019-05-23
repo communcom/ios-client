@@ -15,19 +15,19 @@ extension PostController {
         var voteType = VoteType.upvote
         if post.votes.hasUpVote {voteType = .unvote}
         
-        return NetworkService.shared.voteMessage(voteType: voteType,
-                                                 messagePermlink: post.contentId.permlink,
-                                                 messageAuthor: post.author?.username ?? "",
-                                                 refBlockNum: post.contentId.refBlockNum)
+        return NetworkService.shared.voteMessage(voteType:          voteType,
+                                                 messagePermlink:   post.contentId.permlink,
+                                                 messageAuthor:     post.author?.username ?? "",
+                                                 refBlockNum:       post.contentId.refBlockNum ?? 0)
     }
     
     func downVoteObserver(_ post: ResponseAPIContentGetPost) -> Completable {
         var voteType = VoteType.downvote
         if post.votes.hasUpVote {voteType = .unvote}
         
-        return NetworkService.shared.voteMessage(voteType: voteType,
-                                                 messagePermlink: post.contentId.permlink,
-                                                 messageAuthor: post.author?.username ?? "",
-                                                 refBlockNum: post.contentId.refBlockNum)
+        return NetworkService.shared.voteMessage(voteType:          voteType,
+                                                 messagePermlink:   post.contentId.permlink,
+                                                 messageAuthor:     post.author?.username ?? "",
+                                                 refBlockNum:       post.contentId.refBlockNum ?? 0)
     }
 }
