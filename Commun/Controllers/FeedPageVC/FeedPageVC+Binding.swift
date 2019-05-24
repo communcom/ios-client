@@ -10,8 +10,6 @@ import Foundation
 import RxDataSources
 import CyberSwift
 
-typealias PostSection = AnimatableSectionModel<String, ResponseAPIContentGetPost>
-
 extension FeedPageVC {
     func bindUI() {
         // sortType
@@ -30,21 +28,12 @@ extension FeedPageVC {
             .disposed(by: disposeBag)
         
         // items
-        let dataSource = RxTableViewSectionedAnimatedDataSource<PostSection>(
-            configureCell: { dataSource, tableView, indexPath, item in
-                let cell = tableView.dequeueReusableCell(withIdentifier: "PostCardCell", for: indexPath) as! PostCardCell
-                cell.setUp(with: item)
-                return cell
-            }
-        )
-        
-        
         viewModel.items
             .map {[PostSection(model: "", items: $0)]}
             .do(onNext: {_ in
                 self.tableView.refreshControl?.endRefreshing()
             })
-            .bind(to: tableView.rx.items(dataSource: dataSource))
+            .bind(to: tableView.rx.items(dataSource: ResponseAPIContentGetPost.dataSource))
             .disposed(by: disposeBag)
         
         tableView.rx.modelSelected(ResponseAPIContentGetPost.self)
