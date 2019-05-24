@@ -71,7 +71,7 @@ class TabBarVC: UITabBarController {
         viewModel.getFreshCount()
             .asDriver(onErrorJustReturn: 0)
             .map {$0 > 0 ? "\($0)" : nil}
-            .drive(tabBar.items!.last!.rx.badgeValue)
+            .drive(tabBar.items!.first(where: {$0.tag == 4})!.rx.badgeValue)
             .disposed(by: bag)
     }
 }
