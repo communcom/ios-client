@@ -17,7 +17,6 @@ protocol PostHeaderViewDelegate: class {
 class PostHeaderView: UIView, UIWebViewDelegate, PostController {
     let disposeBag = DisposeBag()
     // Delegate
-    weak var delegate: PostControllerDelegate?
     weak var viewDelegate: PostHeaderViewDelegate?
     
     // Media content

@@ -40,11 +40,7 @@ extension FeedPageVC {
         
         
         viewModel.items
-            .map {items in
-                return [
-                    PostSection(model: "", items: items)
-                ]
-            }
+            .map {[PostSection(model: "", items: $0)]}
             .do(onNext: {_ in
                 self.tableView.refreshControl?.endRefreshing()
             })

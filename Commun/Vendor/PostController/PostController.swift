@@ -11,10 +11,7 @@ import RxSwift
 import CyberSwift
 
 let PostControllerPostDidChangeNotification = "PostControllerPostDidChangeNotification"
-
-protocol PostControllerDelegate: class {
-    func postDidDeleted(post: ResponseAPIContentGetPost)
-}
+let PostControllerPostDidDeleteNotification = "PostControllerPostDidDeleteNotification"
 
 protocol PostController: class {
     var disposeBag: DisposeBag {get}
@@ -22,13 +19,16 @@ protocol PostController: class {
     var downVoteButton: UIButton! {get set}
     var post: ResponseAPIContentGetPost? {get set}
     func setUp(with post: ResponseAPIContentGetPost?)
-    var delegate: PostControllerDelegate? {get set}
 }
 
 extension PostController {
-    
+    // MARK: - Notify observers
     func notifyPostChange(newPost: ResponseAPIContentGetPost) {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: PostControllerPostDidChangeNotification), object: newPost)
+    }
+    
+    func notifyPostDeleted(deletedPost: ResponseAPIContentGetPost) {
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: PostControllerPostDidDeleteNotification), object: deletedPost)
     }
     
     func observePostChange() {
@@ -70,13 +70,7 @@ extension PostController {
                     topController.showAlert(title: "TODO", message: "Edit post")
                 }),
                 UIAlertAction(title: "Delete".localized(), style: .destructive, handler: { (_) in
-                    NetworkService.shared.deletePost(permlink: post.contentId.permlink, refBlockNum: post.contentId.refBlockNum ?? 0)
-                        .subscribe(onCompleted: {
-                            self.delegate?.postDidDeleted(post: post)
-                        }, onError: { (_) in
-                            topController.showGeneralError()
-                        })
-                        .disposed(by: self.disposeBag)
+                    self.deletePost()
                 })
             ]
         }
@@ -168,6 +162,19 @@ extension PostController {
                     UIApplication.topViewController()?.showGeneralError()
             })
             .disposed(by: disposeBag)
+    }
+    
+    func deletePost() {
+        guard let post = post,
+            let topController = UIApplication.topViewController() else {return}
+        
+        NetworkService.shared.deletePost(permlink: post.contentId.permlink, refBlockNum: post.contentId.refBlockNum ?? 0)
+            .subscribe(onCompleted: {
+                self.notifyPostDeleted(deletedPost: post)
+            }, onError: { (_) in
+                topController.showGeneralError()
+            })
+            .disposed(by: self.disposeBag)
     }
     
     func sharePost() {
