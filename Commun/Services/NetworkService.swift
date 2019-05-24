@@ -67,7 +67,6 @@ class NetworkService: NSObject {
             
             RestAPIManager.instance.loadPost(userID:        user,
                                              permlink:      permLink,
-                                             refBlockNum:   block,
                                              completion:    { (post, errorAPI) in
                                                 guard errorAPI == nil else {
                                                     Logger.log(message: errorAPI!.caseInfo.message.localized(), event: .error)
@@ -113,7 +112,6 @@ class NetworkService: NSObject {
         return Single.create{ single in
             RestAPIManager.instance.loadPostComments(nickName:                  user,
                                                      permlink:                  permLink,
-                                                     refBlockNum:               block,
                                                      paginationSequenceKey:     paginationKey,
                                                      completion:                { (response, error) in
                                                         guard error == nil else {
@@ -156,7 +154,7 @@ class NetworkService: NSObject {
         })
     }
     
-    func voteMessage(voteType: VoteActionType, messagePermlink: String, messageAuthor: String, refBlockNum: UInt64) -> Completable {
+    func voteMessage(voteType: VoteActionType, messagePermlink: String, messageAuthor: String) -> Completable {
         return RestAPIManager.instance.rx.vote(
                 voteType: voteType,
                 author: messageAuthor,

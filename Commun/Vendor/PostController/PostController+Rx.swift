@@ -17,8 +17,7 @@ extension PostController {
         
         return NetworkService.shared.voteMessage(voteType:          voteType,
                                                  messagePermlink:   post.contentId.permlink,
-                                                 messageAuthor:     post.author?.username ?? "",
-                                                 refBlockNum:       post.contentId.refBlockNum ?? 0)
+                                                 messageAuthor:     post.author?.username ?? "")
     }
     
     func downVoteObserver(_ post: ResponseAPIContentGetPost) -> Completable {
@@ -27,7 +26,6 @@ extension PostController {
         
         return NetworkService.shared.voteMessage(voteType:          voteType,
                                                  messagePermlink:   post.contentId.permlink,
-                                                 messageAuthor:     post.author?.username ?? "",
-                                                 refBlockNum:       post.contentId.refBlockNum ?? 0)
+                                                 messageAuthor:     post.author?.username ?? "")
     }
 }

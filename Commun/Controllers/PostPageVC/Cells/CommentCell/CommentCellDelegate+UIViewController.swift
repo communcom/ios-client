@@ -12,15 +12,13 @@ extension CommentCellDelegate where Self: UIViewController {
     func cell(_ cell: CommentCellProtocol, didTapUpVoteButtonForComment comment: ResponseAPIContentGetComment) {
         NetworkService.shared.voteMessage(voteType: .upvote,
                                           messagePermlink: comment.contentId.permlink,
-                                          messageAuthor: comment.author?.username ?? "",
-                                          refBlockNum: comment.contentId.refBlockNum)
+                                          messageAuthor: comment.author?.username ?? "")
     }
     
     func cell(_ cell: CommentCellProtocol, didTapDownVoteButtonForComment comment: ResponseAPIContentGetComment) {
         NetworkService.shared.voteMessage(voteType: .downvote,
                                           messagePermlink: comment.contentId.permlink,
-                                          messageAuthor: comment.author?.username ?? "",
-                                          refBlockNum: comment.contentId.refBlockNum)
+                                          messageAuthor: comment.author?.username ?? "")
     }
     
     func cell(_ cell: CommentCellProtocol, didTapReplyButtonForComment comment: ResponseAPIContentGetComment) {
