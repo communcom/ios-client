@@ -31,6 +31,17 @@ extension PostController {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: PostControllerPostDidDeleteNotification), object: deletedPost)
     }
     
+    func observePostChange() {
+        NotificationCenter.default.rx.notification(.init(rawValue: PostControllerPostDidChangeNotification))
+            .subscribe(onNext: {notification in
+                guard let newPost = notification.object as? ResponseAPIContentGetPost,
+                    newPost == self.post
+                    else {return}
+                self.setUp(with: newPost)
+            })
+            .disposed(by: disposeBag)
+    }
+    
     func setHasVote(_ value: Bool, for type: VoteActionType) {
         guard let post = post else {return}
         
