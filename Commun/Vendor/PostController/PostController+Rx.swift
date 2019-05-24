@@ -12,7 +12,7 @@ import CyberSwift
 
 extension PostController {
     func upVoteObserver(_ post: ResponseAPIContentGetPost) -> Completable {
-        var voteType = VoteType.upvote
+        var voteType = VoteActionType.upvote
         if post.votes.hasUpVote {voteType = .unvote}
         
         return NetworkService.shared.voteMessage(voteType:          voteType,
@@ -22,7 +22,7 @@ extension PostController {
     }
     
     func downVoteObserver(_ post: ResponseAPIContentGetPost) -> Completable {
-        var voteType = VoteType.downvote
+        var voteType = VoteActionType.downvote
         if post.votes.hasUpVote {voteType = .unvote}
         
         return NetworkService.shared.voteMessage(voteType:          voteType,

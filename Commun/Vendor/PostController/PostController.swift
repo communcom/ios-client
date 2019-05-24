@@ -43,7 +43,7 @@ extension PostController {
             .disposed(by: disposeBag)
     }
     
-    func setHasVote(_ value: Bool, for type: VoteType) {
+    func setHasVote(_ value: Bool, for type: VoteActionType) {
         guard let post = post else {return}
         
         // return if nothing changes
