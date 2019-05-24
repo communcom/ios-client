@@ -60,7 +60,6 @@ class PostHeaderView: UIView, UIWebViewDelegate, PostController {
     }
     
     func commonInit() {
-        observePostChange()
         // Observe keyboard
         UIResponder.keyboardHeightObservable
             .subscribe(onNext: {keyboardHeight in

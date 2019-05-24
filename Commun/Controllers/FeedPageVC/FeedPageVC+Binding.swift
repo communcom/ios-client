@@ -31,7 +31,7 @@ extension FeedPageVC {
         
         // items
         let dataSource = RxTableViewSectionedAnimatedDataSource<PostSection>(
-            configureCell: { [weak self] dataSource, tableView, indexPath, item in
+            configureCell: { dataSource, tableView, indexPath, item in
                 let cell = tableView.dequeueReusableCell(withIdentifier: "PostCardCell", for: indexPath) as! PostCardCell
                 cell.setUp(with: item)
                 return cell

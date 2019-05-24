@@ -26,7 +26,9 @@ class FeedPageViewModel: PostsListController {
         // bind filter
         bindFilter()
         
+        // post observers
         observePostDelete()
+        observePostChange()
     }
     
     func bindFilter() {

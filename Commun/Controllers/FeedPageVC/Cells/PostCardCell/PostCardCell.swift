@@ -38,8 +38,6 @@ class PostCardCell: UITableViewCell, PostController {
         
         avatarImageView.layer.cornerRadius = avatarImageView.height / 2
         avatarImageView.clipsToBounds = true
-        
-        observePostChange()
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

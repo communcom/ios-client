@@ -18,6 +18,13 @@ protocol ItemsListController {
 }
 
 extension ItemsListController {
+    func updateItem(_ updatedItem: T) {
+        var newItems = items.value
+        guard let index = newItems.firstIndex(of: updatedItem) else {return}
+        newItems[index] = updatedItem
+        items.accept(newItems)
+    }
+    
     func deleteItem(_ deletedItem: T) {
         let newItems = items.value.filter {$0 != deletedItem}
         items.accept(newItems)
@@ -33,6 +40,16 @@ extension PostsListController {
                 guard let deletedPost = notification.object as? ResponseAPIContentGetPost
                     else {return}
                 self.deleteItem(deletedPost)
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    func observePostChange() {
+        NotificationCenter.default.rx.notification(.init(rawValue: PostControllerPostDidChangeNotification))
+            .subscribe(onNext: {notification in
+                guard let newPost = notification.object as? ResponseAPIContentGetPost
+                    else {return}
+                self.updateItem(newPost)
             })
             .disposed(by: disposeBag)
     }
