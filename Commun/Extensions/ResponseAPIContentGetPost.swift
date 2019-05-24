@@ -10,8 +10,6 @@ import Foundation
 import CyberSwift
 import RxDataSources
 
-public typealias PostSection = AnimatableSectionModel<String, ResponseAPIContentGetPost>
-
 extension ResponseAPIContentGetPost: Equatable, IdentifiableType {
     public static func == (lhs: ResponseAPIContentGetPost, rhs: ResponseAPIContentGetPost) -> Bool {
         return lhs.identity == rhs.identity &&
@@ -28,15 +26,5 @@ extension ResponseAPIContentGetPost: Equatable, IdentifiableType {
     
     public var identity: String {
         return self.contentId.userId + "/" + self.contentId.permlink
-    }
-    
-    public static var dataSource: RxTableViewSectionedAnimatedDataSource<PostSection> {
-        return .init(
-            configureCell: { dataSource, tableView, indexPath, item in
-                let cell = tableView.dequeueReusableCell(withIdentifier: "PostCardCell", for: indexPath) as! PostCardCell
-                cell.setUp(with: item)
-                return cell
-            }
-        )
     }
 }

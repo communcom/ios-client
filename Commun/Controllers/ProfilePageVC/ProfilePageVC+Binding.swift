@@ -61,7 +61,7 @@ extension ProfilePageVC: CommentCellDelegate {
                     return cell
                 }
                 
-                if index >= self.viewModel.items.value.count - 5 {
+                if index >= self.viewModel.items.value.count - 3 {
                     self.viewModel.fetchNext()
                 }
                 
