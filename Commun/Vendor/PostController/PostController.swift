@@ -188,8 +188,7 @@ extension PostController {
         // text to share
         var text = post.content.title + "\n"
         
-        #warning("refBlockNum is being removed")
-        text += "https://commun.com/posts/\(userId)/\(post.contentId.refBlockNum)/\(post.contentId.permlink)"
+        text += "https://commun.com/posts/\(userId)/\(post.contentId.permlink)"
         
         
         // link to share
