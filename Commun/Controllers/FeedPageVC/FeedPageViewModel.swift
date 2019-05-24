@@ -11,11 +11,10 @@ import RxSwift
 import RxCocoa
 import CyberSwift
 
-class FeedPageViewModel {
-    
-    private let bag = DisposeBag()
-    
-    let items = BehaviorRelay<[ResponseAPIContentGetPost]>(value: [])
+class FeedPageViewModel: PostsListController {
+    // PostsListController requirement
+    var disposeBag = DisposeBag()
+    var items = BehaviorRelay<[ResponseAPIContentGetPost]>(value: [])
     
     let sortType = BehaviorRelay<FeedTimeFrameMode>(value: .all)
     let feedType = BehaviorRelay<FeedSortMode>(value: .popular)
@@ -27,20 +26,9 @@ class FeedPageViewModel {
         // bind filter
         bindFilter()
         
-//        // observePostChange
-//        NotificationCenter.default.rx.notification(.init(rawValue: PostControllerPostDidChangeNotification))
-//            .subscribe(onNext: {notification in
-//                guard let newPost = notification.object as? ResponseAPIContentGetPost
-//                    else {return}
-//                
-//                let indexToReplace = self.items.value.firstIndex(where: {$0.contentId.permlink == newPost.contentId.permlink})
-//                
-//                guard let index = indexToReplace else {return}
-//                var newArray = self.items.value
-//                newArray[index] = newPost
-//                self.items.accept(newArray)
-//            })
-//            .disposed(by: bag)
+        // post observers
+        observePostDelete()
+        observePostChange()
     }
     
     func bindFilter() {
@@ -57,7 +45,7 @@ class FeedPageViewModel {
             })
             .asDriver(onErrorJustReturn: [])
             .drive(items)
-            .disposed(by: bag)
+            .disposed(by: disposeBag)
         
     }
     
@@ -68,10 +56,11 @@ class FeedPageViewModel {
             }) { (error) in
                 #warning("handle error")
             }
-            .disposed(by: bag)
+            .disposed(by: disposeBag)
     }
     
     @objc func reload() {
+        items.accept([])
         fetcher.reset()
         fetchNext()
     }

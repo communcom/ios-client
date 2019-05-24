@@ -7,6 +7,8 @@
 //
 
 import Foundation
+import RxDataSources
+import CyberSwift
 
 extension FeedPageVC {
     func bindUI() {
@@ -27,17 +29,11 @@ extension FeedPageVC {
         
         // items
         viewModel.items
+            .map {[PostSection(model: "", items: $0)]}
             .do(onNext: {_ in
                 self.tableView.refreshControl?.endRefreshing()
             })
-            .bind(to: tableView.rx.items(
-                cellIdentifier: "PostCardCell",
-                cellType: PostCardCell.self)) { index, model, cell in
-                    if index >= self.viewModel.items.value.count - 5 {
-                        self.viewModel.fetchNext()
-                    }
-                    cell.setUp(with: model)
-            }
+            .bind(to: tableView.rx.items(dataSource: ResponseAPIContentGetPost.dataSource))
             .disposed(by: disposeBag)
         
         tableView.rx.modelSelected(ResponseAPIContentGetPost.self)

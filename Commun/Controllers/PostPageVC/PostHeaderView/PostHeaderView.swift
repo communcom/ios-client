@@ -17,7 +17,6 @@ protocol PostHeaderViewDelegate: class {
 class PostHeaderView: UIView, UIWebViewDelegate, PostController {
     let disposeBag = DisposeBag()
     // Delegate
-    weak var delegate: PostControllerDelegate?
     weak var viewDelegate: PostHeaderViewDelegate?
     
     // Media content
@@ -61,7 +60,6 @@ class PostHeaderView: UIView, UIWebViewDelegate, PostController {
     }
     
     func commonInit() {
-        observePostChange()
         // Observe keyboard
         UIResponder.keyboardHeightObservable
             .subscribe(onNext: {keyboardHeight in

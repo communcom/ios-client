@@ -22,6 +22,7 @@ PODS:
     - Starscream (~> 3.0)
     - SwiftTheme
   - DateToolsSwift (4.0.0)
+  - Differentiator (3.1.0)
   - eosswift (1.6.0):
     - BigInt (~> 3.1.0)
     - RxCocoa (~> 4.0)
@@ -40,6 +41,10 @@ PODS:
     - RxSwift (>= 4.4.2, ~> 4.4)
   - RxCocoa (4.5.0):
     - RxSwift (>= 4.4.2, ~> 4.4)
+  - RxDataSources (3.1.0):
+    - Differentiator (~> 3.0)
+    - RxCocoa (~> 4.0)
+    - RxSwift (~> 4.0)
   - RxStarscream (0.10):
     - RxCocoa (~> 4.3)
     - RxSwift (~> 4.3)
@@ -66,6 +71,7 @@ DEPENDENCIES:
   - DateToolsSwift
   - PhoneNumberKit (~> 2.6)
   - PinCodeInputView
+  - RxDataSources (~> 3.0)
   - SDWebImage (~> 4.0)
   - SwifterSwift/Foundation
   - SwifterSwift/SwiftStdlib
@@ -82,6 +88,7 @@ SPEC REPOS:
     - Checksum
     - CryptoSwift
     - DateToolsSwift
+    - Differentiator
     - eosswift
     - GoloCrypto
     - Localize-Swift
@@ -90,6 +97,7 @@ SPEC REPOS:
     - PinCodeInputView
     - RxBlocking
     - RxCocoa
+    - RxDataSources
     - RxStarscream
     - RxSwift
     - SDWebImage
@@ -119,6 +127,7 @@ SPEC CHECKSUMS:
   CryptoSwift: d81eeaa59dc5a8d03720fe919a6fd07b51f7439f
   CyberSwift: c9db8ba4c881781da30905dcafcca963b7a1881c
   DateToolsSwift: 875d97ff9e3a5d54abdd67a269b3f51c757b71ab
+  Differentiator: be49ca3408f0ecfc761e4c7763d20c62be01b9ad
   eosswift: 22bc931fd65bbd446c3f828233b8fd2916cec4a7
   GoloCrypto: 3f60e824b57ca657be702fb2cf4bd1f7a379257a
   Localize-Swift: c798ec9286494866f7068f85f7c71283ac5bdab4
@@ -127,6 +136,7 @@ SPEC CHECKSUMS:
   PinCodeInputView: 0a7361aaec76b639ff6521f1b6c38ed27b8144e3
   RxBlocking: 79413e4d916f44bb3e113c5b2cc059e36fe58910
   RxCocoa: cbf70265dc65a981d4ac982e513c10cf23df24a0
+  RxDataSources: a843bad90c29817f5923ec8163f4af2de084ceb3
   RxStarscream: aa79e742c87e9bcdff218a1ebb59638f5174589e
   RxSwift: f172070dfd1a93d70a9ab97a5a01166206e1c575
   SDWebImage: 3f3f0c02f09798048c47a5ed0a13f17b063572d8
@@ -139,6 +149,6 @@ SPEC CHECKSUMS:
   TLPhotoPicker: c5aefdc9beaca82116d7855924f1d8abdd055f79
   UIImageView-Letters: f62db28076797adf3560ab7410647dc6899b9eef
 
-PODFILE CHECKSUM: a1ebd22334aaf5bd4119464ba5874216e30c2e05
+PODFILE CHECKSUM: 9b789066d47b45134195c12552d47eb3eb793cb6
 
 COCOAPODS: 1.7.0.rc.1

@@ -13,8 +13,6 @@ import RxSwift
 
 
 class PostCardCell: UITableViewCell, PostController {
-    weak var delegate: PostControllerDelegate?
-    
     var disposeBag = DisposeBag()
     
 
