@@ -10,9 +10,10 @@ import Foundation
 import CyberSwift
 import RxCocoa
 import RxSwift
+import RxDataSources
 
 protocol ItemsListController {
-    associatedtype T: Equatable
+    associatedtype T: Equatable & IdentifiableType
     var items: BehaviorRelay<[T]> {get set}
     var disposeBag: DisposeBag {get}
 }
@@ -20,7 +21,7 @@ protocol ItemsListController {
 extension ItemsListController {
     func updateItem(_ updatedItem: T) {
         var newItems = items.value
-        guard let index = newItems.firstIndex(of: updatedItem) else {return}
+        guard let index = newItems.firstIndex(where: {$0.identity == updatedItem.identity}) else {return}
         newItems[index] = updatedItem
         items.accept(newItems)
     }

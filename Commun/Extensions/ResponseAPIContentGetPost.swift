@@ -12,7 +12,8 @@ import RxDataSources
 
 extension ResponseAPIContentGetPost: Equatable, IdentifiableType {
     public static func == (lhs: ResponseAPIContentGetPost, rhs: ResponseAPIContentGetPost) -> Bool {
-        return lhs.contentId.permlink == rhs.contentId.permlink &&
+        return lhs.identity == rhs.identity &&
+            lhs.contentId.permlink == rhs.contentId.permlink &&
             lhs.content.title == rhs.content.title &&
             lhs.content.tags == rhs.content.tags &&
             lhs.content.body.preview == rhs.content.body.preview &&
