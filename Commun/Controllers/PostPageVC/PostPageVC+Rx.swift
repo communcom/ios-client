@@ -85,7 +85,7 @@ extension PostPageVC: PostHeaderViewDelegate {
                     return cell
                 }
                 
-                if index >= self.viewModel.comments.value.count - 3 {
+                if index >= self.viewModel.comments.value.count - 5 {
                     self.viewModel.fetchNext()
                 }
                 

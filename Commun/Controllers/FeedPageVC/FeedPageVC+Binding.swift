@@ -35,7 +35,7 @@ extension FeedPageVC {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "PostCardCell", for: indexPath) as! PostCardCell
                 cell.setUp(with: item)
                 
-                if indexPath.row >= self.viewModel.items.value.count - 3 {
+                if indexPath.row >= self.viewModel.items.value.count - 5 {
                     self.viewModel.fetchNext()
                 }
                 

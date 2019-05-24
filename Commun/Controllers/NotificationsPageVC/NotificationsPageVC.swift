@@ -76,7 +76,7 @@ class NotificationsPageVC: UIViewController {
                 cell.configure(with: model)
                 
                 // fetchNext when reach last 5 items
-                if index >= self.viewModel.list.value.count - 3 {
+                if index >= self.viewModel.list.value.count - 5 {
                     self.viewModel.fetchNext()
                 }
             }
