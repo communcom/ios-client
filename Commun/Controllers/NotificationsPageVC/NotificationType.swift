@@ -25,7 +25,7 @@ enum NotificationType: String {
         switch self {
         case .upvote:
             let text = NSMutableAttributedString()
-                .bold(notification.actor!.id)
+                .bold(notification.actor!.id ?? "Unknown")
                 .normal(" ")
                 .normal("upvoted you in a post".localized())
                 .normal(": ")
@@ -36,7 +36,7 @@ enum NotificationType: String {
             break
         case .downvote:
             let text = NSMutableAttributedString()
-                .bold(notification.actor!.id)
+                .bold(notification.actor!.id ?? "Unknown")
                 .normal(" ")
                 .normal("downvoted you in a post".localized())
                 .normal(": ")
@@ -47,7 +47,7 @@ enum NotificationType: String {
             break
         case .subscribe:
             let text = NSMutableAttributedString()
-                .bold(notification.actor!.id)
+                .bold(notification.actor!.id ?? "Unknown")
                 .normal(" ")
                 .normal("subscribed you".localized())
             detail.text = text
@@ -55,7 +55,7 @@ enum NotificationType: String {
             break
         case .transfer:
             let text = NSMutableAttributedString()
-                .bold(notification.actor!.id)
+                .bold(notification.actor!.id ?? "Unknown")
                 .normal(" ")
                 .normal("transfered you".localized())
                 .normal(" \(notification.value!.amount) \(notification.value!.currency)")
@@ -64,7 +64,7 @@ enum NotificationType: String {
             break
         case .reply:
             let text = NSMutableAttributedString()
-                .bold(notification.actor!.id)
+                .bold(notification.actor!.id ?? "Unknown")
             
             if let comment = notification.comment {
                 text.normal(" ")
@@ -83,7 +83,7 @@ enum NotificationType: String {
             break
         case .mention:
             let text = NSMutableAttributedString()
-                .bold(notification.actor!.id)
+                .bold(notification.actor!.id ?? "Unknown")
                 .normal(" ")
                 .normal("mentioned you".localized())
             
