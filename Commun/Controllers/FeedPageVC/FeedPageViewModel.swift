@@ -72,6 +72,7 @@ class FeedPageViewModel {
     }
     
     @objc func reload() {
+        items.accept([])
         fetcher.reset()
         fetchNext()
     }

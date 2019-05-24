@@ -35,7 +35,6 @@ extension PostController {
         NotificationCenter.default.rx.notification(.init(rawValue: PostControllerPostDidChangeNotification))
             .subscribe(onNext: {notification in
                 guard let newPost = notification.object as? ResponseAPIContentGetPost,
-                    newPost.contentId.permlink != self.post?.contentId.permlink,
                     newPost == self.post
                     else {return}
                 self.setUp(with: newPost)
@@ -50,20 +49,11 @@ extension PostController {
         if type == .upvote && value == post.votes.hasUpVote {return}
         if type == .downvote && value == post.votes.hasDownVote {return}
         
-        // Image names
-        let unselectedImage = type == .upvote ? "Up": "Down"
-        let selectedImage = unselectedImage + "Selected"
-        
-        // set image
-        let newImage = value ? selectedImage: unselectedImage
-        
         if type == .upvote {
-            upVoteButton.setImage(UIImage(named: newImage), for: .normal)
             self.post!.votes.hasUpVote = !self.post!.votes.hasUpVote
         }
         
         if type == .downvote {
-            downVoteButton.setImage(UIImage(named: newImage), for: .normal)
             self.post!.votes.hasDownVote = !self.post!.votes.hasDownVote
         }
     }
