@@ -14,6 +14,13 @@ public typealias PostSection = AnimatableSectionModel<String, ResponseAPIContent
 
 extension FeedPageVC {
     func bindUI() {
+        // feedType
+        viewModel.feedType
+            .bind {feedType in
+                self.sortByTypeButton.setTitle(feedType.toString(), for: .normal)
+            }
+            .disposed(by: disposeBag)
+        
         // sortType
         viewModel.sortType
             .bind { (mode) in

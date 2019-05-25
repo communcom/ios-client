@@ -52,12 +52,7 @@ class FeedPageVC: UIViewController {
             
             // if feed is my feed, then sort by time
             if index == 0 {
-                self.viewModel.feedType.accept(.time)
-            }
-            
-            // if feed is community then sort by popular
-            if index == 1 {
-                self.viewModel.feedType.accept(.popular)
+                self.viewModel.feedType.accept(.timeDesc)
             }
         }
         
@@ -82,13 +77,17 @@ class FeedPageVC: UIViewController {
     }
     
     @IBAction func sortByTypeButtonDidTouch(_ sender: Any) {
-        showActionSheet(actions: [
-            UIAlertAction(title: "Top", style: .default, handler: { _ in
-                self.showAlert(title: "TODO", message: "FILTER")
-            }),
-            UIAlertAction(title: "New", style: .default, handler: { _ in
-                self.showAlert(title: "TODO", message: "FILTER")
-            })])
+        var options = FeedSortMode.allCases
+        
+        if viewModel.feedTypeMode.value == .byUser {
+            options.removeAll(where: {$0 == .popular})
+        }
+        
+        showActionSheet(actions: options.map { mode in
+            UIAlertAction(title: mode.toString(), style: .default, handler: { (_) in
+                self.viewModel.feedType.accept(mode)
+            })
+        })
 
     }
     

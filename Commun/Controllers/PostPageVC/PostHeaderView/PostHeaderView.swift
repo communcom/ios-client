@@ -96,7 +96,7 @@ class PostHeaderView: UIView, UIWebViewDelegate, PostController {
         // Show count label
         #warning("missing viewsCount + votesCount")
         commentCountLabel.text = "\(post.stats.commentsCount) " + "Comments".localized()
-        voteCountLabel.text = post.payout.rShares.stringValue
+        voteCountLabel.text = post.payout.rShares?.stringValue ?? "0"
         
         // Handle button
         var upVoteImageName = "Up"

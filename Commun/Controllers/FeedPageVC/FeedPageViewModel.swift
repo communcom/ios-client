@@ -34,6 +34,11 @@ class FeedPageViewModel: PostsListController {
     func bindFilter() {
         #warning("handle error")
         Observable.combineLatest(sortType, feedType, feedTypeMode)
+            .skip(1)
+            .filter({ (sortType, feedType, feedTypeMode) -> Bool in
+                if feedTypeMode == .byUser && feedType == .popular {return false}
+                return true
+            })
             .flatMapLatest({ (sortType, feedType, feedTypeMode) -> Single<[ResponseAPIContentGetPost]> in
                 self.items.accept([])
                 self.fetcher.reset()
