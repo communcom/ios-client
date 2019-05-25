@@ -80,7 +80,7 @@ extension PostCardCell {
         let embeds = post.content.embeds
         
         if embeds.count > 0,
-            let imageURL = embeds[0].result.thumbnail_url {
+            let imageURL = embeds[0].result?.thumbnail_url {
             embededImageView.sd_setImage(with: URL(string: imageURL))
             embededViewHeightConstraint.constant = 31/40 * UIScreen.main.bounds.width
         } else {

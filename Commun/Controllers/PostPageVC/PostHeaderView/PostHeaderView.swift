@@ -79,8 +79,8 @@ class PostHeaderView: UIView, UIWebViewDelegate, PostController {
         
         loadingView.isHidden = true
         // Show media
-        if post.content.embeds.first?.result.type == "video",
-            let html = post.content.embeds.first?.result.html {
+        if post.content.embeds.first?.result?.type == "video",
+            let html = post.content.embeds.first?.result?.html {
             webView.loadHTMLString(html, baseURL: nil)
             webViewHeightConstraint.constant = UIScreen.main.bounds.width * 283/375
             webView.scrollView.contentInset = UIEdgeInsets(top: -8, left: -8, bottom: -8, right: -8)
