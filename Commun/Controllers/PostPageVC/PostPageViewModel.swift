@@ -56,6 +56,7 @@ class PostPageViewModel {
                 return .just([])
             }
             .subscribe(onSuccess: { (list) in
+                guard list.count > 0 else {return}
                 self.comments.accept(self.comments.value + list)
             })
             .disposed(by: disposeBag)

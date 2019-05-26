@@ -57,6 +57,7 @@ class FeedPageViewModel: PostsListController {
     func fetchNext() {
         fetcher.fetchNext()
             .subscribe(onSuccess: { (list) in
+                guard list.count > 0 else {return}
                 self.items.accept(self.items.value + list)
             }) { (error) in
                 #warning("handle error")

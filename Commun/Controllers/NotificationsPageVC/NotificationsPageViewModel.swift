@@ -26,6 +26,7 @@ struct NotificationsPageViewModel {
     func fetchNext() {
         fetcher.fetchNext()
             .asDriver(onErrorJustReturn: [])
+            .filter {$0.count > 0}
             .map {self.list.value + $0}
             .drive(list)
             .disposed(by: bag)

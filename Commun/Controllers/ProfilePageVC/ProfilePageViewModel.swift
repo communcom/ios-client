@@ -124,6 +124,7 @@ class ProfilePageViewModel {
     func fetchNext() {
         fetchNextSingle()
             .asDriver(onErrorJustReturn: [])
+            .filter {$0.count > 0}
             .map {self.items.value + $0}
             .drive(items)
             .disposed(by: bag)
