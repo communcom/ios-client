@@ -8,8 +8,10 @@
 
 import UIKit
 import RxSwift
+import CyberSwift
 
 class EditorPageViewModel {
+    var postForEdit: ResponseAPIContentGetPost?
     
     let images = Variable<[UIImage]>([])
     let titleText = Variable<String>("Test")

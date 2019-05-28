@@ -42,6 +42,32 @@ extension PostController {
             .disposed(by: disposeBag)
     }
     
+    func openMorePostActions() {
+        guard let topController = UIApplication.topViewController() else {return}
+        
+        var actions = [UIAlertAction]()
+        
+        if post?.author?.userId == Config.currentUser.nickName {
+            actions += [
+                UIAlertAction(title: "Edit".localized(), style: .default, handler: { (_) in
+                    self.editPost()
+                }),
+                UIAlertAction(title: "Delete".localized(), style: .destructive, handler: { (_) in
+                    self.deletePost()
+                })
+            ]
+        }
+        
+        actions.append(
+            UIAlertAction(title: "Report", style: .destructive, handler: { (_) in
+                self.reportPost()
+            })
+        )
+        
+        topController.showActionSheet(title: nil, message: nil, actions: actions)
+    }
+    
+    // MARK: - Voting
     func setHasVote(_ value: Bool, for type: VoteActionType) {
         guard let post = post else {return}
         
@@ -56,32 +82,6 @@ extension PostController {
         if type == .downvote {
             self.post!.votes.hasDownVote = !self.post!.votes.hasDownVote
         }
-    }
-    
-    func openMorePostActions() {
-        guard let post = post,
-            let topController = UIApplication.topViewController() else {return}
-        
-        var actions = [UIAlertAction]()
-        
-        if post.author?.userId == Config.currentUser.nickName {
-            actions += [
-                UIAlertAction(title: "Edit".localized(), style: .default, handler: { (_) in
-                    topController.showAlert(title: "TODO", message: "Edit post")
-                }),
-                UIAlertAction(title: "Delete".localized(), style: .destructive, handler: { (_) in
-                    self.deletePost()
-                })
-            ]
-        }
-        
-        actions.append(
-            UIAlertAction(title: "Report", style: .destructive, handler: { (_) in
-                topController.showAlert(title: "TODO", message: "Report post")
-            })
-        )
-        
-        topController.showActionSheet(title: nil, message: nil, actions: actions)
     }
     
     func upVote() {
@@ -164,19 +164,7 @@ extension PostController {
             .disposed(by: disposeBag)
     }
     
-    func deletePost() {
-        guard let post = post,
-            let topController = UIApplication.topViewController() else {return}
-        
-        NetworkService.shared.deletePost(permlink: post.contentId.permlink, refBlockNum: post.contentId.refBlockNum ?? 0)
-            .subscribe(onCompleted: {
-                self.notifyPostDeleted(deletedPost: post)
-            }, onError: { (_) in
-                topController.showGeneralError()
-            })
-            .disposed(by: self.disposeBag)
-    }
-    
+    // MARK: - Other actions
     func sharePost() {
         guard let post = post,
             let userId = post.author?.userId,
@@ -196,6 +184,38 @@ extension PostController {
         
         // present the view controller
         controller.present(activityViewController, animated: true, completion: nil)
+    }
+    
+    func reportPost() {
+        #warning("Report post")
+    }
+    
+    func deletePost() {
+        guard let post = post,
+            let topController = UIApplication.topViewController() else {return}
+        
+        NetworkService.shared.deletePost(permlink: post.contentId.permlink, refBlockNum: post.contentId.refBlockNum ?? 0)
+            .subscribe(onCompleted: {
+                self.notifyPostDeleted(deletedPost: post)
+            }, onError: { (_) in
+                topController.showGeneralError()
+            })
+            .disposed(by: self.disposeBag)
+    }
+    
+    func editPost() {
+        guard let post = post,
+            let topController = UIApplication.topViewController() else {return}
+        
+        let viewModel = EditorPageViewModel()
+        viewModel.postForEdit = post
+        
+        let vc = controllerContainer.resolve(EditorPageVC.self)!
+        vc.viewModel = viewModel
+        
+        let nav = UINavigationController(rootViewController: vc)
+        
+        topController.present(nav, animated: true, completion: nil)
     }
 
 }
