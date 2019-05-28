@@ -39,7 +39,7 @@
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ProfilePageCover" translatesAutoresizingMaskIntoConstraints="NO" id="RFx-YH-sbl">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="160"/>
                                         </imageView>
-                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ProfilePageUserAvatar" translatesAutoresizingMaskIntoConstraints="NO" id="CgS-tE-PNM">
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ProfilePageUserAvatar" translatesAutoresizingMaskIntoConstraints="NO" id="CgS-tE-PNM">
                                             <rect key="frame" x="157" y="110" width="100" height="100"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="100" id="drX-rh-jx6"/>
