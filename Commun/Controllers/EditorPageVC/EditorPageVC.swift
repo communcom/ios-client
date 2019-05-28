@@ -69,7 +69,7 @@ class EditorPageVC: UIViewController {
         contentTextView.placeholder = "Enter text".localized() + "..."
         contentTextView.delegate = self
         
-        makeSubscriptions()
+        bindUI()
     }
  
     @objc func closeView() {

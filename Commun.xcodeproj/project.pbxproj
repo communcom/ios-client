@@ -68,7 +68,6 @@
 		570061202253CDDF007700DA /* EditorMediaCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5700611E2253CDDF007700DA /* EditorMediaCell.xib */; };
 		570061242253D3B3007700DA /* EditorLinkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570061222253D3B3007700DA /* EditorLinkCell.swift */; };
 		570061252253D3B3007700DA /* EditorLinkCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 570061232253D3B3007700DA /* EditorLinkCell.xib */; };
-		571710A32253DF0100A5D07C /* EditorPageVC+UITableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571710A22253DF0100A5D07C /* EditorPageVC+UITableViewDataSource.swift */; };
 		571B14F4223A935C00630C8F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571B14F3223A935C00630C8F /* AppDelegate.swift */; };
 		571B14F9223A935C00630C8F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 571B14F7223A935C00630C8F /* Main.storyboard */; };
 		571B14FC223A935C00630C8F /* Commun.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 571B14FA223A935C00630C8F /* Commun.xcdatamodeld */; };
@@ -142,7 +141,6 @@
 		57DE5BE622522060008566B9 /* ComunityCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 57DE5BE422522060008566B9 /* ComunityCell.xib */; };
 		57DE5BEA2252240E008566B9 /* TitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DE5BE82252240E008566B9 /* TitleCell.swift */; };
 		57DE5BEB2252240E008566B9 /* TitleCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 57DE5BE92252240E008566B9 /* TitleCell.xib */; };
-		57DE5BED225225E4008566B9 /* EditorPageVC+Utilites.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DE5BEC225225E4008566B9 /* EditorPageVC+Utilites.swift */; };
 		57E5159E2270E5DE00A6F6DB /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E5159C2270E5DE00A6F6DB /* SettingsVC.swift */; };
 		57E515A12270E66900A6F6DB /* SettingsVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 57E515A02270E66900A6F6DB /* SettingsVC.storyboard */; };
 		57E515A52270EA7900A6F6DB /* GeneralSettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E515A32270EA7900A6F6DB /* GeneralSettingCell.swift */; };
@@ -263,7 +261,6 @@
 		5700611E2253CDDF007700DA /* EditorMediaCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EditorMediaCell.xib; sourceTree = "<group>"; };
 		570061222253D3B3007700DA /* EditorLinkCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorLinkCell.swift; sourceTree = "<group>"; };
 		570061232253D3B3007700DA /* EditorLinkCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EditorLinkCell.xib; sourceTree = "<group>"; };
-		571710A22253DF0100A5D07C /* EditorPageVC+UITableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EditorPageVC+UITableViewDataSource.swift"; sourceTree = "<group>"; };
 		571B14F0223A935C00630C8F /* Commun.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Commun.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		571B14F3223A935C00630C8F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		571B14F8223A935C00630C8F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -345,7 +342,6 @@
 		57DE5BE422522060008566B9 /* ComunityCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ComunityCell.xib; sourceTree = "<group>"; };
 		57DE5BE82252240E008566B9 /* TitleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleCell.swift; sourceTree = "<group>"; };
 		57DE5BE92252240E008566B9 /* TitleCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TitleCell.xib; sourceTree = "<group>"; };
-		57DE5BEC225225E4008566B9 /* EditorPageVC+Utilites.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EditorPageVC+Utilites.swift"; sourceTree = "<group>"; };
 		57E5159C2270E5DE00A6F6DB /* SettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
 		57E515A02270E66900A6F6DB /* SettingsVC.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SettingsVC.storyboard; sourceTree = "<group>"; };
 		57E515A32270EA7900A6F6DB /* GeneralSettingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralSettingCell.swift; sourceTree = "<group>"; };
@@ -971,16 +967,14 @@
 			isa = PBXGroup;
 			children = (
 				57DE5BE12252202F008566B9 /* Cell */,
-				57DE5BDD225208A4008566B9 /* EditorPageViewModel.swift */,
+				57DE5BDF225209A0008566B9 /* EditorPageVC.storyboard */,
 				57DE5BDB2252088C008566B9 /* EditorPageVC.swift */,
+				57CBD95D225517B4000BA8CC /* EditorPageVC+Actions.swift */,
+				57DE5BDD225208A4008566B9 /* EditorPageViewModel.swift */,
 				57F9CAAB225B489000AC9ACA /* EditorPageVC+Rx.swift */,
 				577B8BFC2255F2F50016FE76 /* EditorPageVC+EditorContentCellDelegate.swift */,
-				57CBD95D225517B4000BA8CC /* EditorPageVC+Actions.swift */,
 				571B8240225B31A000823F02 /* EditorPageVC+UITextViewDelegate.swift */,
 				57CBD95F2255187B000BA8CC /* EditorPageVC+UIImagePickerController.swift */,
-				571710A22253DF0100A5D07C /* EditorPageVC+UITableViewDataSource.swift */,
-				57DE5BEC225225E4008566B9 /* EditorPageVC+Utilites.swift */,
-				57DE5BDF225209A0008566B9 /* EditorPageVC.storyboard */,
 			);
 			path = EditorPageVC;
 			sourceTree = "<group>";
@@ -1362,7 +1356,6 @@
 				5787C0C422650F9D00568CEC /* SetUserVC.swift in Sources */,
 				5721E87122650AC0003BE04B /* StringExtension.swift in Sources */,
 				3B0E9C732270785E002AB1C2 /* PhotoLibraryCell.swift in Sources */,
-				57DE5BED225225E4008566B9 /* EditorPageVC+Utilites.swift in Sources */,
 				3B51581E226E0D3A00108F17 /* TLPhotosPickerViewController+Rx.swift in Sources */,
 				57840A07223FAC1B00338FD5 /* UIView+Appearance.swift in Sources */,
 				57CBD95C225511BD000BA8CC /* UITextView+Placeholder.m in Sources */,
@@ -1390,7 +1383,6 @@
 				57840A0A223FAC1B00338FD5 /* Segmentio.swift in Sources */,
 				3B2F227122689308006B589E /* TabBarViewModel.swift in Sources */,
 				3B197C5B2269EF3F008CF10D /* ProfilePageVC+Binding.swift in Sources */,
-				571710A32253DF0100A5D07C /* EditorPageVC+UITableViewDataSource.swift in Sources */,
 				57840A01223FAC1B00338FD5 /* SegmentioCellWithImageUnderLabel.swift in Sources */,
 				3B0E9C752270C691002AB1C2 /* ProfileEditBioVC.swift in Sources */,
 				57A95197224178010020F55D /* PostController.swift in Sources */,

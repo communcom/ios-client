@@ -11,7 +11,7 @@ import UIKit
 extension EditorPageVC: EditorContentCellDelegate {
 
     func contentCell(_ cell: EditorContentCell, didChangeText text: String) {
-        viewModel?.contentText.value = text
+        viewModel?.contentText.accept(text)
     }
 
 }

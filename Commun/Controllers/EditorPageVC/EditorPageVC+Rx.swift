@@ -12,11 +12,15 @@ import RxCocoa
 
 extension EditorPageVC {
     
-    func makeSubscriptions() {
-        viewModel?.isAdult.asObservable().subscribe(onNext: { [weak self] isAdult in
-            self?.adultButton.setImage(isAdult ? UIImage(named: "18ButtonSelected") : UIImage(named: "18Button"), for: .normal)
-        }).disposed(by: disposeBag)
+    func bindUI() {
+        // isAdult
+        viewModel?.isAdult
+            .map {$0 ? "18ButtonSelected": "18Button"}
+            .map {UIImage(named: $0)}
+            .bind(to: self.adultButton.rx.image(for: .normal))
+            .disposed(by: disposeBag)
         
+        // button state
     }
     
 }
