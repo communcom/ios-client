@@ -108,7 +108,7 @@ class NetworkService: NSObject {
         }
     }
     
-    func getPostComment(_ paginationKey: String? = nil, withPermLink permLink: String, withRefBlock block: UInt64, forUser user: String) -> Single<ResponseAPIContentGetComments> {
+    func getPostComment(_ paginationKey: String? = nil, withPermLink permLink: String, forUser user: String) -> Single<ResponseAPIContentGetComments> {
         return Single.create{ single in
             RestAPIManager.instance.loadPostComments(nickName:                  user,
                                                      permlink:                  permLink,
