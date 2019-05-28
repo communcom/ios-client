@@ -60,61 +60,19 @@ class EditorPageVC: UIViewController {
         self.navigationController?.navigationBar.barTintColor = .white
         self.navigationController?.navigationBar.isTranslucent = false
         
-//        tableView.register(UINib(nibName: "ComunityCell", bundle: nil), forCellReuseIdentifier: "ComunityCell")
-//        tableView.register(UINib(nibName: "TitleCell", bundle: nil), forCellReuseIdentifier: "TitleCell")
-//        tableView.register(UINib(nibName: "EditorContentCell", bundle: nil), forCellReuseIdentifier: "EditorContentCell")
-//        tableView.register(UINib(nibName: "EditorMediaCell", bundle: nil), forCellReuseIdentifier: "EditorMediaCell")
-//        tableView.register(UINib(nibName: "EditorLinkCell", bundle: nil), forCellReuseIdentifier: "EditorLinkCell")
-//
-//        tableView.rowHeight = UITableView.automaticDimension
-//        tableView.tableFooterView = UIView()
-//
-//        tableView.dataSource = self
-        
         dropDownView.layer.borderWidth = 1.0
         dropDownView.layer.borderColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1).cgColor
         dropDownView.layer.cornerRadius = 12.0
         
-//        makeCells()
-        
-        titleTextField.placeholder = "Title"
+        titleTextField.placeholder = "Title".localized()
         titleTextField.delegate = self
-        contentTextView.placeholder = "Enter text..."
+        contentTextView.placeholder = "Enter text".localized() + "..."
         contentTextView.delegate = self
-        
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(keyboardWillShow),
-            name: UIResponder.keyboardWillShowNotification,
-            object: nil
-        )
-        
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(keyboardWillHide(_:)),
-            name: UIResponder.keyboardWillHideNotification,
-            object: nil
-        )
         
         makeSubscriptions()
     }
  
     @objc func closeView() {
         self.navigationController?.dismiss(animated: true, completion: nil)
-    }
- 
-    @objc func keyboardWillShow(_ notification: Notification) {
-        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
-            let keyboardRectangle = keyboardFrame.cgRectValue
-            let keyboardHeight = keyboardRectangle.height
-            
-            let newFrame = CGRect(x: 0, y: self.view.height - keyboardHeight-50, width: self.view.width, height: 90)
-            dropDownView.frame = newFrame
-        }
-    }
-    
-    @objc func keyboardWillHide(_ notification: Notification) {
-        let newFrame = CGRect(x: 0, y: self.view.height - 90, width: self.view.width, height: 190)
-        dropDownView.frame = newFrame
     }
 }
