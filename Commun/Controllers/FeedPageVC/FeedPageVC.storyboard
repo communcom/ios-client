@@ -37,7 +37,7 @@
                                                 <constraint firstAttribute="height" constant="8" id="XIN-mZ-GmB"/>
                                             </constraints>
                                         </view>
-                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tux" translatesAutoresizingMaskIntoConstraints="NO" id="Z7e-MC-AaW">
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Z7e-MC-AaW">
                                             <rect key="frame" x="16" y="12" width="40" height="40"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="40" id="K18-NN-wUy"/>
@@ -230,6 +230,5 @@
     </scenes>
     <resources>
         <image name="photo_solid" width="24" height="24"/>
-        <image name="tux" width="327" height="370"/>
     </resources>
 </document>
