@@ -175,7 +175,7 @@ class NetworkService: NSObject {
     func sendComment(comment: String, forPostWithPermlink permlink: String, metaData json: String, tags: [String]) -> Completable {
         return RestAPIManager.instance.rx.create(
             message: comment,
-            parentData: (permlink: permlink, refBlockNum: 0),
+            parentPermlink: permlink,
             tags: tags,
             metaData: json
         ).flatMapToCompletable()
