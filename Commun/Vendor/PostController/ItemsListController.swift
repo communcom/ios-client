@@ -27,7 +27,7 @@ extension ItemsListController {
     }
     
     func deleteItem(_ deletedItem: T) {
-        let newItems = items.value.filter {$0 != deletedItem}
+        let newItems = items.value.filter {$0.identity != deletedItem.identity}
         items.accept(newItems)
     }
 }

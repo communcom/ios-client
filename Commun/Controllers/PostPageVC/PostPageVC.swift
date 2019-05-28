@@ -41,8 +41,24 @@ class PostPageVC: UIViewController, CommentCellDelegate {
         // dismiss keyboard when dragging
         tableView.keyboardDismissMode = .onDrag
         
+        // observe post deleted
+        observePostDeleted()
+        
         // bind ui
         bindUI()
+    }
+    
+    func observePostDeleted() {
+        NotificationCenter.default.rx.notification(.init(rawValue: PostControllerPostDidDeleteNotification))
+            .subscribe(onNext: { (notification) in
+                guard let deletedPost = notification.object as? ResponseAPIContentGetPost,
+                    deletedPost.identity == self.viewModel.post.value?.identity
+                    else {return}
+                self.showAlert(title: "Deleted".localized(), message: "The post has been deleted".localized(), completion: { (_) in
+                    self.dismiss(animated: true, completion: nil)
+                })
+            })
+            .disposed(by: disposeBag)
     }
     
     @IBAction func backButtonTap(_ sender: Any) {
