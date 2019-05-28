@@ -8,25 +8,32 @@
 
 import UIKit
 import RxSwift
+import RxCocoa
 import CyberSwift
 
 class EditorPageViewModel {
     var postForEdit: ResponseAPIContentGetPost?
     
-    let images = Variable<[UIImage]>([])
-    let titleText = Variable<String>("Test")
-    let contentText = Variable<String>("")
-    let isAdult = Variable<Bool>(false)
+    let images = BehaviorRelay<[UIImage]>(value: [])
+    let titleText = BehaviorRelay<String>(value: "")
+    let contentText = BehaviorRelay<String>(value: "")
+    let isAdult = BehaviorRelay<Bool>(value: false)
     
     func addImage(_ image: UIImage) {
-        self.images.value.append(image)
+        var newImages = images.value
+        newImages.append(image)
+        self.images.accept(newImages)
     }
     
     func setAdult() {
-        isAdult.value = !isAdult.value
+        isAdult.accept(!isAdult.value)
     }
     
     func sendPost() -> Completable {
+        if let post = postForEdit {
+            #warning("Edit post and delete this line")
+            return .error(ErrorAPI.requestFailed(message: "Editing post is implemented"))
+        }
         let json = createJsonMetadata()
         return NetworkService.shared.sendPost(withTitle: titleText.value, withText: contentText.value, metaData: json ?? "", withTags: getTags())
     }

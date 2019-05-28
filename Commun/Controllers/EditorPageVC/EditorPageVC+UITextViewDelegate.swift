@@ -20,11 +20,11 @@ extension EditorPageVC: UITextViewDelegate {
         
         if textView == titleTextField {
             titleTextViewHeightConstraint.constant = newSize.height
-            viewModel?.titleText.value = titleTextField.text
+            viewModel?.titleText.accept(titleTextField.text)
         }
         else if textView == contentTextView {
             contentTextViewHeightConstraint.constant = newSize.height
-            viewModel?.contentText.value = contentTextView.text
+            viewModel?.contentText.accept(contentTextView.text)
         }
         
         textView.layoutIfNeeded()

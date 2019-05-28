@@ -15,7 +15,7 @@
         </array>
     </customFonts>
     <scenes>
-        <!--Editor PageVC-->
+        <!--Create post-->
         <scene sceneID="jvH-vc-edb">
             <objects>
                 <viewController storyboardIdentifier="EditorPageVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="AvE-EB-OTN" customClass="EditorPageVC" customModule="Commun" customModuleProvider="target" sceneMemberID="viewController">
@@ -56,31 +56,31 @@
                                     <constraint firstItem="nwa-Mp-egE" firstAttribute="leading" secondItem="aeQ-gX-bWx" secondAttribute="trailing" constant="26" id="Cgl-0u-dYc"/>
                                     <constraint firstItem="aeQ-gX-bWx" firstAttribute="leading" secondItem="U7q-88-jfF" secondAttribute="leading" constant="16" id="quE-AG-kFf"/>
                                     <constraint firstItem="aeQ-gX-bWx" firstAttribute="top" secondItem="U7q-88-jfF" secondAttribute="top" constant="19" id="uu8-LF-TlD"/>
-                                    <constraint firstAttribute="height" constant="190" id="yfQ-RL-ETY"/>
+                                    <constraint firstAttribute="height" constant="190" id="yfQ-RL-ETY" customClass="KeyboardLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                                     <constraint firstItem="nwa-Mp-egE" firstAttribute="centerY" secondItem="aeQ-gX-bWx" secondAttribute="centerY" id="yqy-5T-drz"/>
                                 </constraints>
                             </view>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tux" translatesAutoresizingMaskIntoConstraints="NO" id="Yh5-US-3Nd">
-                                <rect key="frame" x="16" y="44" width="40" height="40"/>
+                                <rect key="frame" x="16" y="88" width="40" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="40" id="KEx-Gr-9De"/>
                                     <constraint firstAttribute="height" constant="40" id="Rbl-66-P7U"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You will post in" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rXf-Vp-Izy">
-                                <rect key="frame" x="72" y="46" width="287" height="16"/>
+                                <rect key="frame" x="72" y="90" width="287" height="16"/>
                                 <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="13"/>
                                 <color key="textColor" red="0.60784313725490191" green="0.62352941176470589" blue="0.63529411764705879" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Overwatch" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bla-eK-cJX">
-                                <rect key="frame" x="72" y="64" width="287" height="18"/>
+                                <rect key="frame" x="72" y="108" width="287" height="18"/>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="94b-Gg-NR2">
-                                <rect key="frame" x="16" y="110" width="343" height="50"/>
+                                <rect key="frame" x="16" y="154" width="343" height="50"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <accessibility key="accessibilityConfiguration" identifier="EditorPageTitleTextField" label="EditorPageTitleTextField"/>
                                 <constraints>
@@ -90,7 +90,7 @@
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="AQZ-x5-R6W">
-                                <rect key="frame" x="16" y="176" width="343" height="50"/>
+                                <rect key="frame" x="16" y="220" width="343" height="50"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <accessibility key="accessibilityConfiguration" identifier="EditorPageContentTextView" label="EditorPageContentTextView"/>
                                 <constraints>
@@ -106,6 +106,7 @@
                             <constraint firstItem="94b-Gg-NR2" firstAttribute="top" secondItem="Yh5-US-3Nd" secondAttribute="bottom" constant="26" id="6gg-zi-JBB"/>
                             <constraint firstItem="AQZ-x5-R6W" firstAttribute="leading" secondItem="94b-Gg-NR2" secondAttribute="leading" id="Ch0-FP-HTO"/>
                             <constraint firstItem="AQZ-x5-R6W" firstAttribute="trailing" secondItem="94b-Gg-NR2" secondAttribute="trailing" id="IWn-Kx-6kD"/>
+                            <constraint firstItem="U7q-88-jfF" firstAttribute="top" relation="greaterThanOrEqual" secondItem="AQZ-x5-R6W" secondAttribute="bottom" constant="8" id="T0l-wb-kj2"/>
                             <constraint firstItem="94b-Gg-NR2" firstAttribute="leading" secondItem="pty-xo-nJA" secondAttribute="leading" constant="16" id="Woj-Ex-3zL"/>
                             <constraint firstItem="rXf-Vp-Izy" firstAttribute="leading" secondItem="Yh5-US-3Nd" secondAttribute="trailing" constant="16" id="XCn-TP-2zr"/>
                             <constraint firstItem="pty-xo-nJA" firstAttribute="bottom" secondItem="U7q-88-jfF" secondAttribute="bottom" constant="-100" id="Zdh-Jl-FuZ"/>
@@ -122,18 +123,59 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="pty-xo-nJA"/>
                     </view>
+                    <navigationItem key="navigationItem" title="Create post" id="uPM-lk-v58">
+                        <barButtonItem key="leftBarButtonItem" title="Close" id="FW5-dO-lod">
+                            <color key="tintColor" red="0.41568627450000001" green="0.50196078430000002" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="EditorPageCloseButton"/>
+                                <userDefinedRuntimeAttribute type="string" keyPath="accessibilityLabel" value=""/>
+                            </userDefinedRuntimeAttributes>
+                            <connections>
+                                <action selector="closeButtonDidTouch:" destination="AvE-EB-OTN" id="hET-4a-I60"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Post" id="uJ6-gc-rL2">
+                            <color key="tintColor" red="0.41568627450000001" green="0.50196078430000002" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="EditorPagePostButton"/>
+                                <userDefinedRuntimeAttribute type="string" keyPath="accessibilityLabel" value="EditorPagePostButton"/>
+                            </userDefinedRuntimeAttributes>
+                            <connections>
+                                <action selector="postButtonTap" destination="AvE-EB-OTN" id="qkv-Dv-cRa"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="adultButton" destination="aeQ-gX-bWx" id="Yli-e5-ttd"/>
                         <outlet property="contentTextView" destination="AQZ-x5-R6W" id="dOK-6y-4pl"/>
                         <outlet property="contentTextViewHeightConstraint" destination="VZB-2H-oHA" id="6th-6W-I3H"/>
                         <outlet property="dropDownView" destination="U7q-88-jfF" id="TJ1-Iy-WOy"/>
+                        <outlet property="sendPostButton" destination="uJ6-gc-rL2" id="aVg-wp-gSO"/>
                         <outlet property="titleTextField" destination="94b-Gg-NR2" id="XAA-FF-b7h"/>
                         <outlet property="titleTextViewHeightConstraint" destination="IR0-zR-OCF" id="65W-ev-Mfr"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FKW-jE-mea" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="106" y="111"/>
+            <point key="canvasLocation" x="102" y="146"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="Vog-xa-npT">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="dkd-fM-1cl" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="BKh-wI-m1C">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="AvE-EB-OTN" kind="relationship" relationship="rootViewController" id="Pcn-WP-PVC"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="S54-dH-Hc2" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-642" y="147"/>
         </scene>
     </scenes>
     <resources>

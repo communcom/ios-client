@@ -165,6 +165,7 @@ class NetworkService: NSObject {
     
     func sendPost(withTitle title: String, withText text: String, metaData json: String, withTags tags: [String]) -> Completable {
         return RestAPIManager.instance.rx.create(message:             text,
+                                                 headline:            title,
                                                  tags:                tags,
                                                  metaData:            json)
             .flatMapToCompletable()
