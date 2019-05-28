@@ -23,7 +23,7 @@ extension PostPageVC: PostHeaderViewDelegate {
         // Observe commentForm
         commentForm.rx.didSubmit
             .subscribe(onNext: {comment in
-                self.showAlert(title: "TODO: Send comment", message: comment)
+                self.sendComment(comment)
             })
             .disposed(by: disposeBag)
     }
@@ -94,6 +94,19 @@ extension PostPageVC: PostHeaderViewDelegate {
                 cell.delegate = self
                 return cell
             }
+            .disposed(by: disposeBag)
+    }
+    
+    func sendComment(_ comment: String) {
+        guard let post = self.viewModel.post.value else {return}
+        NetworkService.shared.sendComment(comment: comment, forPostWithPermlink: post.contentId.permlink, metaData: "", tags: [])
+            .subscribe(onCompleted: {
+                self.commentForm.textView.text = ""
+                self.view.endEditing(true)
+            }, onError: {_ in
+                self.view.endEditing(true)
+                self.showGeneralError()
+            })
             .disposed(by: disposeBag)
     }
     

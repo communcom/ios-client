@@ -172,6 +172,16 @@ class NetworkService: NSObject {
             .observeOn(MainScheduler.instance)
     }
     
+    func sendComment(comment: String, forPostWithPermlink permlink: String, metaData json: String, tags: [String]) -> Completable {
+        return RestAPIManager.instance.rx.create(
+            message: comment,
+            parentData: (permlink: permlink, refBlockNum: 0),
+            tags: tags,
+            metaData: json
+        ).flatMapToCompletable()
+        .observeOn(MainScheduler.instance)
+    }
+    
     func signUp(withPhone phone: String) -> Observable<ResponseAPIRegistrationFirstStep> {
         return Observable.create({ observer -> Disposable in
 //            RestAPIManager.instance.firstStep(phone:        phone,
