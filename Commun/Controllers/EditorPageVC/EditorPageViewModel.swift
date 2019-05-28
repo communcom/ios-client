@@ -30,6 +30,10 @@ class EditorPageViewModel {
     }
     
     func sendPost() -> Completable {
+        if let post = postForEdit {
+            #warning("Edit post and delete this line")
+            return .error(ErrorAPI.requestFailed(message: "Editing post is implemented"))
+        }
         let json = createJsonMetadata()
         return NetworkService.shared.sendPost(withTitle: titleText.value, withText: contentText.value, metaData: json ?? "", withTags: getTags())
     }

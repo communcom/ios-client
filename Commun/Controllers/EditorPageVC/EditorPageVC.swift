@@ -50,6 +50,13 @@ class EditorPageVC: UIViewController {
         contentTextView.placeholder = "Enter text".localized() + "..."
         contentTextView.delegate = self
         
+        // if editing post
+        if let post = viewModel?.postForEdit {
+            titleTextField.text = post.content.title
+            #warning("change text later")
+            contentTextView.text = post.content.body.preview
+        }
+        
         bindUI()
     }
 }
