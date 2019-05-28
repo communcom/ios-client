@@ -29,12 +29,22 @@ class FeedPageVC: UIViewController {
         
         navigationController?.navigationBar.barTintColor = .white
         
+        // searchBar
         let searchBar = UISearchBar(frame: self.view.bounds)
         searchBar.placeholder = "Search"
         self.navigationItem.titleView = searchBar
         
         let searchField: UITextField = searchBar.value(forKey: "searchField") as! UITextField
         searchField.backgroundColor = #colorLiteral(red: 0.9529411765, green: 0.9607843137, blue: 0.9803921569, alpha: 1)
+        
+        // avatarImage
+        UserDefaults.standard.rx
+            .observe(String.self, Config.currentUserAvatarUrlKey)
+            .distinctUntilChanged()
+            .subscribe(onNext: {urlString in
+                self.userAvatarImage.setAvatar(urlString: urlString, namePlaceHolder: Config.currentUser.nickName ?? "U")
+            })
+            .disposed(by: disposeBag)
         
         // tableView
         tableView.register(UINib(nibName: "PostCardCell", bundle: nil), forCellReuseIdentifier: "PostCardCell")

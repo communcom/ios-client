@@ -289,6 +289,7 @@ class NetworkService: NSObject {
                                                 }
                                                 
                                                 if let res = response {
+                                                    UserDefaults.standard.set(res.personal.avatarUrl, forKey: Config.currentUserAvatarUrlKey)
                                                     single(.success(res))
                                                     return
                                                 }
