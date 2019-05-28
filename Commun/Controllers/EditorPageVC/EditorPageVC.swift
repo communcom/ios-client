@@ -21,6 +21,8 @@ class EditorPageVC: UIViewController {
     @IBOutlet weak var titleTextViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var contentTextViewHeightConstraint: NSLayoutConstraint!
     
+    @IBOutlet weak var sendPostButton: UIBarButtonItem!
+    
     let imagePicker = UIImagePickerController()
     
     var cells: [UITableViewCell] = []
@@ -34,28 +36,7 @@ class EditorPageVC: UIViewController {
             viewModel = EditorPageViewModel()
         }
         
-        self.title = "Create post"
-        
-        let close = UIButton(type: .custom)
-        close.setTitle("Close", for: .normal)
-        close.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
-        close.setTitleColor(#colorLiteral(red: 0.4156862745, green: 0.5019607843, blue: 0.9607843137, alpha: 1), for: .normal)
-        close.addTarget(self, action: #selector(closeView), for: .touchUpInside)
-        close.accessibilityLabel = "EditorPageCloseButton"
-        close.accessibilityIdentifier = "EditorPageCloseButton"
-        let closeItem = UIBarButtonItem(customView: close)
-        
-        let post = UIButton(type: .custom)
-        post.setTitle("Post", for: .normal)
-        post.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
-        post.setTitleColor(#colorLiteral(red: 0.4156862745, green: 0.5019607843, blue: 0.9607843137, alpha: 1), for: .normal)
-        post.addTarget(self, action: #selector(postButtonTap), for: .touchUpInside)
-        post.accessibilityLabel = "EditorPagePostButton"
-        post.accessibilityIdentifier = "EditorPagePostButton"
-        let postItem = UIBarButtonItem(customView: post)
-        
-        self.navigationItem.setLeftBarButtonItems([closeItem], animated: true)
-        self.navigationItem.setRightBarButtonItems([postItem], animated: true)
+        self.title = viewModel?.postForEdit != nil ? "Edit post".localized() : "Create post".localized()
         
         self.navigationController?.navigationBar.barTintColor = .white
         self.navigationController?.navigationBar.isTranslucent = false
@@ -70,9 +51,5 @@ class EditorPageVC: UIViewController {
         contentTextView.delegate = self
         
         bindUI()
-    }
- 
-    @objc func closeView() {
-        self.navigationController?.dismiss(animated: true, completion: nil)
     }
 }

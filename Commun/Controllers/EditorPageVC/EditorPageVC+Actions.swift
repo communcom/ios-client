@@ -21,7 +21,7 @@ extension EditorPageVC {
         viewModel?.setAdult()
     }
     
-    @objc func postButtonTap() {
+    @IBAction func postButtonTap() {
         viewModel?.sendPost()
             .subscribe(onCompleted: {
                 self.dismiss(animated: true, completion: nil)
@@ -29,6 +29,10 @@ extension EditorPageVC {
                 self.showGeneralError()
             })
             .disposed(by: disposeBag)
+    }
+    
+    @IBAction func closeButtonDidTouch(_ sender: Any) {
+        self.navigationController?.dismiss(animated: true, completion: nil)
     }
     
 }
