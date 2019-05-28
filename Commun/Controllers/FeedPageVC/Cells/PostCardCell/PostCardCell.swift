@@ -74,7 +74,7 @@ extension PostCardCell {
         
         self.authorNameLabel.text = "by".localized() + " " + (post.author?.username ?? post.author?.userId ?? "")
         
-        self.mainTextLabel.text = post.content.body.preview
+        self.mainTextLabel.text = post.content.title
         self.accessibilityLabel = "PostCardCell"
         
         let embeds = post.content.embeds
