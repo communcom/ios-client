@@ -164,9 +164,9 @@
 		7472E4613CDA904305E42A4F /* Pods_Commun.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F0772CC6D820AD11B1FF48A /* Pods_Commun.framework */; };
 		B170AC15228AFBDA00C6FFBC /* SignUpVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5797E0F9225DDA490026C4D5 /* SignUpVC.storyboard */; };
 		B170AC16228AFBF500C6FFBC /* PostCardCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 572F81A1223C164B0007F2F9 /* PostCardCell.xib */; };
+		B179CAC7229D3E510063FB23 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B179CAC5229D3E500063FB23 /* Fabric.framework */; };
+		B179CAC8229D3E510063FB23 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B179CAC6229D3E510063FB23 /* Crashlytics.framework */; };
 		B17A970C228002440081B8E0 /* SignUpRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17A970B228002440081B8E0 /* SignUpRouter.swift */; };
-		B1A58351229406610025D0FD /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B1A5834F229406600025D0FD /* Crashlytics.framework */; };
-		B1A58352229406610025D0FD /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B1A58350229406600025D0FD /* Fabric.framework */; };
 		B1EA02D32289734800835244 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B1EA02D52289734800835244 /* Localizable.strings */; };
 		B1EA02D72289882300835244 /* SF-Pro-Display-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = 57F9CA9C225B3AA400AC9ACA /* SF-Pro-Display-Black.otf */; };
 		B1EA02D82289882A00835244 /* SF-Pro-Display-BlackItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 57F9CA8E225B3A9400AC9ACA /* SF-Pro-Display-BlackItalic.otf */; };
@@ -396,9 +396,9 @@
 		57FB17A3224C15C400563BF7 /* SignInViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewModel.swift; sourceTree = "<group>"; };
 		8F30C81783ED457B84BCC641 /* Pods-Commun.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Commun.release.xcconfig"; path = "Pods/Target Support Files/Pods-Commun/Pods-Commun.release.xcconfig"; sourceTree = "<group>"; };
 		AE43B2305FC441D96462E0AB /* Pods-Commun.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Commun.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Commun/Pods-Commun.debug.xcconfig"; sourceTree = "<group>"; };
+		B179CAC5229D3E500063FB23 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
+		B179CAC6229D3E510063FB23 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		B17A970B228002440081B8E0 /* SignUpRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpRouter.swift; sourceTree = "<group>"; };
-		B1A5834F229406600025D0FD /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
-		B1A58350229406600025D0FD /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Fabric.framework; path = ../../../Downloads/com/Fabric.framework; sourceTree = "<group>"; };
 		B1EA02D42289734800835244 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		B1EA02D62289734E00835244 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		B1EA0316228A965200835244 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -410,9 +410,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				5721AE41226E543E00133BFF /* WebKit.framework in Frameworks */,
-				B1A58351229406610025D0FD /* Crashlytics.framework in Frameworks */,
 				7472E4613CDA904305E42A4F /* Pods_Commun.framework in Frameworks */,
-				B1A58352229406610025D0FD /* Fabric.framework in Frameworks */,
+				B179CAC8229D3E510063FB23 /* Crashlytics.framework in Frameworks */,
+				B179CAC7229D3E510063FB23 /* Fabric.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1111,8 +1111,8 @@
 		7B93A43127B50B70E39EAAF3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				B1A5834F229406600025D0FD /* Crashlytics.framework */,
-				B1A58350229406600025D0FD /* Fabric.framework */,
+				B179CAC6229D3E510063FB23 /* Crashlytics.framework */,
+				B179CAC5229D3E500063FB23 /* Fabric.framework */,
 				5721AE40226E543E00133BFF /* WebKit.framework */,
 				4F0772CC6D820AD11B1FF48A /* Pods_Commun.framework */,
 			);
