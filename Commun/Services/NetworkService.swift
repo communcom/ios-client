@@ -62,7 +62,7 @@ class NetworkService: NSObject {
         
     }
     
-    func getPost(withPermLink permLink: String, withRefBlock block: UInt64, forUser user: String) -> Observable<ResponseAPIContentGetPost> {
+    func getPost(withPermLink permLink: String, forUser user: String) -> Observable<ResponseAPIContentGetPost> {
         return Observable.create({ observer -> Disposable in
             
             RestAPIManager.instance.loadPost(userID:        user,

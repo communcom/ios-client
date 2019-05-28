@@ -14,7 +14,6 @@ class PostPageViewModel {
     // MARK: - Inputs
     var postForRequest: ResponseAPIContentGetPost?
     var permlink: String?
-    var refBlockNum: UInt64?
     var userId: String?
     
     // MARK: - Objects
@@ -27,12 +26,10 @@ class PostPageViewModel {
     // MARK: - Methods
     func loadPost() {
         let permLink = postForRequest?.contentId.permlink ?? permlink ?? ""
-        let refBlock = postForRequest?.contentId.refBlockNum ?? refBlockNum ?? 0
         let userId = postForRequest?.contentId.userId ?? self.userId ?? ""
         
         // Bind post
         NetworkService.shared.getPost(withPermLink: permLink,
-                                      withRefBlock: refBlock,
                                       forUser: userId)
             .catchError({ (error) -> Observable<ResponseAPIContentGetPost> in
                 if let post = self.postForRequest {
@@ -45,7 +42,6 @@ class PostPageViewModel {
         
         // Configure fetcher
         fetcher.permlink = permLink
-        fetcher.refBlockNum = refBlock
         fetcher.userId = userId
     }
     

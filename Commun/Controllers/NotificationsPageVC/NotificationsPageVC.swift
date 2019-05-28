@@ -98,7 +98,6 @@ class NotificationsPageVC: UIViewController {
                 if let post = notification.post,
                     let postPageVC = controllerContainer.resolve(PostPageVC.self) {
                     postPageVC.viewModel.permlink = post.contentId.permlink
-                    postPageVC.viewModel.refBlockNum = post.contentId.refBlockNum
                     postPageVC.viewModel.userId = post.contentId.userId
                     self?.present(postPageVC, animated: true, completion: nil)
                 }
