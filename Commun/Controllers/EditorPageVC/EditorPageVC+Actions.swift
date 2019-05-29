@@ -9,7 +9,7 @@
 import UIKit
 import CyberSwift
 import RxSwift
-import IHProgressHUD
+import MBProgressHUD
 
 extension EditorPageVC {
     
@@ -27,7 +27,7 @@ extension EditorPageVC {
     @IBAction func postButtonTap() {
         viewModel?.sendPost()
             .do(onSubscribe: {
-                IHProgressHUD.show(withStatus: "Sending post".localized())
+                self.navigationController?.showIndetermineHudWithMessage("Sending post".localized())
             })
             .flatMap({ (transactionId, userId, permlink) -> Single<(userId: String, permlink: String)> in
                 guard let id = transactionId,
@@ -35,11 +35,13 @@ extension EditorPageVC {
                     let permlink = permlink else {
                         return .error(ErrorAPI.responseUnsuccessful(message: "Post Not Found"))
                 }
+                
+                self.navigationController?.showIndetermineHudWithMessage("Wait for transaction".localized())
                 return NetworkService.shared.waitForTransactionWith(id: id)
                     .andThen(Single<(userId: String, permlink: String)>.just((userId: userId, permlink: permlink)))
             })
             .subscribe(onSuccess: { (userId, permlink) in
-                IHProgressHUD.dismiss()
+                self.navigationController?.hideHud()
                 
                 // show post page
                 let postPageVC = controllerContainer.resolve(PostPageVC.self)!
@@ -49,7 +51,7 @@ extension EditorPageVC {
                 viewControllers[0] = postPageVC
                 self.navigationController?.setViewControllers(viewControllers, animated: true)
             }, onError: { (error) in
-                IHProgressHUD.dismiss()
+                self.navigationController?.hideHud()
                 
                 if let error = error as? ErrorAPI {
                     switch error {

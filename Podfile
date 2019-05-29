@@ -23,7 +23,7 @@ target 'Commun' do
   pod 'SwifterSwift/Foundation'    # Foundation Extensions
   pod 'SwifterSwift/UIKit'         # UIKit Extensions
   
-  pod 'IHProgressHUD'
+  pod 'MBProgressHUD', '~> 1.1.0'
   pod 'TLPhotoPicker'
   
   pod 'PinCodeInputView'
