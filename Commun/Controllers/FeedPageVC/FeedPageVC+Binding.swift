@@ -14,6 +14,17 @@ public typealias PostSection = AnimatableSectionModel<String, ResponseAPIContent
 
 extension FeedPageVC {
     func bindUI() {
+        // scrollview
+        self.tableView.rx.willEndDragging
+            .map {$0.velocity.y > 0 ? 0: 50}
+            .subscribe(onNext: {height in
+                UIView.animate(withDuration: 0.25, animations: {
+                    self.searchBarHeightConstraint.constant = CGFloat(height)
+                    self.view.layoutIfNeeded()
+                })
+            })
+            .disposed(by: disposeBag)
+        
         // feedType
         viewModel.feedType
             .bind {feedType in

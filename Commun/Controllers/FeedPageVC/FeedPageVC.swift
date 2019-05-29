@@ -19,6 +19,7 @@ class FeedPageVC: UIViewController {
     @IBOutlet weak var segmentioView: Segmentio!
     @IBOutlet weak var sortByTypeButton: UIButton!
     @IBOutlet weak var sortByTimeButton: UIButton!
+    @IBOutlet weak var searchBarHeightConstraint: NSLayoutConstraint!
     
     let disposeBag = DisposeBag()
     

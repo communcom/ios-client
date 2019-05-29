@@ -215,6 +215,7 @@
                         <viewLayoutGuide key="safeArea" id="4yY-LD-OlZ"/>
                     </view>
                     <connections>
+                        <outlet property="searchBarHeightConstraint" destination="ifU-M9-zI4" id="eD2-Gl-Aqi"/>
                         <outlet property="segmentioView" destination="LW0-TT-GUg" id="jt7-AG-jlE"/>
                         <outlet property="sortByTimeButton" destination="d57-yH-JCE" id="I7M-4v-dAk"/>
                         <outlet property="sortByTypeButton" destination="YpZ-V0-RF5" id="KS2-5T-fKN"/>
