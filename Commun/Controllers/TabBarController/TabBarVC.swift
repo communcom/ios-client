@@ -21,7 +21,8 @@ class TabBarVC: UITabBarController {
         
         // Feed Tab
         let feed = controllerContainer.resolve(FeedPageVC.self)!
-        feed.tabBarItem = centerTabBarItem(withImageName: "feed", tag: 0)
+        let feedNC = UINavigationController(rootViewController: feed)
+        feedNC.tabBarItem = centerTabBarItem(withImageName: "feed", tag: 0)
         feed.accessibilityLabel = "TabBarFeedTabBarItem"
 
         // Comunities Tab
@@ -49,7 +50,7 @@ class TabBarVC: UITabBarController {
         notifications.accessibilityLabel = "TabBarNotificationsTabBarItem"
         
         // Set up controllers
-        self.viewControllers = [feed, /*comunities, wallet,*/ notificationsNC, profileNC]
+        self.viewControllers = [feedNC, /*comunities, wallet,*/ notificationsNC, profileNC]
         
         // Config styles
         self.tabBar.unselectedItemTintColor = #colorLiteral(red: 0.8971592784, green: 0.9046500325, blue: 0.9282500148, alpha: 1)

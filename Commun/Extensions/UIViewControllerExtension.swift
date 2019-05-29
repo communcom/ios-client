@@ -53,4 +53,13 @@ extension UIViewController {
         hud.backgroundColor = UIColor(white: 0, alpha: 0.2)
 
     }
+    
+    var isModal: Bool {
+        
+        let presentingIsModal = presentingViewController != nil
+        let presentingIsNavigation = navigationController?.presentingViewController?.presentedViewController == navigationController
+        let presentingIsTabBar = tabBarController?.presentingViewController is UITabBarController
+        
+        return presentingIsModal || presentingIsNavigation || presentingIsTabBar
+    }
 }

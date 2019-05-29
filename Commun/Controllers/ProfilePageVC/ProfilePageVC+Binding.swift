@@ -91,7 +91,7 @@ extension ProfilePageVC: CommentCellDelegate {
                     if let postPageVC = controllerContainer.resolve(PostPageVC.self),
                         let post = self.viewModel.items.value[indexPath.row] as? ResponseAPIContentGetPost{
                         postPageVC.viewModel.postForRequest = post
-                        self.present(postPageVC, animated: true, completion: nil)
+                        self.show(postPageVC, sender: nil)
                     } else {
                         self.showAlert(title: "Error", message: "Something went wrong")
                     }

@@ -72,7 +72,12 @@ class PostPageVC: UIViewController, CommentCellDelegate {
     }
     
     @IBAction func backButtonTap(_ sender: Any) {
-        self.dismiss(animated: true, completion: nil)
+        if (self.isModal) {
+            self.dismiss(animated: true, completion: nil)
+        } else {
+            self.navigationController?.popViewController()
+        }
+        
     }
     
 }

@@ -73,7 +73,7 @@ extension FeedPageVC {
             .subscribe(onNext: {post in
                 let postPageVC = controllerContainer.resolve(PostPageVC.self)!
                 postPageVC.viewModel.postForRequest = post
-                self.present(postPageVC, animated: true, completion: nil)
+                self.show(postPageVC, sender: nil)
             })
             .disposed(by: disposeBag)
     }
