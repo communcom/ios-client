@@ -198,13 +198,20 @@ class NetworkService: NSObject {
         }
     }
     
-    func sendComment(comment: String, forPostWithPermlink permlink: String, metaData json: String, tags: [String]) -> Completable {
+    func sendComment(comment: String, forPostWithPermlink permlink: String, tags: [String]) -> Completable {
         return RestAPIManager.instance.rx.create(
             message: comment,
             parentPermlink: permlink,
             tags: tags,
-            metaData: json
-        ).flatMapToCompletable()
+            metaData: nil
+        )
+            .flatMapCompletable({ (transaction) -> Completable in
+                #warning("Remove this chaining to use socket in production")
+                guard let transactionId = transaction.body?.transaction_id else {
+                    return .error(ErrorAPI.responseUnsuccessful(message: "transactionId is missing"))
+                }
+                return self.waitForTransactionWith(id: transactionId)
+            })
         .observeOn(MainScheduler.instance)
     }
     

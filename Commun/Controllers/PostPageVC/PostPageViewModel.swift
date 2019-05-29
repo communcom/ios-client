@@ -59,6 +59,7 @@ class PostPageViewModel {
     }
     
     @objc func reload() {
+        comments.accept([])
         fetcher.reset()
         fetchNext()
     }

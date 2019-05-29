@@ -99,13 +99,22 @@ extension PostPageVC: PostHeaderViewDelegate {
     
     func sendComment(_ comment: String) {
         guard let post = self.viewModel.post.value else {return}
-        NetworkService.shared.sendComment(comment: comment, forPostWithPermlink: post.contentId.permlink, metaData: "", tags: [])
+        NetworkService.shared.sendComment(comment: comment, forPostWithPermlink: post.contentId.permlink, tags: [])
+            .do(onSubscribe: {
+                self.commentForm.sendButton.isEnabled = false
+            })
             .subscribe(onCompleted: {
                 self.commentForm.textView.text = ""
                 self.view.endEditing(true)
+                
+                self.commentForm.sendButton.isEnabled = true
+                
+                #warning("refresh table for testing only")
+                self.viewModel.reload()
             }, onError: {_ in
                 self.view.endEditing(true)
                 self.showGeneralError()
+                self.commentForm.sendButton.isEnabled = true
             })
             .disposed(by: disposeBag)
     }
