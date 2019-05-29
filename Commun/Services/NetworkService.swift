@@ -11,6 +11,7 @@ import Foundation
 import Alamofire
 import CyberSwift
 import SwifterSwift
+import eosswift
 
 class NetworkService: NSObject {
     // MARK: - Properties
@@ -163,13 +164,38 @@ class NetworkService: NSObject {
             .observeOn(MainScheduler.instance)
     }
     
-    func sendPost(withTitle title: String, withText text: String, metaData json: String, withTags tags: [String]) -> Completable {
+    // return transactionId
+    typealias SendPostCompletion = (transactionId: String?, userId: String?, permlink: String?)
+    func sendPost(withTitle title: String, withText text: String, metaData json: String, withTags tags: [String]) -> Single<SendPostCompletion> {
         return RestAPIManager.instance.rx.create(message:             text,
                                                  headline:            title,
                                                  tags:                tags,
                                                  metaData:            json)
-            .flatMapToCompletable()
+            .do(onSuccess: { (transaction) in
+                let any = ((transaction.body?.processed.action_traces.first?.act.data["message_id"] as? eosswift.AnyJSONType)?.jsonValue) as? [String: eosswift.AnyJSONType]
+                print(any?["permlink"]?.jsonValue as? String)
+                
+            })
+            .map({ (transaction) -> SendPostCompletion in
+                let any = ((transaction.body?.processed.action_traces.first?.act.data["message_id"])?.jsonValue) as? [String: eosswift.AnyJSONType]
+                return SendPostCompletion(transactionId: transaction.body?.transaction_id,
+                                          userId: any?["author"]?.jsonValue as? String,
+                                          permlink: any?["permlink"]?.jsonValue as? String)
+            })
             .observeOn(MainScheduler.instance)
+    }
+    
+    func waitForTransactionWith(id: String) -> Completable {
+        return Completable.create {completable in
+            RestAPIManager.instance.waitForTransactionWith(id: id) { (error) in
+                if error != nil {
+                    completable(.error(error!))
+                    return
+                }
+                completable(.completed)
+            }
+            return Disposables.create()
+        }
     }
     
     func sendComment(comment: String, forPostWithPermlink permlink: String, metaData json: String, tags: [String]) -> Completable {

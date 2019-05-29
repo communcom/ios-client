@@ -29,7 +29,7 @@ class EditorPageViewModel {
         isAdult.accept(!isAdult.value)
     }
     
-    func sendPost() -> Completable {
+    func sendPost() -> Single<NetworkService.SendPostCompletion> {
         if let post = postForEdit {
             #warning("Edit post and delete this line")
             return .error(ErrorAPI.requestFailed(message: "Editing post is implemented"))
