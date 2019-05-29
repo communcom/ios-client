@@ -58,7 +58,8 @@ class FeedPageViewModel: PostsListController {
         fetcher.fetchNext()
             .subscribe(onSuccess: { (list) in
                 guard list.count > 0 else {return}
-                self.items.accept(self.items.value + list)
+                let newList = list.filter {!self.items.value.contains($0)}
+                self.items.accept(self.items.value + newList)
             }) { (error) in
                 #warning("handle error")
             }
