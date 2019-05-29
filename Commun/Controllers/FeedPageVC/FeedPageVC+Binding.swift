@@ -37,7 +37,7 @@ extension FeedPageVC {
             .disposed(by: disposeBag)
         
         // items
-        let dataSource = RxTableViewSectionedReloadDataSource<PostSection>(
+        let dataSource = RxTableViewSectionedAnimatedDataSource<PostSection>(
             configureCell: { dataSource, tableView, indexPath, item in
                 let cell = tableView.dequeueReusableCell(withIdentifier: "PostCardCell", for: indexPath) as! PostCardCell
                 cell.setUp(with: item)
