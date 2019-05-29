@@ -48,6 +48,16 @@ class PostPageVC: UIViewController, CommentCellDelegate {
         bindUI()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: animated)
+    }
+    
     func observePostDeleted() {
         NotificationCenter.default.rx.notification(.init(rawValue: PostControllerPostDidDeleteNotification))
             .subscribe(onNext: { (notification) in

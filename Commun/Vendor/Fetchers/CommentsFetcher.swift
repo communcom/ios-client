@@ -12,15 +12,13 @@ import RxSwift
 
 class CommentsFetcher: ItemsFetcher<ResponseAPIContentGetComment> {
     var permlink: String?
-    var refBlockNum: UInt64?
     var userId: String?
     
     override var request: Single<[ResponseAPIContentGetComment]>! {
         var result: Single<ResponseAPIContentGetComments>
         if let permLink = permlink,
-            let refBlockNum = refBlockNum,
             let userId = userId {
-            result = NetworkService.shared.getPostComment(sequenceKey, withPermLink: permLink, withRefBlock: refBlockNum, forUser: userId)
+            result = NetworkService.shared.getPostComment(sequenceKey, withPermLink: permLink, forUser: userId)
         } else {
             result = NetworkService.shared.getUserComments(sequenceKey)
         }

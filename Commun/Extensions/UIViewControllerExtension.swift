@@ -9,6 +9,7 @@
 import UIKit
 import RxSwift
 import CyberSwift
+import MBProgressHUD
 
 protocol NextButtonBottomConstraint {
     var nextButtonBottomConstraint: NSLayoutConstraint! { get set }
@@ -34,5 +35,22 @@ extension UIViewController {
     
     func showGeneralError() {
         showAlert(title: "Error".localized(), message: "Something went wrong.\nPlease try again later".localized())
+    }
+    
+    func hideHud() {
+        MBProgressHUD.hide(for: self.view, animated: false)
+    }
+    
+    func showIndetermineHudWithMessage(_ message: String) {
+        // Hide all previous hud
+        hideHud()
+        
+        // show new hud
+        let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+        hud.mode = MBProgressHUDMode.indeterminate
+        hud.isUserInteractionEnabled = true
+        hud.label.text = message
+        hud.backgroundColor = UIColor(white: 0, alpha: 0.2)
+
     }
 }
