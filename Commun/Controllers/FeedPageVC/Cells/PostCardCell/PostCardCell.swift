@@ -30,6 +30,7 @@ class PostCardCell: UITableViewCell, PostController {
     
     @IBOutlet weak var embededImageView: UIImageView!
     @IBOutlet weak var embededViewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var embededImageViewToContainerBottomConstraint: NSLayoutConstraint!
     var post: ResponseAPIContentGetPost?
     
     override func awakeFromNib() {
@@ -86,8 +87,10 @@ extension PostCardCell {
             let imageURL = embeds[0].result?.thumbnail_url {
             embededImageView.sd_setImage(with: URL(string: imageURL))
             embededViewHeightConstraint.constant = 31/40 * UIScreen.main.bounds.width
+            embededImageViewToContainerBottomConstraint.constant = 12
         } else {
             embededViewHeightConstraint.constant = 0
+            embededImageViewToContainerBottomConstraint.constant = 0
         }
         
 //        self.avatarImageView.sd_setImage(with: post.community.avatarUrl?.url, completed: nil)

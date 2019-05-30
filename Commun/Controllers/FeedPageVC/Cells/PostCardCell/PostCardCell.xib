@@ -225,6 +225,7 @@
                 <outlet property="avatarImageView" destination="Ycg-ed-cff" id="uy7-KF-FlE"/>
                 <outlet property="downVoteButton" destination="fMs-g5-fNp" id="yyh-mT-KxX"/>
                 <outlet property="embededImageView" destination="UVz-za-s49" id="bIr-c2-jRn"/>
+                <outlet property="embededImageViewToContainerBottomConstraint" destination="oZo-Hb-wyJ" id="79u-VZ-b3L"/>
                 <outlet property="embededViewHeightConstraint" destination="YjY-cR-8HU" id="jVf-3t-fYx"/>
                 <outlet property="likeCounterLabel" destination="kiT-nP-6oC" id="RCs-fD-VZd"/>
                 <outlet property="mainTextLabel" destination="t1b-fE-pfp" id="i1h-MC-N8n"/>
