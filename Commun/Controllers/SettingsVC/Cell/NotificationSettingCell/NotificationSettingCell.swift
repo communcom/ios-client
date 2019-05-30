@@ -12,7 +12,7 @@ import RxSwift
 
 enum NotificationSettingType: String {
     case vote = "Upvote"
-    case flag = "Flag"
+    case downVote = "Downvote"
     case points = "Points transfer"
     case comment = "Comment and reply"
     case mention = "Mention"
@@ -30,7 +30,7 @@ enum NotificationSettingType: String {
         let standard = UserDefaults.standard
         #warning("options.upvote -> options.vote ?")
         standard.set(options.upvote, forKey: NotificationSettingType.vote.rawValue)
-        standard.set(options.downvote, forKey: NotificationSettingType.flag.rawValue)
+        standard.set(options.downvote, forKey: NotificationSettingType.downVote.rawValue)
         standard.set(options.transfer, forKey: NotificationSettingType.points.rawValue)
         standard.set(options.reply, forKey: NotificationSettingType.comment.rawValue)
         standard.set(options.subscribe, forKey: NotificationSettingType.following.rawValue)
@@ -44,7 +44,7 @@ enum NotificationSettingType: String {
         #warning("types message, witnessVote, witnessCancelVote missing")
         return RequestParameterAPI.NoticeOptions(
             vote: NotificationSettingType.vote.toBool(),
-            flag: NotificationSettingType.flag.toBool(),
+            flag: NotificationSettingType.downVote.toBool(),
             transfer: NotificationSettingType.points.toBool(),
             reply: NotificationSettingType.comment.toBool(),
             subscribe: NotificationSettingType.following.toBool(),
@@ -60,7 +60,7 @@ enum NotificationSettingType: String {
     }
     
     static var allCases: [NotificationSettingType] {
-        return [.vote, .flag, .points, .comment, .mention, .rewardsVote, .rewardsPosts, .following, .repost]
+        return [.vote, .downVote, .points, .comment, .mention, .rewardsVote, .rewardsPosts, .following, .repost]
     }
 }
 
