@@ -44,7 +44,7 @@ enum NotificationType: String {
                 .bold(notification.post!.title ?? "")
             
             detail.text = text
-            detail.icon = #imageLiteral(resourceName: "Group 116 (1).png")
+            detail.icon = UIImage(named: "NotificationDownvote")
             break
         case .subscribe:
             let text = NSMutableAttributedString()
