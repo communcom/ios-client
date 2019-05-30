@@ -26,11 +26,10 @@ extension ProfilePageVC: CommentCellDelegate {
         let isProfileMissing = profile.map {$0 == nil}
         
         isProfileMissing
+            .do(onNext: {missing in
+                missing ? self.showLoading(): self.hideLoading()
+            })
             .drive(tableView.rx.isHidden)
-            .disposed(by: bag)
-        
-        isProfileMissing
-            .drive(activityIndicator.rx.isAnimating)
             .disposed(by: bag)
         
         // Got profile
@@ -61,7 +60,7 @@ extension ProfilePageVC: CommentCellDelegate {
                     return cell
                 }
                 
-                if index >= self.viewModel.items.value.count - 5 {
+                if index == self.viewModel.items.value.count - 2 {
                     self.viewModel.fetchNext()
                 }
                 

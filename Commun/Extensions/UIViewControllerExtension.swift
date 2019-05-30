@@ -10,6 +10,7 @@ import UIKit
 import RxSwift
 import CyberSwift
 import MBProgressHUD
+import ASSpinnerView
 
 protocol NextButtonBottomConstraint {
     var nextButtonBottomConstraint: NSLayoutConstraint! { get set }
@@ -61,5 +62,26 @@ extension UIViewController {
         let presentingIsTabBar = tabBarController?.presentingViewController is UITabBarController
         
         return presentingIsModal || presentingIsNavigation || presentingIsTabBar
+    }
+    
+    func showLoading() {
+        if self.view.viewWithTag(9999) != nil {return}
+        let spinnerView = ASSpinnerView()
+        spinnerView.spinnerLineWidth = 6
+        spinnerView.spinnerDuration = 0.3
+        spinnerView.spinnerStrokeColor = #colorLiteral(red: 0.4784313725, green: 0.6470588235, blue: 0.8980392157, alpha: 1)
+        spinnerView.tag = 9999
+        
+        self.view.addSubview(spinnerView)
+        spinnerView.translatesAutoresizingMaskIntoConstraints = false
+        spinnerView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor, constant: 0).isActive = true
+        spinnerView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor, constant: 0).isActive = true
+        spinnerView.widthAnchor.constraint(equalToConstant: 60).isActive = true
+        spinnerView.heightAnchor.constraint(equalToConstant: 60).isActive = true
+        self.view.bringSubviewToFront(spinnerView)
+    }
+    
+    func hideLoading() {
+        self.view.viewWithTag(9999)?.removeFromSuperview()
     }
 }

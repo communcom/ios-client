@@ -66,7 +66,8 @@ class NotificationsPageVC: UIViewController {
         
         // Bind value to tableView
         list
-            .do(onNext: {[weak self]_ in
+            .do(onNext: {[weak self] items in
+                items.count > 0 ? self?.hideLoading(): self?.showLoading()
                 self?.tableView.refreshControl?.endRefreshing()
             })
             .bind(to: tableView.rx.items(

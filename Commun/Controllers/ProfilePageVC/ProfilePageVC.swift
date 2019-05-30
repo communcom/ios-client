@@ -12,7 +12,6 @@ import CyberSwift
 import SDWebImage
 
 class ProfilePageVC: UIViewController {
-    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var userAvatarImage: UIImageView!
     @IBOutlet weak var userCoverImage: UIImageView!
@@ -56,9 +55,6 @@ class ProfilePageVC: UIViewController {
     }
     
     func setUpViews() {
-        // Indicator settings
-        activityIndicator.hidesWhenStopped = true
-        
         // Configure tableView
         tableView.register(UINib(nibName: "PostCardCell", bundle: nil), forCellReuseIdentifier: "PostCardCell")
         tableView.register(UINib(nibName: "CommentCell", bundle: nil), forCellReuseIdentifier: "CommentCell")

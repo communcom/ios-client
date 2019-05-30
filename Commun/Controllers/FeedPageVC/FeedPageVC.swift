@@ -21,7 +21,6 @@ class FeedPageVC: UIViewController {
     @IBOutlet weak var sortByTypeButton: UIButton!
     @IBOutlet weak var sortByTimeButton: UIButton!
     @IBOutlet weak var searchBarHeightConstraint: NSLayoutConstraint!
-    @IBOutlet weak var spinnerView: ASSpinnerView!
     
     let disposeBag = DisposeBag()
     
@@ -74,11 +73,6 @@ class FeedPageVC: UIViewController {
         
         // dismiss keyboard when dragging
         tableView.keyboardDismissMode = .onDrag
-        
-        // Spinner
-        spinnerView.spinnerLineWidth = 6
-        spinnerView.spinnerDuration = 0.3
-        spinnerView.spinnerStrokeColor = #colorLiteral(red: 0.4784313725, green: 0.6470588235, blue: 0.8980392157, alpha: 1)
         
         // bind ui
         bindUI()

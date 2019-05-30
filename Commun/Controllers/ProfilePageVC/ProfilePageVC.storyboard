@@ -403,16 +403,11 @@
                                     </constraints>
                                 </view>
                             </tableView>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="iku-D9-AKz">
-                                <rect key="frame" x="197" y="745" width="20" height="20"/>
-                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="iku-D9-AKz" firstAttribute="centerX" secondItem="e12-D3-bCz" secondAttribute="centerX" id="Be4-5O-Aj5"/>
                             <constraint firstItem="fdx-8K-eYs" firstAttribute="bottom" secondItem="e12-D3-bCz" secondAttribute="bottom" id="CRt-O7-s9L"/>
                             <constraint firstItem="fdx-8K-eYs" firstAttribute="leading" secondItem="e12-D3-bCz" secondAttribute="leading" id="akV-Xz-RF8"/>
-                            <constraint firstItem="iku-D9-AKz" firstAttribute="centerY" secondItem="e12-D3-bCz" secondAttribute="centerY" id="f9L-C5-LVe"/>
                             <constraint firstItem="fdx-8K-eYs" firstAttribute="top" secondItem="4qE-go-fVJ" secondAttribute="top" id="gBK-zG-Eut"/>
                             <constraint firstItem="fdx-8K-eYs" firstAttribute="trailing" secondItem="e12-D3-bCz" secondAttribute="trailing" id="oA4-Ha-Fpd"/>
                         </constraints>
@@ -420,7 +415,6 @@
                     </view>
                     <size key="freeformSize" width="414" height="1500"/>
                     <connections>
-                        <outlet property="activityIndicator" destination="iku-D9-AKz" id="fKf-u2-hPa"/>
                         <outlet property="addBioButton" destination="f8F-Po-a8Z" id="Nfa-RQ-OeR"/>
                         <outlet property="bioLabel" destination="oe9-4A-of4" id="Pn4-t7-rAz"/>
                         <outlet property="communitiesCountLabel" destination="bNu-7d-aQd" id="e1d-Aq-6Bb"/>

@@ -53,7 +53,7 @@ extension FeedPageVC {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "PostCardCell", for: indexPath) as! PostCardCell
                 cell.setUp(with: item)
                 
-                if indexPath.row == self.viewModel.items.value.count - 3 {
+                if indexPath.row == self.viewModel.items.value.count - 2 {
                     self.viewModel.fetchNext()
                 }
                 
@@ -64,7 +64,7 @@ extension FeedPageVC {
         viewModel.items
             .map {[PostSection(model: "", items: $0)]}
             .do(onNext: {section in
-                self.spinnerView.isHidden = section[0].items.count > 0
+                section[0].items.count > 0 ? self.hideLoading(): self.showLoading()
                 self.tableView.refreshControl?.endRefreshing()
             })
             .bind(to: tableView.rx.items(dataSource: dataSource))

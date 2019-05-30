@@ -201,13 +201,6 @@
                                     </constraints>
                                 </view>
                             </tableView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FI2-eJ-h4D" customClass="ASSpinnerView" customModule="ASSpinnerView">
-                                <rect key="frame" x="157.5" y="313.5" width="60" height="60"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="60" id="TVB-Bo-ZOR"/>
-                                    <constraint firstAttribute="width" constant="60" id="eH0-Kx-Atw"/>
-                                </constraints>
-                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -216,9 +209,7 @@
                             <constraint firstItem="W62-HV-wwc" firstAttribute="top" secondItem="4yY-LD-OlZ" secondAttribute="top" id="GLx-Uo-L2J"/>
                             <constraint firstItem="W62-HV-wwc" firstAttribute="leading" secondItem="4yY-LD-OlZ" secondAttribute="leading" id="ThR-AH-GW9"/>
                             <constraint firstItem="4yY-LD-OlZ" firstAttribute="trailing" secondItem="8YX-tZ-48z" secondAttribute="trailing" id="bfN-me-FMU"/>
-                            <constraint firstItem="FI2-eJ-h4D" firstAttribute="centerX" secondItem="4yY-LD-OlZ" secondAttribute="centerX" id="evh-Sd-zKC"/>
                             <constraint firstItem="4yY-LD-OlZ" firstAttribute="trailing" secondItem="W62-HV-wwc" secondAttribute="trailing" id="jpM-pv-Mqs"/>
-                            <constraint firstItem="FI2-eJ-h4D" firstAttribute="centerY" secondItem="4yY-LD-OlZ" secondAttribute="centerY" id="rAP-em-SHv"/>
                             <constraint firstItem="8YX-tZ-48z" firstAttribute="top" secondItem="W62-HV-wwc" secondAttribute="bottom" id="uhI-Ut-OvX"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="4yY-LD-OlZ"/>
@@ -228,7 +219,6 @@
                         <outlet property="segmentioView" destination="LW0-TT-GUg" id="jt7-AG-jlE"/>
                         <outlet property="sortByTimeButton" destination="d57-yH-JCE" id="I7M-4v-dAk"/>
                         <outlet property="sortByTypeButton" destination="YpZ-V0-RF5" id="KS2-5T-fKN"/>
-                        <outlet property="spinnerView" destination="FI2-eJ-h4D" id="CFf-px-0ym"/>
                         <outlet property="tableView" destination="8YX-tZ-48z" id="qId-Qf-2c1"/>
                         <outlet property="userAvatarImage" destination="Z7e-MC-AaW" id="kXZ-6Z-Ba4"/>
                     </connections>
