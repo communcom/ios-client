@@ -3,6 +3,7 @@ PODS:
     - RxCocoa (~> 4.0)
     - RxSwift (~> 4.0)
   - Alamofire (4.8.2)
+  - ASSpinnerView (0.1.2)
   - BigInt (3.1.0):
     - SipHash (~> 1.2)
   - Checksum (1.0.0)
@@ -68,6 +69,7 @@ PODS:
 DEPENDENCIES:
   - Action
   - Alamofire
+  - ASSpinnerView
   - CyberSwift (from `https://github.com/GolosChain/cyberSwift.git`)
   - DateToolsSwift
   - MBProgressHUD (~> 1.1.0)
@@ -86,6 +88,7 @@ SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Action
     - Alamofire
+    - ASSpinnerView
     - BigInt
     - Checksum
     - CryptoSwift
@@ -119,12 +122,13 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   CyberSwift:
-    :commit: fd7e7818cafc8aa2ab5dde3b104be71ee97cd65d
+    :commit: f2b33b8a808dcd552fabd227ae26e07aa4f4eaf9
     :git: https://github.com/GolosChain/cyberSwift.git
 
 SPEC CHECKSUMS:
   Action: 689181e4c3f6566844178d8a7da6fef39a9597fc
   Alamofire: ae5c501addb7afdbb13687d7f2f722c78734c2d3
+  ASSpinnerView: 526e037b85b9db87d55db55297986b7da3059aa8
   BigInt: 76b5dfdfa3e2e478d4ffdf161aeede5502e2742f
   Checksum: f1aa56a27dea5db4006c819e2e129ee6aeb1d9af
   CryptoSwift: d81eeaa59dc5a8d03720fe919a6fd07b51f7439f
@@ -153,6 +157,6 @@ SPEC CHECKSUMS:
   TLPhotoPicker: c5aefdc9beaca82116d7855924f1d8abdd055f79
   UIImageView-Letters: f62db28076797adf3560ab7410647dc6899b9eef
 
-PODFILE CHECKSUM: b46403f3343aa4df8c5a0178c01ebb97ef65ec04
+PODFILE CHECKSUM: 9399ba687dc24b6739eb1e1c90d3488a30e0ea07
 
 COCOAPODS: 1.7.0.rc.1
