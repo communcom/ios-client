@@ -31,12 +31,12 @@ extension ProfilePageVC {
         
         // If deleting
         if delete {
+            self.userCoverImage.image = UIImage(named: "ProfilePageCover")
             NetworkService.shared.updateMeta(params: ["cover_image": ""])
-                .subscribe(onCompleted: {
-                    self.userCoverImage.image = UIImage(named: "ProfilePageCover")
-                }) { _ in
-                    self.showGeneralError()
-                }
+                .subscribe(onError: {[weak self] _ in
+                    self?.userCoverImage.image = originalImage
+                    self?.showGeneralError()
+                })
                 .disposed(by: bag)
             return
         }
@@ -86,10 +86,10 @@ extension ProfilePageVC {
             // Save to db
             .flatMap {NetworkService.shared.updateMeta(params: ["cover_image": $0])}
             // Catch error and reverse image
-            .subscribe(onError: {error in
-                self.userCoverImage.image = originalImage
+            .subscribe(onError: {[weak self] error in
+                self?.userCoverImage.image = originalImage
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
-                    self.showGeneralError()
+                    self?.showGeneralError()
                 }
             })
             .disposed(by: bag)
@@ -101,12 +101,12 @@ extension ProfilePageVC {
         
         // On deleting
         if delete {
+            self.userAvatarImage.setNonAvatarImageWithId(self.viewModel.profile.value!.username ?? self.viewModel.profile.value!.userId)
             NetworkService.shared.updateMeta(params: ["profile_image": ""])
-                .subscribe(onCompleted: {
-                    self.userAvatarImage.setNonAvatarImageWithId(self.viewModel.profile.value!.userId)
-                }) { _ in
-                    self.showGeneralError()
-                }
+                .subscribe(onError: {[weak self] _ in
+                    self?.userAvatarImage.image = originalImage
+                    self?.showGeneralError()
+                })
                 .disposed(by: bag)
             return
         }
@@ -128,9 +128,9 @@ extension ProfilePageVC {
             // Save to db
             .flatMap {NetworkService.shared.updateMeta(params: ["profile_image": $0])}
             // Catch error and reverse image
-            .subscribe(onError: {error in
-                self.userAvatarImage.image = originalImage
-                self.showGeneralError()
+            .subscribe(onError: {[weak self] error in
+                self?.userAvatarImage.image = originalImage
+                self?.showGeneralError()
             })
             .disposed(by: bag)
     }
@@ -142,12 +142,12 @@ extension ProfilePageVC {
         
         // On deleting
         if delete {
+            self.bioLabel.text = nil
             NetworkService.shared.updateMeta(params: ["about": ""])
-                .subscribe(onCompleted: {
-                    self.bioLabel.text = nil
-                }) { _ in
-                    self.showGeneralError()
-                }
+                .subscribe(onError: {[weak self] _ in
+                    self?.showGeneralError()
+                    self?.bioLabel.text = originalBio
+                })
                 .disposed(by: bag)
             return
         }
@@ -163,9 +163,9 @@ extension ProfilePageVC {
                 self.bioLabel.text = bio
                 return NetworkService.shared.updateMeta(params: ["about": bio])
             }
-            .subscribe(onError: {error in
-                self.bioLabel.text = originalBio
-                self.showGeneralError()
+            .subscribe(onError: {[weak self] error in
+                self?.bioLabel.text = originalBio
+                self?.showGeneralError()
             })
             .disposed(by: bag)
     }

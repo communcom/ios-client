@@ -448,14 +448,11 @@ class NetworkService: NSObject {
     
     //  Update updatemeta
     func updateMeta(params: [String: String]) -> Completable {
-        return .create {completable in
-            RestAPIManager.instance.update(userProfile: params, responseHandling: { (_) in
-                completable(.completed)
-            }, errorHandling: { (error) in
-                completable(.error(error))
+        return RestAPIManager.instance.rx.update(userProfile: params)
+            .flatMapCompletable({ (transaction) -> Completable in
+                guard let id = transaction.body?.transaction_id else {return .error(ErrorAPI.responseUnsuccessful(message: "transactionId is missing"))}
+                return self.waitForTransactionWith(id: id)
             })
-            return Disposables.create()
-        }
     }
     
     // MARK: - options
