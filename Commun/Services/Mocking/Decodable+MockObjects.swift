@@ -11,7 +11,7 @@ import RxSwift
 import CyberSwift
 
 extension Decodable {
-    fileprivate static func mockData() -> Self?  {
+    static func mockData() -> Self?  {
         if let path = Bundle.main.path(forResource: String(describing: self), ofType: "json") {
             do {
                 let data = try Data(contentsOf: URL(fileURLWithPath: path), options: .mappedIfSafe)

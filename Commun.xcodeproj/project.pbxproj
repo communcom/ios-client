@@ -64,6 +64,9 @@
 		3BDD9A0F228F07EF00B2A1DA /* UIApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BDD9A0E228F07EF00B2A1DA /* UIApplication.swift */; };
 		3BF37BCA22A11FA700A72FFE /* UIView+Loading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BF37BC922A11FA700A72FFE /* UIView+Loading.swift */; };
 		3BF37BCC22A1297C00A72FFE /* UITableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BF37BCB22A1297C00A72FFE /* UITableView.swift */; };
+		3BF37BD022A137EE00A72FFE /* ResponseAPIContentGetPost.json in Resources */ = {isa = PBXBuildFile; fileRef = 3BF37BCF22A137EE00A72FFE /* ResponseAPIContentGetPost.json */; };
+		3BF37BD322A1414200A72FFE /* PlaceholderPostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BF37BD122A1414200A72FFE /* PlaceholderPostCell.swift */; };
+		3BF37BD422A1414200A72FFE /* PlaceholderPostCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3BF37BD222A1414200A72FFE /* PlaceholderPostCell.xib */; };
 		5700611A2253CA96007700DA /* EditorContentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570061182253CA96007700DA /* EditorContentCell.swift */; };
 		5700611B2253CA96007700DA /* EditorContentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 570061192253CA96007700DA /* EditorContentCell.xib */; };
 		5700611F2253CDDF007700DA /* EditorMediaCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5700611D2253CDDF007700DA /* EditorMediaCell.swift */; };
@@ -258,6 +261,9 @@
 		3BDD9A0E228F07EF00B2A1DA /* UIApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplication.swift; sourceTree = "<group>"; };
 		3BF37BC922A11FA700A72FFE /* UIView+Loading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Loading.swift"; sourceTree = "<group>"; };
 		3BF37BCB22A1297C00A72FFE /* UITableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableView.swift; sourceTree = "<group>"; };
+		3BF37BCF22A137EE00A72FFE /* ResponseAPIContentGetPost.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ResponseAPIContentGetPost.json; sourceTree = "<group>"; };
+		3BF37BD122A1414200A72FFE /* PlaceholderPostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceholderPostCell.swift; sourceTree = "<group>"; };
+		3BF37BD222A1414200A72FFE /* PlaceholderPostCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlaceholderPostCell.xib; sourceTree = "<group>"; };
 		4F0772CC6D820AD11B1FF48A /* Pods_Commun.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Commun.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		570061182253CA96007700DA /* EditorContentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorContentCell.swift; sourceTree = "<group>"; };
 		570061192253CA96007700DA /* EditorContentCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EditorContentCell.xib; sourceTree = "<group>"; };
@@ -453,6 +459,7 @@
 				3B197C85226A33CF008CF10D /* ResponseAPIContentGetCommentsResult.json */,
 				3B197C87226A33CF008CF10D /* ResponseAPIContentGetFeedResult.json */,
 				3B197C84226A33CF008CF10D /* ResponseAPIContentGetProfileResult.json */,
+				3BF37BCF22A137EE00A72FFE /* ResponseAPIContentGetPost.json */,
 			);
 			path = Mocking;
 			sourceTree = "<group>";
@@ -657,6 +664,8 @@
 			children = (
 				572F81A0223C164B0007F2F9 /* PostCardCell.swift */,
 				572F81A1223C164B0007F2F9 /* PostCardCell.xib */,
+				3BF37BD122A1414200A72FFE /* PlaceholderPostCell.swift */,
+				3BF37BD222A1414200A72FFE /* PlaceholderPostCell.xib */,
 			);
 			path = PostCardCell;
 			sourceTree = "<group>";
@@ -1229,8 +1238,10 @@
 				571B1501223A935D00630C8F /* LaunchScreen.storyboard in Resources */,
 				3B197C8B226A33CF008CF10D /* ResponseAPIContentGetFeedResult.json in Resources */,
 				57A1CA652270FCF000E2A1E3 /* LanguageVC.storyboard in Resources */,
+				3BF37BD422A1414200A72FFE /* PlaceholderPostCell.xib in Resources */,
 				B1EA02DC2289882A00835244 /* SF-Pro-Display-HeavyItalic.otf in Resources */,
 				57DE5BE622522060008566B9 /* ComunityCell.xib in Resources */,
+				3BF37BD022A137EE00A72FFE /* ResponseAPIContentGetPost.json in Resources */,
 				5787C0C822650FC200568CEC /* SetUserVC.storyboard in Resources */,
 				57B6FC2A224A9EAA00BCFDDA /* WelcomeItemVC.storyboard in Resources */,
 				57FB17A0224C092700563BF7 /* SignInVC.storyboard in Resources */,
@@ -1361,6 +1372,7 @@
 				B17A970C228002440081B8E0 /* SignUpRouter.swift in Sources */,
 				5787C0C422650F9D00568CEC /* SetUserVC.swift in Sources */,
 				5721E87122650AC0003BE04B /* StringExtension.swift in Sources */,
+				3BF37BD322A1414200A72FFE /* PlaceholderPostCell.swift in Sources */,
 				3B0E9C732270785E002AB1C2 /* PhotoLibraryCell.swift in Sources */,
 				3B51581E226E0D3A00108F17 /* TLPhotosPickerViewController+Rx.swift in Sources */,
 				57840A07223FAC1B00338FD5 /* UIView+Appearance.swift in Sources */,

@@ -33,4 +33,6 @@ target 'Commun' do
   
   pod 'ASSpinnerView'
   
+  pod 'ListPlaceholder'
+  
 end

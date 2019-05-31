@@ -29,6 +29,7 @@ PODS:
     - RxCocoa (~> 4.0)
     - RxSwift (~> 4.0)
   - GoloCrypto (1.0.6)
+  - ListPlaceholder (1.4)
   - Localize-Swift (2.0.0)
   - Locksmith (4.0.0)
   - MBProgressHUD (1.1.0)
@@ -72,6 +73,7 @@ DEPENDENCIES:
   - ASSpinnerView
   - CyberSwift (from `https://github.com/GolosChain/cyberSwift.git`)
   - DateToolsSwift
+  - ListPlaceholder
   - MBProgressHUD (~> 1.1.0)
   - PhoneNumberKit (~> 2.6)
   - PinCodeInputView
@@ -96,6 +98,7 @@ SPEC REPOS:
     - Differentiator
     - eosswift
     - GoloCrypto
+    - ListPlaceholder
     - Localize-Swift
     - Locksmith
     - MBProgressHUD
@@ -137,6 +140,7 @@ SPEC CHECKSUMS:
   Differentiator: be49ca3408f0ecfc761e4c7763d20c62be01b9ad
   eosswift: 22bc931fd65bbd446c3f828233b8fd2916cec4a7
   GoloCrypto: 3f60e824b57ca657be702fb2cf4bd1f7a379257a
+  ListPlaceholder: 08ddaddf67520a20fc52cf37160fb56aa64d071d
   Localize-Swift: c798ec9286494866f7068f85f7c71283ac5bdab4
   Locksmith: e9bebbaaa4cee3c511bc358a44f843c3fe00e21f
   MBProgressHUD: e7baa36a220447d8aeb12769bf0585582f3866d9
@@ -157,6 +161,6 @@ SPEC CHECKSUMS:
   TLPhotoPicker: c5aefdc9beaca82116d7855924f1d8abdd055f79
   UIImageView-Letters: f62db28076797adf3560ab7410647dc6899b9eef
 
-PODFILE CHECKSUM: 9399ba687dc24b6739eb1e1c90d3488a30e0ea07
+PODFILE CHECKSUM: 37b9baec4bfd81a4bc542d4694ba56b17cc952b2
 
 COCOAPODS: 1.7.0.rc.1
