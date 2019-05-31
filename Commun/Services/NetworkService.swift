@@ -51,7 +51,6 @@ class NetworkService: NSObject {
                                                 }
                                                 
                                                 if let feed = feed {
-                                                    Logger.log(message: "Response: \n\t\(feed.items ?? [])", event: .debug)
                                                     observer.onNext(feed)
                                                 }
                                                 observer.onCompleted()
