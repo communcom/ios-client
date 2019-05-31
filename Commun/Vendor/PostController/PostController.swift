@@ -56,13 +56,13 @@ extension PostController {
                     self.deletePost()
                 })
             ]
+        } else {
+            actions.append(
+                UIAlertAction(title: "Report", style: .destructive, handler: { (_) in
+                    self.reportPost()
+                })
+            )
         }
-        
-        actions.append(
-            UIAlertAction(title: "Report", style: .destructive, handler: { (_) in
-                self.reportPost()
-            })
-        )
         
         topController.showActionSheet(title: nil, message: nil, actions: actions)
     }

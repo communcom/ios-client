@@ -73,8 +73,6 @@ struct ProfileChooseAvatarViewModel {
     func fetchAllImage() {
         let options = PHFetchOptions()
         options.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
-        #warning("Remove limit later")
-        options.fetchLimit = 20
         
         let allPhotos = PHAsset.fetchAssets(with: .image, options: options)
         

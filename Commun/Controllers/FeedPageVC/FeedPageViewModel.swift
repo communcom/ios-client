@@ -33,8 +33,7 @@ class FeedPageViewModel: PostsListController {
     
     func bindFilter() {
         #warning("handle error")
-        Observable.combineLatest(sortType, feedType, feedTypeMode)
-            .skip(1)
+        Observable.combineLatest(sortType.distinctUntilChanged(), feedType.distinctUntilChanged(), feedTypeMode.distinctUntilChanged())
             .filter({ (sortType, feedType, feedTypeMode) -> Bool in
                 if feedTypeMode == .byUser && feedType == .popular {return false}
                 return true

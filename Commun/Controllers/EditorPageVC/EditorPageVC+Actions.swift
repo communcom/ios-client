@@ -25,6 +25,7 @@ extension EditorPageVC {
     }
     
     @IBAction func postButtonTap() {
+        self.view.endEditing(true)
         viewModel?.sendPost()
             .do(onSubscribe: {
                 self.navigationController?.showIndetermineHudWithMessage("Sending post".localized())
