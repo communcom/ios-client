@@ -31,15 +31,24 @@ extension PostPageVC: PostHeaderViewDelegate {
     func bindPost() {
         viewModel.post
             .subscribe(onNext: {post in
-                // Community avatar
-                self.communityAvatarImageView.setAvatar(urlString: post?.community.avatarUrl, namePlaceHolder: post?.community.name ?? "C")
-                
                 // Time ago & community
-                self.comunityNameLabel.text = post?.community.name
-                if let timeString = post?.meta.time {
-                    self.timeAgoLabel.text = Date.timeAgo(string: timeString)
+                if let post = post {
+                    self.comunityNameLabel.isHidden = false
+                    self.timeAgoLabel.isHidden = false
+                    self.byUserLabel.isHidden = false
+                    self.communityAvatarImageView.isHidden = false
+                    
+                    self.communityAvatarImageView.setAvatar(urlString: post.community.avatarUrl, namePlaceHolder: post.community.name)
+                    self.comunityNameLabel.text = post.community.name
+                    self.timeAgoLabel.text = Date.timeAgo(string: post.meta.time)
+                    self.byUserLabel.text = "by".localized() + " " + (post.author?.username ?? post.author?.userId ?? "")
+                } else {
+                    self.comunityNameLabel.isHidden = true
+                    self.timeAgoLabel.isHidden = true
+                    self.byUserLabel.isHidden = true
+                    self.communityAvatarImageView.isHidden = true
                 }
-                self.byUserLabel.text = "by".localized() + " " + (post?.author?.username ?? post?.author?.userId ?? "")
+                
                 
                 // Create tableHeaderView
                 guard let headerView = UINib(nibName: "PostHeaderView", bundle: nil).instantiate(withOwner: self, options: nil).first as? PostHeaderView else {return}
