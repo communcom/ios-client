@@ -16,7 +16,7 @@ extension Decodable {
             do {
                 let data = try Data(contentsOf: URL(fileURLWithPath: path), options: .mappedIfSafe)
                 let result = try JSONDecoder().decode(Self.self, from: data)
-                Logger.log(message: "Retrieved mocking objects for \(String(describing: self)): \(result)", event: .debug)
+//                Logger.log(message: "Retrieved mocking objects for \(String(describing: self)): \(result)", event: .debug)
                 return result
             } catch {
                 print(error)
