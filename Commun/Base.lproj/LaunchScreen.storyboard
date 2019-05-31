@@ -17,7 +17,20 @@
                     <view key="view" clipsSubviews="YES" contentMode="scaleToFill" id="Ze5-6b-2t3">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="slash" translatesAutoresizingMaskIntoConstraints="NO" id="cAx-cD-l9r">
+                                <rect key="frame" x="177" y="388" width="60" height="130.5"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="cAx-cD-l9r" secondAttribute="height" multiplier="240:522" id="5Xb-04-2z0"/>
+                                    <constraint firstAttribute="width" constant="60" id="I94-Jn-PYu"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.41732367873191833" green="0.50173604488372803" blue="0.95928329229354858" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="cAx-cD-l9r" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="m0E-2d-UFw"/>
+                            <constraint firstItem="cAx-cD-l9r" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="tjA-bm-sMZ"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                 </viewController>
@@ -26,4 +39,7 @@
             <point key="canvasLocation" x="53" y="375"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="slash" width="80" height="174"/>
+    </resources>
 </document>
