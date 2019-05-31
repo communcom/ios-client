@@ -9,6 +9,7 @@
 import UIKit
 import SDWebImage
 import RxSwift
+import ListPlaceholder
 
 class NotificationCell: UITableViewCell {
     
@@ -24,6 +25,13 @@ class NotificationCell: UITableViewCell {
     
     // Methods
     func configure(with notification: ResponseAPIOnlineNotificationData) {
+        // For placeholder cell
+        self.contentView.hideLoader()
+        if notification._id.starts(with: "___mock___") {
+            self.contentView.showLoader()
+            return
+        }
+        
         // Fresh detect
         // TODO: Observe fresh changes
         if notification.unread {contentView.backgroundColor = #colorLiteral(red: 0.9725490196, green: 0.9764705882, blue: 1, alpha: 1)}

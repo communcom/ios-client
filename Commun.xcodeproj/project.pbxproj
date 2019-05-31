@@ -67,6 +67,8 @@
 		3BF37BD022A137EE00A72FFE /* ResponseAPIContentGetPost.json in Resources */ = {isa = PBXBuildFile; fileRef = 3BF37BCF22A137EE00A72FFE /* ResponseAPIContentGetPost.json */; };
 		3BF37BD322A1414200A72FFE /* PlaceholderPostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BF37BD122A1414200A72FFE /* PlaceholderPostCell.swift */; };
 		3BF37BD422A1414200A72FFE /* PlaceholderPostCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3BF37BD222A1414200A72FFE /* PlaceholderPostCell.xib */; };
+		3BF37BD622A162E000A72FFE /* ResponseAPIOnlineNotificationData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BF37BD522A162E000A72FFE /* ResponseAPIOnlineNotificationData.swift */; };
+		3BF37BD822A1666200A72FFE /* ResponseAPIOnlineNotifyHistoryResult.json in Resources */ = {isa = PBXBuildFile; fileRef = 3BF37BD722A1666200A72FFE /* ResponseAPIOnlineNotifyHistoryResult.json */; };
 		5700611A2253CA96007700DA /* EditorContentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570061182253CA96007700DA /* EditorContentCell.swift */; };
 		5700611B2253CA96007700DA /* EditorContentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 570061192253CA96007700DA /* EditorContentCell.xib */; };
 		5700611F2253CDDF007700DA /* EditorMediaCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5700611D2253CDDF007700DA /* EditorMediaCell.swift */; };
@@ -264,6 +266,8 @@
 		3BF37BCF22A137EE00A72FFE /* ResponseAPIContentGetPost.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ResponseAPIContentGetPost.json; sourceTree = "<group>"; };
 		3BF37BD122A1414200A72FFE /* PlaceholderPostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceholderPostCell.swift; sourceTree = "<group>"; };
 		3BF37BD222A1414200A72FFE /* PlaceholderPostCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlaceholderPostCell.xib; sourceTree = "<group>"; };
+		3BF37BD522A162E000A72FFE /* ResponseAPIOnlineNotificationData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseAPIOnlineNotificationData.swift; sourceTree = "<group>"; };
+		3BF37BD722A1666200A72FFE /* ResponseAPIOnlineNotifyHistoryResult.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ResponseAPIOnlineNotifyHistoryResult.json; sourceTree = "<group>"; };
 		4F0772CC6D820AD11B1FF48A /* Pods_Commun.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Commun.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		570061182253CA96007700DA /* EditorContentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorContentCell.swift; sourceTree = "<group>"; };
 		570061192253CA96007700DA /* EditorContentCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EditorContentCell.xib; sourceTree = "<group>"; };
@@ -460,6 +464,7 @@
 				3B197C87226A33CF008CF10D /* ResponseAPIContentGetFeedResult.json */,
 				3B197C84226A33CF008CF10D /* ResponseAPIContentGetProfileResult.json */,
 				3BF37BCF22A137EE00A72FFE /* ResponseAPIContentGetPost.json */,
+				3BF37BD722A1666200A72FFE /* ResponseAPIOnlineNotifyHistoryResult.json */,
 			);
 			path = Mocking;
 			sourceTree = "<group>";
@@ -794,6 +799,7 @@
 				3BA4D088229315D60022A69D /* UIResponder.swift */,
 				3B5D7CF02299D79B0077B82C /* FeedSortMode.swift */,
 				3BF37BCB22A1297C00A72FFE /* UITableView.swift */,
+				3BF37BD522A162E000A72FFE /* ResponseAPIOnlineNotificationData.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1230,6 +1236,7 @@
 				5700611B2253CA96007700DA /* EditorContentCell.xib in Resources */,
 				B1EA02ED2289882A00835244 /* SF-Pro-Text-Light.otf in Resources */,
 				B1EA02D82289882A00835244 /* SF-Pro-Display-BlackItalic.otf in Resources */,
+				3BF37BD822A1666200A72FFE /* ResponseAPIOnlineNotifyHistoryResult.json in Resources */,
 				57DE5BE0225209A0008566B9 /* EditorPageVC.storyboard in Resources */,
 				570061202253CDDF007700DA /* EditorMediaCell.xib in Resources */,
 				B1EA02F42289882A00835244 /* SF-Pro-Text-SemiboldItalic.otf in Resources */,
@@ -1377,6 +1384,7 @@
 				3B51581E226E0D3A00108F17 /* TLPhotosPickerViewController+Rx.swift in Sources */,
 				57840A07223FAC1B00338FD5 /* UIView+Appearance.swift in Sources */,
 				57CBD95C225511BD000BA8CC /* UITextView+Placeholder.m in Sources */,
+				3BF37BD622A162E000A72FFE /* ResponseAPIOnlineNotificationData.swift in Sources */,
 				57DE5BE522522060008566B9 /* ComunityCell.swift in Sources */,
 				57840A08223FAC1B00338FD5 /* RoundImageView.swift in Sources */,
 				57FB179D224BFBD700563BF7 /* PillPageControl.swift in Sources */,

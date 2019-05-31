@@ -10,7 +10,9 @@ import UIKit
 import RxSwift
 import RxCocoa
 import CyberSwift
+import RxDataSources
 
+public typealias NotificationSection = AnimatableSectionModel<String, ResponseAPIOnlineNotificationData>
 
 class NotificationsPageVC: UIViewController {
     @IBOutlet weak var tableView: UITableView!
@@ -65,22 +67,21 @@ class NotificationsPageVC: UIViewController {
             .disposed(by: bag)
         
         // Bind value to tableView
+        let dataSource = RxTableViewSectionedAnimatedDataSource<NotificationSection>(configureCell: {_, _, indexPath, item in
+            let cell = self.tableView.dequeueReusableCell(withIdentifier: "NotificationCell") as! NotificationCell
+            cell.configure(with: item)
+            if indexPath.row >= self.viewModel.list.value.count - 5 {
+                self.viewModel.fetchNext()
+            }
+            return cell
+        })
+        
         list
             .do(onNext: {[weak self] items in
-                items.count > 0 ? self?.view.hideLoading(): self?.view.showLoading()
                 self?.tableView.refreshControl?.endRefreshing()
             })
-            .bind(to: tableView.rx.items(
-                cellIdentifier: "NotificationCell",
-                cellType: NotificationCell.self)
-            ) {index, model, cell in
-                cell.configure(with: model)
-                
-                // fetchNext when reach last 5 items
-                if index >= self.viewModel.list.value.count - 5 {
-                    self.viewModel.fetchNext()
-                }
-            }
+            .map {[NotificationSection(model: "", items: $0.count > 0 ? $0: ResponseAPIOnlineNotifyHistoryResult.mockData()!.result!.data)]}
+            .bind(to: tableView.rx.items(dataSource: dataSource))
             .disposed(by: bag)
         
         // tableView
