@@ -27,7 +27,7 @@ extension ProfilePageVC: CommentCellDelegate {
         
         isProfileMissing
             .do(onNext: {missing in
-                missing ? self.showLoading(): self.hideLoading()
+                missing ? self.view.showLoading(): self.view.hideLoading()
             })
             .drive(tableView.rx.isHidden)
             .disposed(by: bag)

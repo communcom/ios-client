@@ -64,7 +64,7 @@ extension FeedPageVC {
         viewModel.items
             .map {[PostSection(model: "", items: $0)]}
             .do(onNext: {section in
-                section[0].items.count > 0 ? self.hideLoading(): self.showLoading()
+                section[0].items.count > 0 ? self.view.hideLoading(): self.view.showLoading()
                 self.tableView.refreshControl?.endRefreshing()
             })
             .bind(to: tableView.rx.items(dataSource: dataSource))

@@ -40,6 +40,7 @@ class PostHeaderView: UIView, UIWebViewDelegate, PostController {
     @IBOutlet weak var loadingView: UIView!
     func setLoading() {
         loadingView.isHidden = false
+        loadingView.showLoading()
         self.height = 200
         layoutSubviews()
     }
@@ -76,7 +77,7 @@ class PostHeaderView: UIView, UIWebViewDelegate, PostController {
             setLoading()
             return
         }
-        
+        loadingView.hideLoading()
         loadingView.isHidden = true
         // Show media
         if post.content.embeds.first?.result?.type == "video",
