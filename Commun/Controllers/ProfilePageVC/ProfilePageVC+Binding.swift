@@ -47,24 +47,27 @@ extension ProfilePageVC: CommentCellDelegate {
         
         // Bind items
         viewModel.items.skip(1)
-            .map { items -> [AnyObject?] in
+            .map { items -> [AnyObject] in
                 if items.count == 0 {
-                    return [nil]
+                    return ResponseAPIContentGetFeedResult.mockData()!.result!.items! as [AnyObject]
                 }
-                return items as [AnyObject?]
+                return items as [AnyObject]
             }
             .bind(to: tableView.rx.items) {table, index, element in
-                guard let element = element else {
-                    let cell = self.tableView.dequeueReusableCell(withIdentifier: "EmptyCell") as! EmptyCell
-                    cell.setUp(with: self.viewModel.segmentedItem.value)
-                    return cell
-                }
+//                guard let element = element else {
+//                    let cell = self.tableView.dequeueReusableCell(withIdentifier: "EmptyCell") as! EmptyCell
+//                    cell.setUp(with: self.viewModel.segmentedItem.value)
+//                    return cell
+//                }
                 
                 if index == self.viewModel.items.value.count - 2 {
                     self.viewModel.fetchNext()
                 }
                 
                 if let post = element as? ResponseAPIContentGetPost {
+                    if post.contentId.permlink.starts(with: "___mock___") {
+                        return self.tableView.dequeueReusableCell(withIdentifier: "PlaceholderPostCell")!
+                    }
                     let cell = self.tableView.dequeueReusableCell(withIdentifier: "PostCardCell") as! PostCardCell
                     cell.setUp(with: post)
                     return cell
