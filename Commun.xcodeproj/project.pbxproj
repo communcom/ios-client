@@ -63,6 +63,7 @@
 		3BDD9A0B228EDA6F00B2A1DA /* PostController+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BDD9A0A228EDA6F00B2A1DA /* PostController+Rx.swift */; };
 		3BDD9A0F228F07EF00B2A1DA /* UIApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BDD9A0E228F07EF00B2A1DA /* UIApplication.swift */; };
 		3BF37BCA22A11FA700A72FFE /* UIView+Loading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BF37BC922A11FA700A72FFE /* UIView+Loading.swift */; };
+		3BF37BCC22A1297C00A72FFE /* UITableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BF37BCB22A1297C00A72FFE /* UITableView.swift */; };
 		5700611A2253CA96007700DA /* EditorContentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570061182253CA96007700DA /* EditorContentCell.swift */; };
 		5700611B2253CA96007700DA /* EditorContentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 570061192253CA96007700DA /* EditorContentCell.xib */; };
 		5700611F2253CDDF007700DA /* EditorMediaCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5700611D2253CDDF007700DA /* EditorMediaCell.swift */; };
@@ -256,6 +257,7 @@
 		3BDD9A0A228EDA6F00B2A1DA /* PostController+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PostController+Rx.swift"; sourceTree = "<group>"; };
 		3BDD9A0E228F07EF00B2A1DA /* UIApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplication.swift; sourceTree = "<group>"; };
 		3BF37BC922A11FA700A72FFE /* UIView+Loading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Loading.swift"; sourceTree = "<group>"; };
+		3BF37BCB22A1297C00A72FFE /* UITableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableView.swift; sourceTree = "<group>"; };
 		4F0772CC6D820AD11B1FF48A /* Pods_Commun.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Commun.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		570061182253CA96007700DA /* EditorContentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorContentCell.swift; sourceTree = "<group>"; };
 		570061192253CA96007700DA /* EditorContentCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EditorContentCell.xib; sourceTree = "<group>"; };
@@ -782,6 +784,7 @@
 				3BA4D0862292BA710022A69D /* ResponseAPIContentGetPost.swift */,
 				3BA4D088229315D60022A69D /* UIResponder.swift */,
 				3B5D7CF02299D79B0077B82C /* FeedSortMode.swift */,
+				3BF37BCB22A1297C00A72FFE /* UITableView.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1424,6 +1427,7 @@
 				B1EA0317228A965200835244 /* MainViewController.swift in Sources */,
 				3B197C8A226A33CF008CF10D /* Decodable+MockObjects.swift in Sources */,
 				578B94DA2263CBD800FB5BC6 /* ConfirmUserVC.swift in Sources */,
+				3BF37BCC22A1297C00A72FFE /* UITableView.swift in Sources */,
 				57840A09223FAC1B00338FD5 /* SegmentioOptions.swift in Sources */,
 				3BB86B47227222DE008F1C64 /* ProfilePage+Parallax.swift in Sources */,
 				571B14F4223A935C00630C8F /* AppDelegate.swift in Sources */,
