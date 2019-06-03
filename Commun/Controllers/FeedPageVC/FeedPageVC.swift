@@ -30,17 +30,18 @@ class FeedPageVC: UIViewController {
         // Config viewModel
         viewModel = FeedPageViewModel()
         
-        viewModel.loadingHandler = {
-            if self.viewModel.fetcher.reachedTheEnd {return}
-            self.tableView.addPostLoadingFooterView()
+        viewModel.loadingHandler = { [weak self] in
+            if self?.viewModel.fetcher.reachedTheEnd == true {return}
+            self?.tableView.addPostLoadingFooterView()
         }
         
-        viewModel.listEndedHandler = {
-            self.tableView.tableFooterView = UIView()
+        viewModel.listEndedHandler = { [weak self] in
+            self?.tableView.tableFooterView = UIView()
         }
         
-        viewModel.fetchNextErrorHandler = {error in
-            self.tableView.addListErrorFooterView(with: #selector(self.didTapTryAgain(gesture:)), on: self)
+        viewModel.fetchNextErrorHandler = {[weak self] error in
+            guard let strongSelf = self else {return}
+            strongSelf.tableView.addListErrorFooterView(with: #selector(strongSelf.didTapTryAgain(gesture:)), on: strongSelf)
         }
         
         navigationController?.navigationBar.barTintColor = .white

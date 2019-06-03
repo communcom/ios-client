@@ -14,6 +14,8 @@ let loadingViewTag = 9999
 let postLoadingFooterViewTag = 99991
 let listErrorFooterViewTag = 99992
 
+let notificationsLoadingFooterViewTag = 99993
+
 extension UITableView {
     func addLoadingFooterView() {
         // Prevent dupplicating
@@ -54,6 +56,31 @@ extension UITableView {
         placeholderPostCell.widthAnchor.constraint(equalTo: containerView.widthAnchor, constant: 0).isActive = true
         placeholderPostCell.heightAnchor.constraint(equalTo: containerView.heightAnchor, constant: 0).isActive = true
 
+        self.tableFooterView = containerView
+    }
+    
+    func addNotificationsLoadingFooterView(){
+        // Prevent dupplicating
+        if tableFooterView?.tag == notificationsLoadingFooterViewTag {
+            return
+        }
+            
+        let numberOfRows = 5
+        let containerView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 88*numberOfRows))
+        containerView.tag = notificationsLoadingFooterViewTag
+        
+        for i in 0..<numberOfRows {
+            let placeholderNotificationsCell = PlaceholderNotificationCell(frame: CGRect(x: 0, y: 0, width: self.width, height: 88))
+            placeholderNotificationsCell.translatesAutoresizingMaskIntoConstraints = false
+            
+            containerView.addSubview(placeholderNotificationsCell)
+            
+            placeholderNotificationsCell.topAnchor.constraint(equalTo: containerView.topAnchor, constant: CGFloat(i*88)).isActive = true
+            placeholderNotificationsCell.heightAnchor.constraint(equalToConstant: 88).isActive = true
+            placeholderNotificationsCell.leadingAnchor.constraint(equalTo: containerView.leadingAnchor).isActive = true
+            placeholderNotificationsCell.trailingAnchor.constraint(equalTo: containerView.trailingAnchor).isActive = true
+        }
+        
         self.tableFooterView = containerView
     }
     

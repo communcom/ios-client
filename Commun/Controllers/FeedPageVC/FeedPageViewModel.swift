@@ -11,7 +11,7 @@ import RxSwift
 import RxCocoa
 import CyberSwift
 
-class FeedPageViewModel: PostsListController {
+class FeedPageViewModel: PostsListController, ListViewModelType {
     // PostsListController requirement
     var disposeBag = DisposeBag()
     var items = BehaviorRelay<[ResponseAPIContentGetPost]>(value: [])
