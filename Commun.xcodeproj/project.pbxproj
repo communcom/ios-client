@@ -47,6 +47,8 @@
 		3B5CB30822A57AA400757533 /* PlaceholderNotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5CB30722A57AA400757533 /* PlaceholderNotificationCell.swift */; };
 		3B5CB30A22A57AB600757533 /* PlaceholderNotificationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3B5CB30922A57AB600757533 /* PlaceholderNotificationCell.xib */; };
 		3B5CB30C22A57D5B00757533 /* NotificationPageVC+Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5CB30B22A57D5B00757533 /* NotificationPageVC+Binding.swift */; };
+		3B5CB31022A5880D00757533 /* MyRxTableViewSectionedAnimatedDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5CB30F22A5880D00757533 /* MyRxTableViewSectionedAnimatedDataSource.swift */; };
+		3B5CB31222A588EE00757533 /* FeedPageVC+EmptyDataSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5CB31122A588EE00757533 /* FeedPageVC+EmptyDataSet.swift */; };
 		3B5D7CEF2297F3FA0077B82C /* ItemsListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5D7CEE2297F3FA0077B82C /* ItemsListController.swift */; };
 		3B5D7CF12299D79B0077B82C /* FeedSortMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5D7CF02299D79B0077B82C /* FeedSortMode.swift */; };
 		3B635F7F22772D87006DAAB2 /* PostsFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B635F7E22772D87006DAAB2 /* PostsFetcher.swift */; };
@@ -252,6 +254,8 @@
 		3B5CB30722A57AA400757533 /* PlaceholderNotificationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceholderNotificationCell.swift; sourceTree = "<group>"; };
 		3B5CB30922A57AB600757533 /* PlaceholderNotificationCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlaceholderNotificationCell.xib; sourceTree = "<group>"; };
 		3B5CB30B22A57D5B00757533 /* NotificationPageVC+Binding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotificationPageVC+Binding.swift"; sourceTree = "<group>"; };
+		3B5CB30F22A5880D00757533 /* MyRxTableViewSectionedAnimatedDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyRxTableViewSectionedAnimatedDataSource.swift; sourceTree = "<group>"; };
+		3B5CB31122A588EE00757533 /* FeedPageVC+EmptyDataSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FeedPageVC+EmptyDataSet.swift"; sourceTree = "<group>"; };
 		3B5D7CEE2297F3FA0077B82C /* ItemsListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemsListController.swift; sourceTree = "<group>"; };
 		3B5D7CF02299D79B0077B82C /* FeedSortMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedSortMode.swift; sourceTree = "<group>"; };
 		3B635F7E22772D87006DAAB2 /* PostsFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostsFetcher.swift; sourceTree = "<group>"; };
@@ -487,9 +491,9 @@
 				3B5CB30622A57A5D00757533 /* Cells */,
 				3B2F2268226892C5006B589E /* NotificationsPageVC.storyboard */,
 				3B2F2265226892C4006B589E /* NotificationsPageVC.swift */,
+				3B5CB30B22A57D5B00757533 /* NotificationPageVC+Binding.swift */,
 				3B2F2264226892C4006B589E /* NotificationsPageViewModel.swift */,
 				3B2F2267226892C4006B589E /* NotificationType.swift */,
-				3B5CB30B22A57D5B00757533 /* NotificationPageVC+Binding.swift */,
 			);
 			path = NotificationsPageVC;
 			sourceTree = "<group>";
@@ -788,6 +792,7 @@
 				576DC91C223E421A00EDED41 /* Cells */,
 				576DC91A223E41F600EDED41 /* FeedPageViewModel.swift */,
 				576DC918223E41E800EDED41 /* FeedPageVC.swift */,
+				3B5CB31122A588EE00757533 /* FeedPageVC+EmptyDataSet.swift */,
 				3B635F802277375A006DAAB2 /* FeedPageVC+Binding.swift */,
 				576DC91D223E429C00EDED41 /* FeedPageVC.storyboard */,
 			);
@@ -840,6 +845,7 @@
 				3BDD99FD228DA59900B2A1DA /* ExpandableTextView.swift */,
 				3BDD9A09228EDA5700B2A1DA /* PostController */,
 				3B5CB30422A5752100757533 /* ListViewModelType.swift */,
+				3B5CB30F22A5880D00757533 /* MyRxTableViewSectionedAnimatedDataSource.swift */,
 			);
 			path = Vendor;
 			sourceTree = "<group>";
@@ -1477,7 +1483,9 @@
 				3B197C8A226A33CF008CF10D /* Decodable+MockObjects.swift in Sources */,
 				578B94DA2263CBD800FB5BC6 /* ConfirmUserVC.swift in Sources */,
 				3BF37BCC22A1297C00A72FFE /* UITableView.swift in Sources */,
+				3B5CB31022A5880D00757533 /* MyRxTableViewSectionedAnimatedDataSource.swift in Sources */,
 				57840A09223FAC1B00338FD5 /* SegmentioOptions.swift in Sources */,
+				3B5CB31222A588EE00757533 /* FeedPageVC+EmptyDataSet.swift in Sources */,
 				3BB86B47227222DE008F1C64 /* ProfilePage+Parallax.swift in Sources */,
 				571B14F4223A935C00630C8F /* AppDelegate.swift in Sources */,
 				3B0E9C6C2270634B002AB1C2 /* ProfileChooseAvatarVC.swift in Sources */,

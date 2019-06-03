@@ -24,6 +24,7 @@ PODS:
     - SwiftTheme
   - DateToolsSwift (4.0.0)
   - Differentiator (3.1.0)
+  - DZNEmptyDataSet (1.8.1)
   - eosswift (1.6.0):
     - BigInt (~> 3.1.0)
     - RxCocoa (~> 4.0)
@@ -73,6 +74,7 @@ DEPENDENCIES:
   - ASSpinnerView
   - CyberSwift (from `https://github.com/GolosChain/cyberSwift.git`)
   - DateToolsSwift
+  - DZNEmptyDataSet
   - ListPlaceholder
   - MBProgressHUD (~> 1.1.0)
   - PhoneNumberKit (~> 2.6)
@@ -96,6 +98,7 @@ SPEC REPOS:
     - CryptoSwift
     - DateToolsSwift
     - Differentiator
+    - DZNEmptyDataSet
     - eosswift
     - GoloCrypto
     - ListPlaceholder
@@ -138,6 +141,7 @@ SPEC CHECKSUMS:
   CyberSwift: c9db8ba4c881781da30905dcafcca963b7a1881c
   DateToolsSwift: 875d97ff9e3a5d54abdd67a269b3f51c757b71ab
   Differentiator: be49ca3408f0ecfc761e4c7763d20c62be01b9ad
+  DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
   eosswift: 22bc931fd65bbd446c3f828233b8fd2916cec4a7
   GoloCrypto: 3f60e824b57ca657be702fb2cf4bd1f7a379257a
   ListPlaceholder: 08ddaddf67520a20fc52cf37160fb56aa64d071d
@@ -161,6 +165,6 @@ SPEC CHECKSUMS:
   TLPhotoPicker: c5aefdc9beaca82116d7855924f1d8abdd055f79
   UIImageView-Letters: f62db28076797adf3560ab7410647dc6899b9eef
 
-PODFILE CHECKSUM: 37b9baec4bfd81a4bc542d4694ba56b17cc952b2
+PODFILE CHECKSUM: 26102363363ac680719a631dd754aafddc7d7755
 
 COCOAPODS: 1.7.0.rc.1

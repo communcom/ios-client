@@ -9,7 +9,8 @@
 import UIKit
 import CyberSwift
 import RxSwift
-import ASSpinnerView
+import DZNEmptyDataSet
+import RxDataSources
 
 class FeedPageVC: UIViewController {
 
@@ -21,6 +22,8 @@ class FeedPageVC: UIViewController {
     @IBOutlet weak var sortByTypeButton: UIButton!
     @IBOutlet weak var sortByTimeButton: UIButton!
     @IBOutlet weak var searchBarHeightConstraint: NSLayoutConstraint!
+    
+    var dataSource: MyRxTableViewSectionedAnimatedDataSource<PostSection>!
     
     let disposeBag = DisposeBag()
     
@@ -64,11 +67,26 @@ class FeedPageVC: UIViewController {
             .disposed(by: disposeBag)
         
         // tableView
+        dataSource = MyRxTableViewSectionedAnimatedDataSource<PostSection>(
+            configureCell: { dataSource, tableView, indexPath, item in
+                let cell = tableView.dequeueReusableCell(withIdentifier: "PostCardCell", for: indexPath) as! PostCardCell
+                cell.setUp(with: item)
+                
+                if indexPath.row == self.viewModel.items.value.count - 2 {
+                    self.viewModel.fetchNext()
+                }
+                
+                return cell
+            }
+        )
+        
         tableView.register(UINib(nibName: "PostCardCell", bundle: nil), forCellReuseIdentifier: "PostCardCell")
         tableView.rowHeight = UITableView.automaticDimension
         tableView.addPostLoadingFooterView()
         tableView.refreshControl = UIRefreshControl()
         tableView.refreshControl?.addTarget(self, action: #selector(refresh), for: .valueChanged)
+        tableView.emptyDataSetSource = self
+        tableView.emptyDataSetDelegate = self
         
         // Segmentio update
         segmentioView.setup(content: [SegmentioItem(title: "My Feed".localized(), image: nil), SegmentioItem(title: "Trending".localized(), image: nil)],

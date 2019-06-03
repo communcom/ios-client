@@ -35,4 +35,6 @@ target 'Commun' do
   
   pod 'ListPlaceholder'
   
+  pod 'DZNEmptyDataSet'
+  
 end
