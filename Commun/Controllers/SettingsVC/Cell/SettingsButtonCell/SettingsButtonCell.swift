@@ -8,13 +8,14 @@
 
 import UIKit
 
-protocol ChangePasswordCellDelegate {
-    func changePasswordDidTap()
+protocol SettingsButtonCellDelegate {
+    func buttonDidTap(on cell: SettingsButtonCell)
 }
 
-class ChangePasswordCell: UITableViewCell {
-
-    var delegate: ChangePasswordCellDelegate?
+class SettingsButtonCell: UITableViewCell {
+    @IBOutlet weak var button: UIButton!
+    
+    var delegate: SettingsButtonCellDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -29,7 +30,7 @@ class ChangePasswordCell: UITableViewCell {
     }
     
     @IBAction func changePasswordButtonTap(_ sender: Any) {
-        delegate?.changePasswordDidTap()
+        delegate?.buttonDidTap(on: self)
     }
     
 }

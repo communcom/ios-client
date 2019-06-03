@@ -40,6 +40,7 @@
 		3B515819226DDE8D00108F17 /* EmptyCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3B515818226DDE8D00108F17 /* EmptyCell.xib */; };
 		3B51581C226DE28D00108F17 /* EmptyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B51581B226DE28D00108F17 /* EmptyCell.swift */; };
 		3B51581E226E0D3A00108F17 /* TLPhotosPickerViewController+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B51581D226E0D3A00108F17 /* TLPhotosPickerViewController+Rx.swift */; };
+		3B5CB2FF22A5416D00757533 /* Auth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5CB2FE22A5416D00757533 /* Auth.swift */; };
 		3B5D7CEF2297F3FA0077B82C /* ItemsListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5D7CEE2297F3FA0077B82C /* ItemsListController.swift */; };
 		3B5D7CF12299D79B0077B82C /* FeedSortMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5D7CF02299D79B0077B82C /* FeedSortMode.swift */; };
 		3B635F7F22772D87006DAAB2 /* PostsFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B635F7E22772D87006DAAB2 /* PostsFetcher.swift */; };
@@ -156,8 +157,8 @@
 		57E515AB2270EBB900A6F6DB /* NotificationSettingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 57E515A92270EBB900A6F6DB /* NotificationSettingCell.xib */; };
 		57E515B12270F4EA00A6F6DB /* PasswordCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E515AF2270F4EA00A6F6DB /* PasswordCell.swift */; };
 		57E515B22270F4EA00A6F6DB /* PasswordCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 57E515B02270F4EA00A6F6DB /* PasswordCell.xib */; };
-		57E515B62270F7B200A6F6DB /* ChangePasswordCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E515B42270F7B200A6F6DB /* ChangePasswordCell.swift */; };
-		57E515B72270F7B200A6F6DB /* ChangePasswordCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 57E515B52270F7B200A6F6DB /* ChangePasswordCell.xib */; };
+		57E515B62270F7B200A6F6DB /* SettingsButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E515B42270F7B200A6F6DB /* SettingsButtonCell.swift */; };
+		57E515B72270F7B200A6F6DB /* SettingsButtonCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 57E515B52270F7B200A6F6DB /* SettingsButtonCell.xib */; };
 		57F5CFC22244E3BE005A09AE /* PostPageVC+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F5CFC12244E3BE005A09AE /* PostPageVC+Rx.swift */; };
 		57F9CAAC225B489000AC9ACA /* EditorPageVC+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F9CAAB225B489000AC9ACA /* EditorPageVC+Rx.swift */; };
 		57FB179B224BFBD700563BF7 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 57FB1796224BFBD700563BF7 /* LICENSE */; };
@@ -239,6 +240,7 @@
 		3B515818226DDE8D00108F17 /* EmptyCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmptyCell.xib; sourceTree = "<group>"; };
 		3B51581B226DE28D00108F17 /* EmptyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyCell.swift; sourceTree = "<group>"; };
 		3B51581D226E0D3A00108F17 /* TLPhotosPickerViewController+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TLPhotosPickerViewController+Rx.swift"; sourceTree = "<group>"; };
+		3B5CB2FE22A5416D00757533 /* Auth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Auth.swift; sourceTree = "<group>"; };
 		3B5D7CEE2297F3FA0077B82C /* ItemsListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemsListController.swift; sourceTree = "<group>"; };
 		3B5D7CF02299D79B0077B82C /* FeedSortMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedSortMode.swift; sourceTree = "<group>"; };
 		3B635F7E22772D87006DAAB2 /* PostsFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostsFetcher.swift; sourceTree = "<group>"; };
@@ -364,8 +366,8 @@
 		57E515A92270EBB900A6F6DB /* NotificationSettingCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NotificationSettingCell.xib; sourceTree = "<group>"; };
 		57E515AF2270F4EA00A6F6DB /* PasswordCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordCell.swift; sourceTree = "<group>"; };
 		57E515B02270F4EA00A6F6DB /* PasswordCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PasswordCell.xib; sourceTree = "<group>"; };
-		57E515B42270F7B200A6F6DB /* ChangePasswordCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordCell.swift; sourceTree = "<group>"; };
-		57E515B52270F7B200A6F6DB /* ChangePasswordCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChangePasswordCell.xib; sourceTree = "<group>"; };
+		57E515B42270F7B200A6F6DB /* SettingsButtonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsButtonCell.swift; sourceTree = "<group>"; };
+		57E515B52270F7B200A6F6DB /* SettingsButtonCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsButtonCell.xib; sourceTree = "<group>"; };
 		57F5CFC12244E3BE005A09AE /* PostPageVC+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PostPageVC+Rx.swift"; sourceTree = "<group>"; };
 		57F9CA8D225B3A9200AC9ACA /* SF-Pro-Display-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-Thin.otf"; sourceTree = "<group>"; };
 		57F9CA8E225B3A9400AC9ACA /* SF-Pro-Display-BlackItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-BlackItalic.otf"; sourceTree = "<group>"; };
@@ -896,6 +898,7 @@
 			children = (
 				3B197C83226A33BF008CF10D /* Mocking */,
 				57840A1A2240DB9400338FD5 /* NetworkService.swift */,
+				3B5CB2FE22A5416D00757533 /* Auth.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -1043,7 +1046,7 @@
 		57E5159B2270E5C700A6F6DB /* Cell */ = {
 			isa = PBXGroup;
 			children = (
-				57E515B32270F79E00A6F6DB /* ChangePasswordCell */,
+				57E515B32270F79E00A6F6DB /* SettingsButtonCell */,
 				57E515AE2270F4D900A6F6DB /* PasswordCell */,
 				57E515A72270EBAA00A6F6DB /* NotificationSettingCell */,
 				57E515A22270EA6500A6F6DB /* GeneralSettingCell */,
@@ -1078,13 +1081,13 @@
 			path = PasswordCell;
 			sourceTree = "<group>";
 		};
-		57E515B32270F79E00A6F6DB /* ChangePasswordCell */ = {
+		57E515B32270F79E00A6F6DB /* SettingsButtonCell */ = {
 			isa = PBXGroup;
 			children = (
-				57E515B42270F7B200A6F6DB /* ChangePasswordCell.swift */,
-				57E515B52270F7B200A6F6DB /* ChangePasswordCell.xib */,
+				57E515B42270F7B200A6F6DB /* SettingsButtonCell.swift */,
+				57E515B52270F7B200A6F6DB /* SettingsButtonCell.xib */,
 			);
-			path = ChangePasswordCell;
+			path = SettingsButtonCell;
 			sourceTree = "<group>";
 		};
 		57FB1795224BFBD700563BF7 /* PageControls */ = {
@@ -1285,7 +1288,7 @@
 				570061252253D3B3007700DA /* EditorLinkCell.xib in Resources */,
 				B1EA02EB2289882A00835244 /* SF-Pro-Text-Heavy.otf in Resources */,
 				B1EA02DD2289882A00835244 /* SF-Pro-Display-Light.otf in Resources */,
-				57E515B72270F7B200A6F6DB /* ChangePasswordCell.xib in Resources */,
+				57E515B72270F7B200A6F6DB /* SettingsButtonCell.xib in Resources */,
 				571B14F9223A935C00630C8F /* Main.storyboard in Resources */,
 				578B94DC2263CBE300FB5BC6 /* ConfirmUserVC.storyboard in Resources */,
 			);
@@ -1415,9 +1418,10 @@
 				57E515AA2270EBB900A6F6DB /* NotificationSettingCell.swift in Sources */,
 				57840A0E223FAC1B00338FD5 /* BadgeWithCounterView.swift in Sources */,
 				3BDD9A0F228F07EF00B2A1DA /* UIApplication.swift in Sources */,
+				3B5CB2FF22A5416D00757533 /* Auth.swift in Sources */,
 				3B0E9C64226F4A0C002AB1C2 /* VerticalDraggableImageView.swift in Sources */,
 				3B02CD282289B23E0078BB52 /* PostHeaderView.swift in Sources */,
-				57E515B62270F7B200A6F6DB /* ChangePasswordCell.swift in Sources */,
+				57E515B62270F7B200A6F6DB /* SettingsButtonCell.swift in Sources */,
 				57A1CA632270FC4700E2A1E3 /* LanguageVC.swift in Sources */,
 				57840A202240DDEB00338FD5 /* Container.swift in Sources */,
 				57F9CAAC225B489000AC9ACA /* EditorPageVC+Rx.swift in Sources */,

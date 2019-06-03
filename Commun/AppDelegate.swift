@@ -25,41 +25,50 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Run WebSocket
         WebSocketManager.instance.connect()
-
-        _ = WebSocketManager.instance.completed.subscribe(onNext:   { [weak self] success in
-            Logger.log(message: "Sign: \n\t\(success)", event: .debug)
-
-            guard success else { return }
-
-            guard let strongSelf = self else { return }
-
-            // Lenta
-            if UserDefaults.standard.value(forKey: Config.isCurrentUserLoggedKey) as? Bool == true {
-                strongSelf.window?.rootViewController = controllerContainer.resolve(TabBarVC.self)
-            }
-
-            // Sign In/Up
-            else {
-                let welcomeVC = controllerContainer.resolve(WelcomeScreenVC.self)
-                let welcomeNav = UINavigationController(rootViewController: welcomeVC!)
-                strongSelf.window?.rootViewController = welcomeNav
-
-                let navigationBarAppearace = UINavigationBar.appearance()
-                navigationBarAppearace.tintColor = #colorLiteral(red: 0.4156862745, green: 0.5019607843, blue: 0.9607843137, alpha: 1)
-            }
-
-            strongSelf.window?.makeKeyAndVisible()
-            application.applicationIconBadgeNumber = 0
-        },
-                                                          onError:  { (error) in
-                                                            Logger.log(message: "Error: \(error.localizedDescription)", event: .error)
-        })
-
+        
+        _ = WebSocketManager.instance.authorized
+            .skip(1)
+            .subscribe(onNext: {success in
+                Logger.log(message: "Sign: \n\t\(success)", event: .debug)
+                
+                // Lenta
+                if success,
+                    UserDefaults.standard.value(forKey: Config.isCurrentUserLoggedKey) as? Bool == true {
+                    self.window?.rootViewController = controllerContainer.resolve(TabBarVC.self)
+                }
+                    
+                // Sign In/Up
+                else {
+                    self.showLogin()
+                }
+                
+                self.window?.makeKeyAndVisible()
+                application.applicationIconBadgeNumber = 0
+            }, onError: {error in
+                switch (error) {
+                case ErrorAPI.jsonParsingFailure(message: "Cannot get such account from BC"):
+                    self.window?.rootViewController?.showAlert(title: "Acount not found".localized(), message: "Cannot get such account from BC".localized(), buttonTitles: nil, highlightedButtonIndex: nil, completion: { (_) in
+                        self.showLogin()
+                    })
+                default:
+                    break
+                }
+                Logger.log(message: "Error: \(error.localizedDescription)", event: .error)
+            })
         
         Crashlytics().debugMode = true
         Fabric.with([Crashlytics.self])
 
         return true
+    }
+    
+    func showLogin() {
+        let welcomeVC = controllerContainer.resolve(WelcomeScreenVC.self)
+        let welcomeNav = UINavigationController(rootViewController: welcomeVC!)
+        self.window?.rootViewController = welcomeNav
+        
+        let navigationBarAppearace = UINavigationBar.appearance()
+        navigationBarAppearace.tintColor = #colorLiteral(red: 0.4156862745, green: 0.5019607843, blue: 0.9607843137, alpha: 1)
     }
 
     func applicationWillResignActive(_ application: UIApplication) {

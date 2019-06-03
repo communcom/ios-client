@@ -25,7 +25,7 @@ class SettingsVC: UIViewController {
 
         tableView.register(UINib(nibName: "GeneralSettingCell", bundle: nil), forCellReuseIdentifier: "GeneralSettingCell")
         tableView.register(UINib(nibName: "NotificationSettingCell", bundle: nil), forCellReuseIdentifier: "NotificationSettingCell")
-        tableView.register(UINib(nibName: "ChangePasswordCell", bundle: nil), forCellReuseIdentifier: "ChangePasswordCell")
+        tableView.register(UINib(nibName: "SettingsButtonCell", bundle: nil), forCellReuseIdentifier: "SettingsButtonCell")
         
         tableView.dataSource = self
         tableView.delegate = self
@@ -74,9 +74,16 @@ extension SettingsVC {
         
         // PasswordsCells
         passwordsCells = []
-        let changePasswordCell = tableView.dequeueReusableCell(withIdentifier: "ChangePasswordCell") as! ChangePasswordCell
+        let changePasswordCell = tableView.dequeueReusableCell(withIdentifier: "SettingsButtonCell") as! SettingsButtonCell
         changePasswordCell.delegate = self
         passwordsCells.append(changePasswordCell)
+        
+        // Logout
+        let logoutCell = tableView.dequeueReusableCell(withIdentifier: "SettingsButtonCell") as! SettingsButtonCell
+        logoutCell.delegate = self
+        logoutCell.button.tintColor = .red
+        logoutCell.button.setTitle("Logout".localized(), for: .normal)
+        passwordsCells.append(logoutCell)
         
         tableView.reloadData()
     }
@@ -170,9 +177,16 @@ extension SettingsVC: UITableViewDelegate {
     
 }
 
-extension SettingsVC: ChangePasswordCellDelegate {
+extension SettingsVC: SettingsButtonCellDelegate {
     
-    func changePasswordDidTap() {
+    func buttonDidTap(on cell: SettingsButtonCell) {
+        if cell.button.titleLabel?.text == "Logout".localized() {
+            showAlert(title: "Logout".localized(), message: "Do you really want to logout", buttonTitles: ["OK".localized(), "Cancel".localized()], highlightedButtonIndex: 1) { (index) in
+                if index == 0 {Auth.logout()}
+            }
+            return
+        }
+        
         let alert = UIAlertController(title: "Change all password",
                                       message: "Changing passwords will save your wallet if someone saw your password.",
                                       preferredStyle: .alert)
