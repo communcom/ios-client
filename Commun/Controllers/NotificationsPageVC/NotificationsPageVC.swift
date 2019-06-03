@@ -42,8 +42,19 @@ class NotificationsPageVC: UIViewController {
         
         // initialize viewModel
         viewModel = NotificationsPageViewModel()
+        
         viewModel.loadingHandler = {[weak self] in
+            if self?.viewModel.fetcher.reachedTheEnd == true {return}
             self?.tableView.addNotificationsLoadingFooterView()
+        }
+        
+        viewModel.listEndedHandler = { [weak self] in
+            self?.tableView.tableFooterView = UIView()
+        }
+        
+        viewModel.fetchNextErrorHandler = {[weak self] error in
+            guard let strongSelf = self else {return}
+            strongSelf.tableView.addListErrorFooterView(with: #selector(strongSelf.didTapTryAgain(gesture:)), on: strongSelf)
         }
         
         // fetchNext
@@ -55,5 +66,15 @@ class NotificationsPageVC: UIViewController {
     
     @objc func refresh() {
         viewModel.reload()
+    }
+    
+    @objc func didTapTryAgain(gesture: UITapGestureRecognizer) {
+        guard let label = gesture.view as? UILabel,
+            let text = label.text else {return}
+        
+        let tryAgainRange = (text as NSString).range(of: "Try again".localized())
+        if gesture.didTapAttributedTextInLabel(label: label, inRange: tryAgainRange) {
+            self.viewModel.fetchNext()
+        }
     }
 }

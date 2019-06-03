@@ -15,7 +15,7 @@ struct NotificationsPageViewModel: ListViewModelType {
     let bag = DisposeBag()
     let list = BehaviorRelay<[ResponseAPIOnlineNotificationData]>(value: [])
     
-    private let fetcher = NotificationsFetcher()
+    let fetcher = NotificationsFetcher()
     
     // Handlers
     var loadingHandler: (() -> Void)?
