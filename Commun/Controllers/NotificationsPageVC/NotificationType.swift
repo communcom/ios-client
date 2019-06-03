@@ -26,29 +26,29 @@ enum NotificationType: String {
         switch self {
         case .upvote:
             let text = NSMutableAttributedString()
-                .bold(name)
+                .semibold(name)
                 .normal(" ")
                 .normal("upvoted you in a post".localized())
                 .normal(": ")
-                .bold(notification.post!.title ?? "")
+                .semibold(notification.post!.title ?? "")
             
             detail.text = text
             detail.icon = UIImage(named: "NotificationUpvote")
             break
         case .downvote:
             let text = NSMutableAttributedString()
-                .bold(name)
+                .semibold(name)
                 .normal(" ")
                 .normal("downvoted you in a post".localized())
                 .normal(": ")
-                .bold(notification.post!.title ?? "")
+                .semibold(notification.post!.title ?? "")
             
             detail.text = text
             detail.icon = UIImage(named: "NotificationDownvote")
             break
         case .subscribe:
             let text = NSMutableAttributedString()
-                .bold(name)
+                .semibold(name)
                 .normal(" ")
                 .normal("subscribed you".localized())
             detail.text = text
@@ -56,7 +56,7 @@ enum NotificationType: String {
             break
         case .transfer:
             let text = NSMutableAttributedString()
-                .bold(name)
+                .semibold(name)
                 .normal(" ")
                 .normal("transfered you".localized())
                 .normal(" \(notification.value!.amount) \(notification.value!.currency)")
@@ -65,18 +65,18 @@ enum NotificationType: String {
             break
         case .reply:
             let text = NSMutableAttributedString()
-                .bold(name)
+                .semibold(name)
             
             if let comment = notification.comment {
                 text.normal(" ")
                     .normal("replied to your comment".localized())
                     .normal(": ")
-                    .bold(comment.body)
+                    .semibold(comment.body)
             } else if let post = notification.post {
                 text.normal(" ")
                     .normal("commented on a post".localized())
                     .normal(": ")
-                    .bold(post.title ?? "")
+                    .semibold(post.title ?? "")
             }
             
             detail.text = text
@@ -84,7 +84,7 @@ enum NotificationType: String {
             break
         case .mention:
             let text = NSMutableAttributedString()
-                .bold(name)
+                .semibold(name)
                 .normal(" ")
                 .normal("mentioned you".localized())
             
@@ -92,14 +92,14 @@ enum NotificationType: String {
                 text.normal(" ")
                     .normal("in a post".localized())
                     .normal(": ")
-                    .bold(post.title ?? "")
+                    .semibold(post.title ?? "")
             }
             
             if let comment = notification.comment {
                 text.normal(" ")
                     .normal("in a comment".localized())
                     .normal(": ")
-                    .bold(comment.body)
+                    .semibold(comment.body)
             }
             
             detail.text = text
@@ -107,19 +107,19 @@ enum NotificationType: String {
             break
         case .reward:
             let text = NSMutableAttributedString()
-                .bold("+\(notification.value!.amount) \(notification.value!.currency). ")
+                .semibold("+\(notification.value!.amount) \(notification.value!.currency). ")
                 .normal("Reward for post".localized())
                 .normal(": ")
-                .bold(notification.post!.title ?? "")
+                .semibold(notification.post!.title ?? "")
             detail.text = text
             detail.icon = UIImage(named: "NotificationRewardsForPost")
             break
         case .curatorReward:
             let text = NSMutableAttributedString()
-                .bold("+\(notification.value!.amount) \(notification.value!.currency). ")
+                .semibold("+\(notification.value!.amount) \(notification.value!.currency). ")
                 .normal("Reward for votes".localized())
                 .normal(": ")
-                .bold(notification.post!.title ?? "")
+                .semibold(notification.post!.title ?? "")
             detail.text = text
             detail.icon = UIImage(named: "NotificationRewardsForVotes")
             break

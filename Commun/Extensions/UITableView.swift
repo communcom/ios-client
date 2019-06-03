@@ -9,9 +9,19 @@
 import Foundation
 import ASSpinnerView
 
+// Tags for footerView
+let loadingViewTag = 9999
+let postLoadingFooterViewTag = 99991
+let listErrorFooterViewTag = 99992
+
 extension UITableView {
     func addLoadingFooterView() {
+        // Prevent dupplicating
+        if tableFooterView?.tag == loadingViewTag {
+            return
+        }
         let containerView = UIView(frame: CGRect(x: 0, y: 0, width: self.width, height: 60))
+        containerView.tag = loadingViewTag
         let spinnerView = ASSpinnerView()
         spinnerView.spinnerLineWidth = 4
         spinnerView.spinnerDuration = 0.3
@@ -29,8 +39,12 @@ extension UITableView {
     }
     
     func addPostLoadingFooterView() {
+        // Prevent dupplicating
+        if tableFooterView?.tag == postLoadingFooterViewTag {
+            return
+        }
         let containerView = UIView(frame: CGRect(x: 0, y: 0, width: self.width, height: 352))
-        
+        containerView.tag = postLoadingFooterViewTag
         let placeholderPostCell = PlaceholderPostCell(frame: CGRect(x: 0, y: 0, width: self.width, height: 352))
         containerView.addSubview(placeholderPostCell)
 
@@ -43,11 +57,19 @@ extension UITableView {
         self.tableFooterView = containerView
     }
     
-    func addListErrorFooterView(with buttonHandler: (()->Void)?) {
-        let containerView = UIView(frame: CGRect(x: 0, y: 0, width: self.width, height: 60))
+    func addListErrorFooterView(with buttonHandler: Selector?) {
+        // Prevent dupplicating
+        if tableFooterView?.tag == listErrorFooterViewTag {
+            return
+        }
+        let containerView = UIView(frame: CGRect(x: 0, y: 0, width: self.width, height: 44))
+        containerView.tag = listErrorFooterViewTag
         let label = UILabel()
         label.numberOfLines = 0
-        label.text = "Can not fetch next items. Try agains?"
+        label.attributedText = NSMutableAttributedString().normal("Can not fetch next items".localized())
+            .normal(". ")
+            .bold("Try again".localized())
+            .bold("?")
         label.textAlignment = .center
         label.font = .systemFont(ofSize: 14)
         label.textColor = .gray
@@ -60,6 +82,12 @@ extension UITableView {
         label.centerYAnchor.constraint(equalTo: containerView.centerYAnchor, constant: 0).isActive = true
         label.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16).isActive = true
         label.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16).isActive = true
+        
+        if let selector = buttonHandler {
+            let tap = UITapGestureRecognizer(target: self, action: selector)
+            label.isUserInteractionEnabled = true
+            label.addGestureRecognizer(tap)
+        }
         
         self.tableFooterView = containerView
     }

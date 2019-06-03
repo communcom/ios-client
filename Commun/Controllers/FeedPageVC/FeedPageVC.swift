@@ -31,6 +31,7 @@ class FeedPageVC: UIViewController {
         viewModel = FeedPageViewModel()
         
         viewModel.loadingHandler = {
+            if self.viewModel.fetcher.reachedTheEnd {return}
             self.tableView.addPostLoadingFooterView()
         }
         

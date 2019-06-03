@@ -9,7 +9,14 @@
 import Foundation
 
 extension NSMutableAttributedString {
-    @discardableResult func bold(_ text: String, font: UIFont = UIFont.systemFont(ofSize: 15, weight: .semibold)) -> NSMutableAttributedString {
+    @discardableResult func bold(_ text: String, font: UIFont = UIFont.systemFont(ofSize: 15, weight: .bold)) -> NSMutableAttributedString {
+        let attrs: [NSAttributedString.Key: Any] = [.font: font]
+        let boldString = NSAttributedString(string:text, attributes: attrs)
+        append(boldString)
+        return self
+    }
+    
+    @discardableResult func semibold(_ text: String, font: UIFont = UIFont.systemFont(ofSize: 15, weight: .semibold)) -> NSMutableAttributedString {
         let attrs: [NSAttributedString.Key: Any] = [.font: font]
         let boldString = NSAttributedString(string:text, attributes: attrs)
         append(boldString)
@@ -26,6 +33,13 @@ extension NSMutableAttributedString {
     @discardableResult func gray(_ text: String, font: UIFont = UIFont.systemFont(ofSize: 15)) -> NSMutableAttributedString {
         let attrs: [NSAttributedString.Key: Any] = [.font: font]
         let normal = NSAttributedString(string: text, attributes: attrs).colored(with: UIColor.gray)
+        append(normal)
+        return self
+    }
+    
+    @discardableResult func underline(_ text: String, font: UIFont = UIFont.systemFont(ofSize: 15)) -> NSMutableAttributedString {
+        let attrs: [NSAttributedString.Key: Any] = [.font: font, .underlineStyle: NSUnderlineStyle.single]
+        let normal = NSAttributedString(string: text, attributes: attrs)
         append(normal)
         return self
     }
