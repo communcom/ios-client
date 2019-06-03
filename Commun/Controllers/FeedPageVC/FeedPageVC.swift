@@ -40,7 +40,7 @@ class FeedPageVC: UIViewController {
         }
         
         viewModel.fetchNextErrorHandler = {error in
-            self.tableView.addListErrorFooterView(with: nil)
+            self.tableView.addListErrorFooterView(with: #selector(self.didTapTryAgain(gesture:)), on: self)
         }
         
         navigationController?.navigationBar.barTintColor = .white
@@ -137,5 +137,15 @@ class FeedPageVC: UIViewController {
     
     @objc func refresh() {
         viewModel.reload()
+    }
+    
+    @objc func didTapTryAgain(gesture: UITapGestureRecognizer) {
+        guard let label = gesture.view as? UILabel,
+            let text = label.text else {return}
+        
+        let tryAgainRange = (text as NSString).range(of: "Try again".localized())
+        if gesture.didTapAttributedTextInLabel(label: label, inRange: tryAgainRange) {
+            self.viewModel.fetchNext()
+        }
     }
 }

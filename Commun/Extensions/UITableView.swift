@@ -57,7 +57,7 @@ extension UITableView {
         self.tableFooterView = containerView
     }
     
-    func addListErrorFooterView(with buttonHandler: Selector?) {
+    func addListErrorFooterView(with buttonHandler: Selector? = nil, on target: AnyObject) {
         // Prevent dupplicating
         if tableFooterView?.tag == listErrorFooterViewTag {
             return
@@ -84,7 +84,7 @@ extension UITableView {
         label.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16).isActive = true
         
         if let selector = buttonHandler {
-            let tap = UITapGestureRecognizer(target: self, action: selector)
+            let tap = UITapGestureRecognizer(target: target, action: selector)
             label.isUserInteractionEnabled = true
             label.addGestureRecognizer(tap)
         }
