@@ -16,6 +16,9 @@ protocol ItemsListController {
     associatedtype T: Equatable & IdentifiableType
     var items: BehaviorRelay<[T]> {get set}
     var disposeBag: DisposeBag {get}
+    var loadingHandler: (()->Void)? {get set}
+    var listEndedHandler: (()->Void)? {get set}
+    var fetchNextErrorHandler: ((Error)->Void)? {get set}
 }
 
 extension ItemsListController {

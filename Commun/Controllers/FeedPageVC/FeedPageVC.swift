@@ -27,7 +27,20 @@ class FeedPageVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        // Config viewModel
         viewModel = FeedPageViewModel()
+        
+        viewModel.loadingHandler = {
+            self.tableView.addPostLoadingFooterView()
+        }
+        
+        viewModel.listEndedHandler = {
+            self.tableView.tableFooterView = UIView()
+        }
+        
+        viewModel.fetchNextErrorHandler = {error in
+            self.tableView.addListErrorFooterView(with: nil)
+        }
         
         navigationController?.navigationBar.barTintColor = .white
         
@@ -50,9 +63,8 @@ class FeedPageVC: UIViewController {
         
         // tableView
         tableView.register(UINib(nibName: "PostCardCell", bundle: nil), forCellReuseIdentifier: "PostCardCell")
-        tableView.register(UINib(nibName: "PlaceholderPostCell", bundle: nil), forCellReuseIdentifier: "PlaceholderPostCell")
         tableView.rowHeight = UITableView.automaticDimension
-        tableView.tableFooterView = UIView()
+        tableView.addPostLoadingFooterView()
         tableView.refreshControl = UIRefreshControl()
         tableView.refreshControl?.addTarget(self, action: #selector(refresh), for: .valueChanged)
         

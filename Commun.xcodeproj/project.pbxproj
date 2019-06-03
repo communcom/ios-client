@@ -41,6 +41,7 @@
 		3B51581C226DE28D00108F17 /* EmptyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B51581B226DE28D00108F17 /* EmptyCell.swift */; };
 		3B51581E226E0D3A00108F17 /* TLPhotosPickerViewController+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B51581D226E0D3A00108F17 /* TLPhotosPickerViewController+Rx.swift */; };
 		3B5CB2FF22A5416D00757533 /* Auth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5CB2FE22A5416D00757533 /* Auth.swift */; };
+		3B5CB30122A55D3E00757533 /* PlaceholderPostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5CB30022A55D3E00757533 /* PlaceholderPostCell.swift */; };
 		3B5D7CEF2297F3FA0077B82C /* ItemsListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5D7CEE2297F3FA0077B82C /* ItemsListController.swift */; };
 		3B5D7CF12299D79B0077B82C /* FeedSortMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5D7CF02299D79B0077B82C /* FeedSortMode.swift */; };
 		3B635F7F22772D87006DAAB2 /* PostsFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B635F7E22772D87006DAAB2 /* PostsFetcher.swift */; };
@@ -66,7 +67,6 @@
 		3BF37BCA22A11FA700A72FFE /* UIView+Loading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BF37BC922A11FA700A72FFE /* UIView+Loading.swift */; };
 		3BF37BCC22A1297C00A72FFE /* UITableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BF37BCB22A1297C00A72FFE /* UITableView.swift */; };
 		3BF37BD022A137EE00A72FFE /* ResponseAPIContentGetPost.json in Resources */ = {isa = PBXBuildFile; fileRef = 3BF37BCF22A137EE00A72FFE /* ResponseAPIContentGetPost.json */; };
-		3BF37BD322A1414200A72FFE /* PlaceholderPostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BF37BD122A1414200A72FFE /* PlaceholderPostCell.swift */; };
 		3BF37BD422A1414200A72FFE /* PlaceholderPostCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3BF37BD222A1414200A72FFE /* PlaceholderPostCell.xib */; };
 		3BF37BD622A162E000A72FFE /* ResponseAPIOnlineNotificationData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BF37BD522A162E000A72FFE /* ResponseAPIOnlineNotificationData.swift */; };
 		3BF37BD822A1666200A72FFE /* ResponseAPIOnlineNotifyHistoryResult.json in Resources */ = {isa = PBXBuildFile; fileRef = 3BF37BD722A1666200A72FFE /* ResponseAPIOnlineNotifyHistoryResult.json */; };
@@ -241,6 +241,7 @@
 		3B51581B226DE28D00108F17 /* EmptyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyCell.swift; sourceTree = "<group>"; };
 		3B51581D226E0D3A00108F17 /* TLPhotosPickerViewController+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TLPhotosPickerViewController+Rx.swift"; sourceTree = "<group>"; };
 		3B5CB2FE22A5416D00757533 /* Auth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Auth.swift; sourceTree = "<group>"; };
+		3B5CB30022A55D3E00757533 /* PlaceholderPostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceholderPostCell.swift; sourceTree = "<group>"; };
 		3B5D7CEE2297F3FA0077B82C /* ItemsListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemsListController.swift; sourceTree = "<group>"; };
 		3B5D7CF02299D79B0077B82C /* FeedSortMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedSortMode.swift; sourceTree = "<group>"; };
 		3B635F7E22772D87006DAAB2 /* PostsFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostsFetcher.swift; sourceTree = "<group>"; };
@@ -266,7 +267,6 @@
 		3BF37BC922A11FA700A72FFE /* UIView+Loading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Loading.swift"; sourceTree = "<group>"; };
 		3BF37BCB22A1297C00A72FFE /* UITableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableView.swift; sourceTree = "<group>"; };
 		3BF37BCF22A137EE00A72FFE /* ResponseAPIContentGetPost.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ResponseAPIContentGetPost.json; sourceTree = "<group>"; };
-		3BF37BD122A1414200A72FFE /* PlaceholderPostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceholderPostCell.swift; sourceTree = "<group>"; };
 		3BF37BD222A1414200A72FFE /* PlaceholderPostCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlaceholderPostCell.xib; sourceTree = "<group>"; };
 		3BF37BD522A162E000A72FFE /* ResponseAPIOnlineNotificationData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseAPIOnlineNotificationData.swift; sourceTree = "<group>"; };
 		3BF37BD722A1666200A72FFE /* ResponseAPIOnlineNotifyHistoryResult.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ResponseAPIOnlineNotifyHistoryResult.json; sourceTree = "<group>"; };
@@ -671,8 +671,8 @@
 			children = (
 				572F81A0223C164B0007F2F9 /* PostCardCell.swift */,
 				572F81A1223C164B0007F2F9 /* PostCardCell.xib */,
-				3BF37BD122A1414200A72FFE /* PlaceholderPostCell.swift */,
 				3BF37BD222A1414200A72FFE /* PlaceholderPostCell.xib */,
+				3B5CB30022A55D3E00757533 /* PlaceholderPostCell.swift */,
 			);
 			path = PostCardCell;
 			sourceTree = "<group>";
@@ -1382,7 +1382,6 @@
 				B17A970C228002440081B8E0 /* SignUpRouter.swift in Sources */,
 				5787C0C422650F9D00568CEC /* SetUserVC.swift in Sources */,
 				5721E87122650AC0003BE04B /* StringExtension.swift in Sources */,
-				3BF37BD322A1414200A72FFE /* PlaceholderPostCell.swift in Sources */,
 				3B0E9C732270785E002AB1C2 /* PhotoLibraryCell.swift in Sources */,
 				3B51581E226E0D3A00108F17 /* TLPhotosPickerViewController+Rx.swift in Sources */,
 				57840A07223FAC1B00338FD5 /* UIView+Appearance.swift in Sources */,
@@ -1465,6 +1464,7 @@
 				57CBD95E225517B4000BA8CC /* EditorPageVC+Actions.swift in Sources */,
 				3B2F2269226892C5006B589E /* NotificationCell.swift in Sources */,
 				57840A1B2240DB9400338FD5 /* NetworkService.swift in Sources */,
+				3B5CB30122A55D3E00757533 /* PlaceholderPostCell.swift in Sources */,
 				572517322243935C0033125C /* ControllerContainer.swift in Sources */,
 				576DC91B223E41F600EDED41 /* FeedPageViewModel.swift in Sources */,
 				3BA4D0872292BA710022A69D /* ResponseAPIContentGetPost.swift in Sources */,

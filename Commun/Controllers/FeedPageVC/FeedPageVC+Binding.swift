@@ -50,10 +50,6 @@ extension FeedPageVC {
         // items
         let dataSource = RxTableViewSectionedAnimatedDataSource<PostSection>(
             configureCell: { dataSource, tableView, indexPath, item in
-                if item.contentId.permlink.starts(with: "___mock___") {
-                    let cell = tableView.dequeueReusableCell(withIdentifier: "PlaceholderPostCell", for: indexPath) as! PlaceholderPostCell
-                    return cell
-                }
                 let cell = tableView.dequeueReusableCell(withIdentifier: "PostCardCell", for: indexPath) as! PostCardCell
                 cell.setUp(with: item)
                 
@@ -66,9 +62,8 @@ extension FeedPageVC {
         )
         
         viewModel.items
-            .map {[PostSection(model: "", items: $0.count>0 ? $0: ResponseAPIContentGetFeedResult.mockData()!.result!.items!)]}
+            .map {[PostSection(model: "", items: $0)]}
             .do(onNext: {section in
-                section[0].items.count > 0 ? self.view.hideLoading(): self.view.showLoading()
                 self.tableView.refreshControl?.endRefreshing()
             })
             .bind(to: tableView.rx.items(dataSource: dataSource))

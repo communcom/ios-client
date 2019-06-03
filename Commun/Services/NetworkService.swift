@@ -44,12 +44,6 @@ class NetworkService: NSObject {
                                                     return
                                                 }
                                                 
-                                                guard feed?.sequenceKey != nil else {
-                                                    observer.onError(NSError(domain: "io.commun.eos.ios", code: 0, userInfo: nil))
-                                                    Logger.log(message: "Feed is finished.", event: .error)
-                                                    return
-                                                }
-                                                
                                                 if let feed = feed {
                                                     observer.onNext(feed)
                                                 }

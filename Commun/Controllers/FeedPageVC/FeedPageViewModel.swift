@@ -22,6 +22,11 @@ class FeedPageViewModel: PostsListController {
     
     let fetcher = PostsFetcher(sortType: .all, feedType: .popular, feedTypeMode: .community)
     
+    // Handlers
+    var listEndedHandler: (() -> Void)?
+    var fetchNextErrorHandler: ((Error) -> Void)?
+    var loadingHandler: (() -> Void)?
+    
     init() {
         // bind filter
         bindFilter()
@@ -32,35 +37,41 @@ class FeedPageViewModel: PostsListController {
     }
     
     func bindFilter() {
-        #warning("handle error")
         Observable.combineLatest(sortType.distinctUntilChanged(), feedType.distinctUntilChanged(), feedTypeMode.distinctUntilChanged())
             .filter({ (sortType, feedType, feedTypeMode) -> Bool in
                 if feedTypeMode == .byUser && feedType == .popular {return false}
                 return true
             })
-            .flatMapLatest({ (sortType, feedType, feedTypeMode) -> Single<[ResponseAPIContentGetPost]> in
+            .subscribe(onNext: {(sortType, feedType, feedTypeMode) in
                 self.items.accept([])
                 self.fetcher.reset()
                 self.fetcher.sortType = sortType
                 self.fetcher.feedType = feedType
                 self.fetcher.feedTypeMode = feedTypeMode
-                return self.fetcher.fetchNext()
-                    .catchErrorJustReturn([])
+                self.fetchNext()
             })
-            .asDriver(onErrorJustReturn: [])
-            .drive(items)
             .disposed(by: disposeBag)
         
     }
     
     func fetchNext() {
         fetcher.fetchNext()
+            .do(onSubscribed: {
+                self.loadingHandler?()
+            })
             .subscribe(onSuccess: { (list) in
-                guard list.count > 0 else {return}
-                let newList = list.filter {!self.items.value.contains($0)}
-                self.items.accept(self.items.value + newList)
+                if list.count > 0 {
+                    let newList = list.filter {!self.items.value.contains($0)}
+                    self.items.accept(self.items.value + newList)
+                }
+                
+                if self.fetcher.reachedTheEnd {
+                    self.listEndedHandler?()
+                    return
+                }
+                
             }) { (error) in
-                #warning("handle error")
+                self.fetchNextErrorHandler?(error)
             }
             .disposed(by: disposeBag)
     }

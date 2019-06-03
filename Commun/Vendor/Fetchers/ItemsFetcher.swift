@@ -46,7 +46,7 @@ class ItemsFetcher<T: Decodable> {
                 self.isFetching = false
                 
                 // mark the end of the fetch
-                if result.count < self.limit {
+                if result.count < self.limit || self.sequenceKey == nil {
                     self.reachedTheEnd = true
                 }
                 
