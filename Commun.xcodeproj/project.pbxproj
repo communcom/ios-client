@@ -37,6 +37,7 @@
 		3B2F226F226892C5006B589E /* NotificationsPageVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3B2F2268226892C5006B589E /* NotificationsPageVC.storyboard */; };
 		3B2F227122689308006B589E /* TabBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B2F227022689308006B589E /* TabBarViewModel.swift */; };
 		3B2F227322689334006B589E /* NSMutableAttributedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B2F227222689334006B589E /* NSMutableAttributedString.swift */; };
+		3B4ECA3D22A6741D00F59FC8 /* NotificationsPage+EmptyDataSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B4ECA3C22A6741D00F59FC8 /* NotificationsPage+EmptyDataSet.swift */; };
 		3B515819226DDE8D00108F17 /* EmptyCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3B515818226DDE8D00108F17 /* EmptyCell.xib */; };
 		3B51581C226DE28D00108F17 /* EmptyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B51581B226DE28D00108F17 /* EmptyCell.swift */; };
 		3B51581E226E0D3A00108F17 /* TLPhotosPickerViewController+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B51581D226E0D3A00108F17 /* TLPhotosPickerViewController+Rx.swift */; };
@@ -244,6 +245,7 @@
 		3B2F2268226892C5006B589E /* NotificationsPageVC.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = NotificationsPageVC.storyboard; sourceTree = "<group>"; };
 		3B2F227022689308006B589E /* TabBarViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarViewModel.swift; sourceTree = "<group>"; };
 		3B2F227222689334006B589E /* NSMutableAttributedString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSMutableAttributedString.swift; sourceTree = "<group>"; };
+		3B4ECA3C22A6741D00F59FC8 /* NotificationsPage+EmptyDataSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotificationsPage+EmptyDataSet.swift"; sourceTree = "<group>"; };
 		3B515818226DDE8D00108F17 /* EmptyCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmptyCell.xib; sourceTree = "<group>"; };
 		3B51581B226DE28D00108F17 /* EmptyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyCell.swift; sourceTree = "<group>"; };
 		3B51581D226E0D3A00108F17 /* TLPhotosPickerViewController+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TLPhotosPickerViewController+Rx.swift"; sourceTree = "<group>"; };
@@ -494,6 +496,7 @@
 				3B5CB30B22A57D5B00757533 /* NotificationPageVC+Binding.swift */,
 				3B2F2264226892C4006B589E /* NotificationsPageViewModel.swift */,
 				3B2F2267226892C4006B589E /* NotificationType.swift */,
+				3B4ECA3C22A6741D00F59FC8 /* NotificationsPage+EmptyDataSet.swift */,
 			);
 			path = NotificationsPageVC;
 			sourceTree = "<group>";
@@ -1464,6 +1467,7 @@
 				3B02CD1F228965AF0078BB52 /* CommentCellDelegate+UIViewController.swift in Sources */,
 				3B197C532269BE0E008CF10D /* SegmentioExtension.swift in Sources */,
 				57B6FC2C224A9F2800BCFDDA /* WelcomeItemVC.swift in Sources */,
+				3B4ECA3D22A6741D00F59FC8 /* NotificationsPage+EmptyDataSet.swift in Sources */,
 				3BAF69CD22677E440055CCEB /* ProfilePageViewModel.swift in Sources */,
 				3B5CB30822A57AA400757533 /* PlaceholderNotificationCell.swift in Sources */,
 				575AECAC226066F800A7EC2D /* FormTextField.swift in Sources */,

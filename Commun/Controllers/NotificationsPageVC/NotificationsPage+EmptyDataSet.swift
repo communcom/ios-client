@@ -7,3 +7,24 @@
 //
 
 import Foundation
+import DZNEmptyDataSet
+
+extension NotificationsPageVC: DZNEmptyDataSetDelegate, DZNEmptyDataSetSource {
+    func image(forEmptyDataSet scrollView: UIScrollView!) -> UIImage! {
+        return UIImage(named: "notifications")
+    }
+    
+    func emptyDataSetShouldDisplay(_ scrollView: UIScrollView!) -> Bool {
+        return dataSource.isEmpty
+    }
+    
+    func title(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
+        return NSMutableAttributedString()
+            .bold("No notification".localized(), font: .boldSystemFont(ofSize: 18))
+    }
+    
+    func description(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
+        return NSMutableAttributedString()
+            .gray("You have no notification".localized())
+    }
+}

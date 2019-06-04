@@ -15,6 +15,16 @@ extension FeedPageVC: DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
     }
     
     func emptyDataSetShouldDisplay(_ scrollView: UIScrollView!) -> Bool {
-        return dataSource.isEmpty && viewModel.fetcher.reachedTheEnd
+        return dataSource.isEmpty
+    }
+    
+    func title(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
+        return NSMutableAttributedString()
+            .bold("No post".localized())
+    }
+    
+    func description(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
+        return NSMutableAttributedString()
+            .gray("We have no post to show".localized())
     }
 }

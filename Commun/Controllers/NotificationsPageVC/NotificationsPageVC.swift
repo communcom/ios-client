@@ -10,12 +10,16 @@ import UIKit
 import RxSwift
 import RxCocoa
 import CyberSwift
+import RxDataSources
+import DZNEmptyDataSet
 
 class NotificationsPageVC: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     
     var viewModel: NotificationsPageViewModel!
     let bag = DisposeBag()
+    
+    var dataSource: MyRxTableViewSectionedAnimatedDataSource<NotificationSection>!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,6 +28,20 @@ class NotificationsPageVC: UIViewController {
         tableView.estimatedRowHeight = 80
         tableView.tableFooterView = UIView()
         tableView.register(UINib(nibName: "NotificationCell", bundle: nil), forCellReuseIdentifier: "NotificationCell")
+        
+        // tableView dataSource
+        dataSource = MyRxTableViewSectionedAnimatedDataSource<NotificationSection>(configureCell: {_, _, indexPath, item in
+            let cell = self.tableView.dequeueReusableCell(withIdentifier: "NotificationCell") as! NotificationCell
+            cell.configure(with: item)
+            if indexPath.row >= self.viewModel.list.value.count - 5 {
+                self.viewModel.fetchNext()
+            }
+            return cell
+        })
+        
+        // tableView emptyDataSet
+        tableView.emptyDataSetDelegate = self
+        tableView.emptyDataSetSource = self
         
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)

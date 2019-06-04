@@ -27,15 +27,6 @@ extension NotificationsPageVC {
             .disposed(by: bag)
         
         // Bind value to tableView
-        let dataSource = RxTableViewSectionedAnimatedDataSource<NotificationSection>(configureCell: {_, _, indexPath, item in
-            let cell = self.tableView.dequeueReusableCell(withIdentifier: "NotificationCell") as! NotificationCell
-            cell.configure(with: item)
-            if indexPath.row >= self.viewModel.list.value.count - 5 {
-                self.viewModel.fetchNext()
-            }
-            return cell
-        })
-        
         list
             .do(onNext: {[weak self] items in
                 self?.tableView.refreshControl?.endRefreshing()
