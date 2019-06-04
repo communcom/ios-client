@@ -20,7 +20,7 @@ extension NotificationsPageVC: DZNEmptyDataSetDelegate, DZNEmptyDataSetSource {
     
     func title(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
         return NSMutableAttributedString()
-            .bold("No notification".localized(), font: .boldSystemFont(ofSize: 18))
+            .bold("No notification".localized(), font: .boldSystemFont(ofSize: 22))
     }
     
     func description(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {

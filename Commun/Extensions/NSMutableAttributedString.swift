@@ -9,9 +9,9 @@
 import Foundation
 
 extension NSMutableAttributedString {
-    @discardableResult func bold(_ text: String, font: UIFont = UIFont.systemFont(ofSize: 15, weight: .bold)) -> NSMutableAttributedString {
+    @discardableResult func bold(_ text: String, font: UIFont = UIFont.systemFont(ofSize: 15, weight: .bold), color: UIColor = .black) -> NSMutableAttributedString {
         let attrs: [NSAttributedString.Key: Any] = [.font: font]
-        let boldString = NSAttributedString(string:text, attributes: attrs)
+        let boldString = NSAttributedString(string:text, attributes: attrs).colored(with: color)
         append(boldString)
         return self
     }
