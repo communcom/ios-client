@@ -446,6 +446,7 @@ class NetworkService: NSObject {
                 guard let id = transaction.body?.transaction_id else {return .error(ErrorAPI.responseUnsuccessful(message: "transactionId is missing"))}
                 return self.waitForTransactionWith(id: id)
             })
+            .observeOn(MainScheduler.instance)
     }
     
     // MARK: - options
