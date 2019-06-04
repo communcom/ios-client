@@ -25,6 +25,7 @@ class ProfilePageVC: UIViewController {
     @IBOutlet weak var segmentio: Segmentio!
     
     @IBOutlet weak var copyReferralLinkButton: UIButton!
+    @IBOutlet weak var errorView: UIView!
     
     let bag = DisposeBag()
     let viewModel = ProfilePageViewModel()
@@ -56,6 +57,14 @@ class ProfilePageVC: UIViewController {
     
     func setUpViews() {
         // Configure viewModel
+        viewModel.profileLoadingHandler = { [weak self] loading in
+            loading ? self?.view.showLoading(): self?.view.hideLoading()
+        }
+        
+        viewModel.profileFetchingErrorHandler = {[weak self] error in
+            self?.errorView.isHidden = (error == nil)
+        }
+        
         viewModel.loadingHandler = {[weak self] in
             
         }
@@ -131,5 +140,9 @@ class ProfilePageVC: UIViewController {
     @IBAction func settingsButtonDidTouch(_ sender: Any) {
         let settingsVC = controllerContainer.resolve(SettingsVC.self)!
         self.show(settingsVC, sender: nil)
+    }
+    
+    @IBAction func btnRetryDidTouch(_ sender: Any) {
+        refresh()
     }
 }

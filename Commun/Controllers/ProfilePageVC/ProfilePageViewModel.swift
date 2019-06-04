@@ -28,6 +28,9 @@ class ProfilePageViewModel: ListViewModelType {
     var listEndedHandler: (() -> Void)?
     var fetchNextErrorHandler: ((Error) -> Void)?
     
+    var profileLoadingHandler: ((Bool) -> Void)?
+    var profileFetchingErrorHandler: ((Error?) -> Void)?
+    
     init() {
         bindElements()
         
@@ -116,11 +119,17 @@ class ProfilePageViewModel: ListViewModelType {
     // MARK: - For profile view
     func loadProfile() {
         NetworkService.shared.getUserProfile()
+            .do(onSubscribed: {
+                self.profileLoadingHandler?(true)
+                self.profileFetchingErrorHandler?(nil)
+            })
             .subscribe(onSuccess: { (profile) in
+                self.profileLoadingHandler?(false)
+                self.profileFetchingErrorHandler?(nil)
                 self.profile.accept(profile)
             }) { (error) in
-                #warning("handle error")
-                print(error)
+                self.profileLoadingHandler?(false)
+                self.profileFetchingErrorHandler?(error)
             }
             .disposed(by: bag)
     }

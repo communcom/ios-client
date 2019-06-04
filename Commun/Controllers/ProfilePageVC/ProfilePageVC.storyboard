@@ -403,10 +403,37 @@
                                     </constraints>
                                 </view>
                             </tableView>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YxM-em-tP8">
+                                <rect key="frame" x="0.0" y="691" width="414" height="128"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="VgM-Ht-PRE">
+                                        <rect key="frame" x="118" y="40" width="178" height="48"/>
+                                        <state key="normal" title="Could not retrieve profile.  Tap to try again">
+                                            <color key="titleColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="titleLabel.textAlignment">
+                                                <integer key="value" value="1"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="btnRetryDidTouch:" destination="9sa-e9-4fu" eventType="touchUpInside" id="MlU-0c-RgQ"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="128" id="CIg-1j-pGK"/>
+                                    <constraint firstItem="VgM-Ht-PRE" firstAttribute="centerX" secondItem="YxM-em-tP8" secondAttribute="centerX" id="NZa-Wm-l1V"/>
+                                    <constraint firstItem="VgM-Ht-PRE" firstAttribute="centerY" secondItem="YxM-em-tP8" secondAttribute="centerY" id="WSb-JC-uGR"/>
+                                    <constraint firstAttribute="width" constant="414" id="cYm-dK-kXs"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="fdx-8K-eYs" firstAttribute="bottom" secondItem="e12-D3-bCz" secondAttribute="bottom" id="CRt-O7-s9L"/>
+                            <constraint firstItem="YxM-em-tP8" firstAttribute="centerX" secondItem="e12-D3-bCz" secondAttribute="centerX" id="Lbd-8j-w8Y"/>
+                            <constraint firstItem="YxM-em-tP8" firstAttribute="centerY" secondItem="e12-D3-bCz" secondAttribute="centerY" id="aiA-2R-o4k"/>
                             <constraint firstItem="fdx-8K-eYs" firstAttribute="leading" secondItem="e12-D3-bCz" secondAttribute="leading" id="akV-Xz-RF8"/>
                             <constraint firstItem="fdx-8K-eYs" firstAttribute="top" secondItem="4qE-go-fVJ" secondAttribute="top" id="gBK-zG-Eut"/>
                             <constraint firstItem="fdx-8K-eYs" firstAttribute="trailing" secondItem="e12-D3-bCz" secondAttribute="trailing" id="oA4-Ha-Fpd"/>
@@ -419,6 +446,7 @@
                         <outlet property="bioLabel" destination="oe9-4A-of4" id="Pn4-t7-rAz"/>
                         <outlet property="communitiesCountLabel" destination="bNu-7d-aQd" id="e1d-Aq-6Bb"/>
                         <outlet property="copyReferralLinkButton" destination="kqh-z7-9H2" id="64l-YQ-YJk"/>
+                        <outlet property="errorView" destination="YxM-em-tP8" id="CXO-ev-TUW"/>
                         <outlet property="followersCountLabel" destination="8lu-a4-7V6" id="SUz-Hj-F36"/>
                         <outlet property="followingsCountLabel" destination="P9F-R4-4qL" id="EKc-hS-8Fz"/>
                         <outlet property="joinedDateLabel" destination="zzx-Z4-0fu" id="MgC-8m-t2m"/>

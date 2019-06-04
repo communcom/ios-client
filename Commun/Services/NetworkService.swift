@@ -310,6 +310,7 @@ class NetworkService: NSObject {
             RestAPIManager.instance.getProfile(nickName: userNickName,
                                                completion: { (response, error) in
                                                 guard error == nil else {
+                                                    Logger.log(message: "Error loadding profile: \(error!)", event: .error)
                                                     single(.error(error!))
                                                     return
                                                 }
