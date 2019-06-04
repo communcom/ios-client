@@ -14,7 +14,6 @@ class ProfileEditBioVC: UIViewController {
     @IBOutlet weak var postButton: UIBarButtonItem!
     @IBOutlet weak var characterCountLabel: UILabel!
     @IBOutlet weak var textView: UITextView!
-    @IBOutlet weak var textViewPlaceholder: UILabel!
     
     var bio: String?
     let didConfirm = PublishSubject<String>()
@@ -33,13 +32,10 @@ class ProfileEditBioVC: UIViewController {
     
     func bindUI() {
         // Bind textView
-        let nonEmpty = textView.rx.text.orEmpty
-            .map {$0.count != 0}
+        let bioChanged = textView.rx.text.orEmpty
+            .map {$0.count != 0 && $0 != self.bio}
         
-        nonEmpty.bind(to: postButton.rx.isEnabled)
-            .disposed(by: bag)
-        
-        nonEmpty.bind(to: textViewPlaceholder.rx.isHidden)
+        bioChanged.bind(to: postButton.rx.isEnabled)
             .disposed(by: bag)
         
         textView.rx.text.orEmpty

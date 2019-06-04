@@ -473,17 +473,14 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Enter text..."/>
+                                </userDefinedRuntimeAttributes>
                             </textView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0/100" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xQa-Bg-Qs9">
                                 <rect key="frame" x="363" y="212" width="35" height="16"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                 <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter text..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="epN-Wh-nIH">
-                                <rect key="frame" x="20" y="112" width="378" height="20.5"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
@@ -496,10 +493,7 @@
                             <constraint firstItem="C4I-yg-0Pt" firstAttribute="trailing" secondItem="LoW-mp-VKe" secondAttribute="trailing" id="J5H-Q8-r9E"/>
                             <constraint firstItem="gJ1-xi-lrj" firstAttribute="top" secondItem="C4I-yg-0Pt" secondAttribute="bottom" constant="16" id="P81-97-jqx"/>
                             <constraint firstItem="C4I-yg-0Pt" firstAttribute="top" secondItem="LoW-mp-VKe" secondAttribute="top" id="egI-5K-b3G"/>
-                            <constraint firstItem="epN-Wh-nIH" firstAttribute="top" secondItem="gJ1-xi-lrj" secondAttribute="top" constant="8" id="ico-fz-Kcq"/>
                             <constraint firstItem="gJ1-xi-lrj" firstAttribute="trailing" secondItem="LoW-mp-VKe" secondAttribute="trailing" constant="-16" id="kUf-Gr-uGB"/>
-                            <constraint firstItem="epN-Wh-nIH" firstAttribute="leading" secondItem="gJ1-xi-lrj" secondAttribute="leading" constant="4" id="kb7-RB-jpi"/>
-                            <constraint firstItem="epN-Wh-nIH" firstAttribute="trailing" secondItem="gJ1-xi-lrj" secondAttribute="trailing" id="pbS-FB-dci"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="LoW-mp-VKe"/>
                     </view>
@@ -507,7 +501,6 @@
                         <outlet property="characterCountLabel" destination="xQa-Bg-Qs9" id="yml-Hl-fdn"/>
                         <outlet property="postButton" destination="NIb-5z-Of3" id="Ff3-3Y-kKv"/>
                         <outlet property="textView" destination="gJ1-xi-lrj" id="2ky-0b-Fvl"/>
-                        <outlet property="textViewPlaceholder" destination="epN-Wh-nIH" id="ezh-Ur-llh"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AR4-n3-EEi" userLabel="First Responder" sceneMemberID="firstResponder"/>
