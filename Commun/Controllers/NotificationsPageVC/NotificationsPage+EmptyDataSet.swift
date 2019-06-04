@@ -27,4 +27,8 @@ extension NotificationsPageVC: DZNEmptyDataSetDelegate, DZNEmptyDataSetSource {
         return NSMutableAttributedString()
             .gray("You have no notification".localized())
     }
+    
+    func emptyDataSet(_ scrollView: UIScrollView!, didTap view: UIView!) {
+        viewModel.reload()
+    }
 }

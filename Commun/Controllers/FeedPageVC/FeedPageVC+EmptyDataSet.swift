@@ -27,4 +27,8 @@ extension FeedPageVC: DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
         return NSMutableAttributedString()
             .gray("We have no post to show".localized())
     }
+    
+    func emptyDataSet(_ scrollView: UIScrollView!, didTap view: UIView!) {
+        viewModel.reload()
+    }
 }
