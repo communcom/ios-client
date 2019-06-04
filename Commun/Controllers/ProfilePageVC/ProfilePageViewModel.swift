@@ -11,17 +11,22 @@ import RxSwift
 import RxCocoa
 import CyberSwift
 
-class ProfilePageViewModel {
+class ProfilePageViewModel: ListViewModelType {
     // Subjects
     let profile = BehaviorRelay<ResponseAPIContentGetProfile?>(value: nil)
     let items = BehaviorRelay<[Decodable]>(value: [])
     let segmentedItem = BehaviorRelay<ProfilePageSegmentioItem>(value: .posts)
     
     // Fetcher
-    private var itemsFetcher: AnyObject!
+    var itemsFetcher: AnyObject!
     
     // Bag
     let bag = DisposeBag()
+    
+    // Handlers
+    var loadingHandler: (() -> Void)?
+    var listEndedHandler: (() -> Void)?
+    var fetchNextErrorHandler: ((Error) -> Void)?
     
     init() {
         bindElements()
@@ -123,10 +128,30 @@ class ProfilePageViewModel {
     // MARK: - For items in tableView
     func fetchNext() {
         fetchNextSingle()
-            .asDriver(onErrorJustReturn: [])
-            .filter {$0.count > 0}
-            .map {self.items.value + $0}
-            .drive(items)
+            .do(onSubscribed: {
+                self.loadingHandler?()
+            })
+            .subscribe(onSuccess: { (list) in
+                if list.count > 0 {
+                    self.items.accept(self.items.value + list)
+                }
+                
+                switch self.segmentedItem.value {
+                case .posts:
+                    guard let fetcher = self.itemsFetcher as? PostsFetcher else {return}
+                    if (fetcher.reachedTheEnd) {
+                        self.listEndedHandler?()
+                    }
+                case .comments:
+                    guard let fetcher = self.itemsFetcher as? CommentsFetcher else {return}
+                    if (fetcher.reachedTheEnd) {
+                        self.listEndedHandler?()
+                    }
+                }
+                
+            }, onError: { (error) in
+                self.fetchNextErrorHandler?(error)
+            })
             .disposed(by: bag)
     }
     

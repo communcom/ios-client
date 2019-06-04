@@ -55,6 +55,17 @@ class ProfilePageVC: UIViewController {
     }
     
     func setUpViews() {
+        // Configure viewModel
+        viewModel.loadingHandler = {[weak self] in
+            
+        }
+        
+        viewModel.listEndedHandler = {[weak self] in
+        }
+        
+        viewModel.fetchNextErrorHandler = {[weak self] error in
+        }
+        
         // Configure tableView
         tableView.register(UINib(nibName: "PostCardCell", bundle: nil), forCellReuseIdentifier: "PostCardCell")
         tableView.register(UINib(nibName: "CommentCell", bundle: nil), forCellReuseIdentifier: "CommentCell")
