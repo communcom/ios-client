@@ -59,7 +59,6 @@ class ProfilePageVC: UIViewController {
         tableView.register(UINib(nibName: "PostCardCell", bundle: nil), forCellReuseIdentifier: "PostCardCell")
         tableView.register(UINib(nibName: "CommentCell", bundle: nil), forCellReuseIdentifier: "CommentCell")
         tableView.register(UINib(nibName: "EmptyCell", bundle: nil), forCellReuseIdentifier: "EmptyCell")
-        tableView.register(UINib(nibName: "PlaceholderPostCell", bundle: nil), forCellReuseIdentifier: "PlaceholderPostCell")
         tableView.rowHeight = UITableView.automaticDimension
         
         // RefreshControl
