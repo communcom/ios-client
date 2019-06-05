@@ -19,7 +19,6 @@ class EditorPageVC: UIViewController {
     @IBOutlet weak var adultButton: UIButton!
     
     @IBOutlet weak var titleTextViewHeightConstraint: NSLayoutConstraint!
-    @IBOutlet weak var contentTextViewHeightConstraint: NSLayoutConstraint!
     
     @IBOutlet weak var sendPostButton: UIBarButtonItem!
     
@@ -43,7 +42,6 @@ class EditorPageVC: UIViewController {
         
         dropDownView.layer.borderWidth = 1.0
         dropDownView.layer.borderColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1).cgColor
-        dropDownView.layer.cornerRadius = 12.0
         
         titleTextField.placeholder = "Title".localized()
         titleTextField.delegate = self

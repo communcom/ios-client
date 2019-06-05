@@ -24,10 +24,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="U7q-88-jfF">
-                                <rect key="frame" x="0.0" y="577" width="375" height="190"/>
+                                <rect key="frame" x="0.0" y="611" width="375" height="56"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aeQ-gX-bWx">
-                                        <rect key="frame" x="16" y="19" width="29" height="17"/>
+                                        <rect key="frame" x="16" y="19.5" width="29" height="17"/>
                                         <accessibility key="accessibilityConfiguration" identifier="EditorPageAdultButton" label="EditorPageAdultButton"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="29" id="gAH-Nj-Ddt"/>
@@ -39,7 +39,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nwa-Mp-egE" userLabel="Photo Button">
-                                        <rect key="frame" x="71" y="18.5" width="20" height="18"/>
+                                        <rect key="frame" x="71" y="19" width="20" height="18"/>
                                         <accessibility key="accessibilityConfiguration" identifier="EditorPagePhotoButton" label="EditorPagePhotoButton"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="20" id="LzT-Oh-312"/>
@@ -54,9 +54,9 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="nwa-Mp-egE" firstAttribute="leading" secondItem="aeQ-gX-bWx" secondAttribute="trailing" constant="26" id="Cgl-0u-dYc"/>
+                                    <constraint firstAttribute="height" constant="56" id="bFX-Kv-Myi"/>
+                                    <constraint firstItem="aeQ-gX-bWx" firstAttribute="centerY" secondItem="U7q-88-jfF" secondAttribute="centerY" id="nzz-jo-t4v"/>
                                     <constraint firstItem="aeQ-gX-bWx" firstAttribute="leading" secondItem="U7q-88-jfF" secondAttribute="leading" constant="16" id="quE-AG-kFf"/>
-                                    <constraint firstItem="aeQ-gX-bWx" firstAttribute="top" secondItem="U7q-88-jfF" secondAttribute="top" constant="19" id="uu8-LF-TlD"/>
-                                    <constraint firstAttribute="height" constant="190" id="yfQ-RL-ETY" customClass="KeyboardLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                                     <constraint firstItem="nwa-Mp-egE" firstAttribute="centerY" secondItem="aeQ-gX-bWx" secondAttribute="centerY" id="yqy-5T-drz"/>
                                 </constraints>
                             </view>
@@ -80,23 +80,20 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="94b-Gg-NR2">
-                                <rect key="frame" x="16" y="154" width="343" height="50"/>
+                                <rect key="frame" x="16" y="154" width="343" height="47.5"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <accessibility key="accessibilityConfiguration" identifier="EditorPageTitleTextField" label="EditorPageTitleTextField"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="50" id="IR0-zR-OCF"/>
+                                    <constraint firstAttribute="height" relation="lessThanOrEqual" constant="110" id="m5t-lR-Upm"/>
+                                    <constraint firstAttribute="height" priority="750" constant="47.5" id="siF-LQ-lQm"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="26"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="AQZ-x5-R6W">
-                                <rect key="frame" x="16" y="220" width="343" height="50"/>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" keyboardDismissMode="onDrag" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="nDy-mq-vIj">
+                                <rect key="frame" x="16" y="209.5" width="343" height="393.5"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <accessibility key="accessibilityConfiguration" identifier="EditorPageContentTextView" label="EditorPageContentTextView"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="50" id="VZB-2H-oHA"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="17"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                         </subviews>
@@ -104,21 +101,21 @@
                         <constraints>
                             <constraint firstItem="bla-eK-cJX" firstAttribute="leading" secondItem="rXf-Vp-Izy" secondAttribute="leading" id="3cI-b9-hR3"/>
                             <constraint firstItem="94b-Gg-NR2" firstAttribute="top" secondItem="Yh5-US-3Nd" secondAttribute="bottom" constant="26" id="6gg-zi-JBB"/>
-                            <constraint firstItem="AQZ-x5-R6W" firstAttribute="leading" secondItem="94b-Gg-NR2" secondAttribute="leading" id="Ch0-FP-HTO"/>
-                            <constraint firstItem="AQZ-x5-R6W" firstAttribute="trailing" secondItem="94b-Gg-NR2" secondAttribute="trailing" id="IWn-Kx-6kD"/>
-                            <constraint firstItem="U7q-88-jfF" firstAttribute="top" relation="greaterThanOrEqual" secondItem="AQZ-x5-R6W" secondAttribute="bottom" constant="8" id="T0l-wb-kj2"/>
+                            <constraint firstItem="nDy-mq-vIj" firstAttribute="trailing" secondItem="94b-Gg-NR2" secondAttribute="trailing" id="BGQ-EL-Juq"/>
+                            <constraint firstItem="nDy-mq-vIj" firstAttribute="leading" secondItem="94b-Gg-NR2" secondAttribute="leading" id="HWp-d6-Vrw"/>
+                            <constraint firstItem="U7q-88-jfF" firstAttribute="top" secondItem="nDy-mq-vIj" secondAttribute="bottom" constant="8" id="JKM-7e-Ztk"/>
+                            <constraint firstItem="pty-xo-nJA" firstAttribute="bottom" secondItem="U7q-88-jfF" secondAttribute="bottom" id="UuV-kj-dYv" customClass="KeyboardLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                             <constraint firstItem="94b-Gg-NR2" firstAttribute="leading" secondItem="pty-xo-nJA" secondAttribute="leading" constant="16" id="Woj-Ex-3zL"/>
                             <constraint firstItem="rXf-Vp-Izy" firstAttribute="leading" secondItem="Yh5-US-3Nd" secondAttribute="trailing" constant="16" id="XCn-TP-2zr"/>
-                            <constraint firstItem="pty-xo-nJA" firstAttribute="bottom" secondItem="U7q-88-jfF" secondAttribute="bottom" constant="-100" id="Zdh-Jl-FuZ"/>
                             <constraint firstItem="bla-eK-cJX" firstAttribute="top" secondItem="rXf-Vp-Izy" secondAttribute="bottom" constant="2" id="dHw-u8-kbP"/>
                             <constraint firstItem="bla-eK-cJX" firstAttribute="trailing" secondItem="rXf-Vp-Izy" secondAttribute="trailing" id="ddI-cL-Tpc"/>
                             <constraint firstItem="Yh5-US-3Nd" firstAttribute="leading" secondItem="pty-xo-nJA" secondAttribute="leading" constant="16" id="ggG-eV-PVe"/>
                             <constraint firstItem="U7q-88-jfF" firstAttribute="leading" secondItem="pty-xo-nJA" secondAttribute="leading" id="iY8-0J-D5y"/>
-                            <constraint firstItem="AQZ-x5-R6W" firstAttribute="top" secondItem="94b-Gg-NR2" secondAttribute="bottom" constant="16" id="opT-Ej-H0T"/>
                             <constraint firstItem="rXf-Vp-Izy" firstAttribute="top" secondItem="pty-xo-nJA" secondAttribute="top" constant="26" id="rHq-Sv-Dxd"/>
                             <constraint firstItem="pty-xo-nJA" firstAttribute="trailing" secondItem="rXf-Vp-Izy" secondAttribute="trailing" constant="16" id="vEH-rj-Qq1"/>
                             <constraint firstItem="Yh5-US-3Nd" firstAttribute="top" secondItem="pty-xo-nJA" secondAttribute="top" constant="24" id="vEd-Y3-ElP"/>
                             <constraint firstItem="pty-xo-nJA" firstAttribute="trailing" secondItem="U7q-88-jfF" secondAttribute="trailing" id="vik-Dw-Ii7"/>
+                            <constraint firstItem="nDy-mq-vIj" firstAttribute="top" secondItem="94b-Gg-NR2" secondAttribute="bottom" constant="8" id="yb9-K0-WcR"/>
                             <constraint firstItem="pty-xo-nJA" firstAttribute="trailing" secondItem="94b-Gg-NR2" secondAttribute="trailing" constant="16" id="z7s-tk-MYh"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="pty-xo-nJA"/>
@@ -147,17 +144,16 @@
                     </navigationItem>
                     <connections>
                         <outlet property="adultButton" destination="aeQ-gX-bWx" id="Yli-e5-ttd"/>
-                        <outlet property="contentTextView" destination="AQZ-x5-R6W" id="dOK-6y-4pl"/>
-                        <outlet property="contentTextViewHeightConstraint" destination="VZB-2H-oHA" id="6th-6W-I3H"/>
-                        <outlet property="dropDownView" destination="U7q-88-jfF" id="TJ1-Iy-WOy"/>
+                        <outlet property="contentTextView" destination="nDy-mq-vIj" id="Kis-Kt-6YU"/>
+                        <outlet property="dropDownView" destination="U7q-88-jfF" id="Z2s-ew-Vrh"/>
                         <outlet property="sendPostButton" destination="uJ6-gc-rL2" id="aVg-wp-gSO"/>
                         <outlet property="titleTextField" destination="94b-Gg-NR2" id="XAA-FF-b7h"/>
-                        <outlet property="titleTextViewHeightConstraint" destination="IR0-zR-OCF" id="65W-ev-Mfr"/>
+                        <outlet property="titleTextViewHeightConstraint" destination="siF-LQ-lQm" id="EkA-k4-2GQ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FKW-jE-mea" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="102" y="146"/>
+            <point key="canvasLocation" x="101.59999999999999" y="145.27736131934034"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Vog-xa-npT">
