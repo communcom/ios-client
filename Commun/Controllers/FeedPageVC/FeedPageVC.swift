@@ -128,7 +128,11 @@ class FeedPageVC: UIViewController {
     }
     
     @IBAction func photoButtonDidTouch(_ sender: Any) {
-        showAlert(title: "TODO", message: "Photo button")
+        let editorVC = controllerContainer.resolve(EditorPageVC.self)
+        let nav = UINavigationController(rootViewController: editorVC!)
+        present(nav, animated: true) {
+            editorVC?.cameraButtonTap()
+        }
     }
     
     @IBAction func sortByTypeButtonDidTouch(_ sender: Any) {
