@@ -44,16 +44,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 
                 self.window?.makeKeyAndVisible()
                 application.applicationIconBadgeNumber = 0
-            }, onError: {error in
-                switch (error) {
-                case ErrorAPI.jsonParsingFailure(message: "Cannot get such account from BC"):
-                    self.window?.rootViewController?.showAlert(title: "Acount not found".localized(), message: "Cannot get such account from BC".localized(), buttonTitles: nil, highlightedButtonIndex: nil, completion: { (_) in
-                        self.showLogin()
-                    })
-                default:
-                    break
-                }
-                Logger.log(message: "Error: \(error.localizedDescription)", event: .error)
             })
         
         Crashlytics().debugMode = true

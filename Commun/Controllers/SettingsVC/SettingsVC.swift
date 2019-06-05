@@ -81,7 +81,7 @@ extension SettingsVC {
         // Logout
         let logoutCell = tableView.dequeueReusableCell(withIdentifier: "SettingsButtonCell") as! SettingsButtonCell
         logoutCell.delegate = self
-        logoutCell.button.tintColor = .red
+        logoutCell.button.setTitleColor(.red, for: .normal)
         logoutCell.button.setTitle("Logout".localized(), for: .normal)
         passwordsCells.append(logoutCell)
         
@@ -182,7 +182,11 @@ extension SettingsVC: SettingsButtonCellDelegate {
     func buttonDidTap(on cell: SettingsButtonCell) {
         if cell.button.titleLabel?.text == "Logout".localized() {
             showAlert(title: "Logout".localized(), message: "Do you really want to logout", buttonTitles: ["OK".localized(), "Cancel".localized()], highlightedButtonIndex: 1) { (index) in
-                if index == 0 {Auth.logout()}
+                if index == 0 {
+                    if !Auth.logout() {
+                        self.showGeneralError()
+                    }
+                }
             }
             return
         }
