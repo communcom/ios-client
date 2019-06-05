@@ -56,6 +56,11 @@ class ProfilePageVC: UIViewController {
     }
     
     func setUpViews() {
+        // Avatar
+        self.userAvatarImage
+            .observeCurrentUserAvatar()
+            .disposed(by: bag)
+        
         // Configure viewModel
         viewModel.profileLoadingHandler = { [weak self] loading in
             loading ? self?.view.showLoading(): self?.view.hideLoading()

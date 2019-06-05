@@ -8,6 +8,7 @@
 
 import Foundation
 import UIImageView_Letters
+import RxSwift
 
 fileprivate var nonAvatarColors = [String: UIColor]()
 
@@ -37,5 +38,15 @@ extension UIImageView {
             // Placeholder image
             setNonAvatarImageWithId(namePlaceHolder)
         }
+    }
+    
+    func observeCurrentUserAvatar() -> Disposable {
+        // avatarImage
+        return UserDefaults.standard.rx
+            .observe(String.self, Config.currentUserAvatarUrlKey)
+            .distinctUntilChanged()
+            .subscribe(onNext: {urlString in
+                self.setAvatar(urlString: urlString, namePlaceHolder: Config.currentUser.nickName ?? "U")
+            })
     }
 }

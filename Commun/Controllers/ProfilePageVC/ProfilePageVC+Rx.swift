@@ -19,9 +19,6 @@ extension Reactive where Base: ProfilePageVC {
                 profilePageVC.userCoverImage.sd_setImage(with: URL(string: coverUrl), placeholderImage: UIImage(named: "ProfilePageCover"))
             }
             
-            // profile image
-            profilePageVC.userAvatarImage.setAvatar(urlString: profile.personal.avatarUrl, namePlaceHolder: profile.username ?? profile.userId)
-            
             // user name
             profilePageVC.userNameLabel.text = profile.username ?? profile.userId
             

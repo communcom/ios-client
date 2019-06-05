@@ -58,12 +58,8 @@ class FeedPageVC: UIViewController {
         searchField.backgroundColor = #colorLiteral(red: 0.9529411765, green: 0.9607843137, blue: 0.9803921569, alpha: 1)
         
         // avatarImage
-        UserDefaults.standard.rx
-            .observe(String.self, Config.currentUserAvatarUrlKey)
-            .distinctUntilChanged()
-            .subscribe(onNext: {urlString in
-                self.userAvatarImage.setAvatar(urlString: urlString, namePlaceHolder: Config.currentUser.nickName ?? "U")
-            })
+        self.userAvatarImage
+            .observeCurrentUserAvatar()
             .disposed(by: disposeBag)
         
         // tableView
