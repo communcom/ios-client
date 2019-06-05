@@ -27,7 +27,7 @@ extension UIImageView {
     func setAvatar(urlString: String?, namePlaceHolder: String) {
         // profile image
         if let avatarUrl = urlString {
-            sd_setImage(with: URL(string: avatarUrl)) { (_, error, _, _) in
+            sd_setImage(with: URL(string: avatarUrl), placeholderImage: UIImage(named: "ProfilePageUserAvatar")) { (_, error, _, _) in
                 if (error != nil) {
                     // Placeholder image
                     self.setNonAvatarImageWithId(namePlaceHolder)

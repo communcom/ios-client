@@ -406,36 +406,11 @@ class NetworkService: NSObject {
     //  MARK: - Contract `gls.social`
     func uploadImage(_ image: UIImage) -> Single<String> {
         return .create {single in
-            let imgData = image.jpegData(compressionQuality: 1)!
-            
-            Alamofire.upload(multipartFormData: { (data) in
-                data.append(imgData, withName: "file", fileName: "file.jpeg", mimeType: "image/jpeg")
-            }, to: "https://img.golos.io/upload", encodingCompletion: { (result) in
-                
-                switch result {
-                case .success(let upload, _, _):
-                    upload.responseJSON(completionHandler: { (response) in
-                        switch response.result {
-                        case .success(let value):
-                            guard let json = value as? [String: Any],
-                                let url = json["url"] as? String else {
-                                    Logger.log(message: "Upload failed: \(String(describing: response.result))", event: .error)
-                                    return single(.error(ErrorAPI.requestFailed(message: "upload failed")))
-                            }
-                            single(.success(url))
-                            break
-                        case .failure(let error):
-                            Logger.log(message: error.localizedDescription, event: .error)
-                            single(.error(error))
-                            break
-                        }
-                    })
-                    
-                case .failure(let encodingError):
-                    single(.error(encodingError))
-                }
+            RestAPIManager.instance.posting(image: image, responseHandling: { (url) in
+                return single(.success(url))
+            }, errorHandling: { (error) in
+                return single(.error(error))
             })
-            
             return Disposables.create()
         }
     }
@@ -445,6 +420,12 @@ class NetworkService: NSObject {
         return RestAPIManager.instance.rx.update(userProfile: params)
             .flatMapCompletable({ (transaction) -> Completable in
                 guard let id = transaction.body?.transaction_id else {return .error(ErrorAPI.responseUnsuccessful(message: "transactionId is missing"))}
+                
+                // update profile
+                if let url = params["profile_image"] {
+                    UserDefaults.standard.set(url, forKey: Config.currentUserAvatarUrlKey)
+                }
+                
                 return self.waitForTransactionWith(id: id)
             })
             .observeOn(MainScheduler.instance)
