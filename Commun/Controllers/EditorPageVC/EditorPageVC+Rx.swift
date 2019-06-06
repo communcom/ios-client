@@ -36,9 +36,7 @@ extension EditorPageVC {
         
         #warning("Verify community")
         #warning("fix contentText later")
-        let combinedText = Observable.combineLatest(titleTextView.rx.text.orEmpty, contentTextView.rx.text.orEmpty).share()
-        
-        combinedText
+        Observable.combineLatest(titleTextView.rx.text.orEmpty, contentTextView.rx.text.orEmpty)
             .map {
                 // Text field  is not empty
                 (!$0.0.isEmpty) && (!$0.1.isEmpty) &&
@@ -47,51 +45,6 @@ extension EditorPageVC {
                 $0.1 != viewModel.postForEdit?.content.body.preview)
             }
             .bind(to: sendPostButton.rx.isEnabled)
-            .disposed(by: disposeBag)
-        
-        // send post button
-        sendPostButton.rx.tap
-            .withLatestFrom(combinedText)
-            .flatMap {title, content in
-                return viewModel.sendPost(with: title, text: content, image: self.imageView.image)
-                    .do(onSubscribe: {
-                        self.navigationController?.showIndetermineHudWithMessage("Sending post".localized())
-                    })
-            }
-            .flatMap { (transactionId, userId, permlink) -> Single<(userId: String, permlink: String)> in
-                guard let id = transactionId,
-                    let userId = userId,
-                    let permlink = permlink else {
-                        return .error(ErrorAPI.responseUnsuccessful(message: "Post Not Found"))
-                }
-                
-                self.navigationController?.showIndetermineHudWithMessage("Wait for transaction".localized())
-                return NetworkService.shared.waitForTransactionWith(id: id)
-                    .andThen(Single<(userId: String, permlink: String)>.just((userId: userId, permlink: permlink)))
-            }
-            .subscribe(onNext: { (userId, permlink) in
-                self.navigationController?.hideHud()
-                
-                // show post page
-                let postPageVC = controllerContainer.resolve(PostPageVC.self)!
-                postPageVC.viewModel.permlink = permlink
-                postPageVC.viewModel.userId = userId
-                var viewControllers = self.navigationController!.viewControllers
-                viewControllers[0] = postPageVC
-                self.navigationController?.setViewControllers(viewControllers, animated: true)
-            }, onError: { (error) in
-                self.navigationController?.hideHud()
-                
-                if let error = error as? ErrorAPI {
-                    switch error {
-                    case .responseUnsuccessful(message: "Post Not Found"):
-                        self.dismiss(animated: true, completion: nil)
-                        break
-                    default:
-                        self.showGeneralError()
-                    }
-                }
-            })
             .disposed(by: disposeBag)
     }
     

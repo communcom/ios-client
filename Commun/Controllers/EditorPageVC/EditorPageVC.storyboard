@@ -171,6 +171,9 @@
                                 <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="EditorPagePostButton"/>
                                 <userDefinedRuntimeAttribute type="string" keyPath="accessibilityLabel" value="EditorPagePostButton"/>
                             </userDefinedRuntimeAttributes>
+                            <connections>
+                                <action selector="sendPostButtonTap" destination="AvE-EB-OTN" id="3Is-sQ-Ay4"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
