@@ -29,10 +29,12 @@ extension EditorPageVC {
                 self.imageView.image = image
                 self.imageView.showLoading()
                 self.sendPostButton.isEnabled = false
+                pickerVC.dismiss(animated: true, completion: nil)
             })
             .flatMap {image in
                 return NetworkService.shared.uploadImage(image)
             }
+            .observeOn(MainScheduler.instance)
             .subscribe(onNext: { (url) in
                 self.imageView.hideLoading()
                 self.viewModel?.addImage(with: url)
