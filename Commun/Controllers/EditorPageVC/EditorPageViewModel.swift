@@ -17,7 +17,13 @@ class EditorPageViewModel {
     let isAdult = BehaviorRelay<Bool>(value: false)
     var embeds = [[String: String]]()
     
-    func addImage(with url: String) {
+    /// set url = nil to remove
+    func addImage(with url: String?) {
+        guard let url = url else {
+            embeds.removeAll(where: {$0["type"] == "image"})
+            return
+        }
+        
         if let i = embeds.firstIndex(where: {$0["type"] == "image"}) {
             embeds[i]["url"] = url
         }

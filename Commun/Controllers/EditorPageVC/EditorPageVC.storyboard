@@ -115,15 +115,28 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aNM-qi-T3R">
+                                <rect key="frame" x="327" y="539" width="24" height="24"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="aNM-qi-T3R" secondAttribute="height" multiplier="1:1" id="Zxl-sD-bij"/>
+                                </constraints>
+                                <state key="normal" title="Button" image="Close"/>
+                                <connections>
+                                    <action selector="removeImageButton:" destination="AvE-EB-OTN" eventType="touchUpInside" id="MxN-ha-K07"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="bla-eK-cJX" firstAttribute="leading" secondItem="rXf-Vp-Izy" secondAttribute="leading" id="3cI-b9-hR3"/>
+                            <constraint firstItem="aNM-qi-T3R" firstAttribute="top" secondItem="6Ld-hr-oUy" secondAttribute="top" constant="8" id="5rK-3u-Frn"/>
                             <constraint firstItem="94b-Gg-NR2" firstAttribute="top" secondItem="Yh5-US-3Nd" secondAttribute="bottom" constant="26" id="6gg-zi-JBB"/>
                             <constraint firstItem="U7q-88-jfF" firstAttribute="top" secondItem="6Ld-hr-oUy" secondAttribute="bottom" constant="8" id="6ko-zH-pUz"/>
                             <constraint firstItem="6Ld-hr-oUy" firstAttribute="top" secondItem="nDy-mq-vIj" secondAttribute="bottom" id="829-WA-zjJ"/>
                             <constraint firstItem="nDy-mq-vIj" firstAttribute="trailing" secondItem="94b-Gg-NR2" secondAttribute="trailing" id="BGQ-EL-Juq"/>
+                            <constraint firstItem="aNM-qi-T3R" firstAttribute="trailing" secondItem="6Ld-hr-oUy" secondAttribute="trailing" constant="-8" id="Fik-gt-uPi"/>
                             <constraint firstItem="nDy-mq-vIj" firstAttribute="leading" secondItem="94b-Gg-NR2" secondAttribute="leading" id="HWp-d6-Vrw"/>
+                            <constraint firstItem="aNM-qi-T3R" firstAttribute="width" secondItem="6Ld-hr-oUy" secondAttribute="height" multiplier="1:3" id="MwY-wG-KGa"/>
                             <constraint firstItem="pty-xo-nJA" firstAttribute="bottom" secondItem="U7q-88-jfF" secondAttribute="bottom" id="UuV-kj-dYv" customClass="KeyboardLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                             <constraint firstItem="94b-Gg-NR2" firstAttribute="leading" secondItem="pty-xo-nJA" secondAttribute="leading" constant="16" id="Woj-Ex-3zL"/>
                             <constraint firstItem="rXf-Vp-Izy" firstAttribute="leading" secondItem="Yh5-US-3Nd" secondAttribute="trailing" constant="16" id="XCn-TP-2zr"/>
@@ -196,6 +209,7 @@
     </scenes>
     <resources>
         <image name="18Button" width="873" height="512"/>
+        <image name="Close" width="512" height="512"/>
         <image name="photo_solid" width="24" height="24"/>
         <image name="tux" width="327" height="370"/>
     </resources>

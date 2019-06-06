@@ -28,6 +28,7 @@ extension EditorPageVC {
             .do(onNext: {image in
                 self.imageView.image = image
                 self.imageView.showLoading()
+                self.sendPostButton.isEnabled = false
             })
             .flatMap {image in
                 return NetworkService.shared.uploadImage(image)
@@ -35,10 +36,12 @@ extension EditorPageVC {
             .subscribe(onNext: { (url) in
                 self.imageView.hideLoading()
                 self.viewModel?.addImage(with: url)
+                self.sendPostButton.isEnabled = true
             }, onError: { (error) in
                 self.showGeneralError()
                 self.imageView.hideLoading()
                 self.imageView.image = originalImage
+                self.sendPostButton.isEnabled = true
             })
             .disposed(by: disposeBag)
             // Upload image
@@ -47,6 +50,11 @@ extension EditorPageVC {
     
     @IBAction func closeButtonDidTouch(_ sender: Any) {
         self.navigationController?.dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func removeImageButton(_ sender: Any) {
+        imageView.image = nil
+        viewModel?.addImage(with: nil)
     }
     
 }
