@@ -15,23 +15,24 @@ class EditorPageViewModel {
     var postForEdit: ResponseAPIContentGetPost?
     
     let isAdult = BehaviorRelay<Bool>(value: false)
-    var embeds = [[String: String]]()
+    var embeds = [[String: Any]]()
     
     /// set url = nil to remove
     func addImage(with url: String?) {
         guard let url = url else {
-            embeds.removeAll(where: {$0["type"] == "image"})
+            embeds.removeAll(where: {($0["type"] as? String) == "photo"})
             return
         }
         
-        if let i = embeds.firstIndex(where: {$0["type"] == "image"}) {
+        if let i = embeds.firstIndex(where: {($0["type"] as? String) == "photo"}) {
             embeds[i]["url"] = url
         }
         
         #warning("add id")
         embeds.append([
-            "type": "image",
-            "url": url
+            "type": "photo",
+            "url": url,
+            "id": Int(Date().timeIntervalSince1970)
         ])
     }
     
@@ -41,7 +42,11 @@ class EditorPageViewModel {
             return .error(ErrorAPI.requestFailed(message: "Editing post is implemented"))
         }
         
-        let json = self.createJsonMetadata(for: text)
+        var sendRequest: Single<NetworkService.SendPostCompletion> {
+            let json = self.createJsonMetadata(for: text)
+            return NetworkService.shared.sendPost(withTitle: title, withText: text, metaData: json ?? "", withTags: self.getTags(from: text))
+        }
+        
         
         if let image = image {
             return NetworkService.shared.uploadImage(image)
@@ -50,17 +55,17 @@ class EditorPageViewModel {
                 })
                 .flatMap {url in
                     self.addImage(with: url)
-                    return NetworkService.shared.sendPost(withTitle: title, withText: text, metaData: json ?? "", withTags: [])
+                    return sendRequest
                 }
         }
         
-        return NetworkService.shared.sendPost(withTitle: title, withText: text, metaData: json ?? "", withTags: self.getTags(from: text))
+        return sendRequest
     }
     
     func createJsonMetadata(for text: String) -> String? {
         for word in text.components(separatedBy: " ") {
             if word.contains("http://") || word.contains("https://") {
-                if embeds.first(where: {$0["url"] == word}) != nil {continue}
+                if embeds.first(where: {($0["url"] as? String) == word}) != nil {continue}
                 #warning("Define type")
                 embeds.append(["url": word])
             }
