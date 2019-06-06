@@ -14,6 +14,12 @@ extension EditorPageVC {
     
     func bindUI() {
         guard let viewModel = viewModel else {return}
+        // image
+        imageView.rx.isEmpty
+            .map {$0 ? 0: 72}
+            .bind(to: imageHeightConstraint.rx.constant)
+            .disposed(by: disposeBag)
+        
         // isAdult
         adultButton.rx.tap
             .map {_ in !viewModel.isAdult.value}

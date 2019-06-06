@@ -15,6 +15,19 @@ class EditorPageViewModel {
     var postForEdit: ResponseAPIContentGetPost?
     
     let isAdult = BehaviorRelay<Bool>(value: false)
+    var embeds = [[String: String]]()
+    
+    func addImage(with url: String) {
+        if let i = embeds.firstIndex(where: {$0["type"] == "image"}) {
+            embeds[i]["url"] = url
+        }
+        
+        #warning("add id")
+        embeds.append([
+            "type": "image",
+            "url": url
+        ])
+    }
     
     func sendPost(with title: String, text: String) -> Single<NetworkService.SendPostCompletion> {
         if let post = postForEdit {
@@ -26,15 +39,15 @@ class EditorPageViewModel {
     }
     
     func createJsonMetadata(for text: String) -> String? {
-        var embeds: [[String: String]] = []
-        
         for word in text.components(separatedBy: " ") {
             if word.contains("http://") || word.contains("https://") {
+                if embeds.first(where: {$0["url"] == word}) != nil {continue}
+                #warning("Define type")
                 embeds.append(["url": word])
             }
         }
         
-        let result: [String: Any] = ["embeds": embeds]
+        let result = ["embeds": embeds]
         return result.jsonString()
     }
     
