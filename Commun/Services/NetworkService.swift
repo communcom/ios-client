@@ -164,11 +164,6 @@ class NetworkService: NSObject {
                                                  headline:            title,
                                                  tags:                tags,
                                                  metaData:            json)
-            .do(onSuccess: { (transaction) in
-                let any = ((transaction.body?.processed.action_traces.first?.act.data["message_id"] as? eosswift.AnyJSONType)?.jsonValue) as? [String: eosswift.AnyJSONType]
-                print(any?["permlink"]?.jsonValue as? String)
-                
-            })
             .map({ (transaction) -> SendPostCompletion in
                 let any = ((transaction.body?.processed.action_traces.first?.act.data["message_id"])?.jsonValue) as? [String: eosswift.AnyJSONType]
                 return SendPostCompletion(transactionId: transaction.body?.transaction_id,
