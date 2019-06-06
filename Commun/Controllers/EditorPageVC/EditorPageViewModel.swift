@@ -35,13 +35,26 @@ class EditorPageViewModel {
         ])
     }
     
-    func sendPost(with title: String, text: String) -> Single<NetworkService.SendPostCompletion> {
+    func sendPost(with title: String, text: String, image: UIImage?) -> Single<NetworkService.SendPostCompletion> {
         if let post = postForEdit {
             #warning("Edit post and delete this line")
             return .error(ErrorAPI.requestFailed(message: "Editing post is implemented"))
         }
-        let json = createJsonMetadata(for: text)
-        return NetworkService.shared.sendPost(withTitle: title, withText: text, metaData: json ?? "", withTags: getTags(from: text))
+        
+        let sendPostRequest = { () -> Single<NetworkService.SendPostCompletion> in
+            let json = self.createJsonMetadata(for: text)
+            return NetworkService.shared.sendPost(withTitle: title, withText: text, metaData: json ?? "", withTags: self.getTags(from: text))
+        }
+        
+        if let image = image {
+            return NetworkService.shared.uploadImage(image)
+                .do(onSuccess: {url in
+                    self.addImage(with: url)
+                })
+                .flatMap {_ in sendPostRequest()}
+        }
+        
+        return sendPostRequest()
     }
     
     func createJsonMetadata(for text: String) -> String? {

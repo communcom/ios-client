@@ -53,7 +53,7 @@ extension EditorPageVC {
         sendPostButton.rx.tap
             .withLatestFrom(combinedText)
             .flatMap {title, content in
-                return viewModel.sendPost(with: title, text: content)
+                return viewModel.sendPost(with: title, text: content, image: self.imageView.image)
                     .do(onSubscribe: {
                         self.navigationController?.showIndetermineHudWithMessage("Sending post".localized())
                     })

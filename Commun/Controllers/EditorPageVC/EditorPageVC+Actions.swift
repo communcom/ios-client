@@ -19,31 +19,12 @@ extension EditorPageVC {
         let pickerVC = CustomTLPhotosPickerVC.singleImage
         self.present(pickerVC, animated: true, completion: nil)
         
-        // Save original image to reverse
-        let originalImage = self.imageView.image
-        
         pickerVC.rx.didSelectAssets
             .filter {($0.count > 0) && ($0.first?.fullResolutionImage != nil)}
             .map {$0.first!.fullResolutionImage!}
-            .do(onNext: {image in
+            .subscribe(onNext: {image in
                 self.imageView.image = image
-                self.imageView.showLoading()
-                self.sendPostButton.isEnabled = false
                 pickerVC.dismiss(animated: true, completion: nil)
-            })
-            .flatMap {image in
-                return NetworkService.shared.uploadImage(image)
-            }
-            .observeOn(MainScheduler.instance)
-            .subscribe(onNext: { (url) in
-                self.imageView.hideLoading()
-                self.viewModel?.addImage(with: url)
-                self.sendPostButton.isEnabled = true
-            }, onError: { (error) in
-                self.showGeneralError()
-                self.imageView.hideLoading()
-                self.imageView.image = originalImage
-                self.sendPostButton.isEnabled = true
             })
             .disposed(by: disposeBag)
             // Upload image
