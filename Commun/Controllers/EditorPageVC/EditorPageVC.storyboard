@@ -34,9 +34,6 @@
                                             <constraint firstAttribute="height" constant="17" id="reZ-0u-ZGM"/>
                                         </constraints>
                                         <state key="normal" image="18Button"/>
-                                        <connections>
-                                            <action selector="adultButtonTap" destination="AvE-EB-OTN" eventType="touchUpInside" id="itZ-NP-8kU"/>
-                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nwa-Mp-egE" userLabel="Photo Button">
                                         <rect key="frame" x="71" y="19" width="20" height="18"/>
@@ -79,16 +76,20 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="94b-Gg-NR2">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="94b-Gg-NR2" customClass="ExpandableTextView" customModule="Commun" customModuleProvider="target">
                                 <rect key="frame" x="16" y="154" width="343" height="47.5"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <accessibility key="accessibilityConfiguration" identifier="EditorPageTitleTextField" label="EditorPageTitleTextField"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" relation="lessThanOrEqual" constant="110" id="m5t-lR-Upm"/>
-                                    <constraint firstAttribute="height" priority="750" constant="47.5" id="siF-LQ-lQm"/>
+                                    <constraint firstAttribute="height" constant="47.5" id="siF-LQ-lQm"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="26"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="maxHeight">
+                                        <real key="value" value="110"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                             </textView>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" keyboardDismissMode="onDrag" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="nDy-mq-vIj">
                                 <rect key="frame" x="16" y="209.5" width="343" height="393.5"/>
@@ -137,9 +138,6 @@
                                 <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="EditorPagePostButton"/>
                                 <userDefinedRuntimeAttribute type="string" keyPath="accessibilityLabel" value="EditorPagePostButton"/>
                             </userDefinedRuntimeAttributes>
-                            <connections>
-                                <action selector="postButtonTap" destination="AvE-EB-OTN" id="qkv-Dv-cRa"/>
-                            </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
@@ -147,7 +145,7 @@
                         <outlet property="contentTextView" destination="nDy-mq-vIj" id="Kis-Kt-6YU"/>
                         <outlet property="dropDownView" destination="U7q-88-jfF" id="Z2s-ew-Vrh"/>
                         <outlet property="sendPostButton" destination="uJ6-gc-rL2" id="aVg-wp-gSO"/>
-                        <outlet property="titleTextField" destination="94b-Gg-NR2" id="XAA-FF-b7h"/>
+                        <outlet property="titleTextView" destination="94b-Gg-NR2" id="V6I-Q2-Vrx"/>
                         <outlet property="titleTextViewHeightConstraint" destination="siF-LQ-lQm" id="EkA-k4-2GQ"/>
                     </connections>
                 </viewController>

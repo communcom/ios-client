@@ -12,6 +12,20 @@ import RxCocoa
 import RxSwift
 
 class CustomTLPhotosPickerVC: TLPhotosPickerViewController {
+    
+    static var singleImage: CustomTLPhotosPickerVC {
+        // If updating
+        let pickerVC = CustomTLPhotosPickerVC()
+        var configure = TLPhotosPickerConfigure()
+        configure.singleSelectedMode = true
+        configure.allowedLivePhotos = false
+        configure.allowedVideo = false
+        configure.allowedVideoRecording = false
+        configure.mediaType = .image
+        pickerVC.configure = configure
+        return pickerVC
+    }
+    
     override func doneButtonTap() {
         self.delegate?.dismissPhotoPicker(withTLPHAssets: self.selectedAssets)
     }

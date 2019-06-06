@@ -119,6 +119,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="Pgb-4l-LXo" firstAttribute="bottom" secondItem="thI-Qg-Abq" secondAttribute="bottom" constant="14" id="2km-nc-Tsn" customClass="KeyboardLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                             <constraint firstItem="gxE-vT-71g" firstAttribute="leading" secondItem="Pgb-4l-LXo" secondAttribute="leading" id="Asn-MO-U9b"/>
                             <constraint firstItem="Pgb-4l-LXo" firstAttribute="trailing" secondItem="gxE-vT-71g" secondAttribute="trailing" id="BLW-ch-ZW8"/>
                             <constraint firstItem="Dx8-8W-zVf" firstAttribute="leading" secondItem="Pgb-4l-LXo" secondAttribute="leading" id="G0A-8k-1Jd"/>
@@ -130,7 +131,6 @@
                             <constraint firstItem="gxE-vT-71g" firstAttribute="top" secondItem="xxf-Yw-cnd" secondAttribute="bottom" id="Nh6-Zs-Ake"/>
                             <constraint firstItem="thI-Qg-Abq" firstAttribute="leading" secondItem="Pgb-4l-LXo" secondAttribute="leading" constant="16" id="ZAN-gb-P85"/>
                             <constraint firstItem="Pgb-4l-LXo" firstAttribute="trailing" secondItem="thI-Qg-Abq" secondAttribute="trailing" constant="16" id="lpC-GX-aP4"/>
-                            <constraint firstItem="Pgb-4l-LXo" firstAttribute="bottom" secondItem="thI-Qg-Abq" secondAttribute="bottom" constant="14" id="tU9-2d-mxx" customClass="KeyboardLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                             <constraint firstItem="Dx8-8W-zVf" firstAttribute="top" secondItem="gxE-vT-71g" secondAttribute="bottom" id="vtz-i6-TwG"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Pgb-4l-LXo"/>

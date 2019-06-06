@@ -13,7 +13,7 @@ class EditorPageVC: UIViewController {
 
     var viewModel: EditorPageViewModel?
     
-    @IBOutlet weak var titleTextField: UITextView!
+    @IBOutlet weak var titleTextView: ExpandableTextView!
     @IBOutlet weak var contentTextView: UITextView!
     @IBOutlet weak var dropDownView: UIView!
     @IBOutlet weak var adultButton: UIButton!
@@ -21,8 +21,6 @@ class EditorPageVC: UIViewController {
     @IBOutlet weak var titleTextViewHeightConstraint: NSLayoutConstraint!
     
     @IBOutlet weak var sendPostButton: UIBarButtonItem!
-    
-    let imagePicker = UIImagePickerController()
     
     var cells: [UITableViewCell] = []
     
@@ -43,16 +41,14 @@ class EditorPageVC: UIViewController {
         dropDownView.layer.borderWidth = 1.0
         dropDownView.layer.borderColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1).cgColor
         
-        titleTextField.placeholder = "Title".localized()
-        titleTextField.delegate = self
+        titleTextView.placeholder = "Title".localized()
         contentTextView.placeholder = "Enter text".localized() + "..."
-        contentTextView.delegate = self
         
         // if editing post
         if let post = viewModel?.postForEdit {
-            titleTextField.text = post.content.title
+            titleTextView.rx.text.onNext(post.content.title)
             #warning("change text later")
-            contentTextView.text = post.content.body.preview
+            contentTextView.rx.text.onNext(post.content.body.full)
         }
         
         bindUI()

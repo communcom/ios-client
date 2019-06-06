@@ -14,34 +14,21 @@ import CyberSwift
 class EditorPageViewModel {
     var postForEdit: ResponseAPIContentGetPost?
     
-    let images = BehaviorRelay<[UIImage]>(value: [])
-    let titleText = BehaviorRelay<String>(value: "")
-    let contentText = BehaviorRelay<String>(value: "")
     let isAdult = BehaviorRelay<Bool>(value: false)
     
-    func addImage(_ image: UIImage) {
-        var newImages = images.value
-        newImages.append(image)
-        self.images.accept(newImages)
-    }
-    
-    func setAdult() {
-        isAdult.accept(!isAdult.value)
-    }
-    
-    func sendPost() -> Single<NetworkService.SendPostCompletion> {
+    func sendPost(with title: String, text: String) -> Single<NetworkService.SendPostCompletion> {
         if let post = postForEdit {
             #warning("Edit post and delete this line")
             return .error(ErrorAPI.requestFailed(message: "Editing post is implemented"))
         }
-        let json = createJsonMetadata()
-        return NetworkService.shared.sendPost(withTitle: titleText.value, withText: contentText.value, metaData: json ?? "", withTags: getTags())
+        let json = createJsonMetadata(for: text)
+        return NetworkService.shared.sendPost(withTitle: title, withText: text, metaData: json ?? "", withTags: getTags(from: text))
     }
     
-    func createJsonMetadata() -> String? {
+    func createJsonMetadata(for text: String) -> String? {
         var embeds: [[String: String]] = []
         
-        for word in contentText.value.components(separatedBy: " ") {
+        for word in text.components(separatedBy: " ") {
             if word.contains("http://") || word.contains("https://") {
                 embeds.append(["url": word])
             }
@@ -51,16 +38,16 @@ class EditorPageViewModel {
         return result.jsonString()
     }
     
-    func getTags() -> [String] {
+    func getTags(from text: String) -> [String] {
         var tags: [String] = []
         
-        for word in contentText.value.components(separatedBy: " ") {
+        for word in text.components(separatedBy: " ") {
             if word.contains("#") {
                 tags.append(word)
             }
         }
         
-        if isAdult.value == true {
+        if isAdult.value {
             tags.append("#18+")
         }
         

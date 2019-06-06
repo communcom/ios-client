@@ -90,7 +90,6 @@
 		571B14FE223A935D00630C8F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 571B14FD223A935D00630C8F /* Assets.xcassets */; };
 		571B1501223A935D00630C8F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 571B14FF223A935D00630C8F /* LaunchScreen.storyboard */; };
 		571B150B223A94DE00630C8F /* TabBarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571B150A223A94DE00630C8F /* TabBarVC.swift */; };
-		571B8241225B31A000823F02 /* EditorPageVC+UITextViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571B8240225B31A000823F02 /* EditorPageVC+UITextViewDelegate.swift */; };
 		5721AE41226E543E00133BFF /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5721AE40226E543E00133BFF /* WebKit.framework */; };
 		5721E87122650AC0003BE04B /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5721E87022650AC0003BE04B /* StringExtension.swift */; };
 		572517322243935C0033125C /* ControllerContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572517312243935C0033125C /* ControllerContainer.swift */; };
@@ -112,7 +111,6 @@
 		576DC91B223E41F600EDED41 /* FeedPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576DC91A223E41F600EDED41 /* FeedPageViewModel.swift */; };
 		576DC91E223E429C00EDED41 /* FeedPageVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 576DC91D223E429C00EDED41 /* FeedPageVC.storyboard */; };
 		576DC921223E42C800EDED41 /* UIViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576DC920223E42C800EDED41 /* UIViewControllerExtension.swift */; };
-		577B8BFD2255F2F50016FE76 /* EditorPageVC+EditorContentCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577B8BFC2255F2F50016FE76 /* EditorPageVC+EditorContentCellDelegate.swift */; };
 		57840A00223FAC1B00338FD5 /* SegmentioCellWithImageBeforeLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 578409EE223FAC1B00338FD5 /* SegmentioCellWithImageBeforeLabel.swift */; };
 		57840A01223FAC1B00338FD5 /* SegmentioCellWithImageUnderLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 578409EF223FAC1B00338FD5 /* SegmentioCellWithImageUnderLabel.swift */; };
 		57840A02223FAC1B00338FD5 /* SegmentioCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 578409F0223FAC1B00338FD5 /* SegmentioCell.swift */; };
@@ -149,7 +147,6 @@
 		57B6FC2C224A9F2800BCFDDA /* WelcomeItemVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B6FC2B224A9F2800BCFDDA /* WelcomeItemVC.swift */; };
 		57CBD95C225511BD000BA8CC /* UITextView+Placeholder.m in Sources */ = {isa = PBXBuildFile; fileRef = 57CBD95B225511BD000BA8CC /* UITextView+Placeholder.m */; };
 		57CBD95E225517B4000BA8CC /* EditorPageVC+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CBD95D225517B4000BA8CC /* EditorPageVC+Actions.swift */; };
-		57CBD9602255187B000BA8CC /* EditorPageVC+UIImagePickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CBD95F2255187B000BA8CC /* EditorPageVC+UIImagePickerController.swift */; };
 		57DE5BDC2252088C008566B9 /* EditorPageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DE5BDB2252088C008566B9 /* EditorPageVC.swift */; };
 		57DE5BDE225208A4008566B9 /* EditorPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DE5BDD225208A4008566B9 /* EditorPageViewModel.swift */; };
 		57DE5BE0225209A0008566B9 /* EditorPageVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 57DE5BDF225209A0008566B9 /* EditorPageVC.storyboard */; };
@@ -301,7 +298,6 @@
 		571B1500223A935D00630C8F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		571B1502223A935D00630C8F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		571B150A223A94DE00630C8F /* TabBarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarVC.swift; sourceTree = "<group>"; };
-		571B8240225B31A000823F02 /* EditorPageVC+UITextViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EditorPageVC+UITextViewDelegate.swift"; sourceTree = "<group>"; };
 		5721AE40226E543E00133BFF /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		5721E87022650AC0003BE04B /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
 		572517312243935C0033125C /* ControllerContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControllerContainer.swift; sourceTree = "<group>"; };
@@ -326,7 +322,6 @@
 		576DC91A223E41F600EDED41 /* FeedPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedPageViewModel.swift; sourceTree = "<group>"; };
 		576DC91D223E429C00EDED41 /* FeedPageVC.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = FeedPageVC.storyboard; sourceTree = "<group>"; };
 		576DC920223E42C800EDED41 /* UIViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtension.swift; sourceTree = "<group>"; };
-		577B8BFC2255F2F50016FE76 /* EditorPageVC+EditorContentCellDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EditorPageVC+EditorContentCellDelegate.swift"; sourceTree = "<group>"; };
 		578409EE223FAC1B00338FD5 /* SegmentioCellWithImageBeforeLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentioCellWithImageBeforeLabel.swift; sourceTree = "<group>"; };
 		578409EF223FAC1B00338FD5 /* SegmentioCellWithImageUnderLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentioCellWithImageUnderLabel.swift; sourceTree = "<group>"; };
 		578409F0223FAC1B00338FD5 /* SegmentioCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentioCell.swift; sourceTree = "<group>"; };
@@ -366,7 +361,6 @@
 		57CBD95A225511BD000BA8CC /* UITextView+Placeholder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITextView+Placeholder.h"; sourceTree = "<group>"; };
 		57CBD95B225511BD000BA8CC /* UITextView+Placeholder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITextView+Placeholder.m"; sourceTree = "<group>"; };
 		57CBD95D225517B4000BA8CC /* EditorPageVC+Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EditorPageVC+Actions.swift"; sourceTree = "<group>"; };
-		57CBD95F2255187B000BA8CC /* EditorPageVC+UIImagePickerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EditorPageVC+UIImagePickerController.swift"; sourceTree = "<group>"; };
 		57DE5BDB2252088C008566B9 /* EditorPageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorPageVC.swift; sourceTree = "<group>"; };
 		57DE5BDD225208A4008566B9 /* EditorPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorPageViewModel.swift; sourceTree = "<group>"; };
 		57DE5BDF225209A0008566B9 /* EditorPageVC.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = EditorPageVC.storyboard; sourceTree = "<group>"; };
@@ -1024,13 +1018,10 @@
 			children = (
 				57DE5BE12252202F008566B9 /* Cell */,
 				57DE5BDF225209A0008566B9 /* EditorPageVC.storyboard */,
-				57DE5BDB2252088C008566B9 /* EditorPageVC.swift */,
-				57CBD95D225517B4000BA8CC /* EditorPageVC+Actions.swift */,
-				57F9CAAB225B489000AC9ACA /* EditorPageVC+Rx.swift */,
 				57DE5BDD225208A4008566B9 /* EditorPageViewModel.swift */,
-				577B8BFC2255F2F50016FE76 /* EditorPageVC+EditorContentCellDelegate.swift */,
-				571B8240225B31A000823F02 /* EditorPageVC+UITextViewDelegate.swift */,
-				57CBD95F2255187B000BA8CC /* EditorPageVC+UIImagePickerController.swift */,
+				57DE5BDB2252088C008566B9 /* EditorPageVC.swift */,
+				57F9CAAB225B489000AC9ACA /* EditorPageVC+Rx.swift */,
+				57CBD95D225517B4000BA8CC /* EditorPageVC+Actions.swift */,
 			);
 			path = EditorPageVC;
 			sourceTree = "<group>";
@@ -1397,7 +1388,6 @@
 				572517402243E4D70033125C /* PostPageViewModel.swift in Sources */,
 				576DC919223E41E800EDED41 /* FeedPageVC.swift in Sources */,
 				57840A04223FAC1B00338FD5 /* SegmentioCellWithImage.swift in Sources */,
-				57CBD9602255187B000BA8CC /* EditorPageVC+UIImagePickerController.swift in Sources */,
 				3B51581C226DE28D00108F17 /* EmptyCell.swift in Sources */,
 				3B5CB30322A56BD500757533 /* UITapGestureRecognizer.swift in Sources */,
 				3B28EFE2228C7C31002D4816 /* KeyboardLayoutConstraint.swift in Sources */,
@@ -1494,7 +1484,6 @@
 				571B14F4223A935C00630C8F /* AppDelegate.swift in Sources */,
 				3B0E9C6C2270634B002AB1C2 /* ProfileChooseAvatarVC.swift in Sources */,
 				3B5CB30C22A57D5B00757533 /* NotificationPageVC+Binding.swift in Sources */,
-				577B8BFD2255F2F50016FE76 /* EditorPageVC+EditorContentCellDelegate.swift in Sources */,
 				5787C0CB2265152900568CEC /* LoadKeysVC.swift in Sources */,
 				575AECB322606F7100A7EC2D /* SelectCountryViewModel.swift in Sources */,
 				57840A0B223FAC1B00338FD5 /* BadgeViewPresenter.swift in Sources */,
@@ -1512,7 +1501,6 @@
 				3B2F226E226892C5006B589E /* NotificationType.swift in Sources */,
 				3BDD9A0B228EDA6F00B2A1DA /* PostController+Rx.swift in Sources */,
 				570061242253D3B3007700DA /* EditorLinkCell.swift in Sources */,
-				571B8241225B31A000823F02 /* EditorPageVC+UITextViewDelegate.swift in Sources */,
 				57F5CFC22244E3BE005A09AE /* PostPageVC+Rx.swift in Sources */,
 				3BDD9A04228DBEC200B2A1DA /* CommentForm.swift in Sources */,
 				3B5CB30522A5752100757533 /* ListViewModelType.swift in Sources */,
