@@ -14,15 +14,15 @@ class EditorPageVC: UIViewController {
     var viewModel: EditorPageViewModel?
     
     @IBOutlet weak var titleTextView: ExpandableTextView!
-    @IBOutlet weak var contentTextView: UITextView!
+    @IBOutlet weak var contentTextView: ExpandableTextView!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var dropDownView: UIView!
     @IBOutlet weak var adultButton: UIButton!
     
-    @IBOutlet weak var titleTextViewHeightConstraint: NSLayoutConstraint!
-    @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
-    
     @IBOutlet weak var sendPostButton: UIBarButtonItem!
+    
+    @IBOutlet weak var imageViewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var removeImageButtonHeightConstraint: NSLayoutConstraint!
     
     var cells: [UITableViewCell] = []
     

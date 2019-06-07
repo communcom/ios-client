@@ -33,13 +33,10 @@ extension EditorPageVC {
     
     @IBAction func sendPostButtonTap() {
         guard let viewModel = viewModel else {return}
-        Observable.combineLatest(titleTextView.rx.text.orEmpty, contentTextView.rx.text.orEmpty)
-            .flatMap {title, content in
-                return viewModel.sendPost(with: title, text: content, image: self.imageView.image)
-                    .do(onSubscribe: {
-                        self.navigationController?.showIndetermineHudWithMessage("Sending post".localized())
-                    })
-            }
+        viewModel.sendPost(with: titleTextView.text, text: contentTextView.text, image: self.imageView.image)
+            .do(onSubscribe: {
+                self.navigationController?.showIndetermineHudWithMessage("Sending post".localized())
+            })
             .flatMap { (transactionId, userId, permlink) -> Single<(userId: String, permlink: String)> in
                 guard let id = transactionId,
                     let userId = userId,
@@ -52,7 +49,7 @@ extension EditorPageVC {
                     .andThen(Single<(userId: String, permlink: String)>.just((userId: userId, permlink: permlink)))
             }
             .observeOn(MainScheduler.instance)
-            .subscribe(onNext: { (userId, permlink) in
+            .subscribe(onSuccess: { (userId, permlink) in
                 self.navigationController?.hideHud()
                 
                 // show post page

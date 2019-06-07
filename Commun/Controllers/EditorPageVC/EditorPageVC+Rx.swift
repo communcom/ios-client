@@ -16,8 +16,13 @@ extension EditorPageVC {
         guard let viewModel = viewModel else {return}
         // image
         imageView.rx.isEmpty
-            .map {$0 ? 0: 72}
-            .bind(to: imageHeightConstraint.rx.constant)
+            .map {$0 ? 0: 220}
+            .bind(to: imageViewHeightConstraint.rx.constant)
+            .disposed(by: disposeBag)
+        
+        imageView.rx.isEmpty
+            .map {$0 ? 0: 24}
+            .bind(to: removeImageButtonHeightConstraint.rx.constant)
             .disposed(by: disposeBag)
         
         // isAdult

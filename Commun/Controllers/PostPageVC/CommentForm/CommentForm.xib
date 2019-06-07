@@ -44,6 +44,9 @@
                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             <userDefinedRuntimeAttributes>
                                 <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Write a comment..."/>
+                                <userDefinedRuntimeAttribute type="number" keyPath="maxHeight">
+                                    <real key="value" value="300"/>
+                                </userDefinedRuntimeAttribute>
                             </userDefinedRuntimeAttributes>
                         </textView>
                     </subviews>
