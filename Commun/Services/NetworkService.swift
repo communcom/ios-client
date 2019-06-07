@@ -186,12 +186,12 @@ class NetworkService: NSObject {
         }
     }
     
-    func sendComment(comment: String, forPostWithPermlink permlink: String, tags: [String]) -> Completable {
+    func sendComment(comment: String, metaData json: String? = nil, tags: [String], forPostWithPermlink permlink: String) -> Completable {
         return RestAPIManager.instance.rx.create(
             message: comment,
             parentPermlink: permlink,
             tags: tags,
-            metaData: nil
+            metaData: json
         )
             .flatMapCompletable({ (transaction) -> Completable in
                 #warning("Remove this chaining to use socket in production")

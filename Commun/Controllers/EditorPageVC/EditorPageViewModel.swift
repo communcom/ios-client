@@ -26,6 +26,7 @@ class EditorPageViewModel {
         
         if let i = embeds.firstIndex(where: {($0["type"] as? String) == "photo"}) {
             embeds[i]["url"] = url
+            return
         }
         
         #warning("add id")
@@ -76,13 +77,7 @@ class EditorPageViewModel {
     }
     
     func getTags(from text: String) -> [String] {
-        var tags: [String] = []
-        
-        for word in text.components(separatedBy: " ") {
-            if word.contains("#") {
-                tags.append(word)
-            }
-        }
+        var tags = text.getTags()
         
         if isAdult.value {
             tags.append("#18+")

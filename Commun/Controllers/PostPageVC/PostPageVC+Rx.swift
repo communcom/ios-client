@@ -29,6 +29,17 @@ extension PostPageVC: PostHeaderViewDelegate {
     }
     
     func bindPost() {
+        // scrollView
+        self.tableView.rx.willDragDown
+            .map {$0 ? 0: 56}
+            .subscribe(onNext: {height in
+                UIView.animate(withDuration: 0.25, animations: {
+                    self.navigationBarHeightConstraint.constant = CGFloat(height)
+                    self.view.layoutIfNeeded()
+                })
+            })
+            .disposed(by: disposeBag)
+        
         viewModel.post
             .subscribe(onNext: {post in
                 // Time ago & community
@@ -107,11 +118,13 @@ extension PostPageVC: PostHeaderViewDelegate {
     }
     
     func sendComment(_ comment: String) {
-        guard let post = self.viewModel.post.value else {return}
-        NetworkService.shared.sendComment(comment: comment, forPostWithPermlink: post.contentId.permlink, tags: [])
-            .do(onSubscribe: {
+        guard self.viewModel.post.value != nil else {return}
+        
+        viewModel.sendComment(comment, image: commentForm.imageView.image)
+            .do(onSubscribed: {
                 self.commentForm.sendButton.isEnabled = false
             })
+            .observeOn(MainScheduler.instance)
             .subscribe(onCompleted: {
                 self.commentForm.textView.text = ""
                 self.view.endEditing(true)
@@ -122,7 +135,9 @@ extension PostPageVC: PostHeaderViewDelegate {
                 self.viewModel.reload()
             }, onError: {_ in
                 self.view.endEditing(true)
-                self.showGeneralError()
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    self.showGeneralError()
+                }
                 self.commentForm.sendButton.isEnabled = true
             })
             .disposed(by: disposeBag)

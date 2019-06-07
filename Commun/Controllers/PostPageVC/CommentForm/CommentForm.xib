@@ -80,6 +80,14 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="itb-zG-GWo">
                     <rect key="frame" x="0.0" y="0.0" width="69" height="85"/>
                     <subviews>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="wa2-TT-6xC">
+                            <rect key="frame" x="0.0" y="6" width="63" height="63"/>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                    <real key="value" value="8"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                        </imageView>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KEA-WD-raw">
                             <rect key="frame" x="47" y="0.0" width="22" height="22"/>
                             <constraints>
@@ -90,14 +98,6 @@
                                 <action selector="removeImageDidTouch:" destination="-1" eventType="touchUpInside" id="TqU-jn-w5O"/>
                             </connections>
                         </button>
-                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="wa2-TT-6xC">
-                            <rect key="frame" x="0.0" y="6" width="63" height="63"/>
-                            <userDefinedRuntimeAttributes>
-                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                    <real key="value" value="8"/>
-                                </userDefinedRuntimeAttribute>
-                            </userDefinedRuntimeAttributes>
-                        </imageView>
                     </subviews>
                     <constraints>
                         <constraint firstItem="wa2-TT-6xC" firstAttribute="top" secondItem="itb-zG-GWo" secondAttribute="top" constant="6" id="5Qg-Uw-YyQ"/>

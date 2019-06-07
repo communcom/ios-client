@@ -20,6 +20,7 @@ class PostPageVC: UIViewController, CommentCellDelegate {
     @IBOutlet weak var communityAvatarImageView: UIImageView!
     @IBOutlet weak var moreButton: UIButton!
     @IBOutlet weak var commentForm: CommentForm!
+    @IBOutlet weak var navigationBarHeightConstraint: NSLayoutConstraint!
     
     let disposeBag = DisposeBag()
     
