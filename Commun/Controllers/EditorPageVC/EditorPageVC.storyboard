@@ -34,9 +34,6 @@
                                             <constraint firstAttribute="height" constant="17" id="reZ-0u-ZGM"/>
                                         </constraints>
                                         <state key="normal" image="18Button"/>
-                                        <connections>
-                                            <action selector="adultButtonTap" destination="AvE-EB-OTN" eventType="touchUpInside" id="itZ-NP-8kU"/>
-                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nwa-Mp-egE" userLabel="Photo Button">
                                         <rect key="frame" x="71" y="19" width="20" height="18"/>
@@ -79,34 +76,71 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="94b-Gg-NR2">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="94b-Gg-NR2" customClass="ExpandableTextView" customModule="Commun" customModuleProvider="target">
                                 <rect key="frame" x="16" y="154" width="343" height="47.5"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <accessibility key="accessibilityConfiguration" identifier="EditorPageTitleTextField" label="EditorPageTitleTextField"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" relation="lessThanOrEqual" constant="110" id="m5t-lR-Upm"/>
-                                    <constraint firstAttribute="height" priority="750" constant="47.5" id="siF-LQ-lQm"/>
+                                    <constraint firstAttribute="height" constant="47.5" id="siF-LQ-lQm"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="26"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="maxHeight">
+                                        <real key="value" value="110"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                             </textView>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" keyboardDismissMode="onDrag" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="nDy-mq-vIj">
-                                <rect key="frame" x="16" y="209.5" width="343" height="393.5"/>
+                                <rect key="frame" x="16" y="209.5" width="343" height="321.5"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="6Ld-hr-oUy">
+                                <rect key="frame" x="231" y="531" width="128" height="72"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="72" id="IA3-lo-jO7"/>
+                                    <constraint firstAttribute="width" secondItem="6Ld-hr-oUy" secondAttribute="height" multiplier="16:9" id="PyM-on-abM"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                        <color key="value" red="0.93725490570000003" green="0.93725490570000003" blue="0.95686274770000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                        <real key="value" value="1"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aNM-qi-T3R">
+                                <rect key="frame" x="327" y="539" width="24" height="24"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="aNM-qi-T3R" secondAttribute="height" multiplier="1:1" id="Zxl-sD-bij"/>
+                                </constraints>
+                                <state key="normal" title="Button" image="Close"/>
+                                <connections>
+                                    <action selector="removeImageButton:" destination="AvE-EB-OTN" eventType="touchUpInside" id="MxN-ha-K07"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="bla-eK-cJX" firstAttribute="leading" secondItem="rXf-Vp-Izy" secondAttribute="leading" id="3cI-b9-hR3"/>
+                            <constraint firstItem="aNM-qi-T3R" firstAttribute="top" secondItem="6Ld-hr-oUy" secondAttribute="top" constant="8" id="5rK-3u-Frn"/>
                             <constraint firstItem="94b-Gg-NR2" firstAttribute="top" secondItem="Yh5-US-3Nd" secondAttribute="bottom" constant="26" id="6gg-zi-JBB"/>
+                            <constraint firstItem="U7q-88-jfF" firstAttribute="top" secondItem="6Ld-hr-oUy" secondAttribute="bottom" constant="8" id="6ko-zH-pUz"/>
+                            <constraint firstItem="6Ld-hr-oUy" firstAttribute="top" secondItem="nDy-mq-vIj" secondAttribute="bottom" id="829-WA-zjJ"/>
                             <constraint firstItem="nDy-mq-vIj" firstAttribute="trailing" secondItem="94b-Gg-NR2" secondAttribute="trailing" id="BGQ-EL-Juq"/>
+                            <constraint firstItem="aNM-qi-T3R" firstAttribute="trailing" secondItem="6Ld-hr-oUy" secondAttribute="trailing" constant="-8" id="Fik-gt-uPi"/>
                             <constraint firstItem="nDy-mq-vIj" firstAttribute="leading" secondItem="94b-Gg-NR2" secondAttribute="leading" id="HWp-d6-Vrw"/>
-                            <constraint firstItem="U7q-88-jfF" firstAttribute="top" secondItem="nDy-mq-vIj" secondAttribute="bottom" constant="8" id="JKM-7e-Ztk"/>
+                            <constraint firstItem="aNM-qi-T3R" firstAttribute="width" secondItem="6Ld-hr-oUy" secondAttribute="height" multiplier="1:3" id="MwY-wG-KGa"/>
                             <constraint firstItem="pty-xo-nJA" firstAttribute="bottom" secondItem="U7q-88-jfF" secondAttribute="bottom" id="UuV-kj-dYv" customClass="KeyboardLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                             <constraint firstItem="94b-Gg-NR2" firstAttribute="leading" secondItem="pty-xo-nJA" secondAttribute="leading" constant="16" id="Woj-Ex-3zL"/>
                             <constraint firstItem="rXf-Vp-Izy" firstAttribute="leading" secondItem="Yh5-US-3Nd" secondAttribute="trailing" constant="16" id="XCn-TP-2zr"/>
+                            <constraint firstItem="pty-xo-nJA" firstAttribute="trailing" secondItem="6Ld-hr-oUy" secondAttribute="trailing" constant="16" id="brW-Nm-2jX"/>
                             <constraint firstItem="bla-eK-cJX" firstAttribute="top" secondItem="rXf-Vp-Izy" secondAttribute="bottom" constant="2" id="dHw-u8-kbP"/>
                             <constraint firstItem="bla-eK-cJX" firstAttribute="trailing" secondItem="rXf-Vp-Izy" secondAttribute="trailing" id="ddI-cL-Tpc"/>
                             <constraint firstItem="Yh5-US-3Nd" firstAttribute="leading" secondItem="pty-xo-nJA" secondAttribute="leading" constant="16" id="ggG-eV-PVe"/>
@@ -138,7 +172,7 @@
                                 <userDefinedRuntimeAttribute type="string" keyPath="accessibilityLabel" value="EditorPagePostButton"/>
                             </userDefinedRuntimeAttributes>
                             <connections>
-                                <action selector="postButtonTap" destination="AvE-EB-OTN" id="qkv-Dv-cRa"/>
+                                <action selector="sendPostButtonTap" destination="AvE-EB-OTN" id="3Is-sQ-Ay4"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -146,8 +180,10 @@
                         <outlet property="adultButton" destination="aeQ-gX-bWx" id="Yli-e5-ttd"/>
                         <outlet property="contentTextView" destination="nDy-mq-vIj" id="Kis-Kt-6YU"/>
                         <outlet property="dropDownView" destination="U7q-88-jfF" id="Z2s-ew-Vrh"/>
+                        <outlet property="imageHeightConstraint" destination="IA3-lo-jO7" id="UB8-7C-P8K"/>
+                        <outlet property="imageView" destination="6Ld-hr-oUy" id="7Zz-Kn-2Wb"/>
                         <outlet property="sendPostButton" destination="uJ6-gc-rL2" id="aVg-wp-gSO"/>
-                        <outlet property="titleTextField" destination="94b-Gg-NR2" id="XAA-FF-b7h"/>
+                        <outlet property="titleTextView" destination="94b-Gg-NR2" id="V6I-Q2-Vrx"/>
                         <outlet property="titleTextViewHeightConstraint" destination="siF-LQ-lQm" id="EkA-k4-2GQ"/>
                     </connections>
                 </viewController>
@@ -176,6 +212,7 @@
     </scenes>
     <resources>
         <image name="18Button" width="873" height="512"/>
+        <image name="Close" width="512" height="512"/>
         <image name="photo_solid" width="24" height="24"/>
         <image name="tux" width="327" height="370"/>
     </resources>

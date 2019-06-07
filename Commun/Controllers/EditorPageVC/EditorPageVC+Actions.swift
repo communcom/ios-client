@@ -10,27 +10,37 @@ import UIKit
 import CyberSwift
 import RxSwift
 import MBProgressHUD
+import TLPhotoPicker
 
 extension EditorPageVC {
     
     @IBAction func cameraButtonTap() {
-        imagePicker.delegate = self
-        imagePicker.allowsEditing = false
-        imagePicker.sourceType = .photoLibrary
-        self.present(imagePicker, animated: true, completion: nil)
-    }
-    
-    @IBAction func adultButtonTap() {
-        viewModel?.setAdult()
-    }
-    
-    @IBAction func postButtonTap() {
-        self.view.endEditing(true)
-        viewModel?.sendPost()
-            .do(onSubscribe: {
-                self.navigationController?.showIndetermineHudWithMessage("Sending post".localized())
+        // If updating
+        let pickerVC = CustomTLPhotosPickerVC.singleImage
+        self.present(pickerVC, animated: true, completion: nil)
+        
+        pickerVC.rx.didSelectAssets
+            .filter {($0.count > 0) && ($0.first?.fullResolutionImage != nil)}
+            .map {$0.first!.fullResolutionImage!}
+            .subscribe(onNext: {image in
+                self.imageView.image = image
+                pickerVC.dismiss(animated: true, completion: nil)
             })
-            .flatMap({ (transactionId, userId, permlink) -> Single<(userId: String, permlink: String)> in
+            .disposed(by: disposeBag)
+            // Upload image
+            
+    }
+    
+    @IBAction func sendPostButtonTap() {
+        guard let viewModel = viewModel else {return}
+        Observable.combineLatest(titleTextView.rx.text.orEmpty, contentTextView.rx.text.orEmpty)
+            .flatMap {title, content in
+                return viewModel.sendPost(with: title, text: content, image: self.imageView.image)
+                    .do(onSubscribe: {
+                        self.navigationController?.showIndetermineHudWithMessage("Sending post".localized())
+                    })
+            }
+            .flatMap { (transactionId, userId, permlink) -> Single<(userId: String, permlink: String)> in
                 guard let id = transactionId,
                     let userId = userId,
                     let permlink = permlink else {
@@ -40,8 +50,9 @@ extension EditorPageVC {
                 self.navigationController?.showIndetermineHudWithMessage("Wait for transaction".localized())
                 return NetworkService.shared.waitForTransactionWith(id: id)
                     .andThen(Single<(userId: String, permlink: String)>.just((userId: userId, permlink: permlink)))
-            })
-            .subscribe(onSuccess: { (userId, permlink) in
+            }
+            .observeOn(MainScheduler.instance)
+            .subscribe(onNext: { (userId, permlink) in
                 self.navigationController?.hideHud()
                 
                 // show post page
@@ -69,6 +80,11 @@ extension EditorPageVC {
     
     @IBAction func closeButtonDidTouch(_ sender: Any) {
         self.navigationController?.dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func removeImageButton(_ sender: Any) {
+        imageView.image = nil
+        viewModel?.addImage(with: nil)
     }
     
 }

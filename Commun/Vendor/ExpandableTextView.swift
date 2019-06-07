@@ -26,7 +26,7 @@ class ExpandableTextView: UITextView {
                 let width = newFrame.size.width
                 let newSize = self.sizeThatFits(CGSize(width: width,
                                                            height: CGFloat.greatestFiniteMagnitude))
-                newFrame.size = CGSize(width: width, height: newSize.height)
+                newFrame.size = CGSize(width: max(newSize.width, width), height: newSize.height)
                 if (newFrame.size.height > self.maxHeight) {return}
                 self.frame = newFrame
                 self.heightConstraint.constant = newSize.height

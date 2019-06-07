@@ -14,7 +14,18 @@ extension EditorPageVC {
     
     func bindUI() {
         guard let viewModel = viewModel else {return}
+        // image
+        imageView.rx.isEmpty
+            .map {$0 ? 0: 72}
+            .bind(to: imageHeightConstraint.rx.constant)
+            .disposed(by: disposeBag)
+        
         // isAdult
+        adultButton.rx.tap
+            .map {_ in !viewModel.isAdult.value}
+            .bind(to: viewModel.isAdult)
+            .disposed(by: disposeBag)
+        
         viewModel.isAdult
             .map {$0 ? "18ButtonSelected": "18Button"}
             .map {UIImage(named: $0)}
@@ -25,7 +36,7 @@ extension EditorPageVC {
         
         #warning("Verify community")
         #warning("fix contentText later")
-        Observable.combineLatest(titleTextField.rx.text.orEmpty, contentTextView.rx.text.orEmpty)
+        Observable.combineLatest(titleTextView.rx.text.orEmpty, contentTextView.rx.text.orEmpty)
             .map {
                 // Text field  is not empty
                 (!$0.0.isEmpty) && (!$0.1.isEmpty) &&

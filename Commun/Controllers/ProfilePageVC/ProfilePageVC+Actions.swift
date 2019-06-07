@@ -42,14 +42,7 @@ extension ProfilePageVC {
         }
         
         // If updating
-        let pickerVC = CustomTLPhotosPickerVC()
-        var configure = TLPhotosPickerConfigure()
-        configure.singleSelectedMode = true
-        configure.allowedLivePhotos = false
-        configure.allowedVideo = false
-        configure.allowedVideoRecording = false
-        configure.mediaType = .image
-        pickerVC.configure = configure
+        let pickerVC = CustomTLPhotosPickerVC.singleImage
         self.present(pickerVC, animated: true, completion: nil)
             
         pickerVC.rx.didSelectAssets

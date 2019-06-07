@@ -14,53 +14,77 @@ import CyberSwift
 class EditorPageViewModel {
     var postForEdit: ResponseAPIContentGetPost?
     
-    let images = BehaviorRelay<[UIImage]>(value: [])
-    let titleText = BehaviorRelay<String>(value: "")
-    let contentText = BehaviorRelay<String>(value: "")
     let isAdult = BehaviorRelay<Bool>(value: false)
+    var embeds = [[String: Any]]()
     
-    func addImage(_ image: UIImage) {
-        var newImages = images.value
-        newImages.append(image)
-        self.images.accept(newImages)
+    /// set url = nil to remove
+    func addImage(with url: String?) {
+        guard let url = url else {
+            embeds.removeAll(where: {($0["type"] as? String) == "photo"})
+            return
+        }
+        
+        if let i = embeds.firstIndex(where: {($0["type"] as? String) == "photo"}) {
+            embeds[i]["url"] = url
+        }
+        
+        #warning("add id")
+        embeds.append([
+            "type": "photo",
+            "url": url,
+            "id": Int(Date().timeIntervalSince1970)
+        ])
     }
     
-    func setAdult() {
-        isAdult.accept(!isAdult.value)
-    }
-    
-    func sendPost() -> Single<NetworkService.SendPostCompletion> {
+    func sendPost(with title: String, text: String, image: UIImage?) -> Single<NetworkService.SendPostCompletion> {
         if let post = postForEdit {
             #warning("Edit post and delete this line")
             return .error(ErrorAPI.requestFailed(message: "Editing post is implemented"))
         }
-        let json = createJsonMetadata()
-        return NetworkService.shared.sendPost(withTitle: titleText.value, withText: contentText.value, metaData: json ?? "", withTags: getTags())
+        
+        var sendRequest: Single<NetworkService.SendPostCompletion> {
+            let json = self.createJsonMetadata(for: text)
+            return NetworkService.shared.sendPost(withTitle: title, withText: text, metaData: json ?? "", withTags: self.getTags(from: text))
+        }
+        
+        
+        if let image = image {
+            return NetworkService.shared.uploadImage(image)
+                .do(onSubscribe: {
+                    UIApplication.topViewController()?.navigationController?.showIndetermineHudWithMessage("Upload image".localized())
+                })
+                .flatMap {url in
+                    self.addImage(with: url)
+                    return sendRequest
+                }
+        }
+        
+        return sendRequest
     }
     
-    func createJsonMetadata() -> String? {
-        var embeds: [[String: String]] = []
-        
-        for word in contentText.value.components(separatedBy: " ") {
+    func createJsonMetadata(for text: String) -> String? {
+        for word in text.components(separatedBy: " ") {
             if word.contains("http://") || word.contains("https://") {
+                if embeds.first(where: {($0["url"] as? String) == word}) != nil {continue}
+                #warning("Define type")
                 embeds.append(["url": word])
             }
         }
         
-        let result: [String: Any] = ["embeds": embeds]
+        let result = ["embeds": embeds]
         return result.jsonString()
     }
     
-    func getTags() -> [String] {
+    func getTags(from text: String) -> [String] {
         var tags: [String] = []
         
-        for word in contentText.value.components(separatedBy: " ") {
+        for word in text.components(separatedBy: " ") {
             if word.contains("#") {
                 tags.append(word)
             }
         }
         
-        if isAdult.value == true {
+        if isAdult.value {
             tags.append("#18+")
         }
         
