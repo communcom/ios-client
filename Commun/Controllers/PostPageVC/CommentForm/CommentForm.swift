@@ -14,6 +14,10 @@ class CommentForm: UIView {
     @IBOutlet var contentView: UIView!
     @IBOutlet weak var textView: ExpandableTextView!
     @IBOutlet weak var sendButton: UIButton!
+    @IBOutlet weak var imageView: UIImageView!
+    
+    
+    @IBOutlet weak var imageWrapperHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var textFieldToSendBtnConstraint: NSLayoutConstraint!
     @IBOutlet weak var sendBtnWidthConstraint: NSLayoutConstraint!
     
@@ -52,5 +56,14 @@ class CommentForm: UIView {
                 })
             })
             .disposed(by: bag)
+        
+        // observe image
+        imageView.rx.isEmpty
+            .map {$0 ? 0: 85}
+            .bind(to: imageWrapperHeightConstraint.rx.constant)
+            .disposed(by: bag)
+    }
+    @IBAction func removeImageDidTouch(_ sender: Any) {
+        imageView.image = nil
     }
 }
