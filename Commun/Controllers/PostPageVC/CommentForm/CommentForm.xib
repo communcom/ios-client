@@ -36,6 +36,9 @@
                                 <constraint firstAttribute="height" constant="24" id="iJb-Ue-jRA"/>
                             </constraints>
                             <state key="normal" image="camera-gray"/>
+                            <connections>
+                                <action selector="addImageDidTouch:" destination="-1" eventType="touchUpInside" id="AIJ-Cu-k19"/>
+                            </connections>
                         </button>
                         <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="27b-40-1Op" customClass="ExpandableTextView" customModule="Commun" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="0.0" width="320" height="36"/>

@@ -63,7 +63,22 @@ class CommentForm: UIView {
             .bind(to: imageWrapperHeightConstraint.rx.constant)
             .disposed(by: bag)
     }
+    
     @IBAction func removeImageDidTouch(_ sender: Any) {
         imageView.image = nil
+    }
+    
+    @IBAction func addImageDidTouch(_ sender: Any) {
+        let pickerVC = CustomTLPhotosPickerVC.singleImage
+        self.parentViewController?.present(pickerVC, animated: true, completion: nil)
+        
+        pickerVC.rx.didSelectAssets
+            .filter {($0.count > 0) && ($0.first?.fullResolutionImage != nil)}
+            .map {$0.first!.fullResolutionImage!}
+            .subscribe(onNext: {image in
+                self.imageView.image = image
+                pickerVC.dismiss(animated: true, completion: nil)
+            })
+            .disposed(by: bag)
     }
 }

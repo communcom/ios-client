@@ -15,7 +15,6 @@ import TLPhotoPicker
 extension EditorPageVC {
     
     @IBAction func cameraButtonTap() {
-        // If updating
         let pickerVC = CustomTLPhotosPickerVC.singleImage
         self.present(pickerVC, animated: true, completion: nil)
         
