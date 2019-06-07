@@ -55,6 +55,7 @@
 		3B635F7F22772D87006DAAB2 /* PostsFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B635F7E22772D87006DAAB2 /* PostsFetcher.swift */; };
 		3B635F812277375A006DAAB2 /* FeedPageVC+Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B635F802277375A006DAAB2 /* FeedPageVC+Binding.swift */; };
 		3B635F8322774A37006DAAB2 /* FeedTimeFrameMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B635F8222774A37006DAAB2 /* FeedTimeFrameMode.swift */; };
+		3B63CD9322AA7AA200DC828B /* UIScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B63CD9222AA7AA200DC828B /* UIScrollView.swift */; };
 		3BA4D0872292BA710022A69D /* ResponseAPIContentGetPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BA4D0862292BA710022A69D /* ResponseAPIContentGetPost.swift */; };
 		3BA4D089229315D60022A69D /* UIResponder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BA4D088229315D60022A69D /* UIResponder.swift */; };
 		3BAF69C322675B420055CCEB /* ProfilePageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BAF69C222675B420055CCEB /* ProfilePageVC.swift */; };
@@ -260,6 +261,7 @@
 		3B635F7E22772D87006DAAB2 /* PostsFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostsFetcher.swift; sourceTree = "<group>"; };
 		3B635F802277375A006DAAB2 /* FeedPageVC+Binding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FeedPageVC+Binding.swift"; sourceTree = "<group>"; };
 		3B635F8222774A37006DAAB2 /* FeedTimeFrameMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedTimeFrameMode.swift; sourceTree = "<group>"; };
+		3B63CD9222AA7AA200DC828B /* UIScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIScrollView.swift; sourceTree = "<group>"; };
 		3BA4D0862292BA710022A69D /* ResponseAPIContentGetPost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseAPIContentGetPost.swift; sourceTree = "<group>"; };
 		3BA4D088229315D60022A69D /* UIResponder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIResponder.swift; sourceTree = "<group>"; };
 		3BAF69C222675B420055CCEB /* ProfilePageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePageVC.swift; sourceTree = "<group>"; };
@@ -825,6 +827,7 @@
 				3BF37BCB22A1297C00A72FFE /* UITableView.swift */,
 				3BF37BD522A162E000A72FFE /* ResponseAPIOnlineNotificationData.swift */,
 				3B5CB30222A56BD500757533 /* UITapGestureRecognizer.swift */,
+				3B63CD9222AA7AA200DC828B /* UIScrollView.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1430,6 +1433,7 @@
 				57840A05223FAC1B00338FD5 /* SegmentioCellWithLabel.swift in Sources */,
 				3B5D7CF12299D79B0077B82C /* FeedSortMode.swift in Sources */,
 				5797E0F8225DDA400026C4D5 /* SignUpVC.swift in Sources */,
+				3B63CD9322AA7AA200DC828B /* UIScrollView.swift in Sources */,
 				3BB86B4922734AE4008F1C64 /* UIColor.swift in Sources */,
 				57840A00223FAC1B00338FD5 /* SegmentioCellWithImageBeforeLabel.swift in Sources */,
 				57840A0A223FAC1B00338FD5 /* Segmentio.swift in Sources */,

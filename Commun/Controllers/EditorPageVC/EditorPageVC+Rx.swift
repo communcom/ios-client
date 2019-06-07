@@ -14,15 +14,30 @@ extension EditorPageVC {
     
     func bindUI() {
         guard let viewModel = viewModel else {return}
+        // scrollView
+        scrollView.rx.willDragDown
+            .filter {$0}
+            .subscribe(onNext: {_ in
+                self.view.endEditing(true)
+            })
+            .disposed(by: disposeBag)
+        
         // image
         imageView.rx.isEmpty
-            .map {$0 ? 0: 220}
+            .map {$0 ? 0: self.imageView.size.width * (self.imageView.image!.size.height / self.imageView.image!.size.width)}
             .bind(to: imageViewHeightConstraint.rx.constant)
             .disposed(by: disposeBag)
         
         imageView.rx.isEmpty
             .map {$0 ? 0: 24}
             .bind(to: removeImageButtonHeightConstraint.rx.constant)
+            .disposed(by: disposeBag)
+        
+        imageView.rx.isEmpty
+            .filter {!$0}
+            .subscribe(onNext: {_ in
+                self.scrollView.scrollsToBottom()
+            })
             .disposed(by: disposeBag)
         
         // isAdult

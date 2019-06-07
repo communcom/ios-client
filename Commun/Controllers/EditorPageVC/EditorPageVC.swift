@@ -13,6 +13,7 @@ class EditorPageVC: UIViewController {
 
     var viewModel: EditorPageViewModel?
     
+    @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var titleTextView: ExpandableTextView!
     @IBOutlet weak var contentTextView: ExpandableTextView!
     @IBOutlet weak var imageView: UIImageView!

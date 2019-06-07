@@ -206,6 +206,7 @@
                         <outlet property="imageView" destination="6Ld-hr-oUy" id="7Zz-Kn-2Wb"/>
                         <outlet property="imageViewHeightConstraint" destination="nNv-gI-pmE" id="nVk-uI-eQv"/>
                         <outlet property="removeImageButtonHeightConstraint" destination="RoS-5I-g09" id="SKO-E8-Oqx"/>
+                        <outlet property="scrollView" destination="ru5-vQ-hj9" id="iIa-n7-xPb"/>
                         <outlet property="sendPostButton" destination="uJ6-gc-rL2" id="aVg-wp-gSO"/>
                         <outlet property="titleTextView" destination="94b-Gg-NR2" id="V6I-Q2-Vrx"/>
                     </connections>
