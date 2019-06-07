@@ -818,7 +818,6 @@
 				3BF37BC922A11FA700A72FFE /* UIView+Loading.swift */,
 				576DC920223E42C800EDED41 /* UIViewControllerExtension.swift */,
 				3B02CD33228ADC100078BB52 /* UIWebView.swift */,
-				3B28EFE1228C7C31002D4816 /* KeyboardLayoutConstraint.swift */,
 				3BDD9A0E228F07EF00B2A1DA /* UIApplication.swift */,
 				3BA4D0862292BA710022A69D /* ResponseAPIContentGetPost.swift */,
 				3BA4D088229315D60022A69D /* UIResponder.swift */,
@@ -843,6 +842,7 @@
 				3BDD9A09228EDA5700B2A1DA /* PostController */,
 				3B5CB30422A5752100757533 /* ListViewModelType.swift */,
 				3B5CB30F22A5880D00757533 /* MyRxTableViewSectionedAnimatedDataSource.swift */,
+				3B28EFE1228C7C31002D4816 /* KeyboardLayoutConstraint.swift */,
 			);
 			path = Vendor;
 			sourceTree = "<group>";

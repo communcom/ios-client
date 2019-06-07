@@ -132,12 +132,12 @@ class SignInVC: UIViewController {
                         return Observable<String>.empty()
                     }
             })
-            .subscribe {[weak self] completable in
+            .subscribe {completable in
                 switch completable {
                 case .completed, .error(_):
                     break
                 case .next(_):
-                    self?.present(TabBarVC(), animated: true, completion: nil)
+                    WebSocketManager.instance.authorized.accept(true)
                 }
             }
             .disposed(by: disposeBag)

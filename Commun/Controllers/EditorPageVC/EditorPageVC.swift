@@ -43,7 +43,12 @@ class EditorPageVC: UIViewController {
         dropDownView.layer.borderWidth = 1.0
         dropDownView.layer.borderColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1).cgColor
         
+        titleTextView.textContainerInset = UIEdgeInsets.zero
+        titleTextView.textContainer.lineFragmentPadding = 0
         titleTextView.placeholder = "Title".localized()
+        
+        contentTextView.textContainerInset = UIEdgeInsets.zero
+        contentTextView.textContainer.lineFragmentPadding = 0
         contentTextView.placeholder = "Enter text".localized() + "..."
         
         // if editing post

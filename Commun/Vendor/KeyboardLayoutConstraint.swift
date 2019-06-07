@@ -54,6 +54,11 @@ public class KeyboardLayoutConstraint: NSLayoutConstraint {
                     keyboardVisibleHeight -= bottomInset
                 }
                 
+                if let vc = UIApplication.topViewController(),
+                    !vc.isModal {
+                    keyboardVisibleHeight -= vc.tabBarController?.tabBar.height ?? 0
+                }
+                
             }
             
             self.updateConstant()

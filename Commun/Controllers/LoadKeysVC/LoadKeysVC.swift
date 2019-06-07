@@ -9,6 +9,7 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import CyberSwift
 
 class LoadKeysVC: UIViewController {
     // MARK: - Properties
@@ -69,7 +70,7 @@ class LoadKeysVC: UIViewController {
             self.viewModel!.saveKeys().subscribe(onNext: { flag in
                 if flag {
                     UserDefaults.standard.set(true, forKey: Config.isCurrentUserLoggedKey)
-                    self.present(TabBarVC(), animated: true, completion: nil)
+                    WebSocketManager.instance.authorized.accept(true)
                 } else {
                     self.showAlert(title: "Error".localized(), message: "Something went wrong")
                 }
