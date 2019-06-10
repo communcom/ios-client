@@ -80,18 +80,32 @@ class PostHeaderView: UIView, UIWebViewDelegate, PostController {
         loadingView.hideLoading()
         loadingView.isHidden = true
         // Show media
-        if post.content.embeds.first?.result?.type == "video",
-            let html = post.content.embeds.first?.result?.html {
+        let embededResult = post.content.embeds.first?.result
+        
+        let showEmbed = { (show: Bool) in
+            
+            if show {
+                self.webView.scrollView.contentInset = UIEdgeInsets(top: -8, left: -8, bottom: -8, right: -8)
+                self.webView.scrollView.isScrollEnabled = false
+                self.webView.scrollView.bouncesZoom = false
+                self.webView.delegate = self
+            }
+            self.webViewHeightConstraint.constant = show ? UIScreen.main.bounds.width * 283/375 : 0
+            self.showMedia = show
+        }
+        
+        if embededResult?.type == "video",
+            let html = embededResult?.html {
+            showEmbed(true)
             webView.loadHTMLString(html, baseURL: nil)
-            webViewHeightConstraint.constant = UIScreen.main.bounds.width * 283/375
-            webView.scrollView.contentInset = UIEdgeInsets(top: -8, left: -8, bottom: -8, right: -8)
-            webView.scrollView.isScrollEnabled = false
-            webView.scrollView.bouncesZoom = false
-            webView.delegate = self
-            showMedia = true
+        } else if embededResult?.type == "photo",
+            let urlString = embededResult?.url,
+            let url = URL(string: urlString) {
+            showEmbed(true)
+            let request = URLRequest(url: url)
+            webView.loadRequest(request)
         } else {
-            showMedia = false
-            webViewHeightConstraint.constant = 0
+            showEmbed(false)
         }
         
         // Show count label
