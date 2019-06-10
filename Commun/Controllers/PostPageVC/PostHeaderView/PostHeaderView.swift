@@ -9,6 +9,7 @@
 import UIKit
 import CyberSwift
 import RxSwift
+import WebKit
 
 protocol PostHeaderViewDelegate: class {
     func headerViewDidLayoutSubviews(_ headerView: PostHeaderView)
@@ -20,8 +21,8 @@ class PostHeaderView: UIView, UIWebViewDelegate, PostController {
     weak var viewDelegate: PostHeaderViewDelegate?
     
     // Media content
-    @IBOutlet weak var webView: UIWebView!
-    @IBOutlet weak var webViewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var embedView: UIView!
+    @IBOutlet weak var embedViewHeightConstraint: NSLayoutConstraint!
     
     // Reactions
     @IBOutlet weak var voteCountLabel: UILabel!
@@ -82,28 +83,13 @@ class PostHeaderView: UIView, UIWebViewDelegate, PostController {
         // Show media
         let embededResult = post.content.embeds.first?.result
         
-        let showEmbed = { (show: Bool) in
-            
-            if show {
-                self.webView.scrollView.contentInset = UIEdgeInsets(top: -8, left: -8, bottom: -8, right: -8)
-                self.webView.scrollView.isScrollEnabled = false
-                self.webView.scrollView.bouncesZoom = false
-                self.webView.delegate = self
-            }
-            self.webViewHeightConstraint.constant = show ? UIScreen.main.bounds.width * 283/375 : 0
-            self.showMedia = show
-        }
-        
         if embededResult?.type == "video",
             let html = embededResult?.html {
-            showEmbed(true)
-            webView.loadHTMLString(html, baseURL: nil)
+            showWebView(with: html)
         } else if embededResult?.type == "photo",
             let urlString = embededResult?.url,
             let url = URL(string: urlString) {
-            showEmbed(true)
-            let request = URLRequest(url: url)
-            webView.loadRequest(request)
+            showPhoto(with: url)
         } else {
             showEmbed(false)
         }
@@ -141,11 +127,59 @@ class PostHeaderView: UIView, UIWebViewDelegate, PostController {
         layout()
     }
     
+    func showEmbed(_ show: Bool) {
+        self.embedViewHeightConstraint.constant = show ? UIScreen.main.bounds.width * 283/375 : 0
+        self.showMedia = show
+    }
+    
+    func showWebView(with htmlString: String) {
+        showEmbed(true)
+        embedView.removeSubviews()
+        let webView = UIWebView()
+        webView.translatesAutoresizingMaskIntoConstraints = false
+        
+        embedView.addSubview(webView)
+        webView.topAnchor.constraint(equalTo: embedView.topAnchor).isActive = true
+        webView.bottomAnchor.constraint(equalTo: embedView.bottomAnchor).isActive = true
+        webView.leadingAnchor.constraint(equalTo: embedView.leadingAnchor).isActive = true
+        webView.trailingAnchor.constraint(equalTo: embedView.trailingAnchor).isActive = true
+        
+        webView.scrollView.contentInset = UIEdgeInsets(top: -8, left: -8, bottom: -8, right: -8)
+        webView.scrollView.isScrollEnabled = false
+        webView.scrollView.bouncesZoom = false
+        
+        embedView.showLoading()
+        webView.loadHTMLString(htmlString, baseURL: nil)
+        
+        webView.delegate = self
+    }
+    
+    func showPhoto(with url: URL) {
+        showEmbed(true)
+        embedView.removeSubviews()
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.contentMode = .scaleToFill
+        
+        embedView.addSubview(imageView)
+        imageView.topAnchor.constraint(equalTo: embedView.topAnchor).isActive = true
+        imageView.bottomAnchor.constraint(equalTo: embedView.bottomAnchor).isActive = true
+        imageView.leadingAnchor.constraint(equalTo: embedView.leadingAnchor).isActive = true
+        imageView.trailingAnchor.constraint(equalTo: embedView.trailingAnchor).isActive = true
+        
+        imageView.showLoading()
+
+        imageView.sd_setImage(with: url) { (_, _, _, _) in
+            imageView.hideLoading()
+        }
+    }
+    
     func webViewDidFinishLoad(_ webView: UIWebView) {
         layoutAndNotify()
         if webView == contentWebView {
             fixedHeight = self.height
         }
+        embedView.hideLoading()
     }
     
     func layoutAndNotify(with keyboardHeight: CGFloat = 0) {
@@ -161,7 +195,7 @@ class PostHeaderView: UIView, UIWebViewDelegate, PostController {
         }
         var height: CGFloat = 112.0
         if showMedia {
-            height += webViewHeightConstraint.constant
+            height += embedViewHeightConstraint.constant
         }
         height += self.postTitleLabel.height
         height += 32
@@ -175,6 +209,8 @@ class PostHeaderView: UIView, UIWebViewDelegate, PostController {
         
         self.layoutSubviews()
     }
+    
+    
     @IBAction func upVoteButtonDidTouch(_ sender: Any) {
         upVote()
     }
