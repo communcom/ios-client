@@ -140,7 +140,7 @@ class SetUserVC: UIViewController {
             return
         }
         
-        RestAPIManager.instance.setUser(nickName:           userNickName,
+        RestAPIManager.instance.setUser(nickName:           userNickName.lowercased(),
                                         phone:              phone,
                                         responseHandling:   { [weak self] result in
                                             guard let strongSelf = self else { return }
