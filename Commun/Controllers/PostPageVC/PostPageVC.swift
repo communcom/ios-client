@@ -24,6 +24,8 @@ class PostPageVC: UIViewController, CommentCellDelegate {
     
     let disposeBag = DisposeBag()
     
+    var expandedIndexes = [Int]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         

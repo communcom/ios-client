@@ -16,9 +16,9 @@ extension NSMutableAttributedString {
         return self
     }
     
-    @discardableResult func semibold(_ text: String, font: UIFont = UIFont.systemFont(ofSize: 15, weight: .semibold)) -> NSMutableAttributedString {
+    @discardableResult func semibold(_ text: String, font: UIFont = UIFont.systemFont(ofSize: 15, weight: .semibold), color: UIColor = .black) -> NSMutableAttributedString {
         let attrs: [NSAttributedString.Key: Any] = [.font: font]
-        let boldString = NSAttributedString(string:text, attributes: attrs)
+        let boldString = NSAttributedString(string:text, attributes: attrs).colored(with: color)
         append(boldString)
         return self
     }
