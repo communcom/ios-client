@@ -24,9 +24,14 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Dx8-8W-zVf">
-                                <rect key="frame" x="0.0" y="76.5" width="375" height="526.5"/>
+                                <rect key="frame" x="0.0" y="20" width="375" height="583"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="rect" keyPath="contentInset">
+                                        <rect key="value" x="56" y="0.0" width="0.0" height="0.0"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xxf-Yw-cnd">
                                 <rect key="frame" x="0.0" y="20" width="375" height="56"/>
@@ -133,7 +138,7 @@
                             <constraint firstItem="gxE-vT-71g" firstAttribute="top" secondItem="xxf-Yw-cnd" secondAttribute="bottom" id="Nh6-Zs-Ake"/>
                             <constraint firstItem="thI-Qg-Abq" firstAttribute="leading" secondItem="Pgb-4l-LXo" secondAttribute="leading" constant="16" id="ZAN-gb-P85"/>
                             <constraint firstItem="Pgb-4l-LXo" firstAttribute="trailing" secondItem="thI-Qg-Abq" secondAttribute="trailing" constant="16" id="lpC-GX-aP4"/>
-                            <constraint firstItem="Dx8-8W-zVf" firstAttribute="top" secondItem="gxE-vT-71g" secondAttribute="bottom" id="vtz-i6-TwG"/>
+                            <constraint firstItem="Dx8-8W-zVf" firstAttribute="top" secondItem="Pgb-4l-LXo" secondAttribute="top" id="w2F-ov-6uG"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Pgb-4l-LXo"/>
                     </view>

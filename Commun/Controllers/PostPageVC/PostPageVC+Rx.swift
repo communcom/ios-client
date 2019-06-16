@@ -30,15 +30,15 @@ extension PostPageVC: PostHeaderViewDelegate {
     
     func bindPost() {
         // scrollView
-//        self.tableView.rx.willDragDown
-//            .map {$0 ? 0: 56}
-//            .subscribe(onNext: {height in
-//                UIView.animate(withDuration: 0.25, animations: {
-//                    self.navigationBarHeightConstraint.constant = CGFloat(height)
-//                    self.view.layoutIfNeeded()
-//                })
-//            })
-//            .disposed(by: disposeBag)
+        self.tableView.rx.willDragDown
+            .map {$0 ? 0: 56}
+            .subscribe(onNext: {height in
+                UIView.animate(withDuration: 0.25, animations: {
+                    self.navigationBarHeightConstraint.constant = CGFloat(height)
+                    self.view.layoutIfNeeded()
+                })
+            })
+            .disposed(by: disposeBag)
         
         viewModel.post
             .subscribe(onNext: {post in
