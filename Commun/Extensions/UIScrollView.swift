@@ -19,7 +19,7 @@ extension UIScrollView {
 extension Reactive where Base: UIScrollView {
     var willDragDown: Observable<Bool> {
         return Observable.merge(
-            willEndDragging.map { $0.velocity.y > 0 },
+            willEndDragging.map { $0.velocity.y >= 0 },
             didScrollToTop.map {false}
         )
     }
