@@ -121,10 +121,6 @@
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pvF-WQ-yKT">
-                    <rect key="frame" x="0.0" y="0.0" width="414" height="616.5"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                </view>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
@@ -134,7 +130,6 @@
                 <constraint firstItem="0PA-qp-qBP" firstAttribute="centerY" secondItem="bgc-Hg-uT2" secondAttribute="centerY" id="32r-kd-eMV"/>
                 <constraint firstItem="qcT-rl-eWv" firstAttribute="leading" secondItem="bgc-Hg-uT2" secondAttribute="trailing" constant="8" id="7jN-EL-AUi"/>
                 <constraint firstItem="qc8-Sk-m8A" firstAttribute="centerY" secondItem="bgc-Hg-uT2" secondAttribute="centerY" id="A3u-6C-6T6"/>
-                <constraint firstItem="pvF-WQ-yKT" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="F6I-Kr-XyP"/>
                 <constraint firstItem="qc8-Sk-m8A" firstAttribute="leading" secondItem="0PA-qp-qBP" secondAttribute="trailing" constant="24" id="FCF-tM-cY3"/>
                 <constraint firstItem="BBW-Hf-RpW" firstAttribute="top" secondItem="k3o-1c-C5p" secondAttribute="bottom" constant="32" id="IkF-57-wce"/>
                 <constraint firstItem="jtl-Hw-hEq" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="Isa-Eb-qgp"/>
@@ -150,12 +145,9 @@
                 <constraint firstItem="gXa-HX-yLP" firstAttribute="top" secondItem="BBW-Hf-RpW" secondAttribute="bottom" constant="40" id="bMt-Ms-xWb"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="k3o-1c-C5p" secondAttribute="trailing" constant="16" id="c4n-FS-fBy"/>
                 <constraint firstItem="qcT-rl-eWv" firstAttribute="centerY" secondItem="bgc-Hg-uT2" secondAttribute="centerY" id="dkV-jr-0hB"/>
-                <constraint firstItem="pvF-WQ-yKT" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="f9K-ye-2Zi"/>
                 <constraint firstItem="gXa-HX-yLP" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" constant="-16" id="fXg-yG-j98"/>
                 <constraint firstItem="jtl-Hw-hEq" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="ggv-pP-sis"/>
                 <constraint firstItem="k3o-1c-C5p" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="16" id="iXv-f7-0Fy"/>
-                <constraint firstItem="gXa-HX-yLP" firstAttribute="top" secondItem="pvF-WQ-yKT" secondAttribute="bottom" constant="8" id="kI7-Ko-91s"/>
-                <constraint firstItem="pvF-WQ-yKT" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="ktD-fS-SXT"/>
                 <constraint firstItem="k3o-1c-C5p" firstAttribute="top" secondItem="Cmd-pK-7d8" secondAttribute="bottom" constant="26" id="m5g-SA-5Np"/>
                 <constraint firstItem="bgc-Hg-uT2" firstAttribute="top" secondItem="jtl-Hw-hEq" secondAttribute="bottom" constant="12" id="mfa-2i-E6x"/>
                 <constraint firstItem="0PA-qp-qBP" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="qcT-rl-eWv" secondAttribute="trailing" constant="8" id="ohg-qa-egg"/>
@@ -174,7 +166,6 @@
                 <outlet property="downVoteButton" destination="PQn-nj-igc" id="eWq-Us-zHP"/>
                 <outlet property="embedView" destination="jtl-Hw-hEq" id="Cop-Pr-3eu"/>
                 <outlet property="embedViewHeightConstraint" destination="GEX-NP-dIc" id="yuV-Pa-j4a"/>
-                <outlet property="loadingView" destination="pvF-WQ-yKT" id="Kps-5W-Fbk"/>
                 <outlet property="postTitleLabel" destination="k3o-1c-C5p" id="h1N-K3-JIx"/>
                 <outlet property="shareButton" destination="2w8-9u-TZr" id="3vZ-1X-0PG"/>
                 <outlet property="upVoteButton" destination="Cmd-pK-7d8" id="SJR-jP-er4"/>

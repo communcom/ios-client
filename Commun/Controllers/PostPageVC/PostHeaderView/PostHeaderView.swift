@@ -38,14 +38,6 @@ class PostHeaderView: UIView, UIWebViewDelegate, PostController {
     @IBOutlet weak var downVoteButton: UIButton!
     @IBOutlet weak var shareButton: UIButton!
     
-    @IBOutlet weak var loadingView: UIView!
-    func setLoading() {
-        loadingView.isHidden = false
-        loadingView.showLoading()
-        self.height = 200
-        layoutSubviews()
-    }
-    
     var fixedHeight: CGFloat?
     
     var post: ResponseAPIContentGetPost?
@@ -75,11 +67,12 @@ class PostHeaderView: UIView, UIWebViewDelegate, PostController {
     func setUp(with post: ResponseAPIContentGetPost?) {
         self.post = post
         guard let post = post else {
-            setLoading()
+            showLoading()
+            self.height = 200
+            layoutSubviews()
             return
         }
-        loadingView.hideLoading()
-        loadingView.isHidden = true
+        hideLoading()
         // Show media
         let embededResult = post.content.embeds.first?.result
         
