@@ -38,13 +38,13 @@ class EmbededView: UIView {
         self.heightConstraint = self.constraints.first {$0.firstAttribute == .height}
     }
     
-    func setUpWithEmbeded(_ embeded: ResponseAPIContentEmbed){
-        if embeded.result?.type == "video",
-            let html = embeded.result?.html {
+    func setUpWithEmbeded(_ embeded: ResponseAPIContentEmbed?){
+        if embeded?.result?.type == "video",
+            let html = embeded?.result?.html {
             showWebView(with: html)
             return
-        } else if embeded.result?.type == "photo",
-            let urlString = embeded.result?.url,
+        } else if embeded?.result?.type == "photo",
+            let urlString = embeded?.result?.url,
             let url = URL(string: urlString) {
             showPhoto(with: url)
             return
@@ -72,12 +72,12 @@ class EmbededView: UIView {
         webView.scrollView.isScrollEnabled = false
         webView.scrollView.bouncesZoom = false
         
-        contentView.showLoading()
+        showLoading()
         webView.loadHTMLString(htmlString, baseURL: nil)
         
         webView.rx.didFinishLoad
             .subscribe(onNext: {
-                self.contentView.hideLoading()
+                self.hideLoading()
                 
                 // modify height base on content
                 self.adjustHeight(withHeight: webView.contentHeight)
@@ -100,10 +100,10 @@ class EmbededView: UIView {
         imageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
         imageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true
         
-        contentView.showLoading()
+        showLoading()
         
         imageView.sd_setImage(with: url) { (image, _, _, _) in
-            self.contentView.hideLoading()
+            self.hideLoading()
             if image != nil {
                 self.adjustHeight(withHeight: UIScreen.main.bounds.width*275/383)
             }
