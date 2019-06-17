@@ -16,6 +16,7 @@ class EmbededView: UIView {
     
     var bag = DisposeBag()
     var heightConstraint: NSLayoutConstraint!
+    let didShowContentWithHeight = PublishSubject<CGFloat>()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -80,7 +81,12 @@ class EmbededView: UIView {
                 self.hideLoading()
                 
                 // modify height base on content
-                self.adjustHeight(withHeight: webView.contentHeight)
+                var height: CGFloat = 383
+                let str = webView.stringByEvaluatingJavaScript(from: "document.body.offsetHeight;") ?? "383"
+                if let n = NumberFormatter().number(from: str) {
+                    height = CGFloat(truncating: n)
+                }
+                self.adjustHeight(withHeight: height)
             })
             .disposed(by: bag)
     }
@@ -111,6 +117,8 @@ class EmbededView: UIView {
     }
     
     private func adjustHeight(withHeight height: CGFloat) {
+        print(height)
+        self.didShowContentWithHeight.onNext(height)
         self.heightConstraint.constant = height
         UIView.animate(withDuration: 0.3, animations: {
             self.contentView.layoutIfNeeded()
