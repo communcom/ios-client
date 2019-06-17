@@ -68,19 +68,22 @@ class PostPageVC: UIViewController, CommentCellDelegate {
                     deletedPost.identity == self.viewModel.post.value?.identity
                     else {return}
                 self.showAlert(title: "Deleted".localized(), message: "The post has been deleted".localized(), completion: { (_) in
-                    self.dismiss(animated: true, completion: nil)
+                    self.back()
                 })
             })
             .disposed(by: disposeBag)
     }
     
     @IBAction func backButtonTap(_ sender: Any) {
+        back()
+    }
+    
+    func back() {
         if (self.isModal) {
             self.dismiss(animated: true, completion: nil)
         } else {
             self.navigationController?.popViewController()
         }
-        
     }
     
 }
