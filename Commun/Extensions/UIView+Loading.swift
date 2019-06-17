@@ -11,22 +11,37 @@ import ASSpinnerView
 
 extension UIView {
     func showLoading() {
-        let size = height > 76 ? 60: height-16
-        
+        // if loading view is existed
         if self.viewWithTag(9999) != nil {return}
+        
+        // create cover view to cover all current view
+        let coverView = UIView()
+        coverView.backgroundColor = .white
+        coverView.translatesAutoresizingMaskIntoConstraints = false
+        coverView.tag = 9999
+        self.addSubview(coverView)
+        
+        // add constraint for coverView
+        coverView.centerXAnchor.constraint(equalTo: self.centerXAnchor, constant: 0).isActive = true
+        coverView.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: 0).isActive = true
+        coverView.widthAnchor.constraint(equalTo: self.widthAnchor, constant: 0).isActive = true
+        coverView.heightAnchor.constraint(equalTo: self.heightAnchor, constant: 0).isActive = true
+        self.bringSubviewToFront(coverView)
+        
+        // add spinnerView
+        let size = height > 76 ? 60: height-16
         let spinnerView = ASSpinnerView()
+        spinnerView.translatesAutoresizingMaskIntoConstraints = false
         spinnerView.spinnerLineWidth = size/10
         spinnerView.spinnerDuration = 0.3
         spinnerView.spinnerStrokeColor = #colorLiteral(red: 0.4784313725, green: 0.6470588235, blue: 0.8980392157, alpha: 1)
-        spinnerView.tag = 9999
+        coverView.addSubview(spinnerView)
         
-        self.addSubview(spinnerView)
-        spinnerView.translatesAutoresizingMaskIntoConstraints = false
-        spinnerView.centerXAnchor.constraint(equalTo: self.centerXAnchor, constant: 0).isActive = true
-        spinnerView.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: 0).isActive = true
+        // add constraint for spinnerView
+        spinnerView.centerXAnchor.constraint(equalTo: coverView.centerXAnchor, constant: 0).isActive = true
+        spinnerView.centerYAnchor.constraint(equalTo: coverView.centerYAnchor, constant: 0).isActive = true
         spinnerView.widthAnchor.constraint(equalToConstant: size).isActive = true
         spinnerView.heightAnchor.constraint(equalToConstant: size).isActive = true
-        self.bringSubviewToFront(spinnerView)
     }
     
     func hideLoading() {
