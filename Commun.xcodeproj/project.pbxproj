@@ -57,6 +57,8 @@
 		3B635F8322774A37006DAAB2 /* FeedTimeFrameMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B635F8222774A37006DAAB2 /* FeedTimeFrameMode.swift */; };
 		3B63CD9322AA7AA200DC828B /* UIScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B63CD9222AA7AA200DC828B /* UIScrollView.swift */; };
 		3B63CD9522AAAC5500DC828B /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B63CD9422AAAC5500DC828B /* String.swift */; };
+		3B885BBC22B7A1FE00FC4B7A /* EmbededView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B885BBB22B7A1FE00FC4B7A /* EmbededView.swift */; };
+		3B885BBE22B7A20D00FC4B7A /* EmbededView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3B885BBD22B7A20D00FC4B7A /* EmbededView.xib */; };
 		3BA4D0872292BA710022A69D /* ResponseAPIContentGetPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BA4D0862292BA710022A69D /* ResponseAPIContentGetPost.swift */; };
 		3BA4D089229315D60022A69D /* UIResponder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BA4D088229315D60022A69D /* UIResponder.swift */; };
 		3BAF69C322675B420055CCEB /* ProfilePageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BAF69C222675B420055CCEB /* ProfilePageVC.swift */; };
@@ -275,6 +277,8 @@
 		3B635F8222774A37006DAAB2 /* FeedTimeFrameMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedTimeFrameMode.swift; sourceTree = "<group>"; };
 		3B63CD9222AA7AA200DC828B /* UIScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIScrollView.swift; sourceTree = "<group>"; };
 		3B63CD9422AAAC5500DC828B /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
+		3B885BBB22B7A1FE00FC4B7A /* EmbededView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbededView.swift; sourceTree = "<group>"; };
+		3B885BBD22B7A20D00FC4B7A /* EmbededView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmbededView.xib; sourceTree = "<group>"; };
 		3BA4D0862292BA710022A69D /* ResponseAPIContentGetPost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseAPIContentGetPost.swift; sourceTree = "<group>"; };
 		3BA4D088229315D60022A69D /* UIResponder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIResponder.swift; sourceTree = "<group>"; };
 		3BAF69C222675B420055CCEB /* ProfilePageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePageVC.swift; sourceTree = "<group>"; };
@@ -560,6 +564,15 @@
 				3B02CD2D228AB4580078BB52 /* NotificationsFetcher.swift */,
 			);
 			path = Fetchers;
+			sourceTree = "<group>";
+		};
+		3B885BBA22B7A1B600FC4B7A /* EmbededView */ = {
+			isa = PBXGroup;
+			children = (
+				3B885BBB22B7A1FE00FC4B7A /* EmbededView.swift */,
+				3B885BBD22B7A20D00FC4B7A /* EmbededView.xib */,
+			);
+			path = EmbededView;
 			sourceTree = "<group>";
 		};
 		3BAF69C122675ADB0055CCEB /* ProfilePageVC */ = {
@@ -870,6 +883,7 @@
 		578409EA223FAC0000338FD5 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				3B885BBA22B7A1B600FC4B7A /* EmbededView */,
 				575AECAA226066F000A7EC2D /* FormTextField */,
 				57CBD9592255117F000BA8CC /* UITextView+Placeholder */,
 				57FB1795224BFBD700563BF7 /* PageControls */,
@@ -1348,6 +1362,7 @@
 				57FB17A0224C092700563BF7 /* SignInVC.storyboard in Resources */,
 				3B197C88226A33CF008CF10D /* ResponseAPIContentGetProfileResult.json in Resources */,
 				B1EA02F32289882A00835244 /* SF-Pro-Text-Semibold.otf in Resources */,
+				3B885BBE22B7A20D00FC4B7A /* EmbededView.xib in Resources */,
 				B1EA02E92289882A00835244 /* SF-Pro-Text-Bold.otf in Resources */,
 				3BDD9A06228DBED000B2A1DA /* CommentForm.xib in Resources */,
 				B1EA02E62289882A00835244 /* SF-Pro-Display-ThinItalic.otf in Resources */,
@@ -1544,6 +1559,7 @@
 				57DE5BEA2252240E008566B9 /* TitleCell.swift in Sources */,
 				3B197C572269CEEF008CF10D /* CommentsFetcher.swift in Sources */,
 				3B635F812277375A006DAAB2 /* FeedPageVC+Binding.swift in Sources */,
+				3B885BBC22B7A1FE00FC4B7A /* EmbededView.swift in Sources */,
 				3B197C552269BF74008CF10D /* ProfilePageSegmentioItem.swift in Sources */,
 				3B0E9C66227050E3002AB1C2 /* UIImageView.swift in Sources */,
 				57B6FC27224A9E8700BCFDDA /* WelcomeScreenVC.swift in Sources */,
