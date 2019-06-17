@@ -9,6 +9,7 @@
 import Foundation
 import RxSwift
 import CyberSwift
+import SwiftyJSON
 
 class SignInViewModel {
     enum SignInError: Error {
@@ -17,11 +18,27 @@ class SignInViewModel {
     
     func signIn(withLogin login: String, withApiKey key: String) -> Observable<String> {
         #warning("login with real logic")
-        return NetworkService.shared.signIn(login: Config.testUserAccount.nickName, key: Config.testUserAccount.activeKey)
-            .flatMap { (permission) -> Observable<String> in
-                if permission != "active" {throw SignInError.unknown}
-                UserDefaults.standard.set(true, forKey: Config.isCurrentUserLoggedKey)
-                return Observable<String>.just(permission)
+        // Get test user
+        let session = URLSession.shared
+        return session.rx.json(url: URL(string: "http://116.203.39.126:7777/get_users")!)
+            .flatMap {json -> Observable<(nickName: String, key: String)> in
+                let users = JSON(json)
+                guard let user = users.array?[0],
+                    let username = user["username"].string,
+                    let key = user["active_key"].string else {
+                        throw ErrorAPI.requestFailed(message: "No test account founded")
+                }
+                print(username, key)
+                return .just((nickName: username, key: key))
             }
+            .flatMap {(nickName: String, key: String) -> Observable<String> in
+                return NetworkService.shared.signIn(login: nickName, key: key)
+                    .flatMap { (permission) -> Observable<String> in
+                        if permission != "active" {throw SignInError.unknown}
+                        UserDefaults.standard.set(true, forKey: Config.isCurrentUserLoggedKey)
+                        return Observable<String>.just(permission)
+                }
+            }
+            .observeOn(MainScheduler.instance)
     }
 }
