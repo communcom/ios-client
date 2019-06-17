@@ -22,6 +22,7 @@ PODS:
     - secp256k1.swift
     - Starscream (~> 3.0)
     - SwiftTheme
+    - SwiftyJSON (~> 4.0)
   - DateToolsSwift (4.0.0)
   - Differentiator (3.1.0)
   - DZNEmptyDataSet (1.8.1)
@@ -64,6 +65,7 @@ PODS:
   - SwifterSwift/SwiftStdlib (5.0.0)
   - SwifterSwift/UIKit (5.0.0)
   - SwiftTheme (0.4.4)
+  - SwiftyJSON (4.3.0)
   - Swinject (2.6.0)
   - TLPhotoPicker (1.8.6)
   - UIImageView-Letters (1.1.4)
@@ -118,6 +120,7 @@ SPEC REPOS:
     - Starscream
     - SwifterSwift
     - SwiftTheme
+    - SwiftyJSON
     - Swinject
     - TLPhotoPicker
     - UIImageView-Letters
@@ -128,7 +131,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   CyberSwift:
-    :commit: a92607272ffef1c5898bf9c4f8ad280037375a6c
+    :commit: 1a03ca532f0691ad56137e7d02faddcfdbcd332b
     :git: https://github.com/GolosChain/cyberSwift.git
 
 SPEC CHECKSUMS:
@@ -138,7 +141,7 @@ SPEC CHECKSUMS:
   BigInt: 76b5dfdfa3e2e478d4ffdf161aeede5502e2742f
   Checksum: f1aa56a27dea5db4006c819e2e129ee6aeb1d9af
   CryptoSwift: d81eeaa59dc5a8d03720fe919a6fd07b51f7439f
-  CyberSwift: f63ca1b6c60302397e606a23c7a5b57a6ccfba35
+  CyberSwift: 5ea8fc231b13efb86cc4a88a1bf3e1b82684950a
   DateToolsSwift: 875d97ff9e3a5d54abdd67a269b3f51c757b71ab
   Differentiator: be49ca3408f0ecfc761e4c7763d20c62be01b9ad
   DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
@@ -161,10 +164,11 @@ SPEC CHECKSUMS:
   Starscream: 08172b481e145289c4930cb567230fb55897cfa4
   SwifterSwift: 96f90594b370802f01647c2b1229c74a84ffafee
   SwiftTheme: a381f983da92153908b7a9eeb961b18b6d94d614
+  SwiftyJSON: 6faa0040f8b59dead0ee07436cbf76b73c08fd08
   Swinject: 48a96cda93633cf2860697b4ce76ab5db9ebaca2
   TLPhotoPicker: c5aefdc9beaca82116d7855924f1d8abdd055f79
   UIImageView-Letters: f62db28076797adf3560ab7410647dc6899b9eef
 
 PODFILE CHECKSUM: e0e8f7183361e734c4919e5dfedbfad3edbad4f2
 
-COCOAPODS: 1.7.1
+COCOAPODS: 1.7.2

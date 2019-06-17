@@ -74,6 +74,7 @@
 		3BDD9A08228EA5FF00B2A1DA /* CommentForm+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BDD9A07228EA5FF00B2A1DA /* CommentForm+Rx.swift */; };
 		3BDD9A0B228EDA6F00B2A1DA /* PostController+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BDD9A0A228EDA6F00B2A1DA /* PostController+Rx.swift */; };
 		3BDD9A0F228F07EF00B2A1DA /* UIApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BDD9A0E228F07EF00B2A1DA /* UIApplication.swift */; };
+		3BEA224422B3DA9C00FF42DA /* JSONParsingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BEA224322B3DA9C00FF42DA /* JSONParsingTests.swift */; };
 		3BF37BCA22A11FA700A72FFE /* UIView+Loading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BF37BC922A11FA700A72FFE /* UIView+Loading.swift */; };
 		3BF37BCC22A1297C00A72FFE /* UITableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BF37BCB22A1297C00A72FFE /* UITableView.swift */; };
 		3BF37BD022A137EE00A72FFE /* ResponseAPIContentGetPost.json in Resources */ = {isa = PBXBuildFile; fileRef = 3BF37BCF22A137EE00A72FFE /* ResponseAPIContentGetPost.json */; };
@@ -213,6 +214,16 @@
 		B1EA0317228A965200835244 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EA0316228A965200835244 /* MainViewController.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		3BEA224622B3DA9C00FF42DA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 571B14E8223A935C00630C8F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 571B14EF223A935C00630C8F;
+			remoteInfo = Commun;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		3B02CD1E228965AF0078BB52 /* CommentCellDelegate+UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CommentCellDelegate+UIViewController.swift"; sourceTree = "<group>"; };
 		3B02CD272289B23E0078BB52 /* PostHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostHeaderView.swift; sourceTree = "<group>"; };
@@ -281,6 +292,9 @@
 		3BDD9A07228EA5FF00B2A1DA /* CommentForm+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CommentForm+Rx.swift"; sourceTree = "<group>"; };
 		3BDD9A0A228EDA6F00B2A1DA /* PostController+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PostController+Rx.swift"; sourceTree = "<group>"; };
 		3BDD9A0E228F07EF00B2A1DA /* UIApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplication.swift; sourceTree = "<group>"; };
+		3BEA224122B3DA9C00FF42DA /* CommunTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CommunTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		3BEA224322B3DA9C00FF42DA /* JSONParsingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONParsingTests.swift; sourceTree = "<group>"; };
+		3BEA224522B3DA9C00FF42DA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3BF37BC922A11FA700A72FFE /* UIView+Loading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Loading.swift"; sourceTree = "<group>"; };
 		3BF37BCB22A1297C00A72FFE /* UITableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableView.swift; sourceTree = "<group>"; };
 		3BF37BCF22A137EE00A72FFE /* ResponseAPIContentGetPost.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ResponseAPIContentGetPost.json; sourceTree = "<group>"; };
@@ -431,6 +445,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		3BEA223E22B3DA9C00FF42DA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		571B14ED223A935C00630C8F /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -578,6 +599,15 @@
 			path = PostController;
 			sourceTree = "<group>";
 		};
+		3BEA224222B3DA9C00FF42DA /* CommunTests */ = {
+			isa = PBXGroup;
+			children = (
+				3BEA224322B3DA9C00FF42DA /* JSONParsingTests.swift */,
+				3BEA224522B3DA9C00FF42DA /* Info.plist */,
+			);
+			path = CommunTests;
+			sourceTree = "<group>";
+		};
 		570061172253CA83007700DA /* EditorContentCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -609,6 +639,7 @@
 			isa = PBXGroup;
 			children = (
 				571B14F2223A935C00630C8F /* Commun */,
+				3BEA224222B3DA9C00FF42DA /* CommunTests */,
 				571B14F1223A935C00630C8F /* Products */,
 				3473647ABA0904219AF41E71 /* Pods */,
 				7B93A43127B50B70E39EAAF3 /* Frameworks */,
@@ -619,6 +650,7 @@
 			isa = PBXGroup;
 			children = (
 				571B14F0223A935C00630C8F /* Commun.app */,
+				3BEA224122B3DA9C00FF42DA /* CommunTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1185,6 +1217,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		3BEA224022B3DA9C00FF42DA /* CommunTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3BEA224A22B3DA9C00FF42DA /* Build configuration list for PBXNativeTarget "CommunTests" */;
+			buildPhases = (
+				3BEA223D22B3DA9C00FF42DA /* Sources */,
+				3BEA223E22B3DA9C00FF42DA /* Frameworks */,
+				3BEA223F22B3DA9C00FF42DA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				3BEA224722B3DA9C00FF42DA /* PBXTargetDependency */,
+			);
+			name = CommunTests;
+			productName = CommunTests;
+			productReference = 3BEA224122B3DA9C00FF42DA /* CommunTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		571B14EF223A935C00630C8F /* Commun */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 571B1505223A935D00630C8F /* Build configuration list for PBXNativeTarget "Commun" */;
@@ -1211,10 +1261,14 @@
 		571B14E8223A935C00630C8F /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1010;
+				LastSwiftUpdateCheck = 1020;
 				LastUpgradeCheck = 1010;
 				ORGANIZATIONNAME = "Maxim Prigozhenkov";
 				TargetAttributes = {
+					3BEA224022B3DA9C00FF42DA = {
+						CreatedOnToolsVersion = 10.2.1;
+						TestTargetID = 571B14EF223A935C00630C8F;
+					};
 					571B14EF223A935C00630C8F = {
 						CreatedOnToolsVersion = 10.1;
 						LastSwiftMigration = 1020;
@@ -1236,11 +1290,19 @@
 			projectRoot = "";
 			targets = (
 				571B14EF223A935C00630C8F /* Commun */,
+				3BEA224022B3DA9C00FF42DA /* CommunTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		3BEA223F22B3DA9C00FF42DA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		571B14EE223A935C00630C8F /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1387,6 +1449,14 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		3BEA223D22B3DA9C00FF42DA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3BEA224422B3DA9C00FF42DA /* JSONParsingTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		571B14EC223A935C00630C8F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1520,6 +1590,14 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		3BEA224722B3DA9C00FF42DA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 571B14EF223A935C00630C8F /* Commun */;
+			targetProxy = 3BEA224622B3DA9C00FF42DA /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
 		571B14F7223A935C00630C8F /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
@@ -1551,6 +1629,49 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		3BEA224822B3DA9C00FF42DA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = QPW4XRTF2N;
+				INFOPLIST_FILE = CommunTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.bigears.CommunTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Commun.app/Commun";
+			};
+			name = Debug;
+		};
+		3BEA224922B3DA9C00FF42DA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = QPW4XRTF2N;
+				INFOPLIST_FILE = CommunTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.bigears.CommunTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Commun.app/Commun";
+			};
+			name = Release;
+		};
 		571B1503223A935D00630C8F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1733,6 +1854,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		3BEA224A22B3DA9C00FF42DA /* Build configuration list for PBXNativeTarget "CommunTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3BEA224822B3DA9C00FF42DA /* Debug */,
+				3BEA224922B3DA9C00FF42DA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		571B14EB223A935C00630C8F /* Build configuration list for PBXProject "Commun" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

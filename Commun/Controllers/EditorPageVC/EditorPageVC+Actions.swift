@@ -67,6 +67,9 @@ extension EditorPageVC {
                     case .responseUnsuccessful(message: "Post Not Found"):
                         self.dismiss(animated: true, completion: nil)
                         break
+                    case .blockchain(message: let message):
+                        self.showAlert(title: "Error".localized(), message: message)
+                        break
                     default:
                         self.showGeneralError()
                     }
