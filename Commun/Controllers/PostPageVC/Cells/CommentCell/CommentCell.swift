@@ -116,7 +116,9 @@ class CommentCell: UITableViewCell, CommentCellProtocol {
         
         if gesture.didTapAttributedTextInLabel(label: label, inRange: seeMoreRange) {
             vc.expandedIndexes.append(indexPath.row)
+            UIView.setAnimationsEnabled(false)
             vc.tableView.reloadRows(at: [indexPath], with: .none)
+            UIView.setAnimationsEnabled(true)
         }
     }
     
