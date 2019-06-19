@@ -12,11 +12,14 @@ import CyberSwift
 struct Auth {
     static func logout() -> Bool {
         // Remove all keys
-        let result = KeychainManager.deleteAllData(forUserNickName: Config.currentUser.id!)
-        
+        let result = KeychainManager.deleteAllData(forUserNickName: Config.currentUserIDKey)
+//        let result = KeychainManager.deleteAllData(forUserNickName: Config.currentUser.id!)
+
         if result {
             UserDefaults.standard.removeObject(forKey: Config.isCurrentUserLoggedKey)
-            WebSocketManager.instance.authorized.accept(false)
+            WebSocketManager.instance.disconnect()
+            WebSocketManager.instance.connect()
+//            WebSocketManager.instance.authorized.accept(false)
         }
         
         return result
