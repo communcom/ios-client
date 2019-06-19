@@ -76,6 +76,8 @@ extension SettingsVC {
         passwordsCells = []
         let changePasswordCell = tableView.dequeueReusableCell(withIdentifier: "SettingsButtonCell") as! SettingsButtonCell
         changePasswordCell.delegate = self
+        changePasswordCell.button.setTitle("Change all password".localized(), for: .normal)
+        changePasswordCell.button.setTitleColor(.appMainColor, for: .normal)
         passwordsCells.append(changePasswordCell)
         
         // Logout
