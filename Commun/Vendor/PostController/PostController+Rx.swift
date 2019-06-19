@@ -26,6 +26,6 @@ extension PostController {
         
         return NetworkService.shared.voteMessage(voteType:          voteType,
                                                  messagePermlink:   post.contentId.permlink,
-                                                 messageAuthor:     post.author?.username ?? "")
+                                                 messageAuthor:     post.author?.userId ?? "")
     }
 }

@@ -23,12 +23,16 @@ extension ItemsListController {
         var newItems = items.value
         guard let index = newItems.firstIndex(where: {$0.identity == updatedItem.identity}) else {return}
         newItems[index] = updatedItem
+        UIView.setAnimationsEnabled(false)
         items.accept(newItems)
+        UIView.setAnimationsEnabled(true)
     }
     
     func deleteItem(_ deletedItem: T) {
         let newItems = items.value.filter {$0.identity != deletedItem.identity}
+        UIView.setAnimationsEnabled(false)
         items.accept(newItems)
+        UIView.setAnimationsEnabled(true)
     }
 }
 

@@ -108,7 +108,7 @@ extension PostController {
                     self.upVoteButton.isEnabled = true
                     self.downVoteButton.isEnabled = true
                 },
-                onError: {_ in
+                onError: {error in
                     // reset state
                     self.setHasVote(originHasUpVote, for: .upvote)
                     self.setHasVote(originHasDownVote, for: .downvote)
@@ -119,7 +119,17 @@ extension PostController {
                     self.downVoteButton.isEnabled = true
                     
                     // show general error
-                    UIApplication.topViewController()?.showGeneralError()
+                    if let error = error as? ErrorAPI {
+                        switch error {
+                        case .blockchain(message: let message):
+                            UIApplication.topViewController()?.showAlert(title: "Error".localized(), message: message)
+                            return
+                        default:
+                            break
+                        }
+                    }
+                    print(error.localizedDescription)
+                    UIApplication.topViewController()?.showAlert(title: "Error".localized(), message: error.localizedDescription)
             })
             .disposed(by: disposeBag)
     }
