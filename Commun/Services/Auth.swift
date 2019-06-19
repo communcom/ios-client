@@ -12,7 +12,7 @@ import CyberSwift
 struct Auth {
     static func logout() -> Bool {
         // Remove all keys
-        let result = KeychainManager.deleteAllData(forUserNickName: Config.currentUser.nickName!)
+        let result = KeychainManager.deleteAllData(forUserNickName: Config.currentUser.id!)
         
         if result {
             UserDefaults.standard.removeObject(forKey: Config.isCurrentUserLoggedKey)

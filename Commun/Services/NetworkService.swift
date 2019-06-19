@@ -32,7 +32,7 @@ class NetworkService: NSObject {
         return Observable.create({ observer -> Disposable in
             
             RestAPIManager.instance.loadFeed(typeMode: typeMode,
-                                             userID: Config.currentUser.nickName,
+                                             userID: Config.currentUser.id,
                                              communityID: "gls",
                                              timeFrameMode: sortType,
                                              sortMode: type,
@@ -80,7 +80,7 @@ class NetworkService: NSObject {
     }
     
     func deletePost(permlink: String, refBlockNum:  UInt64) -> Completable {
-        guard let currentUserId = Config.currentUser.nickName else {return .error(ErrorAPI.requestFailed(message: "Current user not found"))}
+        guard let currentUserId = Config.currentUser.id else {return .error(ErrorAPI.requestFailed(message: "Current user not found"))}
         return RestAPIManager.instance.rx.deleteMessage(author: currentUserId, permlink: permlink)
             .observeOn(MainScheduler.instance)
     }
@@ -129,10 +129,10 @@ class NetworkService: NSObject {
     
     func signIn(login: String, key: String) -> Observable<String> {
         return Observable.create({ observer -> Disposable in
-            RestAPIManager.instance.authorize(userNickName:         login,
+            RestAPIManager.instance.authorize(userID:               login,
                                               userActiveKey:        key,
                                               responseHandling:     { response in
-                                                Config.currentUser.nickName = login
+                                                Config.currentUser.id = login
                                                 Config.currentUser.activeKey = key
                                                 
                                                 Logger.log(message: response.permission, event: .debug)
@@ -282,7 +282,7 @@ class NetworkService: NSObject {
     
     func saveKeys(nickName: String) -> Observable<Bool> {
         return Observable.create({ observer -> Disposable in
-            RestAPIManager.instance.toBlockChain(nickName:          nickName,
+            RestAPIManager.instance.toBlockChain(id:                nickName,
                                                  phone:             UserDefaults.standard.value(forKey: Config.registrationUserPhoneKey) as? String ?? "",
                                                  responseHandling:  { result in
                                                     Logger.log(message: "Response: \n\t\(result.description)", event: .debug)
@@ -300,10 +300,10 @@ class NetworkService: NSObject {
     
     func getUserProfile() -> Single<ResponseAPIContentGetProfile> {
         return Single<ResponseAPIContentGetProfile>.create { single in
-            guard let userNickName = Config.currentUser.nickName else { return Disposables.create() }
+            guard let userNickName = Config.currentUser.id else { return Disposables.create() }
             
-            RestAPIManager.instance.getProfile(nickName: userNickName,
-                                               completion: { (response, error) in
+            RestAPIManager.instance.getProfile(userID:      userNickName,
+                                               completion:  { (response, error) in
                                                 guard error == nil else {
                                                     Logger.log(message: "Error loadding profile: \(error!)", event: .error)
                                                     single(.error(error!))

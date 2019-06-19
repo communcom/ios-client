@@ -45,8 +45,8 @@ extension UIImageView {
         return UserDefaults.standard.rx
             .observe(String.self, Config.currentUserAvatarUrlKey)
             .distinctUntilChanged()
-            .subscribe(onNext: {urlString in
-                self.setAvatar(urlString: urlString, namePlaceHolder: Config.currentUser.nickName ?? "U")
+            .subscribe({ urlString in
+                self.setAvatar(urlString: urlString.debugDescription, namePlaceHolder: Config.currentUser.id ?? "U")
             })
     }
 }

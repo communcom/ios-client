@@ -68,7 +68,7 @@ extension SettingsVC {
             notificationCells.append(notificationCell)
         }
         
-        for (key, value) in KeychainManager.loadData(forUserNickName: Config.currentUser.nickName ?? "", withKey: Config.currentUser.activeKey ?? "") ?? [:] {
+        for (key, value) in KeychainManager.loadData(byUserID: Config.currentUser.id ?? "", withKey: Config.currentUser.activeKey ?? "") ?? [:] {
             // Пока нет паролей...
         }
         

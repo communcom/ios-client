@@ -175,7 +175,7 @@ class SignInVC: UIViewController {
     
     // MARK: - Actions
     @IBAction func paramsButtonTapped(_ sender: UIButton) {
-        let login                   =   Config.testUserAccount.nickName
+        let login                   =   Config.testUserAccount.id
         let activeKey               =   Config.testUserAccount.activeKey
 
         self.loginTextField.text    =   login

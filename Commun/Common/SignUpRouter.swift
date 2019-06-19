@@ -69,7 +69,7 @@ class SignUpRouter: NSObject, SignUpRoutingLogic {
         // LoadKeysVC
         case "toBlockChain":
             DispatchQueue.main.async {
-                if let loadKeysVC = controllerContainer.resolve(LoadKeysVC.self), let nickName = json[Config.registrationUserNameKey] as? String {
+                if let loadKeysVC = controllerContainer.resolve(LoadKeysVC.self), let nickName = json[Config.registrationUserIDKey] as? String {
                     loadKeysVC.viewModel = LoadKeysViewModel(nickName: nickName)
                     self.viewController?.present(loadKeysVC, animated: true, completion: nil)
                 }

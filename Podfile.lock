@@ -55,9 +55,9 @@ PODS:
     - RxSwift (~> 4.3)
     - Starscream (~> 3)
   - RxSwift (4.5.0)
-  - SDWebImage (4.4.6):
-    - SDWebImage/Core (= 4.4.6)
-  - SDWebImage/Core (4.4.6)
+  - SDWebImage (4.4.7):
+    - SDWebImage/Core (= 4.4.7)
+  - SDWebImage/Core (4.4.7)
   - secp256k1.swift (0.1.4)
   - SipHash (1.2.2)
   - Starscream (3.1.0)
@@ -66,8 +66,8 @@ PODS:
   - SwifterSwift/UIKit (5.0.0)
   - SwiftTheme (0.4.4)
   - SwiftyJSON (4.3.0)
-  - Swinject (2.6.0)
-  - TLPhotoPicker (1.8.6)
+  - Swinject (2.6.1)
+  - TLPhotoPicker (1.8.9)
   - UIImageView-Letters (1.1.4)
 
 DEPENDENCIES:
@@ -131,7 +131,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   CyberSwift:
-    :commit: 233cef3aa0f6f8ce7ba34e2d95b6bd701fbd3a2e
+    :commit: da3a5f40fb0d76682ab394567639ab7991cfd480
     :git: https://github.com/GolosChain/cyberSwift.git
 
 SPEC CHECKSUMS:
@@ -158,15 +158,15 @@ SPEC CHECKSUMS:
   RxDataSources: a843bad90c29817f5923ec8163f4af2de084ceb3
   RxStarscream: aa79e742c87e9bcdff218a1ebb59638f5174589e
   RxSwift: f172070dfd1a93d70a9ab97a5a01166206e1c575
-  SDWebImage: 3f3f0c02f09798048c47a5ed0a13f17b063572d8
+  SDWebImage: c10d14a8883ebd89664f02a422006f66a85c0c5d
   secp256k1.swift: a7e7a214f6db6ce5db32cc6b2b45e5c4dd633634
   SipHash: fad90a4683e420c52ef28063063dbbce248ea6d4
   Starscream: 08172b481e145289c4930cb567230fb55897cfa4
   SwifterSwift: 96f90594b370802f01647c2b1229c74a84ffafee
   SwiftTheme: a381f983da92153908b7a9eeb961b18b6d94d614
   SwiftyJSON: 6faa0040f8b59dead0ee07436cbf76b73c08fd08
-  Swinject: 48a96cda93633cf2860697b4ce76ab5db9ebaca2
-  TLPhotoPicker: c5aefdc9beaca82116d7855924f1d8abdd055f79
+  Swinject: b624462f47b635a64f89a60a247baa5fccec14e1
+  TLPhotoPicker: 9bf255c116129bc5d709b4cc8b42b3542e89e841
   UIImageView-Letters: f62db28076797adf3560ab7410647dc6899b9eef
 
 PODFILE CHECKSUM: e0e8f7183361e734c4919e5dfedbfad3edbad4f2
