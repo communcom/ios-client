@@ -27,6 +27,10 @@ class ProfileEditCoverVC: UIViewController {
         
         // Bind
         bindProfile()
+        
+        // Bind avatar
+        avatarImage.observeCurrentUserAvatar()
+            .disposed(by: bag)
     }
     
     // MARK: - binding
@@ -35,19 +39,6 @@ class ProfileEditCoverVC: UIViewController {
             .filter {$0 != nil}
             .map {$0!}
             .subscribe(onNext: { profile in
-                // profile image
-                if let avatarUrl = profile.personal.avatarUrl {
-                    self.avatarImage.sd_setImage(with: URL(string: avatarUrl)) { (_, error, _, _) in
-                        if (error != nil) {
-                            // Placeholder image
-                            self.avatarImage.setNonAvatarImageWithId(profile.username ?? profile.userId)
-                        }
-                    }
-                } else {
-                    // Placeholder image
-                    self.avatarImage.setNonAvatarImageWithId(profile.username ?? profile.userId)
-                }
-                
                 // user name
                 self.userNameLabel.text = profile.username
                 
