@@ -150,10 +150,10 @@ class NetworkService: NSObject {
     
     func voteMessage(voteType: VoteActionType, messagePermlink: String, messageAuthor: String) -> Completable {
         return RestAPIManager.instance.rx.vote(
-                voteType: voteType,
-                author: messageAuthor,
-                permlink: messagePermlink,
-                weight: voteType == .unvote ? 0 : 10_000)
+                voteType:   voteType,
+                author:     messageAuthor,
+                permlink:   messagePermlink,
+                weight:     voteType == .unvote ? 0 : 1)
             .observeOn(MainScheduler.instance)
     }
     
