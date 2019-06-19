@@ -12,7 +12,7 @@ import CyberSwift
 import RxSwift
 import RxCocoa
 
-extension ProfilePageVC: CommentCellDelegate {
+extension ProfilePageVC: ViewControllerWithCommentCells, CommentCellDelegate {
     
     func bindViewModel() {
         let profile = viewModel.profile.asDriver()
@@ -70,7 +70,7 @@ extension ProfilePageVC: CommentCellDelegate {
                 if let comment = element as? ResponseAPIContentGetComment {
                     let cell = self.tableView.dequeueReusableCell(withIdentifier: "CommentCell") as! CommentCell
                     cell.delegate = self
-                    cell.setupFromComment(comment)
+                    cell.setupFromComment(comment, expanded: self.expandedIndexes.contains(index))
                     return cell
                 }
                 

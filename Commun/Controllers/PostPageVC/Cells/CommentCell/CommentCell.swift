@@ -9,20 +9,13 @@
 import UIKit
 
 protocol CommentCellDelegate {
-    func cell(_ cell: CommentCellProtocol, didTapUpVoteButtonForComment comment: ResponseAPIContentGetComment)
-    func cell(_ cell: CommentCellProtocol, didTapDownVoteButtonForComment comment: ResponseAPIContentGetComment)
-    func cell(_ cell: CommentCellProtocol, didTapReplyButtonForComment comment: ResponseAPIContentGetComment)
+    func cell(_ cell: CommentCell, didTapUpVoteButtonForComment comment: ResponseAPIContentGetComment)
+    func cell(_ cell: CommentCell, didTapDownVoteButtonForComment comment: ResponseAPIContentGetComment)
+    func cell(_ cell: CommentCell, didTapReplyButtonForComment comment: ResponseAPIContentGetComment)
+    func cell(_ cell: CommentCell, didTapSeeMoreButtonForComment comment: ResponseAPIContentGetComment)
 }
 
-protocol CommentCellProtocol {
-    func upVoteButtonTap(_ sender: Any)
-    
-    func downVoteButtonTap(_ sender: Any)
-    
-    func replyButtonTap(_ sender: Any)
-}
-
-class CommentCell: UITableViewCell, CommentCellProtocol {
+class CommentCell: UITableViewCell {
 
     @IBOutlet weak var avatarImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
@@ -46,9 +39,9 @@ class CommentCell: UITableViewCell, CommentCellProtocol {
         super.setSelected(selected, animated: animated)
     }
     
-    func setupFromComment(_ comment: ResponseAPIContentGetComment) {
+    func setupFromComment(_ comment: ResponseAPIContentGetComment, expanded: Bool = false) {
         self.comment = comment
-        setText()
+        setText(expanded: expanded)
         
         
 //        if let html = comment.content.embeds.first?.result.html {
@@ -71,7 +64,7 @@ class CommentCell: UITableViewCell, CommentCellProtocol {
         voteCountLabel.text = "\(comment.payout.rShares)"
     }
     
-    func setText() {
+    func setText(expanded: Bool = false) {
         guard let content = comment?.content.body.full else {return}
         
         contentLabel.removeGestureRecognizers()
@@ -84,11 +77,9 @@ class CommentCell: UITableViewCell, CommentCellProtocol {
         }
         
         // If text is long
-        if let vc = self.parentViewController as? PostPageVC,
-            let index = vc.viewModel.comments.value.firstIndex(where: {$0.contentId.permlink == comment?.contentId.permlink}),
-            vc.expandedIndexes.contains(index) {
-                contentLabel.text = content
-                return
+        if expanded {
+            contentLabel.text = content
+            return
         }
         
         // If doesn't expanded
@@ -107,18 +98,13 @@ class CommentCell: UITableViewCell, CommentCellProtocol {
     @objc func seeMoreDidTouch(gesture: UITapGestureRecognizer) {
         guard let label = gesture.view as? UILabel,
             let text = label.text,
-            let vc = self.parentViewController as? PostPageVC,
-            let indexPath = (vc.tableView).indexPath(for: self),
-            !vc.expandedIndexes.contains(indexPath.row)
+            let comment = comment
             else {return}
         
         let seeMoreRange = (text as NSString).range(of: "See More".localized())
         
         if gesture.didTapAttributedTextInLabel(label: label, inRange: seeMoreRange) {
-            vc.expandedIndexes.append(indexPath.row)
-            UIView.setAnimationsEnabled(false)
-            vc.tableView.reloadRows(at: [indexPath], with: .none)
-            UIView.setAnimationsEnabled(true)
+            delegate?.cell(self, didTapSeeMoreButtonForComment: comment)
         }
     }
     

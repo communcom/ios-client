@@ -110,7 +110,7 @@ extension PostPageVC: PostHeaderViewDelegate {
                 }
                 
                 let cell = self.tableView.dequeueReusableCell(withIdentifier: "CommentCell") as! CommentCell
-                cell.setupFromComment(comment)
+                cell.setupFromComment(comment, expanded: self.expandedIndexes.contains(index))
                 cell.delegate = self
                 return cell
             }

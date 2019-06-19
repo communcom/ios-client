@@ -29,6 +29,7 @@ class ProfilePageVC: UIViewController {
     
     let bag = DisposeBag()
     let viewModel = ProfilePageViewModel()
+    var expandedIndexes = [Int]()
     
     // reconstruct headerView for parallax
     var headerView: UIView!
