@@ -17,6 +17,9 @@ class ConfirmUserVC: UIViewController {
     var viewModel: ConfirmUserViewModel?
     let disposeBag = DisposeBag()
     
+    var resendTimer: Timer?
+    var resendSeconds: Int = 0
+    
     let pinCodeInputView: PinCodeInputView<ItemView> = .init(
         digit: 4,
         itemSpacing: 12,
@@ -54,16 +57,15 @@ class ConfirmUserVC: UIViewController {
                                    font:          UIFont(name: "SFProText-Regular", size: 17.0 * Config.heightRatio),
                                    alignment:     .center,
                                    isMultiLines:  false)
-            
         }
     }
    
     @IBOutlet weak var nextButton: UIButton! {
         didSet {
             self.nextButton.tune(withTitle:     "Next".localized(),
-                                   hexColors:     [whiteColorPickers, lightGrayWhiteColorPickers, lightGrayWhiteColorPickers, lightGrayWhiteColorPickers],
-                                   font:          UIFont(name: "SFProText-Semibold", size: 17.0 * Config.heightRatio),
-                                   alignment:     .center)
+                                 hexColors:     [whiteColorPickers, lightGrayWhiteColorPickers, lightGrayWhiteColorPickers, lightGrayWhiteColorPickers],
+                                 font:          UIFont(name: "SFProText-Semibold", size: 17.0 * Config.heightRatio),
+                                 alignment:     .center)
             
             self.nextButton.layer.cornerRadius = 8.0 * Config.heightRatio
             self.nextButton.clipsToBounds = true
@@ -81,6 +83,18 @@ class ConfirmUserVC: UIViewController {
         }
     }
 
+    @IBOutlet weak var resendTimerLabel: UILabel! {
+        didSet {
+            self.resendTimerLabel.tune(withText:      "",
+                                       hexColors:     verySoftBlueColorPickers,
+                                       font:          UIFont(name: "SFProText-Semibold", size: 15.0 * Config.heightRatio),
+                                       alignment:     .center,
+                                       isMultiLines:  false)
+            
+            self.checkResendSmsCodeTime()
+        }
+    }
+    
     @IBOutlet var heightsCollection: [NSLayoutConstraint]! {
         didSet {
             self.heightsCollection.forEach({ $0.constant *= Config.heightRatio })
@@ -151,39 +165,37 @@ class ConfirmUserVC: UIViewController {
         self.pinCodeView.addSubview(pinCodeInputView)
         self.pinCodeInputView.center = pinCodeView.center
     }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        // Verify current step of registration
-        guard   let phone   =   UserDefaults.standard.string(forKey: Config.registrationUserPhoneKey),
-                let json    =   KeychainManager.loadAllData(byUserPhone: phone),
-                let step    =   json[Config.registrationStepKey] as? String,
-                step == "verify"
-        else {
-            self.resendButton.isEnabled = false
-            return
-        }
-        
-        guard let date = json[Config.registrationSmsNextRetryKey] as? String
-        else {
-            self.resendButton.isEnabled = true
-            return
-        }
-        
-        self.resendButton.isEnabled = false
-        
-        let dateNextSmsRetry = date.convert(toDateFormat: .nextSmsDateType)
-        let seconds = Date().seconds(date: dateNextSmsRetry)
-        let deadlineTime = DispatchTime.now() + .seconds(seconds)
-        
-        DispatchQueue.main.asyncAfter(deadline: deadlineTime) {
-            self.resendButton.isEnabled = true
-        }
-    }
     
     override func viewWillLayoutSubviews() {
         self.pinCodeInputView.frame = CGRect(origin: .zero, size: CGSize(width: 228.0 * Config.widthRatio, height: 56.0 * Config.heightRatio))
+    }
+    
+    
+    // MARK: - Custom Functions
+    func checkResendSmsCodeTime() {
+        guard   let phone   =   UserDefaults.standard.string(forKey: Config.registrationUserPhoneKey),
+                let json    =   KeychainManager.loadAllData(byUserPhone: phone),
+                let step    =   json[Config.registrationStepKey] as? String, step == "verify",
+                let date    =   json[Config.registrationSmsNextRetryKey] as? String else {
+                self.resendButton.isEnabled = true
+                self.resendTimerLabel.isHidden = true
+                return
+        }
+        
+        self.resendButton.isEnabled = false
+        self.resendTimerLabel.isHidden = false
+        
+        let dateNextSmsRetry    =   date.convert(toDateFormat: .nextSmsDateType)
+        self.resendSeconds      =   Date().seconds(date: dateNextSmsRetry) - 2
+        let deadlineTime        =   DispatchTime.now() + .seconds(resendSeconds) + 2
+        
+        // Run timer
+        self.resendTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(onTimerFires), userInfo: nil, repeats: true)
+        
+        DispatchQueue.main.asyncAfter(deadline: deadlineTime) {
+            self.resendButton.isEnabled = true
+            self.resendTimerLabel.isHidden = true
+        }
     }
     
     
@@ -194,14 +206,27 @@ class ConfirmUserVC: UIViewController {
 
     
     // MARK: - Actions
+    @objc func onTimerFires() {
+        guard self.resendSeconds > 1 else {
+            self.resendTimer?.invalidate()
+            self.resendTimer = nil
+            self.resendTimerLabel.text = nil
+            return
+        }
+        
+        self.resendSeconds -= 1
+        self.resendTimerLabel.text = "0:\(String(describing: self.resendSeconds).addFirstZero())"
+    }
+
     @IBAction func resendButtonTapped(_ sender: UIButton) {
         RestAPIManager.instance.resendSmsCode(phone:                UserDefaults.standard.string(forKey: Config.registrationUserPhoneKey)!,
                                               responseHandling:     { [weak self] smsCode in
                                                 guard let strongSelf = self else { return }
+                                                
                                                 strongSelf.showAlert(title:       "Info".localized(),
                                                                      message:     "Successfully resend code".localized(),
                                                                      completion:  { success in
-                                                                        strongSelf.navigationController?.dismiss(animated: true, completion: nil)
+                                                                        strongSelf.checkResendSmsCodeTime()
                                                 })
         },
                                               errorHandling:        { [weak self] errorAPI in
