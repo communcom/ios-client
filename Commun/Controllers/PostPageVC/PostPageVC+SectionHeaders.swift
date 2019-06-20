@@ -9,13 +9,17 @@
 import Foundation
 
 extension PostPageVC: UITableViewDelegate {
+    fileprivate var needHideHeader: Bool {
+        return viewModel.fetcher.reachedTheEnd || viewModel.comments.value.count == 0
+    }
+    
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if viewModel.fetcher.reachedTheEnd {return 0}
+        if needHideHeader {return 0}
         return 20
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        if viewModel.fetcher.reachedTheEnd {return nil}
+        if needHideHeader {return nil}
         
         let view = UIView()
         let header = UIButton(type: .system)
