@@ -32,12 +32,12 @@ class NetworkService: NSObject {
         return Observable.create({ observer -> Disposable in
             
             RestAPIManager.instance.loadFeed(typeMode: typeMode,
-                                             userID: Config.currentUser.id,
-                                             communityID: "gls",
-                                             timeFrameMode: sortType,
-                                             sortMode: type,
-                                             paginationSequenceKey: paginationKey,
-                                             completion: { (feed, errorAPI) in
+                                             userID:                    Config.currentUser.id,
+                                             communityID:               AppProfileType.golos.rawValue,
+                                             timeFrameMode:             sortType,
+                                             sortMode:                  type,
+                                             paginationSequenceKey:     paginationKey,
+                                             completion:                { (feed, errorAPI) in
                                                 guard errorAPI == nil else {
                                                     Logger.log(message: errorAPI!.caseInfo.message.localized(), event: .error)
                                                     observer.onError(errorAPI!)
@@ -49,7 +49,6 @@ class NetworkService: NSObject {
                                                 }
                                                 observer.onCompleted()
             })
-            
             
             return Disposables.create()
         })
