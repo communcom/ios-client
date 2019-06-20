@@ -7,8 +7,8 @@ PODS:
   - BigInt (3.1.0):
     - SipHash (~> 1.2)
   - Checksum (1.0.0)
-  - Crashlytics (3.13.2):
-    - Fabric (~> 1.10.2)
+  - Crashlytics (3.13.1):
+    - Fabric (~> 1.10.1)
   - CryptoSwift (1.0.0)
   - CyberSwift (1.0.8):
     - Checksum
@@ -32,7 +32,7 @@ PODS:
     - BigInt (~> 3.1.0)
     - RxCocoa (~> 4.0)
     - RxSwift (~> 4.0)
-  - Fabric (1.10.2)
+  - Fabric (1.10.1)
   - GoloCrypto (1.0.6)
   - ListPlaceholder (1.4)
   - Localize-Swift (2.0.0)
@@ -147,14 +147,14 @@ SPEC CHECKSUMS:
   ASSpinnerView: 526e037b85b9db87d55db55297986b7da3059aa8
   BigInt: 76b5dfdfa3e2e478d4ffdf161aeede5502e2742f
   Checksum: f1aa56a27dea5db4006c819e2e129ee6aeb1d9af
-  Crashlytics: 611738c7847f8291a1a51084e35987b86ba6b3ee
+  Crashlytics: 5aa8e90dcbf2f34898b4f5a0037787531246cca0
   CryptoSwift: d81eeaa59dc5a8d03720fe919a6fd07b51f7439f
   CyberSwift: 5ea8fc231b13efb86cc4a88a1bf3e1b82684950a
   DateToolsSwift: 875d97ff9e3a5d54abdd67a269b3f51c757b71ab
   Differentiator: be49ca3408f0ecfc761e4c7763d20c62be01b9ad
   DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
   eosswift: 22bc931fd65bbd446c3f828233b8fd2916cec4a7
-  Fabric: 706c8b8098fff96c33c0db69cbf81f9c551d0d74
+  Fabric: f6f21452846788bb44595d73e9909d79d328e617
   GoloCrypto: 3f60e824b57ca657be702fb2cf4bd1f7a379257a
   ListPlaceholder: 08ddaddf67520a20fc52cf37160fb56aa64d071d
   Localize-Swift: c798ec9286494866f7068f85f7c71283ac5bdab4
