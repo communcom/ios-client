@@ -45,6 +45,7 @@ PODS:
   - PhoneNumberKit/UIKit (2.6.0):
     - PhoneNumberKit/PhoneNumberKitCore
   - PinCodeInputView (1.0.0)
+  - ReachabilitySwift (4.3.1)
   - RxBlocking (4.5.0):
     - RxSwift (>= 4.4.2, ~> 4.4)
   - RxCocoa (4.5.0):
@@ -53,6 +54,10 @@ PODS:
     - Differentiator (~> 3.0)
     - RxCocoa (~> 4.0)
     - RxSwift (~> 4.0)
+  - RxReachability (0.1.8):
+    - ReachabilitySwift (~> 4.3.0)
+    - RxCocoa (~> 4)
+    - RxSwift (~> 4)
   - RxStarscream (0.10):
     - RxCocoa (~> 4.3)
     - RxSwift (~> 4.3)
@@ -87,6 +92,7 @@ DEPENDENCIES:
   - PhoneNumberKit (~> 2.6)
   - PinCodeInputView
   - RxDataSources (~> 3.0)
+  - RxReachability
   - SDWebImage (~> 4.0)
   - SwifterSwift/Foundation
   - SwifterSwift/SwiftStdlib
@@ -116,9 +122,11 @@ SPEC REPOS:
     - MBProgressHUD
     - PhoneNumberKit
     - PinCodeInputView
+    - ReachabilitySwift
     - RxBlocking
     - RxCocoa
     - RxDataSources
+    - RxReachability
     - RxStarscream
     - RxSwift
     - SDWebImage
@@ -138,7 +146,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   CyberSwift:
-    :commit: 0dfa7e5aa2c78b680eeca6b21a6950eb1c321e53
+    :commit: 5d02b289c045694e81ba0c28712da1ee5f8f2134
     :git: https://github.com/GolosChain/cyberSwift.git
 
 SPEC CHECKSUMS:
@@ -162,9 +170,11 @@ SPEC CHECKSUMS:
   MBProgressHUD: e7baa36a220447d8aeb12769bf0585582f3866d9
   PhoneNumberKit: 167ee1f0bbb6efce7c62559e620eae745595532f
   PinCodeInputView: 0a7361aaec76b639ff6521f1b6c38ed27b8144e3
+  ReachabilitySwift: 4032e2f59586e11e3b0ebe15b167abdd587a388b
   RxBlocking: 79413e4d916f44bb3e113c5b2cc059e36fe58910
   RxCocoa: cbf70265dc65a981d4ac982e513c10cf23df24a0
   RxDataSources: a843bad90c29817f5923ec8163f4af2de084ceb3
+  RxReachability: 053f2d913db44998242ade488ccaef558f3ce7cb
   RxStarscream: aa79e742c87e9bcdff218a1ebb59638f5174589e
   RxSwift: f172070dfd1a93d70a9ab97a5a01166206e1c575
   SDWebImage: c10d14a8883ebd89664f02a422006f66a85c0c5d
@@ -178,6 +188,6 @@ SPEC CHECKSUMS:
   TLPhotoPicker: 9bf255c116129bc5d709b4cc8b42b3542e89e841
   UIImageView-Letters: f62db28076797adf3560ab7410647dc6899b9eef
 
-PODFILE CHECKSUM: 2463f490fabbcd778c01134fb7ba6054c6670bb8
+PODFILE CHECKSUM: 6ae9f4b484fa9d5dbbb7ed39b0fef8799cda999b
 
 COCOAPODS: 1.7.2

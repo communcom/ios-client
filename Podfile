@@ -39,5 +39,6 @@ target 'Commun' do
   pod 'ListPlaceholder'
   
   pod 'DZNEmptyDataSet'
+  pod 'RxReachability'
   
 end

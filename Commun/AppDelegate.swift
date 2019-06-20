@@ -11,6 +11,8 @@ import CoreData
 import Fabric
 import Crashlytics
 @_exported import CyberSwift
+import Reachability
+import RxReachability
 
 let isDebugMode: Bool = true
 let smsCodeDebug: UInt64 = isDebugMode ? 9999 : 0
@@ -20,12 +22,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // MARK: - Properties
     var window: UIWindow?
 
+    var reachability: Reachability?
 
     // MARK: - Class Functions
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        // Network monitoring
+        reachability = Reachability()
+        try? reachability?.startNotifier()
+        
+        _ = reachability?.rx.isReachable
+            .filter {$0}
+            .subscribe(onNext: {_ in
+                if WebSocketManager.instance.isConnected {return}
+                WebSocketManager.instance.connect()
+            })
+        
         // Run WebSocket
-        WebSocketManager.instance.connect()
-
         _ = WebSocketManager.instance.authorized
             .skip(1)
             .subscribe(onNext: {success in
