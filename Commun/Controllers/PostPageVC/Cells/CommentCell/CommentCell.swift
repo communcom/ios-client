@@ -22,6 +22,8 @@ class CommentCell: UITableViewCell {
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var contentLabel: UILabel!
     @IBOutlet weak var voteCountLabel: UILabel!
+    @IBOutlet weak var leftPaddingConstraint: NSLayoutConstraint!
+    @IBOutlet weak var rightPaddingConstraint: NSLayoutConstraint!
     
     private let maxCharactersForReduction = 150
     
@@ -41,6 +43,16 @@ class CommentCell: UITableViewCell {
     
     func setupFromComment(_ comment: ResponseAPIContentGetComment, expanded: Bool = false) {
         self.comment = comment
+        
+        // if comment is a reply
+        if comment.parent.comment != nil {
+            leftPaddingConstraint.constant = 72
+            rightPaddingConstraint.constant = 16
+        } else {
+            leftPaddingConstraint.constant = 16
+            rightPaddingConstraint.constant = 72
+        }
+        
         setText(expanded: expanded)
         
         
