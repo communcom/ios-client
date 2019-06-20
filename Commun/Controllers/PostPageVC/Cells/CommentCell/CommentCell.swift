@@ -84,13 +84,13 @@ class CommentCell: UITableViewCell {
         
         // If text is not so long
         if content.count < maxCharactersForReduction {
-            contentLabel.text = content
+            contentLabel.attributedText = content.highlightMentionAttributedString()
             return
         }
         
         // If text is long
         if expanded {
-            contentLabel.text = content
+            contentLabel.attributedText = content.highlightMentionAttributedString()
             return
         }
         

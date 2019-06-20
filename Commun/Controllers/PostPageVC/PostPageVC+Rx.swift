@@ -114,6 +114,12 @@ extension PostPageVC: PostHeaderViewDelegate {
         
         tableView.rx.setDelegate(self)
             .disposed(by: disposeBag)
+        
+        viewModel.comments
+            .subscribe(onNext: {_ in
+                self.expandedIndexes = []
+            })
+            .disposed(by: disposeBag)
     }
     
     func sendComment(_ comment: String) {

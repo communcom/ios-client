@@ -78,6 +78,13 @@ extension ProfilePageVC: ViewControllerWithCommentCells, CommentCellDelegate {
             }
             .disposed(by: bag)
         
+        // Reset expandable
+        viewModel.items
+            .subscribe(onNext: {_ in
+                self.expandedIndexes = []
+            })
+            .disposed(by: bag)
+        
         // OnItemSelected
         tableView.rx.itemSelected
             .subscribe(onNext: {indexPath in
