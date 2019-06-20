@@ -48,6 +48,14 @@ class WelcomeScreenVC: UIPageViewController {
         }
         
         UserDefaults.standard.set(true, forKey: "FirstStart")
+        
+        // Animate
+        var i = 1
+        Timer.scheduledTimer(withTimeInterval: 4, repeats: true) { (timer) in
+            self.setViewControllers([self.pages[i%self.pages.count]], direction: .forward, animated: true, completion: nil)
+            self.pageControl?.progress = CGFloat(i%self.pages.count)
+            i += 1
+        }
     }
 
     func getItemWithIndex(_ index: Int) -> UIViewController? {
