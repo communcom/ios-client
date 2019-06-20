@@ -24,34 +24,47 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter SMS-code" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5dt-9p-v3W" userLabel="Enter SMS-code Label">
-                                <rect key="frame" x="15.999999999999993" y="63" width="126.33333333333331" height="20"/>
+                                <rect key="frame" x="16" y="63.000000000000007" width="131.66666666666666" height="20.333333333333336"/>
                                 <accessibility key="accessibilityConfiguration" identifier="ConfirmUserEnterSmsCodeLabel" label="ConfirmUserEnterSmsCodeLabel"/>
                                 <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jAK-lA-DMe" userLabel="SMS Code Label">
-                                <rect key="frame" x="170" y="98" width="35.333333333333343" height="17"/>
+                                <rect key="frame" x="170" y="98.333333333333329" width="35.333333333333343" height="17"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bYW-xi-lTa">
-                                <rect key="frame" x="73.666666666666686" y="133" width="228" height="56"/>
+                                <rect key="frame" x="73.666666666666686" y="133.33333333333334" width="228" height="56"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <accessibility key="accessibilityConfiguration" identifier="ConfirmUserPinCodeView" label="ConfirmUserPinCodeView"/>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6zJ-W6-fmM">
-                                <rect key="frame" x="104.66666666666669" y="224" width="166" height="30"/>
-                                <accessibility key="accessibilityConfiguration" identifier="ConfirmUserResendSmsCodeButton" label="ConfirmUserResendSmsCodeButton"/>
-                                <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
-                                <state key="normal" title="Resend verification code">
-                                    <color key="titleColor" red="0.41568627450980389" green="0.50196078431372548" blue="0.96078431372549022" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="resendButtonTapped:" destination="NlB-Y1-YqX" eventType="touchUpInside" id="tR2-ch-WRo"/>
-                                </connections>
-                            </button>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="Y5D-RY-auL" userLabel="Resend Stack View">
+                                <rect key="frame" x="76.333333333333329" y="224.33333333333334" width="222.66666666666669" height="30"/>
+                                <subviews>
+                                    <button clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6zJ-W6-fmM">
+                                        <rect key="frame" x="0.0" y="0.0" width="175" height="30"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <accessibility key="accessibilityConfiguration" identifier="ConfirmUserResendSmsCodeButton" label="ConfirmUserResendSmsCodeButton"/>
+                                        <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
+                                        <state key="normal" title="Resend verification code">
+                                            <color key="titleColor" red="0.41568627450980389" green="0.50196078431372548" blue="0.96078431372549022" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="resendButtonTapped:" destination="NlB-Y1-YqX" eventType="touchUpInside" id="tR2-ch-WRo"/>
+                                        </connections>
+                                    </button>
+                                    <label clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A7l-2z-CKz" userLabel="Timer Label">
+                                        <rect key="frame" x="181" y="0.0" width="41.666666666666657" height="30"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
                             <button clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="waw-lP-Yrt">
                                 <rect key="frame" x="42.666666666666657" y="682" width="290" height="56"/>
                                 <color key="backgroundColor" red="0.41568627450980389" green="0.50196078431372548" blue="0.96078431372549022" alpha="1" colorSpace="calibratedRGB"/>
@@ -75,14 +88,13 @@
                             <constraint firstItem="bYW-xi-lTa" firstAttribute="width" secondItem="ML7-X3-dGA" secondAttribute="width" multiplier="228:375" identifier="ConfirmUserPinCodeViewWidthConstraint" id="1bK-Ak-uVg"/>
                             <constraint firstItem="5dt-9p-v3W" firstAttribute="leading" secondItem="zEB-iN-I0i" secondAttribute="leading" constant="16" identifier="ConfirmUserSmsCodeLabelLeadingConstraint" id="1tD-WO-XIW" userLabel="ConfirmUserEnterSmsCodeLabelLeadingConstraint"/>
                             <constraint firstItem="zEB-iN-I0i" firstAttribute="bottom" secondItem="waw-lP-Yrt" secondAttribute="bottom" priority="999" constant="40" identifier="ConfirmUserNextButtonBottomConstraint" id="7gQ-Nt-x3O" customClass="KeyboardLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
+                            <constraint firstItem="Y5D-RY-auL" firstAttribute="top" secondItem="bYW-xi-lTa" secondAttribute="bottom" constant="35" identifier="resendstackViewTopConstraint" id="7xS-jK-c01"/>
                             <constraint firstItem="waw-lP-Yrt" firstAttribute="width" secondItem="ML7-X3-dGA" secondAttribute="width" multiplier="290:375" identifier="ConfirmUserNextButtonWidthConstraint" id="K5F-pz-4KL"/>
-                            <constraint firstItem="6zJ-W6-fmM" firstAttribute="centerX" secondItem="zEB-iN-I0i" secondAttribute="centerX" id="NYX-uX-DJ6"/>
-                            <constraint firstItem="6zJ-W6-fmM" firstAttribute="top" secondItem="bYW-xi-lTa" secondAttribute="bottom" constant="35" identifier="ConfirmUserResendButtonTopConstraint" id="OIf-uN-r9L" userLabel="ConfirmUserResendSmsCodeButtonTopConstraint"/>
                             <constraint firstItem="bYW-xi-lTa" firstAttribute="height" secondItem="ML7-X3-dGA" secondAttribute="height" multiplier="56:812" identifier="ConfirmUserPinCodeViewHeightConstraint" id="RZe-Nj-cWO"/>
                             <constraint firstItem="jAK-lA-DMe" firstAttribute="centerX" secondItem="ML7-X3-dGA" secondAttribute="centerX" id="TIU-CW-Zpe"/>
                             <constraint firstItem="bYW-xi-lTa" firstAttribute="centerX" secondItem="ML7-X3-dGA" secondAttribute="centerX" id="TxS-xO-Dhs"/>
+                            <constraint firstItem="Y5D-RY-auL" firstAttribute="centerX" secondItem="ML7-X3-dGA" secondAttribute="centerX" id="XxK-up-xT5"/>
                             <constraint firstItem="bYW-xi-lTa" firstAttribute="top" secondItem="jAK-lA-DMe" secondAttribute="bottom" constant="18" id="ZjL-IC-jZ2"/>
-                            <constraint firstItem="waw-lP-Yrt" firstAttribute="top" relation="greaterThanOrEqual" secondItem="6zJ-W6-fmM" secondAttribute="bottom" constant="51" identifier="ConfirmUserNextButtonTopConstraint" id="c1U-Qn-YuT" userLabel="ConfirmUserNextButtonTopConstraint"/>
                             <constraint firstItem="bYW-xi-lTa" firstAttribute="top" secondItem="5dt-9p-v3W" secondAttribute="bottom" constant="50" identifier="ConfirmUserPicCodeViewTopConstraint" id="kPy-LG-FWb" userLabel="ConfirmUserPinCodeViewTopConstraint"/>
                             <constraint firstItem="waw-lP-Yrt" firstAttribute="height" secondItem="ML7-X3-dGA" secondAttribute="height" multiplier="56:812" identifier="ConfirmUserNextButtonHeightConstraint" id="nFo-HL-5dh"/>
                             <constraint firstItem="waw-lP-Yrt" firstAttribute="centerX" secondItem="ML7-X3-dGA" secondAttribute="centerX" id="nu3-Pe-3jZ"/>
@@ -113,15 +125,15 @@
                         <outlet property="nextButton" destination="waw-lP-Yrt" id="Iv0-hI-KCM"/>
                         <outlet property="pinCodeView" destination="bYW-xi-lTa" id="mgP-Ro-2Kc"/>
                         <outlet property="resendButton" destination="6zJ-W6-fmM" id="gtL-Fu-R5f"/>
+                        <outlet property="resendTimerLabel" destination="A7l-2z-CKz" id="3xh-WD-cvi"/>
                         <outlet property="smsCodeLabel" destination="5dt-9p-v3W" id="AES-zC-Jyb"/>
                         <outlet property="testSmsCodeLabel" destination="jAK-lA-DMe" id="8qQ-9h-ayO"/>
                         <outletCollection property="heightsCollection" destination="orP-we-dbJ" collectionClass="NSMutableArray" id="e81-i1-vZa"/>
                         <outletCollection property="heightsCollection" destination="kPy-LG-FWb" collectionClass="NSMutableArray" id="dMl-Lu-Ymp"/>
-                        <outletCollection property="heightsCollection" destination="OIf-uN-r9L" collectionClass="NSMutableArray" id="vVc-aJ-SaZ"/>
-                        <outletCollection property="heightsCollection" destination="c1U-Qn-YuT" collectionClass="NSMutableArray" id="A2M-uI-W5B"/>
                         <outletCollection property="widthsCollection" destination="1tD-WO-XIW" collectionClass="NSMutableArray" id="b6k-uz-F8R"/>
                         <outletCollection property="heightsCollection" destination="ZjL-IC-jZ2" collectionClass="NSMutableArray" id="ufZ-0j-yad"/>
                         <outletCollection property="heightsCollection" destination="7gQ-Nt-x3O" collectionClass="NSMutableArray" id="eEb-pJ-vbf"/>
+                        <outletCollection property="heightsCollection" destination="7xS-jK-c01" collectionClass="NSMutableArray" id="vjk-mV-MmU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Sv0-oJ-wJx" userLabel="First Responder" sceneMemberID="firstResponder"/>

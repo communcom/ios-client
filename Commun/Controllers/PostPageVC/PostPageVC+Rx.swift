@@ -112,7 +112,7 @@ extension PostPageVC: PostHeaderViewDelegate {
             }
             .disposed(by: disposeBag)
         
-        tableView.rx.setDelegate(self)
+        tableView.rx.setDelegate(self as! UIScrollViewDelegate)
             .disposed(by: disposeBag)
     }
     
