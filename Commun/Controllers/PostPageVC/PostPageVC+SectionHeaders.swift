@@ -10,10 +10,13 @@ import Foundation
 
 extension PostPageVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if viewModel.fetcher.reachedTheEnd {return 0}
         return 20
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        if viewModel.fetcher.reachedTheEnd {return nil}
+        
         let view = UIView()
         let header = UIButton(type: .system)
         header.setTitle("Load more comments".localized() + "...", for: .normal)
@@ -26,7 +29,13 @@ extension PostPageVC: UITableViewDelegate {
         header.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
         header.heightAnchor.constraint(equalTo: view.heightAnchor).isActive = true
         
+        header.addTarget(self, action: #selector(loadMore(sender:)), for: .touchUpInside)
+        
         return view
 
+    }
+    
+    @objc func loadMore(sender: UIButton) {
+        viewModel.fetchNext()
     }
 }
