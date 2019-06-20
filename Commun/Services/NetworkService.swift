@@ -105,6 +105,7 @@ class NetworkService: NSObject {
         return Single.create{ single in
             RestAPIManager.instance.loadPostComments(nickName:                  user,
                                                      permlink:                  permLink,
+                                                     sortMode:                  .timeDesc,
                                                      paginationSequenceKey:     paginationKey,
                                                      completion:                { (response, error) in
                                                         guard error == nil else {

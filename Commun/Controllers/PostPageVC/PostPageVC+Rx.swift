@@ -105,15 +105,14 @@ extension PostPageVC: PostHeaderViewDelegate {
                     return cell
                 }
                 
-                if index >= self.viewModel.comments.value.count - 5 {
-                    self.viewModel.fetchNext()
-                }
-                
                 let cell = self.tableView.dequeueReusableCell(withIdentifier: "CommentCell") as! CommentCell
                 cell.setupFromComment(comment, expanded: self.expandedIndexes.contains(index))
                 cell.delegate = self
                 return cell
             }
+            .disposed(by: disposeBag)
+        
+        tableView.rx.setDelegate(self)
             .disposed(by: disposeBag)
     }
     

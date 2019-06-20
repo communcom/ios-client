@@ -56,7 +56,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dho-Zk-FEu">
-                        <rect key="frame" x="72" y="42" width="178" height="20.5"/>
+                        <rect key="frame" x="72" y="42" width="232" height="20.5"/>
                         <constraints>
                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="20.5" id="OUi-8k-REz"/>
                         </constraints>
@@ -95,7 +95,7 @@
                         </connections>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="djA-OD-aYa" userLabel="Reply Button">
-                        <rect key="frame" x="185" y="80.5" width="65" height="30"/>
+                        <rect key="frame" x="185" y="80.5" width="119" height="30"/>
                         <accessibility key="accessibilityConfiguration" identifier="CommentCellReplyButton" label="CommentCellReplyButton"/>
                         <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
                         <state key="normal" title="Reply">
@@ -108,7 +108,7 @@
                 </subviews>
                 <constraints>
                     <constraint firstItem="EWF-Yc-pSQ" firstAttribute="leading" secondItem="wdF-tc-scc" secondAttribute="trailing" constant="12" id="1P9-yM-WiL"/>
-                    <constraint firstAttribute="trailing" secondItem="dho-Zk-FEu" secondAttribute="trailing" constant="70" id="3Sg-Sr-c7j"/>
+                    <constraint firstAttribute="trailing" secondItem="dho-Zk-FEu" secondAttribute="trailing" constant="16" id="3Sg-Sr-c7j"/>
                     <constraint firstItem="djA-OD-aYa" firstAttribute="centerY" secondItem="EWF-Yc-pSQ" secondAttribute="centerY" id="6RT-XR-2wy"/>
                     <constraint firstItem="iEa-zA-ZjA" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="Amo-il-IVV"/>
                     <constraint firstItem="S8Z-0b-bRv" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="BIS-np-xC4"/>
@@ -136,7 +136,9 @@
             <connections>
                 <outlet property="avatarImageView" destination="S8Z-0b-bRv" id="ynH-2z-cMC"/>
                 <outlet property="contentLabel" destination="dho-Zk-FEu" id="Jw7-ec-mcJ"/>
+                <outlet property="leftPaddingConstraint" destination="BIS-np-xC4" id="UCY-FN-q3B"/>
                 <outlet property="nameLabel" destination="vEd-B7-VR3" id="HsJ-hL-kmg"/>
+                <outlet property="rightPaddingConstraint" destination="3Sg-Sr-c7j" id="EDR-IL-YY1"/>
                 <outlet property="timeLabel" destination="F53-9j-0jt" id="XCj-fJ-s5V"/>
                 <outlet property="voteCountLabel" destination="wdF-tc-scc" id="FZj-yM-Mgl"/>
             </connections>
