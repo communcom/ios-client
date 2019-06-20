@@ -40,6 +40,7 @@
 // Titles
 "Info"                                      =   "Info";
 "Error"                                     =   "Error";
+"Successfully resend code"                  =   "Successfully resend code";
 
 
 // Placeholders
@@ -55,3 +56,4 @@
 "Developer error!"                          =   "Developer error!";
 "Wrong phone number"                        =   "Wrong phone number";
 "Enter correct user name"                   =   "Enter correct user name";
+"Enter correct sms code"                    =   "Enter correct sms code";

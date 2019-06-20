@@ -25,28 +25,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Run WebSocket
         WebSocketManager.instance.connect()
-        
+
         _ = WebSocketManager.instance.authorized
             .skip(1)
             .subscribe(onNext: {success in
                 Logger.log(message: "Sign: \n\t\(success)", event: .debug)
-                
+
                 // Lenta
                 if success,
                     UserDefaults.standard.value(forKey: Config.isCurrentUserLoggedKey) as? Bool == true {
                     self.window?.rootViewController = controllerContainer.resolve(TabBarVC.self)
                 }
-                    
+
                 // Sign In/Up
                 else {
                     self.showLogin()
                 }
-                
+        
                 self.window?.makeKeyAndVisible()
                 application.applicationIconBadgeNumber = 0
             })
         
-        Crashlytics().debugMode = true
         Fabric.with([Crashlytics.self])
 
         return true
@@ -56,7 +55,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let welcomeVC = controllerContainer.resolve(WelcomeScreenVC.self)
         let welcomeNav = UINavigationController(rootViewController: welcomeVC!)
         self.window?.rootViewController = welcomeNav
-        
+
         let navigationBarAppearace = UINavigationBar.appearance()
         navigationBarAppearace.tintColor = #colorLiteral(red: 0.4156862745, green: 0.5019607843, blue: 0.9607843137, alpha: 1)
     }

@@ -40,6 +40,7 @@
 // Titles
 "Info"                                      =   "Инфо";
 "Error"                                     =   "Ошибка";
+"Successfully resend code"                  =   "Код подтверждения успешно отправлен";
 
 
 // Placeholders
@@ -55,3 +56,4 @@
 "Developer error!"                          =   "Ошибка разработчика!";
 "Wrong phone number"                        =   "Неверный номер телефона";
 "Enter correct user name"                   =   "Введите корректное имя пользователя";
+"Enter correct sms code"                    =   "Введите корректный смс-код";

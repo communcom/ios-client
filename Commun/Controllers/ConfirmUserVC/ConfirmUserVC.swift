@@ -198,12 +198,10 @@ class ConfirmUserVC: UIViewController {
         RestAPIManager.instance.resendSmsCode(phone:                UserDefaults.standard.string(forKey: Config.registrationUserPhoneKey)!,
                                               responseHandling:     { [weak self] smsCode in
                                                 guard let strongSelf = self else { return }
-                                                strongSelf.showAlert(title:       "Resend code",
-                                                                     message:     "Success",
+                                                strongSelf.showAlert(title:       "Info".localized(),
+                                                                     message:     "Successfully resend code".localized(),
                                                                      completion:  { success in
-                                                                        if success == 1 {
-                                                                            strongSelf.router?.routeToSignUpNextScene()
-                                                                        }
+                                                                        strongSelf.navigationController?.dismiss(animated: true, completion: nil)
                                                 })
         },
                                               errorHandling:        { [weak self] errorAPI in
@@ -245,6 +243,8 @@ class ConfirmUserVC: UIViewController {
                                                         
                                                         strongSelf.showAlert(title: "Error", message: responseAPIError.message)
                         })
+                    } else {
+                        self.showAlert(title: "Error".localized(), message: "Enter correct sms code".localized())
                     }
                 })
                 .disposed(by: self.disposeBag)
