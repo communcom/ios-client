@@ -10,7 +10,13 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-class PostPageViewModel {
+class PostPageViewModel: ListViewModelType {
+    // MARK: - Handlers
+    var loadingHandler: (() -> Void)?
+    var listEndedHandler: (() -> Void)?
+    var fetchNextErrorHandler: ((Error) -> Void)?
+    var fetchNextCompleted: (() -> Void)?
+    
     // MARK: - Inputs
     var postForRequest: ResponseAPIContentGetPost?
     var permlink: String?
@@ -47,13 +53,17 @@ class PostPageViewModel {
     
     func fetchNext() {
         fetcher.fetchNext()
+            .do(onSubscribed: {
+                self.loadingHandler?()
+            })
             .catchError { (error) -> Single<[ResponseAPIContentGetComment]> in
-                #warning("handle error")
+                self.fetchNextErrorHandler?(error)
                 return .just([])
             }
             .subscribe(onSuccess: { (list) in
                 guard list.count > 0 else {return}
                 self.comments.accept(list.reversed() + self.comments.value)
+                self.fetchNextCompleted?()
             })
             .disposed(by: disposeBag)
     }

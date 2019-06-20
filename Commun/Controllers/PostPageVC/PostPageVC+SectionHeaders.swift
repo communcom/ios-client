@@ -35,6 +35,21 @@ extension PostPageVC: UITableViewDelegate {
         
         header.addTarget(self, action: #selector(loadMore(sender:)), for: .touchUpInside)
         
+        viewModel.loadingHandler = {
+            header.setTitle("Loading".localized() + "...", for: .normal)
+            header.isEnabled = false
+        }
+        
+        viewModel.fetchNextErrorHandler = {error in
+            header.setTitle("There is an error".localized() + ". " + "Try again?".localized(), for: .normal)
+            header.isEnabled = true
+        }
+        
+        viewModel.fetchNextCompleted = {
+            header.setTitle("Load more comments".localized() + "...", for: .normal)
+            header.isEnabled = true
+        }
+        
         return view
 
     }
