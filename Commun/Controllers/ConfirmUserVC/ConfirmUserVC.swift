@@ -231,7 +231,7 @@ class ConfirmUserVC: UIViewController {
         },
                                               errorHandling:        { [weak self] errorAPI in
                                                 guard let strongSelf = self else { return }
-                                                strongSelf.showAlert(title: "Resend code", message: "Failed: \(errorAPI.caseInfo.message)")
+                                                strongSelf.showAlert(title: "Error".localized(), message: "Failed: \(errorAPI.caseInfo.message)")
         })
     }
     

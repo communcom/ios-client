@@ -183,7 +183,7 @@ extension SettingsVC: SettingsButtonCellDelegate {
     
     func buttonDidTap(on cell: SettingsButtonCell) {
         if cell.button.titleLabel?.text == "Logout".localized() {
-            showAlert(title: "Logout".localized(), message: "Do you really want to logout", buttonTitles: ["OK".localized(), "Cancel".localized()], highlightedButtonIndex: 1) { (index) in
+            showAlert(title: "Logout".localized(), message: "Do you really want to logout", buttonTitles: ["Ok".localized(), "Cancel".localized()], highlightedButtonIndex: 1) { (index) in
                 if index == 0 {
                     if !Auth.logout() {
                         self.showGeneralError()
