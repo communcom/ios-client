@@ -14,7 +14,9 @@ import SDWebImage
 class ProfilePageVC: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var userAvatarImage: UIImageView!
+    @IBOutlet weak var changeAvatarButton: UIButton!
     @IBOutlet weak var userCoverImage: UIImageView!
+    @IBOutlet weak var changeCoverButton: UIButton!
     @IBOutlet weak var userNameLabel: UILabel!
     @IBOutlet weak var joinedDateLabel: UILabel!
     @IBOutlet weak var bioLabel: UILabel!
@@ -23,6 +25,8 @@ class ProfilePageVC: UIViewController {
     @IBOutlet weak var followingsCountLabel: UILabel!
     @IBOutlet weak var communitiesCountLabel: UILabel!
     @IBOutlet weak var segmentio: Segmentio!
+    @IBOutlet weak var changeSettingsButton: UIButton!
+    @IBOutlet weak var settingsLabel: UILabel!
     
     @IBOutlet weak var copyReferralLinkButton: UIButton!
     @IBOutlet weak var errorView: UIView!
@@ -61,9 +65,18 @@ class ProfilePageVC: UIViewController {
     
     func setUpViews() {
         // Avatar
-        self.userAvatarImage
-            .observeCurrentUserAvatar()
-            .disposed(by: bag)
+        if viewModel.isMyProfile {
+            userAvatarImage
+                .observeCurrentUserAvatar()
+                .disposed(by: bag)
+        } else {
+            // Hide edits button
+            changeAvatarButton.isHidden = true
+            changeCoverButton.isHidden = true
+            addBioButton.isHidden = true
+            changeSettingsButton.isHidden = true
+            settingsLabel.isHidden = true
+        }
         
         // Configure viewModel
         viewModel.profileLoadingHandler = { [weak self] loading in

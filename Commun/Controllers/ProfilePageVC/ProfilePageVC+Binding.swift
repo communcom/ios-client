@@ -40,7 +40,10 @@ extension ProfilePageVC: CommentCellDelegate {
         let bioText = bioLabel.rx.observe(String.self, "text")
         
         bioText.map{$0 == nil}.bind(to: bioLabel.rx.isHidden).disposed(by: bag)
-        bioText.map{$0 != nil}.bind(to: addBioButton.rx.isHidden).disposed(by: bag)
+        
+        if viewModel.isMyProfile {
+            bioText.map{$0 != nil}.bind(to: addBioButton.rx.isHidden).disposed(by: bag)
+        }
         
         // Bind items
         viewModel.items.skip(1)
