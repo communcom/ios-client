@@ -27,12 +27,12 @@ class NetworkService: NSObject {
 //        WebSocketManager.instance.disconnect()
 //    }
     
-    func loadFeed(_ paginationKey: String?, withSortType sortType: FeedTimeFrameMode = .all, withFeedType type: FeedSortMode = .popular, withFeedTypeMode typeMode: FeedTypeMode = .community) -> Observable<ResponseAPIContentGetFeed> {
+    func loadFeed(_ paginationKey: String?, withSortType sortType: FeedTimeFrameMode = .all, withFeedType type: FeedSortMode = .popular, withFeedTypeMode typeMode: FeedTypeMode = .community, userId: String? = nil) -> Observable<ResponseAPIContentGetFeed> {
         
         return Observable.create({ observer -> Disposable in
             
             RestAPIManager.instance.loadFeed(typeMode: typeMode,
-                                             userID:                    Config.currentUser.id,
+                                             userID: userId ?? Config.currentUser.id,
                                              communityID:               AppProfileType.golos.rawValue,
                                              timeFrameMode:             sortType,
                                              sortMode:                  type,
@@ -84,9 +84,9 @@ class NetworkService: NSObject {
             .observeOn(MainScheduler.instance)
     }
     
-    func getUserComments(_ paginationKey: String? = nil) -> Single<ResponseAPIContentGetComments> {
+    func getUserComments(_ paginationKey: String? = nil, nickName: String? = nil) -> Single<ResponseAPIContentGetComments> {
         return Single.create {single in
-            RestAPIManager.instance.loadUserComments(paginationSequenceKey: paginationKey, completion: { (response, error) in
+            RestAPIManager.instance.loadUserComments(nickName: nickName, paginationSequenceKey: paginationKey, completion: { (response, error) in
                 guard error == nil else {
                     Logger.log(message: error!.caseInfo.message.localized(), event: .error)
                     single(.error(error!))
@@ -298,9 +298,9 @@ class NetworkService: NSObject {
     }
     
     
-    func getUserProfile() -> Single<ResponseAPIContentGetProfile> {
+    func getUserProfile(userId: String? = nil) -> Single<ResponseAPIContentGetProfile> {
         return Single<ResponseAPIContentGetProfile>.create { single in
-            guard let userNickName = Config.currentUser.id else { return Disposables.create() }
+            guard let userNickName = userId ?? Config.currentUser.id else { return Disposables.create() }
             
             RestAPIManager.instance.getProfile(userID:      userNickName,
                                                completion:  { (response, error) in

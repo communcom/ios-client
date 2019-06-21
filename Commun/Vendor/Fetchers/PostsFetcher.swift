@@ -14,6 +14,7 @@ class PostsFetcher: ItemsFetcher<ResponseAPIContentGetPost> {
     var sortType: FeedTimeFrameMode
     var feedType: FeedSortMode
     var feedTypeMode: FeedTypeMode
+    var userId: String?
     
     required init(sortType: FeedTimeFrameMode = .all, feedType: FeedSortMode = .popular, feedTypeMode: FeedTypeMode = .community) {
         self.sortType = sortType
@@ -23,7 +24,7 @@ class PostsFetcher: ItemsFetcher<ResponseAPIContentGetPost> {
     }
     
     override var request: Single<[ResponseAPIContentGetPost]>! {
-        return NetworkService.shared.loadFeed(sequenceKey, withSortType: sortType, withFeedType: feedType, withFeedTypeMode: feedTypeMode)
+        return NetworkService.shared.loadFeed(sequenceKey, withSortType: sortType, withFeedType: feedType, withFeedTypeMode: feedTypeMode, userId: userId)
             .do(onNext: { (result) in
                 // assign next sequenceKey
                 self.sequenceKey = result.sequenceKey

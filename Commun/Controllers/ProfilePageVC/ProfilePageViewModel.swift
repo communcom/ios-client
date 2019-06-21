@@ -14,6 +14,9 @@ import CyberSwift
 class ProfilePageViewModel: ListViewModelType {
     // userId for non-current user
     var userId: String? = nil
+    var isMyProfile: Bool {
+        return userId == nil
+    }
     
     // Subjects
     let profile = BehaviorRelay<ResponseAPIContentGetProfile?>(value: nil)
@@ -94,9 +97,11 @@ class ProfilePageViewModel: ListViewModelType {
                 switch item {
                 case .posts:
                     let customFetcher = PostsFetcher(feedType: .timeDesc, feedTypeMode: .byUser)
+                    customFetcher.userId = self.userId
                     self.itemsFetcher = customFetcher
                 case .comments:
                     let customFetcher = CommentsFetcher()
+                    customFetcher.userId = self.userId
                     self.itemsFetcher = customFetcher
                 }
                 // Empty table
@@ -121,7 +126,7 @@ class ProfilePageViewModel: ListViewModelType {
     
     // MARK: - For profile view
     func loadProfile() {
-        NetworkService.shared.getUserProfile()
+        NetworkService.shared.getUserProfile(userId: userId)
             .do(onSubscribed: {
                 self.profileLoadingHandler?(true)
                 self.profileFetchingErrorHandler?(nil)
