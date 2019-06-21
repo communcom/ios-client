@@ -9,7 +9,9 @@
 import UIKit
 import TTTAttributedLabel
 
-protocol CommentCellDelegate {
+protocol CommentCellDelegate: class {
+    var expandedIndexes: [Int] {get set}
+    var tableView: UITableView! {get set}
     func cell(_ cell: CommentCell, didTapUpVoteButtonForComment comment: ResponseAPIContentGetComment)
     func cell(_ cell: CommentCell, didTapDownVoteButtonForComment comment: ResponseAPIContentGetComment)
     func cell(_ cell: CommentCell, didTapReplyButtonForComment comment: ResponseAPIContentGetComment)
