@@ -25,8 +25,12 @@ class ProfilePageVC: UIViewController {
     @IBOutlet weak var followingsCountLabel: UILabel!
     @IBOutlet weak var communitiesCountLabel: UILabel!
     @IBOutlet weak var segmentio: Segmentio!
+    @IBOutlet weak var sendPointsButton: UIButton!
+    @IBOutlet weak var sendPointLabel: UILabel!
     @IBOutlet weak var changeSettingsButton: UIButton!
     @IBOutlet weak var settingsLabel: UILabel!
+    @IBOutlet weak var followButton: UIButton!
+    @IBOutlet weak var followLabel: UILabel!
     
     @IBOutlet weak var copyReferralLinkButton: UIButton!
     @IBOutlet weak var errorView: UIView!
@@ -69,6 +73,10 @@ class ProfilePageVC: UIViewController {
             userAvatarImage
                 .observeCurrentUserAvatar()
                 .disposed(by: bag)
+            sendPointsButton.isHidden = true
+            sendPointLabel.isHidden = true
+            followButton.isHidden = true
+            followLabel.isHidden = true
         } else {
             // Hide edits button
             changeAvatarButton.isHidden = true
@@ -76,6 +84,10 @@ class ProfilePageVC: UIViewController {
             addBioButton.isHidden = true
             changeSettingsButton.isHidden = true
             settingsLabel.isHidden = true
+            
+            // setup for buttons
+            sendPointsButton.imageView?.contentMode = .scaleAspectFit
+            followButton.imageView?.contentMode = .scaleAspectFit
         }
         
         // Configure viewModel
