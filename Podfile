@@ -41,4 +41,6 @@ target 'Commun' do
   pod 'DZNEmptyDataSet'
   pod 'RxReachability'
   
+  pod 'TTTAttributedLabel'
+  
 end
