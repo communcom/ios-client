@@ -39,8 +39,7 @@ extension CommentCellDelegate where Self: UIViewController {
         let profile = controllerContainer.resolve(ProfilePageVC.self)!
         profile.viewModel = ProfilePageViewModel()
         profile.viewModel.userId = userName
-        let profileNC = UINavigationController(rootViewController: profile)
-        present(profileNC, animated: true, completion: nil)
+        show(profile, sender: nil)
     }
     
     func cell(_ cell: CommentCell, didTapOnTag tag: String) {
