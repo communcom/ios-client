@@ -34,4 +34,16 @@ extension CommentCellDelegate where Self: UIViewController {
         tableView.reloadRows(at: [indexPath], with: .none)
         UIView.setAnimationsEnabled(true)
     }
+    
+    func cell(_ cell: CommentCell, didTapOnUserName userName: String) {
+        let profile = controllerContainer.resolve(ProfilePageVC.self)!
+        profile.viewModel = ProfilePageViewModel()
+        profile.viewModel.userId = userName
+        let profileNC = UINavigationController(rootViewController: profile)
+        present(profileNC, animated: true, completion: nil)
+    }
+    
+    func cell(_ cell: CommentCell, didTapOnTag tag: String) {
+        #warning("open tag")
+    }
 }

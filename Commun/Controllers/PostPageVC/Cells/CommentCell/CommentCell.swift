@@ -16,6 +16,8 @@ protocol CommentCellDelegate: class {
     func cell(_ cell: CommentCell, didTapDownVoteButtonForComment comment: ResponseAPIContentGetComment)
     func cell(_ cell: CommentCell, didTapReplyButtonForComment comment: ResponseAPIContentGetComment)
     func cell(_ cell: CommentCell, didTapSeeMoreButtonForComment comment: ResponseAPIContentGetComment)
+    func cell(_ cell: CommentCell, didTapOnUserName userName: String)
+    func cell(_ cell: CommentCell, didTapOnTag tag: String)
 }
 
 class CommentCell: UITableViewCell {
@@ -124,7 +126,7 @@ class CommentCell: UITableViewCell {
         for userName in text.getMentions() {
             let range = (text as NSString).range(of: "@\(userName)")
             if gesture.didTapAttributedTextInLabel(label: label, inRange: range) {
-                print(userName)
+                delegate?.cell(self, didTapOnUserName: userName)
                 return
             }
         }
@@ -132,7 +134,7 @@ class CommentCell: UITableViewCell {
         for tag in text.getTags() {
             let range = (text as NSString).range(of: "#\(tag)")
             if gesture.didTapAttributedTextInLabel(label: label, inRange: range) {
-                print(tag)
+                delegate?.cell(self, didTapOnTag: tag)
                 return
             }
         }

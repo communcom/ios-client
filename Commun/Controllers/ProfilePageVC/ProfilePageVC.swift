@@ -28,7 +28,7 @@ class ProfilePageVC: UIViewController {
     @IBOutlet weak var errorView: UIView!
     
     let bag = DisposeBag()
-    let viewModel = ProfilePageViewModel()
+    var viewModel: ProfilePageViewModel!
     var expandedIndexes = [Int]()
     
     // reconstruct headerView for parallax
@@ -36,6 +36,9 @@ class ProfilePageVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        // construct view model
+        if viewModel == nil { viewModel = ProfilePageViewModel() }
+        
         // setup view
         setUpViews()
         

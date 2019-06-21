@@ -12,6 +12,9 @@ import RxCocoa
 import CyberSwift
 
 class ProfilePageViewModel: ListViewModelType {
+    // userId for non-current user
+    var userId: String? = nil
+    
     // Subjects
     let profile = BehaviorRelay<ResponseAPIContentGetProfile?>(value: nil)
     let items = BehaviorRelay<[Decodable]>(value: [])
