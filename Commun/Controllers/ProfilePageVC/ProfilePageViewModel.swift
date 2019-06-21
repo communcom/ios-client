@@ -13,7 +13,13 @@ import CyberSwift
 
 class ProfilePageViewModel: ListViewModelType {
     // userId for non-current user
-    var userId: String? = nil
+    var userId: String? = nil {
+        didSet {
+            if userId == Config.currentUser.id {
+                userId = nil
+            }
+        }
+    }
     var isMyProfile: Bool {
         return userId == nil
     }
