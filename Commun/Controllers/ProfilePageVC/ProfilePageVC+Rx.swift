@@ -14,9 +14,16 @@ extension Reactive where Base: ProfilePageVC {
     /// Bind profile to view.
     var profile: Binder<ResponseAPIContentGetProfile> {
         return Binder(self.base) { profilePageVC, profile in
-            // set title
             if !profilePageVC.viewModel.isMyProfile {
+                // set title
                 profilePageVC.title = profile.username ?? profile.userId
+                
+                // follow button
+                let isFollowing = profile.isSubscribed ?? false
+                profilePageVC.followButton.setImage(UIImage(named: isFollowing ? "ProfilePageFollowing": "ProfilePageFollow"), for: .normal)
+                profilePageVC.followLabel.text = isFollowing ? "Following".localized(): "Follow".localized()
+                profilePageVC.followButton.backgroundColor = isFollowing ? UIColor(hexString: "#F5F5F5"): .appMainColor
+                profilePageVC.followLabel.textColor = isFollowing ? UIColor(hexString: "#9B9FA2"): .appMainColor
             }
             
             // cover image
