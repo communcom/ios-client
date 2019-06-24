@@ -11,7 +11,7 @@ import CyberSwift
 import RxCocoa
 import RxSwift
 
-extension PostPageVC: PostHeaderViewDelegate {
+extension PostPageVC: PostHeaderViewDelegate, UIScrollViewDelegate {
     
     func bindUI() {
         // Observe post
@@ -112,7 +112,7 @@ extension PostPageVC: PostHeaderViewDelegate {
             }
             .disposed(by: disposeBag)
         
-        tableView.rx.setDelegate(self as! UIScrollViewDelegate)
+        tableView.rx.setDelegate(self)
             .disposed(by: disposeBag)
     }
     
