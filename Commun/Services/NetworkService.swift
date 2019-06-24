@@ -431,6 +431,16 @@ class NetworkService: NSObject {
             .observeOn(MainScheduler.instance)
     }
     
+    func followUser(_ userToFollow: String) -> Completable {
+        return RestAPIManager.instance.rx.follow(userToFollow)
+            .flatMapToCompletable()
+    }
+    
+    func unFollowUser(_ userToUnFollow: String) -> Completable {
+        return RestAPIManager.instance.rx.follow(userToUnFollow, isUnfollow: true)
+            .flatMapToCompletable()
+    }
+    
     // MARK: - options
     func getOptions() -> Completable {
         return .create {completable in
