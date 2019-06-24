@@ -162,4 +162,33 @@ extension ProfilePageVC {
             })
             .disposed(by: bag)
     }
+    
+    // MARK: - Follow, un follow
+    func onFollowTrigger() {
+        guard let userToFollow = viewModel.profile.value?.userId else {return}
+        
+        let isFollowing = viewModel.profile.value?.isSubscribed ?? false
+        
+        // Set new value immediately
+        var newProfile = viewModel.profile.value
+        newProfile?.isSubscribed = !isFollowing
+        viewModel.profile.accept(newProfile)
+        
+        let completable = isFollowing ?
+            NetworkService.shared.unFollowUser(userToFollow) :
+            NetworkService.shared.followUser(userToFollow)
+        
+        completable
+            .subscribe(onError: {[weak self] error in
+                Logger.log(message: error.localizedDescription, event: .error)
+                
+                // reverse change
+                var newProfile = self?.viewModel.profile.value
+                newProfile?.isSubscribed = isFollowing
+                self?.viewModel.profile.accept(newProfile)
+                
+                self?.showGeneralError()
+            })
+            .disposed(by: bag)
+    }
 }

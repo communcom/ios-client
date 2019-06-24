@@ -202,6 +202,15 @@ class ProfilePageVC: UIViewController {
         self.show(settingsVC, sender: nil)
     }
     
+    @IBAction func followButtonDidTouch(_ sender: Any) {
+        guard let userToFollow = viewModel.profile.value?.userId,
+            userToFollow != Config.currentUser.id else {
+                return
+        }
+        
+        self.onFollowTrigger()
+    }
+    
     @IBAction func btnRetryDidTouch(_ sender: Any) {
         refresh()
     }
