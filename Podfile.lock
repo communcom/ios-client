@@ -10,13 +10,14 @@ PODS:
   - Crashlytics (3.13.1):
     - Fabric (~> 1.10.1)
   - CryptoSwift (1.0.0)
-  - CyberSwift (1.0.8):
+  - CyberSwift (1.0.9):
     - Checksum
     - CryptoSwift
     - eosswift (~> 1.5)
     - GoloCrypto
     - Localize-Swift (~> 2.0)
     - Locksmith
+    - PDFReader
     - RxBlocking
     - RxCocoa
     - RxStarscream
@@ -38,6 +39,7 @@ PODS:
   - Localize-Swift (2.0.0)
   - Locksmith (4.0.0)
   - MBProgressHUD (1.1.0)
+  - PDFReader (2.5.1)
   - PhoneNumberKit (2.6.0):
     - PhoneNumberKit/PhoneNumberKitCore (= 2.6.0)
     - PhoneNumberKit/UIKit (= 2.6.0)
@@ -114,6 +116,7 @@ SPEC REPOS:
     - Localize-Swift
     - Locksmith
     - MBProgressHUD
+    - PDFReader
     - PhoneNumberKit
     - PinCodeInputView
     - RxBlocking
@@ -138,7 +141,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   CyberSwift:
-    :commit: fa06ab9a3af9bcfa93acd1024da0d72beb343cef
+    :commit: b2e29a6bf5444b86650701983dfbb9729ff8be0d
     :git: https://github.com/GolosChain/cyberSwift.git
 
 SPEC CHECKSUMS:
@@ -149,7 +152,7 @@ SPEC CHECKSUMS:
   Checksum: f1aa56a27dea5db4006c819e2e129ee6aeb1d9af
   Crashlytics: 5aa8e90dcbf2f34898b4f5a0037787531246cca0
   CryptoSwift: d81eeaa59dc5a8d03720fe919a6fd07b51f7439f
-  CyberSwift: 5ea8fc231b13efb86cc4a88a1bf3e1b82684950a
+  CyberSwift: 844ab05258b45f104490d17f41ae84744f851806
   DateToolsSwift: 875d97ff9e3a5d54abdd67a269b3f51c757b71ab
   Differentiator: be49ca3408f0ecfc761e4c7763d20c62be01b9ad
   DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
@@ -160,6 +163,7 @@ SPEC CHECKSUMS:
   Localize-Swift: c798ec9286494866f7068f85f7c71283ac5bdab4
   Locksmith: e9bebbaaa4cee3c511bc358a44f843c3fe00e21f
   MBProgressHUD: e7baa36a220447d8aeb12769bf0585582f3866d9
+  PDFReader: 2c4a845d0560f33221cf911516e3b700967680f6
   PhoneNumberKit: 167ee1f0bbb6efce7c62559e620eae745595532f
   PinCodeInputView: 0a7361aaec76b639ff6521f1b6c38ed27b8144e3
   RxBlocking: 79413e4d916f44bb3e113c5b2cc059e36fe58910

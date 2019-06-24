@@ -9,13 +9,16 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import PDFReader
 import CyberSwift
 
 class LoadKeysVC: UIViewController {
     // MARK: - Properties
     var viewModel: LoadKeysViewModel?
     let disposeBag = DisposeBag()
-    
+
+    var pdfViewController: PDFViewController?
+
     
     // MARK: - IBOutlets
     @IBOutlet weak var textLabel1: UILabel! {
@@ -69,12 +72,42 @@ class LoadKeysVC: UIViewController {
         downloadKeysButton.rx.tap.subscribe(onNext: { _ in
             self.viewModel!.saveKeys().subscribe(onNext: { flag in
                 if flag {
-                    UserDefaults.standard.set(true, forKey: Config.isCurrentUserLoggedKey)
-                    WebSocketManager.instance.authorized.accept(true)
+                    // Display PDF-file
+                    if let pdfDocument = KeychainManager.loadPDFDocument() {
+                        self.displayPDF(document: pdfDocument)
+                    }
                 } else {
                     self.showAlert(title: "Error".localized(), message: "Something went wrong")
                 }
             }).disposed(by: self.disposeBag)
         }).disposed(by: disposeBag)
+    }
+}
+
+
+// MARK: - PDF utilities
+extension LoadKeysVC {
+    func displayPDF(document: PDFDocument) {
+        let closeButton = UIBarButtonItem(title:    "Close".localized(),
+                                          style:    .done,
+                                          target:   self,
+                                          action:   #selector(didClose(sender:)))
+        
+        self.pdfViewController = PDFViewController.createNew(with:          document,
+                                                             title:         "User keys info".localized(),
+                                                             actionStyle:   .activitySheet,
+                                                             backButton:    closeButton)
+        
+        self.pdfViewController?.backgroundColor = .white
+        self.navigationController?.setNavigationBarHidden(false, animated: false)
+        self.navigationController?.pushViewController(self.pdfViewController ?? UIViewController(), animated: true)
+    }
+    
+    @objc func didClose(sender: UIBarButtonItem) {
+        self.pdfViewController?.navigationController?.popViewController(animated: true)
+        
+        // Save keys
+        UserDefaults.standard.set(true, forKey: Config.isCurrentUserLoggedKey)
+        WebSocketManager.instance.authorized.accept(true)
     }
 }

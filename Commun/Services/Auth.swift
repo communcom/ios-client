@@ -16,6 +16,7 @@ struct Auth {
 
         if result {
             UserDefaults.standard.removeObject(forKey: Config.isCurrentUserLoggedKey)
+            KeychainManager.deletePDFDocument()
             WebSocketManager.instance.disconnect()
             WebSocketManager.instance.connect()
         }
