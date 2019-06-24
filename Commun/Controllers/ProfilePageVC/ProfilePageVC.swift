@@ -61,6 +61,8 @@ class ProfilePageVC: UIViewController {
         super.viewWillAppear(animated)
         if viewModel.isMyProfile {
             navigationController?.setNavigationBarHidden(true, animated: animated)
+        } else {
+            showTitle(false)
         }
     }
     
@@ -68,6 +70,8 @@ class ProfilePageVC: UIViewController {
         super.viewWillDisappear(animated)
         if viewModel.isMyProfile {
             navigationController?.setNavigationBarHidden(false, animated: animated)
+        } else {
+            showTitle(true)
         }
     }
     
@@ -142,6 +146,21 @@ class ProfilePageVC: UIViewController {
         
         // Parallax
         self.constructParallax()
+    }
+    
+    func showTitle(_ show: Bool, animated: Bool = false) {
+        UIView.animate(withDuration: animated ? 0.3: 0) {
+            self.navigationController?.navigationBar.setBackgroundImage(
+                show ? nil: UIImage(), for: .default)
+            self.navigationController?.navigationBar.shadowImage =
+                show ? nil: UIImage()
+            self.navigationController?.view.backgroundColor =
+                show ? .white: .clear
+            self.navigationController?.navigationBar.setTitleFont(.boldSystemFont(ofSize: 17), color:
+                show ? .black: .clear)
+            self.navigationController?.navigationBar.tintColor =
+                show ? .appMainColor: .white
+        }
     }
     
     @objc func refresh() {

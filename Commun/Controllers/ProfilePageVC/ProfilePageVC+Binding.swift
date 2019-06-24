@@ -15,6 +15,13 @@ import RxCocoa
 extension ProfilePageVC: CommentCellDelegate {
     
     func bindViewModel() {
+        // Scroll view
+        tableView.rx.didScroll
+            .map {_ in self.tableView.contentOffset.y >= -425}
+            .subscribe(onNext: {self.showTitle($0, animated: true)})
+            .disposed(by: bag)
+        
+        // Profile
         let profile = viewModel.profile.asDriver()
         
         // End refreshing
