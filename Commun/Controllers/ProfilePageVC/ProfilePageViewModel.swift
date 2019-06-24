@@ -77,6 +77,7 @@ class ProfilePageViewModel: ListViewModelType {
                 case .posts:
                     // Reset fetcher
                     guard let fetcher = self.itemsFetcher as? PostsFetcher else {return Single.never()}
+                    fetcher.userId = self.userId
                     fetcher.reset()
                     
                     // FetchNext items
@@ -85,6 +86,7 @@ class ProfilePageViewModel: ListViewModelType {
                 case .comments:
                     // Reset fetcher
                     guard let fetcher = self.itemsFetcher as? CommentsFetcher else {return Single.never()}
+                    fetcher.userId = self.userId
                     fetcher.reset()
                     
                     // FetchNext items
