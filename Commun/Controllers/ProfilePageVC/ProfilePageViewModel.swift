@@ -12,6 +12,18 @@ import RxCocoa
 import CyberSwift
 
 class ProfilePageViewModel: ListViewModelType {
+    // userId for non-current user
+    var userId: String? = nil {
+        didSet {
+            if userId == Config.currentUser.id {
+                userId = nil
+            }
+        }
+    }
+    var isMyProfile: Bool {
+        return userId == nil
+    }
+    
     // Subjects
     let profile = BehaviorRelay<ResponseAPIContentGetProfile?>(value: nil)
     let items = BehaviorRelay<[Decodable]>(value: [])
@@ -65,6 +77,7 @@ class ProfilePageViewModel: ListViewModelType {
                 case .posts:
                     // Reset fetcher
                     guard let fetcher = self.itemsFetcher as? PostsFetcher else {return Single.never()}
+                    fetcher.userId = self.userId
                     fetcher.reset()
                     
                     // FetchNext items
@@ -73,6 +86,7 @@ class ProfilePageViewModel: ListViewModelType {
                 case .comments:
                     // Reset fetcher
                     guard let fetcher = self.itemsFetcher as? CommentsFetcher else {return Single.never()}
+                    fetcher.userId = self.userId
                     fetcher.reset()
                     
                     // FetchNext items
@@ -91,9 +105,11 @@ class ProfilePageViewModel: ListViewModelType {
                 switch item {
                 case .posts:
                     let customFetcher = PostsFetcher(feedType: .timeDesc, feedTypeMode: .byUser)
+                    customFetcher.userId = self.userId
                     self.itemsFetcher = customFetcher
                 case .comments:
                     let customFetcher = CommentsFetcher()
+                    customFetcher.userId = self.userId
                     self.itemsFetcher = customFetcher
                 }
                 // Empty table
@@ -118,7 +134,7 @@ class ProfilePageViewModel: ListViewModelType {
     
     // MARK: - For profile view
     func loadProfile() {
-        NetworkService.shared.getUserProfile()
+        NetworkService.shared.getUserProfile(userId: userId)
             .do(onSubscribed: {
                 self.profileLoadingHandler?(true)
                 self.profileFetchingErrorHandler?(nil)

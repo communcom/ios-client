@@ -9,7 +9,7 @@
 import UIKit
 import RxSwift
 
-class PostPageVC: UIViewController, ViewControllerWithCommentCells, CommentCellDelegate {
+class PostPageVC: UIViewController, CommentCellDelegate {
     
 
     var viewModel: PostPageViewModel!

@@ -8,11 +8,6 @@
 
 import Foundation
 
-protocol ViewControllerWithCommentCells: class {
-    var expandedIndexes: [Int] {get set}
-    var tableView: UITableView! {get set}
-}
-
 extension CommentCellDelegate where Self: UIViewController {
     func cell(_ cell: CommentCell, didTapUpVoteButtonForComment comment: ResponseAPIContentGetComment) {
         NetworkService.shared.voteMessage(voteType: .upvote,
@@ -29,9 +24,7 @@ extension CommentCellDelegate where Self: UIViewController {
     func cell(_ cell: CommentCell, didTapReplyButtonForComment comment: ResponseAPIContentGetComment) {
         showAlert(title: "TODO", message: "Reply comment")
     }
-}
-
-extension CommentCellDelegate where Self: ViewControllerWithCommentCells {
+    
     func cell(_ cell: CommentCell, didTapSeeMoreButtonForComment comment: ResponseAPIContentGetComment) {
         guard let indexPath = tableView.indexPath(for: cell) else {
             return
@@ -40,5 +33,16 @@ extension CommentCellDelegate where Self: ViewControllerWithCommentCells {
         UIView.setAnimationsEnabled(false)
         tableView.reloadRows(at: [indexPath], with: .none)
         UIView.setAnimationsEnabled(true)
+    }
+    
+    func cell(_ cell: CommentCell, didTapOnUserName userName: String) {
+        let profile = controllerContainer.resolve(ProfilePageVC.self)!
+        profile.viewModel = ProfilePageViewModel()
+        profile.viewModel.userId = userName
+        show(profile, sender: nil)
+    }
+    
+    func cell(_ cell: CommentCell, didTapOnTag tag: String) {
+        #warning("open tag")
     }
 }

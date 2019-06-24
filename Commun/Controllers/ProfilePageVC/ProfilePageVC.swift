@@ -14,7 +14,9 @@ import SDWebImage
 class ProfilePageVC: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var userAvatarImage: UIImageView!
+    @IBOutlet weak var changeAvatarButton: UIButton!
     @IBOutlet weak var userCoverImage: UIImageView!
+    @IBOutlet weak var changeCoverButton: UIButton!
     @IBOutlet weak var userNameLabel: UILabel!
     @IBOutlet weak var joinedDateLabel: UILabel!
     @IBOutlet weak var bioLabel: UILabel!
@@ -23,12 +25,18 @@ class ProfilePageVC: UIViewController {
     @IBOutlet weak var followingsCountLabel: UILabel!
     @IBOutlet weak var communitiesCountLabel: UILabel!
     @IBOutlet weak var segmentio: Segmentio!
+    @IBOutlet weak var sendPointsButton: UIButton!
+    @IBOutlet weak var sendPointLabel: UILabel!
+    @IBOutlet weak var changeSettingsButton: UIButton!
+    @IBOutlet weak var settingsLabel: UILabel!
+    @IBOutlet weak var followButton: UIButton!
+    @IBOutlet weak var followLabel: UILabel!
     
     @IBOutlet weak var copyReferralLinkButton: UIButton!
     @IBOutlet weak var errorView: UIView!
     
     let bag = DisposeBag()
-    let viewModel = ProfilePageViewModel()
+    var viewModel: ProfilePageViewModel!
     var expandedIndexes = [Int]()
     
     // reconstruct headerView for parallax
@@ -36,6 +44,9 @@ class ProfilePageVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        // construct view model
+        if viewModel == nil { viewModel = ProfilePageViewModel() }
+        
         // setup view
         setUpViews()
         
@@ -48,19 +59,44 @@ class ProfilePageVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(true, animated: animated)
+        if viewModel.isMyProfile {
+            navigationController?.setNavigationBarHidden(true, animated: animated)
+        } else {
+            showTitle(false)
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        navigationController?.setNavigationBarHidden(false, animated: animated)
+        if viewModel.isMyProfile {
+            navigationController?.setNavigationBarHidden(false, animated: animated)
+        } else {
+            showTitle(true)
+        }
     }
     
     func setUpViews() {
         // Avatar
-        self.userAvatarImage
-            .observeCurrentUserAvatar()
-            .disposed(by: bag)
+        if viewModel.isMyProfile {
+            userAvatarImage
+                .observeCurrentUserAvatar()
+                .disposed(by: bag)
+            sendPointsButton.isHidden = true
+            sendPointLabel.isHidden = true
+            followButton.isHidden = true
+            followLabel.isHidden = true
+        } else {
+            // Hide edits button
+            changeAvatarButton.isHidden = true
+            changeCoverButton.isHidden = true
+            addBioButton.isHidden = true
+            changeSettingsButton.isHidden = true
+            settingsLabel.isHidden = true
+            
+            // setup for buttons
+            sendPointsButton.imageView?.contentMode = .scaleAspectFit
+            followButton.imageView?.contentMode = .scaleAspectFit
+        }
         
         // Configure viewModel
         viewModel.profileLoadingHandler = { [weak self] loading in
@@ -110,6 +146,21 @@ class ProfilePageVC: UIViewController {
         
         // Parallax
         self.constructParallax()
+    }
+    
+    func showTitle(_ show: Bool, animated: Bool = false) {
+        UIView.animate(withDuration: animated ? 0.3: 0) {
+            self.navigationController?.navigationBar.setBackgroundImage(
+                show ? nil: UIImage(), for: .default)
+            self.navigationController?.navigationBar.shadowImage =
+                show ? nil: UIImage()
+            self.navigationController?.view.backgroundColor =
+                show ? .white: .clear
+            self.navigationController?.navigationBar.setTitleFont(.boldSystemFont(ofSize: 17), color:
+                show ? .black: .clear)
+            self.navigationController?.navigationBar.tintColor =
+                show ? .appMainColor: .white
+        }
     }
     
     @objc func refresh() {

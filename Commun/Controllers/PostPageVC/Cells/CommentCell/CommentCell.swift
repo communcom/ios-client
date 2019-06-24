@@ -7,12 +7,17 @@
 //
 
 import UIKit
+import TTTAttributedLabel
 
-protocol CommentCellDelegate {
+protocol CommentCellDelegate: class {
+    var expandedIndexes: [Int] {get set}
+    var tableView: UITableView! {get set}
     func cell(_ cell: CommentCell, didTapUpVoteButtonForComment comment: ResponseAPIContentGetComment)
     func cell(_ cell: CommentCell, didTapDownVoteButtonForComment comment: ResponseAPIContentGetComment)
     func cell(_ cell: CommentCell, didTapReplyButtonForComment comment: ResponseAPIContentGetComment)
     func cell(_ cell: CommentCell, didTapSeeMoreButtonForComment comment: ResponseAPIContentGetComment)
+    func cell(_ cell: CommentCell, didTapOnUserName userName: String)
+    func cell(_ cell: CommentCell, didTapOnTag tag: String)
 }
 
 class CommentCell: UITableViewCell {
@@ -20,7 +25,7 @@ class CommentCell: UITableViewCell {
     @IBOutlet weak var avatarImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
-    @IBOutlet weak var contentLabel: UILabel!
+    @IBOutlet weak var contentLabel: TTTAttributedLabel!
     @IBOutlet weak var voteCountLabel: UILabel!
     @IBOutlet weak var leftPaddingConstraint: NSLayoutConstraint!
     @IBOutlet weak var rightPaddingConstraint: NSLayoutConstraint!
@@ -35,6 +40,9 @@ class CommentCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         self.selectionStyle = .none
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(contentLabelDidTouch(gesture:)))
+        contentLabel.addGestureRecognizer(tap)
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -79,18 +87,17 @@ class CommentCell: UITableViewCell {
     func setText(expanded: Bool = false) {
         guard let content = comment?.content.body.full else {return}
         
-        contentLabel.removeGestureRecognizers()
-        contentLabel.isUserInteractionEnabled = false
-        
         // If text is not so long
         if content.count < maxCharactersForReduction {
             contentLabel.text = content
+            contentLabel.highlightTagsAndUserNames()
             return
         }
         
         // If text is long
         if expanded {
             contentLabel.text = content
+            contentLabel.highlightTagsAndUserNames()
             return
         }
         
@@ -100,14 +107,10 @@ class CommentCell: UITableViewCell {
             .normal("...")
             .semibold("See More".localized(), color: .appMainColor)
         
-        let tap = UITapGestureRecognizer(target: self, action: #selector(seeMoreDidTouch(gesture:)))
-        contentLabel.isUserInteractionEnabled = true
-        contentLabel.addGestureRecognizer(tap)
-        
-        contentLabel.attributedText = text
+        contentLabel.text = text
     }
     
-    @objc func seeMoreDidTouch(gesture: UITapGestureRecognizer) {
+    @objc func contentLabelDidTouch(gesture: UITapGestureRecognizer) {
         guard let label = gesture.view as? UILabel,
             let text = label.text,
             let comment = comment
@@ -117,6 +120,23 @@ class CommentCell: UITableViewCell {
         
         if gesture.didTapAttributedTextInLabel(label: label, inRange: seeMoreRange) {
             delegate?.cell(self, didTapSeeMoreButtonForComment: comment)
+            return
+        }
+        
+        for userName in text.getMentions() {
+            let range = (text as NSString).range(of: "@\(userName)")
+            if gesture.didTapAttributedTextInLabel(label: label, inRange: range) {
+                delegate?.cell(self, didTapOnUserName: userName)
+                return
+            }
+        }
+        
+        for tag in text.getTags() {
+            let range = (text as NSString).range(of: "#\(tag)")
+            if gesture.didTapAttributedTextInLabel(label: label, inRange: range) {
+                delegate?.cell(self, didTapOnTag: tag)
+                return
+            }
         }
     }
     

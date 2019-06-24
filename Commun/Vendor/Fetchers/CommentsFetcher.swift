@@ -20,7 +20,7 @@ class CommentsFetcher: ItemsFetcher<ResponseAPIContentGetComment> {
             let userId = userId {
             result = NetworkService.shared.getPostComment(sequenceKey, withPermLink: permLink, forUser: userId)
         } else {
-            result = NetworkService.shared.getUserComments(sequenceKey)
+            result = NetworkService.shared.getUserComments(sequenceKey, nickName: userId)
         }
         return result
             .do(onSuccess: { (result) in

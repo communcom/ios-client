@@ -12,9 +12,16 @@ import CyberSwift
 import RxSwift
 import RxCocoa
 
-extension ProfilePageVC: ViewControllerWithCommentCells, CommentCellDelegate {
+extension ProfilePageVC: CommentCellDelegate {
     
     func bindViewModel() {
+        // Scroll view
+        tableView.rx.didScroll
+            .map {_ in self.tableView.contentOffset.y >= -425}
+            .subscribe(onNext: {self.showTitle($0, animated: true)})
+            .disposed(by: bag)
+        
+        // Profile
         let profile = viewModel.profile.asDriver()
         
         // End refreshing
@@ -40,7 +47,10 @@ extension ProfilePageVC: ViewControllerWithCommentCells, CommentCellDelegate {
         let bioText = bioLabel.rx.observe(String.self, "text")
         
         bioText.map{$0 == nil}.bind(to: bioLabel.rx.isHidden).disposed(by: bag)
-        bioText.map{$0 != nil}.bind(to: addBioButton.rx.isHidden).disposed(by: bag)
+        
+        if viewModel.isMyProfile {
+            bioText.map{$0 != nil}.bind(to: addBioButton.rx.isHidden).disposed(by: bag)
+        }
         
         // Bind items
         viewModel.items.skip(1)
@@ -76,6 +86,13 @@ extension ProfilePageVC: ViewControllerWithCommentCells, CommentCellDelegate {
                 
                 fatalError("Unknown cell type")
             }
+            .disposed(by: bag)
+        
+        // Reset expandable
+        viewModel.items
+            .subscribe(onNext: {_ in
+                self.expandedIndexes = []
+            })
             .disposed(by: bag)
         
         // OnItemSelected
