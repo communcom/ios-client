@@ -431,22 +431,14 @@ class NetworkService: NSObject {
             .observeOn(MainScheduler.instance)
     }
     
-    func followUser(_ userToFollow: String) -> Completable {
-        return RestAPIManager.instance.rx.follow(userToFollow)
+    func triggerFollow(_ userToFollow: String, isUnfollow: Bool = false) -> Completable {
+        return RestAPIManager.instance.rx.follow(userToFollow, isUnfollow: isUnfollow)
             .flatMapCompletable({ (transaction) -> Completable in
                 guard let id = transaction.body?.transaction_id else {return .error(ErrorAPI.responseUnsuccessful(message: "transactionId is missing"))}
                 
                 return self.waitForTransactionWith(id: id)
             })
-    }
-    
-    func unFollowUser(_ userToUnFollow: String) -> Completable {
-        return RestAPIManager.instance.rx.follow(userToUnFollow, isUnfollow: true)
-            .flatMapCompletable({ (transaction) -> Completable in
-                guard let id = transaction.body?.transaction_id else {return .error(ErrorAPI.responseUnsuccessful(message: "transactionId is missing"))}
-                
-                return self.waitForTransactionWith(id: id)
-            })
+            .observeOn(MainScheduler.instance)
     }
     
     // MARK: - options

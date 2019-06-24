@@ -174,11 +174,7 @@ extension ProfilePageVC {
         newProfile?.isSubscribed = !isFollowing
         viewModel.profile.accept(newProfile)
         
-        let completable = isFollowing ?
-            NetworkService.shared.unFollowUser(userToFollow) :
-            NetworkService.shared.followUser(userToFollow)
-        
-        completable
+        NetworkService.shared.triggerFollow(userToFollow, isUnfollow: isFollowing)
             .subscribe(onError: {[weak self] error in
                 Logger.log(message: error.localizedDescription, event: .error)
                 
