@@ -23,6 +23,8 @@
 "Welcome,"                                  =   "Добро пожаловать,";
 "sign in to continue"                       =   "авторизуйтесь";
 "User keys info"                            =   "Пользовательские ключи";
+"Comments count"                            =   "комментов";
+"Views count"                               =   "просмотров";
 
 
 // Buttons
