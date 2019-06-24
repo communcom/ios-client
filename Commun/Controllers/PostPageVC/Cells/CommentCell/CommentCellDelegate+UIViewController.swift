@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CyberSwift
 
 extension CommentCellDelegate where Self: UIViewController {
     func cell(_ cell: CommentCell, didTapUpVoteButtonForComment comment: ResponseAPIContentGetComment) {
@@ -36,10 +37,23 @@ extension CommentCellDelegate where Self: UIViewController {
     }
     
     func cell(_ cell: CommentCell, didTapOnUserName userName: String) {
-        let profile = controllerContainer.resolve(ProfilePageVC.self)!
-        profile.viewModel = ProfilePageViewModel()
-        profile.viewModel.userId = userName
-        show(profile, sender: nil)
+        if userName != Config.currentUser.id {
+            let profile = controllerContainer.resolve(ProfilePageVC.self)!
+            profile.viewModel = ProfilePageViewModel()
+            profile.viewModel.userId = userName
+            show(profile, sender: nil)
+            return
+        }
+        
+        // open profile tabbar
+        if let profileNC = tabBarController?.viewControllers?.first(where: {$0.tabBarItem.tag == 2}),
+            profileNC != tabBarController?.selectedViewController{
+            
+            UIView.transition(from: tabBarController!.selectedViewController!.view, to: profileNC.view, duration: 0.3, options: UIView.AnimationOptions.transitionFlipFromLeft, completion: nil)
+            
+            tabBarController?.selectedViewController = profileNC
+        }
+        
     }
     
     func cell(_ cell: CommentCell, didTapOnTag tag: String) {
