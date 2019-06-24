@@ -19,6 +19,8 @@ enum NotificationType: String {
     case mention = "mention"
     case reward = "reward"
     case curatorReward = "curatorReward"
+    case witnessVote = "witnessVote"
+    case witnessCancelVote = "witnessCancelVote"
     
     func getDetail(from notification: ResponseAPIOnlineNotificationData) -> NotificationTypeDetail {
         var detail = NotificationTypeDetail(text: nil, icon: nil)
@@ -122,6 +124,24 @@ enum NotificationType: String {
                 .semibold(notification.post!.title ?? "")
             detail.text = text
             detail.icon = UIImage(named: "NotificationRewardsForVotes")
+            break
+        case .witnessVote:
+            let text = NSMutableAttributedString()
+                .semibold(name)
+                .normal(" ")
+                .normal("voted for you as a delegate".localized())
+                .normal(". 🔥")
+            detail.text = text
+            detail.icon = UIImage(named: "NotificationUpvote")
+            break
+        case .witnessCancelVote:
+            let text = NSMutableAttributedString()
+                .semibold(name)
+                .normal(" ")
+                .normal("has removed your voice from your delegate node".localized())
+                .normal(". 🙈")
+            detail.text = text
+            detail.icon = UIImage(named: "NotificationDownvote")
             break
         }
         return detail
