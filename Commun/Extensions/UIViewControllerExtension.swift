@@ -62,4 +62,23 @@ extension UIViewController {
         
         return presentingIsModal || presentingIsNavigation || presentingIsTabBar
     }
+    
+    func showProfileWithUserId(_ userId: String) {
+        if userId != Config.currentUser.id {
+            let profile = controllerContainer.resolve(ProfilePageVC.self)!
+            profile.viewModel = ProfilePageViewModel()
+            profile.viewModel.userId = userId
+            show(profile, sender: nil)
+            return
+        }
+        
+        // open profile tabbar
+        if let profileNC = tabBarController?.viewControllers?.first(where: {$0.tabBarItem.tag == 2}),
+            profileNC != tabBarController?.selectedViewController{
+            
+            UIView.transition(from: tabBarController!.selectedViewController!.view, to: profileNC.view, duration: 0.3, options: UIView.AnimationOptions.transitionFlipFromLeft, completion: nil)
+            
+            tabBarController?.selectedViewController = profileNC
+        }
+    }
 }

@@ -40,6 +40,11 @@ class PostCardCell: UITableViewCell, PostController {
         avatarImageView.layer.cornerRadius = avatarImageView.height / 2
         avatarImageView.clipsToBounds = true
         
+        // add gesture to authorNameLabel
+        let tap = UITapGestureRecognizer(target: self, action: #selector(userNameTapped(_:)))
+        authorNameLabel.isUserInteractionEnabled = true
+        authorNameLabel.addGestureRecognizer(tap)
+        
         // Observe change
         observePostChange()
     }
@@ -63,6 +68,11 @@ class PostCardCell: UITableViewCell, PostController {
     
     @IBAction func shareButtonTap(_ sender: Any) {
         sharePost()
+    }
+    
+    @objc func userNameTapped(_ sender: UITapGestureRecognizer) {
+        guard let userId = post?.author?.userId else {return}
+        parentViewController?.showProfileWithUserId(userId)
     }
 }
 

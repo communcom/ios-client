@@ -42,6 +42,11 @@ class PostPageVC: UIViewController, CommentCellDelegate {
         
         comunityNameLabel.text = viewModel.postForRequest?.community.name
         
+        // action for labels
+        let tap = UITapGestureRecognizer(target: self, action: #selector(userNameTapped(_:)))
+        byUserLabel.isUserInteractionEnabled = true
+        byUserLabel.addGestureRecognizer(tap)
+        
         // dismiss keyboard when dragging
         tableView.keyboardDismissMode = .onDrag
         
@@ -87,5 +92,9 @@ class PostPageVC: UIViewController, CommentCellDelegate {
         }
     }
     
+    @objc func userNameTapped(_ sender: UITapGestureRecognizer) {
+        guard let userId = viewModel.post.value?.author?.userId else {return}
+        showProfileWithUserId(userId)
+    }
 }
 
