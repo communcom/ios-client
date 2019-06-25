@@ -35,7 +35,7 @@ struct NotificationsPageViewModel: ListViewModelType {
             })
             .subscribe(onSuccess: { (list) in
                 if list.count > 0 {
-                    let newList = list.filter {!self.list.value.contains($0)}
+                    let newList = list.filter {!self.list.value.contains($0) && $0.eventType != "unsubscribe"}
                     self.list.accept(self.list.value + newList)
                 }
                 
