@@ -138,9 +138,22 @@ extension PostPageVC: PostHeaderViewDelegate {
                 
                 #warning("refresh table for testing only")
                 self.viewModel.reload()
-            }, onError: {_ in
+            }, onError: {error in
                 self.view.endEditing(true)
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    if let error = error as? ErrorAPI {
+                        switch error {
+                        case .responseUnsuccessful(message: "Post Not Found"):
+                            self.dismiss(animated: true, completion: nil)
+                            break
+                        case .blockchain(message: let message):
+                            self.showAlert(title: "Error".localized(), message: message)
+                            break
+                        default:
+                            break
+                        }
+                    }
+                    print(error)
                     self.showGeneralError()
                 }
                 self.commentForm.sendButton.isEnabled = true

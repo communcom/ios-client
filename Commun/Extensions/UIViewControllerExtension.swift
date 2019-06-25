@@ -34,7 +34,15 @@ extension UIViewController {
     }
     
     func showGeneralError() {
-        showAlert(title: "Error".localized(), message: "Something went wrong.\nPlease try again later".localized())
+        showErrorWithLocalizedMessage("Something went wrong.\nPlease try again later")
+    }
+    
+    func showErrorWithLocalizedMessage(_ message: String) {
+        showAlert(title: "Error".localized(), message: message.localized())
+    }
+    
+    func showError(_ error: Error) {
+        showAlert(title: "Error".localized(), message: error.localizedDescription)
     }
     
     func hideHud() {

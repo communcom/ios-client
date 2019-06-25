@@ -71,9 +71,12 @@ extension EditorPageVC {
                         self.showAlert(title: "Error".localized(), message: message)
                         break
                     default:
-                        self.showGeneralError()
+                        break
                     }
                 }
+                
+                self.showError(error)
+                
             })
             .disposed(by: disposeBag)
     }
