@@ -43,6 +43,14 @@ class CommentCell: UITableViewCell {
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(contentLabelDidTouch(gesture:)))
         contentLabel.addGestureRecognizer(tap)
+        
+        let tapOnAvatar = UITapGestureRecognizer(target: self, action: #selector(authorDidTouch(gesture:)))
+        avatarImageView.isUserInteractionEnabled = true
+        avatarImageView.addGestureRecognizer(tapOnAvatar)
+        
+        let tapOnUserName = UITapGestureRecognizer(target: self, action: #selector(authorDidTouch(gesture:)))
+        nameLabel.isUserInteractionEnabled = true
+        nameLabel.addGestureRecognizer(tapOnUserName)
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -108,6 +116,11 @@ class CommentCell: UITableViewCell {
             .semibold("See More".localized(), color: .appMainColor)
         
         contentLabel.text = text
+    }
+    
+    @objc func authorDidTouch(gesture: UITapGestureRecognizer) {
+        guard let userId = comment?.author?.userId else {return}
+        delegate?.cell(self, didTapOnUserName: userId)
     }
     
     @objc func contentLabelDidTouch(gesture: UITapGestureRecognizer) {
