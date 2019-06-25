@@ -59,6 +59,7 @@ class ProfilePageVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.navigationController?.navigationBar.prefersLargeTitles = false
         navigationController?.navigationBar.isTranslucent = true
         if viewModel.isMyProfile {
             navigationController?.setNavigationBarHidden(true, animated: animated)
@@ -151,7 +152,6 @@ class ProfilePageVC: UIViewController {
     }
     
     func showTitle(_ show: Bool, animated: Bool = false) {
-        self.navigationController?.navigationBar.prefersLargeTitles = false
         UIView.animate(withDuration: animated ? 0.3: 0) {
             self.navigationController?.navigationBar.setBackgroundImage(
                 show ? nil: UIImage(), for: .default)

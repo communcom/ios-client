@@ -53,6 +53,13 @@ extension NotificationsPageVC {
                     postPageVC.viewModel.permlink = post.contentId.permlink
                     postPageVC.viewModel.userId = post.contentId.userId
                     self?.show(postPageVC, sender: nil)
+                    return
+                }
+                
+                // navigate to profile page
+                if let userId = notification.actor?.userId {
+                    self?.showProfileWithUserId(userId)
+                    return
                 }
             })
             .disposed(by: bag)

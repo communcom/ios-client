@@ -82,6 +82,14 @@ class NotificationsPageVC: UIViewController {
         bindViewModel()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.navigationBar.prefersLargeTitles = true
+        navigationController?.navigationBar.isTranslucent = false
+        self.navigationController?.navigationBar.setTitleFont(.boldSystemFont(ofSize: 17), color:
+            .black)
+    }
+    
     @objc func refresh() {
         viewModel.reload()
     }
