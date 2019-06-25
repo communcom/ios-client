@@ -171,7 +171,7 @@ extension ProfilePageVC {
         
         // Set new value immediately
         var newProfile = viewModel.profile.value
-        newProfile?.isSubscribed = !isFollowing
+        newProfile?.triggerFollow()
         viewModel.profile.accept(newProfile)
         
         NetworkService.shared.triggerFollow(userToFollow, isUnfollow: isFollowing)
@@ -180,7 +180,7 @@ extension ProfilePageVC {
                 
                 // reverse change
                 var newProfile = self?.viewModel.profile.value
-                newProfile?.isSubscribed = isFollowing
+                newProfile?.triggerFollow()
                 self?.viewModel.profile.accept(newProfile)
                 
                 self?.showGeneralError()
