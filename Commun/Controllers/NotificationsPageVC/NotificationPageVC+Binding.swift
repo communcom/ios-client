@@ -44,8 +44,19 @@ extension NotificationsPageVC {
                 self?.tableView.deselectRow(at: indexPath, animated: false)
             })
             .subscribe(onNext: {[weak self] _, notification in
-                // mark as read
-                self?.viewModel.markAsRead(notification).execute()
+                if let strongSelf = self, notification.unread == true {
+                    strongSelf.viewModel.markAsRead(notification)
+                        .subscribe(onCompleted: {
+                            if let index = strongSelf.viewModel.list.value.firstIndex(of: notification) {
+                                var newNotification = notification
+                                newNotification.unread = false
+                                var newList = strongSelf.viewModel.list.value
+                                newList[index] = newNotification
+                                strongSelf.viewModel.list.accept(newList)
+                            }
+                        })
+                        .disposed(by: strongSelf.bag)
+                }
                 
                 // navigate to post page
                 if let post = notification.post,

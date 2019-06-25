@@ -49,10 +49,7 @@ struct NotificationsPageViewModel: ListViewModelType {
             .disposed(by: bag)
     }
     
-    func markAsRead(_ item: ResponseAPIOnlineNotificationData) -> CocoaAction {
-        return CocoaAction {
-            // TODO: markAsRead
-            return Observable.empty()
-        }
+    func markAsRead(_ item: ResponseAPIOnlineNotificationData) -> Completable {
+        return NetworkService.shared.markAsRead(ids: [item._id])
     }
 }

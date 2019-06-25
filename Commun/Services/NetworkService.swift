@@ -322,54 +322,6 @@ class NetworkService: NSObject {
         }
     }
     
-    func getNotifications(fromId: String? = nil, markAsViewed: Bool = true, freshOnly: Bool = false) -> Single<ResponseAPIOnlineNotifyHistory> {
-        return Single<ResponseAPIOnlineNotifyHistory>.create {single in
-            RestAPIManager.instance.getOnlineNotifyHistory(fromId: fromId, freshOnly: false, completion: { (response, error) in
-                guard error == nil else {
-                    single(.error(error!))
-                    return
-                }
-                if let res = response {
-                    single(.success(res))
-                    return
-                }
-            })
-            return Disposables.create()
-        }
-    }
-    
-    func getFreshNotifications() -> Single<ResponseAPIOnlineNotifyHistoryFresh> {
-        return Single<ResponseAPIOnlineNotifyHistoryFresh>.create {single in
-            RestAPIManager.instance.getOnlineNotifyHistoryFresh(completion: { (response, error) in
-                guard error == nil else {
-                    single(.error(error!))
-                    return
-                }
-                if let res = response {
-                    single(.success(res))
-                    return
-                }
-            })
-            return Disposables.create()
-        }
-    }
-    
-    func markAllAsViewed() -> Single<ResponseAPINotifyMarkAllAsViewed> {
-        return Single<ResponseAPINotifyMarkAllAsViewed>.create {single in
-            RestAPIManager.instance.notifyMarkAllAsViewed(completion: { (response, error) in
-                guard error == nil else {
-                    single(.error(error!))
-                    return
-                }
-                if let res = response {
-                    single(.success(res))
-                    return
-                }
-            })
-            return Disposables.create()
-        }
-    }
-    
     func userVerify(phone: String, code: String) -> Observable<Bool> {
         
         return Observable<String>.create({ observer -> Disposable in
@@ -479,6 +431,70 @@ class NetworkService: NSObject {
             Logger.log(message: "Marked post \"\(permlink)\" as read", event: .info)
         }) { (error) in
             Logger.log(message: "Can not make post as read with error: \(error)", event: .error)
+        }
+    }
+    
+    // MARK: - Notifications
+    func getNotifications(fromId: String? = nil, markAsViewed: Bool = true, freshOnly: Bool = false) -> Single<ResponseAPIOnlineNotifyHistory> {
+        return Single<ResponseAPIOnlineNotifyHistory>.create {single in
+            RestAPIManager.instance.getOnlineNotifyHistory(fromId: fromId, freshOnly: false, completion: { (response, error) in
+                guard error == nil else {
+                    single(.error(error!))
+                    return
+                }
+                if let res = response {
+                    single(.success(res))
+                    return
+                }
+            })
+            return Disposables.create()
+        }
+    }
+    
+    func getFreshNotifications() -> Single<ResponseAPIOnlineNotifyHistoryFresh> {
+        return Single<ResponseAPIOnlineNotifyHistoryFresh>.create {single in
+            RestAPIManager.instance.getOnlineNotifyHistoryFresh(completion: { (response, error) in
+                guard error == nil else {
+                    single(.error(error!))
+                    return
+                }
+                if let res = response {
+                    single(.success(res))
+                    return
+                }
+            })
+            return Disposables.create()
+        }
+    }
+    
+    func markAllAsViewed() -> Single<ResponseAPINotifyMarkAllAsViewed> {
+        return Single<ResponseAPINotifyMarkAllAsViewed>.create {single in
+            RestAPIManager.instance.notifyMarkAllAsViewed(completion: { (response, error) in
+                guard error == nil else {
+                    single(.error(error!))
+                    return
+                }
+                if let res = response {
+                    single(.success(res))
+                    return
+                }
+            })
+            return Disposables.create()
+        }
+    }
+    
+    func markAsRead(ids: [String]) -> Completable {
+        if ids.isEmpty {return .empty()}
+        return Completable.create {completable in
+            RestAPIManager.instance.markAsRead(
+                notifies: ids,
+                responseHandling: { (_) in
+                    completable(.completed)
+                },
+                errorHandling: { (error) in
+                    completable(.error(error))
+                })
+            return Disposables.create()
         }
     }
 }
