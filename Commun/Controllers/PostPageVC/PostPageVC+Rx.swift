@@ -11,7 +11,7 @@ import CyberSwift
 import RxCocoa
 import RxSwift
 
-extension PostPageVC: PostHeaderViewDelegate, UIScrollViewDelegate {
+extension PostPageVC: PostHeaderViewDelegate {
     
     func bindUI() {
         // Observe post
