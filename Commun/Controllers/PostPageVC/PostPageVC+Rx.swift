@@ -26,6 +26,12 @@ extension PostPageVC: PostHeaderViewDelegate {
                 self.sendComment(comment)
             })
             .disposed(by: disposeBag)
+        
+        commentForm.textView.rx.didBeginEditing
+            .subscribe(onNext: {_ in
+                self.tableView.scrollToBottom()
+            })
+            .disposed(by: disposeBag)
     }
     
     func bindPost() {
