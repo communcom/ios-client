@@ -79,7 +79,7 @@
 		3BDF4FA822C21B310029D616 /* ResponseAPIContentGetProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BDF4FA722C21B310029D616 /* ResponseAPIContentGetProfile.swift */; };
 		3BDF4FAC22C386AA0029D616 /* PostPageVC+SectionHeaders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BDF4FAB22C386AA0029D616 /* PostPageVC+SectionHeaders.swift */; };
 		3BEA224422B3DA9C00FF42DA /* JSONParsingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BEA224322B3DA9C00FF42DA /* JSONParsingTests.swift */; };
-		3BF37BCA22A11FA700A72FFE /* UIView+Loading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BF37BC922A11FA700A72FFE /* UIView+Loading.swift */; };
+		3BF37BCA22A11FA700A72FFE /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BF37BC922A11FA700A72FFE /* UIView.swift */; };
 		3BF37BCC22A1297C00A72FFE /* UITableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BF37BCB22A1297C00A72FFE /* UITableView.swift */; };
 		3BF37BD022A137EE00A72FFE /* ResponseAPIContentGetPost.json in Resources */ = {isa = PBXBuildFile; fileRef = 3BF37BCF22A137EE00A72FFE /* ResponseAPIContentGetPost.json */; };
 		3BF37BD422A1414200A72FFE /* PlaceholderPostCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3BF37BD222A1414200A72FFE /* PlaceholderPostCell.xib */; };
@@ -302,7 +302,7 @@
 		3BEA224122B3DA9C00FF42DA /* CommunTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CommunTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3BEA224322B3DA9C00FF42DA /* JSONParsingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONParsingTests.swift; sourceTree = "<group>"; };
 		3BEA224522B3DA9C00FF42DA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		3BF37BC922A11FA700A72FFE /* UIView+Loading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Loading.swift"; sourceTree = "<group>"; };
+		3BF37BC922A11FA700A72FFE /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
 		3BF37BCB22A1297C00A72FFE /* UITableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableView.swift; sourceTree = "<group>"; };
 		3BF37BCF22A137EE00A72FFE /* ResponseAPIContentGetPost.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ResponseAPIContentGetPost.json; sourceTree = "<group>"; };
 		3BF37BD222A1414200A72FFE /* PlaceholderPostCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlaceholderPostCell.xib; sourceTree = "<group>"; };
@@ -877,7 +877,7 @@
 				3B63CD9222AA7AA200DC828B /* UIScrollView.swift */,
 				3B6229AA22BD12410053B9EF /* TTTAttributedLabel.swift */,
 				3BDF4FA722C21B310029D616 /* ResponseAPIContentGetProfile.swift */,
-				3BF37BC922A11FA700A72FFE /* UIView+Loading.swift */,
+				3BF37BC922A11FA700A72FFE /* UIView.swift */,
 				3BAF69CA226773000055CCEB /* UIView+Shadow.swift */,
 				576DC920223E42C800EDED41 /* UIViewControllerExtension.swift */,
 				3B02CD33228ADC100078BB52 /* UIWebView.swift */,
@@ -1591,7 +1591,7 @@
 				5787C0CB2265152900568CEC /* LoadKeysVC.swift in Sources */,
 				575AECB322606F7100A7EC2D /* SelectCountryViewModel.swift in Sources */,
 				57840A0B223FAC1B00338FD5 /* BadgeViewPresenter.swift in Sources */,
-				3BF37BCA22A11FA700A72FFE /* UIView+Loading.swift in Sources */,
+				3BF37BCA22A11FA700A72FFE /* UIView.swift in Sources */,
 				575AECAE22606D0800A7EC2D /* SignUpViewModel.swift in Sources */,
 				57CBD95E225517B4000BA8CC /* EditorPageVC+Actions.swift in Sources */,
 				3B2F2269226892C5006B589E /* NotificationCell.swift in Sources */,

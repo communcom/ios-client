@@ -47,4 +47,19 @@ extension UIView {
     func hideLoading() {
         self.viewWithTag(9999)?.removeFromSuperview()
     }
+    
+    func shake() {
+        let midX = center.x
+        let midY = center.y
+        
+        let animation = CABasicAnimation(keyPath: "position")
+        animation.duration = 0.07
+        animation.repeatCount = 2
+        animation.autoreverses = true
+        
+        animation.fromValue = CGPoint(x: midX-30, y: midY)
+        animation.toValue = CGPoint(x: midX+30, y: midY)
+        
+        layer.add(animation, forKey: "position")
+    }
 }
