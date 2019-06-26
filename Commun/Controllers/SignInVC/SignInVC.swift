@@ -175,16 +175,24 @@ class SignInVC: UIViewController {
     
     // MARK: - Actions
     @IBAction func paramsButtonTapped(_ sender: UIButton) {
-        let login                   =   Config.testUserAccount.id
-        let activeKey               =   Config.testUserAccount.activeKey
-
-        self.loginTextField.text    =   login
-        self.keyTextField.text      =   activeKey
-        
-        self.loginTextField.becomeFirstResponder()
-        self.keyTextField.becomeFirstResponder()
-        self.keyTextField.resignFirstResponder()
-        
-        _ = self.checkCorrectDataAndSetupButton(LoginCredential(login: login, key: activeKey))
+        Broadcast.instance.generateNewTestUser { [weak self] (success) in
+            guard let strongSelf = self else { return }
+            
+            if success {
+                let login       =   Config.testUser.id ?? "CyberSwift"
+                let activeKey   =   Config.testUser.activeKey ?? "CyberSwift"
+                
+                DispatchQueue.main.async {
+                    strongSelf.loginTextField.text    =   login
+                    strongSelf.keyTextField.text      =   activeKey
+                    
+                    strongSelf.loginTextField.becomeFirstResponder()
+                    strongSelf.keyTextField.becomeFirstResponder()
+                    strongSelf.keyTextField.resignFirstResponder()
+                    
+                    _ = strongSelf.checkCorrectDataAndSetupButton(LoginCredential(login: login, key: activeKey))
+                }
+            }
+        }
     }
 }

@@ -5,6 +5,8 @@
 //  Created by Maxim Prigozhenkov on 14/03/2019.
 //  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
 //
+//  https://console.firebase.google.com/u/0/project/io-commun-eos-ios/notification/compose?campaignId=4674196189067671007&dupe=true
+//
 
 import UIKit
 import Fabric
@@ -12,7 +14,7 @@ import Crashlytics
 import CoreData
 import Firebase
 import UserNotifications
-
+import CyberSwift
 @_exported import CyberSwift
 
 let isDebugMode: Bool = true
@@ -29,7 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Run WebSocket
         WebSocketManager.instance.connect()
-
+        
         _ = WebSocketManager.instance.authorized
             .skip(1)
             .subscribe(onNext: {success in
@@ -239,6 +241,8 @@ extension AppDelegate: MessagingDelegate {
         
         let dataDict:[String: String] = ["token": fcmToken]
         NotificationCenter.default.post(name: Notification.Name("FCMToken"), object: nil, userInfo: dataDict)
+
+        UserDefaults.standard.set(fcmToken, forKey: "fcmToken")
 
         // TODO: If necessary send token to application server.
         // Note: This callback is fired at each app startup and whenever a new token is generated.
