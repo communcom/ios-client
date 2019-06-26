@@ -44,8 +44,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             })
         
         // Run WebSocket
-        WebSocketManager.instance.connect()
-        
         _ = WebSocketManager.instance.authorized
             .skip(1)
             .subscribe(onNext: {success in
