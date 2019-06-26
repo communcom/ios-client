@@ -11,6 +11,9 @@ target 'Commun' do
   pod 'Fabric'
   pod 'Crashlytics'
 
+  pod 'Firebase/Core'
+  pod 'Firebase/Messaging'
+  
   pod 'CyberSwift', :git => "https://github.com/GolosChain/cyberSwift.git" # "https://github.com/Monserg/cyber-ios.git"
   
   pod 'Alamofire'

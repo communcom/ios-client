@@ -181,6 +181,7 @@
 		57FB17A2224C093A00563BF7 /* SignInVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FB17A1224C093A00563BF7 /* SignInVC.swift */; };
 		57FB17A4224C15C400563BF7 /* SignInViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FB17A3224C15C400563BF7 /* SignInViewModel.swift */; };
 		7472E4613CDA904305E42A4F /* Pods_Commun.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F0772CC6D820AD11B1FF48A /* Pods_Commun.framework */; };
+		B12684F122C220BB0046C838 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B12684F022C220BB0046C838 /* GoogleService-Info.plist */; };
 		B170AC15228AFBDA00C6FFBC /* SignUpVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5797E0F9225DDA490026C4D5 /* SignUpVC.storyboard */; };
 		B170AC16228AFBF500C6FFBC /* PostCardCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 572F81A1223C164B0007F2F9 /* PostCardCell.xib */; };
 		B17A970C228002440081B8E0 /* SignUpRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17A970B228002440081B8E0 /* SignUpRouter.swift */; };
@@ -444,6 +445,8 @@
 		57FB17A3224C15C400563BF7 /* SignInViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewModel.swift; sourceTree = "<group>"; };
 		8F30C81783ED457B84BCC641 /* Pods-Commun.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Commun.release.xcconfig"; path = "Pods/Target Support Files/Pods-Commun/Pods-Commun.release.xcconfig"; sourceTree = "<group>"; };
 		AE43B2305FC441D96462E0AB /* Pods-Commun.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Commun.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Commun/Pods-Commun.debug.xcconfig"; sourceTree = "<group>"; };
+		B12684EF22C1E56B0046C838 /* Commun.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Commun.entitlements; sourceTree = "<group>"; };
+		B12684F022C220BB0046C838 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B17A970B228002440081B8E0 /* SignUpRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpRouter.swift; sourceTree = "<group>"; };
 		B1EA02D42289734800835244 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		B1EA02D62289734E00835244 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -671,6 +674,7 @@
 		571B14F2223A935C00630C8F /* Commun */ = {
 			isa = PBXGroup;
 			children = (
+				B12684EF22C1E56B0046C838 /* Commun.entitlements */,
 				571B14F3223A935C00630C8F /* AppDelegate.swift */,
 				57840A182240DAFF00338FD5 /* Assembly */,
 				B17A970A228002140081B8E0 /* Common */,
@@ -683,6 +687,7 @@
 				571B14FD223A935D00630C8F /* Assets.xcassets */,
 				571B14FF223A935D00630C8F /* LaunchScreen.storyboard */,
 				571B1502223A935D00630C8F /* Info.plist */,
+				B12684F022C220BB0046C838 /* GoogleService-Info.plist */,
 				571B14FA223A935C00630C8F /* Commun.xcdatamodeld */,
 				57BB5CA922550B4300F0B88B /* Commun-Bridging-Header.h */,
 				B1EA02D52289734800835244 /* Localizable.strings */,
@@ -732,7 +737,6 @@
 				5725173F2243E4D70033125C /* PostPageViewModel.swift */,
 				5725173B2243E4640033125C /* PostPageVC.swift */,
 				57F5CFC12244E3BE005A09AE /* PostPageVC+Rx.swift */,
-				3B6229A222BB7C5B0053B9EF /* PostPageVC+SectionHeaders.swift */,
 				5725173D2243E49C0033125C /* PostPageVC.storyboard */,
 			);
 			path = PostPageVC;
@@ -858,27 +862,29 @@
 			isa = PBXGroup;
 			children = (
 				3BAF69CE226787940055CCEB /* Date.swift */,
+				3B5D7CF02299D79B0077B82C /* FeedSortMode.swift */,
 				3B635F8222774A37006DAAB2 /* FeedTimeFrameMode.swift */,
 				3B2F227222689334006B589E /* NSMutableAttributedString.swift */,
+				3BA4D0862292BA710022A69D /* ResponseAPIContentGetPost.swift */,
+				3BF37BD522A162E000A72FFE /* ResponseAPIOnlineNotificationData.swift */,
+				3B63CD9422AAAC5500DC828B /* String.swift */,
 				5721E87022650AC0003BE04B /* StringExtension.swift */,
 				3B51581D226E0D3A00108F17 /* TLPhotosPickerViewController+Rx.swift */,
+				3BDD9A0E228F07EF00B2A1DA /* UIApplication.swift */,
 				3BB86B4822734AE4008F1C64 /* UIColor.swift */,
 				3B0E9C65227050E3002AB1C2 /* UIImageView.swift */,
-				3BAF69CA226773000055CCEB /* UIView+Shadow.swift */,
-				3BF37BC922A11FA700A72FFE /* UIView+Loading.swift */,
-				576DC920223E42C800EDED41 /* UIViewControllerExtension.swift */,
-				3B02CD33228ADC100078BB52 /* UIWebView.swift */,
-				3BDD9A0E228F07EF00B2A1DA /* UIApplication.swift */,
-				3BA4D0862292BA710022A69D /* ResponseAPIContentGetPost.swift */,
 				3BA4D088229315D60022A69D /* UIResponder.swift */,
-				3B5D7CF02299D79B0077B82C /* FeedSortMode.swift */,
+				3B63CD9222AA7AA200DC828B /* UIScrollView.swift */,
 				3BF37BCB22A1297C00A72FFE /* UITableView.swift */,
-				3BF37BD522A162E000A72FFE /* ResponseAPIOnlineNotificationData.swift */,
 				3B5CB30222A56BD500757533 /* UITapGestureRecognizer.swift */,
 				3B63CD9222AA7AA200DC828B /* UIScrollView.swift */,
 				3B63CD9422AAAC5500DC828B /* String.swift */,
 				3B6229AA22BD12410053B9EF /* TTTAttributedLabel.swift */,
 				3BDF4FA722C21B310029D616 /* ResponseAPIContentGetProfile.swift */,
+				3BF37BC922A11FA700A72FFE /* UIView+Loading.swift */,
+				3BAF69CA226773000055CCEB /* UIView+Shadow.swift */,
+				576DC920223E42C800EDED41 /* UIViewControllerExtension.swift */,
+				3B02CD33228ADC100078BB52 /* UIWebView.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1287,6 +1293,11 @@
 					571B14EF223A935C00630C8F = {
 						CreatedOnToolsVersion = 10.1;
 						LastSwiftMigration = 1020;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -1387,6 +1398,7 @@
 				B1EA02E82289882A00835244 /* SF-Pro-Display-UltralightItalic.otf in Resources */,
 				5725173E2243E49C0033125C /* PostPageVC.storyboard in Resources */,
 				576DC91E223E429C00EDED41 /* FeedPageVC.storyboard in Resources */,
+				B12684F122C220BB0046C838 /* GoogleService-Info.plist in Resources */,
 				B1EA02D72289882300835244 /* SF-Pro-Display-Black.otf in Resources */,
 				B1EA02DF2289882A00835244 /* SF-Pro-Display-Medium.otf in Resources */,
 				5787C0CF226515BC00568CEC /* LoadKeysVC.storyboard in Resources */,
@@ -1525,7 +1537,6 @@
 				3B63CD9322AA7AA200DC828B /* UIScrollView.swift in Sources */,
 				3BB86B4922734AE4008F1C64 /* UIColor.swift in Sources */,
 				57840A00223FAC1B00338FD5 /* SegmentioCellWithImageBeforeLabel.swift in Sources */,
-				3B6229A322BB7C5B0053B9EF /* PostPageVC+SectionHeaders.swift in Sources */,
 				57840A0A223FAC1B00338FD5 /* Segmentio.swift in Sources */,
 				3B2F227122689308006B589E /* TabBarViewModel.swift in Sources */,
 				3B197C5B2269EF3F008CF10D /* ProfilePageVC+Binding.swift in Sources */,
@@ -1655,7 +1666,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = QPW4XRTF2N;
+				DEVELOPMENT_TEAM = 5G8856SBG8;
 				INFOPLIST_FILE = CommunTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1676,7 +1687,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = QPW4XRTF2N;
+				DEVELOPMENT_TEAM = 5G8856SBG8;
 				INFOPLIST_FILE = CommunTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1818,6 +1829,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Commun/Commun.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -1848,6 +1860,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Commun/Commun.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";

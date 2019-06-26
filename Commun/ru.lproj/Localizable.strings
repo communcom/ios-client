@@ -22,6 +22,9 @@
 "You need Master Key"                       =   "Вам нужен мастер-ключ для входа в систему.\nПожалуйста, скачайте его.";
 "Welcome,"                                  =   "Добро пожаловать,";
 "sign in to continue"                       =   "авторизуйтесь";
+"User keys info"                            =   "Пользовательские ключи";
+"Comments count"                            =   "комментов";
+"Views count"                               =   "просмотров";
 
 
 // Buttons
