@@ -18,6 +18,7 @@ class SplashViewController: UIViewController {
         zoomAnim.toValue = 1.1
         zoomAnim.duration = 1
         zoomAnim.repeatCount = .infinity
+        zoomAnim.autoreverses = true
         splashImageView.layer.add(zoomAnim, forKey: "Zoom")
         // Do any additional setup after loading the view.
     }
