@@ -58,6 +58,9 @@
 		3B635F8322774A37006DAAB2 /* FeedTimeFrameMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B635F8222774A37006DAAB2 /* FeedTimeFrameMode.swift */; };
 		3B63CD9322AA7AA200DC828B /* UIScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B63CD9222AA7AA200DC828B /* UIScrollView.swift */; };
 		3B67FC0622C4BB5100D05F01 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B67FC0522C4BB5100D05F01 /* SplashViewController.swift */; };
+		3B67FC0822C5016F00D05F01 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B67FC0722C5016F00D05F01 /* SignInViewController.swift */; };
+		3B67FC0B22C50BC400D05F01 /* SignInViewController+CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B67FC0A22C50BC400D05F01 /* SignInViewController+CollectionView.swift */; };
+		3B67FC0C22C50F1500D05F01 /* SignInViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3B67FC0922C5018800D05F01 /* SignInViewController.storyboard */; };
 		3B885BBC22B7A1FE00FC4B7A /* EmbededView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B885BBB22B7A1FE00FC4B7A /* EmbededView.swift */; };
 		3B885BBE22B7A20D00FC4B7A /* EmbededView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3B885BBD22B7A20D00FC4B7A /* EmbededView.xib */; };
 		3BA4D0872292BA710022A69D /* ResponseAPIContentGetPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BA4D0862292BA710022A69D /* ResponseAPIContentGetPost.swift */; };
@@ -280,6 +283,9 @@
 		3B635F8222774A37006DAAB2 /* FeedTimeFrameMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedTimeFrameMode.swift; sourceTree = "<group>"; };
 		3B63CD9222AA7AA200DC828B /* UIScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIScrollView.swift; sourceTree = "<group>"; };
 		3B67FC0522C4BB5100D05F01 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
+		3B67FC0722C5016F00D05F01 /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
+		3B67FC0922C5018800D05F01 /* SignInViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SignInViewController.storyboard; sourceTree = "<group>"; };
+		3B67FC0A22C50BC400D05F01 /* SignInViewController+CollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SignInViewController+CollectionView.swift"; sourceTree = "<group>"; };
 		3B885BBB22B7A1FE00FC4B7A /* EmbededView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbededView.swift; sourceTree = "<group>"; };
 		3B885BBD22B7A20D00FC4B7A /* EmbededView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmbededView.xib; sourceTree = "<group>"; };
 		3BA4D0862292BA710022A69D /* ResponseAPIContentGetPost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseAPIContentGetPost.swift; sourceTree = "<group>"; };
@@ -1205,6 +1211,9 @@
 				57FB17A3224C15C400563BF7 /* SignInViewModel.swift */,
 				57FB17A1224C093A00563BF7 /* SignInVC.swift */,
 				57FB179F224C092700563BF7 /* SignInVC.storyboard */,
+				3B67FC0922C5018800D05F01 /* SignInViewController.storyboard */,
+				3B67FC0722C5016F00D05F01 /* SignInViewController.swift */,
+				3B67FC0A22C50BC400D05F01 /* SignInViewController+CollectionView.swift */,
 			);
 			path = SignInVC;
 			sourceTree = "<group>";
@@ -1367,6 +1376,7 @@
 				3BF37BD422A1414200A72FFE /* PlaceholderPostCell.xib in Resources */,
 				B1EA02DC2289882A00835244 /* SF-Pro-Display-HeavyItalic.otf in Resources */,
 				57DE5BE622522060008566B9 /* ComunityCell.xib in Resources */,
+				3B67FC0C22C50F1500D05F01 /* SignInViewController.storyboard in Resources */,
 				3BF37BD022A137EE00A72FFE /* ResponseAPIContentGetPost.json in Resources */,
 				5787C0C822650FC200568CEC /* SetUserVC.storyboard in Resources */,
 				57B6FC2A224A9EAA00BCFDDA /* WelcomeItemVC.storyboard in Resources */,
@@ -1511,7 +1521,9 @@
 				5721E87122650AC0003BE04B /* StringExtension.swift in Sources */,
 				3B0E9C732270785E002AB1C2 /* PhotoLibraryCell.swift in Sources */,
 				3B51581E226E0D3A00108F17 /* TLPhotosPickerViewController+Rx.swift in Sources */,
+				3B67FC0822C5016F00D05F01 /* SignInViewController.swift in Sources */,
 				57840A07223FAC1B00338FD5 /* UIView+Appearance.swift in Sources */,
+				3B67FC0B22C50BC400D05F01 /* SignInViewController+CollectionView.swift in Sources */,
 				57CBD95C225511BD000BA8CC /* UITextView+Placeholder.m in Sources */,
 				3BF37BD622A162E000A72FFE /* ResponseAPIOnlineNotificationData.swift in Sources */,
 				57DE5BE522522060008566B9 /* ComunityCell.swift in Sources */,
