@@ -76,7 +76,7 @@
                                                 </connections>
                                             </collectionView>
                                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gJG-3i-Ca7">
-                                                <rect key="frame" x="0.0" y="93" width="375" height="420"/>
+                                                <rect key="frame" x="0.0" y="93" width="375" height="376"/>
                                                 <subviews>
                                                     <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ph5-py-HbL">
                                                         <rect key="frame" x="0.0" y="0.0" width="375" height="375"/>
@@ -84,8 +84,15 @@
                                                             <constraint firstAttribute="width" secondItem="ph5-py-HbL" secondAttribute="height" multiplier="1:1" id="Tee-TE-lsU"/>
                                                         </constraints>
                                                     </containerView>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ifj-Qq-1yA">
+                                                        <rect key="frame" x="0.0" y="335" width="375" height="40"/>
+                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="40" id="lIe-KD-eOr"/>
+                                                        </constraints>
+                                                    </view>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Go to commun.com and scan QR" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Gt-Y1-44W">
-                                                        <rect key="frame" x="61.5" y="399" width="252" height="21"/>
+                                                        <rect key="frame" x="61.5" y="355" width="252" height="21"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
@@ -96,9 +103,12 @@
                                                     <constraint firstItem="4Gt-Y1-44W" firstAttribute="centerX" secondItem="gJG-3i-Ca7" secondAttribute="centerX" id="7ND-nM-MAt"/>
                                                     <constraint firstAttribute="trailing" secondItem="ph5-py-HbL" secondAttribute="trailing" id="XBu-o8-ldD"/>
                                                     <constraint firstAttribute="bottom" secondItem="4Gt-Y1-44W" secondAttribute="bottom" id="XL5-TS-bcK"/>
+                                                    <constraint firstItem="Ifj-Qq-1yA" firstAttribute="bottom" secondItem="ph5-py-HbL" secondAttribute="bottom" id="YQI-nc-jHd"/>
+                                                    <constraint firstItem="Ifj-Qq-1yA" firstAttribute="leading" secondItem="ph5-py-HbL" secondAttribute="leading" id="abr-kn-HzY"/>
                                                     <constraint firstItem="ph5-py-HbL" firstAttribute="top" secondItem="gJG-3i-Ca7" secondAttribute="top" id="c7I-6H-u2Z"/>
                                                     <constraint firstItem="ph5-py-HbL" firstAttribute="leading" secondItem="gJG-3i-Ca7" secondAttribute="leading" id="d65-dV-RPu"/>
-                                                    <constraint firstItem="4Gt-Y1-44W" firstAttribute="top" secondItem="ph5-py-HbL" secondAttribute="bottom" constant="24" id="hLE-Ge-src"/>
+                                                    <constraint firstItem="4Gt-Y1-44W" firstAttribute="top" secondItem="ph5-py-HbL" secondAttribute="bottom" constant="-20" id="hLE-Ge-src"/>
+                                                    <constraint firstItem="Ifj-Qq-1yA" firstAttribute="trailing" secondItem="ph5-py-HbL" secondAttribute="trailing" id="s9q-oo-HJ0"/>
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="btM-xQ-6hP">
@@ -214,6 +224,7 @@
                         <outlet property="loginPasswordContainerView" destination="btM-xQ-6hP" id="GQs-3c-jHT"/>
                         <outlet property="loginTextField" destination="MzH-Fh-ifk" id="xKn-7A-y9u"/>
                         <outlet property="passwordTextField" destination="siR-es-fG8" id="qEL-wy-8s6"/>
+                        <outlet property="qrCodeReaderView" destination="ph5-py-HbL" id="C63-FT-Cbp"/>
                         <outlet property="qrContainerView" destination="gJG-3i-Ca7" id="K2b-wU-NLY"/>
                         <outlet property="signInButton" destination="UUZ-Bi-nP3" id="9jf-3d-ytH"/>
                         <outlet property="signUpButton" destination="Yxv-l2-Yad" id="vQY-cz-rx0"/>

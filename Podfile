@@ -45,6 +45,7 @@ target 'Commun' do
   pod 'RxReachability'
   
   pod 'TTTAttributedLabel'
+  pod 'QRCodeReaderViewController', '~> 4.0.2'
   
   post_install do |installer|
     installer.pods_project.targets.each do |target|

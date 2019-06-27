@@ -96,4 +96,22 @@ extension UIViewController {
             tabBarController?.selectedViewController = profileNC
         }
     }
+    
+    // MARK: - ChildVC
+    func add(_ child: UIViewController, to view: UIView? = nil) {
+        addChild(child)
+        
+        if let frame = view?.frame {
+            child.view.frame = frame
+        }
+        
+        view?.addSubview(child.view)
+        child.didMove(toParent: self)
+    }
+    
+    func remove() {
+        willMove(toParent: nil)
+        view.removeFromSuperview()
+        removeFromParent()
+    }
 }
