@@ -180,8 +180,6 @@
 		57FB179B224BFBD700563BF7 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 57FB1796224BFBD700563BF7 /* LICENSE */; };
 		57FB179C224BFBD700563BF7 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 57FB1797224BFBD700563BF7 /* README.md */; };
 		57FB179D224BFBD700563BF7 /* PillPageControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FB179A224BFBD700563BF7 /* PillPageControl.swift */; };
-		57FB17A0224C092700563BF7 /* SignInVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 57FB179F224C092700563BF7 /* SignInVC.storyboard */; };
-		57FB17A2224C093A00563BF7 /* SignInVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FB17A1224C093A00563BF7 /* SignInVC.swift */; };
 		57FB17A4224C15C400563BF7 /* SignInViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FB17A3224C15C400563BF7 /* SignInViewModel.swift */; };
 		7472E4613CDA904305E42A4F /* Pods_Commun.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F0772CC6D820AD11B1FF48A /* Pods_Commun.framework */; };
 		B12684F122C220BB0046C838 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B12684F022C220BB0046C838 /* GoogleService-Info.plist */; };
@@ -446,8 +444,6 @@
 		57FB1796224BFBD700563BF7 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		57FB1797224BFBD700563BF7 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		57FB179A224BFBD700563BF7 /* PillPageControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PillPageControl.swift; sourceTree = "<group>"; };
-		57FB179F224C092700563BF7 /* SignInVC.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SignInVC.storyboard; sourceTree = "<group>"; };
-		57FB17A1224C093A00563BF7 /* SignInVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInVC.swift; sourceTree = "<group>"; };
 		57FB17A3224C15C400563BF7 /* SignInViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewModel.swift; sourceTree = "<group>"; };
 		8F30C81783ED457B84BCC641 /* Pods-Commun.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Commun.release.xcconfig"; path = "Pods/Target Support Files/Pods-Commun/Pods-Commun.release.xcconfig"; sourceTree = "<group>"; };
 		AE43B2305FC441D96462E0AB /* Pods-Commun.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Commun.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Commun/Pods-Commun.debug.xcconfig"; sourceTree = "<group>"; };
@@ -1209,8 +1205,6 @@
 			isa = PBXGroup;
 			children = (
 				57FB17A3224C15C400563BF7 /* SignInViewModel.swift */,
-				57FB17A1224C093A00563BF7 /* SignInVC.swift */,
-				57FB179F224C092700563BF7 /* SignInVC.storyboard */,
 				3B67FC0922C5018800D05F01 /* SignInViewController.storyboard */,
 				3B67FC0722C5016F00D05F01 /* SignInViewController.swift */,
 				3B67FC0A22C50BC400D05F01 /* SignInViewController+CollectionView.swift */,
@@ -1380,7 +1374,6 @@
 				3BF37BD022A137EE00A72FFE /* ResponseAPIContentGetPost.json in Resources */,
 				5787C0C822650FC200568CEC /* SetUserVC.storyboard in Resources */,
 				57B6FC2A224A9EAA00BCFDDA /* WelcomeItemVC.storyboard in Resources */,
-				57FB17A0224C092700563BF7 /* SignInVC.storyboard in Resources */,
 				3B197C88226A33CF008CF10D /* ResponseAPIContentGetProfileResult.json in Resources */,
 				B1EA02F32289882A00835244 /* SF-Pro-Text-Semibold.otf in Resources */,
 				3B885BBE22B7A20D00FC4B7A /* EmbededView.xib in Resources */,
@@ -1568,7 +1561,6 @@
 				57840A202240DDEB00338FD5 /* Container.swift in Sources */,
 				57F9CAAC225B489000AC9ACA /* EditorPageVC+Rx.swift in Sources */,
 				3B0E9C6E227063F6002AB1C2 /* ProfilePageVC+Actions.swift in Sources */,
-				57FB17A2224C093A00563BF7 /* SignInVC.swift in Sources */,
 				3B0E9C7122706985002AB1C2 /* ProfileChooseAvatarViewModel.swift in Sources */,
 				57840A06223FAC1B00338FD5 /* SegmentioCellWithImageOverLabel.swift in Sources */,
 				3B02CD34228ADC100078BB52 /* UIWebView.swift in Sources */,

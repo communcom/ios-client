@@ -7,7 +7,9 @@
 //
 
 import UIKit
+import RxSwift
 
+typealias LoginCredential = (login: String, key: String)
 
 class SignInViewController: UIViewController {
     // Selection
@@ -18,6 +20,7 @@ class SignInViewController: UIViewController {
     }
     var selection = ["Scan QR".localized(), "Login & Key".localized()]
     
+    // Views
     @IBOutlet var collectionView: UICollectionView!
     @IBOutlet var qrContainerView: UIView!
     
@@ -25,6 +28,11 @@ class SignInViewController: UIViewController {
     @IBOutlet weak var loginTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var signInButton: UIButton!
+    @IBOutlet weak var signUpButton: UIButton!
+    
+    // Properties
+    let viewModel = SignInViewModel()
+    let disposeBag = DisposeBag()
     
     // Handlers
     var handlerSignUp: ((Bool) -> Void)?
@@ -38,6 +46,10 @@ class SignInViewController: UIViewController {
     }
     
     func setUpViews() {
+        // title
+        title = "Welcome".localized()
+        navigationController?.navigationBar.prefersLargeTitles = true
+        
         // Configure textView
         let paddingView: UIView = UIView(frame: CGRect(x: 0, y: 0, width: 16, height: 20))
         loginTextField.leftView = paddingView
@@ -49,7 +61,58 @@ class SignInViewController: UIViewController {
     }
     
     func bind() {
+        // Validator
+        let validator = Observable.combineLatest(
+            loginTextField.rx.text,
+            passwordTextField.rx.text
+        )
+            .filter {$0 != nil && $1 != nil}
+            .map {LoginCredential(login: $0!, key: $1!)}
+            .share()
         
+        validator
+            .subscribe(onNext: { cred in
+                _ = self.checkCorrectDataAndSetupButton(cred)
+            })
+            .disposed(by: disposeBag)
+        
+        // Login action
+        signInButton.rx.tap
+            .withLatestFrom(validator.filter(checkCorrectDataAndSetupButton))
+            .flatMapLatest({ (cred) -> Observable<String> in
+                return self.viewModel.signIn(withLogin: cred.login, withApiKey: cred.key)
+                    .catchError {[weak self] _ in
+                        self?.showAlert(title: nil, message: "Login error.\nPlease try again later")
+                        return Observable<String>.empty()
+                }
+            })
+            .subscribe(onNext: {_ in
+                WebSocketManager.instance.authorized.accept(true)
+            })
+            .disposed(by: disposeBag)
+        
+        // Switch to sign up
+        signUpButton.rx.tap
+            .subscribe(onNext: { [weak self] _ in
+                guard let strongSelf = self else { return }
+                
+                strongSelf.navigationController?.popViewController(animated: true, {
+                    strongSelf.handlerSignUp!(true)
+                })
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    func checkCorrectDataAndSetupButton(_ cred: LoginCredential) -> Bool {
+        if cred.login.count > 3 && cred.key.count > 10 {
+            signInButton.isEnabled = true
+            signInButton.backgroundColor = #colorLiteral(red: 0.4235294118, green: 0.5137254902, blue: 0.9294117647, alpha: 1)
+            return true
+        }
+        
+        signInButton.isEnabled = false
+        signInButton.backgroundColor = #colorLiteral(red: 0.4156862745, green: 0.5019607843, blue: 0.9607843137, alpha: 0.3834813784)
+        return false
     }
 
 }

@@ -9,9 +9,6 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
-        <array key="SF-Pro-Display-Bold.otf">
-            <string>SFProDisplay-Bold</string>
-        </array>
         <array key="SF-Pro-Text-Regular.otf">
             <string>SFProText-Regular</string>
         </array>
@@ -29,16 +26,10 @@
                                 <rect key="frame" x="0.0" y="20" width="375" height="647"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cvh-LY-9dy">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="547"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yuF-Oy-Kpj">
-                                                <rect key="frame" x="16" y="19" width="144.5" height="41"/>
-                                                <fontDescription key="fontDescription" name="SFProDisplay-Bold" family="SF Pro Display" pointSize="34"/>
-                                                <nil key="textColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
                                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="G0H-z0-2F9">
-                                                <rect key="frame" x="16" y="84" width="343" height="37"/>
+                                                <rect key="frame" x="16" y="24" width="343" height="37"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="37" id="Gvz-RO-d1J"/>
@@ -85,7 +76,7 @@
                                                 </connections>
                                             </collectionView>
                                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gJG-3i-Ca7">
-                                                <rect key="frame" x="0.0" y="153" width="375" height="420"/>
+                                                <rect key="frame" x="0.0" y="93" width="375" height="420"/>
                                                 <subviews>
                                                     <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ph5-py-HbL">
                                                         <rect key="frame" x="0.0" y="0.0" width="375" height="375"/>
@@ -111,7 +102,7 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="btM-xQ-6hP">
-                                                <rect key="frame" x="0.0" y="153" width="375" height="301"/>
+                                                <rect key="frame" x="0.0" y="93" width="375" height="301"/>
                                                 <subviews>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Login" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="MzH-Fh-ifk">
                                                         <rect key="frame" x="16" y="16" width="343" height="56"/>
@@ -191,14 +182,11 @@
                                             <constraint firstItem="btM-xQ-6hP" firstAttribute="top" secondItem="G0H-z0-2F9" secondAttribute="bottom" constant="32" id="EmP-Lg-IY9"/>
                                             <constraint firstAttribute="trailing" secondItem="G0H-z0-2F9" secondAttribute="trailing" constant="16" id="GiP-N0-lxM"/>
                                             <constraint firstItem="gJG-3i-Ca7" firstAttribute="leading" secondItem="Cvh-LY-9dy" secondAttribute="leading" id="Pih-dW-KLs"/>
-                                            <constraint firstItem="yuF-Oy-Kpj" firstAttribute="leading" secondItem="Cvh-LY-9dy" secondAttribute="leading" constant="16" id="UGH-4B-QIW"/>
                                             <constraint firstItem="G0H-z0-2F9" firstAttribute="leading" secondItem="Cvh-LY-9dy" secondAttribute="leading" constant="16" id="cDi-Xz-XoJ"/>
+                                            <constraint firstItem="G0H-z0-2F9" firstAttribute="top" secondItem="Cvh-LY-9dy" secondAttribute="top" constant="24" id="d3d-KC-vXY"/>
                                             <constraint firstAttribute="trailing" secondItem="gJG-3i-Ca7" secondAttribute="trailing" id="lhO-D0-WEh"/>
                                             <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="btM-xQ-6hP" secondAttribute="bottom" constant="8" id="n8n-e6-9QC" customClass="KeyboardLayoutConstraint" customModule="Commun"/>
-                                            <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="gJG-3i-Ca7" secondAttribute="bottom" constant="8" id="ob7-QC-7dd" customClass="KeyboardLayoutConstraint" customModule="Commun"/>
                                             <constraint firstAttribute="trailing" secondItem="btM-xQ-6hP" secondAttribute="trailing" id="pA8-H1-p3r"/>
-                                            <constraint firstItem="G0H-z0-2F9" firstAttribute="top" secondItem="yuF-Oy-Kpj" secondAttribute="bottom" constant="24" id="sfg-tM-S8T"/>
-                                            <constraint firstItem="yuF-Oy-Kpj" firstAttribute="top" secondItem="Cvh-LY-9dy" secondAttribute="top" constant="19" id="yAI-qV-6vm"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -213,7 +201,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="WpS-YI-7aG" firstAttribute="trailing" secondItem="XB9-x9-3Dr" secondAttribute="trailing" id="0Ue-x8-f80"/>
-                            <constraint firstItem="Cvh-LY-9dy" firstAttribute="height" secondItem="noh-Tx-RFb" secondAttribute="height" priority="750" constant="-64" id="0rA-FW-vK5"/>
+                            <constraint firstItem="Cvh-LY-9dy" firstAttribute="height" secondItem="noh-Tx-RFb" secondAttribute="height" priority="750" constant="-120" id="0rA-FW-vK5"/>
                             <constraint firstItem="XB9-x9-3Dr" firstAttribute="leading" secondItem="WpS-YI-7aG" secondAttribute="leading" id="Ea3-gF-8qi"/>
                             <constraint firstItem="XB9-x9-3Dr" firstAttribute="top" secondItem="WpS-YI-7aG" secondAttribute="top" id="OLV-k9-1mI"/>
                             <constraint firstItem="Cvh-LY-9dy" firstAttribute="width" secondItem="noh-Tx-RFb" secondAttribute="width" id="SzA-aR-3XT"/>
@@ -228,6 +216,7 @@
                         <outlet property="passwordTextField" destination="siR-es-fG8" id="qEL-wy-8s6"/>
                         <outlet property="qrContainerView" destination="gJG-3i-Ca7" id="K2b-wU-NLY"/>
                         <outlet property="signInButton" destination="UUZ-Bi-nP3" id="9jf-3d-ytH"/>
+                        <outlet property="signUpButton" destination="Yxv-l2-Yad" id="vQY-cz-rx0"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gpk-nx-JG2" userLabel="First Responder" sceneMemberID="firstResponder"/>
