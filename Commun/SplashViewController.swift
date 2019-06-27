@@ -14,9 +14,9 @@ class SplashViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         let zoomAnim = CABasicAnimation(keyPath: "transform.scale")
-        zoomAnim.fromValue = 0.9
-        zoomAnim.toValue = 1.1
-        zoomAnim.duration = 1
+        zoomAnim.fromValue = 1
+        zoomAnim.toValue = 1.2
+        zoomAnim.duration = 0.8
         zoomAnim.repeatCount = .infinity
         zoomAnim.autoreverses = true
         splashImageView.layer.add(zoomAnim, forKey: "Zoom")

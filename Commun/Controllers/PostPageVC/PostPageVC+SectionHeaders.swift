@@ -10,7 +10,7 @@ import Foundation
 
 extension PostPageVC: UITableViewDelegate {
     fileprivate var needHideHeader: Bool {
-        return viewModel.fetcher.reachedTheEnd || viewModel.comments.value.count == 0
+        return viewModel.fetcher.reachedTheEnd || viewModel.comments.value.count == 0 || (viewModel.comments.value.count == viewModel.post.value!.stats.commentsCount)
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
