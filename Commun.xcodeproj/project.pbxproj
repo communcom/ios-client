@@ -57,6 +57,7 @@
 		3B635F812277375A006DAAB2 /* FeedPageVC+Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B635F802277375A006DAAB2 /* FeedPageVC+Binding.swift */; };
 		3B635F8322774A37006DAAB2 /* FeedTimeFrameMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B635F8222774A37006DAAB2 /* FeedTimeFrameMode.swift */; };
 		3B63CD9322AA7AA200DC828B /* UIScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B63CD9222AA7AA200DC828B /* UIScrollView.swift */; };
+		3B67FC0622C4BB5100D05F01 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B67FC0522C4BB5100D05F01 /* SplashViewController.swift */; };
 		3B885BBC22B7A1FE00FC4B7A /* EmbededView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B885BBB22B7A1FE00FC4B7A /* EmbededView.swift */; };
 		3B885BBE22B7A20D00FC4B7A /* EmbededView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3B885BBD22B7A20D00FC4B7A /* EmbededView.xib */; };
 		3BA4D0872292BA710022A69D /* ResponseAPIContentGetPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BA4D0862292BA710022A69D /* ResponseAPIContentGetPost.swift */; };
@@ -278,6 +279,7 @@
 		3B635F802277375A006DAAB2 /* FeedPageVC+Binding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FeedPageVC+Binding.swift"; sourceTree = "<group>"; };
 		3B635F8222774A37006DAAB2 /* FeedTimeFrameMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedTimeFrameMode.swift; sourceTree = "<group>"; };
 		3B63CD9222AA7AA200DC828B /* UIScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIScrollView.swift; sourceTree = "<group>"; };
+		3B67FC0522C4BB5100D05F01 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		3B885BBB22B7A1FE00FC4B7A /* EmbededView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbededView.swift; sourceTree = "<group>"; };
 		3B885BBD22B7A20D00FC4B7A /* EmbededView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmbededView.xib; sourceTree = "<group>"; };
 		3BA4D0862292BA710022A69D /* ResponseAPIContentGetPost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseAPIContentGetPost.swift; sourceTree = "<group>"; };
@@ -681,6 +683,7 @@
 				576DC91F223E42B200EDED41 /* Extensions */,
 				572F81A5223C164C0007F2F9 /* Fonts */,
 				571B1508223A937200630C8F /* Controllers */,
+				3B67FC0522C4BB5100D05F01 /* SplashViewController.swift */,
 				571B14F7223A935C00630C8F /* Main.storyboard */,
 				571B14FD223A935D00630C8F /* Assets.xcassets */,
 				571B14FF223A935D00630C8F /* LaunchScreen.storyboard */,
@@ -1540,6 +1543,7 @@
 				3B0E9C752270C691002AB1C2 /* ProfileEditBioVC.swift in Sources */,
 				57A95197224178010020F55D /* PostController.swift in Sources */,
 				57E515AA2270EBB900A6F6DB /* NotificationSettingCell.swift in Sources */,
+				3B67FC0622C4BB5100D05F01 /* SplashViewController.swift in Sources */,
 				3B6229AB22BD12410053B9EF /* TTTAttributedLabel.swift in Sources */,
 				57840A0E223FAC1B00338FD5 /* BadgeWithCounterView.swift in Sources */,
 				3BDF4FA822C21B310029D616 /* ResponseAPIContentGetProfile.swift in Sources */,
