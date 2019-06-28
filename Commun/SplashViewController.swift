@@ -19,8 +19,21 @@ class SplashViewController: UIViewController {
         zoomAnim.duration = 0.8
         zoomAnim.repeatCount = .infinity
         zoomAnim.autoreverses = true
-        splashImageView.layer.add(zoomAnim, forKey: "Zoom")
+        splashImageView.layer.add(zoomAnim, forKey: "Loading")
         // Do any additional setup after loading the view.
+    }
+    
+    func animateSplash(_ completion: @escaping ()->Void) {
+        splashImageView.layer.removeAnimation(forKey: "Loading")
+        UIView.animate(withDuration: 0.3, animations: {
+            self.splashImageView.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
+        }) { (_) in
+            UIView.animate(withDuration: 0.3, animations: {
+                self.splashImageView.transform = CGAffineTransform(scaleX: 30, y: 30)
+            }, completion: { _ in
+                completion()
+            })
+        }
     }
     
 

@@ -84,6 +84,7 @@ class SignInViewController: UIViewController {
             .flatMapLatest({ (cred) -> Observable<String> in
                 return self.viewModel.signIn(withLogin: cred.login, withApiKey: cred.key)
                     .do(onSubscribed: { [weak self] in
+                        self?.view.endEditing(true)
                         self?.configure(signingIn: true)
                     })
                     .catchError {[weak self] _ in

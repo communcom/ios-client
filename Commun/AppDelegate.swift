@@ -52,7 +52,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 // Lenta
                 if success,
                     UserDefaults.standard.value(forKey: Config.isCurrentUserLoggedKey) as? Bool == true {
-                    self.window?.rootViewController = controllerContainer.resolve(TabBarVC.self)
+                    self.changeRootVC(controllerContainer.resolve(TabBarVC.self)!)
                 }
 
                 // Sign In/Up
@@ -90,10 +90,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func showLogin() {
         let welcomeVC = controllerContainer.resolve(WelcomeScreenVC.self)
         let welcomeNav = UINavigationController(rootViewController: welcomeVC!)
-        self.window?.rootViewController = welcomeNav
-
+        changeRootVC(welcomeNav)
+        
         let navigationBarAppearace = UINavigationBar.appearance()
         navigationBarAppearace.tintColor = #colorLiteral(red: 0.4156862745, green: 0.5019607843, blue: 0.9607843137, alpha: 1)
+    }
+    
+    func changeRootVC(_ rootVC: UIViewController) {
+        if let currentVC = window?.rootViewController as? SplashViewController {
+            currentVC.animateSplash {
+                self.window?.rootViewController = rootVC
+            }
+        } else {
+            self.window?.rootViewController = rootVC
+        }
+        
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
