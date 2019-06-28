@@ -83,12 +83,17 @@ class SignInViewController: UIViewController {
             .withLatestFrom(validator.filter(checkCorrectDataAndSetupButton))
             .flatMapLatest({ (cred) -> Observable<String> in
                 return self.viewModel.signIn(withLogin: cred.login, withApiKey: cred.key)
+                    .do(onSubscribed: { [weak self] in
+                        self?.configure(signingIn: true)
+                    })
                     .catchError {[weak self] _ in
-                        self?.showAlert(title: nil, message: "Login error.\nPlease try again later")
+                        self?.configure(signingIn: false)
+                        self?.showAlert(title: nil, message: "Login error".localized() + ".\n" + "Please try again later".localized())
                         return Observable<String>.empty()
                 }
             })
             .subscribe(onNext: {_ in
+                self.configure(signingIn: false)
                 WebSocketManager.instance.authorized.accept(true)
             })
             .disposed(by: disposeBag)
@@ -113,9 +118,20 @@ class SignInViewController: UIViewController {
                 self?.loginTextField.sendActions(for: .valueChanged)
                 self?.passwordTextField.text = key
                 self?.passwordTextField.sendActions(for: .valueChanged)
-//                self?.signInButton.sendActions(for: .touchUpInside)
+                self?.signInButton.sendActions(for: .touchUpInside)
             })
             .disposed(by: disposeBag)
+    }
+    
+    func configure(signingIn: Bool) {
+        if signingIn {
+            self.showIndetermineHudWithMessage("Signing in".localized() + "...")
+        } else {
+            self.hideHud()
+        }
+        self.signInButton.isEnabled = !signingIn
+        self.signInButton.backgroundColor = signingIn ? #colorLiteral(red: 0.4156862745, green: 0.5019607843, blue: 0.9607843137, alpha: 0.3834813784) : #colorLiteral(red: 0.4235294118, green: 0.5137254902, blue: 0.9294117647, alpha: 1)
+        self.signUpButton.isEnabled = !signingIn
     }
     
     func checkCorrectDataAndSetupButton(_ cred: LoginCredential) -> Bool {
