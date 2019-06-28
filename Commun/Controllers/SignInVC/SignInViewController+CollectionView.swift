@@ -64,8 +64,7 @@ extension SignInViewController: UICollectionViewDelegate, UICollectionViewDataSo
                 let activeKey = splitedString[1]
                 self?.viewModel.qrCode.accept((login: String(userId), key: String(activeKey)))
             } else {
-                // TODO: Invalid qr code
-                
+                self?.showErrorWithLocalizedMessage("This QrCode is not valid")
             }
             results.append(string)
         }
