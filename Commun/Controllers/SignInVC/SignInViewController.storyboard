@@ -4,6 +4,7 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -26,7 +27,7 @@
                                 <rect key="frame" x="0.0" y="20" width="375" height="647"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cvh-LY-9dy">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="547"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="477"/>
                                         <subviews>
                                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="G0H-z0-2F9">
                                                 <rect key="frame" x="16" y="24" width="343" height="37"/>
@@ -187,6 +188,7 @@
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
+                                            <constraint firstAttribute="bottom" secondItem="gJG-3i-Ca7" secondAttribute="bottom" constant="8" id="2uM-Rk-QCX"/>
                                             <constraint firstItem="btM-xQ-6hP" firstAttribute="leading" secondItem="Cvh-LY-9dy" secondAttribute="leading" id="AR7-TN-rpz"/>
                                             <constraint firstItem="gJG-3i-Ca7" firstAttribute="top" secondItem="G0H-z0-2F9" secondAttribute="bottom" constant="32" id="Dds-oJ-1PT"/>
                                             <constraint firstItem="btM-xQ-6hP" firstAttribute="top" secondItem="G0H-z0-2F9" secondAttribute="bottom" constant="32" id="EmP-Lg-IY9"/>
@@ -211,7 +213,6 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="WpS-YI-7aG" firstAttribute="trailing" secondItem="XB9-x9-3Dr" secondAttribute="trailing" id="0Ue-x8-f80"/>
-                            <constraint firstItem="Cvh-LY-9dy" firstAttribute="height" secondItem="noh-Tx-RFb" secondAttribute="height" priority="750" constant="-120" id="0rA-FW-vK5"/>
                             <constraint firstItem="XB9-x9-3Dr" firstAttribute="leading" secondItem="WpS-YI-7aG" secondAttribute="leading" id="Ea3-gF-8qi"/>
                             <constraint firstItem="XB9-x9-3Dr" firstAttribute="top" secondItem="WpS-YI-7aG" secondAttribute="top" id="OLV-k9-1mI"/>
                             <constraint firstItem="Cvh-LY-9dy" firstAttribute="width" secondItem="noh-Tx-RFb" secondAttribute="width" id="SzA-aR-3XT"/>
