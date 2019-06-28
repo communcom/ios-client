@@ -103,6 +103,19 @@ class SignInViewController: UIViewController {
                 })
             })
             .disposed(by: disposeBag)
+        
+        // qr code
+        viewModel.qrCode
+            .skip(1)
+            .subscribe(onNext: {[weak self] (login, key) in
+                self?.selectMethod(index: 1)
+                self?.loginTextField.text = login
+                self?.loginTextField.sendActions(for: .valueChanged)
+                self?.passwordTextField.text = key
+                self?.passwordTextField.sendActions(for: .valueChanged)
+//                self?.signInButton.sendActions(for: .touchUpInside)
+            })
+            .disposed(by: disposeBag)
     }
     
     func checkCorrectDataAndSetupButton(_ cred: LoginCredential) -> Bool {

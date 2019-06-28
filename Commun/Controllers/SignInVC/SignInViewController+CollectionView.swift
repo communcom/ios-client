@@ -62,8 +62,7 @@ extension SignInViewController: UICollectionViewDelegate, UICollectionViewDataSo
                 let splitedString = string.split(separator: " ")
                 let userId = splitedString[0]
                 let activeKey = splitedString[1]
-                print(userId, activeKey)
-//                self?.viewModel.qrCode.accept((login: String(userId), key: String(activeKey)))
+                self?.viewModel.qrCode.accept((login: String(userId), key: String(activeKey)))
             } else {
                 // TODO: Invalid qr code
                 
