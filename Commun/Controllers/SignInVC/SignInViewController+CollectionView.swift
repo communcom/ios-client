@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import QRCodeReaderViewController
 
 extension SignInViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -30,16 +31,45 @@ extension SignInViewController: UICollectionViewDelegate, UICollectionViewDataSo
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if selected == indexPath.row {return}
-        selected = indexPath.row
+        selectMethod(index: indexPath.row)
+    }
+    
+    func selectMethod(index: Int) {
+        if selected == index {return}
+        selected = index
         collectionView.reloadData()
-        switch indexPath.row {
+        switch index {
         case 0:
             qrContainerView.isHidden = false
             loginPasswordContainerView.isHidden = true
+            addQrCodeReader()
         default:
             qrContainerView.isHidden = true
             loginPasswordContainerView.isHidden = false
+            qrReaderVC?.remove()
         }
+    }
+    
+    func addQrCodeReader() {
+        // qrcode reader
+        let reader = QRCodeReader(metadataObjectTypes: [AVMetadataObject.ObjectType.qr])
+        qrReaderVC = QRCodeReaderViewController(cancelButtonTitle: nil, codeReader: reader, startScanningAtLoad: true, showSwitchCameraButton: true, showTorchButton: true)
+        var results = [String]()
+        reader.setCompletionWith {[weak self] (string) in
+            guard let string = string, !results.contains(string) else {return}
+            print(string)
+            if string.matches("^[a-z1-5]{12}\\ [0-9A-Za-z]{51}$") {
+                let splitedString = string.split(separator: " ")
+                let userId = splitedString[0]
+                let activeKey = splitedString[1]
+                print(userId, activeKey)
+//                self?.viewModel.qrCode.accept((login: String(userId), key: String(activeKey)))
+            } else {
+                // TODO: Invalid qr code
+                
+            }
+            results.append(string)
+        }
+        add(qrReaderVC, to: qrCodeReaderView)
     }
 }

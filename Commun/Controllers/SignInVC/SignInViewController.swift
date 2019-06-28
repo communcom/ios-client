@@ -10,8 +10,6 @@ import UIKit
 import RxSwift
 import QRCodeReaderViewController
 
-typealias LoginCredential = (login: String, key: String)
-
 class SignInViewController: UIViewController {
     // Selection
     var selected = 1 {
@@ -31,6 +29,7 @@ class SignInViewController: UIViewController {
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var signInButton: UIButton!
     @IBOutlet weak var signUpButton: UIButton!
+    var qrReaderVC: QRCodeReaderViewController!
     
     // Properties
     let viewModel = SignInViewModel()
@@ -51,6 +50,7 @@ class SignInViewController: UIViewController {
         // title
         title = "Welcome".localized()
         navigationController?.navigationBar.prefersLargeTitles = true
+        navigationItem.largeTitleDisplayMode = .always
         
         // Configure textView
         let paddingView: UIView = UIView(frame: CGRect(x: 0, y: 0, width: 16, height: 20))
@@ -60,14 +60,6 @@ class SignInViewController: UIViewController {
         let paddingView2: UIView = UIView(frame: CGRect(x: 0, y: 0, width: 16, height: 20))
         passwordTextField.leftView = paddingView2
         passwordTextField.leftViewMode = .always
-        
-        // qrcode reader
-        let reader = QRCodeReader(metadataObjectTypes: [AVMetadataObject.ObjectType.qr])
-        let vc = QRCodeReaderViewController(cancelButtonTitle: nil, codeReader: reader, startScanningAtLoad: true, showSwitchCameraButton: true, showTorchButton: true)
-        reader.setCompletionWith { (string) in
-            print(string)
-        }
-        add(vc, to: qrCodeReaderView)
     }
     
     func bind() {
