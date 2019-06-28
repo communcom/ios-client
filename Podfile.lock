@@ -111,6 +111,7 @@ PODS:
     - PhoneNumberKit/PhoneNumberKitCore
   - PinCodeInputView (1.0.0)
   - Protobuf (3.8.0)
+  - QRCodeReaderViewController (4.0.2)
   - ReachabilitySwift (4.3.1)
   - RxBlocking (4.5.0):
     - RxSwift (>= 4.4.2, ~> 4.4)
@@ -160,6 +161,7 @@ DEPENDENCIES:
   - MBProgressHUD (~> 1.1.0)
   - PhoneNumberKit (~> 2.6)
   - PinCodeInputView
+  - QRCodeReaderViewController (~> 4.0.2)
   - RxDataSources (~> 3.0)
   - RxReachability
   - SDWebImage (~> 4.0)
@@ -203,6 +205,7 @@ SPEC REPOS:
     - PhoneNumberKit
     - PinCodeInputView
     - Protobuf
+    - QRCodeReaderViewController
     - ReachabilitySwift
     - RxBlocking
     - RxCocoa
@@ -228,7 +231,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   CyberSwift:
-    :commit: 0da55d68ecf3dd94a70cc38d369ddb6b7577dd96
+    :commit: be7ab7d3e42c12f79f2b2ac6d35b7e5e3682354a
     :git: https://github.com/GolosChain/cyberSwift.git
 
 SPEC CHECKSUMS:
@@ -263,6 +266,7 @@ SPEC CHECKSUMS:
   PhoneNumberKit: 167ee1f0bbb6efce7c62559e620eae745595532f
   PinCodeInputView: 0a7361aaec76b639ff6521f1b6c38ed27b8144e3
   Protobuf: 3f617b9a6e73605565086864c9bc26b2bf2dd5a3
+  QRCodeReaderViewController: e8f27d035b3e72b1d4b1c61ff66458287e3be0ff
   ReachabilitySwift: 4032e2f59586e11e3b0ebe15b167abdd587a388b
   RxBlocking: 79413e4d916f44bb3e113c5b2cc059e36fe58910
   RxCocoa: cbf70265dc65a981d4ac982e513c10cf23df24a0
@@ -282,6 +286,6 @@ SPEC CHECKSUMS:
   TTTAttributedLabel: 8cffe8e127e4e82ff3af1e5386d4cd0ad000b656
   UIImageView-Letters: f62db28076797adf3560ab7410647dc6899b9eef
 
-PODFILE CHECKSUM: d45533e840de84b5cc34094ea431c10edb59071e
+PODFILE CHECKSUM: 064d5fbbe74d5fd81e5994754aeb996ad5cb8cb0
 
 COCOAPODS: 1.7.2

@@ -28,7 +28,7 @@ class SignUpRouter: NSObject, SignUpRoutingLogic {
     
     // MARK: - Routing
     func routeToSignInScene() {
-        if  let signInVC = controllerContainer.resolve(SignInVC.self) {
+        if  let signInVC = controllerContainer.resolve(SignInViewController.self) {
             self.viewController?.navigationController?.pushViewController(signInVC)
             
             signInVC.handlerSignUp = { [weak self] success in

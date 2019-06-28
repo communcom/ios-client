@@ -24,8 +24,8 @@ let controllerContainer: Container = {
     })
     
     // Authorization scene
-    container.register(SignInVC.self, factory: { r in
-        let vc = SignInVC.instanceController(fromStoryboard: "SignInVC", withIdentifier: "SignInVC") as! SignInVC
+    container.register(SignInViewController.self, factory: { r in
+        let vc = SignInViewController.instanceController(fromStoryboard: "SignInViewController", withIdentifier: "SignInViewController") as! SignInViewController
         return vc
     })
 
@@ -73,7 +73,7 @@ let controllerContainer: Container = {
     })
     
     container.register(EditorPageVC.self, factory: { r in
-        let vc = SignInVC.instanceController(fromStoryboard: "EditorPageVC", withIdentifier: "EditorPageVC") as! EditorPageVC
+        let vc = EditorPageVC.instanceController(fromStoryboard: "EditorPageVC", withIdentifier: "EditorPageVC") as! EditorPageVC
         return vc
     })
     

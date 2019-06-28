@@ -77,4 +77,8 @@ extension String {
         return embeds
     }
     
+    func matches(_ regex: String) -> Bool {
+        return self.range(of: regex, options: .regularExpression, range: nil, locale: nil) != nil
+    }
+    
 }

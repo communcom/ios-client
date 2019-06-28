@@ -10,11 +10,16 @@ import Foundation
 import RxSwift
 import CyberSwift
 import SwiftyJSON
+import RxCocoa
+
+typealias LoginCredential = (login: String, key: String)
 
 class SignInViewModel {
     enum SignInError: Error {
         case unknown
     }
+    
+    let qrCode = BehaviorRelay<LoginCredential>(value: (login: "", key: ""))
     
     func signIn(withLogin login: String, withApiKey key: String) -> Observable<String> {
         #warning("login with real logic")
