@@ -107,9 +107,6 @@
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hundreds of thematic communities" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iGn-Gq-UAf">
                                 <rect key="frame" x="16" y="656" width="343" height="122"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="122" id="nat-mc-JeA"/>
-                                </constraints>
                                 <fontDescription key="fontDescription" name="SFProText-Bold" family="SF Pro Text" pointSize="34"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
