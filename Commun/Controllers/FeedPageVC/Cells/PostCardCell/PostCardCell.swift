@@ -108,17 +108,7 @@ extension PostCardCell {
         self.numberOfCommentsLabel.text     =   "\(post.stats.commentsCount) " + "Comments".localized()
         
         // Handle button
-        var upVoteImageName = "Up"
-        if post.votes.hasUpVote {
-            upVoteImageName = "UpSelected"
-        }
-        upVoteButton.setImage(UIImage(named: upVoteImageName), for: .normal)
-        
-        var downVoteImageName = "Down"
-        if post.votes.hasDownVote {
-            downVoteImageName = "DownSelected"
-        }
-        downVoteButton.setImage(UIImage(named: downVoteImageName), for: .normal)
+        self.upVoteButton.setImage(UIImage(named: post.votes.hasUpVote ? "icon-up-selected" : "icon-up-default"), for: .normal)
+        self.downVoteButton.setImage(UIImage(named: post.votes.hasDownVote ? "icon-down-selected" : "icon-down-default"), for: .normal)
     }
-    
 }

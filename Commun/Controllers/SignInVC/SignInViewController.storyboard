@@ -153,7 +153,7 @@
                                                             <color key="titleColor" red="0.41568627450000001" green="0.50196078430000002" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         </state>
                                                     </button>
-                                                    <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UUZ-Bi-nP3">
+                                                    <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UUZ-Bi-nP3">
                                                         <rect key="frame" x="16" y="176" width="343" height="56"/>
                                                         <color key="backgroundColor" red="0.41732367869999998" green="0.50173604490000001" blue="0.95928329229999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <constraints>

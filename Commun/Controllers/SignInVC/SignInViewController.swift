@@ -60,6 +60,14 @@ class SignInViewController: UIViewController {
         let paddingView2: UIView = UIView(frame: CGRect(x: 0, y: 0, width: 16, height: 20))
         passwordTextField.leftView = paddingView2
         passwordTextField.leftViewMode = .always
+        
+        // retrieve icloud key-value
+        let keyStore = NSUbiquitousKeyValueStore()
+        if let login = keyStore.string(forKey: Config.currentUserIDKey),
+            let key = keyStore.string(forKey: Config.currentUserPublicActiveKey)
+        {
+            setTextfieldWithLogin(login, key: key)
+        }
     }
     
     func bind() {
@@ -70,17 +78,16 @@ class SignInViewController: UIViewController {
         )
             .filter {$0 != nil && $1 != nil}
             .map {LoginCredential(login: $0!, key: $1!)}
-            .share()
         
         validator
             .subscribe(onNext: { cred in
-                _ = self.checkCorrectDataAndSetupButton(cred)
+                self.configureSignInButton(enabled: self.validate(cred: cred))
             })
             .disposed(by: disposeBag)
         
         // Login action
         signInButton.rx.tap
-            .withLatestFrom(validator.filter(checkCorrectDataAndSetupButton))
+            .withLatestFrom(validator.filter(validate))
             .flatMapLatest({ (cred) -> Observable<String> in
                 return self.viewModel.signIn(withLogin: cred.login, withApiKey: cred.key)
                     .do(onSubscribed: { [weak self] in
@@ -115,13 +122,17 @@ class SignInViewController: UIViewController {
             .skip(1)
             .subscribe(onNext: {[weak self] (login, key) in
                 self?.selectMethod(index: 1)
-                self?.loginTextField.text = login
-                self?.loginTextField.sendActions(for: .valueChanged)
-                self?.passwordTextField.text = key
-                self?.passwordTextField.sendActions(for: .valueChanged)
+                self?.setTextfieldWithLogin(login, key: key)
                 self?.signInButton.sendActions(for: .touchUpInside)
             })
             .disposed(by: disposeBag)
+    }
+    
+    func setTextfieldWithLogin(_ login: String, key: String) {
+        self.loginTextField.text = login
+        self.passwordTextField.text = key
+        self.loginTextField.sendActions(for: .valueChanged)
+        self.passwordTextField.sendActions(for: .valueChanged)
     }
     
     func configure(signingIn: Bool) {
@@ -130,21 +141,17 @@ class SignInViewController: UIViewController {
         } else {
             self.hideHud()
         }
-        self.signInButton.isEnabled = !signingIn
-        self.signInButton.backgroundColor = signingIn ? #colorLiteral(red: 0.4156862745, green: 0.5019607843, blue: 0.9607843137, alpha: 0.3834813784) : #colorLiteral(red: 0.4235294118, green: 0.5137254902, blue: 0.9294117647, alpha: 1)
+        configureSignInButton(enabled: !signingIn)
         self.signUpButton.isEnabled = !signingIn
     }
     
-    func checkCorrectDataAndSetupButton(_ cred: LoginCredential) -> Bool {
-        if cred.login.count > 3 && cred.key.count > 10 {
-            signInButton.isEnabled = true
-            signInButton.backgroundColor = #colorLiteral(red: 0.4235294118, green: 0.5137254902, blue: 0.9294117647, alpha: 1)
-            return true
-        }
-        
-        signInButton.isEnabled = false
-        signInButton.backgroundColor = #colorLiteral(red: 0.4156862745, green: 0.5019607843, blue: 0.9607843137, alpha: 0.3834813784)
-        return false
+    func configureSignInButton(enabled: Bool) {
+        self.signInButton.isEnabled = enabled
+        self.signInButton.backgroundColor = enabled ? #colorLiteral(red: 0.4235294118, green: 0.5137254902, blue: 0.9294117647, alpha: 1) :#colorLiteral(red: 0.4156862745, green: 0.5019607843, blue: 0.9607843137, alpha: 0.3834813784)
+    }
+    
+    func validate(cred: LoginCredential) -> Bool {
+        return cred.login.count > 3 && cred.key.count > 10
     }
 
 }
