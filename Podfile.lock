@@ -228,7 +228,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   CyberSwift:
-    :commit: 0da55d68ecf3dd94a70cc38d369ddb6b7577dd96
+    :commit: 6ae550c05649f75b5dd303ff8e44f3286b1104fd
     :git: https://github.com/GolosChain/cyberSwift.git
 
 SPEC CHECKSUMS:
@@ -282,6 +282,6 @@ SPEC CHECKSUMS:
   TTTAttributedLabel: 8cffe8e127e4e82ff3af1e5386d4cd0ad000b656
   UIImageView-Letters: f62db28076797adf3560ab7410647dc6899b9eef
 
-PODFILE CHECKSUM: 462db9722dea443d65c3aa6702688cff953c48b8
+PODFILE CHECKSUM: d45533e840de84b5cc34094ea431c10edb59071e
 
 COCOAPODS: 1.7.2

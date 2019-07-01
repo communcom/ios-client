@@ -17,6 +17,16 @@ class SignInViewModel {
     }
     
     func signIn(withLogin login: String, withApiKey key: String) -> Observable<String> {
+        return NetworkService.shared.signIn(login: login, key: key)
+            .flatMap { (permission) -> Observable<String> in
+                if permission != "active" {throw SignInError.unknown}
+                UserDefaults.standard.set(true, forKey: Config.isCurrentUserLoggedKey)
+                return Observable<String>.just(permission)
+            }
+            .observeOn(MainScheduler.instance)
+
+        
+        /*
         #warning("login with real logic")
         // Get test user
         let session = URLSession.shared
@@ -40,5 +50,6 @@ class SignInViewModel {
                 }
             }
             .observeOn(MainScheduler.instance)
+        */
     }
 }
