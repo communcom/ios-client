@@ -70,15 +70,20 @@ class LoadKeysVC: UIViewController {
 
     func makeActions() {
         downloadKeysButton.rx.tap.subscribe(onNext: { _ in
+            self.showIndetermineHudWithMessage("Saving keys".localized())
             self.viewModel!.saveKeys().subscribe(onNext: { flag in
+                self.hideHud()
                 if flag {
                     // Display PDF-file
                     if let pdfDocument = KeychainManager.loadPDFDocument() {
                         self.displayPDF(document: pdfDocument)
                     }
                 } else {
-                    self.showAlert(title: "Error".localized(), message: "Something went wrong")
+                    self.showGeneralError()
                 }
+            }, onError: {_ in
+                self.hideHud()
+                self.showGeneralError()
             }).disposed(by: self.disposeBag)
         }).disposed(by: disposeBag)
     }
