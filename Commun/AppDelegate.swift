@@ -32,6 +32,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     // MARK: - Class Functions
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        // Sync iCloud key-value store
+        NSUbiquitousKeyValueStore.default.synchronize()
+        
         // Network monitoring
         reachability = Reachability()
         try? reachability?.startNotifier()
