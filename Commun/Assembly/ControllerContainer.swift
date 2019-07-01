@@ -13,8 +13,8 @@ let controllerContainer: Container = {
     let container = Container()
     
     // Welcome scene
-    container.register(WelcomeScreenVC.self, factory: { r in
-        let vc = WelcomeScreenVC.instanceController(fromStoryboard: "WelcomeScreenVC", withIdentifier: "WelcomeScreenVC") as! WelcomeScreenVC
+    container.register(WelcomeVC.self, factory: { r in
+        let vc = WelcomeVC.instanceController(fromStoryboard: "WelcomeVC", withIdentifier: "WelcomeVC") as! WelcomeVC
         return vc
     })
     

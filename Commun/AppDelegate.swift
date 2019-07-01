@@ -91,7 +91,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func showLogin() {
-        let welcomeVC = controllerContainer.resolve(WelcomeScreenVC.self)
+        let welcomeVC = controllerContainer.resolve(WelcomeVC.self)
         let welcomeNav = UINavigationController(rootViewController: welcomeVC!)
         changeRootVC(welcomeNav)
         
