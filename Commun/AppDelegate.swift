@@ -60,7 +60,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
                 // Sign In/Up
                 else {
-                    self.showLogin()
+                    self.showWelcome()
                 }
         
                 self.window?.makeKeyAndVisible()
@@ -90,7 +90,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
-    func showLogin() {
+    func showWelcome() {
         let welcomeVC = controllerContainer.resolve(WelcomeVC.self)
         let welcomeNav = UINavigationController(rootViewController: welcomeVC!)
         changeRootVC(welcomeNav)

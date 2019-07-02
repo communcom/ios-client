@@ -9,9 +9,7 @@
 import UIKit
 import CyberSwift
 
-protocol SignUpRouter {
-    func signUpNextStep()
-}
+protocol SignUpRouter {}
 
 extension SignUpRouter where Self: UIViewController {
     func routeToSignInScene() {
