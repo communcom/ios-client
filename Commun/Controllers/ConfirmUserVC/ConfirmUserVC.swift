@@ -39,8 +39,7 @@ class ConfirmUserVC: UIViewController, SignUpRouter {
                 return
             }
             
-            if  let phone   =   UserDefaults.standard.string(forKey: Config.registrationUserPhoneKey),
-                let currentUser    =   Config.currentUser,
+            if let currentUser    =   Config.currentUser,
                 let smsCode =   currentUser.smsCode {
                 self.testSmsCodeLabel.text = String(format: "sms code is: `%i`", smsCode)
                 self.testSmsCodeLabel.isHidden = false
@@ -195,59 +194,68 @@ class ConfirmUserVC: UIViewController, SignUpRouter {
     }
 
     @IBAction func resendButtonTapped(_ sender: UIButton) {
-        RestAPIManager.instance.resendSmsCode(phone:                UserDefaults.standard.string(forKey: Config.registrationUserPhoneKey)!,
-                                              responseHandling:     { [weak self] smsCode in
-                                                guard let strongSelf = self else { return }
-                                                
-                                                strongSelf.showAlert(title:       "Info".localized(),
-                                                                     message:     "Successfully resend code".localized(),
-                                                                     completion:  { success in
-                                                                        strongSelf.checkResendSmsCodeTime()
-                                                })
-        },
-                                              errorHandling:        { [weak self] errorAPI in
-                                                guard let strongSelf = self else { return }
-                                                strongSelf.showAlert(title: "Error".localized(), message: "Failed: \(errorAPI.caseInfo.message)")
-        })
+        guard let currentUser = KeychainManager.currentUser(),
+            let phone = currentUser.phoneNumber else {
+                resetSignUpProcess()
+                return
+        }
+        
+        RestAPIManager.instance.resendSmsCode(
+            phone: phone,
+            responseHandling: { [weak self] smsCode in
+                guard let strongSelf = self else { return }
+                strongSelf.showAlert(
+                    title:       "Info".localized(),
+                    message:     "Successfully resend code".localized(),
+                    completion:  { success in
+                        strongSelf.checkResendSmsCodeTime()
+                })
+            },
+            errorHandling: { [weak self] errorAPI in
+                guard let strongSelf = self else { return }
+                strongSelf.showAlert(title: "Error".localized(), message: "Failed: \(errorAPI.caseInfo.message)")
+            })
     }
     
     @IBAction func nextButtonTapped(_ sender: UIButton) {
+        // viewmodel
+        guard let viewModel = viewModel else {
+            fatalError("viewModel missing")
+        }
+        
         // Verify current step of registration
-        guard   let user = KeychainManager.currentUser(),
-                let step    =   user.registrationStep,
-                step == "verify"
+        guard let user = KeychainManager.currentUser(),
+            let step    =   user.registrationStep,
+            step == "verify",
+            let smsCode = user.smsCode,
+            let phone = user.phoneNumber
         else {
-            self.signUpNextStep()
+            self.resetSignUpProcess()
             return
         }
         
-        // Get sms code
-        guard let smsCode = user.smsCode else { return }
-
-        if let viewModel = self.viewModel {
-            viewModel.checkPin(self.pinCodeInputView.text)
-                .subscribe(onNext: { success in
-                    if success {
-                        RestAPIManager.instance.verify(phone:               UserDefaults.standard.string(forKey: Config.registrationUserPhoneKey) ?? "",
-                                                       code:                smsCode,
-                                                       responseHandling:    { [weak self] result in
-                                                        guard let strongSelf = self else { return }
+        viewModel.checkPin(self.pinCodeInputView.text)
+            .subscribe(onNext: { success in
+                if success {
+                    RestAPIManager.instance.verify(phone:               phone,
+                                                   code:                smsCode,
+                                                   responseHandling:    { [weak self] result in
+                                                    guard let strongSelf = self else { return }
+                                                    strongSelf.signUpNextStep()
+                        },
+                                                   errorHandling:       { [weak self] responseAPIError in
+                                                    guard let strongSelf = self else { return }
+                                                    guard responseAPIError.currentState == nil else {
                                                         strongSelf.signUpNextStep()
-                            },
-                                                       errorHandling:       { [weak self] responseAPIError in
-                                                        guard let strongSelf = self else { return }
-                                                        guard responseAPIError.currentState == nil else {
-                                                            strongSelf.signUpNextStep()
-                                                            return
-                                                        }
-                                                        
-                                                        strongSelf.showAlert(title: "Error", message: responseAPIError.message)
-                        })
-                    } else {
-                        self.showAlert(title: "Error".localized(), message: "Enter correct sms code".localized())
-                    }
-                })
-                .disposed(by: self.disposeBag)
-        }
+                                                        return
+                                                    }
+                                                    
+                                                    strongSelf.showAlert(title: "Error", message: responseAPIError.message)
+                    })
+                } else {
+                    self.showAlert(title: "Error".localized(), message: "Enter correct sms code".localized())
+                }
+            })
+            .disposed(by: self.disposeBag)
     }
 }
