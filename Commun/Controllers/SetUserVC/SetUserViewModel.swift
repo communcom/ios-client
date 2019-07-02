@@ -17,9 +17,7 @@ class SetUserViewModel {
         return !userName.isEmpty && userName.count <= 12 && userName.rangeOfCharacter(from: characterset.inverted) == nil
     }
     
-    func setUser(userName: String) -> Observable<Bool> {
-        return NetworkService.shared.setUser(name: userName.value, phone: phone.value).map({ result -> Bool in
-            return result == "OK"
-        })
+    func setUser(userName: String, phone: String) -> Completable {
+        return NetworkService.shared.setUser(name: userName, phone: phone)
     }
 }

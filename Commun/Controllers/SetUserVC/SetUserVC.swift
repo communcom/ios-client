@@ -88,6 +88,11 @@ class SetUserVC: UIViewController, SignUpRouter {
 
     // MARK: - Custom Functions
     func bind() {
+        guard let phone = KeychainManager.currentUser()?.phoneNumber else {
+            resetSignUpProcess()
+            return
+        }
+        
         let userName = userNameTextField.rx.text.orEmpty
         
         userName
@@ -99,21 +104,17 @@ class SetUserVC: UIViewController, SignUpRouter {
         nextButton.rx.tap
             .withLatestFrom(userName)
             .filter {self.viewModel.checkUserName($0)}
-            .flatMapLatest {self.viewModel.setUser()}
-    }
-    
-    func setupActions() {
-        nextButton.rx.tap
-            .subscribe(onNext: { _ in
-                self.viewModel!.setUser()
-                    .subscribe(onNext: { flag in
-                        self.signUpNextStep()
+            .flatMapLatest {userName -> Completable in
+                return self.viewModel.setUser(userName: userName, phone: phone)
+                    .catchError({ error in
+                        return .empty()
                     })
-                    .disposed(by: self.disposeBag)
+            }
+            .subscribe(onNext: { (_) in
+                self.signUpNextStep()
             })
             .disposed(by: disposeBag)
     }
-    
     
     // MARK: - Gestures
     @IBAction func handlerTapGestureRecognizer(_ sender: UITapGestureRecognizer) {
