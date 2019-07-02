@@ -9,77 +9,80 @@
 import UIKit
 import CyberSwift
 
-// MARK: - SignUpRoutingLogic protocol
-@objc protocol SignUpRoutingLogic {
-    func routeToSignInScene()
-    func routeToSignUpNextScene()
+protocol SignUpRouter {
+    func signUpNextStep()
 }
 
-class SignUpRouter: NSObject, SignUpRoutingLogic {
-    // MARK: - Properties
-    weak var viewController: UIViewController?
-    
-    
-    // MARK: - Class Initialization
-    deinit {
-        Logger.log(message: "Success", event: .severe)
-    }
-    
-    
-    // MARK: - Routing
+extension SignUpRouter where Self: UIViewController {
     func routeToSignInScene() {
-        if  let signInVC = controllerContainer.resolve(SignInViewController.self) {
-            self.viewController?.navigationController?.pushViewController(signInVC)
+        let signInVC = controllerContainer.resolve(SignInViewController.self)!
+        
+        signInVC.handlerSignUp = { [weak self] success in
+            guard let strongSelf = self else { return }
             
-            signInVC.handlerSignUp = { [weak self] success in
-                guard let strongSelf = self else { return }
-                
-                if success {
-                    strongSelf.routeToSignUpNextScene()
-                }
+            if success {
+                strongSelf.signUpNextStep()
             }
         }
+        
+        navigationController?.pushViewController(signInVC)
     }
     
-    func routeToSignUpNextScene() {
-        guard let phone = UserDefaults.standard.string(forKey: Config.registrationUserPhoneKey), phone != "" else {
-            self.viewController?.navigationController?.pushViewController(controllerContainer.resolve(SignUpVC.self)!)
+    
+    func signUpNextStep() {
+        // Retrieve current user's state
+        guard let user = KeychainManager.currentUser() else {
+            Logger.log(message: "Invalid user: \(KeychainManager.currentUser().debugDescription)", event: .error)
             return
         }
-
-        guard let user = KeychainManager.currentUser(), let state = user.registrationStep else { return }
         
-        switch state {
-        // ConfirmUserVC
-        case "verify":
-            if  let confirmUserVC = controllerContainer.resolve(ConfirmUserVC.self), let smsCode = user.smsCode {
-                confirmUserVC.viewModel = ConfirmUserViewModel(code: "\(smsCode)", phone: phone)
-                let confirmUserNC = UINavigationController(rootViewController: confirmUserVC)
-                self.viewController?.present(confirmUserNC, animated: true, completion: nil)
-            }
-            
-        // SetUserVC
-        case "setUsername":
-            if let setUserVC = controllerContainer.resolve(SetUserVC.self) {
-                setUserVC.viewModel = SetUserViewModel(phone: phone)
-                self.viewController?.navigationController?.navigationBar.topItem?.backBarButtonItem = UIBarButtonItem(title: "Back".localized(), style: .plain, target: nil, action: nil)
-                self.viewController?.navigationController?.pushViewController(setUserVC)
-            }
-
-        // LoadKeysVC
-        case "toBlockChain":
-            DispatchQueue.main.async {
-                if let loadKeysNC = controllerContainer.resolve(UINavigationController.self), let loadKeysVC = loadKeysNC.viewControllers.first as? LoadKeysVC {
-                    loadKeysVC.viewModel = LoadKeysViewModel(nickName: user.id)
-                    self.viewController?.present(loadKeysNC, animated: true, completion: nil)
-                }
-            }
-
-        // SignUpVC
-        default:
-            self.viewController?.navigationController?.pushViewController(controllerContainer.resolve(SignUpVC.self)!)
+        // Retrieve step
+        guard let step = user.registrationStep else {
+            Logger.log(message: "Invalid registrationStep: \(user.registrationStep.debugDescription)", event: .error)
+            return
         }
         
-        self.viewController?.view.endEditing(true)
+        // Navigation
+        switch step {
+        case "verify":
+            guard let confirmUserVC = controllerContainer.resolve(ConfirmUserVC.self),
+                let smsCode = user.smsCode,
+                let phone = user.phoneNumber
+            else {
+                Logger.log(message: "Invalid parameters for confirmUserVC with user: \(user)", event: .error)
+                return
+            }
+            
+            confirmUserVC.viewModel = ConfirmUserViewModel(code: "\(smsCode)", phone: phone)
+            let confirmUserNC = UINavigationController(rootViewController: confirmUserVC)
+            present(confirmUserNC, animated: true, completion: nil)
+            
+        case "setUsername":
+            guard let setUserVC = controllerContainer.resolve(SetUserVC.self),
+                let phone = user.phoneNumber
+            else {
+                Logger.log(message: "Invalid parameters for setUserVC with user: \(user)", event: .error)
+                return
+            }
+            
+            setUserVC.viewModel = SetUserViewModel(phone: phone)
+            
+            if let nc = self.navigationController {
+                nc.pushViewController(setUserVC)
+                return
+            }
+            
+            present(setUserVC, animated: true, completion: nil)
+            
+        case "toBlockChain":
+            let loadKeysNC = controllerContainer.resolve(UINavigationController.self)!
+            let loadKeysVC = loadKeysNC.viewControllers.first as! LoadKeysVC
+            
+            loadKeysVC.viewModel = LoadKeysViewModel(nickName: user.id)
+            present(loadKeysNC, animated: true, completion: nil)
+            
+        default:
+            navigationController?.pushViewController(controllerContainer.resolve(SignUpVC.self)!)
+        }
     }
 }
