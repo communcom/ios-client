@@ -12,6 +12,12 @@ import CyberSwift
 protocol SignUpRouter {}
 
 extension SignUpRouter where Self: UIViewController {
+    func resetSignUpProcess() {
+        try! KeychainManager.deleteUser()
+        // Dismiss all screen
+        view.window!.rootViewController?.dismiss(animated: true, completion: nil)
+    }
+    
     func routeToSignInScene() {
         let signInVC = controllerContainer.resolve(SignInViewController.self)!
         
@@ -79,7 +85,7 @@ extension SignUpRouter where Self: UIViewController {
             let loadKeysNC = controllerContainer.resolve(UINavigationController.self)!
             let loadKeysVC = loadKeysNC.viewControllers.first as! LoadKeysVC
             
-            loadKeysVC.viewModel = LoadKeysViewModel(nickName: user.id)
+            loadKeysVC.viewModel = LoadKeysViewModel(nickName: user.id!)
             present(loadKeysNC, animated: true, completion: nil)
             
         default:
