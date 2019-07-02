@@ -11,24 +11,13 @@ import RxCocoa
 import Foundation
 
 class SetUserViewModel {
-    // MARK: - Properties
-    let userName = BehaviorRelay<String>(value: "")
-    let phone = BehaviorRelay<String>(value: "")
-    
-    
-    // MARK: - Class Initialization
-    init(phone: String) {
-        self.phone.accept(phone)
-    }
-
-    
     // MARK: - Class Functions
-    func checkUserName() -> Bool {
+    func checkUserName(_ userName: String) -> Bool {
         let characterset = CharacterSet(charactersIn: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.-")
-        return !self.userName.value.isEmpty && self.userName.value.count <= 12 && self.userName.value.rangeOfCharacter(from: characterset.inverted) == nil
+        return !userName.isEmpty && userName.count <= 12 && userName.rangeOfCharacter(from: characterset.inverted) == nil
     }
     
-    func setUser() -> Observable<Bool> {
+    func setUser(userName: String) -> Observable<Bool> {
         return NetworkService.shared.setUser(name: userName.value, phone: phone.value).map({ result -> Bool in
             return result == "OK"
         })

@@ -250,30 +250,20 @@ class NetworkService: NSObject {
 //        })
 //    }
     
-    func setUser(name: String, phone: String) -> Observable<String> {
-        return Observable.create({ observer -> Disposable in
-//
-//            let isDebugMode: Bool   =   appBuildConfig == AppBuildConfig.debug
-//
-//            RestAPIManager.instance.setUser(name:           name,
-//                                            phone:          phone,
-//                                            isDebugMode:    isDebugMode,
-//                                            completion:     { (result, errorAPI) in
-//                                                guard errorAPI == nil else {
-//                                                    Logger.log(message: errorAPI!.caseInfo.message.localized(), event: .error)
-//                                                    return
-//                                                }
-//
-//                                                if let result = result {
-//                                                    Logger.log(message: "Response: \n\t\(result.status)", event: .debug)
-//                                                    observer.onNext(result.status)
-//                                                }
-//
-//                                                observer.onCompleted()
-//            })
-            
+    func setUser(name: String, phone: String) -> Completable {
+        return .create { completable in
+            RestAPIManager.instance.setUser(
+                id: name.lowercased(),
+                phone: phone,
+                responseHandling: { result in
+                    completable(.completed)
+                },
+                errorHandling: { errorAPI in
+                    completable(.error(errorAPI))
+                })
+
             return Disposables.create()
-        })
+        }
     }
     
     func saveKeys(nickName: String) -> Observable<Bool> {
