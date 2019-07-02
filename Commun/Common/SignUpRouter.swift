@@ -47,12 +47,12 @@ class SignUpRouter: NSObject, SignUpRoutingLogic {
             return
         }
 
-        guard let json = KeychainManager.loadAllData(byUserPhone: phone), let state = json[Config.registrationStepKey] as? String else { return }
+        guard let user = KeychainManager.currentUser(), let state = user.registrationStep else { return }
         
         switch state {
         // ConfirmUserVC
         case "verify":
-            if  let confirmUserVC = controllerContainer.resolve(ConfirmUserVC.self), let smsCode = json[Config.registrationSmsCodeKey] as? UInt64 {
+            if  let confirmUserVC = controllerContainer.resolve(ConfirmUserVC.self), let smsCode = user.smsCode {
                 confirmUserVC.viewModel = ConfirmUserViewModel(code: "\(smsCode)", phone: phone)
                 let confirmUserNC = UINavigationController(rootViewController: confirmUserVC)
                 self.viewController?.present(confirmUserNC, animated: true, completion: nil)
@@ -69,8 +69,8 @@ class SignUpRouter: NSObject, SignUpRoutingLogic {
         // LoadKeysVC
         case "toBlockChain":
             DispatchQueue.main.async {
-                if let loadKeysNC = controllerContainer.resolve(UINavigationController.self), let loadKeysVC = loadKeysNC.viewControllers.first as? LoadKeysVC, let nickName = json[Config.registrationUserIDKey] as? String {
-                    loadKeysVC.viewModel = LoadKeysViewModel(nickName: nickName)
+                if let loadKeysNC = controllerContainer.resolve(UINavigationController.self), let loadKeysVC = loadKeysNC.viewControllers.first as? LoadKeysVC {
+                    loadKeysVC.viewModel = LoadKeysViewModel(nickName: user.id)
                     self.viewController?.present(loadKeysNC, animated: true, completion: nil)
                 }
             }

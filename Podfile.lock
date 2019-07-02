@@ -151,7 +151,7 @@ DEPENDENCIES:
   - Alamofire
   - ASSpinnerView
   - Crashlytics
-  - CyberSwift (from `https://github.com/GolosChain/cyberSwift.git`)
+  - CyberSwift (from `https://github.com/GolosChain/cyberSwift.git`, branch `fixes/keychain`)
   - DateToolsSwift
   - DZNEmptyDataSet
   - Fabric
@@ -227,11 +227,12 @@ SPEC REPOS:
 
 EXTERNAL SOURCES:
   CyberSwift:
+    :branch: fixes/keychain
     :git: https://github.com/GolosChain/cyberSwift.git
 
 CHECKOUT OPTIONS:
   CyberSwift:
-    :commit: cafb91226c21842f45b47507a24a322fc6c81117
+    :commit: 66ae8b321b685676db828d5946da7d317dc283de
     :git: https://github.com/GolosChain/cyberSwift.git
 
 SPEC CHECKSUMS:
@@ -286,6 +287,6 @@ SPEC CHECKSUMS:
   TTTAttributedLabel: 8cffe8e127e4e82ff3af1e5386d4cd0ad000b656
   UIImageView-Letters: f62db28076797adf3560ab7410647dc6899b9eef
 
-PODFILE CHECKSUM: 064d5fbbe74d5fd81e5994754aeb996ad5cb8cb0
+PODFILE CHECKSUM: fd1cd6f8ed20997484ec4d3ee8e9eb9ff83c449a
 
 COCOAPODS: 1.7.2

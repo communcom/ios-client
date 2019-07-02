@@ -67,10 +67,11 @@ extension SettingsVC {
             notificationCell.delegate = self
             notificationCells.append(notificationCell)
         }
-        
-        for (key, value) in KeychainManager.loadData(byUserID: Config.currentUser.id ?? "", withKey: Config.currentUser.activeKey ?? "") ?? [:] {
-            // Пока нет паролей...
-        }
+
+        #warning("setup password")
+//        for (key, value) in KeychainManager.loadData(byUserID: Config.currentUser.id ?? "", withKey: Config.currentUser.activeKey ?? "") ?? [:] {
+//            // Пока нет паролей...
+//        }
         
         // PasswordsCells
         passwordsCells = []
@@ -185,7 +186,9 @@ extension SettingsVC: SettingsButtonCellDelegate {
         if cell.button.titleLabel?.text == "Logout".localized() {
             showAlert(title: "Logout".localized(), message: "Do you really want to logout", buttonTitles: ["Ok".localized(), "Cancel".localized()], highlightedButtonIndex: 1) { (index) in
                 if index == 0 {
-                    if !Auth.logout() {
+                    do {
+                        try Auth.logout()
+                    } catch {
                         self.showGeneralError()
                     }
                 }

@@ -75,7 +75,7 @@ class LoadKeysVC: UIViewController {
                 self.hideHud()
                 if flag {
                     // Display PDF-file
-                    if let pdfDocument = KeychainManager.loadPDFDocument() {
+                    if let pdfDocument = PDFManager.loadPDFDocument() {
                         self.displayPDF(document: pdfDocument)
                     }
                 } else {

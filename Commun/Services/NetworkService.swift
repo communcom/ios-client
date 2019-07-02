@@ -32,7 +32,7 @@ class NetworkService: NSObject {
         return Observable.create({ observer -> Disposable in
             
             RestAPIManager.instance.loadFeed(typeMode: typeMode,
-                                             userID: userId ?? Config.currentUser.id,
+                                             userID: userId ?? Config.currentUser?.id,
                                              communityID:               AppProfileType.golos.rawValue,
                                              timeFrameMode:             sortType,
                                              sortMode:                  type,
@@ -79,7 +79,7 @@ class NetworkService: NSObject {
     }
     
     func deletePost(permlink: String, refBlockNum:  UInt64) -> Completable {
-        guard let currentUserId = Config.currentUser.id else {return .error(ErrorAPI.requestFailed(message: "Current user not found"))}
+        guard let currentUserId = Config.currentUser?.id else {return .error(ErrorAPI.requestFailed(message: "Current user not found"))}
         return RestAPIManager.instance.rx.deleteMessage(author: currentUserId, permlink: permlink)
             .observeOn(MainScheduler.instance)
     }
@@ -123,25 +123,21 @@ class NetworkService: NSObject {
         }
     }
     
-    enum SignInError: Error {
-        case errorAPI(String)
-    }
-    
     func signIn(login: String, key: String) -> Observable<String> {
         return Observable.create({ observer -> Disposable in
             RestAPIManager.instance.authorize(userID:               login,
                                               userActiveKey:        key,
                                               responseHandling:     { response in
-                                                Config.currentUser.id = login
-                                                Config.currentUser.activeKey = key
-                                                
                                                 Logger.log(message: response.permission, event: .debug)
                                                 observer.onNext(response.permission)
                                                 observer.onCompleted()
             },
                                               errorHandling:        { errorAPI in
-                                                Logger.log(message: errorAPI.caseInfo.message.localized(), event: .error)
-                                                observer.onError(SignInError.errorAPI(errorAPI.caseInfo.message.localized()))
+                                                if let errorAPI = errorAPI as? ErrorAPI {
+                                                     Logger.log(message: errorAPI.caseInfo.message.localized(), event: .error)
+                                                }
+                                               
+                                            observer.onError(errorAPI)
             })
             
             return Disposables.create()
@@ -300,7 +296,7 @@ class NetworkService: NSObject {
     
     func getUserProfile(userId: String? = nil) -> Single<ResponseAPIContentGetProfile> {
         return Single<ResponseAPIContentGetProfile>.create { single in
-            guard let userNickName = userId ?? Config.currentUser.id else { return Disposables.create() }
+            guard let userNickName = userId ?? Config.currentUser?.id else { return Disposables.create() }
             
             RestAPIManager.instance.getProfile(userID:      userNickName,
                                                completion:  { (response, error) in
@@ -311,7 +307,7 @@ class NetworkService: NSObject {
                                                 }
                                                 
                                                 if let res = response {
-                                                    if (res.userId == Config.currentUser.id) {
+                                                    if (res.userId == Config.currentUser?.id) {
                                                         UserDefaults.standard.set(res.personal.avatarUrl, forKey: Config.currentUserAvatarUrlKey)
                                                     }
                                                     single(.success(res))

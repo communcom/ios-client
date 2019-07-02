@@ -42,8 +42,8 @@ class ConfirmUserVC: UIViewController {
             }
             
             if  let phone   =   UserDefaults.standard.string(forKey: Config.registrationUserPhoneKey),
-                let json    =   KeychainManager.loadAllData(byUserPhone: phone),
-                let smsCode =   json[Config.registrationSmsCodeKey] as? UInt64 {
+                let currentUser    =   Config.currentUser,
+                let smsCode =   currentUser.smsCode {
                 self.testSmsCodeLabel.text = String(format: "sms code is: `%i`", smsCode)
                 self.testSmsCodeLabel.isHidden = false
             }
@@ -173,10 +173,9 @@ class ConfirmUserVC: UIViewController {
     
     // MARK: - Custom Functions
     func checkResendSmsCodeTime() {
-        guard   let phone   =   UserDefaults.standard.string(forKey: Config.registrationUserPhoneKey),
-                let json    =   KeychainManager.loadAllData(byUserPhone: phone),
-                let step    =   json[Config.registrationStepKey] as? String, step == "verify",
-                let date    =   json[Config.registrationSmsNextRetryKey] as? String else {
+        guard   let json    =   KeychainManager.currentUser(),
+                let step    =   json.registrationStep, step == "verify",
+                let date    =   json.smsNextRetry else {
                 self.resendButton.isEnabled = true
                 self.resendTimerLabel.isHidden = true
                 return
@@ -237,9 +236,8 @@ class ConfirmUserVC: UIViewController {
     
     @IBAction func nextButtonTapped(_ sender: UIButton) {
         // Verify current step of registration
-        guard   let phone   =   UserDefaults.standard.string(forKey: Config.registrationUserPhoneKey),
-                let json    =   KeychainManager.loadAllData(byUserPhone: phone),
-                let step    =   json[Config.registrationStepKey] as? String,
+        guard   let user = KeychainManager.currentUser(),
+                let step    =   user.registrationStep,
                 step == "verify"
         else {
             self.router?.routeToSignUpNextScene()
@@ -247,14 +245,14 @@ class ConfirmUserVC: UIViewController {
         }
         
         // Get sms code
-        guard let smsCode = json[Config.registrationSmsCodeKey] as? UInt64 else { return }
+        guard let smsCode = user.smsCode else { return }
 
         if let viewModel = self.viewModel {
             viewModel.checkPin(self.pinCodeInputView.text)
                 .subscribe(onNext: { success in
                     if success {
-                        RestAPIManager.instance.verify(phone:               phone,
-                                                       code:                String(describing: smsCode),
+                        RestAPIManager.instance.verify(phone:               UserDefaults.standard.string(forKey: Config.registrationUserPhoneKey) ?? "",
+                                                       code:                smsCode,
                                                        responseHandling:    { [weak self] result in
                                                         guard let strongSelf = self else { return }
                                                         strongSelf.router?.routeToSignUpNextScene()

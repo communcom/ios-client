@@ -15,7 +15,7 @@ class ProfilePageViewModel: ListViewModelType {
     // userId for non-current user
     var userId: String? = nil {
         didSet {
-            if userId == Config.currentUser.id {
+            if userId == Config.currentUser?.id {
                 userId = nil
             }
         }
