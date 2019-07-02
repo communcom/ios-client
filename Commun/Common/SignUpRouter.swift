@@ -46,6 +46,7 @@ extension SignUpRouter where Self: UIViewController {
         // Retrieve step
         guard let step = user.registrationStep else {
             Logger.log(message: "Invalid registrationStep: \(user.registrationStep.debugDescription)", event: .error)
+            resetSignUpProcess()
             return
         }
         
@@ -57,6 +58,7 @@ extension SignUpRouter where Self: UIViewController {
                 let phone = user.phoneNumber
             else {
                 Logger.log(message: "Invalid parameters for confirmUserVC with user: \(user)", event: .error)
+                resetSignUpProcess()
                 return
             }
             
@@ -66,13 +68,12 @@ extension SignUpRouter where Self: UIViewController {
             
         case "setUsername":
             guard let setUserVC = controllerContainer.resolve(SetUserVC.self),
-                let phone = user.phoneNumber
+                let _ = user.phoneNumber
             else {
                 Logger.log(message: "Invalid parameters for setUserVC with user: \(user)", event: .error)
+                resetSignUpProcess()
                 return
             }
-            
-            setUserVC.viewModel = SetUserViewModel(phone: phone)
             
             if let nc = self.navigationController {
                 nc.pushViewController(setUserVC)
