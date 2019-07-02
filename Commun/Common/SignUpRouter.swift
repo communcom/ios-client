@@ -28,9 +28,12 @@ extension SignUpRouter where Self: UIViewController {
     
     
     func signUpNextStep() {
+        let signUpVC = controllerContainer.resolve(SignUpVC.self)!
+        
         // Retrieve current user's state
         guard let user = KeychainManager.currentUser() else {
-            Logger.log(message: "Invalid user: \(KeychainManager.currentUser().debugDescription)", event: .error)
+            // Navigate to SignUpVC if no user exists
+            navigationController?.pushViewController(signUpVC)
             return
         }
         

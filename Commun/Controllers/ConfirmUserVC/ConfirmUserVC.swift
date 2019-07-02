@@ -12,7 +12,7 @@ import RxCocoa
 import CyberSwift
 import PinCodeInputView
 
-class ConfirmUserVC: UIViewController {
+class ConfirmUserVC: UIViewController, SignUpRouter {
     // MARK: - Properties
     var viewModel: ConfirmUserViewModel?
     let disposeBag = DisposeBag()
@@ -26,8 +26,6 @@ class ConfirmUserVC: UIViewController {
         itemFactory: {
             return ItemView()
     })
-
-    var router: (NSObjectProtocol & SignUpRoutingLogic)?
 
     
     // MARK: - IBOutlets
@@ -106,27 +104,6 @@ class ConfirmUserVC: UIViewController {
             self.widthsCollection.forEach({ $0.constant *= Config.widthRatio })
         }
     }
-    
-    
-    // MARK: - Class Initialization
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        
-        setup()
-    }
-    
-    deinit {
-        Logger.log(message: "Success", event: .severe)
-    }
-    
-    
-    // MARK: - Setup
-    private func setup() {
-        let router                  =   SignUpRouter()
-        router.viewController       =   self
-        self.router                 =   router
-    }
-    
     
     // MARK: - Class Functions
     override func viewDidLoad() {
@@ -240,7 +217,7 @@ class ConfirmUserVC: UIViewController {
                 let step    =   user.registrationStep,
                 step == "verify"
         else {
-            self.router?.routeToSignUpNextScene()
+            self.signUpNextStep()
             return
         }
         
@@ -255,12 +232,12 @@ class ConfirmUserVC: UIViewController {
                                                        code:                smsCode,
                                                        responseHandling:    { [weak self] result in
                                                         guard let strongSelf = self else { return }
-                                                        strongSelf.router?.routeToSignUpNextScene()
+                                                        strongSelf.signUpNextStep()
                             },
                                                        errorHandling:       { [weak self] responseAPIError in
                                                         guard let strongSelf = self else { return }
                                                         guard responseAPIError.currentState == nil else {
-                                                            strongSelf.router?.routeToSignUpNextScene()
+                                                            strongSelf.signUpNextStep()
                                                             return
                                                         }
                                                         

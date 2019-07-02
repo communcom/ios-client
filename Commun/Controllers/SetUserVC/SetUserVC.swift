@@ -11,12 +11,10 @@ import RxSwift
 import RxCocoa
 import CyberSwift
 
-class SetUserVC: UIViewController {
+class SetUserVC: UIViewController, SignUpRouter {
     // MARK: - Properties
     var viewModel: SetUserViewModel?
     let disposeBag = DisposeBag()
-    
-    var router: (NSObjectProtocol & SignUpRoutingLogic)?
 
     
     // MARK: - IBOutlets
@@ -68,26 +66,6 @@ class SetUserVC: UIViewController {
         }
     }
     
-
-    // MARK: - Class Initialization
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        
-        setup()
-    }
-    
-    deinit {
-        Logger.log(message: "Success", event: .severe)
-    }
-    
-    
-    // MARK: - Setup
-    private func setup() {
-        let router                  =   SignUpRouter()
-        router.viewController       =   self
-        self.router                 =   router
-    }
-    
     
     // MARK: - Class Functions
     override func viewDidLoad() {
@@ -117,7 +95,7 @@ class SetUserVC: UIViewController {
             .subscribe(onNext: { _ in
                 self.viewModel!.setUser()
                     .subscribe(onNext: { flag in
-                        self.router?.routeToSignUpNextScene()
+                        self.signUpNextStep()
                     })
                     .disposed(by: self.disposeBag)
             })
@@ -144,7 +122,7 @@ class SetUserVC: UIViewController {
                                         phone:              phone,
                                         responseHandling:   { [weak self] result in
                                             guard let strongSelf = self else { return }
-                                            strongSelf.router?.routeToSignUpNextScene()
+                                            strongSelf.signUpNextStep()
         },
                                         errorHandling:      { [weak self] errorAPI in
                                             guard let strongSelf = self else { return }

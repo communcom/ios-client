@@ -11,12 +11,10 @@ import RxCocoa
 import RxSwift
 import CyberSwift
 
-class SignUpVC: UIViewController {
+class SignUpVC: UIViewController, SignUpRouter {
     // MARK: - Properties
     let viewModel   =   SignUpViewModel()
     let disposeBag  =   DisposeBag()
-
-    var router: (NSObjectProtocol & SignUpRoutingLogic)?
 
     
     // MARK: - IBOutlets
@@ -93,27 +91,6 @@ class SignUpVC: UIViewController {
             self.widthsCollection.forEach({ $0.constant *= Config.widthRatio })
         }
     }
-        
-    
-    // MARK: - Class Initialization
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        
-        setup()
-    }
-    
-    deinit {
-        Logger.log(message: "Success", event: .severe)
-    }
-    
-    
-    // MARK: - Setup
-    private func setup() {
-        let router                  =   SignUpRouter()
-        router.viewController       =   self
-        self.router                 =   router
-    }
-    
     
     // MARK: - Class Functions
     override func viewDidLoad() {
@@ -193,11 +170,11 @@ class SignUpVC: UIViewController {
         
         RestAPIManager.instance.firstStep(phone:                self.viewModel.phone.value,
                                           responseHandling:     { result in
-                                            self.router?.routeToSignUpNextScene()
+                                            self.signUpNextStep()
         },
                                           errorHandling:        { responseAPIError in
                                             guard responseAPIError.currentState == nil else {
-                                                self.router?.routeToSignUpNextScene()
+                                                self.signUpNextStep()
                                                 return
                                             }
                                             
