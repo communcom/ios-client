@@ -18,6 +18,7 @@ class LoadKeysVC: UIViewController {
     let disposeBag = DisposeBag()
 
     var pdfViewController: PDFViewController?
+    lazy var router = SignUpRouter(vc: self)
 
     
     // MARK: - IBOutlets
@@ -112,7 +113,6 @@ extension LoadKeysVC {
         self.pdfViewController?.navigationController?.popViewController(animated: true)
         
         // Save keys
-        UserDefaults.standard.set(true, forKey: Config.isCurrentUserLoggedKey)
-        WebSocketManager.instance.authorized.accept(true)
+        router.routeToSignUpNextScene()
     }
 }

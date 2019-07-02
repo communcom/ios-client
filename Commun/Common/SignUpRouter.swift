@@ -21,6 +21,10 @@ class SignUpRouter: NSObject, SignUpRoutingLogic {
     
     
     // MARK: - Class Initialization
+    init(vc: UIViewController? = nil) {
+        viewController = vc
+    }
+    
     deinit {
         Logger.log(message: "Success", event: .severe)
     }
@@ -74,6 +78,20 @@ class SignUpRouter: NSObject, SignUpRoutingLogic {
                     self.viewController?.present(loadKeysNC, animated: true, completion: nil)
                 }
             }
+            
+        case "pickAvatar":
+            let nc = UINavigationController.instanceController(fromStoryboard: "InitProfile", withIdentifier: "PickupAvatarNC") as! UINavigationController
+            
+            self.viewController?.present(nc, animated: true, completion: nil)
+            
+        case "createBio":
+            let vc = CreateBioVC.instanceController(fromStoryboard: "InitProfile", withIdentifier: "CreateBioVC")
+            if let nc = self.viewController?.navigationController {
+                nc.pushViewController(vc)
+            } else {
+                self.viewController?.present(vc, animated: true, completion: nil)
+            }
+            
 
         // SignUpVC
         default:
