@@ -586,6 +586,18 @@
 			path = EmbededView;
 			sourceTree = "<group>";
 		};
+		3B986B6322CE4B8100C1E985 /* SignUpScenes */ = {
+			isa = PBXGroup;
+			children = (
+				5797E0F6225DDA260026C4D5 /* SignUpVC */,
+				578B94D82263CBC300FB5BC6 /* ConfirmUserVC */,
+				5787C0C222650F8A00568CEC /* SetUserVC */,
+				5787C0C92265151A00568CEC /* LoadKeysVC */,
+				3BB342AE22CA5C09009546B2 /* BoardingVCs */,
+			);
+			path = SignUpScenes;
+			sourceTree = "<group>";
+		};
 		3BAF69C122675ADB0055CCEB /* ProfilePageVC */ = {
 			isa = PBXGroup;
 			children = (
@@ -603,14 +615,14 @@
 			path = ProfilePageVC;
 			sourceTree = "<group>";
 		};
-		3BB342AE22CA5C09009546B2 /* InitProfileVC */ = {
+		3BB342AE22CA5C09009546B2 /* BoardingVCs */ = {
 			isa = PBXGroup;
 			children = (
 				3BB342AF22CA5CA6009546B2 /* PickupAvatarVC.swift */,
 				3BB342B322CA7412009546B2 /* CreateBioVC.swift */,
 				3BB342B122CA64EA009546B2 /* InitProfile.storyboard */,
 			);
-			path = InitProfileVC;
+			path = BoardingVCs;
 			sourceTree = "<group>";
 		};
 		3BDD9A02228DBE9D00B2A1DA /* CommentForm */ = {
@@ -717,23 +729,19 @@
 		571B1508223A937200630C8F /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				3BB342AE22CA5C09009546B2 /* InitProfileVC */,
-				578B94D82263CBC300FB5BC6 /* ConfirmUserVC */,
-				57DE5BDA2252086C008566B9 /* EditorPageVC */,
+				57B6FC23224A9E4900BCFDDA /* WelcomeScreenVC */,
+				3B986B6322CE4B8100C1E985 /* SignUpScenes */,
+				571B1509223A94CD00630C8F /* TabBarController */,
 				576DC917223E41CA00EDED41 /* FeedPageVC */,
+				57DE5BDA2252086C008566B9 /* EditorPageVC */,
 				57A1CA612270FC3300E2A1E3 /* LanguageVC */,
-				5787C0C92265151A00568CEC /* LoadKeysVC */,
 				B1EA0315228A963200835244 /* MainVC */,
 				3B2F225322689252006B589E /* NotificationsPageVC */,
 				5725173A2243E4510033125C /* PostPageVC */,
 				3BAF69C122675ADB0055CCEB /* ProfilePageVC */,
 				575AECAF22606F5200A7EC2D /* SelectCountryVC */,
 				57E5159A2270E5C700A6F6DB /* SettingsVC */,
-				5787C0C222650F8A00568CEC /* SetUserVC */,
 				57FB179E224C077300563BF7 /* SignInVC */,
-				5797E0F6225DDA260026C4D5 /* SignUpVC */,
-				57B6FC23224A9E4900BCFDDA /* WelcomeScreenVC */,
-				571B1509223A94CD00630C8F /* TabBarController */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
