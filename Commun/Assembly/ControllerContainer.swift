@@ -54,6 +54,16 @@ let controllerContainer: Container = {
         return vc
     })
     
+    container.register(PickupAvatarVC.self, factory: { r in
+        let vc = PickupAvatarVC.instanceController(fromStoryboard: "InitProfile", withIdentifier: "PickupAvatarVC") as! PickupAvatarVC
+        return vc
+    })
+    
+    container.register(CreateBioVC.self, factory: { r in
+        let vc = CreateBioVC.instanceController(fromStoryboard: "InitProfile", withIdentifier: "CreateBioVC") as! CreateBioVC
+        return vc
+    })
+    
     // TabBar
     container.register(TabBarVC.self, factory: { r in
         let vc = TabBarVC()

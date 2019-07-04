@@ -12,18 +12,30 @@ import CyberSwift
 protocol SignUpRouter {}
 
 extension SignUpRouter where Self: UIViewController {
+    
+    /// End signing up
     func endSigningUp() {
         // Save keys
-        UserDefaults.standard.set(true, forKey: Config.isCurrentUserLoggedKey)
-        WebSocketManager.instance.authorized.accept(true)
+        do {
+            try KeychainManager.save(data: [
+                Config.registrationStepKey: CurrentUserRegistrationStep.done.rawValue
+            ])
+            UserDefaults.standard.set(true, forKey: Config.isCurrentUserLoggedKey)
+            WebSocketManager.instance.authorized.accept(true)
+        } catch {
+            showError(error)
+        }
+        
     }
     
+    /// Reset signing up
     func resetSignUpProcess() {
         try! KeychainManager.deleteUser()
         // Dismiss all screen
         view.window!.rootViewController?.dismiss(animated: true, completion: nil)
     }
     
+    /// Move to sign in
     func routeToSignInScene() {
         let signInVC = controllerContainer.resolve(SignInViewController.self)!
         
@@ -38,7 +50,7 @@ extension SignUpRouter where Self: UIViewController {
         navigationController?.pushViewController(signInVC)
     }
     
-    
+    /// Move to next scene
     func signUpNextStep() {
         let signUpVC = controllerContainer.resolve(SignUpVC.self)!
         
@@ -88,6 +100,15 @@ extension SignUpRouter where Self: UIViewController {
             let loadKeysVC = controllerContainer.resolve(LoadKeysVC.self)!
             loadKeysVC.viewModel = LoadKeysViewModel()
             vc = loadKeysVC
+            
+        case .setAvatar:
+            let pickAvatarVC = controllerContainer.resolve(PickupAvatarVC.self)!
+            vc = pickAvatarVC
+            
+        case .setBio:
+            let createBioVC = controllerContainer.resolve(CreateBioVC.self)!
+            vc = createBioVC
+            
         default:
             vc = signUpVC
         }

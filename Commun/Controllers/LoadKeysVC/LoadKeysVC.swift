@@ -102,6 +102,13 @@ extension LoadKeysVC {
     @objc func didClose(sender: UIBarButtonItem) {
         self.pdfViewController?.navigationController?.popViewController(animated: true)
         
-        endSigningUp()
+        do {
+            try KeychainManager.save(data: [
+                Config.registrationStepKey: CurrentUserRegistrationStep.setAvatar.rawValue
+            ])
+            signUpNextStep()
+        } catch {
+            showError(error)
+        }
     }
 }
