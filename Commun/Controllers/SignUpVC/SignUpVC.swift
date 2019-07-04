@@ -168,17 +168,12 @@ class SignUpVC: UIViewController, SignUpRouter {
             return
         }
         
-        RestAPIManager.instance.firstStep(phone:                self.viewModel.phone.value,
-                                          responseHandling:     { result in
-                                            self.signUpNextStep()
-        },
-                                          errorHandling:        { responseAPIError in
-                                            guard responseAPIError.currentState == nil else {
-                                                self.signUpNextStep()
-                                                return
-                                            }
-                                            
-                                            self.showAlert(title: "Error", message: responseAPIError.message)
-        })
+        RestAPIManager.instance.rx.firstStep(phone: self.viewModel.phone.value)
+            .subscribe(onSuccess: { _ in
+                self.signUpNextStep()
+            }) { (error) in
+                self.showError(error)
+            }
+            .disposed(by: disposeBag)
     }
 }

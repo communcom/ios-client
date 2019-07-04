@@ -194,27 +194,24 @@ class ConfirmUserVC: UIViewController, SignUpRouter {
     }
 
     @IBAction func resendButtonTapped(_ sender: UIButton) {
-        guard let currentUser = KeychainManager.currentUser(),
-            let phone = currentUser.phoneNumber else {
+        guard KeychainManager.currentUser()?.phoneNumber != nil else {
                 resetSignUpProcess()
                 return
         }
         
-        RestAPIManager.instance.resendSmsCode(
-            phone: phone,
-            responseHandling: { [weak self] smsCode in
+        RestAPIManager.instance.rx.resendSmsCode()
+            .subscribe(onSuccess: { [weak self] (_) in
                 guard let strongSelf = self else { return }
                 strongSelf.showAlert(
-                    title:       "Info".localized(),
-                    message:     "Successfully resend code".localized(),
+                    title: "Info".localized(),
+                    message: "Successfully resend code".localized(),
                     completion:  { success in
                         strongSelf.checkResendSmsCodeTime()
-                })
-            },
-            errorHandling: { [weak self] errorAPI in
-                guard let strongSelf = self else { return }
-                strongSelf.showAlert(title: "Error".localized(), message: "Failed: \(errorAPI.caseInfo.message)")
-            })
+                    })
+            }) {[weak self] (error) in
+                self?.showError(error)
+            }
+            .disposed(by: disposeBag)
     }
     
     @IBAction func nextButtonTapped(_ sender: UIButton) {
@@ -228,34 +225,18 @@ class ConfirmUserVC: UIViewController, SignUpRouter {
             let step    =   user.registrationStep,
             step == "verify",
             let smsCode = user.smsCode,
-            let phone = user.phoneNumber
+            let _ = user.phoneNumber
         else {
             self.resetSignUpProcess()
             return
         }
         
-        viewModel.checkPin(self.pinCodeInputView.text)
-            .subscribe(onNext: { success in
-                if success {
-                    RestAPIManager.instance.verify(phone:               phone,
-                                                   code:                smsCode,
-                                                   responseHandling:    { [weak self] result in
-                                                    guard let strongSelf = self else { return }
-                                                    strongSelf.signUpNextStep()
-                        },
-                                                   errorHandling:       { [weak self] responseAPIError in
-                                                    guard let strongSelf = self else { return }
-                                                    guard responseAPIError.currentState == nil else {
-                                                        strongSelf.signUpNextStep()
-                                                        return
-                                                    }
-                                                    
-                                                    strongSelf.showAlert(title: "Error", message: responseAPIError.message)
-                    })
-                } else {
-                    self.showAlert(title: "Error".localized(), message: "Enter correct sms code".localized())
-                }
-            })
-            .disposed(by: self.disposeBag)
+        RestAPIManager.instance.rx.verify(code: smsCode)
+            .subscribe(onSuccess: { [weak self] (_) in
+                self?.signUpNextStep()
+            }) { (error) in
+                self.showError(error)
+            }
+            .disposed(by: disposeBag)
     }
 }

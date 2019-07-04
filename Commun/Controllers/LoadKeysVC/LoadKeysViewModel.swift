@@ -9,20 +9,11 @@
 import RxSwift
 import RxCocoa
 import Foundation
+import CyberSwift
 
 class LoadKeysViewModel {
-    // MARK: - Properties
-    let nickname = BehaviorRelay<String>(value: "")
-    
-    
-    // MARK: - Class Initialization
-    init(nickName: String) {
-        nickname.accept(nickName)
-    }
-
-    
     // MARK: - Class Functions
-    func saveKeys() -> Observable<Bool> {
-        return NetworkService.shared.saveKeys(nickName: nickname.value)
+    func saveKeys() -> Completable {
+        return RestAPIManager.instance.rx.toBlockChain()
     }
 }

@@ -42,7 +42,11 @@ extension UIViewController {
     }
     
     func showError(_ error: Error) {
-        showAlert(title: "Error".localized(), message: error.localizedDescription)
+        var message = error.localizedDescription
+        if let error = error as? ErrorAPI {
+            message = error.caseInfo.message
+        }
+        showAlert(title: "Error".localized(), message: message)
     }
     
     func hideHud() {

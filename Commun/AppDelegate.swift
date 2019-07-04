@@ -50,8 +50,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         _ = WebSocketManager.instance.authorized
             .skip(1)
             .subscribe(onNext: {success in
-                Logger.log(message: "Sign: \n\t\(success)", event: .debug)
-
+                
                 // Lenta
                 if success,
                     UserDefaults.standard.value(forKey: Config.isCurrentUserLoggedKey) as? Bool == true {

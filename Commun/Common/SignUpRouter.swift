@@ -12,6 +12,12 @@ import CyberSwift
 protocol SignUpRouter {}
 
 extension SignUpRouter where Self: UIViewController {
+    func endSigningUp() {
+        // Save keys
+        UserDefaults.standard.set(true, forKey: Config.isCurrentUserLoggedKey)
+        WebSocketManager.instance.authorized.accept(true)
+    }
+    
     func resetSignUpProcess() {
         try! KeychainManager.deleteUser()
         // Dismiss all screen
@@ -39,7 +45,7 @@ extension SignUpRouter where Self: UIViewController {
         // Retrieve current user's state
         guard let user = KeychainManager.currentUser() else {
             // Navigate to SignUpVC if no user exists
-            navigationController?.pushViewController(signUpVC)
+            showOrPresentVC(signUpVC)
             return
         }
         
@@ -63,8 +69,7 @@ extension SignUpRouter where Self: UIViewController {
             }
             
             confirmUserVC.viewModel = ConfirmUserViewModel(code: "\(smsCode)", phone: phone)
-            let confirmUserNC = UINavigationController(rootViewController: confirmUserVC)
-            present(confirmUserNC, animated: true, completion: nil)
+            showOrPresentVC(confirmUserVC)
             
         case "setUsername":
             guard let setUserVC = controllerContainer.resolve(SetUserVC.self),
@@ -74,23 +79,24 @@ extension SignUpRouter where Self: UIViewController {
                 resetSignUpProcess()
                 return
             }
-            
-            if let nc = self.navigationController {
-                nc.pushViewController(setUserVC)
-                return
-            }
-            
-            present(setUserVC, animated: true, completion: nil)
+            showOrPresentVC(setUserVC)
             
         case "toBlockChain":
-            let loadKeysNC = controllerContainer.resolve(UINavigationController.self)!
-            let loadKeysVC = loadKeysNC.viewControllers.first as! LoadKeysVC
-            
-            loadKeysVC.viewModel = LoadKeysViewModel(nickName: user.id!)
-            present(loadKeysNC, animated: true, completion: nil)
+            let loadKeysVC = controllerContainer.resolve(LoadKeysVC.self)!
+            loadKeysVC.viewModel = LoadKeysViewModel()
+            showOrPresentVC(loadKeysVC)
             
         default:
-            navigationController?.pushViewController(controllerContainer.resolve(SignUpVC.self)!)
+            showOrPresentVC(signUpVC)
         }
+    }
+    
+    private func showOrPresentVC(_ vc: UIViewController) {
+        if let nc = self.navigationController {
+            nc.pushViewController(vc)
+            return
+        }
+        
+        present(vc, animated: true, completion: nil)
     }
 }

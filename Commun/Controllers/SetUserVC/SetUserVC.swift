@@ -88,30 +88,28 @@ class SetUserVC: UIViewController, SignUpRouter {
 
     // MARK: - Custom Functions
     func bind() {
+        userNameTextField.rx.text.orEmpty
+            .subscribe(onNext: {text in
+                self.setButtonState(enabled: self.viewModel.checkUserName(text))
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    @IBAction func buttonNextDidTouch(_ sender: Any) {
         guard let phone = KeychainManager.currentUser()?.phoneNumber else {
             resetSignUpProcess()
             return
         }
         
-        let userName = userNameTextField.rx.text.orEmpty
-        
-        userName
-            .subscribe(onNext: {text in
-                self.setButtonState(enabled: self.viewModel.checkUserName(text))
-            })
-            .disposed(by: disposeBag)
-        
-        nextButton.rx.tap
-            .withLatestFrom(userName)
-            .filter {self.viewModel.checkUserName($0)}
-            .flatMapLatest {userName -> Completable in
-                return self.viewModel.setUser(userName: userName, phone: phone)
-                    .catchError({ error in
-                        return .empty()
-                    })
-            }
-            .subscribe(onNext: { (_) in
+        guard let userName = userNameTextField.text,
+            viewModel.checkUserName(userName) else {
+                return
+        }
+        viewModel.setUser(userName: userName, phone: phone)
+            .subscribe(onCompleted: {
                 self.signUpNextStep()
+            }, onError: {error in
+                self.showError(error)
             })
             .disposed(by: disposeBag)
     }

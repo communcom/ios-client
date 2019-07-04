@@ -9,6 +9,7 @@
 import RxSwift
 import RxCocoa
 import Foundation
+import CyberSwift
 
 class SetUserViewModel {
     // MARK: - Class Functions
@@ -18,6 +19,7 @@ class SetUserViewModel {
     }
     
     func setUser(userName: String, phone: String) -> Completable {
-        return NetworkService.shared.setUser(name: userName, phone: phone)
+        return RestAPIManager.instance.rx.setUser(id: userName)
+            .flatMapToCompletable()
     }
 }

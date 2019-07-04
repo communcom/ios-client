@@ -40,18 +40,6 @@ class SignUpViewModel {
             return country!.flagURL
         }.bind(to: flagUrl).disposed(by: disposeBag)
     }
-    
-    deinit {
-        Logger.log(message: "Success", event: .severe)
-    }
-    
-
-    // MARK: - Class Functions
-    func signUp() -> Observable<UInt64> {
-        return NetworkService.shared.signUp(withPhone: phone.value).map { result -> UInt64 in
-            return result.code
-        }
-    }
 
     func checkLogin() -> Bool {
         return self.selectedCountry.value != nil

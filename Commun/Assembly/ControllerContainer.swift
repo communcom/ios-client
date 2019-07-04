@@ -44,9 +44,9 @@ let controllerContainer: Container = {
         return vc
     })
     
-    container.register(UINavigationController.self, factory: { r in
-        let nc = LoadKeysVC.instanceController(fromStoryboard: "LoadKeysVC", withIdentifier: "LoadKeysNC") as! UINavigationController
-        return nc
+    container.register(LoadKeysVC.self, factory:  {r in
+        let vc = LoadKeysVC.instanceController(fromStoryboard: "LoadKeysVC", withIdentifier: "LoadKeysVC") as! LoadKeysVC
+        return vc
     })
     
     container.register(ConfirmUserVC.self, factory: { r in

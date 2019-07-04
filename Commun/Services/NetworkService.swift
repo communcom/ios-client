@@ -199,33 +199,6 @@ class NetworkService: NSObject {
         .observeOn(MainScheduler.instance)
     }
     
-    func signUp(withPhone phone: String) -> Observable<ResponseAPIRegistrationFirstStep> {
-        return Observable.create({ observer -> Disposable in
-//            RestAPIManager.instance.firstStep(phone:        phone,
-//                                              completion:   { (result, error) in
-//                                                guard error == nil else {
-//                                                    Logger.log(message: error!.message.localized(), event: .error)
-//                                                    
-//                                                    if let state = error?.currentState {
-//                                                        observer.onNext(ResponseAPIRegistrationFirstStep(code: UInt64(error!.code), strategy: state, nextSmsRetry: ""))
-//                                                        observer.onCompleted()
-//                                                    }
-//                                                    
-//                                                    return
-//                                                }
-// 
-//                                                if let result = result {
-//                                                    Logger.log(message: "Response: \n\t\(result)", event: .debug)
-//                                                    observer.onNext(result)
-//                                                }
-//                                                
-//                                                observer.onCompleted()
-//            })
-            
-            return Disposables.create()
-        })
-    }
-    
 //    func resendSmsCode(phone: String) -> Observable<String> {
 //        return Observable<String>.create({ observer -> Disposable in
 //            let isDebugMode: Bool   =   appBuildConfig == AppBuildConfig.debug
@@ -249,39 +222,6 @@ class NetworkService: NSObject {
 //            return code.md5() ?? ""
 //        })
 //    }
-    
-    func setUser(name: String, phone: String) -> Completable {
-        return .create { completable in
-            RestAPIManager.instance.setUser(
-                id: name.lowercased(),
-                phone: phone,
-                responseHandling: { result in
-                    completable(.completed)
-                },
-                errorHandling: { errorAPI in
-                    completable(.error(errorAPI))
-                })
-
-            return Disposables.create()
-        }
-    }
-    
-    func saveKeys(nickName: String) -> Observable<Bool> {
-        return Observable.create({ observer -> Disposable in
-            RestAPIManager.instance.toBlockChain(id:                nickName,
-                                                 phone:             UserDefaults.standard.value(forKey: Config.registrationUserPhoneKey) as? String ?? "",
-                                                 responseHandling:  { result in
-                                                    Logger.log(message: "Response: \n\t\(result.description)", event: .debug)
-                                                    observer.onNext(result)
-                                                    observer.onCompleted()
-            },
-                                                 errorHandling:     { errorAPI in
-                                                    Logger.log(message: errorAPI.caseInfo.message.localized(), event: .error)
-            })
-            
-            return Disposables.create()
-        })
-    }
     
     
     func getUserProfile(userId: String? = nil) -> Single<ResponseAPIContentGetProfile> {
