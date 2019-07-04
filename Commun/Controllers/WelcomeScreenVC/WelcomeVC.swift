@@ -7,25 +7,20 @@
 //
 
 import UIKit
+import CyberSwift
 
-class WelcomeVC: UIViewController {
-    var router: (NSObjectProtocol & SignUpRoutingLogic)?
+class WelcomeVC: UIViewController, SignUpRouter {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        UserDefaults.standard.set(true, forKey: "FirstStart")
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.isTranslucent = true
-
-        setup()
-    }
-    
-    // MARK: - Setup
-    private func setup() {
-        let router                  =   SignUpRouter()
-        router.viewController       =   self
-        self.router                 =   router
+        
+        if let currentUser = Config.currentUser,
+            currentUser.registrationStep != nil {
+            self.signUpNextStep()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -40,10 +35,10 @@ class WelcomeVC: UIViewController {
     
     // MARK: - Actions
     @IBAction func signInButtonTap(_ sender: Any) {
-        self.router?.routeToSignInScene()
+        self.routeToSignInScene()
     }
     
     @IBAction func signUpButtonTap(_ sender: Any) {
-        self.router?.routeToSignUpNextScene()
+        self.signUpNextStep()
     }
 }

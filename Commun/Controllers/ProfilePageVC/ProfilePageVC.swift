@@ -204,7 +204,7 @@ class ProfilePageVC: UIViewController {
     
     @IBAction func followButtonDidTouch(_ sender: Any) {
         guard let userToFollow = viewModel.profile.value?.userId,
-            userToFollow != Config.currentUser.id else {
+            userToFollow != Config.currentUser?.id else {
                 return
         }
         

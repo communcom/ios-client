@@ -61,11 +61,19 @@ class ProfileEditBioVC: UIViewController {
             didConfirm.onNext(textView.text)
         }
         didConfirm.onCompleted()
-        dismiss(animated: true, completion: nil)
+        if (isModal) {
+            dismiss(animated: true, completion: nil)
+        } else {
+            navigationController?.popViewController()
+        }
     }
     
     @IBAction func cancelButtonDidTouch(_ sender: Any) {
         didConfirm.onCompleted()
-        dismiss(animated: true, completion: nil)
+        if (isModal) {
+            dismiss(animated: true, completion: nil)
+        } else {
+            navigationController?.popViewController()
+        }
     }
 }

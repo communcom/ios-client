@@ -20,19 +20,19 @@ class ConfirmUserViewModel {
     
     
     // MARK: - Class Initialization
-    init(code: String, phone: String) {
-        self.pincode.accept(code)
+    init?() {
+        guard let user = Config.currentUser,
+            let code = user.smsCode,
+            let phone = user.phoneNumber else {
+                return nil
+        }
+        self.pincode.accept("\(code)")
         self.phone.accept(phone)
     }
 
     
     // MARK: - Class Functions
-    func checkPin(_ code: String) -> Observable<Bool> {
-        let isEqual = (code == pincode.value) || (code == String(describing: smsCodeDebug))
-        return Observable<Bool>.just(isEqual)
-    }
-    
-    func verifyUser() -> Observable<Bool> {
-        return NetworkService.shared.userVerify(phone: phone.value, code: pincode.value)
+    func isPinValid(_ code: String) -> Bool {
+        return (code == pincode.value) || (code == String(describing: smsCodeDebug))
     }
 }

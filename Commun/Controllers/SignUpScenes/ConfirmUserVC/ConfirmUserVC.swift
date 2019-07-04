@@ -12,7 +12,7 @@ import RxCocoa
 import CyberSwift
 import PinCodeInputView
 
-class ConfirmUserVC: UIViewController {
+class ConfirmUserVC: UIViewController, SignUpRouter {
     // MARK: - Properties
     var viewModel: ConfirmUserViewModel?
     let disposeBag = DisposeBag()
@@ -27,8 +27,6 @@ class ConfirmUserVC: UIViewController {
             return ItemView()
     })
 
-    var router: (NSObjectProtocol & SignUpRoutingLogic)?
-
     
     // MARK: - IBOutlets
     @IBOutlet weak var pinCodeView: UIView!
@@ -41,9 +39,8 @@ class ConfirmUserVC: UIViewController {
                 return
             }
             
-            if  let phone   =   UserDefaults.standard.string(forKey: Config.registrationUserPhoneKey),
-                let json    =   KeychainManager.loadAllData(byUserPhone: phone),
-                let smsCode =   json[Config.registrationSmsCodeKey] as? UInt64 {
+            if let currentUser    =   Config.currentUser,
+                let smsCode =   currentUser.smsCode {
                 self.testSmsCodeLabel.text = String(format: "sms code is: `%i`", smsCode)
                 self.testSmsCodeLabel.isHidden = false
             }
@@ -107,27 +104,6 @@ class ConfirmUserVC: UIViewController {
         }
     }
     
-    
-    // MARK: - Class Initialization
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        
-        setup()
-    }
-    
-    deinit {
-        Logger.log(message: "Success", event: .severe)
-    }
-    
-    
-    // MARK: - Setup
-    private func setup() {
-        let router                  =   SignUpRouter()
-        router.viewController       =   self
-        self.router                 =   router
-    }
-    
-    
     // MARK: - Class Functions
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -173,13 +149,13 @@ class ConfirmUserVC: UIViewController {
     
     // MARK: - Custom Functions
     func checkResendSmsCodeTime() {
-        guard   let phone   =   UserDefaults.standard.string(forKey: Config.registrationUserPhoneKey),
-                let json    =   KeychainManager.loadAllData(byUserPhone: phone),
-                let step    =   json[Config.registrationStepKey] as? String, step == "verify",
-                let date    =   json[Config.registrationSmsNextRetryKey] as? String else {
-                self.resendButton.isEnabled = true
-                self.resendTimerLabel.isHidden = true
-                return
+        guard let user = KeychainManager.currentUser(),
+            user.registrationStep == .verify,
+            let date = user.smsNextRetry
+        else {
+            self.resendButton.isEnabled = true
+            self.resendTimerLabel.isHidden = true
+            return
         }
         
         self.resendButton.isEnabled = false
@@ -219,60 +195,43 @@ class ConfirmUserVC: UIViewController {
     }
 
     @IBAction func resendButtonTapped(_ sender: UIButton) {
-        RestAPIManager.instance.resendSmsCode(phone:                UserDefaults.standard.string(forKey: Config.registrationUserPhoneKey)!,
-                                              responseHandling:     { [weak self] smsCode in
-                                                guard let strongSelf = self else { return }
-                                                
-                                                strongSelf.showAlert(title:       "Info".localized(),
-                                                                     message:     "Successfully resend code".localized(),
-                                                                     completion:  { success in
-                                                                        strongSelf.checkResendSmsCodeTime()
-                                                })
-        },
-                                              errorHandling:        { [weak self] errorAPI in
-                                                guard let strongSelf = self else { return }
-                                                strongSelf.showAlert(title: "Error".localized(), message: "Failed: \(errorAPI.caseInfo.message)")
-        })
+        guard KeychainManager.currentUser()?.phoneNumber != nil else {
+                resetSignUpProcess()
+                return
+        }
+        
+        RestAPIManager.instance.rx.resendSmsCode()
+            .subscribe(onSuccess: { [weak self] (_) in
+                guard let strongSelf = self else { return }
+                strongSelf.showAlert(
+                    title: "Info".localized(),
+                    message: "Successfully resend code".localized(),
+                    completion:  { success in
+                        strongSelf.checkResendSmsCodeTime()
+                    })
+            }) {[weak self] (error) in
+                self?.showError(error)
+            }
+            .disposed(by: disposeBag)
     }
     
     @IBAction func nextButtonTapped(_ sender: UIButton) {
         // Verify current step of registration
-        guard   let phone   =   UserDefaults.standard.string(forKey: Config.registrationUserPhoneKey),
-                let json    =   KeychainManager.loadAllData(byUserPhone: phone),
-                let step    =   json[Config.registrationStepKey] as? String,
-                step == "verify"
+        guard let user = KeychainManager.currentUser(),
+            user.registrationStep == .verify,
+            let smsCode = user.smsCode,
+            let _ = user.phoneNumber
         else {
-            self.router?.routeToSignUpNextScene()
+            self.resetSignUpProcess()
             return
         }
         
-        // Get sms code
-        guard let smsCode = json[Config.registrationSmsCodeKey] as? UInt64 else { return }
-
-        if let viewModel = self.viewModel {
-            viewModel.checkPin(self.pinCodeInputView.text)
-                .subscribe(onNext: { success in
-                    if success {
-                        RestAPIManager.instance.verify(phone:               phone,
-                                                       code:                String(describing: smsCode),
-                                                       responseHandling:    { [weak self] result in
-                                                        guard let strongSelf = self else { return }
-                                                        strongSelf.router?.routeToSignUpNextScene()
-                            },
-                                                       errorHandling:       { [weak self] responseAPIError in
-                                                        guard let strongSelf = self else { return }
-                                                        guard responseAPIError.currentState == nil else {
-                                                            strongSelf.router?.routeToSignUpNextScene()
-                                                            return
-                                                        }
-                                                        
-                                                        strongSelf.showAlert(title: "Error", message: responseAPIError.message)
-                        })
-                    } else {
-                        self.showAlert(title: "Error".localized(), message: "Enter correct sms code".localized())
-                    }
-                })
-                .disposed(by: self.disposeBag)
-        }
+        RestAPIManager.instance.rx.verify(code: smsCode)
+            .subscribe(onSuccess: { [weak self] (_) in
+                self?.signUpNextStep()
+            }) { (error) in
+                self.showError(error)
+            }
+            .disposed(by: disposeBag)
     }
 }

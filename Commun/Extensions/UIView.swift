@@ -10,13 +10,13 @@ import Foundation
 import ASSpinnerView
 
 extension UIView {
-    func showLoading() {
+    func showLoading(cover: Bool = true) {
         // if loading view is existed
         if self.viewWithTag(9999) != nil {return}
         
         // create cover view to cover all current view
         let coverView = UIView()
-        coverView.backgroundColor = .white
+        coverView.backgroundColor = cover ? .white : .clear
         coverView.translatesAutoresizingMaskIntoConstraints = false
         coverView.tag = 9999
         self.addSubview(coverView)

@@ -12,7 +12,7 @@ import RxCocoa
 import PDFReader
 import CyberSwift
 
-class LoadKeysVC: UIViewController {
+class LoadKeysVC: UIViewController, SignUpRouter {
     // MARK: - Properties
     var viewModel: LoadKeysViewModel?
     let disposeBag = DisposeBag()
@@ -62,30 +62,21 @@ class LoadKeysVC: UIViewController {
 
     
     // MARK: - Class Functions
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        makeActions()
-    }
-
-    func makeActions() {
-        downloadKeysButton.rx.tap.subscribe(onNext: { _ in
-            self.showIndetermineHudWithMessage("Saving keys".localized())
-            self.viewModel!.saveKeys().subscribe(onNext: { flag in
+    
+    @IBAction func downloadButtonDidTouch(_ sender: Any) {
+        self.viewModel!.saveKeys()
+            .subscribe(onCompleted: {
                 self.hideHud()
-                if flag {
-                    // Display PDF-file
-                    if let pdfDocument = KeychainManager.loadPDFDocument() {
-                        self.displayPDF(document: pdfDocument)
-                    }
+                if let pdf = PDFManager.loadPDFDocument() {
+                    self.displayPDF(document: pdf)
                 } else {
-                    self.showGeneralError()
+                    self.endSigningUp()
                 }
-            }, onError: {_ in
+            }) { (error) in
                 self.hideHud()
-                self.showGeneralError()
-            }).disposed(by: self.disposeBag)
-        }).disposed(by: disposeBag)
+                self.showError(error)
+            }
+            .disposed(by: disposeBag)
     }
 }
 
@@ -111,8 +102,13 @@ extension LoadKeysVC {
     @objc func didClose(sender: UIBarButtonItem) {
         self.pdfViewController?.navigationController?.popViewController(animated: true)
         
-        // Save keys
-        UserDefaults.standard.set(true, forKey: Config.isCurrentUserLoggedKey)
-        WebSocketManager.instance.authorized.accept(true)
+        do {
+            try KeychainManager.save(data: [
+                Config.registrationStepKey: CurrentUserRegistrationStep.setAvatar.rawValue
+            ])
+            signUpNextStep()
+        } catch {
+            showError(error)
+        }
     }
 }

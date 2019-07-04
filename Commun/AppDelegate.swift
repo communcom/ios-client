@@ -50,17 +50,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         _ = WebSocketManager.instance.authorized
             .skip(1)
             .subscribe(onNext: {success in
-                Logger.log(message: "Sign: \n\t\(success)", event: .debug)
-
+                
                 // Lenta
-                if success,
-                    UserDefaults.standard.value(forKey: Config.isCurrentUserLoggedKey) as? Bool == true {
+                if success, CurrentUser.loggedIn {
                     self.changeRootVC(controllerContainer.resolve(TabBarVC.self)!)
                 }
 
                 // Sign In/Up
                 else {
-                    self.showLogin()
+                    try? KeychainManager.deleteUser()
+                    self.showWelcome()
                 }
         
                 self.window?.makeKeyAndVisible()
@@ -90,7 +89,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
-    func showLogin() {
+    func showWelcome() {
         let welcomeVC = controllerContainer.resolve(WelcomeVC.self)
         let welcomeNav = UINavigationController(rootViewController: welcomeVC!)
         changeRootVC(welcomeNav)

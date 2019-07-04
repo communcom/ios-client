@@ -48,7 +48,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
-                                    <action selector="nextButtonTapped:" destination="IVB-kA-cp0" eventType="touchUpInside" id="tZc-p9-0YU"/>
+                                    <action selector="buttonNextDidTouch:" destination="IVB-kA-cp0" eventType="touchUpInside" id="yp5-rp-eMU"/>
                                 </connections>
                             </button>
                         </subviews>

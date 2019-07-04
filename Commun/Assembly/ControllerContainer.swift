@@ -44,13 +44,23 @@ let controllerContainer: Container = {
         return vc
     })
     
-    container.register(UINavigationController.self, factory: { r in
-        let nc = LoadKeysVC.instanceController(fromStoryboard: "LoadKeysVC", withIdentifier: "LoadKeysNC") as! UINavigationController
-        return nc
+    container.register(LoadKeysVC.self, factory:  {r in
+        let vc = LoadKeysVC.instanceController(fromStoryboard: "LoadKeysVC", withIdentifier: "LoadKeysVC") as! LoadKeysVC
+        return vc
     })
     
     container.register(ConfirmUserVC.self, factory: { r in
         let vc = ConfirmUserVC.instanceController(fromStoryboard: "ConfirmUserVC", withIdentifier: "ConfirmUserVC") as! ConfirmUserVC
+        return vc
+    })
+    
+    container.register(PickupAvatarVC.self, factory: { r in
+        let vc = PickupAvatarVC.instanceController(fromStoryboard: "InitProfile", withIdentifier: "PickupAvatarVC") as! PickupAvatarVC
+        return vc
+    })
+    
+    container.register(CreateBioVC.self, factory: { r in
+        let vc = CreateBioVC.instanceController(fromStoryboard: "InitProfile", withIdentifier: "CreateBioVC") as! CreateBioVC
         return vc
     })
     

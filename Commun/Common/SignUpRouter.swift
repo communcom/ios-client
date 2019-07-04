@@ -9,77 +9,104 @@
 import UIKit
 import CyberSwift
 
-// MARK: - SignUpRoutingLogic protocol
-@objc protocol SignUpRoutingLogic {
-    func routeToSignInScene()
-    func routeToSignUpNextScene()
-}
+protocol SignUpRouter {}
 
-class SignUpRouter: NSObject, SignUpRoutingLogic {
-    // MARK: - Properties
-    weak var viewController: UIViewController?
+extension SignUpRouter where Self: UIViewController {
     
-    
-    // MARK: - Class Initialization
-    deinit {
-        Logger.log(message: "Success", event: .severe)
+    /// End signing up
+    func endSigningUp() {
+        // Save keys
+        do {
+            try KeychainManager.save(data: [
+                Config.registrationStepKey: CurrentUserRegistrationStep.done.rawValue
+            ])
+            UserDefaults.standard.set(true, forKey: Config.isCurrentUserLoggedKey)
+            WebSocketManager.instance.authorized.accept(true)
+        } catch {
+            showError(error)
+        }
+        
     }
     
+    /// Reset signing up
+    func resetSignUpProcess() {
+        try! KeychainManager.deleteUser()
+        // Dismiss all screen
+        view.window!.rootViewController?.dismiss(animated: true, completion: nil)
+    }
     
-    // MARK: - Routing
+    /// Move to sign in
     func routeToSignInScene() {
-        if  let signInVC = controllerContainer.resolve(SignInViewController.self) {
-            self.viewController?.navigationController?.pushViewController(signInVC)
+        let signInVC = controllerContainer.resolve(SignInViewController.self)!
+        
+        signInVC.handlerSignUp = { [weak self] success in
+            guard let strongSelf = self else { return }
             
-            signInVC.handlerSignUp = { [weak self] success in
-                guard let strongSelf = self else { return }
-                
-                if success {
-                    strongSelf.routeToSignUpNextScene()
-                }
+            if success {
+                strongSelf.signUpNextStep()
             }
         }
+        
+        navigationController?.pushViewController(signInVC)
     }
     
-    func routeToSignUpNextScene() {
-        guard let phone = UserDefaults.standard.string(forKey: Config.registrationUserPhoneKey), phone != "" else {
-            self.viewController?.navigationController?.pushViewController(controllerContainer.resolve(SignUpVC.self)!)
+    /// Move to next scene
+    func signUpNextStep() {
+        let signUpVC = controllerContainer.resolve(SignUpVC.self)!
+        
+        // Retrieve current user's state
+        guard let user = KeychainManager.currentUser() else {
+            // Navigate to SignUpVC if no user exists
+            showOrPresentVC(signUpVC)
             return
         }
-
-        guard let json = KeychainManager.loadAllData(byUserPhone: phone), let state = json[Config.registrationStepKey] as? String else { return }
         
-        switch state {
-        // ConfirmUserVC
-        case "verify":
-            if  let confirmUserVC = controllerContainer.resolve(ConfirmUserVC.self), let smsCode = json[Config.registrationSmsCodeKey] as? UInt64 {
-                confirmUserVC.viewModel = ConfirmUserViewModel(code: "\(smsCode)", phone: phone)
-                let confirmUserNC = UINavigationController(rootViewController: confirmUserVC)
-                self.viewController?.present(confirmUserNC, animated: true, completion: nil)
-            }
-            
-        // SetUserVC
-        case "setUsername":
-            if let setUserVC = controllerContainer.resolve(SetUserVC.self) {
-                setUserVC.viewModel = SetUserViewModel(phone: phone)
-                self.viewController?.navigationController?.navigationBar.topItem?.backBarButtonItem = UIBarButtonItem(title: "Back".localized(), style: .plain, target: nil, action: nil)
-                self.viewController?.navigationController?.pushViewController(setUserVC)
-            }
-
-        // LoadKeysVC
-        case "toBlockChain":
-            DispatchQueue.main.async {
-                if let loadKeysNC = controllerContainer.resolve(UINavigationController.self), let loadKeysVC = loadKeysNC.viewControllers.first as? LoadKeysVC, let nickName = json[Config.registrationUserIDKey] as? String {
-                    loadKeysVC.viewModel = LoadKeysViewModel(nickName: nickName)
-                    self.viewController?.present(loadKeysNC, animated: true, completion: nil)
-                }
-            }
-
-        // SignUpVC
-        default:
-            self.viewController?.navigationController?.pushViewController(controllerContainer.resolve(SignUpVC.self)!)
+        // Retrieve step
+        guard let step = user.registrationStep else {
+            Logger.log(message: "Invalid registrationStep: \(user.registrationStep.debugDescription)", event: .error)
+            resetSignUpProcess()
+            return
         }
         
-        self.viewController?.view.endEditing(true)
+        // Navigation
+        var vc: UIViewController
+        
+        switch step {
+        case .verify:
+            let confirmUserVC = controllerContainer.resolve(ConfirmUserVC.self)!
+            confirmUserVC.viewModel = ConfirmUserViewModel()!
+            vc = confirmUserVC
+            
+        case .setUserName:
+            let setUserVC = controllerContainer.resolve(SetUserVC.self)!
+            vc = setUserVC
+            
+        case .toBlockChain:
+            let loadKeysVC = controllerContainer.resolve(LoadKeysVC.self)!
+            loadKeysVC.viewModel = LoadKeysViewModel()
+            vc = loadKeysVC
+            
+        case .setAvatar:
+            let pickAvatarVC = controllerContainer.resolve(PickupAvatarVC.self)!
+            vc = pickAvatarVC
+            
+        case .setBio:
+            let createBioVC = controllerContainer.resolve(CreateBioVC.self)!
+            vc = createBioVC
+            
+        default:
+            vc = signUpVC
+        }
+        
+        showOrPresentVC(vc)
+    }
+    
+    private func showOrPresentVC(_ vc: UIViewController) {
+        if let nc = self.navigationController {
+            nc.pushViewController(vc)
+            return
+        }
+        
+        present(vc, animated: true, completion: nil)
     }
 }

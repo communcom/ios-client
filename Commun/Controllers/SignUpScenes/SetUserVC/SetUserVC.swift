@@ -11,12 +11,10 @@ import RxSwift
 import RxCocoa
 import CyberSwift
 
-class SetUserVC: UIViewController {
+class SetUserVC: UIViewController, SignUpRouter {
     // MARK: - Properties
-    var viewModel: SetUserViewModel?
+    var viewModel: SetUserViewModel!
     let disposeBag = DisposeBag()
-    
-    var router: (NSObjectProtocol & SignUpRoutingLogic)?
 
     
     // MARK: - IBOutlets
@@ -68,87 +66,56 @@ class SetUserVC: UIViewController {
         }
     }
     
-
-    // MARK: - Class Initialization
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        
-        setup()
-    }
-    
-    deinit {
-        Logger.log(message: "Success", event: .severe)
-    }
-    
-    
-    // MARK: - Setup
-    private func setup() {
-        let router                  =   SignUpRouter()
-        router.viewController       =   self
-        self.router                 =   router
-    }
-    
     
     // MARK: - Class Functions
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if viewModel == nil {
+            viewModel = SetUserViewModel()
+        }
 
         self.title = "Sign up".localized()
         self.navigationController?.navigationBar.prefersLargeTitles = true
         
-        self.setupBindings()
-        self.setupActions()
+        self.bind()
+    }
+    
+    func setButtonState(enabled: Bool = false) {
+        self.nextButton.isEnabled = enabled
+        self.nextButton.backgroundColor = enabled ? #colorLiteral(red: 0.4235294118, green: 0.5137254902, blue: 0.9294117647, alpha: 1) :#colorLiteral(red: 0.4156862745, green: 0.5019607843, blue: 0.9607843137, alpha: 0.3834813784)
     }
 
-    
     // MARK: - Custom Functions
-    func setupBindings() {
-        if let viewModel = viewModel {
-            userNameTextField.rx.text
-                .map { string -> String in
-                    return string ?? ""
-                }
-                .bind(to: viewModel.userName).disposed(by: disposeBag)
-        }
-    }
-    
-    func setupActions() {
-        nextButton.rx.tap
-            .subscribe(onNext: { _ in
-                self.viewModel!.setUser()
-                    .subscribe(onNext: { flag in
-                        self.router?.routeToSignUpNextScene()
-                    })
-                    .disposed(by: self.disposeBag)
+    func bind() {
+        userNameTextField.rx.text.orEmpty
+            .subscribe(onNext: {text in
+                self.setButtonState(enabled: self.viewModel.checkUserName(text))
             })
             .disposed(by: disposeBag)
     }
     
+    @IBAction func buttonNextDidTouch(_ sender: Any) {
+        guard let phone = KeychainManager.currentUser()?.phoneNumber else {
+            resetSignUpProcess()
+            return
+        }
+        
+        guard let userName = userNameTextField.text,
+            viewModel.checkUserName(userName) else {
+                return
+        }
+        viewModel.setUser(userName: userName, phone: phone)
+            .subscribe(onCompleted: {
+                self.signUpNextStep()
+            }, onError: {error in
+                self.showError(error)
+            })
+            .disposed(by: disposeBag)
+    }
     
     // MARK: - Gestures
     @IBAction func handlerTapGestureRecognizer(_ sender: UITapGestureRecognizer) {
         self.view.endEditing(true)
-    }
-    
-    
-    // MARK: - Actions
-    @IBAction func nextButtonTapped(_ sender: UIButton) {
-        guard let phone = UserDefaults.standard.string(forKey: Config.registrationUserPhoneKey) else { return }
-
-        guard let userNickName = self.viewModel?.userName.value, (self.viewModel?.checkUserName())! else {
-            self.showAlert(title: "Error".localized(), message: "Enter correct user name".localized())
-            return
-        }
-        
-        RestAPIManager.instance.setUser(id:                 userNickName.lowercased(),
-                                        phone:              phone,
-                                        responseHandling:   { [weak self] result in
-                                            guard let strongSelf = self else { return }
-                                            strongSelf.router?.routeToSignUpNextScene()
-        },
-                                        errorHandling:      { [weak self] errorAPI in
-                                            guard let strongSelf = self else { return }
-                                            strongSelf.showAlert(title: "Error", message: errorAPI.caseInfo.message)
-        })
     }
 }

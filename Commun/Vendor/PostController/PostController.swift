@@ -47,7 +47,7 @@ extension PostController {
         
         var actions = [UIAlertAction]()
         
-        if post?.author?.userId == Config.currentUser.id {
+        if post?.author?.userId == Config.currentUser?.id {
             actions += [
                 UIAlertAction(title: "Edit".localized(), style: .default, handler: { (_) in
                     self.editPost()

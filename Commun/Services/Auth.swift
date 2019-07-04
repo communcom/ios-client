@@ -10,18 +10,15 @@ import Foundation
 import CyberSwift
 
 struct Auth {
-    static func logout() -> Bool {
+    static func logout() throws {
         // Remove all keys
-        let result = KeychainManager.deleteAllData(forUserNickName: Config.currentUserIDKey)
-
-        if result {
-            UserDefaults.standard.removeObject(forKey: Config.registrationUserPhoneKey)
-            UserDefaults.standard.removeObject(forKey: Config.isCurrentUserLoggedKey)
-            KeychainManager.deletePDFDocument()
-            WebSocketManager.instance.disconnect()
-            WebSocketManager.instance.connect()
-        }
+        try KeychainManager.deleteUser()
         
-        return result
+        UserDefaults.standard.removeObject(forKey: Config.registrationUserPhoneKey)
+        UserDefaults.standard.removeObject(forKey: Config.isCurrentUserLoggedKey)
+        PDFManager.deletePDFDocument()
+        WebSocketManager.instance.disconnect()
+        WebSocketManager.instance.connect()
+        
     }
 }
