@@ -8,8 +8,11 @@
 
 import UIKit
 import CyberSwift
+import RxSwift
 
-protocol SignUpRouter {}
+protocol SignUpRouter {
+    var disposeBag: DisposeBag {get}
+}
 
 extension SignUpRouter where Self: UIViewController {
     
@@ -18,7 +21,7 @@ extension SignUpRouter where Self: UIViewController {
         // Save keys
         do {
             try KeychainManager.save(data: [
-                Config.registrationStepKey: CurrentUserRegistrationStep.done.rawValue
+                Config.registrationStepKey: CurrentUserRegistrationStep.registered.rawValue
             ])
             UserDefaults.standard.set(true, forKey: Config.isCurrentUserLoggedKey)
             WebSocketManager.instance.authorized.accept(true)
@@ -30,7 +33,7 @@ extension SignUpRouter where Self: UIViewController {
     
     /// Reset signing up
     func resetSignUpProcess() {
-        try! KeychainManager.deleteUser()
+        try? KeychainManager.deleteUser()
         // Dismiss all screen
         view.window!.rootViewController?.dismiss(animated: true, completion: nil)
     }
@@ -108,5 +111,59 @@ extension SignUpRouter where Self: UIViewController {
         }
         
         present(vc, animated: true, completion: nil)
+    }
+}
+
+extension SignUpRouter where Self: UIViewController {
+    // MARK: - Handler
+    func handleSignUpError(error: Error, with phone: String) {
+        if let error = error as? ErrorAPI {
+            if error.caseInfo.message == "Invalid step taken" {
+                handleInvalidStepTakenWithPhone(phone)
+                return
+            }
+            if error.caseInfo.message == "User already in blockchain." {
+                self.showErrorWithLocalizedMessage("This number has already taken. Please choose another number!")
+                return
+            }
+        }
+        self.showError(error)
+    }
+    
+    /// handle Invalid step taken
+    func handleInvalidStepTakenWithPhone(_ phone: String) {
+        do {
+            try KeychainManager.save(data: [
+                Config.registrationUserPhoneKey: phone
+            ])
+            
+            // Get state
+            RestAPIManager.instance.rx.getState()
+                .map {result -> ResponseAPIRegistrationGetState in
+                    // save state to keychain
+                    var dataToSave = [
+                        Config.registrationStepKey: result.currentState
+                    ]
+                    
+                    // user (for toBlockChain step)
+                    if let user = result.user {
+                        dataToSave[Config.currentUserIDKey] = user
+                    }
+                    
+                    // save data
+                    try KeychainManager.save(data: dataToSave)
+                    
+                    // move to correct step
+                    return result
+                }
+                .subscribe(onSuccess: { (state) in
+                    self.signUpNextStep()
+                }) { (error) in
+                    self.showError(error)
+                }
+                .disposed(by: disposeBag)
+        } catch {
+            showError(error)
+        }
     }
 }

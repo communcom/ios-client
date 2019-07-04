@@ -172,7 +172,7 @@ class SignUpVC: UIViewController, SignUpRouter {
             .subscribe(onSuccess: { _ in
                 self.signUpNextStep()
             }) { (error) in
-                self.showError(error)
+                self.handleSignUpError(error: error, with: self.viewModel.phone.value)
             }
             .disposed(by: disposeBag)
     }

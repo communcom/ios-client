@@ -11,7 +11,7 @@ import RxSwift
 import CyberSwift
 
 class PickupAvatarVC: UIViewController, SignUpRouter {
-    let bag = DisposeBag()
+    let disposeBag = DisposeBag()
     @IBOutlet weak var userAvatarImage: UIImageView!
     
     override func viewDidLoad() {
@@ -53,7 +53,7 @@ class PickupAvatarVC: UIViewController, SignUpRouter {
                 self?.userAvatarImage.image = originalImage
                 self?.showGeneralError()
             })
-            .disposed(by: bag)
+            .disposed(by: disposeBag)
     }
     
     @IBAction func nextButtonDidTouch(_ sender: Any) {
