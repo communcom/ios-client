@@ -20,8 +20,13 @@ class ConfirmUserViewModel {
     
     
     // MARK: - Class Initialization
-    init(code: String, phone: String) {
-        self.pincode.accept(code)
+    init?() {
+        guard let user = Config.currentUser,
+            let code = user.smsCode,
+            let phone = user.phoneNumber else {
+                return nil
+        }
+        self.pincode.accept("\(code)")
         self.phone.accept(phone)
     }
 

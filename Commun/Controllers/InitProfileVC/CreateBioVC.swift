@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CreateBioVC: ProfileEditBioVC {
+class CreateBioVC: ProfileEditBioVC, SignUpRouter {
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -19,10 +19,10 @@ class CreateBioVC: ProfileEditBioVC {
         
         // TODO: save bio
         
-        endRegistration()
+        endSigningUp()
     }
     
     @IBAction func skipButtonDidTouch(_ sender: Any) {
-        endRegistration()
+        endSigningUp()
     }
 }

@@ -73,27 +73,12 @@ extension SignUpRouter where Self: UIViewController {
         
         switch step {
         case .verify:
-            guard let confirmUserVC = controllerContainer.resolve(ConfirmUserVC.self),
-                let smsCode = user.smsCode,
-                let phone = user.phoneNumber
-                else {
-                    Logger.log(message: "Invalid parameters for confirmUserVC with user: \(user)", event: .error)
-                    resetSignUpProcess()
-                    return
-            }
-            
-            confirmUserVC.viewModel = ConfirmUserViewModel(code: "\(smsCode)", phone: phone)
-            
+            let confirmUserVC = controllerContainer.resolve(ConfirmUserVC.self)!
+            confirmUserVC.viewModel = ConfirmUserViewModel()!
             vc = confirmUserVC
             
         case .setUserName:
-            guard let setUserVC = controllerContainer.resolve(SetUserVC.self),
-                let _ = user.phoneNumber
-                else {
-                    Logger.log(message: "Invalid parameters for setUserVC with user: \(user)", event: .error)
-                    resetSignUpProcess()
-                    return
-            }
+            let setUserVC = controllerContainer.resolve(SetUserVC.self)!
             vc = setUserVC
             
         case .toBlockChain:
