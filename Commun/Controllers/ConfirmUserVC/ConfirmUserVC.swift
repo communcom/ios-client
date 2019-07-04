@@ -149,12 +149,13 @@ class ConfirmUserVC: UIViewController, SignUpRouter {
     
     // MARK: - Custom Functions
     func checkResendSmsCodeTime() {
-        guard   let json    =   KeychainManager.currentUser(),
-                let step    =   json.registrationStep, step == "verify",
-                let date    =   json.smsNextRetry else {
-                self.resendButton.isEnabled = true
-                self.resendTimerLabel.isHidden = true
-                return
+        guard let user = KeychainManager.currentUser(),
+            user.registrationStep == .verify,
+            let date = user.smsNextRetry
+        else {
+            self.resendButton.isEnabled = true
+            self.resendTimerLabel.isHidden = true
+            return
         }
         
         self.resendButton.isEnabled = false
@@ -215,15 +216,9 @@ class ConfirmUserVC: UIViewController, SignUpRouter {
     }
     
     @IBAction func nextButtonTapped(_ sender: UIButton) {
-        // viewmodel
-        guard let viewModel = viewModel else {
-            fatalError("viewModel missing")
-        }
-        
         // Verify current step of registration
         guard let user = KeychainManager.currentUser(),
-            let step    =   user.registrationStep,
-            step == "verify",
+            user.registrationStep == .verify,
             let smsCode = user.smsCode,
             let _ = user.phoneNumber
         else {

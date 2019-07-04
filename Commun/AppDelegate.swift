@@ -52,13 +52,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             .subscribe(onNext: {success in
                 
                 // Lenta
-                if success,
-                    UserDefaults.standard.value(forKey: Config.isCurrentUserLoggedKey) as? Bool == true {
+                if success, CurrentUser.loggedIn {
                     self.changeRootVC(controllerContainer.resolve(TabBarVC.self)!)
                 }
 
                 // Sign In/Up
                 else {
+                    try? KeychainManager.deleteUser()
                     self.showWelcome()
                 }
         

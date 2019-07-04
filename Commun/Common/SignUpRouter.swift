@@ -57,38 +57,42 @@ extension SignUpRouter where Self: UIViewController {
         }
         
         // Navigation
+        var vc: UIViewController
+        
         switch step {
-        case "verify":
+        case .verify:
             guard let confirmUserVC = controllerContainer.resolve(ConfirmUserVC.self),
                 let smsCode = user.smsCode,
                 let phone = user.phoneNumber
-            else {
-                Logger.log(message: "Invalid parameters for confirmUserVC with user: \(user)", event: .error)
-                resetSignUpProcess()
-                return
+                else {
+                    Logger.log(message: "Invalid parameters for confirmUserVC with user: \(user)", event: .error)
+                    resetSignUpProcess()
+                    return
             }
             
             confirmUserVC.viewModel = ConfirmUserViewModel(code: "\(smsCode)", phone: phone)
-            showOrPresentVC(confirmUserVC)
             
-        case "setUsername":
+            vc = confirmUserVC
+            
+        case .setUserName:
             guard let setUserVC = controllerContainer.resolve(SetUserVC.self),
                 let _ = user.phoneNumber
-            else {
-                Logger.log(message: "Invalid parameters for setUserVC with user: \(user)", event: .error)
-                resetSignUpProcess()
-                return
+                else {
+                    Logger.log(message: "Invalid parameters for setUserVC with user: \(user)", event: .error)
+                    resetSignUpProcess()
+                    return
             }
-            showOrPresentVC(setUserVC)
+            vc = setUserVC
             
-        case "toBlockChain":
+        case .toBlockChain:
             let loadKeysVC = controllerContainer.resolve(LoadKeysVC.self)!
             loadKeysVC.viewModel = LoadKeysViewModel()
-            showOrPresentVC(loadKeysVC)
-            
+            vc = loadKeysVC
         default:
-            showOrPresentVC(signUpVC)
+            vc = signUpVC
         }
+        
+        showOrPresentVC(vc)
     }
     
     private func showOrPresentVC(_ vc: UIViewController) {
