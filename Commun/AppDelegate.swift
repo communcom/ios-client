@@ -13,6 +13,7 @@ import Fabric
 import Crashlytics
 import CoreData
 import Firebase
+import FirebaseMessaging
 import UserNotifications
 import CyberSwift
 @_exported import CyberSwift
@@ -34,6 +35,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Sync iCloud key-value store
         NSUbiquitousKeyValueStore.default.synchronize()
+        
+        // Hide constraint warning
+        UserDefaults.standard.setValue(false, forKey: "_UIConstraintBasedLayoutLogUnsatisfiable")
         
         // Network monitoring
         reachability = Reachability()
