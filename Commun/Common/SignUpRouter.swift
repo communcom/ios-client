@@ -122,10 +122,6 @@ extension SignUpRouter where Self: UIViewController {
                 handleInvalidStepTakenWithPhone(phone)
                 return
             }
-            if error.caseInfo.message == "User already in blockchain." {
-                self.showErrorWithLocalizedMessage("This number has already taken. Please choose another number!")
-                return
-            }
         }
         self.showError(error)
     }

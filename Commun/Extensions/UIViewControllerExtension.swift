@@ -46,7 +46,7 @@ extension UIViewController {
         if let error = error as? ErrorAPI {
             message = error.caseInfo.message
         }
-        showAlert(title: "Error".localized(), message: message)
+        showAlert(title: "Error".localized(), message: message.localized())
     }
     
     func hideHud() {

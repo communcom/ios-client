@@ -60,3 +60,4 @@
 "Wrong phone number"                        =   "Неверный номер телефона";
 "Enter correct user name"                   =   "Введите корректное имя пользователя";
 "Enter correct sms code"                    =   "Введите корректный смс-код";
+"User already in blockchain."               =   "Ползователь уже зарегистрирован в блокчейне";
