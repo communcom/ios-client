@@ -139,7 +139,7 @@ extension SignUpRouter where Self: UIViewController {
             
             // Get state
             RestAPIManager.instance.rx.getState()
-                .map {result -> ResponseAPIRegistrationGetState in
+                .subscribe(onSuccess: { (result) in
                     // save state to keychain
                     var dataToSave = [
                         Config.registrationStepKey: result.currentState
@@ -151,13 +151,15 @@ extension SignUpRouter where Self: UIViewController {
                     }
                     
                     // save data
-                    try KeychainManager.save(data: dataToSave)
+                    do {
+                        try KeychainManager.save(data: dataToSave)
+                        
+                        // move to next screen
+                        self.signUpNextStep()
+                    } catch {
+                        self.showError(error)
+                    }
                     
-                    // move to correct step
-                    return result
-                }
-                .subscribe(onSuccess: { (state) in
-                    self.signUpNextStep()
                 }) { (error) in
                     self.showError(error)
                 }
