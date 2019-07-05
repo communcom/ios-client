@@ -15,29 +15,6 @@ protocol SignUpRouter {
 }
 
 extension SignUpRouter where Self: UIViewController {
-    
-    /// End signing up
-    func endSigningUp() {
-        // Save keys
-        do {
-            try KeychainManager.save(data: [
-                Config.registrationStepKey: CurrentUserRegistrationStep.registered.rawValue
-            ])
-            UserDefaults.standard.set(true, forKey: Config.isCurrentUserLoggedKey)
-            WebSocketManager.instance.authorized.accept(true)
-        } catch {
-            showError(error)
-        }
-        
-    }
-    
-    /// Reset signing up
-    func resetSignUpProcess() {
-        try? KeychainManager.deleteUser()
-        // Dismiss all screen
-        view.window!.rootViewController?.dismiss(animated: true, completion: nil)
-    }
-    
     /// Move to sign in
     func routeToSignInScene() {
         let signInVC = controllerContainer.resolve(SignInViewController.self)!
@@ -112,6 +89,28 @@ extension SignUpRouter where Self: UIViewController {
         
         present(vc, animated: true, completion: nil)
     }
+    
+    /// End signing up
+    func endSigningUp() {
+        // Save keys
+        do {
+            try KeychainManager.save(data: [
+                Config.registrationStepKey: CurrentUserRegistrationStep.registered.rawValue
+            ])
+            UserDefaults.standard.set(true, forKey: Config.isCurrentUserLoggedKey)
+            WebSocketManager.instance.authorized.accept(true)
+        } catch {
+            showError(error)
+        }
+        
+    }
+    
+    /// Reset signing up
+    func resetSignUpProcess() {
+        try? KeychainManager.deleteUser()
+        // Dismiss all screen
+        view.window!.rootViewController?.dismiss(animated: true, completion: nil)
+    }
 }
 
 extension SignUpRouter where Self: UIViewController {
@@ -128,40 +127,13 @@ extension SignUpRouter where Self: UIViewController {
     
     /// handle Invalid step taken
     func handleInvalidStepTakenWithPhone(_ phone: String) {
-        do {
-            try KeychainManager.save(data: [
-                Config.registrationUserPhoneKey: phone
-            ])
-            
-            // Get state
-            RestAPIManager.instance.rx.getState()
-                .subscribe(onSuccess: { (result) in
-                    // save state to keychain
-                    var dataToSave = [
-                        Config.registrationStepKey: result.currentState
-                    ]
-                    
-                    // user (for toBlockChain step)
-                    if let user = result.user {
-                        dataToSave[Config.currentUserIDKey] = user
-                    }
-                    
-                    // save data
-                    do {
-                        try KeychainManager.save(data: dataToSave)
-                        
-                        // move to next screen
-                        self.signUpNextStep()
-                    } catch {
-                        self.showError(error)
-                    }
-                    
-                }) { (error) in
-                    self.showError(error)
-                }
-                .disposed(by: disposeBag)
-        } catch {
-            showError(error)
-        }
+        // Get state
+        RestAPIManager.instance.rx.getState(phone: phone)
+            .subscribe(onSuccess: { (result) in
+                self.signUpNextStep()
+            }) { (error) in
+                self.showError(error)
+            }
+            .disposed(by: disposeBag)
     }
 }

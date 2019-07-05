@@ -589,6 +589,7 @@
 		3B986B6322CE4B8100C1E985 /* SignUpScenes */ = {
 			isa = PBXGroup;
 			children = (
+				B17A970B228002440081B8E0 /* SignUpRouter.swift */,
 				5797E0F6225DDA260026C4D5 /* SignUpVC */,
 				578B94D82263CBC300FB5BC6 /* ConfirmUserVC */,
 				5787C0C222650F8A00568CEC /* SetUserVC */,
@@ -707,7 +708,6 @@
 				B12684EF22C1E56B0046C838 /* Commun.entitlements */,
 				571B14F3223A935C00630C8F /* AppDelegate.swift */,
 				57840A182240DAFF00338FD5 /* Assembly */,
-				B17A970A228002140081B8E0 /* Common */,
 				57840A192240DB1200338FD5 /* Services */,
 				578409EA223FAC0000338FD5 /* Vendor */,
 				576DC91F223E42B200EDED41 /* Extensions */,
@@ -730,6 +730,7 @@
 			isa = PBXGroup;
 			children = (
 				57B6FC23224A9E4900BCFDDA /* WelcomeScreenVC */,
+				57FB179E224C077300563BF7 /* SignInVC */,
 				3B986B6322CE4B8100C1E985 /* SignUpScenes */,
 				571B1509223A94CD00630C8F /* TabBarController */,
 				576DC917223E41CA00EDED41 /* FeedPageVC */,
@@ -741,7 +742,6 @@
 				3BAF69C122675ADB0055CCEB /* ProfilePageVC */,
 				575AECAF22606F5200A7EC2D /* SelectCountryVC */,
 				57E5159A2270E5C700A6F6DB /* SettingsVC */,
-				57FB179E224C077300563BF7 /* SignInVC */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -1236,14 +1236,6 @@
 				4F0772CC6D820AD11B1FF48A /* Pods_Commun.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		B17A970A228002140081B8E0 /* Common */ = {
-			isa = PBXGroup;
-			children = (
-				B17A970B228002440081B8E0 /* SignUpRouter.swift */,
-			);
-			path = Common;
 			sourceTree = "<group>";
 		};
 		B1EA0315228A963200835244 /* MainVC */ = {

@@ -37,7 +37,7 @@
                                 <accessibility key="accessibilityConfiguration" identifier="SetUserUserNameTextField" label="SetUserUserNameTextField"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" textContentType="nickname"/>
                             </textField>
                             <button clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="596-PJ-wLC">
                                 <rect key="frame" x="47" y="760" width="320" height="62"/>

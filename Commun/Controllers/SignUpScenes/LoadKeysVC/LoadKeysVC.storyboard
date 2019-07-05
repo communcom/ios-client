@@ -36,7 +36,7 @@
                                 </connections>
                             </button>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="image-download-keys" translatesAutoresizingMaskIntoConstraints="NO" id="7gm-kh-Lcv" userLabel="Cover Image View">
-                                <rect key="frame" x="74.5" y="218" width="265" height="265"/>
+                                <rect key="frame" x="74.5" y="229.5" width="265" height="265"/>
                                 <accessibility key="accessibilityConfiguration" identifier="LoadKeysCoverImageView" label="LoadKeysCoverImageView">
                                     <bool key="isElement" value="YES"/>
                                 </accessibility>
@@ -45,14 +45,14 @@
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Master key has been generated" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b1F-hH-fOd" userLabel="Text Label 1">
-                                <rect key="frame" x="81" y="515" width="252" height="20"/>
+                                <rect key="frame" x="81" y="526.5" width="252" height="20"/>
                                 <accessibility key="accessibilityConfiguration" identifier="LoadKeysMasterKeyLabel" label="LoadKeysMasterKeyLabel"/>
                                 <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You need Master Key for Log in. Please, download it." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Rr-2M-ki7" userLabel="Text Label 2">
-                                <rect key="frame" x="86" y="551" width="242" height="41"/>
+                                <rect key="frame" x="86" y="562.5" width="242" height="41"/>
                                 <accessibility key="accessibilityConfiguration" identifier="LoadKeysYouNeedLabel" label="LoadKeysYouNeedLabel"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.60784313725490191" green="0.62352941176470589" blue="0.63529411764705879" alpha="1" colorSpace="calibratedRGB"/>
@@ -66,9 +66,10 @@
                             <constraint firstItem="b1F-hH-fOd" firstAttribute="top" secondItem="7gm-kh-Lcv" secondAttribute="bottom" constant="32" identifier="LoadKeysTextLabel1TopConstraint" id="1hV-Hl-gse"/>
                             <constraint firstItem="5Rr-2M-ki7" firstAttribute="centerX" secondItem="gFg-Y2-v23" secondAttribute="centerX" id="3le-gZ-iUS"/>
                             <constraint firstItem="2Ds-uG-24V" firstAttribute="centerX" secondItem="JWw-Fq-mKc" secondAttribute="centerX" id="625-Va-MQq"/>
+                            <constraint firstItem="7gm-kh-Lcv" firstAttribute="centerY" secondItem="gFg-Y2-v23" secondAttribute="centerY" constant="-91" id="MHh-uY-zQG"/>
                             <constraint firstItem="7gm-kh-Lcv" firstAttribute="width" secondItem="JWw-Fq-mKc" secondAttribute="width" multiplier="240:375" id="O0w-7m-0TJ"/>
+                            <constraint firstItem="2Ds-uG-24V" firstAttribute="top" relation="greaterThanOrEqual" secondItem="5Rr-2M-ki7" secondAttribute="bottom" constant="8" id="OYO-nf-hrk"/>
                             <constraint firstItem="7gm-kh-Lcv" firstAttribute="centerX" secondItem="gFg-Y2-v23" secondAttribute="centerX" id="gw7-0e-S3I"/>
-                            <constraint firstItem="7gm-kh-Lcv" firstAttribute="top" secondItem="gFg-Y2-v23" secondAttribute="top" constant="174" identifier="LoadKeysCoverImageViewTopConstraint" id="sfv-7F-WlO"/>
                             <constraint firstItem="5Rr-2M-ki7" firstAttribute="top" secondItem="b1F-hH-fOd" secondAttribute="bottom" constant="16" identifier="LoadKeysTextLabel2TopConstraint" id="vkx-rK-Fjv"/>
                             <constraint firstItem="b1F-hH-fOd" firstAttribute="centerX" secondItem="gFg-Y2-v23" secondAttribute="centerX" id="xb6-RV-PPj"/>
                             <constraint firstItem="2Ds-uG-24V" firstAttribute="height" secondItem="JWw-Fq-mKc" secondAttribute="height" multiplier="56:812" identifier="LoadKeysDownloadButtonHeightConstraint" id="z4M-VE-eK0"/>
@@ -94,7 +95,6 @@
                         <outlet property="downloadKeysButton" destination="2Ds-uG-24V" id="nPj-Aw-5BJ"/>
                         <outlet property="textLabel1" destination="b1F-hH-fOd" id="TBy-QT-yXp"/>
                         <outlet property="textLabel2" destination="5Rr-2M-ki7" id="PoW-th-9nG"/>
-                        <outletCollection property="heightsCollection" destination="sfv-7F-WlO" collectionClass="NSMutableArray" id="W5t-Ri-mql"/>
                         <outletCollection property="heightsCollection" destination="0rY-kN-hwY" collectionClass="NSMutableArray" id="r3B-UZ-UhL"/>
                         <outletCollection property="heightsCollection" destination="1hV-Hl-gse" collectionClass="NSMutableArray" id="Nd1-sd-reu"/>
                         <outletCollection property="heightsCollection" destination="vkx-rK-Fjv" collectionClass="NSMutableArray" id="rHc-MA-iL5"/>
