@@ -9,7 +9,7 @@
 import UIKit
 import RxSwift
 
-class CreateBioVC: ProfileEditBioVC, SignUpRouter {
+class CreateBioVC: UIViewController, SignUpRouter {
     let disposeBag = DisposeBag()
     
     override func viewDidLoad() {
