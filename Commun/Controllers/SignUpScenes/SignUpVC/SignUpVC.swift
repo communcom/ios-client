@@ -10,6 +10,7 @@ import UIKit
 import RxCocoa
 import RxSwift
 import CyberSwift
+import PhoneNumberKit
 
 class SignUpVC: UIViewController, SignUpRouter {
     // MARK: - Properties
@@ -54,14 +55,18 @@ class SignUpVC: UIViewController, SignUpRouter {
         }
     }
     
-    @IBOutlet weak var phoneNumberTextField: FormTextField! {
+    @IBOutlet weak var phoneNumberTextField: PhoneNumberTextField! {
         didSet {
             self.phoneNumberTextField.tune(withPlaceholder:     "Phone Number Placeholder".localized(),
                                            textColors:          blackWhiteColorPickers,
                                            font:                UIFont.init(name: "SFProText-Regular", size: 17.0 * Config.heightRatio),
                                            alignment:           .left)
             
-            self.phoneNumberTextField.inset = 16.0 * Config.widthRatio
+            // Configure textView
+            let paddingView: UIView = UIView(frame: CGRect(x: 0, y: 0, width: 16 * Config.heightRatio, height: 20))
+            phoneNumberTextField.leftView = paddingView
+            phoneNumberTextField.leftViewMode = .always
+            
             self.phoneNumberTextField.layer.cornerRadius = 8.0 * Config.heightRatio
             self.phoneNumberTextField.clipsToBounds = true
             self.phoneNumberTextField.keyboardType = .numberPad
@@ -106,52 +111,50 @@ class SignUpVC: UIViewController, SignUpRouter {
     
     // MARK: - Custom Functions
     func setupBindings() {
-        let country = viewModel.country.asObservable()
-        country.bind(to: countryLabel.rx.text).disposed(by: disposeBag)
+        let country = viewModel.selectedCountry
         
-        country
-            .map { country -> Bool in
-                return country != "Select country"
-            }
-            .subscribe(onNext: { [weak self] flag in
+        // Bind country name
+        let countryName = country.map {$0?.label}
+        countryName.map {$0 ?? "Select country"}
+            .bind(to: countryLabel.rx.text)
+            .disposed(by: disposeBag)
+        
+        countryName.map {$0 != nil}
+            .subscribe(onNext: {[weak self] flag in
                 self?.placeholderSelectCountryLabel.isHidden = flag
                 self?.countryLabel.isHidden = !flag
                 self?.countryImageView.isHidden = !flag
             })
             .disposed(by: disposeBag)
         
-        self.viewModel.flagUrl
+        // Bind flag url
+        let flagUrl = country.filter {$0 != nil}.map {$0!.flagURL}
+        flagUrl
             .subscribe(onNext: { [weak self] url in
                 self?.countryImageView.sd_setImage(with: url, completed: nil)
             })
             .disposed(by: disposeBag)
         
-        phoneNumberTextField.delegate = self
-        
-        self.viewModel.selectedCountry
+        // Bind textField
+        country
             .filter {$0 != nil}
-            .distinctUntilChanged {$0?.code == $1?.code}
-            .map {_ in ""}
-            .bind(to: viewModel.phone)
+            .map {$0!}
+            .distinctUntilChanged {$0.code == $1.code}
+            .map {"+\($0.code)"}
+            .bind(to: phoneNumberTextField.rx.text)
             .disposed(by: disposeBag)
         
-        viewModel.phone
-            .filter {_ in self.viewModel.selectedCountry.value != nil}
-            .map {source in
-                let code = self.viewModel.selectedCountry.value!.code
-                
-                return String(
-                    format: "+%d (%@) %@-%@-%@",
-                    code,
-                    source.fillWithDash(start: 0, offsetBy: 3),
-                    source.fillWithDash(start: 3, offsetBy: 3),
-                    source.fillWithDash(start: 6, offsetBy: 2),
-                    source.fillWithDash(start: 8, offsetBy: 2)
-                )
-            }
-            .subscribe(onNext: {formattedNumber in
-                self.phoneNumberTextField.text = formattedNumber
+        // Bind phone
+        phoneNumberTextField.rx.text.orEmpty
+            .subscribe(onNext: { text in
+                self.viewModel.phone.accept(text)
             })
+            .disposed(by: disposeBag)
+        
+        // Bind button
+        viewModel.phone
+            .map {_ in self.viewModel.validatePhoneNumber()}
+            .bind(to: self.nextButton.rx.isEnabled)
             .disposed(by: disposeBag)
     }
 
@@ -176,11 +179,6 @@ class SignUpVC: UIViewController, SignUpRouter {
     
     // MARK: - Actions
     @IBAction func nextButtonTapped(_ sender: UIButton) {
-        guard self.viewModel.checkLogin() else {
-            self.showAlert(title: "Error".localized(), message: "Select county".localized())
-            return
-        }
-
         guard self.viewModel.validatePhoneNumber() else {
             self.showAlert(title: "Error".localized(), message: "Wrong phone number".localized())
             return

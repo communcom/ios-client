@@ -70,7 +70,7 @@
                                     <constraint firstAttribute="bottom" secondItem="HyA-rv-plC" secondAttribute="bottom" id="uG6-o8-iba" userLabel="SignUpViewCountryButtonBottomConstraint"/>
                                 </constraints>
                             </view>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Phone number" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="HNR-uY-C2j" customClass="FormTextField" customModule="Commun" customModuleProvider="target">
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Phone number" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="HNR-uY-C2j" customClass="PhoneNumberTextField" customModule="PhoneNumberKit">
                                 <rect key="frame" x="47" y="136.66666666666666" width="320" height="51"/>
                                 <color key="backgroundColor" red="0.95294117649999999" green="0.96078431369999995" blue="0.98039215690000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
