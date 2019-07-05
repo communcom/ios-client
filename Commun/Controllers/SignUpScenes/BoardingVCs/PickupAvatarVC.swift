@@ -15,6 +15,7 @@ class PickupAvatarVC: UIViewController, SignUpRouter {
     let disposeBag = DisposeBag()
     @IBOutlet weak var userAvatarImage: UIImageView!
     @IBOutlet weak var chooseImageButton: UIButton!
+    @IBOutlet weak var nextButton: UIButton!
     
     let image = BehaviorRelay<UIImage?>(value: nil)
     
@@ -40,6 +41,12 @@ class PickupAvatarVC: UIViewController, SignUpRouter {
             .bind(to: chooseImageButton.rx.isHidden)
             .disposed(by: disposeBag)
         
+        image.map {$0 != nil}
+            .subscribe(onNext: {hasImage in
+                self.nextButton.isEnabled = hasImage
+                self.nextButton.backgroundColor = hasImage ? #colorLiteral(red: 0.4173236787, green: 0.5017360449, blue: 0.9592832923, alpha: 1) : #colorLiteral(red: 0.7063884139, green: 0.749147296, blue: 0.9795948863, alpha: 1)
+            })
+            .disposed(by: disposeBag)
     }
     
     override func viewWillAppear(_ animated: Bool) {

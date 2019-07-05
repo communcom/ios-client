@@ -23,8 +23,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="avatar-ellipse-placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="8so-Us-TH5">
+                            <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="avatar-ellipse-placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="8so-Us-TH5">
                                 <rect key="frame" x="97" y="287" width="220" height="220"/>
+                                <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="220" id="Mr6-i5-i6n"/>
                                     <constraint firstAttribute="height" constant="220" id="S9R-EG-dRU"/>
@@ -34,6 +35,9 @@
                                         <real key="value" value="110"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="nw8-Om-cyv" appends="YES" id="RHW-Fq-4CG"/>
+                                </connections>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gpy-Rf-usg">
                                 <rect key="frame" x="178" y="370.66666666666669" width="58" height="53"/>
@@ -99,11 +103,17 @@
                     <navigationItem key="navigationItem" title="Pick a profile picture" id="jRJ-Jf-as9"/>
                     <connections>
                         <outlet property="chooseImageButton" destination="Gpy-Rf-usg" id="vXo-z6-prM"/>
+                        <outlet property="nextButton" destination="Lv0-9t-vki" id="Jvc-i6-7Tj"/>
                         <outlet property="userAvatarImage" destination="8so-Us-TH5" id="7mh-bL-pgx"/>
                         <segue destination="9Z9-bd-gq9" kind="show" id="dbQ-Kk-hBO"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ey6-Jp-1fU" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="nw8-Om-cyv">
+                    <connections>
+                        <action selector="chooseAvatarButtonDidTouch:" destination="eky-07-OKd" id="9eO-81-wBw"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="-3644.9275362318845" y="-516.29464285714289"/>
         </scene>
