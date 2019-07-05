@@ -73,6 +73,7 @@ class LoadKeysVC: UIViewController, SignUpRouter {
     }
     
     @IBAction func downloadButtonDidTouch(_ sender: Any) {
+        showIndetermineHudWithMessage("Downloading...".localized())
         self.viewModel!.saveKeys()
             .subscribe(onCompleted: {
                 self.hideHud()

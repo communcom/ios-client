@@ -64,11 +64,13 @@ class CreateBioVC: UIViewController, SignUpRouter {
     
     @IBAction func nextButtonDidTouch(_ sender: Any) {
         guard let bio = textView.text else {return}
-        
+        self.showIndetermineHudWithMessage("Updating...".localized())
         NetworkService.shared.updateMeta(params: ["about": bio])
             .subscribe(onCompleted: {
+                self.hideHud()
                 self.endSigningUp()
             }) { (error) in
+                self.hideHud()
                 self.showError(error)
             }
             .disposed(by: disposeBag)
