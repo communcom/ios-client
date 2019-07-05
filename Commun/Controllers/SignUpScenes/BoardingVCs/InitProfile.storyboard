@@ -175,6 +175,7 @@
                             </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="Nu6-hE-aK0" firstAttribute="top" secondItem="9ES-MA-cOv" secondAttribute="bottom" constant="23" id="BtA-77-r4j"/>
                             <constraint firstItem="9ES-MA-cOv" firstAttribute="leading" secondItem="3xA-oL-1Ck" secondAttribute="leading" constant="42" id="EfS-7o-3SX"/>
@@ -186,12 +187,15 @@
                             <constraint firstItem="Nu6-hE-aK0" firstAttribute="leading" secondItem="3xA-oL-1Ck" secondAttribute="leading" constant="42" id="bgj-Gx-KAZ"/>
                             <constraint firstItem="3xA-oL-1Ck" firstAttribute="trailing" secondItem="IgH-PI-taQ" secondAttribute="trailing" constant="16" id="gnG-NY-vvQ"/>
                             <constraint firstItem="3xA-oL-1Ck" firstAttribute="trailing" secondItem="9ES-MA-cOv" secondAttribute="trailing" constant="42" id="liv-YM-HNw"/>
-                            <constraint firstItem="3xA-oL-1Ck" firstAttribute="bottom" secondItem="Nu6-hE-aK0" secondAttribute="bottom" constant="50" id="q4G-Ai-9fi"/>
+                            <constraint firstItem="3xA-oL-1Ck" firstAttribute="bottom" secondItem="Nu6-hE-aK0" secondAttribute="bottom" constant="50" id="q4G-Ai-9fi" customClass="KeyboardLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                             <constraint firstItem="IgH-PI-taQ" firstAttribute="leading" secondItem="3xA-oL-1Ck" secondAttribute="leading" constant="16" id="qAf-7f-FIJ"/>
                             <constraint firstItem="3xA-oL-1Ck" firstAttribute="trailing" secondItem="6by-68-hfJ" secondAttribute="trailing" constant="20" id="rer-xG-0v2"/>
                             <constraint firstItem="6by-68-hfJ" firstAttribute="leading" secondItem="3xA-oL-1Ck" secondAttribute="leading" constant="20" id="xwz-jw-y2b"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="3xA-oL-1Ck"/>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="7Ja-7m-ndt" appends="YES" id="Yn8-l5-tMF"/>
+                        </connections>
                     </view>
                     <navigationItem key="navigationItem" title="Describe yourself" id="08m-a1-fe1">
                         <barButtonItem key="rightBarButtonItem" title="Done" id="OQq-hW-qCD"/>
@@ -203,6 +207,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kQP-eo-wWi" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="7Ja-7m-ndt">
+                    <connections>
+                        <action selector="endEditing:" destination="9Z9-bd-gq9" id="Fhe-cm-iOs"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="-2812" y="-516"/>
         </scene>

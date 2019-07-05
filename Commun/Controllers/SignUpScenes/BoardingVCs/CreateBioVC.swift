@@ -62,6 +62,10 @@ class CreateBioVC: UIViewController, SignUpRouter {
         navigationController?.setNavigationBarHidden(false, animated: animated)
     }
     
+    @IBAction func endEditing(_ sender: Any) {
+        self.view.endEditing(true)
+    }
+    
     @IBAction func nextButtonDidTouch(_ sender: Any) {
         guard let bio = textView.text else {return}
         self.showIndetermineHudWithMessage("Updating...".localized())
