@@ -105,7 +105,6 @@
                         <outlet property="chooseImageButton" destination="Gpy-Rf-usg" id="vXo-z6-prM"/>
                         <outlet property="nextButton" destination="Lv0-9t-vki" id="Jvc-i6-7Tj"/>
                         <outlet property="userAvatarImage" destination="8so-Us-TH5" id="7mh-bL-pgx"/>
-                        <segue destination="9Z9-bd-gq9" kind="show" id="dbQ-Kk-hBO"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ey6-Jp-1fU" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -197,6 +196,11 @@
                     <navigationItem key="navigationItem" title="Describe yourself" id="08m-a1-fe1">
                         <barButtonItem key="rightBarButtonItem" title="Done" id="OQq-hW-qCD"/>
                     </navigationItem>
+                    <connections>
+                        <outlet property="characterCountLabel" destination="gBp-pN-Bw1" id="IkT-vf-uBU"/>
+                        <outlet property="nextButton" destination="9ES-MA-cOv" id="eQl-0X-B8u"/>
+                        <outlet property="textView" destination="6by-68-hfJ" id="bkA-fX-OtE"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kQP-eo-wWi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
