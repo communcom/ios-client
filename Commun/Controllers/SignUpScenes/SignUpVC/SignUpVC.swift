@@ -146,7 +146,16 @@ class SignUpVC: UIViewController, SignUpRouter {
         
         // Bind phone
         phoneNumberTextField.rx.text.orEmpty
-            .subscribe(onNext: { text in
+            .map {text -> String in
+                var newText = text
+                if country.value != nil, !newText.contains("+\(country.value!.code)") {
+                    if "+\(country.value!.code)".contains(text) {return "+\(country.value!.code)"}
+                    newText = "+\(country.value!.code)\(newText)"
+                }
+                return newText
+            }
+            .subscribe(onNext: { (text) in
+                self.phoneNumberTextField.text = text
                 self.viewModel.phone.accept(text)
             })
             .disposed(by: disposeBag)
