@@ -63,6 +63,8 @@
 		3B67FC0C22C50F1500D05F01 /* SignInViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3B67FC0922C5018800D05F01 /* SignInViewController.storyboard */; };
 		3B885BBC22B7A1FE00FC4B7A /* EmbededView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B885BBB22B7A1FE00FC4B7A /* EmbededView.swift */; };
 		3B885BBE22B7A20D00FC4B7A /* EmbededView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3B885BBD22B7A20D00FC4B7A /* EmbededView.xib */; };
+		3B986B6522CF4C9E00C1E985 /* PhoneNumberTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B986B6422CF4C9E00C1E985 /* PhoneNumberTests.swift */; };
+		3B986B6722CF5B3400C1E985 /* SignUpVC+UITextFieldDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B986B6622CF5B3400C1E985 /* SignUpVC+UITextFieldDelegate.swift */; };
 		3BA4D0872292BA710022A69D /* ResponseAPIContentGetPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BA4D0862292BA710022A69D /* ResponseAPIContentGetPost.swift */; };
 		3BA4D089229315D60022A69D /* UIResponder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BA4D088229315D60022A69D /* UIResponder.swift */; };
 		3BAF69C322675B420055CCEB /* ProfilePageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BAF69C222675B420055CCEB /* ProfilePageVC.swift */; };
@@ -289,6 +291,8 @@
 		3B67FC0A22C50BC400D05F01 /* SignInViewController+CollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SignInViewController+CollectionView.swift"; sourceTree = "<group>"; };
 		3B885BBB22B7A1FE00FC4B7A /* EmbededView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbededView.swift; sourceTree = "<group>"; };
 		3B885BBD22B7A20D00FC4B7A /* EmbededView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmbededView.xib; sourceTree = "<group>"; };
+		3B986B6422CF4C9E00C1E985 /* PhoneNumberTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneNumberTests.swift; sourceTree = "<group>"; };
+		3B986B6622CF5B3400C1E985 /* SignUpVC+UITextFieldDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SignUpVC+UITextFieldDelegate.swift"; sourceTree = "<group>"; };
 		3BA4D0862292BA710022A69D /* ResponseAPIContentGetPost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseAPIContentGetPost.swift; sourceTree = "<group>"; };
 		3BA4D088229315D60022A69D /* UIResponder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIResponder.swift; sourceTree = "<group>"; };
 		3BAF69C222675B420055CCEB /* ProfilePageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePageVC.swift; sourceTree = "<group>"; };
@@ -651,6 +655,7 @@
 			children = (
 				3BEA224322B3DA9C00FF42DA /* JSONParsingTests.swift */,
 				3BEA224522B3DA9C00FF42DA /* Info.plist */,
+				3B986B6422CF4C9E00C1E985 /* PhoneNumberTests.swift */,
 			);
 			path = CommunTests;
 			sourceTree = "<group>";
@@ -1051,6 +1056,7 @@
 				575AECAD22606D0800A7EC2D /* SignUpViewModel.swift */,
 				5797E0F7225DDA400026C4D5 /* SignUpVC.swift */,
 				5797E0F9225DDA490026C4D5 /* SignUpVC.storyboard */,
+				3B986B6622CF5B3400C1E985 /* SignUpVC+UITextFieldDelegate.swift */,
 			);
 			path = SignUpVC;
 			sourceTree = "<group>";
@@ -1299,7 +1305,6 @@
 				TargetAttributes = {
 					3BEA224022B3DA9C00FF42DA = {
 						CreatedOnToolsVersion = 10.2.1;
-						TestTargetID = 571B14EF223A935C00630C8F;
 					};
 					571B14EF223A935C00630C8F = {
 						CreatedOnToolsVersion = 10.1;
@@ -1496,6 +1501,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3BEA224422B3DA9C00FF42DA /* JSONParsingTests.swift in Sources */,
+				3B986B6522CF4C9E00C1E985 /* PhoneNumberTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1557,6 +1563,7 @@
 				3B2F227122689308006B589E /* TabBarViewModel.swift in Sources */,
 				3B197C5B2269EF3F008CF10D /* ProfilePageVC+Binding.swift in Sources */,
 				57840A01223FAC1B00338FD5 /* SegmentioCellWithImageUnderLabel.swift in Sources */,
+				3B986B6722CF5B3400C1E985 /* SignUpVC+UITextFieldDelegate.swift in Sources */,
 				3B0E9C752270C691002AB1C2 /* ProfileEditBioVC.swift in Sources */,
 				57A95197224178010020F55D /* PostController.swift in Sources */,
 				57E515AA2270EBB900A6F6DB /* NotificationSettingCell.swift in Sources */,
@@ -1682,7 +1689,6 @@
 		3BEA224822B3DA9C00FF42DA /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = 5G8856SBG8;
@@ -1697,14 +1703,12 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Commun.app/Commun";
 			};
 			name = Debug;
 		};
 		3BEA224922B3DA9C00FF42DA /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5G8856SBG8;
 				INFOPLIST_FILE = CommunTests/Info.plist;
@@ -1718,7 +1722,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Commun.app/Commun";
 			};
 			name = Release;
 		};

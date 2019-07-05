@@ -120,21 +120,26 @@ class SignUpVC: UIViewController, SignUpRouter {
             })
             .disposed(by: disposeBag)
         
-        self.viewModel.phone.asObservable()
-            .bind(to: phoneNumberTextField.rx.text)
-            .disposed(by: disposeBag)
-        
         self.viewModel.flagUrl
             .subscribe(onNext: { [weak self] url in
                 self?.countryImageView.sd_setImage(with: url, completed: nil)
             })
             .disposed(by: disposeBag)
         
-        self.phoneNumberTextField.rx.text
-            .map({ text -> String in
-                return text ?? ""
+        phoneNumberTextField.delegate = self
+        
+        viewModel.phone
+            .map {source in
+                return String(format: "+7 (%@) %@-%@-%@",
+                                source.fillWithDash(start: 0, offsetBy: 3),
+                                source.fillWithDash(start: 3, offsetBy: 3),
+                                source.fillWithDash(start: 6, offsetBy: 2),
+                                source.fillWithDash(start: 8, offsetBy: 2))
+            }
+            .subscribe(onNext: {formattedNumber in
+                self.phoneNumberTextField.text = formattedNumber
             })
-            .bind(to: viewModel.phone).disposed(by: disposeBag)
+            .disposed(by: disposeBag)
     }
 
     func setupActions() {

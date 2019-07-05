@@ -81,4 +81,28 @@ extension String {
         return self.range(of: regex, options: .regularExpression, range: nil, locale: nil) != nil
     }
     
+    
+    // MARK: - Telephone verification
+    /// Fill missing number with dashes
+    func fillWithDash(start: Int, offsetBy: Int) -> String {
+        guard let substringStartIndex = self.index(startIndex, offsetBy: start, limitedBy: endIndex) else {
+            return Array(0..<offsetBy).reduce("", {(result, _) -> String in
+                return result + "_"}
+            )
+        }
+        
+        if let substringEndIndex = self.index(startIndex, offsetBy: start + offsetBy, limitedBy: endIndex) {
+            return String(self[substringStartIndex ..< substringEndIndex])
+        }
+        
+        var result = String(self[substringStartIndex...])
+        
+        if (result.count < offsetBy) {
+            result += Array(0..<offsetBy-result.count).reduce("", {(result, _) -> String in
+                return result + "_"}
+            )
+        }
+        
+        return result
+    }
 }

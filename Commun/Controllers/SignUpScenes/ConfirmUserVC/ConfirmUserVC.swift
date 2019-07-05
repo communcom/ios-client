@@ -204,17 +204,7 @@ class ConfirmUserVC: UIViewController, SignUpRouter {
     }
     
     @IBAction func nextButtonTapped(_ sender: UIButton) {
-        // Verify current step of registration
-        guard let user = KeychainManager.currentUser(),
-            user.registrationStep == .verify,
-            let smsCode = user.smsCode,
-            let _ = user.phoneNumber
-        else {
-            self.resetSignUpProcess()
-            return
-        }
-        
-        RestAPIManager.instance.rx.verify(code: smsCode)
+        RestAPIManager.instance.rx.verify()
             .subscribe(onSuccess: { [weak self] (_) in
                 self?.signUpNextStep()
             }) { (error) in
