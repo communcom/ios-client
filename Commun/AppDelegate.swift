@@ -62,7 +62,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
                 // Sign In/Up
                 else {
-                    try? KeychainManager.deleteUser()
                     self.showWelcome()
                 }
         

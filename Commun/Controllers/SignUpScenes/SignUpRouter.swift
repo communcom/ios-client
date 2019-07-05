@@ -52,6 +52,9 @@ extension SignUpRouter where Self: UIViewController {
         var vc: UIViewController
         
         switch step {
+        case .firstStep:
+            vc = signUpVC
+            
         case .verify:
             let confirmUserVC = controllerContainer.resolve(ConfirmUserVC.self)!
             confirmUserVC.viewModel = ConfirmUserViewModel()!
@@ -74,10 +77,11 @@ extension SignUpRouter where Self: UIViewController {
             let createBioVC = controllerContainer.resolve(CreateBioVC.self)!
             vc = createBioVC
             
-        default:
-            vc = signUpVC
+        case .registered:
+            endSigningUp()
+            return
         }
-        
+                
         showOrPresentVC(vc)
     }
     
@@ -130,6 +134,10 @@ extension SignUpRouter where Self: UIViewController {
         // Get state
         RestAPIManager.instance.rx.getState(phone: phone)
             .subscribe(onSuccess: { (result) in
+                if result.currentState == "registered" {
+                    self.showErrorWithLocalizedMessage("This number is already taken!".localized())
+                    return
+                }
                 self.signUpNextStep()
             }) { (error) in
                 self.showError(error)

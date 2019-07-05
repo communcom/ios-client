@@ -62,6 +62,16 @@ class LoadKeysVC: UIViewController, SignUpRouter {
     
     // MARK: - Class Functions
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: animated)
+    }
+    
     @IBAction func downloadButtonDidTouch(_ sender: Any) {
         self.viewModel!.saveKeys()
             .subscribe(onCompleted: {
