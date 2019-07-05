@@ -110,18 +110,6 @@ class ConfirmUserVC: UIViewController, SignUpRouter {
 
         self.title = "Verification".localized()
         self.navigationController?.navigationBar.prefersLargeTitles = true
-        
-        // Close bar button
-        let closeButton = UIBarButtonItem(title: "Close".localized(), style: .plain, target: nil, action: nil)
-
-        closeButton.rx.tap
-            .subscribe(onNext: { [weak self] _ in
-                guard let strongSelf = self else { return }
-                strongSelf.navigationController?.dismiss(animated: true, completion: nil)
-            })
-            .disposed(by: disposeBag)
-        
-        self.navigationItem.leftBarButtonItem = closeButton
 
         self.pinCodeInputView.set(changeTextHandler: { text in
             print(text)
