@@ -128,13 +128,26 @@ class SignUpVC: UIViewController, SignUpRouter {
         
         phoneNumberTextField.delegate = self
         
+        self.viewModel.selectedCountry
+            .filter {$0 != nil}
+            .distinctUntilChanged {$0?.code == $1?.code}
+            .map {_ in ""}
+            .bind(to: viewModel.phone)
+            .disposed(by: disposeBag)
+        
         viewModel.phone
+            .filter {_ in self.viewModel.selectedCountry.value != nil}
             .map {source in
-                return String(format: "+7 (%@) %@-%@-%@",
-                                source.fillWithDash(start: 0, offsetBy: 3),
-                                source.fillWithDash(start: 3, offsetBy: 3),
-                                source.fillWithDash(start: 6, offsetBy: 2),
-                                source.fillWithDash(start: 8, offsetBy: 2))
+                let code = self.viewModel.selectedCountry.value!.code
+                
+                return String(
+                    format: "+%d (%@) %@-%@-%@",
+                    code,
+                    source.fillWithDash(start: 0, offsetBy: 3),
+                    source.fillWithDash(start: 3, offsetBy: 3),
+                    source.fillWithDash(start: 6, offsetBy: 2),
+                    source.fillWithDash(start: 8, offsetBy: 2)
+                )
             }
             .subscribe(onNext: {formattedNumber in
                 self.phoneNumberTextField.text = formattedNumber

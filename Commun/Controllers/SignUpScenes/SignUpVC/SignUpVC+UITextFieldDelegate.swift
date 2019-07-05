@@ -11,7 +11,7 @@ import Foundation
 extension SignUpVC: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         if textField == phoneNumberTextField {
-            print(string)
+            if (viewModel.selectedCountry.value == nil) {return false}
             
             let phone = viewModel.phone
             let oldPhoneValue = phone.value
