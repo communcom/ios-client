@@ -72,6 +72,7 @@ class CreateBioVC: UIViewController, SignUpRouter {
         self.showIndetermineHudWithMessage("Updating...".localized())
         // UpdateProfile without waiting for transaction
         RestAPIManager.instance.rx.update(userProfile: ["about": bio])
+            .observeOn(MainScheduler.instance)
             .subscribe(onSuccess: { _ in
                 self.hideHud()
                 self.endSigningUp()

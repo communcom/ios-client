@@ -82,6 +82,7 @@ class PickupAvatarVC: UIViewController, SignUpRouter {
                 return RestAPIManager.instance.rx.update(userProfile: ["profile_image": url])
                     .map {_ in url}
             }
+            .observeOn(MainScheduler.instance)
             .subscribe(onSuccess: { (url) in
                 do {
                     try KeychainManager.save(data: [
