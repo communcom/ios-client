@@ -24,7 +24,7 @@ class SignInViewModel {
     func signIn(withLogin login: String, withApiKey key: String) -> Completable {
         return RestAPIManager.instance.rx.authorize(login: login, key: key)
             .map {response -> String in
-                if response.permission == "active" {throw SignInError.unknown}
+                guard response.permission == "active" else {throw SignInError.unknown}
                 return response.permission
             }
             .flatMapToCompletable()

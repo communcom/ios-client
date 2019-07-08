@@ -85,27 +85,6 @@ class SignInViewController: UIViewController {
             })
             .disposed(by: disposeBag)
         
-        // Login action
-        signInButton.rx.tap
-            .withLatestFrom(validator.filter(validate))
-            .flatMapLatest({ (cred) -> Completable in
-                return self.viewModel.signIn(withLogin: cred.login, withApiKey: cred.key)
-                    .do(onSubscribed: { [weak self] in
-                        self?.view.endEditing(true)
-                        self?.configure(signingIn: true)
-                    })
-                    .catchError {[weak self] _ in
-                        self?.configure(signingIn: false)
-                        self?.showAlert(title: nil, message: "Login error".localized() + ".\n" + "Please try again later".localized())
-                        return .empty()
-                }
-            })
-            .subscribe(onCompleted: {
-                self.configure(signingIn: false)
-                WebSocketManager.instance.authorized.accept(true)
-            })
-            .disposed(by: disposeBag)
-        
         // Switch to sign up
         signUpButton.rx.tap
             .subscribe(onNext: { [weak self] _ in
@@ -124,6 +103,34 @@ class SignInViewController: UIViewController {
                 self?.selectMethod(index: 1)
                 self?.setTextfieldWithLogin(login, key: key)
                 self?.signInButton.sendActions(for: .touchUpInside)
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    @IBAction func signInButtonDidTouch(_ sender: Any) {
+        // signing state
+        view.endEditing(true)
+        configure(signingIn: true)
+        
+        // send request
+        viewModel.signIn(
+                withLogin: loginTextField.text!,
+                withApiKey: passwordTextField.text!
+            )
+            .catchError { error in
+                if let error = error as? ErrorAPI {
+                    if error.caseInfo.message == "There is no secret stored for this channelId. Probably, client's already authorized" {
+                        return .empty()
+                    }
+                }
+                throw error
+            }
+            .subscribe(onCompleted: {
+                self.configure(signingIn: false)
+                WebSocketManager.instance.authorized.accept(true)
+            }, onError: { [weak self] (error) in
+                self?.configure(signingIn: false)
+                self?.showError(error)
             })
             .disposed(by: disposeBag)
     }
