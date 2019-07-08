@@ -77,29 +77,28 @@ class PickupAvatarVC: UIViewController, SignUpRouter {
         self.showIndetermineHudWithMessage("Uploading...".localized())
         NetworkService.shared.uploadImage(image)
             // Save to bc
-            .flatMapCompletable{
-                NetworkService.shared.updateMeta(params: ["profile_image": $0])
+            .flatMap{ url -> Single<String> in
+                // UpdateProfile without waiting for transaction
+                return RestAPIManager.instance.rx.update(userProfile: ["profile_image": url])
+                    .map {_ in url}
             }
-            // Catch error and reverse image
-            .subscribe(
-                onCompleted: {
-                    do {
-                        try KeychainManager.save(data: [
-                            Config.registrationStepKey: CurrentUserRegistrationStep.setBio.rawValue
-                            ])
-                        self.hideHud()
-                        self.signUpNextStep()
-                    } catch {
-                        self.hideHud()
-                        self.showError(error)
-                    }
-                },
-                onError: {[weak self] error in
-                    self?.hideHud()
-                    self?.image.accept(nil)
-                    self?.showError(error)
+            .subscribe(onSuccess: { (url) in
+                do {
+                    try KeychainManager.save(data: [
+                        Config.registrationStepKey: CurrentUserRegistrationStep.setBio.rawValue
+                    ])
+                    UserDefaults.standard.set(url, forKey: Config.currentUserAvatarUrlKey)
+                    self.hideHud()
+                    self.signUpNextStep()
+                } catch {
+                    self.hideHud()
+                    self.showError(error)
                 }
-            )
+            }) {[weak self] (error) in
+                self?.hideHud()
+                self?.image.accept(nil)
+                self?.showError(error)
+            }
             .disposed(by: disposeBag)
     }
     
