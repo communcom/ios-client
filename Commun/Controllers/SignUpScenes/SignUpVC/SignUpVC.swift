@@ -73,18 +73,6 @@ class SignUpVC: UIViewController, SignUpRouter {
         }
     }
     
-    @IBOutlet weak var nextButton: UIButton! {
-        didSet {
-            self.nextButton.tune(withTitle:     "Next".localized(),
-                                 hexColors:     [whiteColorPickers, lightGrayWhiteColorPickers, lightGrayWhiteColorPickers, lightGrayWhiteColorPickers],
-                                 font:          UIFont(name: "SFProText-Semibold", size: 17.0 * Config.heightRatio),
-                                 alignment:     .center)
-            
-            self.nextButton.layer.cornerRadius = 8.0 * Config.heightRatio
-            self.nextButton.clipsToBounds = true
-        }
-    }
-    
     @IBOutlet var heightsCollection: [NSLayoutConstraint]! {
         didSet {
             self.heightsCollection.forEach({ $0.constant *= Config.heightRatio })
@@ -96,6 +84,7 @@ class SignUpVC: UIViewController, SignUpRouter {
             self.widthsCollection.forEach({ $0.constant *= Config.widthRatio })
         }
     }
+    @IBOutlet weak var nextButton: StepButton!
     
     // MARK: - Class Functions
     override func viewDidLoad() {
@@ -187,7 +176,7 @@ class SignUpVC: UIViewController, SignUpRouter {
 
     
     // MARK: - Actions
-    @IBAction func nextButtonTapped(_ sender: UIButton) {
+    @IBAction func nextButtonTapped(_ sender: Any) {
         guard self.viewModel.validatePhoneNumber() else {
             self.showAlert(title: "Error".localized(), message: "Wrong phone number".localized())
             return
