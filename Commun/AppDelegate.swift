@@ -36,6 +36,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Sync iCloud key-value store
         NSUbiquitousKeyValueStore.default.synchronize()
         
+        #warning("Reset keychain for testing only. Remove in production")
+        // reset keychain
+        if !UserDefaults.standard.bool(forKey: UIApplication.versionBuild) {
+            try? KeychainManager.deleteUser()
+            UserDefaults.standard.set(true, forKey: UIApplication.versionBuild)
+        }
+        
         // Hide constraint warning
         UserDefaults.standard.setValue(false, forKey: "_UIConstraintBasedLayoutLogUnsatisfiable")
         
