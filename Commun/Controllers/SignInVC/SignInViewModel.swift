@@ -23,10 +23,9 @@ class SignInViewModel {
     
     func signIn(withLogin login: String, withApiKey key: String) -> Observable<String> {
         return NetworkService.shared.signIn(login: login, key: key)
-            .flatMap { (permission) -> Observable<String> in
+            .map { (permission) -> String in
                 if permission != "active" {throw SignInError.unknown}
-                UserDefaults.standard.set(true, forKey: Config.isCurrentUserLoggedKey)
-                return Observable<String>.just(permission)
+                return permission
             }
             .observeOn(MainScheduler.instance)
 
