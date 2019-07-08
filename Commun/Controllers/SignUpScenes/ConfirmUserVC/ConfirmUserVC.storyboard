@@ -77,9 +77,12 @@
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                         <integer key="value" value="8"/>
                                     </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="8"/>
+                                    </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <action selector="nextButtonTapped:" destination="NlB-Y1-YqX" eventType="touchUpInside" id="ThD-eD-el8"/>
+                                    <action selector="nextButtonDidTouch:" destination="NlB-Y1-YqX" eventType="touchUpInside" id="FZZ-Vq-bUx"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -122,7 +125,7 @@
                         </connections>
                     </view>
                     <connections>
-                        <outlet property="nextButton" destination="waw-lP-Yrt" id="Iv0-hI-KCM"/>
+                        <outlet property="nextButton" destination="waw-lP-Yrt" id="fd0-fo-sgH"/>
                         <outlet property="pinCodeView" destination="bYW-xi-lTa" id="mgP-Ro-2Kc"/>
                         <outlet property="resendButton" destination="6zJ-W6-fmM" id="gtL-Fu-R5f"/>
                         <outlet property="resendTimerLabel" destination="A7l-2z-CKz" id="3xh-WD-cvi"/>
