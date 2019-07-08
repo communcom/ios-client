@@ -27,7 +27,7 @@ class SignInViewController: UIViewController {
     @IBOutlet var loginPasswordContainerView: UIView!
     @IBOutlet weak var loginTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
-    @IBOutlet weak var signInButton: UIButton!
+    @IBOutlet weak var signInButton: StepButton!
     @IBOutlet weak var signUpButton: UIButton!
     var qrReaderVC: QRCodeReaderViewController!
     
@@ -81,7 +81,7 @@ class SignInViewController: UIViewController {
         
         validator
             .subscribe(onNext: { cred in
-                self.configureSignInButton(enabled: self.validate(cred: cred))
+                self.signInButton.isEnabled = self.validate(cred: cred)
             })
             .disposed(by: disposeBag)
         
@@ -148,13 +148,9 @@ class SignInViewController: UIViewController {
         } else {
             self.hideHud()
         }
-        configureSignInButton(enabled: !signingIn)
+        
+        signInButton.isEnabled = !signingIn
         self.signUpButton.isEnabled = !signingIn
-    }
-    
-    func configureSignInButton(enabled: Bool) {
-        self.signInButton.isEnabled = enabled
-        self.signInButton.backgroundColor = enabled ? #colorLiteral(red: 0.4235294118, green: 0.5137254902, blue: 0.9294117647, alpha: 1) :#colorLiteral(red: 0.4156862745, green: 0.5019607843, blue: 0.9607843137, alpha: 0.3834813784)
     }
     
     func validate(cred: LoginCredential) -> Bool {

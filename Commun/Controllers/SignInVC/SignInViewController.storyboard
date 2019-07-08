@@ -153,22 +153,14 @@
                                                             <color key="titleColor" red="0.41568627450000001" green="0.50196078430000002" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         </state>
                                                     </button>
-                                                    <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UUZ-Bi-nP3">
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2i2-iK-Xdn" customClass="StepButton" customModule="Commun" customModuleProvider="target">
                                                         <rect key="frame" x="16" y="176" width="343" height="56"/>
-                                                        <color key="backgroundColor" red="0.41732367869999998" green="0.50173604490000001" blue="0.95928329229999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <constraints>
-                                                            <constraint firstAttribute="height" constant="56" id="SCN-Nk-kZi"/>
+                                                            <constraint firstAttribute="height" constant="56" id="Idr-z6-cLI"/>
                                                         </constraints>
-                                                        <state key="normal" title="Sign In">
-                                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                        </state>
-                                                        <userDefinedRuntimeAttributes>
-                                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                                <real key="value" value="8"/>
-                                                            </userDefinedRuntimeAttribute>
-                                                        </userDefinedRuntimeAttributes>
+                                                        <state key="normal" title="Sign in"/>
                                                         <connections>
-                                                            <action selector="signInButtonDidTouch:" destination="jR8-kO-b4x" eventType="touchUpInside" id="5pE-Ue-h5z"/>
+                                                            <action selector="signInButtonDidTouch:" destination="jR8-kO-b4x" eventType="touchUpInside" id="znk-Sc-gmk"/>
                                                         </connections>
                                                     </button>
                                                 </subviews>
@@ -176,16 +168,16 @@
                                                 <constraints>
                                                     <constraint firstItem="siR-es-fG8" firstAttribute="top" secondItem="MzH-Fh-ifk" secondAttribute="bottom" constant="8" id="1eP-3k-yWm"/>
                                                     <constraint firstItem="MzH-Fh-ifk" firstAttribute="leading" secondItem="btM-xQ-6hP" secondAttribute="leading" constant="16" id="3QS-zj-l06"/>
-                                                    <constraint firstItem="UUZ-Bi-nP3" firstAttribute="top" secondItem="siR-es-fG8" secondAttribute="bottom" constant="40" id="7pb-yy-Phw"/>
-                                                    <constraint firstItem="UUZ-Bi-nP3" firstAttribute="leading" secondItem="btM-xQ-6hP" secondAttribute="leading" constant="16" id="AAY-T6-E7d"/>
-                                                    <constraint firstItem="Yxv-l2-Yad" firstAttribute="top" secondItem="UUZ-Bi-nP3" secondAttribute="bottom" constant="23" id="Bw2-kE-7xQ"/>
+                                                    <constraint firstAttribute="trailing" secondItem="2i2-iK-Xdn" secondAttribute="trailing" constant="16" id="8HQ-Qt-1jY"/>
                                                     <constraint firstAttribute="trailing" secondItem="siR-es-fG8" secondAttribute="trailing" constant="16" id="FTg-oX-Ydx"/>
                                                     <constraint firstItem="MzH-Fh-ifk" firstAttribute="top" secondItem="btM-xQ-6hP" secondAttribute="top" constant="16" id="HGp-zZ-fPX"/>
-                                                    <constraint firstAttribute="trailing" secondItem="UUZ-Bi-nP3" secondAttribute="trailing" constant="16" id="NgK-KJ-7wU"/>
                                                     <constraint firstItem="Yxv-l2-Yad" firstAttribute="centerX" secondItem="btM-xQ-6hP" secondAttribute="centerX" id="QKy-Ds-FfW"/>
+                                                    <constraint firstItem="Yxv-l2-Yad" firstAttribute="top" secondItem="2i2-iK-Xdn" secondAttribute="bottom" constant="23" id="TwR-iI-u0l"/>
                                                     <constraint firstAttribute="bottom" secondItem="Yxv-l2-Yad" secondAttribute="bottom" constant="16" id="YUm-7H-EEh"/>
                                                     <constraint firstItem="siR-es-fG8" firstAttribute="leading" secondItem="btM-xQ-6hP" secondAttribute="leading" constant="16" id="p4Y-IE-GV6"/>
+                                                    <constraint firstItem="2i2-iK-Xdn" firstAttribute="top" secondItem="siR-es-fG8" secondAttribute="bottom" constant="40" id="sdd-FS-4OY"/>
                                                     <constraint firstAttribute="trailing" secondItem="MzH-Fh-ifk" secondAttribute="trailing" constant="16" id="tJi-BQ-Jod"/>
+                                                    <constraint firstItem="2i2-iK-Xdn" firstAttribute="leading" secondItem="btM-xQ-6hP" secondAttribute="leading" constant="16" id="xmR-56-uAV"/>
                                                 </constraints>
                                             </view>
                                         </subviews>
@@ -230,7 +222,7 @@
                         <outlet property="passwordTextField" destination="siR-es-fG8" id="qEL-wy-8s6"/>
                         <outlet property="qrCodeReaderView" destination="ph5-py-HbL" id="C63-FT-Cbp"/>
                         <outlet property="qrContainerView" destination="gJG-3i-Ca7" id="K2b-wU-NLY"/>
-                        <outlet property="signInButton" destination="UUZ-Bi-nP3" id="9jf-3d-ytH"/>
+                        <outlet property="signInButton" destination="2i2-iK-Xdn" id="0k1-Yb-dcC"/>
                         <outlet property="signUpButton" destination="Yxv-l2-Yad" id="vQY-cz-rx0"/>
                     </connections>
                 </viewController>

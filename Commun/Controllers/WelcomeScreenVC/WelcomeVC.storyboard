@@ -26,25 +26,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yva-NM-lgY" userLabel="Sign Up Button ">
-                                <rect key="frame" x="42" y="613" width="291" height="56"/>
-                                <color key="backgroundColor" red="0.41568627450000001" green="0.50196078430000002" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <accessibility key="accessibilityConfiguration" identifier="WelcomeItemSignUpButton" label="WelcomeItemSignUpButton"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="56" id="0Gg-pC-GpW"/>
-                                </constraints>
-                                <state key="normal" title="Sign up">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </state>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="8"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <action selector="signUpButtonTap:" destination="5Vs-ev-2DK" eventType="touchUpInside" id="miC-cT-CcX"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9u7-LT-02r" userLabel="Sign In Button">
                                 <rect key="frame" x="42" y="685" width="291" height="56"/>
                                 <accessibility key="accessibilityConfiguration" identifier="WelcomeItemSignInButton" label="WelcomeItemSignInButton"/>
@@ -65,19 +46,29 @@
                                     <segue destination="q5V-Zu-EaX" kind="embed" id="edI-Fw-8RT"/>
                                 </connections>
                             </containerView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8t8-vm-TGP" customClass="StepButton" customModule="Commun" customModuleProvider="target">
+                                <rect key="frame" x="42" y="613" width="291" height="56"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="56" id="Zy9-JZ-KHy"/>
+                                </constraints>
+                                <state key="normal" title="Sign up"/>
+                                <connections>
+                                    <action selector="signUpButtonTap:" destination="5Vs-ev-2DK" eventType="touchUpInside" id="Iuv-sF-KYs"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="yva-NM-lgY" firstAttribute="leading" secondItem="bF6-IB-5mY" secondAttribute="leading" constant="42" id="5F3-ko-ig6"/>
+                            <constraint firstItem="9u7-LT-02r" firstAttribute="top" secondItem="8t8-vm-TGP" secondAttribute="bottom" constant="16" id="4O4-PT-fRo"/>
+                            <constraint firstItem="8t8-vm-TGP" firstAttribute="top" secondItem="qQo-fb-NcH" secondAttribute="bottom" constant="40" id="DnB-Zm-gsI"/>
                             <constraint firstItem="9u7-LT-02r" firstAttribute="leading" secondItem="bF6-IB-5mY" secondAttribute="leading" constant="42" id="H9C-oC-CLN"/>
-                            <constraint firstItem="bF6-IB-5mY" firstAttribute="trailing" secondItem="yva-NM-lgY" secondAttribute="trailing" constant="42" id="TCz-5f-Hw1"/>
+                            <constraint firstItem="8t8-vm-TGP" firstAttribute="leading" secondItem="bF6-IB-5mY" secondAttribute="leading" constant="42" id="JGQ-Xv-W61"/>
                             <constraint firstItem="qQo-fb-NcH" firstAttribute="leading" secondItem="bF6-IB-5mY" secondAttribute="leading" id="Tjd-Cq-itW"/>
                             <constraint firstItem="qQo-fb-NcH" firstAttribute="top" secondItem="oXF-w0-ktq" secondAttribute="top" id="UWO-ih-eU6"/>
+                            <constraint firstItem="bF6-IB-5mY" firstAttribute="trailing" secondItem="8t8-vm-TGP" secondAttribute="trailing" constant="42" id="WVQ-e6-8y3"/>
                             <constraint firstItem="bF6-IB-5mY" firstAttribute="bottom" secondItem="9u7-LT-02r" secondAttribute="bottom" constant="37" id="brU-h4-UnN"/>
                             <constraint firstItem="bF6-IB-5mY" firstAttribute="trailing" secondItem="9u7-LT-02r" secondAttribute="trailing" constant="42" id="gfF-cR-X2p"/>
                             <constraint firstItem="qQo-fb-NcH" firstAttribute="trailing" secondItem="bF6-IB-5mY" secondAttribute="trailing" id="mLH-q0-tby"/>
-                            <constraint firstItem="yva-NM-lgY" firstAttribute="top" secondItem="qQo-fb-NcH" secondAttribute="bottom" constant="40" id="vtX-hD-TCZ"/>
-                            <constraint firstItem="9u7-LT-02r" firstAttribute="top" secondItem="yva-NM-lgY" secondAttribute="bottom" constant="16" identifier="WelcomeItemSignInButtonTopConstraint" id="zVE-Vk-Lo5"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="bF6-IB-5mY"/>
                     </view>
