@@ -64,7 +64,12 @@ class CreateBioVC: UIViewController, SignUpRouter {
     }
     
     @IBAction func endEditing(_ sender: Any) {
-        self.view.endEditing(true)
+        if textView.isFirstResponder {
+            self.view.endEditing(true)
+            return
+        }
+        
+        textView.becomeFirstResponder()
     }
     
     @IBAction func nextButtonDidTouch(_ sender: Any) {
