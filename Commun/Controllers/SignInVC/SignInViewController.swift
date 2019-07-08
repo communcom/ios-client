@@ -88,7 +88,7 @@ class SignInViewController: UIViewController {
         // Login action
         signInButton.rx.tap
             .withLatestFrom(validator.filter(validate))
-            .flatMapLatest({ (cred) -> Observable<String> in
+            .flatMapLatest({ (cred) -> Completable in
                 return self.viewModel.signIn(withLogin: cred.login, withApiKey: cred.key)
                     .do(onSubscribed: { [weak self] in
                         self?.view.endEditing(true)
@@ -97,10 +97,10 @@ class SignInViewController: UIViewController {
                     .catchError {[weak self] _ in
                         self?.configure(signingIn: false)
                         self?.showAlert(title: nil, message: "Login error".localized() + ".\n" + "Please try again later".localized())
-                        return Observable<String>.empty()
+                        return .empty()
                 }
             })
-            .subscribe(onNext: {_ in
+            .subscribe(onCompleted: {
                 self.configure(signingIn: false)
                 WebSocketManager.instance.authorized.accept(true)
             })

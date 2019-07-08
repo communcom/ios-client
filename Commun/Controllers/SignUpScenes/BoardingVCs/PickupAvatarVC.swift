@@ -8,7 +8,6 @@
 
 import UIKit
 import RxSwift
-import CyberSwift
 import RxCocoa
 
 class PickupAvatarVC: UIViewController, SignUpRouter {
@@ -79,10 +78,12 @@ class PickupAvatarVC: UIViewController, SignUpRouter {
             // Save to bc
             .flatMap{ url -> Single<String> in
                 // UpdateProfile without waiting for transaction
-                return RestAPIManager.instance.rx.update(userProfile: ["profile_image": url])
-                    .map {_ in url}
+                return NetworkService.shared.updateMeta(
+                    params: ["profile_image": url],
+                    waitForTransaction: false
+                )
+                .andThen(Single<String>.just(url))
             }
-            .observeOn(MainScheduler.instance)
             .subscribe(onSuccess: { (url) in
                 do {
                     try KeychainManager.save(data: [

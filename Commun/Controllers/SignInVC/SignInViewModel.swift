@@ -21,12 +21,13 @@ class SignInViewModel {
     
     let qrCode = BehaviorRelay<LoginCredential>(value: (login: "", key: ""))
     
-    func signIn(withLogin login: String, withApiKey key: String) -> Observable<String> {
-        return NetworkService.shared.signIn(login: login, key: key)
-            .map { (permission) -> String in
-                if permission != "active" {throw SignInError.unknown}
-                return permission
+    func signIn(withLogin login: String, withApiKey key: String) -> Completable {
+        return RestAPIManager.instance.rx.authorize(login: login, key: key)
+            .map {response -> String in
+                if response.permission == "active" {throw SignInError.unknown}
+                return response.permission
             }
+            .flatMapToCompletable()
             .observeOn(MainScheduler.instance)
 
         

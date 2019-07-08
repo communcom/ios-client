@@ -76,9 +76,8 @@ class CreateBioVC: UIViewController, SignUpRouter {
         guard let bio = textView.text else {return}
         self.showIndetermineHudWithMessage("Updating...".localized())
         // UpdateProfile without waiting for transaction
-        RestAPIManager.instance.rx.update(userProfile: ["about": bio])
-            .observeOn(MainScheduler.instance)
-            .subscribe(onSuccess: { _ in
+        NetworkService.shared.updateMeta(params: ["about": bio], waitForTransaction: false)
+            .subscribe(onCompleted: {
                 self.hideHud()
                 self.endSigningUp()
             }) { (error) in
