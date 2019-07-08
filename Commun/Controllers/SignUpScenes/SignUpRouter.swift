@@ -135,7 +135,7 @@ extension SignUpRouter where Self: UIViewController {
         RestAPIManager.instance.rx.getState(phone: phone)
             .subscribe(onSuccess: { (result) in
                 if result.currentState == "registered" {
-                    self.showErrorWithLocalizedMessage("This number is already taken!".localized())
+                    self.showErrorWithLocalizedMessage("This number is already taken!")
                     return
                 }
                 self.signUpNextStep()
