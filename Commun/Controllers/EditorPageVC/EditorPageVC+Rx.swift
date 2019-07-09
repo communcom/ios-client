@@ -23,19 +23,17 @@ extension EditorPageVC {
             .disposed(by: disposeBag)
         
         // image
-        let imageViewIsEmpty = imageView.rx.isEmpty.share()
-        
-        imageViewIsEmpty
+        imageView.rx.isEmpty
             .map {$0 ? 0: self.imageView.size.width * (self.imageView.image!.size.height / self.imageView.image!.size.width)}
             .bind(to: imageViewHeightConstraint.rx.constant)
             .disposed(by: disposeBag)
         
-        imageViewIsEmpty
+        imageView.rx.isEmpty
             .map {$0 ? 0: 24}
             .bind(to: removeImageButtonHeightConstraint.rx.constant)
             .disposed(by: disposeBag)
         
-        imageViewIsEmpty
+        imageView.rx.isEmpty
             .filter {!$0}
             .subscribe(onNext: {_ in
                 self.scrollView.scrollsToBottom()
@@ -58,7 +56,8 @@ extension EditorPageVC {
         
         #warning("Verify community")
         #warning("fix contentText later")
-        imageViewIsEmpty
+        imageView.rx.isEmpty
+            .skip(1)
             .subscribe(onNext: { (empty) in
                 self.viewModel?.imageChanged.accept(true)
             })
