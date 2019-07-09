@@ -23,14 +23,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Ds-uG-24V">
+                            <button clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Ds-uG-24V" customClass="StepButton" customModule="Commun" customModuleProvider="target">
                                 <rect key="frame" x="47" y="726" width="320" height="62"/>
-                                <color key="backgroundColor" red="0.41568627450000001" green="0.50196078430000002" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
                                 <accessibility key="accessibilityConfiguration" identifier="LoadKeysDownloadButton" label="LoadKeysDownloadButton"/>
                                 <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="17"/>
-                                <state key="normal" title="Download">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </state>
+                                <state key="normal" title="Download"/>
                                 <connections>
                                     <action selector="downloadButtonDidTouch:" destination="CbK-LP-0uf" eventType="touchUpInside" id="gdO-PG-D9U"/>
                                 </connections>

@@ -42,17 +42,7 @@ class SetUserVC: UIViewController, SignUpRouter {
         }
     }
     
-    @IBOutlet weak var nextButton: UIButton! {
-        didSet {
-            self.nextButton.tune(withTitle:     "Next".localized(),
-                                 hexColors:     [whiteColorPickers, lightGrayWhiteColorPickers, lightGrayWhiteColorPickers, lightGrayWhiteColorPickers],
-                                 font:          UIFont(name: "SFProText-Semibold", size: 17.0 * Config.heightRatio),
-                                 alignment:     .center)
-            
-            self.nextButton.layer.cornerRadius = 8.0 * Config.heightRatio
-            self.nextButton.clipsToBounds = true
-        }
-    }
+    @IBOutlet weak var nextButton: StepButton!
     
     @IBOutlet var heightsCollection: [NSLayoutConstraint]! {
         didSet {
@@ -80,17 +70,12 @@ class SetUserVC: UIViewController, SignUpRouter {
         
         self.bind()
     }
-    
-    func setButtonState(enabled: Bool = false) {
-        self.nextButton.isEnabled = enabled
-        self.nextButton.backgroundColor = enabled ? #colorLiteral(red: 0.4235294118, green: 0.5137254902, blue: 0.9294117647, alpha: 1) :#colorLiteral(red: 0.4156862745, green: 0.5019607843, blue: 0.9607843137, alpha: 0.3834813784)
-    }
 
     // MARK: - Custom Functions
     func bind() {
         userNameTextField.rx.text.orEmpty
             .subscribe(onNext: {text in
-                self.setButtonState(enabled: self.viewModel.checkUserName(text))
+                self.nextButton.isEnabled = self.viewModel.checkUserName(text)
             })
             .disposed(by: disposeBag)
     }

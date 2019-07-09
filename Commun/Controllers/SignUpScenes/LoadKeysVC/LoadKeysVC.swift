@@ -42,17 +42,7 @@ class LoadKeysVC: UIViewController, SignUpRouter {
     }
     
     
-    @IBOutlet weak var downloadKeysButton: UIButton! {
-        didSet {
-            self.downloadKeysButton.tune(withTitle:     "Download".localized(),
-                                         hexColors:     [whiteColorPickers, lightGrayWhiteColorPickers, lightGrayWhiteColorPickers, lightGrayWhiteColorPickers],
-                                         font:          UIFont(name: "SFProText-Semibold", size: 17.0 * Config.heightRatio),
-                                         alignment:     .center)
-            
-            self.downloadKeysButton.layer.cornerRadius = 8.0 * Config.heightRatio
-            self.downloadKeysButton.clipsToBounds = true
-        }
-    }
+    @IBOutlet weak var downloadKeysButton: StepButton! 
     
     @IBOutlet var heightsCollection: [NSLayoutConstraint]! {
         didSet {

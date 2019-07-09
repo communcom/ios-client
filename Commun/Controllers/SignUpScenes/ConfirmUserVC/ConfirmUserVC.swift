@@ -58,7 +58,7 @@ class ConfirmUserVC: UIViewController, SignUpRouter {
                                    isMultiLines:  false)
         }
     }
-    @IBOutlet weak var nextButton: UIButton!
+    @IBOutlet weak var nextButton: StepButton!
     
     @IBOutlet weak var resendButton: UIButton! {
         didSet {
