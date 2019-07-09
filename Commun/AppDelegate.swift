@@ -95,6 +95,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         Fabric.with([Crashlytics.self])
         
+        // DELETE AFTER TEST!!!
+        self.scheduleLocalNotification(userInfo: ["title": "Test Title #1", "body": "Test body #1", "badge": 45])
+
         return true
     }
     
@@ -162,6 +165,37 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         })
     }
 
+    private func scheduleLocalNotification(userInfo: [AnyHashable : Any]) {
+        let notificationContent                 =   UNMutableNotificationContent()
+        let categoryIdentifirer                 =   "Delete Notification Type"
+        
+        notificationContent.title               =   userInfo["title"] as? String ?? "Commun"
+        notificationContent.body                =   userInfo["body"] as? String ?? "Commun"
+        notificationContent.sound               =   userInfo["sound"] as? UNNotificationSound ?? UNNotificationSound.default
+        notificationContent.badge               =   userInfo["badge"] as? NSNumber ?? 1
+        notificationContent.categoryIdentifier  =   categoryIdentifirer
+        
+        let trigger         =   UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
+        let identifier      =   "Local Notification"
+        let request         =   UNNotificationRequest(identifier: identifier, content: notificationContent, trigger: trigger)
+        
+        self.notificationCenter.add(request) { (error) in
+            if let error = error {
+                Logger.log(message: "Error \(error.localizedDescription)", event: .error)
+            }
+        }
+        
+        let snoozeAction    =   UNNotificationAction(identifier: "Snooze", title: "Snooze".localized(), options: [])
+        let deleteAction    =   UNNotificationAction(identifier: "DeleteAction", title: "Delete".localized(), options: [.destructive])
+        
+        let category        =   UNNotificationCategory(identifier:          categoryIdentifirer,
+                                                       actions:             [snoozeAction, deleteAction],
+                                                       intentIdentifiers:   [],
+                                                       options:             [])
+        
+        self.notificationCenter.setNotificationCategories([category])
+    }
+    
     
     // MARK: - Core Data stack
     lazy var persistentContainer: NSPersistentContainer = {
@@ -256,32 +290,33 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     func userNotificationCenter(_ center:                                   UNUserNotificationCenter,
                                 willPresent notification:                   UNNotification,
                                 withCompletionHandler completionHandler:    @escaping (UNNotificationPresentationOptions) -> Void) {
-        let userInfo = notification.request.content.userInfo
-        
-        if let messageID = userInfo[gcmMessageIDKey] {
-            Logger.log(message: "Message ID: \(messageID)", event: .severe)
-        }
+        // Display Local Notification
+        let notificationContent = notification.request.content
+//        let userInfo = notification.request.content.userInfo
         
         // Print full message.
-        print(userInfo)
+        Logger.log(message: "UINotificationContent: \(notificationContent)", event: .debug)
+//        Logger.log(message: "UserInfo: \(userInfo)", event: .debug)
+
+        completionHandler([.alert, .sound])
         
-        // Change this to your preferred presentation option
-        completionHandler([])
+        UIApplication.shared.applicationIconBadgeNumber = Int(truncating: notificationContent.badge ?? 1)
     }
     
     // Tap on push message
     func userNotificationCenter(_ center:                                   UNUserNotificationCenter,
                                 didReceive response:                        UNNotificationResponse,
                                 withCompletionHandler completionHandler:    @escaping () -> Void) {
-        let userInfo = response.notification.request.content.userInfo
+        let notificationContent = response.notification.request.content
+//        let userInfo = response.notification.request.content.userInfo
         
-        // Print message ID.
-        if let messageID = userInfo[gcmMessageIDKey] {
-            Logger.log(message: "Message ID: \(messageID)", event: .severe)
+        if response.notification.request.identifier == "Local Notification" {
+            Logger.log(message: "Handling notifications with the Local Notification Identifier", event: .debug)
         }
-        
+
         // Print full message.
-        print(userInfo)
+        Logger.log(message: "UINotificationContent: \(notificationContent)", event: .debug)
+//        Logger.log(message: "UserInfo: \(userInfo)", event: .debug)
 
         completionHandler()
     }
