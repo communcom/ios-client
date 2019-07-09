@@ -91,10 +91,7 @@ extension PostCardCell {
         self.mainTextLabel.text = post.content.title
         self.accessibilityLabel = "PostCardCell"
         
-        let embeds = post.content.embeds
-        
-        if embeds.count > 0,
-            let imageURL = embeds[0].result?.thumbnail_url ?? embeds[0].result?.url {
+        if let imageURL = post.firstEmbedImageURL {
             embededImageView.sd_setImage(with: URL(string: imageURL))
             embededViewHeightConstraint.constant = 31/40 * UIScreen.main.bounds.width
             embededImageViewToContainerBottomConstraint.constant = 12
