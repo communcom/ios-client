@@ -136,10 +136,12 @@
             <connections>
                 <outlet property="avatarImageView" destination="S8Z-0b-bRv" id="ynH-2z-cMC"/>
                 <outlet property="contentLabel" destination="dho-Zk-FEu" id="Jw7-ec-mcJ"/>
+                <outlet property="downVoteButton" destination="EWF-Yc-pSQ" id="FRa-Xd-HJG"/>
                 <outlet property="leftPaddingConstraint" destination="BIS-np-xC4" id="UCY-FN-q3B"/>
                 <outlet property="nameLabel" destination="vEd-B7-VR3" id="HsJ-hL-kmg"/>
                 <outlet property="rightPaddingConstraint" destination="3Sg-Sr-c7j" id="EDR-IL-YY1"/>
                 <outlet property="timeLabel" destination="F53-9j-0jt" id="XCj-fJ-s5V"/>
+                <outlet property="upVoteButton" destination="YVW-q8-bUL" id="ahs-BA-pcN"/>
                 <outlet property="voteCountLabel" destination="wdF-tc-scc" id="FZj-yM-Mgl"/>
             </connections>
             <point key="canvasLocation" x="137.59999999999999" y="160.11994002998503"/>

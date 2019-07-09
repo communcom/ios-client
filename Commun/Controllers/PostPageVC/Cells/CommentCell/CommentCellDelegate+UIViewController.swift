@@ -11,15 +11,9 @@ import CyberSwift
 
 extension CommentCellDelegate where Self: UIViewController {
     func cell(_ cell: CommentCell, didTapUpVoteButtonForComment comment: ResponseAPIContentGetComment) {
-        NetworkService.shared.voteMessage(voteType: .upvote,
-                                          messagePermlink: comment.contentId.permlink,
-                                          messageAuthor: comment.author?.username ?? "")
     }
     
     func cell(_ cell: CommentCell, didTapDownVoteButtonForComment comment: ResponseAPIContentGetComment) {
-        NetworkService.shared.voteMessage(voteType: .downvote,
-                                          messagePermlink: comment.contentId.permlink,
-                                          messageAuthor: comment.author?.username ?? "")
     }
     
     func cell(_ cell: CommentCell, didTapReplyButtonForComment comment: ResponseAPIContentGetComment) {

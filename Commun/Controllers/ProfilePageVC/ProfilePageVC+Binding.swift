@@ -20,7 +20,7 @@ extension ProfilePageVC: CommentCellDelegate {
             tableView.rx.didScroll
                 .map {_ in self.tableView.contentOffset.y >= -425}
                 .subscribe(onNext: {self.showTitle($0, animated: true)})
-                .disposed(by: bag)
+                .disposed(by: disposeBag)
         }
         
         // Profile
@@ -29,29 +29,29 @@ extension ProfilePageVC: CommentCellDelegate {
         // End refreshing
         profile.map {_ in false}
             .drive(tableView.refreshControl!.rx.isRefreshing)
-            .disposed(by: bag)
+            .disposed(by: disposeBag)
         
         // Bind state
         let isProfileMissing = profile.map {$0 == nil}
         
         isProfileMissing
             .drive(tableView.rx.isHidden)
-            .disposed(by: bag)
+            .disposed(by: disposeBag)
         
         // Got profile
         let nonNilProfile = profile.filter {$0 != nil}.map {$0!}
         
         nonNilProfile
             .drive(self.rx.profile)
-            .disposed(by: bag)
+            .disposed(by: disposeBag)
         
         // Bind bios
         let bioText = bioLabel.rx.observe(String.self, "text")
         
-        bioText.map{$0 == nil}.bind(to: bioLabel.rx.isHidden).disposed(by: bag)
+        bioText.map{$0 == nil}.bind(to: bioLabel.rx.isHidden).disposed(by: disposeBag)
         
         if viewModel.isMyProfile {
-            bioText.map{$0 != nil}.bind(to: addBioButton.rx.isHidden).disposed(by: bag)
+            bioText.map{$0 != nil}.bind(to: addBioButton.rx.isHidden).disposed(by: disposeBag)
         }
         
         // Bind items
@@ -88,14 +88,14 @@ extension ProfilePageVC: CommentCellDelegate {
                 
                 fatalError("Unknown cell type")
             }
-            .disposed(by: bag)
+            .disposed(by: disposeBag)
         
         // Reset expandable
         viewModel.items
             .subscribe(onNext: {_ in
                 self.expandedIndexes = []
             })
-            .disposed(by: bag)
+            .disposed(by: disposeBag)
         
         // OnItemSelected
         tableView.rx.itemSelected
@@ -118,7 +118,7 @@ extension ProfilePageVC: CommentCellDelegate {
                     break
                 }
             })
-            .disposed(by: bag)
+            .disposed(by: disposeBag)
         
         // Copy referral button
         #warning("Action for copy referral button")

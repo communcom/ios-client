@@ -101,7 +101,9 @@ extension PostController {
         downVoteButton.isEnabled = false
         
         // send request
-        upVoteObserver(post)
+        NetworkService.shared.voteMessage(voteType:          originHasUpVote ? .unvote: .upvote,
+                                          messagePermlink:   post.contentId.permlink,
+                                          messageAuthor:     post.author?.userId ?? "")
             .subscribe(
                 onCompleted: {
                     // re-enable buttons
@@ -141,7 +143,9 @@ extension PostController {
         downVoteButton.isEnabled = false
         
         // send request
-        downVoteObserver(post)
+        NetworkService.shared.voteMessage(voteType:          originHasDownVote ? .unvote: .downvote,
+                                          messagePermlink:   post.contentId.permlink,
+                                          messageAuthor:     post.author?.userId ?? "")
             .subscribe(
                 onCompleted: {
                     // re-enable buttons

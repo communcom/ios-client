@@ -8,6 +8,7 @@
 
 import UIKit
 import TTTAttributedLabel
+import RxSwift
 
 protocol CommentCellDelegate: class {
     var expandedIndexes: [Int] {get set}
@@ -26,6 +27,8 @@ class CommentCell: UITableViewCell {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var contentLabel: TTTAttributedLabel!
+    @IBOutlet weak var upVoteButton: UIButton!
+    @IBOutlet weak var downVoteButton: UIButton!
     @IBOutlet weak var voteCountLabel: UILabel!
     @IBOutlet weak var leftPaddingConstraint: NSLayoutConstraint!
     @IBOutlet weak var rightPaddingConstraint: NSLayoutConstraint!
@@ -34,6 +37,7 @@ class CommentCell: UITableViewCell {
     
     var comment: ResponseAPIContentGetComment?
     var delegate: CommentCellDelegate?
+    let bag = DisposeBag()
     
     var expanded = false
     
@@ -71,18 +75,6 @@ class CommentCell: UITableViewCell {
         
         setText(expanded: expanded)
         
-        
-//        if let html = comment.content.embeds.first?.result.html {
-//            let htmlData = NSString(string: html).data(using: String.Encoding.unicode.rawValue)
-//            let options = [NSAttributedString.DocumentReadingOptionKey.documentType:
-//                NSAttributedString.DocumentType.html]
-//            let attributedString = try? NSMutableAttributedString(data: htmlData ?? Data(),
-//                                                                  options: options,
-//                                                                  documentAttributes: nil)
-//            contentLabel.attributedText = attributedString
-//        } else {
-//        }
-//        avatarImageView.setAvatar(urlString: comment.author., namePlaceHolder: <#T##String#>)
         #warning("set user's avatar")
         avatarImageView.setNonAvatarImageWithId(comment.author?.username ?? comment.author?.userId ?? "U")
         nameLabel.text = comment.author?.username ?? comment.author?.userId
@@ -90,6 +82,14 @@ class CommentCell: UITableViewCell {
         
         #warning("change this number later")
         voteCountLabel.text = "\(comment.payout.rShares)"
+        
+        setButton()
+    }
+    
+    func setButton() {
+        // Handle button
+        upVoteButton.setImage(UIImage(named: comment?.votes.hasUpVote == true ? "icon-up-selected" : "icon-up-default"), for: .normal)
+        downVoteButton.setImage(UIImage(named: comment?.votes.hasDownVote == true ? "icon-down-selected" : "icon-down-default"), for: .normal)
     }
     
     func setText(expanded: Bool = false) {
@@ -154,21 +154,108 @@ class CommentCell: UITableViewCell {
     }
     
     @IBAction func upVoteButtonTap(_ sender: Any) {
-        if let comment = comment {
-            delegate?.cell(self, didTapUpVoteButtonForComment: comment)
-        }
+        guard let comment = comment else {return}
+        
+        // save original state
+        let originHasUpVote = comment.votes.hasUpVote
+        let originHasDownVote = comment.votes.hasDownVote
+        
+        // change state
+        setHasVote(originHasUpVote ? false: true, for: .upvote)
+        setHasVote(false, for: .downvote)
+        
+        // disable button ntil transaction is done
+        upVoteButton.isEnabled = false
+        downVoteButton.isEnabled = false
+        
+        // send request
+        NetworkService.shared.voteMessage(voteType: originHasUpVote ? .unvote: .upvote, messagePermlink: comment.contentId.permlink, messageAuthor: comment.author?.userId ?? "")
+            .subscribe(onCompleted: {
+                // re-enable buttons
+                self.upVoteButton.isEnabled = true
+                self.downVoteButton.isEnabled = true
+            }) { (error) in
+                // reset state
+                self.setHasVote(originHasUpVote, for: .upvote)
+                self.setHasVote(originHasDownVote, for: .downvote)
+                
+                // re-enable buttons
+                self.upVoteButton.isEnabled = true
+                self.downVoteButton.isEnabled = true
+                
+                // show general error
+                UIApplication.topViewController()?.showError(error)
+            }
+            .disposed(by: bag)
+        
+        delegate?.cell(self, didTapUpVoteButtonForComment: comment)
     }
     
     @IBAction func downVoteButtonTap(_ sender: Any) {
-        if let comment = comment {
-            delegate?.cell(self, didTapDownVoteButtonForComment: comment)
-        }
+        guard let comment = comment else {return}
+        
+        // save original state
+        let originHasUpVote = comment.votes.hasUpVote
+        let originHasDownVote = comment.votes.hasDownVote
+        
+        // change state
+        setHasVote(originHasDownVote ? false: true, for: .downvote)
+        setHasVote(false, for: .upvote)
+        
+        // disable button until transaction is done
+        upVoteButton.isEnabled = false
+        downVoteButton.isEnabled = false
+        
+        // send request
+        NetworkService.shared.voteMessage(voteType:          originHasDownVote ? .unvote: .downvote,
+                                          messagePermlink:   comment.contentId.permlink,
+                                          messageAuthor:     comment.author?.userId ?? "")
+            .subscribe(
+                onCompleted: {
+                    // re-enable buttons
+                    self.upVoteButton.isEnabled = true
+                    self.downVoteButton.isEnabled = true
+            },
+                onError: { error in
+                    // reset state
+                    self.setHasVote(originHasUpVote, for: .upvote)
+                    self.setHasVote(originHasDownVote, for: .downvote)
+                    
+                    // re-enable buttons
+                    self.upVoteButton.isEnabled = true
+                    self.downVoteButton.isEnabled = true
+                    
+                    // show general error
+                    UIApplication.topViewController()?.showError(error)
+            })
+            .disposed(by: bag)
+        
+        delegate?.cell(self, didTapDownVoteButtonForComment: comment)
     }
     
     @IBAction func replyButtonTap(_ sender: Any) {
         if let comment = comment {
             delegate?.cell(self, didTapReplyButtonForComment: comment)
         }
+    }
+    
+    // MARK: - Voting
+    func setHasVote(_ value: Bool, for type: VoteActionType) {
+        guard let comment = comment else {return}
+        
+        // return if nothing changes
+        if type == .upvote && value == comment.votes.hasUpVote {return}
+        if type == .downvote && value == comment.votes.hasDownVote {return}
+        
+        if type == .upvote {
+            self.comment!.votes.hasUpVote = !self.comment!.votes.hasUpVote
+        }
+        
+        if type == .downvote {
+            self.comment!.votes.hasDownVote = !self.comment!.votes.hasDownVote
+        }
+        
+        setButton()
     }
     
 }

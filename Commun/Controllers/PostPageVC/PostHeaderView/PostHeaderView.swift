@@ -31,7 +31,7 @@ class PostHeaderView: UIView, UIWebViewDelegate, PostController {
     
     // Content
     @IBOutlet weak var postTitleLabel: UILabel!
-    @IBOutlet weak var contentWebView: UIWebView!
+    @IBOutlet weak var contentWebView: ContentFittingWebView!
     
     // Buttons
     @IBOutlet weak var upVoteButton: UIButton!

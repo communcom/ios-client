@@ -37,7 +37,7 @@ extension ProfilePageVC {
                     self?.userCoverImage.image = originalImage
                     self?.showError(error)
                 })
-                .disposed(by: bag)
+                .disposed(by: disposeBag)
             return
         }
         
@@ -57,7 +57,7 @@ extension ProfilePageVC {
                 
                 self.viewModel.profile.filter {$0 != nil}.map {$0!}
                     .bind(to: coverEditVC.profile)
-                    .disposed(by: self.bag)
+                    .disposed(by: self.disposeBag)
                 
                 pickerVC.present(coverEditVC, animated: true
                     , completion: {
@@ -85,7 +85,7 @@ extension ProfilePageVC {
                     self?.showError(error)
                 }
             })
-            .disposed(by: bag)
+            .disposed(by: disposeBag)
     }
     
     func onUpdateAvatar(delete: Bool = false) {
@@ -100,7 +100,7 @@ extension ProfilePageVC {
                     self?.userAvatarImage.image = originalImage
                     self?.showError(error)
                 })
-                .disposed(by: bag)
+                .disposed(by: disposeBag)
             return
         }
         
@@ -125,7 +125,7 @@ extension ProfilePageVC {
                 self?.userAvatarImage.image = originalImage
                 self?.showError(error)
             })
-            .disposed(by: bag)
+            .disposed(by: disposeBag)
     }
     
     // MARK: - Biography
@@ -141,7 +141,7 @@ extension ProfilePageVC {
                     self?.showError(error)
                     self?.bioLabel.text = originalBio
                 })
-                .disposed(by: bag)
+                .disposed(by: disposeBag)
             return
         }
         
@@ -160,7 +160,7 @@ extension ProfilePageVC {
                 self?.bioLabel.text = originalBio
                 self?.showError(error)
             })
-            .disposed(by: bag)
+            .disposed(by: disposeBag)
     }
     
     // MARK: - Follow, un follow
@@ -185,6 +185,6 @@ extension ProfilePageVC {
                 
                 self?.showError(error)
             })
-            .disposed(by: bag)
+            .disposed(by: disposeBag)
     }
 }

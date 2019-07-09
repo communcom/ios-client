@@ -23,7 +23,7 @@ extension ProfilePageVC {
             .subscribe(onNext: {offsetY in
                 self.updateHeaderView()
             })
-            .disposed(by: bag)
+            .disposed(by: disposeBag)
     }
     
     func updateHeaderView() {

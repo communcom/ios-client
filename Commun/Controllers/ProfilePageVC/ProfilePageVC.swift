@@ -35,7 +35,7 @@ class ProfilePageVC: UIViewController {
     @IBOutlet weak var copyReferralLinkButton: UIButton!
     @IBOutlet weak var errorView: UIView!
     
-    let bag = DisposeBag()
+    let disposeBag = DisposeBag()
     var viewModel: ProfilePageViewModel!
     var expandedIndexes = [Int]()
     
@@ -83,7 +83,7 @@ class ProfilePageVC: UIViewController {
         if viewModel.isMyProfile {
             userAvatarImage
                 .observeCurrentUserAvatar()
-                .disposed(by: bag)
+                .disposed(by: disposeBag)
             sendPointsButton.isHidden = true
             sendPointLabel.isHidden = true
             followButton.isHidden = true

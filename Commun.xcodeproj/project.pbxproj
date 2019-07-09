@@ -85,7 +85,6 @@
 		3BDD9A04228DBEC200B2A1DA /* CommentForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BDD9A03228DBEC200B2A1DA /* CommentForm.swift */; };
 		3BDD9A06228DBED000B2A1DA /* CommentForm.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3BDD9A05228DBED000B2A1DA /* CommentForm.xib */; };
 		3BDD9A08228EA5FF00B2A1DA /* CommentForm+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BDD9A07228EA5FF00B2A1DA /* CommentForm+Rx.swift */; };
-		3BDD9A0B228EDA6F00B2A1DA /* PostController+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BDD9A0A228EDA6F00B2A1DA /* PostController+Rx.swift */; };
 		3BDD9A0F228F07EF00B2A1DA /* UIApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BDD9A0E228F07EF00B2A1DA /* UIApplication.swift */; };
 		3BDF4FA822C21B310029D616 /* ResponseAPIContentGetProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BDF4FA722C21B310029D616 /* ResponseAPIContentGetProfile.swift */; };
 		3BDF4FAC22C386AA0029D616 /* PostPageVC+SectionHeaders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BDF4FAB22C386AA0029D616 /* PostPageVC+SectionHeaders.swift */; };
@@ -304,7 +303,6 @@
 		3BDD9A03228DBEC200B2A1DA /* CommentForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentForm.swift; sourceTree = "<group>"; };
 		3BDD9A05228DBED000B2A1DA /* CommentForm.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CommentForm.xib; sourceTree = "<group>"; };
 		3BDD9A07228EA5FF00B2A1DA /* CommentForm+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CommentForm+Rx.swift"; sourceTree = "<group>"; };
-		3BDD9A0A228EDA6F00B2A1DA /* PostController+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PostController+Rx.swift"; sourceTree = "<group>"; };
 		3BDD9A0E228F07EF00B2A1DA /* UIApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplication.swift; sourceTree = "<group>"; };
 		3BDF4FA722C21B310029D616 /* ResponseAPIContentGetProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseAPIContentGetProfile.swift; sourceTree = "<group>"; };
 		3BDF4FAB22C386AA0029D616 /* PostPageVC+SectionHeaders.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PostPageVC+SectionHeaders.swift"; sourceTree = "<group>"; };
@@ -626,7 +624,6 @@
 			isa = PBXGroup;
 			children = (
 				57A95196224178010020F55D /* PostController.swift */,
-				3BDD9A0A228EDA6F00B2A1DA /* PostController+Rx.swift */,
 				3B5D7CEE2297F3FA0077B82C /* ItemsListController.swift */,
 			);
 			path = PostController;
@@ -1550,7 +1547,6 @@
 				57DE5BDC2252088C008566B9 /* EditorPageVC.swift in Sources */,
 				3B2F226E226892C5006B589E /* NotificationType.swift in Sources */,
 				3BC3CA3322CA297900A893DC /* WelcomeVC.swift in Sources */,
-				3BDD9A0B228EDA6F00B2A1DA /* PostController+Rx.swift in Sources */,
 				57F5CFC22244E3BE005A09AE /* PostPageVC+Rx.swift in Sources */,
 				3BDD9A04228DBEC200B2A1DA /* CommentForm.swift in Sources */,
 				3BB342B422CA7412009546B2 /* CreateBioVC.swift in Sources */,
