@@ -25,8 +25,6 @@ class EditorPageVC: UIViewController {
     @IBOutlet weak var imageViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var removeImageButtonHeightConstraint: NSLayoutConstraint!
     
-    var cells: [UITableViewCell] = []
-    
     let disposeBag = DisposeBag()
     
     override func viewDidLoad() {
@@ -56,7 +54,7 @@ class EditorPageVC: UIViewController {
         if let post = viewModel?.postForEdit {
             titleTextView.rx.text.onNext(post.content.title)
             #warning("change text later")
-            contentTextView.rx.text.onNext(post.content.body.full)
+            contentTextView.rx.text.onNext(post.content.body.full ?? post.content.body.preview)
         }
         
         bindUI()
