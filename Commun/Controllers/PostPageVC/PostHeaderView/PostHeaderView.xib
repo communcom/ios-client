@@ -101,7 +101,7 @@
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <webView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BBW-Hf-RpW">
+                <webView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BBW-Hf-RpW" customClass="ContentFittingWebView" customModule="Commun" customModuleProvider="target">
                     <rect key="frame" x="16" y="504" width="382" height="80.5"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </webView>
