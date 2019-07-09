@@ -28,9 +28,10 @@ let gcmMessageIDKey = "gcm.message_id"
 class AppDelegate: UIResponder, UIApplicationDelegate {
     // MARK: - Properties
     var window: UIWindow?
-
     var reachability: Reachability?
+    let notificationCenter = UNUserNotificationCenter.current()
 
+    
     // MARK: - Class Functions
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Sync iCloud key-value store
@@ -75,16 +76,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Register for remote notifications
         if #available(iOS 10.0, *) {
             // For iOS 10 display notification (sent via APNS)
-            UNUserNotificationCenter.current().delegate = self
-            
-            let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
-            UNUserNotificationCenter.current().requestAuthorization(options: authOptions, completionHandler: {_, _ in })
+            self.requestAuthorization()
         } else {
             let settings: UIUserNotificationSettings = UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
             application.registerUserNotificationSettings(settings)
         }
         
         application.registerForRemoteNotifications()
+
         Messaging.messaging().delegate = self
         
         Fabric.with([Crashlytics.self])
@@ -138,6 +137,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
 
+    // MARK: - Custom Functions
+    private func requestAuthorization() {
+        self.notificationCenter.delegate = self
+        
+        self.notificationCenter.requestAuthorization(options:               [.alert, .sound, .badge],
+                                                     completionHandler:     { (granted, error) in
+                                                        Logger.log(message: "Permission granted: \(granted)", event: .debug)
+                                                        guard granted else { return }
+                                                        self.getNotificationSettings()
+        })
+    }
+    
+    private func getNotificationSettings() {
+        self.notificationCenter.getNotificationSettings(completionHandler:  { (settings) in
+            Logger.log(message: "Notification settings: \(settings)", event: .debug)
+        })
+    }
+
+    
     // MARK: - Core Data stack
     lazy var persistentContainer: NSPersistentContainer = {
         /*
@@ -227,6 +245,7 @@ extension AppDelegate {
 // MARK: - UNUserNotificationCenterDelegate
 @available(iOS 10, *)
 extension AppDelegate: UNUserNotificationCenterDelegate {
+    // Receive push-message when App is active
     func userNotificationCenter(_ center:                                   UNUserNotificationCenter,
                                 willPresent notification:                   UNNotification,
                                 withCompletionHandler completionHandler:    @escaping (UNNotificationPresentationOptions) -> Void) {
@@ -243,6 +262,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         completionHandler([])
     }
     
+    // Tap on push message
     func userNotificationCenter(_ center:                                   UNUserNotificationCenter,
                                 didReceive response:                        UNNotificationResponse,
                                 withCompletionHandler completionHandler:    @escaping () -> Void) {
