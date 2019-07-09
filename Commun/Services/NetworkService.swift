@@ -78,9 +78,8 @@ class NetworkService: NSObject {
         })
     }
     
-    func deletePost(permlink: String, refBlockNum:  UInt64) -> Completable {
-        guard let currentUserId = Config.currentUser?.id else {return .error(ErrorAPI.requestFailed(message: "Current user not found"))}
-        return RestAPIManager.instance.rx.deleteMessage(author: currentUserId, permlink: permlink)
+    func deletePost(permlink: String) -> Completable {
+        return RestAPIManager.instance.rx.deleteMessage(permlink: permlink)
             .observeOn(MainScheduler.instance)
     }
     
@@ -145,6 +144,24 @@ class NetworkService: NSObject {
                                           userId: any?["author"]?.jsonValue as? String,
                                           permlink: any?["permlink"]?.jsonValue as? String)
             })
+            .observeOn(MainScheduler.instance)
+    }
+    
+    func editPostWithPermlink(_ permlink: String, title: String, text: String, metaData json: String, withTags tags: [String])  -> Single<SendPostCompletion> {
+        return RestAPIManager.instance.rx.updateMessage(
+                permlink:       permlink,
+                parentPermlink: nil,
+                headline:       title,
+                message:        text,
+                tags:           tags,
+                metaData:       json
+            )
+            .map {transaction -> SendPostCompletion in
+                let any = ((transaction.body?.processed.action_traces.first?.act.data["message_id"])?.jsonValue) as? [String: eosswift.AnyJSONType]
+                return SendPostCompletion(transactionId: transaction.body?.transaction_id,
+                                          userId: any?["author"]?.jsonValue as? String,
+                                          permlink: any?["permlink"]?.jsonValue as? String)
+            }
             .observeOn(MainScheduler.instance)
     }
     

@@ -38,16 +38,21 @@ class EditorPageViewModel {
     }
     
     func sendPost(with title: String, text: String, image: UIImage?) -> Single<NetworkService.SendPostCompletion> {
+        
+        var request: () -> Single<NetworkService.SendPostCompletion>
         if let post = postForEdit {
-            #warning("Edit post and delete this line")
-            return .error(ErrorAPI.requestFailed(message: "Editing post is implemented"))
+            request = {
+                let json = self.createJsonMetadata(for: text)
+                let tags = self.getTags(from: text)
+                return NetworkService.shared.editPostWithPermlink(post.contentId.permlink, title: title, text: text, metaData: json ?? "", withTags: tags)
+            }
+        } else {
+            request = {
+                let json = self.createJsonMetadata(for: text)
+                let tags = self.getTags(from: text)
+                return NetworkService.shared.sendPost(withTitle: title, withText: text, metaData: json ?? "", withTags: tags)
+            }
         }
-        
-        var sendRequest: Single<NetworkService.SendPostCompletion> {
-            let json = self.createJsonMetadata(for: text)
-            return NetworkService.shared.sendPost(withTitle: title, withText: text, metaData: json ?? "", withTags: self.getTags(from: text))
-        }
-        
         
         if let image = image {
             return NetworkService.shared.uploadImage(image)
@@ -56,11 +61,11 @@ class EditorPageViewModel {
                 })
                 .flatMap {url in
                     self.addImage(with: url)
-                    return sendRequest
+                    return request()
                 }
         }
         
-        return sendRequest
+        return request()
     }
     
     func createJsonMetadata(for text: String) -> String? {

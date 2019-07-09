@@ -194,7 +194,7 @@ extension PostController {
         guard let post = post,
             let topController = UIApplication.topViewController() else {return}
         
-        NetworkService.shared.deletePost(permlink: post.contentId.permlink, refBlockNum: post.contentId.refBlockNum ?? 0)
+        NetworkService.shared.deletePost(permlink: post.contentId.permlink)
             .subscribe(onCompleted: {
                 self.notifyPostDeleted(deletedPost: post)
             }, onError: { error in

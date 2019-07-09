@@ -227,7 +227,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   CyberSwift:
-    :commit: 077fee33bd162f43a1527319a06afad0d8358479
+    :commit: 677465da9b5f11db1d9bb03cb599262152367d42
     :git: https://github.com/GolosChain/cyberSwift.git
 
 SPEC CHECKSUMS:
