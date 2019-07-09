@@ -15,6 +15,8 @@ class EditorPageViewModel {
     var postForEdit: ResponseAPIContentGetPost?
     
     let isAdult = BehaviorRelay<Bool>(value: false)
+    let imageChanged = BehaviorRelay<Bool>(value: false)
+    
     var embeds = [[String: Any]]()
     
     /// set url = nil to remove
@@ -54,7 +56,7 @@ class EditorPageViewModel {
             }
         }
         
-        if let image = image {
+        if let image = image, imageChanged.value {
             return NetworkService.shared.uploadImage(image)
                 .do(onSubscribed: {
                     UIApplication.topViewController()?.navigationController?.showIndetermineHudWithMessage("Upload image".localized())

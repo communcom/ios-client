@@ -55,6 +55,11 @@ class EditorPageVC: UIViewController {
             titleTextView.rx.text.onNext(post.content.title)
             #warning("change text later")
             contentTextView.rx.text.onNext(post.content.body.full ?? post.content.body.preview)
+            
+            if let imageURL = post.firstEmbedImageURL {
+                imageView.sd_setImage(with: URL(string: imageURL), completed: nil)
+                viewModel?.addImage(with: imageURL)
+            }
         }
         
         bindUI()

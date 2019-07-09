@@ -23,17 +23,19 @@ extension EditorPageVC {
             .disposed(by: disposeBag)
         
         // image
-        imageView.rx.isEmpty
+        let imageViewIsEmpty = imageView.rx.isEmpty.share()
+        
+        imageViewIsEmpty
             .map {$0 ? 0: self.imageView.size.width * (self.imageView.image!.size.height / self.imageView.image!.size.width)}
             .bind(to: imageViewHeightConstraint.rx.constant)
             .disposed(by: disposeBag)
         
-        imageView.rx.isEmpty
+        imageViewIsEmpty
             .map {$0 ? 0: 24}
             .bind(to: removeImageButtonHeightConstraint.rx.constant)
             .disposed(by: disposeBag)
         
-        imageView.rx.isEmpty
+        imageViewIsEmpty
             .filter {!$0}
             .subscribe(onNext: {_ in
                 self.scrollView.scrollsToBottom()
@@ -56,13 +58,24 @@ extension EditorPageVC {
         
         #warning("Verify community")
         #warning("fix contentText later")
-        Observable.combineLatest(titleTextView.rx.text.orEmpty, contentTextView.rx.text.orEmpty)
+        imageViewIsEmpty
+            .subscribe(onNext: { (empty) in
+                self.viewModel?.imageChanged.accept(true)
+            })
+            .disposed(by: disposeBag)
+        
+        Observable.combineLatest(
+                titleTextView.rx.text.orEmpty,
+                contentTextView.rx.text.orEmpty,
+                viewModel.imageChanged.map {_ in ""}
+            )
             .map {
                 // Text field  is not empty
                 (!$0.0.isEmpty) && (!$0.1.isEmpty) &&
                 // Title or content has changed
                 ($0.0 != viewModel.postForEdit?.content.title ||
-                $0.1 != viewModel.postForEdit?.content.body.preview)
+                $0.1 != viewModel.postForEdit?.content.body.preview ||
+                    self.viewModel?.imageChanged.value == true)
             }
             .bind(to: sendPostButton.rx.isEnabled)
             .disposed(by: disposeBag)
