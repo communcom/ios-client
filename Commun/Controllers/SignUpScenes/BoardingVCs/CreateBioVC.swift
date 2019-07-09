@@ -8,12 +8,13 @@
 
 import UIKit
 import RxSwift
+import CyberSwift
 
 class CreateBioVC: UIViewController, SignUpRouter {
     let disposeBag = DisposeBag()
     @IBOutlet weak var textView: ExpandableTextView!
     @IBOutlet weak var characterCountLabel: UILabel!
-    @IBOutlet weak var nextButton: UIButton!
+    @IBOutlet weak var nextButton: StepButton!
     private let charactersLimit = 100
     
     override func viewDidLoad() {
@@ -30,7 +31,6 @@ class CreateBioVC: UIViewController, SignUpRouter {
         bioChanged
             .subscribe(onNext: {changed in
                 self.nextButton.isEnabled = changed
-                self.nextButton.backgroundColor = changed ? #colorLiteral(red: 0.4173236787, green: 0.5017360449, blue: 0.9592832923, alpha: 1) : #colorLiteral(red: 0.7063884139, green: 0.749147296, blue: 0.9795948863, alpha: 1)
             })
             .disposed(by: disposeBag)
         
@@ -63,13 +63,19 @@ class CreateBioVC: UIViewController, SignUpRouter {
     }
     
     @IBAction func endEditing(_ sender: Any) {
-        self.view.endEditing(true)
+        if textView.isFirstResponder {
+            self.view.endEditing(true)
+            return
+        }
+        
+        textView.becomeFirstResponder()
     }
     
     @IBAction func nextButtonDidTouch(_ sender: Any) {
         guard let bio = textView.text else {return}
         self.showIndetermineHudWithMessage("Updating...".localized())
-        NetworkService.shared.updateMeta(params: ["about": bio])
+        // UpdateProfile without waiting for transaction
+        NetworkService.shared.updateMeta(params: ["about": bio], waitForTransaction: false)
             .subscribe(onCompleted: {
                 self.hideHud()
                 self.endSigningUp()

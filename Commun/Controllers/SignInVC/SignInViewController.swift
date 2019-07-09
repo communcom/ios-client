@@ -27,7 +27,7 @@ class SignInViewController: UIViewController {
     @IBOutlet var loginPasswordContainerView: UIView!
     @IBOutlet weak var loginTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
-    @IBOutlet weak var signInButton: UIButton!
+    @IBOutlet weak var signInButton: StepButton!
     @IBOutlet weak var signUpButton: UIButton!
     var qrReaderVC: QRCodeReaderViewController!
     
@@ -81,28 +81,7 @@ class SignInViewController: UIViewController {
         
         validator
             .subscribe(onNext: { cred in
-                self.configureSignInButton(enabled: self.validate(cred: cred))
-            })
-            .disposed(by: disposeBag)
-        
-        // Login action
-        signInButton.rx.tap
-            .withLatestFrom(validator.filter(validate))
-            .flatMapLatest({ (cred) -> Observable<String> in
-                return self.viewModel.signIn(withLogin: cred.login, withApiKey: cred.key)
-                    .do(onSubscribed: { [weak self] in
-                        self?.view.endEditing(true)
-                        self?.configure(signingIn: true)
-                    })
-                    .catchError {[weak self] _ in
-                        self?.configure(signingIn: false)
-                        self?.showAlert(title: nil, message: "Login error".localized() + ".\n" + "Please try again later".localized())
-                        return Observable<String>.empty()
-                }
-            })
-            .subscribe(onNext: {_ in
-                self.configure(signingIn: false)
-                WebSocketManager.instance.authorized.accept(true)
+                self.signInButton.isEnabled = self.validate(cred: cred)
             })
             .disposed(by: disposeBag)
         
@@ -128,6 +107,34 @@ class SignInViewController: UIViewController {
             .disposed(by: disposeBag)
     }
     
+    @IBAction func signInButtonDidTouch(_ sender: Any) {
+        // signing state
+        view.endEditing(true)
+        configure(signingIn: true)
+        
+        // send request
+        viewModel.signIn(
+                withLogin: loginTextField.text!,
+                withApiKey: passwordTextField.text!
+            )
+            .catchError { error in
+                if let error = error as? ErrorAPI {
+                    if error.caseInfo.message == "There is no secret stored for this channelId. Probably, client's already authorized" {
+                        return .empty()
+                    }
+                }
+                throw error
+            }
+            .subscribe(onCompleted: {
+                self.configure(signingIn: false)
+                WebSocketManager.instance.authorized.accept(true)
+            }, onError: { [weak self] (error) in
+                self?.configure(signingIn: false)
+                self?.showError(error)
+            })
+            .disposed(by: disposeBag)
+    }
+    
     func setTextfieldWithLogin(_ login: String, key: String) {
         self.loginTextField.text = login
         self.passwordTextField.text = key
@@ -141,13 +148,9 @@ class SignInViewController: UIViewController {
         } else {
             self.hideHud()
         }
-        configureSignInButton(enabled: !signingIn)
+        
+        signInButton.isEnabled = !signingIn
         self.signUpButton.isEnabled = !signingIn
-    }
-    
-    func configureSignInButton(enabled: Bool) {
-        self.signInButton.isEnabled = enabled
-        self.signInButton.backgroundColor = enabled ? #colorLiteral(red: 0.4235294118, green: 0.5137254902, blue: 0.9294117647, alpha: 1) :#colorLiteral(red: 0.4156862745, green: 0.5019607843, blue: 0.9607843137, alpha: 0.3834813784)
     }
     
     func validate(cred: LoginCredential) -> Bool {

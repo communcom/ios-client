@@ -189,7 +189,7 @@ extension SettingsVC: SettingsButtonCellDelegate {
                     do {
                         try Auth.logout()
                     } catch {
-                        self.showGeneralError()
+                        self.showError(error)
                     }
                 }
             }

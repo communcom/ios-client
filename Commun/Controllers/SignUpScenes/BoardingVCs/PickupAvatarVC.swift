@@ -8,14 +8,13 @@
 
 import UIKit
 import RxSwift
-import CyberSwift
 import RxCocoa
 
 class PickupAvatarVC: UIViewController, SignUpRouter {
     let disposeBag = DisposeBag()
     @IBOutlet weak var userAvatarImage: UIImageView!
     @IBOutlet weak var chooseImageButton: UIButton!
-    @IBOutlet weak var nextButton: UIButton!
+    @IBOutlet weak var nextButton: StepButton!
     
     let image = BehaviorRelay<UIImage?>(value: nil)
     
@@ -44,7 +43,6 @@ class PickupAvatarVC: UIViewController, SignUpRouter {
         image.map {$0 != nil}
             .subscribe(onNext: {hasImage in
                 self.nextButton.isEnabled = hasImage
-                self.nextButton.backgroundColor = hasImage ? #colorLiteral(red: 0.4173236787, green: 0.5017360449, blue: 0.9592832923, alpha: 1) : #colorLiteral(red: 0.7063884139, green: 0.749147296, blue: 0.9795948863, alpha: 1)
             })
             .disposed(by: disposeBag)
     }
@@ -77,29 +75,31 @@ class PickupAvatarVC: UIViewController, SignUpRouter {
         self.showIndetermineHudWithMessage("Uploading...".localized())
         NetworkService.shared.uploadImage(image)
             // Save to bc
-            .flatMapCompletable{
-                NetworkService.shared.updateMeta(params: ["profile_image": $0])
+            .flatMap{ url -> Single<String> in
+                // UpdateProfile without waiting for transaction
+                return NetworkService.shared.updateMeta(
+                    params: ["profile_image": url],
+                    waitForTransaction: false
+                )
+                .andThen(Single<String>.just(url))
             }
-            // Catch error and reverse image
-            .subscribe(
-                onCompleted: {
-                    do {
-                        try KeychainManager.save(data: [
-                            Config.registrationStepKey: CurrentUserRegistrationStep.setBio.rawValue
-                            ])
-                        self.hideHud()
-                        self.signUpNextStep()
-                    } catch {
-                        self.hideHud()
-                        self.showError(error)
-                    }
-                },
-                onError: {[weak self] error in
-                    self?.hideHud()
-                    self?.image.accept(nil)
-                    self?.showError(error)
+            .subscribe(onSuccess: { (url) in
+                do {
+                    try KeychainManager.save(data: [
+                        Config.registrationStepKey: CurrentUserRegistrationStep.setBio.rawValue
+                    ])
+                    UserDefaults.standard.set(url, forKey: Config.currentUserAvatarUrlKey)
+                    self.hideHud()
+                    self.signUpNextStep()
+                } catch {
+                    self.hideHud()
+                    self.showError(error)
                 }
-            )
+            }) {[weak self] (error) in
+                self?.hideHud()
+                self?.image.accept(nil)
+                self?.showError(error)
+            }
             .disposed(by: disposeBag)
     }
     

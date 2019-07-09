@@ -23,4 +23,18 @@ extension UIApplication {
         }
         return controller
     }
+    
+    class var appVersion: String {
+        return Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String
+    }
+    
+    class var appBuild: String {
+        return Bundle.main.object(forInfoDictionaryKey: kCFBundleVersionKey as String) as! String
+    }
+    
+    class var versionBuild: String {
+        let version = appVersion, build = appBuild
+        
+        return version == build ? "v\(version)" : "v\(version)(\(build))"
+    }
 }

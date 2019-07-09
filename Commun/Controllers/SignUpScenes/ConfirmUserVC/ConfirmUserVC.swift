@@ -13,6 +13,8 @@ import CyberSwift
 import PinCodeInputView
 
 class ConfirmUserVC: UIViewController, SignUpRouter {
+    static let numberOfDigits = 4
+    
     // MARK: - Properties
     var viewModel: ConfirmUserViewModel?
     let disposeBag = DisposeBag()
@@ -21,7 +23,7 @@ class ConfirmUserVC: UIViewController, SignUpRouter {
     var resendSeconds: Int = 0
     
     let pinCodeInputView: PinCodeInputView<ItemView> = .init(
-        digit: 4,
+        digit: numberOfDigits,
         itemSpacing: 12,
         itemFactory: {
             return ItemView()
@@ -56,18 +58,7 @@ class ConfirmUserVC: UIViewController, SignUpRouter {
                                    isMultiLines:  false)
         }
     }
-   
-    @IBOutlet weak var nextButton: UIButton! {
-        didSet {
-            self.nextButton.tune(withTitle:     "Next".localized(),
-                                 hexColors:     [whiteColorPickers, lightGrayWhiteColorPickers, lightGrayWhiteColorPickers, lightGrayWhiteColorPickers],
-                                 font:          UIFont(name: "SFProText-Semibold", size: 17.0 * Config.heightRatio),
-                                 alignment:     .center)
-            
-            self.nextButton.layer.cornerRadius = 8.0 * Config.heightRatio
-            self.nextButton.clipsToBounds = true
-        }
-    }
+    @IBOutlet weak var nextButton: StepButton!
     
     @IBOutlet weak var resendButton: UIButton! {
         didSet {
@@ -110,9 +101,16 @@ class ConfirmUserVC: UIViewController, SignUpRouter {
 
         self.title = "Verification".localized()
         self.navigationController?.navigationBar.prefersLargeTitles = true
+        
+        nextButton.isEnabled = false
 
         self.pinCodeInputView.set(changeTextHandler: { text in
-            print(text)
+            if text.count == ConfirmUserVC.numberOfDigits {
+                self.nextButton.isEnabled = true
+                self.verify()
+                return
+            }
+            self.nextButton.isEnabled = false
         })
         
         self.pinCodeInputView.set(appearance: .init(itemSize:         CGSize(width: 48.0 * Config.widthRatio, height: 56.0 * Config.heightRatio),
@@ -203,12 +201,20 @@ class ConfirmUserVC: UIViewController, SignUpRouter {
             .disposed(by: disposeBag)
     }
     
-    @IBAction func nextButtonTapped(_ sender: UIButton) {
+    @IBAction func nextButtonDidTouch(_ sender: Any) {
+        verify()
+    }
+    
+    func verify() {
         RestAPIManager.instance.rx.verify()
             .subscribe(onSuccess: { [weak self] (_) in
                 self?.signUpNextStep()
             }) { (error) in
-                self.showError(error)
+                guard let phone = Config.currentUser?.phoneNumber else {
+                    self.showError(error)
+                    return
+                }
+                self.handleSignUpError(error: error, with: phone)
             }
             .disposed(by: disposeBag)
     }

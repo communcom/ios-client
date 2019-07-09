@@ -123,27 +123,6 @@ class NetworkService: NSObject {
         }
     }
     
-    func signIn(login: String, key: String) -> Observable<String> {
-        return Observable.create({ observer -> Disposable in
-            RestAPIManager.instance.authorize(userID:               login,
-                                              userActiveKey:        key,
-                                              responseHandling:     { response in
-                                                Logger.log(message: response.permission, event: .debug)
-                                                observer.onNext(response.permission)
-                                                observer.onCompleted()
-            },
-                                              errorHandling:        { errorAPI in
-                                                if let errorAPI = errorAPI as? ErrorAPI {
-                                                     Logger.log(message: errorAPI.caseInfo.message.localized(), event: .error)
-                                                }
-                                               
-                                            observer.onError(errorAPI)
-            })
-            
-            return Disposables.create()
-        })
-    }
-    
     func voteMessage(voteType: VoteActionType, messagePermlink: String, messageAuthor: String) -> Completable {
         return RestAPIManager.instance.rx.vote(
                 voteType:   voteType,
@@ -294,9 +273,11 @@ class NetworkService: NSObject {
     }
     
     //  Update updatemeta
-    func updateMeta(params: [String: String]) -> Completable {
+    func updateMeta(params: [String: String], waitForTransaction: Bool = true) -> Completable {
         return RestAPIManager.instance.rx.update(userProfile: params)
             .flatMapCompletable({ (transaction) -> Completable in
+                if !waitForTransaction {return .empty()}
+                
                 guard let id = transaction.body?.transaction_id else {return .error(ErrorAPI.responseUnsuccessful(message: "transactionId is missing"))}
                 
                 // update profile

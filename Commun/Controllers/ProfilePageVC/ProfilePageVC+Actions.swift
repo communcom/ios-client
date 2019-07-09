@@ -33,9 +33,9 @@ extension ProfilePageVC {
         if delete {
             self.userCoverImage.image = UIImage(named: "ProfilePageCover")
             NetworkService.shared.updateMeta(params: ["cover_image": ""])
-                .subscribe(onError: {[weak self] _ in
+                .subscribe(onError: {[weak self] error in
                     self?.userCoverImage.image = originalImage
-                    self?.showGeneralError()
+                    self?.showError(error)
                 })
                 .disposed(by: bag)
             return
@@ -82,7 +82,7 @@ extension ProfilePageVC {
             .subscribe(onError: {[weak self] error in
                 self?.userCoverImage.image = originalImage
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
-                    self?.showGeneralError()
+                    self?.showError(error)
                 }
             })
             .disposed(by: bag)
@@ -96,9 +96,9 @@ extension ProfilePageVC {
         if delete {
             self.userAvatarImage.setNonAvatarImageWithId(self.viewModel.profile.value!.username ?? self.viewModel.profile.value!.userId)
             NetworkService.shared.updateMeta(params: ["profile_image": ""])
-                .subscribe(onError: {[weak self] _ in
+                .subscribe(onError: {[weak self] error in
                     self?.userAvatarImage.image = originalImage
-                    self?.showGeneralError()
+                    self?.showError(error)
                 })
                 .disposed(by: bag)
             return
@@ -123,7 +123,7 @@ extension ProfilePageVC {
             // Catch error and reverse image
             .subscribe(onError: {[weak self] error in
                 self?.userAvatarImage.image = originalImage
-                self?.showGeneralError()
+                self?.showError(error)
             })
             .disposed(by: bag)
     }
@@ -137,8 +137,8 @@ extension ProfilePageVC {
         if delete {
             self.bioLabel.text = nil
             NetworkService.shared.updateMeta(params: ["about": ""])
-                .subscribe(onError: {[weak self] _ in
-                    self?.showGeneralError()
+                .subscribe(onError: {[weak self] error in
+                    self?.showError(error)
                     self?.bioLabel.text = originalBio
                 })
                 .disposed(by: bag)
@@ -158,7 +158,7 @@ extension ProfilePageVC {
             }
             .subscribe(onError: {[weak self] error in
                 self?.bioLabel.text = originalBio
-                self?.showGeneralError()
+                self?.showError(error)
             })
             .disposed(by: bag)
     }
@@ -183,7 +183,7 @@ extension ProfilePageVC {
                 newProfile?.triggerFollow()
                 self?.viewModel.profile.accept(newProfile)
                 
-                self?.showGeneralError()
+                self?.showError(error)
             })
             .disposed(by: bag)
     }

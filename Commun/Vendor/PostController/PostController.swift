@@ -119,17 +119,7 @@ extension PostController {
                     self.downVoteButton.isEnabled = true
                     
                     // show general error
-                    if let error = error as? ErrorAPI {
-                        switch error {
-                        case .blockchain(message: let message):
-                            UIApplication.topViewController()?.showAlert(title: "Error".localized(), message: message)
-                            return
-                        default:
-                            break
-                        }
-                    }
-                    print(error.localizedDescription)
-                    UIApplication.topViewController()?.showAlert(title: "Error".localized(), message: error.localizedDescription)
+                    UIApplication.topViewController()?.showError(error)
             })
             .disposed(by: disposeBag)
     }
@@ -158,7 +148,7 @@ extension PostController {
                     self.upVoteButton.isEnabled = true
                     self.downVoteButton.isEnabled = true
                 },
-                onError: {_ in
+                onError: { error in
                     // reset state
                     self.setHasVote(originHasUpVote, for: .upvote)
                     self.setHasVote(originHasDownVote, for: .downvote)
@@ -169,7 +159,7 @@ extension PostController {
                     self.downVoteButton.isEnabled = true
                     
                     // show general error
-                    UIApplication.topViewController()?.showGeneralError()
+                    UIApplication.topViewController()?.showError(error)
             })
             .disposed(by: disposeBag)
     }
@@ -207,8 +197,8 @@ extension PostController {
         NetworkService.shared.deletePost(permlink: post.contentId.permlink, refBlockNum: post.contentId.refBlockNum ?? 0)
             .subscribe(onCompleted: {
                 self.notifyPostDeleted(deletedPost: post)
-            }, onError: { (_) in
-                topController.showGeneralError()
+            }, onError: { error in
+                topController.showError(error)
             })
             .disposed(by: self.disposeBag)
     }

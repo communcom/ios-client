@@ -14,7 +14,6 @@ struct Auth {
         // Remove all keys
         try KeychainManager.deleteUser()
         
-        UserDefaults.standard.removeObject(forKey: Config.registrationUserPhoneKey)
         UserDefaults.standard.removeObject(forKey: Config.isCurrentUserLoggedKey)
         PDFManager.deletePDFDocument()
         WebSocketManager.instance.disconnect()
