@@ -80,7 +80,11 @@ class PostPageViewModel: ListViewModelType {
         embeds = [[String: Any]]()
         
         var request: Completable {
-            return NetworkService.shared.sendComment(comment: comment, metaData: self.createJsonMetadata(for: comment) ?? "", tags: comment.getTags(), forPostWithPermlink: self.post.value!.contentId.permlink)
+            return NetworkService.shared.sendComment(withMessage:       comment,
+                                                     parentAuthor:      self.post.value!.contentId.userId,
+                                                     parentPermlink:    self.post.value!.contentId.permlink,
+                                                     metaData:          self.createJsonMetadata(for: comment) ?? "",
+                                                     tags:              comment.getTags())
         }
         
         if let image = image {

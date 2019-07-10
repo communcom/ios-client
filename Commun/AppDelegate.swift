@@ -95,8 +95,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         Fabric.with([Crashlytics.self])
         
-        // DELETE AFTER TEST!!!
-        self.scheduleLocalNotification(userInfo: ["title": "Test Title #1", "body": "Test body #1", "badge": 45])
+        #warning("Remove after test")
+//        self.scheduleLocalNotification(userInfo: ["title": "Test Title #1", "body": "Test body #1", "badge": 45])
 
         return true
     }

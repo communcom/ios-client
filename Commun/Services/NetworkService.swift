@@ -133,11 +133,13 @@ class NetworkService: NSObject {
     
     // return transactionId
     typealias SendPostCompletion = (transactionId: String?, userId: String?, permlink: String?)
+    
     func sendPost(withTitle title: String, withText text: String, metaData json: String, withTags tags: [String]) -> Single<SendPostCompletion> {
-        return RestAPIManager.instance.rx.create(message:             text,
-                                                 headline:            title,
-                                                 tags:                tags,
-                                                 metaData:            json)
+        return RestAPIManager.instance.rx.create(message:       text,
+                                                 headline:      title,
+                                                 author:        Config.currentUser?.id ?? "Commun",
+                                                 tags:          tags,
+                                                 metaData:      json)
             .map({ (transaction) -> SendPostCompletion in
                 let any = ((transaction.body?.processed.action_traces.first?.act.data["message_id"])?.jsonValue) as? [String: eosswift.AnyJSONType]
                 return SendPostCompletion(transactionId: transaction.body?.transaction_id,
@@ -219,6 +221,19 @@ class NetworkService: NSObject {
 //        })
 //    }
     
+    
+    func waitForTransactionWith(id: String) -> Completable {
+        return Completable.create {completable in
+            RestAPIManager.instance.waitForTransactionWith(id: id) { (error) in
+                if error != nil {
+                    completable(.error(error!))
+                    return
+                }
+                completable(.completed)
+            }
+            return Disposables.create()
+        }
+    }
     
     func getUserProfile(userId: String? = nil) -> Single<ResponseAPIContentGetProfile> {
         return Single<ResponseAPIContentGetProfile>.create { single in
