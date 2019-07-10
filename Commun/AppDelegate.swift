@@ -57,24 +57,39 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 WebSocketManager.instance.connect()
             })
         
-        // Run WebSocket
-        _ = WebSocketManager.instance.authorized
-            .skip(1)
-            .subscribe(onNext: {success in
+        // Handle websocket connection
+        WebSocketManager.instance.completionIsConnected = {
+            // Get step
+            let step = KeychainManager.currentUser()?.registrationStep
+            
+            // Registered user
+            if step == .registered {
+                // If first setting is uncompleted
+                if let step = KeychainManager.currentUser()?.settingStep,
+                    step != .completed {
+                    self.changeRootVC(controllerContainer.resolve(BoardingVC.self)!)
+                    return
+                }
                 
-                // Lenta
-                if success, CurrentUser.loggedIn {
-                    self.changeRootVC(controllerContainer.resolve(TabBarVC.self)!)
-                }
-
-                // Sign In/Up
-                else {
-                    self.showWelcome()
-                }
-        
-                self.window?.makeKeyAndVisible()
-                application.applicationIconBadgeNumber = 0
-            })
+                // if all set
+                _ = RestAPIManager.instance.rx.authorize()
+                    .subscribe(onSuccess: { (response) in
+                        // show feed
+                        self.changeRootVC(controllerContainer.resolve(TabBarVC.self)!)
+                    }, onError: { (error) in
+                        print(error)
+                    })
+                
+            // New user
+            } else {
+                
+                
+                self.showWelcome()
+            }
+            
+            self.window?.makeKeyAndVisible()
+            application.applicationIconBadgeNumber = 0
+        }
         
         // Use Firebase library to configure APIs
         FirebaseApp.configure()

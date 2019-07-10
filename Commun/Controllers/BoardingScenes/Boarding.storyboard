@@ -209,9 +209,115 @@
             </objects>
             <point key="canvasLocation" x="-2812" y="-516"/>
         </scene>
+        <!--BoardingVC-->
+        <scene sceneID="Wnw-UC-28U">
+            <objects>
+                <viewController storyboardIdentifier="BoardingVC" id="IRF-jn-yP1" customClass="BoardingVC" customModule="Commun" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="n3I-gJ-dyw">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="image-download-keys" translatesAutoresizingMaskIntoConstraints="NO" id="aSz-3d-lOV">
+                                <rect key="frame" x="87" y="233" width="240" height="240"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="240" id="JPX-1f-XNs"/>
+                                    <constraint firstAttribute="height" constant="240" id="r36-nR-INI"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Congratulations! Registration has just been completed" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QZ8-zN-NKJ">
+                                <rect key="frame" x="55.333333333333343" y="505.00000000000006" width="303.66666666666663" height="40.666666666666686"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="We just need few more steps to protect your account" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UBk-Zo-2vF">
+                                <rect key="frame" x="42" y="561.66666666666663" width="330" height="40.666666666666629"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2qd-zD-hQG">
+                                <rect key="frame" x="42" y="750" width="330" height="72"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="boarding-pincode" translatesAutoresizingMaskIntoConstraints="NO" id="f2i-rg-CZj">
+                                        <rect key="frame" x="27" y="27" width="18" height="18"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="18" id="5zy-mm-Ifz"/>
+                                            <constraint firstAttribute="width" constant="18" id="FWs-Ts-vYT"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Set up Passcode" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pIx-ue-p0M">
+                                        <rect key="frame" x="72" y="16" width="141" height="22"/>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add short PIN code" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y8T-66-jfZ">
+                                        <rect key="frame" x="72" y="38" width="142" height="20"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="boarding-next-arrow" translatesAutoresizingMaskIntoConstraints="NO" id="KSe-Or-7OX">
+                                        <rect key="frame" x="304" y="26" width="10" height="20"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="20" id="6M2-vf-I1u"/>
+                                            <constraint firstAttribute="width" constant="10" id="VJU-Xj-Jtz"/>
+                                        </constraints>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <gestureRecognizers/>
+                                <constraints>
+                                    <constraint firstItem="Y8T-66-jfZ" firstAttribute="top" secondItem="pIx-ue-p0M" secondAttribute="bottom" id="QHn-o2-fQD"/>
+                                    <constraint firstItem="pIx-ue-p0M" firstAttribute="leading" secondItem="f2i-rg-CZj" secondAttribute="trailing" constant="27" id="ckw-5l-Wgr"/>
+                                    <constraint firstItem="Y8T-66-jfZ" firstAttribute="leading" secondItem="pIx-ue-p0M" secondAttribute="leading" id="e2D-Yq-rAQ"/>
+                                    <constraint firstItem="KSe-Or-7OX" firstAttribute="centerY" secondItem="2qd-zD-hQG" secondAttribute="centerY" id="eaY-Ko-xu1"/>
+                                    <constraint firstItem="f2i-rg-CZj" firstAttribute="centerY" secondItem="2qd-zD-hQG" secondAttribute="centerY" id="ixV-Db-5nx"/>
+                                    <constraint firstAttribute="height" constant="72" id="kbe-lD-4Wp"/>
+                                    <constraint firstItem="pIx-ue-p0M" firstAttribute="top" secondItem="2qd-zD-hQG" secondAttribute="top" constant="16" id="nsm-Hg-Y2e"/>
+                                    <constraint firstAttribute="trailing" secondItem="KSe-Or-7OX" secondAttribute="trailing" constant="16" id="sOS-f3-a90"/>
+                                    <constraint firstItem="f2i-rg-CZj" firstAttribute="leading" secondItem="2qd-zD-hQG" secondAttribute="leading" constant="27" id="udq-iS-aeS"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="shadowColor">
+                                        <color key="value" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="bFf-68-lbp" appends="YES" id="OcD-Xa-sA5"/>
+                                </connections>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="Usf-aG-JIH" firstAttribute="bottom" secondItem="2qd-zD-hQG" secondAttribute="bottom" constant="40" id="1CY-CR-ea6"/>
+                            <constraint firstItem="UBk-Zo-2vF" firstAttribute="top" secondItem="QZ8-zN-NKJ" secondAttribute="bottom" constant="16" id="3Hd-W7-FAd"/>
+                            <constraint firstItem="2qd-zD-hQG" firstAttribute="leading" secondItem="Usf-aG-JIH" secondAttribute="leading" constant="42" id="60Q-Di-7Bc"/>
+                            <constraint firstItem="QZ8-zN-NKJ" firstAttribute="centerX" secondItem="Usf-aG-JIH" secondAttribute="centerX" id="6oY-Ms-bjL"/>
+                            <constraint firstItem="aSz-3d-lOV" firstAttribute="centerY" secondItem="Usf-aG-JIH" secondAttribute="centerY" constant="-100" id="8zG-pc-g3K"/>
+                            <constraint firstItem="Usf-aG-JIH" firstAttribute="trailing" secondItem="2qd-zD-hQG" secondAttribute="trailing" constant="42" id="Ea9-mk-g04"/>
+                            <constraint firstItem="aSz-3d-lOV" firstAttribute="centerX" secondItem="Usf-aG-JIH" secondAttribute="centerX" id="Jaq-iY-B47"/>
+                            <constraint firstItem="2qd-zD-hQG" firstAttribute="centerX" secondItem="Usf-aG-JIH" secondAttribute="centerX" id="OWh-Zi-XOy"/>
+                            <constraint firstItem="Usf-aG-JIH" firstAttribute="trailing" secondItem="UBk-Zo-2vF" secondAttribute="trailing" constant="42" id="RFv-QN-J55"/>
+                            <constraint firstItem="UBk-Zo-2vF" firstAttribute="centerX" secondItem="Usf-aG-JIH" secondAttribute="centerX" id="hsI-40-otA"/>
+                            <constraint firstItem="QZ8-zN-NKJ" firstAttribute="top" secondItem="aSz-3d-lOV" secondAttribute="bottom" constant="32" id="iwB-I5-rAx"/>
+                            <constraint firstItem="UBk-Zo-2vF" firstAttribute="leading" secondItem="Usf-aG-JIH" secondAttribute="leading" constant="42" id="phy-cf-nZF"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="Usf-aG-JIH"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tHg-kU-0l5" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="bFf-68-lbp"/>
+            </objects>
+            <point key="canvasLocation" x="-4503" y="-516"/>
+        </scene>
     </scenes>
     <resources>
         <image name="avatar-ellipse-placeholder" width="220" height="220"/>
+        <image name="boarding-next-arrow" width="7.6666665077209473" height="12.666666984558105"/>
+        <image name="boarding-pincode" width="18" height="18"/>
+        <image name="image-download-keys" width="240" height="240"/>
         <image name="registration-add-avatar" width="57.666667938232422" height="52.666667938232422"/>
     </resources>
 </document>

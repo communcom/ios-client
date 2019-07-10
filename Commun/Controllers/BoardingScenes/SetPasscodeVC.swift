@@ -11,12 +11,12 @@ import THPinViewController
 import RxSwift
 import CyberSwift
 
-class SetPasscodeVC: THPinViewController, SignUpRouter {
+class SetPasscodeVC: THPinViewController, BoardingRouter {
     var currentPin: String?
     var pinSubject = PublishSubject<Void>()
     let disposeBag = DisposeBag()
     
-    override init(delegate: THPinViewControllerDelegate?) {
+    init() {
         super.init(delegate: nil)
         self.delegate = self
     }
@@ -59,7 +59,7 @@ extension SetPasscodeVC: THPinViewControllerDelegate {
     
     func pinViewController(_ pinViewController: THPinViewController, isPinValid pin: String) -> Bool {
         if currentPin == nil {
-            let verifyVC = SetPasscodeVC(delegate: nil)
+            let verifyVC = SetPasscodeVC()
             verifyVC.currentPin = pin
             show(verifyVC, sender: self)
             verifyVC.pinSubject
@@ -67,7 +67,7 @@ extension SetPasscodeVC: THPinViewControllerDelegate {
                     verifyVC.navigationController?.popViewController(animated: true, {
                         do {
                             try RestAPIManager.instance.rx.setPasscode(pin)
-                            self.signUpNextStep()
+                            self.boardingNextStep()
                         } catch {
                             self.showError(error)
                         }

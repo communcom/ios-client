@@ -26,9 +26,6 @@ extension SignUpRouter where Self: UIViewController {
         var vc: UIViewController
         
         switch step {
-        case .firstStep:
-            return
-            
         case .verify:
             let confirmUserVC = controllerContainer.resolve(ConfirmUserVC.self)!
             confirmUserVC.viewModel = ConfirmUserViewModel()!
@@ -41,45 +38,11 @@ extension SignUpRouter where Self: UIViewController {
         case .toBlockChain:
             return
             
-        case .setPasscode:
-            let setPasscode = SetPasscodeVC(delegate: nil)
-            vc = setPasscode
-            
-        case .setFaceId:
-            vc = UIViewController()
-            
-        case .backUpICloud:
-            vc = UIViewController()
-            
-        case .setAvatar:
-            let pickAvatarVC = controllerContainer.resolve(PickupAvatarVC.self)!
-            vc = pickAvatarVC
-            
-        case .setBio:
-            let createBioVC = controllerContainer.resolve(CreateBioVC.self)!
-            vc = createBioVC
-            
-        case .registered:
-            endSigningUp()
+        default:
             return
         }
         
         self.navigationController?.pushViewController(vc)
-    }
-    
-    /// End signing up
-    func endSigningUp() {
-        // Save keys
-        do {
-            try KeychainManager.save(data: [
-                Config.registrationStepKey: CurrentUserRegistrationStep.registered.rawValue
-            ])
-            UserDefaults.standard.set(true, forKey: Config.isCurrentUserLoggedKey)
-            WebSocketManager.instance.authorized.accept(true)
-        } catch {
-            showError(error)
-        }
-        
     }
     
     /// Reset signing up
