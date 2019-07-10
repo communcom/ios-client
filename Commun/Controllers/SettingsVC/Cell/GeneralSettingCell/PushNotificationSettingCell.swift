@@ -41,9 +41,31 @@ class PushNotificationSettingCell: UITableViewCell {
     }
     
     @IBAction func changeSwitchState(_ sender: UISwitch) {
-        UserDefaults.standard.set(sender.isOn, forKey: "pushNotifications")
-        
         // API `push.notifyOn` or `push.notifyOff`
-        
+        if let fcmToken = UserDefaults.standard.value(forKey: "fcmToken") as? String {
+            switch sender.isOn {
+            case false:
+                RestAPIManager.instance.pushNotifyOff(responseHandling: { (response) in
+                    Logger.log(message: response.status, event: .severe)
+                    UserDefaults.standard.set(sender.isOn, forKey: "pushNotifications")
+                },
+                                                      errorHandling:     { (errorAPI) in
+                                                        Logger.log(message: errorAPI.caseInfo.message, event: .error)
+                                                        sender.isOn = !sender.isOn
+                })
+
+            default:
+                RestAPIManager.instance.pushNotifyOn(fcmToken:          fcmToken,
+                                                     responseHandling:  { response in
+                                                        Logger.log(message: response.status, event: .severe)
+                                                        UserDefaults.standard.set(sender.isOn, forKey: "pushNotifications")
+                },
+                                                     errorHandling:     { errorAPI in
+                                                        Logger.log(message: errorAPI.caseInfo.message, event: .error)
+                                                        sender.isOn = !sender.isOn
+                })
+            }
+        }
+
     }
 }
