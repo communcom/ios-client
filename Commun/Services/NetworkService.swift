@@ -150,13 +150,12 @@ class NetworkService: NSObject {
     }
     
     func editPostWithPermlink(_ permlink: String, title: String, text: String, metaData json: String, withTags tags: [String])  -> Single<SendPostCompletion> {
-        return RestAPIManager.instance.rx.updateMessage(
-                permlink:       permlink,
-                parentPermlink: nil,
-                headline:       title,
-                message:        text,
-                tags:           tags,
-                metaData:       json
+        return RestAPIManager.instance.rx.updateMessage(permlink:           permlink,
+                                                        parentPermlink:     nil,
+                                                        headline:           title,
+                                                        message:            text,
+                                                        tags:               tags,
+                                                        metaData:           json
             )
             .map {transaction -> SendPostCompletion in
                 let any = ((transaction.body?.processed.action_traces.first?.act.data["message_id"])?.jsonValue) as? [String: eosswift.AnyJSONType]
@@ -167,26 +166,13 @@ class NetworkService: NSObject {
             .observeOn(MainScheduler.instance)
     }
     
-    func waitForTransactionWith(id: String) -> Completable {
-        return Completable.create {completable in
-            RestAPIManager.instance.waitForTransactionWith(id: id) { (error) in
-                if error != nil {
-                    completable(.error(error!))
-                    return
-                }
-                completable(.completed)
-            }
-            return Disposables.create()
-        }
-    }
-    
-    func sendComment(comment: String, metaData json: String = "", tags: [String], forPostWithPermlink permlink: String) -> Completable {
-        return RestAPIManager.instance.rx.create(
-            message: comment,
-            parentPermlink: permlink,
-            tags: tags,
-            metaData: json
-        )
+    func sendComment(withMessage comment: String, parentAuthor: String, parentPermlink: String, metaData: String = "", tags: [String]) -> Completable {
+        return RestAPIManager.instance.rx.create(message:           comment,
+                                                 parentPermlink:    parentPermlink,
+                                                 author:            parentAuthor,
+                                                 tags:              tags,
+                                                 metaData:          metaData
+            )
             .flatMapCompletable({ (transaction) -> Completable in
                 #warning("Remove this chaining to use socket in production")
                 guard let transactionId = transaction.body?.transaction_id else {
@@ -194,27 +180,9 @@ class NetworkService: NSObject {
                 }
                 return self.waitForTransactionWith(id: transactionId)
             })
-        .observeOn(MainScheduler.instance)
-    }
-    
-    func editPostWithPermlink(_ permlink: String, title: String, text: String, metaData json: String, withTags tags: [String])  -> Single<SendPostCompletion> {
-        return RestAPIManager.instance.rx.updateMessage(
-            permlink:       permlink,
-            parentPermlink: nil,
-            headline:       title,
-            message:        text,
-            tags:           tags,
-            metaData:       json
-            )
-            .map {transaction -> SendPostCompletion in
-                let any = ((transaction.body?.processed.action_traces.first?.act.data["message_id"])?.jsonValue) as? [String: eosswift.AnyJSONType]
-                return SendPostCompletion(transactionId: transaction.body?.transaction_id,
-                                          userId: any?["author"]?.jsonValue as? String,
-                                          permlink: any?["permlink"]?.jsonValue as? String)
-            }
             .observeOn(MainScheduler.instance)
     }
-
+    
     
 //    func resendSmsCode(phone: String) -> Observable<String> {
 //        return Observable<String>.create({ observer -> Disposable in
@@ -248,8 +216,10 @@ class NetworkService: NSObject {
                     completable(.error(error!))
                     return
                 }
+                
                 completable(.completed)
             }
+            
             return Disposables.create()
         }
     }
