@@ -59,33 +59,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Handle websocket connection
         WebSocketManager.instance.completionIsConnected = {
-            // Get step
-            let step = KeychainManager.currentUser()?.registrationStep
+            // trigger user to get step
+            let _ = KeychainManager.currentUser()
             
-            // Registered user
-            if step == .registered {
-                // If first setting is uncompleted
-                if let step = KeychainManager.currentUser()?.settingStep,
-                    step != .completed {
-                    self.changeRootVC(controllerContainer.resolve(BoardingVC.self)!)
-                    return
-                }
-                
-                // if all set
-                _ = RestAPIManager.instance.rx.authorize()
-                    .subscribe(onSuccess: { (response) in
-                        // show feed
-                        self.changeRootVC(controllerContainer.resolve(TabBarVC.self)!)
-                    }, onError: { (error) in
-                        print(error)
-                    })
-                
-            // New user
-            } else {
-                
-                
-                self.showWelcome()
-            }
+            // listen to step changes
+            _ = KeychainManager.userRegistered
+                .distinctUntilChanged()
+                .subscribe(onNext: { _ in
+                    self.navigateWithRegistrationStep()
+                })
             
             self.window?.makeKeyAndVisible()
             application.applicationIconBadgeNumber = 0
@@ -112,6 +94,32 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Fabric.with([Crashlytics.self])
         
         return true
+    }
+    
+    func navigateWithRegistrationStep() {
+        let step = KeychainManager.currentUser()?.registrationStep ?? .firstStep
+        // Registered user
+        if step == .registered {
+            // If first setting is uncompleted
+            if let step = KeychainManager.currentUser()?.settingStep,
+                step != .completed {
+                self.changeRootVC(controllerContainer.resolve(BoardingVC.self)!)
+                return
+            }
+            
+            // if all set
+            _ = RestAPIManager.instance.rx.authorize()
+                .subscribe(onSuccess: { (response) in
+                    // show feed
+                    self.changeRootVC(controllerContainer.resolve(TabBarVC.self)!)
+                }, onError: { (error) in
+                    print(error)
+                })
+            
+        // New user
+        } else {
+            self.showWelcome()
+        }
     }
     
     func showWelcome() {

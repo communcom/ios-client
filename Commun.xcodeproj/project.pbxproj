@@ -41,7 +41,6 @@
 		3B515819226DDE8D00108F17 /* EmptyCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3B515818226DDE8D00108F17 /* EmptyCell.xib */; };
 		3B51581C226DE28D00108F17 /* EmptyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B51581B226DE28D00108F17 /* EmptyCell.swift */; };
 		3B51581E226E0D3A00108F17 /* TLPhotosPickerViewController+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B51581D226E0D3A00108F17 /* TLPhotosPickerViewController+Rx.swift */; };
-		3B5CB2FF22A5416D00757533 /* Auth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5CB2FE22A5416D00757533 /* Auth.swift */; };
 		3B5CB30122A55D3E00757533 /* PlaceholderPostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5CB30022A55D3E00757533 /* PlaceholderPostCell.swift */; };
 		3B5CB30322A56BD500757533 /* UITapGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5CB30222A56BD500757533 /* UITapGestureRecognizer.swift */; };
 		3B5CB30522A5752100757533 /* ListViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5CB30422A5752100757533 /* ListViewModelType.swift */; };
@@ -259,7 +258,6 @@
 		3B515818226DDE8D00108F17 /* EmptyCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmptyCell.xib; sourceTree = "<group>"; };
 		3B51581B226DE28D00108F17 /* EmptyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyCell.swift; sourceTree = "<group>"; };
 		3B51581D226E0D3A00108F17 /* TLPhotosPickerViewController+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TLPhotosPickerViewController+Rx.swift"; sourceTree = "<group>"; };
-		3B5CB2FE22A5416D00757533 /* Auth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Auth.swift; sourceTree = "<group>"; };
 		3B5CB30022A55D3E00757533 /* PlaceholderPostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceholderPostCell.swift; sourceTree = "<group>"; };
 		3B5CB30222A56BD500757533 /* UITapGestureRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITapGestureRecognizer.swift; sourceTree = "<group>"; };
 		3B5CB30422A5752100757533 /* ListViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewModelType.swift; sourceTree = "<group>"; };
@@ -971,7 +969,6 @@
 			children = (
 				3B197C83226A33BF008CF10D /* Mocking */,
 				57840A1A2240DB9400338FD5 /* NetworkService.swift */,
-				3B5CB2FE22A5416D00757533 /* Auth.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -1480,7 +1477,6 @@
 				57840A0E223FAC1B00338FD5 /* BadgeWithCounterView.swift in Sources */,
 				3BDF4FA822C21B310029D616 /* ResponseAPIContentGetProfile.swift in Sources */,
 				3BDD9A0F228F07EF00B2A1DA /* UIApplication.swift in Sources */,
-				3B5CB2FF22A5416D00757533 /* Auth.swift in Sources */,
 				3B0E9C64226F4A0C002AB1C2 /* VerticalDraggableImageView.swift in Sources */,
 				3B02CD282289B23E0078BB52 /* PostHeaderView.swift in Sources */,
 				57E515B62270F7B200A6F6DB /* SettingsButtonCell.swift in Sources */,
