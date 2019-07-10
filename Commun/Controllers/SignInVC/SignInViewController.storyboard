@@ -163,6 +163,12 @@
                                                             <action selector="signInButtonDidTouch:" destination="jR8-kO-b4x" eventType="touchUpInside" id="znk-Sc-gmk"/>
                                                         </connections>
                                                     </button>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aoJ-xG-861" userLabel="Debug Button">
+                                                        <rect key="frame" x="4" y="140" width="367" height="32"/>
+                                                        <connections>
+                                                            <action selector="debugButtonTapped:" destination="jR8-kO-b4x" eventType="touchUpInside" id="9eI-Q5-7zi"/>
+                                                        </connections>
+                                                    </button>
                                                 </subviews>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
@@ -173,7 +179,11 @@
                                                     <constraint firstItem="MzH-Fh-ifk" firstAttribute="top" secondItem="btM-xQ-6hP" secondAttribute="top" constant="16" id="HGp-zZ-fPX"/>
                                                     <constraint firstItem="Yxv-l2-Yad" firstAttribute="centerX" secondItem="btM-xQ-6hP" secondAttribute="centerX" id="QKy-Ds-FfW"/>
                                                     <constraint firstItem="Yxv-l2-Yad" firstAttribute="top" secondItem="2i2-iK-Xdn" secondAttribute="bottom" constant="23" id="TwR-iI-u0l"/>
+                                                    <constraint firstItem="2i2-iK-Xdn" firstAttribute="top" secondItem="aoJ-xG-861" secondAttribute="bottom" constant="4" id="XhV-cs-nMZ"/>
                                                     <constraint firstAttribute="bottom" secondItem="Yxv-l2-Yad" secondAttribute="bottom" constant="16" id="YUm-7H-EEh"/>
+                                                    <constraint firstItem="aoJ-xG-861" firstAttribute="top" secondItem="siR-es-fG8" secondAttribute="bottom" constant="4" id="cfv-oJ-SvQ"/>
+                                                    <constraint firstAttribute="trailing" secondItem="aoJ-xG-861" secondAttribute="trailing" constant="4" id="gfk-ST-NvQ"/>
+                                                    <constraint firstItem="aoJ-xG-861" firstAttribute="leading" secondItem="btM-xQ-6hP" secondAttribute="leading" constant="4" id="iEG-bI-uWK"/>
                                                     <constraint firstItem="siR-es-fG8" firstAttribute="leading" secondItem="btM-xQ-6hP" secondAttribute="leading" constant="16" id="p4Y-IE-GV6"/>
                                                     <constraint firstItem="2i2-iK-Xdn" firstAttribute="top" secondItem="siR-es-fG8" secondAttribute="bottom" constant="40" id="sdd-FS-4OY"/>
                                                     <constraint firstAttribute="trailing" secondItem="MzH-Fh-ifk" secondAttribute="trailing" constant="16" id="tJi-BQ-Jod"/>
