@@ -5,7 +5,7 @@
 //  Created by Maxim Prigozhenkov on 14/03/2019.
 //  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
 //
-//  https://console.firebase.google.com/u/0/project/io-commun-eos-ios/notification/compose?campaignId=4674196189067671007&dupe=true
+//  https://console.firebase.google.com/project/golos-5b0d5/notification/compose?campaignId=9093831260433778480&dupe=true
 //
 
 import UIKit
@@ -95,9 +95,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         Fabric.with([Crashlytics.self])
         
-        #warning("Remove after test")
-//        self.scheduleLocalNotification(userInfo: ["title": "Test Title #1", "body": "Test body #1", "badge": 45])
-
         return true
     }
     
@@ -167,16 +164,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     private func scheduleLocalNotification(userInfo: [AnyHashable : Any]) {
         let notificationContent                 =   UNMutableNotificationContent()
-        let categoryIdentifirer                 =   "Delete Notification Type"
+        let categoryIdentifier                  =   userInfo["category"] as? String ?? "Commun"
         
         notificationContent.title               =   userInfo["title"] as? String ?? "Commun"
         notificationContent.body                =   userInfo["body"] as? String ?? "Commun"
         notificationContent.sound               =   userInfo["sound"] as? UNNotificationSound ?? UNNotificationSound.default
         notificationContent.badge               =   userInfo["badge"] as? NSNumber ?? 1
-        notificationContent.categoryIdentifier  =   categoryIdentifirer
+        notificationContent.categoryIdentifier  =   categoryIdentifier
         
-        let trigger         =   UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
-        let identifier      =   "Local Notification"
+        let trigger         =   UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
+        let identifier      =   "Commun Local Notification"
         let request         =   UNNotificationRequest(identifier: identifier, content: notificationContent, trigger: trigger)
         
         self.notificationCenter.add(request) { (error) in
@@ -185,10 +182,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
         
-        let snoozeAction    =   UNNotificationAction(identifier: "Snooze", title: "Snooze".localized(), options: [])
-        let deleteAction    =   UNNotificationAction(identifier: "DeleteAction", title: "Delete".localized(), options: [.destructive])
+        let snoozeAction    =   UNNotificationAction(identifier: "ActionSnooze", title: "Snooze".localized(), options: [])
+        let deleteAction    =   UNNotificationAction(identifier: "ActionDelete", title: "Delete".localized(), options: [.destructive])
         
-        let category        =   UNNotificationCategory(identifier:          categoryIdentifirer,
+        let category        =   UNNotificationCategory(identifier:          categoryIdentifier,
                                                        actions:             [snoozeAction, deleteAction],
                                                        intentIdentifiers:   [],
                                                        options:             [])
@@ -286,17 +283,15 @@ extension AppDelegate {
 // MARK: - UNUserNotificationCenterDelegate
 @available(iOS 10, *)
 extension AppDelegate: UNUserNotificationCenterDelegate {
-    // Receive push-message when App is active
+    // Receive push-message when App is active/in background
     func userNotificationCenter(_ center:                                   UNUserNotificationCenter,
                                 willPresent notification:                   UNNotification,
                                 withCompletionHandler completionHandler:    @escaping (UNNotificationPresentationOptions) -> Void) {
         // Display Local Notification
         let notificationContent = notification.request.content
-//        let userInfo = notification.request.content.userInfo
         
         // Print full message.
         Logger.log(message: "UINotificationContent: \(notificationContent)", event: .debug)
-//        Logger.log(message: "UserInfo: \(userInfo)", event: .debug)
 
         completionHandler([.alert, .sound])
         
@@ -308,7 +303,6 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                                 didReceive response:                        UNNotificationResponse,
                                 withCompletionHandler completionHandler:    @escaping () -> Void) {
         let notificationContent = response.notification.request.content
-//        let userInfo = response.notification.request.content.userInfo
         
         if response.notification.request.identifier == "Local Notification" {
             Logger.log(message: "Handling notifications with the Local Notification Identifier", event: .debug)
@@ -316,7 +310,6 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
 
         // Print full message.
         Logger.log(message: "UINotificationContent: \(notificationContent)", event: .debug)
-//        Logger.log(message: "UserInfo: \(userInfo)", event: .debug)
 
         completionHandler()
     }

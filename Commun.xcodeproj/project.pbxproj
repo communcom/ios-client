@@ -177,6 +177,8 @@
 		57FB179D224BFBD700563BF7 /* PillPageControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FB179A224BFBD700563BF7 /* PillPageControl.swift */; };
 		57FB17A4224C15C400563BF7 /* SignInViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FB17A3224C15C400563BF7 /* SignInViewModel.swift */; };
 		7472E4613CDA904305E42A4F /* Pods_Commun.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F0772CC6D820AD11B1FF48A /* Pods_Commun.framework */; };
+		B10CCBE622D5F8C70077966C /* PushNotificationSettingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B10CCBE522D5F8C70077966C /* PushNotificationSettingCell.xib */; };
+		B10CCBE822D5F8DB0077966C /* PushNotificationSettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10CCBE722D5F8DB0077966C /* PushNotificationSettingCell.swift */; };
 		B170AC15228AFBDA00C6FFBC /* SignUpVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5797E0F9225DDA490026C4D5 /* SignUpVC.storyboard */; };
 		B170AC16228AFBF500C6FFBC /* PostCardCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 572F81A1223C164B0007F2F9 /* PostCardCell.xib */; };
 		B17A970C228002440081B8E0 /* SignUpRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17A970B228002440081B8E0 /* SignUpRouter.swift */; };
@@ -437,6 +439,8 @@
 		57FB17A3224C15C400563BF7 /* SignInViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewModel.swift; sourceTree = "<group>"; };
 		8F30C81783ED457B84BCC641 /* Pods-Commun.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Commun.release.xcconfig"; path = "Pods/Target Support Files/Pods-Commun/Pods-Commun.release.xcconfig"; sourceTree = "<group>"; };
 		AE43B2305FC441D96462E0AB /* Pods-Commun.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Commun.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Commun/Pods-Commun.debug.xcconfig"; sourceTree = "<group>"; };
+		B10CCBE522D5F8C70077966C /* PushNotificationSettingCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PushNotificationSettingCell.xib; sourceTree = "<group>"; };
+		B10CCBE722D5F8DB0077966C /* PushNotificationSettingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PushNotificationSettingCell.swift; sourceTree = "<group>"; };
 		B12684EF22C1E56B0046C838 /* Commun.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Commun.entitlements; sourceTree = "<group>"; };
 		B17A970B228002440081B8E0 /* SignUpRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpRouter.swift; sourceTree = "<group>"; };
 		B1A6EE5022D5C8E100A5D6F0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -1089,6 +1093,8 @@
 			children = (
 				57E515A32270EA7900A6F6DB /* GeneralSettingCell.swift */,
 				57E515A42270EA7900A6F6DB /* GeneralSettingCell.xib */,
+				B10CCBE722D5F8DB0077966C /* PushNotificationSettingCell.swift */,
+				B10CCBE522D5F8C70077966C /* PushNotificationSettingCell.xib */,
 			);
 			path = GeneralSettingCell;
 			sourceTree = "<group>";
@@ -1311,6 +1317,7 @@
 				3B197C88226A33CF008CF10D /* ResponseAPIContentGetProfileResult.json in Resources */,
 				B1EA02F32289882A00835244 /* SF-Pro-Text-Semibold.otf in Resources */,
 				3B885BBE22B7A20D00FC4B7A /* EmbededView.xib in Resources */,
+				B10CCBE622D5F8C70077966C /* PushNotificationSettingCell.xib in Resources */,
 				B1A6EE5122D5C8E300A5D6F0 /* GoogleService-Info.plist in Resources */,
 				B1EA02E92289882A00835244 /* SF-Pro-Text-Bold.otf in Resources */,
 				3BDD9A06228DBED000B2A1DA /* CommentForm.xib in Resources */,
@@ -1474,6 +1481,7 @@
 				3BF2E09822D3A49F003B37AE /* StepButton.swift in Sources */,
 				3B63CD9322AA7AA200DC828B /* UIScrollView.swift in Sources */,
 				3BB86B4922734AE4008F1C64 /* UIColor.swift in Sources */,
+				B10CCBE822D5F8DB0077966C /* PushNotificationSettingCell.swift in Sources */,
 				57840A00223FAC1B00338FD5 /* SegmentioCellWithImageBeforeLabel.swift in Sources */,
 				57840A0A223FAC1B00338FD5 /* Segmentio.swift in Sources */,
 				3B2F227122689308006B589E /* TabBarViewModel.swift in Sources */,
