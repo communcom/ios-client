@@ -18,28 +18,16 @@ extension SignUpRouter where Self: UIViewController {
     // MARK: - Flow
     /// Move to next scene
     func signUpNextStep() {
-        let signUpVC = controllerContainer.resolve(SignUpVC.self)!
-        
         // Retrieve current user's state
-        guard let user = KeychainManager.currentUser() else {
-            // Navigate to SignUpVC if no user exists
-            showOrPresentVC(signUpVC)
-            return
-        }
-        
-        // Retrieve step
-        guard let step = user.registrationStep else {
-            Logger.log(message: "Invalid registrationStep: \(user.registrationStep.debugDescription)", event: .error)
-            resetSignUpProcess()
-            return
-        }
+        let user = KeychainManager.currentUser()
+        let step = user?.registrationStep ?? .firstStep
         
         // Navigation
         var vc: UIViewController
         
         switch step {
         case .firstStep:
-            vc = signUpVC
+            return
             
         case .verify:
             let confirmUserVC = controllerContainer.resolve(ConfirmUserVC.self)!
@@ -75,17 +63,8 @@ extension SignUpRouter where Self: UIViewController {
             endSigningUp()
             return
         }
-                
-        showOrPresentVC(vc)
-    }
-    
-    private func showOrPresentVC(_ vc: UIViewController) {
-        if let nc = self.navigationController {
-            nc.pushViewController(vc)
-            return
-        }
         
-        present(vc, animated: true, completion: nil)
+        self.navigationController?.pushViewController(vc)
     }
     
     /// End signing up
@@ -107,7 +86,7 @@ extension SignUpRouter where Self: UIViewController {
     func resetSignUpProcess() {
         try? KeychainManager.deleteUser()
         // Dismiss all screen
-        view.window!.rootViewController?.dismiss(animated: true, completion: nil)
+        popToSignUpVC()
     }
 }
 
