@@ -75,8 +75,7 @@ class CommentCell: UITableViewCell {
         
         setText(expanded: expanded)
         
-        #warning("set user's avatar")
-        avatarImageView.setNonAvatarImageWithId(comment.author?.username ?? comment.author?.userId ?? "U")
+        avatarImageView.setAvatar(urlString: comment.author?.avatarUrl, namePlaceHolder: comment.author?.username ?? comment.author?.userId ?? "U")
         nameLabel.text = comment.author?.username ?? comment.author?.userId
         timeLabel.text = Date.timeAgo(string: comment.meta.time)
         
