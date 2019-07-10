@@ -82,7 +82,7 @@ class NetworkService: NSObject {
         return RestAPIManager.instance.rx.deleteMessage(permlink: permlink)
             .observeOn(MainScheduler.instance)
     }
-    
+
     func getUserComments(_ paginationKey: String? = nil, nickName: String? = nil) -> Single<ResponseAPIContentGetComments> {
         return Single.create {single in
             RestAPIManager.instance.loadUserComments(nickName: nickName, paginationSequenceKey: paginationKey, completion: { (response, error) in
