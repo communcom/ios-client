@@ -33,4 +33,10 @@ extension BoardingRouter where Self: UIViewController {
         
         navigationController?.pushViewController(vc)
     }
+    
+    func endBoarding() {
+        try? KeychainManager.save(data: [
+            Config.settingStepKey: CurrentUserSettingStep.completed.rawValue
+        ])
+    }
 }

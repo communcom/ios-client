@@ -187,7 +187,7 @@ extension SettingsVC: SettingsButtonCellDelegate {
             showAlert(title: "Logout".localized(), message: "Do you really want to logout", buttonTitles: ["Ok".localized(), "Cancel".localized()], highlightedButtonIndex: 1) { (index) in
                 if index == 0 {
                     do {
-                        try Auth.logout()
+                        try CurrentUser.logout()
                     } catch {
                         self.showError(error)
                     }

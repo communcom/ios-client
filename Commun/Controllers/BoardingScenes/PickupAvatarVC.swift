@@ -10,7 +10,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-class PickupAvatarVC: UIViewController, SignUpRouter {
+class PickupAvatarVC: UIViewController, BoardingRouter {
     let disposeBag = DisposeBag()
     @IBOutlet weak var userAvatarImage: UIImageView!
     @IBOutlet weak var chooseImageButton: UIButton!
@@ -86,11 +86,10 @@ class PickupAvatarVC: UIViewController, SignUpRouter {
             .subscribe(onSuccess: { (url) in
                 do {
                     try KeychainManager.save(data: [
-                        Config.registrationStepKey: CurrentUserRegistrationStep.setBio.rawValue
+                        Config.settingStepKey: CurrentUserSettingStep.setBio.rawValue
                     ])
-                    UserDefaults.standard.set(url, forKey: Config.currentUserAvatarUrlKey)
                     self.hideHud()
-                    self.signUpNextStep()
+                    self.boardingNextStep()
                 } catch {
                     self.hideHud()
                     self.showError(error)
@@ -104,6 +103,6 @@ class PickupAvatarVC: UIViewController, SignUpRouter {
     }
     
     @IBAction func skipButtonDidTouch(_ sender: Any) {
-        endSigningUp()
+        endBoarding()
     }
 }
