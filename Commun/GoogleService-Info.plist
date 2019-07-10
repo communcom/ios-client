@@ -3,21 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>207189659346-u25ig7nlh3mgfrgrk7e4s9vbhfq3h70g.apps.googleusercontent.com</string>
+	<string>490496210742-be0m9sqm3tps2ken7rr7mja7mu963jui.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.207189659346-u25ig7nlh3mgfrgrk7e4s9vbhfq3h70g</string>
+	<string>com.googleusercontent.apps.490496210742-be0m9sqm3tps2ken7rr7mja7mu963jui</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>490496210742-nbv6aet45v8dp36sug5a9colof86k53a.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyAgmVWZxgyu9Xff8VvwO6T8s7qE96UxNXQ</string>
+	<string>AIzaSyBz3mRGhY6PtFYYRT0oy3Ww7fdZ4xsTEaw</string>
 	<key>GCM_SENDER_ID</key>
-	<string>207189659346</string>
+	<string>490496210742</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>io.commun.eos.ios</string>
 	<key>PROJECT_ID</key>
-	<string>commun-3122d</string>
+	<string>golos-5b0d5</string>
 	<key>STORAGE_BUCKET</key>
-	<string>commun-3122d.appspot.com</string>
+	<string>golos-5b0d5.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,8 +31,8 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:207189659346:ios:8481fcb29e8dab88</string>
+	<string>1:490496210742:ios:8481fcb29e8dab88</string>
 	<key>DATABASE_URL</key>
-	<string>https://commun-3122d.firebaseio.com</string>
+	<string>https://golos-5b0d5.firebaseio.com</string>
 </dict>
 </plist>
