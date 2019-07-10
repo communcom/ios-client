@@ -15,21 +15,7 @@ protocol SignUpRouter {
 }
 
 extension SignUpRouter where Self: UIViewController {
-    /// Move to sign in
-    func routeToSignInScene() {
-        let signInVC = controllerContainer.resolve(SignInViewController.self)!
-        
-        signInVC.handlerSignUp = { [weak self] success in
-            guard let strongSelf = self else { return }
-            
-            if success {
-                strongSelf.signUpNextStep()
-            }
-        }
-        
-        navigationController?.pushViewController(signInVC)
-    }
-    
+    // MARK: - Flow
     /// Move to next scene
     func signUpNextStep() {
         let signUpVC = controllerContainer.resolve(SignUpVC.self)!
@@ -65,9 +51,17 @@ extension SignUpRouter where Self: UIViewController {
             vc = setUserVC
             
         case .toBlockChain:
-            let loadKeysVC = controllerContainer.resolve(LoadKeysVC.self)!
-            loadKeysVC.viewModel = LoadKeysViewModel()
-            vc = loadKeysVC
+            return
+            
+        case .setPasscode:
+            let setPasscode = SetPasscodeVC(delegate: nil)
+            vc = setPasscode
+            
+        case .setFaceId:
+            vc = UIViewController()
+            
+        case .backUpICloud:
+            vc = UIViewController()
             
         case .setAvatar:
             let pickAvatarVC = controllerContainer.resolve(PickupAvatarVC.self)!
@@ -114,6 +108,15 @@ extension SignUpRouter where Self: UIViewController {
         try? KeychainManager.deleteUser()
         // Dismiss all screen
         view.window!.rootViewController?.dismiss(animated: true, completion: nil)
+    }
+}
+
+extension SignUpRouter where Self: UIViewController {
+    // MARK: - Back button
+    func setBackButtonToSignUpVC() {
+        navigationItem.hidesBackButton = true
+        let newBackButton = UIBarButtonItem(title: "Back".localized(), style: .plain, target: self, action: #selector(popToSignUpVC))
+        navigationItem.leftBarButtonItem = newBackButton
     }
 }
 

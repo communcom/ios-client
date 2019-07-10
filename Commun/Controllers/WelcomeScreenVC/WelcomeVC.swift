@@ -10,20 +10,13 @@ import UIKit
 import CyberSwift
 import RxSwift
 
-class WelcomeVC: UIViewController, SignUpRouter {
-    let disposeBag = DisposeBag()
-    
+class WelcomeVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.isTranslucent = true
-        
-        if let currentUser = Config.currentUser,
-            currentUser.registrationStep != nil {
-            self.signUpNextStep()
-        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -38,10 +31,25 @@ class WelcomeVC: UIViewController, SignUpRouter {
     
     // MARK: - Actions
     @IBAction func signInButtonTap(_ sender: Any) {
-        self.routeToSignInScene()
+        let signInVC = controllerContainer.resolve(SignInViewController.self)!
+        
+        signInVC.handlerSignUp = { [weak self] success in
+            guard let strongSelf = self else { return }
+            
+            if success {
+                strongSelf.navigateToSignUp()
+            }
+        }
+        
+        navigationController?.pushViewController(signInVC)
     }
     
     @IBAction func signUpButtonTap(_ sender: Any) {
-        self.signUpNextStep()
+        navigateToSignUp()
+    }
+    
+    func navigateToSignUp() {
+        let signUpVC = controllerContainer.resolve(SignUpVC.self)!
+        show(signUpVC, sender: nil)
     }
 }
