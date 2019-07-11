@@ -8,6 +8,7 @@
 
 import UIKit
 import RxSwift
+import CyberSwift
 import QRCodeReaderViewController
 
 class SignInViewController: UIViewController {
@@ -156,4 +157,22 @@ class SignInViewController: UIViewController {
         return cred.login.count > 3 && cred.key.count > 10
     }
 
+    
+    // MARK: - Actions
+    @IBAction func debugButtonTapped(_ sender: UIButton) {
+        Broadcast.instance.generateNewTestUser { [weak self] (newUser) in
+            guard let strongSelf = self, let user = newUser else { return }
+            
+            let login       =   user.username
+            let activeKey   =   user.active_key
+
+            DispatchQueue.main.async {
+                strongSelf.loginTextField.text = login
+                strongSelf.passwordTextField.text = activeKey
+                strongSelf.loginTextField.becomeFirstResponder()
+                strongSelf.passwordTextField.becomeFirstResponder()
+                strongSelf.passwordTextField.resignFirstResponder()
+            }
+        }
+    }
 }

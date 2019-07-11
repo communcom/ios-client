@@ -5,7 +5,7 @@
 //  Created by Maxim Prigozhenkov on 14/03/2019.
 //  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
 //
-//  https://console.firebase.google.com/u/0/project/io-commun-eos-ios/notification/compose?campaignId=4674196189067671007&dupe=true
+//  https://console.firebase.google.com/project/golos-5b0d5/notification/compose?campaignId=9093831260433778480&dupe=true
 //
 
 import UIKit
@@ -29,11 +29,12 @@ let gcmMessageIDKey = "gcm.message_id"
 class AppDelegate: UIResponder, UIApplicationDelegate {
     // MARK: - Properties
     var window: UIWindow?
-
     var reachability: Reachability?
     
     static var reloadSubject = PublishSubject<Bool>()
+    let notificationCenter = UNUserNotificationCenter.current()
 
+    
     // MARK: - Class Functions
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Sync iCloud key-value store
@@ -79,16 +80,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Register for remote notifications
         if #available(iOS 10.0, *) {
             // For iOS 10 display notification (sent via APNS)
-            UNUserNotificationCenter.current().delegate = self
-            
-            let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
-            UNUserNotificationCenter.current().requestAuthorization(options: authOptions, completionHandler: {_, _ in })
+            self.requestAuthorization()
         } else {
             let settings: UIUserNotificationSettings = UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
             application.registerUserNotificationSettings(settings)
         }
         
         application.registerForRemoteNotifications()
+
         Messaging.messaging().delegate = self
         
         Fabric.with([Crashlytics.self])
@@ -181,6 +180,56 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
 
+    // MARK: - Custom Functions
+    private func requestAuthorization() {
+        self.notificationCenter.delegate = self
+        
+        self.notificationCenter.requestAuthorization(options:               [.alert, .sound, .badge],
+                                                     completionHandler:     { (granted, error) in
+                                                        Logger.log(message: "Permission granted: \(granted)", event: .debug)
+                                                        guard granted else { return }
+                                                        self.getNotificationSettings()
+        })
+    }
+    
+    private func getNotificationSettings() {
+        self.notificationCenter.getNotificationSettings(completionHandler:  { (settings) in
+            Logger.log(message: "Notification settings: \(settings)", event: .debug)
+        })
+    }
+
+    private func scheduleLocalNotification(userInfo: [AnyHashable : Any]) {
+        let notificationContent                 =   UNMutableNotificationContent()
+        let categoryIdentifier                  =   userInfo["category"] as? String ?? "Commun"
+        
+        notificationContent.title               =   userInfo["title"] as? String ?? "Commun"
+        notificationContent.body                =   userInfo["body"] as? String ?? "Commun"
+        notificationContent.sound               =   userInfo["sound"] as? UNNotificationSound ?? UNNotificationSound.default
+        notificationContent.badge               =   userInfo["badge"] as? NSNumber ?? 1
+        notificationContent.categoryIdentifier  =   categoryIdentifier
+        
+        let trigger         =   UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
+        let identifier      =   "Commun Local Notification"
+        let request         =   UNNotificationRequest(identifier: identifier, content: notificationContent, trigger: trigger)
+        
+        self.notificationCenter.add(request) { (error) in
+            if let error = error {
+                Logger.log(message: "Error \(error.localizedDescription)", event: .error)
+            }
+        }
+        
+        let snoozeAction    =   UNNotificationAction(identifier: "ActionSnooze", title: "Snooze".localized(), options: [])
+        let deleteAction    =   UNNotificationAction(identifier: "ActionDelete", title: "Delete".localized(), options: [.destructive])
+        
+        let category        =   UNNotificationCategory(identifier:          categoryIdentifier,
+                                                       actions:             [snoozeAction, deleteAction],
+                                                       intentIdentifiers:   [],
+                                                       options:             [])
+        
+        self.notificationCenter.setNotificationCategories([category])
+    }
+    
+    
     // MARK: - Core Data stack
     lazy var persistentContainer: NSPersistentContainer = {
         /*
@@ -270,34 +319,33 @@ extension AppDelegate {
 // MARK: - UNUserNotificationCenterDelegate
 @available(iOS 10, *)
 extension AppDelegate: UNUserNotificationCenterDelegate {
+    // Receive push-message when App is active/in background
     func userNotificationCenter(_ center:                                   UNUserNotificationCenter,
                                 willPresent notification:                   UNNotification,
                                 withCompletionHandler completionHandler:    @escaping (UNNotificationPresentationOptions) -> Void) {
-        let userInfo = notification.request.content.userInfo
-        
-        if let messageID = userInfo[gcmMessageIDKey] {
-            Logger.log(message: "Message ID: \(messageID)", event: .severe)
-        }
+        // Display Local Notification
+        let notificationContent = notification.request.content
         
         // Print full message.
-        print(userInfo)
+        Logger.log(message: "UINotificationContent: \(notificationContent)", event: .debug)
+
+        completionHandler([.alert, .sound])
         
-        // Change this to your preferred presentation option
-        completionHandler([])
+        UIApplication.shared.applicationIconBadgeNumber = Int(truncating: notificationContent.badge ?? 1)
     }
     
+    // Tap on push message
     func userNotificationCenter(_ center:                                   UNUserNotificationCenter,
                                 didReceive response:                        UNNotificationResponse,
                                 withCompletionHandler completionHandler:    @escaping () -> Void) {
-        let userInfo = response.notification.request.content.userInfo
+        let notificationContent = response.notification.request.content
         
-        // Print message ID.
-        if let messageID = userInfo[gcmMessageIDKey] {
-            Logger.log(message: "Message ID: \(messageID)", event: .severe)
+        if response.notification.request.identifier == "Local Notification" {
+            Logger.log(message: "Handling notifications with the Local Notification Identifier", event: .debug)
         }
-        
+
         // Print full message.
-        print(userInfo)
+        Logger.log(message: "UINotificationContent: \(notificationContent)", event: .debug)
 
         completionHandler()
     }

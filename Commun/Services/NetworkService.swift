@@ -333,10 +333,15 @@ class NetworkService: NSObject {
     }
     
     func setBasicOptions(lang: Language) {
-        RestAPIManager.instance.setBasicOptions(language: lang.code, nsfwContent: .alwaysAlert, responseHandling: { (result) in
-
-        }) { (errorAPI) in
-        }
+        RestAPIManager.instance.setBasicOptions(nsfwContent:        .alwaysAlert,
+                                                responseHandling:   { (result) in
+                                                    if result.status == "OK" {
+                                                        UserDefaults.standard.set(lang.shortCode, forKey: Config.currentUserAppLanguageKey)
+                                                    }
+        },
+                                                errorHandling:      { (errorAPI) in
+                                                    Logger.log(message: "setBasicOptions error: \(errorAPI.caseInfo.message.localized())", event: .error)
+        })
     }
     
     func setOptions(options: RequestParameterAPI.NoticeOptions, type: NoticeType) -> Completable {

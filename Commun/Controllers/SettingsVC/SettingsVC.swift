@@ -24,6 +24,7 @@ class SettingsVC: UIViewController {
         super.viewDidLoad()
 
         tableView.register(UINib(nibName: "GeneralSettingCell", bundle: nil), forCellReuseIdentifier: "GeneralSettingCell")
+        tableView.register(UINib(nibName: "PushNotificationSettingCell", bundle: nil), forCellReuseIdentifier: "PushNotificationSettingCell")
         tableView.register(UINib(nibName: "NotificationSettingCell", bundle: nil), forCellReuseIdentifier: "NotificationSettingCell")
         tableView.register(UINib(nibName: "SettingsButtonCell", bundle: nil), forCellReuseIdentifier: "SettingsButtonCell")
         
@@ -47,10 +48,10 @@ class SettingsVC: UIViewController {
 }
 
 extension SettingsVC {
-    
     func makeCells() {
         // General
         generalCells = []
+        
         let language = tableView.dequeueReusableCell(withIdentifier: "GeneralSettingCell") as! GeneralSettingCell
         language.setupCell(setting: GeneralSetting(name: "Interface language", value: "English"))
         generalCells.append(language)
@@ -58,9 +59,14 @@ extension SettingsVC {
         let content = tableView.dequeueReusableCell(withIdentifier: "GeneralSettingCell") as! GeneralSettingCell
         content.setupCell(setting: GeneralSetting(name: "NSFW content", value: "Always alert"))
         generalCells.append(content)
-        
+
+        let pushNotificationCell = tableView.dequeueReusableCell(withIdentifier: "PushNotificationSettingCell") as! PushNotificationSettingCell
+        pushNotificationCell.setup()
+        generalCells.append(pushNotificationCell)
+
         // Notifications
         notificationCells = []
+        
         for type in NotificationSettingType.allCases {
             let notificationCell = tableView.dequeueReusableCell(withIdentifier: "NotificationSettingCell") as! NotificationSettingCell
             notificationCell.setupCell(withType: type)
@@ -93,8 +99,9 @@ extension SettingsVC {
     
 }
 
+
+// MARK: - UITableViewDataSource
 extension SettingsVC: UITableViewDataSource {
-    
     func numberOfSections(in tableView: UITableView) -> Int {
         return 3
     }
@@ -103,12 +110,15 @@ extension SettingsVC: UITableViewDataSource {
         if section == 0 {
             return generalCells.count
         }
+        
         if section == 1 {
             return notificationCells.count
         }
+        
         if section == 2 {
             return passwordsCells.count
         }
+        
         return 0
     }
     
@@ -116,21 +126,24 @@ extension SettingsVC: UITableViewDataSource {
         if indexPath.section == 0 {
             return generalCells[indexPath.row]
         }
+        
         if indexPath.section == 1 {
             return notificationCells[indexPath.row]
         }
+        
         if indexPath.section == 2 {
             return passwordsCells[indexPath.row]
         }
+        
         return UITableViewCell()
     }
-    
 }
 
+
+// MARK: - UITableViewDelegate
 extension SettingsVC: UITableViewDelegate {
-    
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 56
+        return 56.0
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -141,8 +154,8 @@ extension SettingsVC: UITableViewDelegate {
                     let nav = UINavigationController(rootViewController: vc)
                     self.present(nav, animated: true, completion: nil)
                 }
-                
             }
+                
             else if indexPath.row == 1 {
                 let alert = UIAlertController(title: nil, message: "Select alert", preferredStyle: .actionSheet)
                 alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
@@ -162,12 +175,15 @@ extension SettingsVC: UITableViewDelegate {
         case 0:
             label.text = "General"
             break
+        
         case 1:
             label.text = "Notifications"
             break
+        
         case 2:
             label.text = "Passwords"
             break
+        
         default:
             label.text = ""
         }
@@ -177,14 +193,15 @@ extension SettingsVC: UITableViewDelegate {
         
         return view
     }
-    
 }
 
+
+// MARK: - SettingsButtonCellDelegate
 extension SettingsVC: SettingsButtonCellDelegate {
-    
     func buttonDidTap(on cell: SettingsButtonCell) {
         if cell.button.titleLabel?.text == "Logout".localized() {
             showAlert(title: "Logout".localized(), message: "Do you really want to logout", buttonTitles: ["Ok".localized(), "Cancel".localized()], highlightedButtonIndex: 1) { (index) in
+               
                 if index == 0 {
                     do {
                         try CurrentUser.logout()
@@ -194,6 +211,7 @@ extension SettingsVC: SettingsButtonCellDelegate {
                     }
                 }
             }
+            
             return
         }
         
@@ -208,25 +226,33 @@ extension SettingsVC: SettingsButtonCellDelegate {
         alert.addAction(UIAlertAction(title: "Update", style: .default, handler: { _ in
             print("Update password")
         }))
+        
         present(alert, animated: true, completion: nil)
     }
-    
 }
 
+
+// MARK: - LanguageVCDelegate
 extension SettingsVC: LanguageVCDelegate {
-    
     func didSelectLanguage(_ language: Language) {
         NetworkService.shared.setBasicOptions(lang: language)
+        
+        if let cell = self.tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as? GeneralSettingCell {
+            cell.settingValueLabel.text = language.name.components(separatedBy: " ").first ?? "English".localized()
+        }
     }
-    
 }
 
+
+// MARK: - NotificationSettingCellDelegate
 extension SettingsVC: NotificationSettingCellDelegate {
     func didFailWithError(error: Error) {
         var message = error.localizedDescription
+        
         if let error = error as? ErrorAPI {
             message = error.caseInfo.message
         }
+        
         self.showAlert(title: "Error".localized(), message: message)
     }
 }
