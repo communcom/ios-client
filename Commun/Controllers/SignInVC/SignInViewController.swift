@@ -118,16 +118,9 @@ class SignInViewController: UIViewController {
                 withLogin: loginTextField.text!,
                 withApiKey: passwordTextField.text!
             )
-            .catchError { error in
-                if let error = error as? ErrorAPI {
-                    if error.caseInfo.message == "There is no secret stored for this channelId. Probably, client's already authorized" {
-                        return .empty()
-                    }
-                }
-                throw error
-            }
             .subscribe(onCompleted: { [weak self] in
                 self?.configure(signingIn: false)
+                AppDelegate.reloadSubject.onNext(true)
             }, onError: { [weak self] (error) in
                 self?.configure(signingIn: false)
                 self?.showError(error)

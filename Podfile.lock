@@ -231,7 +231,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   CyberSwift:
-    :commit: 8a0586ad5659a84d98300af71eb0c9d1dd53e4ea
+    :commit: 98f1ca6543809bc9db376980fcc81378abaff579
     :git: https://github.com/GolosChain/cyberSwift.git
   THPinViewController:
     :commit: 6fb35244f9b13d8ece5e8e9d0d265d2d5787c7d6
