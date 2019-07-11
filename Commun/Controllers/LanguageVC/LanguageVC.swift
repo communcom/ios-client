@@ -11,6 +11,7 @@ import UIKit
 struct Language {
     var name: String
     var code: String
+    let shortCode: String
 }
 
 protocol LanguageVCDelegate {
@@ -23,7 +24,10 @@ class LanguageVC: UIViewController {
     
     var searchController = UISearchController(searchResultsController: nil) // С поиском будут доработки
     
-    var languages = [Language(name: "English (UK)", code: "UK")]
+    var languages = [
+                        Language(name: "English (UK)", code: "UK", shortCode: "en"),
+                        Language(name: "Russian (RUS)", code: "Ru", shortCode: "ru")
+                    ]
     
     var delegate: LanguageVCDelegate?
     

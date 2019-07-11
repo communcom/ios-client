@@ -335,8 +335,10 @@ class NetworkService: NSObject {
     }
     
     func setBasicOptions(lang: Language) {
-        RestAPIManager.instance.setBasicOptions(language: lang.code, nsfwContent: .alwaysAlert, responseHandling: { (result) in
-
+        RestAPIManager.instance.setBasicOptions(language: lang.shortCode, nsfwContent: .alwaysAlert, responseHandling: { (result) in
+            if result.status == "OK" {
+                UserDefaults.standard.set(lang.shortCode, forKey: Config.currentUserAppLanguageKey)
+            }
         }) { (errorAPI) in
         }
     }

@@ -11,8 +11,8 @@ import CyberSwift
 import RxSwift
 
 enum NotificationSettingType: String {
-    case vote = "Upvote"
-    case downVote = "Downvote"
+    case upvote = "Upvote"
+    case downvote = "Downvote"
     case points = "Points transfer"
     case comment = "Comment and reply"
     case mention = "Mention"
@@ -26,11 +26,11 @@ enum NotificationSettingType: String {
     }
     
     static func getOptions(_ options: ResponseAPIGetOptionsNotifyShow) {
-        #warning("types message, witnessVote, witnessCancelVote missing")
+        #warning("types unsubscribe, witnessVote, witnessCancelVote missing")
         let standard = UserDefaults.standard
-        #warning("options.upvote -> options.vote ?")
-        standard.set(options.upvote, forKey: NotificationSettingType.vote.rawValue)
-        standard.set(options.downvote, forKey: NotificationSettingType.downVote.rawValue)
+
+        standard.set(options.upvote, forKey: NotificationSettingType.upvote.rawValue)
+        standard.set(options.downvote, forKey: NotificationSettingType.downvote.rawValue)
         standard.set(options.transfer, forKey: NotificationSettingType.points.rawValue)
         standard.set(options.reply, forKey: NotificationSettingType.comment.rawValue)
         standard.set(options.subscribe, forKey: NotificationSettingType.following.rawValue)
@@ -41,26 +41,24 @@ enum NotificationSettingType: String {
     }
     
     static func getNoticeOptions() -> RequestParameterAPI.NoticeOptions {
-        #warning("types message, witnessVote, witnessCancelVote missing")
-        return RequestParameterAPI.NoticeOptions(
-            vote: NotificationSettingType.vote.toBool(),
-            flag: NotificationSettingType.downVote.toBool(),
-            transfer: NotificationSettingType.points.toBool(),
-            reply: NotificationSettingType.comment.toBool(),
-            subscribe: NotificationSettingType.following.toBool(),
-            unsubscribe: false,
-            mention: NotificationSettingType.mention.toBool(),
-            repost: NotificationSettingType.repost.toBool(),
-            reward: NotificationSettingType.rewardsPosts.toBool(),
-            curatorReward: NotificationSettingType.rewardsVote.toBool(),
-            message: false, //NotificationSettingType.downvote.toBool(),
-            witnessVote: false, //NotificationSettingType.downvote.toBool(),
-            witnessCancelVote: false //NotificationSettingType.downvote.toBool(),
+        #warning("types unsubscribe, witnessVote, witnessCancelVote missing")
+        return RequestParameterAPI.NoticeOptions(upvote:                NotificationSettingType.upvote.toBool(),
+                                                 downvote:              NotificationSettingType.downvote.toBool(),
+                                                 transfer:              NotificationSettingType.points.toBool(),
+                                                 reply:                 NotificationSettingType.comment.toBool(),
+                                                 subscribe:             NotificationSettingType.following.toBool(),
+                                                 unsubscribe:           false,
+                                                 mention:               NotificationSettingType.mention.toBool(),
+                                                 repost:                NotificationSettingType.repost.toBool(),
+                                                 reward:                NotificationSettingType.rewardsPosts.toBool(),
+                                                 curatorReward:         NotificationSettingType.rewardsVote.toBool(),
+                                                 witnessVote:           false,
+                                                 witnessCancelVote:     false
         )
     }
     
     static var allCases: [NotificationSettingType] {
-        return [.vote, .downVote, .points, .comment, .mention, .rewardsVote, .rewardsPosts, .following, .repost]
+        return [.upvote, .downvote, .points, .comment, .mention, .rewardsVote, .rewardsPosts, .following, .repost]
     }
 }
 
@@ -106,7 +104,7 @@ class NotificationSettingCell: UITableViewCell {
         
         let options = NotificationSettingType.getNoticeOptions()
         
-        NetworkService.shared.setOptions(options: options, type: .notify)
+        NetworkService.shared.setOptions(options: options, type: .push)
             .subscribe(onError: {error in
                 UserDefaults.standard.set(!sender.isOn, forKey: type.rawValue)
                 sender.setOn(!sender.isOn, animated: true)
