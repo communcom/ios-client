@@ -30,6 +30,7 @@ class SetPasscodeVC: THPinViewController, BoardingRouter {
         if (currentPin == nil) {
             navigationController?.setNavigationBarHidden(true, animated: animated)
         }
+        clear()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
