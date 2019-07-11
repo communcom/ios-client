@@ -18,8 +18,8 @@ class SetUserViewModel {
         return !userName.isEmpty && userName.count <= 12 && userName.rangeOfCharacter(from: characterset.inverted) == nil
     }
     
-    func setUser(userName: String, phone: String) -> Completable {
+    func setUser(userName: String, phone: String) -> Single<String> {
         return RestAPIManager.instance.rx.setUser(id: userName)
-            .flatMapToCompletable()
+            .map {_ in userName}
     }
 }

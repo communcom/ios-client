@@ -295,14 +295,14 @@ class NetworkService: NSObject {
     func updateMeta(params: [String: String], waitForTransaction: Bool = true) -> Completable {
         return RestAPIManager.instance.rx.update(userProfile: params)
             .flatMapCompletable({ (transaction) -> Completable in
-                if !waitForTransaction {return .empty()}
-                
-                guard let id = transaction.body?.transaction_id else {return .error(ErrorAPI.responseUnsuccessful(message: "transactionId is missing"))}
-                
                 // update profile
                 if let url = params["profile_image"] {
                     UserDefaults.standard.set(url, forKey: Config.currentUserAvatarUrlKey)
                 }
+                
+                if !waitForTransaction {return .empty()}
+                
+                guard let id = transaction.body?.transaction_id else {return .error(ErrorAPI.responseUnsuccessful(message: "transactionId is missing"))}
                 
                 return self.waitForTransactionWith(id: id)
             })

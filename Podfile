@@ -14,7 +14,7 @@ target 'Commun' do
   pod 'Firebase/Core'
   pod 'Firebase/Messaging'
   
-  pod 'CyberSwift', :git => "https://github.com/GolosChain/cyberSwift.git" # "https://github.com/Monserg/cyber-ios.git"
+  pod 'CyberSwift', :git => "https://github.com/GolosChain/cyberSwift.git", :branch => "features/registration_new_steps" # "https://github.com/Monserg/cyber-ios.git"
   
   pod 'Alamofire'
   pod 'Swinject'
@@ -46,6 +46,8 @@ target 'Commun' do
   
   pod 'TTTAttributedLabel'
   pod 'QRCodeReaderViewController', '~> 4.0.2'
+  
+  pod 'THPinViewController'
   
   post_install do |installer|
     installer.pods_project.targets.each do |target|

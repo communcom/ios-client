@@ -125,9 +125,8 @@ class SignInViewController: UIViewController {
                 }
                 throw error
             }
-            .subscribe(onCompleted: {
-                self.configure(signingIn: false)
-                WebSocketManager.instance.authorized.accept(true)
+            .subscribe(onCompleted: { [weak self] in
+                self?.configure(signingIn: false)
             }, onError: { [weak self] (error) in
                 self?.configure(signingIn: false)
                 self?.showError(error)

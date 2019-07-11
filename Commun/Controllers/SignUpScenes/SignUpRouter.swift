@@ -15,46 +15,17 @@ protocol SignUpRouter {
 }
 
 extension SignUpRouter where Self: UIViewController {
-    /// Move to sign in
-    func routeToSignInScene() {
-        let signInVC = controllerContainer.resolve(SignInViewController.self)!
-        
-        signInVC.handlerSignUp = { [weak self] success in
-            guard let strongSelf = self else { return }
-            
-            if success {
-                strongSelf.signUpNextStep()
-            }
-        }
-        
-        navigationController?.pushViewController(signInVC)
-    }
-    
+    // MARK: - Flow
     /// Move to next scene
     func signUpNextStep() {
-        let signUpVC = controllerContainer.resolve(SignUpVC.self)!
-        
         // Retrieve current user's state
-        guard let user = KeychainManager.currentUser() else {
-            // Navigate to SignUpVC if no user exists
-            showOrPresentVC(signUpVC)
-            return
-        }
-        
-        // Retrieve step
-        guard let step = user.registrationStep else {
-            Logger.log(message: "Invalid registrationStep: \(user.registrationStep.debugDescription)", event: .error)
-            resetSignUpProcess()
-            return
-        }
+        let user = KeychainManager.currentUser()
+        let step = user?.registrationStep ?? .firstStep
         
         // Navigation
         var vc: UIViewController
         
         switch step {
-        case .firstStep:
-            vc = signUpVC
-            
         case .verify:
             let confirmUserVC = controllerContainer.resolve(ConfirmUserVC.self)!
             confirmUserVC.viewModel = ConfirmUserViewModel()!
@@ -65,55 +36,29 @@ extension SignUpRouter where Self: UIViewController {
             vc = setUserVC
             
         case .toBlockChain:
-            let loadKeysVC = controllerContainer.resolve(LoadKeysVC.self)!
-            loadKeysVC.viewModel = LoadKeysViewModel()
-            vc = loadKeysVC
-            
-        case .setAvatar:
-            let pickAvatarVC = controllerContainer.resolve(PickupAvatarVC.self)!
-            vc = pickAvatarVC
-            
-        case .setBio:
-            let createBioVC = controllerContainer.resolve(CreateBioVC.self)!
-            vc = createBioVC
-            
-        case .registered:
-            endSigningUp()
             return
-        }
-                
-        showOrPresentVC(vc)
-    }
-    
-    private func showOrPresentVC(_ vc: UIViewController) {
-        if let nc = self.navigationController {
-            nc.pushViewController(vc)
+            
+        default:
             return
         }
         
-        present(vc, animated: true, completion: nil)
-    }
-    
-    /// End signing up
-    func endSigningUp() {
-        // Save keys
-        do {
-            try KeychainManager.save(data: [
-                Config.registrationStepKey: CurrentUserRegistrationStep.registered.rawValue
-            ])
-            UserDefaults.standard.set(true, forKey: Config.isCurrentUserLoggedKey)
-            WebSocketManager.instance.authorized.accept(true)
-        } catch {
-            showError(error)
-        }
-        
+        self.navigationController?.pushViewController(vc)
     }
     
     /// Reset signing up
     func resetSignUpProcess() {
         try? KeychainManager.deleteUser()
         // Dismiss all screen
-        view.window!.rootViewController?.dismiss(animated: true, completion: nil)
+        popToSignUpVC()
+    }
+}
+
+extension SignUpRouter where Self: UIViewController {
+    // MARK: - Back button
+    func setBackButtonToSignUpVC() {
+        navigationItem.hidesBackButton = true
+        let newBackButton = UIBarButtonItem(title: "Back".localized(), style: .plain, target: self, action: #selector(popToSignUpVC))
+        navigationItem.leftBarButtonItem = newBackButton
     }
 }
 

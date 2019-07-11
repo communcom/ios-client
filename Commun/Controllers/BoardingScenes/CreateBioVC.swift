@@ -10,7 +10,7 @@ import UIKit
 import RxSwift
 import CyberSwift
 
-class CreateBioVC: UIViewController, SignUpRouter {
+class CreateBioVC: UIViewController, BoardingRouter {
     let disposeBag = DisposeBag()
     @IBOutlet weak var textView: ExpandableTextView!
     @IBOutlet weak var characterCountLabel: UILabel!
@@ -78,7 +78,7 @@ class CreateBioVC: UIViewController, SignUpRouter {
         NetworkService.shared.updateMeta(params: ["about": bio], waitForTransaction: false)
             .subscribe(onCompleted: {
                 self.hideHud()
-                self.endSigningUp()
+                self.endBoarding()
             }) { (error) in
                 self.hideHud()
                 self.showError(error)
@@ -87,6 +87,6 @@ class CreateBioVC: UIViewController, SignUpRouter {
     }
     
     @IBAction func skipButtonDidTouch(_ sender: Any) {
-        endSigningUp()
+        endBoarding()
     }
 }

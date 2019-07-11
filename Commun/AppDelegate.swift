@@ -19,6 +19,7 @@ import CyberSwift
 @_exported import CyberSwift
 import Reachability
 import RxReachability
+import RxSwift
 
 let isDebugMode: Bool = true
 let smsCodeDebug: UInt64 = isDebugMode ? 9999 : 0
@@ -30,6 +31,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     var reachability: Reachability?
+    
+    static var reloadSubject = PublishSubject<Bool>()
 
     // MARK: - Class Functions
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
@@ -57,23 +60,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 WebSocketManager.instance.connect()
             })
         
-        // Run WebSocket
-        _ = WebSocketManager.instance.authorized
-            .skip(1)
-            .subscribe(onNext: {success in
-                
-                // Lenta
-                if success, CurrentUser.loggedIn {
-                    self.changeRootVC(controllerContainer.resolve(TabBarVC.self)!)
-                }
-
-                // Sign In/Up
-                else {
-                    self.showWelcome()
-                }
+        // Handle websocket connection
+        WebSocketManager.instance.completionIsConnected = {
+            AppDelegate.reloadSubject.onNext(false)
+            self.window?.makeKeyAndVisible()
+            application.applicationIconBadgeNumber = 0
+        }
         
-                self.window?.makeKeyAndVisible()
-                application.applicationIconBadgeNumber = 0
+        // Reload app
+        _ = AppDelegate.reloadSubject
+            .subscribe(onNext: {force in
+                self.navigateWithRegistrationStep(force: force)
             })
         
         // Use Firebase library to configure APIs
@@ -99,13 +96,52 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
-    func showWelcome() {
-        let welcomeVC = controllerContainer.resolve(WelcomeVC.self)
-        let welcomeNav = UINavigationController(rootViewController: welcomeVC!)
-        changeRootVC(welcomeNav)
+    func navigateWithRegistrationStep(force: Bool = false) {
         
-        let navigationBarAppearace = UINavigationBar.appearance()
-        navigationBarAppearace.tintColor = #colorLiteral(red: 0.4156862745, green: 0.5019607843, blue: 0.9607843137, alpha: 1)
+        let step = KeychainManager.currentUser()?.registrationStep ?? .firstStep
+        // Registered user
+        if step == .registered {
+            // If first setting is uncompleted
+            let settingStep = KeychainManager.currentUser()?.settingStep ?? .setPasscode
+            if settingStep != .completed {
+                if !force,
+                    let nc = self.window?.rootViewController as? UINavigationController,
+                    nc.viewControllers.first is BoardingVC {
+                    return
+                }
+                
+                let boardingVC = controllerContainer.resolve(BoardingVC.self)!
+                let nc = UINavigationController(rootViewController: boardingVC)
+                
+                changeRootVC(nc)
+                return
+            }
+            
+            // if all set
+            _ = RestAPIManager.instance.rx.authorize()
+                .subscribe(onSuccess: { (response) in
+                    // show feed
+                    if (!force && (self.window?.rootViewController is TabBarVC)) {return}
+                    self.changeRootVC(controllerContainer.resolve(TabBarVC.self)!)
+                }, onError: { (error) in
+                    print(error)
+                })
+            
+        // New user
+        } else {
+            if !force,
+                let nc = self.window?.rootViewController as? UINavigationController,
+                nc.viewControllers.first is WelcomeVC {
+                return
+            }
+            
+            let welcomeVC = controllerContainer.resolve(WelcomeVC.self)
+            let welcomeNav = UINavigationController(rootViewController: welcomeVC!)
+            changeRootVC(welcomeNav)
+            
+            let navigationBarAppearace = UINavigationBar.appearance()
+            navigationBarAppearace.tintColor = #colorLiteral(red: 0.4156862745, green: 0.5019607843, blue: 0.9607843137, alpha: 1)
+        }
     }
     
     func changeRootVC(_ rootVC: UIViewController) {
