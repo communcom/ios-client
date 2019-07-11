@@ -77,7 +77,6 @@ class CreateBioVC: UIViewController, BoardingRouter {
         // UpdateProfile without waiting for transaction
         NetworkService.shared.updateMeta(params: ["about": bio], waitForTransaction: false)
             .subscribe(onCompleted: {
-                self.hideHud()
                 self.endBoarding()
             }) { (error) in
                 self.hideHud()
