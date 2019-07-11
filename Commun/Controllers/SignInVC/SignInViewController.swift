@@ -118,8 +118,7 @@ class SignInViewController: UIViewController {
                 withLogin: loginTextField.text!,
                 withApiKey: passwordTextField.text!
             )
-            .subscribe(onCompleted: { [weak self] in
-                self?.configure(signingIn: false)
+            .subscribe(onCompleted: {
                 AppDelegate.reloadSubject.onNext(true)
             }, onError: { [weak self] (error) in
                 self?.configure(signingIn: false)

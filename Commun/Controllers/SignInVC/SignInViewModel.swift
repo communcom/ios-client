@@ -15,16 +15,13 @@ import RxCocoa
 typealias LoginCredential = (login: String, key: String)
 
 class SignInViewModel {
-    enum SignInError: Error {
-        case unknown
-    }
     
     let qrCode = BehaviorRelay<LoginCredential>(value: (login: "", key: ""))
     
     func signIn(withLogin login: String, withApiKey key: String) -> Completable {
         return RestAPIManager.instance.rx.authorize(login: login, key: key)
             .map {response -> String in
-                guard response.permission == "active" else {throw SignInError.unknown}
+                guard response.permission == "active" else {throw ErrorAPI.unknown}
                 return response.permission
             }
             .flatMapToCompletable()
