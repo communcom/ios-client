@@ -188,6 +188,7 @@ extension SettingsVC: SettingsButtonCellDelegate {
                 if index == 0 {
                     do {
                         try CurrentUser.logout()
+                        AppDelegate.reloadSubject.onNext(true)
                     } catch {
                         self.showError(error)
                     }
