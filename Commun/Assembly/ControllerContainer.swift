@@ -54,6 +54,11 @@ let controllerContainer: Container = {
         return vc
     })
     
+    container.register(KeysVC.self, factory: {r in
+        let vc = KeysVC.instanceController(fromStoryboard: "Boarding", withIdentifier: "KeysVC") as! KeysVC
+        return vc
+    })
+    
     container.register(PickupAvatarVC.self, factory: { r in
         let vc = PickupAvatarVC.instanceController(fromStoryboard: "Boarding", withIdentifier: "PickupAvatarVC") as! PickupAvatarVC
         return vc

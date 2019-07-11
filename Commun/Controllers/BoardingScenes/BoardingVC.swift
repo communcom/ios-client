@@ -7,13 +7,17 @@
 //
 
 import UIKit
+import CyberSwift
 
 class BoardingVC: UIViewController, BoardingRouter {
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        if let step = KeychainManager.currentUser()?.settingStep,
+            step != .setPasscode {
+            boardingNextStep()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
