@@ -218,20 +218,20 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="image-download-keys" translatesAutoresizingMaskIntoConstraints="NO" id="aSz-3d-lOV">
-                                <rect key="frame" x="87" y="233" width="240" height="240"/>
+                                <rect key="frame" x="87" y="213" width="240" height="240"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="240" id="JPX-1f-XNs"/>
                                     <constraint firstAttribute="height" constant="240" id="r36-nR-INI"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Congratulations! Registration has just been completed" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QZ8-zN-NKJ">
-                                <rect key="frame" x="55.333333333333343" y="505.00000000000006" width="303.66666666666663" height="40.666666666666686"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Congratulations! Registration has been completed" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QZ8-zN-NKJ">
+                                <rect key="frame" x="72.333333333333343" y="485" width="269.33333333333326" height="40.666666666666629"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="We just need few more steps to protect your account" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UBk-Zo-2vF">
-                                <rect key="frame" x="42" y="561.66666666666663" width="330" height="40.666666666666629"/>
+                                <rect key="frame" x="42" y="541.66666666666663" width="330" height="40.666666666666629"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
@@ -283,6 +283,15 @@
                                     <userDefinedRuntimeAttribute type="color" keyPath="shadowColor">
                                         <color key="value" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="size" keyPath="shadowOffset">
+                                        <size key="value" width="5" height="5"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
+                                        <real key="value" value="0.10000000000000001"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
+                                        <real key="value" value="8"/>
+                                    </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
                                     <outletCollection property="gestureRecognizers" destination="bFf-68-lbp" appends="YES" id="OcD-Xa-sA5"/>
@@ -295,7 +304,7 @@
                             <constraint firstItem="UBk-Zo-2vF" firstAttribute="top" secondItem="QZ8-zN-NKJ" secondAttribute="bottom" constant="16" id="3Hd-W7-FAd"/>
                             <constraint firstItem="2qd-zD-hQG" firstAttribute="leading" secondItem="Usf-aG-JIH" secondAttribute="leading" constant="42" id="60Q-Di-7Bc"/>
                             <constraint firstItem="QZ8-zN-NKJ" firstAttribute="centerX" secondItem="Usf-aG-JIH" secondAttribute="centerX" id="6oY-Ms-bjL"/>
-                            <constraint firstItem="aSz-3d-lOV" firstAttribute="centerY" secondItem="Usf-aG-JIH" secondAttribute="centerY" constant="-100" id="8zG-pc-g3K"/>
+                            <constraint firstItem="aSz-3d-lOV" firstAttribute="centerY" secondItem="Usf-aG-JIH" secondAttribute="centerY" constant="-120" id="8zG-pc-g3K"/>
                             <constraint firstItem="Usf-aG-JIH" firstAttribute="trailing" secondItem="2qd-zD-hQG" secondAttribute="trailing" constant="42" id="Ea9-mk-g04"/>
                             <constraint firstItem="aSz-3d-lOV" firstAttribute="centerX" secondItem="Usf-aG-JIH" secondAttribute="centerX" id="Jaq-iY-B47"/>
                             <constraint firstItem="2qd-zD-hQG" firstAttribute="centerX" secondItem="Usf-aG-JIH" secondAttribute="centerX" id="OWh-Zi-XOy"/>
@@ -308,7 +317,11 @@
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tHg-kU-0l5" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer id="bFf-68-lbp"/>
+                <tapGestureRecognizer id="bFf-68-lbp">
+                    <connections>
+                        <action selector="setupPasscodeDidTouch:" destination="IRF-jn-yP1" id="lMH-we-FZb"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="-4503" y="-516"/>
         </scene>

@@ -100,7 +100,7 @@ class SetUserVC: UIViewController, SignUpRouter {
                 return RestAPIManager.instance.rx.toBlockChain()
             })
             .subscribe(onCompleted: {
-                self.signUpNextStep()
+                AppDelegate.reloadSubject.onNext(true)
             }, onError: {error in
                 self.hideHud()
                 self.showError(error)
