@@ -103,6 +103,13 @@ class PickupAvatarVC: UIViewController, BoardingRouter {
     }
     
     @IBAction func skipButtonDidTouch(_ sender: Any) {
-        endBoarding()
+        do {
+            try KeychainManager.save(data: [
+                Config.settingStepKey: CurrentUserSettingStep.setBio.rawValue
+            ])
+            boardingNextStep()
+        } catch {
+            showError(error)
+        }
     }
 }

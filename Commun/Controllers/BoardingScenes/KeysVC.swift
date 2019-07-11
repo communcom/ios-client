@@ -18,6 +18,10 @@ class KeysVC: UIViewController, BoardingRouter {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // hide back button
+        navigationItem.setHidesBackButton(true, animated: false)
+        
         // Set title
         title = "Backup keys".localized()
         
@@ -82,6 +86,7 @@ class KeysVC: UIViewController, BoardingRouter {
             try KeychainManager.save(data: [
                 Config.settingStepKey: CurrentUserSettingStep.setAvatar.rawValue
             ])
+            boardingNextStep()
         } catch {
             showError(error)
         }

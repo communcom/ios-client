@@ -26,9 +26,9 @@ extension BoardingRouter where Self: UIViewController {
         case .setFaceId, .backUpICloud:
             vc = controllerContainer.resolve(KeysVC.self)!
         case .setAvatar:
-            vc = UIViewController()
+            vc = controllerContainer.resolve(PickupAvatarVC.self)!
         case .setBio:
-            vc = UIViewController()
+            vc = controllerContainer.resolve(CreateBioVC.self)!
         default:
             return
         }
@@ -40,5 +40,6 @@ extension BoardingRouter where Self: UIViewController {
         try? KeychainManager.save(data: [
             Config.settingStepKey: CurrentUserSettingStep.completed.rawValue
         ])
+        AppDelegate.reloadSubject.onNext(true)
     }
 }
