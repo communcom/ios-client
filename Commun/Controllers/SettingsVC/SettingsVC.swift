@@ -235,6 +235,10 @@ extension SettingsVC: SettingsButtonCellDelegate {
 extension SettingsVC: LanguageVCDelegate {
     func didSelectLanguage(_ language: Language) {
         NetworkService.shared.setBasicOptions(lang: language)
+        
+        if let cell = self.tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as? GeneralSettingCell {
+            cell.settingValueLabel.text = language.name.components(separatedBy: " ").first ?? "English".localized()
+        }
     }
 }
 

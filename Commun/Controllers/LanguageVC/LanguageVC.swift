@@ -19,9 +19,7 @@ protocol LanguageVCDelegate {
 }
 
 class LanguageVC: UIViewController {
-
-    @IBOutlet weak var tableView: UITableView!
-    
+    // MARK: - Properties
     var searchController = UISearchController(searchResultsController: nil) // С поиском будут доработки
     
     var languages = [
@@ -31,6 +29,12 @@ class LanguageVC: UIViewController {
     
     var delegate: LanguageVCDelegate?
     
+    
+    // MARK: - IBOutlets
+    @IBOutlet weak var tableView: UITableView!
+
+    
+    // MARK: - Class Functions
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -46,23 +50,29 @@ class LanguageVC: UIViewController {
         tableView.delegate = self
     }
     
+    
+    // MARK: - Custom Functions
     @objc func cancelScreen() {
         self.navigationController?.dismiss(animated: true, completion: nil)
     }
 }
 
+
+// MARK: - UITableViewDataSource, UITableViewDelegate
 extension LanguageVC: UITableViewDataSource, UITableViewDelegate {
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return languages.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell = tableView.dequeueReusableCell(withIdentifier: "LangCell")
+        
         if (cell == nil) {
             cell = UITableViewCell(style: .default, reuseIdentifier: "LangCell")
         }
+        
         cell?.textLabel?.text = languages[indexPath.row].name
+        
         return cell!
     }
     

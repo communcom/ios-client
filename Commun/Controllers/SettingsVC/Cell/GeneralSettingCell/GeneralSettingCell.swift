@@ -14,26 +14,31 @@ struct GeneralSetting {
 }
 
 class GeneralSettingCell: UITableViewCell {
-
+    // MARK: - IBOutlets
     @IBOutlet weak var settingNameLabel: UILabel!
     @IBOutlet weak var settingValueLabel: UILabel!
     
+    
+    // MARK: - Class Initialization
     override func awakeFromNib() {
         super.awakeFromNib()
         
         selectionStyle = .none
         accessoryType = .disclosureIndicator
     }
+    
 
+    // MARK: - Class Functions
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
     }
     
+    
+    // MARK: - Custom Functions
     func setupCell(setting: GeneralSetting) {
         settingNameLabel.text = setting.name
         settingValueLabel.text = setting.value
     }
-    
 }

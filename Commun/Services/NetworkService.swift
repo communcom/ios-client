@@ -278,6 +278,7 @@ class NetworkService: NSObject {
         
     }
     
+    
     //  MARK: - Contract `gls.social`
     func uploadImage(_ image: UIImage) -> Single<String> {
         return .create {single in
@@ -321,6 +322,7 @@ class NetworkService: NSObject {
             .observeOn(MainScheduler.instance)
     }
     
+    
     // MARK: - options
     func getOptions() -> Completable {
         return .create {completable in
@@ -335,12 +337,15 @@ class NetworkService: NSObject {
     }
     
     func setBasicOptions(lang: Language) {
-        RestAPIManager.instance.setBasicOptions(language: lang.shortCode, nsfwContent: .alwaysAlert, responseHandling: { (result) in
-            if result.status == "OK" {
-                UserDefaults.standard.set(lang.shortCode, forKey: Config.currentUserAppLanguageKey)
-            }
-        }) { (errorAPI) in
-        }
+        RestAPIManager.instance.setBasicOptions(nsfwContent:        .alwaysAlert,
+                                                responseHandling:   { (result) in
+                                                    if result.status == "OK" {
+                                                        UserDefaults.standard.set(lang.shortCode, forKey: Config.currentUserAppLanguageKey)
+                                                    }
+        },
+                                                errorHandling:      { (errorAPI) in
+                                                    Logger.log(message: "setBasicOptions error: \(errorAPI.caseInfo.message.localized())", event: .error)
+        })
     }
     
     func setOptions(options: RequestParameterAPI.NoticeOptions, type: NoticeType) -> Completable {
@@ -353,6 +358,7 @@ class NetworkService: NSObject {
             return Disposables.create()
         }
     }
+    
     
     // MARK: - meta
     // meta.recordPostView
