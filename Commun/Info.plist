@@ -17,7 +17,7 @@
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
-	<string>14</string>
+	<string>15</string>
 	<key>Config</key>
 	<string>$(CONFIGURATION)</string>
 	<key>Fabric</key>
@@ -36,6 +36,8 @@
 	</dict>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>The camera is need to scan QR codes</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Need photo</string>
 	<key>UIAppFonts</key>
@@ -64,7 +66,5 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>NSCameraUsageDescription</key>
-	<string>The camera is need to scan QR codes</string>
 </dict>
 </plist>
