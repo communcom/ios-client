@@ -50,6 +50,7 @@ class SetPasscodeVC: THPinViewController, BoardingRouter {
         // Text
         promptTitle = currentPin == nil ? "Create your passcode".localized() : "Verify your new passcode".localized()
         promptColor = .black
+        view.tintColor = .black
     }
 }
 

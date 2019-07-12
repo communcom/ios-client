@@ -47,7 +47,7 @@ target 'Commun' do
   pod 'TTTAttributedLabel'
   pod 'QRCodeReaderViewController', '~> 4.0.2'
   
-  pod 'THPinViewController', :git => "https://github.com/bigearsenal/THPinViewController.git"
+  pod 'THPinViewController', :git => "https://github.com/bigearsenal/THPinViewController.git", :branch => "commun"
   
   post_install do |installer|
     installer.pods_project.targets.each do |target|

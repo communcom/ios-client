@@ -80,7 +80,7 @@ class CommentCell: UITableViewCell {
         timeLabel.text = Date.timeAgo(string: comment.meta.time)
         
         #warning("change this number later")
-        voteCountLabel.text = "\(comment.payout.rShares)"
+        voteCountLabel.text = "\(comment.votes.upCount ?? 0)"
         
         setButton()
     }
