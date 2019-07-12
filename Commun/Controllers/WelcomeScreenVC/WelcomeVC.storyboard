@@ -118,6 +118,8 @@
                     <connections>
                         <outlet property="imageView" destination="dAW-BQ-tTo" id="5uJ-DL-abP"/>
                         <outlet property="textLabel" destination="iGn-Gq-UAf" id="A7S-dx-lzl"/>
+                        <outletCollection property="heightsCollection" destination="3VF-Yk-wGH" collectionClass="NSMutableArray" id="snd-gX-s9W"/>
+                        <outletCollection property="heightsCollection" destination="MiH-hP-Pkg" collectionClass="NSMutableArray" id="QqJ-bH-5qB"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6E5-tT-hpe" userLabel="First Responder" sceneMemberID="firstResponder"/>

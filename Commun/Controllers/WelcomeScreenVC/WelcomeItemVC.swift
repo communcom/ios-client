@@ -17,6 +17,12 @@ class WelcomeItemVC: UIViewController {
     @IBOutlet weak var textLabel: UILabel!
     @IBOutlet weak var imageView: UIImageView!
 
+    @IBOutlet var heightsCollection: [NSLayoutConstraint]! {
+        didSet {
+            self.heightsCollection.forEach({ $0.constant *= Config.heightRatio })
+        }
+    }
+
     
     // MARK: - Class Functions
     override func viewDidLoad() {
