@@ -152,6 +152,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             self.window?.rootViewController = rootVC
         }
         
+        // Animation
+        rootVC.view.alpha = 0
+        UIView.animate(withDuration: 0.5, animations: {
+            rootVC.view.alpha = 1
+        })
+        
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
