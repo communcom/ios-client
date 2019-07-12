@@ -72,6 +72,17 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="bF6-IB-5mY"/>
                     </view>
+                    <connections>
+                        <outletCollection property="heightsCollection" destination="4O4-PT-fRo" collectionClass="NSMutableArray" id="AdN-8x-yFO"/>
+                        <outletCollection property="heightsCollection" destination="DnB-Zm-gsI" collectionClass="NSMutableArray" id="5Ee-rt-Gr1"/>
+                        <outletCollection property="heightsCollection" destination="Zy9-JZ-KHy" collectionClass="NSMutableArray" id="Ks2-Qy-c3R"/>
+                        <outletCollection property="heightsCollection" destination="XnG-Bd-ecU" collectionClass="NSMutableArray" id="3Tg-cE-Sot"/>
+                        <outletCollection property="heightsCollection" destination="brU-h4-UnN" collectionClass="NSMutableArray" id="bM9-Yn-npv"/>
+                        <outletCollection property="widthsCollection" destination="JGQ-Xv-W61" collectionClass="NSMutableArray" id="3FK-Ch-ut4"/>
+                        <outletCollection property="widthsCollection" destination="WVQ-e6-8y3" collectionClass="NSMutableArray" id="YAQ-tq-yLl"/>
+                        <outletCollection property="widthsCollection" destination="gfF-cR-X2p" collectionClass="NSMutableArray" id="TzV-Iy-Og4"/>
+                        <outletCollection property="widthsCollection" destination="H9C-oC-CLN" collectionClass="NSMutableArray" id="Xxb-l6-qcL"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Zhj-Zk-YL3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -83,7 +94,7 @@
                 <pageViewController autoresizesArchivedViewToFullSize="NO" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="q5V-Zu-EaX" customClass="WelcomePageVC" customModule="Commun" customModuleProvider="target" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jPp-cs-9fJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="292" y="142"/>
+            <point key="canvasLocation" x="358" y="230"/>
         </scene>
         <!--Welcome ItemVC-->
         <scene sceneID="KB7-7i-wx7">
@@ -93,11 +104,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="dAW-BQ-tTo">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="dAW-BQ-tTo">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="648"/>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hundreds of thematic communities" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iGn-Gq-UAf">
-                                <rect key="frame" x="16" y="656" width="343" height="122"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="Hundreds of thematic communities" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iGn-Gq-UAf">
+                                <rect key="frame" x="8" y="656" width="359" height="122"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="122" id="HCu-2f-fSQ"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" name="SFProText-Bold" family="SF Pro Text" pointSize="34"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -108,16 +122,21 @@
                             <constraint firstItem="GHG-MB-YcI" firstAttribute="trailing" secondItem="dAW-BQ-tTo" secondAttribute="trailing" id="0AM-iR-CAn"/>
                             <constraint firstItem="GHG-MB-YcI" firstAttribute="top" secondItem="dAW-BQ-tTo" secondAttribute="top" constant="44" id="3VF-Yk-wGH"/>
                             <constraint firstItem="GHG-MB-YcI" firstAttribute="bottom" secondItem="iGn-Gq-UAf" secondAttribute="bottom" id="7C5-Fs-6hc"/>
-                            <constraint firstItem="iGn-Gq-UAf" firstAttribute="leading" secondItem="GHG-MB-YcI" secondAttribute="leading" constant="16" id="7iZ-Y2-Gxp"/>
+                            <constraint firstItem="iGn-Gq-UAf" firstAttribute="leading" secondItem="GHG-MB-YcI" secondAttribute="leading" constant="8" id="7iZ-Y2-Gxp"/>
                             <constraint firstItem="iGn-Gq-UAf" firstAttribute="top" secondItem="dAW-BQ-tTo" secondAttribute="bottom" constant="8" id="MiH-hP-Pkg"/>
                             <constraint firstItem="dAW-BQ-tTo" firstAttribute="leading" secondItem="GHG-MB-YcI" secondAttribute="leading" id="b4G-hi-dil"/>
-                            <constraint firstItem="GHG-MB-YcI" firstAttribute="trailing" secondItem="iGn-Gq-UAf" secondAttribute="trailing" constant="16" id="oEd-wo-KuZ"/>
+                            <constraint firstItem="GHG-MB-YcI" firstAttribute="trailing" secondItem="iGn-Gq-UAf" secondAttribute="trailing" constant="8" id="oEd-wo-KuZ"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="GHG-MB-YcI"/>
                     </view>
                     <connections>
                         <outlet property="imageView" destination="dAW-BQ-tTo" id="5uJ-DL-abP"/>
                         <outlet property="textLabel" destination="iGn-Gq-UAf" id="A7S-dx-lzl"/>
+                        <outletCollection property="heightsCollection" destination="3VF-Yk-wGH" collectionClass="NSMutableArray" id="snd-gX-s9W"/>
+                        <outletCollection property="heightsCollection" destination="MiH-hP-Pkg" collectionClass="NSMutableArray" id="QqJ-bH-5qB"/>
+                        <outletCollection property="widthsCollection" destination="oEd-wo-KuZ" collectionClass="NSMutableArray" id="dbg-6o-J3Y"/>
+                        <outletCollection property="widthsCollection" destination="7iZ-Y2-Gxp" collectionClass="NSMutableArray" id="WnP-4C-k4N"/>
+                        <outletCollection property="heightsCollection" destination="HCu-2f-fSQ" collectionClass="NSMutableArray" id="c4y-TK-AOY"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6E5-tT-hpe" userLabel="First Responder" sceneMemberID="firstResponder"/>
