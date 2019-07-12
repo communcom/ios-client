@@ -40,7 +40,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // MARK: - Class Functions
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Logger
-        Logger.showEvents = [.error]
+//        Logger.showEvents = [.error]
         
         // Sync iCloud key-value store
         NSUbiquitousKeyValueStore.default.synchronize()

@@ -8,13 +8,10 @@
 
 import UIKit
 import THPinViewController
-import RxSwift
 import CyberSwift
 
 class SetPasscodeVC: THPinViewController, BoardingRouter {
     var currentPin: String?
-    var pinSubject = PublishSubject<Void>()
-    let disposeBag = DisposeBag()
     
     init() {
         super.init(delegate: nil)
@@ -64,22 +61,16 @@ extension SetPasscodeVC: THPinViewControllerDelegate {
             let verifyVC = SetPasscodeVC()
             verifyVC.currentPin = pin
             show(verifyVC, sender: self)
-            verifyVC.pinSubject
-                .subscribe(onCompleted: {
-                    verifyVC.navigationController?.popViewController(animated: true, {
-                        do {
-                            try RestAPIManager.instance.rx.setPasscode(pin)
-                            self.boardingNextStep()
-                        } catch {
-                            self.showError(error)
-                        }
-                    })
-                })
-                .disposed(by: disposeBag)
             return true
         }
         if pin == currentPin {
-            pinSubject.onCompleted()
+            do {
+                try RestAPIManager.instance.rx.setPasscode(pin)
+                self.boardingNextStep()
+            } catch {
+                self.showError(error)
+                return false
+            }
         }
         return pin == currentPin
     }
