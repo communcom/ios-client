@@ -94,6 +94,11 @@ extension PostController {
         // change state
         setHasVote(originHasUpVote ? false: true, for: .upvote)
         setHasVote(false, for: .downvote)
+        
+        // animate
+        animateUpVote()
+        
+        // notify
         notifyPostChange(newPost: self.post!)
         
         // disable button until transaction is done
@@ -136,6 +141,11 @@ extension PostController {
         // change state
         setHasVote(originHasDownVote ? false: true, for: .downvote)
         setHasVote(false, for: .upvote)
+        
+        // animate
+        animateDownVote()
+
+        // notify
         notifyPostChange(newPost: self.post!)
         
         // disable button until transaction is done
@@ -222,4 +232,36 @@ extension PostController {
         topController.present(nav, animated: true, completion: nil)
     }
 
+    // MARK: - Animation
+    func animateUpVote() {
+        CATransaction.begin()
+        
+        let moveUpAnim = CABasicAnimation(keyPath: "position.y")
+        moveUpAnim.byValue = -16
+        moveUpAnim.autoreverses = true
+        self.upVoteButton.layer.add(moveUpAnim, forKey: "moveUp")
+        
+        let fadeAnim = CABasicAnimation(keyPath: "opacity")
+        fadeAnim.byValue = -1
+        fadeAnim.autoreverses = true
+        self.upVoteButton.layer.add(fadeAnim, forKey: "Fade")
+        
+        CATransaction.commit()
+    }
+    
+    func animateDownVote() {
+        CATransaction.begin()
+        
+        let moveDownAnim = CABasicAnimation(keyPath: "position.y")
+        moveDownAnim.byValue = 16
+        moveDownAnim.autoreverses = true
+        self.downVoteButton.layer.add(moveDownAnim, forKey: "moveDown")
+        
+        let fadeAnim = CABasicAnimation(keyPath: "opacity")
+        fadeAnim.byValue = -1
+        fadeAnim.autoreverses = true
+        self.downVoteButton.layer.add(fadeAnim, forKey: "Fade")
+        
+        CATransaction.commit()
+    }
 }
