@@ -7,11 +7,25 @@
 //
 
 import UIKit
-import CyberSwift
 import RxSwift
+import CyberSwift
 
 class WelcomeVC: UIViewController {
+    // MARK: - IBOutlets
+    @IBOutlet var heightsCollection: [NSLayoutConstraint]! {
+        didSet {
+            self.heightsCollection.forEach({ $0.constant *= Config.heightRatio })
+        }
+    }
+
+    @IBOutlet var widthsCollection: [NSLayoutConstraint]! {
+        didSet {
+            self.widthsCollection.forEach({ $0.constant *= Config.widthRatio })
+        }
+    }
+
     
+    // MARK: - Class Functions
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
@@ -28,6 +42,14 @@ class WelcomeVC: UIViewController {
         super.viewWillDisappear(animated)
         navigationController?.setNavigationBarHidden(false, animated: animated)
     }
+    
+    
+    // MARK: - Custom Functions
+    func navigateToSignUp() {
+        let signUpVC = controllerContainer.resolve(SignUpVC.self)!
+        show(signUpVC, sender: nil)
+    }
+
     
     // MARK: - Actions
     @IBAction func signInButtonTap(_ sender: Any) {
@@ -46,10 +68,5 @@ class WelcomeVC: UIViewController {
     
     @IBAction func signUpButtonTap(_ sender: Any) {
         navigateToSignUp()
-    }
-    
-    func navigateToSignUp() {
-        let signUpVC = controllerContainer.resolve(SignUpVC.self)!
-        show(signUpVC, sender: nil)
     }
 }

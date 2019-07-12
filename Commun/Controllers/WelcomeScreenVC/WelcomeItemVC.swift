@@ -23,6 +23,12 @@ class WelcomeItemVC: UIViewController {
         }
     }
 
+    @IBOutlet var widthsCollection: [NSLayoutConstraint]! {
+        didSet {
+            self.widthsCollection.forEach({ $0.constant *= Config.widthRatio })
+        }
+    }
+
     
     // MARK: - Class Functions
     override func viewDidLoad() {

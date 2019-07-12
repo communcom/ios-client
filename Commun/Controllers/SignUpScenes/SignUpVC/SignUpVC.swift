@@ -84,7 +84,9 @@ class SignUpVC: UIViewController, SignUpRouter {
             self.widthsCollection.forEach({ $0.constant *= Config.widthRatio })
         }
     }
+    
     @IBOutlet weak var nextButton: StepButton!
+    
     
     // MARK: - Class Functions
     override func viewDidLoad() {
