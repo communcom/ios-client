@@ -24,6 +24,8 @@ import RxSwift
 let isDebugMode: Bool = true
 let smsCodeDebug: UInt64 = isDebugMode ? 9999 : 0
 let gcmMessageIDKey = "gcm.message_id"
+var isTouchIdAvailable = false
+var isFaceIdAvailable = false
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -37,6 +39,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // MARK: - Class Functions
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        // Logger
+        Logger.showEvents = [.error]
+        
         // Sync iCloud key-value store
         NSUbiquitousKeyValueStore.default.synchronize()
         

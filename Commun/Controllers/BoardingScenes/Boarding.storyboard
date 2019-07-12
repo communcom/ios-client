@@ -323,7 +323,92 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="-3616" y="-516"/>
+            <point key="canvasLocation" x="-4435" y="-516"/>
+        </scene>
+        <!--Enable BiometricsVC-->
+        <scene sceneID="ai3-i8-VRF">
+            <objects>
+                <viewController storyboardIdentifier="EnableBiometricsVC" id="zD5-Oe-CSk" customClass="EnableBiometricsVC" customModule="Commun" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="V6a-EV-BHc">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SmP-oF-rry">
+                                <rect key="frame" x="42" y="792" width="330" height="30"/>
+                                <state key="normal" title="Skip"/>
+                                <connections>
+                                    <action selector="laterButtonDidTouch:" destination="0mk-Sc-da2" eventType="touchUpInside" id="xzG-8g-JZd"/>
+                                    <action selector="skipButtonDidTouch:" destination="eky-07-OKd" eventType="touchUpInside" id="Vv1-5Z-SB9"/>
+                                    <action selector="skipButtonDidTouch:" destination="zD5-Oe-CSk" eventType="touchUpInside" id="Xyh-iS-MNx"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="upS-wF-nAs" customClass="StepButton" customModule="Commun" customModuleProvider="target">
+                                <rect key="frame" x="42" y="713" width="330" height="56"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="56" id="hyK-UC-gkS"/>
+                                </constraints>
+                                <state key="normal" title="Enable Touch ID"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="8"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="backupIcloudDidTouch:" destination="0mk-Sc-da2" eventType="touchUpInside" id="dAM-oP-lMZ"/>
+                                    <action selector="enableButtonDidTouch:" destination="zD5-Oe-CSk" eventType="touchUpInside" id="aL4-p1-E5x"/>
+                                    <action selector="nextButtonDidTouch:" destination="eky-07-OKd" eventType="touchUpInside" id="5kn-fU-Tg5"/>
+                                </connections>
+                            </button>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="boarding-touch-id" translatesAutoresizingMaskIntoConstraints="NO" id="ewj-C2-ZgI">
+                                <rect key="frame" x="87" y="213" width="240" height="240"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="240" id="Bop-aq-tPy"/>
+                                    <constraint firstAttribute="height" constant="240" id="n1Y-gY-0eC"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enable Touch ID" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Efb-oZ-TTf">
+                                <rect key="frame" x="72" y="485" width="270" height="20.333333333333314"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enable Touch ID to secure your transactions" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f1V-oU-EMs">
+                                <rect key="frame" x="42" y="521.33333333333337" width="330" height="40.666666666666629"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="M80-fP-3Fw" firstAttribute="bottom" secondItem="SmP-oF-rry" secondAttribute="bottom" constant="40" id="0gU-Bb-lqf"/>
+                            <constraint firstItem="f1V-oU-EMs" firstAttribute="leading" secondItem="M80-fP-3Fw" secondAttribute="leading" constant="42" id="8JQ-tP-18J"/>
+                            <constraint firstItem="M80-fP-3Fw" firstAttribute="trailing" secondItem="upS-wF-nAs" secondAttribute="trailing" constant="42" id="9bf-wa-Ffv"/>
+                            <constraint firstItem="upS-wF-nAs" firstAttribute="leading" secondItem="M80-fP-3Fw" secondAttribute="leading" constant="42" id="FpQ-bT-ubU"/>
+                            <constraint firstItem="Efb-oZ-TTf" firstAttribute="centerX" secondItem="M80-fP-3Fw" secondAttribute="centerX" id="NO6-tj-hAt"/>
+                            <constraint firstItem="M80-fP-3Fw" firstAttribute="trailing" secondItem="SmP-oF-rry" secondAttribute="trailing" constant="42" id="NcO-fs-b0b"/>
+                            <constraint firstItem="SmP-oF-rry" firstAttribute="leading" secondItem="M80-fP-3Fw" secondAttribute="leading" constant="42" id="Njy-R5-qFZ"/>
+                            <constraint firstItem="M80-fP-3Fw" firstAttribute="trailing" secondItem="Efb-oZ-TTf" secondAttribute="trailing" constant="72" id="Xz3-9e-ZGO"/>
+                            <constraint firstItem="f1V-oU-EMs" firstAttribute="top" secondItem="Efb-oZ-TTf" secondAttribute="bottom" constant="16" id="c1R-mS-rve"/>
+                            <constraint firstItem="ewj-C2-ZgI" firstAttribute="centerY" secondItem="M80-fP-3Fw" secondAttribute="centerY" constant="-120" id="kyb-Pc-Rop"/>
+                            <constraint firstItem="ewj-C2-ZgI" firstAttribute="centerX" secondItem="M80-fP-3Fw" secondAttribute="centerX" id="sbc-7B-bVU"/>
+                            <constraint firstItem="Efb-oZ-TTf" firstAttribute="leading" secondItem="M80-fP-3Fw" secondAttribute="leading" constant="72" id="tpt-wR-1iW"/>
+                            <constraint firstItem="M80-fP-3Fw" firstAttribute="trailing" secondItem="f1V-oU-EMs" secondAttribute="trailing" constant="42" id="wQ5-kI-TFF"/>
+                            <constraint firstItem="Efb-oZ-TTf" firstAttribute="top" secondItem="ewj-C2-ZgI" secondAttribute="bottom" constant="32" id="yB6-pf-nwE"/>
+                            <constraint firstItem="SmP-oF-rry" firstAttribute="top" secondItem="upS-wF-nAs" secondAttribute="bottom" constant="23" id="yd7-uz-rLf"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="M80-fP-3Fw"/>
+                    </view>
+                    <connections>
+                        <outlet property="descriptionLabel" destination="f1V-oU-EMs" id="Gru-Vi-t46"/>
+                        <outlet property="enableButton" destination="upS-wF-nAs" id="f5I-8k-BCX"/>
+                        <outlet property="headerLabel" destination="Efb-oZ-TTf" id="D4y-t4-2hQ"/>
+                        <outlet property="imageView" destination="ewj-C2-ZgI" id="jQg-yQ-fJG"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9Aa-yN-YcK" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-3617" y="-514"/>
         </scene>
         <!--KeysVC-->
         <scene sceneID="1lF-k0-Q4M">
@@ -486,6 +571,7 @@
         <image name="avatar-ellipse-placeholder" width="220" height="220"/>
         <image name="boarding-next-arrow" width="7.6666665077209473" height="12.666666984558105"/>
         <image name="boarding-pincode" width="18" height="18"/>
+        <image name="boarding-touch-id" width="30.333333969116211" height="33.333332061767578"/>
         <image name="image-download-keys" width="240" height="240"/>
         <image name="registration-add-avatar" width="57.666667938232422" height="52.666667938232422"/>
     </resources>

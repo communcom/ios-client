@@ -54,6 +54,11 @@ let controllerContainer: Container = {
         return vc
     })
     
+    container.register(EnableBiometricsVC.self, factory: {r in
+        let vc = EnableBiometricsVC.instanceController(fromStoryboard: "Boarding", withIdentifier: "EnableBiometricsVC") as! EnableBiometricsVC
+        return vc
+    })
+    
     container.register(KeysVC.self, factory: {r in
         let vc = KeysVC.instanceController(fromStoryboard: "Boarding", withIdentifier: "KeysVC") as! KeysVC
         return vc
