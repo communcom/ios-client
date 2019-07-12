@@ -24,8 +24,6 @@ import RxSwift
 let isDebugMode: Bool = true
 let smsCodeDebug: UInt64 = isDebugMode ? 9999 : 0
 let gcmMessageIDKey = "gcm.message_id"
-var isTouchIdAvailable = false
-var isFaceIdAvailable = false
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {

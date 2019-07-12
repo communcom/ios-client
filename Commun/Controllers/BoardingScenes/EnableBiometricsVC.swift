@@ -28,14 +28,12 @@ class EnableBiometricsVC: UIViewController, BoardingRouter {
             headerLabel.text = "Enable".localized() + " Touch Id"
             descriptionLabel.text = "Enable".localized() + " Touch Id " + "to secure your transactions".localized()
             enableButton.setTitle("Enable".localized() + " Touch Id", for: .normal)
-            isTouchIdAvailable = true
             break
         case .faceID:
             imageView.image = UIImage(named: "boarding-face-id")
             headerLabel.text = "Enable".localized() + " Face Id"
             descriptionLabel.text = "Enable".localized() + " Face Id " + "to secure your transactions".localized()
             enableButton.setTitle("Enable".localized() + " Face Id", for: .normal)
-            isFaceIdAvailable = true
             break
         default:
             try! KeychainManager.save(data: [
@@ -56,11 +54,12 @@ class EnableBiometricsVC: UIViewController, BoardingRouter {
     }
 
     @IBAction func enableButtonDidTouch(_ sender: Any) {
-        #warning("seting constant later")
         do {
             try KeychainManager.save(data: [
                 Config.settingStepKey: CurrentUserSettingStep.backUpICloud.rawValue
             ])
+            
+            #warning("use string constant later")
             UserDefaults.standard.set(true, forKey: "isAuthenticationWithBiometricsEnabled")
             boardingNextStep()
         } catch {
