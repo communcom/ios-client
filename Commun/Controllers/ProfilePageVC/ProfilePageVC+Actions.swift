@@ -169,22 +169,48 @@ extension ProfilePageVC {
         
         let isFollowing = viewModel.profile.value?.isSubscribed ?? false
         
-        // Set new value immediately
-        var newProfile = viewModel.profile.value
-        newProfile?.triggerFollow()
-        viewModel.profile.accept(newProfile)
+        let setNewValue = {
+            // Set new value immediately
+            var newProfile = self.viewModel.profile.value
+            newProfile?.triggerFollow()
+            self.viewModel.profile.accept(newProfile)
+            
+            NetworkService.shared.triggerFollow(userToFollow, isUnfollow: isFollowing)
+                .subscribe(onError: {[weak self] error in
+                    Logger.log(message: error.localizedDescription, event: .error)
+                    
+                    // reverse change
+                    var newProfile = self?.viewModel.profile.value
+                    newProfile?.triggerFollow()
+                    self?.viewModel.profile.accept(newProfile)
+                    
+                    self?.showError(error)
+                })
+                .disposed(by: self.disposeBag)
+        }
         
-        NetworkService.shared.triggerFollow(userToFollow, isUnfollow: isFollowing)
-            .subscribe(onError: {[weak self] error in
-                Logger.log(message: error.localizedDescription, event: .error)
-                
-                // reverse change
-                var newProfile = self?.viewModel.profile.value
-                newProfile?.triggerFollow()
-                self?.viewModel.profile.accept(newProfile)
-                
-                self?.showError(error)
-            })
-            .disposed(by: disposeBag)
+        // animation
+        if !isFollowing {animateFollowing(setNewValue)}
+        else {setNewValue()}
+        
+    }
+    
+    // MARK: - Animation
+    func animateFollowing(_ completion: @escaping (() -> Void)) {
+        CATransaction.begin()
+        
+        CATransaction.setCompletionBlock(completion)
+        
+        let moveDownAnim = CABasicAnimation(keyPath: "transform.scale")
+        moveDownAnim.byValue = 1.2
+        moveDownAnim.autoreverses = true
+        followButton.layer.add(moveDownAnim, forKey: "transform.scale")
+        
+        let fadeAnim = CABasicAnimation(keyPath: "opacity")
+        fadeAnim.byValue = -1
+        fadeAnim.autoreverses = true
+        followButton.layer.add(fadeAnim, forKey: "Fade")
+        
+        CATransaction.commit()
     }
 }

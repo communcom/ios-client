@@ -104,6 +104,8 @@ extension UIViewController {
             UIView.transition(from: tabBarController!.selectedViewController!.view, to: profileNC.view, duration: 0.3, options: UIView.AnimationOptions.transitionFlipFromLeft, completion: nil)
             
             tabBarController?.selectedViewController = profileNC
+        } else {
+            self.view.shake()
         }
     }
     

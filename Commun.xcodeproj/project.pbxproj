@@ -676,7 +676,6 @@
 				576DC91F223E42B200EDED41 /* Extensions */,
 				572F81A5223C164C0007F2F9 /* Fonts */,
 				571B1508223A937200630C8F /* Controllers */,
-				3B67FC0522C4BB5100D05F01 /* SplashViewController.swift */,
 				571B14F7223A935C00630C8F /* Main.storyboard */,
 				571B14FD223A935D00630C8F /* Assets.xcassets */,
 				571B14FF223A935D00630C8F /* LaunchScreen.storyboard */,
@@ -692,6 +691,7 @@
 		571B1508223A937200630C8F /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				3B67FC0522C4BB5100D05F01 /* SplashViewController.swift */,
 				57B6FC23224A9E4900BCFDDA /* WelcomeScreenVC */,
 				57FB179E224C077300563BF7 /* SignInVC */,
 				3B986B6322CE4B8100C1E985 /* SignUpScenes */,
