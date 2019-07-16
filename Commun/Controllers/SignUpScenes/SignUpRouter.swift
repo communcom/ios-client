@@ -68,7 +68,8 @@ extension SignUpRouter where Self: UIViewController {
                 return
             }
         }
-        self.showError(error)
+        hideHud()
+        showError(error)
     }
     
     /// handle Invalid step taken
@@ -80,8 +81,10 @@ extension SignUpRouter where Self: UIViewController {
                     self.showErrorWithLocalizedMessage("This number is already taken!")
                     return
                 }
+                self.hideHud()
                 self.signUpNextStep()
             }) { (error) in
+                self.hideHud()
                 self.showError(error)
             }
             .disposed(by: disposeBag)

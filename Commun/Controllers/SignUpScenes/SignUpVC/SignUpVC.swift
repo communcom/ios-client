@@ -184,10 +184,14 @@ class SignUpVC: UIViewController, SignUpRouter {
             return
         }
         
+        showIndetermineHudWithMessage("Signing you up".localized() + "...")
+        
         RestAPIManager.instance.rx.firstStep(phone: self.viewModel.phone.value)
             .subscribe(onSuccess: { _ in
+                self.hideHud()
                 self.signUpNextStep()
             }) { (error) in
+                self.hideHud()
                 self.handleSignUpError(error: error, with: self.viewModel.phone.value)
             }
             .disposed(by: disposeBag)

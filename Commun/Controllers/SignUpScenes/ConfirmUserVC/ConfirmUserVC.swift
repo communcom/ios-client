@@ -206,11 +206,14 @@ class ConfirmUserVC: UIViewController, SignUpRouter {
     }
     
     func verify() {
+        showIndetermineHudWithMessage("Verifying".localized() + "...")
         RestAPIManager.instance.rx.verify()
             .subscribe(onSuccess: { [weak self] (_) in
+                self?.hideHud()
                 self?.signUpNextStep()
             }) { (error) in
                 guard let phone = Config.currentUser?.phoneNumber else {
+                    self.hideHud()
                     self.showError(error)
                     return
                 }
