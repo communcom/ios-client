@@ -93,6 +93,8 @@ class SetUserVC: UIViewController, SignUpRouter {
                 return
         }
         
+        self.view.endEditing(true)
+        
         showIndetermineHudWithMessage("Setting username".localized() + "...")
         viewModel.setUser(userName: userName, phone: phone)
             .flatMapCompletable({ (id) -> Completable in
