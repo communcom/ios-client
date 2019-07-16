@@ -67,6 +67,7 @@
 		3B986B6522CF4C9E00C1E985 /* PhoneNumberTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B986B6422CF4C9E00C1E985 /* PhoneNumberTests.swift */; };
 		3BA4D0872292BA710022A69D /* ResponseAPIContentGetPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BA4D0862292BA710022A69D /* ResponseAPIContentGetPost.swift */; };
 		3BA4D089229315D60022A69D /* UIResponder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BA4D088229315D60022A69D /* UIResponder.swift */; };
+		3BAE92A922DE553D00E97AE8 /* ScalableLayoutConstraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BAE92A822DE553D00E97AE8 /* ScalableLayoutConstraint.swift */; };
 		3BAF69C322675B420055CCEB /* ProfilePageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BAF69C222675B420055CCEB /* ProfilePageVC.swift */; };
 		3BAF69C522675B540055CCEB /* ProfilePageVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3BAF69C422675B540055CCEB /* ProfilePageVC.storyboard */; };
 		3BAF69CB226773000055CCEB /* UIView+Shadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BAF69CA226773000055CCEB /* UIView+Shadow.swift */; };
@@ -288,6 +289,7 @@
 		3B986B6422CF4C9E00C1E985 /* PhoneNumberTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneNumberTests.swift; sourceTree = "<group>"; };
 		3BA4D0862292BA710022A69D /* ResponseAPIContentGetPost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseAPIContentGetPost.swift; sourceTree = "<group>"; };
 		3BA4D088229315D60022A69D /* UIResponder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIResponder.swift; sourceTree = "<group>"; };
+		3BAE92A822DE553D00E97AE8 /* ScalableLayoutConstraint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScalableLayoutConstraint.swift; sourceTree = "<group>"; };
 		3BAF69C222675B420055CCEB /* ProfilePageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePageVC.swift; sourceTree = "<group>"; };
 		3BAF69C422675B540055CCEB /* ProfilePageVC.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ProfilePageVC.storyboard; sourceTree = "<group>"; };
 		3BAF69CA226773000055CCEB /* UIView+Shadow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Shadow.swift"; sourceTree = "<group>"; };
@@ -898,6 +900,7 @@
 				3B28EFE1228C7C31002D4816 /* KeyboardLayoutConstraint.swift */,
 				3BF2E09722D3A49F003B37AE /* StepButton.swift */,
 				3BB48ACA22D4ECDC00F11B6A /* ContentFittingWebView.swift */,
+				3BAE92A822DE553D00E97AE8 /* ScalableLayoutConstraint.swift */,
 			);
 			path = Vendor;
 			sourceTree = "<group>";
@@ -1553,6 +1556,7 @@
 				3BC3CA3322CA297900A893DC /* WelcomeVC.swift in Sources */,
 				57F5CFC22244E3BE005A09AE /* PostPageVC+Rx.swift in Sources */,
 				3BDD9A04228DBEC200B2A1DA /* CommentForm.swift in Sources */,
+				3BAE92A922DE553D00E97AE8 /* ScalableLayoutConstraint.swift in Sources */,
 				3BB342B422CA7412009546B2 /* CreateBioVC.swift in Sources */,
 				3B5CB30522A5752100757533 /* ListViewModelType.swift in Sources */,
 				5740957F2247768C00E40E51 /* CommentCell.swift in Sources */,
