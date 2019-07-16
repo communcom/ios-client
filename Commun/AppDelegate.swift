@@ -126,7 +126,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     if (!force && (self.window?.rootViewController is TabBarVC)) {return}
                     self.changeRootVC(controllerContainer.resolve(TabBarVC.self)!)
                 }, onError: { (error) in
-                    print(error)
+                    if let error = error as? ErrorAPI {
+                        switch error.caseInfo.message {
+                        case "Cannot get such account from BC":
+                            AppDelegate.reloadSubject.onNext(true)
+                        default:
+                            break
+                        }
+                    }
                 })
             
         // New user
