@@ -97,6 +97,15 @@ class SetUserVC: UIViewController, SignUpRouter {
         
         showIndetermineHudWithMessage("Setting username".localized() + "...")
         viewModel.setUser(userName: userName, phone: phone)
+            .catchError({ (error) -> Single<String> in
+                if let error = error as? ErrorAPI {
+                    if error.caseInfo.message == "Invalid step taken",
+                        Config.currentUser?.registrationStep == .toBlockChain{
+                        return .just(Config.currentUser?.id ?? "")
+                    }
+                }
+                throw error
+            })
             .flatMapCompletable({ (id) -> Completable in
                 self.showIndetermineHudWithMessage("Saving to blockchain".localized() + "...")
                 return RestAPIManager.instance.rx.toBlockChain()
