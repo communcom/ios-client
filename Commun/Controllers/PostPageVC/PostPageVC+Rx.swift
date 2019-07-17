@@ -138,6 +138,7 @@ extension PostPageVC: PostHeaderViewDelegate {
             .observeOn(MainScheduler.instance)
             .subscribe(onCompleted: {
                 self.commentForm.textView.text = ""
+                self.commentForm.imageView.image = nil
                 self.view.endEditing(true)
                 
                 self.commentForm.sendButton.isEnabled = true
