@@ -84,7 +84,7 @@ class PostHeaderView: UIView, UIWebViewDelegate, PostController {
             let url = URL(string: urlString) {
             showPhoto(with: url)
         } else {
-            showEmbed(false)
+            showMedia = false
         }
         
         // Show count label
@@ -111,13 +111,8 @@ class PostHeaderView: UIView, UIWebViewDelegate, PostController {
         layout()
     }
     
-    func showEmbed(_ show: Bool) {
-        self.embedViewHeightConstraint.constant = show ? UIScreen.main.bounds.width * 283/375 : 0
-        self.showMedia = show
-    }
-    
     func showWebView(with htmlString: String) {
-        showEmbed(true)
+        showMedia = true
         embedView.removeSubviews()
         let webView = UIWebView()
         webView.translatesAutoresizingMaskIntoConstraints = false
@@ -135,12 +130,10 @@ class PostHeaderView: UIView, UIWebViewDelegate, PostController {
         embedView.showLoading()
         webView.delegate = self
         webView.loadHTMLString(htmlString, baseURL: nil)
-        
-        webView.delegate = self
     }
     
     func showPhoto(with url: URL) {
-        showEmbed(true)
+        showMedia = true
         embedView.removeSubviews()
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -169,6 +162,9 @@ class PostHeaderView: UIView, UIWebViewDelegate, PostController {
         if let embedWebView = embedView.subviews.first(where: {$0 is UIWebView}) as? UIWebView,
             webView == embedWebView{
             self.embedViewHeightConstraint.constant = UIScreen.main.bounds.width * webView.contentHeight / webView.contentWidth
+            print(embedWebView.contentWidth, embedWebView.contentHeight)
+            print(webView.contentWidth, webView.contentHeight)
+            
         }
         
         layoutAndNotify()
@@ -192,9 +188,11 @@ class PostHeaderView: UIView, UIWebViewDelegate, PostController {
             return
         }
         var height: CGFloat = 112.0
-        if showMedia {
-            height += embedViewHeightConstraint.constant
+        if !showMedia {
+            embedViewHeightConstraint.constant = 0
         }
+        
+        height += embedViewHeightConstraint.constant
         height += self.postTitleLabel.height
         height += 32
         height += contentWebView.contentHeight

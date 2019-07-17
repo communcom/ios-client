@@ -48,7 +48,7 @@
                                         </connections>
                                     </button>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tux" translatesAutoresizingMaskIntoConstraints="NO" id="JAo-Iq-Wdc">
-                                        <rect key="frame" x="44" y="8" width="40" height="40"/>
+                                        <rect key="frame" x="36" y="8" width="40" height="40"/>
                                         <accessibility key="accessibilityConfiguration" identifier="PostPageAvatarImageView"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="40" id="jG9-NI-5wV"/>
@@ -60,13 +60,13 @@
                                         </userDefinedRuntimeAttributes>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ComunityName" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z2m-2G-cmH">
-                                        <rect key="frame" x="100" y="8" width="110.5" height="18"/>
+                                        <rect key="frame" x="84" y="8" width="243" height="18"/>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3h ago" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RsM-Yt-jdM">
-                                        <rect key="frame" x="100" y="32" width="42.5" height="16"/>
+                                        <rect key="frame" x="84" y="32" width="42.5" height="16"/>
                                         <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="13"/>
                                         <color key="textColor" red="0.60784313725490191" green="0.62352941176470589" blue="0.63529411764705879" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -80,7 +80,7 @@
                                         <state key="normal" image="more"/>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="by Sergey" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AUu-SG-Yxw">
-                                        <rect key="frame" x="146" y="32" width="61.5" height="16"/>
+                                        <rect key="frame" x="130" y="32" width="61.5" height="16"/>
                                         <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="13"/>
                                         <color key="textColor" red="0.60784313729999995" green="0.62352941179999999" blue="0.63529411759999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -95,6 +95,7 @@
                                     <constraint firstItem="ESO-Mb-GPX" firstAttribute="height" secondItem="xxf-Yw-cnd" secondAttribute="height" multiplier="24:56" id="D0C-7o-z6M"/>
                                     <constraint firstItem="RsM-Yt-jdM" firstAttribute="height" secondItem="xxf-Yw-cnd" secondAttribute="height" multiplier="16:56" id="EWC-Zp-qvO"/>
                                     <constraint firstItem="epW-Br-j8v" firstAttribute="height" secondItem="xxf-Yw-cnd" secondAttribute="height" multiplier="36:56" id="G9w-Wa-9PM"/>
+                                    <constraint firstItem="ESO-Mb-GPX" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="AUu-SG-Yxw" secondAttribute="trailing" constant="8" id="JUG-SJ-cCG"/>
                                     <constraint firstAttribute="height" constant="56" id="P2e-hR-1BQ"/>
                                     <constraint firstItem="epW-Br-j8v" firstAttribute="centerY" secondItem="xxf-Yw-cnd" secondAttribute="centerY" id="R0I-1s-okT"/>
                                     <constraint firstItem="AUu-SG-Yxw" firstAttribute="leading" secondItem="RsM-Yt-jdM" secondAttribute="trailing" constant="3.5" id="R3d-mp-ebT"/>
@@ -102,11 +103,12 @@
                                     <constraint firstItem="JAo-Iq-Wdc" firstAttribute="centerY" secondItem="epW-Br-j8v" secondAttribute="centerY" id="ZG7-Tm-63A"/>
                                     <constraint firstItem="JAo-Iq-Wdc" firstAttribute="height" secondItem="xxf-Yw-cnd" secondAttribute="height" multiplier="40:56" id="amV-Az-iLW"/>
                                     <constraint firstItem="epW-Br-j8v" firstAttribute="leading" secondItem="xxf-Yw-cnd" secondAttribute="leading" id="gA1-9t-B9M"/>
+                                    <constraint firstItem="ESO-Mb-GPX" firstAttribute="leading" secondItem="Z2m-2G-cmH" secondAttribute="trailing" constant="8" id="gu9-3w-ncR"/>
                                     <constraint firstItem="RsM-Yt-jdM" firstAttribute="bottom" secondItem="JAo-Iq-Wdc" secondAttribute="bottom" id="l2t-3l-05b"/>
                                     <constraint firstAttribute="trailing" secondItem="ESO-Mb-GPX" secondAttribute="trailing" constant="16" id="msL-I7-Pfq"/>
                                     <constraint firstItem="Z2m-2G-cmH" firstAttribute="height" secondItem="xxf-Yw-cnd" secondAttribute="height" multiplier="18:56" id="nZN-Sd-lFF"/>
-                                    <constraint firstItem="JAo-Iq-Wdc" firstAttribute="leading" secondItem="epW-Br-j8v" secondAttribute="trailing" constant="8" id="nbn-g5-6Jj"/>
-                                    <constraint firstItem="Z2m-2G-cmH" firstAttribute="leading" secondItem="JAo-Iq-Wdc" secondAttribute="trailing" constant="16" id="sgX-1h-tTA"/>
+                                    <constraint firstItem="JAo-Iq-Wdc" firstAttribute="leading" secondItem="epW-Br-j8v" secondAttribute="trailing" id="nbn-g5-6Jj"/>
+                                    <constraint firstItem="Z2m-2G-cmH" firstAttribute="leading" secondItem="JAo-Iq-Wdc" secondAttribute="trailing" constant="8" id="sgX-1h-tTA"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gxE-vT-71g">
