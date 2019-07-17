@@ -108,6 +108,9 @@ class ProfilePageVC: UIViewController {
         
         viewModel.profileFetchingErrorHandler = {[weak self] error in
             self?.errorView.isHidden = (error == nil)
+            if error != nil {
+                self?.showTitle(true)
+            }
         }
         
         viewModel.loadingHandler = {[weak self] in
