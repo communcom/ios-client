@@ -51,12 +51,12 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="Zrb-vq-uwO" firstAttribute="top" secondItem="Kdi-h6-fMh" secondAttribute="bottom" constant="52" identifier="SetUsernameTextFieldTopConstraint" id="7bl-EF-REx"/>
+                            <constraint firstItem="Zrb-vq-uwO" firstAttribute="top" secondItem="Kdi-h6-fMh" secondAttribute="bottom" constant="52" identifier="SetUsernameTextFieldTopConstraint" id="7bl-EF-REx" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                             <constraint firstItem="596-PJ-wLC" firstAttribute="width" secondItem="x7M-Uk-FDw" secondAttribute="width" multiplier="290:375" identifier="SetUsernameNextButtonWidthConstraint" id="Hi6-FX-CQx"/>
                             <constraint firstItem="Zrb-vq-uwO" firstAttribute="width" secondItem="x7M-Uk-FDw" secondAttribute="width" multiplier="290:375" identifier="SetUsernameTextFieldWidthConstraint" id="MMB-sa-79r"/>
                             <constraint firstItem="596-PJ-wLC" firstAttribute="height" secondItem="x7M-Uk-FDw" secondAttribute="height" multiplier="56:812" identifier="SetUsernameNextButtonHeightConstraint" id="N4E-a6-ayl"/>
-                            <constraint firstItem="Kdi-h6-fMh" firstAttribute="leading" secondItem="j0s-Hr-oj6" secondAttribute="leading" constant="16" identifier="SetUsernameCreateUsernameLeadingConstraint" id="RMh-Zd-kCZ"/>
-                            <constraint firstItem="Kdi-h6-fMh" firstAttribute="top" secondItem="j0s-Hr-oj6" secondAttribute="top" constant="19" identifier="SetUserCreateUsernameLabelTopConstraint" id="RsZ-iQ-wFh"/>
+                            <constraint firstItem="Kdi-h6-fMh" firstAttribute="leading" secondItem="j0s-Hr-oj6" secondAttribute="leading" constant="16" identifier="SetUsernameCreateUsernameLeadingConstraint" id="RMh-Zd-kCZ" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
+                            <constraint firstItem="Kdi-h6-fMh" firstAttribute="top" secondItem="j0s-Hr-oj6" secondAttribute="top" constant="19" identifier="SetUserCreateUsernameLabelTopConstraint" id="RsZ-iQ-wFh" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                             <constraint firstItem="j0s-Hr-oj6" firstAttribute="bottom" secondItem="596-PJ-wLC" secondAttribute="bottom" priority="999" constant="40" identifier="SetUserNextButtonBottomConstraint" id="Sbb-2I-0lW" customClass="KeyboardLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                             <constraint firstItem="Zrb-vq-uwO" firstAttribute="centerX" secondItem="x7M-Uk-FDw" secondAttribute="centerX" id="Z78-1U-cSz"/>
                             <constraint firstItem="596-PJ-wLC" firstAttribute="centerX" secondItem="x7M-Uk-FDw" secondAttribute="centerX" id="t73-Se-8ey"/>
@@ -87,10 +87,6 @@
                         <outlet property="creatUsernameLabel" destination="Kdi-h6-fMh" id="k8w-Rw-VW2"/>
                         <outlet property="nextButton" destination="596-PJ-wLC" id="CqU-Ch-Lhn"/>
                         <outlet property="userNameTextField" destination="Zrb-vq-uwO" id="q1i-ss-1WT"/>
-                        <outletCollection property="heightsCollection" destination="Sbb-2I-0lW" collectionClass="NSMutableArray" id="FWQ-kJ-Sh8"/>
-                        <outletCollection property="heightsCollection" destination="RsZ-iQ-wFh" collectionClass="NSMutableArray" id="71y-ao-f5h"/>
-                        <outletCollection property="heightsCollection" destination="7bl-EF-REx" collectionClass="NSMutableArray" id="Tuz-Nh-8Mf"/>
-                        <outletCollection property="widthsCollection" destination="RMh-Zd-kCZ" collectionClass="NSMutableArray" id="XGN-RK-64O"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8wN-X2-GYM" userLabel="First Responder" sceneMemberID="firstResponder"/>

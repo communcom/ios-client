@@ -11,19 +11,6 @@ import RxSwift
 import CyberSwift
 
 class WelcomeVC: UIViewController {
-    // MARK: - IBOutlets
-    @IBOutlet var heightsCollection: [NSLayoutConstraint]! {
-        didSet {
-            self.heightsCollection.forEach({ $0.constant *= Config.heightRatio })
-        }
-    }
-
-    @IBOutlet var widthsCollection: [NSLayoutConstraint]! {
-        didSet {
-            self.widthsCollection.forEach({ $0.constant *= Config.widthRatio })
-        }
-    }
-
     
     // MARK: - Class Functions
     override func viewDidLoad() {

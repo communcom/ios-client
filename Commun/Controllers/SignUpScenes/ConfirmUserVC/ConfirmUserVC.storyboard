@@ -86,19 +86,19 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="bYW-xi-lTa" firstAttribute="width" secondItem="ML7-X3-dGA" secondAttribute="width" multiplier="228:375" identifier="ConfirmUserPinCodeViewWidthConstraint" id="1bK-Ak-uVg"/>
-                            <constraint firstItem="5dt-9p-v3W" firstAttribute="leading" secondItem="zEB-iN-I0i" secondAttribute="leading" constant="16" identifier="ConfirmUserSmsCodeLabelLeadingConstraint" id="1tD-WO-XIW" userLabel="ConfirmUserEnterSmsCodeLabelLeadingConstraint"/>
+                            <constraint firstItem="5dt-9p-v3W" firstAttribute="leading" secondItem="zEB-iN-I0i" secondAttribute="leading" constant="16" identifier="ConfirmUserSmsCodeLabelLeadingConstraint" id="1tD-WO-XIW" userLabel="ConfirmUserEnterSmsCodeLabelLeadingConstraint" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                             <constraint firstItem="zEB-iN-I0i" firstAttribute="bottom" secondItem="waw-lP-Yrt" secondAttribute="bottom" priority="999" constant="40" identifier="ConfirmUserNextButtonBottomConstraint" id="7gQ-Nt-x3O" customClass="KeyboardLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
-                            <constraint firstItem="Y5D-RY-auL" firstAttribute="top" secondItem="bYW-xi-lTa" secondAttribute="bottom" constant="35" identifier="resendstackViewTopConstraint" id="7xS-jK-c01"/>
+                            <constraint firstItem="Y5D-RY-auL" firstAttribute="top" secondItem="bYW-xi-lTa" secondAttribute="bottom" constant="35" identifier="resendstackViewTopConstraint" id="7xS-jK-c01" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                             <constraint firstItem="waw-lP-Yrt" firstAttribute="width" secondItem="ML7-X3-dGA" secondAttribute="width" multiplier="290:375" identifier="ConfirmUserNextButtonWidthConstraint" id="K5F-pz-4KL"/>
                             <constraint firstItem="bYW-xi-lTa" firstAttribute="height" secondItem="ML7-X3-dGA" secondAttribute="height" multiplier="56:812" identifier="ConfirmUserPinCodeViewHeightConstraint" id="RZe-Nj-cWO"/>
                             <constraint firstItem="jAK-lA-DMe" firstAttribute="centerX" secondItem="ML7-X3-dGA" secondAttribute="centerX" id="TIU-CW-Zpe"/>
                             <constraint firstItem="bYW-xi-lTa" firstAttribute="centerX" secondItem="ML7-X3-dGA" secondAttribute="centerX" id="TxS-xO-Dhs"/>
                             <constraint firstItem="Y5D-RY-auL" firstAttribute="centerX" secondItem="ML7-X3-dGA" secondAttribute="centerX" id="XxK-up-xT5"/>
-                            <constraint firstItem="bYW-xi-lTa" firstAttribute="top" secondItem="jAK-lA-DMe" secondAttribute="bottom" constant="18" id="ZjL-IC-jZ2"/>
-                            <constraint firstItem="bYW-xi-lTa" firstAttribute="top" secondItem="5dt-9p-v3W" secondAttribute="bottom" constant="50" identifier="ConfirmUserPicCodeViewTopConstraint" id="kPy-LG-FWb" userLabel="ConfirmUserPinCodeViewTopConstraint"/>
+                            <constraint firstItem="bYW-xi-lTa" firstAttribute="top" secondItem="jAK-lA-DMe" secondAttribute="bottom" constant="18" id="ZjL-IC-jZ2" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
+                            <constraint firstItem="bYW-xi-lTa" firstAttribute="top" secondItem="5dt-9p-v3W" secondAttribute="bottom" constant="50" identifier="ConfirmUserPicCodeViewTopConstraint" id="kPy-LG-FWb" userLabel="ConfirmUserPinCodeViewTopConstraint" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                             <constraint firstItem="waw-lP-Yrt" firstAttribute="height" secondItem="ML7-X3-dGA" secondAttribute="height" multiplier="56:812" identifier="ConfirmUserNextButtonHeightConstraint" id="nFo-HL-5dh"/>
                             <constraint firstItem="waw-lP-Yrt" firstAttribute="centerX" secondItem="ML7-X3-dGA" secondAttribute="centerX" id="nu3-Pe-3jZ"/>
-                            <constraint firstItem="5dt-9p-v3W" firstAttribute="top" secondItem="zEB-iN-I0i" secondAttribute="top" constant="19" id="orP-we-dbJ" userLabel="ConfirmUserEnterSmsCodeLabelTopConstraint"/>
+                            <constraint firstItem="5dt-9p-v3W" firstAttribute="top" secondItem="zEB-iN-I0i" secondAttribute="top" constant="19" id="orP-we-dbJ" userLabel="ConfirmUserEnterSmsCodeLabelTopConstraint" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="zEB-iN-I0i"/>
                         <variation key="default">
@@ -128,12 +128,6 @@
                         <outlet property="resendTimerLabel" destination="A7l-2z-CKz" id="3xh-WD-cvi"/>
                         <outlet property="smsCodeLabel" destination="5dt-9p-v3W" id="AES-zC-Jyb"/>
                         <outlet property="testSmsCodeLabel" destination="jAK-lA-DMe" id="8qQ-9h-ayO"/>
-                        <outletCollection property="heightsCollection" destination="orP-we-dbJ" collectionClass="NSMutableArray" id="e81-i1-vZa"/>
-                        <outletCollection property="heightsCollection" destination="kPy-LG-FWb" collectionClass="NSMutableArray" id="dMl-Lu-Ymp"/>
-                        <outletCollection property="widthsCollection" destination="1tD-WO-XIW" collectionClass="NSMutableArray" id="b6k-uz-F8R"/>
-                        <outletCollection property="heightsCollection" destination="ZjL-IC-jZ2" collectionClass="NSMutableArray" id="ufZ-0j-yad"/>
-                        <outletCollection property="heightsCollection" destination="7gQ-Nt-x3O" collectionClass="NSMutableArray" id="eEb-pJ-vbf"/>
-                        <outletCollection property="heightsCollection" destination="7xS-jK-c01" collectionClass="NSMutableArray" id="vjk-mV-MmU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Sv0-oJ-wJx" userLabel="First Responder" sceneMemberID="firstResponder"/>

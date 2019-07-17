@@ -73,18 +73,6 @@ class SignUpVC: UIViewController, SignUpRouter {
         }
     }
     
-    @IBOutlet var heightsCollection: [NSLayoutConstraint]! {
-        didSet {
-            self.heightsCollection.forEach({ $0.constant *= Config.heightRatio })
-        }
-    }
-
-    @IBOutlet var widthsCollection: [NSLayoutConstraint]! {
-        didSet {
-            self.widthsCollection.forEach({ $0.constant *= Config.widthRatio })
-        }
-    }
-    
     @IBOutlet weak var nextButton: StepButton!
     
     
