@@ -45,6 +45,11 @@ extension PostPageVC: UITableViewDelegate {
             header.isEnabled = true
         }
         
+        viewModel.listEndedHandler = {
+            header.setTitle(nil, for: .normal)
+            header.isEnabled = false
+        }
+        
         viewModel.fetchNextCompleted = {
             header.setTitle("Load more comments".localized() + "...", for: .normal)
             header.isEnabled = true

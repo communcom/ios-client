@@ -61,7 +61,10 @@ class PostPageViewModel: ListViewModelType {
                 return .just([])
             }
             .subscribe(onSuccess: { (list) in
-                guard list.count > 0 else {return}
+                guard list.count > 0 else {
+                    self.listEndedHandler?()
+                    return
+                }
                 self.comments.accept(list.reversed() + self.comments.value)
                 self.fetchNextCompleted?()
             })
