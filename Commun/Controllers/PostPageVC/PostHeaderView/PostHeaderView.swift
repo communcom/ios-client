@@ -23,6 +23,7 @@ class PostHeaderView: UIView, UIWebViewDelegate, PostController {
     // Media content
     @IBOutlet weak var embedView: UIView!
     @IBOutlet weak var embedViewHeightConstraint: NSLayoutConstraint!
+    var embededViewFixedHeight: CGFloat? = nil
     
     // Reactions
     @IBOutlet weak var voteCountLabel: UILabel!
@@ -37,8 +38,6 @@ class PostHeaderView: UIView, UIWebViewDelegate, PostController {
     @IBOutlet weak var upVoteButton: UIButton!
     @IBOutlet weak var downVoteButton: UIButton!
     @IBOutlet weak var shareButton: UIButton!
-    
-    var fixedHeight: CGFloat?
     
     var post: ResponseAPIContentGetPost?
     
@@ -160,18 +159,17 @@ class PostHeaderView: UIView, UIWebViewDelegate, PostController {
     
     func webViewDidFinishLoad(_ webView: UIWebView) {
         if let embedWebView = embedView.subviews.first(where: {$0 is UIWebView}) as? UIWebView,
-            webView == embedWebView{
-            self.embedViewHeightConstraint.constant = UIScreen.main.bounds.width * webView.contentHeight / webView.contentWidth
-            print(embedWebView.contentWidth, embedWebView.contentHeight)
-            print(webView.contentWidth, webView.contentHeight)
-            
+            webView == embedWebView {
+            if embededViewFixedHeight == nil {
+                let height  = UIScreen.main.bounds.width * webView.contentHeight / webView.contentWidth
+                embedViewHeightConstraint.constant = height
+                embededViewFixedHeight = height
+            } else {
+                return
+            }
         }
         
         layoutAndNotify()
-        
-        if webView == contentWebView {
-            fixedHeight = self.height
-        }
         
         embedView.hideLoading()
     }
@@ -182,11 +180,6 @@ class PostHeaderView: UIView, UIWebViewDelegate, PostController {
     }
     
     func layout(with keyboardHeight: CGFloat = 0) {
-        if let height = fixedHeight {
-            self.height = height
-            self.layoutSubviews()
-            return
-        }
         var height: CGFloat = 112.0
         if !showMedia {
             embedViewHeightConstraint.constant = 0
