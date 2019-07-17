@@ -23,7 +23,7 @@ class PostCardCell: UITableViewCell, PostController {
     @IBOutlet weak var mainTextLabel: UILabel!
     @IBOutlet weak var likeCounterLabel: UILabel!
     @IBOutlet weak var numberOfCommentsLabel: UILabel!
-    @IBOutlet weak var numberOfSharesLabel: UILabel!
+    @IBOutlet weak var numberOfViewsLabel: UILabel!
     
     @IBOutlet weak var upVoteButton: UIButton!
     @IBOutlet weak var downVoteButton: UIButton!
@@ -104,6 +104,7 @@ extension PostCardCell {
         #warning("change this number later")
         self.likeCounterLabel.text          =   "\(post.votes.upCount ?? 0)"
         self.numberOfCommentsLabel.text     =   "\(post.stats.commentsCount) " + "Comments".localized()
+        self.numberOfViewsLabel.text = "\(post.stats.viewCount) " + "Views".localized()
         
         // Handle button
         self.upVoteButton.setImage(UIImage(named: post.votes.hasUpVote ? "icon-up-selected" : "icon-up-default"), for: .normal)

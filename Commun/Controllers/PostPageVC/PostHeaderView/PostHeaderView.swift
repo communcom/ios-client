@@ -89,7 +89,7 @@ class PostHeaderView: UIView, UIWebViewDelegate, PostController {
         // Show count label
         commentCountLabel.text = "\(post.stats.commentsCount) " + "Comments count".localized()
         viewCountLabel.text = "\(post.stats.viewCount) " + "Views count".localized()
-        voteCountLabel.text = String(describing: (post.votes.upCount ?? 0) + (post.votes.downCount ?? 0))
+        voteCountLabel.text = "\(post.votes.upCount ?? 0)"
         
         // Handle button
         self.upVoteButton.setImage(UIImage(named: post.votes.hasUpVote ? "icon-up-selected" : "icon-up-default"), for: .normal)

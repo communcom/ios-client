@@ -76,11 +76,15 @@ extension PostController {
         if type == .downvote && value == post.votes.hasDownVote {return}
         
         if type == .upvote {
-            self.post!.votes.hasUpVote = !self.post!.votes.hasUpVote
+            let voted = !self.post!.votes.hasUpVote
+            self.post!.votes.hasUpVote = voted
+            self.post!.votes.upCount = (self.post?.votes.upCount ?? 0) + (voted ? 1: -1)
         }
         
         if type == .downvote {
-            self.post!.votes.hasDownVote = !self.post!.votes.hasDownVote
+            let downVoted = !self.post!.votes.hasDownVote
+            self.post!.votes.hasDownVote = downVoted
+            self.post!.votes.downCount = (self.post?.votes.downCount ?? 0) + (downVoted ? 1: -1)
         }
     }
     
