@@ -12,4 +12,8 @@ extension UIWebView {
     var contentHeight: CGFloat {
         return self.scrollView.contentSize.height
     }
+    
+    var contentWidth: CGFloat {
+        return self.scrollView.contentSize.width
+    }
 }

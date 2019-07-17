@@ -133,6 +133,7 @@ class PostHeaderView: UIView, UIWebViewDelegate, PostController {
         webView.scrollView.bouncesZoom = false
         
         embedView.showLoading()
+        webView.delegate = self
         webView.loadHTMLString(htmlString, baseURL: nil)
         
         webView.delegate = self
@@ -152,17 +153,30 @@ class PostHeaderView: UIView, UIWebViewDelegate, PostController {
         imageView.trailingAnchor.constraint(equalTo: embedView.trailingAnchor).isActive = true
         
         imageView.showLoading()
-
-        imageView.sd_setImage(with: url) { (_, _, _, _) in
-            imageView.hideLoading()
+        
+        imageView.sd_setImage(with: url) { [weak self] (image, _, _, _) in
+            var image = image
+            if image == nil {
+                image = UIImage(named: "image-not-found")
+                imageView.image = image
+            }
+            self?.hideLoading()
+            self?.embedViewHeightConstraint.constant = UIScreen.main.bounds.width * image!.size.height / image!.size.width
         }
     }
     
     func webViewDidFinishLoad(_ webView: UIWebView) {
+        if let embedWebView = embedView.subviews.first(where: {$0 is UIWebView}) as? UIWebView,
+            webView == embedWebView{
+            self.embedViewHeightConstraint.constant = UIScreen.main.bounds.width * webView.contentHeight / webView.contentWidth
+        }
+        
         layoutAndNotify()
+        
         if webView == contentWebView {
             fixedHeight = self.height
         }
+        
         embedView.hideLoading()
     }
     
