@@ -8,6 +8,7 @@
 
 import UIKit
 import Localize_Swift
+import RxSwift
 
 struct Language {
     var name: String
@@ -37,7 +38,7 @@ class LanguageVC: UIViewController {
     var searchController = UISearchController(searchResultsController: nil) // С поиском будут доработки
     
     var delegate: LanguageVCDelegate?
-    
+    var didSelectLanguage = PublishSubject<Language>()
     
     // MARK: - IBOutlets
     @IBOutlet weak var tableView: UITableView!
@@ -87,6 +88,8 @@ extension LanguageVC: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         delegate?.didSelectLanguage(Language.supportedLanguages[indexPath.row])
+        didSelectLanguage.onNext(Language.supportedLanguages[indexPath.row])
+        didSelectLanguage.onCompleted()
         cancelScreen()
     }
 }

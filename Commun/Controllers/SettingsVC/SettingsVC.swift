@@ -8,6 +8,7 @@
 
 import UIKit
 import RxSwift
+import RxCocoa
 import CyberSwift
 import RxDataSources
 
@@ -87,6 +88,38 @@ class SettingsVC: UIViewController {
             .bind(to: tableView.rx.items(dataSource: dataSource))
             .disposed(by: bag)
         
+        // Action
+        tableView.rx.itemSelected
+            .subscribe(onNext: { (indexPath) in
+                switch indexPath.section {
+                case 0:
+                    switch indexPath.row {
+                    case 0:
+                        let vc = controllerContainer.resolve(LanguageVC.self)!
+                        let nav = UINavigationController(rootViewController: vc)
+                        self.present(nav, animated: true, completion: nil)
+                        vc.didSelectLanguage
+                            .subscribe(onNext: { (language) in
+                                self.viewModel.currentLanguage.accept(language)
+                            })
+                            .disposed(by: self.bag)
+                    case 1:
+                        let alert = UIAlertController(title: nil, message: "Select alert", preferredStyle: .actionSheet)
+                        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+                        alert.addAction(UIAlertAction(title: "Always alert", style: .default, handler: nil))
+                        self.present(alert, animated: true, completion: nil)
+                    default:
+                        break
+                    }
+                    break
+                case 1:
+                    break
+                default:
+                    break
+                }
+            })
+            .disposed(by: bag)
+        
         // For headerInSection
         tableView.rx.setDelegate(self)
             .disposed(by: bag)
@@ -94,29 +127,6 @@ class SettingsVC: UIViewController {
 
 }
 
-//// MARK: - UITableViewDelegate
-//extension SettingsVC: UITableViewDelegate {
-
-//
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        if indexPath.section == 0 {
-//            if indexPath.row == 0 {
-//                if let vc = controllerContainer.resolve(LanguageVC.self) {
-//                    vc.delegate = self
-//                    let nav = UINavigationController(rootViewController: vc)
-//                    self.present(nav, animated: true, completion: nil)
-//                }
-//            }
-//
-//            else if indexPath.row == 1 {
-//                let alert = UIAlertController(title: nil, message: "Select alert", preferredStyle: .actionSheet)
-//                alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-//                alert.addAction(UIAlertAction(title: "Always alert", style: .default, handler: nil))
-//                self.present(alert, animated: true, completion: nil)
-//            }
-//        }
-//    }
-//
 
 //// MARK: - SettingsButtonCellDelegate
 //extension SettingsVC: SettingsButtonCellDelegate {

@@ -31,6 +31,14 @@ class SettingsViewModel {
             .bind(to: notificationOn)
             .disposed(by: bag)
         
+        // current language
+        currentLanguage
+            .skip(1)
+            .subscribe(onNext: { (language) in
+                Localize.setCurrentLanguage(language.shortCode)
+            })
+            .disposed(by: bag)
+        
         getOptionsPushShow()
         getKeys()
     }
