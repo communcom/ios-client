@@ -94,104 +94,9 @@ class SettingsVC: UIViewController {
 
 }
 
-//extension SettingsVC {
-//    func makeCells() {
-//        // General
-//        generalCells = []
-//
-//        let language = tableView.dequeueReusableCell(withIdentifier: "GeneralSettingCell") as! GeneralSettingCell
-//        language.setupCell(setting: GeneralSetting(name: "Interface language", value: "English"))
-//        generalCells.append(language)
-//
-//        let content = tableView.dequeueReusableCell(withIdentifier: "GeneralSettingCell") as! GeneralSettingCell
-//        content.setupCell(setting: GeneralSetting(name: "NSFW content", value: "Always alert"))
-//        generalCells.append(content)
-//
-//        let pushNotificationCell = tableView.dequeueReusableCell(withIdentifier: "PushNotificationSettingCell") as! PushNotificationSettingCell
-//        pushNotificationCell.setup()
-//        generalCells.append(pushNotificationCell)
-//
-//        // Notifications
-//        notificationCells = []
-//
-//        for type in NotificationSettingType.allCases {
-//            let notificationCell = tableView.dequeueReusableCell(withIdentifier: "NotificationSettingCell") as! NotificationSettingCell
-//            notificationCell.setupCell(withType: type)
-//            notificationCell.delegate = self
-//            notificationCells.append(notificationCell)
-//        }
-//
-//        #warning("setup password")
-////        for (key, value) in KeychainManager.loadData(byUserID: Config.currentUser.id ?? "", withKey: Config.currentUser.activeKey ?? "") ?? [:] {
-////            // Пока нет паролей...
-////        }
-//
-//        // PasswordsCells
-//        passwordsCells = []
-//        let changePasswordCell = tableView.dequeueReusableCell(withIdentifier: "SettingsButtonCell") as! SettingsButtonCell
-//        changePasswordCell.delegate = self
-//        changePasswordCell.button.setTitle("Change all password".localized(), for: .normal)
-//        changePasswordCell.button.setTitleColor(.appMainColor, for: .normal)
-//        passwordsCells.append(changePasswordCell)
-//
-//        // Logout
-//        let logoutCell = tableView.dequeueReusableCell(withIdentifier: "SettingsButtonCell") as! SettingsButtonCell
-//        logoutCell.delegate = self
-//        logoutCell.button.setTitleColor(.red, for: .normal)
-//        logoutCell.button.setTitle("Logout".localized(), for: .normal)
-//        passwordsCells.append(logoutCell)
-//
-//        tableView.reloadData()
-//    }
-//
-//}
-
-
-// MARK: - UITableViewDataSource
-//extension SettingsVC: UITableViewDataSource {
-//    func numberOfSections(in tableView: UITableView) -> Int {
-//        return 3
-//    }
-//
-//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        if section == 0 {
-//            return generalCells.count
-//        }
-//
-//        if section == 1 {
-//            return notificationCells.count
-//        }
-//
-//        if section == 2 {
-//            return passwordsCells.count
-//        }
-//
-//        return 0
-//    }
-//
-//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        if indexPath.section == 0 {
-//            return generalCells[indexPath.row]
-//        }
-//
-//        if indexPath.section == 1 {
-//            return notificationCells[indexPath.row]
-//        }
-//
-//        if indexPath.section == 2 {
-//            return passwordsCells[indexPath.row]
-//        }
-//
-//        return UITableViewCell()
-//    }
-//}
-//
-//
 //// MARK: - UITableViewDelegate
 //extension SettingsVC: UITableViewDelegate {
-//    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-//        return 56.0
-//    }
+
 //
 //    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 //        if indexPath.section == 0 {
@@ -212,37 +117,7 @@ class SettingsVC: UIViewController {
 //        }
 //    }
 //
-//    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-//        let view = UIView()
-//        view.backgroundColor = .white
-//
-//        let label = UILabel(frame: CGRect(x: 16, y: 15, width: self.view.frame.width, height: 30))
-//
-//        switch section {
-//        case 0:
-//            label.text = "General"
-//            break
-//
-//        case 1:
-//            label.text = "Notifications"
-//            break
-//
-//        case 2:
-//            label.text = "Passwords"
-//            break
-//
-//        default:
-//            label.text = ""
-//        }
-//
-//        label.font = .systemFont(ofSize: 22)
-//        view.addSubview(label)
-//
-//        return view
-//    }
-//}
-//
-//
+
 //// MARK: - SettingsButtonCellDelegate
 //extension SettingsVC: SettingsButtonCellDelegate {
 //    func buttonDidTap(on cell: SettingsButtonCell) {
