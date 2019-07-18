@@ -320,13 +320,12 @@ class NetworkService: NSObject {
     }
     
     // MARK: - options
-    func getOptions() -> Completable {
-        return .create {completable in
+    func getOptions() -> Single<ResponseAPIGetOptions> {
+        return Single<ResponseAPIGetOptions>.create {single in
             RestAPIManager.instance.getOptions(responseHandling: { (options) in
-                NotificationSettingType.getOptions(options.notify.show)
-                completable(.completed)
+                single(.success(options))
             }, errorHandling: { (errorAPI) in
-                completable(.error(errorAPI))
+                single(.error(errorAPI))
             })
             return Disposables.create()
         }

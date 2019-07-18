@@ -16,26 +16,14 @@ class SettingsVC: UIViewController {
     
     private let bag = DisposeBag()
     
-    var generalCells: [UITableViewCell] = []
-    var notificationCells: [UITableViewCell] = []
-    var passwordsCells: [UITableViewCell] = []
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        tableView.register(UINib(nibName: "GeneralSettingCell", bundle: nil), forCellReuseIdentifier: "GeneralSettingCell")
-        tableView.register(UINib(nibName: "PushNotificationSettingCell", bundle: nil), forCellReuseIdentifier: "PushNotificationSettingCell")
-        tableView.register(UINib(nibName: "NotificationSettingCell", bundle: nil), forCellReuseIdentifier: "NotificationSettingCell")
-        tableView.register(UINib(nibName: "SettingsButtonCell", bundle: nil), forCellReuseIdentifier: "SettingsButtonCell")
         
-        tableView.dataSource = self
-        tableView.delegate = self
-        
+        // Configure cells
         tableView.rowHeight = UITableView.automaticDimension//56
+        self.title = "Settings".localized()
         
-        self.title = "Settings"
-        
-        // get options
+        // Get options
         NetworkService.shared.getOptions()
             .subscribe(onCompleted: {
                 self.makeCells()

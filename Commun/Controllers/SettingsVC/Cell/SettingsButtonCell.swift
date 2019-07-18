@@ -13,24 +13,24 @@ protocol SettingsButtonCellDelegate {
 }
 
 class SettingsButtonCell: UITableViewCell {
-    @IBOutlet weak var button: UIButton!
+    enum ButtonType {
+        case changeAllPassword
+        case logout
+    }
     
+    @IBOutlet weak var button: UIButton!
     var delegate: SettingsButtonCellDelegate?
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        
-        selectionStyle = .none
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+    func setUpWithButtonType(_ type: ButtonType) {
+        switch type {
+        case .changeAllPassword:
+            button.setTitle("Change all password".localized(), for: .normal)
+        case .logout:
+            button.setTitle("Log out".localized(), for: .normal)
+        }
     }
     
     @IBAction func changePasswordButtonTap(_ sender: Any) {
         delegate?.buttonDidTap(on: self)
     }
-    
 }
