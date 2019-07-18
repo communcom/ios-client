@@ -10,6 +10,10 @@ import UIKit
 import RxSwift
 import CyberSwift
 
+protocol SettingsSwitcherCellDelegate: class {
+    func switcherDidSwitch(value: Bool, for key: String)
+}
+
 class SettingsSwitcherCell: UITableViewCell {
     typealias SwitcherType = (key: String, value: Bool)
     
@@ -18,12 +22,21 @@ class SettingsSwitcherCell: UITableViewCell {
     @IBOutlet weak var switcher: UISwitch!
     
     private var bag = DisposeBag()
+    weak var delegate: SettingsSwitcherCellDelegate?
+    var key: String?
     
     func setUpWithType(_ type: SwitcherType) {
+        // reassign key
+        key = type.key
+        
         // Setting
         switcherImageView.image = UIImage(named: type.key)
         switcherNameLabel.text = type.key
         switcher.isOn = type.value
     }
     
+    @IBAction func switcherDidSwitch(_ sender: Any) {
+        guard let key = key else {return}
+        delegate?.switcherDidSwitch(value: switcher.isOn, for: key)
+    }
 }

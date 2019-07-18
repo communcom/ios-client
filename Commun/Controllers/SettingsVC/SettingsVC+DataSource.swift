@@ -75,6 +75,7 @@ extension SettingsVC {
                 case .switcher(let switcherType):
                     let cell = tableView.dequeueReusableCell(withIdentifier: "SettingsSwitcherCell", for: indexPath) as! SettingsSwitcherCell
                     cell.setUpWithType(switcherType)
+                    cell.delegate = self
                     return cell
                     
                 case .keyValue(let keyValue):

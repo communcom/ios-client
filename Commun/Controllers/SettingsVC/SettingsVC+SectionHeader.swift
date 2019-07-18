@@ -44,11 +44,32 @@ extension SettingsVC: UITableViewDelegate {
             switcher.onTintColor = .appMainColor
             switcher.isOn = viewModel.notificationOn.value
             
+            viewModel.optionsPushShow
+                .filter {$0 != nil}
+                .filter {
+                    !$0!.upvote &&
+                    !$0!.downvote &&
+                    !$0!.transfer &&
+                    !$0!.reply &&
+                    !$0!.mention &&
+                    !$0!.reward &&
+                    !$0!.curatorReward &&
+                    !$0!.subscribe &&
+                    !$0!.repost
+                }
+                .subscribe(onNext: {_ in
+                    switcher.rx.isOn.onNext(false)
+                    switcher.sendActions(for: .valueChanged)
+                })
+                .disposed(by: bag)
+            
             switcher.rx.isOn
                 .skip(1)
                 .subscribe(onNext: {isOn in
                     self.viewModel.togglePushNotify(on: isOn)
-                        .subscribe(onError: {[weak self] (error) in
+                        .subscribe( onCompleted: {
+                            self.viewModel.getOptionsPushShow()
+                        }, onError: {[weak self] (error) in
                             switcher.isOn = !switcher.isOn
                             self?.showError(error)
                         })

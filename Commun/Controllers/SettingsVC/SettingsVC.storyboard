@@ -89,6 +89,9 @@
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vFN-f9-3BH">
                                                     <rect key="frame" x="349" y="12.5" width="51" height="31"/>
                                                     <color key="onTintColor" red="0.41568627450000001" green="0.50196078430000002" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <connections>
+                                                        <action selector="switcherDidSwitch:" destination="BxN-OO-vPZ" eventType="valueChanged" id="iay-E9-TP1"/>
+                                                    </connections>
                                                 </switch>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="296-ge-I06">
                                                     <rect key="frame" x="16" y="8" width="40" height="40"/>

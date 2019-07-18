@@ -104,15 +104,13 @@ class SettingsVC: UIViewController {
                             })
                             .disposed(by: self.bag)
                     case 1:
-                        let alert = UIAlertController(title: nil, message: "Select alert", preferredStyle: .actionSheet)
-                        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-                        alert.addAction(UIAlertAction(title: "Always alert", style: .default, handler: nil))
+                        let alert = UIAlertController(title: nil, message: "Select alert".localized(), preferredStyle: .actionSheet)
+                        alert.addAction(UIAlertAction(title: "Cancel".localized(), style: .cancel, handler: nil))
+                        alert.addAction(UIAlertAction(title: "Always alert".localized(), style: .default, handler: nil))
                         self.present(alert, animated: true, completion: nil)
                     default:
                         break
                     }
-                    break
-                case 1:
                     break
                 default:
                     break
@@ -127,6 +125,36 @@ class SettingsVC: UIViewController {
 
 }
 
+// MARK: - SwitcherCellDelegate
+extension SettingsVC: SettingsSwitcherCellDelegate {
+    func switcherDidSwitch(value: Bool, for key: String) {
+        // Notification
+        if let notificationType = NotificationSettingType(rawValue: key) {
+            guard var newValue = viewModel.optionsPushShow.value else {return}
+            switch notificationType {
+            case .upvote:
+                newValue.upvote = value
+            case .downvote:
+                newValue.downvote = value
+            case .points:
+                newValue.transfer = value
+            case .comment:
+                newValue.reply = value
+            case .mention:
+                newValue.mention = value
+            case .rewardsPosts:
+                newValue.reward = value
+            case .rewardsVote:
+                newValue.curatorReward = value
+            case .following:
+                newValue.subscribe = value
+            case .repost:
+                newValue.repost = value
+            }
+            viewModel.optionsPushShow.accept(newValue)
+        }
+    }
+}
 
 //// MARK: - SettingsButtonCellDelegate
 //extension SettingsVC: SettingsButtonCellDelegate {
