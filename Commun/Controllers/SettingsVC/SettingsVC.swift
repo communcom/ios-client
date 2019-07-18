@@ -29,36 +29,6 @@ class SettingsVC: UIViewController {
     }
     
     func bindUI() {
-        // Data source
-        let dataSource = RxTableViewSectionedReloadDataSource<Section>(
-            configureCell: { dataSource, tableView, indexPath, item in
-                switch item {
-                case .option(let option):
-                    let cell = tableView.dequeueReusableCell(withIdentifier: "SettingsOptionsCell", for: indexPath) as! SettingsOptionsCell
-                    cell.setUpWithOption(option)
-                    return cell
-                    
-                case .switcher(let switcherType):
-                    let cell = tableView.dequeueReusableCell(withIdentifier: "SettingsSwitcherCell", for: indexPath) as! SettingsSwitcherCell
-                    cell.setUpWithType(switcherType)
-                    return cell
-                    
-                case .keyValue(let keyValue):
-                    let cell = tableView.dequeueReusableCell(withIdentifier: "SettingsKeyCell", for: indexPath) as! SettingsKeyCell
-                    cell.setUpWithKeyType(keyValue)
-                    return cell
-                    
-                case .button(let buttonType):
-                    let cell = tableView.dequeueReusableCell(withIdentifier: "SettingsButtonCell", for: indexPath) as! SettingsButtonCell
-                    cell.setUpWithButtonType(buttonType)
-                    return cell
-                }
-            },
-            titleForHeaderInSection: {dataSource, index in
-                return "test"
-            }
-        )
-        
         // Bind table
         Observable.combineLatest(
                 viewModel.currentLanguage,
@@ -78,30 +48,32 @@ class SettingsVC: UIViewController {
                 )
                 
                 // second section
+                var rows = [Section.CustomData]()
                 if let pushShow = pushShow {
-                    sections.append(
-                        .secondSection(header: "Notifications", items: [
-                            .switcher((key: NotificationSettingType.upvote.rawValue, value: pushShow.upvote)),
-                            .switcher((key: NotificationSettingType.downvote.rawValue, value: pushShow.downvote)),
-                            .switcher((key: NotificationSettingType.points.rawValue, value: pushShow.transfer)),
-                            .switcher((key: NotificationSettingType.comment.rawValue, value: pushShow.reply)),
-                            .switcher((key: NotificationSettingType.mention.rawValue, value: pushShow.mention)),
-                            .switcher((key: NotificationSettingType.rewardsPosts.rawValue, value: pushShow.reward)),
-                            .switcher((key: NotificationSettingType.rewardsVote.rawValue, value: pushShow.curatorReward)),
-                            .switcher((key: NotificationSettingType.following.rawValue, value: pushShow.subscribe)),
-                            .switcher((key: NotificationSettingType.repost.rawValue, value: pushShow.repost))
-                        ])
-                    )
+                    rows += [
+                        .switcher((key: NotificationSettingType.upvote.rawValue, value: pushShow.upvote)),
+                        .switcher((key: NotificationSettingType.downvote.rawValue, value: pushShow.downvote)),
+                        .switcher((key: NotificationSettingType.points.rawValue, value: pushShow.transfer)),
+                        .switcher((key: NotificationSettingType.comment.rawValue, value: pushShow.reply)),
+                        .switcher((key: NotificationSettingType.mention.rawValue, value: pushShow.mention)),
+                        .switcher((key: NotificationSettingType.rewardsPosts.rawValue, value: pushShow.reward)),
+                        .switcher((key: NotificationSettingType.rewardsVote.rawValue, value: pushShow.curatorReward)),
+                        .switcher((key: NotificationSettingType.following.rawValue, value: pushShow.subscribe)),
+                        .switcher((key: NotificationSettingType.repost.rawValue, value: pushShow.repost))
+                    ]
                 }
+                sections.append(
+                    .secondSection(header: "Notifications", items: rows)
+                )
                 
                 // third section
+                rows = [Section.CustomData]()
                 if let keys = keys {
-                    var rows = [Section.CustomData]()
                     for (k,v) in keys {
                         rows.append(.keyValue((key: k, value: v)))
                     }
-                    sections.append(.thirdSection(header: "Private keys".localized(), items: rows))
                 }
+                sections.append(.thirdSection(header: "Private keys".localized(), items: rows))
                 
                 // forth section
                 sections.append(.forthSection(items: [
@@ -113,7 +85,6 @@ class SettingsVC: UIViewController {
             }
             .bind(to: tableView.rx.items(dataSource: dataSource))
             .disposed(by: bag)
-        
         
         // For headerInSection
         tableView.rx.setDelegate(self)

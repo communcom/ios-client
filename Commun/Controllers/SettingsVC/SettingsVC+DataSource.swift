@@ -8,6 +8,7 @@
 
 import Foundation
 import RxDataSources
+import CyberSwift
 
 // https://stackoverflow.com/questions/40455824/how-to-bind-table-view-with-multiple-sections-that-represent-different-data-type
 
@@ -60,5 +61,33 @@ extension SettingsVC {
                 self = .forthSection(items: items)
             }
         }
+    }
+    
+    var dataSource: RxTableViewSectionedReloadDataSource<Section> {
+        return RxTableViewSectionedReloadDataSource<Section>(
+            configureCell: { dataSource, tableView, indexPath, item in
+                switch item {
+                case .option(let option):
+                    let cell = tableView.dequeueReusableCell(withIdentifier: "SettingsOptionsCell", for: indexPath) as! SettingsOptionsCell
+                    cell.setUpWithOption(option)
+                    return cell
+                    
+                case .switcher(let switcherType):
+                    let cell = tableView.dequeueReusableCell(withIdentifier: "SettingsSwitcherCell", for: indexPath) as! SettingsSwitcherCell
+                    cell.setUpWithType(switcherType)
+                    return cell
+                    
+                case .keyValue(let keyValue):
+                    let cell = tableView.dequeueReusableCell(withIdentifier: "SettingsKeyCell", for: indexPath) as! SettingsKeyCell
+                    cell.setUpWithKeyType(keyValue)
+                    return cell
+                    
+                case .button(let buttonType):
+                    let cell = tableView.dequeueReusableCell(withIdentifier: "SettingsButtonCell", for: indexPath) as! SettingsButtonCell
+                    cell.setUpWithButtonType(buttonType)
+                    return cell
+                }
+            }
+        )
     }
 }
