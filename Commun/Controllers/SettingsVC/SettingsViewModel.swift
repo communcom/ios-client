@@ -44,7 +44,7 @@ class SettingsViewModel {
     }
     
     func getOptionsPushShow() {
-        NetworkService.shared.getOptions()
+        RestAPIManager.instance.rx.getPushNotify()
             .map {$0.notify.show}
             .asObservable()
             .bind(to: optionsPushShow)

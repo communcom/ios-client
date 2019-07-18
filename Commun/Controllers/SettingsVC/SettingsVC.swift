@@ -130,7 +130,8 @@ extension SettingsVC: SettingsSwitcherCellDelegate {
     func switcherDidSwitch(value: Bool, for key: String) {
         // Notification
         if let notificationType = NotificationSettingType(rawValue: key) {
-            guard var newValue = viewModel.optionsPushShow.value else {return}
+            guard let original = viewModel.optionsPushShow.value else {return}
+            var newValue = original
             switch notificationType {
             case .upvote:
                 newValue.upvote = value
@@ -152,6 +153,12 @@ extension SettingsVC: SettingsSwitcherCellDelegate {
                 newValue.repost = value
             }
             viewModel.optionsPushShow.accept(newValue)
+            RestAPIManager.instance.rx.setPushNotify(options: newValue.toParam())
+                .subscribe(onError: {[weak self] error in
+                    self?.showError(error)
+                    self?.viewModel.optionsPushShow.accept(original)
+                })
+                .disposed(by: bag)
         }
     }
 }

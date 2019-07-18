@@ -37,6 +37,8 @@ class SettingsSwitcherCell: UITableViewCell {
     
     @IBAction func switcherDidSwitch(_ sender: Any) {
         guard let key = key else {return}
-        delegate?.switcherDidSwitch(value: switcher.isOn, for: key)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.55) {
+            self.delegate?.switcherDidSwitch(value: self.switcher.isOn, for: key)
+        }
     }
 }
