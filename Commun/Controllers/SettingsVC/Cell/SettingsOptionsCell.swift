@@ -10,24 +10,14 @@ import UIKit
 import CyberSwift
 
 class SettingsOptionsCell: UITableViewCell {
-    enum Option {
-        case language(language: Language)
-        case NSFWcontent(value: String)
-    }
+    typealias Option = (key: String, value: String)
     
     @IBOutlet weak var optionNameLabel: UILabel!
     @IBOutlet weak var valueLabel: UILabel!
     
     func setUpWithOption(_ option: Option) {
-        switch option {
-        case .language(let language):
-            // Supported ru and en
-            optionNameLabel.text = "Interface language".localized()
-            valueLabel.text = language.name
-        case .NSFWcontent(_):
-            optionNameLabel.text = "NSFW content".localized()
-            valueLabel.text = "Always alert".localized()
-        }
+        optionNameLabel.text = option.key
+        valueLabel.text = option.value
     }
 
 }

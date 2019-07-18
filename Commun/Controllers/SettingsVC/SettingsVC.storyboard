@@ -41,7 +41,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Options" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SDR-cg-hoG">
-                                                    <rect key="frame" x="16" y="17.5" width="66" height="21"/>
+                                                    <rect key="frame" x="16" y="16" width="66" height="24"/>
                                                     <fontDescription key="fontDescription" name="SFProText-Semibold" family="SF Pro Text" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -61,7 +61,8 @@
                                                 </imageView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="Ust-Ak-zNA" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="SDR-cg-hoG" secondAttribute="trailing" constant="193" id="BLV-Pb-AzX"/>
+                                                <constraint firstAttribute="bottom" secondItem="SDR-cg-hoG" secondAttribute="bottom" constant="16" id="0a9-lq-bnv"/>
+                                                <constraint firstItem="SDR-cg-hoG" firstAttribute="top" secondItem="NRW-iJ-9gS" secondAttribute="top" constant="16" id="0tx-cq-wY5"/>
                                                 <constraint firstItem="Ust-Ak-zNA" firstAttribute="centerY" secondItem="NRW-iJ-9gS" secondAttribute="centerY" id="OVr-OV-Zxm"/>
                                                 <constraint firstItem="m1T-k0-A9b" firstAttribute="centerY" secondItem="NRW-iJ-9gS" secondAttribute="centerY" id="gIf-8i-I1v"/>
                                                 <constraint firstAttribute="trailing" secondItem="m1T-k0-A9b" secondAttribute="trailing" constant="16" id="gNu-iH-6Eb" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
@@ -101,11 +102,13 @@
                                                 </imageView>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="296-ge-I06" secondAttribute="bottom" constant="8" id="4jC-6p-jFI"/>
                                                 <constraint firstItem="296-ge-I06" firstAttribute="leading" secondItem="e9V-dy-t1T" secondAttribute="leading" constant="16" id="Ebw-7P-oeN" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                                                 <constraint firstItem="ORd-Sk-Pvj" firstAttribute="leading" secondItem="296-ge-I06" secondAttribute="trailing" constant="16" id="VFt-cP-Y4k" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                                                 <constraint firstAttribute="trailing" secondItem="vFN-f9-3BH" secondAttribute="trailing" constant="16" id="X53-sp-Qzj" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                                                 <constraint firstItem="vFN-f9-3BH" firstAttribute="centerY" secondItem="e9V-dy-t1T" secondAttribute="centerY" id="aNe-bD-lD4"/>
                                                 <constraint firstItem="vFN-f9-3BH" firstAttribute="leading" secondItem="ORd-Sk-Pvj" secondAttribute="trailing" constant="16" id="adf-he-vfe" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
+                                                <constraint firstItem="296-ge-I06" firstAttribute="top" secondItem="e9V-dy-t1T" secondAttribute="top" constant="8" id="mkC-w9-5No"/>
                                                 <constraint firstItem="296-ge-I06" firstAttribute="centerY" secondItem="e9V-dy-t1T" secondAttribute="centerY" id="wfg-EP-Bs1"/>
                                             </constraints>
                                         </tableViewCellContentView>

@@ -9,13 +9,14 @@
 import UIKit
 
 class SettingsKeyCell: UITableViewCell {
+    typealias KeyType = (key: String, value: String)
     
     @IBOutlet weak var keyTypeLabel: UILabel!
     @IBOutlet weak var keyLabel: UILabel!
     
-    func setUpWithKeyType(_ keyType: String, value: String) {
-        keyTypeLabel.text = keyType.localized()
-        keyLabel.text = value
+    func setUpWithKeyType(_ keyType: KeyType) {
+        keyTypeLabel.text = keyType.key.localized()
+        keyLabel.text = keyType.value.localized()
     }
     
     @IBAction func copyKeyDidTouch(_ sender: Any) {

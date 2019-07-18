@@ -8,29 +8,22 @@
 
 import UIKit
 import RxSwift
+import CyberSwift
 
 class SettingsSwitcherCell: UITableViewCell {
-    enum SwitcherType {
-        case notification(type: NotificationSettingType)
-    }
+    typealias SwitcherType = (key: String, value: Bool)
     
     @IBOutlet weak var switcherImageView: UIImageView!
     @IBOutlet weak var switcherNameLabel: UILabel!
     @IBOutlet weak var switcher: UISwitch!
     
-    private var type: NotificationSettingType?
     private var bag = DisposeBag()
     
     func setUpWithType(_ type: SwitcherType) {
         // Setting
-        switch type {
-        case .notification(let type):
-            switcherImageView.image = UIImage(named: type.rawValue)
-            switcherNameLabel.text = type.rawValue
-            switcher.isOn = UserDefaults.standard.bool(forKey: type.rawValue)
-            
-            #warning("switcher was switched")
-        }
+        switcherImageView.image = UIImage(named: type.key)
+        switcherNameLabel.text = type.key
+        switcher.isOn = type.value
     }
     
 }
