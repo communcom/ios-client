@@ -12,15 +12,25 @@ import RxCocoa
 import CyberSwift
 import Localize_Swift
 
-struct SettingsViewModel {
+class SettingsViewModel {
     private let bag = DisposeBag()
     
     let currentLanguage = BehaviorRelay<Language>(value: Language.currentLanguage)
     let nsfwContent     = BehaviorRelay<String>(value: "Alway alert")
+    let notificationOn  = BehaviorRelay<Bool>(value: UserDefaults.standard.bool(forKey: Config.currentUserPushNotificationOn))
     let optionsPushShow = BehaviorRelay<ResponseAPIGetOptionsNotifyShow?>(value: nil)
     let userKeys        = BehaviorRelay<[String: String]?>(value: nil)
     
     init() {
+        // bind notificationOn
+        UserDefaults.standard.rx
+            .observe(Bool.self, Config.currentUserPushNotificationOn)
+            .skip(1)
+            .filter {$0 != nil}
+            .map {$0!}
+            .bind(to: notificationOn)
+            .disposed(by: bag)
+        
         getOptionsPushShow()
         getKeys()
     }
@@ -55,5 +65,10 @@ struct SettingsViewModel {
         }
         
         userKeys.accept(keys)
+    }
+    
+    func togglePushNotify(on: Bool) -> Completable {
+        return on ? RestAPIManager.instance.rx.pushNotifyOn() :
+            RestAPIManager.instance.rx.pushNotifyOff()
     }
 }

@@ -22,7 +22,15 @@ extension SettingsVC: UITableViewDelegate {
         let view = UIView()
         view.backgroundColor = .white
 
-        let label = UILabel(frame: CGRect(x: 16, y: 15, width: self.view.frame.width, height: 30))
+        let label = UILabel(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 56))
+        label.font = .boldSystemFont(ofSize: 22)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        
+        view.addSubview(label)
+        
+        label.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        label.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16).isActive = true
+        
 
         switch section {
         case 0:
@@ -31,6 +39,27 @@ extension SettingsVC: UITableViewDelegate {
 
         case 1:
             label.text = "Notifications".localized()
+            let switcher = UISwitch(frame: CGRect.zero)
+            switcher.translatesAutoresizingMaskIntoConstraints = false
+            switcher.onTintColor = .appMainColor
+            switcher.isOn = viewModel.notificationOn.value
+            
+            switcher.rx.isOn
+                .skip(1)
+                .subscribe(onNext: {isOn in
+                    self.viewModel.togglePushNotify(on: isOn)
+                        .subscribe(onError: {[weak self] (error) in
+                            switcher.isOn = !switcher.isOn
+                            self?.showError(error)
+                        })
+                        .disposed(by: self.bag)
+                })
+                .disposed(by: bag)
+            
+            view.addSubview(switcher)
+            
+            switcher.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+            switcher.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16).isActive = true
             break
 
         case 2:
@@ -40,9 +69,6 @@ extension SettingsVC: UITableViewDelegate {
         default:
             label.text = ""
         }
-
-        label.font = .boldSystemFont(ofSize: 22)
-        view.addSubview(label)
 
         return view
     }

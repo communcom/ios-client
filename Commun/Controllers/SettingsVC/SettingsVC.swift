@@ -15,8 +15,8 @@ class SettingsVC: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
     
-    private let bag = DisposeBag()
-    private let viewModel = SettingsViewModel()
+    let bag = DisposeBag()
+    let viewModel = SettingsViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,10 +33,11 @@ class SettingsVC: UIViewController {
         Observable.combineLatest(
                 viewModel.currentLanguage,
                 viewModel.nsfwContent,
+                viewModel.notificationOn,
                 viewModel.optionsPushShow,
                 viewModel.userKeys
             )
-            .map {(lang, nsfw, pushShow, keys) -> [Section] in
+            .map {(lang, nsfw, isNotificationOn, pushShow, keys) -> [Section] in
                 var sections = [Section]()
                 
                 // first section
@@ -49,7 +50,7 @@ class SettingsVC: UIViewController {
                 
                 // second section
                 var rows = [Section.CustomData]()
-                if let pushShow = pushShow {
+                if let pushShow = pushShow, isNotificationOn {
                     rows += [
                         .switcher((key: NotificationSettingType.upvote.rawValue, value: pushShow.upvote)),
                         .switcher((key: NotificationSettingType.downvote.rawValue, value: pushShow.downvote)),

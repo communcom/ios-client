@@ -54,10 +54,10 @@
 		3B5D7CF12299D79B0077B82C /* FeedSortMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5D7CF02299D79B0077B82C /* FeedSortMode.swift */; };
 		3B5EDE2E22DF929D00897BF3 /* SettingsSwitcherCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5EDE2D22DF929D00897BF3 /* SettingsSwitcherCell.swift */; };
 		3B5EDE3022DF92D000897BF3 /* SettingsOptionsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5EDE2F22DF92D000897BF3 /* SettingsOptionsCell.swift */; };
-		3B5EDE3322E06EBB00897BF3 /* NotificationSettingsType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5EDE3222E06EBB00897BF3 /* NotificationSettingsType.swift */; };
 		3B5EDE3522E073C500897BF3 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5EDE3422E073C500897BF3 /* SettingsViewModel.swift */; };
 		3B5EDE3722E07DCC00897BF3 /* SettingsVC+SectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5EDE3622E07DCC00897BF3 /* SettingsVC+SectionHeader.swift */; };
 		3B5EDE3922E07F0300897BF3 /* SettingsVC+DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5EDE3822E07F0300897BF3 /* SettingsVC+DataSource.swift */; };
+		3B5EDE3B22E0DD5100897BF3 /* NotificationSettingType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5EDE3A22E0DD5100897BF3 /* NotificationSettingType.swift */; };
 		3B6229AB22BD12410053B9EF /* TTTAttributedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6229AA22BD12410053B9EF /* TTTAttributedLabel.swift */; };
 		3B635F7F22772D87006DAAB2 /* PostsFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B635F7E22772D87006DAAB2 /* PostsFetcher.swift */; };
 		3B635F812277375A006DAAB2 /* FeedPageVC+Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B635F802277375A006DAAB2 /* FeedPageVC+Binding.swift */; };
@@ -274,10 +274,10 @@
 		3B5D7CF02299D79B0077B82C /* FeedSortMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedSortMode.swift; sourceTree = "<group>"; };
 		3B5EDE2D22DF929D00897BF3 /* SettingsSwitcherCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSwitcherCell.swift; sourceTree = "<group>"; };
 		3B5EDE2F22DF92D000897BF3 /* SettingsOptionsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsOptionsCell.swift; sourceTree = "<group>"; };
-		3B5EDE3222E06EBB00897BF3 /* NotificationSettingsType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSettingsType.swift; sourceTree = "<group>"; };
 		3B5EDE3422E073C500897BF3 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		3B5EDE3622E07DCC00897BF3 /* SettingsVC+SectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SettingsVC+SectionHeader.swift"; sourceTree = "<group>"; };
 		3B5EDE3822E07F0300897BF3 /* SettingsVC+DataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SettingsVC+DataSource.swift"; sourceTree = "<group>"; };
+		3B5EDE3A22E0DD5100897BF3 /* NotificationSettingType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSettingType.swift; sourceTree = "<group>"; };
 		3B6229AA22BD12410053B9EF /* TTTAttributedLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TTTAttributedLabel.swift; sourceTree = "<group>"; };
 		3B635F7E22772D87006DAAB2 /* PostsFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostsFetcher.swift; sourceTree = "<group>"; };
 		3B635F802277375A006DAAB2 /* FeedPageVC+Binding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FeedPageVC+Binding.swift"; sourceTree = "<group>"; };
@@ -552,14 +552,6 @@
 				3B5CB30922A57AB600757533 /* PlaceholderNotificationCell.xib */,
 			);
 			path = Cells;
-			sourceTree = "<group>";
-		};
-		3B5EDE3122E06EA100897BF3 /* Helpers */ = {
-			isa = PBXGroup;
-			children = (
-				3B5EDE3222E06EBB00897BF3 /* NotificationSettingsType.swift */,
-			);
-			path = Helpers;
 			sourceTree = "<group>";
 		};
 		3B635F7D22771679006DAAB2 /* Fetchers */ = {
@@ -1072,6 +1064,7 @@
 		57E5159A2270E5C700A6F6DB /* SettingsVC */ = {
 			isa = PBXGroup;
 			children = (
+				3B5EDE3A22E0DD5100897BF3 /* NotificationSettingType.swift */,
 				57E5159B2270E5C700A6F6DB /* Cell */,
 				3B5EDE3422E073C500897BF3 /* SettingsViewModel.swift */,
 				57E5159C2270E5DE00A6F6DB /* SettingsVC.swift */,
@@ -1085,7 +1078,6 @@
 		57E5159B2270E5C700A6F6DB /* Cell */ = {
 			isa = PBXGroup;
 			children = (
-				3B5EDE3122E06EA100897BF3 /* Helpers */,
 				3B5EDE2F22DF92D000897BF3 /* SettingsOptionsCell.swift */,
 				3B5EDE2D22DF929D00897BF3 /* SettingsSwitcherCell.swift */,
 				57E515AF2270F4EA00A6F6DB /* SettingsKeyCell.swift */,
@@ -1509,8 +1501,8 @@
 				3BF37BCA22A11FA700A72FFE /* UIView.swift in Sources */,
 				575AECAE22606D0800A7EC2D /* SignUpViewModel.swift in Sources */,
 				57CBD95E225517B4000BA8CC /* EditorPageVC+Actions.swift in Sources */,
-				3B5EDE3322E06EBB00897BF3 /* NotificationSettingsType.swift in Sources */,
 				3B2F2269226892C5006B589E /* NotificationCell.swift in Sources */,
+				3B5EDE3B22E0DD5100897BF3 /* NotificationSettingType.swift in Sources */,
 				57840A1B2240DB9400338FD5 /* NetworkService.swift in Sources */,
 				3B5CB30122A55D3E00757533 /* PlaceholderPostCell.swift in Sources */,
 				572517322243935C0033125C /* ControllerContainer.swift in Sources */,
