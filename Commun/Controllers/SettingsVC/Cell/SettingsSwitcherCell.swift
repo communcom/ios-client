@@ -15,7 +15,7 @@ protocol SettingsSwitcherCellDelegate: class {
 }
 
 class SettingsSwitcherCell: UITableViewCell {
-    typealias SwitcherType = (key: String, value: Bool)
+    typealias SwitcherType = (key: String, value: Bool, image: UIImage?)
     
     @IBOutlet weak var switcherImageView: UIImageView!
     @IBOutlet weak var switcherNameLabel: UILabel!
@@ -30,7 +30,7 @@ class SettingsSwitcherCell: UITableViewCell {
         key = type.key
         
         // Setting
-        switcherImageView.image = UIImage(named: type.key)
+        switcherImageView.image = type.image ?? UIImage(named: type.key)
         switcherNameLabel.text = type.key
         switcher.isOn = type.value
     }

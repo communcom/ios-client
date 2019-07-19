@@ -19,28 +19,21 @@ class EnableBiometricsVC: UIViewController, BoardingRouter {
         super.viewDidLoad()
 
         // retrieve policy
-        let context = LAContext()
+        let biometryType = LABiometryType.current
         
-        let _ = context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil)
-        switch context.biometryType {
-        case .touchID:
-            imageView.image = UIImage(named: "boarding-touch-id")
-            headerLabel.text = "Enable".localized() + " Touch Id"
-            descriptionLabel.text = "Enable".localized() + " Touch Id " + "to secure your transactions".localized()
-            enableButton.setTitle("Enable".localized() + " Touch Id", for: .normal)
-            break
-        case .faceID:
-            imageView.image = UIImage(named: "boarding-face-id")
-            headerLabel.text = "Enable".localized() + " Face Id"
-            descriptionLabel.text = "Enable".localized() + " Face Id " + "to secure your transactions".localized()
-            enableButton.setTitle("Enable".localized() + " Face Id", for: .normal)
-            break
-        default:
-            try! KeychainManager.save(data: [
-                Config.settingStepKey: CurrentUserSettingStep.backUpICloud.rawValue
-            ])
-            boardingNextStep()
+        if #available(iOS 11.2, *) {
+            if biometryType == .none {
+                try! KeychainManager.save(data: [
+                    Config.settingStepKey: CurrentUserSettingStep.backUpICloud.rawValue
+                    ])
+                boardingNextStep()
+                return
+            }
         }
+        
+        imageView.image = biometryType.icon
+        descriptionLabel.text = "Enable".localized() + " " + biometryType.stringValue + " " + "to secure your transactions".localized()
+        enableButton.setTitle("Enable".localized() + " \(biometryType.stringValue)", for: .normal)
     }
     
     override func viewWillAppear(_ animated: Bool) {

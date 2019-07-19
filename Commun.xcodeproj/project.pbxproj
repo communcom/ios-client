@@ -58,7 +58,7 @@
 		3B5EDE3722E07DCC00897BF3 /* SettingsVC+SectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5EDE3622E07DCC00897BF3 /* SettingsVC+SectionHeader.swift */; };
 		3B5EDE3922E07F0300897BF3 /* SettingsVC+DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5EDE3822E07F0300897BF3 /* SettingsVC+DataSource.swift */; };
 		3B5EDE3B22E0DD5100897BF3 /* NotificationSettingType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5EDE3A22E0DD5100897BF3 /* NotificationSettingType.swift */; };
-		3B5EDE3D22E0F0B600897BF3 /* ResponseAPIGetOptionsNotifyShow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5EDE3C22E0F0B600897BF3 /* ResponseAPIGetOptionsNotifyShow.swift */; };
+		3B61AC3422E1CA8A00F608AF /* LAContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B61AC3322E1CA8A00F608AF /* LAContext.swift */; };
 		3B6229AB22BD12410053B9EF /* TTTAttributedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6229AA22BD12410053B9EF /* TTTAttributedLabel.swift */; };
 		3B635F7F22772D87006DAAB2 /* PostsFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B635F7E22772D87006DAAB2 /* PostsFetcher.swift */; };
 		3B635F812277375A006DAAB2 /* FeedPageVC+Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B635F802277375A006DAAB2 /* FeedPageVC+Binding.swift */; };
@@ -279,7 +279,7 @@
 		3B5EDE3622E07DCC00897BF3 /* SettingsVC+SectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SettingsVC+SectionHeader.swift"; sourceTree = "<group>"; };
 		3B5EDE3822E07F0300897BF3 /* SettingsVC+DataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SettingsVC+DataSource.swift"; sourceTree = "<group>"; };
 		3B5EDE3A22E0DD5100897BF3 /* NotificationSettingType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSettingType.swift; sourceTree = "<group>"; };
-		3B5EDE3C22E0F0B600897BF3 /* ResponseAPIGetOptionsNotifyShow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseAPIGetOptionsNotifyShow.swift; sourceTree = "<group>"; };
+		3B61AC3322E1CA8A00F608AF /* LAContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LAContext.swift; sourceTree = "<group>"; };
 		3B6229AA22BD12410053B9EF /* TTTAttributedLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TTTAttributedLabel.swift; sourceTree = "<group>"; };
 		3B635F7E22772D87006DAAB2 /* PostsFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostsFetcher.swift; sourceTree = "<group>"; };
 		3B635F802277375A006DAAB2 /* FeedPageVC+Binding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FeedPageVC+Binding.swift"; sourceTree = "<group>"; };
@@ -877,7 +877,7 @@
 				3BAF69CA226773000055CCEB /* UIView+Shadow.swift */,
 				576DC920223E42C800EDED41 /* UIViewControllerExtension.swift */,
 				3B02CD33228ADC100078BB52 /* UIWebView.swift */,
-				3B5EDE3C22E0F0B600897BF3 /* ResponseAPIGetOptionsNotifyShow.swift */,
+				3B61AC3322E1CA8A00F608AF /* LAContext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1485,7 +1485,6 @@
 				3BAF69D1226792C60055CCEB /* ProfilePageVC+Rx.swift in Sources */,
 				57FB17A4224C15C400563BF7 /* SignInViewModel.swift in Sources */,
 				3BA4D089229315D60022A69D /* UIResponder.swift in Sources */,
-				3B5EDE3D22E0F0B600897BF3 /* ResponseAPIGetOptionsNotifyShow.swift in Sources */,
 				57840A02223FAC1B00338FD5 /* SegmentioCell.swift in Sources */,
 				B1EA0317228A965200835244 /* MainViewController.swift in Sources */,
 				3B5EDE2E22DF929D00897BF3 /* SettingsSwitcherCell.swift in Sources */,
@@ -1499,6 +1498,7 @@
 				3BB86B47227222DE008F1C64 /* ProfilePage+Parallax.swift in Sources */,
 				571B14F4223A935C00630C8F /* AppDelegate.swift in Sources */,
 				3B0E9C6C2270634B002AB1C2 /* ProfileChooseAvatarVC.swift in Sources */,
+				3B61AC3422E1CA8A00F608AF /* LAContext.swift in Sources */,
 				3B5CB30C22A57D5B00757533 /* NotificationPageVC+Binding.swift in Sources */,
 				575AECB322606F7100A7EC2D /* SelectCountryViewModel.swift in Sources */,
 				57840A0B223FAC1B00338FD5 /* BadgeViewPresenter.swift in Sources */,

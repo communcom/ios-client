@@ -11,6 +11,7 @@ import RxSwift
 import RxCocoa
 import CyberSwift
 import RxDataSources
+import LocalAuthentication
 
 class SettingsVC: UIViewController {
 
@@ -42,10 +43,13 @@ class SettingsVC: UIViewController {
                 var sections = [Section]()
                 
                 // first section
+                let currentBiometryType = LABiometryType.current
                 sections.append(
                     .firstSection(header: "General", items: [
                         .option((key: "Interface language", value: lang.name)),
-                        .option((key: "NSFW content", value: nsfw.localized()))
+                        .option((key: "NSFW content", value: nsfw.localized())),
+                        .option((key: "Change passcode", value: "")),
+                        .switcher((key: "Enable \(currentBiometryType.stringValue)", value: true, image: currentBiometryType.icon))
                     ])
                 )
                 
@@ -53,15 +57,15 @@ class SettingsVC: UIViewController {
                 var rows = [Section.CustomData]()
                 if let pushShow = pushShow, isNotificationOn {
                     rows += [
-                        .switcher((key: NotificationSettingType.upvote.rawValue, value: pushShow.upvote)),
-                        .switcher((key: NotificationSettingType.downvote.rawValue, value: pushShow.downvote)),
-                        .switcher((key: NotificationSettingType.points.rawValue, value: pushShow.transfer)),
-                        .switcher((key: NotificationSettingType.comment.rawValue, value: pushShow.reply)),
-                        .switcher((key: NotificationSettingType.mention.rawValue, value: pushShow.mention)),
-                        .switcher((key: NotificationSettingType.rewardsPosts.rawValue, value: pushShow.reward)),
-                        .switcher((key: NotificationSettingType.rewardsVote.rawValue, value: pushShow.curatorReward)),
-                        .switcher((key: NotificationSettingType.following.rawValue, value: pushShow.subscribe)),
-                        .switcher((key: NotificationSettingType.repost.rawValue, value: pushShow.repost))
+                        .switcher((key: NotificationSettingType.upvote.rawValue, value: pushShow.upvote, image: nil)),
+                        .switcher((key: NotificationSettingType.downvote.rawValue, value: pushShow.downvote, image: nil)),
+                        .switcher((key: NotificationSettingType.points.rawValue, value: pushShow.transfer, image: nil)),
+                        .switcher((key: NotificationSettingType.comment.rawValue, value: pushShow.reply, image: nil)),
+                        .switcher((key: NotificationSettingType.mention.rawValue, value: pushShow.mention, image: nil)),
+                        .switcher((key: NotificationSettingType.rewardsPosts.rawValue, value: pushShow.reward, image: nil)),
+                        .switcher((key: NotificationSettingType.rewardsVote.rawValue, value: pushShow.curatorReward, image: nil)),
+                        .switcher((key: NotificationSettingType.following.rawValue, value: pushShow.subscribe, image: nil)),
+                        .switcher((key: NotificationSettingType.repost.rawValue, value: pushShow.repost, image: nil))
                     ]
                 }
                 sections.append(
