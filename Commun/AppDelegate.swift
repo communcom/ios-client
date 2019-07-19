@@ -33,6 +33,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     static var reloadSubject = PublishSubject<Bool>()
     let notificationCenter = UNUserNotificationCenter.current()
+    
+    private var bag = DisposeBag()
 
     
     // MARK: - Class Functions
@@ -57,12 +59,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         reachability = Reachability()
         try? reachability?.startNotifier()
         
-        _ = reachability?.rx.isReachable
+        reachability?.rx.isReachable
             .filter {$0}
             .subscribe(onNext: {_ in
                 if WebSocketManager.instance.isConnected {return}
                 WebSocketManager.instance.connect()
             })
+            .disposed(by: bag)
         
         // Handle websocket connection
         WebSocketManager.instance.completionIsConnected = {
@@ -72,10 +75,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         // Reload app
-        _ = AppDelegate.reloadSubject
+        AppDelegate.reloadSubject
             .subscribe(onNext: {force in
                 self.navigateWithRegistrationStep(force: force)
             })
+            .disposed(by: bag)
         
         // Use Firebase library to configure APIs
         FirebaseApp.configure()
@@ -120,8 +124,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
             
             // if all set
-            _ = RestAPIManager.instance.rx.authorize()
+            RestAPIManager.instance.rx.authorize()
                 .subscribe(onSuccess: { (response) in
+                    // Turn notify on
+                    self.pushNotifyOn()
+                    
                     // show feed
                     if (!force && (self.window?.rootViewController is TabBarVC)) {return}
                     self.changeRootVC(controllerContainer.resolve(TabBarVC.self)!)
@@ -135,6 +142,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                         }
                     }
                 })
+                .disposed(by: bag)
             
         // New user
         } else {
@@ -243,6 +251,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                                        options:             [])
         
         self.notificationCenter.setNotificationCategories([category])
+    }
+    
+    func pushNotifyOn() {
+        if UserDefaults.standard.value(forKey: Config.currentUserPushNotificationOn) == nil {
+            RestAPIManager.instance.rx.pushNotifyOn()
+                .subscribe(onCompleted: {
+                    Logger.log(message: "Successfully turn pushNotificationOn", event: .severe)
+                }) { (error) in
+                    
+                }
+                .disposed(by: bag)
+        }
     }
     
     

@@ -319,19 +319,6 @@ class NetworkService: NSObject {
             .observeOn(MainScheduler.instance)
     }
     
-    // MARK: - options
-    func getOptions() -> Completable {
-        return .create {completable in
-            RestAPIManager.instance.getOptions(responseHandling: { (options) in
-                NotificationSettingType.getOptions(options.notify.show)
-                completable(.completed)
-            }, errorHandling: { (errorAPI) in
-                completable(.error(errorAPI))
-            })
-            return Disposables.create()
-        }
-    }
-    
     func setBasicOptions(lang: Language) {
         RestAPIManager.instance.setBasicOptions(nsfwContent:        .alwaysAlert,
                                                 responseHandling:   { (result) in
@@ -342,17 +329,6 @@ class NetworkService: NSObject {
                                                 errorHandling:      { (errorAPI) in
                                                     Logger.log(message: "setBasicOptions error: \(errorAPI.caseInfo.message.localized())", event: .error)
         })
-    }
-    
-    func setOptions(options: RequestParameterAPI.NoticeOptions, type: NoticeType) -> Completable {
-        return .create {completable in
-            RestAPIManager.instance.set(options: options, type: type, responseHandling: { (_) in
-                completable(.completed)
-            }, errorHandling: { (error) in
-                completable(.error(error))
-            })
-            return Disposables.create()
-        }
     }
     
     // MARK: - meta
