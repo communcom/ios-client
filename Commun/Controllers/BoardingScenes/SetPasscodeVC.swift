@@ -12,6 +12,8 @@ import CyberSwift
 
 class SetPasscodeVC: THPinViewController, BoardingRouter {
     var currentPin: String?
+    var completion: (()->Void)?
+    var isVerifyVC = false
     
     init() {
         super.init(delegate: nil)
@@ -45,7 +47,12 @@ class SetPasscodeVC: THPinViewController, BoardingRouter {
         disableCancel = true
         
         // Text
-        promptTitle = currentPin == nil ? "Create your passcode".localized() : "Verify your new passcode".localized()
+        if isVerifyVC {
+            promptTitle = "Enter your current passcode".localized()
+        } else {
+            promptTitle = currentPin == nil ? "Create your passcode".localized() : "Verify your new passcode".localized()
+        }
+        
         promptColor = .black
         view.tintColor = .black
     }
@@ -60,13 +67,14 @@ extension SetPasscodeVC: THPinViewControllerDelegate {
         if currentPin == nil {
             let verifyVC = SetPasscodeVC()
             verifyVC.currentPin = pin
+            verifyVC.completion = completion
             show(verifyVC, sender: self)
             return true
         }
         if pin == currentPin {
             do {
                 try RestAPIManager.instance.rx.setPasscode(pin)
-                self.boardingNextStep()
+                completion?()
             } catch {
                 self.showError(error)
                 return false

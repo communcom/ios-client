@@ -12,6 +12,7 @@ import RxCocoa
 import CyberSwift
 import RxDataSources
 import LocalAuthentication
+import THPinViewController
 
 class SettingsVC: UIViewController {
 
@@ -174,6 +175,32 @@ extension SettingsVC: SettingsSwitcherCellDelegate {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.55) {
                 self.viewModel.biometryEnabled.accept(value)
             }
+        }
+        
+        if key == "Change passcode" {
+            let verifyVC = SetPasscodeVC()
+            verifyVC.currentPin = Config.currentUser?.passcode
+            
+            // if passcode existed
+            if (Config.currentUser?.passcode != nil) {
+                verifyVC.isVerifyVC = true
+                verifyVC.completion = {
+                    verifyVC.dismiss(animated: true, completion: {
+                        let setNewPasscodeVC = SetPasscodeVC()
+                        setNewPasscodeVC.completion = {
+                            setNewPasscodeVC.navigationController?.dismiss(animated: true, completion: nil)
+                        }
+                        let nc = UINavigationController(rootViewController: setNewPasscodeVC)
+                        self.present(nc, animated: true, completion: nil)
+                    })
+                }
+            } else {
+                verifyVC.completion = {
+                    verifyVC.navigationController?.popToViewController(self, animated: true)
+                }
+            }
+            
+            show(verifyVC, sender: self)
         }
     }
 }
