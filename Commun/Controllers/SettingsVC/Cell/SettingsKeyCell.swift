@@ -29,7 +29,7 @@ class SettingsKeyCell: UITableViewCell {
             let image = UIImage(named: "Checkmark")
             hud.customView = UIImageView(image: image)
             hud.label.text = "Copied to clipboard".localized()
-            hud.hide(animated: true, afterDelay: 2)
+            hud.hide(animated: true, afterDelay: 1)
         }
     }
     
