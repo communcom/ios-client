@@ -52,8 +52,7 @@ class EnableBiometricsVC: UIViewController, BoardingRouter {
                 Config.settingStepKey: CurrentUserSettingStep.backUpICloud.rawValue
             ])
             
-            #warning("use string constant later")
-            UserDefaults.standard.set(true, forKey: "isAuthenticationWithBiometricsEnabled")
+            UserDefaults.standard.set(true, forKey: Config.currentUserBiometryAuthEnabled)
             boardingNextStep()
         } catch {
             showError(error)

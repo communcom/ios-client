@@ -19,6 +19,7 @@ class SettingsVC: UIViewController {
     
     let bag = DisposeBag()
     let viewModel = SettingsViewModel()
+    let currentBiometryType = LABiometryType.current
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,19 +38,19 @@ class SettingsVC: UIViewController {
                 viewModel.nsfwContent,
                 viewModel.notificationOn,
                 viewModel.optionsPushShow,
-                viewModel.userKeys
+                viewModel.userKeys,
+                viewModel.biometryEnabled
             )
-            .map {(lang, nsfw, isNotificationOn, pushShow, keys) -> [Section] in
+            .map {(lang, nsfw, isNotificationOn, pushShow, keys, biometryEnabled) -> [Section] in
                 var sections = [Section]()
                 
                 // first section
-                let currentBiometryType = LABiometryType.current
                 sections.append(
                     .firstSection(header: "General", items: [
                         .option((key: "Interface language", value: lang.name)),
                         .option((key: "NSFW content", value: nsfw.localized())),
                         .option((key: "Change passcode", value: "")),
-                        .switcher((key: "Enable \(currentBiometryType.stringValue)", value: true, image: currentBiometryType.icon))
+                        .switcher((key: "Use \(self.currentBiometryType.stringValue)", value: biometryEnabled, image: self.currentBiometryType.icon))
                     ])
                 )
                 
@@ -156,13 +157,23 @@ extension SettingsVC: SettingsSwitcherCellDelegate {
             case .repost:
                 newValue.repost = value
             }
-            viewModel.optionsPushShow.accept(newValue)
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.55) {
+                self.viewModel.optionsPushShow.accept(newValue)
+            }
             RestAPIManager.instance.rx.setPushNotify(options: newValue.toParam())
                 .subscribe(onError: {[weak self] error in
                     self?.showError(error)
                     self?.viewModel.optionsPushShow.accept(original)
                 })
                 .disposed(by: bag)
+        }
+        
+        if key == "Use \(self.currentBiometryType.stringValue)" {
+            UserDefaults.standard.set(value, forKey: Config.currentUserBiometryAuthEnabled)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.55) {
+                self.viewModel.biometryEnabled.accept(value)
+            }
         }
     }
 }
