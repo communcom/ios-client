@@ -15,6 +15,8 @@ class KeysVC: UIViewController, BoardingRouter {
     @IBOutlet weak var tableView: UITableView!
     
     var disposeBag = DisposeBag()
+    var completion: (()->Void)?
+    var onBoarding = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,8 +63,12 @@ class KeysVC: UIViewController, BoardingRouter {
 
     @IBAction func backupIcloudDidTouch(_ sender: Any) {
         do {
-            try RestAPIManager.instance.rx.backUpICloud()
-            boardingNextStep()
+            try RestAPIManager.instance.rx.backUpICloud(onBoarding: onBoarding)
+            if completion == nil {
+                self.boardingNextStep()
+            } else {
+                completion!()
+            }
         } catch {
             showError(error)
         }
@@ -83,10 +89,14 @@ class KeysVC: UIViewController, BoardingRouter {
     
     @IBAction func laterButtonDidTouch(_ sender: Any) {
         do {
-            try KeychainManager.save(data: [
-                Config.settingStepKey: CurrentUserSettingStep.setAvatar.rawValue
-            ])
-            boardingNextStep()
+            if onBoarding {
+                try KeychainManager.save(data: [
+                    Config.settingStepKey: CurrentUserSettingStep.setAvatar.rawValue
+                ])
+                boardingNextStep()
+                return
+            }
+            completion?()
         } catch {
             showError(error)
         }
