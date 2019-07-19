@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Action
 
 extension SettingsVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -35,6 +36,15 @@ extension SettingsVC: UITableViewDelegate {
         switch section {
         case 0:
             label.text = "General".localized()
+            let button = UIButton(frame: CGRect.zero)
+            button.translatesAutoresizingMaskIntoConstraints = false
+            button.setTitleColor(.appMainColor, for: .normal)
+            button.setTitle("Back up".localized(), for: .normal)
+            view.addSubview(button)
+            
+            button.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+            button.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16).isActive = true
+            button.addTarget(self, action: #selector(btnBackUpDidTouch), for: .touchUpInside)
             break
 
         case 1:
@@ -92,5 +102,14 @@ extension SettingsVC: UITableViewDelegate {
         }
 
         return view
+    }
+    
+    @objc func btnBackUpDidTouch() {
+        let vc = controllerContainer.resolve(KeysVC.self)!
+        vc.onBoarding = false
+        vc.completion = {
+            self.navigationController?.popToViewController(self, animated: true)
+        }
+        self.show(vc, sender: nil)
     }
 }
