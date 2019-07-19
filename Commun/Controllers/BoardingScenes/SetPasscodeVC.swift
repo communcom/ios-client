@@ -13,6 +13,7 @@ import CyberSwift
 class SetPasscodeVC: THPinViewController, BoardingRouter {
     var currentPin: String?
     var completion: (()->Void)?
+    var onBoarding = true
     var isVerifyVC = false
     
     init() {
@@ -26,7 +27,7 @@ class SetPasscodeVC: THPinViewController, BoardingRouter {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if (currentPin == nil) {
+        if (currentPin == nil && onBoarding) {
             navigationController?.setNavigationBarHidden(true, animated: animated)
         }
         clear()
@@ -34,7 +35,7 @@ class SetPasscodeVC: THPinViewController, BoardingRouter {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        if (currentPin == nil) {
+        if (currentPin == nil && onBoarding) {
             navigationController?.setNavigationBarHidden(false, animated: animated)
         }
     }
@@ -68,13 +69,20 @@ extension SetPasscodeVC: THPinViewControllerDelegate {
             let verifyVC = SetPasscodeVC()
             verifyVC.currentPin = pin
             verifyVC.completion = completion
+            verifyVC.onBoarding = onBoarding
             show(verifyVC, sender: self)
             return true
         }
         if pin == currentPin {
             do {
-                try RestAPIManager.instance.rx.setPasscode(pin)
-                completion?()
+                if !isVerifyVC {
+                    try RestAPIManager.instance.rx.setPasscode(pin, onBoarding: onBoarding)
+                }
+                if let completion = completion {
+                    completion()
+                } else {
+                    self.boardingNextStep()
+                }
             } catch {
                 self.showError(error)
                 return false

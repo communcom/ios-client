@@ -20,11 +20,7 @@ extension BoardingRouter where Self: UIViewController {
         
         switch step {
         case .setPasscode:
-            let passCodeVC = SetPasscodeVC()
-            passCodeVC.completion = {
-                passCodeVC.boardingNextStep()
-            }
-            vc = passCodeVC
+            vc = SetPasscodeVC()
         case .setFaceId:
             vc = controllerContainer.resolve(EnableBiometricsVC.self)!
         case .backUpICloud:

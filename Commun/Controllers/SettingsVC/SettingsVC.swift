@@ -185,15 +185,16 @@ extension SettingsVC: SettingsSwitcherCellDelegate {
             if (Config.currentUser?.passcode != nil) {
                 verifyVC.isVerifyVC = true
                 verifyVC.completion = {
-                    verifyVC.dismiss(animated: true, completion: {
+                    self.navigationController?.popViewController(animated: true, {
                         let setNewPasscodeVC = SetPasscodeVC()
+                        setNewPasscodeVC.onBoarding = false
                         setNewPasscodeVC.completion = {
-                            setNewPasscodeVC.navigationController?.dismiss(animated: true, completion: nil)
+                            self.navigationController?.popToViewController(self, animated: true)
                         }
-                        let nc = UINavigationController(rootViewController: setNewPasscodeVC)
-                        self.present(nc, animated: true, completion: nil)
+                        self.show(setNewPasscodeVC, sender: nil)
                     })
                 }
+            // if no passcode was set
             } else {
                 verifyVC.completion = {
                     verifyVC.navigationController?.popToViewController(self, animated: true)
