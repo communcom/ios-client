@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import MBProgressHUD
 
 class SettingsKeyCell: UITableViewCell {
     typealias KeyType = (key: String, value: String)
@@ -23,14 +22,7 @@ class SettingsKeyCell: UITableViewCell {
     @IBAction func copyKeyDidTouch(_ sender: Any) {
         let pasteBoard = UIPasteboard.general
         pasteBoard.string = keyLabel.text
-        if let view = self.parentViewController?.view {
-            let hud = MBProgressHUD.showAdded(to: view, animated: true)
-            hud.mode = .customView
-            let image = UIImage(named: "Checkmark")
-            hud.customView = UIImageView(image: image)
-            hud.label.text = "Copied to clipboard".localized()
-            hud.hide(animated: true, afterDelay: 1)
-        }
+        parentViewController?.showDone("Copied to clipboard")
     }
     
 }

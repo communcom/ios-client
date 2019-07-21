@@ -122,14 +122,13 @@ class SettingsVC: UIViewController {
                         if (Config.currentUser?.passcode != nil) {
                             verifyVC.isVerifyVC = true
                             verifyVC.completion = {
-                                self.navigationController?.popViewController(animated: true, {
-                                    let setNewPasscodeVC = SetPasscodeVC()
-                                    setNewPasscodeVC.onBoarding = false
-                                    setNewPasscodeVC.completion = {
-                                        self.navigationController?.popToViewController(self, animated: true)
-                                    }
-                                    self.show(setNewPasscodeVC, sender: nil)
-                                })
+                                let setNewPasscodeVC = SetPasscodeVC()
+                                setNewPasscodeVC.onBoarding = false
+                                setNewPasscodeVC.completion = {
+                                    self.navigationController?.popToViewController(self, animated: true)
+                                    self.showDone("New passcode was set")
+                                }
+                                verifyVC.show(setNewPasscodeVC, sender: nil)
                             }
                             // if no passcode was set
                         } else {

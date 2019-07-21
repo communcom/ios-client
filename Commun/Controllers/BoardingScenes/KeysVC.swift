@@ -67,7 +67,9 @@ class KeysVC: UIViewController, BoardingRouter {
             if completion == nil {
                 self.boardingNextStep()
             } else {
-                completion!()
+                showDone("Backed up") {
+                    self.completion?()
+                }
             }
         } catch {
             showError(error)

@@ -72,6 +72,22 @@ extension UIViewController {
 
     }
     
+    func showDone(_ message: String, completion: (()->Void)? = nil) {
+        // Hide all previous hud
+        hideHud()
+        
+        // show new hud
+        let hud = MBProgressHUD.showAdded(to: view, animated: true)
+        hud.mode = .customView
+        let image = UIImage(named: "Checkmark")
+        hud.customView = UIImageView(image: image)
+        hud.label.text = message.localized()
+        hud.hide(animated: true, afterDelay: 1)
+        if let completion = completion {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: completion)
+        }
+    }
+    
     var isModal: Bool {
         
         let presentingIsModal = presentingViewController != nil
