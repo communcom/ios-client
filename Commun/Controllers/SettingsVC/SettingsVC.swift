@@ -114,6 +114,31 @@ class SettingsVC: UIViewController {
                         alert.addAction(UIAlertAction(title: "Cancel".localized(), style: .cancel, handler: nil))
                         alert.addAction(UIAlertAction(title: "Always alert".localized(), style: .default, handler: nil))
                         self.present(alert, animated: true, completion: nil)
+                    case 2:
+                        let verifyVC = SetPasscodeVC()
+                        verifyVC.currentPin = Config.currentUser?.passcode
+                        
+                        // if passcode existed
+                        if (Config.currentUser?.passcode != nil) {
+                            verifyVC.isVerifyVC = true
+                            verifyVC.completion = {
+                                self.navigationController?.popViewController(animated: true, {
+                                    let setNewPasscodeVC = SetPasscodeVC()
+                                    setNewPasscodeVC.onBoarding = false
+                                    setNewPasscodeVC.completion = {
+                                        self.navigationController?.popToViewController(self, animated: true)
+                                    }
+                                    self.show(setNewPasscodeVC, sender: nil)
+                                })
+                            }
+                            // if no passcode was set
+                        } else {
+                            verifyVC.completion = {
+                                verifyVC.navigationController?.popToViewController(self, animated: true)
+                            }
+                        }
+                        
+                        self.show(verifyVC, sender: self)
                     default:
                         break
                     }
@@ -175,33 +200,6 @@ extension SettingsVC: SettingsSwitcherCellDelegate {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.55) {
                 self.viewModel.biometryEnabled.accept(value)
             }
-        }
-        
-        if key == "Change passcode" {
-            let verifyVC = SetPasscodeVC()
-            verifyVC.currentPin = Config.currentUser?.passcode
-            
-            // if passcode existed
-            if (Config.currentUser?.passcode != nil) {
-                verifyVC.isVerifyVC = true
-                verifyVC.completion = {
-                    self.navigationController?.popViewController(animated: true, {
-                        let setNewPasscodeVC = SetPasscodeVC()
-                        setNewPasscodeVC.onBoarding = false
-                        setNewPasscodeVC.completion = {
-                            self.navigationController?.popToViewController(self, animated: true)
-                        }
-                        self.show(setNewPasscodeVC, sender: nil)
-                    })
-                }
-            // if no passcode was set
-            } else {
-                verifyVC.completion = {
-                    verifyVC.navigationController?.popToViewController(self, animated: true)
-                }
-            }
-            
-            show(verifyVC, sender: self)
         }
     }
 }
