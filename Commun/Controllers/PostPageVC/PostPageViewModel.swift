@@ -37,12 +37,13 @@ class PostPageViewModel: ListViewModelType {
         // Bind post
         NetworkService.shared.getPost(withPermLink: permLink,
                                       forUser: userId)
-            .catchError({ (error) -> Observable<ResponseAPIContentGetPost> in
+            .catchError({ (error) -> Single<ResponseAPIContentGetPost> in
                 if let post = self.postForRequest {
                     return .just(post)
                 }
-                return Observable.empty()
+                throw error
             })
+            .asObservable()
             .bind(to: post)
             .disposed(by: disposeBag)
         

@@ -23,7 +23,6 @@ PODS:
     - RxSwift
     - secp256k1.swift
     - Starscream
-    - SwiftSocket
     - SwiftTheme
     - SwiftyJSON (~> 4.0)
   - DateToolsSwift (4.0.0)
@@ -137,7 +136,6 @@ PODS:
   - SwifterSwift/Foundation (5.0.0)
   - SwifterSwift/SwiftStdlib (5.0.0)
   - SwifterSwift/UIKit (5.0.0)
-  - SwiftSocket (2.0.2)
   - SwiftTheme (0.4.4)
   - SwiftyJSON (4.3.0)
   - Swinject (2.6.2)
@@ -218,7 +216,6 @@ SPEC REPOS:
     - SipHash
     - Starscream
     - SwifterSwift
-    - SwiftSocket
     - SwiftTheme
     - SwiftyJSON
     - Swinject
@@ -236,7 +233,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   CyberSwift:
-    :commit: 073fc53a9df85c0d29ada2e4fab60d14ccead707
+    :commit: 3ba3c494c195e6e03eea41efb5b1eb953f5e0454
     :git: https://github.com/GolosChain/cyberSwift.git
   THPinViewController:
     :commit: cee3a491b530cd2c9155ebc2511ea06a22af672b
@@ -250,7 +247,7 @@ SPEC CHECKSUMS:
   Checksum: f1aa56a27dea5db4006c819e2e129ee6aeb1d9af
   Crashlytics: 2aa08cd61fb1d62718c4e653169461d1d7377de2
   CryptoSwift: d81eeaa59dc5a8d03720fe919a6fd07b51f7439f
-  CyberSwift: d558607502b51f123ca8f30101a7074cafab050e
+  CyberSwift: 1550b0aee7f2210299fcee74c567f4aad6864b57
   DateToolsSwift: 875d97ff9e3a5d54abdd67a269b3f51c757b71ab
   Differentiator: be49ca3408f0ecfc761e4c7763d20c62be01b9ad
   DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
@@ -286,7 +283,6 @@ SPEC CHECKSUMS:
   SipHash: fad90a4683e420c52ef28063063dbbce248ea6d4
   Starscream: 08172b481e145289c4930cb567230fb55897cfa4
   SwifterSwift: 96f90594b370802f01647c2b1229c74a84ffafee
-  SwiftSocket: 6f4c9c63fbc5c1d61188936bb3c599fd546f40ae
   SwiftTheme: a381f983da92153908b7a9eeb961b18b6d94d614
   SwiftyJSON: 6faa0040f8b59dead0ee07436cbf76b73c08fd08
   Swinject: cf7458774b1b00323080a9c67e47a1ee7f9d2af1
@@ -295,6 +291,6 @@ SPEC CHECKSUMS:
   TTTAttributedLabel: 8cffe8e127e4e82ff3af1e5386d4cd0ad000b656
   UIImageView-Letters: f62db28076797adf3560ab7410647dc6899b9eef
 
-PODFILE CHECKSUM: 930049f03920194f3b48acfb6a71eca1b721f42b
+PODFILE CHECKSUM: 2ce5db068a21c5948af07e1daf62e0a4f11ca01e
 
 COCOAPODS: 1.7.2
