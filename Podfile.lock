@@ -19,10 +19,9 @@ PODS:
     - Locksmith
     - PDFReader
     - RxCocoa
-    - RxStarscream
     - RxSwift
     - secp256k1.swift
-    - Starscream (~> 3.0)
+    - Starscream
     - SwiftTheme
     - SwiftyJSON (~> 4.0)
   - DateToolsSwift (4.0.0)
@@ -122,10 +121,6 @@ PODS:
     - ReachabilitySwift (~> 4.3.0)
     - RxCocoa (~> 4)
     - RxSwift (~> 4)
-  - RxStarscream (0.10):
-    - RxCocoa (~> 4.3)
-    - RxSwift (~> 4.3)
-    - Starscream (~> 3)
   - RxSwift (4.5.0)
   - SDWebImage (4.4.7):
     - SDWebImage/Core (= 4.4.7)
@@ -209,7 +204,6 @@ SPEC REPOS:
     - RxCocoa
     - RxDataSources
     - RxReachability
-    - RxStarscream
     - RxSwift
     - SDWebImage
     - secp256k1.swift
@@ -232,7 +226,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   CyberSwift:
-    :commit: 36933a5ba94465ab66d0397685de7138d5fcc237
+    :commit: 8c493c9f6829df9c152dcbaba57fed35334f95e0
     :git: https://github.com/GolosChain/cyberSwift.git
   THPinViewController:
     :commit: cee3a491b530cd2c9155ebc2511ea06a22af672b
@@ -246,7 +240,7 @@ SPEC CHECKSUMS:
   Checksum: f1aa56a27dea5db4006c819e2e129ee6aeb1d9af
   Crashlytics: 2dfd686bcb918dc10ee0e76f7f853fe42c7bd552
   CryptoSwift: d81eeaa59dc5a8d03720fe919a6fd07b51f7439f
-  CyberSwift: c962d9e8f551266000fd672dd0eaaf574f480d36
+  CyberSwift: 34feeb0b28ce0fe0762485ad6b06a7669c409a3a
   DateToolsSwift: 875d97ff9e3a5d54abdd67a269b3f51c757b71ab
   Differentiator: be49ca3408f0ecfc761e4c7763d20c62be01b9ad
   DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
@@ -275,7 +269,6 @@ SPEC CHECKSUMS:
   RxCocoa: cbf70265dc65a981d4ac982e513c10cf23df24a0
   RxDataSources: a843bad90c29817f5923ec8163f4af2de084ceb3
   RxReachability: 053f2d913db44998242ade488ccaef558f3ce7cb
-  RxStarscream: aa79e742c87e9bcdff218a1ebb59638f5174589e
   RxSwift: f172070dfd1a93d70a9ab97a5a01166206e1c575
   SDWebImage: c10d14a8883ebd89664f02a422006f66a85c0c5d
   secp256k1.swift: a7e7a214f6db6ce5db32cc6b2b45e5c4dd633634

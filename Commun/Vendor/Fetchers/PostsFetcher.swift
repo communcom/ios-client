@@ -25,11 +25,10 @@ class PostsFetcher: ItemsFetcher<ResponseAPIContentGetPost> {
     
     override var request: Single<[ResponseAPIContentGetPost]>! {
         return NetworkService.shared.loadFeed(sequenceKey, withSortType: sortType, withFeedType: feedType, withFeedTypeMode: feedTypeMode, userId: userId)
-            .do(onNext: { (result) in
+            .do(onSuccess: { (result) in
                 // assign next sequenceKey
                 self.sequenceKey = result.sequenceKey
             })
             .map {$0.items ?? []}
-            .asSingle()
     }
 }

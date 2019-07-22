@@ -62,17 +62,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         reachability?.rx.isReachable
             .filter {$0}
             .subscribe(onNext: {_ in
-                if WebSocketManager.instance.isConnected {return}
-                WebSocketManager.instance.connect()
+                SocketManager.shared.connect()
             })
             .disposed(by: bag)
         
-        // Handle websocket connection
-        WebSocketManager.instance.completionIsConnected = {
-            AppDelegate.reloadSubject.onNext(false)
-            self.window?.makeKeyAndVisible()
-            application.applicationIconBadgeNumber = 0
-        }
+        // handle connected
+        SocketManager.shared.connected
+            .filter {$0}
+            .subscribe(onNext: { (connected) in
+                AppDelegate.reloadSubject.onNext(false)
+                self.window?.makeKeyAndVisible()
+                application.applicationIconBadgeNumber = 0
+            })
+            .disposed(by: bag)
         
         // Reload app
         AppDelegate.reloadSubject

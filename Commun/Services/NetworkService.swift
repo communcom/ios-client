@@ -27,55 +27,20 @@ class NetworkService: NSObject {
 //        WebSocketManager.instance.disconnect()
 //    }
     
-    func loadFeed(_ paginationKey: String?, withSortType sortType: FeedTimeFrameMode = .all, withFeedType type: FeedSortMode = .popular, withFeedTypeMode typeMode: FeedTypeMode = .community, userId: String? = nil) -> Observable<ResponseAPIContentGetFeed> {
+    func loadFeed(_ paginationKey: String?, withSortType sortType: FeedTimeFrameMode = .all, withFeedType type: FeedSortMode = .popular, withFeedTypeMode typeMode: FeedTypeMode = .community, userId: String? = nil) -> Single<ResponseAPIContentGetFeed> {
         
-        return Observable.create({ observer -> Disposable in
-            
-            RestAPIManager.instance.loadFeed(typeMode: typeMode,
+        return RestAPIManager.instance.loadFeed(typeMode: typeMode,
                                              userID: userId ?? Config.currentUser?.id,
                                              communityID:               AppProfileType.golos.rawValue,
                                              timeFrameMode:             sortType,
                                              sortMode:                  type,
-                                             paginationSequenceKey:     paginationKey,
-                                             completion:                { (feed, errorAPI) in
-                                                guard errorAPI == nil else {
-                                                    Logger.log(message: errorAPI!.caseInfo.message.localized(), event: .error)
-                                                    observer.onError(errorAPI!)
-                                                    return
-                                                }
-                                                
-                                                if let feed = feed {
-                                                    observer.onNext(feed)
-                                                }
-                                                observer.onCompleted()
-            })
-            
-            return Disposables.create()
-        })
+                                             paginationSequenceKey:     paginationKey)
         
     }
     
-    func getPost(withPermLink permLink: String, forUser user: String) -> Observable<ResponseAPIContentGetPost> {
-        return Observable.create({ observer -> Disposable in
-            
-            RestAPIManager.instance.loadPost(userID:        user,
-                                             permlink:      permLink,
-                                             completion:    { (post, errorAPI) in
-                                                guard errorAPI == nil else {
-                                                    Logger.log(message: errorAPI!.caseInfo.message.localized(), event: .error)
-                                                    return
-                                                }
-                                                
-                                                if let post = post {
-                                                    Logger.log(message: "Response: \n\t\(post)", event: .debug)
-                                                    observer.onNext(post)
-                                                }
-                                                
-                                                observer.onCompleted()
-            })
-            
-            return Disposables.create()
-        })
+    func getPost(withPermLink permLink: String, forUser user: String) -> Single<ResponseAPIContentGetPost> {
+        return RestAPIManager.instance.loadPost(userID:        user,
+                                             permlink:      permLink)
     }
     
     func deletePost(permlink: String) -> Completable {
@@ -84,42 +49,16 @@ class NetworkService: NSObject {
     }
     
     func getUserComments(_ paginationKey: String? = nil, nickName: String? = nil) -> Single<ResponseAPIContentGetComments> {
-        return Single.create {single in
-            RestAPIManager.instance.loadUserComments(nickName: nickName, paginationSequenceKey: paginationKey, completion: { (response, error) in
-                guard error == nil else {
-                    Logger.log(message: error!.caseInfo.message.localized(), event: .error)
-                    single(.error(error!))
-                    return
-                }
-                if let res = response {
-                    single(.success(res))
-                    return
-                }
-            })
-            return Disposables.create()
-        }
+        return RestAPIManager.instance.loadUserComments(
+            nickName: nickName,
+            paginationSequenceKey: paginationKey)
     }
     
     func getPostComment(_ paginationKey: String? = nil, withPermLink permLink: String, forUser user: String) -> Single<ResponseAPIContentGetComments> {
-        return Single.create{ single in
-            RestAPIManager.instance.loadPostComments(nickName:                  user,
+        return RestAPIManager.instance.loadPostComments(nickName:                  user,
                                                      permlink:                  permLink,
                                                      sortMode:                  .timeDesc,
-                                                     paginationSequenceKey:     paginationKey,
-                                                     completion:                { (response, error) in
-                                                        guard error == nil else {
-                                                            Logger.log(message: error!.caseInfo.message.localized(), event: .error)
-                                                            single(.error(error!))
-                                                            return
-                                                        }
-                                                        
-                                                        if let res = response {
-                                                            single(.success(res))
-                                                            return
-                                                        }
-            })
-            return Disposables.create()
-        }
+                                                     paginationSequenceKey:     paginationKey)
     }
     
     func voteMessage(voteType: VoteActionType, messagePermlink: String, messageAuthor: String) -> Completable {
@@ -168,16 +107,7 @@ class NetworkService: NSObject {
     }
     
     func waitForTransactionWith(id: String) -> Completable {
-        return Completable.create {completable in
-            RestAPIManager.instance.waitForTransactionWith(id: id) { (error) in
-                if error != nil {
-                    completable(.error(error!))
-                    return
-                }
-                completable(.completed)
-            }
-            return Disposables.create()
-        }
+        return RestAPIManager.instance.waitForTransactionWith(id: id)
     }
     
     func sendComment(withMessage comment: String, parentAuthor: String, parentPermlink: String, metaData: String = "", tags: [String]) -> Completable {
@@ -223,27 +153,9 @@ class NetworkService: NSObject {
     
     
     func getUserProfile(userId: String? = nil) -> Single<ResponseAPIContentGetProfile> {
-        return Single<ResponseAPIContentGetProfile>.create { single in
-            guard let userNickName = userId ?? Config.currentUser?.id else { return Disposables.create() }
-            
-            RestAPIManager.instance.getProfile(userID:      userNickName,
-                                               completion:  { (response, error) in
-                                                guard error == nil else {
-                                                    Logger.log(message: "Error loadding profile: \(error!)", event: .error)
-                                                    single(.error(error!))
-                                                    return
-                                                }
-                                                
-                                                if let res = response {
-                                                    if (res.userId == Config.currentUser?.id) {
-                                                        UserDefaults.standard.set(res.personal.avatarUrl, forKey: Config.currentUserAvatarUrlKey)
-                                                    }
-                                                    single(.success(res))
-                                                    return
-                                                }
-            })
-            return Disposables.create()
-        }
+        guard let userNickName = userId ?? Config.currentUser?.id else { return .error(ErrorAPI.requestFailed(message: "userId missing")) }
+        
+        return RestAPIManager.instance.getProfile(userID: userNickName)
     }
     
     func userVerify(phone: String, code: String) -> Observable<Bool> {
@@ -316,92 +228,30 @@ class NetworkService: NSObject {
                 
                 return self.waitForTransactionWith(id: id)
             })
-            .observeOn(MainScheduler.instance)
-    }
-    
-    func setBasicOptions(lang: Language) {
-        RestAPIManager.instance.setBasicOptions(nsfwContent:        .alwaysAlert,
-                                                responseHandling:   { (result) in
-                                                    if result.status == "OK" {
-                                                        UserDefaults.standard.set(lang.shortCode, forKey: Config.currentUserAppLanguageKey)
-                                                    }
-        },
-                                                errorHandling:      { (errorAPI) in
-                                                    Logger.log(message: "setBasicOptions error: \(errorAPI.caseInfo.message.localized())", event: .error)
-        })
     }
     
     // MARK: - meta
     // meta.recordPostView
-    func markPostAsRead(permlink: String) {
-        RestAPIManager.instance.recordPostView(permlink: permlink, responseHandling: { (_) in
-            Logger.log(message: "Marked post \"\(permlink)\" as read", event: .info)
-        }) { (error) in
-            Logger.log(message: "Can not make post as read with error: \(error)", event: .error)
-        }
+    func markPostAsRead(permlink: String) -> Single<ResponseAPIMetaRecordPostView> {
+        return RestAPIManager.instance.recordPostView(permlink: permlink)
     }
     
     // MARK: - Notifications
     func getNotifications(fromId: String? = nil, markAsViewed: Bool = true, freshOnly: Bool = false) -> Single<ResponseAPIOnlineNotifyHistory> {
-        return Single<ResponseAPIOnlineNotifyHistory>.create {single in
-            RestAPIManager.instance.getOnlineNotifyHistory(fromId: fromId, freshOnly: false, completion: { (response, error) in
-                guard error == nil else {
-                    single(.error(error!))
-                    return
-                }
-                if let res = response {
-                    single(.success(res))
-                    return
-                }
-            })
-            return Disposables.create()
-        }
+        return RestAPIManager.instance.getOnlineNotifyHistory(fromId: fromId, freshOnly: false)
     }
     
     func getFreshNotifications() -> Single<ResponseAPIOnlineNotifyHistoryFresh> {
-        return Single<ResponseAPIOnlineNotifyHistoryFresh>.create {single in
-            RestAPIManager.instance.getOnlineNotifyHistoryFresh(completion: { (response, error) in
-                guard error == nil else {
-                    single(.error(error!))
-                    return
-                }
-                if let res = response {
-                    single(.success(res))
-                    return
-                }
-            })
-            return Disposables.create()
-        }
+        return RestAPIManager.instance.getOnlineNotifyHistoryFresh()
     }
     
     func markAllAsViewed() -> Single<ResponseAPINotifyMarkAllAsViewed> {
-        return Single<ResponseAPINotifyMarkAllAsViewed>.create {single in
-            RestAPIManager.instance.notifyMarkAllAsViewed(completion: { (response, error) in
-                guard error == nil else {
-                    single(.error(error!))
-                    return
-                }
-                if let res = response {
-                    single(.success(res))
-                    return
-                }
-            })
-            return Disposables.create()
-        }
+        return RestAPIManager.instance.notifyMarkAllAsViewed()
     }
     
     func markAsRead(ids: [String]) -> Completable {
         if ids.isEmpty {return .empty()}
-        return Completable.create {completable in
-            RestAPIManager.instance.markAsRead(
-                notifies: ids,
-                responseHandling: { (_) in
-                    completable(.completed)
-                },
-                errorHandling: { (error) in
-                    completable(.error(error))
-                })
-            return Disposables.create()
-        }
+        return RestAPIManager.instance.markAsRead(notifies: ids)
+            .flatMapToCompletable()
     }
 }
