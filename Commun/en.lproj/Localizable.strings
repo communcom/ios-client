@@ -21,11 +21,14 @@
 "Master key has been generated"             =   "Master key has been generated";
 "You need Master Key"                       =   "You need Master Key for Log in.\nPlease, download it.";
 "Welcome,"                                  =   "Welcome,";
+"Welcome"                                   =   "Welcome";
 "sign in to continue"                       =   "sign in to continue";
 "User keys info"                            =   "User keys info";
 "Comments count"                            =   "Comments";
 "Views count"                               =   "Views";
 "Push notifications"                        =   "Push notifications";
+"Scan QR"                                   =   "Scan QR";
+"Go to commun.com and scan QR"              =   "Go to commun.com and scan QR";
 
 
 // Buttons

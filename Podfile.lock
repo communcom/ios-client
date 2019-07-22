@@ -7,7 +7,7 @@ PODS:
   - BigInt (3.1.0):
     - SipHash (~> 1.2)
   - Checksum (1.0.0)
-  - Crashlytics (3.13.3):
+  - Crashlytics (3.13.4):
     - Fabric (~> 1.10.2)
   - CryptoSwift (1.0.0)
   - CyberSwift (1.0.9):
@@ -244,7 +244,7 @@ SPEC CHECKSUMS:
   ASSpinnerView: 526e037b85b9db87d55db55297986b7da3059aa8
   BigInt: 76b5dfdfa3e2e478d4ffdf161aeede5502e2742f
   Checksum: f1aa56a27dea5db4006c819e2e129ee6aeb1d9af
-  Crashlytics: 2aa08cd61fb1d62718c4e653169461d1d7377de2
+  Crashlytics: 2dfd686bcb918dc10ee0e76f7f853fe42c7bd552
   CryptoSwift: d81eeaa59dc5a8d03720fe919a6fd07b51f7439f
   CyberSwift: c962d9e8f551266000fd672dd0eaaf574f480d36
   DateToolsSwift: 875d97ff9e3a5d54abdd67a269b3f51c757b71ab
@@ -292,4 +292,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: d063d4c8a86166705ccd2399bcf3efb2947685fd
 
-COCOAPODS: 1.7.2
+COCOAPODS: 1.7.4

@@ -22,7 +22,7 @@ extension SignInViewController: UICollectionViewDelegate, UICollectionViewDataSo
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SignInSelectionCell", for: indexPath)
         
         let label = (cell.viewWithTag(1) as! UILabel)
-        label.text = selection[indexPath.row]
+        label.text = selection[indexPath.row].localized()
         
         label.backgroundColor = selected == indexPath.row ? #colorLiteral(red: 0.9529411765, green: 0.9607843137, blue: 0.9803921569, alpha: 1) : #colorLiteral(red: 0.8971592784, green: 0.9046500325, blue: 0.9282500148, alpha: 1)
         label.textColor = selected == indexPath.row ? #colorLiteral(red: 0.6062102914, green: 0.6253217459, blue: 0.6361377239, alpha: 1): #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)

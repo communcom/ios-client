@@ -12,24 +12,16 @@ import CyberSwift
 import QRCodeReaderViewController
 
 class SignInViewController: UIViewController {
-    // Selection
+    // MARK: - Properties
     var selected = 1 {
         didSet {
             self.view.endEditing(true)
         }
+
     }
+    
     var selection = ["Scan QR".localized(), "Login & Key".localized()]
     
-    // Views
-    @IBOutlet var collectionView: UICollectionView!
-    @IBOutlet var qrContainerView: UIView!
-    @IBOutlet weak var qrCodeReaderView: UIView!
-    
-    @IBOutlet var loginPasswordContainerView: UIView!
-    @IBOutlet weak var loginTextField: UITextField!
-    @IBOutlet weak var passwordTextField: UITextField!
-    @IBOutlet weak var signInButton: StepButton!
-    @IBOutlet weak var signUpButton: UIButton!
     var qrReaderVC: QRCodeReaderViewController!
     
     // Properties
@@ -39,6 +31,38 @@ class SignInViewController: UIViewController {
     // Handlers
     var handlerSignUp: ((Bool) -> Void)?
     
+
+    // MARK: - IBOutlets
+    @IBOutlet var collectionView: UICollectionView!
+    @IBOutlet var qrContainerView: UIView!
+    @IBOutlet weak var qrCodeReaderView: UIView!
+    
+    @IBOutlet var loginPasswordContainerView: UIView!
+    @IBOutlet weak var loginTextField: UITextField!
+    @IBOutlet weak var passwordTextField: UITextField!
+    @IBOutlet weak var signInButton: StepButton!
+    
+    @IBOutlet weak var signUpButton: UIButton! {
+        didSet {
+            self.signUpButton.tune(withTitle:       "Don't have an account?".localized(),
+                                   hexColors:       [softBlueColorPickers, verySoftBlueColorPickers, verySoftBlueColorPickers, verySoftBlueColorPickers],
+                                   font:            UIFont(name: "SFProText-Regular", size: 15.0 * Config.widthRatio),
+                                   alignment:       .center)
+        }
+    }
+        
+    @IBOutlet weak var gotoLabel: UILabel! {
+        didSet {
+            self.gotoLabel.tune(withText:       "Go to commun.com and scan QR".localized(),
+                                hexColors:      blackWhiteColorPickers,
+                                font:           UIFont.init(name: "SFProText-Regular", size: 17.0 * Config.widthRatio),
+                                alignment:      .center,
+                                isMultiLines:   false)
+        }
+    }
+    
+    
+    // MARK: - Class Functions
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -47,6 +71,8 @@ class SignInViewController: UIViewController {
         bind()
     }
     
+    
+    // MARK: - Custom Functions
     func setUpViews() {
         // title
         title = "Welcome".localized()
@@ -108,25 +134,6 @@ class SignInViewController: UIViewController {
             .disposed(by: disposeBag)
     }
     
-    @IBAction func signInButtonDidTouch(_ sender: Any) {
-        // signing state
-        view.endEditing(true)
-        configure(signingIn: true)
-        
-        // send request
-        viewModel.signIn(
-                withLogin: loginTextField.text!,
-                withApiKey: passwordTextField.text!
-            )
-            .subscribe(onCompleted: {
-                AppDelegate.reloadSubject.onNext(true)
-            }, onError: { [weak self] (error) in
-                self?.configure(signingIn: false)
-                self?.showError(error)
-            })
-            .disposed(by: disposeBag)
-    }
-    
     func setTextfieldWithLogin(_ login: String, key: String) {
         self.loginTextField.text = login
         self.passwordTextField.text = key
@@ -151,6 +158,25 @@ class SignInViewController: UIViewController {
 
     
     // MARK: - Actions
+    @IBAction func signInButtonDidTouch(_ sender: Any) {
+        // signing state
+        view.endEditing(true)
+        configure(signingIn: true)
+        
+        // send request
+        viewModel.signIn(
+            withLogin: loginTextField.text!,
+            withApiKey: passwordTextField.text!
+            )
+            .subscribe(onCompleted: {
+                AppDelegate.reloadSubject.onNext(true)
+            }, onError: { [weak self] (error) in
+                self?.configure(signingIn: false)
+                self?.showError(error)
+            })
+            .disposed(by: disposeBag)
+    }
+    
     @IBAction func debugButtonTapped(_ sender: UIButton) {
         Broadcast.instance.generateNewTestUser { [weak self] (newUser) in
             guard let strongSelf = self, let user = newUser else { return }

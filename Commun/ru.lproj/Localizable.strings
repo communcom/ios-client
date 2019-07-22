@@ -21,11 +21,14 @@
 "Master key has been generated"             =   "Мастер ключ был создан";
 "You need Master Key"                       =   "Вам нужен мастер-ключ для входа в систему.\nПожалуйста, скачайте его.";
 "Welcome,"                                  =   "Добро пожаловать,";
+"Welcome"                                   =   "Добро пожаловать";
 "sign in to continue"                       =   "авторизуйтесь";
 "User keys info"                            =   "Пользовательские ключи";
 "Comments count"                            =   "комментов";
 "Views count"                               =   "просмотров";
 "Push notifications"                        =   "Пуш уведомления";
+"Scan QR"                                   =   "Сканирование QR";
+"Go to commun.com and scan QR"              =   "Перейдите на commun.com и отсканируйте QR";
 
 
 // Buttons

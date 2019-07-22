@@ -11,6 +11,16 @@ import RxSwift
 import CyberSwift
 
 class WelcomeVC: UIViewController {
+    // MARK: - IBOutlets
+    @IBOutlet weak var signInButton: UIButton! {
+        didSet {
+            self.signInButton.tune(withTitle:       "Sign in".localized(),
+                                   hexColors:       [softBlueColorPickers, verySoftBlueColorPickers, verySoftBlueColorPickers, verySoftBlueColorPickers],
+                                   font:            UIFont(name: "SFProText-Semibold", size: 17.0 * Config.heightRatio),
+                                   alignment:       .center)
+        }
+    }
+    
     
     // MARK: - Class Functions
     override func viewDidLoad() {
