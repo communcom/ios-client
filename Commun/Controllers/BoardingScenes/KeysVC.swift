@@ -12,12 +12,17 @@ import RxCocoa
 import RxSwift
 
 class KeysVC: UIViewController, BoardingRouter {
-    @IBOutlet weak var tableView: UITableView!
-    
+    // MARK: - Properties
     var disposeBag = DisposeBag()
     var completion: (()->Void)?
     var onBoarding = true
     
+
+    // MARK: - IBOutlets
+    @IBOutlet weak var tableView: UITableView!
+        
+    
+    // MARK: - Class Functions
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -30,6 +35,8 @@ class KeysVC: UIViewController, BoardingRouter {
         bindUI()
     }
     
+    
+    // MARK: - Custom Functions
     func bindUI() {
         
         // Retrieve keys
@@ -61,6 +68,8 @@ class KeysVC: UIViewController, BoardingRouter {
             .disposed(by: disposeBag)
     }
 
+    
+    // MARK: - Actions
     @IBAction func backupIcloudDidTouch(_ sender: Any) {
         do {
             try RestAPIManager.instance.rx.backUpICloud(onBoarding: onBoarding)
@@ -76,8 +85,8 @@ class KeysVC: UIViewController, BoardingRouter {
         }
         
     }
+    
     @IBAction func shareButtonDidTouch(_ sender: Any) {
-        
         guard let user = KeychainManager.currentUser() else {return}
         
         let textToShare = [String(format: "id:\n\"%@\"\n\nname:\n\"%@\"\n\nmemo key:\n\"%@\"\n\nowner key:\n\"%@\"\n\nactive key:\n\"%@\"\n\nposting key:\n\"%@\"", user.id ?? "", user.name ?? "", user.memoKeys?.privateKey ?? "", user.ownerKeys?.privateKey ?? "", user.activeKeys?.privateKey ?? "", user.postingKeys?.privateKey ?? "")]

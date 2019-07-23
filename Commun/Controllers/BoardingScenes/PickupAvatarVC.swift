@@ -11,17 +11,33 @@ import RxSwift
 import RxCocoa
 
 class PickupAvatarVC: UIViewController, BoardingRouter {
+    // MARK: - Properties
     let disposeBag = DisposeBag()
+    let image = BehaviorRelay<UIImage?>(value: nil)
+    
+    
+    // MARK: - IBOutlets
     @IBOutlet weak var userAvatarImage: UIImageView!
     @IBOutlet weak var chooseImageButton: UIButton!
     @IBOutlet weak var nextButton: StepButton!
     
-    let image = BehaviorRelay<UIImage?>(value: nil)
+    @IBOutlet weak var titleLabel: UILabel! {
+        didSet {
+            self.titleLabel.tune(withText:          "Pick a profile picture".localized(),
+                                 hexColors:         blackWhiteColorPickers,
+                                 font:              UIFont.init(name: "SFProText-Bold", size: 34.0 * Config.widthRatio),
+                                 alignment:         .left,
+                                 isMultiLines:      true)
+        }
+    }
     
+
+    // MARK: - Class Functions
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // setup navigation
+        self.title = "Pick a profile picture".localized()
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.isTranslucent = true
@@ -30,6 +46,18 @@ class PickupAvatarVC: UIViewController, BoardingRouter {
         bindViews()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: animated)
+    }
+    
+
+    // MARK: - Custom Functions
     func bindViews() {
         // bind image
         image.filter{$0 != nil}
@@ -47,16 +75,8 @@ class PickupAvatarVC: UIViewController, BoardingRouter {
             .disposed(by: disposeBag)
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(true, animated: animated)
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        navigationController?.setNavigationBarHidden(false, animated: animated)
-    }
-    
+
+    // MARK: - Actions
     @IBAction func chooseAvatarButtonDidTouch(_ sender: Any) {
         // On updating
         let chooseAvatarVC = controllerContainer.resolve(ProfileChooseAvatarVC.self)!

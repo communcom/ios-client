@@ -293,7 +293,7 @@ class SegmentioCell: UICollectionViewCell {
             let defaultState = options.states.defaultState
             segmentTitleLabel?.textColor = defaultState.titleTextColor
             segmentTitleLabel?.font = defaultState.titleFont
-            segmentTitleLabel?.text = content.title
+            segmentTitleLabel?.text = content.title?.localized()
             segmentTitleLabel?.minimumScaleFactor = 0.5
             segmentTitleLabel?.adjustsFontSizeToFitWidth = true
         }

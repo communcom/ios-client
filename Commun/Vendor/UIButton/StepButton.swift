@@ -9,18 +9,30 @@
 import UIKit
 
 @IBDesignable class StepButton: UIButton {
-    
+    // MARK: - Class Initialization
     override init(frame: CGRect) {
         super.init(frame: frame)
+        
         commonInit()
         
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+        
         commonInit()
     }
+
     
+    // MARK: - Class Functions
+    override var isEnabled: Bool {
+        didSet {
+            self.backgroundColor = self.isEnabled ? #colorLiteral(red: 0.4235294118, green: 0.5137254902, blue: 0.9294117647, alpha: 1) :#colorLiteral(red: 0.4156862745, green: 0.5019607843, blue: 0.9607843137, alpha: 0.3834813784)
+        }
+    }
+
+    
+    // MARK: - Custom Functions
     func commonInit() {
         backgroundColor = #colorLiteral(red: 0.4235294118, green: 0.5137254902, blue: 0.9294117647, alpha: 1)
         setTitleColor(.white, for: .normal)
@@ -31,12 +43,6 @@ import UIKit
         // localize label
         if let text = titleLabel?.text {
             setTitle(text.localized(), for: .normal)
-        }
-    }
-    
-    override var isEnabled: Bool {
-        didSet {
-            self.backgroundColor = self.isEnabled ? #colorLiteral(red: 0.4235294118, green: 0.5137254902, blue: 0.9294117647, alpha: 1) :#colorLiteral(red: 0.4156862745, green: 0.5019607843, blue: 0.9607843137, alpha: 0.3834813784)
         }
     }
 }

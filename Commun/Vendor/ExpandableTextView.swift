@@ -11,23 +11,29 @@ import RxCocoa
 import RxSwift
 
 class ExpandableTextView: UITextView {
+    // MARK: - Properties
     private let bag = DisposeBag()
     var heightConstraint: NSLayoutConstraint!
-    
     @IBInspectable var maxHeight: CGFloat = 0
     
+    
+    // MARK: - Class Initialization
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+        
         self.rx.text
             .skip(1)
             .distinctUntilChanged()
             .subscribe(onNext: {_ in
                 var newFrame = self.frame
                 let width = newFrame.size.width
-                let newSize = self.sizeThatFits(CGSize(width: width,
-                                                           height: CGFloat.greatestFiniteMagnitude))
+                let newSize = self.sizeThatFits(CGSize(width:   width,
+                                                       height:  CGFloat.greatestFiniteMagnitude))
+                
                 newFrame.size = CGSize(width: max(newSize.width, width), height: newSize.height)
+                
                 if (self.maxHeight > 0 && newFrame.size.height > self.maxHeight) {return}
+                
                 self.frame = newFrame
                 self.heightConstraint.constant = newSize.height
                 self.layoutIfNeeded()
@@ -38,6 +44,8 @@ class ExpandableTextView: UITextView {
         textContainerInset = UIEdgeInsets(top: 10, left: 16, bottom: 10, right: 16)
     }
     
+    
+    // MARK: - Custom Functions
     func setDelegate(_ delegate: UIScrollViewDelegate) {
         self.rx.setDelegate(delegate)
             .disposed(by: bag)

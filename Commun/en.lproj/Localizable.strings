@@ -29,6 +29,26 @@
 "Push notifications"                        =   "Push notifications";
 "Scan QR"                                   =   "Scan QR";
 "Go to commun.com and scan QR"              =   "Go to commun.com and scan QR";
+"Create your passcode"                      =   "Create your passcode";
+"Verify your new passcode"                  =   "Verify your new passcode";
+"Enable Touch ID title"                     =   "Enable Touch ID";
+"Enable Touch ID description"               =   "Enable Touch ID to secure your\ntransactions";
+"Pick a profile picture"                    =   "Pick a profile picture";
+"Describe yourself"                         =   "Describe yourself";
+"to secure your transactions"               =   "to secure your transactions";
+"Notifications"                             =   "Notifications";
+"No notification"                           =   "No notification";
+"You have no notification"                  =   "You have no notification";
+"No Posts"                                  =   "No Posts";
+"No Comments"                               =   "No Comments";
+"You have not made any"                     =   "You have not made any";
+"post"                                      =   "post";
+"comment"                                   =   "comment";
+"We have no post to show"                   =   "We have no post to show";
+"Set up Passcode"                           =   "Set up Passcode";
+"Add short PIN code"                        =   "Add short PIN code";
+"Trending"                                  =   "Trending";
+"My Feed"                                   =   "My Feed";
 
 
 // Buttons
@@ -42,12 +62,18 @@
 "Download"                                  =   "Download";
 "Resend verification code"                  =   "Resend verification code";
 "Don't have an account?"                    =   "Don't have an account?";
+"Enable"                                    =   "Enable";
+"Skip"                                      =   "Skip";
+"Backup iCloud"                             =   "Backup iCloud";
+"Later"                                     =   "Later";
 
 
 // Titles
 "Info"                                      =   "Info";
 "Error"                                     =   "Error";
 "Successfully resend code"                  =   "Successfully resend code";
+"Backup keys"                               =   "Backup keys";
+"Saving to blockchain"                      =   "Saving to blockchain";
 
 
 // Placeholders
@@ -57,6 +83,7 @@
 "Username Placeholder"                      =   "Username";
 "Login Placeholder"                         =   "Login";
 "Key Placeholder"                           =   "Key";
+"Write Text Placeholder"                    =   "Write text";
 
 
 // Error message

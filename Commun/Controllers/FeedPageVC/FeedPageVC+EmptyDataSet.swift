@@ -20,7 +20,7 @@ extension FeedPageVC: DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
     
     func title(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
         return NSMutableAttributedString()
-            .bold("No post".localized(), font: .boldSystemFont(ofSize: 22))
+            .bold("No Posts".localized(), font: .boldSystemFont(ofSize: 22))
     }
     
     func description(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {

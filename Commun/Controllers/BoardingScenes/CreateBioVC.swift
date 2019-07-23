@@ -11,18 +11,53 @@ import RxSwift
 import CyberSwift
 
 class CreateBioVC: UIViewController, BoardingRouter {
+    // MARK: - Properties
     let disposeBag = DisposeBag()
-    @IBOutlet weak var textView: ExpandableTextView!
+    private let charactersLimit = 100
+
+
+    // MARK: - IBOutlets
     @IBOutlet weak var characterCountLabel: UILabel!
     @IBOutlet weak var nextButton: StepButton!
-    private let charactersLimit = 100
     
+    @IBOutlet weak var textView: ExpandableTextView! {
+        didSet {
+            self.textView.placeholder = "Write Text Placeholder".localized()
+        }
+    }
+    
+    @IBOutlet weak var titleLabel: UILabel! {
+        didSet {
+            self.titleLabel.tune(withText:          "Describe yourself".localized(),
+                                 hexColors:         blackWhiteColorPickers,
+                                 font:              UIFont.init(name: "SFProText-Bold", size: 34.0 * Config.widthRatio),
+                                 alignment:         .left,
+                                 isMultiLines:      false)
+        }
+    }
+
+    
+    // MARK: - Class Functions
     override func viewDidLoad() {
         super.viewDidLoad()
 
         bindUI()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        navigationController?.setNavigationBarHidden(false, animated: animated)
+    }
+    
+
+    // MARK: - Custom Functions
     func bindUI() {
         // Bind textView
         let bioChanged = textView.rx.text.orEmpty
@@ -52,16 +87,8 @@ class CreateBioVC: UIViewController, BoardingRouter {
         }
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(true, animated: animated)
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        navigationController?.setNavigationBarHidden(false, animated: animated)
-    }
-    
+
+    // MARK: - Actions
     @IBAction func endEditing(_ sender: Any) {
         if textView.isFirstResponder {
             self.view.endEditing(true)

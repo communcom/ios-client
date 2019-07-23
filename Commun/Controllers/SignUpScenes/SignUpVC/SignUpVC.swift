@@ -32,7 +32,7 @@ class SignUpVC: UIViewController, SignUpRouter {
         didSet {
             self.placeholderSelectCountryLabel.tune(withText:       "Select Country Placeholder".localized(),
                                                     hexColors:      darkGrayishBluePickers,
-                                                    font:           UIFont.init(name: "SFProText-Regular", size: 17.0 * Config.heightRatio),
+                                                    font:           UIFont.init(name: "SFProText-Regular", size: 17.0 * Config.widthRatio),
                                                     alignment:      .left,
                                                     isMultiLines:   false)
         }
@@ -42,7 +42,7 @@ class SignUpVC: UIViewController, SignUpRouter {
         didSet {
             self.countryLabel.tune(withText:       "",
                                    hexColors:      blackWhiteColorPickers,
-                                   font:           UIFont.init(name: "SFProText-Regular", size: 17.0 * Config.heightRatio),
+                                   font:           UIFont.init(name: "SFProText-Regular", size: 17.0 * Config.widthRatio),
                                    alignment:      .left,
                                    isMultiLines:   false)
         }
@@ -59,11 +59,11 @@ class SignUpVC: UIViewController, SignUpRouter {
         didSet {
             self.phoneNumberTextField.tune(withPlaceholder:     "Phone Number Placeholder".localized(),
                                            textColors:          blackWhiteColorPickers,
-                                           font:                UIFont.init(name: "SFProText-Regular", size: 17.0 * Config.heightRatio),
+                                           font:                UIFont.init(name: "SFProText-Regular", size: 17.0 * Config.widthRatio),
                                            alignment:           .left)
             
             // Configure textView
-            let paddingView: UIView = UIView(frame: CGRect(x: 0, y: 0, width: 16 * Config.heightRatio, height: 20))
+            let paddingView: UIView = UIView(frame: CGRect(x: 0, y: 0, width: 16 * Config.widthRatio, height: 20))
             phoneNumberTextField.leftView = paddingView
             phoneNumberTextField.leftViewMode = .always
             

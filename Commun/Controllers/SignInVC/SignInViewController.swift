@@ -37,20 +37,29 @@ class SignInViewController: UIViewController {
     @IBOutlet var qrContainerView: UIView!
     @IBOutlet weak var qrCodeReaderView: UIView!
     
-    @IBOutlet var loginPasswordContainerView: UIView!
-    @IBOutlet weak var loginTextField: UITextField!
-    @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var signInButton: StepButton!
+    @IBOutlet weak var signUpButton: BlankButton!
     
-    @IBOutlet weak var signUpButton: UIButton! {
+    @IBOutlet var loginPasswordContainerView: UIView!
+    
+    @IBOutlet weak var loginTextField: UITextField! {
         didSet {
-            self.signUpButton.tune(withTitle:       "Don't have an account?".localized(),
-                                   hexColors:       [softBlueColorPickers, verySoftBlueColorPickers, verySoftBlueColorPickers, verySoftBlueColorPickers],
-                                   font:            UIFont(name: "SFProText-Regular", size: 15.0 * Config.widthRatio),
-                                   alignment:       .center)
+            self.loginTextField.tune(withPlaceholder:       "Login Placeholder".localized(),
+                                     textColors:            blackWhiteColorPickers,
+                                     font:                  UIFont.init(name: "SFProText-Regular", size: 17.0 * Config.widthRatio),
+                                     alignment:             .left)
         }
     }
-        
+    
+    @IBOutlet weak var passwordTextField: UITextField! {
+        didSet {
+            self.passwordTextField.tune(withPlaceholder:    "Key Placeholder".localized(),
+                                        textColors:         blackWhiteColorPickers,
+                                        font:               UIFont.init(name: "SFProText-Regular", size: 17.0 * Config.widthRatio),
+                                        alignment:          .left)
+        }
+    }
+    
     @IBOutlet weak var gotoLabel: UILabel! {
         didSet {
             self.gotoLabel.tune(withText:       "Go to commun.com and scan QR".localized(),

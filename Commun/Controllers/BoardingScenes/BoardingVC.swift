@@ -10,7 +10,29 @@ import UIKit
 import CyberSwift
 
 class BoardingVC: UIViewController, BoardingRouter {
-
+    // MARK: - IBOutlets
+    @IBOutlet weak var passcodeLabel: UILabel! {
+        didSet {
+            self.passcodeLabel.tune(withText:           "Set up Passcode".localized(),
+                                    hexColors:          blackWhiteColorPickers,
+                                    font:               UIFont.init(name: "SFProText-Semibold", size: 17.0 * Config.widthRatio),
+                                    alignment:          .left,
+                                    isMultiLines:       false)
+        }
+    }
+    
+    @IBOutlet weak var pincodeLabel: UILabel! {
+        didSet {
+            self.pincodeLabel.tune(withText:            "Add short PIN code".localized(),
+                                   hexColors:            verySoftBlueColorPickers,
+                                   font:                 UIFont.init(name: "SFProText-Regular", size: 17.0 * Config.widthRatio),
+                                   alignment:            .left,
+                                   isMultiLines:         false)
+        }
+    }
+    
+    
+    // MARK: - Class Functions
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -30,6 +52,8 @@ class BoardingVC: UIViewController, BoardingRouter {
         navigationController?.setNavigationBarHidden(false, animated: animated)
     }
 
+    
+    // MARK: - Actions
     @IBAction func setupPasscodeDidTouch(_ sender: Any) {
         boardingNextStep()
     }

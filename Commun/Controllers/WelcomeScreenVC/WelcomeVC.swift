@@ -11,20 +11,10 @@ import RxSwift
 import CyberSwift
 
 class WelcomeVC: UIViewController {
-    // MARK: - IBOutlets
-    @IBOutlet weak var signInButton: UIButton! {
-        didSet {
-            self.signInButton.tune(withTitle:       "Sign in".localized(),
-                                   hexColors:       [softBlueColorPickers, verySoftBlueColorPickers, verySoftBlueColorPickers, verySoftBlueColorPickers],
-                                   font:            UIFont(name: "SFProText-Semibold", size: 17.0 * Config.heightRatio),
-                                   alignment:       .center)
-        }
-    }
-    
-    
     // MARK: - Class Functions
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.isTranslucent = true
@@ -32,11 +22,13 @@ class WelcomeVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
         navigationController?.setNavigationBarHidden(true, animated: animated)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        
         navigationController?.setNavigationBarHidden(false, animated: animated)
     }
     

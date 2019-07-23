@@ -184,6 +184,7 @@
 		B170AC16228AFBF500C6FFBC /* PostCardCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 572F81A1223C164B0007F2F9 /* PostCardCell.xib */; };
 		B17A970C228002440081B8E0 /* SignUpRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17A970B228002440081B8E0 /* SignUpRouter.swift */; };
 		B1A6EE5122D5C8E300A5D6F0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B1A6EE5022D5C8E100A5D6F0 /* GoogleService-Info.plist */; };
+		B1A8AC1B22E6FF5400032030 /* BlankButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A8AC1A22E6FF5400032030 /* BlankButton.swift */; };
 		B1EA02D32289734800835244 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B1EA02D52289734800835244 /* Localizable.strings */; };
 		B1EA02D72289882300835244 /* SF-Pro-Display-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = 57F9CA9C225B3AA400AC9ACA /* SF-Pro-Display-Black.otf */; };
 		B1EA02D82289882A00835244 /* SF-Pro-Display-BlackItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 57F9CA8E225B3A9400AC9ACA /* SF-Pro-Display-BlackItalic.otf */; };
@@ -446,6 +447,7 @@
 		B12684EF22C1E56B0046C838 /* Commun.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Commun.entitlements; sourceTree = "<group>"; };
 		B17A970B228002440081B8E0 /* SignUpRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpRouter.swift; sourceTree = "<group>"; };
 		B1A6EE5022D5C8E100A5D6F0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		B1A8AC1A22E6FF5400032030 /* BlankButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlankButton.swift; sourceTree = "<group>"; };
 		B1EA02D42289734800835244 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		B1EA02D62289734E00835244 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		B1EA0316228A965200835244 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -886,20 +888,20 @@
 			isa = PBXGroup;
 			children = (
 				3B885BBA22B7A1B600FC4B7A /* EmbededView */,
-				575AECAA226066F000A7EC2D /* FormTextField */,
-				57CBD9592255117F000BA8CC /* UITextView+Placeholder */,
-				57FB1795224BFBD700563BF7 /* PageControls */,
-				578409EB223FAC1B00338FD5 /* Segmentio */,
 				3B635F7D22771679006DAAB2 /* Fetchers */,
-				3B0E9C63226F4A0C002AB1C2 /* VerticalDraggableImageView.swift */,
-				3BDD99FD228DA59900B2A1DA /* ExpandableTextView.swift */,
+				575AECAA226066F000A7EC2D /* FormTextField */,
+				57FB1795224BFBD700563BF7 /* PageControls */,
 				3BDD9A09228EDA5700B2A1DA /* PostController */,
+				578409EB223FAC1B00338FD5 /* Segmentio */,
+				B1A8AC1922E6FD4800032030 /* UIButton */,
+				57CBD9592255117F000BA8CC /* UITextView+Placeholder */,
+				3BB48ACA22D4ECDC00F11B6A /* ContentFittingWebView.swift */,
+				3BDD99FD228DA59900B2A1DA /* ExpandableTextView.swift */,
+				3B28EFE1228C7C31002D4816 /* KeyboardLayoutConstraint.swift */,
 				3B5CB30422A5752100757533 /* ListViewModelType.swift */,
 				3B5CB30F22A5880D00757533 /* MyRxTableViewSectionedAnimatedDataSource.swift */,
-				3B28EFE1228C7C31002D4816 /* KeyboardLayoutConstraint.swift */,
-				3BF2E09722D3A49F003B37AE /* StepButton.swift */,
-				3BB48ACA22D4ECDC00F11B6A /* ContentFittingWebView.swift */,
 				3BAE92A822DE553D00E97AE8 /* ScalableLayoutConstraint.swift */,
+				3B0E9C63226F4A0C002AB1C2 /* VerticalDraggableImageView.swift */,
 			);
 			path = Vendor;
 			sourceTree = "<group>";
@@ -1133,6 +1135,15 @@
 				4F0772CC6D820AD11B1FF48A /* Pods_Commun.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		B1A8AC1922E6FD4800032030 /* UIButton */ = {
+			isa = PBXGroup;
+			children = (
+				B1A8AC1A22E6FF5400032030 /* BlankButton.swift */,
+				3BF2E09722D3A49F003B37AE /* StepButton.swift */,
+			);
+			path = UIButton;
 			sourceTree = "<group>";
 		};
 		B1EA0315228A963200835244 /* MainVC */ = {
@@ -1474,6 +1485,7 @@
 				3B4ECA3D22A6741D00F59FC8 /* NotificationsPage+EmptyDataSet.swift in Sources */,
 				3BAF69CD22677E440055CCEB /* ProfilePageViewModel.swift in Sources */,
 				3B5CB30822A57AA400757533 /* PlaceholderNotificationCell.swift in Sources */,
+				B1A8AC1B22E6FF5400032030 /* BlankButton.swift in Sources */,
 				575AECAC226066F800A7EC2D /* FormTextField.swift in Sources */,
 				5725173C2243E4640033125C /* PostPageVC.swift in Sources */,
 				3BAF69C322675B420055CCEB /* ProfilePageVC.swift in Sources */,
