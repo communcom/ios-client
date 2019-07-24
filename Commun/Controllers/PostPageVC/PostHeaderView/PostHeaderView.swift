@@ -95,9 +95,7 @@ class PostHeaderView: UIView, UIWebViewDelegate, PostController {
         postTitleLabel.text = post.content.title
         
         // Show content
-        let htmlStart = "<HTML><HEAD><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, shrink-to-fit=no\"></HEAD><BODY>"
-        let htmlEnd = "</BODY></HTML>"
-        let html = "\(htmlStart)<span style=\"word-break: hyphenate; -webkit-hyphens: auto; font-family: -apple-system; text-align: justify; font-size: 17\">\(post.content.body.full ?? "")</span>\(htmlEnd)"
+        let html = "<span style=\"word-break: hyphenate; -webkit-hyphens: auto; font-family: -apple-system; text-align: justify; font-size: 17\">\(post.content.body.full ?? "")</span>"
         
         contentWebView.loadHTMLString(html, baseURL: nil)
         contentWebView.delegate = self
@@ -123,10 +121,7 @@ class PostHeaderView: UIView, UIWebViewDelegate, PostController {
         embedView.showLoading()
         webView.delegate = self
         
-        let htmlStart = "<HTML><HEAD><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, shrink-to-fit=no\"></HEAD><BODY>"
-        let htmlEnd = "</BODY></HTML>"
-        
-        webView.loadHTMLString(htmlStart + htmlString + htmlEnd, baseURL: nil)
+        webView.loadHTMLString(htmlString, baseURL: nil)
     }
     
     func showPhoto(with url: URL) {
@@ -158,12 +153,12 @@ class PostHeaderView: UIView, UIWebViewDelegate, PostController {
         if let embedWebView = embedView.subviews.first(where: {$0 is UIWebView}) as? UIWebView,
             webView == embedWebView {
             
-            let height  = webView.contentHeight
+            let height  = UIScreen.main.bounds.width * webView.contentHeight / webView.contentWidth
             embedViewHeightConstraint.constant = height
         }
         
         if webView == contentWebView {
-            let height  = webView.contentHeight
+            let height  = UIScreen.main.bounds.width * webView.contentHeight / webView.contentWidth
             contentWebViewHeightConstraint.constant = height
         }
         
