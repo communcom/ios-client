@@ -10,10 +10,9 @@ import UIKit
 import RxSwift
 
 class PostPageVC: UIViewController, CommentCellDelegate {
-    
-
     var viewModel: PostPageViewModel!
     
+    var headerView: PostHeaderView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var comunityNameLabel: UILabel!
     @IBOutlet weak var timeAgoLabel: UILabel!

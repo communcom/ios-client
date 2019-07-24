@@ -104,6 +104,9 @@
                 <webView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BBW-Hf-RpW" customClass="ContentFittingWebView" customModule="Commun" customModuleProvider="target">
                     <rect key="frame" x="16" y="292" width="382" height="56.5"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="56.5" id="gLI-kU-Q8S"/>
+                    </constraints>
                 </webView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gXa-HX-yLP">
                     <rect key="frame" x="16" y="388.5" width="382" height="1"/>
@@ -163,6 +166,7 @@
             <connections>
                 <outlet property="commentCountLabel" destination="0PA-qp-qBP" id="Sv9-bp-gOU"/>
                 <outlet property="contentWebView" destination="BBW-Hf-RpW" id="xhR-2L-Q7l"/>
+                <outlet property="contentWebViewHeightConstraint" destination="gLI-kU-Q8S" id="8MK-hs-ucf"/>
                 <outlet property="downVoteButton" destination="PQn-nj-igc" id="eWq-Us-zHP"/>
                 <outlet property="embedView" destination="jtl-Hw-hEq" id="Cop-Pr-3eu"/>
                 <outlet property="embedViewHeightConstraint" destination="GEX-NP-dIc" id="yuV-Pa-j4a"/>

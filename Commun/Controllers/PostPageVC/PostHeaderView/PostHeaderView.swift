@@ -23,7 +23,6 @@ class PostHeaderView: UIView, UIWebViewDelegate, PostController {
     // Media content
     @IBOutlet weak var embedView: UIView!
     @IBOutlet weak var embedViewHeightConstraint: NSLayoutConstraint!
-    var embededViewFixedHeight: CGFloat? = nil
     
     // Reactions
     @IBOutlet weak var voteCountLabel: UILabel!
@@ -33,6 +32,7 @@ class PostHeaderView: UIView, UIWebViewDelegate, PostController {
     // Content
     @IBOutlet weak var postTitleLabel: UILabel!
     @IBOutlet weak var contentWebView: ContentFittingWebView!
+    @IBOutlet weak var contentWebViewHeightConstraint: NSLayoutConstraint!
     
     // Buttons
     @IBOutlet weak var upVoteButton: UIButton!
@@ -54,21 +54,17 @@ class PostHeaderView: UIView, UIWebViewDelegate, PostController {
     
     func commonInit() {
         observePostChange()
-        // Observe keyboard
-        UIResponder.keyboardHeightObservable
-            .subscribe(onNext: {keyboardHeight in
-                self.layoutAndNotify(with: keyboardHeight)
-            })
-            .disposed(by: disposeBag)
     }
     
-    var showMedia = false
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        viewDelegate?.headerViewDidLayoutSubviews(self)
+    }
+    
     func setUp(with post: ResponseAPIContentGetPost?) {
         self.post = post
         guard let post = post else {
             showLoading()
-            self.height = 200
-            layoutSubviews()
             return
         }
         hideLoading()
@@ -83,7 +79,7 @@ class PostHeaderView: UIView, UIWebViewDelegate, PostController {
             let url = URL(string: urlString) {
             showPhoto(with: url)
         } else {
-            showMedia = false
+            embedViewHeightConstraint.constant = 0
         }
         
         // Show count label
@@ -99,19 +95,17 @@ class PostHeaderView: UIView, UIWebViewDelegate, PostController {
         postTitleLabel.text = post.content.title
         
         // Show content
-        let html = "<span style=\"word-break: hyphenate; -webkit-hyphens: auto; font-family: -apple-system; text-align: justify; font-size: 17\">\(post.content.body.full ?? "")</span>"
+        let htmlStart = "<HTML><HEAD><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, shrink-to-fit=no\"></HEAD><BODY>"
+        let htmlEnd = "</BODY></HTML>"
+        let html = "\(htmlStart)<span style=\"word-break: hyphenate; -webkit-hyphens: auto; font-family: -apple-system; text-align: justify; font-size: 17\">\(post.content.body.full ?? "")</span>\(htmlEnd)"
         
         contentWebView.loadHTMLString(html, baseURL: nil)
         contentWebView.delegate = self
         contentWebView.scrollView.isScrollEnabled = false
         contentWebView.scrollView.bouncesZoom = false
-        
-        // Notify to delegate to update content
-        layout()
     }
     
     func showWebView(with htmlString: String) {
-        showMedia = true
         embedView.removeSubviews()
         let webView = UIWebView()
         webView.translatesAutoresizingMaskIntoConstraints = false
@@ -128,11 +122,14 @@ class PostHeaderView: UIView, UIWebViewDelegate, PostController {
         
         embedView.showLoading()
         webView.delegate = self
-        webView.loadHTMLString(htmlString, baseURL: nil)
+        
+        let htmlStart = "<HTML><HEAD><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, shrink-to-fit=no\"></HEAD><BODY>"
+        let htmlEnd = "</BODY></HTML>"
+        
+        webView.loadHTMLString(htmlStart + htmlString + htmlEnd, baseURL: nil)
     }
     
     func showPhoto(with url: URL) {
-        showMedia = true
         embedView.removeSubviews()
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -160,43 +157,17 @@ class PostHeaderView: UIView, UIWebViewDelegate, PostController {
     func webViewDidFinishLoad(_ webView: UIWebView) {
         if let embedWebView = embedView.subviews.first(where: {$0 is UIWebView}) as? UIWebView,
             webView == embedWebView {
-            if embededViewFixedHeight == nil {
-                let height  = UIScreen.main.bounds.width * webView.contentHeight / webView.contentWidth
-                embedViewHeightConstraint.constant = height
-                embededViewFixedHeight = height
-            } else {
-                return
-            }
+            
+            let height  = webView.contentHeight
+            embedViewHeightConstraint.constant = height
         }
         
-        layoutAndNotify()
+        if webView == contentWebView {
+            let height  = webView.contentHeight
+            contentWebViewHeightConstraint.constant = height
+        }
         
         embedView.hideLoading()
-    }
-    
-    func layoutAndNotify(with keyboardHeight: CGFloat = 0) {
-        layout(with: keyboardHeight)
-        viewDelegate?.headerViewDidLayoutSubviews(self)
-    }
-    
-    func layout(with keyboardHeight: CGFloat = 0) {
-        var height: CGFloat = 112.0
-        if !showMedia {
-            embedViewHeightConstraint.constant = 0
-        }
-        
-        height += embedViewHeightConstraint.constant
-        height += self.postTitleLabel.height
-        height += 32
-        height += contentWebView.contentHeight
-        height -= keyboardHeight
-        
-        height += 41 + 16 + 26.5 + 16
-        
-        if self.height == height {return}
-        self.height = height
-        
-        self.layoutSubviews()
     }
     
     

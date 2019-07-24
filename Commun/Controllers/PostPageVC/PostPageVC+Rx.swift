@@ -11,7 +11,7 @@ import CyberSwift
 import RxCocoa
 import RxSwift
 
-extension PostPageVC: PostHeaderViewDelegate {
+extension PostPageVC {
     
     func bindUI() {
         // Observe post
@@ -68,12 +68,10 @@ extension PostPageVC: PostHeaderViewDelegate {
                 
                 
                 // Create tableHeaderView
-                guard let headerView = UINib(nibName: "PostHeaderView", bundle: nil).instantiate(withOwner: self, options: nil).first as? PostHeaderView else {return}
-                headerView.setUp(with: post)
-                headerView.viewDelegate = self
-                
-                // Assign table header view
-                self.tableView.tableHeaderView = headerView
+                if self.headerView == nil {
+                    self.createHeaderView()
+                }
+                self.headerView.setUp(with: post)
             })
             .disposed(by: disposeBag)
         
@@ -153,9 +151,5 @@ extension PostPageVC: PostHeaderViewDelegate {
                 self.commentForm.sendButton.isEnabled = true
             })
             .disposed(by: disposeBag)
-    }
-    
-    func headerViewDidLayoutSubviews(_ headerView: PostHeaderView) {
-        self.tableView.tableHeaderView = headerView
     }
 }
