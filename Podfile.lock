@@ -226,7 +226,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   CyberSwift:
-    :commit: 8c493c9f6829df9c152dcbaba57fed35334f95e0
+    :commit: 8a3d98cc1f3ba884ce59dbe050a9d45240457f0b
     :git: https://github.com/GolosChain/cyberSwift.git
   THPinViewController:
     :commit: cee3a491b530cd2c9155ebc2511ea06a22af672b
@@ -285,4 +285,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: d063d4c8a86166705ccd2399bcf3efb2947685fd
 
-COCOAPODS: 1.7.4
+COCOAPODS: 1.7.2

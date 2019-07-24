@@ -22,11 +22,15 @@ class SettingsVC: UIViewController {
     let viewModel = SettingsViewModel()
     let currentBiometryType = LABiometryType.current
     
+    var sectionHeaders: [UIView]!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Configure views
         tableView.rowHeight = UITableView.automaticDimension//56
         title = "Settings".localized()
+        
+        createHeaderViews()
         
         // Bind Views
         bindUI()
