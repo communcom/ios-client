@@ -51,6 +51,7 @@
 		3B5CB31022A5880D00757533 /* MyRxTableViewSectionedAnimatedDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5CB30F22A5880D00757533 /* MyRxTableViewSectionedAnimatedDataSource.swift */; };
 		3B5CB31222A588EE00757533 /* FeedPageVC+EmptyDataSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5CB31122A588EE00757533 /* FeedPageVC+EmptyDataSet.swift */; };
 		3B5D361822E820760012A991 /* PostPageVC+Header.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5D361722E820760012A991 /* PostPageVC+Header.swift */; };
+		3B5D361C22E8303C0012A991 /* HTMLStringWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5D361B22E8303C0012A991 /* HTMLStringWebView.swift */; };
 		3B5D7CEF2297F3FA0077B82C /* ItemsListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5D7CEE2297F3FA0077B82C /* ItemsListController.swift */; };
 		3B5D7CF12299D79B0077B82C /* FeedSortMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5D7CF02299D79B0077B82C /* FeedSortMode.swift */; };
 		3B5EDE2E22DF929D00897BF3 /* SettingsSwitcherCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5EDE2D22DF929D00897BF3 /* SettingsSwitcherCell.swift */; };
@@ -274,6 +275,7 @@
 		3B5CB30F22A5880D00757533 /* MyRxTableViewSectionedAnimatedDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyRxTableViewSectionedAnimatedDataSource.swift; sourceTree = "<group>"; };
 		3B5CB31122A588EE00757533 /* FeedPageVC+EmptyDataSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FeedPageVC+EmptyDataSet.swift"; sourceTree = "<group>"; };
 		3B5D361722E820760012A991 /* PostPageVC+Header.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PostPageVC+Header.swift"; sourceTree = "<group>"; };
+		3B5D361B22E8303C0012A991 /* HTMLStringWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTMLStringWebView.swift; sourceTree = "<group>"; };
 		3B5D7CEE2297F3FA0077B82C /* ItemsListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemsListController.swift; sourceTree = "<group>"; };
 		3B5D7CF02299D79B0077B82C /* FeedSortMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedSortMode.swift; sourceTree = "<group>"; };
 		3B5EDE2D22DF929D00897BF3 /* SettingsSwitcherCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSwitcherCell.swift; sourceTree = "<group>"; };
@@ -905,6 +907,7 @@
 				3B5CB30F22A5880D00757533 /* MyRxTableViewSectionedAnimatedDataSource.swift */,
 				3BAE92A822DE553D00E97AE8 /* ScalableLayoutConstraint.swift */,
 				3B0E9C63226F4A0C002AB1C2 /* VerticalDraggableImageView.swift */,
+				3B5D361B22E8303C0012A991 /* HTMLStringWebView.swift */,
 			);
 			path = Vendor;
 			sourceTree = "<group>";
@@ -1455,6 +1458,7 @@
 				5797E0F8225DDA400026C4D5 /* SignUpVC.swift in Sources */,
 				3BF2E09822D3A49F003B37AE /* StepButton.swift in Sources */,
 				3B63CD9322AA7AA200DC828B /* UIScrollView.swift in Sources */,
+				3B5D361C22E8303C0012A991 /* HTMLStringWebView.swift in Sources */,
 				3BB86B4922734AE4008F1C64 /* UIColor.swift in Sources */,
 				57840A00223FAC1B00338FD5 /* SegmentioCellWithImageBeforeLabel.swift in Sources */,
 				57840A0A223FAC1B00338FD5 /* Segmentio.swift in Sources */,

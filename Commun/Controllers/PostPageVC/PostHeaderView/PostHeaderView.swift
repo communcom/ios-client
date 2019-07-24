@@ -31,7 +31,7 @@ class PostHeaderView: UIView, UIWebViewDelegate, PostController {
     
     // Content
     @IBOutlet weak var postTitleLabel: UILabel!
-    @IBOutlet weak var contentWebView: ContentFittingWebView!
+    @IBOutlet weak var contentWebView: HTMLStringWebView!
     @IBOutlet weak var contentWebViewHeightConstraint: NSLayoutConstraint!
     
     // Buttons
@@ -104,22 +104,28 @@ class PostHeaderView: UIView, UIWebViewDelegate, PostController {
     }
     
     func showWebView(with htmlString: String) {
-        embedView.removeSubviews()
-        let webView = UIWebView()
-        webView.translatesAutoresizingMaskIntoConstraints = false
+        var webView: HTMLStringWebView!
         
-        embedView.addSubview(webView)
-        webView.topAnchor.constraint(equalTo: embedView.topAnchor).isActive = true
-        webView.bottomAnchor.constraint(equalTo: embedView.bottomAnchor).isActive = true
-        webView.leadingAnchor.constraint(equalTo: embedView.leadingAnchor).isActive = true
-        webView.trailingAnchor.constraint(equalTo: embedView.trailingAnchor).isActive = true
-        
-        webView.scrollView.contentInset = UIEdgeInsets(top: -8, left: -8, bottom: -8, right: -8)
-        webView.scrollView.isScrollEnabled = false
-        webView.scrollView.bouncesZoom = false
-        
-        embedView.showLoading()
-        webView.delegate = self
+        if let currentWebView = embedView.subviews.first(where: {$0 is HTMLStringWebView}) as? HTMLStringWebView {
+            webView = currentWebView
+        } else {
+            embedView.removeSubviews()
+            webView = HTMLStringWebView()
+            webView.translatesAutoresizingMaskIntoConstraints = false
+            
+            embedView.addSubview(webView)
+            webView.topAnchor.constraint(equalTo: embedView.topAnchor).isActive = true
+            webView.bottomAnchor.constraint(equalTo: embedView.bottomAnchor).isActive = true
+            webView.leadingAnchor.constraint(equalTo: embedView.leadingAnchor).isActive = true
+            webView.trailingAnchor.constraint(equalTo: embedView.trailingAnchor).isActive = true
+            
+            webView.scrollView.contentInset = UIEdgeInsets(top: -8, left: -8, bottom: -8, right: -8)
+            webView.scrollView.isScrollEnabled = false
+            webView.scrollView.bouncesZoom = false
+            
+            embedView.showLoading()
+            webView.delegate = self
+        }
         
         webView.loadHTMLString(htmlString, baseURL: nil)
     }
@@ -158,8 +164,8 @@ class PostHeaderView: UIView, UIWebViewDelegate, PostController {
         }
         
         if webView == contentWebView {
-            let height  = UIScreen.main.bounds.width * webView.contentHeight / webView.contentWidth
-            contentWebViewHeightConstraint.constant = height
+            let height  = webView.contentHeight
+            contentWebViewHeightConstraint.constant = height + 16
         }
         
         embedView.hideLoading()
