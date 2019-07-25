@@ -34,7 +34,7 @@ extension UIViewController {
             alert.addAction(action)
         }
         
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Cancel".localized(), style: .cancel, handler: nil))
         
         self.present(alert, animated: true, completion: nil)
     }

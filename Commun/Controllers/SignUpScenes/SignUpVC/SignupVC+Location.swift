@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreLocation
+import CyberSwift
 
 extension SignUpVC: CLLocationManagerDelegate {
     func updateLocation() {
@@ -31,8 +32,11 @@ extension SignUpVC: CLLocationManagerDelegate {
         geocoder.reverseGeocodeLocation(location) { (placemarks, error) in
             guard let placemarks = placemarks, placemarks.count > 0 else {return}
             let placemark = placemarks[0]
-            guard let country = placemark.country else {return}
-            print(country)
+            guard let countryCode = placemark.isoCountryCode,
+                let country = PhoneCode.getCountries().first(where: {$0.shortCode == countryCode})
+            else {return}
+            
+            self.viewModel.selectedCountry.accept(country)
         }
     }
 }
