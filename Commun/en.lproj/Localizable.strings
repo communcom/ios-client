@@ -81,8 +81,8 @@
 "Select Country Placeholder"                =   "Select country";
 "Phone Number Placeholder"                  =   "Phone number";
 "Username Placeholder"                      =   "Username";
-"Login Placeholder"                         =   "Login";
-"Key Placeholder"                           =   "Key";
+"Login Placeholder"                         =   "User ID or username";
+"Key Placeholder"                           =   "Master key";
 "Write Text Placeholder"                    =   "Write text";
 
 

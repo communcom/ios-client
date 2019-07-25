@@ -14,7 +14,7 @@ target 'Commun' do
   pod 'Firebase/Core'
   pod 'Firebase/Messaging'
   
-  pod 'CyberSwift', :git => "https://github.com/GolosChain/cyberSwift.git" # "https://github.com/Monserg/cyber-ios.git"
+  pod 'CyberSwift', :git => "https://github.com/GolosChain/cyberSwift.git", :branch => "features/new_login" # "https://github.com/Monserg/cyber-ios.git"
   
   pod 'Alamofire'
   pod 'Swinject'

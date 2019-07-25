@@ -17,7 +17,6 @@ PODS:
     - GoloCrypto
     - Localize-Swift (~> 2.0)
     - Locksmith
-    - PDFReader
     - RxCocoa
     - RxSwift
     - secp256k1.swift
@@ -100,7 +99,6 @@ PODS:
     - nanopb/encode (= 0.3.901)
   - nanopb/decode (0.3.901)
   - nanopb/encode (0.3.901)
-  - PDFReader (2.5.1)
   - PhoneNumberKit (2.6.0):
     - PhoneNumberKit/PhoneNumberKitCore (= 2.6.0)
     - PhoneNumberKit/UIKit (= 2.6.0)
@@ -144,7 +142,7 @@ DEPENDENCIES:
   - Alamofire
   - ASSpinnerView
   - Crashlytics
-  - CyberSwift (from `https://github.com/GolosChain/cyberSwift.git`)
+  - CyberSwift (from `https://github.com/GolosChain/cyberSwift.git`, branch `features/new_login`)
   - DateToolsSwift
   - DZNEmptyDataSet
   - Fabric
@@ -195,7 +193,6 @@ SPEC REPOS:
     - Locksmith
     - MBProgressHUD
     - nanopb
-    - PDFReader
     - PhoneNumberKit
     - PinCodeInputView
     - Protobuf
@@ -219,6 +216,7 @@ SPEC REPOS:
 
 EXTERNAL SOURCES:
   CyberSwift:
+    :branch: features/new_login
     :git: https://github.com/GolosChain/cyberSwift.git
   THPinViewController:
     :branch: commun
@@ -226,7 +224,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   CyberSwift:
-    :commit: 8a3d98cc1f3ba884ce59dbe050a9d45240457f0b
+    :commit: 0346d05b00ea984020e1006f236d1e901b601bc9
     :git: https://github.com/GolosChain/cyberSwift.git
   THPinViewController:
     :commit: cee3a491b530cd2c9155ebc2511ea06a22af672b
@@ -240,7 +238,7 @@ SPEC CHECKSUMS:
   Checksum: f1aa56a27dea5db4006c819e2e129ee6aeb1d9af
   Crashlytics: 2dfd686bcb918dc10ee0e76f7f853fe42c7bd552
   CryptoSwift: d81eeaa59dc5a8d03720fe919a6fd07b51f7439f
-  CyberSwift: 34feeb0b28ce0fe0762485ad6b06a7669c409a3a
+  CyberSwift: d43bf48ed543ff3d7496dfce9317c2725bca6f72
   DateToolsSwift: 875d97ff9e3a5d54abdd67a269b3f51c757b71ab
   Differentiator: be49ca3408f0ecfc761e4c7763d20c62be01b9ad
   DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
@@ -260,7 +258,6 @@ SPEC CHECKSUMS:
   Locksmith: e9bebbaaa4cee3c511bc358a44f843c3fe00e21f
   MBProgressHUD: e7baa36a220447d8aeb12769bf0585582f3866d9
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
-  PDFReader: 2c4a845d0560f33221cf911516e3b700967680f6
   PhoneNumberKit: 167ee1f0bbb6efce7c62559e620eae745595532f
   PinCodeInputView: 0a7361aaec76b639ff6521f1b6c38ed27b8144e3
   Protobuf: 3f617b9a6e73605565086864c9bc26b2bf2dd5a3
@@ -283,6 +280,6 @@ SPEC CHECKSUMS:
   TTTAttributedLabel: 8cffe8e127e4e82ff3af1e5386d4cd0ad000b656
   UIImageView-Letters: f62db28076797adf3560ab7410647dc6899b9eef
 
-PODFILE CHECKSUM: d063d4c8a86166705ccd2399bcf3efb2947685fd
+PODFILE CHECKSUM: 97d5f1a84d9d6db4d266d7ac723577d4e41c2624
 
-COCOAPODS: 1.7.2
+COCOAPODS: 1.7.5

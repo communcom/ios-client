@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import CyberSwift
+import RxSwift
 
 protocol SettingsButtonCellDelegate {
     func buttonDidTap(on cell: SettingsButtonCell)
@@ -21,6 +23,7 @@ class SettingsButtonCell: UITableViewCell {
     @IBOutlet weak var button: UIButton!
     var delegate: SettingsButtonCellDelegate?
     var type: ButtonType?
+    let bag = DisposeBag()
     
     func setUpWithButtonType(_ type: ButtonType) {
         self.type = type
@@ -55,12 +58,13 @@ class SettingsButtonCell: UITableViewCell {
             parentViewController?.showAlert(title: "Logout".localized(), message: "Do you really want to logout?".localized(), buttonTitles: ["Ok".localized(), "Cancel".localized()], highlightedButtonIndex: 1) { (index) in
                 
                 if index == 0 {
-                    do {
-                        try CurrentUser.logout()
-                        AppDelegate.reloadSubject.onNext(true)
-                    } catch {
-                        self.parentViewController?.showError(error)
-                    }
+                    RestAPIManager.instance.rx.logout()
+                        .subscribe(onCompleted: {
+                            AppDelegate.reloadSubject.onNext(true)
+                        }, onError: { (error) in
+                            self.parentViewController?.showError(error)
+                        })
+                        .disposed(by: self.bag)
                 }
             }
         }

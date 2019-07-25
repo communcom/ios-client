@@ -18,8 +18,8 @@ class SignInViewModel {
     
     let qrCode = BehaviorRelay<LoginCredential>(value: (login: "", key: ""))
     
-    func signIn(withLogin login: String, withApiKey key: String) -> Completable {
-        return RestAPIManager.instance.rx.authorize(login: login, key: key)
+    func signIn(login: String, masterKey: String) -> Completable {
+        return RestAPIManager.instance.rx.login(login: login, masterKey: masterKey)
             .map {response -> String in
                 guard response.permission == "active" else {throw ErrorAPI.unknown}
                 return response.permission

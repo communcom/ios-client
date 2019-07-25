@@ -99,8 +99,8 @@ class SignInViewController: UIViewController {
         
         // retrieve icloud key-value
         let keyStore = NSUbiquitousKeyValueStore()
-        if let login = keyStore.string(forKey: Config.currentUserIDKey),
-            let key = keyStore.string(forKey: Config.currentUserPublicActiveKey)
+        if let login = keyStore.string(forKey: Config.currentUserNameKey),
+            let key = keyStore.string(forKey: Config.currentUserMasterKey)
         {
             setTextfieldWithLogin(login, key: key)
         }
@@ -174,8 +174,8 @@ class SignInViewController: UIViewController {
         
         // send request
         viewModel.signIn(
-            withLogin: loginTextField.text!,
-            withApiKey: passwordTextField.text!
+            login: loginTextField.text!,
+            masterKey: passwordTextField.text!
             )
             .subscribe(onCompleted: {
                 AppDelegate.reloadSubject.onNext(true)
