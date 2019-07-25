@@ -96,7 +96,7 @@ class SignUpVC: UIViewController, SignUpRouter {
         let country = viewModel.selectedCountry
         
         // Bind country name
-        let countryName = country.map {$0?.label}
+        let countryName = country.map {$0?.localizedName}
         countryName.map {$0 ?? "Select country"}
             .bind(to: countryLabel.rx.text)
             .disposed(by: disposeBag)
