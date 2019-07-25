@@ -92,8 +92,8 @@
                                                             <constraint firstAttribute="height" constant="40" id="lIe-KD-eOr"/>
                                                         </constraints>
                                                     </view>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Go to commun.com and scan QR" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Gt-Y1-44W">
-                                                        <rect key="frame" x="81" y="394" width="252" height="21"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Go to commun.com and scan QR" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Gt-Y1-44W">
+                                                        <rect key="frame" x="16" y="394" width="382" height="21"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
@@ -102,6 +102,7 @@
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstItem="4Gt-Y1-44W" firstAttribute="centerX" secondItem="gJG-3i-Ca7" secondAttribute="centerX" id="7ND-nM-MAt"/>
+                                                    <constraint firstAttribute="trailing" secondItem="4Gt-Y1-44W" secondAttribute="trailing" constant="16" id="J34-uo-4c4"/>
                                                     <constraint firstAttribute="trailing" secondItem="ph5-py-HbL" secondAttribute="trailing" id="XBu-o8-ldD"/>
                                                     <constraint firstAttribute="bottom" secondItem="4Gt-Y1-44W" secondAttribute="bottom" id="XL5-TS-bcK"/>
                                                     <constraint firstItem="Ifj-Qq-1yA" firstAttribute="bottom" secondItem="ph5-py-HbL" secondAttribute="bottom" id="YQI-nc-jHd"/>
@@ -109,6 +110,7 @@
                                                     <constraint firstItem="ph5-py-HbL" firstAttribute="top" secondItem="gJG-3i-Ca7" secondAttribute="top" id="c7I-6H-u2Z"/>
                                                     <constraint firstItem="ph5-py-HbL" firstAttribute="leading" secondItem="gJG-3i-Ca7" secondAttribute="leading" id="d65-dV-RPu"/>
                                                     <constraint firstItem="4Gt-Y1-44W" firstAttribute="top" secondItem="ph5-py-HbL" secondAttribute="bottom" constant="-20" id="hLE-Ge-src"/>
+                                                    <constraint firstItem="4Gt-Y1-44W" firstAttribute="leading" secondItem="gJG-3i-Ca7" secondAttribute="leading" constant="16" id="jQH-AY-cu0"/>
                                                     <constraint firstItem="Ifj-Qq-1yA" firstAttribute="trailing" secondItem="ph5-py-HbL" secondAttribute="trailing" id="s9q-oo-HJ0"/>
                                                 </constraints>
                                             </view>
