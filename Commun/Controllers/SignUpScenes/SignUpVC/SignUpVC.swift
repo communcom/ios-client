@@ -11,12 +11,13 @@ import RxCocoa
 import RxSwift
 import CyberSwift
 import PhoneNumberKit
+import CoreLocation
 
 class SignUpVC: UIViewController, SignUpRouter {
     // MARK: - Properties
     let viewModel   =   SignUpViewModel()
     let disposeBag  =   DisposeBag()
-
+    var locationManager: CLLocationManager!
     
     // MARK: - IBOutlets
     @IBOutlet weak var countryButton: UIButton!
@@ -85,6 +86,8 @@ class SignUpVC: UIViewController, SignUpRouter {
         
         self.setupBindings()
         self.setupActions()
+        
+        updateLocation()
     }
     
     

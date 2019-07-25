@@ -74,6 +74,7 @@
 		3B885BBC22B7A1FE00FC4B7A /* EmbededView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B885BBB22B7A1FE00FC4B7A /* EmbededView.swift */; };
 		3B885BBE22B7A20D00FC4B7A /* EmbededView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3B885BBD22B7A20D00FC4B7A /* EmbededView.xib */; };
 		3B986B6522CF4C9E00C1E985 /* PhoneNumberTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B986B6422CF4C9E00C1E985 /* PhoneNumberTests.swift */; };
+		3BA3779722E9DA6C0071AF3A /* SignupVC+Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BA3779622E9DA6C0071AF3A /* SignupVC+Location.swift */; };
 		3BA4D0872292BA710022A69D /* ResponseAPIContentGetPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BA4D0862292BA710022A69D /* ResponseAPIContentGetPost.swift */; };
 		3BA4D089229315D60022A69D /* UIResponder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BA4D088229315D60022A69D /* UIResponder.swift */; };
 		3BAE92A922DE553D00E97AE8 /* ScalableLayoutConstraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BAE92A822DE553D00E97AE8 /* ScalableLayoutConstraint.swift */; };
@@ -298,6 +299,7 @@
 		3B885BBB22B7A1FE00FC4B7A /* EmbededView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbededView.swift; sourceTree = "<group>"; };
 		3B885BBD22B7A20D00FC4B7A /* EmbededView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmbededView.xib; sourceTree = "<group>"; };
 		3B986B6422CF4C9E00C1E985 /* PhoneNumberTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneNumberTests.swift; sourceTree = "<group>"; };
+		3BA3779622E9DA6C0071AF3A /* SignupVC+Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SignupVC+Location.swift"; sourceTree = "<group>"; };
 		3BA4D0862292BA710022A69D /* ResponseAPIContentGetPost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseAPIContentGetPost.swift; sourceTree = "<group>"; };
 		3BA4D088229315D60022A69D /* UIResponder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIResponder.swift; sourceTree = "<group>"; };
 		3BAE92A822DE553D00E97AE8 /* ScalableLayoutConstraint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScalableLayoutConstraint.swift; sourceTree = "<group>"; };
@@ -1019,6 +1021,7 @@
 				575AECAD22606D0800A7EC2D /* SignUpViewModel.swift */,
 				5797E0F7225DDA400026C4D5 /* SignUpVC.swift */,
 				5797E0F9225DDA490026C4D5 /* SignUpVC.storyboard */,
+				3BA3779622E9DA6C0071AF3A /* SignupVC+Location.swift */,
 			);
 			path = SignUpVC;
 			sourceTree = "<group>";
@@ -1440,6 +1443,7 @@
 				57CBD95C225511BD000BA8CC /* UITextView+Placeholder.m in Sources */,
 				3BF37BD622A162E000A72FFE /* ResponseAPIOnlineNotificationData.swift in Sources */,
 				57840A08223FAC1B00338FD5 /* RoundImageView.swift in Sources */,
+				3BA3779722E9DA6C0071AF3A /* SignupVC+Location.swift in Sources */,
 				57FB179D224BFBD700563BF7 /* PillPageControl.swift in Sources */,
 				572F81A7223C164C0007F2F9 /* PostCardCell.swift in Sources */,
 				57840A03223FAC1B00338FD5 /* SegmentioCellWithImageAfterLabel.swift in Sources */,
