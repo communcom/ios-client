@@ -20,7 +20,7 @@ class SettingsViewModel {
     let biometryEnabled = BehaviorRelay<Bool>(value: UserDefaults.standard.bool(forKey: Config.currentUserBiometryAuthEnabled))
     let notificationOn  = BehaviorRelay<Bool>(value: UserDefaults.standard.bool(forKey: Config.currentUserPushNotificationOn))
     let optionsPushShow = BehaviorRelay<ResponseAPIGetOptionsNotifyShow?>(value: nil)
-    let userKeys        = BehaviorRelay<[String: String]?>(value: nil)
+    let userKeys        = BehaviorRelay<[(key: String, value: String)]?>(value: nil)
     
     init() {
         // bind notificationOn
@@ -55,22 +55,26 @@ class SettingsViewModel {
     func getKeys() {
         guard let user = Config.currentUser else {return}
         
-        var keys = [String: String]()
+        var keys = [(key: String, value: String)]()
         
-        if let postingKey = user.postingKeys?.privateKey {
-            keys["Posting key"] = postingKey
+        if let masterKey = user.masterKey {
+            keys.append((key: "Master key", value: masterKey))
         }
         
         if let activeKey = user.activeKeys?.privateKey {
-            keys["Active key"] = activeKey
+            keys.append((key: "Active key", value: activeKey))
         }
         
+        if let postingKey = user.postingKeys?.privateKey {
+            keys.append((key: "Posting key", value: postingKey))
+        }
+
         if let ownerKey = user.ownerKeys?.privateKey {
-            keys["Owner key"] = ownerKey
+            keys.append((key: "Owner key", value: ownerKey))
         }
-        
+
         if let memoKey = user.memoKeys?.privateKey {
-            keys["Memo key"] = memoKey
+            keys.append((key: "Memo key", value: memoKey))
         }
         
         userKeys.accept(keys)

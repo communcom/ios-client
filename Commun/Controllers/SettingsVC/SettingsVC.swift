@@ -81,8 +81,8 @@ class SettingsVC: UIViewController {
                 // third section
                 rows = [Section.CustomData]()
                 if let keys = keys {
-                    for (k,v) in keys {
-                        rows.append(.keyValue((key: k, value: v)))
+                    for key in keys {
+                        rows.append(.keyValue((key: key.key, value: key.value)))
                     }
                 }
                 sections.append(.thirdSection(header: "Private keys".localized(), items: rows))
