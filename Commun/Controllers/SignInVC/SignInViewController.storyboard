@@ -27,7 +27,7 @@
                                 <rect key="frame" x="0.0" y="44" width="414" height="818"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cvh-LY-9dy">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="516"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="515"/>
                                         <subviews>
                                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="G0H-z0-2F9">
                                                 <rect key="frame" x="16" y="24" width="382" height="37"/>
@@ -77,7 +77,7 @@
                                                 </connections>
                                             </collectionView>
                                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gJG-3i-Ca7">
-                                                <rect key="frame" x="0.0" y="93" width="414" height="415"/>
+                                                <rect key="frame" x="0.0" y="93" width="414" height="414"/>
                                                 <subviews>
                                                     <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ph5-py-HbL">
                                                         <rect key="frame" x="0.0" y="0.0" width="414" height="414"/>
@@ -85,15 +85,12 @@
                                                             <constraint firstAttribute="width" secondItem="ph5-py-HbL" secondAttribute="height" multiplier="1:1" id="Tee-TE-lsU"/>
                                                         </constraints>
                                                     </containerView>
-                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ifj-Qq-1yA">
-                                                        <rect key="frame" x="0.0" y="374" width="414" height="40"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Go to commun and scan QRasdfasdfasdf a asdf asdf asdf asdf" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AEd-90-k92">
+                                                        <rect key="frame" x="0.0" y="358" width="414" height="56"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
-                                                            <constraint firstAttribute="height" constant="40" id="lIe-KD-eOr"/>
+                                                            <constraint firstAttribute="height" constant="56" id="CFJ-is-L0z"/>
                                                         </constraints>
-                                                    </view>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Go to commun.com and scan QR" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Gt-Y1-44W">
-                                                        <rect key="frame" x="16" y="394" width="382" height="21"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
@@ -101,17 +98,13 @@
                                                 </subviews>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
-                                                    <constraint firstItem="4Gt-Y1-44W" firstAttribute="centerX" secondItem="gJG-3i-Ca7" secondAttribute="centerX" id="7ND-nM-MAt"/>
-                                                    <constraint firstAttribute="trailing" secondItem="4Gt-Y1-44W" secondAttribute="trailing" constant="16" id="J34-uo-4c4"/>
+                                                    <constraint firstItem="AEd-90-k92" firstAttribute="leading" secondItem="gJG-3i-Ca7" secondAttribute="leading" id="6Pt-vL-8Ik"/>
+                                                    <constraint firstItem="AEd-90-k92" firstAttribute="bottom" secondItem="ph5-py-HbL" secondAttribute="bottom" id="GPf-KZ-XeN"/>
+                                                    <constraint firstAttribute="trailing" secondItem="AEd-90-k92" secondAttribute="trailing" id="SPQ-6t-LbT"/>
                                                     <constraint firstAttribute="trailing" secondItem="ph5-py-HbL" secondAttribute="trailing" id="XBu-o8-ldD"/>
-                                                    <constraint firstAttribute="bottom" secondItem="4Gt-Y1-44W" secondAttribute="bottom" id="XL5-TS-bcK"/>
-                                                    <constraint firstItem="Ifj-Qq-1yA" firstAttribute="bottom" secondItem="ph5-py-HbL" secondAttribute="bottom" id="YQI-nc-jHd"/>
-                                                    <constraint firstItem="Ifj-Qq-1yA" firstAttribute="leading" secondItem="ph5-py-HbL" secondAttribute="leading" id="abr-kn-HzY"/>
+                                                    <constraint firstAttribute="bottom" secondItem="ph5-py-HbL" secondAttribute="bottom" id="XSb-7O-iEV"/>
                                                     <constraint firstItem="ph5-py-HbL" firstAttribute="top" secondItem="gJG-3i-Ca7" secondAttribute="top" id="c7I-6H-u2Z"/>
                                                     <constraint firstItem="ph5-py-HbL" firstAttribute="leading" secondItem="gJG-3i-Ca7" secondAttribute="leading" id="d65-dV-RPu"/>
-                                                    <constraint firstItem="4Gt-Y1-44W" firstAttribute="top" secondItem="ph5-py-HbL" secondAttribute="bottom" constant="-20" id="hLE-Ge-src"/>
-                                                    <constraint firstItem="4Gt-Y1-44W" firstAttribute="leading" secondItem="gJG-3i-Ca7" secondAttribute="leading" constant="16" id="jQH-AY-cu0"/>
-                                                    <constraint firstItem="Ifj-Qq-1yA" firstAttribute="trailing" secondItem="ph5-py-HbL" secondAttribute="trailing" id="s9q-oo-HJ0"/>
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="btM-xQ-6hP">
@@ -229,7 +222,7 @@
                     </view>
                     <connections>
                         <outlet property="collectionView" destination="G0H-z0-2F9" id="Olt-eC-Je0"/>
-                        <outlet property="gotoLabel" destination="4Gt-Y1-44W" id="fjA-hO-CRD"/>
+                        <outlet property="gotoLabel" destination="AEd-90-k92" id="8Gv-Uy-9gi"/>
                         <outlet property="loginPasswordContainerView" destination="btM-xQ-6hP" id="GQs-3c-jHT"/>
                         <outlet property="loginTextField" destination="MzH-Fh-ifk" id="xKn-7A-y9u"/>
                         <outlet property="passwordTextField" destination="siR-es-fG8" id="qEL-wy-8s6"/>
@@ -241,7 +234,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gpk-nx-JG2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-322.39999999999998" y="235.23238380809596"/>
+            <point key="canvasLocation" x="-323.1884057971015" y="235.04464285714283"/>
         </scene>
     </scenes>
 </document>
