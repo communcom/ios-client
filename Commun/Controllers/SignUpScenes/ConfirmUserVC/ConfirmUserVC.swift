@@ -93,12 +93,7 @@ class ConfirmUserVC: UIViewController, SignUpRouter {
         nextButton.isEnabled = false
 
         self.pinCodeInputView.set(changeTextHandler: { text in
-            if text.count == ConfirmUserVC.numberOfDigits {
-                self.nextButton.isEnabled = true
-                self.verify()
-                return
-            }
-            self.nextButton.isEnabled = false
+            self.verify()
         })
         
         self.pinCodeInputView.set(appearance: .init(itemSize:         CGSize(width: 48.0 * Config.widthRatio, height: 56.0 * Config.heightRatio),
@@ -194,8 +189,16 @@ class ConfirmUserVC: UIViewController, SignUpRouter {
     }
     
     func verify() {
+        guard pinCodeInputView.text.count == ConfirmUserVC.numberOfDigits,
+            let code = UInt64(pinCodeInputView.text) else {
+                nextButton.isEnabled = false
+                return
+        }
+        
+        nextButton.isEnabled = true
+        
         showIndetermineHudWithMessage("Verifying".localized() + "...")
-        RestAPIManager.instance.rx.verify()
+        RestAPIManager.instance.rx.verify(code: code)
             .subscribe(onSuccess: { [weak self] (_) in
                 self?.hideHud()
                 self?.signUpNextStep()
