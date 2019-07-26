@@ -23,8 +23,8 @@ class WelcomePageVC: UIPageViewController {
     
     // Timer
     let timeOut = 7
-    var timeLeft = 7
     var timer: Timer?
+    var countdown: Timer?
     
     fileprivate lazy var pages: [UIViewController] = {
         var list = [UIViewController]()
@@ -56,12 +56,31 @@ class WelcomePageVC: UIPageViewController {
         
         self.view.addSubview(pageControl!)
         
+        
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        countdown?.invalidate()
+        timer?.invalidate()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setUpCountdown()
+    }
+    
+    func setUpCountdown() {
+        // reset
+        var timeLeft = 7
+        countdown?.invalidate()
+        
         // Count down
-        Timer.scheduledTimer(withTimeInterval: TimeInterval(1), repeats: true, block: { [weak self] (_) in
+        countdown = Timer(timeInterval: TimeInterval(1), repeats: true, block: { [weak self] (_) in
             guard let strongSelf = self else {return}
-            strongSelf.timeLeft -= 1
-            
-            if strongSelf.timeLeft == 3 {
+            timeLeft -= 1
+            print(timeLeft)
+            if timeLeft == 3 {
                 if let timer = strongSelf.timer {
                     if !timer.isValid {
                         strongSelf.schedule()
@@ -71,10 +90,11 @@ class WelcomePageVC: UIPageViewController {
                 }
             }
             
-            if strongSelf.timeLeft == 0 {
-                strongSelf.timeLeft = 7
+            if timeLeft == 0 {
+                timeLeft = 7
             }
         })
+        RunLoop.current.add(countdown!, forMode: .common)
     }
     
     func schedule() {
@@ -136,7 +156,7 @@ extension WelcomePageVC: UIPageViewControllerDelegate, UIPageViewControllerDataS
             let viewControllerIndex = vc.item
             currentPage = viewControllerIndex
             timer?.invalidate()
-            timeLeft = 7
+            setUpCountdown()
         }
     }
 }
