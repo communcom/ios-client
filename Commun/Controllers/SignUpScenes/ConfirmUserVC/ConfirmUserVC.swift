@@ -16,7 +16,6 @@ class ConfirmUserVC: UIViewController, SignUpRouter {
     static let numberOfDigits = 4
     
     // MARK: - Properties
-    var viewModel: ConfirmUserViewModel?
     let disposeBag = DisposeBag()
     
     var resendTimer: Timer?
@@ -32,22 +31,6 @@ class ConfirmUserVC: UIViewController, SignUpRouter {
     
     // MARK: - IBOutlets
     @IBOutlet weak var pinCodeView: UIView!
-    
-    @IBOutlet weak var testSmsCodeLabel: UILabel! {
-        didSet {
-            guard isDebugMode else {
-                self.testSmsCodeLabel.text = nil
-                self.testSmsCodeLabel.isHidden = true
-                return
-            }
-            
-            if let currentUser    =   Config.currentUser,
-                let smsCode =   currentUser.smsCode {
-                self.testSmsCodeLabel.text = String(format: "sms code is: `%i`", smsCode)
-                self.testSmsCodeLabel.isHidden = false
-            }
-        }
-    }
     
     @IBOutlet weak var smsCodeLabel: UILabel! {
         didSet {
@@ -93,12 +76,7 @@ class ConfirmUserVC: UIViewController, SignUpRouter {
         nextButton.isEnabled = false
 
         self.pinCodeInputView.set(changeTextHandler: { text in
-            if text.count == ConfirmUserVC.numberOfDigits {
-                self.nextButton.isEnabled = true
-                self.verify()
-                return
-            }
-            self.nextButton.isEnabled = false
+            self.verify()
         })
         
         self.pinCodeInputView.set(appearance: .init(itemSize:         CGSize(width: 48.0 * Config.widthRatio, height: 56.0 * Config.heightRatio),
@@ -194,8 +172,16 @@ class ConfirmUserVC: UIViewController, SignUpRouter {
     }
     
     func verify() {
+        guard pinCodeInputView.text.count == ConfirmUserVC.numberOfDigits,
+            let code = UInt64(pinCodeInputView.text) else {
+                nextButton.isEnabled = false
+                return
+        }
+        
+        nextButton.isEnabled = true
+        
         showIndetermineHudWithMessage("Verifying".localized() + "...")
-        RestAPIManager.instance.rx.verify()
+        RestAPIManager.instance.rx.verify(code: code)
             .subscribe(onSuccess: { [weak self] (_) in
                 self?.hideHud()
                 self?.signUpNextStep()

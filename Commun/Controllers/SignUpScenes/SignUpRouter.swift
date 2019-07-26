@@ -28,7 +28,6 @@ extension SignUpRouter where Self: UIViewController {
         switch step {
         case .verify:
             let confirmUserVC = controllerContainer.resolve(ConfirmUserVC.self)!
-            confirmUserVC.viewModel = ConfirmUserViewModel()!
             vc = confirmUserVC
             
         case .setUserName, .toBlockChain:

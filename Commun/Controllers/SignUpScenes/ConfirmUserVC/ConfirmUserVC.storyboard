@@ -30,12 +30,6 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jAK-lA-DMe" userLabel="SMS Code Label">
-                                <rect key="frame" x="170" y="98.333333333333329" width="35.333333333333343" height="17"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bYW-xi-lTa">
                                 <rect key="frame" x="73.666666666666686" y="133.33333333333334" width="228" height="56"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -91,10 +85,8 @@
                             <constraint firstItem="Y5D-RY-auL" firstAttribute="top" secondItem="bYW-xi-lTa" secondAttribute="bottom" constant="35" identifier="resendstackViewTopConstraint" id="7xS-jK-c01" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                             <constraint firstItem="waw-lP-Yrt" firstAttribute="width" secondItem="ML7-X3-dGA" secondAttribute="width" multiplier="290:375" identifier="ConfirmUserNextButtonWidthConstraint" id="K5F-pz-4KL"/>
                             <constraint firstItem="bYW-xi-lTa" firstAttribute="height" secondItem="ML7-X3-dGA" secondAttribute="height" multiplier="56:812" identifier="ConfirmUserPinCodeViewHeightConstraint" id="RZe-Nj-cWO"/>
-                            <constraint firstItem="jAK-lA-DMe" firstAttribute="centerX" secondItem="ML7-X3-dGA" secondAttribute="centerX" id="TIU-CW-Zpe"/>
                             <constraint firstItem="bYW-xi-lTa" firstAttribute="centerX" secondItem="ML7-X3-dGA" secondAttribute="centerX" id="TxS-xO-Dhs"/>
                             <constraint firstItem="Y5D-RY-auL" firstAttribute="centerX" secondItem="ML7-X3-dGA" secondAttribute="centerX" id="XxK-up-xT5"/>
-                            <constraint firstItem="bYW-xi-lTa" firstAttribute="top" secondItem="jAK-lA-DMe" secondAttribute="bottom" constant="18" id="ZjL-IC-jZ2" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                             <constraint firstItem="bYW-xi-lTa" firstAttribute="top" secondItem="5dt-9p-v3W" secondAttribute="bottom" constant="50" identifier="ConfirmUserPicCodeViewTopConstraint" id="kPy-LG-FWb" userLabel="ConfirmUserPinCodeViewTopConstraint" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                             <constraint firstItem="waw-lP-Yrt" firstAttribute="height" secondItem="ML7-X3-dGA" secondAttribute="height" multiplier="56:812" identifier="ConfirmUserNextButtonHeightConstraint" id="nFo-HL-5dh"/>
                             <constraint firstItem="waw-lP-Yrt" firstAttribute="centerX" secondItem="ML7-X3-dGA" secondAttribute="centerX" id="nu3-Pe-3jZ"/>
@@ -127,7 +119,6 @@
                         <outlet property="resendButton" destination="6zJ-W6-fmM" id="gtL-Fu-R5f"/>
                         <outlet property="resendTimerLabel" destination="A7l-2z-CKz" id="3xh-WD-cvi"/>
                         <outlet property="smsCodeLabel" destination="5dt-9p-v3W" id="AES-zC-Jyb"/>
-                        <outlet property="testSmsCodeLabel" destination="jAK-lA-DMe" id="8qQ-9h-ayO"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Sv0-oJ-wJx" userLabel="First Responder" sceneMemberID="firstResponder"/>

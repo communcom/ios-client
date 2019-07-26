@@ -27,6 +27,6 @@ class CountryCell: UITableViewCell {
     
     func setupCountry(_ country: Country) {
         countryImage.sd_setImage(with: country.flagURL, completed: nil)
-        countryLabel.text = "\(country.label) (\(country.phoneCode))"
+        countryLabel.text = "\(country.localizedName) (\(country.phoneCode))"
     }
 }

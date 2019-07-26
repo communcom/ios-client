@@ -10,9 +10,21 @@ import UIKit
 
 class WelcomePageVC: UIPageViewController {
     // MARK: - Properties
-    var currentPage = 0
+    var currentPage = 0 {
+        didSet {
+            if currentPage > self.pages.count - 1 || currentPage < 0 {return}
+            setViewControllers([pages[currentPage]], direction: .forward, animated: true, completion: nil)
+            pageControl?.progress = CGFloat(currentPage)
+        }
+    }
+    
     var pageControl: PillPageControl?
     var totalPages = 3
+    
+    // Timer
+    let timeOut = 7
+    var timer: Timer?
+    var countdown: Timer?
     
     fileprivate lazy var pages: [UIViewController] = {
         var list = [UIViewController]()
@@ -44,12 +56,59 @@ class WelcomePageVC: UIPageViewController {
         
         self.view.addSubview(pageControl!)
         
-        var i = 1
-        Timer.scheduledTimer(withTimeInterval: 3, repeats: true) { (timer) in
-            self.setViewControllers([self.pages[i%self.pages.count]], direction: .forward, animated: true, completion: nil)
-            self.pageControl?.progress = CGFloat(i%self.pages.count)
-            i += 1
-        }
+        
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        countdown?.invalidate()
+        timer?.invalidate()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setUpCountdown()
+    }
+    
+    func setUpCountdown() {
+        // reset
+        var timeLeft = 7
+        countdown?.invalidate()
+        
+        // Count down
+        countdown = Timer(timeInterval: TimeInterval(1), repeats: true, block: { [weak self] (_) in
+            guard let strongSelf = self else {return}
+            timeLeft -= 1
+            print(timeLeft)
+            if timeLeft == 3 {
+                if let timer = strongSelf.timer {
+                    if !timer.isValid {
+                        strongSelf.schedule()
+                    }
+                } else {
+                    strongSelf.schedule()
+                }
+            }
+            
+            if timeLeft == 0 {
+                timeLeft = 7
+            }
+        })
+        RunLoop.current.add(countdown!, forMode: .common)
+    }
+    
+    func schedule() {
+        timer?.invalidate()
+        
+        // Re-schedule
+        timer = Timer(timeInterval: TimeInterval(3), repeats: true, block: { [weak self] (_) in
+            guard let strongSelf = self else {return}
+            var newValue = strongSelf.currentPage
+            if newValue == strongSelf.pages.count - 1 {newValue = 0}
+            else {newValue += 1}
+            strongSelf.currentPage = newValue
+        })
+        RunLoop.current.add(timer!, forMode: .common)
     }
     
     private func pageAtIndex(_ index: Int) -> UIViewController {
@@ -65,7 +124,7 @@ extension WelcomePageVC: UIPageViewControllerDelegate, UIPageViewControllerDataS
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
         guard let vc = viewController as? WelcomeItemVC,
             vc.item > 0
-        else {return nil}
+        else {return pages[pages.count - 1]}
         
         let previousIndex = vc.item - 1
         
@@ -80,7 +139,7 @@ extension WelcomePageVC: UIPageViewControllerDelegate, UIPageViewControllerDataS
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
         guard let vc = viewController as? WelcomeItemVC,
             vc.item < totalPages - 1
-        else {return nil}
+        else {return pages[0]}
         
         let nextIndex = vc.item + 1
         
@@ -94,8 +153,10 @@ extension WelcomePageVC: UIPageViewControllerDelegate, UIPageViewControllerDataS
     
     func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
         if let vc = viewControllers?.first as? WelcomeItemVC {
-             let viewControllerIndex = vc.item
-            pageControl?.progress = CGFloat(viewControllerIndex)
+            let viewControllerIndex = vc.item
+            currentPage = viewControllerIndex
+            timer?.invalidate()
+            setUpCountdown()
         }
     }
 }

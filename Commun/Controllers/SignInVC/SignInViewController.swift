@@ -66,7 +66,7 @@ class SignInViewController: UIViewController {
                                 hexColors:      blackWhiteColorPickers,
                                 font:           UIFont.init(name: "SFProText-Regular", size: 17.0 * Config.widthRatio),
                                 alignment:      .center,
-                                isMultiLines:   false)
+                                isMultiLines:   true)
         }
     }
     
