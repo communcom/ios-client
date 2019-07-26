@@ -94,7 +94,7 @@ class KeysVC: UIViewController, BoardingRouter {
     @IBAction func shareButtonDidTouch(_ sender: Any) {
         guard let user = KeychainManager.currentUser() else {return}
         
-        let textToShare = [String(format: "id:\n\"%@\"\n\nname:\n\"%@\"\n\nmemo key:\n\"%@\"\n\nowner key:\n\"%@\"\n\nactive key:\n\"%@\"\n\nposting key:\n\"%@\"", user.id ?? "", user.name ?? "", user.memoKeys?.privateKey ?? "", user.ownerKeys?.privateKey ?? "", user.activeKeys?.privateKey ?? "", user.postingKeys?.privateKey ?? "")]
+        let textToShare = [String(format: "id:\n\"%@\"\n\nname:\n\"%@\"\n\nmaster key:\n\"%@\"\n\nmemo key:\n\"%@\"\n\nowner key:\n\"%@\"\n\nactive key:\n\"%@\"\n\nposting key:\n\"%@\"", user.id ?? "", user.name ?? "", user.masterKey ?? "", user.memoKeys?.privateKey ?? "", user.ownerKeys?.privateKey ?? "", user.activeKeys?.privateKey ?? "", user.postingKeys?.privateKey ?? "")]
         
         let activityViewController = UIActivityViewController(activityItems: textToShare, applicationActivities: nil)
         activityViewController.popoverPresentationController?.sourceView = view // so that iPads won't crash
