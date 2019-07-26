@@ -91,6 +91,6 @@ extension SignInViewController: UICollectionViewDelegateFlowLayout {
         cell.layoutIfNeeded()
         
         let size = cell.contentView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
-        return CGSize(width: size.width + 32, height: 37)
+        return CGSize(width: size.width + 32, height: 37*Config.heightRatio)
     }
 }
