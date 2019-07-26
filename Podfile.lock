@@ -226,7 +226,7 @@ CHECKOUT OPTIONS:
     :commit: 7da78c0c06439af6888c582e5a46b1fad818f7ae
     :git: https://github.com/GolosChain/cyberSwift.git
   THPinViewController:
-    :commit: cee3a491b530cd2c9155ebc2511ea06a22af672b
+    :commit: dfbc78e82589f1e0b18a3d664d0193340ffcfdaf
     :git: https://github.com/bigearsenal/THPinViewController.git
 
 SPEC CHECKSUMS:

@@ -10,32 +10,11 @@ import UIKit
 import LocalAuthentication
 
 class EnableBiometricsVC: UIViewController, BoardingRouter {
-    // MARK: - IBOutlets
     @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var headerLabel: UILabel!
+    @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var enableButton: StepButton!
-
-    @IBOutlet weak var headerLabel: UILabel! {
-        didSet {
-            self.headerLabel.tune(withText:             "Enable Touch ID title".localized(),
-                                  hexColors:            blackWhiteColorPickers,
-                                  font:                 UIFont.init(name: "SFProText-Semibold", size: 17.0 * Config.widthRatio),
-                                  alignment:            .center,
-                                  isMultiLines:         false)
-        }
-    }
     
-    @IBOutlet weak var descriptionLabel: UILabel! {
-        didSet {
-            self.descriptionLabel.tune(withText:        "Enable Touch ID description".localized(),
-                                       hexColors:       darkGrayishBluePickers,
-                                       font:            UIFont.init(name: "SFProText-Regular", size: 17.0 * Config.widthRatio),
-                                       alignment:       .center,
-                                       isMultiLines:    true)
-        }
-    }
-    
-
-    // MARK: - Class Functions
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -53,6 +32,7 @@ class EnableBiometricsVC: UIViewController, BoardingRouter {
         }
         
         imageView.image = biometryType.icon
+        headerLabel.text = "Enable".localized() + " " + biometryType.stringValue
         descriptionLabel.text = "Enable".localized() + " " + biometryType.stringValue + " " + "to secure your transactions".localized()
         enableButton.setTitle("Enable".localized() + " \(biometryType.stringValue)", for: .normal)
     }

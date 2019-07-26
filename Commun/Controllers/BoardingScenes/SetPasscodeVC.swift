@@ -45,7 +45,9 @@ class SetPasscodeVC: THPinViewController, BoardingRouter {
         
         // Setup views
         backgroundColor = .white
-        disableCancel = true
+        
+        // cancel here means deleteButton
+        disableCancel = false
         
         // Text
         if isVerifyVC {
