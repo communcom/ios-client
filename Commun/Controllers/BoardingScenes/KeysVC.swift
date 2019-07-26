@@ -43,19 +43,24 @@ class KeysVC: UIViewController, BoardingRouter {
         let user = KeychainManager.currentUser()
         
         Observable.just(user)
-            .map {user -> [String: String] in
-                var keys = [String: String]()
+            .map {user -> [(key: String, value: String)] in
+                var keys = [(key: String, value: String)]()
+                
+                if let key = user?.masterKey {
+                    keys.append((key: "Master key", value: key))
+                }
+                
                 if let key = user?.memoKeys?.privateKey {
-                    keys["Memo key"] = key
+                    keys.append((key: "Memo key", value: key))
                 }
                 if let key = user?.ownerKeys?.privateKey {
-                    keys["Owner key"] = key
+                    keys.append((key: "Owner key", value: key))
                 }
                 if let key = user?.activeKeys?.privateKey {
-                    keys["Active key"] = key
+                    keys.append((key: "Active key", value: key))
                 }
                 if let key = user?.postingKeys?.privateKey {
-                    keys["Posting key"] = key
+                    keys.append((key: "Posting key", value: key))
                 }
                 return keys
             }
