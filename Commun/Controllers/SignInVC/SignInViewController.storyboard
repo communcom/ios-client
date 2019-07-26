@@ -197,7 +197,6 @@
                                             <constraint firstItem="G0H-z0-2F9" firstAttribute="leading" secondItem="Cvh-LY-9dy" secondAttribute="leading" constant="16" id="cDi-Xz-XoJ" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                                             <constraint firstItem="G0H-z0-2F9" firstAttribute="top" secondItem="Cvh-LY-9dy" secondAttribute="top" constant="24" id="d3d-KC-vXY" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                                             <constraint firstAttribute="trailing" secondItem="gJG-3i-Ca7" secondAttribute="trailing" id="lhO-D0-WEh"/>
-                                            <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="btM-xQ-6hP" secondAttribute="bottom" constant="8" id="n8n-e6-9QC" customClass="KeyboardLayoutConstraint" customModule="Commun"/>
                                             <constraint firstAttribute="trailing" secondItem="btM-xQ-6hP" secondAttribute="trailing" id="pA8-H1-p3r"/>
                                         </constraints>
                                     </view>
@@ -206,7 +205,7 @@
                                     <constraint firstItem="Cvh-LY-9dy" firstAttribute="leading" secondItem="XB9-x9-3Dr" secondAttribute="leading" id="PZ8-dG-CaL"/>
                                     <constraint firstAttribute="trailing" secondItem="Cvh-LY-9dy" secondAttribute="trailing" id="ZTz-hi-eny"/>
                                     <constraint firstItem="Cvh-LY-9dy" firstAttribute="top" secondItem="XB9-x9-3Dr" secondAttribute="top" id="iRy-ET-rYf"/>
-                                    <constraint firstAttribute="bottom" secondItem="Cvh-LY-9dy" secondAttribute="bottom" id="sU5-ti-9bS"/>
+                                    <constraint firstAttribute="bottom" secondItem="Cvh-LY-9dy" secondAttribute="bottom" id="sU5-ti-9bS" customClass="KeyboardLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                                 </constraints>
                             </scrollView>
                         </subviews>
