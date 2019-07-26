@@ -18,7 +18,7 @@
 "Select country"                            =   "Выберите страну";
 "Enter SMS-code"                            =   "Введите SMS-код";
 "Create your username"                      =   "Создайте имя пользователя";
-"Master key has been generated"             =   "Мастер ключ был создан";
+"Master key has been generated"             =   "Мастер-ключ был создан";
 "You need Master Key"                       =   "Вам нужен мастер-ключ для входа в систему.\nПожалуйста, скачайте его.";
 "Welcome,"                                  =   "Добро пожаловать,";
 "Welcome"                                   =   "Добро пожаловать";
@@ -28,6 +28,7 @@
 "Views count"                               =   "просмотров";
 "Push notifications"                        =   "Пуш уведомления";
 "Scan QR"                                   =   "Сканирование QR";
+"Login & Key"                               =   "Логин & Мастер-ключ";
 "Go to commun.com and scan QR"              =   "Перейдите на commun.com и отсканируйте QR";
 "Create your passcode"                      =   "Создайте свой пароль";
 "Verify your new passcode"                  =   "Подтердите свой новый пароль";
@@ -82,7 +83,7 @@
 "Phone Number Placeholder"                  =   "Введите номер телефона";
 "Username Placeholder"                      =   "Введите имя пользователя";
 "Login Placeholder"                         =   "Введите имя пользователя";
-"Key Placeholder"                           =   "Введите активный ключ";
+"Key Placeholder"                           =   "Введите мастер-ключ";
 "Write Text Placeholder"                    =   "Введите текст";
 
 
