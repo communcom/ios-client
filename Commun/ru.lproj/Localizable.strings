@@ -75,6 +75,7 @@
 "Successfully resend code"                  =   "Код подтверждения успешно отправлен";
 "Backup keys"                               =   "Резервное копирование ключей";
 "Saving to blockchain"                      =   "Сохранение в блокчейн";
+"Signing in"                                =   "Вход в систему";
 
 
 // Placeholders
