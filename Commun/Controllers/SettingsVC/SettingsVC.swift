@@ -43,10 +43,11 @@ class SettingsVC: UIViewController {
                 viewModel.nsfwContent,
                 viewModel.notificationOn,
                 viewModel.optionsPushShow,
+                viewModel.showKey,
                 viewModel.userKeys,
                 viewModel.biometryEnabled
             )
-            .map {(lang, nsfw, isNotificationOn, pushShow, keys, biometryEnabled) -> [Section] in
+            .map {(lang, nsfw, isNotificationOn, pushShow, showKey, keys, biometryEnabled) -> [Section] in
                 var sections = [Section]()
                 
                 // first section
@@ -80,17 +81,22 @@ class SettingsVC: UIViewController {
                 
                 // third section
                 rows = [Section.CustomData]()
-                if let keys = keys {
-                    for key in keys {
-                        rows.append(.keyValue((key: key.key, value: key.value)))
+                if showKey {
+                    if let keys = keys {
+                        for key in keys {
+                            rows.append(.keyValue((key: key.key, value: key.value)))
+                        }
                     }
+                    rows.append(.button(ButtonType.changeAllPasswords.rendered))
+                } else {
+                    rows.append(.button(ButtonType.showAllPasswords.rendered))
                 }
+                
                 sections.append(.thirdSection(header: "Private keys".localized(), items: rows))
                 
                 // forth section
                 sections.append(.forthSection(items: [
-                    .button(.changeAllPassword),
-                    .button(.logout)
+                    .button(ButtonType.logout.rendered)
                 ]))
                 
                 return sections
@@ -159,50 +165,4 @@ class SettingsVC: UIViewController {
 
 }
 
-// MARK: - SwitcherCellDelegate
-extension SettingsVC: SettingsSwitcherCellDelegate {
-    func switcherDidSwitch(value: Bool, for key: String) {
-        // Notification
-        if let notificationType = NotificationSettingType(rawValue: key) {
-            guard let original = viewModel.optionsPushShow.value else {return}
-            var newValue = original
-            switch notificationType {
-            case .upvote:
-                newValue.upvote = value
-            case .downvote:
-                newValue.downvote = value
-            case .points:
-                newValue.transfer = value
-            case .comment:
-                newValue.reply = value
-            case .mention:
-                newValue.mention = value
-            case .rewardsPosts:
-                newValue.reward = value
-            case .rewardsVote:
-                newValue.curatorReward = value
-            case .following:
-                newValue.subscribe = value
-            case .repost:
-                newValue.repost = value
-            }
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.55) {
-                self.viewModel.optionsPushShow.accept(newValue)
-            }
-            RestAPIManager.instance.rx.setPushNotify(options: newValue.toParam())
-                .subscribe(onError: {[weak self] error in
-                    self?.showError(error)
-                    self?.viewModel.optionsPushShow.accept(original)
-                })
-                .disposed(by: bag)
-        }
-        
-        if key == "Use \(self.currentBiometryType.stringValue)" {
-            UserDefaults.standard.set(value, forKey: Config.currentUserBiometryAuthEnabled)
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.55) {
-                self.viewModel.biometryEnabled.accept(value)
-            }
-        }
-    }
-}
+

@@ -86,6 +86,7 @@ extension SettingsVC {
                 case .button(let buttonType):
                     let cell = tableView.dequeueReusableCell(withIdentifier: "SettingsButtonCell", for: indexPath) as! SettingsButtonCell
                     cell.setUpWithButtonType(buttonType)
+                    cell.delegate = self
                     return cell
                 }
             }

@@ -21,6 +21,7 @@ class SettingsViewModel {
     let notificationOn  = BehaviorRelay<Bool>(value: UserDefaults.standard.bool(forKey: Config.currentUserPushNotificationOn))
     let optionsPushShow = BehaviorRelay<ResponseAPIGetOptionsNotifyShow?>(value: nil)
     let userKeys        = BehaviorRelay<[(key: String, value: String)]?>(value: nil)
+    let showKey         = BehaviorRelay<Bool>(value: false)
     
     init() {
         // bind notificationOn

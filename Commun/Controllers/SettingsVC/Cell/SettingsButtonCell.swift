@@ -10,64 +10,25 @@ import UIKit
 import CyberSwift
 import RxSwift
 
-protocol SettingsButtonCellDelegate {
+protocol SettingsButtonCellDelegate: class {
     func buttonDidTap(on cell: SettingsButtonCell)
 }
 
 class SettingsButtonCell: UITableViewCell {
-    enum ButtonType {
-        case changeAllPassword
-        case logout
-    }
+    typealias ButtonType = (title: String, titleColor: UIColor)
     
     @IBOutlet weak var button: UIButton!
-    var delegate: SettingsButtonCellDelegate?
+    weak var delegate: SettingsButtonCellDelegate?
     var type: ButtonType?
     let bag = DisposeBag()
     
     func setUpWithButtonType(_ type: ButtonType) {
         self.type = type
-        switch type {
-        case .changeAllPassword:
-            button.setTitle("Change all password".localized(), for: .normal)
-            button.setTitleColor(.appMainColor, for: .normal)
-        case .logout:
-            button.setTitle("Log out".localized(), for: .normal)
-            button.setTitleColor(.red, for: .normal)
-        }
+        button.setTitle(type.title.localized(), for: .normal)
+        button.setTitleColor(type.titleColor, for: .normal)
     }
     
     @IBAction func changePasswordButtonTap(_ sender: Any) {
-        guard let type = type else {return}
-        switch type {
-        case .changeAllPassword:
-            let alert = UIAlertController(title: "Change all password",
-                                          message: "Changing passwords will save your wallet if someone saw your password.",
-                                          preferredStyle: .alert)
-            alert.addTextField { field in
-                field.placeholder = "Paste owner password"
-            }
-            
-            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-            alert.addAction(UIAlertAction(title: "Update", style: .default, handler: { _ in
-                print("Update password")
-            }))
-            
-            parentViewController?.present(alert, animated: true, completion: nil)
-        case .logout:
-            parentViewController?.showAlert(title: "Logout".localized(), message: "Do you really want to logout?".localized(), buttonTitles: ["Ok".localized(), "Cancel".localized()], highlightedButtonIndex: 1) { (index) in
-                
-                if index == 0 {
-                    RestAPIManager.instance.rx.logout()
-                        .subscribe(onCompleted: {
-                            AppDelegate.reloadSubject.onNext(true)
-                        }, onError: { (error) in
-                            self.parentViewController?.showError(error)
-                        })
-                        .disposed(by: self.bag)
-                }
-            }
-        }
         delegate?.buttonDidTap(on: self)
     }
 }

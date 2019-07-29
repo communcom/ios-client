@@ -103,6 +103,8 @@
 		3BDD9A0F228F07EF00B2A1DA /* UIApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BDD9A0E228F07EF00B2A1DA /* UIApplication.swift */; };
 		3BDF4FA822C21B310029D616 /* ResponseAPIContentGetProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BDF4FA722C21B310029D616 /* ResponseAPIContentGetProfile.swift */; };
 		3BDF4FAC22C386AA0029D616 /* PostPageVC+SectionHeaders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BDF4FAB22C386AA0029D616 /* PostPageVC+SectionHeaders.swift */; };
+		3BE68AAA22EEA08600033B81 /* SettingsVC+SwitcherDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BE68AA922EEA08600033B81 /* SettingsVC+SwitcherDelegate.swift */; };
+		3BE68AAE22EEA1AE00033B81 /* SettingsVC+ButtonDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BE68AAD22EEA1AE00033B81 /* SettingsVC+ButtonDelegate.swift */; };
 		3BEA224422B3DA9C00FF42DA /* JSONParsingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BEA224322B3DA9C00FF42DA /* JSONParsingTests.swift */; };
 		3BF2E09822D3A49F003B37AE /* StepButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BF2E09722D3A49F003B37AE /* StepButton.swift */; };
 		3BF37BCA22A11FA700A72FFE /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BF37BC922A11FA700A72FFE /* UIView.swift */; };
@@ -327,6 +329,8 @@
 		3BDD9A0E228F07EF00B2A1DA /* UIApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplication.swift; sourceTree = "<group>"; };
 		3BDF4FA722C21B310029D616 /* ResponseAPIContentGetProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseAPIContentGetProfile.swift; sourceTree = "<group>"; };
 		3BDF4FAB22C386AA0029D616 /* PostPageVC+SectionHeaders.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PostPageVC+SectionHeaders.swift"; sourceTree = "<group>"; };
+		3BE68AA922EEA08600033B81 /* SettingsVC+SwitcherDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SettingsVC+SwitcherDelegate.swift"; sourceTree = "<group>"; };
+		3BE68AAD22EEA1AE00033B81 /* SettingsVC+ButtonDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SettingsVC+ButtonDelegate.swift"; sourceTree = "<group>"; };
 		3BEA224122B3DA9C00FF42DA /* CommunTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CommunTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3BEA224322B3DA9C00FF42DA /* JSONParsingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONParsingTests.swift; sourceTree = "<group>"; };
 		3BEA224522B3DA9C00FF42DA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -642,6 +646,15 @@
 				3B5D7CEE2297F3FA0077B82C /* ItemsListController.swift */,
 			);
 			path = PostController;
+			sourceTree = "<group>";
+		};
+		3BE68AAF22EEA23300033B81 /* Delegates */ = {
+			isa = PBXGroup;
+			children = (
+				3BE68AAD22EEA1AE00033B81 /* SettingsVC+ButtonDelegate.swift */,
+				3BE68AA922EEA08600033B81 /* SettingsVC+SwitcherDelegate.swift */,
+			);
+			path = Delegates;
 			sourceTree = "<group>";
 		};
 		3BEA224222B3DA9C00FF42DA /* CommunTests */ = {
@@ -1076,6 +1089,7 @@
 			isa = PBXGroup;
 			children = (
 				3B5EDE3A22E0DD5100897BF3 /* NotificationSettingType.swift */,
+				3BE68AAF22EEA23300033B81 /* Delegates */,
 				57E5159B2270E5C700A6F6DB /* Cell */,
 				3B5EDE3422E073C500897BF3 /* SettingsViewModel.swift */,
 				57E5159C2270E5DE00A6F6DB /* SettingsVC.swift */,
@@ -1443,6 +1457,7 @@
 				57CBD95C225511BD000BA8CC /* UITextView+Placeholder.m in Sources */,
 				3BF37BD622A162E000A72FFE /* ResponseAPIOnlineNotificationData.swift in Sources */,
 				57840A08223FAC1B00338FD5 /* RoundImageView.swift in Sources */,
+				3BE68AAE22EEA1AE00033B81 /* SettingsVC+ButtonDelegate.swift in Sources */,
 				3BA3779722E9DA6C0071AF3A /* SignupVC+Location.swift in Sources */,
 				57FB179D224BFBD700563BF7 /* PillPageControl.swift in Sources */,
 				572F81A7223C164C0007F2F9 /* PostCardCell.swift in Sources */,
@@ -1537,6 +1552,7 @@
 				576DC91B223E41F600EDED41 /* FeedPageViewModel.swift in Sources */,
 				3BA4D0872292BA710022A69D /* ResponseAPIContentGetPost.swift in Sources */,
 				3B5EDE3922E07F0300897BF3 /* SettingsVC+DataSource.swift in Sources */,
+				3BE68AAA22EEA08600033B81 /* SettingsVC+SwitcherDelegate.swift in Sources */,
 				575945A122607F1F004041C9 /* CountryCell.swift in Sources */,
 				57DE5BDC2252088C008566B9 /* EditorPageVC.swift in Sources */,
 				3B2F226E226892C5006B589E /* NotificationType.swift in Sources */,
