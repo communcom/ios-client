@@ -31,7 +31,16 @@ extension SettingsVC: SettingsButtonCellDelegate {
         switch buttonType {
         case .showAllPasswords:
             // TODO: Authentication
-            viewModel.showKey.accept(true)
+            let vc = LocalAuthVC()
+            vc.canIgnore = true
+            vc.didSuccess
+                .subscribe(onNext: {[weak self] (success) in
+                    if success {
+                        self?.viewModel.showKey.accept(true)
+                    }
+                })
+                .disposed(by: bag)
+            present(vc, animated: true, completion: nil)
             break
         case .changeAllPasswords:
             let alert = UIAlertController(title: "Change all passwords",
