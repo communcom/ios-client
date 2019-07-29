@@ -90,15 +90,26 @@ extension SettingsVC: UITableViewDelegate {
                 
             case 2:
                 label.text = "Passwords".localized()
-                let button = UIButton(frame: CGRect.zero)
-                button.translatesAutoresizingMaskIntoConstraints = false
-                button.setTitleColor(.appMainColor, for: .normal)
-                button.setTitle("Back up".localized(), for: .normal)
-                view.addSubview(button)
+                viewModel.showKey
+                    .subscribe(onNext: {show in
+                        if show {
+                            let button = UIButton(frame: CGRect.zero)
+                            button.translatesAutoresizingMaskIntoConstraints = false
+                            button.setTitleColor(.appMainColor, for: .normal)
+                            button.setTitle("Back up".localized(), for: .normal)
+                            view.addSubview(button)
+                            
+                            button.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+                            button.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16).isActive = true
+                            button.addTarget(self, action: #selector(self.btnBackUpDidTouch), for: .touchUpInside)
+                        } else {
+                            if let button = view.subviews.first(where: {$0 is UIButton}) {
+                                button.removeFromSuperview()
+                            }
+                        }
+                    })
+                    .disposed(by: bag)
                 
-                button.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-                button.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16).isActive = true
-                button.addTarget(self, action: #selector(btnBackUpDidTouch), for: .touchUpInside)
                 break
                 
             default:
