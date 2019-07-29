@@ -88,6 +88,10 @@ class SignInViewController: UIViewController {
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.largeTitleDisplayMode = .always
         
+        // collection View
+        collectionView.contentInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
+        collectionView.scrollToItem(at: IndexPath(row: 1, section: 0), at: .centeredHorizontally, animated: true)
+        
         // Configure textView
         let paddingView: UIView = UIView(frame: CGRect(x: 0, y: 0, width: 16, height: 20))
         loginTextField.leftView = paddingView

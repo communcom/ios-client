@@ -43,6 +43,7 @@ extension SignInViewController: UICollectionViewDelegate, UICollectionViewDataSo
     func selectMethod(index: Int) {
         if selected == index {return}
         selected = index
+        collectionView.scrollToItem(at: IndexPath(row: index, section: 0), at: .centeredHorizontally, animated: true)
         collectionView.reloadData()
         switch index {
         case 0:

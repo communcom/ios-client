@@ -30,7 +30,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="515"/>
                                         <subviews>
                                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="G0H-z0-2F9">
-                                                <rect key="frame" x="16" y="24" width="382" height="37"/>
+                                                <rect key="frame" x="0.0" y="24" width="414" height="37"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="37" id="Gvz-RO-d1J" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
@@ -192,9 +192,9 @@
                                             <constraint firstItem="btM-xQ-6hP" firstAttribute="leading" secondItem="Cvh-LY-9dy" secondAttribute="leading" id="AR7-TN-rpz"/>
                                             <constraint firstItem="gJG-3i-Ca7" firstAttribute="top" secondItem="G0H-z0-2F9" secondAttribute="bottom" constant="32" id="Dds-oJ-1PT" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                                             <constraint firstItem="btM-xQ-6hP" firstAttribute="top" secondItem="G0H-z0-2F9" secondAttribute="bottom" constant="32" id="EmP-Lg-IY9" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
-                                            <constraint firstAttribute="trailing" secondItem="G0H-z0-2F9" secondAttribute="trailing" constant="16" id="GiP-N0-lxM" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
+                                            <constraint firstAttribute="trailing" secondItem="G0H-z0-2F9" secondAttribute="trailing" id="GiP-N0-lxM" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                                             <constraint firstItem="gJG-3i-Ca7" firstAttribute="leading" secondItem="Cvh-LY-9dy" secondAttribute="leading" id="Pih-dW-KLs"/>
-                                            <constraint firstItem="G0H-z0-2F9" firstAttribute="leading" secondItem="Cvh-LY-9dy" secondAttribute="leading" constant="16" id="cDi-Xz-XoJ" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
+                                            <constraint firstItem="G0H-z0-2F9" firstAttribute="leading" secondItem="Cvh-LY-9dy" secondAttribute="leading" id="cDi-Xz-XoJ" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                                             <constraint firstItem="G0H-z0-2F9" firstAttribute="top" secondItem="Cvh-LY-9dy" secondAttribute="top" constant="24" id="d3d-KC-vXY" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                                             <constraint firstAttribute="trailing" secondItem="gJG-3i-Ca7" secondAttribute="trailing" id="lhO-D0-WEh"/>
                                             <constraint firstAttribute="trailing" secondItem="btM-xQ-6hP" secondAttribute="trailing" id="pA8-H1-p3r"/>
