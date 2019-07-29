@@ -3,6 +3,7 @@ PODS:
     - RxCocoa (~> 4.0)
     - RxSwift (~> 4.0)
   - Alamofire (4.8.2)
+  - AppImageViewer (1.0.29)
   - ASSpinnerView (0.1.2)
   - BigInt (3.1.0):
     - SipHash (~> 1.2)
@@ -140,6 +141,7 @@ PODS:
 DEPENDENCIES:
   - Action
   - Alamofire
+  - AppImageViewer
   - ASSpinnerView
   - Crashlytics
   - CyberSwift (from `https://github.com/GolosChain/cyberSwift.git`)
@@ -169,6 +171,7 @@ SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Action
     - Alamofire
+    - AppImageViewer
     - ASSpinnerView
     - BigInt
     - Checksum
@@ -232,6 +235,7 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   Action: 689181e4c3f6566844178d8a7da6fef39a9597fc
   Alamofire: ae5c501addb7afdbb13687d7f2f722c78734c2d3
+  AppImageViewer: 05329f00d593894592d22ca567184a5d761ef256
   ASSpinnerView: 526e037b85b9db87d55db55297986b7da3059aa8
   BigInt: 76b5dfdfa3e2e478d4ffdf161aeede5502e2742f
   Checksum: f1aa56a27dea5db4006c819e2e129ee6aeb1d9af
@@ -279,6 +283,6 @@ SPEC CHECKSUMS:
   TTTAttributedLabel: 8cffe8e127e4e82ff3af1e5386d4cd0ad000b656
   UIImageView-Letters: f62db28076797adf3560ab7410647dc6899b9eef
 
-PODFILE CHECKSUM: d063d4c8a86166705ccd2399bcf3efb2947685fd
+PODFILE CHECKSUM: 4ec7c122c9397fbccbfe6a459b761f99b727d899
 
 COCOAPODS: 1.7.5

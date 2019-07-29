@@ -49,6 +49,8 @@ target 'Commun' do
   
   pod 'THPinViewController', :git => "https://github.com/bigearsenal/THPinViewController.git", :branch => "commun"
   
+  pod 'AppImageViewer'
+  
   post_install do |installer|
     installer.pods_project.targets.each do |target|
       if ['PDFReader'].include? target.name

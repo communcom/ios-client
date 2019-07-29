@@ -135,6 +135,7 @@ class PostHeaderView: UIView, UIWebViewDelegate, PostController {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleToFill
+        imageView.addTapToViewer()
         
         embedView.addSubview(imageView)
         imageView.topAnchor.constraint(equalTo: embedView.topAnchor).isActive = true

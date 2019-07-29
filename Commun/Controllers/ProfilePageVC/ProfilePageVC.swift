@@ -101,6 +101,9 @@ class ProfilePageVC: UIViewController {
             followButton.imageView?.contentMode = .scaleAspectFit
         }
         
+        userAvatarImage.addTapToViewer()
+        userCoverImage.addTapToViewer()
+        
         // Configure viewModel
         viewModel.profileLoadingHandler = { [weak self] loading in
             loading ? self?.view.showLoading(): self?.view.hideLoading()

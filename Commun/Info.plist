@@ -17,7 +17,7 @@
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
-	<string>21</string>
+	<string>22</string>
 	<key>Config</key>
 	<string>$(CONFIGURATION)</string>
 	<key>Fabric</key>
@@ -38,6 +38,8 @@
 	<true/>
 	<key>NSCameraUsageDescription</key>
 	<string>The camera is need to scan QR codes</string>
+	<key>NSFaceIDUsageDescription</key>
+	<string>FaceID needed to identify user</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Location needed to define content and settings that is suitable for you</string>
 	<key>NSPhotoLibraryUsageDescription</key>
@@ -72,7 +74,5 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-    <key>NSFaceIDUsageDescription</key>
-    <string>FaceID needed to identify user</string>
 </dict>
 </plist>

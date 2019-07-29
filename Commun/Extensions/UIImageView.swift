@@ -9,6 +9,7 @@
 import Foundation
 import UIImageView_Letters
 import RxSwift
+import AppImageViewer
 
 fileprivate var nonAvatarColors = [String: UIColor]()
 
@@ -38,6 +39,19 @@ extension UIImageView {
             // Placeholder image
             setNonAvatarImageWithId(namePlaceHolder)
         }
+    }
+    
+    func addTapToViewer() {
+        self.isUserInteractionEnabled = true
+        let tap = UITapGestureRecognizer(target: self, action: #selector(openViewer(gesture:)))
+        addGestureRecognizer(tap)
+    }
+    
+    @objc func openViewer(gesture: UITapGestureRecognizer) {
+        guard let image = image else {return}
+        let appImage = ViewerImage.appImage(forImage: image)
+        let viewer = AppImageViewer(originImage: image, photos: [appImage], animatedFromView: self)
+        parentViewController?.present(viewer, animated: false, completion: nil)
     }
     
     func observeCurrentUserAvatar() -> Disposable {
