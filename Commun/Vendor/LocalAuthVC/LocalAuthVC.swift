@@ -48,7 +48,7 @@ class LocalAuthVC: THPinViewController {
             leftBottomButton?.widthAnchor.constraint(equalToConstant: 50).isActive = true
             leftBottomButton?.widthAnchor.constraint(equalTo: leftBottomButton!.heightAnchor).isActive = true
             leftBottomButton?.addTarget(self, action: #selector(authWithBiometric), for: .touchUpInside)
-            authWithBiometric()
+            authWithBiometric(isAuto: true)
         }
         
         // Add cancel button on bottom
@@ -59,7 +59,7 @@ class LocalAuthVC: THPinViewController {
         }
     }
     
-    @objc func authWithBiometric() {
+    @objc func authWithBiometric(isAuto: Bool = false) {
         let myContext = LAContext()
         let myReason = reason?.localized() ?? "Confirm it's you".localized()
         var authError: NSError?
@@ -73,6 +73,16 @@ class LocalAuthVC: THPinViewController {
                     if success {
                         self.didSuccess.onNext(true)
                         self.dismiss(animated: true, completion: nil)
+                    }
+                }
+            }
+        } else {
+            if !isAuto {
+                showAlert(title: "Warning".localized(), message: LABiometryType.current.stringValue + " " + "was turned off".localized() + "\n" + "Do you want to turn it on?".localized(), buttonTitles: ["Turn on".localized(), "Cancel".localized()], highlightedButtonIndex: 0) { (index) in
+                    if index == 0 {
+                        if let url = URL.init(string: UIApplication.openSettingsURLString) {
+                            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                        }
                     }
                 }
             }
