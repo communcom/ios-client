@@ -38,7 +38,7 @@ class LanguageVC: UIViewController {
     var searchController = UISearchController(searchResultsController: nil) // С поиском будут доработки
     
     var delegate: LanguageVCDelegate?
-    var didSelectLanguage = PublishSubject<Language>()
+    var didChangeLanguage = PublishSubject<Language>()
     
     // MARK: - IBOutlets
     @IBOutlet weak var tableView: UITableView!
@@ -60,6 +60,9 @@ class LanguageVC: UIViewController {
         tableView.delegate = self
     }
     
+    deinit {
+        didChangeLanguage.onCompleted()
+    }
     
     // MARK: - Custom Functions
     @objc func cancelScreen() {
@@ -87,9 +90,12 @@ extension LanguageVC: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        delegate?.didSelectLanguage(Language.supportedLanguages[indexPath.row])
-        didSelectLanguage.onNext(Language.supportedLanguages[indexPath.row])
-        didSelectLanguage.onCompleted()
+        let newLanguage = Language.supportedLanguages[indexPath.row]
+        if Localize.currentLanguage() != newLanguage.shortCode {
+            delegate?.didSelectLanguage(newLanguage)
+            didChangeLanguage.onNext(Language.supportedLanguages[indexPath.row])
+            didChangeLanguage.onCompleted()
+        }
         cancelScreen()
     }
 }

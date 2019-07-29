@@ -114,9 +114,10 @@ class SettingsVC: UIViewController {
                         let vc = controllerContainer.resolve(LanguageVC.self)!
                         let nav = UINavigationController(rootViewController: vc)
                         self.present(nav, animated: true, completion: nil)
-                        vc.didSelectLanguage
+                        vc.didChangeLanguage
                             .subscribe(onNext: { (language) in
                                 self.viewModel.currentLanguage.accept(language)
+                                AppDelegate.reloadSubject.onNext(true)
                             })
                             .disposed(by: self.bag)
                     case 1:
