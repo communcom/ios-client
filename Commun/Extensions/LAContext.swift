@@ -8,6 +8,7 @@
 
 import Foundation
 import LocalAuthentication
+import CyberSwift
 
 extension LABiometryType {
     var icon: UIImage? {
@@ -37,5 +38,9 @@ extension LABiometryType {
         let context = LAContext()
         let _ = context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil)
         return context.biometryType
+    }
+    
+    var isEnabled: Bool {
+        return UserDefaults.standard.bool(forKey: Config.currentUserBiometryAuthEnabled)
     }
 }
