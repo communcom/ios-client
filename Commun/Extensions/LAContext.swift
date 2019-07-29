@@ -40,7 +40,7 @@ extension LABiometryType {
         return context.biometryType
     }
     
-    var isEnabled: Bool {
+    static var isEnabled: Bool {
         return UserDefaults.standard.bool(forKey: Config.currentUserBiometryAuthEnabled)
     }
 }

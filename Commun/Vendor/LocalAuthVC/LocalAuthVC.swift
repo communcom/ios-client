@@ -39,12 +39,14 @@ class LocalAuthVC: THPinViewController {
         promptTitle = "Enter passcode".localized()
         
         // face id, touch id button
-        let button = UIButton(frame: .zero)
-        let biometryType = LABiometryType.current
-        button.setImage(biometryType.icon, for: .normal)
-        leftBottomButton = button
-        leftBottomButton?.widthAnchor.constraint(equalToConstant: 50).isActive = true
-        leftBottomButton?.widthAnchor.constraint(equalTo: leftBottomButton!.heightAnchor).isActive = true
+        if LABiometryType.isEnabled {
+            let button = UIButton(frame: .zero)
+            let biometryType = LABiometryType.current
+            button.setImage(biometryType.icon, for: .normal)
+            leftBottomButton = button
+            leftBottomButton?.widthAnchor.constraint(equalToConstant: 50).isActive = true
+            leftBottomButton?.widthAnchor.constraint(equalTo: leftBottomButton!.heightAnchor).isActive = true
+        }
         
         // Add cancel button on bottom
         if !canIgnore {
