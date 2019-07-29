@@ -13,7 +13,6 @@ import RxSwift
 
 class LocalAuthVC: THPinViewController {
     var canIgnore = false
-    var cancelButton: UIButton?
     var remainingPinEntries = 3
     let didSuccess = PublishSubject<Bool>()
     
@@ -32,27 +31,18 @@ class LocalAuthVC: THPinViewController {
         backgroundColor = .white
         promptColor = .black
         view.tintColor = .black
+        promptTitle = "Enter passcode".localized()
         
         // Add cancel button on bottom
-        if canIgnore {
-            cancelButton = UIButton(frame: .zero)
-            cancelButton?.translatesAutoresizingMaskIntoConstraints = false
-            view.addSubview(cancelButton!)
-            cancelButton?.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -40).isActive = true
-            cancelButton?.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-            cancelButton?.setTitleColor(.black, for: .normal)
-            cancelButton?.setTitle("Cancel".localized(), for: .normal)
-            cancelButton?.addTarget(self, action: #selector(cancelButtonDidTouch), for: .touchUpInside)
+        if !canIgnore {
+            navigationController?.setNavigationBarHidden(true, animated: false)
+        } else {
+            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Close".localized(), style: .plain, target: self, action: #selector(cancelButtonDidTouch))
         }
     }
     
     @objc func cancelButtonDidTouch() {
         dismiss(animated: true, completion: nil)
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(true, animated: animated)
     }
     
     override func viewWillDisappear(_ animated: Bool) {

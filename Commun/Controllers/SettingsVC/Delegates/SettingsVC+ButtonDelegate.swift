@@ -40,7 +40,8 @@ extension SettingsVC: SettingsButtonCellDelegate {
                     }
                 })
                 .disposed(by: bag)
-            present(vc, animated: true, completion: nil)
+            let nc = UINavigationController(rootViewController: vc)
+            present(nc, animated: true, completion: nil)
             break
         case .changeAllPasswords:
             let alert = UIAlertController(title: "Change all passwords",
