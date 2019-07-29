@@ -64,6 +64,10 @@ class LocalAuthVC: THPinViewController {
         let myReason = reason?.localized() ?? "Confirm it's you".localized()
         var authError: NSError?
         if myContext.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &authError) {
+            if let error = authError {
+                print(error)
+                return
+            }
             myContext.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: myReason) { (success, errror) in
                 DispatchQueue.main.sync {
                     if success {

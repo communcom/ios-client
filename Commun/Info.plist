@@ -72,5 +72,7 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+    <key>NSFaceIDUsageDescription</key>
+    <string>FaceID needed to identify user</string>
 </dict>
 </plist>
