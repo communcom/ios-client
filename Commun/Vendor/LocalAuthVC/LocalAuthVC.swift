@@ -16,6 +16,7 @@ class LocalAuthVC: THPinViewController {
     var canIgnore = false
     var remainingPinEntries = 3
     let didSuccess = PublishSubject<Bool>()
+    var reason: String?
     
     init() {
         super.init(delegate: nil)
@@ -46,6 +47,8 @@ class LocalAuthVC: THPinViewController {
             leftBottomButton = button
             leftBottomButton?.widthAnchor.constraint(equalToConstant: 50).isActive = true
             leftBottomButton?.widthAnchor.constraint(equalTo: leftBottomButton!.heightAnchor).isActive = true
+            leftBottomButton?.addTarget(self, action: #selector(authWithBiometric), for: .touchUpInside)
+            authWithBiometric()
         }
         
         // Add cancel button on bottom
@@ -53,6 +56,22 @@ class LocalAuthVC: THPinViewController {
             navigationController?.setNavigationBarHidden(true, animated: false)
         } else {
             navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Close".localized(), style: .plain, target: self, action: #selector(cancelButtonDidTouch))
+        }
+    }
+    
+    @objc func authWithBiometric() {
+        let myContext = LAContext()
+        let myReason = reason?.localized() ?? "Confirm it's you".localized()
+        var authError: NSError?
+        if myContext.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &authError) {
+            myContext.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: myReason) { (success, errror) in
+                DispatchQueue.main.sync {
+                    if success {
+                        self.didSuccess.onNext(true)
+                        self.dismiss(animated: true, completion: nil)
+                    }
+                }
+            }
         }
     }
     
