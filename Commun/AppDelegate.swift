@@ -105,62 +105,73 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func navigateWithRegistrationStep(force: Bool = false) {
-        
-        let step = KeychainManager.currentUser()?.registrationStep ?? .firstStep
-        // Registered user
-        if step == .registered {
-            // If first setting is uncompleted
-            let settingStep = KeychainManager.currentUser()?.settingStep ?? .setPasscode
-            if settingStep != .completed {
-                if !force,
-                    let nc = self.window?.rootViewController as? UINavigationController,
-                    nc.viewControllers.first is BoardingVC {
+        let completion = {
+            let step = KeychainManager.currentUser()?.registrationStep ?? .firstStep
+            // Registered user
+            if step == .registered {
+                // If first setting is uncompleted
+                let settingStep = KeychainManager.currentUser()?.settingStep ?? .setPasscode
+                if settingStep != .completed {
+                    if !force,
+                        let nc = self.window?.rootViewController as? UINavigationController,
+                        nc.viewControllers.first is BoardingVC {
+                        return
+                    }
+                    
+                    let boardingVC = controllerContainer.resolve(BoardingVC.self)!
+                    let nc = UINavigationController(rootViewController: boardingVC)
+                    
+                    self.changeRootVC(nc)
                     return
                 }
                 
-                let boardingVC = controllerContainer.resolve(BoardingVC.self)!
-                let nc = UINavigationController(rootViewController: boardingVC)
-                
-                changeRootVC(nc)
-                return
-            }
-            
-            // if all set
-            RestAPIManager.instance.rx.authorize()
-                .subscribe(onSuccess: { (response) in
-                    // Turn notify on
-                    self.pushNotifyOn()
-                    
-                    // show feed
-                    if (!force && (self.window?.rootViewController is TabBarVC)) {return}
-                    self.changeRootVC(controllerContainer.resolve(TabBarVC.self)!)
-                }, onError: { (error) in
-                    if let error = error as? ErrorAPI {
-                        switch error.caseInfo.message {
-                        case "Cannot get such account from BC":
-                            AppDelegate.reloadSubject.onNext(true)
-                        default:
-                            break
+                // if all set
+                RestAPIManager.instance.rx.authorize()
+                    .subscribe(onSuccess: { (response) in
+                        // Turn notify on
+                        self.pushNotifyOn()
+                        
+                        // show feed
+                        if (!force && (self.window?.rootViewController is TabBarVC)) {return}
+                        self.changeRootVC(controllerContainer.resolve(TabBarVC.self)!)
+                    }, onError: { (error) in
+                        if let error = error as? ErrorAPI {
+                            switch error.caseInfo.message {
+                            case "Cannot get such account from BC":
+                                AppDelegate.reloadSubject.onNext(true)
+                            default:
+                                break
+                            }
                         }
-                    }
-                })
-                .disposed(by: bag)
-            
-        // New user
+                    })
+                    .disposed(by: self.bag)
+                
+                // New user
+            } else {
+                if !force,
+                    let nc = self.window?.rootViewController as? UINavigationController,
+                    nc.viewControllers.first is WelcomeVC {
+                    return
+                }
+                
+                let welcomeVC = controllerContainer.resolve(WelcomeVC.self)
+                let welcomeNav = UINavigationController(rootViewController: welcomeVC!)
+                self.changeRootVC(welcomeNav)
+                
+                let navigationBarAppearace = UINavigationBar.appearance()
+                navigationBarAppearace.tintColor = #colorLiteral(red: 0.4156862745, green: 0.5019607843, blue: 0.9607843137, alpha: 1)
+            }        }
+        
+        if force, let vc = window?.rootViewController, !(vc is SplashViewController) {
+            // Closing animation
+            let vc = controllerContainer.resolve(SplashViewController.self)!
+            self.window?.rootViewController = vc
+            completion()
         } else {
-            if !force,
-                let nc = self.window?.rootViewController as? UINavigationController,
-                nc.viewControllers.first is WelcomeVC {
-                return
-            }
-            
-            let welcomeVC = controllerContainer.resolve(WelcomeVC.self)
-            let welcomeNav = UINavigationController(rootViewController: welcomeVC!)
-            changeRootVC(welcomeNav)
-            
-            let navigationBarAppearace = UINavigationBar.appearance()
-            navigationBarAppearace.tintColor = #colorLiteral(red: 0.4156862745, green: 0.5019607843, blue: 0.9607843137, alpha: 1)
+            completion()
         }
+        
+        
     }
     
     func changeRootVC(_ rootVC: UIViewController) {

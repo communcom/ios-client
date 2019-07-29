@@ -13,7 +13,7 @@
         <!--Splash View Controller-->
         <scene sceneID="g0g-AP-cmr">
             <objects>
-                <viewController id="bew-rO-3vv" customClass="SplashViewController" customModule="Commun" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SplashViewController" id="bew-rO-3vv" customClass="SplashViewController" customModule="Commun" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" clipsSubviews="YES" contentMode="scaleToFill" id="FK8-5s-eKH">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

@@ -12,6 +12,12 @@ import Swinject
 let controllerContainer: Container = {
     let container = Container()
     
+    // Splash scene
+    container.register(SplashViewController.self, factory: { r in
+        let vc = SplashViewController.instanceController(fromStoryboard: "Main", withIdentifier: "SplashViewController") as! SplashViewController
+        return vc
+    })
+    
     // Welcome scene
     container.register(WelcomeVC.self, factory: { r in
         let vc = WelcomeVC.instanceController(fromStoryboard: "WelcomeVC", withIdentifier: "WelcomeVC") as! WelcomeVC
