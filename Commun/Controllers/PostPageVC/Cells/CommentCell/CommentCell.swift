@@ -27,6 +27,8 @@ class CommentCell: UITableViewCell {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var contentLabel: TTTAttributedLabel!
+    @IBOutlet weak var embedView: UIView!
+    @IBOutlet weak var embedViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var upVoteButton: UIButton!
     @IBOutlet weak var downVoteButton: UIButton!
     @IBOutlet weak var voteCountLabel: UILabel!
@@ -82,10 +84,49 @@ class CommentCell: UITableViewCell {
         nameLabel.text = comment.author?.username ?? comment.author?.userId
         timeLabel.text = Date.timeAgo(string: comment.meta.time)
         
+        // Show media
+        let embededResult = comment.content.embeds.first?.result
+        
+        if embededResult?.type == "photo",
+            let urlString = embededResult?.url,
+            let url = URL(string: urlString) {
+            showPhoto(with: url)
+            embedViewHeightConstraint.constant = 142
+        } else {
+            // TODO: Video
+            embedViewHeightConstraint.constant = 0
+        }
+        
         #warning("change this number later")
         voteCountLabel.text = "\(comment.votes.upCount ?? 0)"
         
         setButton()
+    }
+    
+    func showPhoto(with url: URL) {
+        embedView.removeSubviews()
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.contentMode = .scaleAspectFit
+        imageView.backgroundColor = .black
+        imageView.addTapToViewer()
+        
+        embedView.addSubview(imageView)
+        imageView.topAnchor.constraint(equalTo: embedView.topAnchor, constant: 8).isActive = true
+        imageView.bottomAnchor.constraint(equalTo: embedView.bottomAnchor, constant: -8).isActive = true
+        imageView.leadingAnchor.constraint(equalTo: embedView.leadingAnchor).isActive = true
+        imageView.trailingAnchor.constraint(equalTo: embedView.trailingAnchor).isActive = true
+        
+        imageView.showLoading()
+        
+        imageView.sd_setImage(with: url) { [weak self] (image, _, _, _) in
+            var image = image
+            if image == nil {
+                image = UIImage(named: "image-not-found")
+                imageView.image = image
+            }
+            self?.hideLoading()
+        }
     }
     
     func setButton() {
