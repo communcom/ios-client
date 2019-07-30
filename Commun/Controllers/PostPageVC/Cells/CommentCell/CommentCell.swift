@@ -55,6 +55,8 @@ class CommentCell: UITableViewCell {
         let tapOnUserName = UITapGestureRecognizer(target: self, action: #selector(authorDidTouch(gesture:)))
         nameLabel.isUserInteractionEnabled = true
         nameLabel.addGestureRecognizer(tapOnUserName)
+        
+        observeCommentChanged()
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -63,6 +65,7 @@ class CommentCell: UITableViewCell {
     
     func setupFromComment(_ comment: ResponseAPIContentGetComment, expanded: Bool = false) {
         self.comment = comment
+        self.expanded = expanded
         
         // if comment is a reply
         if comment.parent.comment != nil {
@@ -152,6 +155,45 @@ class CommentCell: UITableViewCell {
         }
     }
     
+    @IBAction func replyButtonTap(_ sender: Any) {
+        if let comment = comment {
+            delegate?.cell(self, didTapReplyButtonForComment: comment)
+        }
+    }
+    
+    // MARK: - Observing
+    func observeCommentChanged() {
+        NotificationCenter.default.rx.notification(.init(rawValue: CommentControllerCommentDidChangeNotification))
+            .subscribe(onNext: {notification in
+                guard let newComment = notification.object as? ResponseAPIContentGetComment,
+                    newComment == self.comment
+                    else {return}
+                self.setupFromComment(newComment, expanded: self.expanded)
+            })
+            .disposed(by: bag)
+    }
+    
+    // MARK: - Voting
+    func setHasVote(_ value: Bool, for type: VoteActionType) {
+        guard let comment = comment else {return}
+        
+        // return if nothing changes
+        if type == .upvote && value == comment.votes.hasUpVote {return}
+        if type == .downvote && value == comment.votes.hasDownVote {return}
+        
+        if type == .upvote {
+            let voted = !self.comment!.votes.hasUpVote
+            self.comment!.votes.hasUpVote = voted
+            self.comment!.votes.upCount = (self.comment?.votes.upCount ?? 0) + (voted ? 1: -1)
+        }
+        
+        if type == .downvote {
+            let voted = !self.comment!.votes.hasDownVote
+            self.comment!.votes.hasDownVote = voted
+            self.comment!.votes.downCount = (self.comment?.votes.downCount ?? 0) + (voted ? 1: -1)
+        }
+    }
+    
     @IBAction func upVoteButtonTap(_ sender: Any) {
         guard let comment = comment else {return}
         
@@ -165,6 +207,9 @@ class CommentCell: UITableViewCell {
         
         // animation
         animateUpVote()
+        
+        // notify
+        self.comment?.notifyChanged()
         
         // disable button ntil transaction is done
         upVoteButton.isEnabled = false
@@ -180,6 +225,7 @@ class CommentCell: UITableViewCell {
                 // reset state
                 self.setHasVote(originHasUpVote, for: .upvote)
                 self.setHasVote(originHasDownVote, for: .downvote)
+                self.comment?.notifyChanged()
                 
                 // re-enable buttons
                 self.upVoteButton.isEnabled = true
@@ -207,6 +253,9 @@ class CommentCell: UITableViewCell {
         // animation
         animateDownVote()
         
+        // notify
+        self.comment?.notifyChanged()
+        
         // disable button until transaction is done
         upVoteButton.isEnabled = false
         downVoteButton.isEnabled = false
@@ -225,6 +274,7 @@ class CommentCell: UITableViewCell {
                     // reset state
                     self.setHasVote(originHasUpVote, for: .upvote)
                     self.setHasVote(originHasDownVote, for: .downvote)
+                    self.comment?.notifyChanged()
                     
                     // re-enable buttons
                     self.upVoteButton.isEnabled = true
@@ -236,31 +286,6 @@ class CommentCell: UITableViewCell {
             .disposed(by: bag)
         
         delegate?.cell(self, didTapDownVoteButtonForComment: comment)
-    }
-    
-    @IBAction func replyButtonTap(_ sender: Any) {
-        if let comment = comment {
-            delegate?.cell(self, didTapReplyButtonForComment: comment)
-        }
-    }
-    
-    // MARK: - Voting
-    func setHasVote(_ value: Bool, for type: VoteActionType) {
-        guard let comment = comment else {return}
-        
-        // return if nothing changes
-        if type == .upvote && value == comment.votes.hasUpVote {return}
-        if type == .downvote && value == comment.votes.hasDownVote {return}
-        
-        if type == .upvote {
-            self.comment!.votes.hasUpVote = !self.comment!.votes.hasUpVote
-        }
-        
-        if type == .downvote {
-            self.comment!.votes.hasDownVote = !self.comment!.votes.hasDownVote
-        }
-        
-        setButton()
     }
     
     // MARK: - Animations
