@@ -239,10 +239,10 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2qd-zD-hQG">
-                                <rect key="frame" x="32" y="750" width="350" height="72"/>
+                                <rect key="frame" x="32" y="752.66666666666663" width="350" height="69.333333333333371"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="boarding-pincode" translatesAutoresizingMaskIntoConstraints="NO" id="f2i-rg-CZj">
-                                        <rect key="frame" x="27" y="27" width="18" height="18"/>
+                                        <rect key="frame" x="27" y="25.666666666666742" width="18" height="18"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="18" id="5zy-mm-Ifz" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                                             <constraint firstAttribute="width" constant="18" id="FWs-Ts-vYT" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
@@ -254,14 +254,14 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add short PIN code" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y8T-66-jfZ">
-                                        <rect key="frame" x="72" y="38" width="236" height="20"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add short PIN code" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y8T-66-jfZ">
+                                        <rect key="frame" x="72" y="38" width="236" height="19.333333333333329"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="boarding-next-arrow" translatesAutoresizingMaskIntoConstraints="NO" id="KSe-Or-7OX">
-                                        <rect key="frame" x="324" y="26" width="10" height="20"/>
+                                        <rect key="frame" x="324" y="24.666666666666742" width="10" height="20"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="20" id="6M2-vf-I1u" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                                             <constraint firstAttribute="width" constant="10" id="VJU-Xj-Jtz" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
@@ -276,8 +276,8 @@
                                     <constraint firstItem="pIx-ue-p0M" firstAttribute="leading" secondItem="f2i-rg-CZj" secondAttribute="trailing" constant="27" id="ckw-5l-Wgr" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                                     <constraint firstItem="Y8T-66-jfZ" firstAttribute="leading" secondItem="pIx-ue-p0M" secondAttribute="leading" id="e2D-Yq-rAQ"/>
                                     <constraint firstItem="KSe-Or-7OX" firstAttribute="centerY" secondItem="2qd-zD-hQG" secondAttribute="centerY" id="eaY-Ko-xu1"/>
+                                    <constraint firstAttribute="bottom" secondItem="Y8T-66-jfZ" secondAttribute="bottom" constant="12" id="hDa-6m-11U"/>
                                     <constraint firstItem="f2i-rg-CZj" firstAttribute="centerY" secondItem="2qd-zD-hQG" secondAttribute="centerY" id="ixV-Db-5nx"/>
-                                    <constraint firstAttribute="height" constant="72" id="kbe-lD-4Wp" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                                     <constraint firstItem="pIx-ue-p0M" firstAttribute="top" secondItem="2qd-zD-hQG" secondAttribute="top" constant="12" id="nsm-Hg-Y2e"/>
                                     <constraint firstAttribute="trailing" secondItem="KSe-Or-7OX" secondAttribute="trailing" constant="16" id="sOS-f3-a90" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                                     <constraint firstItem="f2i-rg-CZj" firstAttribute="leading" secondItem="2qd-zD-hQG" secondAttribute="leading" constant="27" id="udq-iS-aeS" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>

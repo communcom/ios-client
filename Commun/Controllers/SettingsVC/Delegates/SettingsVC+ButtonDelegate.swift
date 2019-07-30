@@ -33,13 +33,9 @@ extension SettingsVC: SettingsButtonCellDelegate {
             // TODO: Authentication
             let vc = LocalAuthVC()
             vc.canIgnore = true
-            vc.didSuccess
-                .subscribe(onNext: {[weak self] (success) in
-                    if success {
-                        self?.viewModel.showKey.accept(true)
-                    }
-                })
-                .disposed(by: bag)
+            vc.completion = {
+                self.viewModel.showKey.accept(true)
+            }
             let nc = UINavigationController(rootViewController: vc)
             present(nc, animated: true, completion: nil)
             break

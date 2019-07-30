@@ -15,16 +15,12 @@ import LocalAuthentication
 class LocalAuthVC: THPinViewController {
     var canIgnore = false
     var remainingPinEntries = 3
-    let didSuccess = PublishSubject<Bool>()
+    var completion: (() -> Void)?
     var reason: String?
     
     init() {
         super.init(delegate: nil)
         delegate = self
-    }
-    
-    deinit {
-        didSuccess.onCompleted()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -71,8 +67,7 @@ class LocalAuthVC: THPinViewController {
             myContext.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: myReason) { (success, errror) in
                 DispatchQueue.main.sync {
                     if success {
-                        self.didSuccess.onNext(true)
-                        self.dismiss(animated: true, completion: nil)
+                        self.completion?()
                     }
                 }
             }
@@ -119,10 +114,10 @@ extension LocalAuthVC: THPinViewControllerDelegate {
     }
     
     func pinViewControllerDidDismiss(afterPinEntryWasSuccessful pinViewController: THPinViewController) {
-        didSuccess.onNext(true)
+        completion?()
     }
     
     func pinViewControllerDidDismiss(afterPinEntryWasUnsuccessful pinViewController: THPinViewController) {
-        didSuccess.onNext(false)
+        
     }
 }
