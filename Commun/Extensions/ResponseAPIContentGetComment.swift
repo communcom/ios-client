@@ -10,6 +10,8 @@ import Foundation
 import CyberSwift
 import RxDataSources
 
+let CommentControllerCommentDidChangeNotification = "CommentControllerCommentDidChangeNotification"
+
 extension ResponseAPIContentGetComment: Equatable, IdentifiableType {
     public static func == (lhs: ResponseAPIContentGetComment, rhs: ResponseAPIContentGetComment) -> Bool {
         return lhs.identity == rhs.identity

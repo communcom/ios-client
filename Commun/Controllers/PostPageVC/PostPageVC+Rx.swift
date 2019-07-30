@@ -80,8 +80,11 @@ extension PostPageVC {
             .map {$0!}
         
         nonNilPost
-            .subscribe(onNext:{post in
-                NetworkService.shared.markPostAsRead(permlink: post.contentId.permlink)
+            .take(1)
+            .asSingle()
+            .flatMap {NetworkService.shared.markPostAsRead(permlink: $0.contentId.permlink)}
+            .subscribe(onSuccess: {_ in
+                Logger.log(message: "Marked post as read", event: .severe)
             })
             .disposed(by: disposeBag)
         
