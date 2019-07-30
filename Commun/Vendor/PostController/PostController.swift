@@ -24,7 +24,7 @@ protocol PostController: class {
 extension PostController {
     // MARK: - Notify observers
     func notifyPostChange(newPost: ResponseAPIContentGetPost) {
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: PostControllerPostDidChangeNotification), object: newPost)
+        newPost.notifyChanged()
     }
     
     func notifyPostDeleted(deletedPost: ResponseAPIContentGetPost) {

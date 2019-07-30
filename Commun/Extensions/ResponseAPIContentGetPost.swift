@@ -27,4 +27,8 @@ extension ResponseAPIContentGetPost: Equatable, IdentifiableType {
         }
         return nil
     }
+    
+    public func notifyChanged() {
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: PostControllerPostDidChangeNotification), object: self)
+    }
 }

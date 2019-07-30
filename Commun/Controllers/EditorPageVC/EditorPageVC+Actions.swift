@@ -51,14 +51,26 @@ extension EditorPageVC {
             .observeOn(MainScheduler.instance)
             .subscribe(onSuccess: { (userId, permlink) in
                 self.navigationController?.hideHud()
-                
-                // show post page
-                let postPageVC = controllerContainer.resolve(PostPageVC.self)!
-                postPageVC.viewModel.permlink = permlink
-                postPageVC.viewModel.userId = userId
-                var viewControllers = self.navigationController!.viewControllers
-                viewControllers[0] = postPageVC
-                self.navigationController?.setViewControllers(viewControllers, animated: true)
+                // if editing post
+                if var post = self.viewModel?.postForEdit {
+                    post.content.title = self.titleTextView.text
+                    post.content.body.full = self.contentTextView.text
+                    if let imageURL = self.viewModel?.embeds.first(where: {($0["type"] as? String) == "photo"})?["url"] as? String,
+                        let embeded = post.content.embeds.first,
+                        embeded.type == "photo" {
+                        post.content.embeds[0].result?.url = imageURL
+                    }
+                    post.notifyChanged()
+                    self.dismiss(animated: true, completion: nil)
+                } else {
+                    // show post page
+                    let postPageVC = controllerContainer.resolve(PostPageVC.self)!
+                    postPageVC.viewModel.permlink = permlink
+                    postPageVC.viewModel.userId = userId
+                    var viewControllers = self.navigationController!.viewControllers
+                    viewControllers[0] = postPageVC
+                    self.navigationController?.setViewControllers(viewControllers, animated: true)
+                }
             }, onError: { (error) in
                 self.navigationController?.hideHud()
                 
