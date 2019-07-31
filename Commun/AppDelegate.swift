@@ -73,6 +73,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 AppDelegate.reloadSubject.onNext(false)
                 self.window?.makeKeyAndVisible()
                 application.applicationIconBadgeNumber = 0
+            }, onError: {_ in
+                if let vc = self.window?.rootViewController as? SplashViewController {
+                    vc.showErrorScreen()
+                }
             })
             .disposed(by: bag)
         
@@ -138,11 +142,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                         if let error = error as? ErrorAPI {
                             switch error.caseInfo.message {
                             case "Cannot get such account from BC":
-                                AppDelegate.reloadSubject.onNext(true)
+                                do {
+                                    try KeychainManager.deleteUser()
+                                    AppDelegate.reloadSubject.onNext(true)
+                                } catch {
+                                    print("Could not delete user from key chain")
+                                }
+                                return
                             default:
                                 break
                             }
                         }
+                        if let splashVC = self.window?.rootViewController as? SplashViewController {
+                            splashVC.showErrorScreen()
+                        }
+                        
                     })
                     .disposed(by: self.bag)
                 

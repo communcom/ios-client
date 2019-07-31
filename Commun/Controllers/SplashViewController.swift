@@ -10,6 +10,7 @@ import UIKit
 
 class SplashViewController: UIViewController {
     @IBOutlet weak var splashImageView: UIImageView!
+    var errorView: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,15 +37,45 @@ class SplashViewController: UIViewController {
         }
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    func showErrorScreen() {
+        // reset
+        hideErrorView()
+        
+        // setup new errorView
+        errorView = UIView(frame: self.view.frame)
+        errorView.backgroundColor = .white
+        self.view.addSubview(errorView)
+        self.view.bringSubviewToFront(errorView)
+        
+        // label
+        let label = UILabel(frame: .zero)
+        label.numberOfLines = 0
+        label.textAlignment = .center
+        label.text = "There is an error occurs".localized() + "\n" + "Tap to try again".localized()
+        label.textColor = .darkGray
+        label.translatesAutoresizingMaskIntoConstraints = false
+        errorView.addSubview(label)
+        
+        // constraint for label
+        label.centerXAnchor.constraint(equalTo: errorView.centerXAnchor).isActive = true
+        label.centerYAnchor.constraint(equalTo: errorView.centerYAnchor).isActive = true
+        label.leadingAnchor.constraint(equalTo: errorView.leadingAnchor, constant: 16).isActive = true
+        label.trailingAnchor.constraint(equalTo: errorView.trailingAnchor, constant: -16).isActive = true
+        
+        // action for label
+        label.isUserInteractionEnabled = true
+        let tap = UITapGestureRecognizer(target: self, action: #selector(retryDidTouch))
+        label.addGestureRecognizer(tap)
     }
-    */
-
+    
+    @objc func retryDidTouch(_ tap: UITapGestureRecognizer) {
+        hideErrorView()
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
+            AppDelegate.reloadSubject.onNext(true)
+        }
+    }
+    
+    func hideErrorView() {
+        errorView?.removeFromSuperview()
+    }
 }
