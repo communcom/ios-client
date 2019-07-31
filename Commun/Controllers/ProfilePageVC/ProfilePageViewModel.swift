@@ -135,7 +135,7 @@ class ProfilePageViewModel: ListViewModelType {
     // MARK: - For profile view
     func loadProfile() {
         NetworkService.shared.getUserProfile(userId: userId)
-            .do(onSubscribed: {
+            .do(onSubscribe: {
                 self.profileLoadingHandler?(true)
                 self.profileFetchingErrorHandler?(nil)
             })

@@ -18,6 +18,7 @@ PODS:
     - GoloCrypto
     - Localize-Swift (~> 2.0)
     - Locksmith
+    - ReachabilitySwift
     - RxCocoa
     - RxSwift
     - secp256k1.swift
@@ -151,7 +152,6 @@ DEPENDENCIES:
   - PhoneNumberKit (~> 2.6)
   - PinCodeInputView
   - QRCodeReaderViewController (~> 4.0.2)
-  - ReachabilitySwift
   - RxDataSources (~> 3.0)
   - SDWebImage (~> 4.0)
   - SwifterSwift/Foundation
@@ -221,7 +221,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   CyberSwift:
-    :commit: 9eda72f5a07c643e83054beeaf8afa96832d3e08
+    :commit: d61112c3acd1801a4c839baa07a0d8525ef8b3d0
     :git: https://github.com/GolosChain/cyberSwift.git
   THPinViewController:
     :commit: 3a9214d337cb96e6491325f8e0a72e50d62fc210
@@ -236,7 +236,7 @@ SPEC CHECKSUMS:
   Checksum: f1aa56a27dea5db4006c819e2e129ee6aeb1d9af
   Crashlytics: 2dfd686bcb918dc10ee0e76f7f853fe42c7bd552
   CryptoSwift: d81eeaa59dc5a8d03720fe919a6fd07b51f7439f
-  CyberSwift: d43bf48ed543ff3d7496dfce9317c2725bca6f72
+  CyberSwift: c2e49f8e37450d53d67484cd71147ddc950ef7cb
   DateToolsSwift: 875d97ff9e3a5d54abdd67a269b3f51c757b71ab
   Differentiator: be49ca3408f0ecfc761e4c7763d20c62be01b9ad
   DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
@@ -277,6 +277,6 @@ SPEC CHECKSUMS:
   TTTAttributedLabel: 8cffe8e127e4e82ff3af1e5386d4cd0ad000b656
   UIImageView-Letters: f62db28076797adf3560ab7410647dc6899b9eef
 
-PODFILE CHECKSUM: f3336c067aff1d00eafdea3e1e511b14654deece
+PODFILE CHECKSUM: 4b6e984ea74e375519623a4473ea83aae16eccc9
 
 COCOAPODS: 1.7.5

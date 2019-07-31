@@ -42,7 +42,6 @@ target 'Commun' do
   pod 'ListPlaceholder'
   
   pod 'DZNEmptyDataSet'
-  pod 'ReachabilitySwift'
   
   pod 'TTTAttributedLabel'
   pod 'QRCodeReaderViewController', '~> 4.0.2'

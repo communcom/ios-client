@@ -56,7 +56,7 @@ class FeedPageViewModel: PostsListController, ListViewModelType {
     
     func fetchNext() {
         fetcher.fetchNext()
-            .do(onSubscribed: {
+            .do(onSubscribe: {
                 self.loadingHandler?()
             })
             .subscribe(onSuccess: { (list) in

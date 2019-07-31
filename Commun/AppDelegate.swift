@@ -17,7 +17,6 @@ import FirebaseMessaging
 import UserNotifications
 import CyberSwift
 @_exported import CyberSwift
-import Reachability
 import RxSwift
 
 let isDebugMode: Bool = true
@@ -28,7 +27,6 @@ let gcmMessageIDKey = "gcm.message_id"
 class AppDelegate: UIResponder, UIApplicationDelegate {
     // MARK: - Properties
     var window: UIWindow?
-    var reachability: Reachability?
     
     static var reloadSubject = PublishSubject<Bool>()
     let notificationCenter = UNUserNotificationCenter.current()
@@ -54,23 +52,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Hide constraint warning
         UserDefaults.standard.setValue(false, forKey: "_UIConstraintBasedLayoutLogUnsatisfiable")
         
-        // Network monitoring
-        reachability = Reachability()
-        
-        reachability?.whenReachable = { _ in
-            SocketManager.shared.connect()
-        }
-        
-        do {
-            try reachability?.startNotifier()
-        } catch {
-            Logger.log(message: "Unable to start reachability.notifier", event: .error)
-        }
-        
         // handle connected
         SocketManager.shared.connected
             .filter {$0}
-            .subscribe(onNext: { (connected) in
+            .take(1)
+            .asSingle()
+            .timeout(5, scheduler: MainScheduler.instance)
+            .subscribe(onSuccess: { (connected) in
                 AppDelegate.reloadSubject.onNext(false)
                 self.window?.makeKeyAndVisible()
                 application.applicationIconBadgeNumber = 0
