@@ -68,6 +68,7 @@ class LocalAuthVC: THPinViewController {
                 DispatchQueue.main.sync {
                     if success {
                         self.completion?()
+                        self.dismiss(animated: true, completion: nil)
                     }
                 }
             }
