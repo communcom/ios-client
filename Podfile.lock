@@ -116,10 +116,6 @@ PODS:
     - Differentiator (~> 3.0)
     - RxCocoa (~> 4.0)
     - RxSwift (~> 4.0)
-  - RxReachability (0.1.8):
-    - ReachabilitySwift (~> 4.3.0)
-    - RxCocoa (~> 4)
-    - RxSwift (~> 4)
   - RxSwift (4.5.0)
   - SDWebImage (4.4.7):
     - SDWebImage/Core (= 4.4.7)
@@ -155,8 +151,8 @@ DEPENDENCIES:
   - PhoneNumberKit (~> 2.6)
   - PinCodeInputView
   - QRCodeReaderViewController (~> 4.0.2)
+  - ReachabilitySwift
   - RxDataSources (~> 3.0)
-  - RxReachability
   - SDWebImage (~> 4.0)
   - SwifterSwift/Foundation
   - SwifterSwift/SwiftStdlib
@@ -203,7 +199,6 @@ SPEC REPOS:
     - ReachabilitySwift
     - RxCocoa
     - RxDataSources
-    - RxReachability
     - RxSwift
     - SDWebImage
     - secp256k1.swift
@@ -268,7 +263,6 @@ SPEC CHECKSUMS:
   ReachabilitySwift: 4032e2f59586e11e3b0ebe15b167abdd587a388b
   RxCocoa: cbf70265dc65a981d4ac982e513c10cf23df24a0
   RxDataSources: a843bad90c29817f5923ec8163f4af2de084ceb3
-  RxReachability: 053f2d913db44998242ade488ccaef558f3ce7cb
   RxSwift: f172070dfd1a93d70a9ab97a5a01166206e1c575
   SDWebImage: c10d14a8883ebd89664f02a422006f66a85c0c5d
   secp256k1.swift: a7e7a214f6db6ce5db32cc6b2b45e5c4dd633634
@@ -283,6 +277,6 @@ SPEC CHECKSUMS:
   TTTAttributedLabel: 8cffe8e127e4e82ff3af1e5386d4cd0ad000b656
   UIImageView-Letters: f62db28076797adf3560ab7410647dc6899b9eef
 
-PODFILE CHECKSUM: 4ec7c122c9397fbccbfe6a459b761f99b727d899
+PODFILE CHECKSUM: f3336c067aff1d00eafdea3e1e511b14654deece
 
 COCOAPODS: 1.7.5

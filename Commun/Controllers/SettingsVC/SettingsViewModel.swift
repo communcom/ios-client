@@ -48,8 +48,9 @@ class SettingsViewModel {
     func getOptionsPushShow() {
         RestAPIManager.instance.rx.getPushNotify()
             .map {$0.notify.show}
-            .asObservable()
-            .bind(to: optionsPushShow)
+            .subscribe(onSuccess: { [weak self] (show) in
+                self?.optionsPushShow.accept(show)
+            })
             .disposed(by: bag)
     }
     

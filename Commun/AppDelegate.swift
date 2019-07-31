@@ -18,7 +18,6 @@ import UserNotifications
 import CyberSwift
 @_exported import CyberSwift
 import Reachability
-import RxReachability
 import RxSwift
 
 let isDebugMode: Bool = true
@@ -57,14 +56,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Network monitoring
         reachability = Reachability()
-        try? reachability?.startNotifier()
         
-        reachability?.rx.isReachable
-            .filter {$0}
-            .subscribe(onNext: {_ in
-                SocketManager.shared.connect()
-            })
-            .disposed(by: bag)
+        reachability?.whenReachable = { _ in
+            SocketManager.shared.connect()
+        }
+        
+        do {
+            try reachability?.startNotifier()
+        } catch {
+            Logger.log(message: "Unable to start reachability.notifier", event: .error)
+        }
         
         // handle connected
         SocketManager.shared.connected
