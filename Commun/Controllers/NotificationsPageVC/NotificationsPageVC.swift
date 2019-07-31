@@ -73,6 +73,7 @@ class NotificationsPageVC: UIViewController {
         viewModel.fetchNextErrorHandler = {[weak self] error in
             guard let strongSelf = self else {return}
             strongSelf.tableView.addListErrorFooterView(with: #selector(strongSelf.didTapTryAgain(gesture:)), on: strongSelf)
+            self?.tableView.reloadData()
         }
         
         // fetchNext

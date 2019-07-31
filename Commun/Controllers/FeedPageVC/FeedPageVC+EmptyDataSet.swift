@@ -19,13 +19,15 @@ extension FeedPageVC: DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
     }
     
     func title(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
+        let message = viewModel.lastError.value == nil ? "No Posts".localized() : "Error".localized() + "!"
         return NSMutableAttributedString()
-            .bold("No Posts".localized(), font: .boldSystemFont(ofSize: 22))
+            .bold(message, font: .boldSystemFont(ofSize: 22))
     }
     
     func description(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
+        let message = viewModel.lastError.value == nil ? "No post to show".localized() : "There is an error occurred".localized() + "\n" + "Tap to try again".localized()
         return NSMutableAttributedString()
-            .gray("We have no post to show".localized())
+            .gray(message)
     }
     
     func emptyDataSet(_ scrollView: UIScrollView!, didTap view: UIView!) {

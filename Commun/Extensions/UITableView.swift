@@ -84,7 +84,21 @@ extension UITableView {
         self.tableFooterView = containerView
     }
     
+    var numberOfRowsInTotal: Int {
+        var result = 0
+        for i in 0..<numberOfSections {
+            result += numberOfRows(inSection: i)
+        }
+        return result
+    }
+    
     func addListErrorFooterView(with buttonHandler: Selector? = nil, on target: AnyObject) {
+        // If list is empty
+        if numberOfRowsInTotal == 0 {
+            tableFooterView = UIView()
+            return
+        }
+        
         // Prevent dupplicating
         if tableFooterView?.tag == listErrorFooterViewTag {
             return

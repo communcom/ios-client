@@ -45,7 +45,7 @@
 "You have not made any"                     =   "Вы не создали ни одного";
 "post"                                      =   "сообщения";
 "comment"                                   =   "комментария";
-"We have no post to show"                   =   "У нас нет сообщений для показа";
+"No post to show"                           =   "Нет сообщений для показа";
 "Set up Passcode"                           =   "Установите пароль";
 "Add short PIN code"                        =   "Добавьте короткий PIN-код";
 "Trending"                                  =   "Актуальные";

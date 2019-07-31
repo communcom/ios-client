@@ -14,6 +14,7 @@ import Action
 struct NotificationsPageViewModel: ListViewModelType {
     let bag = DisposeBag()
     let list = BehaviorRelay<[ResponseAPIOnlineNotificationData]>(value: [])
+    let lastError = BehaviorRelay<Error?>(value: nil)
     
     let fetcher = NotificationsFetcher()
     
@@ -25,6 +26,7 @@ struct NotificationsPageViewModel: ListViewModelType {
     func reload() {
         fetcher.reset()
         list.accept([])
+        lastError.accept(nil)
         fetchNext()
     }
     
@@ -34,6 +36,9 @@ struct NotificationsPageViewModel: ListViewModelType {
                 self.loadingHandler?()
             })
             .subscribe(onSuccess: { (list) in
+                // Reset error
+                self.lastError.accept(nil)
+                
                 if list.count > 0 {
                     let newList = list.filter {!self.list.value.contains($0) && $0.eventType != "unsubscribe"}
                     self.list.accept(self.list.value + newList)
@@ -44,6 +49,7 @@ struct NotificationsPageViewModel: ListViewModelType {
                     return
                 }
             }, onError: { (error) in
+                self.lastError.accept(error)
                 self.fetchNextErrorHandler?(error)
             })
             .disposed(by: bag)
