@@ -163,7 +163,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 
                 let navigationBarAppearace = UINavigationBar.appearance()
                 navigationBarAppearace.tintColor = #colorLiteral(red: 0.4156862745, green: 0.5019607843, blue: 0.9607843137, alpha: 1)
-            }        }
+            }
+        }
         
         if force, let vc = window?.rootViewController, !(vc is SplashViewController) {
             // Closing animation
