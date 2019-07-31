@@ -94,3 +94,5 @@
 "Enter correct user name"                   =   "Введите корректное имя пользователя";
 "Enter correct sms code"                    =   "Введите корректный смс-код";
 "User already in blockchain."               =   "Ползователь уже зарегистрирован в блокчейне";
+"There is an error occurred"                =   "Возникла ошибка";
+"Tap to try again"                          =   "Нажмите сюда чтобы попробовать еще раз";

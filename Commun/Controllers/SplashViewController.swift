@@ -51,7 +51,7 @@ class SplashViewController: UIViewController {
         let label = UILabel(frame: .zero)
         label.numberOfLines = 0
         label.textAlignment = .center
-        label.text = "There is an error occurs".localized() + "\n" + "Tap to try again".localized()
+        label.text = "There is an error occurred".localized() + "\n" + "Tap to try again".localized()
         label.textColor = .darkGray
         label.translatesAutoresizingMaskIntoConstraints = false
         errorView.addSubview(label)
