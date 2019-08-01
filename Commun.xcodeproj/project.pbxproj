@@ -221,7 +221,6 @@
 		B1EA02F22289882A00835244 /* SF-Pro-Text-RegularItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 57F9CAA1225B3AAA00AC9ACA /* SF-Pro-Text-RegularItalic.otf */; };
 		B1EA02F32289882A00835244 /* SF-Pro-Text-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 57F9CA94225B3A9900AC9ACA /* SF-Pro-Text-Semibold.otf */; };
 		B1EA02F42289882A00835244 /* SF-Pro-Text-SemiboldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 57F9CAA6225B3AAF00AC9ACA /* SF-Pro-Text-SemiboldItalic.otf */; };
-		B1EA0317228A965200835244 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EA0316228A965200835244 /* MainViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -462,7 +461,6 @@
 		B1A8AC1A22E6FF5400032030 /* BlankButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlankButton.swift; sourceTree = "<group>"; };
 		B1EA02D42289734800835244 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		B1EA02D62289734E00835244 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
-		B1EA0316228A965200835244 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -734,7 +732,6 @@
 				57DE5BDA2252086C008566B9 /* EditorPageVC */,
 				576DC917223E41CA00EDED41 /* FeedPageVC */,
 				57A1CA612270FC3300E2A1E3 /* LanguageVC */,
-				B1EA0315228A963200835244 /* MainVC */,
 				3B2F225322689252006B589E /* NotificationsPageVC */,
 				5725173A2243E4510033125C /* PostPageVC */,
 				3BAF69C122675ADB0055CCEB /* ProfilePageVC */,
@@ -1180,14 +1177,6 @@
 			path = UIButton;
 			sourceTree = "<group>";
 		};
-		B1EA0315228A963200835244 /* MainVC */ = {
-			isa = PBXGroup;
-			children = (
-				B1EA0316228A965200835244 /* MainViewController.swift */,
-			);
-			path = MainVC;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1540,7 +1529,6 @@
 				57FB17A4224C15C400563BF7 /* SignInViewModel.swift in Sources */,
 				3BA4D089229315D60022A69D /* UIResponder.swift in Sources */,
 				57840A02223FAC1B00338FD5 /* SegmentioCell.swift in Sources */,
-				B1EA0317228A965200835244 /* MainViewController.swift in Sources */,
 				3B5EDE2E22DF929D00897BF3 /* SettingsSwitcherCell.swift in Sources */,
 				3B197C8A226A33CF008CF10D /* Decodable+MockObjects.swift in Sources */,
 				578B94DA2263CBD800FB5BC6 /* ConfirmUserVC.swift in Sources */,
