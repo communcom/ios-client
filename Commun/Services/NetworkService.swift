@@ -71,20 +71,12 @@ class NetworkService: NSObject {
     }
     
     // return transactionId
-    typealias SendPostCompletion = (transactionId: String?, userId: String?, permlink: String?)
-  
     func sendPost(withTitle title: String, withText text: String, metaData json: String, withTags tags: [String]) -> Single<SendPostCompletion> {
         return RestAPIManager.instance.rx.create(message:       text,
                                                  headline:      title,
                                                  author:        Config.currentUser?.id ?? "Commun",
                                                  tags:          tags,
                                                  metaData:      json)
-            .map({ (transaction) -> SendPostCompletion in
-                let any = ((transaction.body?.processed.action_traces.first?.act.data["message_id"])?.jsonValue) as? [String: eosswift.AnyJSONType]
-                return SendPostCompletion(transactionId: transaction.body?.transaction_id,
-                                          userId: any?["author"]?.jsonValue as? String,
-                                          permlink: any?["permlink"]?.jsonValue as? String)
-            })
             .observeOn(MainScheduler.instance)
     }
     
@@ -97,12 +89,6 @@ class NetworkService: NSObject {
                 tags:           tags,
                 metaData:       json
             )
-            .map {transaction -> SendPostCompletion in
-                let any = ((transaction.body?.processed.action_traces.first?.act.data["message_id"])?.jsonValue) as? [String: eosswift.AnyJSONType]
-                return SendPostCompletion(transactionId: transaction.body?.transaction_id,
-                                          userId: any?["author"]?.jsonValue as? String,
-                                          permlink: any?["permlink"]?.jsonValue as? String)
-            }
             .observeOn(MainScheduler.instance)
     }
     
@@ -117,12 +103,10 @@ class NetworkService: NSObject {
                                                  tags:              tags,
                                                  metaData:          metaData
             )
-            .flatMapCompletable({ (transaction) -> Completable in
+            .flatMapCompletable({ (msgInfo) -> Completable in
                 #warning("Remove this chaining to use socket in production")
-                guard let transactionId = transaction.body?.transaction_id else {
-                    return .error(ErrorAPI.responseUnsuccessful(message: "transactionId is missing"))
-                }
-                return self.waitForTransactionWith(id: transactionId)
+                
+                return self.waitForTransactionWith(id: msgInfo.transactionId!)
             })
             .observeOn(MainScheduler.instance)
     }
@@ -214,20 +198,14 @@ class NetworkService: NSObject {
                 
                 if !waitForTransaction {return .empty()}
                 
-                guard let id = transaction.body?.transaction_id else {return .error(ErrorAPI.responseUnsuccessful(message: "transactionId is missing"))}
-                
-                return self.waitForTransactionWith(id: id)
+                return self.waitForTransactionWith(id: transaction)
             })
             .observeOn(MainScheduler.instance)
     }
     
     func triggerFollow(_ userToFollow: String, isUnfollow: Bool = false) -> Completable {
         return RestAPIManager.instance.rx.follow(userToFollow, isUnfollow: isUnfollow)
-            .flatMapCompletable({ (transaction) -> Completable in
-                guard let id = transaction.body?.transaction_id else {return .error(ErrorAPI.responseUnsuccessful(message: "transactionId is missing"))}
-                
-                return self.waitForTransactionWith(id: id)
-            })
+            .flatMapCompletable { self.waitForTransactionWith(id: $0) }
     }
     
     // MARK: - meta
