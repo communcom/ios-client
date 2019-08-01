@@ -29,6 +29,7 @@ extension CommunitiesVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         // create view
         let view = UIView()
+        view.backgroundColor = .white
         
         // create uilabel
         let label = UILabel(text: section == 1 ? "Recommended".localized(): nil)
