@@ -15,10 +15,10 @@
         </array>
     </customFonts>
     <scenes>
-        <!--View Controller-->
+        <!--CommunitiesVC-->
         <scene sceneID="kEO-aY-2RQ">
             <objects>
-                <viewController id="3em-ps-6DW" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CommunitiesVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="3em-ps-6DW" customClass="CommunitiesVC" customModule="Commun" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="PoL-S5-DAM">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -124,6 +124,11 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="4tD-TS-ddZ"/>
                     </view>
+                    <connections>
+                        <outlet property="searchBar" destination="0HY-oy-JMr" id="2Ae-Ak-18L"/>
+                        <outlet property="segmentio" destination="rDJ-4d-Y6e" id="pNr-Zc-JdA"/>
+                        <outlet property="tableView" destination="bxJ-qP-W0Y" id="UOz-9x-Z0f"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uWY-ju-L7l" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

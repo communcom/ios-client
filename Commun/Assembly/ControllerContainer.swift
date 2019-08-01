@@ -103,6 +103,12 @@ let controllerContainer: Container = {
         return vc
     })
     
+    // Communities scene
+    container.register(CommunitiesVC.self, factory: { r in
+        let vc = CommunitiesVC.instanceController(fromStoryboard: "Communities", withIdentifier: "CommunitiesVC") as! CommunitiesVC
+        return vc
+    })
+    
     // Profile scene
     container.register(ProfilePageVC.self, factory: { r in
         let vc = ProfilePageVC.instanceController(fromStoryboard: "ProfilePageVC", withIdentifier: "ProfilePageVC") as! ProfilePageVC

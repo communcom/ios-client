@@ -26,7 +26,7 @@ class TabBarVC: UITabBarController {
         feed.accessibilityLabel = "TabBarFeedTabBarItem"
 
         // Comunities Tab
-        let comunities = UIViewController()
+        let comunities = controllerContainer.resolve(CommunitiesVC.self)!
         comunities.tabBarItem = centerTabBarItem(withImageName: "comunities", tag: 1)
         comunities.accessibilityLabel = "TabBarComunitiesTabBarItem"
 
