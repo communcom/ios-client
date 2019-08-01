@@ -30,7 +30,7 @@ class CommunityCell: UITableViewCell {
         
         joinButton.setTitle(joined ? "JOINED".localized(): "JOIN".localized(), for: .normal)
         joinButton.backgroundColor = joined ? UIColor(hexString: "#F3F5FA") : UIColor.appMainColor
-        joinButton.setTitleColor(joined ? .darkGray : .black, for: .normal)
+        joinButton.setTitleColor(joined ? .darkGray : .white, for: .normal)
     }
 
     @IBAction func joinButtonDidTouch(_ sender: Any) {

@@ -7,14 +7,17 @@
 //
 
 import UIKit
+import RxSwift
 
 class CommunitiesVC: UIViewController {
     // MARK: - Properties
-    let viewModel = CommunitiesViewModel()
+    let viewModel   = CommunitiesViewModel()
+    let bag         = DisposeBag()
     
     // HeaderView
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var segmentio: Segmentio!
+    @IBOutlet weak var segmentioHeightConstraint: NSLayoutConstraint!
     
     // TableView
     @IBOutlet weak var tableView: UITableView!
