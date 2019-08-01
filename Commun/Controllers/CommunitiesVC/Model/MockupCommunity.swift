@@ -9,11 +9,22 @@
 import Foundation
 import RxDataSources
 
-struct MockupCommunity: Equatable, IdentifiableType {
+class MockupCommunity: Equatable, IdentifiableType {
+    static func == (lhs: MockupCommunity, rhs: MockupCommunity) -> Bool {
+        return lhs.id == rhs.id
+    }
+    
     let id: UInt
     var name: String
     var icon: UIImage?
     var joined: Bool = false
+    
+    init(id: UInt, name: String, icon: UIImage?, joined: Bool) {
+        self.id = id
+        self.name = name
+        self.icon = icon
+        self.joined = joined
+    }
     
     static var mockupData: [MockupCommunity] {
         return [
