@@ -39,9 +39,9 @@ class EditorPageViewModel {
         ])
     }
     
-    func sendPost(with title: String, text: String, image: UIImage?) -> Single<NetworkService.SendPostCompletion> {
+    func sendPost(with title: String, text: String, image: UIImage?) -> Single<SendPostCompletion> {
         
-        var request: () -> Single<NetworkService.SendPostCompletion>
+        var request: () -> Single<SendPostCompletion>
         if let post = postForEdit {
             request = {
                 let json = self.createJsonMetadata(for: text)
