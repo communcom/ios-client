@@ -56,7 +56,7 @@
                                 <rect key="frame" x="0.0" y="156" width="414" height="740"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="80" id="XlL-3I-7Yn">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="CommunityCell" rowHeight="80" id="XlL-3I-7Yn" customClass="CommunityCell" customModule="Commun" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="414" height="80"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="XlL-3I-7Yn" id="eRf-aE-hOf">
@@ -86,16 +86,13 @@
                                                         <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     </state>
                                                     <userDefinedRuntimeAttributes>
-                                                        <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                                            <color key="value" red="0.85480856895446777" green="0.85495573282241821" blue="0.85479927062988281" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                        <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                                            <real key="value" value="1"/>
-                                                        </userDefinedRuntimeAttribute>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                                             <real key="value" value="15"/>
                                                         </userDefinedRuntimeAttribute>
                                                     </userDefinedRuntimeAttributes>
+                                                    <connections>
+                                                        <action selector="joinButtonDidTouch:" destination="XlL-3I-7Yn" eventType="touchUpInside" id="0oR-Wh-CHo"/>
+                                                    </connections>
                                                 </button>
                                             </subviews>
                                             <constraints>
@@ -108,6 +105,11 @@
                                                 <constraint firstItem="Md7-nS-5sB" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="c34-8g-oxv" secondAttribute="trailing" constant="8" id="zi2-wk-eAS"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="communityImageView" destination="UfI-uK-mA2" id="Jtx-1h-cnH"/>
+                                            <outlet property="joinButton" destination="Md7-nS-5sB" id="bVg-kl-SoC"/>
+                                            <outlet property="nameLabel" destination="c34-8g-oxv" id="3il-Cm-cg7"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
