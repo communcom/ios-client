@@ -28,13 +28,13 @@ class MockupCommunity: Equatable, IdentifiableType {
     
     static var mockupData: [MockupCommunity] {
         return [
-            MockupCommunity(id: 1, name: "ADME", icon: nil, joined: false),
-            MockupCommunity(id: 2, name: "Behance", icon: nil, joined: true),
-            MockupCommunity(id: 3, name: "COMMUN", icon: nil, joined: false),
-            MockupCommunity(id: 4, name: "Dribble", icon: nil, joined: true),
-            MockupCommunity(id: 5, name: "UX Journals", icon: nil, joined: false),
-            MockupCommunity(id: 6, name: "Suppermatika", icon: nil, joined: false),
-            MockupCommunity(id: 7, name: "Overwatch", icon: nil, joined: false),
+            MockupCommunity(id: 1, name: "ADME", icon: UIImage(named: "tux"), joined: false),
+            MockupCommunity(id: 2, name: "Behance", icon: UIImage(named: "tux"), joined: true),
+            MockupCommunity(id: 3, name: "COMMUN", icon: UIImage(named: "tux"), joined: false),
+            MockupCommunity(id: 4, name: "Dribble", icon: UIImage(named: "tux"), joined: true),
+            MockupCommunity(id: 5, name: "UX Journals", icon: UIImage(named: "tux"), joined: false),
+            MockupCommunity(id: 6, name: "Suppermatika", icon: UIImage(named: "tux"), joined: false),
+            MockupCommunity(id: 7, name: "Overwatch", icon: UIImage(named: "tux"), joined: false),
         ]
     }
     

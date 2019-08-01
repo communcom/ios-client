@@ -9,7 +9,7 @@
 import Foundation
 import RxDataSources
 
-extension CommunitiesVC {
+extension CommunitiesVC: UITableViewDelegate {
     typealias Section = AnimatableSectionModel<String, MockupCommunity>
     
     var dataSource: RxTableViewSectionedAnimatedDataSource<Section> {
@@ -20,5 +20,26 @@ extension CommunitiesVC {
                 return cell
             }
         )
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return (section == 1 && viewModel.filter.value != .myCommunities) ? 56 : 0
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        // create view
+        let view = UIView()
+        
+        // create uilabel
+        let label = UILabel(text: section == 1 ? "Recommended".localized(): nil)
+        label.font = .boldSystemFont(ofSize: 22)
+        view.addSubview(label)
+        
+        // constraint
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        label.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16).isActive = true
+        
+        return view
     }
 }

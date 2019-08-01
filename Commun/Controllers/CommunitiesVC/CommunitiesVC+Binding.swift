@@ -51,5 +51,8 @@ extension CommunitiesVC {
             }
             .bind(to: tableView.rx.items(dataSource: dataSource))
             .disposed(by: bag)
+        
+        // forward delegate to set section for header
+        tableView.rx.setDelegate(self).disposed(by: bag)
     }
 }
