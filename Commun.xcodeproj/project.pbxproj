@@ -34,6 +34,7 @@
 		3B24F86122F3715E00B7091C /* CommunitiesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B24F86022F3715E00B7091C /* CommunitiesVC.swift */; };
 		3B24F86322F376FF00B7091C /* CommunitiesVC+Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B24F86222F376FF00B7091C /* CommunitiesVC+Binding.swift */; };
 		3B24F86522F3777500B7091C /* CommunitiesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B24F86422F3777500B7091C /* CommunitiesViewModel.swift */; };
+		3B24F86722F3784900B7091C /* MockupCommunity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B24F86622F3784900B7091C /* MockupCommunity.swift */; };
 		3B28EFE2228C7C31002D4816 /* KeyboardLayoutConstraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B28EFE1228C7C31002D4816 /* KeyboardLayoutConstraint.swift */; };
 		3B2F2269226892C5006B589E /* NotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B2F2262226892C4006B589E /* NotificationCell.swift */; };
 		3B2F226A226892C5006B589E /* NotificationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3B2F2263226892C4006B589E /* NotificationCell.xib */; };
@@ -265,6 +266,7 @@
 		3B24F86022F3715E00B7091C /* CommunitiesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunitiesVC.swift; sourceTree = "<group>"; };
 		3B24F86222F376FF00B7091C /* CommunitiesVC+Binding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CommunitiesVC+Binding.swift"; sourceTree = "<group>"; };
 		3B24F86422F3777500B7091C /* CommunitiesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunitiesViewModel.swift; sourceTree = "<group>"; };
+		3B24F86622F3784900B7091C /* MockupCommunity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockupCommunity.swift; sourceTree = "<group>"; };
 		3B28EFE1228C7C31002D4816 /* KeyboardLayoutConstraint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardLayoutConstraint.swift; sourceTree = "<group>"; };
 		3B2F2262226892C4006B589E /* NotificationCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationCell.swift; sourceTree = "<group>"; };
 		3B2F2263226892C4006B589E /* NotificationCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NotificationCell.xib; sourceTree = "<group>"; };
@@ -534,12 +536,21 @@
 		3B24F85D22F36A1C00B7091C /* CommunitiesVC */ = {
 			isa = PBXGroup;
 			children = (
+				3B24F86822F3784F00B7091C /* Model */,
 				3B24F86422F3777500B7091C /* CommunitiesViewModel.swift */,
 				3B24F86022F3715E00B7091C /* CommunitiesVC.swift */,
 				3B24F86222F376FF00B7091C /* CommunitiesVC+Binding.swift */,
 				3B24F85E22F36A7100B7091C /* Communities.storyboard */,
 			);
 			path = CommunitiesVC;
+			sourceTree = "<group>";
+		};
+		3B24F86822F3784F00B7091C /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				3B24F86622F3784900B7091C /* MockupCommunity.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		3B2F225322689252006B589E /* NotificationsPageVC */ = {
@@ -1566,6 +1577,7 @@
 				3B24F86322F376FF00B7091C /* CommunitiesVC+Binding.swift in Sources */,
 				3B5CB30C22A57D5B00757533 /* NotificationPageVC+Binding.swift in Sources */,
 				575AECB322606F7100A7EC2D /* SelectCountryViewModel.swift in Sources */,
+				3B24F86722F3784900B7091C /* MockupCommunity.swift in Sources */,
 				3B24F86122F3715E00B7091C /* CommunitiesVC.swift in Sources */,
 				57840A0B223FAC1B00338FD5 /* BadgeViewPresenter.swift in Sources */,
 				3BF37BCA22A11FA700A72FFE /* UIView.swift in Sources */,

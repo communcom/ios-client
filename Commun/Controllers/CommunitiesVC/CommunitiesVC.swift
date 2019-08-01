@@ -48,7 +48,7 @@ class CommunitiesVC: UIViewController {
             options: .default)
         
         segmentio.valueDidChange = {_, index in
-            // TODO: segmentio did change
+            self.viewModel.filter.accept(index == 0 ? .myCommunities : .discover)
         }
         
         // fire first filter

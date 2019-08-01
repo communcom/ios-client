@@ -11,5 +11,6 @@ import RxSwift
 import RxCocoa
 
 class CommunitiesViewModel {
+    let filter = BehaviorRelay<MockupCommunityFilter>(value: .discover)
     
 }
