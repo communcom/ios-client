@@ -32,6 +32,8 @@
 		3B197C8B226A33CF008CF10D /* ResponseAPIContentGetFeedResult.json in Resources */ = {isa = PBXBuildFile; fileRef = 3B197C87226A33CF008CF10D /* ResponseAPIContentGetFeedResult.json */; };
 		3B24F85F22F36A7100B7091C /* Communities.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3B24F85E22F36A7100B7091C /* Communities.storyboard */; };
 		3B24F86122F3715E00B7091C /* CommunitiesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B24F86022F3715E00B7091C /* CommunitiesVC.swift */; };
+		3B24F86322F376FF00B7091C /* CommunitiesVC+Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B24F86222F376FF00B7091C /* CommunitiesVC+Binding.swift */; };
+		3B24F86522F3777500B7091C /* CommunitiesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B24F86422F3777500B7091C /* CommunitiesViewModel.swift */; };
 		3B28EFE2228C7C31002D4816 /* KeyboardLayoutConstraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B28EFE1228C7C31002D4816 /* KeyboardLayoutConstraint.swift */; };
 		3B2F2269226892C5006B589E /* NotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B2F2262226892C4006B589E /* NotificationCell.swift */; };
 		3B2F226A226892C5006B589E /* NotificationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3B2F2263226892C4006B589E /* NotificationCell.xib */; };
@@ -223,7 +225,6 @@
 		B1EA02F22289882A00835244 /* SF-Pro-Text-RegularItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 57F9CAA1225B3AAA00AC9ACA /* SF-Pro-Text-RegularItalic.otf */; };
 		B1EA02F32289882A00835244 /* SF-Pro-Text-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 57F9CA94225B3A9900AC9ACA /* SF-Pro-Text-Semibold.otf */; };
 		B1EA02F42289882A00835244 /* SF-Pro-Text-SemiboldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 57F9CAA6225B3AAF00AC9ACA /* SF-Pro-Text-SemiboldItalic.otf */; };
-		B1EA0317228A965200835244 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EA0316228A965200835244 /* MainViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -262,6 +263,8 @@
 		3B197C87226A33CF008CF10D /* ResponseAPIContentGetFeedResult.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ResponseAPIContentGetFeedResult.json; sourceTree = "<group>"; };
 		3B24F85E22F36A7100B7091C /* Communities.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Communities.storyboard; sourceTree = "<group>"; };
 		3B24F86022F3715E00B7091C /* CommunitiesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunitiesVC.swift; sourceTree = "<group>"; };
+		3B24F86222F376FF00B7091C /* CommunitiesVC+Binding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CommunitiesVC+Binding.swift"; sourceTree = "<group>"; };
+		3B24F86422F3777500B7091C /* CommunitiesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunitiesViewModel.swift; sourceTree = "<group>"; };
 		3B28EFE1228C7C31002D4816 /* KeyboardLayoutConstraint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardLayoutConstraint.swift; sourceTree = "<group>"; };
 		3B2F2262226892C4006B589E /* NotificationCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationCell.swift; sourceTree = "<group>"; };
 		3B2F2263226892C4006B589E /* NotificationCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NotificationCell.xib; sourceTree = "<group>"; };
@@ -531,8 +534,10 @@
 		3B24F85D22F36A1C00B7091C /* CommunitiesVC */ = {
 			isa = PBXGroup;
 			children = (
-				3B24F85E22F36A7100B7091C /* Communities.storyboard */,
+				3B24F86422F3777500B7091C /* CommunitiesViewModel.swift */,
 				3B24F86022F3715E00B7091C /* CommunitiesVC.swift */,
+				3B24F86222F376FF00B7091C /* CommunitiesVC+Binding.swift */,
+				3B24F85E22F36A7100B7091C /* Communities.storyboard */,
 			);
 			path = CommunitiesVC;
 			sourceTree = "<group>";
@@ -1491,6 +1496,7 @@
 				3BDD99FE228DA59900B2A1DA /* ExpandableTextView.swift in Sources */,
 				57840A05223FAC1B00338FD5 /* SegmentioCellWithLabel.swift in Sources */,
 				3BB48AD022D5F84D00F11B6A /* SetPasscodeVC.swift in Sources */,
+				3B24F86522F3777500B7091C /* CommunitiesViewModel.swift in Sources */,
 				3B5D7CF12299D79B0077B82C /* FeedSortMode.swift in Sources */,
 				3BB48AD522D645FF00F11B6A /* BoardingVC.swift in Sources */,
 				5797E0F8225DDA400026C4D5 /* SignUpVC.swift in Sources */,
@@ -1557,6 +1563,7 @@
 				571B14F4223A935C00630C8F /* AppDelegate.swift in Sources */,
 				3B0E9C6C2270634B002AB1C2 /* ProfileChooseAvatarVC.swift in Sources */,
 				3B61AC3422E1CA8A00F608AF /* LAContext.swift in Sources */,
+				3B24F86322F376FF00B7091C /* CommunitiesVC+Binding.swift in Sources */,
 				3B5CB30C22A57D5B00757533 /* NotificationPageVC+Binding.swift in Sources */,
 				575AECB322606F7100A7EC2D /* SelectCountryViewModel.swift in Sources */,
 				3B24F86122F3715E00B7091C /* CommunitiesVC.swift in Sources */,

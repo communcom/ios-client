@@ -9,11 +9,17 @@
 import UIKit
 
 class CommunitiesVC: UIViewController {
+    // MARK: - Properties
+    let viewModel = CommunitiesViewModel()
     
+    // HeaderView
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var segmentio: Segmentio!
     
+    // TableView
     @IBOutlet weak var tableView: UITableView!
+    
+    // MARK: - View lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -22,19 +28,30 @@ class CommunitiesVC: UIViewController {
         bindUI()
     }
     
+    // MARK: - Set up views
     func setUp() {
+        setUpSegmentio()
+    }
+    
+    func setUpSegmentio() {
         // Segmentio
         segmentio.setup(
             content: [
-                SegmentioItem(title: "My communities".localized(), image: nil),
-                SegmentioItem(title: "Discover".localized(), image: nil)
+                SegmentioItem(
+                    title: "My communities".localized(),
+                    image: nil),
+                SegmentioItem(
+                    title: "Discover".localized(),
+                    image: nil)
             ],
             style: .onlyLabel,
             options: .default)
-    }
-    
-    func bindUI() {
         
+        segmentio.valueDidChange = {_, index in
+            // TODO: segmentio did change
+        }
+        
+        // fire first filter
+        segmentio.selectedSegmentioIndex = 1
     }
-
 }
