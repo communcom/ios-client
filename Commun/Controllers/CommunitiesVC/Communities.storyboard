@@ -137,7 +137,6 @@
                     <connections>
                         <outlet property="searchBar" destination="0HY-oy-JMr" id="2Ae-Ak-18L"/>
                         <outlet property="segmentio" destination="rDJ-4d-Y6e" id="pNr-Zc-JdA"/>
-                        <outlet property="segmentioHeightConstraint" destination="waC-aJ-eD3" id="UIx-fG-AhP"/>
                         <outlet property="tableView" destination="bxJ-qP-W0Y" id="UOz-9x-Z0f"/>
                     </connections>
                 </viewController>

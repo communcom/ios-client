@@ -17,7 +17,6 @@ class CommunitiesVC: UIViewController {
     // HeaderView
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var segmentio: Segmentio!
-    @IBOutlet weak var segmentioHeightConstraint: NSLayoutConstraint!
     
     // TableView
     @IBOutlet weak var tableView: UITableView!
@@ -51,7 +50,7 @@ class CommunitiesVC: UIViewController {
             options: .default)
         
         segmentio.valueDidChange = {_, index in
-            self.viewModel.filter.accept(index == 0 ? .myCommunities : .discover)
+            self.viewModel.applyFilter(joined: index == 0 ? true: false)
         }
         
         // fire first filter

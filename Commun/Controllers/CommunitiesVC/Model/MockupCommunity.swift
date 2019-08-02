@@ -43,19 +43,15 @@ class MockupCommunity: Equatable, IdentifiableType {
     }
 }
 
-enum CommunityFilter: Equatable, IdentifiableType {
-    case myCommunities
-    case discover
-    case search(text: String)
+struct CommunityFilter: Equatable, IdentifiableType, CustomStringConvertible {
+    var text: String?
+    var joined: Bool?
     
     var identity: String {
-        switch self {
-        case .myCommunities:
-            return "My Communities"
-        case .discover:
-            return "Discover"
-        case .search(let text):
-            return "Search \(text)"
-        }
+        return "{\n\ttext: \(String(describing: text)),\n\tjoined: \(String(describing: joined))\n}"
+    }
+    
+    var description: String {
+        return "Community filtered \(identity)"
     }
 }

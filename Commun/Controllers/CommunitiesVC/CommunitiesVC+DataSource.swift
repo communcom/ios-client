@@ -23,7 +23,13 @@ extension CommunitiesVC: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return (section == 1 && viewModel.filter.value != .myCommunities) ? 56 : 0
+        // Hide "My community" header
+        if section == 1 {return 0}
+        
+        // Hide "Recommended" when "My communities" is showing
+        if viewModel.filter.value.joined == true {return 0}
+        
+        return 56
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -32,7 +38,7 @@ extension CommunitiesVC: UITableViewDelegate {
         view.backgroundColor = .white
         
         // create uilabel
-        let label = UILabel(text: section == 1 ? "Recommended".localized(): nil)
+        let label = UILabel(text: section == 0 ? "Recommended".localized(): nil)
         label.font = .boldSystemFont(ofSize: 22)
         view.addSubview(label)
         
