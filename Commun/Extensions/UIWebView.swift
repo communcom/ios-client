@@ -10,6 +10,12 @@ import Foundation
 
 extension UIWebView {
     var contentHeight: CGFloat {
+        let script = "document.documentElement.scrollHeight"
+        if let returnedString = stringByEvaluatingJavaScript(from: script) {
+            guard let n = NumberFormatter().number(from: returnedString) else { return self.scrollView.contentSize.height }
+            return CGFloat(truncating: n)
+        }
+        
         return self.scrollView.contentSize.height
     }
     
