@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Segmentio
 
 extension SegmentioOptions {
     static var `default`: SegmentioOptions {
@@ -17,22 +18,22 @@ extension SegmentioOptions {
         let states = SegmentioStates(
             defaultState: SegmentioState(
                 backgroundColor: .clear,
-                titleFont: UIFont(name: "SF Pro Text", size: 15) ?? UIFont.systemFont(ofSize: UIFont.smallSystemFontSize),
+                titleFont: UIFont.boldSystemFont(ofSize: 15),
                 titleTextColor: #colorLiteral(red: 0.6078431373, green: 0.6235294118, blue: 0.6352941176, alpha: 1)
             ),
             selectedState: SegmentioState(
                 backgroundColor: .clear,
-                titleFont: UIFont(name: "SF Pro Text", size: 15) ?? UIFont.systemFont(ofSize: UIFont.smallSystemFontSize),
+                titleFont: UIFont.boldSystemFont(ofSize: 15),
                 titleTextColor: .black
             ),
             highlightedState: SegmentioState(
                 backgroundColor: .clear,
-                titleFont: UIFont(name: "SF Pro Text", size: 15) ?? UIFont.boldSystemFont(ofSize: UIFont.smallSystemFontSize),
+                titleFont: UIFont.boldSystemFont(ofSize: 15),
                 titleTextColor: .black
             )
         )
         let options = SegmentioOptions(backgroundColor: .white,
-                                       segmentPosition: .dynamic,
+                                       segmentPosition: .fixed(maxVisibleItems: 3),
                                        scrollEnabled: false,
                                        indicatorOptions: indicator,
                                        horizontalSeparatorOptions: SegmentioHorizontalSeparatorOptions(type: .bottom,

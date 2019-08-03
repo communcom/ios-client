@@ -10,6 +10,7 @@ import UIKit
 import RxSwift
 import CyberSwift
 import SDWebImage
+import Segmentio
 
 class ProfilePageVC: UIViewController {
     @IBOutlet weak var tableView: UITableView!

@@ -11,6 +11,7 @@ import CyberSwift
 import RxSwift
 import DZNEmptyDataSet
 import RxDataSources
+import Segmentio
 
 class FeedPageVC: UIViewController {
 

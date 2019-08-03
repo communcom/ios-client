@@ -8,6 +8,7 @@
 
 import UIKit
 import RxSwift
+import Segmentio
 
 class CommunitiesVC: UIViewController {
     // MARK: - Properties

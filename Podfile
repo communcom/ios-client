@@ -29,6 +29,8 @@ target 'Commun' do
   pod 'SwifterSwift/Foundation'    # Foundation Extensions
   pod 'SwifterSwift/UIKit'         # UIKit Extensions
   
+  pod 'Segmentio'
+  
   pod 'MBProgressHUD', '~> 1.1.0'
   pod 'TLPhotoPicker'
   

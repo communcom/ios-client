@@ -149,21 +149,6 @@
 		576DC91B223E41F600EDED41 /* FeedPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576DC91A223E41F600EDED41 /* FeedPageViewModel.swift */; };
 		576DC91E223E429C00EDED41 /* FeedPageVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 576DC91D223E429C00EDED41 /* FeedPageVC.storyboard */; };
 		576DC921223E42C800EDED41 /* UIViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576DC920223E42C800EDED41 /* UIViewControllerExtension.swift */; };
-		57840A00223FAC1B00338FD5 /* SegmentioCellWithImageBeforeLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 578409EE223FAC1B00338FD5 /* SegmentioCellWithImageBeforeLabel.swift */; };
-		57840A01223FAC1B00338FD5 /* SegmentioCellWithImageUnderLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 578409EF223FAC1B00338FD5 /* SegmentioCellWithImageUnderLabel.swift */; };
-		57840A02223FAC1B00338FD5 /* SegmentioCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 578409F0223FAC1B00338FD5 /* SegmentioCell.swift */; };
-		57840A03223FAC1B00338FD5 /* SegmentioCellWithImageAfterLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 578409F1223FAC1B00338FD5 /* SegmentioCellWithImageAfterLabel.swift */; };
-		57840A04223FAC1B00338FD5 /* SegmentioCellWithImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 578409F2223FAC1B00338FD5 /* SegmentioCellWithImage.swift */; };
-		57840A05223FAC1B00338FD5 /* SegmentioCellWithLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 578409F3223FAC1B00338FD5 /* SegmentioCellWithLabel.swift */; };
-		57840A06223FAC1B00338FD5 /* SegmentioCellWithImageOverLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 578409F4223FAC1B00338FD5 /* SegmentioCellWithImageOverLabel.swift */; };
-		57840A07223FAC1B00338FD5 /* UIView+Appearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 578409F6223FAC1B00338FD5 /* UIView+Appearance.swift */; };
-		57840A08223FAC1B00338FD5 /* RoundImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 578409F7223FAC1B00338FD5 /* RoundImageView.swift */; };
-		57840A09223FAC1B00338FD5 /* SegmentioOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 578409F8223FAC1B00338FD5 /* SegmentioOptions.swift */; };
-		57840A0A223FAC1B00338FD5 /* Segmentio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 578409F9223FAC1B00338FD5 /* Segmentio.swift */; };
-		57840A0B223FAC1B00338FD5 /* BadgeViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 578409FB223FAC1B00338FD5 /* BadgeViewPresenter.swift */; };
-		57840A0C223FAC1B00338FD5 /* BadgeWithCounterViewBigSized.xib in Resources */ = {isa = PBXBuildFile; fileRef = 578409FD223FAC1B00338FD5 /* BadgeWithCounterViewBigSized.xib */; };
-		57840A0D223FAC1B00338FD5 /* BadgeWithCounterViewStandardSized.xib in Resources */ = {isa = PBXBuildFile; fileRef = 578409FE223FAC1B00338FD5 /* BadgeWithCounterViewStandardSized.xib */; };
-		57840A0E223FAC1B00338FD5 /* BadgeWithCounterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 578409FF223FAC1B00338FD5 /* BadgeWithCounterView.swift */; };
 		57840A1B2240DB9400338FD5 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57840A1A2240DB9400338FD5 /* NetworkService.swift */; };
 		57840A202240DDEB00338FD5 /* Container.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57840A1F2240DDEB00338FD5 /* Container.swift */; };
 		5787C0C422650F9D00568CEC /* SetUserVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5787C0C322650F9D00568CEC /* SetUserVC.swift */; };
@@ -391,21 +376,6 @@
 		576DC91A223E41F600EDED41 /* FeedPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedPageViewModel.swift; sourceTree = "<group>"; };
 		576DC91D223E429C00EDED41 /* FeedPageVC.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = FeedPageVC.storyboard; sourceTree = "<group>"; };
 		576DC920223E42C800EDED41 /* UIViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtension.swift; sourceTree = "<group>"; };
-		578409EE223FAC1B00338FD5 /* SegmentioCellWithImageBeforeLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentioCellWithImageBeforeLabel.swift; sourceTree = "<group>"; };
-		578409EF223FAC1B00338FD5 /* SegmentioCellWithImageUnderLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentioCellWithImageUnderLabel.swift; sourceTree = "<group>"; };
-		578409F0223FAC1B00338FD5 /* SegmentioCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentioCell.swift; sourceTree = "<group>"; };
-		578409F1223FAC1B00338FD5 /* SegmentioCellWithImageAfterLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentioCellWithImageAfterLabel.swift; sourceTree = "<group>"; };
-		578409F2223FAC1B00338FD5 /* SegmentioCellWithImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentioCellWithImage.swift; sourceTree = "<group>"; };
-		578409F3223FAC1B00338FD5 /* SegmentioCellWithLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentioCellWithLabel.swift; sourceTree = "<group>"; };
-		578409F4223FAC1B00338FD5 /* SegmentioCellWithImageOverLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentioCellWithImageOverLabel.swift; sourceTree = "<group>"; };
-		578409F6223FAC1B00338FD5 /* UIView+Appearance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Appearance.swift"; sourceTree = "<group>"; };
-		578409F7223FAC1B00338FD5 /* RoundImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoundImageView.swift; sourceTree = "<group>"; };
-		578409F8223FAC1B00338FD5 /* SegmentioOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentioOptions.swift; sourceTree = "<group>"; };
-		578409F9223FAC1B00338FD5 /* Segmentio.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Segmentio.swift; sourceTree = "<group>"; };
-		578409FB223FAC1B00338FD5 /* BadgeViewPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BadgeViewPresenter.swift; sourceTree = "<group>"; };
-		578409FD223FAC1B00338FD5 /* BadgeWithCounterViewBigSized.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BadgeWithCounterViewBigSized.xib; sourceTree = "<group>"; };
-		578409FE223FAC1B00338FD5 /* BadgeWithCounterViewStandardSized.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BadgeWithCounterViewStandardSized.xib; sourceTree = "<group>"; };
-		578409FF223FAC1B00338FD5 /* BadgeWithCounterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BadgeWithCounterView.swift; sourceTree = "<group>"; };
 		57840A1A2240DB9400338FD5 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		57840A1F2240DDEB00338FD5 /* Container.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Container.swift; sourceTree = "<group>"; };
 		5787C0C322650F9D00568CEC /* SetUserVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetUserVC.swift; sourceTree = "<group>"; };
@@ -930,6 +900,7 @@
 		576DC91F223E42B200EDED41 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				3B197C522269BE0E008CF10D /* SegmentioExtension.swift */,
 				3BAF69CE226787940055CCEB /* Date.swift */,
 				3B5D7CF02299D79B0077B82C /* FeedSortMode.swift */,
 				3B635F8222774A37006DAAB2 /* FeedTimeFrameMode.swift */,
@@ -966,7 +937,6 @@
 				575AECAA226066F000A7EC2D /* FormTextField */,
 				57FB1795224BFBD700563BF7 /* PageControls */,
 				3BDD9A09228EDA5700B2A1DA /* PostController */,
-				578409EB223FAC1B00338FD5 /* Segmentio */,
 				B1A8AC1922E6FD4800032030 /* UIButton */,
 				57CBD9592255117F000BA8CC /* UITextView+Placeholder */,
 				3BB48ACA22D4ECDC00F11B6A /* ContentFittingWebView.swift */,
@@ -979,69 +949,6 @@
 				3B5D361B22E8303C0012A991 /* HTMLStringWebView.swift */,
 			);
 			path = Vendor;
-			sourceTree = "<group>";
-		};
-		578409EB223FAC1B00338FD5 /* Segmentio */ = {
-			isa = PBXGroup;
-			children = (
-				578409EC223FAC1B00338FD5 /* Source */,
-				3B197C522269BE0E008CF10D /* SegmentioExtension.swift */,
-			);
-			path = Segmentio;
-			sourceTree = "<group>";
-		};
-		578409EC223FAC1B00338FD5 /* Source */ = {
-			isa = PBXGroup;
-			children = (
-				578409ED223FAC1B00338FD5 /* Cells */,
-				578409F5223FAC1B00338FD5 /* Extensions */,
-				578409F8223FAC1B00338FD5 /* SegmentioOptions.swift */,
-				578409F9223FAC1B00338FD5 /* Segmentio.swift */,
-				578409FA223FAC1B00338FD5 /* Badge */,
-			);
-			path = Source;
-			sourceTree = "<group>";
-		};
-		578409ED223FAC1B00338FD5 /* Cells */ = {
-			isa = PBXGroup;
-			children = (
-				578409EE223FAC1B00338FD5 /* SegmentioCellWithImageBeforeLabel.swift */,
-				578409EF223FAC1B00338FD5 /* SegmentioCellWithImageUnderLabel.swift */,
-				578409F0223FAC1B00338FD5 /* SegmentioCell.swift */,
-				578409F1223FAC1B00338FD5 /* SegmentioCellWithImageAfterLabel.swift */,
-				578409F2223FAC1B00338FD5 /* SegmentioCellWithImage.swift */,
-				578409F3223FAC1B00338FD5 /* SegmentioCellWithLabel.swift */,
-				578409F4223FAC1B00338FD5 /* SegmentioCellWithImageOverLabel.swift */,
-			);
-			path = Cells;
-			sourceTree = "<group>";
-		};
-		578409F5223FAC1B00338FD5 /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				578409F6223FAC1B00338FD5 /* UIView+Appearance.swift */,
-				578409F7223FAC1B00338FD5 /* RoundImageView.swift */,
-			);
-			path = Extensions;
-			sourceTree = "<group>";
-		};
-		578409FA223FAC1B00338FD5 /* Badge */ = {
-			isa = PBXGroup;
-			children = (
-				578409FB223FAC1B00338FD5 /* BadgeViewPresenter.swift */,
-				578409FC223FAC1B00338FD5 /* Views */,
-			);
-			path = Badge;
-			sourceTree = "<group>";
-		};
-		578409FC223FAC1B00338FD5 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				578409FD223FAC1B00338FD5 /* BadgeWithCounterViewBigSized.xib */,
-				578409FE223FAC1B00338FD5 /* BadgeWithCounterViewStandardSized.xib */,
-				578409FF223FAC1B00338FD5 /* BadgeWithCounterView.swift */,
-			);
-			path = Views;
 			sourceTree = "<group>";
 		};
 		57840A182240DAFF00338FD5 /* Assembly */ = {
@@ -1340,7 +1247,6 @@
 				3B2F226F226892C5006B589E /* NotificationsPageVC.storyboard in Resources */,
 				572F81AB223C164C0007F2F9 /* SF-Pro-Text-Regular.otf in Resources */,
 				57B6FC25224A9E5600BCFDDA /* WelcomeVC.storyboard in Resources */,
-				57840A0C223FAC1B00338FD5 /* BadgeWithCounterViewBigSized.xib in Resources */,
 				B1EA02D32289734800835244 /* Localizable.strings in Resources */,
 				B1EA02D92289882A00835244 /* SF-Pro-Display-Bold.otf in Resources */,
 				B1EA02ED2289882A00835244 /* SF-Pro-Text-Light.otf in Resources */,
@@ -1375,7 +1281,6 @@
 				B170AC15228AFBDA00C6FFBC /* SignUpVC.storyboard in Resources */,
 				57FB179B224BFBD700563BF7 /* LICENSE in Resources */,
 				3B5CB30A22A57AB600757533 /* PlaceholderNotificationCell.xib in Resources */,
-				57840A0D223FAC1B00338FD5 /* BadgeWithCounterViewStandardSized.xib in Resources */,
 				571B14FE223A935D00630C8F /* Assets.xcassets in Resources */,
 				3B515819226DDE8D00108F17 /* EmptyCell.xib in Resources */,
 				3B197C89226A33CF008CF10D /* ResponseAPIContentGetCommentsResult.json in Resources */,
@@ -1475,7 +1380,6 @@
 			files = (
 				572517402243E4D70033125C /* PostPageViewModel.swift in Sources */,
 				576DC919223E41E800EDED41 /* FeedPageVC.swift in Sources */,
-				57840A04223FAC1B00338FD5 /* SegmentioCellWithImage.swift in Sources */,
 				3B51581C226DE28D00108F17 /* EmptyCell.swift in Sources */,
 				3B5CB30322A56BD500757533 /* UITapGestureRecognizer.swift in Sources */,
 				3B28EFE2228C7C31002D4816 /* KeyboardLayoutConstraint.swift in Sources */,
@@ -1499,18 +1403,15 @@
 				3B67FC0822C5016F00D05F01 /* SignInViewController.swift in Sources */,
 				3B0506EE22D7309900B4E4A3 /* KeysVC.swift in Sources */,
 				3BB48ACB22D4ECDC00F11B6A /* ContentFittingWebView.swift in Sources */,
-				57840A07223FAC1B00338FD5 /* UIView+Appearance.swift in Sources */,
 				3B82D0F722D8D56A004EE848 /* EnableBiometricsVC.swift in Sources */,
 				3B5D361822E820760012A991 /* PostPageVC+Header.swift in Sources */,
 				3B67FC0B22C50BC400D05F01 /* SignInViewController+CollectionView.swift in Sources */,
 				57CBD95C225511BD000BA8CC /* UITextView+Placeholder.m in Sources */,
 				3BF37BD622A162E000A72FFE /* ResponseAPIOnlineNotificationData.swift in Sources */,
-				57840A08223FAC1B00338FD5 /* RoundImageView.swift in Sources */,
 				3BE68AAE22EEA1AE00033B81 /* SettingsVC+ButtonDelegate.swift in Sources */,
 				3BA3779722E9DA6C0071AF3A /* SignupVC+Location.swift in Sources */,
 				57FB179D224BFBD700563BF7 /* PillPageControl.swift in Sources */,
 				572F81A7223C164C0007F2F9 /* PostCardCell.swift in Sources */,
-				57840A03223FAC1B00338FD5 /* SegmentioCellWithImageAfterLabel.swift in Sources */,
 				3B635F8322774A37006DAAB2 /* FeedTimeFrameMode.swift in Sources */,
 				57E515B12270F4EA00A6F6DB /* SettingsKeyCell.swift in Sources */,
 				3B02CD2E228AB4580078BB52 /* NotificationsFetcher.swift in Sources */,
@@ -1519,7 +1420,6 @@
 				3BAF69CF226787940055CCEB /* Date.swift in Sources */,
 				3BE68AB222EEA7C300033B81 /* LocalAuthVC.swift in Sources */,
 				3BDD99FE228DA59900B2A1DA /* ExpandableTextView.swift in Sources */,
-				57840A05223FAC1B00338FD5 /* SegmentioCellWithLabel.swift in Sources */,
 				3BB48AD022D5F84D00F11B6A /* SetPasscodeVC.swift in Sources */,
 				3B24F86522F3777500B7091C /* CommunitiesViewModel.swift in Sources */,
 				3B5D7CF12299D79B0077B82C /* FeedSortMode.swift in Sources */,
@@ -1529,17 +1429,13 @@
 				3B63CD9322AA7AA200DC828B /* UIScrollView.swift in Sources */,
 				3B5D361C22E8303C0012A991 /* HTMLStringWebView.swift in Sources */,
 				3BB86B4922734AE4008F1C64 /* UIColor.swift in Sources */,
-				57840A00223FAC1B00338FD5 /* SegmentioCellWithImageBeforeLabel.swift in Sources */,
-				57840A0A223FAC1B00338FD5 /* Segmentio.swift in Sources */,
 				3B2F227122689308006B589E /* TabBarViewModel.swift in Sources */,
 				3B197C5B2269EF3F008CF10D /* ProfilePageVC+Binding.swift in Sources */,
-				57840A01223FAC1B00338FD5 /* SegmentioCellWithImageUnderLabel.swift in Sources */,
 				3B24F86F22F37FB800B7091C /* CommunitiesVC+DataSource.swift in Sources */,
 				3B0E9C752270C691002AB1C2 /* ProfileEditBioVC.swift in Sources */,
 				57A95197224178010020F55D /* PostController.swift in Sources */,
 				3B67FC0622C4BB5100D05F01 /* SplashViewController.swift in Sources */,
 				3B6229AB22BD12410053B9EF /* TTTAttributedLabel.swift in Sources */,
-				57840A0E223FAC1B00338FD5 /* BadgeWithCounterView.swift in Sources */,
 				3BDF4FA822C21B310029D616 /* ResponseAPIContentGetProfile.swift in Sources */,
 				3B5EDE3522E073C500897BF3 /* SettingsViewModel.swift in Sources */,
 				3BDD9A0F228F07EF00B2A1DA /* UIApplication.swift in Sources */,
@@ -1553,7 +1449,6 @@
 				57F9CAAC225B489000AC9ACA /* EditorPageVC+Rx.swift in Sources */,
 				3B0E9C6E227063F6002AB1C2 /* ProfilePageVC+Actions.swift in Sources */,
 				3B0E9C7122706985002AB1C2 /* ProfileChooseAvatarViewModel.swift in Sources */,
-				57840A06223FAC1B00338FD5 /* SegmentioCellWithImageOverLabel.swift in Sources */,
 				3BB342B022CA5CA6009546B2 /* PickupAvatarVC.swift in Sources */,
 				3B02CD34228ADC100078BB52 /* UIWebView.swift in Sources */,
 				3B0E9C5E226F02AC002AB1C2 /* ProfileEditCoverVC.swift in Sources */,
@@ -1576,14 +1471,12 @@
 				3BAF69D1226792C60055CCEB /* ProfilePageVC+Rx.swift in Sources */,
 				57FB17A4224C15C400563BF7 /* SignInViewModel.swift in Sources */,
 				3BA4D089229315D60022A69D /* UIResponder.swift in Sources */,
-				57840A02223FAC1B00338FD5 /* SegmentioCell.swift in Sources */,
 				3B5EDE2E22DF929D00897BF3 /* SettingsSwitcherCell.swift in Sources */,
 				3B197C8A226A33CF008CF10D /* Decodable+MockObjects.swift in Sources */,
 				578B94DA2263CBD800FB5BC6 /* ConfirmUserVC.swift in Sources */,
 				3BB342A922CA2DBB009546B2 /* WelcomePageVC.swift in Sources */,
 				3BF37BCC22A1297C00A72FFE /* UITableView.swift in Sources */,
 				3B5CB31022A5880D00757533 /* MyRxTableViewSectionedAnimatedDataSource.swift in Sources */,
-				57840A09223FAC1B00338FD5 /* SegmentioOptions.swift in Sources */,
 				3B5CB31222A588EE00757533 /* FeedPageVC+EmptyDataSet.swift in Sources */,
 				3BB86B47227222DE008F1C64 /* ProfilePage+Parallax.swift in Sources */,
 				571B14F4223A935C00630C8F /* AppDelegate.swift in Sources */,
@@ -1595,7 +1488,6 @@
 				575AECB322606F7100A7EC2D /* SelectCountryViewModel.swift in Sources */,
 				3B24F86722F3784900B7091C /* MockupCommunity.swift in Sources */,
 				3B24F86122F3715E00B7091C /* CommunitiesVC.swift in Sources */,
-				57840A0B223FAC1B00338FD5 /* BadgeViewPresenter.swift in Sources */,
 				3BF37BCA22A11FA700A72FFE /* UIView.swift in Sources */,
 				575AECAE22606D0800A7EC2D /* SignUpViewModel.swift in Sources */,
 				57CBD95E225517B4000BA8CC /* EditorPageVC+Actions.swift in Sources */,
