@@ -64,7 +64,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="UfI-uK-mA2">
-                                                    <rect key="frame" x="36" y="19" width="56" height="56"/>
+                                                    <rect key="frame" x="20" y="19" width="56" height="56"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="56" id="0vY-3m-uZr"/>
                                                         <constraint firstAttribute="width" constant="56" id="c8v-4a-4G2"/>
@@ -76,7 +76,7 @@
                                                     </userDefinedRuntimeAttributes>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c34-8g-oxv">
-                                                    <rect key="frame" x="108" y="37" width="45.5" height="20.5"/>
+                                                    <rect key="frame" x="92" y="37" width="45.5" height="20.5"/>
                                                     <fontDescription key="fontDescription" name="SFProText-Semibold" family="SF Pro Text" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -103,7 +103,7 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="c34-8g-oxv" firstAttribute="centerY" secondItem="UfI-uK-mA2" secondAttribute="centerY" id="M9g-Ep-BPB"/>
-                                                <constraint firstItem="UfI-uK-mA2" firstAttribute="leading" secondItem="eRf-aE-hOf" secondAttribute="leadingMargin" constant="16" id="V8o-au-ecG"/>
+                                                <constraint firstItem="UfI-uK-mA2" firstAttribute="leading" secondItem="eRf-aE-hOf" secondAttribute="leadingMargin" id="V8o-au-ecG"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="UfI-uK-mA2" secondAttribute="bottom" constant="8" id="ZWU-JP-KUn"/>
                                                 <constraint firstAttribute="trailing" secondItem="Md7-nS-5sB" secondAttribute="trailing" constant="16" id="fu2-fK-3Mo"/>
                                                 <constraint firstItem="Md7-nS-5sB" firstAttribute="centerY" secondItem="eRf-aE-hOf" secondAttribute="centerY" id="haU-ts-zLy"/>
