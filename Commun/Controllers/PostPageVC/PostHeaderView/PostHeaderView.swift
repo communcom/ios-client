@@ -160,7 +160,7 @@ class PostHeaderView: UIView, UIWebViewDelegate, PostController {
         if let embedWebView = embedView.subviews.first(where: {$0 is UIWebView}) as? UIWebView,
             webView == embedWebView {
             
-            let height  = UIScreen.main.bounds.width * webView.contentHeight / webView.contentWidth
+            let height  = (UIScreen.main.bounds.width-16) * webView.contentHeight / webView.contentWidth
             embedViewHeightConstraint.constant = height
         }
         
