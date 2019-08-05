@@ -19,7 +19,7 @@ class SetUserViewModel {
     }
     
     func setUser(userName: String, phone: String) -> Single<String> {
-        return RestAPIManager.instance.rx.setUser(id: userName)
+        return RestAPIManager.instance.rx.setUserName(userName)
             .map {_ in userName}
     }
 }
