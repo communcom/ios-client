@@ -17,16 +17,15 @@ class NetworkService: NSObject {
     // MARK: - Properties
     static let shared = NetworkService()
     
+    // MARK: - Helpers
+    private func saveUserAvatarUrl(_ url: String) {
+        if UserDefaults.standard.string(forKey: Config.currentUserAvatarUrlKey) == url {
+            return
+        }
+        UserDefaults.standard.set(url, forKey: Config.currentUserAvatarUrlKey)
+    }
     
-    // MARK: - Class Functions
-//    func connect() {
-//        WebSocketManager.instance.connect()
-//    }
-//    
-//    func disconnect() {
-//        WebSocketManager.instance.disconnect()
-//    }
-    
+    // MARK: - Methods API
     func loadFeed(_ paginationKey: String?, withSortType sortType: FeedTimeFrameMode = .all, withFeedType type: FeedSortMode = .popular, withFeedTypeMode typeMode: FeedTypeMode = .community, userId: String? = nil) -> Single<ResponseAPIContentGetFeed> {
         
         return RestAPIManager.instance.loadFeed(typeMode: typeMode,
@@ -140,6 +139,11 @@ class NetworkService: NSObject {
         guard let userNickName = userId ?? Config.currentUser?.id else { return .error(ErrorAPI.requestFailed(message: "userId missing")) }
         
         return RestAPIManager.instance.getProfile(userID: userNickName)
+            .do(onSuccess: { (profile) in
+                if let avatarUrl = profile.personal.avatarUrl {
+                    self.saveUserAvatarUrl(avatarUrl)
+                }
+            })
     }
     
     func userVerify(phone: String, code: String) -> Observable<Bool> {
@@ -193,7 +197,7 @@ class NetworkService: NSObject {
             .flatMapCompletable({ (transaction) -> Completable in
                 // update profile
                 if let url = params["profile_image"] {
-                    UserDefaults.standard.set(url, forKey: Config.currentUserAvatarUrlKey)
+                    self.saveUserAvatarUrl(url)
                 }
                 
                 if !waitForTransaction {return .empty()}
