@@ -105,7 +105,7 @@ class PickupAvatarVC: UIViewController, BoardingRouter {
             }
             .subscribe(onSuccess: { (url) in
                 do {
-                    try KeychainManager.save(data: [
+                    try KeychainManager.save([
                         Config.settingStepKey: CurrentUserSettingStep.setBio.rawValue
                     ])
                     self.hideHud()
@@ -124,7 +124,7 @@ class PickupAvatarVC: UIViewController, BoardingRouter {
     
     @IBAction func skipButtonDidTouch(_ sender: Any) {
         do {
-            try KeychainManager.save(data: [
+            try KeychainManager.save([
                 Config.settingStepKey: CurrentUserSettingStep.setBio.rawValue
             ])
             boardingNextStep()

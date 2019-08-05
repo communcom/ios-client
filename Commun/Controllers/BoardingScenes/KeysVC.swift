@@ -106,7 +106,7 @@ class KeysVC: UIViewController, BoardingRouter {
     @IBAction func laterButtonDidTouch(_ sender: Any) {
         do {
             if onBoarding {
-                try KeychainManager.save(data: [
+                try KeychainManager.save([
                     Config.settingStepKey: CurrentUserSettingStep.setAvatar.rawValue
                 ])
                 boardingNextStep()

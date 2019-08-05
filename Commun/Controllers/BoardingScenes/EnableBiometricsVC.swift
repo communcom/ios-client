@@ -23,7 +23,7 @@ class EnableBiometricsVC: UIViewController, BoardingRouter {
         
         if #available(iOS 11.2, *) {
             if biometryType == .none {
-                try! KeychainManager.save(data: [
+                try! KeychainManager.save([
                     Config.settingStepKey: CurrentUserSettingStep.backUpICloud.rawValue
                     ])
                 boardingNextStep()
@@ -51,7 +51,7 @@ class EnableBiometricsVC: UIViewController, BoardingRouter {
     // MARK: - Actions
     @IBAction func enableButtonDidTouch(_ sender: Any) {
         do {
-            try KeychainManager.save(data: [
+            try KeychainManager.save([
                 Config.settingStepKey: CurrentUserSettingStep.backUpICloud.rawValue
             ])
             
@@ -64,7 +64,7 @@ class EnableBiometricsVC: UIViewController, BoardingRouter {
     
     @IBAction func skipButtonDidTouch(_ sender: Any) {
         do {
-            try KeychainManager.save(data: [
+            try KeychainManager.save([
                 Config.settingStepKey: CurrentUserSettingStep.backUpICloud.rawValue
             ])
             boardingNextStep()

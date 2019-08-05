@@ -16,6 +16,12 @@ extension BoardingRouter where Self: UIViewController {
     func boardingNextStep() {
         let step = KeychainManager.currentUser()?.settingStep ?? .setPasscode
         
+        if KeychainManager.currentUser()?.registrationStep == .relogined,
+            step == .setAvatar {
+            endBoarding()
+            return
+        }
+        
         var vc: UIViewController
         
         switch step {
@@ -37,7 +43,7 @@ extension BoardingRouter where Self: UIViewController {
     }
     
     func endBoarding() {
-        try? KeychainManager.save(data: [
+        try? KeychainManager.save([
             Config.settingStepKey: CurrentUserSettingStep.completed.rawValue
         ])
         AppDelegate.reloadSubject.onNext(true)

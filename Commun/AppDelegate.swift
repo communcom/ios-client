@@ -101,7 +101,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let completion = {
             let step = KeychainManager.currentUser()?.registrationStep ?? .firstStep
             // Registered user
-            if step == .registered {
+            if step == .registered || step == .relogined {
                 // If first setting is uncompleted
                 let settingStep = KeychainManager.currentUser()?.settingStep ?? .setPasscode
                 if settingStep != .completed {
