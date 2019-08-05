@@ -77,7 +77,11 @@ class PostHeaderView: UIView, UIWebViewDelegate, PostController {
         } else if embededResult?.type == "photo",
             let urlString = embededResult?.url,
             let url = URL(string: urlString) {
-            showPhoto(with: url)
+            if urlString.lowercased().ends(with: ".gif") {
+                showWebView(with: "<div><div style=\"left: 0; width: 100%; height: 0; position: relative; padding-bottom: 74.9457%;\"><img src=\"\(urlString)\" /></div></div>")
+            } else {
+                showPhoto(with: url)
+            }
         } else {
             embedViewHeightConstraint.constant = 0
         }
