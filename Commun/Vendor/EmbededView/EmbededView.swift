@@ -11,9 +11,6 @@ import RxSwift
 import CyberSwift
 
 class EmbededView: UIView {
-
-    @IBOutlet var contentView: UIView!
-    
     var bag = DisposeBag()
     var heightConstraint: NSLayoutConstraint!
     let didShowContentWithHeight = PublishSubject<CGFloat>()
@@ -29,12 +26,6 @@ class EmbededView: UIView {
     }
     
     private func commonInit() {
-        // init from xib
-        Bundle.main.loadNibNamed("EmbededView", owner: self, options: nil)
-        addSubview(contentView)
-        contentView.frame = self.bounds
-        contentView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        
         // assign height constraint
         self.heightConstraint = self.constraints.first {$0.firstAttribute == .height}
     }
@@ -57,17 +48,17 @@ class EmbededView: UIView {
     
     private func showWebView(with htmlString: String) {
         // clean content
-        contentView.removeSubviews()
+        removeSubviews()
         
         // create webView
         let webView = UIWebView()
         webView.translatesAutoresizingMaskIntoConstraints = false
         
-        contentView.addSubview(webView)
-        webView.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
-        webView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
-        webView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
-        webView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true
+        addSubview(webView)
+        webView.topAnchor.constraint(equalTo: topAnchor).isActive = true
+        webView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+        webView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
+        webView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
         
         webView.scrollView.contentInset = UIEdgeInsets(top: -8, left: -8, bottom: -8, right: -8)
         webView.scrollView.isScrollEnabled = false
@@ -93,18 +84,18 @@ class EmbededView: UIView {
     
     private func showPhoto(with url: URL) {
         // clean content
-        contentView.removeSubviews()
+        removeSubviews()
         
         // create imageView
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleToFill
         
-        contentView.addSubview(imageView)
-        imageView.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
-        imageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
-        imageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
-        imageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true
+        addSubview(imageView)
+        imageView.topAnchor.constraint(equalTo: topAnchor).isActive = true
+        imageView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+        imageView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
+        imageView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
         
         showLoading()
         
@@ -121,7 +112,7 @@ class EmbededView: UIView {
         self.didShowContentWithHeight.onNext(height)
         self.heightConstraint.constant = height
         UIView.animate(withDuration: 0.3, animations: {
-            self.contentView.layoutIfNeeded()
+            self.layoutIfNeeded()
         })
     }
 

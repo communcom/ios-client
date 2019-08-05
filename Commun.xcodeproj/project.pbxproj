@@ -80,7 +80,6 @@
 		3B67FC0C22C50F1500D05F01 /* SignInViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3B67FC0922C5018800D05F01 /* SignInViewController.storyboard */; };
 		3B82D0F722D8D56A004EE848 /* EnableBiometricsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B82D0F622D8D56A004EE848 /* EnableBiometricsVC.swift */; };
 		3B885BBC22B7A1FE00FC4B7A /* EmbededView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B885BBB22B7A1FE00FC4B7A /* EmbededView.swift */; };
-		3B885BBE22B7A20D00FC4B7A /* EmbededView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3B885BBD22B7A20D00FC4B7A /* EmbededView.xib */; };
 		3B986B6522CF4C9E00C1E985 /* PhoneNumberTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B986B6422CF4C9E00C1E985 /* PhoneNumberTests.swift */; };
 		3BA3779722E9DA6C0071AF3A /* SignupVC+Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BA3779622E9DA6C0071AF3A /* SignupVC+Location.swift */; };
 		3BA4D0872292BA710022A69D /* ResponseAPIContentGetPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BA4D0862292BA710022A69D /* ResponseAPIContentGetPost.swift */; };
@@ -299,7 +298,6 @@
 		3B67FC0A22C50BC400D05F01 /* SignInViewController+CollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SignInViewController+CollectionView.swift"; sourceTree = "<group>"; };
 		3B82D0F622D8D56A004EE848 /* EnableBiometricsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnableBiometricsVC.swift; sourceTree = "<group>"; };
 		3B885BBB22B7A1FE00FC4B7A /* EmbededView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbededView.swift; sourceTree = "<group>"; };
-		3B885BBD22B7A20D00FC4B7A /* EmbededView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmbededView.xib; sourceTree = "<group>"; };
 		3B986B6422CF4C9E00C1E985 /* PhoneNumberTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneNumberTests.swift; sourceTree = "<group>"; };
 		3BA3779622E9DA6C0071AF3A /* SignupVC+Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SignupVC+Location.swift"; sourceTree = "<group>"; };
 		3BA4D0862292BA710022A69D /* ResponseAPIContentGetPost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseAPIContentGetPost.swift; sourceTree = "<group>"; };
@@ -597,7 +595,6 @@
 			isa = PBXGroup;
 			children = (
 				3B885BBB22B7A1FE00FC4B7A /* EmbededView.swift */,
-				3B885BBD22B7A20D00FC4B7A /* EmbededView.xib */,
 			);
 			path = EmbededView;
 			sourceTree = "<group>";
@@ -1265,7 +1262,6 @@
 				5787C0C822650FC200568CEC /* SetUserVC.storyboard in Resources */,
 				3B197C88226A33CF008CF10D /* ResponseAPIContentGetProfileResult.json in Resources */,
 				B1EA02F32289882A00835244 /* SF-Pro-Text-Semibold.otf in Resources */,
-				3B885BBE22B7A20D00FC4B7A /* EmbededView.xib in Resources */,
 				B1A6EE5122D5C8E300A5D6F0 /* GoogleService-Info.plist in Resources */,
 				B1EA02E92289882A00835244 /* SF-Pro-Text-Bold.otf in Resources */,
 				3BDD9A06228DBED000B2A1DA /* CommentForm.xib in Resources */,
