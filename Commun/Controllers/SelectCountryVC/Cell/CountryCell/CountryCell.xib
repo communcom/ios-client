@@ -20,38 +20,57 @@
         <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="56" id="KGk-i7-Jjw" customClass="CountryCell" customModule="Commun" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="320" height="56"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
                 <rect key="frame" x="0.0" y="0.0" width="320" height="55.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Q2w-5x-X36">
-                        <rect key="frame" x="16" y="8.5" width="40" height="40"/>
+                    <stackView opaque="NO" contentMode="scaleToFill" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="lzF-eX-vVz">
+                        <rect key="frame" x="16" y="8" width="288" height="40"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="Q2w-5x-X36">
+                                <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="Q2w-5x-X36" secondAttribute="height" multiplier="1:1" id="EOA-nd-xxm"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="n5T-hh-dX3">
+                                <rect key="frame" x="56" y="0.0" width="232" height="40"/>
+                                <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <constraints>
-                            <constraint firstAttribute="width" constant="40" id="OeM-Hm-EtX"/>
-                            <constraint firstAttribute="height" constant="40" id="ia3-w7-51D"/>
+                            <constraint firstAttribute="height" constant="40" id="5gJ-3q-oWA" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
+                            <constraint firstItem="Q2w-5x-X36" firstAttribute="centerY" secondItem="lzF-eX-vVz" secondAttribute="centerY" id="6uW-Th-JMt"/>
+                            <constraint firstItem="n5T-hh-dX3" firstAttribute="centerY" secondItem="lzF-eX-vVz" secondAttribute="centerY" id="UcH-7E-IGe"/>
+                        </constraints>
+                    </stackView>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ig8-1y-Sva" userLabel="Circle Image View">
+                        <rect key="frame" x="16" y="8" width="40" height="40"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="ig8-1y-Sva" secondAttribute="height" multiplier="1:1" id="Q5D-SR-DsU"/>
+                            <constraint firstAttribute="height" constant="40" id="baD-fA-CAa" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n5T-hh-dX3">
-                        <rect key="frame" x="72" y="19.5" width="224" height="18"/>
-                        <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
-                        <nil key="textColor"/>
-                        <nil key="highlightedColor"/>
-                    </label>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="Q2w-5x-X36" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="66o-6L-GHH"/>
-                    <constraint firstItem="Q2w-5x-X36" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="HcR-5r-549"/>
-                    <constraint firstAttribute="trailing" secondItem="n5T-hh-dX3" secondAttribute="trailing" constant="24" id="M3i-uB-7PI"/>
-                    <constraint firstAttribute="bottom" secondItem="Q2w-5x-X36" secondAttribute="bottom" constant="8" id="blp-MB-xfB"/>
-                    <constraint firstItem="n5T-hh-dX3" firstAttribute="leading" secondItem="Q2w-5x-X36" secondAttribute="trailing" constant="16" id="hpP-3H-nRe"/>
-                    <constraint firstItem="n5T-hh-dX3" firstAttribute="centerY" secondItem="Q2w-5x-X36" secondAttribute="centerY" id="vwg-cp-jJZ"/>
+                    <constraint firstAttribute="trailing" secondItem="lzF-eX-vVz" secondAttribute="trailing" constant="16" id="3qZ-er-8PN" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
+                    <constraint firstItem="ig8-1y-Sva" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="L5D-WI-Nxz"/>
+                    <constraint firstItem="lzF-eX-vVz" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="LNK-ID-63e" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
+                    <constraint firstItem="lzF-eX-vVz" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="gJg-58-wXg"/>
+                    <constraint firstItem="ig8-1y-Sva" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="y0M-6W-PY0" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="circleImageView" destination="ig8-1y-Sva" id="8X5-jG-TBd"/>
                 <outlet property="countryImage" destination="Q2w-5x-X36" id="ujJ-3n-ZPT"/>
                 <outlet property="countryLabel" destination="n5T-hh-dX3" id="x3m-df-yYC"/>
+                <outlet property="stackView" destination="lzF-eX-vVz" id="Exf-gi-y8W"/>
             </connections>
+            <point key="canvasLocation" x="137.68115942028987" y="148.66071428571428"/>
         </tableViewCell>
     </objects>
 </document>

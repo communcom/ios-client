@@ -29,7 +29,7 @@ class SelectCountryVC: UIViewController {
         self.title = "Select country".localized()
         
         tableView.register(UINib(nibName: "CountryCell", bundle: nil), forCellReuseIdentifier: "CountryCell")
-        tableView.rowHeight = 56.0
+        tableView.rowHeight = 56.0 * Config.heightRatio
         
         // Close bar button
         let closeButton = UIBarButtonItem(title: "Close".localized(), style: .plain, target: nil, action: nil)

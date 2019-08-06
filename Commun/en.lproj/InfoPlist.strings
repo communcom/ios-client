@@ -1,0 +1,15 @@
+/* 
+  InfoPlist.strings
+  golos-ios
+
+  Created by msm72 on 23.05.2018.
+  Copyright © 2018 golos. All rights reserved.
+ 
+  https://developer.apple.com/library/content/documentation/General/Reference/InfoPlistKeyReference/Articles/AboutInformationPropertyListFiles.html
+*/
+
+NSCameraUsageDescription                =   "We need access to your device's camera to scan the QR code";
+NSFaceIDUsageDescription                =   "FaceID needed to identify user";
+NSLocationWhenInUseUsageDescription     =   "Location needed to define content and settings that is suitable for you";
+NSPhotoLibraryUsageDescription          =   "We need access to your device's album to show photos";
+NSPhotoLibraryAddUsageDescription       =   "We need access to your device's album to show photos";

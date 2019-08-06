@@ -10,6 +10,7 @@ import Foundation
 import UIImageView_Letters
 import RxSwift
 import AppImageViewer
+import CyberSwift
 
 fileprivate var nonAvatarColors = [String: UIColor]()
 
@@ -63,7 +64,28 @@ extension UIImageView {
                 self.setAvatar(urlString: urlString, namePlaceHolder: Config.currentUser?.id ?? "U")
             })
     }
+    
+    class func drawCircleLine(size: CGSize, color: UIColor = .black) -> UIImage {
+        let lineWidth: CGFloat = 1.0
+        
+        let renderer = UIGraphicsImageRenderer(size: CGSize(width: size.height, height: size.height))
+        
+        return renderer.image { ctx in
+            ctx.cgContext.setFillColor(UIColor.clear.cgColor)
+            ctx.cgContext.setStrokeColor(color.cgColor)
+            ctx.cgContext.setLineWidth(lineWidth)
+            
+            let rectangle = CGRect(x:           lineWidth,
+                                   y:           lineWidth,
+                                   width:       size.height - lineWidth * 2,
+                                   height:      size.height - lineWidth * 2)
+            
+            ctx.cgContext.addEllipse(in: rectangle)
+            ctx.cgContext.drawPath(using: .fillStroke)
+        }
+    }
 }
+
 
 extension Reactive where Base: UIImageView {
     var isEmpty: Observable<Bool> {

@@ -238,6 +238,6 @@
         <image name="18Button" width="873" height="512"/>
         <image name="Close" width="512" height="512"/>
         <image name="photo_solid" width="24" height="24"/>
-        <image name="tux" width="327" height="370"/>
+        <image name="tux" width="56" height="56"/>
     </resources>
 </document>
