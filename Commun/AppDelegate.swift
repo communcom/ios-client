@@ -163,6 +163,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 
                 let navigationBarAppearace = UINavigationBar.appearance()
                 navigationBarAppearace.tintColor = #colorLiteral(red: 0.4156862745, green: 0.5019607843, blue: 0.9607843137, alpha: 1)
+                navigationBarAppearace.largeTitleTextAttributes =   [
+                                                                        NSAttributedString.Key.foregroundColor:     UIColor.black,
+                                                                        NSAttributedString.Key.font:                UIFont(name:    "SFProDisplay-Bold",
+                                                                                                                           size:    30.0 * Config.widthRatio)!
+                ]
             }
         }
         

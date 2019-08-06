@@ -83,7 +83,7 @@ class SignUpVC: UIViewController, SignUpRouter {
 
         self.title = "Sign up".localized()
         self.navigationController?.navigationBar.prefersLargeTitles = true
-        
+
         self.setupBindings()
         self.setupActions()
         
