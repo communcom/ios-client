@@ -21,12 +21,7 @@ class CountryCell: UITableViewCell {
         }
     }
    
-    @IBOutlet weak var circleImageView: UIImageView! {
-        didSet {
-            self.circleImageView.image = UIImageView.drawCircleLine(size:   CGSize(width: 40.0 * Config.heightRatio, height: 40.0 * Config.heightRatio),
-                                                                    color:  UIColor(hexString: "#808080")!)
-        }
-    }
+    @IBOutlet weak var circleImageView: UIImageView!
     
     @IBOutlet weak var stackView: UIStackView! {
         didSet {
