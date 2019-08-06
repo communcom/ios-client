@@ -50,6 +50,10 @@
 "Add short PIN code"                        =   "Добавьте короткий PIN-код";
 "Trending"                                  =   "Актуальные";
 "My Feed"                                   =   "Мой канал";
+"Enter passcode"                            =   "Введите пароль";
+"Confirm it's you"                          =   "Подтвердите, что это вы";
+"was turned off"                            =   "был выключен";
+"Do you want to turn it on?"                =   "Вы хотите включить его?";
 
 
 // Buttons
@@ -67,15 +71,20 @@
 "Skip"                                      =   "Пропустить";
 "Backup iCloud"                             =   "Резервное копирование iCloud";
 "Later"                                     =   "Позже";
+"Turn on"                                   =   "Включить";
 
 
 // Titles
 "Info"                                      =   "Инфо";
 "Error"                                     =   "Ошибка";
+"Warning"                                   =   "Предупреждение";
 "Successfully resend code"                  =   "Код подтверждения успешно отправлен";
 "Backup keys"                               =   "Резервное копирование ключей";
 "Saving to blockchain"                      =   "Сохранение в блокчейн";
 "Signing in"                                =   "Вход в систему";
+"Edit"                                      =   "Редактирование";
+"Delete"                                    =   "Удаление";
+"Report"                                    =   "Отчёт";
 
 
 // Placeholders

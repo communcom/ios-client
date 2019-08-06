@@ -58,7 +58,7 @@ extension PostController {
             ]
         } else {
             actions.append(
-                UIAlertAction(title: "Report", style: .destructive, handler: { (_) in
+                UIAlertAction(title: "Report".localized(), style: .destructive, handler: { (_) in
                     self.reportPost()
                 })
             )

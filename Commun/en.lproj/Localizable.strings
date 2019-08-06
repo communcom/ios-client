@@ -50,6 +50,10 @@
 "Add short PIN code"                        =   "Add short PIN code";
 "Trending"                                  =   "Trending";
 "My Feed"                                   =   "My Feed";
+"Enter passcode"                            =   "Enter passcode";
+"Confirm it's you"                          =   "Confirm it's you";
+"was turned off"                            =   "was turned off";
+"Do you want to turn it on?"                =   "Do you want to turn it on?";
 
 
 // Buttons
@@ -67,15 +71,20 @@
 "Skip"                                      =   "Skip";
 "Backup iCloud"                             =   "Backup iCloud";
 "Later"                                     =   "Later";
+"Turn on"                                   =   "Turn on";
 
 
 // Titles
 "Info"                                      =   "Info";
 "Error"                                     =   "Error";
+"Warning"                                   =   "Warning";
 "Successfully resend code"                  =   "Successfully resend code";
 "Backup keys"                               =   "Backup keys";
 "Saving to blockchain"                      =   "Saving to blockchain";
 "Signing in"                                =   "Signing in";
+"Edit"                                      =   "Edit";
+"Delete"                                    =   "Delete";
+"Report"                                    =   "Report";
 
 
 // Placeholders
