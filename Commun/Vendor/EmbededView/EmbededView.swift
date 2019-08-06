@@ -10,10 +10,10 @@ import UIKit
 import RxSwift
 import CyberSwift
 
-class EmbededView: UIView {
+class EmbededView: UIView, UIWebViewDelegate {
     var bag = DisposeBag()
     var heightConstraint: NSLayoutConstraint!
-    let didShowContentWithHeight = PublishSubject<CGFloat>()
+//    let didShowContentWithHeight = PublishSubject<CGFloat>()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -30,66 +30,54 @@ class EmbededView: UIView {
         self.heightConstraint = self.constraints.first {$0.firstAttribute == .height}
     }
     
-    func setUpWithEmbeded(_ embeded: ResponseAPIContentEmbed?){
-        if embeded?.result?.type == "video",
-            let html = embeded?.result?.html {
+    func setUpWithEmbeded(_ embededResult: ResponseAPIContentEmbedResult?){
+        if embededResult?.type == "video",
+            let html = embededResult?.html {
             showWebView(with: html)
-            return
-        } else if embeded?.result?.type == "photo",
-            let urlString = embeded?.result?.url,
+        } else if embededResult?.type == "photo",
+            let urlString = embededResult?.url,
             let url = URL(string: urlString) {
-            showPhoto(with: url)
-            return
+            if urlString.lowercased().ends(with: ".gif") {
+                showWebView(with: "<div><div style=\"left: 0; width: 100%; height: 0; position: relative; padding-bottom: 74.9457%;\"><img src=\"\(urlString)\" /></div></div>")
+            } else {
+                showPhoto(with: url)
+            }
+        }
+    }
+    
+    func showWebView(with htmlString: String) {
+        var webView: HTMLStringWebView!
+        
+        if let currentWebView = subviews.first(where: {$0 is HTMLStringWebView}) as? HTMLStringWebView {
+            webView = currentWebView
+        } else {
+            removeSubviews()
+            webView = HTMLStringWebView()
+            webView.translatesAutoresizingMaskIntoConstraints = false
+            
+            addSubview(webView)
+            webView.topAnchor.constraint(equalTo: topAnchor).isActive = true
+            webView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+            webView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
+            webView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
+            
+            webView.scrollView.contentInset = UIEdgeInsets(top: -8, left: -8, bottom: -8, right: -8)
+            webView.scrollView.isScrollEnabled = false
+            webView.scrollView.bouncesZoom = false
+            
+            showLoading()
+            webView.delegate = self
         }
         
-        // hide embeded
-        self.adjustHeight(withHeight: 0)
-    }
-    
-    private func showWebView(with htmlString: String) {
-        // clean content
-        removeSubviews()
-        
-        // create webView
-        let webView = UIWebView()
-        webView.translatesAutoresizingMaskIntoConstraints = false
-        
-        addSubview(webView)
-        webView.topAnchor.constraint(equalTo: topAnchor).isActive = true
-        webView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
-        webView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
-        webView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
-        
-        webView.scrollView.contentInset = UIEdgeInsets(top: -8, left: -8, bottom: -8, right: -8)
-        webView.scrollView.isScrollEnabled = false
-        webView.scrollView.bouncesZoom = false
-        
-        showLoading()
         webView.loadHTMLString(htmlString, baseURL: nil)
-        
-        webView.rx.didFinishLoad
-            .subscribe(onNext: {
-                self.hideLoading()
-                
-                // modify height base on content
-                var height: CGFloat = 383
-                let str = webView.stringByEvaluatingJavaScript(from: "document.body.offsetHeight;") ?? "383"
-                if let n = NumberFormatter().number(from: str) {
-                    height = CGFloat(truncating: n)
-                }
-                self.adjustHeight(withHeight: height)
-            })
-            .disposed(by: bag)
     }
     
-    private func showPhoto(with url: URL) {
-        // clean content
+    func showPhoto(with url: URL) {
         removeSubviews()
-        
-        // create imageView
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleToFill
+        imageView.addTapToViewer()
         
         addSubview(imageView)
         imageView.topAnchor.constraint(equalTo: topAnchor).isActive = true
@@ -97,23 +85,29 @@ class EmbededView: UIView {
         imageView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
         imageView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
         
-        showLoading()
+        imageView.showLoading()
         
-        imageView.sd_setImage(with: url) { (image, _, _, _) in
-            self.hideLoading()
-            if image != nil {
-                self.adjustHeight(withHeight: UIScreen.main.bounds.width*275/383)
+        imageView.sd_setImage(with: url) { [weak self] (image, _, _, _) in
+            guard let strongSelf = self else {return}
+            var image = image
+            if image == nil {
+                image = UIImage(named: "image-not-found")
+                imageView.image = image
             }
+            strongSelf.adjustHeight(withHeight: strongSelf.size.width * image!.size.height / image!.size.height)
         }
     }
     
     private func adjustHeight(withHeight height: CGFloat) {
-        print(height)
-        self.didShowContentWithHeight.onNext(height)
         self.heightConstraint.constant = height
-        UIView.animate(withDuration: 0.3, animations: {
-            self.layoutIfNeeded()
-        })
+        hideLoading()
+        self.setNeedsLayout()
+//        self.didShowContentWithHeight.onNext(height)
+    }
+    
+    func webViewDidFinishLoad(_ webView: UIWebView) {
+        let height  = (UIScreen.main.bounds.width-16) * webView.contentHeight / webView.contentWidth
+        adjustHeight(withHeight: height)
     }
 
 }

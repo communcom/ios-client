@@ -21,7 +21,7 @@ class PostHeaderView: UIView, UIWebViewDelegate, PostController {
     weak var viewDelegate: PostHeaderViewDelegate?
     
     // Media content
-    @IBOutlet weak var embedView: UIView!
+    @IBOutlet weak var embedView: EmbededView!
     @IBOutlet weak var embedViewHeightConstraint: NSLayoutConstraint!
     
     // Reactions
@@ -70,21 +70,7 @@ class PostHeaderView: UIView, UIWebViewDelegate, PostController {
         hideLoading()
         // Show media
         let embededResult = post.content.embeds.first?.result
-        
-        if embededResult?.type == "video",
-            let html = embededResult?.html {
-            showWebView(with: html)
-        } else if embededResult?.type == "photo",
-            let urlString = embededResult?.url,
-            let url = URL(string: urlString) {
-            if urlString.lowercased().ends(with: ".gif") {
-                showWebView(with: "<div><div style=\"left: 0; width: 100%; height: 0; position: relative; padding-bottom: 74.9457%;\"><img src=\"\(urlString)\" /></div></div>")
-            } else {
-                showPhoto(with: url)
-            }
-        } else {
-            embedViewHeightConstraint.constant = 0
-        }
+        embedView.setUpWithEmbeded(embededResult)
         
         // Show count label
         commentCountLabel.text = "\(post.stats.commentsCount) " + "Comments count".localized()
@@ -107,73 +93,9 @@ class PostHeaderView: UIView, UIWebViewDelegate, PostController {
         contentWebView.scrollView.bouncesZoom = false
     }
     
-    func showWebView(with htmlString: String) {
-        var webView: HTMLStringWebView!
-        
-        if let currentWebView = embedView.subviews.first(where: {$0 is HTMLStringWebView}) as? HTMLStringWebView {
-            webView = currentWebView
-        } else {
-            embedView.removeSubviews()
-            webView = HTMLStringWebView()
-            webView.translatesAutoresizingMaskIntoConstraints = false
-            
-            embedView.addSubview(webView)
-            webView.topAnchor.constraint(equalTo: embedView.topAnchor).isActive = true
-            webView.bottomAnchor.constraint(equalTo: embedView.bottomAnchor).isActive = true
-            webView.leadingAnchor.constraint(equalTo: embedView.leadingAnchor).isActive = true
-            webView.trailingAnchor.constraint(equalTo: embedView.trailingAnchor).isActive = true
-            
-            webView.scrollView.contentInset = UIEdgeInsets(top: -8, left: -8, bottom: -8, right: -8)
-            webView.scrollView.isScrollEnabled = false
-            webView.scrollView.bouncesZoom = false
-            
-            embedView.showLoading()
-            webView.delegate = self
-        }
-        
-        webView.loadHTMLString(htmlString, baseURL: nil)
-    }
-    
-    func showPhoto(with url: URL) {
-        embedView.removeSubviews()
-        let imageView = UIImageView()
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.contentMode = .scaleToFill
-        imageView.addTapToViewer()
-        
-        embedView.addSubview(imageView)
-        imageView.topAnchor.constraint(equalTo: embedView.topAnchor).isActive = true
-        imageView.bottomAnchor.constraint(equalTo: embedView.bottomAnchor).isActive = true
-        imageView.leadingAnchor.constraint(equalTo: embedView.leadingAnchor).isActive = true
-        imageView.trailingAnchor.constraint(equalTo: embedView.trailingAnchor).isActive = true
-        
-        imageView.showLoading()
-        
-        imageView.sd_setImage(with: url) { [weak self] (image, _, _, _) in
-            var image = image
-            if image == nil {
-                image = UIImage(named: "image-not-found")
-                imageView.image = image
-            }
-            self?.hideLoading()
-            self?.embedViewHeightConstraint.constant = UIScreen.main.bounds.width * image!.size.height / image!.size.width
-        }
-    }
-    
     func webViewDidFinishLoad(_ webView: UIWebView) {
-        if let embedWebView = embedView.subviews.first(where: {$0 is UIWebView}) as? UIWebView,
-            webView == embedWebView {
-            
-            let height  = (UIScreen.main.bounds.width-16) * webView.contentHeight / webView.contentWidth
-            embedViewHeightConstraint.constant = height
-        }
-        
-        if webView == contentWebView {
-            let height  = webView.contentHeight
-            contentWebViewHeightConstraint.constant = height + 16
-        }
-        
-        embedView.hideLoading()
+        let height  = webView.contentHeight
+        contentWebViewHeightConstraint.constant = height + 16
     }
     
     
