@@ -21,17 +21,24 @@ class ItemsFetcher<T: Decodable> {
     var request: Single<[T]>! {
         return nil
     }
+    var lastError: Error?
     
     // MARK: - Methods
     func reset() {
-        reachedTheEnd = false
-        isFetching = false
-        sequenceKey = nil
+        lastError       = nil
+        reachedTheEnd   = false
+        isFetching      = false
+        sequenceKey     = nil
     }
     
     func fetchNext() -> Single<[T]> {
+        // Resign error
+        lastError = nil
+        
         // Prevent duplicate request
-        if self.isFetching || self.reachedTheEnd {return Single.never()}
+        if self.isFetching || self.reachedTheEnd {
+            return Single.never()
+        }
         
         // Mark operation as fetching
         self.isFetching = true
@@ -50,9 +57,14 @@ class ItemsFetcher<T: Decodable> {
                     self.reachedTheEnd = true
                 }
                 
+                self.lastError = nil
+                
             }, onError: { (error) in
                 // mark isFetching as false
                 self.isFetching = false
+                
+                // resign error
+                self.lastError = error
             })
     }
 }

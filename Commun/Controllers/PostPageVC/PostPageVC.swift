@@ -46,10 +46,21 @@ class PostPageVC: UIViewController, CommentCellDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // setup views
+        // setup viewModel
         viewModel.loadPost()
         viewModel.fetchNext()
         
+        viewModel.listEndedHandler = { [weak self] in
+            self?.tableView.tableFooterView = UIView()
+        }
+        
+        viewModel.fetchNextErrorHandler = {[weak self] error in
+            guard let strongSelf = self else {return}
+            strongSelf.tableView.addListErrorFooterView(with: #selector(strongSelf.didTapTryAgain(gesture:)), on: strongSelf)
+            strongSelf.tableView.reloadData()
+        }
+        
+        // setupView
         tableView.register(UINib(nibName: "CommentCell", bundle: nil), forCellReuseIdentifier: "CommentCell")
         
         tableView.register(UINib(nibName: "EmptyCell", bundle: nil), forCellReuseIdentifier: "EmptyCell")
@@ -117,6 +128,16 @@ class PostPageVC: UIViewController, CommentCellDelegate {
     }
     @IBAction func replyingToCloseDidTouch(_ sender: Any) {
         replyingComment = nil
+    }
+    
+    @objc func didTapTryAgain(gesture: UITapGestureRecognizer) {
+        guard let label = gesture.view as? UILabel,
+            let text = label.text else {return}
+        
+        let tryAgainRange = (text as NSString).range(of: "Try again".localized())
+        if gesture.didTapAttributedTextInLabel(label: label, inRange: tryAgainRange) {
+            self.viewModel.fetchNext()
+        }
     }
 }
 

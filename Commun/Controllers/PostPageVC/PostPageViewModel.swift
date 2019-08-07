@@ -61,13 +61,17 @@ class PostPageViewModel: ListViewModelType {
                 self.fetchNextErrorHandler?(error)
                 return .just([])
             }
-            .subscribe(onSuccess: { (list) in
+            .subscribe(onSuccess: {[weak self] (list) in
+                guard let strongSelf = self else {return}
+                
                 guard list.count > 0 else {
-                    self.listEndedHandler?()
+                    strongSelf.listEndedHandler?()
                     return
                 }
-                self.comments.accept(list.reversed() + self.comments.value)
-                self.fetchNextCompleted?()
+                
+                let newList = strongSelf.sortComments(list.filter {!strongSelf.comments.value.contains($0)})
+                strongSelf.comments.accept(strongSelf.comments.value + newList)
+                strongSelf.fetchNextCompleted?()
             })
             .disposed(by: disposeBag)
     }
@@ -76,5 +80,9 @@ class PostPageViewModel: ListViewModelType {
         comments.accept([])
         fetcher.reset()
         fetchNext()
+    }
+    
+    func sortComments(_ comments: [ResponseAPIContentGetComment]) -> [ResponseAPIContentGetComment] {
+        return comments
     }
 }

@@ -112,11 +112,13 @@ extension PostPageVC {
                 let cell = self.tableView.dequeueReusableCell(withIdentifier: "CommentCell") as! CommentCell
                 cell.setupFromComment(comment, expanded: self.expandedIndexes.contains(index))
                 cell.delegate = self
+                
+                if index == self.viewModel.comments.value.count - 2 {
+                    self.viewModel.fetchNext()
+                }
+                
                 return cell
             }
-            .disposed(by: disposeBag)
-        
-        tableView.rx.setDelegate(self)
             .disposed(by: disposeBag)
         
         viewModel.comments

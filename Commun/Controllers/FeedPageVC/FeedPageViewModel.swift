@@ -15,7 +15,6 @@ class FeedPageViewModel: PostsListController, ListViewModelType {
     // PostsListController requirement
     var disposeBag = DisposeBag()
     var items = BehaviorRelay<[ResponseAPIContentGetPost]>(value: [])
-    let lastError = BehaviorRelay<Error?>(value: nil)
     
     let sortType = BehaviorRelay<FeedTimeFrameMode>(value: .all)
     let feedType = BehaviorRelay<FeedSortMode>(value: .popular)
@@ -61,8 +60,6 @@ class FeedPageViewModel: PostsListController, ListViewModelType {
                 self.loadingHandler?()
             })
             .subscribe(onSuccess: { (list) in
-                self.lastError.accept(nil)
-                
                 if list.count > 0 {
                     let newList = list.filter {!self.items.value.contains($0)}
                     self.items.accept(self.items.value + newList)
@@ -74,7 +71,6 @@ class FeedPageViewModel: PostsListController, ListViewModelType {
                 }
                 
             }) { (error) in
-                self.lastError.accept(error)
                 self.fetchNextErrorHandler?(error)
             }
             .disposed(by: disposeBag)
@@ -82,7 +78,6 @@ class FeedPageViewModel: PostsListController, ListViewModelType {
     
     @objc func reload() {
         items.accept([])
-        lastError.accept(nil)
         fetcher.reset()
         fetchNext()
     }

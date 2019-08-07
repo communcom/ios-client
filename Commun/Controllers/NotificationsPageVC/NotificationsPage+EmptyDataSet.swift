@@ -19,13 +19,13 @@ extension NotificationsPageVC: DZNEmptyDataSetDelegate, DZNEmptyDataSetSource {
     }
     
     func title(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
-        let message = viewModel.lastError.value == nil ? "No notification".localized(): "Error".localized() + "!"
+        let message = viewModel.fetcher.lastError == nil ? "No notification".localized(): "Error".localized() + "!"
         return NSMutableAttributedString()
             .bold(message, font: .boldSystemFont(ofSize: 22))
     }
     
     func description(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
-        let message = viewModel.lastError.value == nil ? "You have no notification".localized() : "There is an error occurred".localized() + "\n" + "Tap to try again".localized()
+        let message = viewModel.fetcher.lastError == nil ? "You have no notification".localized() : "There is an error occurred".localized() + "\n" + "Tap to try again".localized()
         return NSMutableAttributedString()
             .gray(message)
     }
