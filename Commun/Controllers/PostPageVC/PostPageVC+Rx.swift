@@ -129,6 +129,9 @@ extension PostPageVC {
     func bindCommentForm() {
         commentForm.commentDidSend
             .subscribe(onNext: { [weak self] (_) in
+                if (self?.replyingComment != nil) {
+                    self?.replyingComment = nil
+                }
                 #warning("Reload table for testing only")
                 self?.viewModel.reload()
             })

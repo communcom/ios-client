@@ -34,6 +34,7 @@ class PostPageVC: UIViewController, CommentCellDelegate {
                 replyingToLabelHeightConstraint.constant = 16
                 commentForm.parentAuthor = comment.contentId.userId
                 commentForm.parentPermlink = comment.contentId.permlink
+                replyingToLabel.text = "Replying to".localized() + " " + (comment.author?.username ?? "")
             } else {
                 replyingToLabelHeightConstraint.constant = 0
                 commentForm.parentAuthor = viewModel.post.value?.contentId.userId
