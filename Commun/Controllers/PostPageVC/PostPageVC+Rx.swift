@@ -21,17 +21,7 @@ extension PostPageVC {
         bindComments()
         
         // Observe commentForm
-        commentForm.rx.didSubmit
-            .subscribe(onNext: {comment in
-                self.sendComment(comment)
-            })
-            .disposed(by: disposeBag)
-        
-        commentForm.textView.rx.didBeginEditing
-            .subscribe(onNext: {_ in
-                self.tableView.scrollToBottom()
-            })
-            .disposed(by: disposeBag)
+        bindCommentForm()
     }
     
     func bindPost() {
@@ -48,8 +38,8 @@ extension PostPageVC {
         
         viewModel.post
             .subscribe(onNext: {post in
-                // Time ago & community
                 if let post = post {
+                    // Time ago & community
                     self.comunityNameLabel.isHidden = false
                     self.timeAgoLabel.isHidden = false
                     self.byUserLabel.isHidden = false
@@ -59,12 +49,17 @@ extension PostPageVC {
                     self.comunityNameLabel.text = post.community.name
                     self.timeAgoLabel.text = Date.timeAgo(string: post.meta.time)
                     self.byUserLabel.text = "by".localized() + " " + (post.author?.username ?? post.author?.userId ?? "")
+                    
+                    // commentForm
+                    self.commentForm.parentAuthor = post.contentId.userId
+                    self.commentForm.parentPermlink = post.contentId.permlink
                 } else {
                     self.comunityNameLabel.isHidden = true
                     self.timeAgoLabel.isHidden = true
                     self.byUserLabel.isHidden = true
                     self.communityAvatarImageView.isHidden = true
                 }
+                
                 
                 
                 // Create tableHeaderView
@@ -129,29 +124,26 @@ extension PostPageVC {
             .disposed(by: disposeBag)
     }
     
-    func sendComment(_ comment: String) {
-        guard self.viewModel.post.value != nil else {return}
-        
-        viewModel.sendComment(comment, image: commentForm.imageView.image)
-            .do(onSubscribed: {
-                self.commentForm.sendButton.isEnabled = false
+    func bindCommentForm() {
+        commentForm.commentDidSend
+            .subscribe(onNext: { [weak self] (_) in
+                #warning("Reload table for testing only")
+                self?.viewModel.reload()
             })
-            .observeOn(MainScheduler.instance)
-            .subscribe(onCompleted: {
-                self.commentForm.textView.text = ""
-                self.commentForm.imageView.image = nil
-                self.view.endEditing(true)
-                
-                self.commentForm.sendButton.isEnabled = true
-                
-                #warning("refresh table for testing only")
-                self.viewModel.reload()
-            }, onError: {error in
-                self.view.endEditing(true)
+            .disposed(by: disposeBag)
+        
+        commentForm.commentDidFailedToSend
+            .subscribe(onNext: { [weak self] (error) in
+                self?.view.endEditing(true)
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                    self.showError(error)
+                    self?.showError(error)
                 }
-                self.commentForm.sendButton.isEnabled = true
+            })
+            .disposed(by: disposeBag)
+        
+        commentForm.textView.rx.didBeginEditing
+            .subscribe(onNext: {_ in
+                self.tableView.scrollToBottom()
             })
             .disposed(by: disposeBag)
     }
