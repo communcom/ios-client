@@ -22,7 +22,7 @@ class SetUserVC: UIViewController, SignUpRouter {
         didSet {
             self.creatUsernameLabel.tune(withText:      "Create your username".localized(),
                                          hexColors:     blackWhiteColorPickers,
-                                         font:          UIFont(name: "SFProText-Regular", size: 17.0 * Config.heightRatio),
+                                         font:          UIFont(name: "SFProText-Regular", size: 17.0 * Config.widthRatio),
                                          alignment:     .left,
                                          isMultiLines:  false)
         }
@@ -32,7 +32,7 @@ class SetUserVC: UIViewController, SignUpRouter {
         didSet {
             self.userNameTextField.tune(withPlaceholder:    "Username Placeholder".localized(),
                                         textColors:         blackWhiteColorPickers,
-                                        font:               UIFont.init(name: "SFProText-Regular", size: 17.0 * Config.heightRatio),
+                                        font:               UIFont.init(name: "SFProText-Regular", size: 17.0 * Config.widthRatio),
                                         alignment:          .left)
             
             self.userNameTextField.inset = 16.0 * Config.widthRatio

@@ -54,6 +54,17 @@
 "Confirm it's you"                          =   "Подтвердите, что это вы";
 "was turned off"                            =   "был выключен";
 "Do you want to turn it on?"                =   "Вы хотите включить его?";
+"ago"                                       =   "назад";
+"New"                                       =   "Новый";
+"Top"                                       =   "Первый";
+"Old"                                       =   "Старый";
+"Past 24 hours"                             =   "За последние 24 часа";
+"Past Week"                                 =   "За последнюю неделю";
+"Past Month"                                =   "За последний месяц";
+"Past Year"                                 =   "За последний год";
+"Of All Time"                               =   "За всё время";
+"Can not fetch next items"                  =   "Отсутствует очередная порция данных";
+"Try again"                                 =   "Попробуйте ещё раз";
 
 
 // Buttons
@@ -104,4 +115,4 @@
 "Enter correct sms code"                    =   "Введите корректный смс-код";
 "User already in blockchain."               =   "Ползователь уже зарегистрирован в блокчейне";
 "There is an error occurred"                =   "Возникла ошибка";
-"Tap to try again"                          =   "Нажмите сюда чтобы попробовать еще раз";
+"Tap to try again"                          =   "Нажмите ещё раз";

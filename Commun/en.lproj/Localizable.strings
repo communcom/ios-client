@@ -54,6 +54,17 @@
 "Confirm it's you"                          =   "Confirm it's you";
 "was turned off"                            =   "was turned off";
 "Do you want to turn it on?"                =   "Do you want to turn it on?";
+"ago"                                       =   "ago";
+"New"                                       =   "New";
+"Top"                                       =   "Top";
+"Old"                                       =   "Old";
+"Past 24 hours"                             =   "Past 24 hours";
+"Past Week"                                 =   "Past Week";
+"Past Month"                                =   "Past Month";
+"Past Year"                                 =   "Past Year";
+"Of All Time"                               =   "Of All Time";
+"Can not fetch next items"                  =   "Can not fetch next items";
+"Try again"                                 =   "Try again";
 
 
 // Buttons

@@ -36,7 +36,7 @@ class ConfirmUserVC: UIViewController, SignUpRouter {
         didSet {
             self.smsCodeLabel.tune(withText:      "Enter SMS-code".localized(),
                                    hexColors:     blackWhiteColorPickers,
-                                   font:          UIFont(name: "SFProText-Regular", size: 17.0 * Config.heightRatio),
+                                   font:          UIFont(name: "SFProText-Regular", size: 17.0 * Config.widthRatio),
                                    alignment:     .center,
                                    isMultiLines:  false)
         }
@@ -49,7 +49,7 @@ class ConfirmUserVC: UIViewController, SignUpRouter {
             
             self.resendButton.tune(withTitle:     "Resend verification code".localized(),
                                    hexColors:     [softBlueColorPickers, verySoftBlueColorPickers, verySoftBlueColorPickers, verySoftBlueColorPickers],
-                                   font:          UIFont(name: "SFProText-Semibold", size: 15.0 * Config.heightRatio),
+                                   font:          UIFont(name: "SFProText-Semibold", size: 15.0 * Config.widthRatio),
                                    alignment:     .center)
         }
     }
@@ -58,7 +58,7 @@ class ConfirmUserVC: UIViewController, SignUpRouter {
         didSet {
             self.resendTimerLabel.tune(withText:      "",
                                        hexColors:     verySoftBlueColorPickers,
-                                       font:          UIFont(name: "SFProText-Semibold", size: 15.0 * Config.heightRatio),
+                                       font:          UIFont(name: "SFProText-Semibold", size: 15.0 * Config.widthRatio),
                                        alignment:     .center,
                                        isMultiLines:  false)
             
@@ -81,7 +81,7 @@ class ConfirmUserVC: UIViewController, SignUpRouter {
         
         self.pinCodeInputView.set(appearance: .init(itemSize:         CGSize(width: 48.0 * Config.widthRatio, height: 56.0 * Config.heightRatio),
                                                     font:             .init(descriptor: UIFontDescriptor(name:  "SFProText-Regular",
-                                                                                                         size:  26.0 * Config.heightRatio),
+                                                                                                         size:  26.0 * Config.widthRatio),
                                                                             size:   26.0 * Config.heightRatio),
                                                     textColor:        .black,
                                                     backgroundColor:  UIColor(hexString: "F3F5FA")!,
