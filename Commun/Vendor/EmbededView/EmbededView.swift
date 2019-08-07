@@ -42,6 +42,8 @@ class EmbededView: UIView, UIWebViewDelegate {
             } else {
                 showPhoto(with: url)
             }
+        } else {
+            adjustHeight(withHeight: 0)
         }
     }
     
