@@ -17,7 +17,7 @@ extension CommentCellDelegate where Self: UIViewController {
     }
     
     func cell(_ cell: CommentCell, didTapReplyButtonForComment comment: ResponseAPIContentGetComment) {
-        showAlert(title: "TODO", message: "Reply comment")
+        replyingComment = comment
     }
     
     func cell(_ cell: CommentCell, didTapSeeMoreButtonForComment comment: ResponseAPIContentGetComment) {

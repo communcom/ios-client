@@ -20,11 +20,27 @@ class PostPageVC: UIViewController, CommentCellDelegate {
     @IBOutlet weak var communityAvatarImageView: UIImageView!
     @IBOutlet weak var moreButton: UIButton!
     @IBOutlet weak var commentForm: CommentForm!
+    @IBOutlet weak var replyingToLabel: UILabel!
+    @IBOutlet weak var replyingToLabelHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var navigationBarHeightConstraint: NSLayoutConstraint!
     
     let disposeBag = DisposeBag()
     
     var expandedIndexes = [Int]()
+    
+    var replyingComment: ResponseAPIContentGetComment? {
+        didSet {
+            if let comment = self.replyingComment {
+                replyingToLabelHeightConstraint.constant = 16
+                commentForm.parentAuthor = comment.contentId.userId
+                commentForm.parentPermlink = comment.contentId.permlink
+            } else {
+                replyingToLabelHeightConstraint.constant = 0
+                commentForm.parentAuthor = viewModel.post.value?.contentId.userId
+                commentForm.parentPermlink = viewModel.post.value?.contentId.permlink
+            }
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,6 +67,9 @@ class PostPageVC: UIViewController, CommentCellDelegate {
         
         // observe post deleted
         observePostDeleted()
+        
+        // replyingto
+        replyingComment = nil
         
         // bind ui
         bindUI()
@@ -94,6 +113,9 @@ class PostPageVC: UIViewController, CommentCellDelegate {
     @objc func userNameTapped(_ sender: UITapGestureRecognizer) {
         guard let userId = viewModel.post.value?.author?.userId else {return}
         showProfileWithUserId(userId)
+    }
+    @IBAction func replyingToCloseDidTouch(_ sender: Any) {
+        replyingComment = nil
     }
 }
 

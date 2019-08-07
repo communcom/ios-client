@@ -51,8 +51,10 @@ extension PostPageVC {
                     self.byUserLabel.text = "by".localized() + " " + (post.author?.username ?? post.author?.userId ?? "")
                     
                     // commentForm
-                    self.commentForm.parentAuthor = post.contentId.userId
-                    self.commentForm.parentPermlink = post.contentId.permlink
+                    if self.replyingComment == nil {
+                        self.commentForm.parentAuthor = post.contentId.userId
+                        self.commentForm.parentPermlink = post.contentId.permlink
+                    }
                 } else {
                     self.comunityNameLabel.isHidden = true
                     self.timeAgoLabel.isHidden = true

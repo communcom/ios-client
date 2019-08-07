@@ -11,6 +11,7 @@ import TTTAttributedLabel
 import RxSwift
 
 protocol CommentCellDelegate: class {
+    var replyingComment: ResponseAPIContentGetComment? {get set}
     var expandedIndexes: [Int] {get set}
     var tableView: UITableView! {get set}
     func cell(_ cell: CommentCell, didTapUpVoteButtonForComment comment: ResponseAPIContentGetComment)

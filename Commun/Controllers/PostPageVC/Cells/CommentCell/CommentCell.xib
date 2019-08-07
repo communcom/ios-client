@@ -18,14 +18,14 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="247" id="KGk-i7-Jjw" customClass="CommentCell" customModule="Commun" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="247"/>
+            <rect key="frame" x="0.0" y="0.0" width="320" height="255"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="246.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="254.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iEa-zA-ZjA">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="246.5"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="254.5"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="123.5" id="shg-i6-YLM"/>
@@ -72,7 +72,7 @@
                         </constraints>
                     </view>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YVW-q8-bUL" userLabel="Upvote Button">
-                        <rect key="frame" x="72" y="204.5" width="28" height="28"/>
+                        <rect key="frame" x="72" y="212.5" width="28" height="28"/>
                         <accessibility key="accessibilityConfiguration" identifier="CommentCellUpvoteButton" label="CommentCellUpvoteButton"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="28" id="ACe-Tv-lGJ"/>
@@ -84,13 +84,13 @@
                         </connections>
                     </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wdF-tc-scc">
-                        <rect key="frame" x="112" y="210.5" width="9" height="16"/>
+                        <rect key="frame" x="112" y="218.5" width="9" height="16"/>
                         <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EWF-Yc-pSQ" userLabel="Unvote Button">
-                        <rect key="frame" x="133" y="204.5" width="28" height="28"/>
+                        <rect key="frame" x="133" y="212.5" width="28" height="28"/>
                         <accessibility key="accessibilityConfiguration" identifier="CommentCellUnvoteButton" label="CommentCellUnvoteButton"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="28" id="2eE-8d-axL"/>
@@ -102,7 +102,7 @@
                         </connections>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="djA-OD-aYa" userLabel="Reply Button">
-                        <rect key="frame" x="185" y="203.5" width="119" height="30"/>
+                        <rect key="frame" x="185" y="211.5" width="119" height="30"/>
                         <accessibility key="accessibilityConfiguration" identifier="CommentCellReplyButton" label="CommentCellReplyButton"/>
                         <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
                         <state key="normal" title="Reply">
@@ -136,7 +136,7 @@
                     <constraint firstItem="vEd-B7-VR3" firstAttribute="leading" secondItem="S8Z-0b-bRv" secondAttribute="trailing" constant="16" id="eFa-WJ-7PT"/>
                     <constraint firstItem="iEa-zA-ZjA" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="ejL-OZ-oJK"/>
                     <constraint firstAttribute="trailing" secondItem="iEa-zA-ZjA" secondAttribute="trailing" id="fnR-sf-ssi"/>
-                    <constraint firstItem="YVW-q8-bUL" firstAttribute="top" secondItem="Ujt-CL-dNy" secondAttribute="bottom" id="iEq-SZ-H5k"/>
+                    <constraint firstItem="YVW-q8-bUL" firstAttribute="top" secondItem="Ujt-CL-dNy" secondAttribute="bottom" constant="8" id="iEq-SZ-H5k"/>
                     <constraint firstItem="djA-OD-aYa" firstAttribute="leading" secondItem="EWF-Yc-pSQ" secondAttribute="trailing" constant="24" id="jEW-f1-qdX"/>
                     <constraint firstAttribute="bottom" secondItem="YVW-q8-bUL" secondAttribute="bottom" constant="14" id="lAY-7n-hsQ"/>
                     <constraint firstItem="Ujt-CL-dNy" firstAttribute="leading" secondItem="vEd-B7-VR3" secondAttribute="leading" id="lHy-jZ-fa9"/>
@@ -162,6 +162,6 @@
     <resources>
         <image name="Down" width="170.66667175292969" height="170.66667175292969"/>
         <image name="Up" width="170.66667175292969" height="170.66667175292969"/>
-        <image name="tux" width="327" height="370"/>
+        <image name="tux" width="56" height="56"/>
     </resources>
 </document>
