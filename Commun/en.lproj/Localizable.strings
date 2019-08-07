@@ -65,6 +65,23 @@
 "Of All Time"                               =   "Of All Time";
 "Can not fetch next items"                  =   "Can not fetch next items";
 "Try again"                                 =   "Try again";
+"Signing you up"                            =   "Signing you up";
+"Verifying"                                 =   "Verifying";
+"Setting username"                          =   "Setting username";
+"Enter your current passcode"               =   "Enter your current passcode";
+"Uploading..."                              =   "Uploading...";
+"Updating..."                               =   "Updating...";
+"Upload image"                              =   "Upload image";
+"Edit post"                                 =   "Edit post";
+"Create post"                               =   "Create post";
+"Sending post"                              =   "Sending post";
+"Wait for transaction"                      =   "Wait for transaction";
+"by"                                        =   "by";
+"Comments"                                  =   "Comments";
+"Views"                                     =   "Views";
+"My communities"                            =   "My communities";
+"Discover"                                  =   "Discover";
+"Recommended"                               =   "Recommended";
 
 
 // Buttons
@@ -83,6 +100,8 @@
 "Backup iCloud"                             =   "Backup iCloud";
 "Later"                                     =   "Later";
 "Turn on"                                   =   "Turn on";
+"JOINED"                                    =   "JOINED";
+"JOIN"                                      =   "JOIN";
 
 
 // Titles
@@ -106,6 +125,7 @@
 "Login Placeholder"                         =   "User ID or username";
 "Key Placeholder"                           =   "Master key";
 "Write Text Placeholder"                    =   "Write text";
+"Title Placeholder"                         =   "Title";
 
 
 // Error message

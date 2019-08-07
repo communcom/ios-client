@@ -65,6 +65,23 @@
 "Of All Time"                               =   "За всё время";
 "Can not fetch next items"                  =   "Отсутствует очередная порция данных";
 "Try again"                                 =   "Попробуйте ещё раз";
+"Signing you up"                            =   "Подписание";
+"Verifying"                                 =   "Проверка";
+"Setting username"                          =   "Установка имени пользователя";
+"Enter your current passcode"               =   "Введите ваш текущий пароль";
+"Uploading..."                              =   "Выгрузка...";
+"Updating..."                               =   "Обновление...";
+"Upload image"                              =   "Загрузить изображение";
+"Edit post"                                 =   "Редактирование сообщения";
+"Create post"                               =   "Создание сообщения";
+"Sending post"                              =   "Отправка сообщения";
+"Wait for transaction"                      =   "Ожидание транзакции";
+"by"                                        =   "от";
+"Comments"                                  =   "Комментарии";
+"Views"                                     =   "Просмотры";
+"My communities"                            =   "Мои сообщества";
+"Discover"                                  =   "Обнаружить";
+"Recommended"                               =   "Рекомендуемые";
 
 
 // Buttons
@@ -83,6 +100,8 @@
 "Backup iCloud"                             =   "Резервное копирование iCloud";
 "Later"                                     =   "Позже";
 "Turn on"                                   =   "Включить";
+"JOINED"                                    =   "ПРИСОЕДИНИЛСЯ";
+"JOIN"                                      =   "ПРИСОЕДИНИТЬСЯ";
 
 
 // Titles
@@ -106,6 +125,7 @@
 "Login Placeholder"                         =   "Введите имя пользователя";
 "Key Placeholder"                           =   "Введите мастер-ключ";
 "Write Text Placeholder"                    =   "Введите текст";
+"Title Placeholder"                         =   "Заголовок";
 
 
 // Error message
