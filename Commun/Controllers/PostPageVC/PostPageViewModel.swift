@@ -69,8 +69,18 @@ class PostPageViewModel: ListViewModelType {
                     return
                 }
                 
-                let newList = strongSelf.sortComments(list.filter {!strongSelf.comments.value.contains($0)})
-                strongSelf.comments.accept(strongSelf.comments.value + newList)
+                // get unique items
+                var newList = list.filter {!strongSelf.comments.value.contains($0)}
+                guard newList.count > 0 else {return}
+                
+                // add last
+                newList = strongSelf.comments.value + newList
+                
+                // sort
+                newList = strongSelf.sortComments(newList)
+                
+                // resign
+                strongSelf.comments.accept(newList)
                 strongSelf.fetchNextCompleted?()
             })
             .disposed(by: disposeBag)
