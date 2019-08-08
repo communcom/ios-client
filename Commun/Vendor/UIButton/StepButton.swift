@@ -42,7 +42,7 @@ import UIKit
         
         // localize label
         if let text = titleLabel?.text {
-            setTitle(text.localized(), for: .normal)
+            setTitle(text.localized().uppercaseFirst, for: .normal)
         }
     }
 }

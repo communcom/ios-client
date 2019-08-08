@@ -13,15 +13,15 @@ extension FeedTimeFrameMode {
     func toString() -> String {
         switch self {
         case .day:
-            return "Past 24 hours".localized()
+            return "past 24 hours".localized().uppercaseFirst
         case .week:
-            return "Past Week".localized()
+            return "past week".localized().uppercaseFirst
         case .month:
-            return "Past Month".localized()
+            return "past month".localized().uppercaseFirst
         case .year:
-            return "Past Year".localized()
+            return "past year".localized().uppercaseFirst
         case .all:
-            return "Of All Time".localized()
+            return "of all time".localized().uppercaseFirst
         case .wilsonHot:
             return ""
         case .wilsonTrending:

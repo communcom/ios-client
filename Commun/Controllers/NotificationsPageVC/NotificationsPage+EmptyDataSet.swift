@@ -25,7 +25,7 @@ extension NotificationsPageVC: DZNEmptyDataSetDelegate, DZNEmptyDataSetSource {
     }
     
     func description(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
-        let message = viewModel.lastError.value == nil ? "You have no notification".localized() : "There is an error occurred".localized() + "\n" + "Tap to try again".localized()
+        let message = (viewModel.lastError.value == nil ? "you have no notification" : "there is an error occurred").localized().uppercaseFirst + "\n" + "tap to try again".localized().uppercaseFirst
         return NSMutableAttributedString()
             .gray(message)
     }

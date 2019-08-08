@@ -39,7 +39,7 @@ class NotificationCell: UITableViewCell {
         guard let type = NotificationType(rawValue: notification.eventType) else {
             avatarImage.image = UIImage(named: "NotificationAvatarPlaceholder")
             notificationTypeImage.image = UIImage(named: "NotificationMention")
-            contentLabel.text = "You have a new notification".localized()
+            contentLabel.text = "you have a new notification".localized().uppercaseFirst
             return
         }
     

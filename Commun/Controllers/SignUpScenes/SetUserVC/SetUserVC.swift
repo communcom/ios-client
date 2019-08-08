@@ -52,7 +52,7 @@ class SetUserVC: UIViewController, SignUpRouter {
             viewModel = SetUserViewModel()
         }
 
-        self.title = "Sign up".localized()
+        self.title = "sign up".localized().uppercaseFirst
         self.navigationController?.navigationBar.prefersLargeTitles = true
         
         setBackButtonToSignUpVC()
@@ -82,7 +82,8 @@ class SetUserVC: UIViewController, SignUpRouter {
         
         self.view.endEditing(true)
         
-        showIndetermineHudWithMessage("Setting username".localized() + "...")
+        showIndetermineHudWithMessage("setting username".localized().uppercaseFirst + "...")
+        
         viewModel.setUser(userName: userName, phone: phone)
             .catchError({ (error) -> Single<String> in
                 if let error = error as? ErrorAPI {
@@ -94,7 +95,7 @@ class SetUserVC: UIViewController, SignUpRouter {
                 throw error
             })
             .flatMapCompletable({ (id) -> Completable in
-                self.showIndetermineHudWithMessage("Saving to blockchain".localized() + "...")
+                self.showIndetermineHudWithMessage("saving to blockchain...".localized().uppercaseFirst)
                 return RestAPIManager.instance.rx.toBlockChain()
             })
             .subscribe(onCompleted: {

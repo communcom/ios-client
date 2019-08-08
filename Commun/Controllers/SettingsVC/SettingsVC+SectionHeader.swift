@@ -36,11 +36,11 @@ extension SettingsVC: UITableViewDelegate {
         
             switch section {
             case 0:
-                label.text = "General".localized()
+                label.text = "general".localized().uppercaseFirst
                 break
                 
             case 1:
-                label.text = "Notifications".localized()
+                label.text = "notifications".localized().uppercaseFirst
                 let switcher = UISwitch(frame: CGRect.zero)
                 switcher.translatesAutoresizingMaskIntoConstraints = false
                 switcher.onTintColor = .appMainColor

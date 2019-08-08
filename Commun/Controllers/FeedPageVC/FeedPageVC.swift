@@ -89,9 +89,10 @@ class FeedPageVC: UIViewController {
         tableView.emptyDataSetDelegate = self
         
         // Segmentio update
-        segmentioView.setup(content: [SegmentioItem(title: "My Feed".localized(), image: nil), SegmentioItem(title: "Trending".localized(), image: nil)],
-                            style: SegmentioStyle.onlyLabel,
-                            options: SegmentioOptions.default)
+        segmentioView.setup(content:    [SegmentioItem(title: "my Feed".localized().uppercaseFirst, image: nil), SegmentioItem(title: "trending".localized().uppercaseFirst, image: nil)],
+                            style:      SegmentioStyle.onlyLabel,
+                            options:    SegmentioOptions.default)
+        
         segmentioView.valueDidChange = {_, index in
             self.viewModel.feedTypeMode.accept(index == 0 ? .byUser : .community)
             
@@ -166,7 +167,7 @@ class FeedPageVC: UIViewController {
         guard let label = gesture.view as? UILabel,
             let text = label.text else {return}
         
-        let tryAgainRange = (text as NSString).range(of: "Try again".localized())
+        let tryAgainRange = (text as NSString).range(of: "try again".localized().uppercaseFirst)
         if gesture.didTapAttributedTextInLabel(label: label, inRange: tryAgainRange) {
             self.viewModel.fetchNext()
         }

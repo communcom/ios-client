@@ -100,7 +100,7 @@ class CreateBioVC: UIViewController, BoardingRouter {
     
     @IBAction func nextButtonDidTouch(_ sender: Any) {
         guard let bio = textView.text else {return}
-        self.showIndetermineHudWithMessage("Updating...".localized())
+        self.showIndetermineHudWithMessage("updating...".localized().uppercaseFirst)
         // UpdateProfile without waiting for transaction
         NetworkService.shared.updateMeta(params: ["about": bio], waitForTransaction: false)
             .subscribe(onCompleted: {

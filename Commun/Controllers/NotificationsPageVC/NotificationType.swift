@@ -110,7 +110,7 @@ enum NotificationType: String {
         case .reward:
             let text = NSMutableAttributedString()
                 .semibold("+\(notification.value!.amount) \(notification.value!.currency). ")
-                .normal("Reward for post".localized())
+                .normal("reward for post".localized().uppercaseFirst)
                 .normal(": ")
                 .semibold(notification.post!.title ?? "")
             detail.text = text
@@ -119,7 +119,7 @@ enum NotificationType: String {
         case .curatorReward:
             let text = NSMutableAttributedString()
                 .semibold("+\(notification.value!.amount) \(notification.value!.currency). ")
-                .normal("Reward for votes".localized())
+                .normal("reward for votes".localized().uppercaseFirst)
                 .normal(": ")
                 .semibold(notification.post!.title ?? "")
             detail.text = text

@@ -84,7 +84,7 @@ class SignInViewController: UIViewController {
     // MARK: - Custom Functions
     func setUpViews() {
         // title
-        title = "Welcome".localized()
+        title = "welcome".localized().uppercaseFirst
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.largeTitleDisplayMode = .always
         
@@ -156,7 +156,7 @@ class SignInViewController: UIViewController {
     
     func configure(signingIn: Bool) {
         if signingIn {
-            self.showIndetermineHudWithMessage("Signing in".localized() + "...")
+            self.showIndetermineHudWithMessage("signing in".localized().uppercaseFirst + "...")
         } else {
             self.hideHud()
         }

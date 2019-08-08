@@ -104,7 +104,7 @@ extension PostCardCell {
         #warning("change this number later")
         self.likeCounterLabel.text          =   "\(post.votes.upCount ?? 0)"
         self.numberOfCommentsLabel.text     =   "\(post.stats.commentsCount) " + "comments".localized()
-        self.numberOfViewsLabel.text        =   "\(post.stats.viewCount) " + "Views".localized()
+        self.numberOfViewsLabel.text        =   "\(post.stats.viewCount) " + "views".localized()
         
         // Handle button
         self.upVoteButton.setImage(UIImage(named: post.votes.hasUpVote ? "icon-up-selected" : "icon-up-default"), for: .normal)

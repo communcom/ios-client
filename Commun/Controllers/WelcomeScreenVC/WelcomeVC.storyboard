@@ -33,7 +33,7 @@
                                     <constraint firstAttribute="height" constant="56" id="XnG-Bd-ecU" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="17"/>
-                                <state key="normal" title="Sign in">
+                                <state key="normal" title="sign in">
                                     <color key="titleColor" red="0.41568627450000001" green="0.50196078430000002" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
@@ -51,7 +51,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="56" id="Zy9-JZ-KHy" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                                 </constraints>
-                                <state key="normal" title="Sign up"/>
+                                <state key="normal" title="sign up"/>
                                 <connections>
                                     <action selector="signUpButtonTap:" destination="5Vs-ev-2DK" eventType="touchUpInside" id="Iuv-sF-KYs"/>
                                 </connections>

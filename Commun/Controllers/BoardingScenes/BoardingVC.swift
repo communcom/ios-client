@@ -13,7 +13,7 @@ class BoardingVC: UIViewController, BoardingRouter {
     // MARK: - IBOutlets
     @IBOutlet weak var passcodeLabel: UILabel! {
         didSet {
-            self.passcodeLabel.tune(withText:           "Set up Passcode".localized(),
+            self.passcodeLabel.tune(withText:           "set up passcode".localized().uppercaseFirst,
                                     hexColors:          blackWhiteColorPickers,
                                     font:               UIFont.init(name: "SFProText-Semibold", size: 17.0 * Config.widthRatio),
                                     alignment:          .left,

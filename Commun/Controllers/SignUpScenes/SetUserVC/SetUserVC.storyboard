@@ -43,7 +43,7 @@
                                 <rect key="frame" x="47" y="760" width="320" height="62"/>
                                 <accessibility key="accessibilityConfiguration" identifier="SetUserNextButton" label="SetUserNextButton"/>
                                 <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="17"/>
-                                <state key="normal" title="Next"/>
+                                <state key="normal" title="next"/>
                                 <connections>
                                     <action selector="buttonNextDidTouch:" destination="IVB-kA-cp0" eventType="touchUpInside" id="yp5-rp-eMU"/>
                                 </connections>

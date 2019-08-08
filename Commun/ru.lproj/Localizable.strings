@@ -103,3 +103,117 @@
 "loading"                                       =   "загрузка";
 "login & key"                                   =   "логин & мастер-ключ";
 "login placeholder"                             =   "введите имя пользователя";
+
+
+// M
+"master key has been generated"                 =   "мастер-ключ был создан";
+"mentioned you"                                 =   "упомянул вас";
+"my communities"                                =   "мои сообщества";
+"my Feed"                                       =   "мой канал";
+
+
+// N
+"new"                                           =   "новый";
+"next"                                          =   "дальше";
+"no comments"                                   =   "комментарии отсутствуют";
+"no notification"                               =   "уведомления отсутствуют";
+"no post to show"                               =   "нет сообщений для показа";
+"no posts"                                      =   "сообщения отсутствуют";
+"notifications"                                 =   "уведомления";
+
+
+// O
+"of all time"                                   =   "за всё время";
+"of thematic"                                   =   "тематических";
+"old"                                           =   "старый";
+
+
+// P
+"past 24 hours"                                 =   "за последние 24 часа";
+"past month"                                    =   "за последний месяц";
+"past week"                                     =   "за последнюю неделю";
+"past year"                                     =   "за последний год";
+"phone number placeholder"                      =   "введите номер телефона";
+"pick a profile picture"                        =   "выберите изображение\nпрофиля";
+"post"                                          =   "сообщения";
+"post not found"                                =   "сообщение не найдено";
+"profile description"                           =   "описание профиля";
+"profile photo"                                 =   "фотографию профиля";
+
+
+// R
+"read! upvote!"                                 =   "читайте! голосуйте!";
+"recommended"                                   =   "рекомендуемые";
+"replied to your comment"                       =   "ответил на ваш комментарий";
+"report"                                        =   "отчёт";
+"resend verification code"                      =   "отправить код подтверждения";
+"reward for post"                               =   "награда за сообщение";
+"reward for votes"                              =   "награда за голоса";
+
+
+// S
+"saving to blockchain..."                       =   "сохранение в блокчейн...";
+"scan QR"                                       =   "сканирование QR";
+"search placeholder"                            =   "поиск";
+"see more"                                      =   "узнать больше";
+"select country placeholder"                    =   "выберите страну";
+"select country"                                =   "выберите страну";
+"sending post"                                  =   "отправка сообщения";
+"set up passcode"                               =   "установите пароль";
+"setting username"                              =   "установка имени пользователя";
+"sign in"                                       =   "войти";
+"sign up"                                       =   "зарегистрироваться";
+"signing in"                                    =   "вход в систему";
+"signing you up"                                =   "подписание";
+"something went wrong"                          =   "что-то пошло не так";
+"skip"                                          =   "пропустить";
+"subscribe to your"                             =   "подпишитесь на ваши";
+"subscribed you"                                =   "подписался на вас";
+"successfully resend code"                      =   "код подтверждения успешно отправлен";
+
+
+// T
+"tap to try again"                              =   "нажмите ещё раз";
+"the post has been deleted"                     =   "сообщение было удалено";
+"there is an error occurred"                    =   "возникла ошибка";
+"title placeholder"                             =   "заголовок";
+"to secure your transactions"                   =   "для защиты ваших\nтранзакций";
+"top"                                           =   "первый";
+"transfered you"                                =   "перевёл средства на вас";
+"trending"                                      =   "актуальные";
+"try again"                                     =   "попробуйте ещё раз";
+"turn on"                                       =   "включить";
+
+
+// U
+"updating..."                                   =   "обновление...";
+"upload image"                                  =   "загрузить изображение";
+"uploading..."                                  =   "выгрузка...";
+"upvoted you in a post"                         =   "проголосовал за вас в сообщении";
+"user already in blockchain."                   =   "пользователь уже зарегистрирован в блокчейне";
+"user keys info"                                =   "пользовательские ключи";
+"username placeholder"                          =   "введите имя пользователя";
+
+
+// V
+"verification"                                  =   "верификация";
+"verify your new passcode"                      =   "подтвердите свой новый пароль";
+"verifying..."                                  =   "проверка...";
+"views count"                                   =   "просмотров";
+"views"                                         =   "просмотры";
+"voted for you as a delegate"                   =   "проголосовал за вас как за делегата";
+
+
+// W
+"wait for transaction"                          =   "ожидание транзакции";
+"warning"                                       =   "предупреждение";
+"was turned off"                                =   "был выключен";
+"welcome"                                       =   "добро пожаловать";
+"write text placeholder"                        =   "введите текст";
+"wrong phone number"                            =   "неверный номер телефона";
+
+
+// Y
+"you have a new notification"                   =   "у вас есть новое уведомление";
+"you have no notification"                      =   "у вас нет уведомлений";
+"you have not made any"                         =   "вы не создали ни одного";

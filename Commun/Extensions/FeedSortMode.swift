@@ -13,11 +13,11 @@ extension FeedSortMode {
     func toString() -> String {
         switch self {
         case .timeDesc:
-            return "New".localized()
+            return "new".localized().uppercaseFirst
         case .popular:
-            return "Top".localized()
+            return "top".localized().uppercaseFirst
         case .time:
-            return "Old".localized()
+            return "old".localized().uppercaseFirst
         }
     }
     

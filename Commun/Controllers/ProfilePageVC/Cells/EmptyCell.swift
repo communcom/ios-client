@@ -24,14 +24,14 @@ class EmptyCell: UITableViewCell {
     }
     
     func setUpEmptyComment() {
-        titleLabel.text = "No Comments".localized()
+        titleLabel.text = "no comments".localized().uppercaseFirst
         descriptionLabel.text = String(format: "%@ %@", "you have not made any".localized().uppercaseFirst, "comment".localized())
         emptyImageView.image = UIImage(named: "ProfilePageItemsEmptyComment")
     }
     
     func setUpEmptyPost() {
-        titleLabel.text = "No Posts".localized()
-        descriptionLabel.text = "You have not made any".localized() + " " + "post".localized()
+        titleLabel.text = "no posts".localized().uppercaseFirst
+        descriptionLabel.text = String(format: "%@ %@", "you have not made any".localized().uppercaseFirst, "post".localized())
         emptyImageView.image = UIImage(named: "ProfilePageItemsEmptyPost")
     }
 

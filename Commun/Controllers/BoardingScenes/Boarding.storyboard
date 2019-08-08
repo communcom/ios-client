@@ -52,7 +52,7 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L5W-u9-L4u" customClass="BlankButton" customModule="Commun" customModuleProvider="target">
                                 <rect key="frame" x="42" y="792" width="330" height="30"/>
-                                <state key="normal" title="Skip"/>
+                                <state key="normal" title="skip"/>
                                 <connections>
                                     <action selector="skipButtonDidTouch:" destination="eky-07-OKd" eventType="touchUpInside" id="oKE-0V-ybz"/>
                                 </connections>
@@ -62,7 +62,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="56" id="186-Dn-6G5" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                                 </constraints>
-                                <state key="normal" title="Next"/>
+                                <state key="normal" title="next"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                         <real key="value" value="8"/>
@@ -133,7 +133,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="56" id="luH-9F-cx4" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                                 </constraints>
-                                <state key="normal" title="Next"/>
+                                <state key="normal" title="next"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                         <real key="value" value="8"/>
@@ -145,7 +145,7 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nu6-hE-aK0" customClass="BlankButton" customModule="Commun" customModuleProvider="target">
                                 <rect key="frame" x="42" y="792" width="330" height="30"/>
-                                <state key="normal" title="Skip"/>
+                                <state key="normal" title="skip"/>
                                 <connections>
                                     <action selector="skipButtonDidTouch:" destination="9Z9-bd-gq9" eventType="touchUpInside" id="Bte-an-yu1"/>
                                 </connections>
@@ -165,7 +165,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                 <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Write Text Placeholder"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="write text placeholder"/>
                                 </userDefinedRuntimeAttributes>
                             </textView>
                         </subviews>
@@ -343,7 +343,7 @@
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SmP-oF-rry" customClass="BlankButton" customModule="Commun" customModuleProvider="target">
                                 <rect key="frame" x="42" y="792" width="330" height="30"/>
-                                <state key="normal" title="Skip"/>
+                                <state key="normal" title="skip"/>
                                 <connections>
                                     <action selector="laterButtonDidTouch:" destination="0mk-Sc-da2" eventType="touchUpInside" id="xzG-8g-JZd"/>
                                     <action selector="skipButtonDidTouch:" destination="eky-07-OKd" eventType="touchUpInside" id="Vv1-5Z-SB9"/>
@@ -355,7 +355,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="56" id="hyK-UC-gkS" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                                 </constraints>
-                                <state key="normal" title="Enable Touch ID"/>
+                                <state key="normal" title="enable Touch ID"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                         <real key="value" value="8"/>

@@ -74,7 +74,7 @@ class PostHeaderView: UIView, UIWebViewDelegate, PostController {
         
         // Show count label
         commentCountLabel.text = "\(post.stats.commentsCount) " + "comments count".localized()
-        viewCountLabel.text = "\(post.stats.viewCount) " + "Views count".localized()
+        viewCountLabel.text = "\(post.stats.viewCount) " + "views count".localized()
         voteCountLabel.text = "\(post.votes.upCount ?? 0)"
         
         // Handle button

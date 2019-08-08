@@ -44,11 +44,11 @@ class EditorPageVC: UIViewController {
         
         titleTextView.textContainerInset = UIEdgeInsets.zero
         titleTextView.textContainer.lineFragmentPadding = 0
-        titleTextView.placeholder = "Title Placeholder".localized()
+        titleTextView.placeholder = "title placeholder".localized().uppercaseFirst
         
         contentTextView.textContainerInset = UIEdgeInsets.zero
         contentTextView.textContainer.lineFragmentPadding = 0
-        contentTextView.placeholder = "Write Text Placeholder".localized() + "..."
+        contentTextView.placeholder = "write text placeholder".localized().uppercaseFirst + "..."
         
         // if editing post
         if let post = viewModel?.postForEdit {

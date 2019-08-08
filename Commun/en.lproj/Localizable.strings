@@ -103,3 +103,117 @@
 "loading"                                       =   "loading";
 "login & key"                                   =   "login & master key";
 "login placeholder"                             =   "user ID or username";
+
+
+// M
+"master key has been generated"                 =   "master key has been generated";
+"mentioned you"                                 =   "mentioned you";
+"my communities"                                =   "my communities";
+"my Feed"                                       =   "my Feed";
+
+
+// N
+"new"                                           =   "new";
+"next"                                          =   "next";
+"no comments"                                   =   "no comments";
+"no notification"                               =   "no notification";
+"no post to show"                               =   "no post to show";
+"no posts"                                      =   "no posts";
+"notifications"                                 =   "notifications";
+
+
+// O
+"of all time"                                   =   "of all time";
+"of thematic"                                   =   "of thematic";
+"old"                                           =   "old";
+
+
+// P
+"past 24 hours"                                 =   "past 24 hours";
+"past month"                                    =   "past month";
+"past week"                                     =   "past week";
+"past year"                                     =   "past year";
+"phone number placeholder"                      =   "phone number";
+"pick a profile picture"                        =   "pick a profile picture";
+"post"                                          =   "post";
+"post not found"                                =   "post not found";
+"profile description"                           =   "profile description";
+"profile photo"                                 =   "profile photo";
+
+
+// R
+"read! upvote!"                                 =   "read! upvote!";
+"recommended"                                   =   "recommended";
+"replied to your comment"                       =   "replied to your comment";
+"report"                                        =   "report";
+"resend verification code"                      =   "resend verification code";
+"reward for post"                               =   "reward for post";
+"reward for votes"                              =   "reward for votes";
+
+
+// S
+"saving to blockchain..."                       =   "saving to blockchain...";
+"scan QR"                                       =   "scan QR";
+"search placeholder"                            =   "search";
+"see more"                                      =   "see more";
+"select country placeholder"                    =   "select country";
+"select country"                                =   "select country";
+"sending post"                                  =   "sending post";
+"set up passcode"                               =   "set up Passcode";
+"setting username"                              =   "setting username";
+"sign in"                                       =   "sign in";
+"sign up"                                       =   "sign up";
+"signing in"                                    =   "signing in";
+"signing you up"                                =   "signing you up";
+"something went wrong"                          =   "something went wrong";
+"skip"                                          =   "skip";
+"subscribe to your"                             =   "subscribe to your";
+"subscribed you"                                =   "subscribed you";
+"successfully resend code"                      =   "successfully resend code";
+
+
+// T
+"tap to try again"                              =   "tap to try again";
+"the post has been deleted"                     =   "the post has been deleted";
+"there is an error occurred"                    =   "there is an error occurred";
+"title placeholder"                             =   "title";
+"to secure your transactions"                   =   "to secure your transactions";
+"top"                                           =   "top";
+"transfered you"                                =   "transfered you";
+"trending"                                      =   "trending";
+"try again"                                     =   "try again";
+"turn on"                                       =   "turn on";
+
+
+// U
+"updating..."                                   =   "updating...";
+"upload image"                                  =   "upload image";
+"uploading..."                                  =   "uploading...";
+"upvoted you in a post"                         =   "upvoted you in a post";
+"user already in blockchain."                   =   "user already in blockchain.";
+"user keys info"                                =   "user keys info";
+"username placeholder"                          =   "username";
+
+
+// V
+"verification"                                  =   "verification";
+"verify your new passcode"                      =   "verify your new passcode";
+"verifying..."                                  =   "verifying...";
+"views count"                                   =   "views";
+"views"                                         =   "views";
+"voted for you as a delegate"                   =   "voted for you as a delegate";
+
+
+// W
+"wait for transaction"                          =   "wait for transaction";
+"warning"                                       =   "warning";
+"was turned off"                                =   "was turned off";
+"welcome"                                       =   "welcome";
+"write text placeholder"                        =   "write text";
+"wrong phone number"                            =   "wrong phone number";
+
+
+// Y
+"you have a new notification"                   =   "you have a new notification";
+"you have no notification"                      =   "you have no notification";
+"you have not made any"                         =   "you have not made any";

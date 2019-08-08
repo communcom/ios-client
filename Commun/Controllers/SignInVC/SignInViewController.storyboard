@@ -49,7 +49,7 @@
                                                             <rect key="frame" x="0.0" y="0.0" width="121" height="37"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <subviews>
-                                                                <label opaque="NO" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Scan QR" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kFk-7b-h1Z">
+                                                                <label opaque="NO" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="scan QR" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kFk-7b-h1Z">
                                                                     <rect key="frame" x="0.0" y="0.0" width="121" height="37"/>
                                                                     <color key="backgroundColor" red="0.89715927839279175" green="0.90465003252029419" blue="0.9282500147819519" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
@@ -141,10 +141,10 @@
                                                         </userDefinedRuntimeAttributes>
                                                     </textField>
                                                     <button clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yxv-l2-Yad" customClass="BlankButton" customModule="Commun" customModuleProvider="target">
-                                                        <rect key="frame" x="124" y="255" width="166" height="30"/>
+                                                        <rect key="frame" x="125" y="255" width="164" height="30"/>
                                                         <accessibility key="accessibilityConfiguration" identifier="SignInSignUpButton" label="SignInSignUpButton"/>
                                                         <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
-                                                        <state key="normal" title="Don't have an account?">
+                                                        <state key="normal" title="don't have an account?">
                                                             <color key="titleColor" red="0.41568627450000001" green="0.50196078430000002" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         </state>
                                                     </button>
@@ -153,7 +153,7 @@
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="56" id="Idr-z6-cLI" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                                                         </constraints>
-                                                        <state key="normal" title="Sign in"/>
+                                                        <state key="normal" title="sign in"/>
                                                         <connections>
                                                             <action selector="signInButtonDidTouch:" destination="jR8-kO-b4x" eventType="touchUpInside" id="znk-Sc-gmk"/>
                                                         </connections>

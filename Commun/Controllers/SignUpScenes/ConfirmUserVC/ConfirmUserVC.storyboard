@@ -36,14 +36,14 @@
                                 <accessibility key="accessibilityConfiguration" identifier="ConfirmUserPinCodeView" label="ConfirmUserPinCodeView"/>
                             </view>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="Y5D-RY-auL" userLabel="Resend Stack View">
-                                <rect key="frame" x="76.333333333333329" y="224.33333333333334" width="222.66666666666669" height="30"/>
+                                <rect key="frame" x="78.333333333333329" y="224.33333333333334" width="218.66666666666669" height="30"/>
                                 <subviews>
                                     <button clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6zJ-W6-fmM">
-                                        <rect key="frame" x="0.0" y="0.0" width="175" height="30"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="171" height="30"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <accessibility key="accessibilityConfiguration" identifier="ConfirmUserResendSmsCodeButton" label="ConfirmUserResendSmsCodeButton"/>
                                         <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
-                                        <state key="normal" title="Resend verification code">
+                                        <state key="normal" title="resend verification code">
                                             <color key="titleColor" red="0.41568627450980389" green="0.50196078431372548" blue="0.96078431372549022" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
                                         <connections>
@@ -51,7 +51,7 @@
                                         </connections>
                                     </button>
                                     <label clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A7l-2z-CKz" userLabel="Timer Label">
-                                        <rect key="frame" x="181" y="0.0" width="41.666666666666657" height="30"/>
+                                        <rect key="frame" x="177" y="0.0" width="41.666666666666657" height="30"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
@@ -63,7 +63,7 @@
                                 <rect key="frame" x="42.666666666666657" y="682" width="290" height="56"/>
                                 <accessibility key="accessibilityConfiguration" identifier="ConfirmUserNextButton" label="ConfirmUserNextButton"/>
                                 <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="17"/>
-                                <state key="normal" title="Next"/>
+                                <state key="normal" title="next"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                         <integer key="value" value="8"/>

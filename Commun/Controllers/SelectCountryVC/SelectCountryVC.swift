@@ -26,7 +26,7 @@ class SelectCountryVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.title = "Select country".localized()
+        self.title = "select country".localized().uppercaseFirst
         
         tableView.register(UINib(nibName: "CountryCell", bundle: nil), forCellReuseIdentifier: "CountryCell")
         tableView.rowHeight = 56.0 * Config.heightRatio

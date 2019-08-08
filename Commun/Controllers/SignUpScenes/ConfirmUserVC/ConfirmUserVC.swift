@@ -47,7 +47,7 @@ class ConfirmUserVC: UIViewController, SignUpRouter {
         didSet {
             self.resendButton.isEnabled = true
             
-            self.resendButton.tune(withTitle:     "Resend verification code".localized(),
+            self.resendButton.tune(withTitle:     "resend verification code".localized().uppercaseFirst,
                                    hexColors:     [softBlueColorPickers, verySoftBlueColorPickers, verySoftBlueColorPickers, verySoftBlueColorPickers],
                                    font:          UIFont(name: "SFProText-Semibold", size: 15.0 * Config.widthRatio),
                                    alignment:     .center)
@@ -70,7 +70,7 @@ class ConfirmUserVC: UIViewController, SignUpRouter {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.title = "Verification".localized()
+        self.title = "verification".localized().uppercaseFirst
         self.navigationController?.navigationBar.prefersLargeTitles = true
         
         nextButton.isEnabled = false
@@ -179,7 +179,8 @@ class ConfirmUserVC: UIViewController, SignUpRouter {
         
         nextButton.isEnabled = true
         
-        showIndetermineHudWithMessage("Verifying".localized() + "...")
+        showIndetermineHudWithMessage("verifying...".localized().uppercaseFirst)
+        
         RestAPIManager.instance.rx.verify(code: code)
             .subscribe(onSuccess: { [weak self] (_) in
                 self?.hideHud()

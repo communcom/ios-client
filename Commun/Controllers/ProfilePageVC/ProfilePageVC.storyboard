@@ -737,7 +737,7 @@
                                 <items>
                                     <navigationItem title="Change position" id="4WX-Gf-cxW">
                                         <barButtonItem key="leftBarButtonItem" title="Cancel" id="AsR-Cp-Z8E"/>
-                                        <barButtonItem key="rightBarButtonItem" title="Done" id="3XE-ch-LV0"/>
+                                        <barButtonItem key="rightBarButtonItem" title="done" id="3XE-ch-LV0"/>
                                     </navigationItem>
                                 </items>
                             </navigationBar>
