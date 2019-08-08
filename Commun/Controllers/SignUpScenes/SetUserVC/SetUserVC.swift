@@ -20,17 +20,17 @@ class SetUserVC: UIViewController, SignUpRouter {
     // MARK: - IBOutlets
     @IBOutlet weak var creatUsernameLabel: UILabel! {
         didSet {
-            self.creatUsernameLabel.tune(withText:      "Create your username".localized(),
-                                         hexColors:     blackWhiteColorPickers,
-                                         font:          UIFont(name: "SFProText-Regular", size: 17.0 * Config.widthRatio),
-                                         alignment:     .left,
-                                         isMultiLines:  false)
+            self.creatUsernameLabel.tune(withText:          "create your username".localized().uppercaseFirst,
+                                         hexColors:         blackWhiteColorPickers,
+                                         font:              UIFont(name: "SFProText-Regular", size: 17.0 * Config.widthRatio),
+                                         alignment:         .left,
+                                         isMultiLines:      false)
         }
     }
     
     @IBOutlet weak var userNameTextField: FormTextField! {
         didSet {
-            self.userNameTextField.tune(withPlaceholder:    "Username Placeholder".localized(),
+            self.userNameTextField.tune(withPlaceholder:    "username placeholder".localized().uppercaseFirst,
                                         textColors:         blackWhiteColorPickers,
                                         font:               UIFont.init(name: "SFProText-Regular", size: 17.0 * Config.widthRatio),
                                         alignment:          .left)

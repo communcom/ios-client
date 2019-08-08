@@ -34,7 +34,7 @@ class EditorPageVC: UIViewController {
             viewModel = EditorPageViewModel()
         }
         
-        self.title = viewModel?.postForEdit != nil ? "Edit post".localized() : "Create post".localized()
+        self.title = (viewModel?.postForEdit != nil ? "edit post" : "create post").localized().uppercaseFirst
         
         self.navigationController?.navigationBar.barTintColor = .white
         self.navigationController?.navigationBar.isTranslucent = false

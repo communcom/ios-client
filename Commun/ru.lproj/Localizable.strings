@@ -6,164 +6,89 @@
   Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
 */
 
-// Labels
-"Hundreds"                                  =   "Сотни";
-"of thematic"                               =   "тематических";
-"communities"                               =   "сообществ";
-"Subscribe to your"                         =   "Подпишитесь на ваши";
-"favorite communities"                      =   "любимые сообщества";
-"Read! upvote!"                             =   "Читайте! голосуйте!";
-"comment!"                                  =   "комментируйте!";
-"Verification"                              =   "Верификация";
-"Select country"                            =   "Выберите страну";
-"Enter SMS-code"                            =   "Введите SMS-код";
-"Create your username"                      =   "Создайте имя пользователя";
-"Master key has been generated"             =   "Мастер-ключ был создан";
-"You need Master Key"                       =   "Вам нужен мастер-ключ для входа в систему.\nПожалуйста, скачайте его.";
-"Welcome,"                                  =   "Добро пожаловать,";
-"Welcome"                                   =   "Добро пожаловать";
-"sign in to continue"                       =   "авторизуйтесь";
-"User keys info"                            =   "Пользовательские ключи";
-"Comments count"                            =   "комментов";
-"Views count"                               =   "просмотров";
-"Push notifications"                        =   "Пуш уведомления";
-"Scan QR"                                   =   "Сканирование QR";
-"Login & Key"                               =   "Логин & Мастер-ключ";
-"Go to commun.com and scan QR"              =   "Перейдите на commun.com и отсканируйте QR";
-"Create your passcode"                      =   "Создайте свой пароль";
-"Verify your new passcode"                  =   "Подтвердите свой новый пароль";
-"Enable Touch ID title"                     =   "Включить Touch ID";
-"Enable Touch ID description"               =   "Включите Touch ID для защиты ваших\nтранзакций";
-"Pick a profile picture"                    =   "Выберите изображение\nпрофиля";
-"Describe yourself"                         =   "Опишите себя";
-"to secure your transactions"               =   "для защиты ваших\nтранзакций";
-"Notifications"                             =   "Уведомления";
-"No notification"                           =   "Уведомления отсутствуют";
-"You have no notification"                  =   "У вас нет уведомлений";
-"No Posts"                                  =   "Сообщения отсутствуют";
-"No Comments"                               =   "Комментарии отсутствуют";
-"You have not made any"                     =   "Вы не создали ни одного";
-"post"                                      =   "сообщения";
-"comment"                                   =   "комментария";
-"No post to show"                           =   "Нет сообщений для показа";
-"Set up Passcode"                           =   "Установите пароль";
-"Add short PIN code"                        =   "Добавьте короткий PIN-код";
-"Trending"                                  =   "Актуальные";
-"My Feed"                                   =   "Мой канал";
-"Enter passcode"                            =   "Введите пароль";
-"Confirm it's you"                          =   "Подтвердите, что это вы";
-"was turned off"                            =   "был выключен";
-"Do you want to turn it on?"                =   "Вы хотите включить его?";
-"ago"                                       =   "назад";
-"New"                                       =   "Новый";
-"Top"                                       =   "Первый";
-"Old"                                       =   "Старый";
-"Past 24 hours"                             =   "За последние 24 часа";
-"Past Week"                                 =   "За последнюю неделю";
-"Past Month"                                =   "За последний месяц";
-"Past Year"                                 =   "За последний год";
-"Of All Time"                               =   "За всё время";
-"Can not fetch next items"                  =   "Отсутствует очередная порция данных";
-"Try again"                                 =   "Попробуйте ещё раз";
-"Try again?"                                =   "Попробуете ещё раз?";
-"Signing you up"                            =   "Подписание";
-"Verifying"                                 =   "Проверка";
-"Setting username"                          =   "Установка имени пользователя";
-"Enter your current passcode"               =   "Введите ваш текущий пароль";
-"Uploading..."                              =   "Выгрузка...";
-"Updating..."                               =   "Обновление...";
-"Loading"                                   =   "Загрузка";
-"Upload image"                              =   "Загрузить изображение";
-"Edit post"                                 =   "Редактирование сообщения";
-"Create post"                               =   "Создание сообщения";
-"Sending post"                              =   "Отправка сообщения";
-"Wait for transaction"                      =   "Ожидание транзакции";
-"by"                                        =   "от";
-"Comments"                                  =   "Комментарии";
-"Views"                                     =   "Просмотры";
-"My communities"                            =   "Мои сообщества";
-"Discover"                                  =   "Обнаружить";
-"Recommended"                               =   "Рекомендуемые";
-"You have a new notification"               =   "У вас есть новое уведомление";
-"upvoted you in a post"                     =   "проголосовал за вас в сообщении";
-"downvoted you in a post"                   =   "проголосовал против вас в сообщении";
-"subscribed you"                            =   "подписался на вас";
-"transfered you"                            =   "перевёл средства на вас";
-"replied to your comment"                   =   "ответил на ваш комментарий";
-"commented on a post"                       =   "прокомментировал сообщение";
-"mentioned you"                             =   "упомянул вас";
-"in a post"                                 =   "в сообщении";
-"in a comment"                              =   "в комментарии";
-"Reward for post"                           =   "Награда за сообщение";
-"Reward for votes"                          =   "Награда за голоса";
-"voted for you as a delegate"               =   "проголосовал за вас как за делегата";
-"has removed your voice from your..."       =   "удалил ваш голос из вашего узла делегата";
-"See More"                                  =   "Узнать больше";
-"Deleted"                                   =   "Удалено";
-"The post has been deleted"                 =   "Сообщение было удалено";
-"Load more comments"                        =   "Загрузить больше комментариев";
-"Joined"                                    =   "Присоединился";
-"Add bio"                                   =   "Добавить биографию";
-"Edit bio"                                  =   "Редактировать биографию";
-"profile description"                       =   "profile description";
-"cover photo"                               =   "фотографию обложки";
-"profile photo"                             =   "фотографию профиля";
-"Choose from gallery"                       =   "Выберите из галереи";
-"Delete current"                            =   "Удалить текущую";
-"following"                                 =   "следующий";
-"follow"                                    =   "следить";
+
+// A
+"add bio"                                       =   "добавить биографию";
+"add short PIN code"                            =   "добавьте короткий PIN-код";
+"ago"                                           =   "назад";
 
 
-// Buttons
-"Sign up"                                   =   "Зарегистрироваться";
-"Sign in"                                   =   "Войти";
-"Next"                                      =   "Дальше";
-"Back"                                      =   "Назад";
-"Cancel"                                    =   "Отменить";
-"Close"                                     =   "Закрыть";
-"Done"                                      =   "Готово";
-"Download"                                  =   "Скачать";
-"Resend verification code"                  =   "Отправить код подтверждения";
-"Don't have an account?"                    =   "У вас нет аккаунта?";
-"Enable"                                    =   "Включить";
-"Skip"                                      =   "Пропустить";
-"Backup iCloud"                             =   "Резервное копирование iCloud";
-"Later"                                     =   "Позже";
-"Turn on"                                   =   "Включить";
-"JOINED"                                    =   "ПРИСОЕДИНИЛСЯ";
-"JOIN"                                      =   "ПРИСОЕДИНИТЬСЯ";
+// B
+"back"                                          =   "назад";
+"backup iCloud"                                 =   "резервное копирование iCloud";
+"backup keys"                                   =   "резервное копирование ключей";
+"by"                                            =   "от";
 
 
-// Titles
-"Info"                                      =   "Инфо";
-"Error"                                     =   "Ошибка";
-"Warning"                                   =   "Предупреждение";
-"Successfully resend code"                  =   "Код подтверждения успешно отправлен";
-"Backup keys"                               =   "Резервное копирование ключей";
-"Saving to blockchain"                      =   "Сохранение в блокчейн";
-"Signing in"                                =   "Вход в систему";
-"Edit"                                      =   "Редактирование";
-"Delete"                                    =   "Удаление";
-"Report"                                    =   "Отчёт";
-"Change"                                    =   "Изменить";
+// C
+"can not fetch next items"                      =   "отсутствует очередная порция данных";
+"cancel"                                        =   "отменить";
+"change"                                        =   "изменить";
+"choose from gallery"                           =   "выберите из галереи";
+"close"                                         =   "закрыть";
+"comment!"                                      =   "комментируйте!";
+"comment"                                       =   "комментария";
+"commented on a post"                           =   "прокомментировал сообщение";
+"comments count"                                =   "комментариев";
+"comments"                                      =   "комментарии";
+"communities"                                   =   "сообществ";
+"confirm it's you"                              =   "подтвердите, что это вы";
+"cover photo"                                   =   "фотографию обложки";
+"create post"                                   =   "создание сообщения";
+"create your passcode"                          =   "создайте свой пароль";
+"create your username"                          =   "создайте имя пользователя";
 
 
-// Placeholders
-"Search Placeholder"                        =   "Поиск";
-"Select Country Placeholder"                =   "Выберите страну";
-"Phone Number Placeholder"                  =   "Введите номер телефона";
-"Username Placeholder"                      =   "Введите имя пользователя";
-"Login Placeholder"                         =   "Введите имя пользователя";
-"Key Placeholder"                           =   "Введите мастер-ключ";
-"Write Text Placeholder"                    =   "Введите текст";
-"Title Placeholder"                         =   "Заголовок";
+// D
+"delete current"                                =   "удалить текущую";
+"delete"                                        =   "удаление";
+"deleted"                                       =   "удалено";
+"describe yourself"                             =   "опишите себя";
+"discover"                                      =   "обнаружить";
+"do you want to turn it on?"                    =   "вы хотите включить его?";
+"don't have an account?"                        =   "у вас нет аккаунта?";
+"done"                                          =   "готово";
+"download"                                      =   "скачать";
+"downvoted you in a post"                       =   "проголосовал против вас в сообщении";
 
 
-// Error message
-"Developer error!"                          =   "Ошибка разработчика!";
-"Wrong phone number"                        =   "Неверный номер телефона";
-"Enter correct user name"                   =   "Введите корректное имя пользователя";
-"Enter correct sms code"                    =   "Введите корректный смс-код";
-"User already in blockchain."               =   "Ползователь уже зарегистрирован в блокчейне";
-"There is an error occurred"                =   "Возникла ошибка";
-"Tap to try again"                          =   "Нажмите ещё раз";
+// E
+"edit bio"                                      =   "редактировать биографию";
+"edit post"                                     =   "редактирование сообщения";
+"edit"                                          =   "редактирование";
+"enable Touch ID description"                   =   "включите Touch ID для защиты ваших\nтранзакций";
+"enable Touch ID title"                         =   "включить Touch ID";
+"enable"                                        =   "включить";
+"enter correct sms code"                        =   "введите корректный смс-код";
+"enter correct user name"                       =   "введите корректное имя пользователя";
+"enter passcode"                                =   "введите пароль";
+"enter sms-code"                                =   "введите SMS-код";
+"enter your current passcode"                   =   "введите ваш текущий пароль";
+"error"                                         =   "ошибка";
+
+
+// F
+"favorite communities"                          =   "любимые сообщества";
+"follow"                                        =   "следить";
+"following"                                     =   "следующий";
+
+
+// G
+"go to commun.com and scan QR"                  =   "перейдите на commun.com и отсканируйте QR";
+
+
+// H
+"has removed your voice from your..."           =   "удалил ваш голос из вашего узла делегата";
+"hundreds"                                      =   "сотни";
+
+
+// I
+"in a comment"                                  =   "в комментарии";
+"in a post"                                     =   "в сообщении";
+"info"                                          =   "инфо";
+
+
+// J
+"join"                                          =   "присоединиться";
+"joined"                                        =   "присоединился";
+

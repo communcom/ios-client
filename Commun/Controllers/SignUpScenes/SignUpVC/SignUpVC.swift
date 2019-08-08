@@ -171,7 +171,7 @@ class SignUpVC: UIViewController, SignUpRouter {
     // MARK: - Actions
     @IBAction func nextButtonTapped(_ sender: Any) {
         guard self.viewModel.validatePhoneNumber() else {
-            self.showAlert(title: "Error".localized(), message: "Wrong phone number".localized())
+            self.showAlert(title: "error".localized().uppercaseFirst, message: "wrong phone number".localized().uppercaseFirst)
             return
         }
         

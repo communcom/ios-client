@@ -6,164 +6,89 @@
   Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
 */
 
-// Labels
-"Hundreds"                                  =   "Hundreds";
-"of thematic"                               =   "of thematic";
-"communities"                               =   "communities";
-"Subscribe to your"                         =   "Subscribe to your";
-"favorite communities"                      =   "favorite communities";
-"Read! upvote!"                             =   "Read! upvote!";
-"comment!"                                  =   "comment!";
-"Verification"                              =   "Verification";
-"Select country"                            =   "Select country";
-"Enter SMS-code"                            =   "Enter SMS-code";
-"Create your username"                      =   "Create your username";
-"Master key has been generated"             =   "Master key has been generated";
-"You need Master Key"                       =   "You need Master Key for Log in.\nPlease, download it.";
-"Welcome,"                                  =   "Welcome,";
-"Welcome"                                   =   "Welcome";
-"sign in to continue"                       =   "sign in to continue";
-"User keys info"                            =   "User keys info";
-"Comments count"                            =   "Comments";
-"Views count"                               =   "Views";
-"Push notifications"                        =   "Push notifications";
-"Scan QR"                                   =   "Scan QR";
-"Login & Key"                               =   "Login & Master key";
-"Go to commun.com and scan QR"              =   "Go to commun.com and scan QR";
-"Create your passcode"                      =   "Create your passcode";
-"Verify your new passcode"                  =   "Verify your new passcode";
-"Enable Touch ID title"                     =   "Enable Touch ID";
-"Enable Touch ID description"               =   "Enable Touch ID to secure your\ntransactions";
-"Pick a profile picture"                    =   "Pick a profile picture";
-"Describe yourself"                         =   "Describe yourself";
-"to secure your transactions"               =   "to secure your transactions";
-"Notifications"                             =   "Notifications";
-"No notification"                           =   "No notification";
-"You have no notification"                  =   "You have no notification";
-"No Posts"                                  =   "No Posts";
-"No Comments"                               =   "No Comments";
-"You have not made any"                     =   "You have not made any";
-"post"                                      =   "post";
-"comment"                                   =   "comment";
-"No post to show"                           =   "No post to show";
-"Set up Passcode"                           =   "Set up Passcode";
-"Add short PIN code"                        =   "Add short PIN code";
-"Trending"                                  =   "Trending";
-"My Feed"                                   =   "My Feed";
-"Enter passcode"                            =   "Enter passcode";
-"Confirm it's you"                          =   "Confirm it's you";
-"was turned off"                            =   "was turned off";
-"Do you want to turn it on?"                =   "Do you want to turn it on?";
-"ago"                                       =   "ago";
-"New"                                       =   "New";
-"Top"                                       =   "Top";
-"Old"                                       =   "Old";
-"Past 24 hours"                             =   "Past 24 hours";
-"Past Week"                                 =   "Past Week";
-"Past Month"                                =   "Past Month";
-"Past Year"                                 =   "Past Year";
-"Of All Time"                               =   "Of All Time";
-"Can not fetch next items"                  =   "Can not fetch next items";
-"Try again"                                 =   "Try again";
-"Try again?"                                =   "Try again?";
-"Signing you up"                            =   "Signing you up";
-"Verifying"                                 =   "Verifying";
-"Setting username"                          =   "Setting username";
-"Enter your current passcode"               =   "Enter your current passcode";
-"Uploading..."                              =   "Uploading...";
-"Updating..."                               =   "Updating...";
-"Loading"                                   =   "Loading";
-"Upload image"                              =   "Upload image";
-"Edit post"                                 =   "Edit post";
-"Create post"                               =   "Create post";
-"Sending post"                              =   "Sending post";
-"Wait for transaction"                      =   "Wait for transaction";
-"by"                                        =   "by";
-"Comments"                                  =   "Comments";
-"Views"                                     =   "Views";
-"My communities"                            =   "My communities";
-"Discover"                                  =   "Discover";
-"Recommended"                               =   "Recommended";
-"You have a new notification"               =   "You have a new notification";
-"upvoted you in a post"                     =   "upvoted you in a post";
-"downvoted you in a post"                   =   "downvoted you in a post";
-"subscribed you"                            =   "subscribed you";
-"transfered you"                            =   "transfered you";
-"replied to your comment"                   =   "replied to your comment";
-"commented on a post"                       =   "commented on a post";
-"mentioned you"                             =   "mentioned you";
-"in a post"                                 =   "in a post";
-"in a comment"                              =   "in a comment";
-"Reward for post"                           =   "Reward for post";
-"Reward for votes"                          =   "Reward for votes";
-"voted for you as a delegate"               =   "voted for you as a delegate";
-"has removed your voice from your..."       =   "has removed your voice from your delegate node";
-"See More"                                  =   "See More";
-"Deleted"                                   =   "Deleted";
-"The post has been deleted"                 =   "The post has been deleted";
-"Load more comments"                        =   "Load more comments";
-"Joined"                                    =   "Joined";
-"Add bio"                                   =   "Add bio";
-"Edit bio"                                  =   "Edit bio";
-"profile description"                       =   "profile description";
-"cover photo"                               =   "cover photo";
-"profile photo"                             =   "profile photo";
-"Choose from gallery"                       =   "Choose from gallery";
-"Delete current"                            =   "Delete current";
-"following"                                 =   "following";
-"follow"                                    =   "follow";
+
+// A
+"add bio"                                       =   "add bio";
+"add short PIN code"                            =   "add short PIN code";
+"ago"                                           =   "ago";
 
 
-// Buttons
-"Sign up"                                   =   "Sign up";
-"Sign in"                                   =   "Sign in";
-"Next"                                      =   "Next";
-"Back"                                      =   "Back";
-"Cancel"                                    =   "Cancel";
-"Close"                                     =   "Close";
-"Done"                                      =   "Done";
-"Download"                                  =   "Download";
-"Resend verification code"                  =   "Resend verification code";
-"Don't have an account?"                    =   "Don't have an account?";
-"Enable"                                    =   "Enable";
-"Skip"                                      =   "Skip";
-"Backup iCloud"                             =   "Backup iCloud";
-"Later"                                     =   "Later";
-"Turn on"                                   =   "Turn on";
-"JOINED"                                    =   "JOINED";
-"JOIN"                                      =   "JOIN";
+// B
+"back"                                          =   "back";
+"backup iCloud"                                 =   "backup iCloud";
+"backup keys"                                   =   "backup keys";
+"by"                                            =   "by";
 
 
-// Titles
-"Info"                                      =   "Info";
-"Error"                                     =   "Error";
-"Warning"                                   =   "Warning";
-"Successfully resend code"                  =   "Successfully resend code";
-"Backup keys"                               =   "Backup keys";
-"Saving to blockchain"                      =   "Saving to blockchain";
-"Signing in"                                =   "Signing in";
-"Edit"                                      =   "Edit";
-"Delete"                                    =   "Delete";
-"Report"                                    =   "Report";
-"Change"                                    =   "Change";
+// C
+"can not fetch next items"                      =   "can not fetch next items";
+"cancel"                                        =   "cancel";
+"change"                                        =   "change";
+"choose from gallery"                           =   "choose from gallery";
+"close"                                         =   "close";
+"comment!"                                      =   "comment!";
+"comment"                                       =   "comment";
+"commented on a post"                           =   "commented on a post";
+"comments count"                                =   "comments";
+"comments"                                      =   "comments";
+"communities"                                   =   "communities";
+"confirm it's you"                              =   "confirm it's you";
+"cover photo"                                   =   "cover photo";
+"create post"                                   =   "create post";
+"create your passcode"                          =   "create your passcode";
+"create your username"                          =   "create your username";
 
 
-// Placeholders
-"Search Placeholder"                        =   "Search";
-"Select Country Placeholder"                =   "Select country";
-"Phone Number Placeholder"                  =   "Phone number";
-"Username Placeholder"                      =   "Username";
-"Login Placeholder"                         =   "User ID or username";
-"Key Placeholder"                           =   "Master key";
-"Write Text Placeholder"                    =   "Write text";
-"Title Placeholder"                         =   "Title";
+// D
+"delete current"                                =   "delete current";
+"delete"                                        =   "delete";
+"deleted"                                       =   "deleted";
+"describe yourself"                             =   "describe yourself";
+"discover"                                      =   "discover";
+"do you want to turn it on?"                    =   "do you want to turn it on?";
+"don't have an account?"                        =   "don't have an account?";
+"done"                                          =   "done";
+"download"                                      =   "download";
+"downvoted you in a post"                       =   "downvoted you in a post";
 
 
-// Error message
-"Developer error!"                          =   "Developer error!";
-"Wrong phone number"                        =   "Wrong phone number";
-"Enter correct user name"                   =   "Enter correct user name";
-"Enter correct sms code"                    =   "Enter correct sms code";
-"User already in blockchain."               =   "User already in blockchain.";
-"There is an error occurred"                =   "There is an error occurred";
-"Tap to try again"                          =   "Tap to try again";
+// E
+"edit bio"                                      =   "edit bio";
+"edit post"                                     =   "edit post";
+"edit"                                          =   "edit";
+"enable Touch ID description"                   =   "enable Touch ID to secure your\ntransactions";
+"enable Touch ID title"                         =   "enable Touch ID";
+"enable"                                        =   "enable";
+"enter correct sms code"                        =   "enter correct sms code";
+"enter correct user name"                       =   "enter correct user name";
+"enter passcode"                                =   "enter passcode";
+"enter sms-code"                                =   "enter SMS-code";
+"enter your current passcode"                   =   "enter your current passcode";
+"error"                                         =   "error";
+
+
+// F
+"favorite communities"                          =   "favorite communities";
+"follow"                                        =   "follow";
+"following"                                     =   "following";
+
+
+// G
+"go to commun.com and scan QR"                  =   "go to commun.com and scan QR";
+
+
+// H
+"has removed your voice from your..."           =   "has removed your voice from your delegate node";
+"hundreds"                                      =   "hundreds";
+
+
+// I
+"in a comment"                                  =   "in a comment";
+"in a post"                                     =   "in a post";
+"info"                                          =   "info";
+
+
+// J
+"join"                                          =   "join";
+"joined"                                        =   "joined";
+

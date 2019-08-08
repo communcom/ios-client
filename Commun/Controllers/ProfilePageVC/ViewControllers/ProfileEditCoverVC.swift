@@ -46,7 +46,7 @@ class ProfileEditCoverVC: UIViewController {
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateStyle = .long
                 let dateString = dateFormatter.string(from: Date.from(string: profile.registration.time))
-                self.joinedDateLabel.text = ("Joined".localized() + " " + dateString)
+                self.joinedDateLabel.text = String(format: "%@ %@", "joined".localized().uppercaseFirst, dateString)
             })
             .disposed(by: bag)
     }

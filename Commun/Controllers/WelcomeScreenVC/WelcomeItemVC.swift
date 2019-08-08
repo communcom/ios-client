@@ -37,19 +37,19 @@ class WelcomeItemVC: UIViewController {
         switch self.item {
         case 0:
             attributedString = attributedString
-                .bold("Hundreds".localized(), font: UIFont(name: "SFProText-Semibold", size: 30 * Config.widthRatio)!, color: .black)
+                .bold("hundreds".localized().uppercaseFirst, font: UIFont(name: "SFProText-Semibold", size: 30.0 * Config.widthRatio)!, color: .black)
                 .normal("\n")
-                .bold("of thematic".localized(), font: UIFont(name: "SFProText-Semibold", size: 30 * Config.widthRatio)!, color: .appMainColor)
+                .bold("of thematic".localized(), font: UIFont(name: "SFProText-Semibold", size: 30.0 * Config.widthRatio)!, color: .appMainColor)
                 .normal("\n")
-                .bold("communities".localized(), font: UIFont(name: "SFProText-Semibold", size: 30 * Config.widthRatio)!, color: .appMainColor)
+                .bold("communities".localized(), font: UIFont(name: "SFProText-Semibold", size: 30.0 * Config.widthRatio)!, color: .appMainColor)
             
         case 1:
             attributedString = attributedString
-                .bold("Subscribe to your".localized() + "\n" + "favorite communities".localized(), font: UIFont(name: "SFProText-Semibold", size: 30 * Config.widthRatio)!, color: .black)
+                .bold("subscribe to your".localized().uppercaseFirst + "\n" + "favorite communities".localized(), font: UIFont(name: "SFProText-Semibold", size: 30.0 * Config.widthRatio)!, color: .black)
 
         case 2:
             attributedString = attributedString
-                .bold("Read! upvote!".localized() + "\n" + "comment!".localized(), font: UIFont(name: "SFProText-Semibold", size: 30 * Config.widthRatio)!, color: .black)
+                .bold("read! upvote!".localized().uppercaseFirst + "\n" + "comment!".localized(), font: UIFont(name: "SFProText-Semibold", size: 30.0 * Config.widthRatio)!, color: .black)
 
         default:
             break

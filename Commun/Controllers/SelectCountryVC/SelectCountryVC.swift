@@ -32,7 +32,7 @@ class SelectCountryVC: UIViewController {
         tableView.rowHeight = 56.0 * Config.heightRatio
         
         // Close bar button
-        let closeButton = UIBarButtonItem(title: "Close".localized(), style: .plain, target: nil, action: nil)
+        let closeButton = UIBarButtonItem(title: "close".localized().uppercaseFirst, style: .plain, target: nil, action: nil)
         
         closeButton.rx
             .tap

@@ -264,7 +264,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         let snoozeAction    =   UNNotificationAction(identifier: "ActionSnooze", title: "Snooze".localized(), options: [])
-        let deleteAction    =   UNNotificationAction(identifier: "ActionDelete", title: "Delete".localized(), options: [.destructive])
+        let deleteAction    =   UNNotificationAction(identifier: "ActionDelete", title: "delete".localized().uppercaseFirst, options: [.destructive])
         
         let category        =   UNNotificationCategory(identifier:          categoryIdentifier,
                                                        actions:             [snoozeAction, deleteAction],

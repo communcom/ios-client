@@ -122,7 +122,7 @@ class SettingsVC: UIViewController {
                             .disposed(by: self.bag)
                     case 1:
                         let alert = UIAlertController(title: nil, message: "Select alert".localized(), preferredStyle: .actionSheet)
-                        alert.addAction(UIAlertAction(title: "Cancel".localized(), style: .cancel, handler: nil))
+                        alert.addAction(UIAlertAction(title: "cancel".localized().uppercaseFirst, style: .cancel, handler: nil))
                         alert.addAction(UIAlertAction(title: "Always alert".localized(), style: .default, handler: nil))
                         self.present(alert, animated: true, completion: nil)
                     case 2:

@@ -19,7 +19,7 @@ extension NotificationsPageVC: DZNEmptyDataSetDelegate, DZNEmptyDataSetSource {
     }
     
     func title(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
-        let message = viewModel.lastError.value == nil ? "No notification".localized(): "Error".localized() + "!"
+        let message = String(format: "%@!", (viewModel.lastError.value == nil ? "no notification" : "error").localized().uppercaseFirst)
         return NSMutableAttributedString()
             .bold(message, font: .boldSystemFont(ofSize: 22))
     }

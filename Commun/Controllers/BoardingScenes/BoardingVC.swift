@@ -23,7 +23,7 @@ class BoardingVC: UIViewController, BoardingRouter {
     
     @IBOutlet weak var pincodeLabel: UILabel! {
         didSet {
-            self.pincodeLabel.tune(withText:            "Add short PIN code".localized(),
+            self.pincodeLabel.tune(withText:            "add short PIN code".localized().uppercaseFirst,
                                    hexColors:            grayWhiteColorPickers,
                                    font:                 UIFont.init(name: "SFProText-Regular", size: 17.0 * Config.widthRatio),
                                    alignment:            .left,

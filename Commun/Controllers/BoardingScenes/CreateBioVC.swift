@@ -22,13 +22,13 @@ class CreateBioVC: UIViewController, BoardingRouter {
     
     @IBOutlet weak var textView: ExpandableTextView! {
         didSet {
-            self.textView.placeholder = "Write Text Placeholder".localized()
+            self.textView.placeholder = "write text placeholder".localized().uppercaseFirst
         }
     }
     
     @IBOutlet weak var titleLabel: UILabel! {
         didSet {
-            self.titleLabel.tune(withText:          "Describe yourself".localized(),
+            self.titleLabel.tune(withText:          "describe yourself".localized().uppercaseFirst,
                                  hexColors:         blackWhiteColorPickers,
                                  font:              UIFont.init(name: "SFProText-Bold", size: 34.0 * Config.widthRatio),
                                  alignment:         .left,

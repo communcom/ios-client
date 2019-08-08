@@ -28,7 +28,7 @@ class CommunityCell: UITableViewCell {
     func setUpDidJoin() {
         let joined = self.community.joined
         
-        joinButton.setTitle(joined ? "JOINED".localized(): "JOIN".localized(), for: .normal)
+        joinButton.setTitle((joined ? "joined" : "join").localized().uppercased(), for: .normal)
         joinButton.backgroundColor = joined ? UIColor(hexString: "#F3F5FA") : UIColor.appMainColor
         joinButton.setTitleColor(joined ? .darkGray : .white, for: .normal)
     }

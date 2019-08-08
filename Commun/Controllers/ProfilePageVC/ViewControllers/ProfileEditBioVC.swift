@@ -23,7 +23,7 @@ class ProfileEditBioVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Set views
-        title = (bio == nil) ? "Add bio".localized() : "Edit bio".localized()
+        title = (bio == nil ? "add bio" : "edit bio").localized().uppercaseFirst
         textView.rx.text.onNext(bio)
 
         // bind ui

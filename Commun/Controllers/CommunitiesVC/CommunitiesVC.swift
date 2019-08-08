@@ -41,10 +41,10 @@ class CommunitiesVC: UIViewController {
         segmentio.setup(
             content: [
                 SegmentioItem(
-                    title: "My communities".localized(),
+                    title: "my communities".localized().uppercaseFirst,
                     image: nil),
                 SegmentioItem(
-                    title: "Discover".localized(),
+                    title: "discover".localized().uppercaseFirst,
                     image: nil)
             ],
             style: .onlyLabel,

@@ -49,16 +49,16 @@ extension PostController {
         
         if post?.author?.userId == Config.currentUser?.id {
             actions += [
-                UIAlertAction(title: "Edit".localized(), style: .default, handler: { (_) in
+                UIAlertAction(title: "edit".localized().uppercaseFirst, style: .default, handler: { (_) in
                     self.editPost()
                 }),
-                UIAlertAction(title: "Delete".localized(), style: .destructive, handler: { (_) in
+                UIAlertAction(title: "delete".localized().uppercaseFirst, style: .destructive, handler: { (_) in
                     self.deletePost()
                 })
             ]
         } else {
             actions.append(
-                UIAlertAction(title: "Report".localized(), style: .destructive, handler: { (_) in
+                UIAlertAction(title: "report".localized().uppercaseFirst, style: .destructive, handler: { (_) in
                     self.reportPost()
                 })
             )

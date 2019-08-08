@@ -34,7 +34,7 @@ class ConfirmUserVC: UIViewController, SignUpRouter {
     
     @IBOutlet weak var smsCodeLabel: UILabel! {
         didSet {
-            self.smsCodeLabel.tune(withText:      "Enter SMS-code".localized(),
+            self.smsCodeLabel.tune(withText:      "enter sms-code".localized().uppercaseFirst,
                                    hexColors:     blackWhiteColorPickers,
                                    font:          UIFont(name: "SFProText-Regular", size: 17.0 * Config.widthRatio),
                                    alignment:     .center,
@@ -155,12 +155,11 @@ class ConfirmUserVC: UIViewController, SignUpRouter {
         RestAPIManager.instance.rx.resendSmsCode()
             .subscribe(onSuccess: { [weak self] (_) in
                 guard let strongSelf = self else { return }
-                strongSelf.showAlert(
-                    title: "Info".localized(),
-                    message: "Successfully resend code".localized(),
-                    completion:  { success in
-                        strongSelf.checkResendSmsCodeTime()
-                    })
+                strongSelf.showAlert(title:         "info".localized().uppercaseFirst,
+                                     message:       "successfully resend code".localized().uppercaseFirst,
+                                     completion:    { success in
+                                        strongSelf.checkResendSmsCodeTime()
+                })
             }) {[weak self] (error) in
                 self?.showError(error)
             }

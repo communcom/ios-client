@@ -62,7 +62,7 @@ class SignInViewController: UIViewController {
     
     @IBOutlet weak var gotoLabel: UILabel! {
         didSet {
-            self.gotoLabel.tune(withText:       "Go to commun.com and scan QR".localized(),
+            self.gotoLabel.tune(withText:       "go to commun.com and scan QR".localized().uppercaseFirst,
                                 hexColors:      blackWhiteColorPickers,
                                 font:           UIFont.init(name: "SFProText-Regular", size: 17.0 * Config.widthRatio),
                                 alignment:      .center,

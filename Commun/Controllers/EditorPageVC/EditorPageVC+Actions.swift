@@ -76,11 +76,11 @@ extension EditorPageVC {
                 
                 if let error = error as? ErrorAPI {
                     switch error {
-                    case .responseUnsuccessful(message: "Post Not Found"):
+                    case .responseUnsuccessful(message: "post not found".localized().uppercaseFirst):
                         self.dismiss(animated: true, completion: nil)
                         break
                     case .blockchain(message: let message):
-                        self.showAlert(title: "Error".localized(), message: message)
+                        self.showAlert(title: "error".localized().uppercaseFirst, message: message)
                         break
                     default:
                         break

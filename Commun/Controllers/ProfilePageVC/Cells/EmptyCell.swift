@@ -25,7 +25,7 @@ class EmptyCell: UITableViewCell {
     
     func setUpEmptyComment() {
         titleLabel.text = "No Comments".localized()
-        descriptionLabel.text = "You have not made any".localized() + " " + "comment".localized()
+        descriptionLabel.text = String(format: "%@ %@", "you have not made any".localized().uppercaseFirst, "comment".localized())
         emptyImageView.image = UIImage(named: "ProfilePageItemsEmptyComment")
     }
     

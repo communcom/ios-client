@@ -109,7 +109,7 @@ extension UITableView {
         containerView.tag = listErrorFooterViewTag
         let label = UILabel()
         label.numberOfLines = 0
-        label.attributedText = NSMutableAttributedString().normal("Can not fetch next items".localized())
+        label.attributedText = NSMutableAttributedString().normal("can not fetch next items".localized().uppercaseFirst)
             .normal(". ")
             .bold("Try again".localized())
             .bold("?")

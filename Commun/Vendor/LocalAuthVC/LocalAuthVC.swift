@@ -33,7 +33,7 @@ class LocalAuthVC: THPinViewController {
         backgroundColor = .white
         promptColor = .black
         view.tintColor = .black
-        promptTitle = "Enter passcode".localized()
+        promptTitle = "enter passcode".localized().uppercaseFirst
         
         // face id, touch id button
         if LABiometryType.isEnabled {
@@ -51,13 +51,13 @@ class LocalAuthVC: THPinViewController {
         if !canIgnore {
             navigationController?.setNavigationBarHidden(true, animated: false)
         } else {
-            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Close".localized(), style: .plain, target: self, action: #selector(cancelButtonDidTouch))
+            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "close".localized().uppercaseFirst, style: .plain, target: self, action: #selector(cancelButtonDidTouch))
         }
     }
     
     @objc func authWithBiometric(isAuto: Bool = false) {
         let myContext = LAContext()
-        let myReason = reason?.localized() ?? "Confirm it's you".localized()
+        let myReason = reason?.localized() ?? "confirm it's you".localized().uppercaseFirst
         var authError: NSError?
         if myContext.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &authError) {
             if let error = authError {
@@ -74,7 +74,7 @@ class LocalAuthVC: THPinViewController {
             }
         } else {
             if !isAuto {
-                showAlert(title: "Warning".localized(), message: LABiometryType.current.stringValue + " " + "was turned off".localized() + "\n" + "Do you want to turn it on?".localized(), buttonTitles: ["Turn on".localized(), "Cancel".localized()], highlightedButtonIndex: 0) { (index) in
+                showAlert(title: "warning".localized().uppercaseFirst, message: LABiometryType.current.stringValue + " " + "was turned off".localized() + "\n" + "do you want to turn it on?".localized().uppercaseFirst, buttonTitles: ["turn on".localized().uppercaseFirst, "cancel".localized().uppercaseFirst], highlightedButtonIndex: 0) { (index) in
                     if index == 0 {
                         if let url = URL.init(string: UIApplication.openSettingsURLString) {
                             UIApplication.shared.open(url, options: [:], completionHandler: nil)

@@ -72,7 +72,7 @@ class PostPageVC: UIViewController, CommentCellDelegate {
                 guard let deletedPost = notification.object as? ResponseAPIContentGetPost,
                     deletedPost.identity == self.viewModel.post.value?.identity
                     else {return}
-                self.showAlert(title: "Deleted".localized(), message: "The post has been deleted".localized(), completion: { (_) in
+                self.showAlert(title: "deleted".localized().uppercaseFirst, message: "the post has been deleted".localized().uppercaseFirst, completion: { (_) in
                     self.back()
                 })
             })

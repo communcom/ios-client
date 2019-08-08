@@ -34,7 +34,7 @@ extension UIViewController {
             alert.addAction(action)
         }
         
-        alert.addAction(UIAlertAction(title: "Cancel".localized(), style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "cancel".localized().uppercaseFirst, style: .cancel, handler: nil))
         
         self.present(alert, animated: true, completion: nil)
     }
@@ -44,7 +44,7 @@ extension UIViewController {
     }
     
     func showErrorWithLocalizedMessage(_ message: String) {
-        showAlert(title: "Error".localized(), message: message.localized())
+        showAlert(title: "error".localized().uppercaseFirst, message: message.localized())
     }
     
     func showError(_ error: Error) {
@@ -52,7 +52,7 @@ extension UIViewController {
         if let error = error as? ErrorAPI {
             message = error.caseInfo.message
         }
-        showAlert(title: "Error".localized(), message: message.localized())
+        showAlert(title: "error".localized().uppercaseFirst, message: message.localized())
     }
     
     func hideHud() {
