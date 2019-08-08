@@ -27,7 +27,7 @@ import UIKit
     // MARK: - Custom Functions
     func commonInit() {
         if let text = self.titleLabel?.text {
-            self.tune(withTitle:        text.localized(),
+            self.tune(withTitle:        text.localized().uppercaseFirst,
                       hexColors:        [softBlueColorPickers, verySoftBlueColorPickers, verySoftBlueColorPickers, verySoftBlueColorPickers],
                       font:             UIFont(name: "SFProText-Semibold", size: 17.0 * Config.widthRatio),
                       alignment:        .center)

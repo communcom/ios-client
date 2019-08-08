@@ -30,7 +30,7 @@ class KeysVC: UIViewController, BoardingRouter {
         navigationItem.setHidesBackButton(true, animated: false)
         
         // Set title
-        title = "Backup keys".localized()
+        title = "backup keys".localized().uppercaseFirst
         
         bindUI()
     }

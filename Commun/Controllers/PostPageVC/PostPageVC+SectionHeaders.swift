@@ -23,7 +23,7 @@ extension PostPageVC: UITableViewDelegate {
         
         let view = UIView()
         let header = UIButton(type: .system)
-        header.setTitle("Load more comments".localized() + "...", for: .normal)
+        header.setTitle("load more comments".localized().uppercaseFirst + "...", for: .normal)
         
         view.addSubview(header)
         header.translatesAutoresizingMaskIntoConstraints = false
@@ -36,12 +36,12 @@ extension PostPageVC: UITableViewDelegate {
         header.addTarget(self, action: #selector(loadMore(sender:)), for: .touchUpInside)
         
         viewModel.loadingHandler = {
-            header.setTitle("Loading".localized() + "...", for: .normal)
+            header.setTitle("loading".localized().uppercaseFirst + "...", for: .normal)
             header.isEnabled = false
         }
         
         viewModel.fetchNextErrorHandler = {error in
-            header.setTitle("There is an error occurred".localized() + ". " + "Try again?".localized(), for: .normal)
+            header.setTitle(String(format: "%@. %@?", "there is an error occurred".localized().uppercaseFirst, "try again".localized().uppercaseFirst), for: .normal)
             header.isEnabled = true
         }
         
@@ -51,7 +51,7 @@ extension PostPageVC: UITableViewDelegate {
         }
         
         viewModel.fetchNextCompleted = {
-            header.setTitle("Load more comments".localized() + "...", for: .normal)
+            header.setTitle("load more comments".localized().uppercaseFirst + "...", for: .normal)
             header.isEnabled = true
         }
         
