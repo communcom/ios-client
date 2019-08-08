@@ -104,7 +104,7 @@ class PostPageVC: UIViewController, CommentCellDelegate {
                 cell.setupFromComment(comment, expanded: self.expandedIndexes.contains(indexPath.row))
                 cell.delegate = self
                 
-                if indexPath.row == self.viewModel.comments.value.count - 2 {
+                if indexPath.row == self.viewModel.items.value.count - 2 {
                     self.viewModel.fetchNext()
                 }
                 

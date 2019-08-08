@@ -59,3 +59,18 @@ extension PostsListController {
             .disposed(by: disposeBag)
     }
 }
+
+protocol CommentsListController: ItemsListController where T == ResponseAPIContentGetComment {}
+
+extension CommentsListController {
+    func observeCommentChange() {
+        NotificationCenter.default.rx.notification(.init(rawValue: CommentControllerCommentDidChangeNotification))
+            .subscribe(onNext: {notification in
+                guard let newComment = notification.object as? ResponseAPIContentGetComment
+                    else {return}
+                self.updateItem(newComment)
+            })
+            .disposed(by: disposeBag)
+    }
+}
+

@@ -11,7 +11,7 @@ import RxSwift
 import RxCocoa
 import CyberSwift
 
-class PostPageViewModel: ListViewModelType {
+class PostPageViewModel: CommentsListController, ListViewModelType {
     // MARK: - type
     struct GroupedComment: CustomStringConvertible {
         var comment: ResponseAPIContentGetComment
@@ -35,12 +35,17 @@ class PostPageViewModel: ListViewModelType {
     
     // MARK: - Objects
     let post = BehaviorRelay<ResponseAPIContentGetPost?>(value: nil)
-    let comments = BehaviorRelay<[ResponseAPIContentGetComment]>(value: [])
+    // comments
+    var items = BehaviorRelay<[ResponseAPIContentGetComment]>(value: [])
     
     let disposeBag = DisposeBag()
     let fetcher = CommentsFetcher()
     
     // MARK: - Methods
+    init() {
+        observeCommentChange()
+    }
+    
     func loadPost() {
         let permLink = postForRequest?.contentId.permlink ?? permlink ?? ""
         let userId = postForRequest?.contentId.userId ?? self.userId ?? ""
@@ -81,24 +86,24 @@ class PostPageViewModel: ListViewModelType {
                 }
                 
                 // get unique items
-                var newList = list.filter {!strongSelf.comments.value.contains($0)}
+                var newList = list.filter {!strongSelf.items.value.contains($0)}
                 guard newList.count > 0 else {return}
                 
                 // add last
-                newList = strongSelf.comments.value + newList
+                newList = strongSelf.items.value + newList
                 
                 // sort
                 newList = strongSelf.sortComments(newList)
                 
                 // resign
-                strongSelf.comments.accept(newList)
+                strongSelf.items.accept(newList)
                 strongSelf.fetchNextCompleted?()
             })
             .disposed(by: disposeBag)
     }
     
     @objc func reload() {
-        comments.accept([])
+        items.accept([])
         fetcher.reset()
         fetchNext()
     }

@@ -95,12 +95,12 @@ extension PostPageVC {
     }
     
     func bindComments() {
-        viewModel.comments
+        viewModel.items
             .map {[CommentSection(model: "", items: $0)]}
             .bind(to: tableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
         
-        viewModel.comments
+        viewModel.items
             .subscribe(onNext: {_ in
                 self.expandedIndexes = []
             })
