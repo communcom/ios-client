@@ -50,6 +50,7 @@ class NetworkService: NSObject {
     func getUserComments(_ paginationKey: String? = nil, nickName: String? = nil) -> Single<ResponseAPIContentGetComments> {
         return RestAPIManager.instance.loadUserComments(
             nickName:               nickName,
+            paginationLimit:        30,
             paginationSequenceKey:  paginationKey)
     }
     
@@ -57,6 +58,7 @@ class NetworkService: NSObject {
         return RestAPIManager.instance.loadPostComments(
             nickName:               user,
             permlink:               permLink,
+            paginationLimit:        30,
             paginationSequenceKey:  paginationKey)
     }
     
