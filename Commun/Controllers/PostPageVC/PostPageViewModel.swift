@@ -9,8 +9,19 @@
 import Foundation
 import RxSwift
 import RxCocoa
+import CyberSwift
 
 class PostPageViewModel: ListViewModelType {
+    // MARK: - type
+    struct GroupedComment: CustomStringConvertible {
+        var comment: ResponseAPIContentGetComment
+        var replies = [GroupedComment]()
+        
+        var description: String {
+            return "Comment: \"\(comment.content.body.full!)\", Childs: \"\(replies)\""
+        }
+    }
+    
     // MARK: - Handlers
     var loadingHandler: (() -> Void)?
     var listEndedHandler: (() -> Void)?
@@ -93,6 +104,37 @@ class PostPageViewModel: ListViewModelType {
     }
     
     func sortComments(_ comments: [ResponseAPIContentGetComment]) -> [ResponseAPIContentGetComment] {
+        guard comments.count > 0 else {return []}
+        
+        // result array
+        let result = comments.filter {$0.parent.comment == nil}
+            .reduce([GroupedComment]()) { (result, comment) -> [GroupedComment] in
+                return result + [GroupedComment(comment: comment, replies: getChildForComment(comment, in: comments))]
+        }
+        
+        print(result)
+        
         return comments
     }
+    
+    var maxNestedLevel = 6
+    
+    func getChildForComment(_ comment: ResponseAPIContentGetComment, in source: [ResponseAPIContentGetComment]) -> [GroupedComment] {
+        
+        var result = [GroupedComment]()
+        
+        // filter child
+        let childComments = source
+            .filter {$0.parent.comment?.contentId?.permlink == comment.contentId.permlink && $0.parent.comment?.contentId?.userId == comment.contentId.userId}
+        
+        if childComments.count > 0 {
+            // append child
+            result = childComments.reduce([GroupedComment](), { (result, comment) -> [GroupedComment] in
+                return result + [GroupedComment(comment: comment, replies: getChildForComment(comment, in: source))]
+            })
+        }
+        
+        return result
+    }
+    
 }
