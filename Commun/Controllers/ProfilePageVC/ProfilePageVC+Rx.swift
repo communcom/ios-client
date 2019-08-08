@@ -21,9 +21,9 @@ extension Reactive where Base: ProfilePageVC {
                 // follow button
                 let isFollowing = profile.isSubscribed ?? false
                 profilePageVC.followButton.setImage(UIImage(named: isFollowing ? "ProfilePageFollowing": "ProfilePageFollow"), for: .normal)
-                profilePageVC.followLabel.text = isFollowing ? "Following".localized(): "Follow".localized()
-                profilePageVC.followButton.backgroundColor = isFollowing ? UIColor(hexString: "#F5F5F5"): .appMainColor
-                profilePageVC.followLabel.textColor = isFollowing ? UIColor(hexString: "#9B9FA2"): .appMainColor
+                profilePageVC.followLabel.text = (isFollowing ? "following".localized(): "follow".localized()).uppercaseFirst
+                profilePageVC.followButton.backgroundColor = isFollowing ? UIColor(hexString: "#F5F5F5") : .appMainColor
+                profilePageVC.followLabel.textColor = isFollowing ? UIColor(hexString: "#9B9FA2") : .appMainColor
             }
             
             // cover image

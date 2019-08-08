@@ -41,7 +41,7 @@ extension PostPageVC: UITableViewDelegate {
         }
         
         viewModel.fetchNextErrorHandler = {error in
-            header.setTitle("There is an error".localized() + ". " + "Try again?".localized(), for: .normal)
+            header.setTitle("There is an error occurred".localized() + ". " + "Try again?".localized(), for: .normal)
             header.isEnabled = true
         }
         

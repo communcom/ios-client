@@ -138,7 +138,7 @@ enum NotificationType: String {
             let text = NSMutableAttributedString()
                 .semibold(name)
                 .normal(" ")
-                .normal("has removed your voice from your delegate node".localized())
+                .normal("has removed your voice from your...".localized())
                 .normal(". 🙈")
             detail.text = text
             detail.icon = UIImage(named: "NotificationDownvote")

@@ -65,12 +65,14 @@
 "Of All Time"                               =   "За всё время";
 "Can not fetch next items"                  =   "Отсутствует очередная порция данных";
 "Try again"                                 =   "Попробуйте ещё раз";
+"Try again?"                                =   "Попробуете ещё раз?";
 "Signing you up"                            =   "Подписание";
 "Verifying"                                 =   "Проверка";
 "Setting username"                          =   "Установка имени пользователя";
 "Enter your current passcode"               =   "Введите ваш текущий пароль";
 "Uploading..."                              =   "Выгрузка...";
 "Updating..."                               =   "Обновление...";
+"Loading"                                   =   "Загрузка";
 "Upload image"                              =   "Загрузить изображение";
 "Edit post"                                 =   "Редактирование сообщения";
 "Create post"                               =   "Создание сообщения";
@@ -82,6 +84,34 @@
 "My communities"                            =   "Мои сообщества";
 "Discover"                                  =   "Обнаружить";
 "Recommended"                               =   "Рекомендуемые";
+"You have a new notification"               =   "У вас есть новое уведомление";
+"upvoted you in a post"                     =   "проголосовал за вас в сообщении";
+"downvoted you in a post"                   =   "проголосовал против вас в сообщении";
+"subscribed you"                            =   "подписался на вас";
+"transfered you"                            =   "перевёл средства на вас";
+"replied to your comment"                   =   "ответил на ваш комментарий";
+"commented on a post"                       =   "прокомментировал сообщение";
+"mentioned you"                             =   "упомянул вас";
+"in a post"                                 =   "в сообщении";
+"in a comment"                              =   "в комментарии";
+"Reward for post"                           =   "Награда за сообщение";
+"Reward for votes"                          =   "Награда за голоса";
+"voted for you as a delegate"               =   "проголосовал за вас как за делегата";
+"has removed your voice from your..."       =   "удалил ваш голос из вашего узла делегата";
+"See More"                                  =   "Узнать больше";
+"Deleted"                                   =   "Удалено";
+"The post has been deleted"                 =   "Сообщение было удалено";
+"Load more comments"                        =   "Загрузить больше комментариев";
+"Joined"                                    =   "Присоединился";
+"Add bio"                                   =   "Добавить биографию";
+"Edit bio"                                  =   "Редактировать биографию";
+"profile description"                       =   "profile description";
+"cover photo"                               =   "фотографию обложки";
+"profile photo"                             =   "фотографию профиля";
+"Choose from gallery"                       =   "Выберите из галереи";
+"Delete current"                            =   "Удалить текущую";
+"following"                                 =   "следующий";
+"follow"                                    =   "следить";
 
 
 // Buttons
@@ -115,6 +145,7 @@
 "Edit"                                      =   "Редактирование";
 "Delete"                                    =   "Удаление";
 "Report"                                    =   "Отчёт";
+"Change"                                    =   "Изменить";
 
 
 // Placeholders

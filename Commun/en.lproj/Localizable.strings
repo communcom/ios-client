@@ -65,12 +65,14 @@
 "Of All Time"                               =   "Of All Time";
 "Can not fetch next items"                  =   "Can not fetch next items";
 "Try again"                                 =   "Try again";
+"Try again?"                                =   "Try again?";
 "Signing you up"                            =   "Signing you up";
 "Verifying"                                 =   "Verifying";
 "Setting username"                          =   "Setting username";
 "Enter your current passcode"               =   "Enter your current passcode";
 "Uploading..."                              =   "Uploading...";
 "Updating..."                               =   "Updating...";
+"Loading"                                   =   "Loading";
 "Upload image"                              =   "Upload image";
 "Edit post"                                 =   "Edit post";
 "Create post"                               =   "Create post";
@@ -82,6 +84,34 @@
 "My communities"                            =   "My communities";
 "Discover"                                  =   "Discover";
 "Recommended"                               =   "Recommended";
+"You have a new notification"               =   "You have a new notification";
+"upvoted you in a post"                     =   "upvoted you in a post";
+"downvoted you in a post"                   =   "downvoted you in a post";
+"subscribed you"                            =   "subscribed you";
+"transfered you"                            =   "transfered you";
+"replied to your comment"                   =   "replied to your comment";
+"commented on a post"                       =   "commented on a post";
+"mentioned you"                             =   "mentioned you";
+"in a post"                                 =   "in a post";
+"in a comment"                              =   "in a comment";
+"Reward for post"                           =   "Reward for post";
+"Reward for votes"                          =   "Reward for votes";
+"voted for you as a delegate"               =   "voted for you as a delegate";
+"has removed your voice from your..."       =   "has removed your voice from your delegate node";
+"See More"                                  =   "See More";
+"Deleted"                                   =   "Deleted";
+"The post has been deleted"                 =   "The post has been deleted";
+"Load more comments"                        =   "Load more comments";
+"Joined"                                    =   "Joined";
+"Add bio"                                   =   "Add bio";
+"Edit bio"                                  =   "Edit bio";
+"profile description"                       =   "profile description";
+"cover photo"                               =   "cover photo";
+"profile photo"                             =   "profile photo";
+"Choose from gallery"                       =   "Choose from gallery";
+"Delete current"                            =   "Delete current";
+"following"                                 =   "following";
+"follow"                                    =   "follow";
 
 
 // Buttons
@@ -115,6 +145,7 @@
 "Edit"                                      =   "Edit";
 "Delete"                                    =   "Delete";
 "Report"                                    =   "Report";
+"Change"                                    =   "Change";
 
 
 // Placeholders
