@@ -27,7 +27,7 @@ extension String {
     }
     
     fileprivate func getStringsStartWith(_ symbol: String) -> [String] {
-        if let regex = try? NSRegularExpression(pattern: "\(symbol)[a-z0-9]+", options: .caseInsensitive)
+        if let regex = try? NSRegularExpression(pattern: "\(symbol)[a-z0-9-_]+", options: .caseInsensitive)
         {
             let string = self as NSString
             
