@@ -158,7 +158,7 @@ class CommentCell: UITableViewCell {
         let text = NSMutableAttributedString()
             .normal(String(content.prefix(maxCharactersForReduction - 3)))
             .normal("...")
-            .semibold("See More".localized(), color: .appMainColor)
+            .semibold("see more".localized(), color: .appMainColor)
         
         contentLabel.text = text
     }
@@ -174,7 +174,7 @@ class CommentCell: UITableViewCell {
             let comment = comment
             else {return}
         
-        let seeMoreRange = (text as NSString).range(of: "See More".localized())
+        let seeMoreRange = (text as NSString).range(of: "see more".localized())
         
         if gesture.didTapAttributedTextInLabel(label: label, inRange: seeMoreRange) {
             delegate?.cell(self, didTapSeeMoreButtonForComment: comment)

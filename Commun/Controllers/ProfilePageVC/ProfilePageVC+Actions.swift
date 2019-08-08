@@ -15,13 +15,18 @@ import CyberSwift
 extension ProfilePageVC {
     // MARK: - Covers + Avatar
     func openActionSheet(cover: Bool) {
-        self.showActionSheet(title: "Change".localized() + " " + (cover ? "Cover".localized() : "profile photo".localized()), actions: [
-            UIAlertAction(title: "Choose from gallery".localized(), style: .default, handler: { _ in
-                cover ? self.onUpdateCover() : self.onUpdateAvatar()
-            }),
-            UIAlertAction(title: "Delete current".localized() + " " + (cover ? "Cover".localized() : "profile photo".localized()), style: .destructive, handler: { _ in
-                cover ? self.onUpdateCover(delete: true) : self.onUpdateAvatar(delete: true)
-            })])
+        self.showActionSheet(title:     String(format: "%@ %@", "change".localized().uppercaseFirst, (cover ? "cover photo" : "profile photo").localized()),
+                             actions:   [
+                                UIAlertAction(title:    "choose from gallery".localized().uppercaseFirst,
+                                              style:    .default,
+                                              handler:  { _ in
+                                                cover ? self.onUpdateCover() : self.onUpdateAvatar()
+                                }),
+                                UIAlertAction(title:    String(format: "%@ %@", "delete current".localized().uppercaseFirst, (cover ? "cover photo" : "profile photo").localized()),
+                                              style:    .destructive,
+                                              handler:  { _ in
+                                                cover ? self.onUpdateCover(delete: true) : self.onUpdateAvatar(delete: true)
+                                })])
     }
     
     

@@ -20,7 +20,7 @@ class SignInViewController: UIViewController {
 
     }
     
-    var selection = ["Scan QR".localized(), "Login & Key".localized()]
+    var selection = ["scan QR".localized().uppercaseFirst, "login & key".localized().uppercaseFirst]
     
     var qrReaderVC: QRCodeReaderViewController!
     
@@ -44,7 +44,7 @@ class SignInViewController: UIViewController {
     
     @IBOutlet weak var loginTextField: UITextField! {
         didSet {
-            self.loginTextField.tune(withPlaceholder:       "Login Placeholder".localized(),
+            self.loginTextField.tune(withPlaceholder:       "login placeholder".localized().uppercaseFirst,
                                      textColors:            blackWhiteColorPickers,
                                      font:                  UIFont.init(name: "SFProText-Regular", size: 17.0 * Config.widthRatio),
                                      alignment:             .left)
@@ -53,7 +53,7 @@ class SignInViewController: UIViewController {
     
     @IBOutlet weak var passwordTextField: UITextField! {
         didSet {
-            self.passwordTextField.tune(withPlaceholder:    "Key Placeholder".localized(),
+            self.passwordTextField.tune(withPlaceholder:    "key placeholder".localized().uppercaseFirst,
                                         textColors:         blackWhiteColorPickers,
                                         font:               UIFont.init(name: "SFProText-Regular", size: 17.0 * Config.widthRatio),
                                         alignment:          .left)
@@ -62,7 +62,7 @@ class SignInViewController: UIViewController {
     
     @IBOutlet weak var gotoLabel: UILabel! {
         didSet {
-            self.gotoLabel.tune(withText:       "Go to commun.com and scan QR".localized(),
+            self.gotoLabel.tune(withText:       "go to commun.com and scan QR".localized().uppercaseFirst,
                                 hexColors:      blackWhiteColorPickers,
                                 font:           UIFont.init(name: "SFProText-Regular", size: 17.0 * Config.widthRatio),
                                 alignment:      .center,
@@ -84,7 +84,7 @@ class SignInViewController: UIViewController {
     // MARK: - Custom Functions
     func setUpViews() {
         // title
-        title = "Welcome".localized()
+        title = "welcome".localized().uppercaseFirst
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.largeTitleDisplayMode = .always
         
@@ -156,7 +156,7 @@ class SignInViewController: UIViewController {
     
     func configure(signingIn: Bool) {
         if signingIn {
-            self.showIndetermineHudWithMessage("Signing in".localized() + "...")
+            self.showIndetermineHudWithMessage("signing in".localized().uppercaseFirst + "...")
         } else {
             self.hideHud()
         }

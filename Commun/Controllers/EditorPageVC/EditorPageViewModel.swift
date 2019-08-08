@@ -59,7 +59,7 @@ class EditorPageViewModel {
         if let image = image, imageChanged.value {
             return NetworkService.shared.uploadImage(image)
                 .do(onSubscribed: {
-                    UIApplication.topViewController()?.navigationController?.showIndetermineHudWithMessage("Upload image".localized())
+                    UIApplication.topViewController()?.navigationController?.showIndetermineHudWithMessage("upload image".localized().uppercaseFirst)
                 })
                 .flatMap {url in
                     self.addImage(with: url)

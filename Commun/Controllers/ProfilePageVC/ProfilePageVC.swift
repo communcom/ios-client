@@ -195,14 +195,15 @@ class ProfilePageVC: UIViewController {
     }
     
     @IBAction func bioLableDidTouch(_ sender: Any) {
-        self.showActionSheet(title: "Change".localized() + "profile description".localized(), actions: [
-            UIAlertAction(title: "Edit".localized(), style: .default, handler: { (_) in
-                self.onUpdateBio()
-            }),
-            UIAlertAction(title: "Delete".localized(), style: .destructive, handler: { (_) in
-                self.onUpdateBio(delete: true)
-            }),
-        ])
+        self.showActionSheet(title:     String(format: "%@ %@", "change".localized().uppercaseFirst, "profile description".localized()),
+                             actions:   [
+                                UIAlertAction(title: "edit".localized().uppercaseFirst, style: .default, handler: { (_) in
+                                    self.onUpdateBio()
+                                }),
+                                UIAlertAction(title: "delete".localized().uppercaseFirst, style: .destructive, handler: { (_) in
+                                    self.onUpdateBio(delete: true)
+                                }),
+            ])
     }
     
     @IBAction func settingsButtonDidTouch(_ sender: Any) {

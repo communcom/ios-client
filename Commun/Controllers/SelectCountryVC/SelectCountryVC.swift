@@ -26,13 +26,13 @@ class SelectCountryVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.title = "Select country".localized()
+        self.title = "select country".localized().uppercaseFirst
         
         tableView.register(UINib(nibName: "CountryCell", bundle: nil), forCellReuseIdentifier: "CountryCell")
         tableView.rowHeight = 56.0 * Config.heightRatio
         
         // Close bar button
-        let closeButton = UIBarButtonItem(title: "Close".localized(), style: .plain, target: nil, action: nil)
+        let closeButton = UIBarButtonItem(title: "close".localized().uppercaseFirst, style: .plain, target: nil, action: nil)
         
         closeButton.rx
             .tap

@@ -20,19 +20,19 @@ class SetUserVC: UIViewController, SignUpRouter {
     // MARK: - IBOutlets
     @IBOutlet weak var creatUsernameLabel: UILabel! {
         didSet {
-            self.creatUsernameLabel.tune(withText:      "Create your username".localized(),
-                                         hexColors:     blackWhiteColorPickers,
-                                         font:          UIFont(name: "SFProText-Regular", size: 17.0 * Config.heightRatio),
-                                         alignment:     .left,
-                                         isMultiLines:  false)
+            self.creatUsernameLabel.tune(withText:          "create your username".localized().uppercaseFirst,
+                                         hexColors:         blackWhiteColorPickers,
+                                         font:              UIFont(name: "SFProText-Regular", size: 17.0 * Config.widthRatio),
+                                         alignment:         .left,
+                                         isMultiLines:      false)
         }
     }
     
     @IBOutlet weak var userNameTextField: FormTextField! {
         didSet {
-            self.userNameTextField.tune(withPlaceholder:    "Username Placeholder".localized(),
+            self.userNameTextField.tune(withPlaceholder:    "username placeholder".localized().uppercaseFirst,
                                         textColors:         blackWhiteColorPickers,
-                                        font:               UIFont.init(name: "SFProText-Regular", size: 17.0 * Config.heightRatio),
+                                        font:               UIFont.init(name: "SFProText-Regular", size: 17.0 * Config.widthRatio),
                                         alignment:          .left)
             
             self.userNameTextField.inset = 16.0 * Config.widthRatio
@@ -52,7 +52,7 @@ class SetUserVC: UIViewController, SignUpRouter {
             viewModel = SetUserViewModel()
         }
 
-        self.title = "Sign up".localized()
+        self.title = "sign up".localized().uppercaseFirst
         self.navigationController?.navigationBar.prefersLargeTitles = true
         
         setBackButtonToSignUpVC()
@@ -82,7 +82,8 @@ class SetUserVC: UIViewController, SignUpRouter {
         
         self.view.endEditing(true)
         
-        showIndetermineHudWithMessage("Setting username".localized() + "...")
+        showIndetermineHudWithMessage("setting username".localized().uppercaseFirst + "...")
+        
         viewModel.setUser(userName: userName, phone: phone)
             .catchError({ (error) -> Single<String> in
                 if let error = error as? ErrorAPI {
@@ -94,7 +95,7 @@ class SetUserVC: UIViewController, SignUpRouter {
                 throw error
             })
             .flatMapCompletable({ (id) -> Completable in
-                self.showIndetermineHudWithMessage("Saving to blockchain".localized() + "...")
+                self.showIndetermineHudWithMessage("saving to blockchain...".localized().uppercaseFirst)
                 return RestAPIManager.instance.rx.toBlockChain()
             })
             .subscribe(onCompleted: {

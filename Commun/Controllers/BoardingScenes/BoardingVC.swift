@@ -13,7 +13,7 @@ class BoardingVC: UIViewController, BoardingRouter {
     // MARK: - IBOutlets
     @IBOutlet weak var passcodeLabel: UILabel! {
         didSet {
-            self.passcodeLabel.tune(withText:           "Set up Passcode".localized(),
+            self.passcodeLabel.tune(withText:           "set up passcode".localized().uppercaseFirst,
                                     hexColors:          blackWhiteColorPickers,
                                     font:               UIFont.init(name: "SFProText-Semibold", size: 17.0 * Config.widthRatio),
                                     alignment:          .left,
@@ -23,7 +23,7 @@ class BoardingVC: UIViewController, BoardingRouter {
     
     @IBOutlet weak var pincodeLabel: UILabel! {
         didSet {
-            self.pincodeLabel.tune(withText:            "Add short PIN code".localized(),
+            self.pincodeLabel.tune(withText:            "add short PIN code".localized().uppercaseFirst,
                                    hexColors:            grayWhiteColorPickers,
                                    font:                 UIFont.init(name: "SFProText-Regular", size: 17.0 * Config.widthRatio),
                                    alignment:            .left,

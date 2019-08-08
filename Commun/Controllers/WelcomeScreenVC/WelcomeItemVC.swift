@@ -17,18 +17,6 @@ class WelcomeItemVC: UIViewController {
     @IBOutlet weak var textLabel: UILabel!
     @IBOutlet weak var imageView: UIImageView!
 
-    @IBOutlet var heightsCollection: [NSLayoutConstraint]! {
-        didSet {
-            self.heightsCollection.forEach({ $0.constant *= Config.heightRatio })
-        }
-    }
-
-    @IBOutlet var widthsCollection: [NSLayoutConstraint]! {
-        didSet {
-            self.widthsCollection.forEach({ $0.constant *= Config.widthRatio })
-        }
-    }
-
     
     // MARK: - Class Functions
     override func viewDidLoad() {
@@ -49,19 +37,19 @@ class WelcomeItemVC: UIViewController {
         switch self.item {
         case 0:
             attributedString = attributedString
-                .bold("Hundreds".localized(), font: UIFont(name: "SFProText-Semibold", size: 30 * Config.heightRatio)!, color: .black)
+                .bold("hundreds".localized().uppercaseFirst, font: UIFont(name: "SFProText-Semibold", size: 30.0 * Config.widthRatio)!, color: .black)
                 .normal("\n")
-                .bold("of thematic".localized(), font: UIFont(name: "SFProText-Semibold", size: 30 * Config.heightRatio)!, color: .appMainColor)
+                .bold("of thematic".localized(), font: UIFont(name: "SFProText-Semibold", size: 30.0 * Config.widthRatio)!, color: .appMainColor)
                 .normal("\n")
-                .bold("communities".localized(), font: UIFont(name: "SFProText-Semibold", size: 30 * Config.heightRatio)!, color: .appMainColor)
+                .bold("communities".localized(), font: UIFont(name: "SFProText-Semibold", size: 30.0 * Config.widthRatio)!, color: .appMainColor)
             
         case 1:
             attributedString = attributedString
-                .bold("Subscribe to your".localized() + "\n" + "favorite communities".localized(), font: UIFont(name: "SFProText-Semibold", size: 30 * Config.heightRatio)!, color: .black)
+                .bold("subscribe to your".localized().uppercaseFirst + "\n" + "favorite communities".localized(), font: UIFont(name: "SFProText-Semibold", size: 30.0 * Config.widthRatio)!, color: .black)
 
         case 2:
             attributedString = attributedString
-                .bold("Read! upvote!".localized() + "\n" + "comment!".localized(), font: UIFont(name: "SFProText-Semibold", size: 30 * Config.heightRatio)!, color: .black)
+                .bold("read! upvote!".localized().uppercaseFirst + "\n" + "comment!".localized(), font: UIFont(name: "SFProText-Semibold", size: 30.0 * Config.widthRatio)!, color: .black)
 
         default:
             break

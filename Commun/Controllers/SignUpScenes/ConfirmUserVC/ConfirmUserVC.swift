@@ -34,9 +34,9 @@ class ConfirmUserVC: UIViewController, SignUpRouter {
     
     @IBOutlet weak var smsCodeLabel: UILabel! {
         didSet {
-            self.smsCodeLabel.tune(withText:      "Enter SMS-code".localized(),
+            self.smsCodeLabel.tune(withText:      "enter sms-code".localized().uppercaseFirst,
                                    hexColors:     blackWhiteColorPickers,
-                                   font:          UIFont(name: "SFProText-Regular", size: 17.0 * Config.heightRatio),
+                                   font:          UIFont(name: "SFProText-Regular", size: 17.0 * Config.widthRatio),
                                    alignment:     .center,
                                    isMultiLines:  false)
         }
@@ -47,9 +47,9 @@ class ConfirmUserVC: UIViewController, SignUpRouter {
         didSet {
             self.resendButton.isEnabled = true
             
-            self.resendButton.tune(withTitle:     "Resend verification code".localized(),
+            self.resendButton.tune(withTitle:     "resend verification code".localized().uppercaseFirst,
                                    hexColors:     [softBlueColorPickers, verySoftBlueColorPickers, verySoftBlueColorPickers, verySoftBlueColorPickers],
-                                   font:          UIFont(name: "SFProText-Semibold", size: 15.0 * Config.heightRatio),
+                                   font:          UIFont(name: "SFProText-Semibold", size: 15.0 * Config.widthRatio),
                                    alignment:     .center)
         }
     }
@@ -58,7 +58,7 @@ class ConfirmUserVC: UIViewController, SignUpRouter {
         didSet {
             self.resendTimerLabel.tune(withText:      "",
                                        hexColors:     verySoftBlueColorPickers,
-                                       font:          UIFont(name: "SFProText-Semibold", size: 15.0 * Config.heightRatio),
+                                       font:          UIFont(name: "SFProText-Semibold", size: 15.0 * Config.widthRatio),
                                        alignment:     .center,
                                        isMultiLines:  false)
             
@@ -70,7 +70,7 @@ class ConfirmUserVC: UIViewController, SignUpRouter {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.title = "Verification".localized()
+        self.title = "verification".localized().uppercaseFirst
         self.navigationController?.navigationBar.prefersLargeTitles = true
         
         nextButton.isEnabled = false
@@ -81,7 +81,7 @@ class ConfirmUserVC: UIViewController, SignUpRouter {
         
         self.pinCodeInputView.set(appearance: .init(itemSize:         CGSize(width: 48.0 * Config.widthRatio, height: 56.0 * Config.heightRatio),
                                                     font:             .init(descriptor: UIFontDescriptor(name:  "SFProText-Regular",
-                                                                                                         size:  26.0 * Config.heightRatio),
+                                                                                                         size:  26.0 * Config.widthRatio),
                                                                             size:   26.0 * Config.heightRatio),
                                                     textColor:        .black,
                                                     backgroundColor:  UIColor(hexString: "F3F5FA")!,
@@ -155,12 +155,11 @@ class ConfirmUserVC: UIViewController, SignUpRouter {
         RestAPIManager.instance.rx.resendSmsCode()
             .subscribe(onSuccess: { [weak self] (_) in
                 guard let strongSelf = self else { return }
-                strongSelf.showAlert(
-                    title: "Info".localized(),
-                    message: "Successfully resend code".localized(),
-                    completion:  { success in
-                        strongSelf.checkResendSmsCodeTime()
-                    })
+                strongSelf.showAlert(title:         "info".localized().uppercaseFirst,
+                                     message:       "successfully resend code".localized().uppercaseFirst,
+                                     completion:    { success in
+                                        strongSelf.checkResendSmsCodeTime()
+                })
             }) {[weak self] (error) in
                 self?.showError(error)
             }
@@ -180,7 +179,8 @@ class ConfirmUserVC: UIViewController, SignUpRouter {
         
         nextButton.isEnabled = true
         
-        showIndetermineHudWithMessage("Verifying".localized() + "...")
+        showIndetermineHudWithMessage("verifying...".localized().uppercaseFirst)
+        
         RestAPIManager.instance.rx.verify(code: code)
             .subscribe(onSuccess: { [weak self] (_) in
                 self?.hideHud()

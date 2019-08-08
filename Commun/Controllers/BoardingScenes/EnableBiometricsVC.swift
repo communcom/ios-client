@@ -32,9 +32,9 @@ class EnableBiometricsVC: UIViewController, BoardingRouter {
         }
         
         imageView.image = biometryType.icon
-        headerLabel.text = "Enable".localized() + " " + biometryType.stringValue
-        descriptionLabel.text = "Enable".localized() + " " + biometryType.stringValue + " " + "to secure your transactions".localized()
-        enableButton.setTitle("Enable".localized() + " \(biometryType.stringValue)", for: .normal)
+        headerLabel.text = String(format: "%@ %@", "enable".localized().uppercaseFirst, biometryType.stringValue)
+        descriptionLabel.text = String(format: "%@ %@ %@", "enable".localized().uppercaseFirst, biometryType.stringValue, "to secure your transactions".localized())
+        enableButton.setTitle(String(format: "%@ %@", "enable".localized().uppercaseFirst, biometryType.stringValue), for: .normal)
     }
     
     override func viewWillAppear(_ animated: Bool) {

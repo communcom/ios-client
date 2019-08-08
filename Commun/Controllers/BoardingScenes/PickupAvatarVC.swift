@@ -23,7 +23,7 @@ class PickupAvatarVC: UIViewController, BoardingRouter {
     
     @IBOutlet weak var titleLabel: UILabel! {
         didSet {
-            self.titleLabel.tune(withText:          "Pick a profile picture".localized(),
+            self.titleLabel.tune(withText:          "pick a profile picture".localized().uppercaseFirst,
                                  hexColors:         blackWhiteColorPickers,
                                  font:              UIFont.init(name: "SFProText-Bold", size: 34.0 * Config.widthRatio),
                                  alignment:         .left,
@@ -37,7 +37,7 @@ class PickupAvatarVC: UIViewController, BoardingRouter {
         super.viewDidLoad()
         
         // setup navigation
-        self.title = "Pick a profile picture".localized()
+        self.title = "pick a profile picture".localized().uppercaseFirst
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.isTranslucent = true
@@ -92,7 +92,7 @@ class PickupAvatarVC: UIViewController, BoardingRouter {
     @IBAction func nextButtonDidTouch(_ sender: Any) {
         guard let image = image.value else {return}
         // Save image for reversing when update failed
-        self.showIndetermineHudWithMessage("Uploading...".localized())
+        self.showIndetermineHudWithMessage("uploading...".localized().uppercaseFirst)
         NetworkService.shared.uploadImage(image)
             // Save to bc
             .flatMap{ url -> Single<String> in

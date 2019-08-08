@@ -40,14 +40,14 @@ extension SettingsVC: SettingsButtonCellDelegate {
             present(nc, animated: true, completion: nil)
             break
         case .changeAllPasswords:
-            let alert = UIAlertController(title: "Change all passwords",
-                                          message: "Changing passwords will save your wallet if someone saw your password.",
-                                          preferredStyle: .alert)
+            let alert = UIAlertController(title:            "Change all passwords",
+                                          message:          "Changing passwords will save your wallet if someone saw your password.",
+                                          preferredStyle:   .alert)
             alert.addTextField { field in
                 field.placeholder = "Paste owner password"
             }
             
-            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            alert.addAction(UIAlertAction(title: "cancel".localized().uppercaseFirst, style: .cancel, handler: nil))
             alert.addAction(UIAlertAction(title: "Update", style: .default, handler: { _ in
                 // TODO: Update password
                 print("Update password")
@@ -55,7 +55,7 @@ extension SettingsVC: SettingsButtonCellDelegate {
             
             present(alert, animated: true, completion: nil)
         case .logout:
-            showAlert(title: "Logout".localized(), message: "Do you really want to logout?".localized(), buttonTitles: ["Ok".localized(), "Cancel".localized()], highlightedButtonIndex: 1) { (index) in
+            showAlert(title: "Logout".localized(), message: "Do you really want to logout?".localized(), buttonTitles: ["Ok".localized(), "cancel".localized().uppercaseFirst], highlightedButtonIndex: 1) { (index) in
                 
                 if index == 0 {
                     RestAPIManager.instance.rx.logout()

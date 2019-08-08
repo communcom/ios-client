@@ -34,7 +34,7 @@ class EditorPageVC: UIViewController {
             viewModel = EditorPageViewModel()
         }
         
-        self.title = viewModel?.postForEdit != nil ? "Edit post".localized() : "Create post".localized()
+        self.title = (viewModel?.postForEdit != nil ? "edit post" : "create post").localized().uppercaseFirst
         
         self.navigationController?.navigationBar.barTintColor = .white
         self.navigationController?.navigationBar.isTranslucent = false
@@ -44,11 +44,11 @@ class EditorPageVC: UIViewController {
         
         titleTextView.textContainerInset = UIEdgeInsets.zero
         titleTextView.textContainer.lineFragmentPadding = 0
-        titleTextView.placeholder = "Title".localized()
+        titleTextView.placeholder = "title placeholder".localized().uppercaseFirst
         
         contentTextView.textContainerInset = UIEdgeInsets.zero
         contentTextView.textContainer.lineFragmentPadding = 0
-        contentTextView.placeholder = "Enter text".localized() + "..."
+        contentTextView.placeholder = "write text placeholder".localized().uppercaseFirst + "..."
         
         // if editing post
         if let post = viewModel?.postForEdit {

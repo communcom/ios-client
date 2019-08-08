@@ -35,16 +35,17 @@ extension EditorPageVC {
         self.view.endEditing(true)
         viewModel.sendPost(with: titleTextView.text, text: contentTextView.text, image: self.imageView.image)
             .do(onSubscribe: {
-                self.navigationController?.showIndetermineHudWithMessage("Sending post".localized())
+                self.navigationController?.showIndetermineHudWithMessage("sending post".localized().uppercaseFirst)
             })
             .flatMap { (transactionId, userId, permlink) -> Single<(userId: String, permlink: String)> in
                 guard let id = transactionId,
                     let userId = userId,
                     let permlink = permlink else {
-                        return .error(ErrorAPI.responseUnsuccessful(message: "Post Not Found"))
+                        return .error(ErrorAPI.responseUnsuccessful(message: "post not found".localized().uppercaseFirst))
                 }
                 
-                self.navigationController?.showIndetermineHudWithMessage("Wait for transaction".localized())
+                self.navigationController?.showIndetermineHudWithMessage("wait for transaction".localized().uppercaseFirst)
+                
                 return NetworkService.shared.waitForTransactionWith(id: id)
                     .andThen(Single<(userId: String, permlink: String)>.just((userId: userId, permlink: permlink)))
             }
@@ -76,11 +77,11 @@ extension EditorPageVC {
                 
                 if let error = error as? ErrorAPI {
                     switch error {
-                    case .responseUnsuccessful(message: "Post Not Found"):
+                    case .responseUnsuccessful(message: "post not found".localized().uppercaseFirst):
                         self.dismiss(animated: true, completion: nil)
                         break
                     case .blockchain(message: let message):
-                        self.showAlert(title: "Error".localized(), message: message)
+                        self.showAlert(title: "error".localized().uppercaseFirst, message: message)
                         break
                     default:
                         break

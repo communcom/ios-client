@@ -38,7 +38,7 @@ extension CommunitiesVC: UITableViewDelegate {
         view.backgroundColor = .white
         
         // create uilabel
-        let label = UILabel(text: section == 0 ? "Recommended".localized(): nil)
+        let label = UILabel(text: section == 0 ? "recommended".localized().uppercaseFirst : nil)
         label.font = .boldSystemFont(ofSize: 22)
         view.addSubview(label)
         

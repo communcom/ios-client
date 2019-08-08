@@ -17,12 +17,12 @@ class CountryCell: UITableViewCell {
     @IBOutlet weak var countryImage: UIImageView! {
         didSet {
             self.countryImage.layer.cornerRadius = 42.0 * Config.heightRatio / 2.0
+            self.countryImage.layer.borderColor = UIColor.init(hexString: "#808080")!.cgColor
+            self.countryImage.layer.borderWidth = 1.0
             self.countryImage.clipsToBounds = true
         }
     }
-   
-    @IBOutlet weak var circleImageView: UIImageView!
-    
+       
     @IBOutlet weak var stackView: UIStackView! {
         didSet {
             self.stackView.spacing = 16.0 * Config.widthRatio
@@ -34,8 +34,6 @@ class CountryCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-//        self.countryImage.layer.cornerRadius = countryImage.width / 2
-//        self.countryImage.clipsToBounds = true
         self.selectionStyle = .none
     }
 

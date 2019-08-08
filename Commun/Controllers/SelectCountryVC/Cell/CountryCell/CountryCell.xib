@@ -47,25 +47,15 @@
                             <constraint firstItem="n5T-hh-dX3" firstAttribute="centerY" secondItem="lzF-eX-vVz" secondAttribute="centerY" id="UcH-7E-IGe"/>
                         </constraints>
                     </stackView>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ig8-1y-Sva" userLabel="Circle Image View">
-                        <rect key="frame" x="16" y="8" width="40" height="40"/>
-                        <constraints>
-                            <constraint firstAttribute="width" secondItem="ig8-1y-Sva" secondAttribute="height" multiplier="1:1" id="Q5D-SR-DsU"/>
-                            <constraint firstAttribute="height" constant="40" id="baD-fA-CAa" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
-                        </constraints>
-                    </imageView>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="lzF-eX-vVz" secondAttribute="trailing" constant="16" id="3qZ-er-8PN" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
-                    <constraint firstItem="ig8-1y-Sva" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="L5D-WI-Nxz"/>
                     <constraint firstItem="lzF-eX-vVz" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="LNK-ID-63e" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                     <constraint firstItem="lzF-eX-vVz" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="gJg-58-wXg"/>
-                    <constraint firstItem="ig8-1y-Sva" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="y0M-6W-PY0" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
-                <outlet property="circleImageView" destination="ig8-1y-Sva" id="8X5-jG-TBd"/>
                 <outlet property="countryImage" destination="Q2w-5x-X36" id="ujJ-3n-ZPT"/>
                 <outlet property="countryLabel" destination="n5T-hh-dX3" id="x3m-df-yYC"/>
                 <outlet property="stackView" destination="lzF-eX-vVz" id="Exf-gi-y8W"/>

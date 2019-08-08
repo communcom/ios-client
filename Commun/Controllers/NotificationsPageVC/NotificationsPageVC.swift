@@ -48,7 +48,8 @@ class NotificationsPageVC: UIViewController {
         tableView.refreshControl = refreshControl
         
         // configure navigation bar
-        title = "Notifications".localized()
+        title = "notifications".localized().uppercaseFirst
+        
         let navigationBar = navigationController?.navigationBar
         navigationBar?.barTintColor = UIColor.white
         navigationBar?.isTranslucent = false
@@ -99,7 +100,7 @@ class NotificationsPageVC: UIViewController {
         guard let label = gesture.view as? UILabel,
             let text = label.text else {return}
         
-        let tryAgainRange = (text as NSString).range(of: "Try again".localized())
+        let tryAgainRange = (text as NSString).range(of: "try again".localized().uppercaseFirst)
         if gesture.didTapAttributedTextInLabel(label: label, inRange: tryAgainRange) {
             self.viewModel.fetchNext()
         }

@@ -108,7 +108,7 @@ extension ProfilePageVC: CommentCellDelegate {
                         postPageVC.viewModel.postForRequest = post
                         self.show(postPageVC, sender: nil)
                     } else {
-                        self.showAlert(title: "Error", message: "Something went wrong")
+                        self.showAlert(title: "error".localized().uppercaseFirst, message: "something went wrong".localized().uppercaseFirst)
                     }
                     break
                 case is CommentCell:

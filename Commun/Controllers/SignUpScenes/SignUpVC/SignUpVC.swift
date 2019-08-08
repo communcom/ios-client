@@ -31,7 +31,7 @@ class SignUpVC: UIViewController, SignUpRouter {
     
     @IBOutlet weak var placeholderSelectCountryLabel: UILabel! {
         didSet {
-            self.placeholderSelectCountryLabel.tune(withText:       "Select Country Placeholder".localized(),
+            self.placeholderSelectCountryLabel.tune(withText:       "select country placeholder".localized().uppercaseFirst,
                                                     hexColors:      darkGrayishBluePickers,
                                                     font:           UIFont.init(name: "SFProText-Regular", size: 17.0 * Config.widthRatio),
                                                     alignment:      .left,
@@ -58,7 +58,7 @@ class SignUpVC: UIViewController, SignUpRouter {
     
     @IBOutlet weak var phoneNumberTextField: PhoneNumberTextField! {
         didSet {
-            self.phoneNumberTextField.tune(withPlaceholder:     "Phone Number Placeholder".localized(),
+            self.phoneNumberTextField.tune(withPlaceholder:     "phone number placeholder".localized().uppercaseFirst,
                                            textColors:          blackWhiteColorPickers,
                                            font:                UIFont.init(name: "SFProText-Regular", size: 17.0 * Config.widthRatio),
                                            alignment:           .left)
@@ -81,9 +81,9 @@ class SignUpVC: UIViewController, SignUpRouter {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.title = "Sign up".localized()
+        self.title = "sign up".localized().uppercaseFirst
         self.navigationController?.navigationBar.prefersLargeTitles = true
-        
+
         self.setupBindings()
         self.setupActions()
         
@@ -97,7 +97,7 @@ class SignUpVC: UIViewController, SignUpRouter {
         
         // Bind country name
         let countryName = country.map {$0?.localizedName}
-        countryName.map {$0 ?? "Select country"}
+        countryName.map {$0 ?? "select country".localized().uppercaseFirst}
             .bind(to: countryLabel.rx.text)
             .disposed(by: disposeBag)
         
@@ -171,11 +171,11 @@ class SignUpVC: UIViewController, SignUpRouter {
     // MARK: - Actions
     @IBAction func nextButtonTapped(_ sender: Any) {
         guard self.viewModel.validatePhoneNumber() else {
-            self.showAlert(title: "Error".localized(), message: "Wrong phone number".localized())
+            self.showAlert(title: "error".localized().uppercaseFirst, message: "wrong phone number".localized().uppercaseFirst)
             return
         }
         
-        showIndetermineHudWithMessage("Signing you up".localized() + "...")
+        showIndetermineHudWithMessage("signing you up".localized().uppercaseFirst + "...")
         
         RestAPIManager.instance.rx.firstStep(phone: self.viewModel.phone.value)
             .subscribe(onSuccess: { _ in
