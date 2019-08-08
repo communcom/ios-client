@@ -18,7 +18,7 @@ class PostPageViewModel: ListViewModelType {
         var replies = [GroupedComment]()
         
         var description: String {
-            return "Comment: \"\(comment.content.body.full!)\", Childs: \"\(replies)\""
+            return "{comment: \"\(comment.content.body.full!)\", childs: \(replies)}"
         }
     }
     
@@ -112,9 +112,7 @@ class PostPageViewModel: ListViewModelType {
                 return result + [GroupedComment(comment: comment, replies: getChildForComment(comment, in: comments))]
         }
         
-        print(result)
-        
-        return comments
+        return flat(result)
     }
     
     var maxNestedLevel = 6
@@ -137,4 +135,15 @@ class PostPageViewModel: ListViewModelType {
         return result
     }
     
+    func flat(_ array:[GroupedComment]) -> [ResponseAPIContentGetComment] {
+        var myArray = [ResponseAPIContentGetComment]()
+        for element in array {
+            myArray.append(element.comment)
+            let result = flat(element.replies)
+            for i in result {
+                myArray.append(i)
+            }
+        }
+        return myArray
+    }
 }
