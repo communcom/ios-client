@@ -96,29 +96,8 @@ extension PostPageVC {
     
     func bindComments() {
         viewModel.comments
-            .map { items -> [ResponseAPIContentGetComment?] in
-                if items.count == 0 {
-                    return [nil]
-                }
-                return items
-            }
-            .bind(to: tableView.rx.items) { table, index, comment in
-                guard let comment = comment else {
-                    let cell = self.tableView.dequeueReusableCell(withIdentifier: "EmptyCell") as! EmptyCell
-                    cell.setUpEmptyComment()
-                    return cell
-                }
-                
-                let cell = self.tableView.dequeueReusableCell(withIdentifier: "CommentCell") as! CommentCell
-                cell.setupFromComment(comment, expanded: self.expandedIndexes.contains(index))
-                cell.delegate = self
-                
-                if index == self.viewModel.comments.value.count - 2 {
-                    self.viewModel.fetchNext()
-                }
-                
-                return cell
-            }
+            .map {[CommentSection(model: "", items: $0)]}
+            .bind(to: tableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
         
         viewModel.comments
@@ -145,12 +124,6 @@ extension PostPageVC {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                     self?.showError(error)
                 }
-            })
-            .disposed(by: disposeBag)
-        
-        commentForm.textView.rx.didBeginEditing
-            .subscribe(onNext: {_ in
-                self.tableView.scrollToBottom()
             })
             .disposed(by: disposeBag)
     }

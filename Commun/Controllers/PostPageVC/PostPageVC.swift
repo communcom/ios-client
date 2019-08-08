@@ -8,7 +8,10 @@
 
 import UIKit
 import RxSwift
+import CyberSwift
+import RxDataSources
 
+public typealias CommentSection = AnimatableSectionModel<String, ResponseAPIContentGetComment>
 class PostPageVC: UIViewController, CommentCellDelegate {
     var viewModel: PostPageViewModel!
     
@@ -28,17 +31,28 @@ class PostPageVC: UIViewController, CommentCellDelegate {
     
     var expandedIndexes = [Int]()
     
+    var dataSource: MyRxTableViewSectionedAnimatedDataSource<CommentSection>!
+    
     var replyingComment: ResponseAPIContentGetComment? {
         didSet {
             if let comment = self.replyingComment {
                 replyingToLabelHeightConstraint.constant = 16
+                UIView.animate(withDuration: 0.3) {
+                    self.view.layoutIfNeeded()
+                }
                 commentForm.parentAuthor = comment.contentId.userId
                 commentForm.parentPermlink = comment.contentId.permlink
                 replyingToLabel.text = "Replying to".localized() + " " + (comment.author?.username ?? "")
+                commentForm.textView.text = "@\(comment.author?.username ?? comment.contentId.userId) \(commentForm.textView.text ?? "")"
+                commentForm.textView.becomeFirstResponder()
             } else {
                 replyingToLabelHeightConstraint.constant = 0
+                UIView.animate(withDuration: 0.3) {
+                    self.view.layoutIfNeeded()
+                }
                 commentForm.parentAuthor = viewModel.post.value?.contentId.userId
                 commentForm.parentPermlink = viewModel.post.value?.contentId.permlink
+                commentForm.textView.text = nil
             }
         }
     }
@@ -82,6 +96,21 @@ class PostPageVC: UIViewController, CommentCellDelegate {
         
         // replyingto
         replyingComment = nil
+        
+        // dataSource
+        dataSource = MyRxTableViewSectionedAnimatedDataSource<CommentSection>(
+            configureCell: { dataSource, tableView, indexPath, comment in
+                let cell = self.tableView.dequeueReusableCell(withIdentifier: "CommentCell") as! CommentCell
+                cell.setupFromComment(comment, expanded: self.expandedIndexes.contains(indexPath.row))
+                cell.delegate = self
+                
+                if indexPath.row == self.viewModel.comments.value.count - 2 {
+                    self.viewModel.fetchNext()
+                }
+                
+                return cell
+            }
+        )
         
         // bind ui
         bindUI()

@@ -78,6 +78,7 @@ class CommentCell: UITableViewCell {
             leftPaddingConstraint.constant = 16
             rightPaddingConstraint.constant = 72
         }
+//        leftPaddingConstraint.constant = CGFloat((comment.nestedLevel - 1 > 2 ? 2 : comment.nestedLevel - 1) * 72 + 16)
         
         setText(expanded: expanded)
         
