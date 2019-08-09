@@ -166,15 +166,19 @@ DEPENDENCIES:
   - UIImageView-Letters
 
 SPEC REPOS:
-  https://github.com/CocoaPods/Specs.git:
+  https://github.com/cocoapods/specs.git:
     - Action
     - Alamofire
     - AppImageViewer
     - ASSpinnerView
+    - BigInt
+    - Checksum
     - Crashlytics
+    - CryptoSwift
     - DateToolsSwift
     - Differentiator
     - DZNEmptyDataSet
+    - eosswift
     - Fabric
     - Firebase
     - FirebaseAnalytics
@@ -182,39 +186,34 @@ SPEC REPOS:
     - FirebaseCore
     - FirebaseInstanceID
     - FirebaseMessaging
+    - GoloCrypto
     - GoogleAppMeasurement
     - GoogleUtilities
     - ListPlaceholder
+    - Localize-Swift
+    - Locksmith
     - MBProgressHUD
     - nanopb
     - PhoneNumberKit
     - PinCodeInputView
     - Protobuf
     - QRCodeReaderViewController
+    - ReachabilitySwift
     - RxCocoa
     - RxDataSources
     - RxSwift
     - SDWebImage
+    - secp256k1.swift
     - Segmentio
+    - SipHash
+    - Starscream
     - SwifterSwift
+    - SwiftTheme
+    - SwiftyJSON
     - Swinject
     - TLPhotoPicker
     - TTTAttributedLabel
     - UIImageView-Letters
-  trunk:
-    - BigInt
-    - Checksum
-    - CryptoSwift
-    - eosswift
-    - GoloCrypto
-    - Localize-Swift
-    - Locksmith
-    - ReachabilitySwift
-    - secp256k1.swift
-    - SipHash
-    - Starscream
-    - SwiftTheme
-    - SwiftyJSON
 
 EXTERNAL SOURCES:
   CyberSwift:
@@ -225,7 +224,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   CyberSwift:
-    :commit: d7dc0bce54d5875b4ed2650f0fe27583a6abcb42
+    :commit: b02b1dba4827b640c17f97e89b3e3ee2d4609db9
     :git: https://github.com/GolosChain/cyberSwift.git
   THPinViewController:
     :commit: 3a9214d337cb96e6491325f8e0a72e50d62fc210
@@ -284,4 +283,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 832cc0e4b3f044a14d0ea35f47dae97883f1b0eb
 
-COCOAPODS: 1.8.0.beta.1
+COCOAPODS: 1.7.5
