@@ -24,7 +24,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="Dx8-8W-zVf">
-                                <rect key="frame" x="0.0" y="20" width="375" height="583"/>
+                                <rect key="frame" x="0.0" y="20" width="375" height="567"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <userDefinedRuntimeAttributes>
@@ -119,16 +119,35 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="thI-Qg-Abq" customClass="CommentForm" customModule="Commun" customModuleProvider="target">
-                                <rect key="frame" x="16" y="617" width="343" height="36"/>
+                                <rect key="frame" x="16" y="601" width="343" height="36"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="36" placeholder="YES" id="JfU-Ts-gQr"/>
                                 </constraints>
                             </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Replying to" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="53b-Ty-ok2">
+                                <rect key="frame" x="40" y="645" width="68" height="16"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="16" id="NL0-sE-1wr"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z6n-rS-yU9">
+                                <rect key="frame" x="116" y="645" width="16" height="16"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="Z6n-rS-yU9" secondAttribute="height" multiplier="1:1" id="1QS-7w-vqp"/>
+                                </constraints>
+                                <state key="normal" image="Close"/>
+                                <connections>
+                                    <action selector="replyingToCloseDidTouch:" destination="e29-hK-EV2" eventType="touchUpInside" id="bfn-5F-yJF"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="Pgb-4l-LXo" firstAttribute="bottom" secondItem="thI-Qg-Abq" secondAttribute="bottom" constant="14" id="2km-nc-Tsn" customClass="KeyboardLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
+                            <constraint firstItem="53b-Ty-ok2" firstAttribute="leading" secondItem="Pgb-4l-LXo" secondAttribute="leading" constant="40" id="531-AN-oIu"/>
                             <constraint firstItem="gxE-vT-71g" firstAttribute="leading" secondItem="Pgb-4l-LXo" secondAttribute="leading" id="Asn-MO-U9b"/>
                             <constraint firstItem="Pgb-4l-LXo" firstAttribute="trailing" secondItem="gxE-vT-71g" secondAttribute="trailing" id="BLW-ch-ZW8"/>
                             <constraint firstItem="Dx8-8W-zVf" firstAttribute="leading" secondItem="Pgb-4l-LXo" secondAttribute="leading" id="G0A-8k-1Jd"/>
@@ -138,7 +157,12 @@
                             <constraint firstItem="xxf-Yw-cnd" firstAttribute="top" secondItem="Pgb-4l-LXo" secondAttribute="top" id="M6C-mX-Ryo"/>
                             <constraint firstItem="thI-Qg-Abq" firstAttribute="top" secondItem="Dx8-8W-zVf" secondAttribute="bottom" constant="14" id="M7J-ms-coW"/>
                             <constraint firstItem="gxE-vT-71g" firstAttribute="top" secondItem="xxf-Yw-cnd" secondAttribute="bottom" id="Nh6-Zs-Ake"/>
+                            <constraint firstItem="Z6n-rS-yU9" firstAttribute="leading" secondItem="53b-Ty-ok2" secondAttribute="trailing" constant="8" id="VKV-7o-PDQ"/>
                             <constraint firstItem="thI-Qg-Abq" firstAttribute="leading" secondItem="Pgb-4l-LXo" secondAttribute="leading" constant="16" id="ZAN-gb-P85"/>
+                            <constraint firstItem="Z6n-rS-yU9" firstAttribute="centerY" secondItem="53b-Ty-ok2" secondAttribute="centerY" id="bc1-v1-NfP"/>
+                            <constraint firstItem="Pgb-4l-LXo" firstAttribute="bottom" secondItem="53b-Ty-ok2" secondAttribute="bottom" constant="6" id="iXi-oW-cud" customClass="KeyboardLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
+                            <constraint firstItem="53b-Ty-ok2" firstAttribute="top" secondItem="thI-Qg-Abq" secondAttribute="bottom" constant="8" id="kx9-vf-XYA"/>
+                            <constraint firstItem="Z6n-rS-yU9" firstAttribute="height" secondItem="53b-Ty-ok2" secondAttribute="height" id="lOx-Af-YxG"/>
                             <constraint firstItem="Pgb-4l-LXo" firstAttribute="trailing" secondItem="thI-Qg-Abq" secondAttribute="trailing" constant="16" id="lpC-GX-aP4"/>
                             <constraint firstItem="Dx8-8W-zVf" firstAttribute="top" secondItem="Pgb-4l-LXo" secondAttribute="top" id="w2F-ov-6uG"/>
                         </constraints>
@@ -151,6 +175,8 @@
                         <outlet property="comunityNameLabel" destination="Z2m-2G-cmH" id="GD7-ht-eGw"/>
                         <outlet property="moreButton" destination="ESO-Mb-GPX" id="Vy6-TL-DK0"/>
                         <outlet property="navigationBarHeightConstraint" destination="P2e-hR-1BQ" id="vjY-NO-7TV"/>
+                        <outlet property="replyingToLabel" destination="53b-Ty-ok2" id="RLe-aJ-Sdw"/>
+                        <outlet property="replyingToLabelHeightConstraint" destination="NL0-sE-1wr" id="FTv-5j-5gZ"/>
                         <outlet property="tableView" destination="Dx8-8W-zVf" id="OtS-57-Afj"/>
                         <outlet property="timeAgoLabel" destination="RsM-Yt-jdM" id="Azv-hd-vTh"/>
                     </connections>
@@ -162,7 +188,8 @@
     </scenes>
     <resources>
         <image name="Back" width="512" height="512"/>
+        <image name="Close" width="512" height="512"/>
         <image name="more" width="512" height="512"/>
-        <image name="tux" width="327" height="370"/>
+        <image name="tux" width="56" height="56"/>
     </resources>
 </document>

@@ -8,7 +8,10 @@
 
 import UIKit
 import RxSwift
+import CyberSwift
+import RxDataSources
 
+public typealias CommentSection = AnimatableSectionModel<String, ResponseAPIContentGetComment>
 class PostPageVC: UIViewController, CommentCellDelegate {
     var viewModel: PostPageViewModel!
     
@@ -20,19 +23,63 @@ class PostPageVC: UIViewController, CommentCellDelegate {
     @IBOutlet weak var communityAvatarImageView: UIImageView!
     @IBOutlet weak var moreButton: UIButton!
     @IBOutlet weak var commentForm: CommentForm!
+    @IBOutlet weak var replyingToLabel: UILabel!
+    @IBOutlet weak var replyingToLabelHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var navigationBarHeightConstraint: NSLayoutConstraint!
     
     let disposeBag = DisposeBag()
     
     var expandedIndexes = [Int]()
     
+    var dataSource: MyRxTableViewSectionedAnimatedDataSource<CommentSection>!
+    
+    var replyingComment: ResponseAPIContentGetComment? {
+        didSet {
+            if let comment = self.replyingComment {
+                replyingToLabelHeightConstraint.constant = 16
+                UIView.animate(withDuration: 0.3) {
+                    self.view.layoutIfNeeded()
+                }
+                commentForm.parentAuthor = comment.contentId.userId
+                commentForm.parentPermlink = comment.contentId.permlink
+                replyingToLabel.text = "Replying to".localized() + " " + (comment.author?.username ?? "")
+                commentForm.textView.text = "@\(comment.author?.username ?? comment.contentId.userId) \(commentForm.textView.text ?? "")"
+                commentForm.textView.becomeFirstResponder()
+            } else {
+                replyingToLabelHeightConstraint.constant = 0
+                UIView.animate(withDuration: 0.3) {
+                    self.view.layoutIfNeeded()
+                }
+                commentForm.parentAuthor = viewModel.post.value?.contentId.userId
+                commentForm.parentPermlink = viewModel.post.value?.contentId.permlink
+                commentForm.textView.text = nil
+            }
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // setup views
+        // setup viewModel
         viewModel.loadPost()
         viewModel.fetchNext()
         
+        viewModel.loadingHandler = { [weak self] in
+            if self?.viewModel.fetcher.reachedTheEnd == true {return}
+            self?.tableView.addNotificationsLoadingFooterView()
+        }
+        
+        viewModel.listEndedHandler = { [weak self] in
+            self?.tableView.tableFooterView = UIView()
+        }
+        
+        viewModel.fetchNextErrorHandler = {[weak self] error in
+            guard let strongSelf = self else {return}
+            strongSelf.tableView.addListErrorFooterView(with: #selector(strongSelf.didTapTryAgain(gesture:)), on: strongSelf)
+            strongSelf.tableView.reloadData()
+        }
+        
+        // setupView
         tableView.register(UINib(nibName: "CommentCell", bundle: nil), forCellReuseIdentifier: "CommentCell")
         
         tableView.register(UINib(nibName: "EmptyCell", bundle: nil), forCellReuseIdentifier: "EmptyCell")
@@ -51,6 +98,24 @@ class PostPageVC: UIViewController, CommentCellDelegate {
         
         // observe post deleted
         observePostDeleted()
+        
+        // replyingto
+        replyingComment = nil
+        
+        // dataSource
+        dataSource = MyRxTableViewSectionedAnimatedDataSource<CommentSection>(
+            configureCell: { dataSource, tableView, indexPath, comment in
+                let cell = self.tableView.dequeueReusableCell(withIdentifier: "CommentCell") as! CommentCell
+                cell.setupFromComment(comment, expanded: self.expandedIndexes.contains(indexPath.row))
+                cell.delegate = self
+                
+                if indexPath.row == self.viewModel.items.value.count - 2 {
+                    self.viewModel.fetchNext()
+                }
+                
+                return cell
+            }
+        )
         
         // bind ui
         bindUI()
@@ -94,6 +159,19 @@ class PostPageVC: UIViewController, CommentCellDelegate {
     @objc func userNameTapped(_ sender: UITapGestureRecognizer) {
         guard let userId = viewModel.post.value?.author?.userId else {return}
         showProfileWithUserId(userId)
+    }
+    @IBAction func replyingToCloseDidTouch(_ sender: Any) {
+        replyingComment = nil
+    }
+    
+    @objc func didTapTryAgain(gesture: UITapGestureRecognizer) {
+        guard let label = gesture.view as? UILabel,
+            let text = label.text else {return}
+        
+        let tryAgainRange = (text as NSString).range(of: "Try again".localized())
+        if gesture.didTapAttributedTextInLabel(label: label, inRange: tryAgainRange) {
+            self.viewModel.fetchNext()
+        }
     }
 }
 

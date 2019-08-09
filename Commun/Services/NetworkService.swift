@@ -49,15 +49,17 @@ class NetworkService: NSObject {
     
     func getUserComments(_ paginationKey: String? = nil, nickName: String? = nil) -> Single<ResponseAPIContentGetComments> {
         return RestAPIManager.instance.loadUserComments(
-            nickName: nickName,
-            paginationSequenceKey: paginationKey)
+            nickName:               nickName,
+            paginationLimit:        30,
+            paginationSequenceKey:  paginationKey)
     }
     
     func getPostComment(_ paginationKey: String? = nil, withPermLink permLink: String, forUser user: String) -> Single<ResponseAPIContentGetComments> {
-        return RestAPIManager.instance.loadPostComments(nickName:                  user,
-                                                     permlink:                  permLink,
-                                                     sortMode:                  .timeDesc,
-                                                     paginationSequenceKey:     paginationKey)
+        return RestAPIManager.instance.loadPostComments(
+            nickName:               user,
+            permlink:               permLink,
+            paginationLimit:        30,
+            paginationSequenceKey:  paginationKey)
     }
     
     func voteMessage(voteType: VoteActionType, messagePermlink: String, messageAuthor: String) -> Completable {

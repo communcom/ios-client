@@ -9,8 +9,19 @@
 import Foundation
 import RxSwift
 import RxCocoa
+import CyberSwift
 
-class PostPageViewModel: ListViewModelType {
+class PostPageViewModel: CommentsListController, ListViewModelType {
+    // MARK: - type
+    struct GroupedComment: CustomStringConvertible {
+        var comment: ResponseAPIContentGetComment
+        var replies = [GroupedComment]()
+        
+        var description: String {
+            return "{comment: \"\(comment.content.body.full!)\", childs: \(replies)}"
+        }
+    }
+    
     // MARK: - Handlers
     var loadingHandler: (() -> Void)?
     var listEndedHandler: (() -> Void)?
@@ -24,12 +35,17 @@ class PostPageViewModel: ListViewModelType {
     
     // MARK: - Objects
     let post = BehaviorRelay<ResponseAPIContentGetPost?>(value: nil)
-    let comments = BehaviorRelay<[ResponseAPIContentGetComment]>(value: [])
+    // comments
+    var items = BehaviorRelay<[ResponseAPIContentGetComment]>(value: [])
     
     let disposeBag = DisposeBag()
     let fetcher = CommentsFetcher()
     
     // MARK: - Methods
+    init() {
+        observeCommentChange()
+    }
+    
     func loadPost() {
         let permLink = postForRequest?.contentId.permlink ?? permlink ?? ""
         let userId = postForRequest?.contentId.userId ?? self.userId ?? ""
@@ -61,20 +77,78 @@ class PostPageViewModel: ListViewModelType {
                 self.fetchNextErrorHandler?(error)
                 return .just([])
             }
-            .subscribe(onSuccess: { (list) in
+            .subscribe(onSuccess: {[weak self] (list) in
+                guard let strongSelf = self else {return}
+                
                 guard list.count > 0 else {
-                    self.listEndedHandler?()
+                    strongSelf.listEndedHandler?()
                     return
                 }
-                self.comments.accept(list.reversed() + self.comments.value)
-                self.fetchNextCompleted?()
+                
+                // get unique items
+                var newList = list.filter {!strongSelf.items.value.contains($0)}
+                guard newList.count > 0 else {return}
+                
+                // add last
+                newList = strongSelf.items.value + newList
+                
+                // sort
+                newList = strongSelf.sortComments(newList)
+                
+                // resign
+                strongSelf.items.accept(newList)
+                strongSelf.fetchNextCompleted?()
             })
             .disposed(by: disposeBag)
     }
     
     @objc func reload() {
-        comments.accept([])
+        items.accept([])
         fetcher.reset()
         fetchNext()
+    }
+    
+    func sortComments(_ comments: [ResponseAPIContentGetComment]) -> [ResponseAPIContentGetComment] {
+        guard comments.count > 0 else {return []}
+        
+        // result array
+        let result = comments.filter {$0.parent.comment == nil}
+            .reduce([GroupedComment]()) { (result, comment) -> [GroupedComment] in
+                return result + [GroupedComment(comment: comment, replies: getChildForComment(comment, in: comments))]
+        }
+        
+        return flat(result)
+    }
+    
+    var maxNestedLevel = 6
+    
+    func getChildForComment(_ comment: ResponseAPIContentGetComment, in source: [ResponseAPIContentGetComment]) -> [GroupedComment] {
+        
+        var result = [GroupedComment]()
+        
+        // filter child
+        let childComments = source
+            .filter {$0.parent.comment?.contentId?.permlink == comment.contentId.permlink && $0.parent.comment?.contentId?.userId == comment.contentId.userId}
+        
+        if childComments.count > 0 {
+            // append child
+            result = childComments.reduce([GroupedComment](), { (result, comment) -> [GroupedComment] in
+                return result + [GroupedComment(comment: comment, replies: getChildForComment(comment, in: source))]
+            })
+        }
+        
+        return result
+    }
+    
+    func flat(_ array:[GroupedComment]) -> [ResponseAPIContentGetComment] {
+        var myArray = [ResponseAPIContentGetComment]()
+        for element in array {
+            myArray.append(element.comment)
+            let result = flat(element.replies)
+            for i in result {
+                myArray.append(i)
+            }
+        }
+        return myArray
     }
 }

@@ -51,8 +51,10 @@ extension PostPageVC {
                     self.byUserLabel.text = "by".localized() + " " + (post.author?.username ?? post.author?.userId ?? "")
                     
                     // commentForm
-                    self.commentForm.parentAuthor = post.contentId.userId
-                    self.commentForm.parentPermlink = post.contentId.permlink
+                    if self.replyingComment == nil {
+                        self.commentForm.parentAuthor = post.contentId.userId
+                        self.commentForm.parentPermlink = post.contentId.permlink
+                    }
                 } else {
                     self.comunityNameLabel.isHidden = true
                     self.timeAgoLabel.isHidden = true
@@ -93,31 +95,12 @@ extension PostPageVC {
     }
     
     func bindComments() {
-        viewModel.comments
-            .map { items -> [ResponseAPIContentGetComment?] in
-                if items.count == 0 {
-                    return [nil]
-                }
-                return items
-            }
-            .bind(to: tableView.rx.items) { table, index, comment in
-                guard let comment = comment else {
-                    let cell = self.tableView.dequeueReusableCell(withIdentifier: "EmptyCell") as! EmptyCell
-                    cell.setUpEmptyComment()
-                    return cell
-                }
-                
-                let cell = self.tableView.dequeueReusableCell(withIdentifier: "CommentCell") as! CommentCell
-                cell.setupFromComment(comment, expanded: self.expandedIndexes.contains(index))
-                cell.delegate = self
-                return cell
-            }
+        viewModel.items
+            .map {[CommentSection(model: "", items: $0)]}
+            .bind(to: tableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
         
-        tableView.rx.setDelegate(self)
-            .disposed(by: disposeBag)
-        
-        viewModel.comments
+        viewModel.items
             .subscribe(onNext: {_ in
                 self.expandedIndexes = []
             })
@@ -127,6 +110,9 @@ extension PostPageVC {
     func bindCommentForm() {
         commentForm.commentDidSend
             .subscribe(onNext: { [weak self] (_) in
+                if (self?.replyingComment != nil) {
+                    self?.replyingComment = nil
+                }
                 #warning("Reload table for testing only")
                 self?.viewModel.reload()
             })
@@ -138,12 +124,6 @@ extension PostPageVC {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                     self?.showError(error)
                 }
-            })
-            .disposed(by: disposeBag)
-        
-        commentForm.textView.rx.didBeginEditing
-            .subscribe(onNext: {_ in
-                self.tableView.scrollToBottom()
             })
             .disposed(by: disposeBag)
     }

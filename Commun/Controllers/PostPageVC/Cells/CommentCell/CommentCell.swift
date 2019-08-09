@@ -11,6 +11,7 @@ import TTTAttributedLabel
 import RxSwift
 
 protocol CommentCellDelegate: class {
+    var replyingComment: ResponseAPIContentGetComment? {get set}
     var expandedIndexes: [Int] {get set}
     var tableView: UITableView! {get set}
     func cell(_ cell: CommentCell, didTapUpVoteButtonForComment comment: ResponseAPIContentGetComment)
@@ -77,6 +78,7 @@ class CommentCell: UITableViewCell {
             leftPaddingConstraint.constant = 16
             rightPaddingConstraint.constant = 72
         }
+//        leftPaddingConstraint.constant = CGFloat((comment.nestedLevel - 1 > 2 ? 2 : comment.nestedLevel - 1) * 72 + 16)
         
         setText(expanded: expanded)
         
