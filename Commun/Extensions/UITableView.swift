@@ -17,6 +17,7 @@ let postLoadingFooterViewTag = 99991
 let listErrorFooterViewTag = 99992
 
 let notificationsLoadingFooterViewTag = 99993
+let commentLoadingFooterViewTag = 99994
 
 extension UITableView {
     func addLoadingFooterView() {
@@ -62,25 +63,33 @@ extension UITableView {
     }
     
     func addNotificationsLoadingFooterView(){
+        addLoadingFooterView(
+            rowType:        PlaceholderNotificationCell.self,
+            tag:            notificationsLoadingFooterViewTag,
+            rowHeight:      88,
+            numberOfRows:   5
+        )
+    }
+    
+    func addLoadingFooterView<T: UIView>(rowType: T.Type, tag: Int, rowHeight: CGFloat, numberOfRows: Int = 5) {
         // Prevent dupplicating
-        if tableFooterView?.tag == notificationsLoadingFooterViewTag {
+        if tableFooterView?.tag == tag {
             return
         }
-            
-        let numberOfRows = 5
-        let containerView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 88*numberOfRows))
-        containerView.tag = notificationsLoadingFooterViewTag
+        
+        let containerView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: rowHeight*CGFloat(numberOfRows)))
+        containerView.tag = tag
         
         for i in 0..<numberOfRows {
-            let placeholderNotificationsCell = PlaceholderNotificationCell(frame: CGRect(x: 0, y: 0, width: self.width, height: 88))
-            placeholderNotificationsCell.translatesAutoresizingMaskIntoConstraints = false
+            let placeholderView = T.init(frame: CGRect(x: 0, y: 0, width: self.width, height: rowHeight))
+            placeholderView.translatesAutoresizingMaskIntoConstraints = false
             
-            containerView.addSubview(placeholderNotificationsCell)
+            containerView.addSubview(placeholderView)
             
-            placeholderNotificationsCell.topAnchor.constraint(equalTo: containerView.topAnchor, constant: CGFloat(i*88)).isActive = true
-            placeholderNotificationsCell.heightAnchor.constraint(equalToConstant: 88).isActive = true
-            placeholderNotificationsCell.leadingAnchor.constraint(equalTo: containerView.leadingAnchor).isActive = true
-            placeholderNotificationsCell.trailingAnchor.constraint(equalTo: containerView.trailingAnchor).isActive = true
+            placeholderView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: CGFloat(i)*rowHeight).isActive = true
+            placeholderView.heightAnchor.constraint(equalToConstant: rowHeight).isActive = true
+            placeholderView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor).isActive = true
+            placeholderView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor).isActive = true
         }
         
         self.tableFooterView = containerView
