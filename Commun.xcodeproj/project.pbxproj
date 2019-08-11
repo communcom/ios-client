@@ -552,8 +552,6 @@
 			isa = PBXGroup;
 			children = (
 				3B0E9C722270785E002AB1C2 /* PhotoLibraryCell.swift */,
-				3B515818226DDE8D00108F17 /* EmptyCell.xib */,
-				3B51581B226DE28D00108F17 /* EmptyCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -607,6 +605,15 @@
 				5787C0C222650F8A00568CEC /* SetUserVC */,
 			);
 			path = SignUpScenes;
+			sourceTree = "<group>";
+		};
+		3B9BEB3B2300E210003C70B3 /* EmptyCell */ = {
+			isa = PBXGroup;
+			children = (
+				3B515818226DDE8D00108F17 /* EmptyCell.xib */,
+				3B51581B226DE28D00108F17 /* EmptyCell.swift */,
+			);
+			path = EmptyCell;
 			sourceTree = "<group>";
 		};
 		3BAF69C122675ADB0055CCEB /* ProfilePageVC */ = {
@@ -926,6 +933,7 @@
 		578409EA223FAC0000338FD5 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				3B9BEB3B2300E210003C70B3 /* EmptyCell */,
 				3BE68AB022EEA79B00033B81 /* LocalAuthVC */,
 				3B885BBA22B7A1B600FC4B7A /* EmbededView */,
 				3B635F7D22771679006DAAB2 /* Fetchers */,
