@@ -81,6 +81,8 @@
 		3B82D0F722D8D56A004EE848 /* EnableBiometricsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B82D0F622D8D56A004EE848 /* EnableBiometricsVC.swift */; };
 		3B885BBC22B7A1FE00FC4B7A /* EmbededView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B885BBB22B7A1FE00FC4B7A /* EmbededView.swift */; };
 		3B986B6522CF4C9E00C1E985 /* PhoneNumberTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B986B6422CF4C9E00C1E985 /* PhoneNumberTests.swift */; };
+		3B9BEB3D2300EC7D003C70B3 /* EmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B9BEB3C2300EC7D003C70B3 /* EmptyView.swift */; };
+		3B9BEB3F2300EC9C003C70B3 /* EmptyView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3B9BEB3E2300EC9C003C70B3 /* EmptyView.xib */; };
 		3BA3779722E9DA6C0071AF3A /* SignupVC+Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BA3779622E9DA6C0071AF3A /* SignupVC+Location.swift */; };
 		3BA4D0872292BA710022A69D /* ResponseAPIContentGetPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BA4D0862292BA710022A69D /* ResponseAPIContentGetPost.swift */; };
 		3BA4D089229315D60022A69D /* UIResponder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BA4D088229315D60022A69D /* UIResponder.swift */; };
@@ -298,6 +300,8 @@
 		3B82D0F622D8D56A004EE848 /* EnableBiometricsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnableBiometricsVC.swift; sourceTree = "<group>"; };
 		3B885BBB22B7A1FE00FC4B7A /* EmbededView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbededView.swift; sourceTree = "<group>"; };
 		3B986B6422CF4C9E00C1E985 /* PhoneNumberTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneNumberTests.swift; sourceTree = "<group>"; };
+		3B9BEB3C2300EC7D003C70B3 /* EmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyView.swift; sourceTree = "<group>"; };
+		3B9BEB3E2300EC9C003C70B3 /* EmptyView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmptyView.xib; sourceTree = "<group>"; };
 		3BA3779622E9DA6C0071AF3A /* SignupVC+Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SignupVC+Location.swift"; sourceTree = "<group>"; };
 		3BA4D0862292BA710022A69D /* ResponseAPIContentGetPost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseAPIContentGetPost.swift; sourceTree = "<group>"; };
 		3BA4D088229315D60022A69D /* UIResponder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIResponder.swift; sourceTree = "<group>"; };
@@ -552,8 +556,6 @@
 			isa = PBXGroup;
 			children = (
 				3B0E9C722270785E002AB1C2 /* PhotoLibraryCell.swift */,
-				3B515818226DDE8D00108F17 /* EmptyCell.xib */,
-				3B51581B226DE28D00108F17 /* EmptyCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -607,6 +609,17 @@
 				5787C0C222650F8A00568CEC /* SetUserVC */,
 			);
 			path = SignUpScenes;
+			sourceTree = "<group>";
+		};
+		3B9BEB3B2300E210003C70B3 /* EmptyViews */ = {
+			isa = PBXGroup;
+			children = (
+				3B515818226DDE8D00108F17 /* EmptyCell.xib */,
+				3B51581B226DE28D00108F17 /* EmptyCell.swift */,
+				3B9BEB3C2300EC7D003C70B3 /* EmptyView.swift */,
+				3B9BEB3E2300EC9C003C70B3 /* EmptyView.xib */,
+			);
+			path = EmptyViews;
 			sourceTree = "<group>";
 		};
 		3BAF69C122675ADB0055CCEB /* ProfilePageVC */ = {
@@ -926,6 +939,7 @@
 		578409EA223FAC0000338FD5 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				3B9BEB3B2300E210003C70B3 /* EmptyViews */,
 				3BE68AB022EEA79B00033B81 /* LocalAuthVC */,
 				3B885BBA22B7A1B600FC4B7A /* EmbededView */,
 				3B635F7D22771679006DAAB2 /* Fetchers */,
@@ -1235,6 +1249,7 @@
 				B1EA02DB2289882A00835244 /* SF-Pro-Display-Heavy.otf in Resources */,
 				B1EA02EF2289882A00835244 /* SF-Pro-Text-Medium.otf in Resources */,
 				B1EA02F22289882A00835244 /* SF-Pro-Text-RegularItalic.otf in Resources */,
+				3B9BEB3F2300EC9C003C70B3 /* EmptyView.xib in Resources */,
 				575AECB522606FA600A7EC2D /* SelectCountryVC.storyboard in Resources */,
 				B1EA02EA2289882A00835244 /* SF-Pro-Text-BoldItalic.otf in Resources */,
 				B1EA02E22289882A00835244 /* SF-Pro-Display-RegularItalic.otf in Resources */,
@@ -1429,6 +1444,7 @@
 				3B0E9C752270C691002AB1C2 /* ProfileEditBioVC.swift in Sources */,
 				57A95197224178010020F55D /* PostController.swift in Sources */,
 				3B67FC0622C4BB5100D05F01 /* SplashViewController.swift in Sources */,
+				3B9BEB3D2300EC7D003C70B3 /* EmptyView.swift in Sources */,
 				3B6229AB22BD12410053B9EF /* TTTAttributedLabel.swift in Sources */,
 				3BDF4FA822C21B310029D616 /* ResponseAPIContentGetProfile.swift in Sources */,
 				3B5EDE3522E073C500897BF3 /* SettingsViewModel.swift in Sources */,

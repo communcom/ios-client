@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SF-Pro-Text-Semibold.otf">
+            <string>SFProText-Semibold</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="EmptyView" customModule="Commun" customModuleProvider="target">
+            <connections>
+                <outlet property="backgroundView" destination="iN0-l3-epB" id="MOZ-3v-1IV"/>
+                <outlet property="descriptionLabel" destination="nP2-Uv-v0A" id="v9z-oM-ZxG"/>
+                <outlet property="emptyImageView" destination="BMp-pE-Fls" id="zVf-gk-pJD"/>
+                <outlet property="titleLabel" destination="bub-d4-iCi" id="gG8-ah-ACK"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="214"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ProfilePageItemsEmptyComment" translatesAutoresizingMaskIntoConstraints="NO" id="BMp-pE-Fls">
+                    <rect key="frame" x="187" y="50" width="40" height="40"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="40" id="1HT-22-AH8"/>
+                        <constraint firstAttribute="width" constant="40" id="p6O-6h-WEk"/>
+                    </constraints>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You have not made any comment" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nP2-Uv-v0A">
+                    <rect key="frame" x="93.5" y="140.5" width="227.5" height="18"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Comments" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bub-d4-iCi">
+                    <rect key="frame" x="131" y="114" width="152.5" height="26.5"/>
+                    <fontDescription key="fontDescription" name="SFProText-Semibold" family="SF Pro Text" pointSize="22"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="bub-d4-iCi" firstAttribute="top" secondItem="BMp-pE-Fls" secondAttribute="bottom" constant="24" id="0Sw-rM-QIn"/>
+                <constraint firstAttribute="bottom" secondItem="nP2-Uv-v0A" secondAttribute="bottom" priority="750" constant="55.5" id="GOj-rS-qAv"/>
+                <constraint firstItem="bub-d4-iCi" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="LuU-tE-yY4"/>
+                <constraint firstItem="nP2-Uv-v0A" firstAttribute="top" secondItem="bub-d4-iCi" secondAttribute="bottom" id="PhK-MC-8qQ"/>
+                <constraint firstItem="nP2-Uv-v0A" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="TiM-ya-Y4E"/>
+                <constraint firstItem="BMp-pE-Fls" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="50" id="mUn-PT-RB1"/>
+                <constraint firstItem="BMp-pE-Fls" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="up4-ee-Dtd"/>
+            </constraints>
+            <nil key="simulatedTopBarMetrics"/>
+            <nil key="simulatedBottomBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="ProfilePageItemsEmptyComment" width="30" height="27.5"/>
+    </resources>
+</document>

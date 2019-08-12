@@ -18,6 +18,7 @@ let listErrorFooterViewTag = 99992
 
 let notificationsLoadingFooterViewTag = 99993
 let commentLoadingFooterViewTag = 99994
+let commentEmptyFooterViewTag   = 99995
 
 extension UITableView {
     func addLoadingFooterView() {

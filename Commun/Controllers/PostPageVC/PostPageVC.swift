@@ -70,7 +70,7 @@ class PostPageVC: UIViewController, CommentCellDelegate {
         }
         
         viewModel.listEndedHandler = { [weak self] in
-            self?.tableView.tableFooterView = UIView()
+            self?.addEmptyCell()
         }
         
         viewModel.fetchNextErrorHandler = {[weak self] error in
@@ -81,8 +81,6 @@ class PostPageVC: UIViewController, CommentCellDelegate {
         
         // setupView
         tableView.register(UINib(nibName: "CommentCell", bundle: nil), forCellReuseIdentifier: "CommentCell")
-        
-        tableView.register(UINib(nibName: "EmptyCell", bundle: nil), forCellReuseIdentifier: "EmptyCell")
         
         tableView.rowHeight = UITableView.automaticDimension
         
@@ -172,6 +170,31 @@ class PostPageVC: UIViewController, CommentCellDelegate {
         if gesture.didTapAttributedTextInLabel(label: label, inRange: tryAgainRange) {
             self.viewModel.fetchNext()
         }
+    }
+    
+    func addEmptyCell() {
+        // init emptyView
+        let emptyView = EmptyView(frame: .zero)
+        
+        // Prevent dupplicating
+        if tableView.tableFooterView?.tag == commentEmptyFooterViewTag {
+            return
+        }
+        
+        let containerView = UIView(frame: CGRect(x: 0, y: 0, width: self.tableView.size.width, height: 214))
+        containerView.tag = commentEmptyFooterViewTag
+        
+        containerView.addSubview(emptyView)
+        
+        emptyView.translatesAutoresizingMaskIntoConstraints = false
+        emptyView.topAnchor.constraint(equalTo: containerView.topAnchor).isActive = true
+        emptyView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor).isActive = true
+        emptyView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor).isActive = true
+        emptyView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor).isActive = true
+        
+        
+        tableView.tableFooterView = containerView
+        emptyView.setUpEmptyComment()
     }
 }
 
