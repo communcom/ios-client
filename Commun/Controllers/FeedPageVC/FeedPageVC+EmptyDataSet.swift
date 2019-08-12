@@ -19,7 +19,7 @@ extension FeedPageVC: DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
     }
     
     func title(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
-        let message = String(format: "%@ %@!", (viewModel.fetcher.lastError == nil ? "no posts" : "error").localized().uppercaseFirst)
+        let message = (viewModel.fetcher.lastError == nil ? "no posts" : "error").localized().uppercaseFirst
         return NSMutableAttributedString()
             .bold(message, font: .boldSystemFont(ofSize: 22))
     }
