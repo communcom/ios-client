@@ -47,16 +47,13 @@ class ProfilePageVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // construct view model
-        if viewModel == nil { viewModel = ProfilePageViewModel() }
+        if viewModel == nil { viewModel = ProfilePageViewModel(userId: nil) }
         
         // setup view
         setUpViews()
         
         // bind view model
         bindViewModel()
-        
-        // load profile
-        viewModel.loadProfile()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -148,8 +145,6 @@ class ProfilePageVC: UIViewController {
             content: items,
             style: SegmentioStyle.onlyLabel,
             options: SegmentioOptions.default)
-        
-        segmentio.selectedSegmentioIndex = 0
         
         segmentio.valueDidChange = {_, index in
             self.viewModel.segmentedItem.accept(segmentedItems[index])

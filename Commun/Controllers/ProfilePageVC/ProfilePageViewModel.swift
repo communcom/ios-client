@@ -43,63 +43,16 @@ class ProfilePageViewModel: ListViewModelType {
     var profileLoadingHandler: ((Bool) -> Void)?
     var profileFetchingErrorHandler: ((Error?) -> Void)?
     
-    init() {
+    init(userId: String?) {
+        self.userId = userId
+        loadProfile()
         bindElements()
-        
-        // observe item's change
-        segmentedItem
-            .subscribe(onNext: {segItem in
-                switch segItem {
-                case .posts:
-                    // TODO: Observe post's change
-                    break
-                case .comments:
-                    // TODO: Observe comment's change
-                    break
-                }
-            })
-            .disposed(by: bag)
     }
     
     func bindElements() {
-        let nonNilProfile = profile.filter {$0 != nil}
-            .map {$0!}
-        
-        // Retrieve items after receiving profile
-        nonNilProfile
-            .withLatestFrom(segmentedItem)
-            .flatMapLatest { (item: ProfilePageSegmentioItem) -> Single<[Decodable]> in
-                // Empty table
-                self.items.accept([])
-                
-                // Cast itemsFetcher
-                switch item {
-                case .posts:
-                    // Reset fetcher
-                    guard let fetcher = self.itemsFetcher as? PostsFetcher else {return Single.never()}
-                    fetcher.userId = self.userId
-                    fetcher.reset()
-                    
-                    // FetchNext items
-                    return fetcher.fetchNext()
-                        .map {$0 as [ResponseAPIContentGetPost]}
-                case .comments:
-                    // Reset fetcher
-                    guard let fetcher = self.itemsFetcher as? CommentsFetcher else {return Single.never()}
-                    fetcher.userId = self.userId
-                    fetcher.reset()
-                    
-                    // FetchNext items
-                    return fetcher.fetchNext()
-                        .map {$0 as [ResponseAPIContentGetComment]}
-                }
-            }
-            .asDriver(onErrorJustReturn: [])
-            .drive(items)
-            .disposed(by: bag)
-        
         // Retrieve items after segemented changes
         segmentedItem
+            .filter {_ in self.profile.value != nil}
             .flatMapLatest {item -> Single<[Decodable]> in
                 // Re-create fetcher
                 switch item {

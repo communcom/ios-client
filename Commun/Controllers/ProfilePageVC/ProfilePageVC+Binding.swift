@@ -24,6 +24,10 @@ extension ProfilePageVC: CommentCellDelegate {
         }
         
         // Profile
+        viewModel.profile.filter {$0 != nil}.subscribe(onNext: { [weak self] _ in
+            self?.segmentio.selectedSegmentioIndex = 0
+        }).disposed(by: disposeBag)
+        
         let profile = viewModel.profile.asDriver()
         
         // End refreshing
