@@ -58,10 +58,13 @@ extension SettingsVC: SettingsButtonCellDelegate {
             showAlert(title: "Logout".localized(), message: "Do you really want to logout?".localized(), buttonTitles: ["Ok".localized(), "cancel".localized().uppercaseFirst], highlightedButtonIndex: 1) { (index) in
                 
                 if index == 0 {
+                    self.showIndetermineHudWithMessage("logging out".localized().uppercaseFirst)
                     RestAPIManager.instance.rx.logout()
                         .subscribe(onCompleted: {
+                            self.hideHud()
                             AppDelegate.reloadSubject.onNext(true)
                         }, onError: { (error) in
+                            self.hideHud()
                             self.showError(error)
                         })
                         .disposed(by: self.bag)
