@@ -21,7 +21,7 @@ class TabBarVC: UITabBarController {
         
         // Feed Tab
         let feed = controllerContainer.resolve(FeedPageVC.self)!
-        let feedNC = UINavigationController(rootViewController: feed)
+        let feedNC = SwipeNavigationController(rootViewController: feed)
         feedNC.tabBarItem = centerTabBarItem(withImageName: "feed", tag: 0)
         feed.accessibilityLabel = "TabBarFeedTabBarItem"
 
