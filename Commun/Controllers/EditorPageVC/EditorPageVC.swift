@@ -47,6 +47,8 @@ class EditorPageVC: UIViewController {
         contentTextView.textContainer.lineFragmentPadding = 0
         contentTextView.placeholder = "write text placeholder".localized().uppercaseFirst + "..."
         
+        previewView.adjustHeight(0)
+        
         // if editing post
         if let post = viewModel?.postForEdit {
             titleTextView.rx.text.onNext(post.content.title)
@@ -55,13 +57,15 @@ class EditorPageVC: UIViewController {
             
             if let firstEmbeded = post.content.embeds.first?.result {
                 if firstEmbeded.type == "photo" {
-                    previewView.setUp(mediaType: .image(image: nil, url: firstEmbeded.url))
+                    let value = PreviewView.MediaType.image(image: nil, url: firstEmbeded.url)
+                    previewView.initialMedia = value
+                    previewView.setUp(mediaType: value)
                 } else {
-                    previewView.setUp(mediaType: .linkFromText(text: firstEmbeded.url))
+                    let value = PreviewView.MediaType.linkFromText(text: firstEmbeded.url)
+                    previewView.initialMedia = value
+                    previewView.setUp(mediaType: value)
                 }
             }
-            
-            
         }
         
         bindUI()

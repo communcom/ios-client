@@ -15,20 +15,21 @@ class EditorPageViewModel {
     var postForEdit: ResponseAPIContentGetPost?
     
     let isAdult = BehaviorRelay<Bool>(value: false)
+    var embeds = [[String: Any]]()
     
     func sendPost(with title: String, text: String, media: PreviewView.MediaType?) -> Single<SendPostCompletion> {
         // Prepare request
         var uploadImage: Single<String>?
         
         // Prepare embeds
-        var embeds = [[String: Any]]()
+        embeds = [[String: Any]]()
         if let media = media {
             switch media {
             case .image(let image, let imageUrl):
                 if let image = image {
                     uploadImage = NetworkService.shared.uploadImage(image)
                         .do(onSuccess: {url in
-                            embeds.append([
+                            self.embeds.append([
                                 "type": "photo",
                                 "url": url,
                                 "id": Int(Date().timeIntervalSince1970)
@@ -65,7 +66,6 @@ class EditorPageViewModel {
         }
         
         // Send request
-        var sendPost: Single<SendPostCompletion>
         if let post = postForEdit {
             return uploadImage != nil ?
                 uploadImage!.flatMap {_ in NetworkService.shared.editPostWithPermlink(post.contentId.permlink, title: title, text: text, metaData: embedsString ?? "", withTags: tags)} :

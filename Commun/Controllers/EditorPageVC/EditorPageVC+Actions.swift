@@ -33,7 +33,8 @@ extension EditorPageVC {
     @IBAction func sendPostButtonTap() {
         guard let viewModel = viewModel else {return}
         self.view.endEditing(true)
-        viewModel.sendPost(with: titleTextView.text, text: contentTextView.text, image: self.imageView.image)
+        
+        viewModel.sendPost(with: titleTextView.text, text: contentTextView.text, media: previewView.media)
             .do(onSubscribe: {
                 self.navigationController?.showIndetermineHudWithMessage("sending post".localized().uppercaseFirst)
             })

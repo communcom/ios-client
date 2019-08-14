@@ -18,6 +18,8 @@ class PreviewView: UIView {
     }
     
     // MARK: - Properties
+    var initialMedia: MediaType?
+    
     var heightConstraint: NSLayoutConstraint! {
         return self.constraints.first {$0.firstAttribute == .height}
     }
