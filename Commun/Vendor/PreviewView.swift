@@ -54,6 +54,7 @@ class PreviewView: UIView {
     
     // MARK: - Methods
     @objc func clear() {
+        media = nil
         removeSubviews()
         adjustHeight(0)
     }
@@ -69,7 +70,10 @@ class PreviewView: UIView {
     }
     
     // MARK: - Setup content
-    func setUp(mediaType: MediaType?) {
+    func setUp(mediaType: MediaType?, replace: Bool = false) {
+        // ignore setup if preview is existed
+        if media != nil && !replace {return}
+        
         // setup media
         media = mediaType
         

@@ -21,8 +21,8 @@ extension EditorPageVC {
         pickerVC.rx.didSelectAssets
             .filter {($0.count > 0) && ($0.first?.fullResolutionImage != nil)}
             .map {$0.first!.fullResolutionImage!}
-            .subscribe(onNext: {image in
-                self.imageView.image = image
+            .subscribe(onNext: {[weak self] image in
+                self?.previewView.setUp(mediaType: .image(image: image, url: nil), replace: true)
                 pickerVC.dismiss(animated: true, completion: nil)
             })
             .disposed(by: disposeBag)
@@ -97,10 +97,4 @@ extension EditorPageVC {
     @IBAction func closeButtonDidTouch(_ sender: Any) {
         self.navigationController?.dismiss(animated: true, completion: nil)
     }
-    
-    @IBAction func removeImageButton(_ sender: Any) {
-        imageView.image = nil
-        viewModel?.addImage(with: nil)
-    }
-    
 }

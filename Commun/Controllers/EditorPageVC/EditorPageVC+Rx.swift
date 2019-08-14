@@ -22,24 +22,6 @@ extension EditorPageVC {
             })
             .disposed(by: disposeBag)
         
-        // image
-        imageView.rx.isEmpty
-            .map {$0 ? 0: self.imageView.size.width * (self.imageView.image!.size.height / self.imageView.image!.size.width)}
-            .bind(to: imageViewHeightConstraint.rx.constant)
-            .disposed(by: disposeBag)
-        
-        imageView.rx.isEmpty
-            .map {$0 ? 0: 24}
-            .bind(to: removeImageButtonHeightConstraint.rx.constant)
-            .disposed(by: disposeBag)
-        
-        imageView.rx.isEmpty
-            .filter {!$0}
-            .subscribe(onNext: {_ in
-                self.scrollView.scrollsToBottom()
-            })
-            .disposed(by: disposeBag)
-        
         // isAdult
         adultButton.rx.tap
             .map {_ in !viewModel.isAdult.value}
@@ -52,17 +34,19 @@ extension EditorPageVC {
             .bind(to: self.adultButton.rx.image(for: .normal))
             .disposed(by: disposeBag)
         
+        // Retrieve link
+        contentTextView.rx.text.orEmpty
+            .filter {$0 != ""}
+            .debounce(0.3, scheduler: MainScheduler.instance)
+            .subscribe(onNext: {[weak self] text in
+                self?.previewView.setUp(mediaType: .linkFromText(text: text))
+            })
+            .disposed(by: disposeBag)
+        
         // verification
         
         #warning("Verify community")
         #warning("fix contentText later")
-        imageView.rx.isEmpty
-            .skip(1)
-            .subscribe(onNext: { (empty) in
-                self.viewModel?.imageChanged.accept(true)
-            })
-            .disposed(by: disposeBag)
-        
         Observable.combineLatest(
                 titleTextView.rx.text.orEmpty,
                 contentTextView.rx.text.orEmpty,

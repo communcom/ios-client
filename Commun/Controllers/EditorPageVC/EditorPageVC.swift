@@ -16,14 +16,11 @@ class EditorPageVC: UIViewController {
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var titleTextView: ExpandableTextView!
     @IBOutlet weak var contentTextView: ExpandableTextView!
-    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var previewView: PreviewView!
     @IBOutlet weak var dropDownView: UIView!
     @IBOutlet weak var adultButton: UIButton!
     
     @IBOutlet weak var sendPostButton: UIBarButtonItem!
-    
-    @IBOutlet weak var imageViewHeightConstraint: NSLayoutConstraint!
-    @IBOutlet weak var removeImageButtonHeightConstraint: NSLayoutConstraint!
     
     let disposeBag = DisposeBag()
     
@@ -56,10 +53,15 @@ class EditorPageVC: UIViewController {
             #warning("change text later")
             contentTextView.rx.text.onNext(post.content.body.full ?? post.content.body.preview)
             
-            if let imageURL = post.firstEmbedImageURL {
-                imageView.sd_setImage(with: URL(string: imageURL), completed: nil)
-                viewModel?.addImage(with: imageURL)
+            if let firstEmbeded = post.content.embeds.first?.result {
+                if firstEmbeded.type == "photo" {
+                    previewView.setUp(mediaType: .image(image: nil, url: firstEmbeded.url))
+                } else {
+                    previewView.setUp(mediaType: .linkFromText(text: firstEmbeded.url))
+                }
             }
+            
+            
         }
         
         bindUI()
