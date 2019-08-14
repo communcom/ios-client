@@ -15,82 +15,66 @@ class EditorPageViewModel {
     var postForEdit: ResponseAPIContentGetPost?
     
     let isAdult = BehaviorRelay<Bool>(value: false)
-    let imageChanged = BehaviorRelay<Bool>(value: false)
     
-    var embeds = [[String: Any]]()
-    
-    /// set url = nil to remove
-    func addImage(with url: String?) {
-        guard let url = url else {
-            embeds.removeAll(where: {($0["type"] as? String) == "photo"})
-            return
-        }
+    func sendPost(with title: String, text: String, media: PreviewView.MediaType?) -> Single<SendPostCompletion> {
+        // Prepare request
+        var uploadImage: Single<String>?
         
-        if let i = embeds.firstIndex(where: {($0["type"] as? String) == "photo"}) {
-            embeds[i]["url"] = url
-            return
-        }
-        
-        #warning("add id")
-        embeds.append([
-            "type": "photo",
-            "url": url,
-            "id": Int(Date().timeIntervalSince1970)
-        ])
-    }
-    
-    func sendPost(with title: String, text: String, image: UIImage?) -> Single<SendPostCompletion> {
-        
-        var request: () -> Single<SendPostCompletion>
-        if let post = postForEdit {
-            request = {
-                let json = self.createJsonMetadata(for: text)
-                let tags = self.getTags(from: text)
-                return NetworkService.shared.editPostWithPermlink(post.contentId.permlink, title: title, text: text, metaData: json ?? "", withTags: tags)
-            }
-        } else {
-            request = {
-                let json = self.createJsonMetadata(for: text)
-                let tags = self.getTags(from: text)
-                return NetworkService.shared.sendPost(withTitle: title, withText: text, metaData: json ?? "", withTags: tags)
-            }
-        }
-        
-        if let image = image, imageChanged.value {
-            return NetworkService.shared.uploadImage(image)
-                .do(onSubscribed: {
-                    UIApplication.topViewController()?.navigationController?.showIndetermineHudWithMessage("upload image".localized().uppercaseFirst)
-                })
-                .flatMap {url in
-                    self.addImage(with: url)
-                    return request()
+        // Prepare embeds
+        var embeds = [[String: Any]]()
+        if let media = media {
+            switch media {
+            case .image(let image, let imageUrl):
+                if let image = image {
+                    uploadImage = NetworkService.shared.uploadImage(image)
+                        .do(onSuccess: {url in
+                            embeds.append([
+                                "type": "photo",
+                                "url": url,
+                                "id": Int(Date().timeIntervalSince1970)
+                            ])
+                        }, onSubscribed: {
+                            UIApplication.topViewController()?.navigationController?
+                                .showIndetermineHudWithMessage("upload image".localized().uppercaseFirst)
+                        })
+                } else if let url = imageUrl {
+                    embeds.append([
+                        "type": "photo",
+                        "url": url,
+                        "id": Int(Date().timeIntervalSince1970)
+                    ])
                 }
-        }
-        
-        return request()
-    }
-    
-    func createJsonMetadata(for text: String) -> String? {
-        for word in text.components(separatedBy: " ") {
-            if word.contains("http://") || word.contains("https://") {
-                if embeds.first(where: {($0["url"] as? String) == word}) != nil {continue}
-                #warning("Define type")
-                embeds.append(["url": word])
+            case .linkFromText(let text):
+                for word in text.components(separatedBy: " ") {
+                    if word.contains("http://") || word.contains("https://") {
+                        if embeds.first(where: {($0["url"] as? String) == word}) != nil {continue}
+                        #warning("Define type")
+                        embeds.append(["url": word])
+                    }
+                }
             }
         }
-        
         let result = ["embeds": embeds]
-        return result.jsonString()
-    }
-    
-    func getTags(from text: String) -> [String] {
+        let embedsString = result.jsonString()
+        
+        // Prepare tags
         var tags = text.getTags()
         
         if isAdult.value {
             tags.append("#18+")
         }
         
-        return tags
+        // Send request
+        var sendPost: Single<SendPostCompletion>
+        if let post = postForEdit {
+            return uploadImage != nil ?
+                uploadImage!.flatMap {_ in NetworkService.shared.editPostWithPermlink(post.contentId.permlink, title: title, text: text, metaData: embedsString ?? "", withTags: tags)} :
+                NetworkService.shared.editPostWithPermlink(post.contentId.permlink, title: title, text: text, metaData: embedsString ?? "", withTags: tags)
+        } else {
+            return uploadImage != nil ?
+                uploadImage!.flatMap {_ in NetworkService.shared.sendPost(withTitle: title, withText: text, metaData: embedsString ?? "", withTags: tags)}:
+                NetworkService.shared.sendPost(withTitle: title, withText: text, metaData: embedsString ?? "", withTags: tags)
+        }
     }
     
 }
