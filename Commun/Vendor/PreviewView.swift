@@ -157,6 +157,7 @@ class PreviewView: UIView {
             // imageView
             let imageView = UIImageView()
             imageView.translatesAutoresizingMaskIntoConstraints = false
+            imageView.contentMode = .scaleAspectFit
             strongSelf.addSubview(imageView)
             
             // bottom views
