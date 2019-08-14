@@ -22,6 +22,8 @@ class PreviewView: UIView {
         return self.constraints.first {$0.firstAttribute == .height}
     }
     
+    var media: MediaType?
+    
     let closeButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -68,6 +70,9 @@ class PreviewView: UIView {
     
     // MARK: - Setup content
     func setUp(mediaType: MediaType?) {
+        // setup media
+        media = mediaType
+        
         // if media was removed
         guard let mediaType = mediaType else {
             clear()
