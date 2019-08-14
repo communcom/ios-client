@@ -46,6 +46,7 @@ class PreviewView: UIView {
     }
     
     private func commonInit() {
+        backgroundColor = .white
         closeButton.addTarget(self, action: #selector(clear), for: .touchUpInside)
     }
     
@@ -186,7 +187,7 @@ class PreviewView: UIView {
                 imageView.sd_setImage(with: imageUrl)
             }
             
-            titleLabel.text = response.description
+            titleLabel.text = response.title
             urlLabel.text = response.canonicalUrl
             
             strongSelf.bringSubviewToFront(strongSelf.closeButton)
