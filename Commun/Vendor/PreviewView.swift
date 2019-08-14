@@ -74,6 +74,9 @@ class PreviewView: UIView {
             return
         }
         
+        // Remove subviews
+        removeSubviews()
+        
         // default height is 315
         adjustHeight(319)
         
@@ -82,6 +85,10 @@ class PreviewView: UIView {
         
         // completion
         let completion: (Error?)->Void = { [weak self] error in
+            guard error == nil else {
+                self?.clear()
+                return
+            }
             self?.hideLoading()
             self?.showFloatingButtons()
         }
@@ -103,7 +110,6 @@ class PreviewView: UIView {
     }
     
     func showImageWithImage(_ image: UIImage?, orUrl url: String?, completion: ((Error?)->Void)? = nil) {
-        removeSubviews()
         // Create image View
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -130,8 +136,6 @@ class PreviewView: UIView {
     }
     
     func showLinkPreviewWithUrlFromText(_ text: String, completion: ((Error?)->Void)? = nil) {
-        removeSubviews()
-        
         // Get preview
         let slp = SwiftLinkPreview(cache: InMemoryCache())
         
@@ -195,7 +199,6 @@ class PreviewView: UIView {
         }
         
         let errorHandler: ((PreviewError) -> Void) = {error in
-            // TODO:
             completion?(error)
         }
         
