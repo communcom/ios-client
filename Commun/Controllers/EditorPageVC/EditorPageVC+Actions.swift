@@ -34,7 +34,7 @@ extension EditorPageVC {
         guard let viewModel = viewModel else {return}
         self.view.endEditing(true)
         
-        viewModel.sendPost(with: titleTextView.text, text: contentTextView.text, media: previewView.media)
+        viewModel.sendPost(with: titleTextView.text, text: contentTextView.text, media: previewView.media.value)
             .do(onSubscribe: {
                 self.navigationController?.showIndetermineHudWithMessage("sending post".localized().uppercaseFirst)
             })

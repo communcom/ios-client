@@ -9,10 +9,11 @@
 import UIKit
 import SDWebImage
 import SwiftLinkPreview
+import RxCocoa
 
 class PreviewView: UIView {
     // MARK: - Enum
-    enum MediaType {
+    enum MediaType: Equatable {
         case image(image: UIImage?, url: String?)
         case linkFromText(text: String)
     }
@@ -24,7 +25,7 @@ class PreviewView: UIView {
         return self.constraints.first {$0.firstAttribute == .height}
     }
     
-    var media: MediaType?
+    let media = BehaviorRelay<MediaType?>(value: nil)
     
     let closeButton: UIButton = {
         let button = UIButton()
@@ -56,7 +57,7 @@ class PreviewView: UIView {
     
     // MARK: - Methods
     @objc func clear() {
-        media = nil
+        media.accept(nil)
         removeSubviews()
         adjustHeight(0)
     }
@@ -74,10 +75,10 @@ class PreviewView: UIView {
     // MARK: - Setup content
     func setUp(mediaType: MediaType?, replace: Bool = false) {
         // ignore setup if preview is existed
-        if media != nil && !replace {return}
+        if media.value != nil && !replace {return}
         
         // setup media
-        media = mediaType
+        media.accept(mediaType)
         
         // if media was removed
         guard let mediaType = mediaType else {

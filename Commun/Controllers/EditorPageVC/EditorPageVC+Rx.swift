@@ -50,7 +50,7 @@ extension EditorPageVC {
         Observable.combineLatest(
                 titleTextView.rx.text.orEmpty,
                 contentTextView.rx.text.orEmpty,
-                viewModel.imageChanged.map {_ in ""}
+                previewView.media
             )
             .map {
                 // Text field  is not empty
@@ -58,7 +58,7 @@ extension EditorPageVC {
                 // Title or content has changed
                 ($0.0 != viewModel.postForEdit?.content.title ||
                 $0.1 != viewModel.postForEdit?.content.body.preview ||
-                    self.viewModel?.imageChanged.value == true)
+                    $0.2 == self.previewView.initialMedia)
             }
             .bind(to: sendPostButton.rx.isEnabled)
             .disposed(by: disposeBag)
