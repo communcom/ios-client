@@ -18,7 +18,10 @@ class PreviewView: UIView {
     }
     
     // MARK: - Properties
-    var heightConstraint: NSLayoutConstraint!
+    var heightConstraint: NSLayoutConstraint! {
+        return self.constraints.first {$0.firstAttribute == .height}
+    }
+    
     let closeButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -26,10 +29,7 @@ class PreviewView: UIView {
         
         // constraint
         button.widthAnchor.constraint(equalToConstant: 24).isActive = true
-        
-        let heightConstraint = NSLayoutConstraint(item: button, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 24)
-//        heightConstraint.priority = .defaultLow
-        heightConstraint.isActive = true
+        button.heightAnchor.constraint(equalToConstant: 24).isActive = true
         
         return button
     }()
@@ -46,11 +46,36 @@ class PreviewView: UIView {
     }
     
     private func commonInit() {
-        heightConstraint = constraints.first {$0.firstAttribute == .height}
+        closeButton.addTarget(self, action: #selector(clear), for: .touchUpInside)
     }
     
     // MARK: - Methods
-    func setUp(mediaType: MediaType) {
+    @objc func clear() {
+        removeSubviews()
+        adjustHeight(0)
+    }
+    
+    func adjustHeight(_ height: CGFloat) {
+        let constraint = heightConstraint!
+        if constraint.constant == height {return}
+        constraint.constant = height
+        UIView.animate(withDuration: 0.3) {
+            self.setNeedsLayout()
+            self.superview?.layoutSubviews()
+        }
+    }
+    
+    // MARK: - Setup content
+    func setUp(mediaType: MediaType?) {
+        // if media was removed
+        guard let mediaType = mediaType else {
+            clear()
+            return
+        }
+        
+        // default height is 315
+        adjustHeight(319)
+        
         // show loading
         showLoading()
         
