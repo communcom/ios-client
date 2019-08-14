@@ -19,6 +19,20 @@ class PreviewView: UIView {
     
     // MARK: - Properties
     var heightConstraint: NSLayoutConstraint!
+    let closeButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setImage(UIImage(named: "Close"), for: .normal)
+        
+        // constraint
+        button.widthAnchor.constraint(equalToConstant: 24).isActive = true
+        
+        let heightConstraint = NSLayoutConstraint(item: button, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 24)
+//        heightConstraint.priority = .defaultLow
+        heightConstraint.isActive = true
+        
+        return button
+    }()
     
     // MARK: - Initializers
     override init(frame: CGRect) {
@@ -37,16 +51,32 @@ class PreviewView: UIView {
     
     // MARK: - Methods
     func setUp(mediaType: MediaType) {
+        // show loading
         showLoading()
+        
+        // completion
+        let completion: (Error?)->Void = { [weak self] error in
+            self?.hideLoading()
+            self?.showFloatingButtons()
+        }
+        
         switch mediaType {
         case .image(let image, let url):
-            showImageWithImage(image, orUrl: url)
+            showImageWithImage(image, orUrl: url, completion: completion)
         case .linkFromText(let text):
-            showLinkPreviewWithUrlFromText(text)
+            showLinkPreviewWithUrlFromText(text, completion: completion)
         }
     }
     
-    func showImageWithImage(_ image: UIImage?, orUrl url: String?) {
+    func showFloatingButtons() {
+        addSubview(closeButton)
+        
+        // constraint
+        closeButton.topAnchor.constraint(equalTo: topAnchor, constant: 16).isActive = true
+        closeButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16).isActive = true
+    }
+    
+    func showImageWithImage(_ image: UIImage?, orUrl url: String?, completion: ((Error?)->Void)? = nil) {
         removeSubviews()
         // Create image View
         let imageView = UIImageView()
@@ -64,16 +94,16 @@ class PreviewView: UIView {
         // Set image
         if let image = image {
             imageView.image = image
-            hideLoading()
+            completion?(nil)
         } else if let urlString = url,
             let url = URL(string: urlString){
-            imageView.sd_setImage(with: url) { [weak self] (image, _, _, _) in
-                self?.hideLoading()
+            imageView.sd_setImage(with: url) { (image, error, _, _) in
+                completion?(error)
             }
         }
     }
     
-    func showLinkPreviewWithUrlFromText(_ text: String) {
+    func showLinkPreviewWithUrlFromText(_ text: String, completion: ((Error?)->Void)? = nil) {
         removeSubviews()
         
         // Get preview
@@ -133,10 +163,14 @@ class PreviewView: UIView {
             
             titleLabel.text = response.description
             urlLabel.text = response.canonicalUrl
+            
+            strongSelf.bringSubviewToFront(strongSelf.closeButton)
+            completion?(nil)
         }
         
         let errorHandler: ((PreviewError) -> Void) = {error in
-            
+            // TODO:
+            completion?(error)
         }
         
         if let cached = slp.cache.slp_getCachedResponse(url: text) {
