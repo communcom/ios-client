@@ -22,7 +22,7 @@ extension EditorPageVC {
             .filter {($0.count > 0) && ($0.first?.fullResolutionImage != nil)}
             .map {$0.first!.fullResolutionImage!}
             .subscribe(onNext: {[weak self] image in
-                self?.previewView.setUp(mediaType: .image(image: image, url: nil), replace: true)
+                self?.previewView.setUp(mediaType: .image(image: image, url: nil))
                 pickerVC.dismiss(animated: true, completion: nil)
             })
             .disposed(by: disposeBag)

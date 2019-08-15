@@ -16,6 +16,32 @@ class PreviewView: UIView {
     enum MediaType: Equatable {
         case image(image: UIImage?, url: String?)
         case linkFromText(text: String)
+        
+        static func == (lhs: MediaType, rhs: MediaType) -> Bool {
+            switch (lhs, rhs) {
+            case (.image(_), .linkFromText(_)):
+                return false
+            case (.image(let image1, let url1), .image(let image2, let url2)):
+                return image1 == image2 || url1 == url2
+            case (.linkFromText(let text1), .linkFromText(let text2)):
+                // Extract url and compare
+                return firstUrlFromString(text1) == firstUrlFromString(text2)
+            default:
+                return false
+            }
+        }
+        
+        static func firstUrlFromString(_ text: String) -> URL? {
+            do {
+                let detector = try NSDataDetector(types: NSTextCheckingResult.CheckingType.link.rawValue)
+                let range = NSRange(location: 0, length: text.utf16.count)
+                let matches = detector.matches(in: text, options: [], range: range)
+                
+                return matches.compactMap { $0.url }.first
+            } catch {
+                return nil
+            }
+        }
     }
     
     // MARK: - Properties
@@ -73,9 +99,9 @@ class PreviewView: UIView {
     }
     
     // MARK: - Setup content
-    func setUp(mediaType: MediaType?, replace: Bool = false) {
+    func setUp(mediaType: MediaType?) {
         // ignore setup if preview is existed
-        if media.value != nil && !replace {return}
+        if media.value == mediaType {return}
         
         // setup media
         media.accept(mediaType)
