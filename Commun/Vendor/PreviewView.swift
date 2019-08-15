@@ -65,6 +65,8 @@ class PreviewView: UIView {
         return button
     }()
     
+    var cancelablePreview: Cancellable?
+    
     // MARK: - Initializers
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -83,6 +85,7 @@ class PreviewView: UIView {
     
     // MARK: - Methods
     @objc func clear() {
+        cancelablePreview?.cancel()
         media.accept(nil)
         removeSubviews()
         adjustHeight(0)
@@ -111,6 +114,9 @@ class PreviewView: UIView {
             clear()
             return
         }
+        
+        // Cancel existing operation
+        cancelablePreview?.cancel()
         
         // Remove subviews
         removeSubviews()
@@ -246,7 +252,7 @@ class PreviewView: UIView {
             successHandler(cached)
         } else {
             // Perform preview otherwise
-            slp.preview(text, onSuccess: successHandler, onError: errorHandler)
+            cancelablePreview = slp.preview(text, onSuccess: successHandler, onError: errorHandler)
         }
     }
 }
