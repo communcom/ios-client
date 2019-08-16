@@ -137,7 +137,7 @@ class FeedPageVC: UIViewController {
     @IBAction func sortByTypeButtonDidTouch(_ sender: Any) {
         var options = FeedSortMode.allCases
         
-        if viewModel.feedTypeMode.value == .byUser {
+        if viewModel.feedTypeMode.value != .community {
             options.removeAll(where: {$0 == .popular})
         }
         
