@@ -34,7 +34,7 @@ class EditorPageViewModel {
                                 "url": url,
                                 "id": Int(Date().timeIntervalSince1970)
                             ])
-                        }, onSubscribed: {
+                        }, onSubscribe: {
                             UIApplication.topViewController()?.navigationController?
                                 .showIndetermineHudWithMessage("upload image".localized().uppercaseFirst)
                         })
@@ -55,8 +55,6 @@ class EditorPageViewModel {
                 }
             }
         }
-        let result = ["embeds": embeds]
-        let embedsString = result.jsonString()
         
         // Prepare tags
         var tags = text.getTags()
@@ -68,12 +66,12 @@ class EditorPageViewModel {
         // Send request
         if let post = postForEdit {
             return uploadImage != nil ?
-                uploadImage!.flatMap {_ in NetworkService.shared.editPostWithPermlink(post.contentId.permlink, title: title, text: text, metaData: embedsString ?? "", withTags: tags)} :
-                NetworkService.shared.editPostWithPermlink(post.contentId.permlink, title: title, text: text, metaData: embedsString ?? "", withTags: tags)
+                uploadImage!.flatMap {_ in NetworkService.shared.editPostWithPermlink(post.contentId.permlink, title: title, text: text, metaData: ["embeds": self.embeds].jsonString() ?? "", withTags: tags)} :
+                NetworkService.shared.editPostWithPermlink(post.contentId.permlink, title: title, text: text, metaData: ["embeds": self.embeds].jsonString() ?? "", withTags: tags)
         } else {
             return uploadImage != nil ?
-                uploadImage!.flatMap {_ in NetworkService.shared.sendPost(withTitle: title, withText: text, metaData: embedsString ?? "", withTags: tags)}:
-                NetworkService.shared.sendPost(withTitle: title, withText: text, metaData: embedsString ?? "", withTags: tags)
+                uploadImage!.flatMap {_ in NetworkService.shared.sendPost(withTitle: title, withText: text, metaData: ["embeds": self.embeds].jsonString() ?? "", withTags: tags)}:
+                NetworkService.shared.sendPost(withTitle: title, withText: text, metaData: ["embeds": self.embeds].jsonString() ?? "", withTags: tags)
         }
     }
     
