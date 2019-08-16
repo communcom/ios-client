@@ -79,18 +79,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Use Firebase library to configure APIs
         FirebaseApp.configure()
         
-        // Register for remote notifications
-        if #available(iOS 10.0, *) {
-            // For iOS 10 display notification (sent via APNS)
-            self.requestAuthorization()
-        } else {
-            let settings: UIUserNotificationSettings = UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
-            application.registerUserNotificationSettings(settings)
-        }
+        // Configure notification
+        configureNotifications(application: application)
         
-        application.registerForRemoteNotifications()
-
-        Messaging.messaging().delegate = self
         
         Fabric.with([Crashlytics.self])
         
@@ -226,7 +217,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
 
     // MARK: - Custom Functions
-    private func requestAuthorization() {
+    private func configureNotifications(application: UIApplication) {
+        // Set delegate for Messaging
+        Messaging.messaging().delegate = self
+        
+        // Configure notificationCenter
         self.notificationCenter.delegate = self
         
         self.notificationCenter.requestAuthorization(options:               [.alert, .sound, .badge],
@@ -235,6 +230,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                                         guard granted else { return }
                                                         self.getNotificationSettings()
         })
+        
+        // Register for remote notification
+        application.registerForRemoteNotifications()
     }
     
     private func getNotificationSettings() {
