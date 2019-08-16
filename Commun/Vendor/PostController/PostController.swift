@@ -235,6 +235,13 @@ extension PostController {
         
         topController.present(nav, animated: true, completion: nil)
     }
+    
+    // MARK: - Commented
+    func postDidComment() {
+        guard post != nil else {return}
+        self.post!.stats.commentsCount += 1
+        notifyPostChange(newPost: self.post!)
+    }
 
     // MARK: - Animation
     func animateUpVote() {

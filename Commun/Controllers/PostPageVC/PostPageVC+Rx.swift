@@ -113,6 +113,10 @@ extension PostPageVC {
                 if (self?.replyingComment != nil) {
                     self?.replyingComment = nil
                 }
+                
+                // update post
+                self?.headerView.postDidComment()
+                
                 #warning("Reload table for testing only")
                 self?.viewModel.reload()
             })
