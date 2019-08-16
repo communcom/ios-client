@@ -16,13 +16,12 @@ import Segmentio
 class FeedPageVC: UIViewController {
 
     var viewModel: FeedPageViewModel!
-    
+    lazy var searchBar = UISearchBar(frame: CGRect(x: 0, y: 0, width: 200, height: 20))
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var userAvatarImage: UIImageView!
     @IBOutlet weak var segmentioView: Segmentio!
     @IBOutlet weak var sortByTypeButton: UIButton!
     @IBOutlet weak var sortByTimeButton: UIButton!
-    @IBOutlet weak var searchBarHeightConstraint: NSLayoutConstraint!
     
     var dataSource: MyRxTableViewSectionedAnimatedDataSource<PostSection>!
     
@@ -32,8 +31,19 @@ class FeedPageVC: UIViewController {
         super.viewDidLoad()
 
         // Config viewModel
+        setUpViewModel()
+        
+        // setup views
+        setUpViews()
+        
+        // bind ui
+        bindUI()
+    }
+    
+    func setUpViewModel() {
         viewModel = FeedPageViewModel()
         
+        // handlers
         viewModel.loadingHandler = { [weak self] in
             if self?.viewModel.fetcher.reachedTheEnd == true {return}
             self?.tableView.addPostLoadingFooterView()
@@ -48,12 +58,13 @@ class FeedPageVC: UIViewController {
             strongSelf.tableView.addListErrorFooterView(with: #selector(strongSelf.didTapTryAgain(gesture:)), on: strongSelf)
             strongSelf.tableView.reloadData()
         }
-        
+    }
+    
+    func setUpViews() {
         navigationController?.navigationBar.barTintColor = .white
-        
+
         // searchBar
-        let searchBar = UISearchBar(frame: self.view.bounds)
-        searchBar.placeholder = "Search"
+        searchBar.placeholder = "search".localized().uppercaseFirst
         self.navigationItem.titleView = searchBar
         
         let searchField: UITextField = searchBar.value(forKey: "searchField") as! UITextField
@@ -107,19 +118,6 @@ class FeedPageVC: UIViewController {
         
         // dismiss keyboard when dragging
         tableView.keyboardDismissMode = .onDrag
-        
-        // bind ui
-        bindUI()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(true, animated: animated)
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        navigationController?.setNavigationBarHidden(false, animated: animated)
     }
 
     @IBAction func postButtonDidTouch(_ sender: Any) {

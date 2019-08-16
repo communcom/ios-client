@@ -16,12 +16,9 @@ extension FeedPageVC {
     func bindUI() {
         // scrollview
         self.tableView.rx.willDragDown
-            .map {$0 ? 0: 50}
-            .subscribe(onNext: {height in
-                UIView.animate(withDuration: 0.25, animations: {
-                    self.searchBarHeightConstraint.constant = CGFloat(height)
-                    self.view.layoutIfNeeded()
-                })
+            .map {$0 ? true: false}
+            .subscribe(onNext: {hide in
+                self.navigationController?.setNavigationBarHidden(hide, animated: true)
             })
             .disposed(by: disposeBag)
         
