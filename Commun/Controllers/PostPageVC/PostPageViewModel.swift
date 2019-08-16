@@ -80,24 +80,26 @@ class PostPageViewModel: CommentsListController, ListViewModelType {
             .subscribe(onSuccess: {[weak self] (list) in
                 guard let strongSelf = self else {return}
                 
-                guard list.count > 0 else {
+                if list.count > 0 {
+                    // get unique items
+                    var newList = list.filter {!strongSelf.items.value.contains($0)}
+                    guard newList.count > 0 else {return}
+                    
+                    // add last
+                    newList = strongSelf.items.value + newList
+                    
+                    // sort
+                    newList = strongSelf.sortComments(newList)
+                    
+                    // resign
+                    strongSelf.items.accept(newList)
+                    strongSelf.fetchNextCompleted?()
+                }
+                
+                if strongSelf.fetcher.reachedTheEnd {
                     strongSelf.listEndedHandler?()
                     return
                 }
-                
-                // get unique items
-                var newList = list.filter {!strongSelf.items.value.contains($0)}
-                guard newList.count > 0 else {return}
-                
-                // add last
-                newList = strongSelf.items.value + newList
-                
-                // sort
-                newList = strongSelf.sortComments(newList)
-                
-                // resign
-                strongSelf.items.accept(newList)
-                strongSelf.fetchNextCompleted?()
             })
             .disposed(by: disposeBag)
     }

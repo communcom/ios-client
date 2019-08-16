@@ -70,7 +70,12 @@ class PostPageVC: UIViewController, CommentCellDelegate {
         }
         
         viewModel.listEndedHandler = { [weak self] in
-            self?.addEmptyCell()
+            if self?.dataSource.isEmpty == true {
+                self?.addEmptyCell()
+            } else {
+                self?.tableView.tableFooterView = UIView()
+            }
+            
         }
         
         viewModel.fetchNextErrorHandler = {[weak self] error in
