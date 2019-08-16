@@ -96,7 +96,7 @@ class EmbededView: UIView, UIWebViewDelegate {
                 image = UIImage(named: "image-not-found")
                 imageView.image = image
             }
-            strongSelf.adjustHeight(withHeight: strongSelf.size.width * image!.size.height / image!.size.height)
+            strongSelf.adjustHeight(withHeight: strongSelf.size.width * image!.size.height / image!.size.width)
         }
     }
     
