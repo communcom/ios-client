@@ -27,12 +27,13 @@ class TabBarVC: UITabBarController {
 
         // Comunities Tab
         let comunities = controllerContainer.resolve(CommunitiesVC.self)!
-        comunities.tabBarItem = centerTabBarItem(withImageName: "comunities", tag: 1)
+        let communitiesNC = SwipeNavigationController(rootViewController: comunities)
+        communitiesNC.tabBarItem = centerTabBarItem(withImageName: "comunities", tag: 1)
         comunities.accessibilityLabel = "TabBarComunitiesTabBarItem"
 
         // Profile Tab
         let profile = controllerContainer.resolve(ProfilePageVC.self)!
-        let profileNC = UINavigationController(rootViewController: profile)
+        let profileNC = SwipeNavigationController(rootViewController: profile)
         profileNC.tabBarItem = centerTabBarItem(withImageName: "profile", tag: 2)
         profileNC.accessibilityLabel = "TabBarProfileTabBarItem"
         profileNC.navigationBar.tintColor = UIColor.appMainColor
@@ -44,13 +45,13 @@ class TabBarVC: UITabBarController {
         
         // Notifications Tab
         let notifications = controllerContainer.resolve(NotificationsPageVC.self)!
-        let notificationsNC = UINavigationController(rootViewController: notifications)
+        let notificationsNC = SwipeNavigationController(rootViewController: notifications)
         notificationsNC.tabBarItem = centerTabBarItem(withImageName: "notifications", tag: 4)
         notificationsNC.navigationBar.prefersLargeTitles = true
         notifications.accessibilityLabel = "TabBarNotificationsTabBarItem"
         
         // Set up controllers
-        self.viewControllers = [feedNC, comunities,/* wallet,*/ notificationsNC, profileNC]
+        self.viewControllers = [feedNC, communitiesNC,/* wallet,*/ notificationsNC, profileNC]
         
         // Config styles
         self.tabBar.unselectedItemTintColor = #colorLiteral(red: 0.8971592784, green: 0.9046500325, blue: 0.9282500148, alpha: 1)
