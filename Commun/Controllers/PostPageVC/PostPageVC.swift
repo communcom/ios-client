@@ -66,7 +66,12 @@ class PostPageVC: UIViewController, CommentCellDelegate {
         
         viewModel.loadingHandler = { [weak self] in
             if self?.viewModel.fetcher.reachedTheEnd == true {return}
-            self?.tableView.addNotificationsLoadingFooterView()
+            self?.tableView.addLoadingFooterView(
+                rowType:        PlaceholderNotificationCell.self,
+                tag:            notificationsLoadingFooterViewTag,
+                rowHeight:      88,
+                numberOfRows:   1
+            )
         }
         
         viewModel.listEndedHandler = { [weak self] in
