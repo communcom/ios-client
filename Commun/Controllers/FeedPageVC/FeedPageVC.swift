@@ -105,7 +105,7 @@ class FeedPageVC: UIViewController {
                             options:    SegmentioOptions.default)
         
         segmentioView.valueDidChange = {_, index in
-            self.viewModel.feedTypeMode.accept(index == 0 ? .byUser : .community)
+            self.viewModel.feedTypeMode.accept(index == 0 ? .subscriptions : .community)
             
             // if feed is my feed, then sort by time
             if index == 0 {
