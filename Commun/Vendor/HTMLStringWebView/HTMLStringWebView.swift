@@ -21,13 +21,23 @@ class HTMLStringWebView: UIWebView {
     }
     
     func renderContent(html: String) -> String {
+        var result = html
+        
+        // Detect users
+        #warning("Remove golos.io in production")
+        // "(https:\\/\\/(?:golos\\.io|commun\\.com)\\/)?@\(String.nameRegex)"
+        for mention in result.getMentions() {
+            if let regex = try? NSRegularExpression(pattern: "(?![\">])(https:\\/\\/(?:golos\\.io|commun\\.com)\\/)?@\(NSRegularExpression.escapedPattern(for: mention))(?![\"<])") {
+                result = regex.stringByReplacingMatches(in: result, options: [], range: NSMakeRange(0, result.count), withTemplate: "<a href=\"https://commun.com/@\(mention)\">@\(mention)</a>")
+            }
+        }
+        
+        // Detect links
         let types = NSTextCheckingResult.CheckingType.link
         guard let detector = try? NSDataDetector(types: types.rawValue) else {
-            return html
+            return result
         }
-        let matches = detector.matches(in: html, options: .reportCompletion, range: NSMakeRange(0, html.count))
-        
-        var result = html
+        let matches = detector.matches(in: result, options: .reportCompletion, range: NSMakeRange(0, result.count))
         
         for match in matches {
             guard let urlString = match.url?.absoluteString,

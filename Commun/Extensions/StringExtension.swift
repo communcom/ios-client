@@ -26,8 +26,20 @@ extension String {
         }
     }
     
+    static var nameRegex: String {
+        return "[a-z0-9-_]+"
+    }
+    
+    static var mentionRegex: String {
+        return "@\(nameRegex)"
+    }
+    
+    static var tagRegex: String {
+        return "#\(nameRegex)"
+    }
+    
     fileprivate func getStringsStartWith(_ symbol: String) -> [String] {
-        if let regex = try? NSRegularExpression(pattern: "\(symbol)[a-z0-9-_]+", options: .caseInsensitive)
+        if let regex = try? NSRegularExpression(pattern: "\(symbol)\(String.nameRegex)", options: .caseInsensitive)
         {
             let string = self as NSString
             
@@ -49,13 +61,13 @@ extension String {
     
     func highlightMentionAttributedString() -> NSAttributedString {
         let attributed = NSMutableAttributedString(string: self)
-        if let regex = try? NSRegularExpression(pattern: "#[a-z0-9]+", options: .caseInsensitive){
+        if let regex = try? NSRegularExpression(pattern: .tagRegex, options: .caseInsensitive){
             for match in regex.matches(in: self, range: NSRange(location: 0, length: self.utf16.count)) as [NSTextCheckingResult] {
                 attributed.addAttribute(.foregroundColor, value: UIColor.appMainColor, range: match.range)
                 attributed.addAttribute(.font, value: UIFont.systemFont(ofSize: 15, weight: .semibold), range: match.range)
             }
         }
-        if let regex = try? NSRegularExpression(pattern: "@[a-z0-9]+", options: .caseInsensitive){
+        if let regex = try? NSRegularExpression(pattern: .mentionRegex, options: .caseInsensitive){
             for match in regex.matches(in: self, range: NSRange(location: 0, length: self.utf16.count)) as [NSTextCheckingResult] {
                 attributed.addAttribute(.foregroundColor, value: UIColor.appMainColor, range: match.range)
                 attributed.addAttribute(.font, value: UIFont.systemFont(ofSize: 15, weight: .semibold), range: match.range)
@@ -104,5 +116,18 @@ extension String {
         }
         
         return result
+    }
+    
+    func matches(for regex: String) -> [String] {
+        
+        do {
+            let regex = try NSRegularExpression(pattern: regex)
+            let nsString = self as NSString
+            let results = regex.matches(in: self, range: NSRange(location: 0, length: nsString.length))
+            return results.map { nsString.substring(with: $0.range)}
+        } catch let error {
+            print("invalid regex: \(error.localizedDescription)")
+            return []
+        }
     }
 }
