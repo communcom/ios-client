@@ -120,11 +120,23 @@ class PostHeaderView: UIView, UIWebViewDelegate, PostController {
         return result
     }
     
+    func webViewDidStartLoad(_ webView: UIWebView) {
+        webView.showLoading()
+    }
+    
     func webViewDidFinishLoad(_ webView: UIWebView) {
+        webView.hideLoading()
         let height  = webView.contentHeight
         contentWebViewHeightConstraint.constant = height + 16
     }
     
+    func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebView.NavigationType) -> Bool {
+        if let webView = webView as? HTMLStringWebView {
+            return webView.webView(webView, shouldStartLoadWith: request, navigationType: navigationType)
+        }
+        if navigationType == .linkClicked {return false}
+        return true
+    }
     
     @IBAction func upVoteButtonDidTouch(_ sender: Any) {
         upVote()
