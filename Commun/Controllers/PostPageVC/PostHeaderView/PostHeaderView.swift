@@ -105,7 +105,7 @@ class PostHeaderView: UIView, UIWebViewDelegate, PostController {
         
         for match in matches {
             guard let urlString = match.url?.absoluteString,
-                let regex = try? NSRegularExpression(pattern: "(?!\")\(urlString)(?!\")", options: .caseInsensitive)
+                let regex = try? NSRegularExpression(pattern: "(?!\")\(NSRegularExpression.escapedPattern(for: urlString.removingPercentEncoding!))(?!\")", options: .caseInsensitive)
                 else {continue}
             // for images
             if urlString.ends(with: ".png", caseSensitive: false) ||
