@@ -17,7 +17,48 @@ class HTMLStringWebView: UIWebView {
         
         let htmlStart = "<HTML><HEAD><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, shrink-to-fit=no\"><link rel=\"stylesheet\" type=\"text/css\" href=\"HTMLStringWebView.css\"></HEAD><BODY>"
         let htmlEnd = "</BODY></HTML>"
-        super.loadHTMLString(htmlStart + string + htmlEnd, baseURL: Bundle.main.bundleURL)
+        super.loadHTMLString(htmlStart + renderContent(html: string) + htmlEnd, baseURL: Bundle.main.bundleURL)
+    }
+    
+    func renderContent(html: String) -> String {
+        let types = NSTextCheckingResult.CheckingType.link
+        guard let detector = try? NSDataDetector(types: types.rawValue) else {
+            return html
+        }
+        let matches = detector.matches(in: html, options: .reportCompletion, range: NSMakeRange(0, html.count))
+        
+        var result = html
+        
+        for match in matches {
+            guard let urlString = match.url?.absoluteString,
+                let regex = try? NSRegularExpression(pattern: "(?!\")\(NSRegularExpression.escapedPattern(for: urlString))(?!\")", options: .caseInsensitive)
+                else {continue}
+            // for images
+            if urlString.ends(with: ".png", caseSensitive: false) ||
+                urlString.ends(with: ".jpg", caseSensitive: false) ||
+                urlString.ends(with: ".jpeg", caseSensitive: false) ||
+                urlString.ends(with: ".gif", caseSensitive: false) {
+                
+                let resultTemplate = "<img src=\"\(urlString)\" />"
+                
+                if let regex1 = try? NSRegularExpression(pattern: "\\!?\\[.*\\]\\(\(NSRegularExpression.escapedPattern(for: urlString))\\)", options: .caseInsensitive) {
+                    // TODO: Get description between "[" and "]"
+                    result = regex1.stringByReplacingMatches(in: result, options: [], range: NSMakeRange(0, result.count), withTemplate: resultTemplate)
+                }
+                
+                result = regex.stringByReplacingMatches(in: result, options: [], range: NSMakeRange(0, result.count), withTemplate: resultTemplate)
+            } else {
+                
+                let resultTemplate = "<a href=\"\(urlString)\">\(urlString.removingPercentEncoding ?? urlString)</a>"
+                
+                if let regex1 = try? NSRegularExpression(pattern: "\\!?\\[.*\\]\\(\(NSRegularExpression.escapedPattern(for: urlString))\\)", options: .caseInsensitive) {
+                    // TODO: Get description between "[" and "]"
+                    result = regex1.stringByReplacingMatches(in: result, options: [], range: NSMakeRange(0, result.count), withTemplate: resultTemplate)
+                }
+                result = regex.stringByReplacingMatches(in: result, options: [], range: NSMakeRange(0, result.count), withTemplate: resultTemplate)
+            }
+        }
+        return result
     }
     
     func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebView.NavigationType) -> Bool {
