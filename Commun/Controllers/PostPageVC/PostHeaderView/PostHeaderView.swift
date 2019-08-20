@@ -105,16 +105,21 @@ class PostHeaderView: UIView, UIWebViewDelegate, PostController {
         
         for match in matches {
             guard let urlString = match.url?.absoluteString,
-                let regex = try? NSRegularExpression(pattern: "(?!\")\(NSRegularExpression.escapedPattern(for: urlString.removingPercentEncoding!))(?!\")", options: .caseInsensitive)
+                let regex = try? NSRegularExpression(pattern: "(?!\")\(NSRegularExpression.escapedPattern(for: urlString))(?!\")", options: .caseInsensitive)
                 else {continue}
             // for images
             if urlString.ends(with: ".png", caseSensitive: false) ||
                 urlString.ends(with: ".jpg", caseSensitive: false) ||
                 urlString.ends(with: ".jpeg", caseSensitive: false) ||
                 urlString.ends(with: ".gif", caseSensitive: false) {
+                if let regex1 = try? NSRegularExpression(pattern: "\\!?\\[.*\\]\\(\(NSRegularExpression.escapedPattern(for: urlString))\\)", options: .caseInsensitive) {
+                    // TODO: Get description between "[" and "]"
+                    result = regex1.stringByReplacingMatches(in: result, options: [], range: NSMakeRange(0, result.count), withTemplate: "<img src=\"\(urlString)\" />")
+                }
+                
                 result = regex.stringByReplacingMatches(in: result, options: [], range: NSMakeRange(0, result.count), withTemplate: "<img src=\"\(urlString)\" />")
             } else {
-                result = regex.stringByReplacingMatches(in: result, options: [], range: NSMakeRange(0, result.count), withTemplate: "<a href=\"\(urlString)\">\(urlString)</a>")
+                result = regex.stringByReplacingMatches(in: result, options: [], range: NSMakeRange(0, result.count), withTemplate: "<a href=\"\(urlString)\">\(urlString.removingPercentEncoding ?? urlString)</a>")
             }
         }
         return result
