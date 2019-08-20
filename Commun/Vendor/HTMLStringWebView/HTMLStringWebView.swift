@@ -27,7 +27,7 @@ class HTMLStringWebView: UIWebView {
         #warning("Remove golos.io in production")
         // "(https:\\/\\/(?:golos\\.io|commun\\.com)\\/)?@\(String.nameRegex)"
         for mention in result.getMentions() {
-            if let regex = try? NSRegularExpression(pattern: "(?![\">])(https:\\/\\/(?:golos\\.io|commun\\.com)\\/)?@\(NSRegularExpression.escapedPattern(for: mention))(?![\"<])") {
+            if let regex = try? NSRegularExpression(pattern: "\\s(?![\">])(https:\\/\\/(?:golos\\.io|commun\\.com)\\/)?@\(NSRegularExpression.escapedPattern(for: mention))(?![\"<])") {
                 result = regex.stringByReplacingMatches(in: result, options: [], range: NSMakeRange(0, result.count), withTemplate: "<a href=\"https://commun.com/@\(mention)\">@\(mention)</a>")
             }
         }
@@ -41,7 +41,7 @@ class HTMLStringWebView: UIWebView {
         
         for match in matches {
             guard let urlString = match.url?.absoluteString,
-                let regex = try? NSRegularExpression(pattern: "(?!\")\(NSRegularExpression.escapedPattern(for: urlString))(?!\")", options: .caseInsensitive)
+                let regex = try? NSRegularExpression(pattern: "(?![\">])\(NSRegularExpression.escapedPattern(for: urlString))(?![\"<])", options: .caseInsensitive)
                 else {continue}
             // for images
             if urlString.ends(with: ".png", caseSensitive: false) ||
@@ -74,6 +74,17 @@ class HTMLStringWebView: UIWebView {
     func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebView.NavigationType) -> Bool {
         switch navigationType {
         case .linkClicked:
+            // if userName tapped
+            guard let url = request.url else {return false}
+            let urlString = url.absoluteString
+            
+            if urlString.matches(pattern: "^\(NSRegularExpression.escapedPattern(for: "https://commun.com/"))\(String.mentionRegex)$"),
+                let userName = urlString.components(separatedBy: "@").last {
+                parentViewController?.showProfileWithUserId(userName)
+                return false
+            }
+            
+            
             let vc = UIViewController()
             parentViewController?.show(vc, sender: nil)
             vc.navigationController?.setNavigationBarHidden(false, animated: true)
