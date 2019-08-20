@@ -16,7 +16,7 @@ class SettingsViewModel {
     private let bag = DisposeBag()
     
     let currentLanguage = BehaviorRelay<Language>(value: Language.currentLanguage)
-    let nsfwContent     = BehaviorRelay<String>(value: "Alway alert")
+    let nsfwContent     = BehaviorRelay<String>(value: "Always alert")
     let biometryEnabled = BehaviorRelay<Bool>(value: UserDefaults.standard.bool(forKey: Config.currentUserBiometryAuthEnabled))
     let notificationOn  = BehaviorRelay<Bool>(value: UserDefaults.standard.bool(forKey: Config.currentUserPushNotificationOn))
     let optionsPushShow = BehaviorRelay<ResponseAPIGetOptionsNotifyShow?>(value: nil)
