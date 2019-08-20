@@ -28,6 +28,7 @@ extension PostPageVC {
         // scrollView
         self.tableView.rx.willDragDown
             .map {$0 ? 0: 56}
+            .distinctUntilChanged()
             .subscribe(onNext: {height in
                 UIView.animate(withDuration: 0.25, animations: {
                     self.navigationBarHeightConstraint.constant = CGFloat(height)

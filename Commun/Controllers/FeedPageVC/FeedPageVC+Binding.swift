@@ -17,6 +17,7 @@ extension FeedPageVC {
         // scrollview
         self.tableView.rx.willDragDown
             .map {$0 ? true: false}
+            .distinctUntilChanged()
             .subscribe(onNext: {hide in
                 self.navigationController?.setNavigationBarHidden(hide, animated: true)
             })
