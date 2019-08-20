@@ -112,14 +112,24 @@ class PostHeaderView: UIView, UIWebViewDelegate, PostController {
                 urlString.ends(with: ".jpg", caseSensitive: false) ||
                 urlString.ends(with: ".jpeg", caseSensitive: false) ||
                 urlString.ends(with: ".gif", caseSensitive: false) {
+                
+                let resultTemplate = "<img src=\"\(urlString)\" />"
+                
                 if let regex1 = try? NSRegularExpression(pattern: "\\!?\\[.*\\]\\(\(NSRegularExpression.escapedPattern(for: urlString))\\)", options: .caseInsensitive) {
                     // TODO: Get description between "[" and "]"
-                    result = regex1.stringByReplacingMatches(in: result, options: [], range: NSMakeRange(0, result.count), withTemplate: "<img src=\"\(urlString)\" />")
+                    result = regex1.stringByReplacingMatches(in: result, options: [], range: NSMakeRange(0, result.count), withTemplate: resultTemplate)
                 }
                 
-                result = regex.stringByReplacingMatches(in: result, options: [], range: NSMakeRange(0, result.count), withTemplate: "<img src=\"\(urlString)\" />")
+                result = regex.stringByReplacingMatches(in: result, options: [], range: NSMakeRange(0, result.count), withTemplate: resultTemplate)
             } else {
-                result = regex.stringByReplacingMatches(in: result, options: [], range: NSMakeRange(0, result.count), withTemplate: "<a href=\"\(urlString)\">\(urlString.removingPercentEncoding ?? urlString)</a>")
+                
+                let resultTemplate = "<a href=\"\(urlString)\">\(urlString.removingPercentEncoding ?? urlString)</a>"
+                
+                if let regex1 = try? NSRegularExpression(pattern: "\\!?\\[.*\\]\\(\(NSRegularExpression.escapedPattern(for: urlString))\\)", options: .caseInsensitive) {
+                    // TODO: Get description between "[" and "]"
+                    result = regex1.stringByReplacingMatches(in: result, options: [], range: NSMakeRange(0, result.count), withTemplate: resultTemplate)
+                }
+                result = regex.stringByReplacingMatches(in: result, options: [], range: NSMakeRange(0, result.count), withTemplate: resultTemplate)
             }
         }
         return result
