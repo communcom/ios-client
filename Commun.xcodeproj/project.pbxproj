@@ -123,6 +123,7 @@
 		3BF37BD422A1414200A72FFE /* PlaceholderPostCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3BF37BD222A1414200A72FFE /* PlaceholderPostCell.xib */; };
 		3BF37BD622A162E000A72FFE /* ResponseAPIOnlineNotificationData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BF37BD522A162E000A72FFE /* ResponseAPIOnlineNotificationData.swift */; };
 		3BF37BD822A1666200A72FFE /* ResponseAPIOnlineNotifyHistoryResult.json in Resources */ = {isa = PBXBuildFile; fileRef = 3BF37BD722A1666200A72FFE /* ResponseAPIOnlineNotifyHistoryResult.json */; };
+		3BF53CE4230B93E10082464F /* HTMLStringWebView.css in Resources */ = {isa = PBXBuildFile; fileRef = 3BF53CE3230B93E10082464F /* HTMLStringWebView.css */; };
 		571B14F4223A935C00630C8F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571B14F3223A935C00630C8F /* AppDelegate.swift */; };
 		571B14F9223A935C00630C8F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 571B14F7223A935C00630C8F /* Main.storyboard */; };
 		571B14FC223A935C00630C8F /* Commun.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 571B14FA223A935C00630C8F /* Commun.xcdatamodeld */; };
@@ -346,6 +347,7 @@
 		3BF37BD222A1414200A72FFE /* PlaceholderPostCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlaceholderPostCell.xib; sourceTree = "<group>"; };
 		3BF37BD522A162E000A72FFE /* ResponseAPIOnlineNotificationData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseAPIOnlineNotificationData.swift; sourceTree = "<group>"; };
 		3BF37BD722A1666200A72FFE /* ResponseAPIOnlineNotifyHistoryResult.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ResponseAPIOnlineNotifyHistoryResult.json; sourceTree = "<group>"; };
+		3BF53CE3230B93E10082464F /* HTMLStringWebView.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; path = HTMLStringWebView.css; sourceTree = "<group>"; };
 		4F0772CC6D820AD11B1FF48A /* Pods_Commun.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Commun.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		571B14F0223A935C00630C8F /* Commun.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Commun.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		571B14F3223A935C00630C8F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -703,6 +705,15 @@
 			path = CommunTests;
 			sourceTree = "<group>";
 		};
+		3BF53CE2230B93990082464F /* HTMLStringWebView */ = {
+			isa = PBXGroup;
+			children = (
+				3B5D361B22E8303C0012A991 /* HTMLStringWebView.swift */,
+				3BF53CE3230B93E10082464F /* HTMLStringWebView.css */,
+			);
+			path = HTMLStringWebView;
+			sourceTree = "<group>";
+		};
 		571B14E7223A935C00630C8F = {
 			isa = PBXGroup;
 			children = (
@@ -959,7 +970,7 @@
 				3B5CB30F22A5880D00757533 /* MyRxTableViewSectionedAnimatedDataSource.swift */,
 				3BAE92A822DE553D00E97AE8 /* ScalableLayoutConstraint.swift */,
 				3B0E9C63226F4A0C002AB1C2 /* VerticalDraggableImageView.swift */,
-				3B5D361B22E8303C0012A991 /* HTMLStringWebView.swift */,
+				3BF53CE2230B93990082464F /* HTMLStringWebView */,
 				3B11911E2302B9B9008D0417 /* SwipeNavigationController.swift */,
 				3B11913823040A40008D0417 /* PreviewView.swift */,
 			);
@@ -1263,6 +1274,7 @@
 				B1D1CF9922F8A28A0071F1B6 /* InfoPlist.strings in Resources */,
 				3B2F226F226892C5006B589E /* NotificationsPageVC.storyboard in Resources */,
 				572F81AB223C164C0007F2F9 /* SF-Pro-Text-Regular.otf in Resources */,
+				3BF53CE4230B93E10082464F /* HTMLStringWebView.css in Resources */,
 				57B6FC25224A9E5600BCFDDA /* WelcomeVC.storyboard in Resources */,
 				B1EA02D32289734800835244 /* Localizable.strings in Resources */,
 				B1EA02D92289882A00835244 /* SF-Pro-Display-Bold.otf in Resources */,

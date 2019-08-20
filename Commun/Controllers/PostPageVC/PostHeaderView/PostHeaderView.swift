@@ -85,12 +85,39 @@ class PostHeaderView: UIView, UIWebViewDelegate, PostController {
         postTitleLabel.text = post.content.title
         
         // Show content
-        let html = "<span style=\"word-break: hyphenate; -webkit-hyphens: auto; font-family: -apple-system; text-align: justify; font-size: 17\">\(post.content.body.full ?? "")</span>"
+        let content = renderContent(html: post.content.body.full ?? "")
+        let html = "<span style=\"word-break: hyphenate; -webkit-hyphens: auto; font-family: -apple-system; text-align: justify; font-size: 17\">\(content)</span>"
         
         contentWebView.loadHTMLString(html, baseURL: nil)
         contentWebView.delegate = self
         contentWebView.scrollView.isScrollEnabled = false
         contentWebView.scrollView.bouncesZoom = false
+    }
+    
+    func renderContent(html: String) -> String {
+        let types = NSTextCheckingResult.CheckingType.link
+        guard let detector = try? NSDataDetector(types: types.rawValue) else {
+            return html
+        }
+        let matches = detector.matches(in: html, options: .reportCompletion, range: NSMakeRange(0, html.count))
+        
+        var result = html
+        
+        for match in matches {
+            guard let urlString = match.url?.absoluteString,
+                let regex = try? NSRegularExpression(pattern: "(?!\")\(urlString)(?!\")", options: .caseInsensitive)
+                else {continue}
+            // for images
+            if urlString.ends(with: ".png", caseSensitive: false) ||
+                urlString.ends(with: ".jpg", caseSensitive: false) ||
+                urlString.ends(with: ".jpeg", caseSensitive: false) ||
+                urlString.ends(with: ".gif", caseSensitive: false) {
+                result = regex.stringByReplacingMatches(in: result, options: [], range: NSMakeRange(0, result.count), withTemplate: "<img src=\"\(urlString)\" />")
+            } else {
+                result = regex.stringByReplacingMatches(in: result, options: [], range: NSMakeRange(0, result.count), withTemplate: "<a href=\"\(urlString)\">\(urlString)</a>")
+            }
+        }
+        return result
     }
     
     func webViewDidFinishLoad(_ webView: UIWebView) {

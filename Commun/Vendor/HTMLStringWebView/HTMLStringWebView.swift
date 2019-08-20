@@ -13,8 +13,9 @@ class HTMLStringWebView: UIWebView {
     override func loadHTMLString(_ string: String, baseURL: URL?) {
         guard htmlString != string else {return}
         htmlString = string
-        let htmlStart = "<HTML><HEAD><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, shrink-to-fit=no\"></HEAD><BODY>"
+        
+        let htmlStart = "<HTML><HEAD><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, shrink-to-fit=no\"><link rel=\"stylesheet\" type=\"text/css\" href=\"HTMLStringWebView.css\"></HEAD><BODY>"
         let htmlEnd = "</BODY></HTML>"
-        super.loadHTMLString(htmlStart + string + htmlEnd, baseURL: baseURL)
+        super.loadHTMLString(htmlStart + string + htmlEnd, baseURL: Bundle.main.bundleURL)
     }
 }
