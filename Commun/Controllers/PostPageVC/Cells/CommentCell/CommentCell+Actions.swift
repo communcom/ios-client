@@ -8,6 +8,7 @@
 
 import Foundation
 import TTTAttributedLabel
+import SafariServices
 
 extension CommentCell: TTTAttributedLabelDelegate {
     @objc func authorDidTouch(gesture: UITapGestureRecognizer) {
@@ -37,11 +38,8 @@ extension CommentCell: TTTAttributedLabelDelegate {
             return
         }
         
-        let vc = WebViewController()
-        parentViewController?.show(vc, sender: nil)
-        let request = URLRequest(url: url)
-        vc.loadRequest(request)
-        
+        let safariVC = SFSafariViewController(url: url)
+        parentViewController?.present(safariVC, animated: true, completion: nil)
     }
     
     

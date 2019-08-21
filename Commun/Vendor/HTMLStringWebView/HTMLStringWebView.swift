@@ -8,6 +8,7 @@
 
 import Foundation
 import WebKit
+import SafariServices
 
 class HTMLStringWebView: UIWebView {
     var htmlString: String?
@@ -85,9 +86,8 @@ class HTMLStringWebView: UIWebView {
             }
             
             
-            let vc = WebViewController()
-            parentViewController?.show(vc, sender: nil)
-            vc.loadRequest(request)
+            let safariVC = SFSafariViewController(url: url)
+            parentViewController?.present(safariVC, animated: true, completion: nil)
             
             return false
         default:

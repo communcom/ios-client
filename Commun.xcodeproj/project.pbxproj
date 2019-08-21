@@ -25,7 +25,6 @@
 		3B11911F2302B9B9008D0417 /* SwipeNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B11911E2302B9B9008D0417 /* SwipeNavigationController.swift */; };
 		3B11913923040A40008D0417 /* PreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B11913823040A40008D0417 /* PreviewView.swift */; };
 		3B17E7A8230CE10600D681AA /* CommentCell+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B17E7A7230CE10600D681AA /* CommentCell+Actions.swift */; };
-		3B17E7AC230CE50C00D681AA /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B17E7AB230CE50C00D681AA /* WebViewController.swift */; };
 		3B197C532269BE0E008CF10D /* SegmentioExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B197C522269BE0E008CF10D /* SegmentioExtension.swift */; };
 		3B197C552269BF74008CF10D /* ProfilePageSegmentioItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B197C542269BF74008CF10D /* ProfilePageSegmentioItem.swift */; };
 		3B197C572269CEEF008CF10D /* CommentsFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B197C562269CEEF008CF10D /* CommentsFetcher.swift */; };
@@ -249,7 +248,6 @@
 		3B11911E2302B9B9008D0417 /* SwipeNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeNavigationController.swift; sourceTree = "<group>"; };
 		3B11913823040A40008D0417 /* PreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewView.swift; sourceTree = "<group>"; };
 		3B17E7A7230CE10600D681AA /* CommentCell+Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CommentCell+Actions.swift"; sourceTree = "<group>"; };
-		3B17E7AB230CE50C00D681AA /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		3B197C522269BE0E008CF10D /* SegmentioExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentioExtension.swift; sourceTree = "<group>"; };
 		3B197C542269BF74008CF10D /* ProfilePageSegmentioItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePageSegmentioItem.swift; sourceTree = "<group>"; };
 		3B197C562269CEEF008CF10D /* CommentsFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentsFetcher.swift; sourceTree = "<group>"; };
@@ -978,7 +976,6 @@
 				3BF53CE2230B93990082464F /* HTMLStringWebView */,
 				3B11911E2302B9B9008D0417 /* SwipeNavigationController.swift */,
 				3B11913823040A40008D0417 /* PreviewView.swift */,
-				3B17E7AB230CE50C00D681AA /* WebViewController.swift */,
 			);
 			path = Vendor;
 			sourceTree = "<group>";
@@ -1449,7 +1446,6 @@
 				3B635F8322774A37006DAAB2 /* FeedTimeFrameMode.swift in Sources */,
 				57E515B12270F4EA00A6F6DB /* SettingsKeyCell.swift in Sources */,
 				3B02CD2E228AB4580078BB52 /* NotificationsFetcher.swift in Sources */,
-				3B17E7AC230CE50C00D681AA /* WebViewController.swift in Sources */,
 				571B150B223A94DE00630C8F /* TabBarVC.swift in Sources */,
 				3B2F226C226892C5006B589E /* NotificationsPageVC.swift in Sources */,
 				3BAF69CF226787940055CCEB /* Date.swift in Sources */,
