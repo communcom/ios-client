@@ -104,7 +104,7 @@ class PreviewView: UIView {
     // MARK: - Setup content
     func setUp(mediaType: MediaType?) {
         // ignore setup if preview is existed
-        if media.value == mediaType {return}
+        if media.value != nil || media.value == mediaType {return}
         
         // setup media
         media.accept(mediaType)
