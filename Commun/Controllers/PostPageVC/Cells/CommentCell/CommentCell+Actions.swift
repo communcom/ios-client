@@ -17,27 +17,30 @@ extension CommentCell: TTTAttributedLabelDelegate {
     
     func attributedLabel(_ label: TTTAttributedLabel!, didSelectLinkWith url: URL!) {
         guard let url = url else {return}
-        if url.absoluteString == "seemore://" {
+        let urlString = url.absoluteString
+        
+        if urlString == "seemore://" {
             guard let comment = comment else {return}
             delegate?.cell(self, didTapSeeMoreButtonForComment: comment)
             return
         }
         
-        //        for userName in text.getMentions() {
-        //            let range = (text as NSString).range(of: "@\(userName)")
-        //            if gesture.didTapAttributedTextInLabel(label: label, inRange: range) {
-        //                delegate?.cell(self, didTapOnUserName: userName)
-        //                return
-        //            }
-        //        }
-        //
-        //        for tag in text.getTags() {
-        //            let range = (text as NSString).range(of: "#\(tag)")
-        //            if gesture.didTapAttributedTextInLabel(label: label, inRange: range) {
-        //                delegate?.cell(self, didTapOnTag: tag)
-        //                return
-        //            }
-        //        }
+        #warning("remove golos.io in production")
+        if urlString.matches(pattern: "^(?:\(NSRegularExpression.escapedPattern(for: "https://commun.com/"))|\(NSRegularExpression.escapedPattern(for: "https://golos.io/")))\(String.mentionRegex)$"),
+            let userName = urlString.components(separatedBy: "@").last {
+            delegate?.cell(self, didTapOnUserName: userName)
+            return
+        }
+        if urlString.matches(pattern: "^(?:\(NSRegularExpression.escapedPattern(for: "https://commun.com/"))|\(NSRegularExpression.escapedPattern(for: "https://golos.io/")))\(String.tagRegex)$"),
+            let tag = urlString.components(separatedBy: "#").last {
+            delegate?.cell(self, didTapOnTag: tag)
+            return
+        }
+        
+        let vc = WebViewController()
+        parentViewController?.show(vc, sender: nil)
+        let request = URLRequest(url: url)
+        vc.loadRequest(request)
         
     }
     
