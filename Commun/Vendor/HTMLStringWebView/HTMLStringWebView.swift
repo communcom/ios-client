@@ -85,29 +85,13 @@ class HTMLStringWebView: UIWebView {
             }
             
             
-            let vc = UIViewController()
+            let vc = WebViewController()
             parentViewController?.show(vc, sender: nil)
-            vc.navigationController?.setNavigationBarHidden(false, animated: true)
-            
-            let webConfiguration = WKWebViewConfiguration()
-            let webView = WKWebView(frame: .zero, configuration: webConfiguration)
-            vc.view = webView
-            webView.navigationDelegate = self
-            webView.load(request)
+            vc.loadRequest(request)
             
             return false
         default:
             return true
         }
-    }
-}
-
-extension HTMLStringWebView: WKNavigationDelegate {
-    func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
-        webView.showLoading()
-    }
-    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        webView.hideLoading()
-        webView.parentViewController?.title = webView.title
     }
 }
