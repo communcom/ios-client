@@ -15,38 +15,30 @@ extension CommentCell: TTTAttributedLabelDelegate {
         delegate?.cell(self, didTapOnUserName: userId)
     }
     
-    @objc func contentLabelDidTouch(gesture: UITapGestureRecognizer) {
-        guard let label = gesture.view as? UILabel,
-            let text = label.text,
-            let comment = comment
-            else {return}
-        
-        let seeMoreRange = (text as NSString).range(of: "see more".localized().uppercaseFirst)
-        
-        if gesture.didTapAttributedTextInLabel(label: label, inRange: seeMoreRange) {
+    func attributedLabel(_ label: TTTAttributedLabel!, didSelectLinkWith url: URL!) {
+        guard let url = url else {return}
+        if url.absoluteString == "seemore://" {
+            guard let comment = comment else {return}
             delegate?.cell(self, didTapSeeMoreButtonForComment: comment)
             return
         }
         
-//        for userName in text.getMentions() {
-//            let range = (text as NSString).range(of: "@\(userName)")
-//            if gesture.didTapAttributedTextInLabel(label: label, inRange: range) {
-//                delegate?.cell(self, didTapOnUserName: userName)
-//                return
-//            }
-//        }
-//
-//        for tag in text.getTags() {
-//            let range = (text as NSString).range(of: "#\(tag)")
-//            if gesture.didTapAttributedTextInLabel(label: label, inRange: range) {
-//                delegate?.cell(self, didTapOnTag: tag)
-//                return
-//            }
-//        }
-    }
-    
-    func attributedLabel(_ label: TTTAttributedLabel!, didSelectLinkWith url: URL!) {
-        print(url)
+        //        for userName in text.getMentions() {
+        //            let range = (text as NSString).range(of: "@\(userName)")
+        //            if gesture.didTapAttributedTextInLabel(label: label, inRange: range) {
+        //                delegate?.cell(self, didTapOnUserName: userName)
+        //                return
+        //            }
+        //        }
+        //
+        //        for tag in text.getTags() {
+        //            let range = (text as NSString).range(of: "#\(tag)")
+        //            if gesture.didTapAttributedTextInLabel(label: label, inRange: range) {
+        //                delegate?.cell(self, didTapOnTag: tag)
+        //                return
+        //            }
+        //        }
+        
     }
     
     

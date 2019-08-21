@@ -158,8 +158,8 @@ class CommentCell: UITableViewCell {
             .normal(String(content.prefix(maxCharactersForReduction - 3)))
             .normal("...")
             .semibold("see more".localized().uppercaseFirst, color: .appMainColor)
-        
         contentLabel.text = text
+        contentLabel.addLinkToText("see more".localized().uppercaseFirst, toUrl: "seemore://")
     }
     
     func addLinksFromContent(_ content: String) {
@@ -175,8 +175,7 @@ class CommentCell: UITableViewCell {
         
         for match in matches {
             guard let urlString = match.url?.absoluteString else {continue}
-            let range = (content as NSString).range(of: urlString)
-            contentLabel.addLink(to: URL(string: urlString), with: range)
+            contentLabel.addLinkToText(urlString)
         }
     }
     

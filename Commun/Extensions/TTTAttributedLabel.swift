@@ -13,12 +13,17 @@ extension TTTAttributedLabel {
     func highlightTagsAndUserNames() {
         guard let content = self.text as? String else {return}
         for user in content.getMentions() {
-            let range = (content as NSString).range(of: "@\(user)")
-            addLink(to: URL(string: "https://commun.com/@\(user)"), with: range)
+            addLinkToText("@\(user)", toUrl: "https://commun.com/@\(user)")
         }
         for tag in content.getTags() {
-            let range = (content as NSString).range(of: "#\(tag)")
-            addLink(to: URL(string: "https://commun.com/#\(tag)"), with: range)
+            addLinkToText("#\(tag)", toUrl: "https://commun.com/#\(tag)")
         }
+    }
+    
+    func addLinkToText(_ text: String, toUrl urlString: String? = nil) {
+        guard let content = self.text as? String,
+            let url = URL(string: urlString ?? text) else {return}
+        let range = (content as NSString).range(of: text)
+        addLink(to: url, with: range)
     }
 }
