@@ -163,9 +163,6 @@ class CommentCell: UITableViewCell {
     }
     
     func addLinksFromContent(_ content: String) {
-//        contentLabel.highlightTagsAndUserNames()
-//        // Detect links
-//
         // Detect links
         let types = NSTextCheckingResult.CheckingType.link
         guard let detector = try? NSDataDetector(types: types.rawValue) else {
@@ -177,6 +174,9 @@ class CommentCell: UITableViewCell {
             guard let urlString = match.url?.absoluteString else {continue}
             contentLabel.addLinkToText(urlString)
         }
+        
+        // tags and usernames
+        contentLabel.highlightTagsAndUserNames()
     }
     
     // MARK: - Observing

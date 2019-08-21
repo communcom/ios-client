@@ -12,12 +12,30 @@ import TTTAttributedLabel
 extension TTTAttributedLabel {
     func highlightTagsAndUserNames() {
         guard let content = self.text as? String else {return}
-        for user in content.getMentions() {
-            addLinkToText("@\(user)", toUrl: "https://commun.com/@\(user)")
+        if let regex = try? NSRegularExpression(pattern: "\\s?\(String.mentionRegex)", options: .caseInsensitive) {
+            let string = content as NSString
+            
+            let matches = regex.matches(in: content, options: [], range: NSRange(location: 0, length: string.length)).map {
+                string.substring(with: $0.range)
+            }
+
+            for user in matches {
+                addLinkToText(user, toUrl: "https://commun.com/\(user)")
+            }
         }
-        for tag in content.getTags() {
-            addLinkToText("#\(tag)", toUrl: "https://commun.com/#\(tag)")
+        
+        if let regex = try? NSRegularExpression(pattern: "\\s?\(String.tagRegex)", options: .caseInsensitive) {
+            let string = content as NSString
+            
+            let matches = regex.matches(in: content, options: [], range: NSRange(location: 0, length: string.length)).map {
+                string.substring(with: $0.range)
+            }
+            
+            for tag in matches {
+                addLinkToText(tag, toUrl: "https://commun.com/\(tag)")
+            }
         }
+        
     }
     
     func addLinkToText(_ text: String, toUrl urlString: String? = nil) {
