@@ -10,15 +10,14 @@ import UIKit
 import WebKit
 
 class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate {
-    var webView: WKWebView!
-    
-    override func loadView() {
+    lazy var webView: WKWebView! = {
         let webConfig = WKWebViewConfiguration()
-        webView = WKWebView(frame: .zero, configuration: webConfig)
+        let webView = WKWebView(frame: .zero, configuration: webConfig)
         webView.uiDelegate = self
         webView.navigationDelegate = self
         view = webView
-    }
+        return webView
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,5 +35,8 @@ class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate {
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         webView.hideLoading()
         webView.parentViewController?.title = webView.title
+        // disable horizontal scrolling
+        let scrollableSize = CGSize(width: view.frame.size.width, height: webView.scrollView.contentSize.height)
+        self.webView?.scrollView.contentSize = scrollableSize
     }
 }

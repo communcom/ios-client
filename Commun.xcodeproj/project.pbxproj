@@ -24,6 +24,7 @@
 		3B0E9C752270C691002AB1C2 /* ProfileEditBioVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B0E9C742270C691002AB1C2 /* ProfileEditBioVC.swift */; };
 		3B11911F2302B9B9008D0417 /* SwipeNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B11911E2302B9B9008D0417 /* SwipeNavigationController.swift */; };
 		3B11913923040A40008D0417 /* PreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B11913823040A40008D0417 /* PreviewView.swift */; };
+		3B17E7A8230CE10600D681AA /* CommentCell+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B17E7A7230CE10600D681AA /* CommentCell+Actions.swift */; };
 		3B17E7AC230CE50C00D681AA /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B17E7AB230CE50C00D681AA /* WebViewController.swift */; };
 		3B197C532269BE0E008CF10D /* SegmentioExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B197C522269BE0E008CF10D /* SegmentioExtension.swift */; };
 		3B197C552269BF74008CF10D /* ProfilePageSegmentioItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B197C542269BF74008CF10D /* ProfilePageSegmentioItem.swift */; };
@@ -247,6 +248,7 @@
 		3B0E9C742270C691002AB1C2 /* ProfileEditBioVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditBioVC.swift; sourceTree = "<group>"; };
 		3B11911E2302B9B9008D0417 /* SwipeNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeNavigationController.swift; sourceTree = "<group>"; };
 		3B11913823040A40008D0417 /* PreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewView.swift; sourceTree = "<group>"; };
+		3B17E7A7230CE10600D681AA /* CommentCell+Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CommentCell+Actions.swift"; sourceTree = "<group>"; };
 		3B17E7AB230CE50C00D681AA /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		3B197C522269BE0E008CF10D /* SegmentioExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentioExtension.swift; sourceTree = "<group>"; };
 		3B197C542269BF74008CF10D /* ProfilePageSegmentioItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePageSegmentioItem.swift; sourceTree = "<group>"; };
@@ -859,6 +861,7 @@
 			isa = PBXGroup;
 			children = (
 				5740957D2247768C00E40E51 /* CommentCell.swift */,
+				3B17E7A7230CE10600D681AA /* CommentCell+Actions.swift */,
 				5740957E2247768C00E40E51 /* CommentCell.xib */,
 				3B02CD1E228965AF0078BB52 /* CommentCellDelegate+UIViewController.swift */,
 			);
@@ -1419,6 +1422,7 @@
 				5787C0C622650FA500568CEC /* SetUserViewModel.swift in Sources */,
 				575AECB122606F6600A7EC2D /* SelectCountryVC.swift in Sources */,
 				571B14FC223A935C00630C8F /* Commun.xcdatamodeld in Sources */,
+				3B17E7A8230CE10600D681AA /* CommentCell+Actions.swift in Sources */,
 				576DC921223E42C800EDED41 /* UIViewControllerExtension.swift in Sources */,
 				57DE5BDE225208A4008566B9 /* EditorPageViewModel.swift in Sources */,
 				3B2F227322689334006B589E /* NSMutableAttributedString.swift in Sources */,
