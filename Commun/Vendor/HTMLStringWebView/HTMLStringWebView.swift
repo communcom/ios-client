@@ -33,6 +33,14 @@ class HTMLStringWebView: UIWebView {
             }
         }
         
+        // parse links
+        result = stringByParsingLinks(html: result)
+        
+        return result
+    }
+    
+    func stringByParsingLinks(html: String) -> String {
+        var result = html
         // Detect links
         let types = NSTextCheckingResult.CheckingType.link
         guard let detector = try? NSDataDetector(types: types.rawValue) else {
@@ -53,26 +61,61 @@ class HTMLStringWebView: UIWebView {
                 urlString.ends(with: ".jpeg", caseSensitive: false) ||
                 urlString.ends(with: ".gif", caseSensitive: false) {
                 
-                let resultTemplate = "<img src=\"\(urlString)\" />"
-                
                 if let regex1 = try? NSRegularExpression(pattern: "\\!?\\[.*\\]\\(\(NSRegularExpression.escapedPattern(for: originals[index]))\\)", options: .caseInsensitive) {
-                    // TODO: Get description between "[" and "]"
-                    result = regex1.stringByReplacingMatches(in: result, options: [], range: NSMakeRange(0, result.count), withTemplate: resultTemplate)
+                    
+                    let resultTemplate = { (_ embededString: String) -> String in
+                        var description: String?
+                        
+                        if let match = embededString.range(of: "\\[.*\\]", options: .regularExpression) {
+                            description = String(embededString[match]).replacingOccurrences(of: "[", with: "").replacingOccurrences(of: "]", with: "")
+                        }
+                        
+                        if let description = description, description.count > 0 {
+                            return """
+                            <div class="embeded">
+                            <img src=\"\(urlString)\" />
+                            <p>\(description)</p>
+                            </div>
+                            """
+                        }
+                        
+                        return "<img src=\"\(urlString)\" />"
+                    }
+                    
+                    result = regex1.stringByReplacingMatches(in: result, templateForEach: resultTemplate)
                 }
                 
                 if let regex = try? NSRegularExpression(pattern: "(?![\">])\(NSRegularExpression.escapedPattern(for: originals[index]))(?![\"<])", options: .caseInsensitive) {
-                    result = regex.stringByReplacingMatches(in: result, options: [], range: NSMakeRange(0, result.count), withTemplate: resultTemplate)
+                    
+                    result = regex.stringByReplacingMatches(in: result, templateForEach: { (match) -> String in
+                        return "<img src=\"\(urlString)\" />"
+                    })
                 }
                 
             } else {
-                let resultTemplate = "<a href=\"\(urlString)\">\(originals[index]))</a>"
                 if let regex1 = try? NSRegularExpression(pattern: "\\!?\\[.*\\]\\(\(NSRegularExpression.escapedPattern(for: originals[index]))\\)", options: .caseInsensitive) {
-                    // TODO: Get description between "[" and "]"
-                    result = regex1.stringByReplacingMatches(in: result, options: [], range: NSMakeRange(0, result.count), withTemplate: resultTemplate)
+                    
+                    let resultTemplate = { (_ embededString: String) -> String in
+                        var description: String?
+                        
+                        if let match = embededString.range(of: "\\[.*\\]", options: .regularExpression) {
+                            description = String(embededString[match]).replacingOccurrences(of: "[", with: "").replacingOccurrences(of: "]", with: "")
+                        }
+                        
+                        if let description = description, description.count > 0 {
+                            return "<a href=\"\(urlString)\">\(description))</a>"
+                        }
+                        
+                        return "<a href=\"\(urlString)\">\(originals[index]))</a>"
+                    }
+                    
+                    result = regex1.stringByReplacingMatches(in: result, templateForEach: resultTemplate)
                 }
                 
                 if let regex = try? NSRegularExpression(pattern: "(?![\">])\(NSRegularExpression.escapedPattern(for: originals[index]))(?![\"<])", options: .caseInsensitive) {
-                    result = regex.stringByReplacingMatches(in: result, options: [], range: NSMakeRange(0, result.count), withTemplate: resultTemplate)
+                    result = regex.stringByReplacingMatches(in: result, templateForEach: { (match) -> String in
+                        return "<a href=\"\(urlString)\">\(originals[index]))</a>"
+                    })
                 }
                 
             }
