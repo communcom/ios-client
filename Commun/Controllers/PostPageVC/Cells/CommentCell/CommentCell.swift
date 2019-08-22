@@ -164,19 +164,59 @@ class CommentCell: UITableViewCell {
     
     func addLinksFromContent(_ content: String) {
         // Detect links
+        addLinks(html: content)
+        
+        // tags and usernames
+        contentLabel.highlightTagsAndUserNames()
+    }
+    
+    func addLinks(html: String) {
+        // Result
+        var result = html
+        var links = [(url: String, description: String)]()
+        
+        // Detect links
         let types = NSTextCheckingResult.CheckingType.link
         guard let detector = try? NSDataDetector(types: types.rawValue) else {
             return
         }
-        let matches = detector.matches(in: content, options: .reportCompletion, range: NSMakeRange(0, content.count))
+        let matches = detector.matches(in: result, options: .reportCompletion, range: NSMakeRange(0, result.count))
+        
+        var originals = matches.map {
+            result.nsString.substring(with: $0.range)
+        }
+        
+        for (index, match) in matches.enumerated() {
+            guard let urlString = match.url?.absoluteString else {continue}
+            
+            if let regex1 = try? NSRegularExpression(pattern: "\\!?\\[.*\\]\\(\(NSRegularExpression.escapedPattern(for: originals[index]))\\)", options: .caseInsensitive) {
+                
+                for embededString in regex1.matchedStrings(in: result) {
+                    var description: String?
+                    
+                    if let match = embededString.range(of: "\\[.*\\]", options: .regularExpression) {
+                        description = String(embededString[match]).replacingOccurrences(of: "[", with: "").replacingOccurrences(of: "]", with: "")
+                    }
+                    
+                    if let description = description, description.count > 0 {
+                        result = result.replacingOccurrences(of: embededString, with: description)
+                        links.append((url: urlString, description: description))
+                    } else {
+                        result = result.replacingOccurrences(of: embededString, with: urlString)
+                        links.append((url: urlString, description: urlString))
+                    }
+                }
+            }
+        }
+        contentLabel.text = result
+        for link in links {
+            contentLabel.addLinkToText(link.description, toUrl: link.url)
+        }
         
         for match in matches {
             guard let urlString = match.url?.absoluteString else {continue}
             contentLabel.addLinkToText(urlString)
         }
-        
-        // tags and usernames
-        contentLabel.highlightTagsAndUserNames()
     }
     
     // MARK: - Observing
