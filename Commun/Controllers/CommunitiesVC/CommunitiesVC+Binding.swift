@@ -12,6 +12,15 @@ import RxSwift
 extension CommunitiesVC {
     // MARK: - bind UI
     func bindUI() {
+        // scrollview
+        tableView.rx.willDragDown
+            .map {$0 ? true: false}
+            .distinctUntilChanged()
+            .subscribe(onNext: {hide in
+                self.navigationController?.setNavigationBarHidden(hide, animated: true)
+            })
+            .disposed(by: bag)
+        
         // bind search text to filter
         searchBar.rx.text.orEmpty
             .subscribe(onNext: {text in
@@ -20,7 +29,7 @@ extension CommunitiesVC {
             .disposed(by: bag)
         
         // bind items to datasource
-        Observable.combineLatest(viewModel.items, viewModel.filter)
+        Observable.combineLatest(viewModel.items, viewModel.filter.debounce(0.3, scheduler: MainScheduler.instance))
             .map {items, filter in
                 var filteredByText = items
                 let filter = self.viewModel.filter.value

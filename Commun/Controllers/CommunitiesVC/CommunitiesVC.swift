@@ -16,7 +16,7 @@ class CommunitiesVC: UIViewController {
     let bag         = DisposeBag()
     
     // HeaderView
-    @IBOutlet weak var searchBar: UISearchBar!
+    var searchBar: UISearchBar!
     @IBOutlet weak var segmentio: Segmentio!
     
     // TableView
@@ -33,7 +33,19 @@ class CommunitiesVC: UIViewController {
     
     // MARK: - Set up views
     func setUp() {
+        setUpSearchBar()
         setUpSegmentio()
+    }
+    
+    func setUpSearchBar() {
+        navigationController?.navigationBar.barTintColor = .white
+        
+        searchBar = UISearchBar(frame: .zero)
+        searchBar.placeholder = "search".localized().uppercaseFirst
+        navigationItem.titleView = searchBar
+        
+        let searchField: UITextField = searchBar.value(forKey: "searchField") as! UITextField
+        searchField.backgroundColor = #colorLiteral(red: 0.9529411765, green: 0.9607843137, blue: 0.9803921569, alpha: 1)
     }
     
     func setUpSegmentio() {
