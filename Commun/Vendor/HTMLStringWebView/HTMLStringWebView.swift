@@ -37,7 +37,7 @@ class HTMLStringWebView: UIWebView {
         result = stringByParsingLinks(html: result)
         
         // replace characters
-        result = result.replacingOccurrences(of: "\\n", with: "<br />")
+        result = result.replacingOccurrences(of: "\n", with: "<br />")
         
         return result
     }
