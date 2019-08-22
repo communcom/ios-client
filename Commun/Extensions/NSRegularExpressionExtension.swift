@@ -10,10 +10,11 @@ import Foundation
 
 extension NSRegularExpression {
     func matchedStrings(in string: String) -> [String] {
-        return matches(in: string, options: [], range: NSMakeRange(0, string.count))
+        let strings = matches(in: string, options: [], range: NSMakeRange(0, string.count))
             .map {
                 string.nsString.substring(with: $0.range)
         }
+        return Array(Set(strings))
     }
     
     func stringByReplacingMatches(in string: String, templateForEach: ((String) -> String)) -> String {
