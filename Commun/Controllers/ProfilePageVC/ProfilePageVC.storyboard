@@ -736,8 +736,8 @@
                                 <color key="barTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <items>
                                     <navigationItem title="Change position" id="4WX-Gf-cxW">
-                                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="AsR-Cp-Z8E"/>
-                                        <barButtonItem key="rightBarButtonItem" title="done" id="3XE-ch-LV0"/>
+                                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="AsR-Cp-Z8E"/>
+                                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="3XE-ch-LV0"/>
                                     </navigationItem>
                                 </items>
                             </navigationBar>

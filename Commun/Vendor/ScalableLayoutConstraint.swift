@@ -15,6 +15,8 @@ class ScalableLayoutConstraint: NSLayoutConstraint {
     override func awakeFromNib() {
         super.awakeFromNib()
         
+        let oldConstant = constant
+        
         switch firstAttribute {
         case .leading, .trailing, .left, .right, .width:
             constant *= Config.widthRatio
@@ -22,6 +24,10 @@ class ScalableLayoutConstraint: NSLayoutConstraint {
             constant *= Config.heightRatio
         default:
             return
+        }
+        
+        if let view = firstItem as? UIView {
+            view.layer.cornerRadius = view.layer.cornerRadius * constant / oldConstant
         }
     }
 }

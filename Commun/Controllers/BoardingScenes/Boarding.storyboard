@@ -24,11 +24,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="avatar-ellipse-placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="8so-Us-TH5">
-                                <rect key="frame" x="97" y="287" width="220" height="220"/>
+                                <rect key="frame" x="97" y="343" width="220" height="220"/>
                                 <gestureRecognizers/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="220" id="Mr6-i5-i6n" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                                     <constraint firstAttribute="height" constant="220" id="S9R-EG-dRU" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
+                                    <constraint firstAttribute="width" secondItem="8so-Us-TH5" secondAttribute="height" multiplier="1:1" id="mkA-DN-Na8"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -40,7 +40,7 @@
                                 </connections>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gpy-Rf-usg">
-                                <rect key="frame" x="178" y="370.66666666666669" width="58" height="53"/>
+                                <rect key="frame" x="178" y="426.66666666666669" width="58" height="53"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="53" id="JzV-YF-HeM" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                                     <constraint firstAttribute="width" constant="58" id="VMd-Wi-Jp2" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
@@ -84,7 +84,7 @@
                             <constraint firstItem="RF3-iG-k7N" firstAttribute="trailing" secondItem="nWI-gk-ZqF" secondAttribute="trailing" constant="16" id="ArM-nD-dCo" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                             <constraint firstItem="RF3-iG-k7N" firstAttribute="trailing" secondItem="Lv0-9t-vki" secondAttribute="trailing" constant="42" id="JZF-RD-9Yy" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                             <constraint firstItem="L5W-u9-L4u" firstAttribute="trailing" secondItem="Lv0-9t-vki" secondAttribute="trailing" id="Oce-dc-ZyO"/>
-                            <constraint firstItem="8so-Us-TH5" firstAttribute="centerY" secondItem="RF3-iG-k7N" secondAttribute="centerY" constant="-56" id="Rvf-La-sQL" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
+                            <constraint firstItem="8so-Us-TH5" firstAttribute="centerY" secondItem="RF3-iG-k7N" secondAttribute="centerY" id="Rvf-La-sQL" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                             <constraint firstItem="L5W-u9-L4u" firstAttribute="top" secondItem="Lv0-9t-vki" secondAttribute="bottom" constant="23" id="TdH-Kd-O9E" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                             <constraint firstItem="RF3-iG-k7N" firstAttribute="bottom" secondItem="L5W-u9-L4u" secondAttribute="bottom" constant="40" id="d9R-V5-o7a" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                             <constraint firstItem="Lv0-9t-vki" firstAttribute="leading" secondItem="RF3-iG-k7N" secondAttribute="leading" constant="42" id="lco-Uo-blh" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
