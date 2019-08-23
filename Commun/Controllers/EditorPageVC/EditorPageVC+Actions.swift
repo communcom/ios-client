@@ -23,9 +23,24 @@ extension EditorPageVC {
             .map {$0.first!.fullResolutionImage!}
             .subscribe(onNext: {[weak self] image in
                 guard let strongSelf = self else {return}
-//                self?.previewView.setUp(mediaType: .image(image: image, url: nil))
-                strongSelf.contentTextView.addImage(image)
-                pickerVC.dismiss(animated: true, completion: nil)
+                let alert = UIAlertController(
+                    title:          "description".localized().uppercaseFirst,
+                    message:        "add a description for your image".localized().uppercaseFirst,
+                    preferredStyle: .alert)
+                
+                alert.addTextField { field in
+                    field.placeholder = "description".localized().uppercaseFirst
+                }
+                
+                alert.addAction(UIAlertAction(title: "cancel".localized().uppercaseFirst, style: .cancel, handler: {_ in
+                    strongSelf.contentTextView.addImage(image)
+                    pickerVC.dismiss(animated: true, completion: nil)
+                }))
+                alert.addAction(UIAlertAction(title: "add".localized().uppercaseFirst, style: .default, handler: { _ in
+                    strongSelf.contentTextView.addImage(image, description: alert.textFields?.first?.text)
+                    pickerVC.dismiss(animated: true, completion: nil)
+                }))
+                pickerVC.present(alert, animated: true, completion: nil)
             })
             .disposed(by: disposeBag)
             // Upload image

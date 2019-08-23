@@ -119,6 +119,7 @@
 		3BE68AB222EEA7C300033B81 /* LocalAuthVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BE68AB122EEA7C300033B81 /* LocalAuthVC.swift */; };
 		3BEA224422B3DA9C00FF42DA /* JSONParsingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BEA224322B3DA9C00FF42DA /* JSONParsingTests.swift */; };
 		3BEC38E3230F801600662374 /* UITextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BEC38E2230F801600662374 /* UITextView.swift */; };
+		3BEC38E5230F8BC900662374 /* TextAttachment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BEC38E4230F8BC900662374 /* TextAttachment.swift */; };
 		3BF2E09822D3A49F003B37AE /* StepButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BF2E09722D3A49F003B37AE /* StepButton.swift */; };
 		3BF37BCA22A11FA700A72FFE /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BF37BC922A11FA700A72FFE /* UIView.swift */; };
 		3BF37BCC22A1297C00A72FFE /* UITableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BF37BCB22A1297C00A72FFE /* UITableView.swift */; };
@@ -346,6 +347,7 @@
 		3BEA224322B3DA9C00FF42DA /* JSONParsingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONParsingTests.swift; sourceTree = "<group>"; };
 		3BEA224522B3DA9C00FF42DA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3BEC38E2230F801600662374 /* UITextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextView.swift; sourceTree = "<group>"; };
+		3BEC38E4230F8BC900662374 /* TextAttachment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextAttachment.swift; sourceTree = "<group>"; };
 		3BF2E09722D3A49F003B37AE /* StepButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepButton.swift; sourceTree = "<group>"; };
 		3BF37BC922A11FA700A72FFE /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
 		3BF37BCB22A1297C00A72FFE /* UITableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableView.swift; sourceTree = "<group>"; };
@@ -982,6 +984,7 @@
 				3BF53CE2230B93990082464F /* HTMLStringWebView */,
 				3B11911E2302B9B9008D0417 /* SwipeNavigationController.swift */,
 				3B11913823040A40008D0417 /* PreviewView.swift */,
+				3BEC38E4230F8BC900662374 /* TextAttachment.swift */,
 			);
 			path = Vendor;
 			sourceTree = "<group>";
@@ -1484,6 +1487,7 @@
 				57E515B62270F7B200A6F6DB /* SettingsButtonCell.swift in Sources */,
 				3B5EDE3022DF92D000897BF3 /* SettingsOptionsCell.swift in Sources */,
 				57A1CA632270FC4700E2A1E3 /* LanguageVC.swift in Sources */,
+				3BEC38E5230F8BC900662374 /* TextAttachment.swift in Sources */,
 				57840A202240DDEB00338FD5 /* Container.swift in Sources */,
 				57F9CAAC225B489000AC9ACA /* EditorPageVC+Rx.swift in Sources */,
 				3B0E9C6E227063F6002AB1C2 /* ProfilePageVC+Actions.swift in Sources */,
