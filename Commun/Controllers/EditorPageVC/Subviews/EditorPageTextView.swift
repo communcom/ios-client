@@ -26,6 +26,7 @@ class EditorPageTextView: RTViewAttachmentTextView {
     }
     
     func setUpExpandable() {
+        textView.isScrollEnabled = false
         textView.rx.text
             .skip(1)
             .distinctUntilChanged()
