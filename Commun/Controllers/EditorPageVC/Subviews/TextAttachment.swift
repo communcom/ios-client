@@ -19,14 +19,12 @@ class TextAttachment: RTViewAttachment {
     var type: AttachmentType? {
         didSet {
             guard let type = type else {return}
-            placeholderText = "[\("loading".localized())]("
             switch type {
-            case .image(_):
-                placeholderText += "image".localized()
-            case .url(_):
-                placeholderText += "link".localized()
+            case .image(_, let urlString, let description):
+                placeholderText = "[\(description ?? "loading".localized())](\(urlString ?? "image".localized()))"
+            case .url(let url, let description):
+                placeholderText = "[\(description ?? "link".localized())](\(url))"
             }
-            placeholderText += " id=\(id!))"
         }
     }
     
