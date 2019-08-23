@@ -15,6 +15,22 @@ import TLPhotoPicker
 extension EditorPageVC {
     
     @IBAction func cameraButtonTap() {
+        view.endEditing(true)
+        showActionSheet(title:     "add image".localized().uppercaseFirst,
+                             actions:   [
+                                UIAlertAction(title:    "choose from gallery".localized().uppercaseFirst,
+                                              style:    .default,
+                                              handler:  { _ in
+                                                self.chooseFromGallery()
+                                }),
+                                UIAlertAction(title:   "insert image from URL".localized().uppercaseFirst,
+                                              style:    .default,
+                                              handler:  { _ in
+                                                self.selectImageFromUrl()
+                                })])
+    }
+    
+    func chooseFromGallery() {
         let pickerVC = CustomTLPhotosPickerVC.singleImage
         self.present(pickerVC, animated: true, completion: nil)
         
@@ -45,8 +61,29 @@ extension EditorPageVC {
                 pickerVC.present(alert, animated: true, completion: nil)
             })
             .disposed(by: disposeBag)
-            // Upload image
-            
+    }
+    
+    func selectImageFromUrl() {
+        let alert = UIAlertController(
+            title:          "select image".localized().uppercaseFirst,
+            message:        "select image from an URL".localized().uppercaseFirst,
+            preferredStyle: .alert)
+        
+        alert.addTextField { field in
+            field.placeholder = "image URL".localized().uppercaseFirst
+        }
+        
+        alert.addTextField { field in
+            field.placeholder = "description".localized().uppercaseFirst + "(" + "optional".localized() + ")"
+        }
+        
+        alert.addAction(UIAlertAction(title: "add".localized().uppercaseFirst, style: .cancel, handler: {[weak self] _ in
+            // TODO: image from url
+        }))
+        
+        alert.addAction(UIAlertAction(title: "cancel".localized().uppercaseFirst, style: .default, handler: nil))
+        
+        present(alert, animated: true, completion: nil)
     }
     
     @IBAction func sendPostButtonTap() {
