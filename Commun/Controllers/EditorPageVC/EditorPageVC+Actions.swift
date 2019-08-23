@@ -49,12 +49,12 @@ extension EditorPageVC {
                 }
                 
                 alert.addAction(UIAlertAction(title: "add".localized().uppercaseFirst, style: .cancel, handler: { _ in
-                    strongSelf.contentView.textView.addImage(image, description: alert.textFields?.first?.text)
+                    strongSelf.contentView.addImage(image, description: alert.textFields?.first?.text)
                     pickerVC.dismiss(animated: true, completion: nil)
                 }))
                 
                 alert.addAction(UIAlertAction(title: "cancel".localized().uppercaseFirst, style: .default, handler: {_ in
-                    strongSelf.contentView.textView.addImage(image)
+                    strongSelf.contentView.addImage(image)
                     pickerVC.dismiss(animated: true, completion: nil)
                 }))
                 
@@ -78,7 +78,8 @@ extension EditorPageVC {
         }
         
         alert.addAction(UIAlertAction(title: "add".localized().uppercaseFirst, style: .cancel, handler: {[weak self] _ in
-            // TODO: image from url
+            guard let urlString = alert.textFields?.first?.text else { return }
+            self?.contentView.addImage(nil, urlString: urlString, description: alert.textFields?.last?.text)
         }))
         
         alert.addAction(UIAlertAction(title: "cancel".localized().uppercaseFirst, style: .default, handler: nil))

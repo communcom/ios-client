@@ -48,4 +48,28 @@ class EditorPageTextView: RTViewAttachmentTextView {
         
         heightConstraint = constraints.first {$0.firstAttribute == .height}
     }
+    
+    // MARK: - Methods
+    func addImage(_ image: UIImage? = nil, urlString: String? = nil, description: String? = nil) {
+        // set image
+        if let image = image {
+            
+            let oldWidth = image.size.width
+            let scaleFactor = oldWidth / (frame.size.width - 10)
+            let newImage = UIImage(cgImage: image.cgImage!, scale: scaleFactor, orientation: .up)
+            guard let textAttachment = TextAttachment(view: UIImageView(image: newImage)) else {return}
+
+            textAttachment.type = .image(image: image, urlString: nil, description: description)
+            insert(textAttachment)
+            
+        } else if let urlString = urlString {
+            let textAttachment = TextAttachment(view: UIView())!
+            textAttachment.type = .image(image: nil, urlString: urlString, description: description)
+            textView.insertText(textAttachment.placeholderText)
+        } else {
+            return
+        }
+        
+        
+    }
 }
