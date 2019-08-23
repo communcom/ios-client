@@ -67,7 +67,7 @@ class EditorPageTextView: RTViewAttachmentTextView {
             let url = URL(string: urlString) {
             let textAttachment = TextAttachment(view: UIView())!
             textAttachment.type = .image(image: nil, urlString: urlString, description: description)
-            textView.insertText("\n" + textAttachment.placeholderText)
+            textView.insertText(textAttachment.placeholderText)
             
             let manager = SDWebImageManager.shared()
             
@@ -78,7 +78,7 @@ class EditorPageTextView: RTViewAttachmentTextView {
                 let location = strongSelf.textView
                     .nsRangeOfText(textAttachment.placeholderText).location
                 
-                guard location > 0 else {return}
+                guard location >= 0 else {return}
                 
                 // remove placeholder
                 strongSelf.textView.removeText(textAttachment.placeholderText)
