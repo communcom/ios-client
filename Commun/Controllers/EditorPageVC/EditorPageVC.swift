@@ -15,7 +15,6 @@ class EditorPageVC: UIViewController {
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var titleTextView: ExpandableTextView!
     @IBOutlet weak var contentTextView: ExpandableTextView!
-    @IBOutlet weak var previewView: PreviewView!
     @IBOutlet weak var dropDownView: UIView!
     @IBOutlet weak var adultButton: UIButton!
     @IBOutlet weak var sendPostButton: UIBarButtonItem!
@@ -52,25 +51,11 @@ class EditorPageVC: UIViewController {
         contentTextView.placeholder = "write text placeholder".localized().uppercaseFirst + "..."
         contentTextView.typingAttributes = defaultAttributeForContentTextView
         
-        previewView.adjustHeight(0)
-        
         // if editing post
         if let post = viewModel?.postForEdit {
             titleTextView.rx.text.onNext(post.content.title)
-            #warning("change text later")
+            #warning("parse text")
             contentTextView.rx.text.onNext(post.content.body.full ?? post.content.body.preview)
-            
-            if let firstEmbeded = post.content.embeds.first?.result {
-                if firstEmbeded.type == "photo" {
-                    let value = PreviewView.MediaType.image(image: nil, url: firstEmbeded.url)
-                    previewView.initialMedia = value
-                    previewView.setUp(mediaType: value)
-                } else {
-                    let value = PreviewView.MediaType.linkFromText(text: firstEmbeded.url)
-                    previewView.initialMedia = value
-                    previewView.setUp(mediaType: value)
-                }
-            }
         }
         
         bindUI()
