@@ -51,6 +51,9 @@ class EditorPageVC: UIViewController {
         contentView.textView.textContainer.lineFragmentPadding = 0
         contentView.textView.placeholder = "write text placeholder".localized().uppercaseFirst + "..."
         contentView.textView.typingAttributes = defaultAttributeForContentTextView
+        // you should ensure layout
+        contentView.textView.layoutManager
+            .ensureLayout(for: contentView.textView.textContainer)
         
         // if editing post
         if let post = viewModel?.postForEdit {

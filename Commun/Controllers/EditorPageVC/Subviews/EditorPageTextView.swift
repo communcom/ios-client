@@ -10,6 +10,7 @@ import Foundation
 import RTViewAttachment
 import RxSwift
 import RxCocoa
+import SDWebImage
 
 class EditorPageTextView: RTViewAttachmentTextView {
     // MARK: - Properties
@@ -62,14 +63,40 @@ class EditorPageTextView: RTViewAttachmentTextView {
             textAttachment.type = .image(image: image, urlString: nil, description: description)
             insert(textAttachment)
             
-        } else if let urlString = urlString {
+        } else if let urlString = urlString,
+            let url = URL(string: urlString) {
             let textAttachment = TextAttachment(view: UIView())!
             textAttachment.type = .image(image: nil, urlString: urlString, description: description)
-            textView.insertText(textAttachment.placeholderText)
+            textView.insertText("\n" + textAttachment.placeholderText)
+            
+            let manager = SDWebImageManager.shared()
+            
+            manager.imageDownloader?.downloadImage(with: url, completed: {[weak self] (image, data, error, _) in
+                guard let strongSelf = self else {return}
+                
+                // current location of placeholder
+                let location = strongSelf.textView
+                    .nsRangeOfText(textAttachment.placeholderText).location
+                
+                guard location > 0 else {return}
+                
+                // remove placeholder
+                strongSelf.textView.removeText(textAttachment.placeholderText)
+                
+                // attach image
+                if let image = image {
+                    let oldWidth = image.size.width
+                    let scaleFactor = oldWidth / (strongSelf.frame.size.width - 10)
+                    let newImage = UIImage(cgImage: image.cgImage!, scale: scaleFactor, orientation: .up)
+                    textAttachment.attachedView = UIImageView(image: newImage)
+                    strongSelf.insert(textAttachment, at: UInt(location))
+                } else {
+                    strongSelf.parentViewController?.showErrorWithLocalizedMessage("could not load image".localized().uppercaseFirst + "with URL".localized() + " " + urlString)
+                }
+            })
+            
         } else {
-            return
+            parentViewController?.showGeneralError()
         }
-        
-        
     }
 }
