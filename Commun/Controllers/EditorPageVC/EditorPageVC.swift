@@ -10,20 +10,24 @@ import UIKit
 import RxSwift
 
 class EditorPageVC: UIViewController {
-
-    var viewModel: EditorPageViewModel?
     
+    // MARK: - Outlets
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var titleTextView: ExpandableTextView!
     @IBOutlet weak var contentTextView: ExpandableTextView!
     @IBOutlet weak var previewView: PreviewView!
     @IBOutlet weak var dropDownView: UIView!
     @IBOutlet weak var adultButton: UIButton!
-    
     @IBOutlet weak var sendPostButton: UIBarButtonItem!
     
+    // MARK: - Properties
+    var viewModel: EditorPageViewModel?
     let disposeBag = DisposeBag()
+    lazy var defaultAttributeForContentTextView: [NSAttributedString.Key: Any] = {
+        return [.font: UIFont.systemFont(ofSize: 17)]
+    }()
     
+    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -46,6 +50,7 @@ class EditorPageVC: UIViewController {
         contentTextView.textContainerInset = UIEdgeInsets.zero
         contentTextView.textContainer.lineFragmentPadding = 0
         contentTextView.placeholder = "write text placeholder".localized().uppercaseFirst + "..."
+        contentTextView.typingAttributes = defaultAttributeForContentTextView
         
         previewView.adjustHeight(0)
         
