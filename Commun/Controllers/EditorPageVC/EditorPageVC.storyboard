@@ -118,11 +118,11 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ra4-Bs-Xab">
-                                        <rect key="frame" x="342" y="19.5" width="17" height="17"/>
+                                        <rect key="frame" x="337" y="17" width="22" height="22"/>
                                         <accessibility key="accessibilityConfiguration" identifier="EditorPageHideKeyboardButton" label="EditorPageHideKeyboardButton"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="ra4-Bs-Xab" secondAttribute="height" multiplier="1:1" id="43f-1R-XAQ"/>
-                                            <constraint firstAttribute="height" constant="17" id="csH-8s-wFA"/>
+                                            <constraint firstAttribute="height" constant="22" id="csH-8s-wFA"/>
                                         </constraints>
                                         <color key="tintColor" red="0.41390401124954224" green="0.50106823444366455" blue="0.96205252408981323" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <state key="normal" image="keyboard_hide"/>
