@@ -49,12 +49,12 @@ extension EditorPageVC {
                 }
                 
                 alert.addAction(UIAlertAction(title: "add".localized().uppercaseFirst, style: .cancel, handler: { _ in
-                    strongSelf.contentTextView.addImage(image, description: alert.textFields?.first?.text)
+                    strongSelf.contentView.textView.addImage(image, description: alert.textFields?.first?.text)
                     pickerVC.dismiss(animated: true, completion: nil)
                 }))
                 
                 alert.addAction(UIAlertAction(title: "cancel".localized().uppercaseFirst, style: .default, handler: {_ in
-                    strongSelf.contentTextView.addImage(image)
+                    strongSelf.contentView.textView.addImage(image)
                     pickerVC.dismiss(animated: true, completion: nil)
                 }))
                 
@@ -90,7 +90,7 @@ extension EditorPageVC {
         guard let viewModel = viewModel else {return}
         self.view.endEditing(true)
         
-        viewModel.sendPost(with: titleTextView.text, text: contentTextView.text)
+        viewModel.sendPost(with: titleTextView.text, text: contentView.textView.text)
             .do(onSubscribe: {
                 self.navigationController?.showIndetermineHudWithMessage("sending post".localized().uppercaseFirst)
             })
@@ -112,7 +112,7 @@ extension EditorPageVC {
                 // if editing post
                 if var post = self.viewModel?.postForEdit {
                     post.content.title = self.titleTextView.text
-                    post.content.body.full = self.contentTextView.text
+                    post.content.body.full = self.contentView.textView.text
                     if let imageURL = self.viewModel?.embeds.first(where: {($0["type"] as? String) == "photo"})?["url"] as? String,
                         let embeded = post.content.embeds.first,
                         embeded.type == "photo" {

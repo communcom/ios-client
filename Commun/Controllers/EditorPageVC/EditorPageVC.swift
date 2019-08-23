@@ -14,7 +14,7 @@ class EditorPageVC: UIViewController {
     // MARK: - Outlets
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var titleTextView: ExpandableTextView!
-    @IBOutlet weak var contentTextView: ExpandableTextView!
+    @IBOutlet weak var contentView: EditorPageTextView!
     @IBOutlet weak var dropDownView: UIView!
     @IBOutlet weak var adultButton: UIButton!
     @IBOutlet weak var hideKeyboardButton: UIButton!
@@ -47,16 +47,16 @@ class EditorPageVC: UIViewController {
         titleTextView.textContainer.lineFragmentPadding = 0
         titleTextView.placeholder = "title placeholder".localized().uppercaseFirst
         
-        contentTextView.textContainerInset = UIEdgeInsets.zero
-        contentTextView.textContainer.lineFragmentPadding = 0
-        contentTextView.placeholder = "write text placeholder".localized().uppercaseFirst + "..."
-        contentTextView.typingAttributes = defaultAttributeForContentTextView
+        contentView.textContainerInset = UIEdgeInsets.zero
+        contentView.textView.textContainer.lineFragmentPadding = 0
+        contentView.textView.placeholder = "write text placeholder".localized().uppercaseFirst + "..."
+        contentView.textView.typingAttributes = defaultAttributeForContentTextView
         
         // if editing post
         if let post = viewModel?.postForEdit {
             titleTextView.rx.text.onNext(post.content.title)
             #warning("parse text")
-            contentTextView.rx.text.onNext(post.content.body.full ?? post.content.body.preview)
+            contentView.textView.rx.text.onNext(post.content.body.full ?? post.content.body.preview)
         }
         
         // bottom buttons

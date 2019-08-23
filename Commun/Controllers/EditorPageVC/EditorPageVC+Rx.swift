@@ -40,7 +40,7 @@ extension EditorPageVC {
         #warning("fix contentText later")
         Observable.combineLatest(
                 titleTextView.rx.text.orEmpty,
-                contentTextView.rx.text.orEmpty
+                contentView.textView.rx.text.orEmpty
             )
             .map {
                 // Text field  is not empty

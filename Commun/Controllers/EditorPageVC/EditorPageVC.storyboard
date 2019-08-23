@@ -58,30 +58,28 @@
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="26"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
-                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" keyboardDismissMode="onDrag" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="nDy-mq-vIj" customClass="ExpandableTextView" customModule="Commun" customModuleProvider="target">
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="43v-42-Twq" customClass="EditorPageTextView" customModule="Commun" customModuleProvider="target">
                                                 <rect key="frame" x="16" y="159.5" width="343" height="492.5"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="492.5" id="fzY-dn-AUK"/>
+                                                    <constraint firstAttribute="height" constant="492.5" id="VPB-WY-9K4"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                            </textView>
+                                            </view>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
-                                            <constraint firstItem="nDy-mq-vIj" firstAttribute="leading" secondItem="sEN-wG-0Ug" secondAttribute="leading" constant="16" id="3fG-dK-c96"/>
                                             <constraint firstItem="Yh5-US-3Nd" firstAttribute="top" secondItem="sEN-wG-0Ug" secondAttribute="top" constant="24" id="6Af-al-35U"/>
-                                            <constraint firstItem="nDy-mq-vIj" firstAttribute="top" secondItem="94b-Gg-NR2" secondAttribute="bottom" constant="24" id="9bs-MA-LIM"/>
-                                            <constraint firstAttribute="trailing" secondItem="nDy-mq-vIj" secondAttribute="trailing" constant="16" id="JjK-wi-YsK"/>
+                                            <constraint firstItem="43v-42-Twq" firstAttribute="top" secondItem="94b-Gg-NR2" secondAttribute="bottom" constant="24" id="8rg-ME-PmA"/>
                                             <constraint firstItem="94b-Gg-NR2" firstAttribute="top" secondItem="Yh5-US-3Nd" secondAttribute="bottom" constant="24" id="KZ3-sQ-HDx"/>
                                             <constraint firstItem="94b-Gg-NR2" firstAttribute="leading" secondItem="sEN-wG-0Ug" secondAttribute="leading" constant="16" id="MIs-Ct-8b1"/>
                                             <constraint firstAttribute="trailing" secondItem="94b-Gg-NR2" secondAttribute="trailing" constant="16" id="NSS-fa-RQ9"/>
                                             <constraint firstItem="bla-eK-cJX" firstAttribute="leading" secondItem="Yh5-US-3Nd" secondAttribute="trailing" constant="16" id="PYt-MM-7kK"/>
+                                            <constraint firstAttribute="trailing" secondItem="43v-42-Twq" secondAttribute="trailing" constant="16" id="RW4-41-xh1"/>
                                             <constraint firstItem="bla-eK-cJX" firstAttribute="bottom" secondItem="Yh5-US-3Nd" secondAttribute="bottom" id="Ux6-0J-LVH"/>
                                             <constraint firstItem="Yh5-US-3Nd" firstAttribute="leading" secondItem="sEN-wG-0Ug" secondAttribute="leading" constant="16" id="WaU-DB-mG9"/>
                                             <constraint firstItem="rXf-Vp-Izy" firstAttribute="top" secondItem="Yh5-US-3Nd" secondAttribute="top" id="daB-RR-zr9"/>
-                                            <constraint firstAttribute="bottom" secondItem="nDy-mq-vIj" secondAttribute="bottom" constant="16" id="udw-1r-GZv"/>
+                                            <constraint firstAttribute="bottom" secondItem="43v-42-Twq" secondAttribute="bottom" constant="16" id="eEF-tm-weP"/>
+                                            <constraint firstItem="43v-42-Twq" firstAttribute="leading" secondItem="sEN-wG-0Ug" secondAttribute="leading" constant="16" id="nSt-T5-EI3"/>
                                             <constraint firstItem="rXf-Vp-Izy" firstAttribute="leading" secondItem="Yh5-US-3Nd" secondAttribute="trailing" constant="16" id="xb7-nt-KyL"/>
                                         </constraints>
                                     </view>
@@ -182,7 +180,7 @@
                     <size key="freeformSize" width="375" height="1000"/>
                     <connections>
                         <outlet property="adultButton" destination="aeQ-gX-bWx" id="Yli-e5-ttd"/>
-                        <outlet property="contentTextView" destination="nDy-mq-vIj" id="m9Q-7A-Hdv"/>
+                        <outlet property="contentView" destination="43v-42-Twq" id="Hv0-YE-Bi7"/>
                         <outlet property="dropDownView" destination="U7q-88-jfF" id="Z2s-ew-Vrh"/>
                         <outlet property="hideKeyboardButton" destination="ra4-Bs-Xab" id="p5q-9A-EoT"/>
                         <outlet property="scrollView" destination="ru5-vQ-hj9" id="iIa-n7-xPb"/>

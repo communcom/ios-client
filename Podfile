@@ -52,6 +52,7 @@ target 'Commun' do
   
   pod 'AppImageViewer'
   pod 'SwiftLinkPreview', '~> 3.0.1'
+  pod 'RTViewAttachment', :git => "https://github.com/bigearsenal/RTViewAttachment.git", :branch => "commun"
   
   post_install do |installer|
     installer.pods_project.targets.each do |target|
