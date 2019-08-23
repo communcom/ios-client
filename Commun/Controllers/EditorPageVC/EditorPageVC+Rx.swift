@@ -27,6 +27,13 @@ extension EditorPageVC {
             .bind(to: self.adultButton.rx.image(for: .normal))
             .disposed(by: disposeBag)
         
+        // hideKeyboard
+        UIResponder.keyboardHeightObservable
+            .map {$0 == 0 ? false: true}
+            .asDriver(onErrorJustReturn: false)
+            .drive(hideKeyboardButton.rx.isHidden)
+            .disposed(by: disposeBag)
+        
         // verification
         
         #warning("Verify community")

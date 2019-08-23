@@ -115,6 +115,10 @@ extension EditorPageVC {
     }
     
     @IBAction func closeButtonDidTouch(_ sender: Any) {
-        self.navigationController?.dismiss(animated: true, completion: nil)
+        navigationController?.dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func hideKeyboardButtonDidTouch(_ sender: Any) {
+        view.endEditing(true)
     }
 }

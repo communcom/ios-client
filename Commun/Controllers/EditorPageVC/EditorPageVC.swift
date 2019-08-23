@@ -17,6 +17,7 @@ class EditorPageVC: UIViewController {
     @IBOutlet weak var contentTextView: ExpandableTextView!
     @IBOutlet weak var dropDownView: UIView!
     @IBOutlet weak var adultButton: UIButton!
+    @IBOutlet weak var hideKeyboardButton: UIButton!
     @IBOutlet weak var sendPostButton: UIBarButtonItem!
     
     // MARK: - Properties
@@ -57,6 +58,9 @@ class EditorPageVC: UIViewController {
             #warning("parse text")
             contentTextView.rx.text.onNext(post.content.body.full ?? post.content.body.preview)
         }
+        
+        // bottom buttons
+        hideKeyboardButton.isHidden = true
         
         bindUI()
     }

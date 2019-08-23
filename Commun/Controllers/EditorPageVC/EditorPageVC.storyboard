@@ -117,11 +117,26 @@
                                             <action selector="cameraButtonTap" destination="AvE-EB-OTN" eventType="touchUpInside" id="BZC-lL-yl0"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ra4-Bs-Xab">
+                                        <rect key="frame" x="342" y="19.5" width="17" height="17"/>
+                                        <accessibility key="accessibilityConfiguration" identifier="EditorPageHideKeyboardButton" label="EditorPageHideKeyboardButton"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="ra4-Bs-Xab" secondAttribute="height" multiplier="1:1" id="43f-1R-XAQ"/>
+                                            <constraint firstAttribute="height" constant="17" id="csH-8s-wFA"/>
+                                        </constraints>
+                                        <color key="tintColor" red="0.41390401124954224" green="0.50106823444366455" blue="0.96205252408981323" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <state key="normal" image="keyboard_hide"/>
+                                        <connections>
+                                            <action selector="hideKeyboardButtonDidTouch:" destination="AvE-EB-OTN" eventType="touchUpInside" id="VR1-af-6i3"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="ra4-Bs-Xab" secondAttribute="trailing" constant="16" id="2EY-Ji-hBt"/>
                                     <constraint firstItem="nwa-Mp-egE" firstAttribute="leading" secondItem="aeQ-gX-bWx" secondAttribute="trailing" constant="26" id="Cgl-0u-dYc"/>
                                     <constraint firstAttribute="height" constant="56" id="bFX-Kv-Myi"/>
+                                    <constraint firstItem="ra4-Bs-Xab" firstAttribute="centerY" secondItem="aeQ-gX-bWx" secondAttribute="centerY" id="h0O-pG-fwu"/>
                                     <constraint firstItem="aeQ-gX-bWx" firstAttribute="centerY" secondItem="U7q-88-jfF" secondAttribute="centerY" id="nzz-jo-t4v"/>
                                     <constraint firstItem="aeQ-gX-bWx" firstAttribute="leading" secondItem="U7q-88-jfF" secondAttribute="leading" constant="16" id="quE-AG-kFf"/>
                                     <constraint firstItem="nwa-Mp-egE" firstAttribute="centerY" secondItem="aeQ-gX-bWx" secondAttribute="centerY" id="yqy-5T-drz"/>
@@ -169,6 +184,7 @@
                         <outlet property="adultButton" destination="aeQ-gX-bWx" id="Yli-e5-ttd"/>
                         <outlet property="contentTextView" destination="nDy-mq-vIj" id="m9Q-7A-Hdv"/>
                         <outlet property="dropDownView" destination="U7q-88-jfF" id="Z2s-ew-Vrh"/>
+                        <outlet property="hideKeyboardButton" destination="ra4-Bs-Xab" id="p5q-9A-EoT"/>
                         <outlet property="scrollView" destination="ru5-vQ-hj9" id="iIa-n7-xPb"/>
                         <outlet property="sendPostButton" destination="uJ6-gc-rL2" id="aVg-wp-gSO"/>
                         <outlet property="titleTextView" destination="94b-Gg-NR2" id="V6I-Q2-Vrx"/>
@@ -199,6 +215,7 @@
     </scenes>
     <resources>
         <image name="18Button" width="873" height="512"/>
+        <image name="keyboard_hide" width="192" height="192"/>
         <image name="photo_solid" width="24" height="24"/>
         <image name="tux" width="56" height="56"/>
     </resources>
