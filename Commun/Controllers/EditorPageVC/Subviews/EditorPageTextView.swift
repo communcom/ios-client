@@ -65,7 +65,8 @@ class EditorPageTextView: RTViewAttachmentTextView {
         if let image = image {
             let attachmentType = TextAttachment.AttachmentType.image(image: image, urlString: nil, description: description)
             textView.insertText("\n\n")
-            let mediaView = MediaView(frame: CGRect(x: 0, y: 8, width: frame.size.width, height: image.size.height * frame.size.width / image.size.width + 50))
+            let newWidth = frame.size.width - 2
+            let mediaView = MediaView(frame: CGRect(x: 0, y: 0, width: newWidth, height: image.size.height * newWidth / image.size.width + 50))
             mediaView.showCloseButton = false
             mediaView.setUpWithAttachmentType(attachmentType)
             
@@ -99,7 +100,8 @@ class EditorPageTextView: RTViewAttachmentTextView {
                 if let image = image {
                     let attachmentType = TextAttachment.AttachmentType.image(image: image, urlString: urlString, description: description)
                     strongSelf.textView.insertText("\n\n")
-                    let mediaView = MediaView(frame: CGRect(x: 0, y: 8, width: strongSelf.frame.size.width, height: image.size.height * strongSelf.frame.size.width / image.size.width + 50))
+                    let newWidth = strongSelf.frame.size.width - 2
+                    let mediaView = MediaView(frame: CGRect(x: 0, y: 0, width: newWidth, height: image.size.height * newWidth / image.size.width + 50))
                     mediaView.setUpWithAttachmentType(attachmentType)
                     mediaView.showCloseButton = false
                     

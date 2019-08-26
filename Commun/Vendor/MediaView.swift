@@ -19,7 +19,7 @@ class MediaView: UIView {
     weak var delegate: MediaViewDelegate?
     var showCloseButton = true {
         didSet {
-            closeButton.isHidden = showCloseButton
+            closeButton.isHidden = !showCloseButton
         }
     }
     
