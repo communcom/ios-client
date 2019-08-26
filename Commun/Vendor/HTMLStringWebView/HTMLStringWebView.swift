@@ -117,7 +117,7 @@ class HTMLStringWebView: UIWebView {
                 
                 if let regex = try? NSRegularExpression(pattern: "(?![\">])\(NSRegularExpression.escapedPattern(for: originals[index]))(?![\"<])", options: .caseInsensitive) {
                     result = regex.stringByReplacingMatches(in: result, templateForEach: { (match) -> String in
-                        return "<a href=\"\(urlString)\">\(originals[index]))</a>"
+                        return "<a href=\"\(urlString)\">\(originals[index])</a>"
                     })
                 }
                 
