@@ -46,11 +46,15 @@ class EditorPageViewModel {
 
         // get attachments
         mutableAS.beginEditing()
+        var offset = 0
         var attachments = [TextAttachment]()
         attributedString.enumerateAttribute(.attachment, in: NSMakeRange(0, attributedString.length), options: []) { (value, range, stop) in
             if let attachment = value as? TextAttachment {
                 attachments.append(attachment)
-                mutableAS.replaceCharacters(in: range, with: attachment.placeholderText)
+                var newRange = range
+                newRange.location += offset
+                mutableAS.replaceCharacters(in: newRange, with: attachment.placeholderText)
+                offset += attachment.placeholderText.count - newRange.length
             }
         }
         mutableAS.endEditing()
