@@ -21,8 +21,8 @@ extension NSRegularExpression {
         let originals = matchedStrings(in: string)
         var result = string
         
-        for index in 0..<originals.count {
-            result = result.replacingOccurrences(of: originals[index], with: templateForEach(originals[index]))
+        for original in originals {
+            result = result.replacingOccurrences(of: original, with: templateForEach(original))
         }
         return result
     }
