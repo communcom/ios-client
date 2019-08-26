@@ -106,10 +106,10 @@ class HTMLStringWebView: UIWebView {
                         }
                         
                         if let description = description, description.count > 0 {
-                            return "<a href=\"\(urlString)\">\(description))</a>"
+                            return "<a href=\"\(urlString)\">\(description)</a>"
                         }
                         
-                        return "<a href=\"\(urlString)\">\(originals[index]))</a>"
+                        return "<a href=\"\(urlString)\">\(originals[index])</a>"
                     }
                     
                     result = regex1.stringByReplacingMatches(in: result, templateForEach: resultTemplate)
