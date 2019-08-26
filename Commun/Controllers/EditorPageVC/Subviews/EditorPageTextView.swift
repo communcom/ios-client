@@ -22,6 +22,15 @@ class EditorPageTextView: RTViewAttachmentTextView {
     // MARK: - Class Initialization
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+        commonInit()
+    }
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        commonInit()
+    }
+    
+    func commonInit() {
         setUpExpandable()
         textContainerInset = UIEdgeInsets(top: 10, left: 16, bottom: 10, right: 16)
     }
@@ -54,14 +63,17 @@ class EditorPageTextView: RTViewAttachmentTextView {
     func addImage(_ image: UIImage? = nil, urlString: String? = nil, description: String? = nil) {
         // set image
         if let image = image {
+            let attachmentType = TextAttachment.AttachmentType.image(image: image, urlString: nil, description: description)
+            textView.insertText("\n\n")
+            let mediaView = MediaView(frame: CGRect(x: 0, y: 8, width: frame.size.width, height: image.size.height * frame.size.width / image.size.width + 50))
+            mediaView.showCloseButton = false
+            mediaView.setUpWithAttachmentType(attachmentType)
             
-            let oldWidth = image.size.width
-            let scaleFactor = oldWidth / (frame.size.width - 10)
-            let newImage = UIImage(cgImage: image.cgImage!, scale: scaleFactor, orientation: .up)
-            guard let textAttachment = TextAttachment(view: UIImageView(image: newImage)) else {return}
-
-            textAttachment.type = .image(image: image, urlString: nil, description: description)
+            guard let textAttachment = TextAttachment(view: mediaView) else {return}
+            textAttachment.type = attachmentType
+            
             insert(textAttachment)
+            textView.insertText("\n")
             
         } else if let urlString = urlString,
             let url = URL(string: urlString) {
@@ -85,16 +97,21 @@ class EditorPageTextView: RTViewAttachmentTextView {
                 
                 // attach image
                 if let image = image {
-                    let oldWidth = image.size.width
-                    let scaleFactor = oldWidth / (strongSelf.frame.size.width - 10)
-                    let newImage = UIImage(cgImage: image.cgImage!, scale: scaleFactor, orientation: .up)
-                    textAttachment.attachedView = UIImageView(image: newImage)
-                    strongSelf.insert(textAttachment, at: UInt(location))
+                    let attachmentType = TextAttachment.AttachmentType.image(image: image, urlString: urlString, description: description)
+                    strongSelf.textView.insertText("\n\n")
+                    let mediaView = MediaView(frame: CGRect(x: 0, y: 8, width: strongSelf.frame.size.width, height: image.size.height * strongSelf.frame.size.width / image.size.width + 50))
+                    mediaView.setUpWithAttachmentType(attachmentType)
+                    mediaView.showCloseButton = false
+                    
+                    guard let textAttachment = TextAttachment(view: mediaView) else {return}
+                    textAttachment.type = attachmentType
+                    
+                    strongSelf.insert(textAttachment)
+                    strongSelf.textView.insertText("\n")
                 } else {
                     strongSelf.parentViewController?.showErrorWithLocalizedMessage("could not load image".localized().uppercaseFirst + "with URL".localized() + " " + urlString)
                 }
             })
-            
         } else {
             parentViewController?.showGeneralError()
         }

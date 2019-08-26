@@ -109,6 +109,7 @@
 		3BB86B4922734AE4008F1C64 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BB86B4822734AE4008F1C64 /* UIColor.swift */; };
 		3BC3CA3322CA297900A893DC /* WelcomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BC3CA3222CA297900A893DC /* WelcomeVC.swift */; };
 		3BD50564230D42C40049571C /* NSRegularExpressionExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BD50563230D42C40049571C /* NSRegularExpressionExtension.swift */; };
+		3BD50573231387EB00F3F9D3 /* MediaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BD50572231387EB00F3F9D3 /* MediaView.swift */; };
 		3BDD99FE228DA59900B2A1DA /* ExpandableTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BDD99FD228DA59900B2A1DA /* ExpandableTextView.swift */; };
 		3BDD9A04228DBEC200B2A1DA /* CommentForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BDD9A03228DBEC200B2A1DA /* CommentForm.swift */; };
 		3BDD9A06228DBED000B2A1DA /* CommentForm.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3BDD9A05228DBED000B2A1DA /* CommentForm.xib */; };
@@ -336,6 +337,7 @@
 		3BB86B4822734AE4008F1C64 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		3BC3CA3222CA297900A893DC /* WelcomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeVC.swift; sourceTree = "<group>"; };
 		3BD50563230D42C40049571C /* NSRegularExpressionExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSRegularExpressionExtension.swift; sourceTree = "<group>"; };
+		3BD50572231387EB00F3F9D3 /* MediaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaView.swift; sourceTree = "<group>"; };
 		3BDD99FD228DA59900B2A1DA /* ExpandableTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandableTextView.swift; sourceTree = "<group>"; };
 		3BDD9A03228DBEC200B2A1DA /* CommentForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentForm.swift; sourceTree = "<group>"; };
 		3BDD9A05228DBED000B2A1DA /* CommentForm.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CommentForm.xib; sourceTree = "<group>"; };
@@ -718,7 +720,6 @@
 		3BEC38E8230FA18900662374 /* Subviews */ = {
 			isa = PBXGroup;
 			children = (
-				3BEC38EB230FED2B00662374 /* TextAttachment.swift */,
 				3BEC38E6230FA17F00662374 /* EditorPageTextView.swift */,
 			);
 			path = Subviews;
@@ -995,6 +996,8 @@
 				3BF53CE2230B93990082464F /* HTMLStringWebView */,
 				3B11911E2302B9B9008D0417 /* SwipeNavigationController.swift */,
 				3B11913823040A40008D0417 /* PreviewView.swift */,
+				3BD50572231387EB00F3F9D3 /* MediaView.swift */,
+				3BEC38EB230FED2B00662374 /* TextAttachment.swift */,
 			);
 			path = Vendor;
 			sourceTree = "<group>";
@@ -1564,6 +1567,7 @@
 				3BC3CA3322CA297900A893DC /* WelcomeVC.swift in Sources */,
 				57F5CFC22244E3BE005A09AE /* PostPageVC+Rx.swift in Sources */,
 				3BDD9A04228DBEC200B2A1DA /* CommentForm.swift in Sources */,
+				3BD50573231387EB00F3F9D3 /* MediaView.swift in Sources */,
 				3BAE92A922DE553D00E97AE8 /* ScalableLayoutConstraint.swift in Sources */,
 				3BB342B422CA7412009546B2 /* CreateBioVC.swift in Sources */,
 				3B5CB30522A5752100757533 /* ListViewModelType.swift in Sources */,
