@@ -18,10 +18,33 @@ class EditorPageViewModel {
     var embeds = [[String: Any]]()
     
     func sendPost(with title: String, text attributedString: NSAttributedString) -> Single<SendPostCompletion> {
-        // extract image
         let mutableAS = NSMutableAttributedString(attributedString: attributedString)
         
-        // get attachment
+        // Prepare embeds
+        embeds = [[String: Any]]()
+        
+        // Prepare tags
+        var tags = mutableAS.string.getTags()
+        
+        if isAdult.value {
+            tags.append("#18+")
+        }
+        
+        // Detect links
+        let types = NSTextCheckingResult.CheckingType.link
+        if let detector = try? NSDataDetector(types: types.rawValue) {
+            let matches = detector.matches(in: mutableAS.string, options: .reportCompletion, range: NSMakeRange(0, mutableAS.string.count))
+            for match in matches {
+                guard let urlString = match.url?.absoluteString else {
+                    continue
+                }
+                if embeds.first(where: {($0["url"] as? String) == urlString}) != nil {continue}
+                #warning("Define type")
+                embeds.append(["url": urlString])
+            }
+        }
+
+        // get attachments
         mutableAS.beginEditing()
         var attachments = [TextAttachment]()
         attributedString.enumerateAttribute(.attachment, in: NSMakeRange(0, attributedString.length), options: []) { (value, range, stop) in
@@ -55,25 +78,6 @@ class EditorPageViewModel {
                 }
             }
         ).take(1).asSingle()
-        
-        // Prepare embeds
-        embeds = [[String: Any]]()
-        
-        for word in mutableAS.string.components(separatedBy: " ") {
-            if word.contains("http://") || word.contains("https://") {
-                if embeds.first(where: {($0["url"] as? String) == word}) != nil {continue}
-                #warning("Define type")
-                embeds.append(["url": word])
-            }
-        }
-        
-        
-        // Prepare tags
-        var tags = mutableAS.string.getTags()
-
-        if isAdult.value {
-            tags.append("#18+")
-        }
         
         // Send request
         return uploadImages
