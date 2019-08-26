@@ -22,6 +22,7 @@ class EditorPageViewModel {
         let mutableAS = NSMutableAttributedString(attributedString: attributedString)
         
         // get attachment
+        mutableAS.beginEditing()
         var attachments = [TextAttachment]()
         attributedString.enumerateAttribute(.attachment, in: NSMakeRange(0, attributedString.length), options: []) { (value, range, stop) in
             if let attachment = value as? TextAttachment {
@@ -29,6 +30,7 @@ class EditorPageViewModel {
                 mutableAS.replaceCharacters(in: range, with: attachment.placeholderText)
             }
         }
+        mutableAS.endEditing()
         
         // parallelly uploading images
         let uploadImages = Observable.zip(
