@@ -40,6 +40,11 @@ class FeedPageVC: UIViewController {
         bindUI()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: animated)
+    }
+    
     func setUpViewModel() {
         viewModel = FeedPageViewModel()
         
