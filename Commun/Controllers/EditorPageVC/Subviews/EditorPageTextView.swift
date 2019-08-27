@@ -61,12 +61,15 @@ class EditorPageTextView: RTViewAttachmentTextView {
     
     // MARK: - Methods
     func addImage(_ image: UIImage? = nil, urlString: String? = nil, description: String? = nil) {
+        // options
+        let rightMargin: CGFloat = 8
+        let heightForDescription: CGFloat = 80
+        
         // set image
         if let image = image {
             let attachmentType = TextAttachment.AttachmentType.image(image: image, urlString: nil, description: description)
-            textView.insertText("\n\n")
-            let newWidth = frame.size.width - 2
-            let mediaView = MediaView(frame: CGRect(x: 0, y: 0, width: newWidth, height: image.size.height * newWidth / image.size.width + 50))
+            let newWidth = frame.size.width - rightMargin
+            let mediaView = MediaView(frame: CGRect(x: 0, y: 0, width: newWidth, height: image.size.height * newWidth / image.size.width + heightForDescription))
             mediaView.showCloseButton = false
             mediaView.setUpWithAttachmentType(attachmentType)
             
@@ -99,9 +102,8 @@ class EditorPageTextView: RTViewAttachmentTextView {
                 // attach image
                 if let image = image {
                     let attachmentType = TextAttachment.AttachmentType.image(image: image, urlString: urlString, description: description)
-                    strongSelf.textView.insertText("\n\n")
-                    let newWidth = strongSelf.frame.size.width - 2
-                    let mediaView = MediaView(frame: CGRect(x: 0, y: 0, width: newWidth, height: image.size.height * newWidth / image.size.width + 50))
+                    let newWidth = strongSelf.frame.size.width - rightMargin
+                    let mediaView = MediaView(frame: CGRect(x: 0, y: 0, width: newWidth, height: image.size.height * newWidth / image.size.width + heightForDescription))
                     mediaView.setUpWithAttachmentType(attachmentType)
                     mediaView.showCloseButton = false
                     

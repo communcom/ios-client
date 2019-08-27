@@ -83,6 +83,7 @@ class MediaView: UIView {
     func commonInit() {
         // setup apperance
         backgroundColor = .white
+        imageView.contentMode = .scaleToFill
         
         // subviews
         addSubview(imageView)

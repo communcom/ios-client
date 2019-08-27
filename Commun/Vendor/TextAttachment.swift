@@ -31,30 +31,30 @@ class TextAttachment: RTViewAttachment {
     // MARK: - Initializers
     override init!(view: UIView!, placeholderText text: String!) {
         super.init(view: view, placeholderText: text)
-        generateUniqueId()
+        commonInit()
     }
     
     override init!(view: UIView!, placeholderText text: String!, fullWidth: Bool) {
         super.init(view: view, placeholderText: text, fullWidth: fullWidth)
-        generateUniqueId()
+        commonInit()
     }
     
     override init!(view: UIView!) {
         super.init(view: view)
-        generateUniqueId()
+        commonInit()
     }
     
     override init(data contentData: Data?, ofType uti: String?) {
         super.init(data: contentData, ofType: uti)
-        generateUniqueId()
+        commonInit()
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        generateUniqueId()
+        commonInit()
     }
     
-    private func generateUniqueId() {
+    private func commonInit() {
         id = TextAttachment.uniqueId
         TextAttachment.uniqueId += 1
     }
