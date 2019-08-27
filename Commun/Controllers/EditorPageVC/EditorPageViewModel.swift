@@ -72,7 +72,7 @@ class EditorPageViewModel {
                     return result + [
                         NetworkService.shared.uploadImage(image!)
                             .do(onSuccess: {imageURL in
-                                mutableAS.mutableString.replaceOccurrences(of: attachment.placeholderText, with: attachment.placeholderText.replacingOccurrences(of: "()", with: "(\(imageURL))"), options: [], range: NSMakeRange(0, mutableAS.mutableString.length))
+                                mutableAS.mutableString.replaceOccurrences(of: attachment.placeholderText, with: attachment.placeholderText.replacingOccurrences(of: "(id=\(attachment.id!))", with: "(\(imageURL))"), options: [], range: NSMakeRange(0, mutableAS.mutableString.length))
                             })
                             .asObservable()
                     ]
