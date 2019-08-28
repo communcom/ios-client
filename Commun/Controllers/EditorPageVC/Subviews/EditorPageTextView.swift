@@ -10,10 +10,11 @@ import Foundation
 import RxSwift
 import RxCocoa
 import SDWebImage
+import CyberSwift
 
 class EditorPageTextView: ExpandableTextView {
     // MARK: - Properties
-    let bag = DisposeBag()
+    private let bag = DisposeBag()
     
     // options
     private let attachmentRightMargin: CGFloat = 10
@@ -40,9 +41,12 @@ class EditorPageTextView: ExpandableTextView {
         let currentAtStr = NSMutableAttributedString(attributedString: attributedText)
         let attachmentAtStr = NSAttributedString(attachment: attachment)
         if let index = index {
-            currentAtStr.insert(attachmentAtStr, at: index)
+            currentAtStr.insert(NSAttributedString(string: "\n"), at: index)
+            currentAtStr.insert(attachmentAtStr, at: index+1)
+            currentAtStr.append(NSAttributedString(string: "\n"))
         } else {
             currentAtStr.append(attachmentAtStr)
+            currentAtStr.append(NSAttributedString(string: "\n"))
         }
         currentAtStr.addAttributes(typingAttributes, range: NSMakeRange(0, currentAtStr.length))
         attributedText = currentAtStr
@@ -92,9 +96,8 @@ class EditorPageTextView: ExpandableTextView {
         attributedString.addAttributes(typingAttributes, range: NSMakeRange(0, attributedString.length))
         attributedText = attributedString
         
-        let imageDownloader = SDWebImageManager.shared().imageDownloader
-        
         // find embeds
+        var singles = [Observable<UIImage>]()
         for match in regex.matchedStrings(in: text) {
             
             let description = match.slicing(from: "[", to: "]")
@@ -102,15 +105,47 @@ class EditorPageTextView: ExpandableTextView {
                 let url         = URL(string: urlString)
             else {continue}
             
-            imageDownloader?.downloadImage(with: url, completed: { [weak self] (image, _, error, _) in
-                guard let strongSelf = self else {return}
-                // attach image
-                if let image = image {
-                    let location = text.nsString.range(of: match).location
+            let downloadImage = downloadImageSingle(url: url)
+                .do(onSuccess: { [weak self] (image) in
+                    guard let strongSelf = self else {return}
+                    let location = strongSelf.text.nsString.range(of: match).location
                     strongSelf.attach(image: image, urlString: urlString, description: description, at: location)
                     strongSelf.removeText(match)
-                }
+                })
+                .asObservable()
+            
+            singles.append(downloadImage)
+        }
+    
+        parentViewController?.navigationController?
+            .showIndetermineHudWithMessage("loading".localized().uppercaseFirst)
+        Observable.zip(singles)
+            .subscribe(onNext: { [weak self] (_) in
+                self?.parentViewController?.navigationController?.hideHud()
+                }, onError: { [weak self] (error) in
+                    self?.parentViewController?.navigationController?.hideHud()
+                    self?.parentViewController?.navigationController?.showError(error)
             })
+            .disposed(by: bag)
+    }
+    
+    private func downloadImageSingle(url: URL) -> Single<UIImage> {
+        guard let imageDownloader = SDWebImageManager.shared().imageDownloader else {
+            return .error(ErrorAPI.unknown)
+        }
+        return Single<UIImage>.create {single in
+            imageDownloader.downloadImage(with: url) { (image, _, error, _) in
+                if let image = image {
+                    single(.success(image))
+                    return
+                }
+                if let error = error {
+                    single(.error(error))
+                    return
+                }
+                single(.error(ErrorAPI.unknown))
+            }
+            return Disposables.create()
         }
     }
 }
