@@ -24,7 +24,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="avatar-ellipse-placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="8so-Us-TH5">
-                                <rect key="frame" x="97" y="343" width="220" height="220"/>
+                                <rect key="frame" x="97" y="287" width="220" height="220"/>
+                                <accessibility key="accessibilityConfiguration" identifier="PickupAvatarUserAvatarImageView" label="PickupAvatarUserAvatarImageView">
+                                    <bool key="isElement" value="YES"/>
+                                </accessibility>
                                 <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="220" id="S9R-EG-dRU" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
@@ -40,7 +43,8 @@
                                 </connections>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gpy-Rf-usg">
-                                <rect key="frame" x="178" y="426.66666666666669" width="58" height="53"/>
+                                <rect key="frame" x="178" y="370.66666666666669" width="58" height="53"/>
+                                <accessibility key="accessibilityConfiguration" identifier="PickupAvatarChooseImageButton" label="PickupAvatarChooseImageButton"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="53" id="JzV-YF-HeM" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                                     <constraint firstAttribute="width" constant="58" id="VMd-Wi-Jp2" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
@@ -52,6 +56,7 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L5W-u9-L4u" customClass="BlankButton" customModule="Commun" customModuleProvider="target">
                                 <rect key="frame" x="42" y="792" width="330" height="30"/>
+                                <accessibility key="accessibilityConfiguration" identifier="PickupAvatarSkipButton" label="PickupAvatarSkipButton"/>
                                 <state key="normal" title="skip"/>
                                 <connections>
                                     <action selector="skipButtonDidTouch:" destination="eky-07-OKd" eventType="touchUpInside" id="oKE-0V-ybz"/>
@@ -59,6 +64,7 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lv0-9t-vki" customClass="StepButton" customModule="Commun" customModuleProvider="target">
                                 <rect key="frame" x="42" y="713" width="330" height="56"/>
+                                <accessibility key="accessibilityConfiguration" identifier="PickupAvatarNextButton" label="PickupAvatarNextButton"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="56" id="186-Dn-6G5" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                                 </constraints>
@@ -74,6 +80,7 @@
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pick a profile picture" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="nWI-gk-ZqF">
                                 <rect key="frame" x="16" y="100" width="382" height="40.666666666666657"/>
+                                <accessibility key="accessibilityConfiguration" identifier="PickupAvatarTitleLabel" label="PickupAvatarTitleLabel"/>
                                 <fontDescription key="fontDescription" name="SFProDisplay-Bold" family="SF Pro Display" pointSize="34"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -124,12 +131,14 @@
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0/100" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gBp-pN-Bw1">
                                 <rect key="frame" x="359" y="212" width="35" height="16"/>
+                                <accessibility key="accessibilityConfiguration" identifier="CreateBioCountLabel" label="CreateBioCountLabel"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9ES-MA-cOv" customClass="StepButton" customModule="Commun" customModuleProvider="target">
                                 <rect key="frame" x="42" y="713" width="330" height="56"/>
+                                <accessibility key="accessibilityConfiguration" identifier="CreateBioNextButton" label="CreateBioNextButton"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="56" id="luH-9F-cx4" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                                 </constraints>
@@ -145,6 +154,7 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nu6-hE-aK0" customClass="BlankButton" customModule="Commun" customModuleProvider="target">
                                 <rect key="frame" x="42" y="792" width="330" height="30"/>
+                                <accessibility key="accessibilityConfiguration" identifier="CreateBioSkipButton" label="CreateBioSkipButton"/>
                                 <state key="normal" title="skip"/>
                                 <connections>
                                     <action selector="skipButtonDidTouch:" destination="9Z9-bd-gq9" eventType="touchUpInside" id="Bte-an-yu1"/>
@@ -152,6 +162,7 @@
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Describe yourself" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="IgH-PI-taQ">
                                 <rect key="frame" x="16" y="100" width="382" height="40.666666666666657"/>
+                                <accessibility key="accessibilityConfiguration" identifier="CreateBioTitleLabel" label="CreateBioTitleLabel"/>
                                 <fontDescription key="fontDescription" name="SFProDisplay-Bold" family="SF Pro Display" pointSize="34"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -159,6 +170,7 @@
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="6by-68-hfJ" customClass="ExpandableTextView" customModule="Commun" customModuleProvider="target">
                                 <rect key="frame" x="16" y="156.33333333333334" width="382" height="47.666666666666657"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <accessibility key="accessibilityConfiguration" identifier="CreateBioTextView" label="CreateBioTextView"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="47.5" id="0gg-fz-IHe" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                                 </constraints>
@@ -243,6 +255,9 @@
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="boarding-pincode" translatesAutoresizingMaskIntoConstraints="NO" id="f2i-rg-CZj">
                                         <rect key="frame" x="27" y="25.666666666666742" width="18" height="18"/>
+                                        <accessibility key="accessibilityConfiguration" identifier="BoardingViewPincodeImageView" label="BoardingViewPincodeImageView">
+                                            <bool key="isElement" value="YES"/>
+                                        </accessibility>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="18" id="5zy-mm-Ifz" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                                             <constraint firstAttribute="width" constant="18" id="FWs-Ts-vYT" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
@@ -250,18 +265,23 @@
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Set up Passcode" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pIx-ue-p0M">
                                         <rect key="frame" x="72" y="12" width="236" height="22"/>
+                                        <accessibility key="accessibilityConfiguration" identifier="BoardingViewPasscodeLabel" label="BoardingViewPasscodeLabel"/>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add short PIN code" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y8T-66-jfZ">
                                         <rect key="frame" x="72" y="38" width="236" height="19.333333333333329"/>
+                                        <accessibility key="accessibilityConfiguration" identifier="BoardingViewPincodeLabel" label="BoardingViewPincodeLabel"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="boarding-next-arrow" translatesAutoresizingMaskIntoConstraints="NO" id="KSe-Or-7OX">
                                         <rect key="frame" x="324" y="24.666666666666742" width="10" height="20"/>
+                                        <accessibility key="accessibilityConfiguration" identifier="BoardingViewArrowImageView" label="BoardingViewArrowImageView">
+                                            <bool key="isElement" value="YES"/>
+                                        </accessibility>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="20" id="6M2-vf-I1u" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                                             <constraint firstAttribute="width" constant="10" id="VJU-Xj-Jtz" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
@@ -269,6 +289,9 @@
                                     </imageView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <accessibility key="accessibilityConfiguration" identifier="BoardingView" label="BoardingView">
+                                    <bool key="isElement" value="YES"/>
+                                </accessibility>
                                 <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstItem="KSe-Or-7OX" firstAttribute="leading" secondItem="pIx-ue-p0M" secondAttribute="trailing" constant="16" id="2Bc-OM-qNO" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
@@ -343,6 +366,7 @@
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SmP-oF-rry" customClass="BlankButton" customModule="Commun" customModuleProvider="target">
                                 <rect key="frame" x="42" y="792" width="330" height="30"/>
+                                <accessibility key="accessibilityConfiguration" identifier="EnableBiometricsSkipButton" label="EnableBiometricsSkipButton"/>
                                 <state key="normal" title="skip"/>
                                 <connections>
                                     <action selector="laterButtonDidTouch:" destination="0mk-Sc-da2" eventType="touchUpInside" id="xzG-8g-JZd"/>
@@ -352,6 +376,7 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="upS-wF-nAs" customClass="StepButton" customModule="Commun" customModuleProvider="target">
                                 <rect key="frame" x="42" y="713" width="330" height="56"/>
+                                <accessibility key="accessibilityConfiguration" identifier="EnableBiometricsEnableButton" label="EnableBiometricsEnableButton"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="56" id="hyK-UC-gkS" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                                 </constraints>
@@ -369,6 +394,9 @@
                             </button>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="boarding-touch-id" translatesAutoresizingMaskIntoConstraints="NO" id="ewj-C2-ZgI">
                                 <rect key="frame" x="157" y="283" width="100" height="100"/>
+                                <accessibility key="accessibilityConfiguration" identifier="EnableBiometricsImageView" label="EnableBiometricsImageView">
+                                    <bool key="isElement" value="YES"/>
+                                </accessibility>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="100" id="Bop-aq-tPy" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                                     <constraint firstAttribute="height" constant="100" id="n1Y-gY-0eC" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
@@ -376,12 +404,14 @@
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enable Touch ID" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Efb-oZ-TTf">
                                 <rect key="frame" x="72" y="415" width="270" height="20.333333333333314"/>
+                                <accessibility key="accessibilityConfiguration" identifier="EnableBiometricsHeaderLabel" label="EnableBiometricsHeaderLabel"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enable Touch ID to secure your transactions" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f1V-oU-EMs">
                                 <rect key="frame" x="42" y="451.33333333333331" width="330" height="40.666666666666686"/>
+                                <accessibility key="accessibilityConfiguration" identifier="EnableBiometricsDescriptionLabel" label="EnableBiometricsDescriptionLabel"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
@@ -428,6 +458,7 @@
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IzK-YM-F6C" customClass="BlankButton" customModule="Commun" customModuleProvider="target">
                                 <rect key="frame" x="42" y="792" width="330" height="30"/>
+                                <accessibility key="accessibilityConfiguration" identifier="KeysLaterButton" label="KeysLaterButton"/>
                                 <state key="normal" title="later"/>
                                 <connections>
                                     <action selector="laterButtonDidTouch:" destination="0mk-Sc-da2" eventType="touchUpInside" id="qza-Z6-efy"/>
@@ -436,6 +467,7 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P2U-8O-KWP" customClass="StepButton" customModule="Commun" customModuleProvider="target">
                                 <rect key="frame" x="42" y="713" width="330" height="56"/>
+                                <accessibility key="accessibilityConfiguration" identifier="KeysiCloudBackupButton" label="KeysiCloudBackupButton"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="56" id="o5R-9M-hZP" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                                 </constraints>

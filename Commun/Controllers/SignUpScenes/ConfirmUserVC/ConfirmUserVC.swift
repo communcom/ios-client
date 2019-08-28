@@ -20,12 +20,20 @@ class ConfirmUserVC: UIViewController, SignUpRouter {
     
     var resendTimer: Timer?
     var resendSeconds: Int = 0
+    static var counter: Int = 0
     
-    let pinCodeInputView: PinCodeInputView<ItemView> = .init(
-        digit: numberOfDigits,
-        itemSpacing: 12,
-        itemFactory: {
-            return ItemView()
+    let pinCodeInputView: PinCodeInputView<ItemView> = .init(digit:         numberOfDigits,
+                                                             itemSpacing:   12,
+                                                             itemFactory:   {
+                                                                let itemView = ItemView()
+                                                                let autoTestMarker = String(format: "ConfirmUserPinCodeInputView-%i", counter)
+                                                                
+                                                                // For autotest
+                                                                itemView.accessibilityLabel = autoTestMarker
+                                                                itemView.accessibilityIdentifier = autoTestMarker
+                                                                counter += 1
+                                                                
+                                                                return itemView
     })
 
     
@@ -80,9 +88,9 @@ class ConfirmUserVC: UIViewController, SignUpRouter {
         })
         
         self.pinCodeInputView.set(appearance: .init(itemSize:         CGSize(width: 48.0 * Config.widthRatio, height: 56.0 * Config.heightRatio),
-                                                    font:             .init(descriptor: UIFontDescriptor(name:  "SFProText-Regular",
-                                                                                                         size:  26.0 * Config.widthRatio),
-                                                                            size:   26.0 * Config.heightRatio),
+                                                    font:             .init(descriptor:     UIFontDescriptor(name:  "SFProText-Regular",
+                                                                                                             size:  26.0 * Config.widthRatio),
+                                                                            size:           26.0 * Config.heightRatio),
                                                     textColor:        .black,
                                                     backgroundColor:  UIColor(hexString: "F3F5FA")!,
                                                     cursorColor:      UIColor(red: 69/255, green: 108/255, blue: 1, alpha: 1),
