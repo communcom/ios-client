@@ -117,6 +117,8 @@ class EditorPageTextView: ExpandableTextView {
             singles.append(downloadImage)
         }
     
+        guard singles.count > 0 else {return}
+        
         parentViewController?.navigationController?
             .showIndetermineHudWithMessage("loading".localized().uppercaseFirst)
         Observable.zip(singles)
