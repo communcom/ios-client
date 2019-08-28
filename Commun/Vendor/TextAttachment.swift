@@ -29,7 +29,14 @@ class TextAttachment: NSTextAttachment {
     }
     
     var placeholderText: String {
-        return "[\(desc ?? "")](\(urlString ?? "id=\(id)"))"
+        let placeholder = "[\(desc ?? "")](\(urlString ?? "id=\(id)"))"
+        guard let type = type else {return placeholder}
+        switch type {
+        case .image(_):
+            return "!\(placeholder)"
+        case .url:
+            return placeholder
+        }
     }
 }
 
