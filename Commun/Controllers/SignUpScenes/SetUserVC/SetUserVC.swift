@@ -70,7 +70,7 @@ class SetUserVC: UIViewController, SignUpRouter {
     }
     
     @IBAction func buttonNextDidTouch(_ sender: Any) {
-        guard let phone = KeychainManager.currentUser()?.phoneNumber else {
+        guard KeychainManager.currentUser()?.phoneNumber != nil else {
             resetSignUpProcess()
             return
         }
@@ -84,7 +84,7 @@ class SetUserVC: UIViewController, SignUpRouter {
         
         showIndetermineHudWithMessage("setting username".localized().uppercaseFirst + "...")
         
-        viewModel.setUser(userName: userName, phone: phone)
+        viewModel.set(userName: userName)
             .catchError({ (error) -> Single<String> in
                 if let error = error as? ErrorAPI {
                     if error.caseInfo.message == "Invalid step taken",

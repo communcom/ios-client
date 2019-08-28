@@ -18,7 +18,7 @@ class SetUserViewModel {
         return !userName.isEmpty && userName.count <= 12 && userName.rangeOfCharacter(from: characterset.inverted) == nil
     }
     
-    func setUser(userName: String, phone: String) -> Single<String> {
+    func set(userName: String) -> Single<String> {
         return RestAPIManager.instance.rx.setUserName(userName)
             .map {_ in userName}
     }
