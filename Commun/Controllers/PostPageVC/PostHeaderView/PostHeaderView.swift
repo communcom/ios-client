@@ -85,9 +85,7 @@ class PostHeaderView: UIView, UIWebViewDelegate, PostController {
         postTitleLabel.text = post.content.title
         
         // Show content
-        let html = "<section style=\"word-break: hyphenate; -webkit-hyphens: auto; font-family: -apple-system; text-align: justify; font-size: 17\"> \(post.content.body.full ?? "") </section>"
-        
-        contentWebView.loadHTMLString(html, baseURL: nil)
+        contentWebView.loadHTMLString(post.content.body.full ?? "", baseURL: nil)
         contentWebView.delegate = self
         contentWebView.scrollView.isScrollEnabled = false
         contentWebView.scrollView.bouncesZoom = false

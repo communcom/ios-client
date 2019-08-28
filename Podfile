@@ -52,5 +52,6 @@ target 'Commun' do
   
   pod 'AppImageViewer'
   pod 'SwiftLinkPreview', '~> 3.0.1'
+  pod 'Down'
   
 end

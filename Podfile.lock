@@ -27,6 +27,7 @@ PODS:
     - SwiftyJSON (~> 4.0)
   - DateToolsSwift (4.0.0)
   - Differentiator (3.1.0)
+  - Down (0.8.6)
   - DZNEmptyDataSet (1.8.1)
   - eosswift (1.6.0):
     - BigInt (~> 3.1.0)
@@ -145,6 +146,7 @@ DEPENDENCIES:
   - Crashlytics
   - CyberSwift (from `https://github.com/GolosChain/cyberSwift.git`)
   - DateToolsSwift
+  - Down
   - DZNEmptyDataSet
   - Fabric
   - Firebase/Core
@@ -179,6 +181,7 @@ SPEC REPOS:
     - CryptoSwift
     - DateToolsSwift
     - Differentiator
+    - Down
     - DZNEmptyDataSet
     - eosswift
     - Fabric
@@ -245,6 +248,7 @@ SPEC CHECKSUMS:
   CyberSwift: c2e49f8e37450d53d67484cd71147ddc950ef7cb
   DateToolsSwift: 875d97ff9e3a5d54abdd67a269b3f51c757b71ab
   Differentiator: be49ca3408f0ecfc761e4c7763d20c62be01b9ad
+  Down: 3c758f2388fa739663023f400e742a988fa1e21d
   DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
   eosswift: 22bc931fd65bbd446c3f828233b8fd2916cec4a7
   Fabric: 706c8b8098fff96c33c0db69cbf81f9c551d0d74
@@ -285,6 +289,6 @@ SPEC CHECKSUMS:
   TTTAttributedLabel: 8cffe8e127e4e82ff3af1e5386d4cd0ad000b656
   UIImageView-Letters: f62db28076797adf3560ab7410647dc6899b9eef
 
-PODFILE CHECKSUM: 51f166254c8ec8096589f80276398bf03e6b8b55
+PODFILE CHECKSUM: 00a9a2aaf90b421b521f1c23b183c4e370024cc4
 
 COCOAPODS: 1.7.5
