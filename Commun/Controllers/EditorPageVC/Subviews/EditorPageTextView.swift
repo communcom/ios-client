@@ -89,7 +89,7 @@ class EditorPageTextView: ExpandableTextView {
     
     func parseText(_ text: String?) {
         guard let text = text,
-            let regex = try? NSRegularExpression(pattern: "\\[.*\\]\\(.*\\)", options: .caseInsensitive)
+            let regex = try? NSRegularExpression(pattern: "\\!\\[.*\\]\\(.*\\)", options: .caseInsensitive)
         else {return}
         // assign text
         let attributedString = NSMutableAttributedString(string: text)
