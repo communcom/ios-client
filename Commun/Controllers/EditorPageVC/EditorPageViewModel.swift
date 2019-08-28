@@ -89,6 +89,17 @@ class EditorPageViewModel {
                 UIApplication.topViewController()?.navigationController?
                     .showIndetermineHudWithMessage("upload image".localized().uppercaseFirst)
             })
+            .catchError({ (error) -> Single<[String]> in
+                if let error = error as? RxError {
+                    switch error {
+                    case .noElements:
+                        return .just([])
+                    default:
+                        break
+                    }
+                }
+                throw error
+            })
             .flatMap({ (urls) in
                 for url in urls {
                     self.embeds.append([
