@@ -49,12 +49,12 @@ extension EditorPageVC {
                 }
                 
                 alert.addAction(UIAlertAction(title: "add".localized().uppercaseFirst, style: .cancel, handler: { _ in
-                    strongSelf.contentView.addImage(image, description: alert.textFields?.first?.text)
+                    strongSelf.contentTextView.addImage(image, description: alert.textFields?.first?.text)
                     pickerVC.dismiss(animated: true, completion: nil)
                 }))
                 
                 alert.addAction(UIAlertAction(title: "cancel".localized().uppercaseFirst, style: .default, handler: {_ in
-                    strongSelf.contentView.addImage(image)
+                    strongSelf.contentTextView.addImage(image)
                     pickerVC.dismiss(animated: true, completion: nil)
                 }))
                 
@@ -79,7 +79,7 @@ extension EditorPageVC {
         
         alert.addAction(UIAlertAction(title: "add".localized().uppercaseFirst, style: .cancel, handler: {[weak self] _ in
             guard let urlString = alert.textFields?.first?.text else { return }
-            self?.contentView.addImage(nil, urlString: urlString, description: alert.textFields?.last?.text)
+            self?.contentTextView.addImage(nil, urlString: urlString, description: alert.textFields?.last?.text)
         }))
         
         alert.addAction(UIAlertAction(title: "cancel".localized().uppercaseFirst, style: .default, handler: nil))
@@ -91,7 +91,7 @@ extension EditorPageVC {
         guard let viewModel = viewModel else {return}
         self.view.endEditing(true)
         
-        viewModel.sendPost(with: titleTextView.text, text: contentView.textView.attributedText)
+        viewModel.sendPost(with: titleTextView.text, text: contentTextView.attributedText)
             .do(onSubscribe: {
                 self.navigationController?.showIndetermineHudWithMessage("sending post".localized().uppercaseFirst)
             })
@@ -113,7 +113,7 @@ extension EditorPageVC {
                 // if editing post
                 if var post = self.viewModel?.postForEdit {
                     post.content.title = self.titleTextView.text
-                    post.content.body.full = self.contentView.textView.text
+                    post.content.body.full = self.contentTextView.text
                     if let imageURL = self.viewModel?.embeds.first(where: {($0["type"] as? String) == "photo"})?["url"] as? String,
                         let embeded = post.content.embeds.first,
                         embeded.type == "photo" {

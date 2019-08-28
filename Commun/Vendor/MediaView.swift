@@ -128,59 +128,47 @@ class MediaView: UIView {
         delegate?.mediaViewCloseButtonDidTouch()
     }
     
-    func setUpWithAttachmentType(
-        _ attachmentType: TextAttachment.AttachmentType,
-        completion: ((Error?)->Void)? = nil
-    ) {
-        switch attachmentType {
-        case .image(let image, let url, let description):
-            // Set description
-            titleLabel.text = description
-            urlLabel.text = url
+    func setUp(image: UIImage?, url: String? = nil, description: String? = nil, completion: ((Error?)->Void)? = nil) {
+        // Set description
+        titleLabel.text = description
+        urlLabel.text = url
+        // Set image
+        if let image = image {
+            imageView.image = image
+            completion?(nil)
+        } else if let urlString = url,
+            let url = URL(string: urlString){
+            imageView.sd_setImageCachedError(with: url, completion: completion)
+        }
+    }
+    
+    func setUp(url: String, description: String? = nil, completion: ((Error?)->Void)? = nil) {
+        // Get preview
+        let slp = SwiftLinkPreview(cache: InMemoryCache())
+        
+        // handlers
+        let successHandler: ((Response) -> Void)  = {[weak self] response in
+            guard let strongSelf = self else {return}
             
-            // Set image
-            if let image = image {
-                imageView.image = image
-                completion?(nil)
-            } else if let urlString = url,
-                let url = URL(string: urlString){
-                imageView.showLoader()
-                imageView.sd_setImage(with: url) { [weak self] (image, error, _, _) in
-                    self?.imageView.hideLoader()
-                    if error != nil {
-                        self?.imageView.image = UIImage(named: "image-not-found")
-                    }
-                    completion?(error)
-                }
-            }
-        case .url(let url, _):
-            // Get preview
-            let slp = SwiftLinkPreview(cache: InMemoryCache())
-            
-            // handlers
-            let successHandler: ((Response) -> Void)  = {[weak self] response in
-                guard let strongSelf = self else {return}
-                
-                if let imageUrlString = response.image,
-                    let imageUrl = URL(string: imageUrlString) {
-                    strongSelf.imageView.sd_setImageCachedError(with: imageUrl, completion: completion)
-                }
-                
-                strongSelf.titleLabel.text = response.title
-                strongSelf.urlLabel.text = response.canonicalUrl
+            if let imageUrlString = response.image,
+                let imageUrl = URL(string: imageUrlString) {
+                strongSelf.imageView.sd_setImageCachedError(with: imageUrl, completion: completion)
             }
             
-            let errorHandler: ((PreviewError) -> Void) = {error in
-                completion?(error)
-            }
-            
-            if let cached = slp.cache.slp_getCachedResponse(url: url) {
-                // Do whatever with the cached response
-                successHandler(cached)
-            } else {
-                // Perform preview otherwise
-                cancelablePreview = slp.preview(url, onSuccess: successHandler, onError: errorHandler)
-            }
+            strongSelf.titleLabel.text = response.title
+            strongSelf.urlLabel.text = response.canonicalUrl
+        }
+        
+        let errorHandler: ((PreviewError) -> Void) = {error in
+            completion?(error)
+        }
+        
+        if let cached = slp.cache.slp_getCachedResponse(url: url) {
+            // Do whatever with the cached response
+            successHandler(cached)
+        } else {
+            // Perform preview otherwise
+            cancelablePreview = slp.preview(url, onSuccess: successHandler, onError: errorHandler)
         }
     }
 }

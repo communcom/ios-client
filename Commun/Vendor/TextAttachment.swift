@@ -7,55 +7,47 @@
 //
 
 import Foundation
-import RTViewAttachment
 
-class TextAttachment: RTViewAttachment {
-    private static var uniqueId = 0
+class TextAttachment: NSTextAttachment {
     enum AttachmentType {
-        case image(image: UIImage?, urlString: String?, description: String?)
-        case url(url: String, description: String?)
+        case image(originalImage: UIImage?), url
     }
-    var id: Int!
-    var type: AttachmentType? {
+    
+    private static var uniqueId = 0
+    lazy var id: Int = {
+        let id = TextAttachment.uniqueId
+        TextAttachment.uniqueId += 1
+        return id
+    }()
+    var type: AttachmentType?
+    var desc: String?
+    var urlString: String?
+    var view: UIView? {
         didSet {
-            guard let type = type else {return}
-            switch type {
-            case .image(_, let urlString, let description):
-                placeholderText = "[\(description ?? "")](\(urlString ?? "id=\(id!)"))"
-            case .url(let url, let description):
-                placeholderText = "[\(description ?? "")](\(url))"
-            }
+            image = view?.toImage
         }
     }
     
-    // MARK: - Initializers
-    override init!(view: UIView!, placeholderText text: String!) {
-        super.init(view: view, placeholderText: text)
-        commonInit()
+    var placeholderText: String {
+        return "[\(desc ?? "")](\(urlString ?? "id=\(id)"))"
     }
-    
-    override init!(view: UIView!, placeholderText text: String!, fullWidth: Bool) {
-        super.init(view: view, placeholderText: text, fullWidth: fullWidth)
-        commonInit()
-    }
-    
-    override init!(view: UIView!) {
-        super.init(view: view)
-        commonInit()
-    }
-    
-    override init(data contentData: Data?, ofType uti: String?) {
-        super.init(data: contentData, ofType: uti)
-        commonInit()
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        commonInit()
-    }
-    
-    private func commonInit() {
-        id = TextAttachment.uniqueId
-        TextAttachment.uniqueId += 1
+}
+
+private extension UIView {
+    var toImage: UIImage {
+        let image: UIImage
+        if #available(iOS 10.0, *) {
+            let renderer = UIGraphicsImageRenderer(size: self.frame.size)
+            image = renderer.image {
+                self.layer.render(in: $0.cgContext)
+            }
+        } else {
+            UIGraphicsBeginImageContextWithOptions(self.frame.size, false, UIScreen.main.scale)
+            self.layer.render(in: UIGraphicsGetCurrentContext()! )
+            image = UIGraphicsGetImageFromCurrentImageContext()!
+            UIGraphicsEndImageContext()
+        }
+        
+        return image
     }
 }

@@ -64,19 +64,19 @@ class EditorPageViewModel {
             attachments.reduce([]) { (result, attachment) -> [Observable<String>] in
                 guard let type = attachment.type else {return result}
                 switch type {
-                case .image(let image, let urlString, _):
-                    if let urlString = urlString {
+                case .image(let originalImage):
+                    if let urlString = attachment.urlString {
                         return result + [.just(urlString)]
                     }
                     
                     return result + [
-                        NetworkService.shared.uploadImage(image!)
+                        NetworkService.shared.uploadImage(originalImage!)
                             .do(onSuccess: {imageURL in
-                                mutableAS.mutableString.replaceOccurrences(of: attachment.placeholderText, with: attachment.placeholderText.replacingOccurrences(of: "(id=\(attachment.id!))", with: "(\(imageURL))"), options: [], range: NSMakeRange(0, mutableAS.mutableString.length))
+                                mutableAS.mutableString.replaceOccurrences(of: attachment.placeholderText, with: attachment.placeholderText.replacingOccurrences(of: "(id=\(attachment.id))", with: "(\(imageURL))"), options: [], range: NSMakeRange(0, mutableAS.mutableString.length))
                             })
                             .asObservable()
                     ]
-                case .url(_, _):
+                case .url:
                     // TODO: later
                     return result
                 }

@@ -52,16 +52,5 @@ target 'Commun' do
   
   pod 'AppImageViewer'
   pod 'SwiftLinkPreview', '~> 3.0.1'
-  pod 'RTViewAttachment', :git => "https://github.com/bigearsenal/RTViewAttachment.git", :branch => "commun"
-  
-  post_install do |installer|
-    installer.pods_project.targets.each do |target|
-      if ['PDFReader'].include? target.name
-        target.build_configurations.each do |config|
-          config.build_settings['SWIFT_VERSION'] = '4'
-        end
-      end
-    end
-  end
   
 end
