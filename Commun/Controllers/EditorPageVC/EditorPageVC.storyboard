@@ -27,7 +27,7 @@
                                 <rect key="frame" x="0.0" y="64" width="375" height="880"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sEN-wG-0Ug">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="979"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="668"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tux" translatesAutoresizingMaskIntoConstraints="NO" id="Yh5-US-3Nd">
                                                 <rect key="frame" x="16" y="24" width="40" height="40"/>
@@ -58,42 +58,31 @@
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="26"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
-                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" keyboardDismissMode="onDrag" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="nDy-mq-vIj" customClass="ExpandableTextView" customModule="Commun" customModuleProvider="target">
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="0Oi-CV-9TI" customClass="EditorPageTextView" customModule="Commun" customModuleProvider="target">
                                                 <rect key="frame" x="16" y="159.5" width="343" height="492.5"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="492.5" id="fzY-dn-AUK"/>
+                                                    <constraint firstAttribute="height" constant="492.5" id="y5W-EZ-eXt"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ee3-62-gYg" customClass="PreviewView" customModule="Commun" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="660" width="375" height="319"/>
-                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="319" id="MQq-ZJ-6mM"/>
-                                                </constraints>
-                                            </view>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
-                                            <constraint firstItem="nDy-mq-vIj" firstAttribute="leading" secondItem="sEN-wG-0Ug" secondAttribute="leading" constant="16" id="3fG-dK-c96"/>
+                                            <constraint firstAttribute="bottom" secondItem="0Oi-CV-9TI" secondAttribute="bottom" constant="16" id="0Gd-MZ-gC2"/>
                                             <constraint firstItem="Yh5-US-3Nd" firstAttribute="top" secondItem="sEN-wG-0Ug" secondAttribute="top" constant="24" id="6Af-al-35U"/>
-                                            <constraint firstItem="nDy-mq-vIj" firstAttribute="top" secondItem="94b-Gg-NR2" secondAttribute="bottom" constant="24" id="9bs-MA-LIM"/>
-                                            <constraint firstAttribute="trailing" secondItem="nDy-mq-vIj" secondAttribute="trailing" constant="16" id="JjK-wi-YsK"/>
+                                            <constraint firstItem="0Oi-CV-9TI" firstAttribute="leading" secondItem="sEN-wG-0Ug" secondAttribute="leading" constant="16" id="JFG-pd-zWB"/>
                                             <constraint firstItem="94b-Gg-NR2" firstAttribute="top" secondItem="Yh5-US-3Nd" secondAttribute="bottom" constant="24" id="KZ3-sQ-HDx"/>
                                             <constraint firstItem="94b-Gg-NR2" firstAttribute="leading" secondItem="sEN-wG-0Ug" secondAttribute="leading" constant="16" id="MIs-Ct-8b1"/>
-                                            <constraint firstItem="ee3-62-gYg" firstAttribute="top" secondItem="nDy-mq-vIj" secondAttribute="bottom" constant="8" id="NOW-6H-5cO"/>
+                                            <constraint firstItem="0Oi-CV-9TI" firstAttribute="top" secondItem="94b-Gg-NR2" secondAttribute="bottom" constant="24" id="MSP-eN-dyd"/>
                                             <constraint firstAttribute="trailing" secondItem="94b-Gg-NR2" secondAttribute="trailing" constant="16" id="NSS-fa-RQ9"/>
                                             <constraint firstItem="bla-eK-cJX" firstAttribute="leading" secondItem="Yh5-US-3Nd" secondAttribute="trailing" constant="16" id="PYt-MM-7kK"/>
                                             <constraint firstItem="bla-eK-cJX" firstAttribute="bottom" secondItem="Yh5-US-3Nd" secondAttribute="bottom" id="Ux6-0J-LVH"/>
                                             <constraint firstItem="Yh5-US-3Nd" firstAttribute="leading" secondItem="sEN-wG-0Ug" secondAttribute="leading" constant="16" id="WaU-DB-mG9"/>
-                                            <constraint firstAttribute="bottom" secondItem="ee3-62-gYg" secondAttribute="bottom" id="XZ7-qZ-iwD"/>
                                             <constraint firstItem="rXf-Vp-Izy" firstAttribute="top" secondItem="Yh5-US-3Nd" secondAttribute="top" id="daB-RR-zr9"/>
-                                            <constraint firstAttribute="bottom" secondItem="ee3-62-gYg" secondAttribute="bottom" id="iGD-Ye-j6f"/>
-                                            <constraint firstItem="ee3-62-gYg" firstAttribute="leading" secondItem="sEN-wG-0Ug" secondAttribute="leading" id="vfe-Xd-S1p"/>
+                                            <constraint firstAttribute="trailing" secondItem="0Oi-CV-9TI" secondAttribute="trailing" constant="16" id="hvR-oT-a83"/>
                                             <constraint firstItem="rXf-Vp-Izy" firstAttribute="leading" secondItem="Yh5-US-3Nd" secondAttribute="trailing" constant="16" id="xb7-nt-KyL"/>
-                                            <constraint firstAttribute="trailing" secondItem="ee3-62-gYg" secondAttribute="trailing" id="yya-Mo-qdl"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -128,11 +117,26 @@
                                             <action selector="cameraButtonTap" destination="AvE-EB-OTN" eventType="touchUpInside" id="BZC-lL-yl0"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ra4-Bs-Xab">
+                                        <rect key="frame" x="337" y="17" width="22" height="22"/>
+                                        <accessibility key="accessibilityConfiguration" identifier="EditorPageHideKeyboardButton" label="EditorPageHideKeyboardButton"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="ra4-Bs-Xab" secondAttribute="height" multiplier="1:1" id="43f-1R-XAQ"/>
+                                            <constraint firstAttribute="height" constant="22" id="csH-8s-wFA"/>
+                                        </constraints>
+                                        <color key="tintColor" red="0.41390401124954224" green="0.50106823444366455" blue="0.96205252408981323" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <state key="normal" image="keyboard_hide"/>
+                                        <connections>
+                                            <action selector="hideKeyboardButtonDidTouch:" destination="AvE-EB-OTN" eventType="touchUpInside" id="VR1-af-6i3"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="ra4-Bs-Xab" secondAttribute="trailing" constant="16" id="2EY-Ji-hBt"/>
                                     <constraint firstItem="nwa-Mp-egE" firstAttribute="leading" secondItem="aeQ-gX-bWx" secondAttribute="trailing" constant="26" id="Cgl-0u-dYc"/>
                                     <constraint firstAttribute="height" constant="56" id="bFX-Kv-Myi"/>
+                                    <constraint firstItem="ra4-Bs-Xab" firstAttribute="centerY" secondItem="aeQ-gX-bWx" secondAttribute="centerY" id="h0O-pG-fwu"/>
                                     <constraint firstItem="aeQ-gX-bWx" firstAttribute="centerY" secondItem="U7q-88-jfF" secondAttribute="centerY" id="nzz-jo-t4v"/>
                                     <constraint firstItem="aeQ-gX-bWx" firstAttribute="leading" secondItem="U7q-88-jfF" secondAttribute="leading" constant="16" id="quE-AG-kFf"/>
                                     <constraint firstItem="nwa-Mp-egE" firstAttribute="centerY" secondItem="aeQ-gX-bWx" secondAttribute="centerY" id="yqy-5T-drz"/>
@@ -178,9 +182,9 @@
                     <size key="freeformSize" width="375" height="1000"/>
                     <connections>
                         <outlet property="adultButton" destination="aeQ-gX-bWx" id="Yli-e5-ttd"/>
-                        <outlet property="contentTextView" destination="nDy-mq-vIj" id="m9Q-7A-Hdv"/>
+                        <outlet property="contentTextView" destination="0Oi-CV-9TI" id="1eu-aX-BHL"/>
                         <outlet property="dropDownView" destination="U7q-88-jfF" id="Z2s-ew-Vrh"/>
-                        <outlet property="previewView" destination="ee3-62-gYg" id="9kr-l0-RPf"/>
+                        <outlet property="hideKeyboardButton" destination="ra4-Bs-Xab" id="p5q-9A-EoT"/>
                         <outlet property="scrollView" destination="ru5-vQ-hj9" id="iIa-n7-xPb"/>
                         <outlet property="sendPostButton" destination="uJ6-gc-rL2" id="aVg-wp-gSO"/>
                         <outlet property="titleTextView" destination="94b-Gg-NR2" id="V6I-Q2-Vrx"/>
@@ -211,6 +215,7 @@
     </scenes>
     <resources>
         <image name="18Button" width="873" height="512"/>
+        <image name="keyboard_hide" width="192" height="192"/>
         <image name="photo_solid" width="24" height="24"/>
         <image name="tux" width="56" height="56"/>
     </resources>

@@ -15,6 +15,22 @@ import TLPhotoPicker
 extension EditorPageVC {
     
     @IBAction func cameraButtonTap() {
+        view.endEditing(true)
+        showActionSheet(title:     "add image".localized().uppercaseFirst,
+                             actions:   [
+                                UIAlertAction(title:    "choose from gallery".localized().uppercaseFirst,
+                                              style:    .default,
+                                              handler:  { _ in
+                                                self.chooseFromGallery()
+                                }),
+                                UIAlertAction(title:   "insert image from URL".localized().uppercaseFirst,
+                                              style:    .default,
+                                              handler:  { _ in
+                                                self.selectImageFromUrl()
+                                })])
+    }
+    
+    func chooseFromGallery() {
         let pickerVC = CustomTLPhotosPickerVC.singleImage
         self.present(pickerVC, animated: true, completion: nil)
         
@@ -22,19 +38,60 @@ extension EditorPageVC {
             .filter {($0.count > 0) && ($0.first?.fullResolutionImage != nil)}
             .map {$0.first!.fullResolutionImage!}
             .subscribe(onNext: {[weak self] image in
-                self?.previewView.setUp(mediaType: .image(image: image, url: nil))
-                pickerVC.dismiss(animated: true, completion: nil)
+                guard let strongSelf = self else {return}
+                let alert = UIAlertController(
+                    title:          "description".localized().uppercaseFirst,
+                    message:        "add a description for your image".localized().uppercaseFirst,
+                    preferredStyle: .alert)
+                
+                alert.addTextField { field in
+                    field.placeholder = "description".localized().uppercaseFirst + "(" + "optional".localized() + ")"
+                }
+                
+                alert.addAction(UIAlertAction(title: "add".localized().uppercaseFirst, style: .cancel, handler: { _ in
+                    strongSelf.contentTextView.addImage(image, description: alert.textFields?.first?.text)
+                    pickerVC.dismiss(animated: true, completion: nil)
+                }))
+                
+                alert.addAction(UIAlertAction(title: "cancel".localized().uppercaseFirst, style: .default, handler: {_ in
+                    strongSelf.contentTextView.addImage(image)
+                    pickerVC.dismiss(animated: true, completion: nil)
+                }))
+                
+                pickerVC.present(alert, animated: true, completion: nil)
             })
             .disposed(by: disposeBag)
-            // Upload image
-            
+    }
+    
+    func selectImageFromUrl() {
+        let alert = UIAlertController(
+            title:          "select image".localized().uppercaseFirst,
+            message:        "select image from an URL".localized().uppercaseFirst,
+            preferredStyle: .alert)
+        
+        alert.addTextField { field in
+            field.placeholder = "image URL".localized().uppercaseFirst
+        }
+        
+        alert.addTextField { field in
+            field.placeholder = "description".localized().uppercaseFirst + "(" + "optional".localized() + ")"
+        }
+        
+        alert.addAction(UIAlertAction(title: "add".localized().uppercaseFirst, style: .cancel, handler: {[weak self] _ in
+            guard let urlString = alert.textFields?.first?.text else { return }
+            self?.contentTextView.addImage(nil, urlString: urlString, description: alert.textFields?.last?.text)
+        }))
+        
+        alert.addAction(UIAlertAction(title: "cancel".localized().uppercaseFirst, style: .default, handler: nil))
+        
+        present(alert, animated: true, completion: nil)
     }
     
     @IBAction func sendPostButtonTap() {
         guard let viewModel = viewModel else {return}
         self.view.endEditing(true)
         
-        viewModel.sendPost(with: titleTextView.text, text: contentTextView.text, media: previewView.media.value)
+        viewModel.sendPost(with: titleTextView.text, text: contentTextView.attributedText)
             .do(onSubscribe: {
                 self.navigationController?.showIndetermineHudWithMessage("sending post".localized().uppercaseFirst)
             })
@@ -96,6 +153,10 @@ extension EditorPageVC {
     }
     
     @IBAction func closeButtonDidTouch(_ sender: Any) {
-        self.navigationController?.dismiss(animated: true, completion: nil)
+        navigationController?.dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func hideKeyboardButtonDidTouch(_ sender: Any) {
+        view.endEditing(true)
     }
 }

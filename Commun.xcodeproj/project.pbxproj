@@ -109,6 +109,7 @@
 		3BB86B4922734AE4008F1C64 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BB86B4822734AE4008F1C64 /* UIColor.swift */; };
 		3BC3CA3322CA297900A893DC /* WelcomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BC3CA3222CA297900A893DC /* WelcomeVC.swift */; };
 		3BD50564230D42C40049571C /* NSRegularExpressionExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BD50563230D42C40049571C /* NSRegularExpressionExtension.swift */; };
+		3BD50573231387EB00F3F9D3 /* MediaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BD50572231387EB00F3F9D3 /* MediaView.swift */; };
 		3BDD99FE228DA59900B2A1DA /* ExpandableTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BDD99FD228DA59900B2A1DA /* ExpandableTextView.swift */; };
 		3BDD9A04228DBEC200B2A1DA /* CommentForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BDD9A03228DBEC200B2A1DA /* CommentForm.swift */; };
 		3BDD9A06228DBED000B2A1DA /* CommentForm.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3BDD9A05228DBED000B2A1DA /* CommentForm.xib */; };
@@ -118,6 +119,9 @@
 		3BE68AAE22EEA1AE00033B81 /* SettingsVC+ButtonDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BE68AAD22EEA1AE00033B81 /* SettingsVC+ButtonDelegate.swift */; };
 		3BE68AB222EEA7C300033B81 /* LocalAuthVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BE68AB122EEA7C300033B81 /* LocalAuthVC.swift */; };
 		3BEA224422B3DA9C00FF42DA /* JSONParsingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BEA224322B3DA9C00FF42DA /* JSONParsingTests.swift */; };
+		3BEC38E3230F801600662374 /* UITextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BEC38E2230F801600662374 /* UITextView.swift */; };
+		3BEC38E7230FA17F00662374 /* EditorPageTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BEC38E6230FA17F00662374 /* EditorPageTextView.swift */; };
+		3BEC38EC230FED2B00662374 /* TextAttachment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BEC38EB230FED2B00662374 /* TextAttachment.swift */; };
 		3BF2E09822D3A49F003B37AE /* StepButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BF2E09722D3A49F003B37AE /* StepButton.swift */; };
 		3BF37BCA22A11FA700A72FFE /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BF37BC922A11FA700A72FFE /* UIView.swift */; };
 		3BF37BCC22A1297C00A72FFE /* UITableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BF37BCB22A1297C00A72FFE /* UITableView.swift */; };
@@ -333,6 +337,7 @@
 		3BB86B4822734AE4008F1C64 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		3BC3CA3222CA297900A893DC /* WelcomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeVC.swift; sourceTree = "<group>"; };
 		3BD50563230D42C40049571C /* NSRegularExpressionExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSRegularExpressionExtension.swift; sourceTree = "<group>"; };
+		3BD50572231387EB00F3F9D3 /* MediaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaView.swift; sourceTree = "<group>"; };
 		3BDD99FD228DA59900B2A1DA /* ExpandableTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandableTextView.swift; sourceTree = "<group>"; };
 		3BDD9A03228DBEC200B2A1DA /* CommentForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentForm.swift; sourceTree = "<group>"; };
 		3BDD9A05228DBED000B2A1DA /* CommentForm.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CommentForm.xib; sourceTree = "<group>"; };
@@ -344,6 +349,9 @@
 		3BEA224122B3DA9C00FF42DA /* CommunTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CommunTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3BEA224322B3DA9C00FF42DA /* JSONParsingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONParsingTests.swift; sourceTree = "<group>"; };
 		3BEA224522B3DA9C00FF42DA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3BEC38E2230F801600662374 /* UITextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextView.swift; sourceTree = "<group>"; };
+		3BEC38E6230FA17F00662374 /* EditorPageTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorPageTextView.swift; sourceTree = "<group>"; };
+		3BEC38EB230FED2B00662374 /* TextAttachment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextAttachment.swift; sourceTree = "<group>"; };
 		3BF2E09722D3A49F003B37AE /* StepButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepButton.swift; sourceTree = "<group>"; };
 		3BF37BC922A11FA700A72FFE /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
 		3BF37BCB22A1297C00A72FFE /* UITableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableView.swift; sourceTree = "<group>"; };
@@ -709,6 +717,14 @@
 			path = CommunTests;
 			sourceTree = "<group>";
 		};
+		3BEC38E8230FA18900662374 /* Subviews */ = {
+			isa = PBXGroup;
+			children = (
+				3BEC38E6230FA17F00662374 /* EditorPageTextView.swift */,
+			);
+			path = Subviews;
+			sourceTree = "<group>";
+		};
 		3BF53CE2230B93990082464F /* HTMLStringWebView */ = {
 			isa = PBXGroup;
 			children = (
@@ -953,6 +969,7 @@
 				3B02CD33228ADC100078BB52 /* UIWebView.swift */,
 				3B61AC3322E1CA8A00F608AF /* LAContext.swift */,
 				3BD50563230D42C40049571C /* NSRegularExpressionExtension.swift */,
+				3BEC38E2230F801600662374 /* UITextView.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -979,6 +996,8 @@
 				3BF53CE2230B93990082464F /* HTMLStringWebView */,
 				3B11911E2302B9B9008D0417 /* SwipeNavigationController.swift */,
 				3B11913823040A40008D0417 /* PreviewView.swift */,
+				3BD50572231387EB00F3F9D3 /* MediaView.swift */,
+				3BEC38EB230FED2B00662374 /* TextAttachment.swift */,
 			);
 			path = Vendor;
 			sourceTree = "<group>";
@@ -1071,6 +1090,7 @@
 		57DE5BDA2252086C008566B9 /* EditorPageVC */ = {
 			isa = PBXGroup;
 			children = (
+				3BEC38E8230FA18900662374 /* Subviews */,
 				57DE5BDF225209A0008566B9 /* EditorPageVC.storyboard */,
 				57DE5BDD225208A4008566B9 /* EditorPageViewModel.swift */,
 				57DE5BDB2252088C008566B9 /* EditorPageVC.swift */,
@@ -1414,8 +1434,10 @@
 			files = (
 				572517402243E4D70033125C /* PostPageViewModel.swift in Sources */,
 				576DC919223E41E800EDED41 /* FeedPageVC.swift in Sources */,
+				3BEC38EC230FED2B00662374 /* TextAttachment.swift in Sources */,
 				3B51581C226DE28D00108F17 /* EmptyCell.swift in Sources */,
 				3B5CB30322A56BD500757533 /* UITapGestureRecognizer.swift in Sources */,
+				3BEC38E7230FA17F00662374 /* EditorPageTextView.swift in Sources */,
 				3B28EFE2228C7C31002D4816 /* KeyboardLayoutConstraint.swift in Sources */,
 				3BAF69CB226773000055CCEB /* UIView+Shadow.swift in Sources */,
 				3BAF69D522686A1B0055CCEB /* ItemsFetcher.swift in Sources */,
@@ -1512,6 +1534,7 @@
 				3B197C8A226A33CF008CF10D /* Decodable+MockObjects.swift in Sources */,
 				578B94DA2263CBD800FB5BC6 /* ConfirmUserVC.swift in Sources */,
 				3B11913923040A40008D0417 /* PreviewView.swift in Sources */,
+				3BEC38E3230F801600662374 /* UITextView.swift in Sources */,
 				3BB342A922CA2DBB009546B2 /* WelcomePageVC.swift in Sources */,
 				3BF37BCC22A1297C00A72FFE /* UITableView.swift in Sources */,
 				3B5CB31022A5880D00757533 /* MyRxTableViewSectionedAnimatedDataSource.swift in Sources */,
@@ -1544,6 +1567,7 @@
 				3BC3CA3322CA297900A893DC /* WelcomeVC.swift in Sources */,
 				57F5CFC22244E3BE005A09AE /* PostPageVC+Rx.swift in Sources */,
 				3BDD9A04228DBEC200B2A1DA /* CommentForm.swift in Sources */,
+				3BD50573231387EB00F3F9D3 /* MediaView.swift in Sources */,
 				3BAE92A922DE553D00E97AE8 /* ScalableLayoutConstraint.swift in Sources */,
 				3BB342B422CA7412009546B2 /* CreateBioVC.swift in Sources */,
 				3B5CB30522A5752100757533 /* ListViewModelType.swift in Sources */,

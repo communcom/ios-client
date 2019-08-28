@@ -64,6 +64,17 @@ extension UIImageView {
                 self.setAvatar(urlString: urlString, namePlaceHolder: Config.currentUser?.id ?? "U")
             })
     }
+    
+    func sd_setImageCachedError(with url: URL, completion: ((Error?) -> Void)?) {
+        showLoader()
+        sd_setImage(with: url) { [weak self] (image, error, _, _) in
+            self?.hideLoader()
+            if error != nil {
+                self?.image = UIImage(named: "image-not-found")
+            }
+            completion?(error)
+        }
+    }
 }
 
 

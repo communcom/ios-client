@@ -14,13 +14,6 @@ extension EditorPageVC {
     
     func bindUI() {
         guard let viewModel = viewModel else {return}
-        // scrollView
-        scrollView.rx.willDragDown
-            .filter {$0}
-            .subscribe(onNext: {_ in
-                self.view.endEditing(true)
-            })
-            .disposed(by: disposeBag)
         
         // isAdult
         adultButton.rx.tap
@@ -34,13 +27,11 @@ extension EditorPageVC {
             .bind(to: self.adultButton.rx.image(for: .normal))
             .disposed(by: disposeBag)
         
-        // Retrieve link
-        contentTextView.rx.text.orEmpty
-            .filter {$0 != ""}
-            .debounce(0.3, scheduler: MainScheduler.instance)
-            .subscribe(onNext: {[weak self] text in
-                self?.previewView.setUp(mediaType: .linkFromText(text: text))
-            })
+        // hideKeyboard
+        UIResponder.keyboardHeightObservable
+            .map {$0 == 0 ? true: false}
+            .asDriver(onErrorJustReturn: true)
+            .drive(hideKeyboardButton.rx.isHidden)
             .disposed(by: disposeBag)
         
         // verification
@@ -49,16 +40,14 @@ extension EditorPageVC {
         #warning("fix contentText later")
         Observable.combineLatest(
                 titleTextView.rx.text.orEmpty,
-                contentTextView.rx.text.orEmpty,
-                previewView.media
+                contentTextView.rx.text.orEmpty
             )
             .map {
                 // Text field  is not empty
                 (!$0.0.isEmpty) && (!$0.1.isEmpty) &&
                 // Title or content has changed
                 ($0.0 != viewModel.postForEdit?.content.title ||
-                $0.1 != viewModel.postForEdit?.content.body.preview ||
-                    $0.2 == self.previewView.initialMedia)
+                $0.1 != viewModel.postForEdit?.content.body.preview)
             }
             .bind(to: sendPostButton.rx.isEnabled)
             .disposed(by: disposeBag)

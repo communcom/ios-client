@@ -10,20 +10,24 @@ import UIKit
 import RxSwift
 
 class EditorPageVC: UIViewController {
-
-    var viewModel: EditorPageViewModel?
     
+    // MARK: - Outlets
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var titleTextView: ExpandableTextView!
-    @IBOutlet weak var contentTextView: ExpandableTextView!
-    @IBOutlet weak var previewView: PreviewView!
+    @IBOutlet weak var contentTextView: EditorPageTextView!
     @IBOutlet weak var dropDownView: UIView!
     @IBOutlet weak var adultButton: UIButton!
-    
+    @IBOutlet weak var hideKeyboardButton: UIButton!
     @IBOutlet weak var sendPostButton: UIBarButtonItem!
     
+    // MARK: - Properties
+    var viewModel: EditorPageViewModel?
     let disposeBag = DisposeBag()
+    lazy var defaultAttributeForContentTextView: [NSAttributedString.Key: Any] = {
+        return [.font: UIFont.systemFont(ofSize: 17)]
+    }()
     
+    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -46,27 +50,30 @@ class EditorPageVC: UIViewController {
         contentTextView.textContainerInset = UIEdgeInsets.zero
         contentTextView.textContainer.lineFragmentPadding = 0
         contentTextView.placeholder = "write text placeholder".localized().uppercaseFirst + "..."
-        
-        previewView.adjustHeight(0)
+        contentTextView.typingAttributes = defaultAttributeForContentTextView
+        // you should ensure layout
+        contentTextView.layoutManager
+            .ensureLayout(for: contentTextView.textContainer)
         
         // if editing post
         if let post = viewModel?.postForEdit {
-            titleTextView.rx.text.onNext(post.content.title)
-            #warning("change text later")
-            contentTextView.rx.text.onNext(post.content.body.full ?? post.content.body.preview)
-            
-            if let firstEmbeded = post.content.embeds.first?.result {
-                if firstEmbeded.type == "photo" {
-                    let value = PreviewView.MediaType.image(image: nil, url: firstEmbeded.url)
-                    previewView.initialMedia = value
-                    previewView.setUp(mediaType: value)
-                } else {
-                    let value = PreviewView.MediaType.linkFromText(text: firstEmbeded.url)
-                    previewView.initialMedia = value
-                    previewView.setUp(mediaType: value)
-                }
-            }
+            showIndetermineHudWithMessage("loading post".localized().uppercaseFirst)
+            // Get full post
+            NetworkService.shared.getPost(withPermLink: post.contentId.permlink, forUser: post.contentId.userId)
+                .subscribe(onSuccess: {post in
+                    self.hideHud()
+                    self.titleTextView.rx.text.onNext(post.content.title)
+                    self.contentTextView.parseText(post.content.body.full)
+                    self.viewModel?.postForEdit = post
+                }, onError: {error in
+                    self.hideHud()
+                    self.showError(error)
+                })
+                .disposed(by: disposeBag)
         }
+        
+        // bottom buttons
+        hideKeyboardButton.isHidden = true
         
         bindUI()
     }

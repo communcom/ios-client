@@ -39,7 +39,7 @@ extension UIViewController {
         self.present(alert, animated: true, completion: nil)
     }
     
-    private func showGeneralError() {
+    func showGeneralError() {
         showErrorWithLocalizedMessage("Something went wrong.\nPlease try again later")
     }
     
