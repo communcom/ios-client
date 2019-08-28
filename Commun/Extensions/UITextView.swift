@@ -33,6 +33,8 @@ extension UITextView {
     
     func removeText(_ text: String) {
         guard let tRange = rangeOfText(text) else {return}
+        textStorage.beginEditing()
         replace(tRange, withText: "")
+        textStorage.endEditing()
     }
 }

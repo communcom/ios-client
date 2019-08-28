@@ -18,6 +18,10 @@ class EditorPageTextView: RTViewAttachmentTextView {
     var heightConstraint: NSLayoutConstraint!
     @IBInspectable var maxHeight: CGFloat = 0
     
+    // options
+    private let attachmentRightMargin: CGFloat = 8
+    private let attachmentHeightForDescription: CGFloat = 80
+    
     
     // MARK: - Class Initialization
     required init?(coder aDecoder: NSCoder) {
@@ -61,15 +65,12 @@ class EditorPageTextView: RTViewAttachmentTextView {
     
     // MARK: - Methods
     func addImage(_ image: UIImage? = nil, urlString: String? = nil, description: String? = nil) {
-        // options
-        let rightMargin: CGFloat = 8
-        let heightForDescription: CGFloat = 80
         
         // set image
         if let image = image {
             let attachmentType = TextAttachment.AttachmentType.image(image: image, urlString: nil, description: description)
-            let newWidth = frame.size.width - rightMargin
-            let mediaView = MediaView(frame: CGRect(x: 0, y: 0, width: newWidth, height: image.size.height * newWidth / image.size.width + heightForDescription))
+            let newWidth = frame.size.width - attachmentRightMargin
+            let mediaView = MediaView(frame: CGRect(x: 0, y: 0, width: newWidth, height: image.size.height * newWidth / image.size.width + attachmentRightMargin))
             mediaView.showCloseButton = false
             mediaView.setUpWithAttachmentType(attachmentType)
             
@@ -102,8 +103,8 @@ class EditorPageTextView: RTViewAttachmentTextView {
                 // attach image
                 if let image = image {
                     let attachmentType = TextAttachment.AttachmentType.image(image: image, urlString: urlString, description: description)
-                    let newWidth = strongSelf.frame.size.width - rightMargin
-                    let mediaView = MediaView(frame: CGRect(x: 0, y: 0, width: newWidth, height: image.size.height * newWidth / image.size.width + heightForDescription))
+                    let newWidth = strongSelf.frame.size.width - strongSelf.attachmentRightMargin
+                    let mediaView = MediaView(frame: CGRect(x: 0, y: 0, width: newWidth, height: image.size.height * newWidth / image.size.width + strongSelf.attachmentHeightForDescription))
                     mediaView.setUpWithAttachmentType(attachmentType)
                     mediaView.showCloseButton = false
                     
@@ -118,6 +119,51 @@ class EditorPageTextView: RTViewAttachmentTextView {
             })
         } else {
             parentViewController?.showGeneralError()
+        }
+    }
+    
+    func parseText(_ text: String?) {
+        guard let text = text,
+            let regex = try? NSRegularExpression(pattern: "\\[.*\\]\\(.*\\)", options: .caseInsensitive)
+        else {return}
+        // assign text
+        let attributedString = NSMutableAttributedString(string: text)
+        attributedString.addAttributes(textView.typingAttributes, range: NSMakeRange(0, attributedString.length))
+        textView.attributedText = attributedString
+        
+        let imageDownloader = SDWebImageManager.shared().imageDownloader
+        
+        // find embeds
+        for match in regex.matchedStrings(in: text) {
+            
+            let description = match.slicing(from: "[", to: "]")
+            guard let urlString = match.slicing(from: "(", to: ")"),
+                let url         = URL(string: urlString)
+            else {continue}
+            
+            imageDownloader?.downloadImage(with: url, completed: { [weak self] (image, _, error, _) in
+                guard let strongSelf = self else {return}
+                // attach image
+                if let image = image {
+                    // get range of text
+                    let textRange = strongSelf.textView.text.nsString.range(of: match)
+                    let location = textRange.location
+                    
+                    guard location >= 0 else {return}
+                    
+                    let attachmentType = TextAttachment.AttachmentType.image(image: image, urlString: urlString, description: description)
+                    let newWidth = strongSelf.frame.size.width - strongSelf.attachmentRightMargin
+                    let mediaView = MediaView(frame: CGRect(x: 0, y: 0, width: newWidth, height: image.size.height * newWidth / image.size.width + strongSelf.attachmentHeightForDescription))
+                    mediaView.setUpWithAttachmentType(attachmentType)
+                    mediaView.showCloseButton = false
+                    
+                    guard let textAttachment = TextAttachment(view: mediaView) else {return}
+                    textAttachment.type = attachmentType
+                    
+                    strongSelf.insert(textAttachment, at: UInt(location))
+                    strongSelf.textView.removeText(match)
+                }
+            })
         }
     }
 }

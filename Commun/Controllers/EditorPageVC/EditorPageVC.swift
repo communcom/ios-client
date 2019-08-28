@@ -57,9 +57,19 @@ class EditorPageVC: UIViewController {
         
         // if editing post
         if let post = viewModel?.postForEdit {
-            titleTextView.rx.text.onNext(post.content.title)
-            #warning("parse text")
-            contentView.textView.rx.text.onNext(post.content.body.full ?? post.content.body.preview)
+            showIndetermineHudWithMessage("loading post".localized().uppercaseFirst)
+            // Get full post
+            NetworkService.shared.getPost(withPermLink: post.contentId.permlink, forUser: post.contentId.userId)
+                .subscribe(onSuccess: {post in
+                    self.hideHud()
+                    self.titleTextView.rx.text.onNext(post.content.title)
+                    self.contentView.parseText(post.content.body.full)
+                    self.viewModel?.postForEdit = post
+                }, onError: {error in
+                    self.hideHud()
+                    self.showError(error)
+                })
+                .disposed(by: disposeBag)
         }
         
         // bottom buttons
