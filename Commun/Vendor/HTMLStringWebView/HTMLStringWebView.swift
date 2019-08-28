@@ -18,7 +18,8 @@ class HTMLStringWebView: UIWebView {
         
         let htmlStart = "<HTML><HEAD><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, shrink-to-fit=no\"><link rel=\"stylesheet\" type=\"text/css\" href=\"HTMLStringWebView.css\"></HEAD><BODY>"
         let htmlEnd = "</BODY></HTML>"
-        super.loadHTMLString(htmlStart + renderContent(html: string) + htmlEnd, baseURL: Bundle.main.bundleURL)
+        let html = htmlStart + renderContent(html: string) + htmlEnd
+        super.loadHTMLString(html, baseURL: Bundle.main.bundleURL)
     }
     
     func renderContent(html: String) -> String {
@@ -74,12 +75,7 @@ class HTMLStringWebView: UIWebView {
                         }
                         
                         if let description = description, description.count > 0 {
-                            return """
-                            <div class="embeded">
-                            <img src=\"\(urlString)\" />
-                            <p>\(description)</p>
-                            </div>
-                            """
+                            return "<div class=\"embeded\"><img src=\"\(urlString)\" /><p>\(description)</p></div>"
                         }
                         
                         return "<img src=\"\(urlString)\" />"
