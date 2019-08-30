@@ -115,7 +115,6 @@ class MediaView: UIView {
         titleLabel.leadingAnchor.constraint(equalTo: descriptionView.leadingAnchor, constant: 16).isActive = true
         titleLabel.trailingAnchor.constraint(equalTo: descriptionView.trailingAnchor, constant: -16).isActive = true
         
-        urlLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 8).isActive = true
         urlLabel.leadingAnchor.constraint(equalTo: descriptionView.leadingAnchor, constant: 16).isActive = true
         urlLabel.trailingAnchor.constraint(equalTo: descriptionView.trailingAnchor, constant: -16).isActive = true
         urlLabel.bottomAnchor.constraint(equalTo: descriptionView.bottomAnchor, constant: -16).isActive = true

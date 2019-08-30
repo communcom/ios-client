@@ -88,6 +88,7 @@ extension NSMutableAttributedString {
                         let imageAS = NSAttributedString(attachment: attachment)
                         strongSelf.replaceCharacters(in: newRange, with: imageAS)
                     })
+                    .catchErrorJustReturn(UIImage(named: "image-not-available")!)
                     .map {_ in ()}
                     .asObservable()
                 singles.append(downloadImage)
@@ -102,9 +103,11 @@ extension NSMutableAttributedString {
                             let url = URL(string: imageUrlString) {
                             return NetworkService.shared.downloadImage(url)
                                 .map {($0, urlString, response.title)}
+                                .catchErrorJustReturn((UIImage(named: "image-not-available")!, urlString, response.title))
                         }
                         throw ErrorAPI.unknown
                     }
+                    .catchErrorJustReturn((UIImage(named: "image-not-available")!, urlString, nil))
                     .do(onSuccess: { [weak self] (arg0) in
                         let (image, urlString, description) = arg0
                         guard let strongSelf = self else {return}
