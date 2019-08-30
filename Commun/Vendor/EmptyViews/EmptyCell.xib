@@ -21,6 +21,9 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1Hv-AH-oZB" customClass="EmptyView" customModule="Commun" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="374" height="213.5"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <accessibility key="accessibilityConfiguration" identifier="EmptyCellEmptyView" label="EmptyCellEmptyView">
+                            <bool key="isElement" value="YES"/>
+                        </accessibility>
                     </view>
                 </subviews>
                 <constraints>
@@ -30,6 +33,9 @@
                     <constraint firstItem="1Hv-AH-oZB" firstAttribute="centerX" secondItem="C65-9P-JSl" secondAttribute="centerX" id="iLv-Mn-2uQ"/>
                 </constraints>
             </tableViewCellContentView>
+            <accessibility key="accessibilityConfiguration" identifier="EmptyCell" label="EmptyCell">
+                <bool key="isElement" value="YES"/>
+            </accessibility>
             <connections>
                 <outlet property="emptyView" destination="1Hv-AH-oZB" id="Dmr-F3-TTM"/>
             </connections>
