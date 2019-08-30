@@ -33,6 +33,9 @@
                     </view>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tux" translatesAutoresizingMaskIntoConstraints="NO" id="S8Z-0b-bRv">
                         <rect key="frame" x="16" y="12" width="40" height="40"/>
+                        <accessibility key="accessibilityConfiguration" identifier="CommentCellAvatarImageView" label="CommentCellAvatarImageView">
+                            <bool key="isElement" value="YES"/>
+                        </accessibility>
                         <constraints>
                             <constraint firstAttribute="height" constant="40" id="1YP-RU-K7z"/>
                             <constraint firstAttribute="width" constant="40" id="Q75-Sv-KVj"/>
@@ -45,6 +48,7 @@
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vEd-B7-VR3">
                         <rect key="frame" x="72" y="16" width="42" height="18"/>
+                        <accessibility key="accessibilityConfiguration" identifier="CommentCellNameLabel" label="CommentCellNameLabel"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="18" id="qjE-00-XBy"/>
                         </constraints>
@@ -54,12 +58,14 @@
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3h ago" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F53-9j-0jt">
                         <rect key="frame" x="122" y="17" width="43" height="16"/>
+                        <accessibility key="accessibilityConfiguration" identifier="CommentCellTimeLabel" label="CommentCellTimeLabel"/>
                         <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="13"/>
                         <color key="textColor" red="0.60784313729999995" green="0.62352941179999999" blue="0.63529411759999999" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Comment is here" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dho-Zk-FEu" customClass="TTTAttributedLabel">
                         <rect key="frame" x="72" y="42" width="232" height="20.5"/>
+                        <accessibility key="accessibilityConfiguration" identifier="CommentCellContentLabel" label="CommentCellContentLabel"/>
                         <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -67,6 +73,9 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ujt-CL-dNy">
                         <rect key="frame" x="72" y="62.5" width="232" height="142"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <accessibility key="accessibilityConfiguration" identifier="CommentCellEmbedView" label="CommentCellEmbedView">
+                            <bool key="isElement" value="YES"/>
+                        </accessibility>
                         <constraints>
                             <constraint firstAttribute="height" constant="142" id="2IP-pT-wae"/>
                         </constraints>
@@ -85,6 +94,7 @@
                     </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wdF-tc-scc">
                         <rect key="frame" x="112" y="218.5" width="9" height="16"/>
+                        <accessibility key="accessibilityConfiguration" identifier="CommentCellVoteCountLabel" label="CommentCellVoteCountLabel"/>
                         <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -142,6 +152,9 @@
                     <constraint firstItem="Ujt-CL-dNy" firstAttribute="leading" secondItem="vEd-B7-VR3" secondAttribute="leading" id="lHy-jZ-fa9"/>
                 </constraints>
             </tableViewCellContentView>
+            <accessibility key="accessibilityConfiguration" identifier="CommentCell" label="CommentCell">
+                <bool key="isElement" value="YES"/>
+            </accessibility>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="avatarImageView" destination="S8Z-0b-bRv" id="ynH-2z-cMC"/>
