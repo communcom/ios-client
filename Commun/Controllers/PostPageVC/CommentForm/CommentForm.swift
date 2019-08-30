@@ -49,8 +49,11 @@ class CommentForm: UIView {
         // setup observer
         let isTextViewEmpty = textView.rx.text.orEmpty
             .map{$0 == ""}
-            
-        isTextViewEmpty.distinctUntilChanged()
+            .distinctUntilChanged()
+        
+        Observable.combineLatest(isTextViewEmpty, imageView.rx.isEmpty)
+            .map {$0 && $1}
+            .distinctUntilChanged()
             .subscribe(onNext: {isEmpty in
                 if isEmpty {
                     self.textFieldToSendBtnConstraint.constant = 0
@@ -114,6 +117,10 @@ class CommentForm: UIView {
     }
     
     func sendComment(text: String, metaData: String, tags: [String]) {
+        var text = text
+        // support posting image without text
+        if text == "" {text = "  "}
+        
         NetworkService.shared.sendComment(
             withMessage:       text,
             parentAuthor:      parentAuthor ?? "",
