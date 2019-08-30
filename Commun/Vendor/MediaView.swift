@@ -22,6 +22,8 @@ class MediaView: UIView {
             closeButton.isHidden = !showCloseButton
         }
     }
+    static let descriptionDefaultHeight: CGFloat = 92
+    private var descriptionViewHeightConstraint: NSLayoutConstraint!
     
     // MARK: - Subviews
     lazy var closeButton: UIButton = {
@@ -105,6 +107,8 @@ class MediaView: UIView {
         descriptionView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
         descriptionView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
         descriptionView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+        descriptionViewHeightConstraint = descriptionView.heightAnchor.constraint(equalToConstant: MediaView.descriptionDefaultHeight)
+        descriptionViewHeightConstraint.isActive = true
         
         // layout descriptionView
         titleLabel.topAnchor.constraint(equalTo: descriptionView.topAnchor, constant: 16).isActive = true
@@ -132,6 +136,7 @@ class MediaView: UIView {
         // Set description
         titleLabel.text = description
         urlLabel.text = url
+        layoutDescriptionView()
         // Set image
         if let image = image {
             imageView.image = image
@@ -140,6 +145,17 @@ class MediaView: UIView {
             let url = URL(string: urlString){
             imageView.sd_setImageCachedError(with: url, completion: completion)
         }
+    }
+    
+    func layoutDescriptionView() {
+        var newValue = MediaView.descriptionDefaultHeight
+        if titleLabel.text == nil {
+            newValue -= newValue * 5 / 9
+        }
+        if urlLabel.text == nil {
+            newValue -= newValue * 4 / 9
+        }
+        descriptionViewHeightConstraint.constant = newValue
     }
     
     func setUp(url: String, description: String? = nil, completion: ((Error?)->Void)? = nil) {
@@ -157,6 +173,8 @@ class MediaView: UIView {
             
             strongSelf.titleLabel.text = response.title
             strongSelf.urlLabel.text = response.canonicalUrl
+            
+            strongSelf.layoutDescriptionView()
         }
         
         let errorHandler: ((PreviewError) -> Void) = {error in

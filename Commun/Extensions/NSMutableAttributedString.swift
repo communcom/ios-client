@@ -49,7 +49,7 @@ extension NSMutableAttributedString {
     
     func imageAttachment(from image: UIImage, urlString: String? = nil, description: String? = nil, into view: UIView) -> TextAttachment {
         let attachmentRightMargin: CGFloat = 10
-        let attachmentHeightForDescription: CGFloat = 80
+        let attachmentHeightForDescription: CGFloat = MediaView.descriptionDefaultHeight
         
         // setup view
         let newWidth = view.frame.size.width - attachmentRightMargin
