@@ -30,12 +30,16 @@
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="Q2w-5x-X36">
                                 <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <accessibility key="accessibilityConfiguration" identifier="CountryCellImageView" label="CountryCellImageView">
+                                    <bool key="isElement" value="YES"/>
+                                </accessibility>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="Q2w-5x-X36" secondAttribute="height" multiplier="1:1" id="EOA-nd-xxm"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="n5T-hh-dX3">
                                 <rect key="frame" x="56" y="0.0" width="232" height="40"/>
+                                <accessibility key="accessibilityConfiguration" identifier="CountryCellNameLabel" label="CountryCellNameLabel"/>
                                 <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -54,6 +58,9 @@
                     <constraint firstItem="lzF-eX-vVz" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="gJg-58-wXg"/>
                 </constraints>
             </tableViewCellContentView>
+            <accessibility key="accessibilityConfiguration" identifier="CountryCell" label="CountryCell">
+                <bool key="isElement" value="YES"/>
+            </accessibility>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="countryImage" destination="Q2w-5x-X36" id="ujJ-3n-ZPT"/>
