@@ -116,6 +116,7 @@ extension NSMutableAttributedString {
                         strongSelf.replaceCharacters(in: newRange, with: imageAS)
                     })
                     .map {_ in ()}
+                    .catchErrorJustReturn(())
                     .asObservable()
                 singles.append(downloadPreview)
             }

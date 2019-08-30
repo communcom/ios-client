@@ -196,6 +196,7 @@ class NetworkService: NSObject {
     }
     
     func downloadImage(_ url: URL) -> Single<UIImage> {
+        Logger.log(message: "Downloading image for \(url.absoluteString)", event: .debug)
         guard let imageDownloader = SDWebImageManager.shared().imageDownloader else {
             return .error(ErrorAPI.unknown)
         }
@@ -216,6 +217,7 @@ class NetworkService: NSObject {
     }
     
     func downloadLinkPreview(_ urlString: String) -> Single<Response> {
+        Logger.log(message: "Downloading preview for \(urlString)", event: .debug)
         let slp = SwiftLinkPreview(cache: InMemoryCache())
         if let cached = slp.cache.slp_getCachedResponse(url: urlString) {
             // Do whatever with the cached response

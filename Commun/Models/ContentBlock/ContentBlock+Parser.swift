@@ -16,6 +16,7 @@ extension NSAttributedString {
     static var separator: NSAttributedString {
         let separator = NSMutableAttributedString(string: "\n")
         separator.addAttribute(.paragraphStyle, value: NSParagraphStyle(), range: NSMakeRange(0, separator.length))
+        separator.addAttribute(.font, value: UIFont.systemFont(ofSize: 5), range: NSMakeRange(0, separator.length))
         return separator
     }
 }
