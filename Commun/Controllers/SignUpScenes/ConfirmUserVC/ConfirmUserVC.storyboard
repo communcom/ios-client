@@ -33,7 +33,9 @@
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bYW-xi-lTa">
                                 <rect key="frame" x="73.666666666666686" y="133.33333333333334" width="228" height="56"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <accessibility key="accessibilityConfiguration" identifier="ConfirmUserPinCodeView" label="ConfirmUserPinCodeView"/>
+                                <accessibility key="accessibilityConfiguration" identifier="ConfirmUserPinCodeView" label="ConfirmUserPinCodeView">
+                                    <bool key="isElement" value="YES"/>
+                                </accessibility>
                             </view>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="Y5D-RY-auL" userLabel="Resend Stack View">
                                 <rect key="frame" x="78.333333333333329" y="224.33333333333334" width="218.66666666666669" height="30"/>
@@ -53,6 +55,7 @@
                                     <label clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A7l-2z-CKz" userLabel="Timer Label">
                                         <rect key="frame" x="177" y="0.0" width="41.666666666666657" height="30"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <accessibility key="accessibilityConfiguration" identifier="ConfirmUserTimerLabel" label="ConfirmUserTimerLabel"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
