@@ -27,6 +27,9 @@
             <subviews>
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="NotificationAvatarPlaceholder" translatesAutoresizingMaskIntoConstraints="NO" id="qxl-wU-Jhx">
                     <rect key="frame" x="16" y="16" width="56" height="56"/>
+                    <accessibility key="accessibilityConfiguration" identifier="PlaceholderNotificationCellAvatarImageView" label="PlaceholderNotificationCellAvatarImageView">
+                        <bool key="isElement" value="YES"/>
+                    </accessibility>
                     <constraints>
                         <constraint firstAttribute="height" constant="56" id="I5U-98-ZCx"/>
                         <constraint firstAttribute="width" constant="56" id="jH7-Iy-cG3"/>
@@ -39,18 +42,23 @@
                 </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label bladhfalsdjfasldfasldflasdf sdf jas f safasd fasdf " textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9ii-Uo-udB">
                     <rect key="frame" x="88" y="34" width="310" height="36"/>
+                    <accessibility key="accessibilityConfiguration" identifier="PlaceholderNotificationCellContentLabel" label="PlaceholderNotificationCellContentLabel"/>
                     <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="4 hr ago" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FG5-oz-Rvi">
                     <rect key="frame" x="88" y="16" width="294" height="16"/>
+                    <accessibility key="accessibilityConfiguration" identifier="PlaceholderNotificationCellTimeAgoLabel" label="PlaceholderNotificationCellTimeAgoLabel"/>
                     <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="13"/>
                     <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <nil key="highlightedColor"/>
                 </label>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <accessibility key="accessibilityConfiguration" identifier="PlaceholderNotificationCell" label="PlaceholderNotificationCell">
+                <bool key="isElement" value="YES"/>
+            </accessibility>
             <constraints>
                 <constraint firstItem="FG5-oz-Rvi" firstAttribute="top" secondItem="qxl-wU-Jhx" secondAttribute="top" id="7NA-84-uOl"/>
                 <constraint firstAttribute="trailing" secondItem="FG5-oz-Rvi" secondAttribute="trailing" constant="32" id="FlC-Bt-i3C"/>
