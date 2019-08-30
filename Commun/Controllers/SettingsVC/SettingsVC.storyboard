@@ -39,18 +39,23 @@
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Options" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SDR-cg-hoG">
                                                     <rect key="frame" x="16" y="16" width="66" height="24"/>
+                                                    <accessibility key="accessibilityConfiguration" identifier="SettingsOptionsCellOptionNameLabel" label="SettingsOptionsCellOptionNameLabel"/>
                                                     <fontDescription key="fontDescription" name="SFProText-Semibold" family="SF Pro Text" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Selected" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ust-Ak-zNA">
                                                     <rect key="frame" x="311.5" y="19" width="60.5" height="18"/>
+                                                    <accessibility key="accessibilityConfiguration" identifier="SettingsOptionsCellValueLabel" label="SettingsOptionsCellValueLabel"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="boarding-next-arrow" translatesAutoresizingMaskIntoConstraints="NO" id="m1T-k0-A9b">
                                                     <rect key="frame" x="388" y="18" width="10" height="20"/>
+                                                    <accessibility key="accessibilityConfiguration" identifier="SettingsOptionsCellArrowImageView" label="SettingsOptionsCellArrowImageView">
+                                                        <bool key="isElement" value="YES"/>
+                                                    </accessibility>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="20" id="aIS-9f-ZDh"/>
                                                         <constraint firstAttribute="width" constant="10" id="hhD-Ji-4RJ"/>
@@ -68,6 +73,9 @@
                                                 <constraint firstItem="SDR-cg-hoG" firstAttribute="centerY" secondItem="NRW-iJ-9gS" secondAttribute="centerY" id="wzg-pE-bXk"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <accessibility key="accessibilityConfiguration" identifier="SettingsOptionsCell" label="SettingsOptionsCell">
+                                            <bool key="isElement" value="YES"/>
+                                        </accessibility>
                                         <connections>
                                             <outlet property="optionNameLabel" destination="SDR-cg-hoG" id="Z88-Q8-ASE"/>
                                             <outlet property="valueLabel" destination="Ust-Ak-zNA" id="96Y-LN-g4e"/>
@@ -82,12 +90,14 @@
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Switcher" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ORd-Sk-Pvj">
                                                     <rect key="frame" x="72" y="19" width="261" height="18"/>
+                                                    <accessibility key="accessibilityConfiguration" identifier="SettingsSwitcherCellNameLabel" label="SettingsSwitcherCellNameLabel"/>
                                                     <fontDescription key="fontDescription" name="SFProText-Semibold" family="SF Pro Text" pointSize="15"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vFN-f9-3BH">
                                                     <rect key="frame" x="349" y="12.5" width="51" height="31"/>
+                                                    <accessibility key="accessibilityConfiguration" identifier="SettingsSwitcherCellSwitch" label="SettingsSwitcherCellSwitch"/>
                                                     <color key="onTintColor" red="0.41568627450000001" green="0.50196078430000002" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
                                                     <connections>
                                                         <action selector="switcherDidSwitch:" destination="BxN-OO-vPZ" eventType="valueChanged" id="iay-E9-TP1"/>
@@ -95,6 +105,9 @@
                                                 </switch>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="296-ge-I06">
                                                     <rect key="frame" x="16" y="8" width="40" height="40"/>
+                                                    <accessibility key="accessibilityConfiguration" identifier="SettingsSwitcherCellImageView" label="SettingsSwitcherCellImageView">
+                                                        <bool key="isElement" value="YES"/>
+                                                    </accessibility>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="40" id="Eey-oD-3sN"/>
                                                         <constraint firstAttribute="height" constant="40" id="KIM-MI-7gN"/>
@@ -112,6 +125,9 @@
                                                 <constraint firstItem="296-ge-I06" firstAttribute="centerY" secondItem="e9V-dy-t1T" secondAttribute="centerY" id="wfg-EP-Bs1"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <accessibility key="accessibilityConfiguration" identifier="SettingsSwitcherCell" label="SettingsSwitcherCell">
+                                            <bool key="isElement" value="YES"/>
+                                        </accessibility>
                                         <constraints>
                                             <constraint firstItem="ORd-Sk-Pvj" firstAttribute="centerY" secondItem="BxN-OO-vPZ" secondAttribute="centerY" id="fnT-Z4-05K"/>
                                         </constraints>
@@ -130,6 +146,7 @@
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Key type" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5B0-0A-oRT">
                                                     <rect key="frame" x="20" y="19" width="52.5" height="16"/>
+                                                    <accessibility key="accessibilityConfiguration" identifier="SettingsKeyCellKeyTypeLabel" label="SettingsKeyCellKeyTypeLabel"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="16" id="7CO-l5-s1W"/>
                                                     </constraints>
@@ -139,12 +156,14 @@
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0xDdbA127De3D6D93C25268817615d6499055272" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="me5-3S-4gU">
                                                     <rect key="frame" x="20" y="43" width="338" height="68"/>
+                                                    <accessibility key="accessibilityConfiguration" identifier="SettingsKeyCellKeyLabel" label="SettingsKeyCellKeyLabel"/>
                                                     <fontDescription key="fontDescription" name="SFProText-Semibold" family="SF Pro Text" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jka-7U-TpH">
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jka-7U-TpH" userLabel="Copy Button">
                                                     <rect key="frame" x="374" y="65" width="24" height="24"/>
+                                                    <accessibility key="accessibilityConfiguration" identifier="SettingsKeyCellKeyCopyButton" label="SettingsKeyCellKeyCopyButton"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="24" id="GeM-Bc-Plw"/>
                                                         <constraint firstAttribute="width" constant="24" id="gWH-9q-dbz"/>
@@ -166,6 +185,9 @@
                                                 <constraint firstAttribute="trailing" secondItem="Jka-7U-TpH" secondAttribute="trailing" constant="16" id="zyR-wV-Yxh"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <accessibility key="accessibilityConfiguration" identifier="SettingsKeyCell" label="SettingsKeyCell">
+                                            <bool key="isElement" value="YES"/>
+                                        </accessibility>
                                         <connections>
                                             <outlet property="keyLabel" destination="me5-3S-4gU" id="NvL-lD-ixt"/>
                                             <outlet property="keyTypeLabel" destination="5B0-0A-oRT" id="kI9-93-Wup"/>
@@ -181,6 +203,7 @@
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tkj-CV-jYj">
                                                     <rect key="frame" x="16" y="8" width="382" height="56"/>
                                                     <color key="backgroundColor" red="0.95294117649999999" green="0.96078431369999995" blue="0.98039215690000003" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <accessibility key="accessibilityConfiguration" identifier="SettingsButtonCellChangeAllPasswordsButton" label="SettingsButtonCellChangeAllPasswordsButton"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="56" id="VhI-TX-k5c"/>
                                                     </constraints>
@@ -206,6 +229,9 @@
                                                 <constraint firstItem="Tkj-CV-jYj" firstAttribute="top" secondItem="kgu-iZ-bhu" secondAttribute="top" constant="8" id="jJv-TD-5Za"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <accessibility key="accessibilityConfiguration" identifier="SettingsButtonCell" label="SettingsButtonCell">
+                                            <bool key="isElement" value="YES"/>
+                                        </accessibility>
                                         <viewLayoutGuide key="safeArea" id="BI3-1k-a2N"/>
                                         <connections>
                                             <outlet property="button" destination="Tkj-CV-jYj" id="W9H-ge-4IQ"/>
