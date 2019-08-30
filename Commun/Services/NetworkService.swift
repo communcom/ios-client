@@ -12,6 +12,8 @@ import Alamofire
 import CyberSwift
 import SwifterSwift
 import eosswift
+import SDWebImage
+import SwiftLinkPreview
 
 class NetworkService: NSObject {
     // MARK: - Properties
@@ -190,6 +192,45 @@ class NetworkService: NSObject {
             }
             
             return Disposables.create()
+        }
+    }
+    
+    func downloadImage(_ url: URL) -> Single<UIImage> {
+        guard let imageDownloader = SDWebImageManager.shared().imageDownloader else {
+            return .error(ErrorAPI.unknown)
+        }
+        return Single<UIImage>.create {single in
+            imageDownloader.downloadImage(with: url) { (image, _, error, _) in
+                if let image = image {
+                    single(.success(image))
+                    return
+                }
+                if let error = error {
+                    single(.error(error))
+                    return
+                }
+                single(.error(ErrorAPI.unknown))
+            }
+            return Disposables.create()
+        }
+    }
+    
+    func downloadLinkPreview(_ urlString: String) -> Single<Response> {
+        let slp = SwiftLinkPreview(cache: InMemoryCache())
+        if let cached = slp.cache.slp_getCachedResponse(url: urlString) {
+            // Do whatever with the cached response
+            return .just(cached)
+        } else {
+            // Perform preview otherwise
+            return Single<Response>.create {single in
+                slp.preview(urlString, onSuccess: { (response) in
+                    single(.success(response))
+                }, onError: { (error) in
+                    single(.error(error))
+                })
+                return Disposables.create()
+            }
+            
         }
     }
     

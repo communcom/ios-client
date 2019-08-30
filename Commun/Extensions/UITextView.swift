@@ -17,13 +17,8 @@ extension UITextView {
         attributedText = currentMAS
     }
     
-    func nsRangeOfText(_ text: String) -> NSRange {
-        let str1 = attributedText.string.nsString
-        return str1.range(of: text)
-    }
-    
     func rangeOfText(_ text: String) -> UITextRange? {
-        let range = nsRangeOfText(text)
+        let range = attributedText.nsRangeOfText(text)
         
         guard let start = position(from: beginningOfDocument, offset: range.location),
             let end = position(from: start, offset: range.length) else { return nil }

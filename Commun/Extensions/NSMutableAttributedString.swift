@@ -7,6 +7,9 @@
 //
 
 import Foundation
+import SwiftLinkPreview
+import RxSwift
+import CyberSwift
 
 extension NSMutableAttributedString {
     @discardableResult func bold(_ text: String, font: UIFont = UIFont.systemFont(ofSize: 15, weight: .bold), color: UIColor = .black) -> NSMutableAttributedString {
@@ -64,5 +67,65 @@ extension NSMutableAttributedString {
         mediaView.removeFromSuperview()
         
         return attachment
+    }
+    
+    func parseContent(into view: UIView) -> Completable {
+        var singles = [Observable<Void>]()
+        enumerateAttributes(in: NSMakeRange(0, length), options: []) { (attrs, range, bool) in
+            print(attrs, range)
+            let text = attributedSubstring(from: range).string
+            print(text)
+            
+            // images
+            if text.matches(pattern: "\\!\\[.*\\]\\(.*\\)") {
+                let description = text.slicing(from: "[", to: "]")
+                guard let urlString = text.slicing(from: "(", to: ")"),
+                    let url         = URL(string: urlString)
+                    else {return}
+                let downloadImage = NetworkService.shared.downloadImage(url)
+                    .do(onSuccess: { [weak self] (image) in
+                        guard let strongSelf = self else {return}
+                        let newRange = strongSelf.nsRangeOfText(text)
+                        let attachment = strongSelf.imageAttachment(from: image, urlString: urlString, description: description, into: view)
+                        let imageAS = NSAttributedString(attachment: attachment)
+                        strongSelf.replaceCharacters(in: newRange, with: imageAS)
+                    })
+                    .map {_ in ()}
+                    .asObservable()
+                singles.append(downloadImage)
+            }
+            
+            // video or website
+            else if text.matches(pattern: "\\!(video|website)\\[.*\\]\\(.*\\)") {
+                guard let urlString = text.slicing(from: "(", to: ")") else {return}
+                let downloadPreview = NetworkService.shared.downloadLinkPreview(urlString)
+                    .flatMap {response -> Single<(UIImage, String?, String?)> in
+                        if let imageUrlString = response.image,
+                            let url = URL(string: imageUrlString) {
+                            return NetworkService.shared.downloadImage(url)
+                                .map {($0, urlString, response.title)}
+                        }
+                        throw ErrorAPI.unknown
+                    }
+                    .do(onSuccess: { [weak self] (arg0) in
+                        let (image, urlString, description) = arg0
+                        guard let strongSelf = self else {return}
+                        let newRange = strongSelf.nsRangeOfText(text)
+                        let attachment = strongSelf.imageAttachment(from: image, urlString: urlString, description: description, into: view)
+                        let imageAS = NSAttributedString(attachment: attachment)
+                        strongSelf.replaceCharacters(in: newRange, with: imageAS)
+                    })
+                    .map {_ in ()}
+                    .asObservable()
+                singles.append(downloadPreview)
+            }
+        }
+        
+        guard singles.count > 0 else {return .empty()}
+        
+        return Observable.zip(singles)
+            .take(1)
+            .asSingle()
+            .flatMapToCompletable()
     }
 }
