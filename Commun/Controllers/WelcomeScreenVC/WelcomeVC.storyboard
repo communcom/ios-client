@@ -28,7 +28,7 @@
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9u7-LT-02r" userLabel="Sign In Button" customClass="BlankButton" customModule="Commun" customModuleProvider="target">
                                 <rect key="frame" x="42" y="574" width="291" height="56"/>
-                                <accessibility key="accessibilityConfiguration" identifier="WelcomeItemSignInButton" label="WelcomeItemSignInButton"/>
+                                <accessibility key="accessibilityConfiguration" identifier="WelcomeSignInButton" label="WelcomeSignInButton"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="56" id="XnG-Bd-ecU" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                                 </constraints>
@@ -48,6 +48,7 @@
                             </containerView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8t8-vm-TGP" customClass="StepButton" customModule="Commun" customModuleProvider="target">
                                 <rect key="frame" x="42" y="502" width="291" height="56"/>
+                                <accessibility key="accessibilityConfiguration" identifier="WelcomeSignUpButton" label="WelcomeSignUpButton"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="56" id="Zy9-JZ-KHy" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                                 </constraints>
