@@ -22,7 +22,9 @@
             <subviews>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tux" translatesAutoresizingMaskIntoConstraints="NO" id="SUC-uu-8k5">
                     <rect key="frame" x="16" y="14" width="40" height="40"/>
-                    <accessibility key="accessibilityConfiguration" identifier="PostCardCellAvatarImageView" label="PostCardCellAvatarImageView"/>
+                    <accessibility key="accessibilityConfiguration" identifier="PostCardCellAvatarImageView" label="PostCardCellAvatarImageView">
+                        <bool key="isElement" value="YES"/>
+                    </accessibility>
                     <constraints>
                         <constraint firstAttribute="width" constant="40" id="IUE-V2-Q2j"/>
                         <constraint firstAttribute="height" constant="40" id="XwL-2e-fVw"/>
@@ -59,6 +61,9 @@
                     <subviews>
                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="BwL-RK-1qr">
                             <rect key="frame" x="0.0" y="0.0" width="414" height="204.5"/>
+                            <accessibility key="accessibilityConfiguration" identifier="PlaceholderPostCellImageView" label="PlaceholderPostCellImageView">
+                                <bool key="isElement" value="YES"/>
+                            </accessibility>
                         </imageView>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -72,7 +77,9 @@
                 </view>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-            <accessibility key="accessibilityConfiguration" identifier="PostCardCellBackgroundView" label="PostCardCellBackgroundView"/>
+            <accessibility key="accessibilityConfiguration" identifier="PlaceholderPostCell" label="PlaceholderPostCell">
+                <bool key="isElement" value="YES"/>
+            </accessibility>
             <constraints>
                 <constraint firstItem="0jl-jk-7la" firstAttribute="leading" secondItem="WYs-zQ-iSs" secondAttribute="leading" id="4VD-mL-wQX"/>
                 <constraint firstAttribute="trailing" secondItem="Oyz-no-eKk" secondAttribute="trailing" constant="16" id="5zZ-yU-nmw"/>
@@ -95,6 +102,6 @@
         </view>
     </objects>
     <resources>
-        <image name="tux" width="327" height="370"/>
+        <image name="tux" width="56" height="56"/>
     </resources>
 </document>
