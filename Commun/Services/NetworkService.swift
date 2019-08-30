@@ -228,6 +228,7 @@ class NetworkService: NSObject {
                 slp.preview(urlString, onSuccess: { (response) in
                     single(.success(response))
                 }, onError: { (error) in
+                    Logger.log(message: "Preview error for \(urlString): \(error)", event: .error)
                     single(.error(error))
                 })
                 return Disposables.create()

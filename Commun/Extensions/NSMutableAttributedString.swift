@@ -72,9 +72,7 @@ extension NSMutableAttributedString {
     func parseContent(into view: UIView) -> Completable {
         var singles = [Observable<Void>]()
         enumerateAttributes(in: NSMakeRange(0, length), options: []) { (attrs, range, bool) in
-            print(attrs, range)
             let text = attributedSubstring(from: range).string
-            print(text)
             
             // images
             if text.matches(pattern: "\\!\\[.*\\]\\(.*\\)") {

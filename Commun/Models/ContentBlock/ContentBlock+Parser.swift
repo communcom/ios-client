@@ -16,7 +16,6 @@ extension NSAttributedString {
     static var separator: NSAttributedString {
         let separator = NSMutableAttributedString(string: "\n")
         separator.addAttribute(.paragraphStyle, value: NSParagraphStyle(), range: NSMakeRange(0, separator.length))
-        separator.addAttribute(.font, value: UIFont.systemFont(ofSize: 5), range: NSMakeRange(0, separator.length))
         return separator
     }
 }
@@ -94,53 +93,63 @@ extension ContentBlock {
             break
         }
         
-        // Parse Attribute
-        var attr = currentAttributes
-        if let text_color = attributes?.text_color {
-            attr[.foregroundColor] = UIColor(hexString: text_color)
-        }
-        
-        var symbolicTraits: UIFontDescriptor.SymbolicTraits = []
-        if attributes?.style?.contains("bold") == true {
-            symbolicTraits.insert(.traitBold)
-        } else if attributes?.style?.contains("italic") == true {
-            symbolicTraits.insert(.traitItalic)
-        }
-        
-        if !symbolicTraits.isEmpty {
-            if let currentFont = attr[.font] as? UIFont {
-                attr[.font] = UIFont(descriptor: currentFont.fontDescriptor.withSymbolicTraits(symbolicTraits)!, size: currentFont.pointSize)
-            }
-        }
-        
         switch type {
         case "paragraph":
-            // spacing bottom of paragraph
+            child.addAttributes(currentAttributes, range: NSMakeRange(0, child.length))
             child.append(NSAttributedString.separator)
-            break
+            return child
+        case "text":
+            var attr = currentAttributes
+            if let text_color = attributes?.text_color {
+                attr[.foregroundColor] = UIColor(hexString: text_color)
+            }
+    
+            var symbolicTraits: UIFontDescriptor.SymbolicTraits = []
+            if attributes?.style?.contains("bold") == true {
+                symbolicTraits.insert(.traitBold)
+            } else if attributes?.style?.contains("italic") == true {
+                symbolicTraits.insert(.traitItalic)
+            }
+    
+            if !symbolicTraits.isEmpty {
+                if let currentFont = attr[.font] as? UIFont {
+                    attr[.font] = UIFont(descriptor: currentFont.fontDescriptor.withSymbolicTraits(symbolicTraits)!, size: currentFont.pointSize)
+                }
+            }
+            child.addAttributes(attr, range: NSMakeRange(0, child.length))
+            return child
         case "tag":
-            attr[.foregroundColor] = UIColor.tag
             child.insert(NSAttributedString(string: "#"), at: 0)
+            var attr = currentAttributes
+            attr[.foregroundColor] = UIColor.tag
+            child.addAttributes(attr, range: NSMakeRange(0, child.length))
+            return child
         case "link":
             let url = attributes?.url ?? ""
+            var attr = currentAttributes
             attr[.link] = url
+            child.addAttributes(attr, range: NSMakeRange(0, child.length))
+            return child
         case "image":
             let description = attributes?.description ?? ""
             child.insert(NSAttributedString(string: "![\(description)]("), at: 0)
             child.append(NSAttributedString(string: ")"))
+            child.addAttributes(currentAttributes, range: NSMakeRange(0, child.length))
             child.append(NSAttributedString.separator)
-            break
+            return child
         case "video":
             // TODO: video
             child.insert(NSAttributedString(string: "!video[]("), at: 0)
             child.append(NSAttributedString(string: ")"))
+            child.addAttributes(currentAttributes, range: NSMakeRange(0, child.length))
             child.append(NSAttributedString.separator)
-            break
+            return child
         case "website":
             child.insert(NSAttributedString(string: "!website[]("), at: 0)
             child.append(NSAttributedString(string: ")"))
+            child.addAttributes(currentAttributes, range: NSMakeRange(0, child.length))
             child.append(NSAttributedString.separator)
-            break
+            return child
         case "set":
             // TODO: set
             child.append(NSAttributedString.separator)
@@ -149,7 +158,6 @@ extension ContentBlock {
             break
         }
         
-        child.addAttributes(attr, range: NSMakeRange(0, child.length))
         return child
     }
 }
