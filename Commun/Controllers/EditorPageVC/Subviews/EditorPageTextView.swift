@@ -74,6 +74,7 @@ class EditorPageTextView: ExpandableTextView {
         // find embeds
         var singles = [Observable<UIImage>]()
         var offset = 0
+        var minChangedLocation: Int?
         attributedText.enumerateAttributes(in: NSMakeRange(0, attributedText.length), options: []) { (attrs, range, bool) in
             print(attrs, range)
             // image
@@ -88,7 +89,11 @@ class EditorPageTextView: ExpandableTextView {
                     .do(onSuccess: { [weak self] (image) in
                         guard let strongSelf = self else {return}
                         var newRange = range
-                        newRange.location += offset
+                        if minChangedLocation == nil || newRange.location < minChangedLocation! {
+                            minChangedLocation = newRange.location
+                        } else {
+                            newRange.location += offset
+                        }
                         let attachment = strongSelf.textStorage.imageAttachment(from: image, urlString: urlString, description: description, into: strongSelf)
                         let imageAS = NSAttributedString(attachment: attachment)
                         strongSelf.textStorage.replaceCharacters(in: range, with: imageAS)
@@ -97,6 +102,16 @@ class EditorPageTextView: ExpandableTextView {
                     .asObservable()
     
                 singles.append(downloadImage)
+                
+            }
+            
+            // video or website
+            else if text.matches(pattern: "\\!(video|website)\\[.*\\]\\(.*\\)") {
+                let description = text.slicing(from: "[", to: "]")
+                guard let urlString = text.slicing(from: "(", to: ")"),
+                    let url         = URL(string: urlString)
+                else {return}
+                
             }
         }
         

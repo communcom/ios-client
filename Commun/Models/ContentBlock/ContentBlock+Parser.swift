@@ -12,6 +12,14 @@ class ContentBlockAttributedString: NSAttributedString {
     var block: ContentBlock?
 }
 
+extension NSAttributedString {
+    static var separator: NSAttributedString {
+        let separator = NSMutableAttributedString(string: "\n")
+        separator.addAttribute(.paragraphStyle, value: NSParagraphStyle(), range: NSMakeRange(0, separator.length))
+        return separator
+    }
+}
+
 extension ContentBlock {
     func toHTML() -> String {
         
@@ -105,11 +113,10 @@ extension ContentBlock {
         }
         
         switch type {
-        case "post":
-            return child
         case "paragraph":
-            child.append(NSAttributedString(string: "\n"))
-            return child
+            // spacing bottom of paragraph
+            child.append(NSAttributedString.separator)
+            break
         case "tag":
             attr[.foregroundColor] = UIColor.tag
             child.insert(NSAttributedString(string: "#"), at: 0)
@@ -119,20 +126,23 @@ extension ContentBlock {
         case "image":
             let description = attributes?.description ?? ""
             child.insert(NSAttributedString(string: "![\(description)]("), at: 0)
-            child.append(NSAttributedString(string: ")\n"))
+            child.append(NSAttributedString(string: ")"))
+            child.append(NSAttributedString.separator)
             break
         case "video":
             // TODO: video
             child.insert(NSAttributedString(string: "!video[]("), at: 0)
-            child.append(NSAttributedString(string: ")\n"))
+            child.append(NSAttributedString(string: ")"))
+            child.append(NSAttributedString.separator)
             break
         case "website":
             child.insert(NSAttributedString(string: "!website[]("), at: 0)
-            child.append(NSAttributedString(string: ")\n"))
+            child.append(NSAttributedString(string: ")"))
+            child.append(NSAttributedString.separator)
             break
         case "set":
             // TODO: set
-            child.append(NSAttributedString(string: "\n"))
+            child.append(NSAttributedString.separator)
             break
         default:
             break
