@@ -12,4 +12,8 @@ extension UIColor {
     static var appMainColor: UIColor {
         return UIColor(hexString: "#6A80F5")!
     }
+    
+    static var tag: UIColor {
+        return .blue
+    }
 }

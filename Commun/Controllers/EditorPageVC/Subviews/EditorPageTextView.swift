@@ -16,40 +16,18 @@ class EditorPageTextView: ExpandableTextView {
     // MARK: - Properties
     private let bag = DisposeBag()
     
-    // options
-    private let attachmentRightMargin: CGFloat = 10
-    private let attachmentHeightForDescription: CGFloat = 80
-    
     // MARK: - Methods
     private func attach(image: UIImage, urlString: String? = nil, description: String? = nil, at index: Int? = nil) {
-        // setup view
-        let newWidth = frame.size.width - attachmentRightMargin
-        let mediaView = MediaView(frame: CGRect(x: 0, y: 0, width: newWidth, height: image.size.height * newWidth / image.size.width + attachmentHeightForDescription))
-        mediaView.showCloseButton = false
-        mediaView.setUp(image: image, url: urlString, description: description)
-        addSubview(mediaView)
-        
-        // setup attachment
-        let attachment = TextAttachment()
-        attachment.urlString    = urlString
-        attachment.desc         = description
-        attachment.view         = mediaView
-        attachment.type         = .image(originalImage: image)
-        mediaView.removeFromSuperview()
-        
         // Insert Attachment
-        let currentAtStr = NSMutableAttributedString(attributedString: attributedText)
-        let attachmentAtStr = NSAttributedString(attachment: attachment)
+        let attachment = textStorage.imageAttachment(from: image, urlString: urlString, description: description, into: self)
+        let imageAS = NSAttributedString(attachment: attachment)
+        
         if let index = index {
-            currentAtStr.insert(NSAttributedString(string: "\n"), at: index)
-            currentAtStr.insert(attachmentAtStr, at: index+1)
-            currentAtStr.append(NSAttributedString(string: "\n"))
+            textStorage.insert(imageAS, at: index)
         } else {
-            currentAtStr.append(attachmentAtStr)
-            currentAtStr.append(NSAttributedString(string: "\n"))
+            textStorage.append(imageAS)
         }
-        currentAtStr.addAttributes(typingAttributes, range: NSMakeRange(0, currentAtStr.length))
-        attributedText = currentAtStr
+        textStorage.addAttributes(typingAttributes, range: NSMakeRange(0, textStorage.length))
     }
     
     func addImage(_ image: UIImage? = nil, urlString: String? = nil, description: String? = nil) {
@@ -88,37 +66,73 @@ class EditorPageTextView: ExpandableTextView {
     }
     
     func parseText(_ text: String?) {
-        guard let text = text,
-            let regex = try? NSRegularExpression(pattern: "\\!\\[.*\\]\\(.*\\)", options: .caseInsensitive)
-        else {return}
-        // assign text
-        let attributedString = NSMutableAttributedString(string: text)
-        attributedString.addAttributes(typingAttributes, range: NSMakeRange(0, attributedString.length))
-        attributedText = attributedString
+        let string = ###"{"id":1,"type":"post","attributes":{"version":1,"title":"Сказка про царя"},"content":[{"id":2,"type":"paragraph","content":[{"id":3,"type":"text","content":"Много лет тому назад, "},{"id":4,"type":"text","content":"Царь купил себе айпад. ","attributes":{"style":["bold","italic"],"text_color":"#ffff0000"}},{"id":5,"type":"tag","content":"с_той_поры_прошли_века","attributes":{"anchor":"favdfa9384fnakdrkdfkd"}},{"id":6,"type":"text","content":" , Люди "},{"id":7,"type":"link","content":"помнят ","attributes":{"url":"http://yandex.ru"}},{"id":8,"type":"link","content":"чудака.","attributes":{"url":"https://www.anekdot.ru/i//8/28/vina.jpg"}}]},{"id":9,"type":"image","content":"https://cdn.arstechnica.net/wp-content/uploads/2016/02/5718897981_10faa45ac3_b-640x624.jpg","attributes":{"description":"Hi!"}},{"id":10,"type":"video","content":"https://www.youtube.com/embed/afp6CrtPnJo"},{"id":11,"type":"website","content":"http://yandex.ru"},{"id":12,"type":"set","content":[{"id":13,"type":"image","content":"https://thehappypuppysite.com/wp-content/uploads/2017/10/Cute-Dog-Names-HP-long.jpg","attributes":{"description":"Hi!"}},{"id":14,"type":"video","content":"https://www.youtube.com/watch?v=IQ&feature=youtu.be"},{"id":15,"type":"website","content":"http://yandex.ru"}]}]}"###
+        let jsonData = string.data(using: .utf8)!
+        let block = try! JSONDecoder().decode(ContentBlock.self, from: jsonData)
+        let attributedText = block.toAttributedString(currentAttributes: typingAttributes)
         
         // find embeds
         var singles = [Observable<UIImage>]()
-        for match in regex.matchedStrings(in: text) {
-            
-            let description = match.slicing(from: "[", to: "]")
-            guard let urlString = match.slicing(from: "(", to: ")"),
-                let url         = URL(string: urlString)
-            else {continue}
-            
-            let downloadImage = downloadImageSingle(url: url)
-                .do(onSuccess: { [weak self] (image) in
-                    guard let strongSelf = self else {return}
-                    let location = strongSelf.text.nsString.range(of: match).location
-                    strongSelf.attach(image: image, urlString: urlString, description: description, at: location)
-                    strongSelf.removeText(match)
-                })
-                .asObservable()
-            
-            singles.append(downloadImage)
-        }
+        var offset = 0
+        attributedText.enumerateAttributes(in: NSMakeRange(0, attributedText.length), options: []) { (attrs, range, bool) in
+            print(attrs, range)
+            // image
+            let text = attributedText.attributedSubstring(from: range).string
+            print(text)
+            if text.matches(pattern: "\\!\\[.*\\]\\(.*\\)") {
+                let description = text.slicing(from: "[", to: "]")
+                guard let urlString = text.slicing(from: "(", to: ")"),
+                    let url         = URL(string: urlString)
+                else {return}
+                let downloadImage = downloadImageSingle(url: url)
+                    .do(onSuccess: { [weak self] (image) in
+                        guard let strongSelf = self else {return}
+                        var newRange = range
+                        newRange.location += offset
+                        let attachment = strongSelf.textStorage.imageAttachment(from: image, urlString: urlString, description: description, into: strongSelf)
+                        let imageAS = NSAttributedString(attachment: attachment)
+                        strongSelf.textStorage.replaceCharacters(in: range, with: imageAS)
+                        offset += imageAS.length - text.count
+                    })
+                    .asObservable()
     
-        guard singles.count > 0 else {return}
+                singles.append(downloadImage)
+            }
+        }
         
+        self.attributedText = attributedText
+        
+//        guard let text = text,
+//            let regex = try? NSRegularExpression(pattern: "\\!\\[.*\\]\\(.*\\)", options: .caseInsensitive)
+//        else {return}
+//        // assign text
+//        let attributedString = NSMutableAttributedString(string: text)
+//        attributedString.addAttributes(typingAttributes, range: NSMakeRange(0, attributedString.length))
+//        attributedText = attributedString
+//
+//        // find embeds
+//        var singles = [Observable<UIImage>]()
+//        for match in regex.matchedStrings(in: text) {
+//
+//            let description = match.slicing(from: "[", to: "]")
+//            guard let urlString = match.slicing(from: "(", to: ")"),
+//                let url         = URL(string: urlString)
+//            else {continue}
+//
+//            let downloadImage = downloadImageSingle(url: url)
+//                .do(onSuccess: { [weak self] (image) in
+//                    guard let strongSelf = self else {return}
+//                    let location = strongSelf.text.nsString.range(of: match).location
+//                    strongSelf.attach(image: image, urlString: urlString, description: description, at: location)
+//                    strongSelf.removeText(match)
+//                })
+//                .asObservable()
+//
+//            singles.append(downloadImage)
+//        }
+//
+        guard singles.count > 0 else {return}
+
         parentViewController?.navigationController?
             .showIndetermineHudWithMessage("loading".localized().uppercaseFirst)
         Observable.zip(singles)

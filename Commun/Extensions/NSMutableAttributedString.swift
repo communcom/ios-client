@@ -43,4 +43,26 @@ extension NSMutableAttributedString {
         append(normal)
         return self
     }
+    
+    func imageAttachment(from image: UIImage, urlString: String? = nil, description: String? = nil, into view: UIView) -> TextAttachment {
+        let attachmentRightMargin: CGFloat = 10
+        let attachmentHeightForDescription: CGFloat = 80
+        
+        // setup view
+        let newWidth = view.frame.size.width - attachmentRightMargin
+        let mediaView = MediaView(frame: CGRect(x: 0, y: 0, width: newWidth, height: image.size.height * newWidth / image.size.width + attachmentHeightForDescription))
+        mediaView.showCloseButton = false
+        mediaView.setUp(image: image, url: urlString, description: description)
+        view.addSubview(mediaView)
+        
+        // setup attachment
+        let attachment = TextAttachment()
+        attachment.urlString    = urlString
+        attachment.desc         = description
+        attachment.view         = mediaView
+        attachment.type         = .image(originalImage: image)
+        mediaView.removeFromSuperview()
+        
+        return attachment
+    }
 }
