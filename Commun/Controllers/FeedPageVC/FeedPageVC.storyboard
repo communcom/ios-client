@@ -43,6 +43,9 @@
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LW0-TT-GUg" customClass="Segmentio" customModule="Segmentio">
                                                     <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <accessibility key="accessibilityConfiguration" identifier="FeedPageSegmentio" label="FeedPageSegmentio">
+                                                        <bool key="isElement" value="YES"/>
+                                                    </accessibility>
                                                 </view>
                                             </subviews>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -66,6 +69,9 @@
                                         </view>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Z7e-MC-AaW">
                                             <rect key="frame" x="16" y="64" width="40" height="40"/>
+                                            <accessibility key="accessibilityConfiguration" identifier="FeedPageUserAvatarImageView" label="FeedPageUserAvatarImageView">
+                                                <bool key="isElement" value="YES"/>
+                                            </accessibility>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="40" id="K18-NN-wUy"/>
                                                 <constraint firstAttribute="height" constant="40" id="lWN-gx-2wx"/>
