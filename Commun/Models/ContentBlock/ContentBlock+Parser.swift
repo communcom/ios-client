@@ -107,7 +107,9 @@ extension ContentBlock {
             var symbolicTraits: UIFontDescriptor.SymbolicTraits = []
             if attributes?.style?.contains("bold") == true {
                 symbolicTraits.insert(.traitBold)
-            } else if attributes?.style?.contains("italic") == true {
+            }
+            
+            if attributes?.style?.contains("italic") == true {
                 symbolicTraits.insert(.traitItalic)
             }
     
@@ -153,11 +155,9 @@ extension ContentBlock {
         case "set":
             // TODO: set
             child.append(NSAttributedString.separator)
-            break
+            return child
         default:
-            break
+            return child
         }
-        
-        return child
     }
 }

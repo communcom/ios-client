@@ -32,6 +32,14 @@ struct ContentBlockAttributes: Codable {
     
     // ImageBlock
     var description: String?
+    
+    // VideoBlock
+    var provider_name: String?
+    var author: String?
+    var author_url: String?
+    var thumbnail_url: String?
+    var thumbnail_size: [UInt]?
+    var html: String?
 }
 
 enum ContentBlockContent {
