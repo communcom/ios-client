@@ -14,8 +14,8 @@ class ContentBlockAttributedString: NSAttributedString {
 
 extension NSAttributedString {
     static var separator: NSAttributedString {
-        let separator = NSMutableAttributedString(string: "\n")
-        separator.addAttribute(.paragraphStyle, value: NSParagraphStyle(), range: NSMakeRange(0, separator.length))
+        // \u2063 means Invisible Separator
+        let separator = NSMutableAttributedString(string: "\u{2063}")
         return separator
     }
 }
@@ -95,8 +95,8 @@ extension ContentBlock {
         
         switch type {
         case "paragraph":
-            child.addAttributes(currentAttributes, range: NSMakeRange(0, child.length))
             child.append(NSAttributedString.separator)
+            child.addAttributes(currentAttributes, range: NSMakeRange(child.length - 1, 1))
             return child
         case "text":
             var attr = currentAttributes
@@ -136,25 +136,26 @@ extension ContentBlock {
             let description = attributes?.description ?? ""
             child.insert(NSAttributedString(string: "![\(description)]("), at: 0)
             child.append(NSAttributedString(string: ")"))
-            child.addAttributes(currentAttributes, range: NSMakeRange(0, child.length))
             child.append(NSAttributedString.separator)
+            child.addAttributes(currentAttributes, range: NSMakeRange(child.length - 1, 1))
             return child
         case "video":
             // TODO: video
             child.insert(NSAttributedString(string: "!video[]("), at: 0)
             child.append(NSAttributedString(string: ")"))
-            child.addAttributes(currentAttributes, range: NSMakeRange(0, child.length))
             child.append(NSAttributedString.separator)
+            child.addAttributes(currentAttributes, range: NSMakeRange(child.length - 1, 1))
             return child
         case "website":
             child.insert(NSAttributedString(string: "!website[]("), at: 0)
             child.append(NSAttributedString(string: ")"))
-            child.addAttributes(currentAttributes, range: NSMakeRange(0, child.length))
             child.append(NSAttributedString.separator)
+            child.addAttributes(currentAttributes, range: NSMakeRange(child.length - 1, 1))
             return child
         case "set":
             // TODO: set
             child.append(NSAttributedString.separator)
+            child.addAttributes(currentAttributes, range: NSMakeRange(child.length - 1, 1))
             return child
         default:
             return child
