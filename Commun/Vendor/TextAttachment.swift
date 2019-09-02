@@ -42,6 +42,10 @@ class TextAttachment: NSTextAttachment {
             return "!video\(placeholder)"
         }
     }
+    
+    override var description: String {
+        return "TextAttachment(\(placeholderText))"
+    }
 }
 
 private extension UIView {
