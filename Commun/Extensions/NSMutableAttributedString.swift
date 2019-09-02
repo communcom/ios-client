@@ -113,6 +113,12 @@ extension NSMutableAttributedString {
                         guard let strongSelf = self else {return}
                         let newRange = strongSelf.nsRangeOfText(text)
                         let attachment = strongSelf.imageAttachment(from: image, urlString: urlString, description: description, into: view)
+                        if text.contains("!video") {
+                            attachment.type = .video
+                        } else if text.contains("!website") {
+                            attachment.type = .website
+                        }
+                        
                         let imageAS = NSAttributedString(attachment: attachment)
                         strongSelf.replaceCharacters(in: newRange, with: imageAS)
                     })

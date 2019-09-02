@@ -10,7 +10,9 @@ import Foundation
 
 class TextAttachment: NSTextAttachment {
     enum AttachmentType {
-        case image(originalImage: UIImage?), url
+        case image(originalImage: UIImage?)
+        case website
+        case video
     }
     
     private static var uniqueId = 0
@@ -34,8 +36,10 @@ class TextAttachment: NSTextAttachment {
         switch type {
         case .image(_):
             return "!\(placeholder)"
-        case .url:
-            return placeholder
+        case .website:
+            return "!website\(placeholder)"
+        case .video:
+            return "!video\(placeholder)"
         }
     }
 }

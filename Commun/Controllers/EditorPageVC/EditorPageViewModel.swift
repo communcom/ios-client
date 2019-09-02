@@ -76,7 +76,7 @@ class EditorPageViewModel {
                             })
                             .asObservable()
                     ]
-                case .url:
+                case .website, .video:
                     // TODO: later
                     return result
                 }
