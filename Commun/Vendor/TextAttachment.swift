@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import RxSwift
 
 class TextAttachment: NSTextAttachment {
     enum AttachmentType {
@@ -45,6 +46,57 @@ class TextAttachment: NSTextAttachment {
     
     override var description: String {
         return "TextAttachment(\(placeholderText))"
+    }
+    
+    func toSingleContentBlock(id: UInt) -> Single<ContentBlock>? {
+        guard let type = type else {
+            print("Type of content is missing: \(self)")
+            return nil
+        }
+        switch type {
+        case .image(let originalImage):
+            let blockType = "image"
+            let attributes = ContentBlockAttributes(version: nil, title: nil, style: nil, text_color: nil, anchor: nil, url: nil, description: desc, provider_name: nil, author: nil, author_url: nil, thumbnail_url: nil, thumbnail_size: nil, html: nil)
+            
+            // if image was uploaded
+            if let url = urlString {
+                let block = ContentBlock(id: id, type: blockType, attributes: attributes, content: .string(url))
+                return .just(block)
+            }
+                
+            // have to upload image
+            else if let image = originalImage {
+                let single: Single<ContentBlock> =
+                    NetworkService.shared.uploadImage(image)
+                        .map {url in
+                            return ContentBlock(id: id, type: blockType, attributes: attributes, content: .string(url))
+                        }
+                return single
+            }
+        case .website:
+            guard let url = urlString else {break}
+            // TODO: download descriptions, modify attributes
+            let block = ContentBlock(
+                id: id,
+                type: "website",
+                attributes:
+                ContentBlockAttributes(version: nil, title: nil, style: nil, text_color: nil, anchor: nil, url: nil, description: nil, provider_name: nil, author: nil, author_url: nil, thumbnail_url: nil, thumbnail_size: nil, html: nil),
+                content: .string(url))
+            
+            return .just(block)
+            
+        case .video:
+            guard let url = urlString else {break}
+            // TODO: download descriptions, modify attributes
+            let block = ContentBlock(
+                id: id,
+                type: "video",
+                attributes:
+                ContentBlockAttributes(version: nil, title: nil, style: nil, text_color: nil, anchor: nil, url: nil, description: nil, provider_name: nil, author: nil, author_url: nil, thumbnail_url: nil, thumbnail_size: nil, html: nil),
+                content: .string(url))
+            return .just(block)
+        }
+        return nil
     }
 }
 

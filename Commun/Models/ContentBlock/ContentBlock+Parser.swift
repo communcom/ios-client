@@ -15,7 +15,7 @@ class ContentBlockAttributedString: NSAttributedString {
 extension NSAttributedString {
     static var separator: NSAttributedString {
         // \u2063 means Invisible Separator
-        let separator = NSMutableAttributedString(string: "\u{2063}")
+        let separator = NSMutableAttributedString(string: "\n")
         return separator
     }
 }
