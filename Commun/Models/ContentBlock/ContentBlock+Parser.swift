@@ -124,6 +124,7 @@ extension ContentBlock {
             child.insert(NSAttributedString(string: "#"), at: 0)
             var attr = currentAttributes
             attr[.foregroundColor] = UIColor.tag
+            attr[.link] = attributes?.anchor
             child.addAttributes(attr, range: NSMakeRange(0, child.length))
             return child
         case "link":

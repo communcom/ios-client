@@ -137,20 +137,19 @@ extension NSMutableAttributedString {
             .flatMapToCompletable()
     }
     
-    func toContentBlock() {
+    func toContentBlock() -> Single<ContentBlock> {
         // spend id = 1 for PostBlock, so id starts from 1
         var id: UInt = 1
         
         // child blocks of post block
-        let childBlocks = [ContentBlockContent]()
+        var contentBlocks = [Single<ContentBlock>]()
         
         // get AS, which was separated by the Escaping String
         let attrStrs = components(separatedBy: "\n")
         
         // parse AS to ContentBlock
-        var contentBlocks = [Single<ContentBlock>]()
         for attrStr in attrStrs {
-            // parse attachment
+            // parse attachments
             if let attachment = attrStr.attributes[.attachment] as? TextAttachment {
                 id += 1
                 if let single = attachment.toSingleContentBlock(id: id) {
@@ -160,34 +159,19 @@ extension NSMutableAttributedString {
             
             // Parse paragraph
             else {
-                let paragraphContent = [ContentBlock]()
-                
+                id += 1
+                let block = attrStr.toParagraphContentBlock(id: &id)
+                contentBlocks.append(.just(block))
             }
         }
 
-
-//
-//        var content = [ContentBlock]()
-//
-//        id += 1
-//        var currentBlock = ContentBlock(id: id, type: "paragraph", attributes: nil, content: .array([]))
-//
-//        enumerateAttributes(in: NSMakeRange(0, length), options: []) { (attrs, range, bool) in
-//            let currentText = attributedSubstring(from: range).string
-//            if currentText == "\u{2063}" {
-//                content.append(currentBlock)
-//            } else if let attachment = attrs[.attachment] as? TextAttachment {
-//                let type: TextAttachment.AttachmentType
-//                switch type {
-//                case .image(let originalImage):
-//                    if let image = originalImage {
-//                        // TODO: Upload
-//                    }
-//                    currentBlock
-//                }
-//            } else {
-//                let currentAS = attributedSubstring(from: range).string
-//            }
-//        }
+        return Single.zip(contentBlocks)
+            .map {contentBlocks -> ContentBlock in
+                return ContentBlock(
+                    id: 1,
+                    type: "post",
+                    attributes: ContentBlockAttributes(version: 1, title: nil, style: nil, text_color: nil, anchor: nil, url: nil, description: nil, provider_name: nil, author: nil, author_url: nil, thumbnail_url: nil, thumbnail_size: nil, html: nil),
+                    content: .array(contentBlocks))
+            }
     }
 }
