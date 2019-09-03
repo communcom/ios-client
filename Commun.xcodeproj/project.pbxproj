@@ -45,6 +45,8 @@
 		3B2538B1231E318400D0B1DA /* RichTextEditButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B2538B0231E318400D0B1DA /* RichTextEditButton.swift */; };
 		3B2538B4231E34D900D0B1DA /* EditorPageTextView+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B2538B3231E34D900D0B1DA /* EditorPageTextView+Actions.swift */; };
 		3B2538B6231E667800D0B1DA /* EditorPageTextView+Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B2538B5231E667800D0B1DA /* EditorPageTextView+Binding.swift */; };
+		3B2538B8231E6DF000D0B1DA /* EditorColorPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B2538B7231E6DF000D0B1DA /* EditorColorPicker.swift */; };
+		3B2538BA231E6E5A00D0B1DA /* colorPalette.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3B2538B9231E6E5A00D0B1DA /* colorPalette.plist */; };
 		3B28EFE2228C7C31002D4816 /* KeyboardLayoutConstraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B28EFE1228C7C31002D4816 /* KeyboardLayoutConstraint.swift */; };
 		3B2F2269226892C5006B589E /* NotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B2F2262226892C4006B589E /* NotificationCell.swift */; };
 		3B2F226A226892C5006B589E /* NotificationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3B2F2263226892C4006B589E /* NotificationCell.xib */; };
@@ -281,6 +283,8 @@
 		3B2538B0231E318400D0B1DA /* RichTextEditButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichTextEditButton.swift; sourceTree = "<group>"; };
 		3B2538B3231E34D900D0B1DA /* EditorPageTextView+Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EditorPageTextView+Actions.swift"; sourceTree = "<group>"; };
 		3B2538B5231E667800D0B1DA /* EditorPageTextView+Binding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EditorPageTextView+Binding.swift"; sourceTree = "<group>"; };
+		3B2538B7231E6DF000D0B1DA /* EditorColorPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorColorPicker.swift; sourceTree = "<group>"; };
+		3B2538B9231E6E5A00D0B1DA /* colorPalette.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = colorPalette.plist; sourceTree = "<group>"; };
 		3B28EFE1228C7C31002D4816 /* KeyboardLayoutConstraint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardLayoutConstraint.swift; sourceTree = "<group>"; };
 		3B2F2262226892C4006B589E /* NotificationCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationCell.swift; sourceTree = "<group>"; };
 		3B2F2263226892C4006B589E /* NotificationCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NotificationCell.xib; sourceTree = "<group>"; };
@@ -589,6 +593,15 @@
 			path = EditorPageTextView;
 			sourceTree = "<group>";
 		};
+		3B2538BB231E6F0A00D0B1DA /* ColorPicker */ = {
+			isa = PBXGroup;
+			children = (
+				3B2538B7231E6DF000D0B1DA /* EditorColorPicker.swift */,
+				3B2538B9231E6E5A00D0B1DA /* colorPalette.plist */,
+			);
+			path = ColorPicker;
+			sourceTree = "<group>";
+		};
 		3B2F225322689252006B589E /* NotificationsPageVC */ = {
 			isa = PBXGroup;
 			children = (
@@ -773,6 +786,7 @@
 			children = (
 				3B2538B2231E34A800D0B1DA /* EditorPageTextView */,
 				3B2538B0231E318400D0B1DA /* RichTextEditButton.swift */,
+				3B2538BB231E6F0A00D0B1DA /* ColorPicker */,
 			);
 			path = Subviews;
 			sourceTree = "<group>";
@@ -1372,6 +1386,7 @@
 				3B197C8B226A33CF008CF10D /* ResponseAPIContentGetFeedResult.json in Resources */,
 				57A1CA652270FCF000E2A1E3 /* LanguageVC.storyboard in Resources */,
 				3BF37BD422A1414200A72FFE /* PlaceholderPostCell.xib in Resources */,
+				3B2538BA231E6E5A00D0B1DA /* colorPalette.plist in Resources */,
 				B1EA02DC2289882A00835244 /* SF-Pro-Display-HeavyItalic.otf in Resources */,
 				3B67FC0C22C50F1500D05F01 /* SignInViewController.storyboard in Resources */,
 				3BF37BD022A137EE00A72FFE /* ResponseAPIContentGetPost.json in Resources */,
@@ -1670,6 +1685,7 @@
 				57DE5BDC2252088C008566B9 /* EditorPageVC.swift in Sources */,
 				3B2F226E226892C5006B589E /* NotificationType.swift in Sources */,
 				3BC3CA3322CA297900A893DC /* WelcomeVC.swift in Sources */,
+				3B2538B8231E6DF000D0B1DA /* EditorColorPicker.swift in Sources */,
 				57F5CFC22244E3BE005A09AE /* PostPageVC+Rx.swift in Sources */,
 				3BDD9A04228DBEC200B2A1DA /* CommentForm.swift in Sources */,
 				3BD50573231387EB00F3F9D3 /* MediaView.swift in Sources */,

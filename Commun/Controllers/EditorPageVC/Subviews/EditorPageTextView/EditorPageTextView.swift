@@ -76,4 +76,8 @@ class EditorPageTextView: ExpandableTextView {
         sender.isSelected = !sender.isSelected
         textStorage.addAttribute(.font, value: font, range: selectedRange)
     }
+    
+    func setColor(_ color: UIColor, sender: UIButton) {
+        textStorage.addAttribute(.foregroundColor, value: color, range: selectedRange)
+    }
 }

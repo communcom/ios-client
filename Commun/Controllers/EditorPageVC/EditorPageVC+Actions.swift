@@ -183,5 +183,28 @@ extension EditorPageVC {
     }
     
     @IBAction func colorPickerButtonDidTouch(_ sender: Any) {
+        guard let sender = sender as? UIView else {return}
+        let vc = ColorPickerViewController()
+        vc.modalPresentationStyle = .popover
+        
+        /* 3 */
+        if let popoverPresentationController = vc.popoverPresentationController {
+            popoverPresentationController.permittedArrowDirections = .any
+            popoverPresentationController.sourceView = sender
+            popoverPresentationController.sourceRect = sender.frame
+            popoverPresentationController.delegate = self
+            present(vc, animated: true, completion: nil)
+            
+            vc.didSelectColor = {color in
+                self.colorPickerButton.backgroundColor = color
+                self.contentTextView.setColor(color, sender: sender as! UIButton)
+            }
+        }
+    }
+}
+
+extension EditorPageVC: UIPopoverPresentationControllerDelegate {
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        return .none
     }
 }
