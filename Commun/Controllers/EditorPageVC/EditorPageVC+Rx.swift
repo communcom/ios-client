@@ -31,7 +31,13 @@ extension EditorPageVC {
         UIResponder.keyboardHeightObservable
             .map {$0 == 0 ? true: false}
             .asDriver(onErrorJustReturn: true)
-            .drive(hideKeyboardButton.rx.isHidden)
+            .drive(onNext: { [weak self] (hide) in
+                self?.boldButton.isHidden = hide
+                self?.italicButton.isHidden = hide
+                self?.colorPickerButton.isHidden = hide
+                self?.addLinkButton.isHidden = hide
+                self?.hideKeyboardButton.isHidden = hide
+            })
             .disposed(by: disposeBag)
         
         // verification

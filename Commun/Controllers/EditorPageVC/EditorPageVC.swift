@@ -17,6 +17,10 @@ class EditorPageVC: UIViewController {
     @IBOutlet weak var contentTextView: EditorPageTextView!
     @IBOutlet weak var dropDownView: UIView!
     @IBOutlet weak var adultButton: UIButton!
+    @IBOutlet weak var boldButton: UIButton!
+    @IBOutlet weak var italicButton: UIButton!
+    @IBOutlet weak var colorPickerButton: UIButton!
+    @IBOutlet weak var addLinkButton: UIButton!
     @IBOutlet weak var hideKeyboardButton: UIButton!
     @IBOutlet weak var sendPostButton: UIBarButtonItem!
     
@@ -73,6 +77,10 @@ class EditorPageVC: UIViewController {
         }
         
         // bottom buttons
+        boldButton.isHidden = true
+        italicButton.isHidden = true
+        colorPickerButton.isHidden = true
+        addLinkButton.isHidden = true
         hideKeyboardButton.isHidden = true
         
         bindUI()

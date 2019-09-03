@@ -234,10 +234,14 @@
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="375" height="1000"/>
                     <connections>
+                        <outlet property="addLinkButton" destination="aDH-6L-uUK" id="btM-EN-BXj"/>
                         <outlet property="adultButton" destination="aeQ-gX-bWx" id="Yli-e5-ttd"/>
+                        <outlet property="boldButton" destination="BgQ-FM-Lio" id="0rb-cn-eUE"/>
+                        <outlet property="colorPickerButton" destination="eHI-Fy-KHY" id="4Wf-kn-zWO"/>
                         <outlet property="contentTextView" destination="0Oi-CV-9TI" id="1eu-aX-BHL"/>
                         <outlet property="dropDownView" destination="U7q-88-jfF" id="Z2s-ew-Vrh"/>
                         <outlet property="hideKeyboardButton" destination="ra4-Bs-Xab" id="p5q-9A-EoT"/>
+                        <outlet property="italicButton" destination="ENk-8M-crN" id="m27-lc-5Ju"/>
                         <outlet property="scrollView" destination="ru5-vQ-hj9" id="iIa-n7-xPb"/>
                         <outlet property="sendPostButton" destination="uJ6-gc-rL2" id="aVg-wp-gSO"/>
                         <outlet property="titleTextView" destination="94b-Gg-NR2" id="V6I-Q2-Vrx"/>
