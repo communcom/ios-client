@@ -34,7 +34,7 @@ extension NSAttributedString {
         
         var blocks = [ContentBlock]()
         enumerateAttributes(in: NSMakeRange(0, length), options: []) { (attrs, range, bool) in
-            var content = attributedSubstring(from: range).string.replacingOccurrences(of: "\u{200B}", with: "")
+            var content = attributedSubstring(from: range).string
             var blockType = "text"
             
             // Parse links and tags

@@ -40,70 +40,53 @@ class EditorPageTextView: ExpandableTextView {
     }
     
     func setBold(from sender: RichTextEditButton) {
-        // default font
-        var font = (selectedAString.attributes[.font] as? UIFont) ?? defaultFont
-        let fontDescriptor = font.fontDescriptor
-        var symbolicTraits = fontDescriptor.symbolicTraits
-        
-        // set bold
-        if !sender.isSelected {
-            symbolicTraits.insert(.traitBold)
-        } else {
-            symbolicTraits.remove(.traitBold)
-        }
-        
-        font = UIFont(descriptor: fontDescriptor.withSymbolicTraits(symbolicTraits)!, size: font.pointSize)
-        
-        if selectedRange.length > 0 {
-            sender.isSelected = !sender.isSelected
-        }
-        
-        addAttributeAtSelectedRange(.font, value: font)
+        setSymbolicTrait(.traitBold, on: !sender.isSelected)
+        sender.isSelected = !sender.isSelected
     }
     
     func setItalic(from sender: RichTextEditButton) {
-        // default font
-        var font = (selectedAString.attributes[.font] as? UIFont) ?? defaultFont
-        let fontDescriptor = font.fontDescriptor
-        var symbolicTraits = fontDescriptor.symbolicTraits
-        
-        // set bold
-        if !sender.isSelected {
-            symbolicTraits.insert(.traitItalic)
-        } else {
-            symbolicTraits.remove(.traitItalic)
-        }
-        
-        font = UIFont(descriptor: fontDescriptor.withSymbolicTraits(symbolicTraits)!, size: font.pointSize)
-        
-        if selectedRange.length > 0 {
-            sender.isSelected = !sender.isSelected
-        }
-        
-        addAttributeAtSelectedRange(.font, value: font)
+        setSymbolicTrait(.traitItalic, on: !sender.isSelected)
+        sender.isSelected = !sender.isSelected
     }
     
     func setColor(_ color: UIColor, sender: UIButton) {
-        addAttributeAtSelectedRange(.foregroundColor, value: color)
+        if selectedRange.length == 0 {
+            typingAttributes[.foregroundColor] = color
+        } else {
+            textStorage.addAttribute(.foregroundColor, value: color, range: selectedRange)
+        }
     }
     
-    private func addAttributeAtSelectedRange(_ key: NSAttributedString.Key, value: Any) {
-        var range = selectedRange
+    private func setSymbolicTrait(_ trait: UIFontDescriptor.SymbolicTraits, on: Bool) {
+        // Modify typingAttributes
         if selectedRange.length == 0 {
-            if range.location > 0,
-                textStorage.attributedSubstring(from: NSMakeRange(range.location - 1, 1)).string == "\u{200B}" {
-                range.location = range.location - 1
-                range.length = 1
+            var font = (typingAttributes[.font] as? UIFont) ?? defaultFont
+            var symbolicTraits = font.fontDescriptor.symbolicTraits
+            
+            if on {
+                symbolicTraits.insert(trait)
             } else {
-                textStorage.insert(NSAttributedString(string: "\u{200B}"), at: selectedRange.location)
-                range.length = 1
-                textStorage.addAttribute(.font, value: defaultFont, range: range)
+                symbolicTraits.remove(trait)
             }
             
+            font = UIFont(descriptor: font.fontDescriptor.withSymbolicTraits(symbolicTraits)!, size: font.pointSize)
+            typingAttributes[.font] = font
         }
-        textStorage.addAttribute(key, value: value, range: range)
-        if selectedRange.length == 0 {
-            selectedRange = NSMakeRange(range.location + 1, 0)
+            // Modify selectedText's attributes
+        else {
+            // default font
+            var font = (selectedAString.attributes[.font] as? UIFont) ?? defaultFont
+            let fontDescriptor = font.fontDescriptor
+            var symbolicTraits = fontDescriptor.symbolicTraits
+            
+            if on {
+                symbolicTraits.insert(trait)
+            } else {
+                symbolicTraits.remove(trait)
+            }
+            
+            font = UIFont(descriptor: font.fontDescriptor.withSymbolicTraits(symbolicTraits)!, size: font.pointSize)
+            textStorage.addAttribute(.font, value: font, range: selectedRange)
         }
     }
 }

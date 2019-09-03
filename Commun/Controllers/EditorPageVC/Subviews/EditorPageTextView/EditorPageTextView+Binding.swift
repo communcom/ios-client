@@ -18,27 +18,7 @@ extension EditorPageTextView {
                 var textColor = UIColor.black
                 var urlString: String?
                 
-                var detectRange = self.selectedRange
-                
-                if detectRange.length == 0 {
-                    if detectRange.location == 0,
-                        self.attributedText.length > 0 {
-                        detectRange.length = 1
-                    }
-                    else if self.selectedRange.location < self.attributedText.length - 1,
-                        self.attributedText.attributedSubstring(from: NSMakeRange(detectRange.location - 1, 1)).string == "\n" {
-                        detectRange.location += 1
-                        detectRange.length = 1
-                    }
-                    else {
-                        detectRange.location -= 1
-                        detectRange.length = 1
-                    }
-                }
-                
-                let string = self.attributedText.attributedSubstring(from: detectRange)
-                
-                let attrs = string.attributes
+                let attrs = self.typingAttributes
                 
                 if let font = attrs[.font] as? UIFont {
                     if font.fontDescriptor.symbolicTraits.contains(.traitBold) {
