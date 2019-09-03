@@ -72,6 +72,7 @@ class EditorPageTextView: ExpandableTextView {
                 
                 if let link = attrs[.link] as? String {
                     urlString = link
+                    textColor = .link
                 }
                 
                 let textStyle = TextStyle(isBold: bold, isItalic: italic, textColor: textColor, urlString: urlString)

@@ -17,10 +17,20 @@ extension EditorPageVC {
         // textView
         contentTextView.currentTextStyle
             .subscribe(onNext: { (textStyle) in
+                // bold
                 self.boldButton.isSelected = textStyle.isBold
+                self.boldButton.isEnabled = (textStyle.urlString == nil)
+                
+                // italic
                 self.italicButton.isSelected = textStyle.isItalic
+                self.italicButton.isEnabled = (textStyle.urlString == nil)
+                
+                // add link button
                 self.addLinkButton.isSelected = (textStyle.urlString != nil)
+                
+                // color picker
                 self.colorPickerButton.backgroundColor = textStyle.textColor
+                self.colorPickerButton.isEnabled = (textStyle.urlString == nil)
             })
             .disposed(by: disposeBag)
         

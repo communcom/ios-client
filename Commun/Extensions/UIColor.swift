@@ -16,4 +16,8 @@ extension UIColor {
     static var tag: UIColor {
         return .blue
     }
+    
+    static var link: UIColor {
+        return .init(red: 50/255, green: 146/255, blue: 252/255, alpha: 1)
+    }
 }
