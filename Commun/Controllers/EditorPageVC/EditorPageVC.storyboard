@@ -139,6 +139,9 @@
                                         </constraints>
                                         <color key="tintColor" red="0.41390401119999998" green="0.50106823440000003" blue="0.96205252409999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <state key="normal" image="bold"/>
+                                        <connections>
+                                            <action selector="richTextEditButtonDidTouch:" destination="AvE-EB-OTN" eventType="touchUpInside" id="ThT-TD-wpb"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ENk-8M-crN" userLabel="Photo Button" customClass="RichTextEditButton" customModule="Commun" customModuleProvider="target">
                                         <rect key="frame" x="163" y="20" width="20" height="16"/>
@@ -149,6 +152,9 @@
                                         </constraints>
                                         <color key="tintColor" red="0.41390401119999998" green="0.50106823440000003" blue="0.96205252409999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <state key="normal" image="italic"/>
+                                        <connections>
+                                            <action selector="richTextEditButtonDidTouch:" destination="AvE-EB-OTN" eventType="touchUpInside" id="CDd-YX-D3G"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eHI-Fy-KHY" userLabel="Photo Button">
                                         <rect key="frame" x="209" y="19" width="26" height="18"/>
@@ -164,6 +170,9 @@
                                                 <real key="value" value="4"/>
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="colorPickerButtonDidTouch:" destination="AvE-EB-OTN" eventType="touchUpInside" id="dAa-Ep-cjl"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aDH-6L-uUK" userLabel="Photo Button" customClass="RichTextEditButton" customModule="Commun" customModuleProvider="target">
                                         <rect key="frame" x="261" y="18" width="25" height="20"/>
@@ -174,6 +183,9 @@
                                         </constraints>
                                         <color key="tintColor" red="0.41390401119999998" green="0.50106823440000003" blue="0.96205252409999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <state key="normal" image="add_link"/>
+                                        <connections>
+                                            <action selector="richTextEditButtonDidTouch:" destination="AvE-EB-OTN" eventType="touchUpInside" id="AWB-YJ-C4s"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

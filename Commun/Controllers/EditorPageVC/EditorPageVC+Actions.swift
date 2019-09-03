@@ -169,4 +169,21 @@ extension EditorPageVC {
     @IBAction func hideKeyboardButtonDidTouch(_ sender: Any) {
         view.endEditing(true)
     }
+    
+    @IBAction func richTextEditButtonDidTouch(_ sender: Any) {
+        let button = sender as! RichTextEditButton
+        
+        if button == boldButton {
+            var font = UIFont.systemFont(ofSize: 17)
+            if !button.isSelected {
+                font = .boldSystemFont(ofSize: 17)
+            }
+            
+            button.isSelected = !button.isSelected
+            contentTextView.textStorage.addAttribute(.font, value: font, range: contentTextView.selectedRange)
+        }
+    }
+    
+    @IBAction func colorPickerButtonDidTouch(_ sender: Any) {
+    }
 }
