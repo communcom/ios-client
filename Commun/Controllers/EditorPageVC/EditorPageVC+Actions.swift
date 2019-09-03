@@ -171,7 +171,7 @@ extension EditorPageVC {
     }
     
     @IBAction func richTextEditButtonDidTouch(_ sender: Any) {
-        let button = sender as! RichTextEditButton
+        let button = sender as! UIButton
         
         if button == boldButton {
             contentTextView.setBold(from: button)

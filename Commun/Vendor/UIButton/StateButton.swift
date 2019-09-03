@@ -8,7 +8,7 @@
 
 import UIKit
 
-class RichTextEditButton: UIButton {
+class StateButton: UIButton {
     override var isSelected: Bool {
         didSet {
             tintColor = self.isSelected ? .appMainColor: .lightGray

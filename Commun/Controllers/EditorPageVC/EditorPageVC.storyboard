@@ -96,22 +96,24 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="U7q-88-jfF">
                                 <rect key="frame" x="0.0" y="944" width="375" height="56"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aeQ-gX-bWx">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aeQ-gX-bWx" customClass="StateButton" customModule="Commun" customModuleProvider="target">
                                         <rect key="frame" x="16" y="19.5" width="29" height="17"/>
                                         <accessibility key="accessibilityConfiguration" identifier="EditorPageAdultButton" label="EditorPageAdultButton"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="29" id="gAH-Nj-Ddt"/>
                                             <constraint firstAttribute="height" constant="17" id="reZ-0u-ZGM"/>
                                         </constraints>
+                                        <color key="tintColor" red="0.41390401119999998" green="0.50106823440000003" blue="0.96205252409999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <state key="normal" image="18Button"/>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nwa-Mp-egE" userLabel="Photo Button">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nwa-Mp-egE" userLabel="Photo Button" customClass="StateButton" customModule="Commun" customModuleProvider="target">
                                         <rect key="frame" x="71" y="18" width="22" height="20"/>
                                         <accessibility key="accessibilityConfiguration" identifier="EditorPagePhotoButton" label="EditorPagePhotoButton"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="22" id="LzT-Oh-312"/>
                                             <constraint firstAttribute="height" constant="20" id="heR-KI-1IM"/>
                                         </constraints>
+                                        <color key="tintColor" red="0.41390401119999998" green="0.50106823440000003" blue="0.96205252409999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <state key="normal" image="photo_solid"/>
                                         <connections>
                                             <action selector="cameraButtonTap" destination="AvE-EB-OTN" eventType="touchUpInside" id="BZC-lL-yl0"/>
@@ -130,7 +132,7 @@
                                             <action selector="hideKeyboardButtonDidTouch:" destination="AvE-EB-OTN" eventType="touchUpInside" id="VR1-af-6i3"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BgQ-FM-Lio" userLabel="Photo Button" customClass="RichTextEditButton" customModule="Commun" customModuleProvider="target">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BgQ-FM-Lio" userLabel="Photo Button" customClass="StateButton" customModule="Commun" customModuleProvider="target">
                                         <rect key="frame" x="119" y="20" width="20" height="16"/>
                                         <accessibility key="accessibilityConfiguration" identifier="EditorPagePhotoButton" label="EditorPagePhotoButton"/>
                                         <constraints>
@@ -143,7 +145,7 @@
                                             <action selector="richTextEditButtonDidTouch:" destination="AvE-EB-OTN" eventType="touchUpInside" id="ThT-TD-wpb"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ENk-8M-crN" userLabel="Photo Button" customClass="RichTextEditButton" customModule="Commun" customModuleProvider="target">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ENk-8M-crN" userLabel="Photo Button" customClass="StateButton" customModule="Commun" customModuleProvider="target">
                                         <rect key="frame" x="163" y="20" width="20" height="16"/>
                                         <accessibility key="accessibilityConfiguration" identifier="EditorPagePhotoButton" label="EditorPagePhotoButton"/>
                                         <constraints>
@@ -174,7 +176,7 @@
                                             <action selector="colorPickerButtonDidTouch:" destination="AvE-EB-OTN" eventType="touchUpInside" id="dAa-Ep-cjl"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aDH-6L-uUK" userLabel="Photo Button" customClass="RichTextEditButton" customModule="Commun" customModuleProvider="target">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aDH-6L-uUK" userLabel="Photo Button" customClass="StateButton" customModule="Commun" customModuleProvider="target">
                                         <rect key="frame" x="261" y="18" width="25" height="20"/>
                                         <accessibility key="accessibilityConfiguration" identifier="EditorPagePhotoButton" label="EditorPagePhotoButton"/>
                                         <constraints>
@@ -254,6 +256,7 @@
                         <outlet property="dropDownView" destination="U7q-88-jfF" id="Z2s-ew-Vrh"/>
                         <outlet property="hideKeyboardButton" destination="ra4-Bs-Xab" id="p5q-9A-EoT"/>
                         <outlet property="italicButton" destination="ENk-8M-crN" id="m27-lc-5Ju"/>
+                        <outlet property="photoPickerButton" destination="nwa-Mp-egE" id="N6s-hE-WPM"/>
                         <outlet property="scrollView" destination="ru5-vQ-hj9" id="iIa-n7-xPb"/>
                         <outlet property="sendPostButton" destination="uJ6-gc-rL2" id="aVg-wp-gSO"/>
                         <outlet property="titleTextView" destination="94b-Gg-NR2" id="V6I-Q2-Vrx"/>

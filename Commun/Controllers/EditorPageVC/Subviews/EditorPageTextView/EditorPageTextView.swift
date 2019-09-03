@@ -39,12 +39,12 @@ class EditorPageTextView: ExpandableTextView {
         return attributedText.attributedSubstring(from: selectedRange)
     }
     
-    func setBold(from sender: RichTextEditButton) {
+    func setBold(from sender: UIButton) {
         setSymbolicTrait(.traitBold, on: !sender.isSelected)
         sender.isSelected = !sender.isSelected
     }
     
-    func setItalic(from sender: RichTextEditButton) {
+    func setItalic(from sender: UIButton) {
         setSymbolicTrait(.traitItalic, on: !sender.isSelected)
         sender.isSelected = !sender.isSelected
     }

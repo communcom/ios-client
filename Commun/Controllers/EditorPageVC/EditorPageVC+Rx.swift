@@ -14,7 +14,27 @@ extension EditorPageVC {
     
     func bindUI() {
         guard let viewModel = viewModel else {return}
-        // textView
+        // textViews
+        titleTextView.rx.didBeginEditing
+            .subscribe(onNext: {_ in
+                self.boldButton.isEnabled = false
+                self.italicButton.isEnabled = false
+                self.colorPickerButton.isEnabled = false
+                self.addLinkButton.isEnabled = false
+                self.photoPickerButton.isEnabled = false
+            })
+            .disposed(by: disposeBag)
+        
+        contentTextView.rx.didBeginEditing
+            .subscribe(onNext: {_ in
+                self.boldButton.isEnabled = true
+                self.italicButton.isEnabled = true
+                self.colorPickerButton.isEnabled = true
+                self.addLinkButton.isEnabled = true
+                self.photoPickerButton.isEnabled = true
+            })
+            .disposed(by: disposeBag)
+        
         contentTextView.currentTextStyle
             .subscribe(onNext: { (textStyle) in
                 // bold
@@ -41,9 +61,7 @@ extension EditorPageVC {
             .disposed(by: disposeBag)
         
         viewModel.isAdult
-            .map {$0 ? "18ButtonSelected": "18Button"}
-            .map {UIImage(named: $0)}
-            .bind(to: self.adultButton.rx.image(for: .normal))
+            .bind(to: self.adultButton.rx.isSelected)
             .disposed(by: disposeBag)
         
         // hideKeyboard
