@@ -28,7 +28,7 @@ extension NSAttributedString {
         return output
     }
     
-    func toParagraphContentBlock(id: inout UInt) -> ContentBlock {
+    func toParagraphContentBlock(id: inout UInt) -> ContentBlock? {
         let paragraphBlockId = id
         
         var blocks = [ContentBlock]()
@@ -83,15 +83,21 @@ extension NSAttributedString {
                 }
             }
             
-            id += 1
-            let block = ContentBlock(
-                id: id,
-                type: blockType,
-                attributes: ContentBlockAttributes(version: nil, title: nil, style: style, text_color: text_color, anchor: nil, url: nil, description: nil, provider_name: nil, author: nil, author_url: nil, thumbnail_url: nil, thumbnail_size: nil, html: nil),
-                content: .string(content))
-            blocks.append(block)
+            if !content.trimmed.isEmpty {
+                id += 1
+                let block = ContentBlock(
+                    id: id,
+                    type: blockType,
+                    attributes: ContentBlockAttributes(version: nil, title: nil, style: style, text_color: text_color, anchor: nil, url: nil, description: nil, provider_name: nil, author: nil, author_url: nil, thumbnail_url: nil, thumbnail_size: nil, html: nil),
+                    content: .string(content))
+                blocks.append(block)
+            }
         }
         
-        return ContentBlock(id: paragraphBlockId, type: "paragraph", attributes: nil, content: .array(blocks))
+        if !blocks.isEmpty {
+            id += 1
+            return ContentBlock(id: paragraphBlockId, type: "paragraph", attributes: nil, content: .array(blocks))
+        }
+        return nil
     }
 }

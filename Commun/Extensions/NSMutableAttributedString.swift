@@ -158,9 +158,7 @@ extension NSMutableAttributedString {
             }
             
             // Parse paragraph
-            else {
-                id += 1
-                let block = attrStr.toParagraphContentBlock(id: &id)
+            else if let block = attrStr.toParagraphContentBlock(id: &id) {
                 contentBlocks.append(.just(block))
             }
         }
