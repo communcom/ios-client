@@ -90,9 +90,16 @@ class EditorPageTextView: ExpandableTextView {
     private func addAttributeAtSelectedRange(_ key: NSAttributedString.Key, value: Any) {
         var range = selectedRange
         if selectedRange.length == 0 {
-            textStorage.insert(NSAttributedString(string: "\u{200B}"), at: selectedRange.location)
-            range.length = 1
-            textStorage.addAttribute(.font, value: defaultFont, range: range)
+            if range.location > 0,
+                textStorage.attributedSubstring(from: NSMakeRange(range.location - 1, 1)).string == "\u{200B}" {
+                range.location = range.location - 1
+                range.length = 1
+            } else {
+                textStorage.insert(NSAttributedString(string: "\u{200B}"), at: selectedRange.location)
+                range.length = 1
+                textStorage.addAttribute(.font, value: defaultFont, range: range)
+            }
+            
         }
         textStorage.addAttribute(key, value: value, range: range)
         if selectedRange.length == 0 {
