@@ -1,35 +1,14 @@
 //
-//  EditorPageTextView.swift
+//  EditorPageTextView+Actions.swift
 //  Commun
 //
-//  Created by Chung Tran on 8/23/19.
+//  Created by Chung Tran on 9/3/19.
 //  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
 //
 
 import Foundation
-import RxSwift
-import RxCocoa
-import SDWebImage
-import CyberSwift
 
-class EditorPageTextView: ExpandableTextView {
-    // MARK: - Nested types
-    struct TextStyle {
-        var bold = false
-        var italic = false
-        var textColor: UIColor = .black
-        var isLink = false
-        var urlString: String?
-    }
-    
-    // MARK: - Properties
-    private let bag = DisposeBag()
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        
-    }
-    
+extension EditorPageTextView {
     // MARK: - Methods
     private func attach(image: UIImage, urlString: String? = nil, description: String? = nil) {
         // Insert Attachment
@@ -56,7 +35,7 @@ class EditorPageTextView: ExpandableTextView {
             textStorage.insert(imageAS, at: location)
             textStorage.insert(NSAttributedString.separator, at: location+1)
         }
-        // append
+            // append
         else {
             textStorage.append(NSAttributedString.separator)
             textStorage.append(imageAS)
@@ -96,7 +75,7 @@ class EditorPageTextView: ExpandableTextView {
     }
     
     func parseText(_ text: String?) {
-        let string = ###"{"id":1,"type":"post","attributes":{"version":1,"title":"Сказка про царя"},"content":[{"id":2,"type":"paragraph","content":[{"id":3,"type":"text","content":"Много лет тому назад, "},{"id":4,"type":"text","content":"Царь купил себе айпад. ","attributes":{"style":["bold","italic"],"text_color":"#ffff0000"}},{"id":5,"type":"tag","content":"с_той_поры_прошли_века","attributes":{"anchor":"favdfa9384fnakdrkdfkd"}},{"id":6,"type":"text","content":" , Люди "},{"id":7,"type":"link","content":"помнят ","attributes":{"url":"http://yandex.ru"}},{"id":8,"type":"link","content":"чудака.","attributes":{"url":"https://www.anekdot.ru/i/8/28/vina.jpg"}}]},{"id":9,"type":"image","content":"http://cartoonbank.ru/?page_id=29&brand=36","attributes":{"description":"Hi!"}},{"id":10,"type":"video","content":"https://www.youtube.com/watch?v=UiYlRkVxC_4","attributes":{"title":"Rammstein - Reise, Reise (Lyrics)","provider_name":"YouTube","author":"admiralscoat","author_url":"https://www.youtube.com/user/Bmontemoney","description":"Lyrics video Rammstein - Reise, Reise Please rate, comment and subscribe! Rammstein members: #1. Till Lindemann - Lead vocals #2. Richard Z. Kruspe - Lead gu...","thumbnail_url":"https://i.ytimg.com/vi/UiYlRkVxC_4/hqdefault.jpg","thumbnail_size":[480,360],"html":"<div><div style=\"left: 0; width: 100%; height: 0; position: relative; padding-bottom: 56.2493%;\"><iframe src=\"https://www.youtube.com/embed/UiYlRkVxC_4?feature=oembed\" style=\"border: 0; top: 0; left: 0; width: 100%; height: 100%; position: absolute;\" allowfullscreen scrolling=\"no\"></iframe></div></div>"}},{"id":11,"type":"website","content":"https://trinixy.ru","attributes":{"title":"Триникси","description":"Время знать больше","provider_name":"Яндекс","thumbnail_url":"https://yastatic.net/s3/home/logos/share/share-logo_ru.png"}},{"id":12,"type":"set","content":[{"id":13,"type":"image","content":"http://cartoonbank.ru/?page_id=29&brand=36"},{"id":14,"type":"video","content":"https://www.youtube.com/watch?v=UiYlRkVxC_4"},{"id":15,"type":"website","content":"http://yandex.ru"}]}]}"###
+        let string = ###"{"id":1,"content":[{"id":2,"type":"paragraph","content":[{"id":3,"content":"Много лет ","type":"text","attributes":{}}]},{"id":4,"content":"https:\/\/img.golos.io\/images\/43KTyjpe2GKAtK3L3eQGLwTg3UKi.png","type":"image","attributes":{"description":"waterfall"}},{"id":5,"type":"paragraph","content":[{"id":6,"content":" назад, ","type":"text","attributes":{}},{"id":7,"content":"Царь купил себе айпад. ","type":"text","attributes":{"style":["bold","italic"],"text_color":"#FF0000"}},{"id":8,"content":"с_той_поры_прошли_века","type":"tag","attributes":{"anchor":"favdfa9384fnakdrkdfkd"}},{"id":9,"content":" , Люди ","type":"text","attributes":{}},{"id":10,"content":"помнят ","type":"link","attributes":{"url":"http:\/\/yandex.ru"}},{"id":11,"content":"чудака.","type":"link","attributes":{"url":"https:\/\/www.anekdot.ru\/i\/8\/28\/vina.jpg"}}]},{"id":12,"content":"http:\/\/cartoonbank.ru\/?page_id=29&brand=36","type":"image","attributes":{"description":"Hi!"}},{"id":13,"content":"https:\/\/www.youtube.com\/watch?v=UiYlRkVxC_4","type":"video","attributes":{}},{"id":14,"content":"https:\/\/trinixy.ru","type":"website","attributes":{}},{"id":15,"content":"http:\/\/cartoonbank.ru\/?page_id=29&brand=36","type":"image","attributes":{"description":""}},{"id":16,"content":"https:\/\/www.youtube.com\/watch?v=UiYlRkVxC_4","type":"video","attributes":{}},{"id":17,"content":"http:\/\/yandex.ru","type":"website","attributes":{}},{"id":18,"type":"paragraph","content":[]},{"id":19,"type":"paragraph","content":[]}],"type":"post","attributes":{"version":1}}"###
         
         // Parse data
         let jsonData = string.data(using: .utf8)!

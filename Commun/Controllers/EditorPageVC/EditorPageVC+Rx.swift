@@ -14,6 +14,15 @@ extension EditorPageVC {
     
     func bindUI() {
         guard let viewModel = viewModel else {return}
+        // textView
+        contentTextView.currentTextStyle
+            .subscribe(onNext: { (textStyle) in
+                self.boldButton.isSelected = textStyle.isBold
+                self.italicButton.isSelected = textStyle.isItalic
+                self.addLinkButton.isSelected = (textStyle.urlString != nil)
+                self.colorPickerButton.backgroundColor = textStyle.textColor
+            })
+            .disposed(by: disposeBag)
         
         // isAdult
         adultButton.rx.tap
