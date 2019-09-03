@@ -64,7 +64,7 @@
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="492.5" id="y5W-EZ-eXt"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
                                         </subviews>
