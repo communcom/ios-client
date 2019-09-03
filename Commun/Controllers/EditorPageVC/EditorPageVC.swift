@@ -27,9 +27,6 @@ class EditorPageVC: UIViewController {
     // MARK: - Properties
     var viewModel: EditorPageViewModel?
     let disposeBag = DisposeBag()
-    lazy var defaultAttributeForContentTextView: [NSAttributedString.Key: Any] = {
-        return [.font: UIFont.systemFont(ofSize: 17)]
-    }()
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -54,7 +51,6 @@ class EditorPageVC: UIViewController {
         contentTextView.textContainerInset = UIEdgeInsets.zero
         contentTextView.textContainer.lineFragmentPadding = 0
         contentTextView.placeholder = "write text placeholder".localized().uppercaseFirst + "..."
-        contentTextView.typingAttributes = defaultAttributeForContentTextView
         // you should ensure layout
         contentTextView.layoutManager
             .ensureLayout(for: contentTextView.textContainer)

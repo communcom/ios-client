@@ -23,63 +23,57 @@ class EditorPageTextView: ExpandableTextView {
     
     // MARK: - Properties
     let bag = DisposeBag()
+    let defaultFont = UIFont.systemFont(ofSize: 17)
     var currentTextStyle = PublishSubject<TextStyle>()
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        // set default attributes
+        typingAttributes = [.font: defaultFont]
+        
+        // bind actions
         bind()
     }
     
-    func bind() {
-        // get TextStyle at current selectedRange
-        rx.didChangeSelection
-            .subscribe(onNext: {
-                var bold = false
-                var italic = false
-                var textColor = UIColor.black
-                var urlString: String?
-                
-                var detectRange = self.selectedRange
-                
-                if detectRange.length == 0 {
-                    if detectRange.location == 0,
-                        self.attributedText.length > 0 {
-                        detectRange.length = 1
-                    }
-                    else {
-                        detectRange.location -= 1
-                        detectRange.length = 1
-                    }
-                }
-                
-                let string = self.attributedText.attributedSubstring(from: detectRange)
-                
-                let attrs = string.attributes
-                
-                if let font = attrs[.font] as? UIFont {
-                    if font.fontDescriptor.symbolicTraits.contains(.traitBold) {
-                        bold = true
-                    }
-                    
-                    if font.fontDescriptor.symbolicTraits.contains(.traitItalic) {
-                        italic = true
-                    }
-                }
-                
-                if let color = attrs[.foregroundColor] as? UIColor {
-                    textColor = color
-                }
-                
-                if let link = attrs[.link] as? String {
-                    urlString = link
-                    textColor = .link
-                }
-                
-                let textStyle = TextStyle(isBold: bold, isItalic: italic, textColor: textColor, urlString: urlString)
-                
-                self.currentTextStyle.onNext(textStyle)
-                
-            })
-            .disposed(by: bag)
+    var selectedAString: NSAttributedString {
+        return attributedText.attributedSubstring(from: selectedRange)
+    }
+    
+    func setBold(from sender: RichTextEditButton) {
+        // default font
+        var font = (selectedAString.attributes[.font] as? UIFont) ?? defaultFont
+        let fontDescriptor = font.fontDescriptor
+        var symbolicTraits = fontDescriptor.symbolicTraits
+        
+        // set bold
+        if !sender.isSelected {
+            symbolicTraits.insert(.traitBold)
+        } else {
+            symbolicTraits.remove(.traitBold)
+        }
+        
+        font = UIFont(descriptor: fontDescriptor.withSymbolicTraits(symbolicTraits)!, size: font.pointSize)
+        
+        sender.isSelected = !sender.isSelected
+        textStorage.addAttribute(.font, value: font, range: selectedRange)
+    }
+    
+    func setItalic(from sender: RichTextEditButton) {
+        // default font
+        var font = (selectedAString.attributes[.font] as? UIFont) ?? defaultFont
+        let fontDescriptor = font.fontDescriptor
+        var symbolicTraits = fontDescriptor.symbolicTraits
+        
+        // set bold
+        if !sender.isSelected {
+            symbolicTraits.insert(.traitItalic)
+        } else {
+            symbolicTraits.remove(.traitItalic)
+        }
+        
+        font = UIFont(descriptor: fontDescriptor.withSymbolicTraits(symbolicTraits)!, size: font.pointSize)
+        
+        sender.isSelected = !sender.isSelected
+        textStorage.addAttribute(.font, value: font, range: selectedRange)
     }
 }

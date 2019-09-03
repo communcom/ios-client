@@ -174,13 +174,11 @@ extension EditorPageVC {
         let button = sender as! RichTextEditButton
         
         if button == boldButton {
-            var font = UIFont.systemFont(ofSize: 17)
-            if !button.isSelected {
-                font = .boldSystemFont(ofSize: 17)
-            }
-            
-            button.isSelected = !button.isSelected
-            contentTextView.textStorage.addAttribute(.font, value: font, range: contentTextView.selectedRange)
+            contentTextView.setBold(from: button)
+        }
+        
+        if button == italicButton {
+            contentTextView.setItalic(from: button)
         }
     }
     

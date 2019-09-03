@@ -44,6 +44,7 @@
 		3B24F86F22F37FB800B7091C /* CommunitiesVC+DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B24F86E22F37FB800B7091C /* CommunitiesVC+DataSource.swift */; };
 		3B2538B1231E318400D0B1DA /* RichTextEditButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B2538B0231E318400D0B1DA /* RichTextEditButton.swift */; };
 		3B2538B4231E34D900D0B1DA /* EditorPageTextView+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B2538B3231E34D900D0B1DA /* EditorPageTextView+Actions.swift */; };
+		3B2538B6231E667800D0B1DA /* EditorPageTextView+Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B2538B5231E667800D0B1DA /* EditorPageTextView+Binding.swift */; };
 		3B28EFE2228C7C31002D4816 /* KeyboardLayoutConstraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B28EFE1228C7C31002D4816 /* KeyboardLayoutConstraint.swift */; };
 		3B2F2269226892C5006B589E /* NotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B2F2262226892C4006B589E /* NotificationCell.swift */; };
 		3B2F226A226892C5006B589E /* NotificationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3B2F2263226892C4006B589E /* NotificationCell.xib */; };
@@ -279,6 +280,7 @@
 		3B24F86E22F37FB800B7091C /* CommunitiesVC+DataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CommunitiesVC+DataSource.swift"; sourceTree = "<group>"; };
 		3B2538B0231E318400D0B1DA /* RichTextEditButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichTextEditButton.swift; sourceTree = "<group>"; };
 		3B2538B3231E34D900D0B1DA /* EditorPageTextView+Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EditorPageTextView+Actions.swift"; sourceTree = "<group>"; };
+		3B2538B5231E667800D0B1DA /* EditorPageTextView+Binding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EditorPageTextView+Binding.swift"; sourceTree = "<group>"; };
 		3B28EFE1228C7C31002D4816 /* KeyboardLayoutConstraint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardLayoutConstraint.swift; sourceTree = "<group>"; };
 		3B2F2262226892C4006B589E /* NotificationCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationCell.swift; sourceTree = "<group>"; };
 		3B2F2263226892C4006B589E /* NotificationCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NotificationCell.xib; sourceTree = "<group>"; };
@@ -582,6 +584,7 @@
 			children = (
 				3BEC38E6230FA17F00662374 /* EditorPageTextView.swift */,
 				3B2538B3231E34D900D0B1DA /* EditorPageTextView+Actions.swift */,
+				3B2538B5231E667800D0B1DA /* EditorPageTextView+Binding.swift */,
 			);
 			path = EditorPageTextView;
 			sourceTree = "<group>";
@@ -1607,6 +1610,7 @@
 				57F9CAAC225B489000AC9ACA /* EditorPageVC+Rx.swift in Sources */,
 				3B0E9C6E227063F6002AB1C2 /* ProfilePageVC+Actions.swift in Sources */,
 				3B0E9C7122706985002AB1C2 /* ProfileChooseAvatarViewModel.swift in Sources */,
+				3B2538B6231E667800D0B1DA /* EditorPageTextView+Binding.swift in Sources */,
 				3BB342B022CA5CA6009546B2 /* PickupAvatarVC.swift in Sources */,
 				3B02CD34228ADC100078BB52 /* UIWebView.swift in Sources */,
 				3B0E9C5E226F02AC002AB1C2 /* ProfileEditCoverVC.swift in Sources */,
