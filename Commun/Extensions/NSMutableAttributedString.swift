@@ -151,8 +151,7 @@ extension NSMutableAttributedString {
         for attrStr in attrStrs {
             // parse attachments
             if let attachment = attrStr.attributes[.attachment] as? TextAttachment {
-                id += 1
-                if let single = attachment.toSingleContentBlock(id: id) {
+                if let single = attachment.toSingleContentBlock(id: &id) {
                     contentBlocks.append(single)
                 }
             }

@@ -54,6 +54,10 @@ class EditorPageTextView: ExpandableTextView {
         
         font = UIFont(descriptor: fontDescriptor.withSymbolicTraits(symbolicTraits)!, size: font.pointSize)
         
+        if selectedRange.length > 0 {
+            sender.isSelected = !sender.isSelected
+        }
+        
         addAttributeAtSelectedRange(.font, value: font)
     }
     
@@ -71,6 +75,10 @@ class EditorPageTextView: ExpandableTextView {
         }
         
         font = UIFont(descriptor: fontDescriptor.withSymbolicTraits(symbolicTraits)!, size: font.pointSize)
+        
+        if selectedRange.length > 0 {
+            sender.isSelected = !sender.isSelected
+        }
         
         addAttributeAtSelectedRange(.font, value: font)
     }

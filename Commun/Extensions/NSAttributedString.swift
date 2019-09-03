@@ -29,11 +29,12 @@ extension NSAttributedString {
     }
     
     func toParagraphContentBlock(id: inout UInt) -> ContentBlock? {
-        let paragraphBlockId = id
+        let originalId = id
+        id += 1
         
         var blocks = [ContentBlock]()
         enumerateAttributes(in: NSMakeRange(0, length), options: []) { (attrs, range, bool) in
-            var content = attributedSubstring(from: range).string
+            var content = attributedSubstring(from: range).string.replacingOccurrences(of: "\u{200B}", with: "")
             var blockType = "text"
             
             // Parse links and tags
@@ -95,8 +96,9 @@ extension NSAttributedString {
         }
         
         if !blocks.isEmpty {
-            id += 1
-            return ContentBlock(id: paragraphBlockId, type: "paragraph", attributes: nil, content: .array(blocks))
+            return ContentBlock(id: originalId + 1, type: "paragraph", attributes: nil, content: .array(blocks))
+        } else {
+            id = originalId
         }
         return nil
     }

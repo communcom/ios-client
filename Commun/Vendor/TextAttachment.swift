@@ -48,7 +48,7 @@ class TextAttachment: NSTextAttachment {
         return "TextAttachment(\(placeholderText))"
     }
     
-    func toSingleContentBlock(id: UInt) -> Single<ContentBlock>? {
+    func toSingleContentBlock(id: inout UInt) -> Single<ContentBlock>? {
         guard let type = type else {
             print("Type of content is missing: \(self)")
             return nil
@@ -60,22 +60,26 @@ class TextAttachment: NSTextAttachment {
             
             // if image was uploaded
             if let url = urlString {
+                id += 1
                 let block = ContentBlock(id: id, type: blockType, attributes: attributes, content: .string(url))
                 return .just(block)
             }
                 
             // have to upload image
             else if let image = originalImage {
+                id += 1
+                let newId = id
                 let single: Single<ContentBlock> =
                     NetworkService.shared.uploadImage(image)
                         .map {url in
-                            return ContentBlock(id: id, type: blockType, attributes: attributes, content: .string(url))
+                            return ContentBlock(id: newId, type: blockType, attributes: attributes, content: .string(url))
                         }
                 return single
             }
         case .website:
             guard let url = urlString else {break}
             // TODO: download descriptions, modify attributes
+            id += 1
             let block = ContentBlock(
                 id: id,
                 type: "website",
@@ -88,6 +92,7 @@ class TextAttachment: NSTextAttachment {
         case .video:
             guard let url = urlString else {break}
             // TODO: download descriptions, modify attributes
+            id += 1
             let block = ContentBlock(
                 id: id,
                 type: "video",
