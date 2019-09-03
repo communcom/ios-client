@@ -54,8 +54,7 @@ class EditorPageTextView: ExpandableTextView {
         
         font = UIFont(descriptor: fontDescriptor.withSymbolicTraits(symbolicTraits)!, size: font.pointSize)
         
-        sender.isSelected = !sender.isSelected
-        textStorage.addAttribute(.font, value: font, range: selectedRange)
+        addAttributeAtSelectedRange(.font, value: font)
     }
     
     func setItalic(from sender: RichTextEditButton) {
@@ -73,11 +72,23 @@ class EditorPageTextView: ExpandableTextView {
         
         font = UIFont(descriptor: fontDescriptor.withSymbolicTraits(symbolicTraits)!, size: font.pointSize)
         
-        sender.isSelected = !sender.isSelected
-        textStorage.addAttribute(.font, value: font, range: selectedRange)
+        addAttributeAtSelectedRange(.font, value: font)
     }
     
     func setColor(_ color: UIColor, sender: UIButton) {
-        textStorage.addAttribute(.foregroundColor, value: color, range: selectedRange)
+        addAttributeAtSelectedRange(.foregroundColor, value: color)
+    }
+    
+    private func addAttributeAtSelectedRange(_ key: NSAttributedString.Key, value: Any) {
+        var range = selectedRange
+        if selectedRange.length == 0 {
+            textStorage.insert(NSAttributedString(string: "\u{200B}"), at: selectedRange.location)
+            range.length = 1
+            textStorage.addAttribute(.font, value: defaultFont, range: range)
+        }
+        textStorage.addAttribute(key, value: value, range: range)
+        if selectedRange.length == 0 {
+            selectedRange = NSMakeRange(range.location + 1, 0)
+        }
     }
 }
