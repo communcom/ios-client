@@ -13,8 +13,22 @@ import SDWebImage
 import CyberSwift
 
 class EditorPageTextView: ExpandableTextView {
+    // MARK: - Nested types
+    struct TextStyle {
+        var bold = false
+        var italic = false
+        var textColor: UIColor = .black
+        var isLink = false
+        var urlString: String?
+    }
+    
     // MARK: - Properties
     private let bag = DisposeBag()
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+    }
     
     // MARK: - Methods
     private func attach(image: UIImage, urlString: String? = nil, description: String? = nil) {

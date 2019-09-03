@@ -17,10 +17,10 @@ class EditorPageVC: UIViewController {
     @IBOutlet weak var contentTextView: EditorPageTextView!
     @IBOutlet weak var dropDownView: UIView!
     @IBOutlet weak var adultButton: UIButton!
-    @IBOutlet weak var boldButton: UIButton!
-    @IBOutlet weak var italicButton: UIButton!
+    @IBOutlet weak var boldButton: RichTextEditButton!
+    @IBOutlet weak var italicButton: RichTextEditButton!
     @IBOutlet weak var colorPickerButton: UIButton!
-    @IBOutlet weak var addLinkButton: UIButton!
+    @IBOutlet weak var addLinkButton: RichTextEditButton!
     @IBOutlet weak var hideKeyboardButton: UIButton!
     @IBOutlet weak var sendPostButton: UIBarButtonItem!
     
