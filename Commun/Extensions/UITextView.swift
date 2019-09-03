@@ -32,4 +32,12 @@ extension UITextView {
         replace(tRange, withText: "")
         textStorage.endEditing()
     }
+    
+    var currentCursorLocation: Int? {
+        if let selectedRange = self.selectedTextRange {
+            let cursorPosition = offset(from: beginningOfDocument, to: selectedRange.start)
+            return cursorPosition
+        }
+        return nil
+    }
 }

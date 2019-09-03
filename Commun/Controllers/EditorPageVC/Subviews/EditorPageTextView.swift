@@ -17,17 +17,30 @@ class EditorPageTextView: ExpandableTextView {
     private let bag = DisposeBag()
     
     // MARK: - Methods
-    private func attach(image: UIImage, urlString: String? = nil, description: String? = nil, at index: Int? = nil) {
+    private func attach(image: UIImage, urlString: String? = nil, description: String? = nil) {
         // Insert Attachment
         let attachment = textStorage.imageAttachment(from: image, urlString: urlString, description: description, into: self)
         let imageAS = NSAttributedString(attachment: attachment)
         
-        if let index = index {
-            textStorage.insert(imageAS, at: index)
+        // insert
+        if let index = currentCursorLocation {
+            var realIndex: Int
+            if index > 0,
+                textStorage.attributedSubstring(from: NSMakeRange(index - 1, 1)).string != "\n" {
+                textStorage.insert(NSAttributedString.separator, at: index)
+                realIndex = index+1
+            } else {
+                realIndex = index
+            }
+            
+            textStorage.insert(imageAS, at: realIndex)
+            textStorage.insert(NSAttributedString.separator, at: realIndex+1)
+        // append
         } else {
+            textStorage.append(NSAttributedString.separator)
             textStorage.append(imageAS)
+            textStorage.addAttributes(typingAttributes, range: NSMakeRange(textStorage.length - 1, 1))
         }
-        textStorage.addAttributes(typingAttributes, range: NSMakeRange(0, textStorage.length))
     }
     
     func addImage(_ image: UIImage? = nil, urlString: String? = nil, description: String? = nil) {
@@ -37,29 +50,25 @@ class EditorPageTextView: ExpandableTextView {
             attach(image: image, urlString: urlString, description: description)
         } else if let urlString = urlString,
             let url = URL(string: urlString) {
-            let textAttachment = TextAttachment()
-            textAttachment.urlString    = urlString
-            textAttachment.desc         = description
-            insertText(textAttachment.placeholderText)
             
-            let manager = SDWebImageManager.shared()
-            
-            manager.imageDownloader?.downloadImage(with: url, completed: {[weak self] (image, data, error, _) in
-                guard let strongSelf = self else {return}
-                
-                // current location of placeholder
-                let location = strongSelf.attributedText.nsRangeOfText(textAttachment.placeholderText).location
-                
-                guard location >= 0 else {return}
-                
-                // attach image
-                if let image = image {
-                    strongSelf.attach(image: image, urlString: urlString, description: description, at: location)
-                    strongSelf.removeText(textAttachment.placeholderText)
-                } else {
-                    strongSelf.parentViewController?.showErrorWithLocalizedMessage("could not load image".localized().uppercaseFirst + "with URL".localized() + " " + urlString)
-                }
-            })
+            NetworkService.shared.downloadImage(url)
+                .do(onSubscribe: {
+                    self.parentViewController?.navigationController?
+                        .showIndetermineHudWithMessage("loading".localized().uppercaseFirst)
+                })
+                .catchErrorJustReturn(UIImage(named: "image-not-available")!)
+                .subscribe(
+                    onSuccess: { [weak self] (image) in
+                        guard let strongSelf = self else {return}
+                        strongSelf.parentViewController?.navigationController?.hideHud()
+                        strongSelf.attach(image: image, urlString: urlString, description: description)
+                    },
+                    onError: {[weak self] error in
+                        self?.parentViewController?.navigationController?.hideHud()
+                        self?.parentViewController?.showError(error)
+                    }
+                )
+                .disposed(by: bag)
         } else {
             parentViewController?.showGeneralError()
         }
