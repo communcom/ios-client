@@ -23,20 +23,27 @@ class EditorPageTextView: ExpandableTextView {
         let imageAS = NSAttributedString(attachment: attachment)
         
         // insert
-        if let index = currentCursorLocation {
-            var realIndex: Int
-            if index > 0,
-                textStorage.attributedSubstring(from: NSMakeRange(index - 1, 1)).string != "\n" {
-                textStorage.insert(NSAttributedString.separator, at: index)
-                realIndex = index+1
-            } else {
-                realIndex = index
+        if var selectedTextRange = selectedTextRange {
+            var location = offset(from: beginningOfDocument, to: selectedTextRange.start)
+            
+            // insert an endline character
+            if location > 0,
+                textStorage.attributedSubstring(from: NSMakeRange(location - 1, 1)).string != "\n" {
+                textStorage.insert(NSAttributedString.separator, at: location)
+                location += 1
+                
+                let newStart = position(from: selectedTextRange.start, offset: 1)!
+                let newEnd = position(from: selectedTextRange.end, offset: 1)!
+                selectedTextRange = textRange(from: newStart, to: newEnd)!
             }
             
-            textStorage.insert(imageAS, at: realIndex)
-            textStorage.insert(NSAttributedString.separator, at: realIndex+1)
+            replace(selectedTextRange, withText: "")
+            location = offset(from: beginningOfDocument, to: selectedTextRange.start)
+            textStorage.insert(imageAS, at: location)
+            textStorage.insert(NSAttributedString.separator, at: location+1)
+        }
         // append
-        } else {
+        else {
             textStorage.append(NSAttributedString.separator)
             textStorage.append(imageAS)
             textStorage.addAttributes(typingAttributes, range: NSMakeRange(textStorage.length - 1, 1))
