@@ -25,6 +25,11 @@ extension EditorPageTextView {
                         self.attributedText.length > 0 {
                         detectRange.length = 1
                     }
+                    else if self.selectedRange.location < self.attributedText.length - 1,
+                        self.attributedText.attributedSubstring(from: NSMakeRange(detectRange.location - 1, 1)).string == "\n" {
+                        detectRange.location += 1
+                        detectRange.length = 1
+                    }
                     else {
                         detectRange.location -= 1
                         detectRange.length = 1
