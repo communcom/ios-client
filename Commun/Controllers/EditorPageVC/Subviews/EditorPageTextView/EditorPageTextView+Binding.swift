@@ -30,7 +30,8 @@ extension EditorPageTextView {
                     }
                 }
                 
-                if let color = attrs[.foregroundColor] as? UIColor {
+                if let color = attrs[.foregroundColor] as? UIColor,
+                    color != .black {
                     textColor = color
                 }
                 
