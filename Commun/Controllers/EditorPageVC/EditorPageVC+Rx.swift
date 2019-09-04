@@ -32,6 +32,22 @@ extension EditorPageVC {
                 self.colorPickerButton.isEnabled = true
                 self.addLinkButton.isEnabled = true
                 self.photoPickerButton.isEnabled = true
+                
+                self.boldButton.isHidden = false
+                self.italicButton.isHidden = false
+                self.colorPickerButton.isHidden = false
+                self.addLinkButton.isHidden = false
+                self.photoPickerButton.isHidden = false
+            })
+            .disposed(by: disposeBag)
+        
+        contentTextView.rx.didEndEditing
+            .subscribe(onNext: {
+                self.boldButton.isHidden = true
+                self.italicButton.isHidden = true
+                self.colorPickerButton.isHidden = true
+                self.addLinkButton.isHidden = true
+                self.photoPickerButton.isHidden = true
             })
             .disposed(by: disposeBag)
         
@@ -68,13 +84,7 @@ extension EditorPageVC {
         UIResponder.keyboardHeightObservable
             .map {$0 == 0 ? true: false}
             .asDriver(onErrorJustReturn: true)
-            .drive(onNext: { [weak self] (hide) in
-                self?.boldButton.isHidden = hide
-                self?.italicButton.isHidden = hide
-                self?.colorPickerButton.isHidden = hide
-                self?.addLinkButton.isHidden = hide
-                self?.hideKeyboardButton.isHidden = hide
-            })
+            .drive(hideKeyboardButton.rx.isHidden)
             .disposed(by: disposeBag)
         
         // verification
