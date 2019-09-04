@@ -14,20 +14,6 @@ extension NSAttributedString {
         return str1.range(of: text)
     }
     
-    func components(separatedBy string: String) -> [NSAttributedString] {
-        let input = self.string
-        let separatedInput = input.components(separatedBy: string)
-        var output = [NSAttributedString]()
-        var start = 0
-        for sub in separatedInput {
-            let range = NSMakeRange(start, sub.count)
-            let attrStr = attributedSubstring(from: range)
-            output.append(attrStr)
-            start += range.length + string.count
-        }
-        return output
-    }
-    
     func toParagraphContentBlock(id: inout UInt) -> ContentBlock? {
         let originalId = id
         id += 1

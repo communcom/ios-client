@@ -145,21 +145,33 @@ extension NSMutableAttributedString {
         var contentBlocks = [Single<ContentBlock>]()
         
         // get AS, which was separated by the Escaping String
-        let attrStrs = components(separatedBy: "\n")
-        
-        // parse AS to ContentBlock
-        for attrStr in attrStrs {
+        var currentParagraph: NSMutableAttributedString?
+        enumerateAttributes(in: NSMakeRange(0, length), options: []) { (attrs, range, bool) in
             // parse attachments
-            if let attachment = attrStr.attributes[.attachment] as? TextAttachment {
+            if let attachment = attrs[.attachment] as? TextAttachment {
+                if let paragraph = currentParagraph,
+                    let block = paragraph.toParagraphContentBlock(id: &id){
+                    contentBlocks.append(.just(block))
+                    currentParagraph = nil
+                }
                 if let single = attachment.toSingleContentBlock(id: &id) {
                     contentBlocks.append(single)
                 }
             }
             
-            // Parse paragraph
-            else if let block = attrStr.toParagraphContentBlock(id: &id) {
-                contentBlocks.append(.just(block))
+            else {
+                if currentParagraph == nil {
+                    currentParagraph = NSMutableAttributedString()
+                }
+                currentParagraph?.append(attributedSubstring(from: range))
             }
+        }
+        
+        // apend last currentParagraph
+        if let paragraph = currentParagraph,
+            let block = paragraph.toParagraphContentBlock(id: &id){
+            contentBlocks.append(.just(block))
+            currentParagraph = nil
         }
 
         return Single.zip(contentBlocks)
