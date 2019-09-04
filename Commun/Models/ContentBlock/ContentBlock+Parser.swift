@@ -147,10 +147,10 @@ extension ContentBlock {
             child.addAttributes(attr, range: NSMakeRange(0, child.length))
             return child
         case "tag":
+            let link = child.string
             child.insert(NSAttributedString(string: "#"), at: 0)
             var attr = currentAttributes
-            attr[.foregroundColor] = UIColor.tag
-            attr[.link] = attributes?.anchor
+            attr[.link] = "hash:\(link)"
             child.addAttributes(attr, range: NSMakeRange(0, child.length))
             return child
         case "link":
