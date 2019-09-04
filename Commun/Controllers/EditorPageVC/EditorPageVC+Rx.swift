@@ -70,6 +70,8 @@ extension EditorPageVC {
             })
             .disposed(by: disposeBag)
         
+        contentTextView.rx.setDelegate(self)
+        
         // isAdult
         adultButton.rx.tap
             .map {_ in !viewModel.isAdult.value}
@@ -105,5 +107,4 @@ extension EditorPageVC {
             .bind(to: sendPostButton.rx.isEnabled)
             .disposed(by: disposeBag)
     }
-    
 }

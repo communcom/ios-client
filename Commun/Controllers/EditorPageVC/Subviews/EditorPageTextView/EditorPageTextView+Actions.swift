@@ -12,7 +12,7 @@ extension EditorPageTextView {
     // MARK: - Methods
     private func attach(image: UIImage, urlString: String? = nil, description: String? = nil) {
         // Insert Attachment
-        let attachment = textStorage.imageAttachment(from: image, urlString: urlString, description: description, into: self)
+        let attachment = imageAttachment(from: image, urlString: urlString, description: description)
         let imageAS = NSAttributedString(attachment: attachment)
         
         // insert
@@ -88,7 +88,7 @@ extension EditorPageTextView {
         self.attributedText = attributedText
         
         // Parse medias
-        self.textStorage.parseContent(into: self)
+        parseContent()
             .do(onSubscribe: {
                 self.parentViewController?.navigationController?
                     .showIndetermineHudWithMessage("loading".localized().uppercaseFirst)
