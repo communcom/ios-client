@@ -10,6 +10,7 @@ import UIKit
 import CyberSwift
 import RxSwift
 import WebKit
+import Down
 
 protocol PostHeaderViewDelegate: class {
     func headerViewDidLayoutSubviews(_ headerView: PostHeaderView)
@@ -85,7 +86,25 @@ class PostHeaderView: UIView, UIWebViewDelegate, PostController {
         postTitleLabel.text = post.content.title
         
         // Show content
-        contentWebView.loadHTMLString(post.content.body.full ?? "", baseURL: nil)
+        // Parse data
+        var html = post.content.body.full ?? ""
+        
+        #warning("MARKDOWN: Remove later")
+        let down = Down(markdownString: html)
+        
+        if let string = post.content.body.full {
+            // parse new data struct
+            if let jsonData = string.data(using: .utf8),
+                let block = try? JSONDecoder().decode(ContentBlock.self, from: jsonData) {
+                html = block.toHTML()
+            }
+            // TODO: Remove later: if parsing was unsuccessful, then go back to parse using mark down
+            else if let downHtml = try? down.toHTML(){
+                html = downHtml
+            }
+        }
+        
+        contentWebView.loadHTMLString(html, baseURL: nil)
         contentWebView.delegate = self
         contentWebView.scrollView.isScrollEnabled = false
         contentWebView.scrollView.bouncesZoom = false
