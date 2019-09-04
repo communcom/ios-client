@@ -56,7 +56,7 @@ extension ContentBlock {
                 innerHTML += inner.toHTML()
             }
         case .string(let string):
-            innerHTML += string
+            innerHTML += string.replacingOccurrences(of: "\n", with: "<br/>")
         case .unsupported:
             break
         }
@@ -91,9 +91,9 @@ extension ContentBlock {
             return "<a href=\"\(url)\">\(innerHTML)</a>"
         case "image":
             let description = attributes?.description ?? ""
-            return "<div style=\"background-color: #F5F5F5;\"><img style=\"display: block; width: 100%; height: auto;\" src=\"\(innerHTML)\" /><p>\(description)</p></div>"
+            return "<div class=\"embeded\"><img style=\"display: block; width: 100%; height: auto;\" src=\"\(innerHTML)\" /><p>\(description)</p></div>"
         case "video":
-            return "<div style=\"position:relative;padding-top:56.25%;\"><iframe src=\"\(innerHTML)\" frameborder=\"0\" allowfullscreen style=\"position:absolute;top:0;left:0;width:100%;height:100%;\"></iframe></div>"
+            return "<div class=\"embeded\" style=\"position:relative;padding-top:56.25%;\"><iframe src=\"\(innerHTML)\" frameborder=\"0\" allowfullscreen style=\"position:absolute;top:0;left:0;width:100%;height:100%;\"></iframe></div>"
         case "website":
             // TODO: Preview
             return ""
