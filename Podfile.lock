@@ -130,7 +130,7 @@ PODS:
   - SwifterSwift/SwiftStdlib (5.0.0)
   - SwifterSwift/UIKit (5.0.0)
   - SwiftLinkPreview (3.0.1)
-  - SwiftTheme (0.4.4)
+  - SwiftTheme (0.4.5)
   - SwiftyJSON (4.3.0)
   - Swinject (2.6.2)
   - THPinViewController (1.2.6)
@@ -230,7 +230,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   CyberSwift:
-    :commit: 943a9222397ea0117b03ee3cadcc3fd89748c7d4
+    :commit: 57eda528b8a199058b6256fabbc832ef14fc6043
     :git: https://github.com/GolosChain/cyberSwift.git
   THPinViewController:
     :commit: 3a9214d337cb96e6491325f8e0a72e50d62fc210
@@ -281,7 +281,7 @@ SPEC CHECKSUMS:
   Starscream: 08172b481e145289c4930cb567230fb55897cfa4
   SwifterSwift: 96f90594b370802f01647c2b1229c74a84ffafee
   SwiftLinkPreview: 7524438c43bf63a5041615713777c3d8f19a9a31
-  SwiftTheme: a381f983da92153908b7a9eeb961b18b6d94d614
+  SwiftTheme: 4560ca4a4274aef71dd3f985aa8007c6e59993fd
   SwiftyJSON: 6faa0040f8b59dead0ee07436cbf76b73c08fd08
   Swinject: cf7458774b1b00323080a9c67e47a1ee7f9d2af1
   THPinViewController: e0dc717a61c8a0a0f251764da26b9ca8a4fd2ec1
