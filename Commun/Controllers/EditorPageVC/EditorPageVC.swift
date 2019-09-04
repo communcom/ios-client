@@ -8,6 +8,7 @@
 
 import UIKit
 import RxSwift
+import CyberSwift
 
 class EditorPageVC: UIViewController {
     
@@ -61,10 +62,15 @@ class EditorPageVC: UIViewController {
             showIndetermineHudWithMessage("loading post".localized().uppercaseFirst)
             // Get full post
             NetworkService.shared.getPost(withPermLink: post.contentId.permlink, forUser: post.contentId.userId)
+                .do(onSuccess: { (post) in
+                    if post.content.body.full == nil {
+                        throw ErrorAPI.responseUnsuccessful(message: "Content not found")
+                    }
+                })
                 .subscribe(onSuccess: {post in
                     self.hideHud()
                     self.titleTextView.rx.text.onNext(post.content.title)
-                    self.contentTextView.parseText(post.content.body.full)
+                    self.contentTextView.parseText(post.content.body.full!)
                     self.viewModel?.postForEdit = post
                 }, onError: {error in
                     self.hideHud()

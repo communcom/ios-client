@@ -74,13 +74,15 @@ extension EditorPageTextView {
         }
     }
     
-    func parseText(_ text: String?) {
-        let string = ###"{"id":1,"content":[{"id":2,"type":"paragraph","content":[{"id":3,"content":"Много лет ","type":"text","attributes":{}}]},{"id":4,"content":"https:\/\/img.golos.io\/images\/43KTyjpe2GKAtK3L3eQGLwTg3UKi.png","type":"image","attributes":{"description":"waterfall"}},{"id":5,"type":"paragraph","content":[{"id":6,"content":" назад, ","type":"text","attributes":{}},{"id":7,"content":"Царь купил себе айпад. ","type":"text","attributes":{"style":["bold","italic"],"text_color":"#FF0000"}},{"id":8,"content":"с_той_поры_прошли_века","type":"tag","attributes":{"anchor":"favdfa9384fnakdrkdfkd"}},{"id":9,"content":" , Люди ","type":"text","attributes":{}},{"id":10,"content":"помнят ","type":"link","attributes":{"url":"http:\/\/yandex.ru"}},{"id":11,"content":"чудака.","type":"link","attributes":{"url":"https:\/\/www.anekdot.ru\/i\/8\/28\/vina.jpg"}}]},{"id":12,"content":"http:\/\/cartoonbank.ru\/?page_id=29&brand=36","type":"image","attributes":{"description":"Hi!"}},{"id":13,"content":"https:\/\/www.youtube.com\/watch?v=UiYlRkVxC_4","type":"video","attributes":{}},{"id":14,"content":"https:\/\/trinixy.ru","type":"website","attributes":{}},{"id":15,"content":"http:\/\/cartoonbank.ru\/?page_id=29&brand=36","type":"image","attributes":{"description":""}},{"id":16,"content":"https:\/\/www.youtube.com\/watch?v=UiYlRkVxC_4","type":"video","attributes":{}},{"id":17,"content":"http:\/\/yandex.ru","type":"website","attributes":{}},{"id":18,"type":"paragraph","content":[]},{"id":19,"type":"paragraph","content":[]}],"type":"post","attributes":{"version":1}}"###
+    func parseText(_ string: String) {
+        // Plain string
+        var attributedText = NSAttributedString(string: string)
         
         // Parse data
-        let jsonData = string.data(using: .utf8)!
-        let block = try! JSONDecoder().decode(ContentBlock.self, from: jsonData)
-        let attributedText = block.toAttributedString(currentAttributes: typingAttributes)
+        if let jsonData = string.data(using: .utf8),
+            let block = try? JSONDecoder().decode(ContentBlock.self, from: jsonData) {
+            attributedText = block.toAttributedString(currentAttributes: typingAttributes)
+        }
         
         // Asign raw value first
         self.attributedText = attributedText
