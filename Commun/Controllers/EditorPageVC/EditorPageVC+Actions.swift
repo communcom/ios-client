@@ -92,6 +92,7 @@ extension EditorPageVC {
         self.view.endEditing(true)
 
         contentTextView.textStorage.toContentBlock()
+            .observeOn(MainScheduler.instance)
             .do(onSubscribe: {
                 self.navigationController?
                     .showIndetermineHudWithMessage(
