@@ -30,12 +30,12 @@ extension ContentBlock {
             }
         case .string(let string):
             if type == "tag" {
-                return [string.replacingOccurrences(of: "#", with: "")]
+                return [string]
             }
         case .unsupported:
             break
         }
-        return []
+        return tags
     }
     
     func toHTML() -> String {
