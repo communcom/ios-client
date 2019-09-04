@@ -21,6 +21,23 @@ extension NSAttributedString {
 }
 
 extension ContentBlock {
+    func getTags() -> [String] {
+        var tags = [String]()
+        switch content {
+        case .array(let childBlocks):
+            for block in childBlocks {
+                tags += block.getTags()
+            }
+        case .string(let string):
+            if type == "tag" {
+                return [string.replacingOccurrences(of: "#", with: "")]
+            }
+        case .unsupported:
+            break
+        }
+        return []
+    }
+    
     func toHTML() -> String {
         
         var innerHTML = ""

@@ -1306,6 +1306,7 @@
 				TargetAttributes = {
 					3BEA224022B3DA9C00FF42DA = {
 						CreatedOnToolsVersion = 10.2.1;
+						TestTargetID = 571B14EF223A935C00630C8F;
 					};
 					571B14EF223A935C00630C8F = {
 						CreatedOnToolsVersion = 10.1;
@@ -1752,6 +1753,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = C1D6A6DAA916F8782899DFE5 /* Pods-CommunTests.debug.xcconfig */;
 			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = 5G8856SBG8;
@@ -1766,6 +1768,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Commun.app/Commun";
 			};
 			name = Debug;
 		};
@@ -1773,6 +1776,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 9CD929A7157C80FECCC31E93 /* Pods-CommunTests.release.xcconfig */;
 			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5G8856SBG8;
 				INFOPLIST_FILE = CommunTests/Info.plist;
@@ -1786,6 +1790,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Commun.app/Commun";
 			};
 			name = Release;
 		};
@@ -1890,6 +1895,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
