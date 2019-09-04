@@ -32,6 +32,12 @@ extension EditorPageTextView {
         return attachment
     }
     
+    func replaceCharacters(in range: NSRange, with attachment: TextAttachment) {
+        let attachmentAS = NSAttributedString(attachment: attachment)
+        textStorage.replaceCharacters(in: range, with: attachmentAS)
+        textStorage.addAttributes(typingAttributes, range: NSMakeRange(range.location, 1))
+    }
+    
     func parseContent() -> Completable {
         var singles = [Observable<Void>]()
         textStorage.enumerateAttributes(in: NSMakeRange(0, textStorage.length), options: []) { (attrs, range, bool) in
@@ -49,8 +55,7 @@ extension EditorPageTextView {
                         guard let strongSelf = self else {return}
                         let newRange = strongSelf.textStorage.nsRangeOfText(text)
                         let attachment = strongSelf.imageAttachment(from: image, urlString: urlString, description: description)
-                        let imageAS = NSAttributedString(attachment: attachment)
-                        strongSelf.textStorage.replaceCharacters(in: newRange, with: imageAS)
+                        strongSelf.replaceCharacters(in: newRange, with: attachment)
                     })
                     .map {_ in ()}
                     .asObservable()
@@ -82,8 +87,7 @@ extension EditorPageTextView {
                             attachment.type = .website
                         }
                         
-                        let imageAS = NSAttributedString(attachment: attachment)
-                        strongSelf.textStorage.replaceCharacters(in: newRange, with: imageAS)
+                        strongSelf.replaceCharacters(in: newRange, with: attachment)
                     })
                     .map {_ in ()}
                     .catchErrorJustReturn(())
