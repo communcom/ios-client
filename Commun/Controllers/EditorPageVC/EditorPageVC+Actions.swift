@@ -88,78 +88,64 @@ extension EditorPageVC {
     }
     
     @IBAction func sendPostButtonTap() {
+        guard let viewModel = viewModel else {return}
+        self.view.endEditing(true)
+
         contentTextView.textStorage.toContentBlock()
-            .subscribe(onSuccess: { (block) in
-                let encoder = JSONEncoder()
-                let data = try! encoder.encode(block)
-                let string = String(data: data, encoding: .utf8)!
-                print(string)
+            .do(onSubscribe: {
+                self.navigationController?
+                    .showIndetermineHudWithMessage(
+                        "uploading".localized().uppercaseFirst)
+            })
+            .flatMap {
+                viewModel.sendPost(title: self.titleTextView.text, block: $0)
+            }
+            .do(onSubscribe: {
+                self.navigationController?
+                    .showIndetermineHudWithMessage(
+                        "sending post".localized().uppercaseFirst)
+            })
+            .flatMap {
+                viewModel.waitForTransaction($0)
+            }
+            .do(onSubscribe: {
+                self.navigationController?
+                    .showIndetermineHudWithMessage(
+                        "wait for transaction".localized().uppercaseFirst)
+            })
+            .subscribe(onSuccess: { (userId, permlink) in
+                self.navigationController?.hideHud()
+                // if editing post
+                if (self.viewModel?.postForEdit) != nil {
+                    self.dismiss(animated: true, completion: nil)
+                }
+                // if creating post
+                else {
+                    // show post page
+                    let postPageVC = controllerContainer.resolve(PostPageVC.self)!
+                    postPageVC.viewModel.permlink = permlink
+                    postPageVC.viewModel.userId = userId
+                    var viewControllers = self.navigationController!.viewControllers
+                    viewControllers[0] = postPageVC
+                    self.navigationController?.setViewControllers(viewControllers, animated: true)
+                }
             }) { (error) in
-                print(error)
+                self.navigationController?.hideHud()
+                if let error = error as? ErrorAPI {
+                    switch error {
+                    case .responseUnsuccessful(message: "post not found".localized().uppercaseFirst):
+                        self.dismiss(animated: true, completion: nil)
+                        break
+                    case .blockchain(message: let message):
+                        self.showAlert(title: "error".localized().uppercaseFirst, message: message)
+                        break
+                    default:
+                        break
+                    }
+                }
+                self.showError(error)
             }
             .disposed(by: disposeBag)
-//        guard let viewModel = viewModel else {return}
-//        self.view.endEditing(true)
-//
-//        viewModel.sendPost(with: titleTextView.text, text: contentTextView.attributedText)
-//            .do(onSubscribe: {
-//                self.navigationController?.showIndetermineHudWithMessage("sending post".localized().uppercaseFirst)
-//            })
-//            .flatMap { (transactionId, userId, permlink) -> Single<(userId: String, permlink: String)> in
-//                guard let id = transactionId,
-//                    let userId = userId,
-//                    let permlink = permlink else {
-//                        return .error(ErrorAPI.responseUnsuccessful(message: "post not found".localized().uppercaseFirst))
-//                }
-//
-//                self.navigationController?.showIndetermineHudWithMessage("wait for transaction".localized().uppercaseFirst)
-//
-//                return NetworkService.shared.waitForTransactionWith(id: id)
-//                    .andThen(Single<(userId: String, permlink: String)>.just((userId: userId, permlink: permlink)))
-//            }
-//            .observeOn(MainScheduler.instance)
-//            .subscribe(onSuccess: { (userId, permlink) in
-//                self.navigationController?.hideHud()
-//                // if editing post
-//                if var post = self.viewModel?.postForEdit {
-//                    post.content.title = self.titleTextView.text
-//                    post.content.body.full = self.contentTextView.text
-//                    if let imageURL = self.viewModel?.embeds.first(where: {($0["type"] as? String) == "photo"})?["url"] as? String,
-//                        let embeded = post.content.embeds.first,
-//                        embeded.type == "photo" {
-//                        post.content.embeds[0].result?.url = imageURL
-//                    }
-//                    post.notifyChanged()
-//                    self.dismiss(animated: true, completion: nil)
-//                } else {
-//                    // show post page
-//                    let postPageVC = controllerContainer.resolve(PostPageVC.self)!
-//                    postPageVC.viewModel.permlink = permlink
-//                    postPageVC.viewModel.userId = userId
-//                    var viewControllers = self.navigationController!.viewControllers
-//                    viewControllers[0] = postPageVC
-//                    self.navigationController?.setViewControllers(viewControllers, animated: true)
-//                }
-//            }, onError: { (error) in
-//                self.navigationController?.hideHud()
-//
-//                if let error = error as? ErrorAPI {
-//                    switch error {
-//                    case .responseUnsuccessful(message: "post not found".localized().uppercaseFirst):
-//                        self.dismiss(animated: true, completion: nil)
-//                        break
-//                    case .blockchain(message: let message):
-//                        self.showAlert(title: "error".localized().uppercaseFirst, message: message)
-//                        break
-//                    default:
-//                        break
-//                    }
-//                }
-//
-//                self.showError(error)
-//
-//            })
-//            .disposed(by: disposeBag)
     }
     
     @IBAction func closeButtonDidTouch(_ sender: Any) {

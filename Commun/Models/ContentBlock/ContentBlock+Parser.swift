@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CyberSwift
 
 class ContentBlockAttributedString: NSAttributedString {
     var block: ContentBlock?
@@ -21,6 +22,14 @@ extension NSAttributedString {
 }
 
 extension ContentBlock {
+    func jsonString() throws -> String {
+        let data = try JSONEncoder().encode(self)
+        guard let string = String(data: data, encoding: .utf8) else {
+            throw ErrorAPI.invalidData(message: "Could not parse string from block")
+        }
+        return string
+    }
+    
     func getTags() -> [String] {
         var tags = [String]()
         switch content {
