@@ -21,8 +21,10 @@ extension EditorPageTextView {
             
             // insert an endline character
             if location > 0,
-                textStorage.attributedSubstring(from: NSMakeRange(location - 1, 1)).string != "\n" {
+                textStorage.attributedSubstring(from: NSMakeRange(location - 1, 1)).string != "\n"
+            {
                 textStorage.insert(NSAttributedString.separator, at: location)
+                textStorage.addAttributes(typingAttributes, range: NSMakeRange(location, 1))
                 location += 1
                 
                 let newStart = position(from: selectedTextRange.start, offset: 1)!
@@ -34,12 +36,13 @@ extension EditorPageTextView {
             location = offset(from: beginningOfDocument, to: selectedTextRange.start)
             textStorage.insert(imageAS, at: location)
             textStorage.insert(NSAttributedString.separator, at: location+1)
+            textStorage.addAttributes(typingAttributes, range: NSMakeRange(location, 2))
         }
-            // append
+        // append
         else {
             textStorage.append(NSAttributedString.separator)
             textStorage.append(imageAS)
-            textStorage.addAttributes(typingAttributes, range: NSMakeRange(textStorage.length - 1, 1))
+            textStorage.addAttributes(typingAttributes, range: NSMakeRange(textStorage.length - 2, 1))
         }
     }
     
