@@ -10,6 +10,9 @@ import Foundation
 import CommonCrypto
 
 extension String {
+    static var invisible: String {
+        return "\u{2063}"
+    }
     
     func md5() -> String? {
         let length = Int(CC_MD5_DIGEST_LENGTH)

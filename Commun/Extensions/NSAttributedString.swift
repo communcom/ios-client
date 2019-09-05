@@ -85,7 +85,7 @@ extension NSAttributedString {
             
             // modify content
             // remove invisible character
-            content = content.replacingOccurrences(of: "\u{2063}", with: "")
+            content = content.replacingOccurrences(of: String.invisible, with: "")
             
             // add block if content is not empty
             if !content.trimmed.isEmpty {
@@ -105,5 +105,39 @@ extension NSAttributedString {
             id = originalId
         }
         return nil
+    }
+    
+    /// find range of text which has the same attributes as text at index
+    func rangeOfLink(at index: Int) -> NSRange? {
+        if index >= length {return nil}
+        let attrs = attributes(at: index, effectiveRange: nil)
+        
+        guard let urlString = attrs[.link] as? String else {return nil}
+        
+        // the start and the end of the length
+        var start = index
+        var end = index
+        
+        // move backward
+        for i in (0..<index).reversed() {
+            // Compare attributes
+            if attributes(at: i, effectiveRange: nil)[.link] as? String == urlString {
+                start = i
+            } else {
+                break
+            }
+        }
+        
+        // move forward
+        for i in ((index + 1)...length-1) {
+            // Compare attributes
+            if attributes(at: i, effectiveRange: nil)[.link] as? String == urlString {
+                end = i
+            } else {
+                break
+            }
+        }
+        
+        return NSMakeRange(start, end - start + 1)
     }
 }
