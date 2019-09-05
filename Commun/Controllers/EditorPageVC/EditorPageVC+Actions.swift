@@ -188,6 +188,44 @@ extension EditorPageVC {
             }
         }
     }
+    
+    @IBAction func addLinkButtonDidTouch(_ sender: Any) {
+        if let urlString = contentTextView.currentTextStyle.value.urlString {
+            // TODO: Remove link
+        } else {
+            // Add link
+            let alert = UIAlertController(
+                title:          "add link".localized().uppercaseFirst,
+                message:        "select a link to add to text".localized().uppercaseFirst,
+                preferredStyle: .alert)
+            
+            alert.addTextField { field in
+                field.placeholder = "URL".localized()
+            }
+            
+            alert.addTextField { field in
+                field.placeholder = "placeholder".localized().uppercaseFirst
+                let string = self.contentTextView.selectedAString.string
+                if !string.isEmpty {
+                    field.text = string
+                }
+            }
+            
+            alert.addAction(UIAlertAction(title: "add".localized().uppercaseFirst, style: .cancel, handler: {[weak self] _ in
+                guard let urlString = alert.textFields?.first?.text,
+                    let placeholder = alert.textFields?.last?.text
+                else {
+                    self?.showErrorWithMessage("URL".localized() + " " + "or".localized() + " " + "placeholder".localized() + " " + "is missing".localized())
+                    return
+                }
+                self?.contentTextView.addLink(urlString, placeholder: placeholder)
+            }))
+            
+            alert.addAction(UIAlertAction(title: "cancel".localized().uppercaseFirst, style: .default, handler: nil))
+            
+            present(alert, animated: true, completion: nil)
+        }
+    }
 }
 
 extension EditorPageVC: UIPopoverPresentationControllerDelegate {

@@ -186,6 +186,7 @@
                                         <color key="tintColor" red="0.41390401119999998" green="0.50106823440000003" blue="0.96205252409999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <state key="normal" image="add_link"/>
                                         <connections>
+                                            <action selector="addLinkButtonDidTouch:" destination="AvE-EB-OTN" eventType="touchUpInside" id="IKo-aj-cpT"/>
                                             <action selector="richTextEditButtonDidTouch:" destination="AvE-EB-OTN" eventType="touchUpInside" id="AWB-YJ-C4s"/>
                                         </connections>
                                     </button>

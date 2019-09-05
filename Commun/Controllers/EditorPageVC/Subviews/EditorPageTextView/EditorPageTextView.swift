@@ -57,6 +57,15 @@ class EditorPageTextView: ExpandableTextView {
         }
     }
     
+    func addLink(_ urlString: String, placeholder: String) {
+        var attrs = typingAttributes
+        attrs[.link] = urlString
+        let attrStr = NSMutableAttributedString(string: placeholder, attributes: attrs)
+        attrStr.insert(NSAttributedString(string: "\u{2063}", attributes: typingAttributes), at: 0)
+        attrStr.append(NSAttributedString(string: "\u{2063}", attributes: typingAttributes))
+        textStorage.replaceCharacters(in: selectedRange, with: attrStr)
+    }
+    
     private func setSymbolicTrait(_ trait: UIFontDescriptor.SymbolicTraits, on: Bool) {
         // Modify typingAttributes
         if selectedRange.length == 0 {

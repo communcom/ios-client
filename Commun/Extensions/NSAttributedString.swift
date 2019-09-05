@@ -83,6 +83,11 @@ extension NSAttributedString {
                 }
             }
             
+            // modify content
+            // remove invisible character
+            content = content.replacingOccurrences(of: "\u{2063}", with: "")
+            
+            // add block if content is not empty
             if !content.trimmed.isEmpty {
                 id += 1
                 let block = ContentBlock(

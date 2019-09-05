@@ -42,7 +42,7 @@ extension EditorPageTextView {
                 
                 let textStyle = TextStyle(isBold: bold, isItalic: italic, textColor: textColor, urlString: urlString)
                 
-                self.currentTextStyle.onNext(textStyle)
+                self.currentTextStyle.accept(textStyle)
                 
             })
             .disposed(by: bag)

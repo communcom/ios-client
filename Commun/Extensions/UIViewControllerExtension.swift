@@ -43,8 +43,12 @@ extension UIViewController {
         showErrorWithLocalizedMessage("Something went wrong.\nPlease try again later")
     }
     
+    func showErrorWithMessage(_ message: String) {
+        showAlert(title: "error".localized(), message: message)
+    }
+    
     func showErrorWithLocalizedMessage(_ message: String) {
-        showAlert(title: "error".localized().uppercaseFirst, message: message.localized())
+        showErrorWithMessage(message.localized())
     }
     
     func showError(_ error: Error) {
