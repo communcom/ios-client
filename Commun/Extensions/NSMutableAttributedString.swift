@@ -55,34 +55,57 @@ extension NSMutableAttributedString {
         var contentBlocks = [Single<ContentBlock>]()
         
         // get AS, which was separated by the Escaping String
-        var currentParagraph: NSMutableAttributedString?
+        var attachmentRanges = [NSRange]()
         enumerateAttributes(in: NSMakeRange(0, length), options: []) { (attrs, range, bool) in
             // parse attachments
-            if let attachment = attrs[.attachment] as? TextAttachment {
-                if let paragraph = currentParagraph,
-                    let block = paragraph.toParagraphContentBlock(id: &id){
-                    contentBlocks.append(.just(block))
-                    currentParagraph = nil
-                }
-                if let single = attachment.toSingleContentBlock(id: &id) {
-                    contentBlocks.append(single)
-                }
-            }
-            
-            else {
-                if currentParagraph == nil {
-                    currentParagraph = NSMutableAttributedString()
-                }
-                currentParagraph?.append(attributedSubstring(from: range))
+            if let _ = attrs[.attachment] as? TextAttachment {
+                attachmentRanges.append(range)
             }
         }
         
-        // apend last currentParagraph
-        if let paragraph = currentParagraph,
-            let block = paragraph.toParagraphContentBlock(id: &id){
-            contentBlocks.append(.just(block))
-            currentParagraph = nil
+        // parse attributed string
+        var start = 0
+        
+        for range in attachmentRanges {
+            // add text from start to attachment's location
+            if range.location - start > 0 {
+                let end = range.location - 1
+                let rangeForText = NSMakeRange(start, end - start + 1)
+                let subAS = attributedSubstring(from: rangeForText)
+                let components = subAS.components(separatedBy: "\n")
+                for component in components {
+                    if let block = component.toParagraphContentBlock(id: &id) {
+                        contentBlocks.append(.just(block))
+                    }
+                }
+            }
+            
+            // add attachment
+            if let attachment = attributes(at: range.location, effectiveRange: nil)[.attachment] as? TextAttachment,
+                let single = attachment.toSingleContentBlock(id: &id)
+            {
+                contentBlocks.append(single)
+            }
+            
+            // new start
+            start = range.location + 1
+            if start >= length {
+                break
+            }
         }
+        
+        // add last
+        if start < length {
+            let lastRange = NSMakeRange(start, length - start)
+            let subAS = attributedSubstring(from: lastRange)
+            let components = subAS.components(separatedBy: "\n")
+            for component in components {
+                if let block = component.toParagraphContentBlock(id: &id) {
+                    contentBlocks.append(.just(block))
+                }
+            }
+        }
+        
 
         return Single.zip(contentBlocks)
             .map {contentBlocks -> ContentBlock in
