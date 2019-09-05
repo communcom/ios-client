@@ -97,13 +97,20 @@ extension EditorPageVC {
                 titleTextView.rx.text.orEmpty,
                 contentTextView.rx.text.orEmpty
             )
-            .map {
-                // Text field  is not empty
-                (!$0.0.isEmpty) && (!$0.1.isEmpty) &&
-                // Title or content has changed
-                ($0.0 != viewModel.postForEdit?.content.title ||
-                $0.1 != viewModel.postForEdit?.content.body.preview)
-            }
+            .map({ (title, content) -> Bool in
+                // both title and content are not empty
+                let result = !title.isEmpty && !content.isEmpty
+                // TODO: Compare contentBlock
+//                // compare content
+//                var contentChanged = (title != viewModel.postForEdit?.content.title)
+//                // Parse data
+//                if let jsonData = viewModel.postForEdit?.content.body.full?.data(using: .utf8),
+//                    let block = try? JSONDecoder().decode(ContentBlock.self, from: jsonData) {
+//                    attributedText = block.toAttributedString(currentAttributes: typingAttributes)
+//                }
+                
+                return result
+            })
             .bind(to: sendPostButton.rx.isEnabled)
             .disposed(by: disposeBag)
     }

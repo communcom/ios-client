@@ -103,4 +103,74 @@ extension EditorPageTextView {
             .asSingle()
             .flatMapToCompletable()
     }
+    
+    func getContentBlock() -> Single<ContentBlock> {
+        // spend id = 1 for PostBlock, so id starts from 1
+        var id: UInt = 1
+        
+        // child blocks of post block
+        var contentBlocks = [Single<ContentBlock>]()
+        
+        // get AS, which was separated by the Escaping String
+        var attachmentRanges = [NSRange]()
+        textStorage.enumerateAttributes(in: NSMakeRange(0, textStorage.length), options: []) { (attrs, range, bool) in
+            // parse attachments
+            if let _ = attrs[.attachment] as? TextAttachment {
+                attachmentRanges.append(range)
+            }
+        }
+        
+        // parse attributed string
+        var start = 0
+        
+        for range in attachmentRanges {
+            // add text from start to attachment's location
+            if range.location - start > 0 {
+                let end = range.location - 1
+                let rangeForText = NSMakeRange(start, end - start + 1)
+                let subAS = textStorage.attributedSubstring(from: rangeForText)
+                let components = subAS.components(separatedBy: "\n")
+                for component in components {
+                    if let block = component.toParagraphContentBlock(id: &id) {
+                        contentBlocks.append(.just(block))
+                    }
+                }
+            }
+            
+            // add attachment
+            if let attachment = textStorage.attributes(at: range.location, effectiveRange: nil)[.attachment] as? TextAttachment,
+                let single = attachment.toSingleContentBlock(id: &id)
+            {
+                contentBlocks.append(single)
+            }
+            
+            // new start
+            start = range.location + 1
+            if start >= textStorage.length {
+                break
+            }
+        }
+        
+        // add last
+        if start < textStorage.length {
+            let lastRange = NSMakeRange(start, textStorage.length - start)
+            let subAS = textStorage.attributedSubstring(from: lastRange)
+            let components = subAS.components(separatedBy: "\n")
+            for component in components {
+                if let block = component.toParagraphContentBlock(id: &id) {
+                    contentBlocks.append(.just(block))
+                }
+            }
+        }
+        
+        
+        return Single.zip(contentBlocks)
+            .map {contentBlocks -> ContentBlock in
+                return ContentBlock(
+                    id: 1,
+                    type: "post",
+                    attributes: ContentBlockAttributes(version: 1, title: nil, style: nil, text_color: nil, anchor: nil, url: nil, description: nil, provider_name: nil, author: nil, author_url: nil, thumbnail_url: nil, thumbnail_size: nil, html: nil),
+                    content: .array(contentBlocks))
+        }
+    }
 }

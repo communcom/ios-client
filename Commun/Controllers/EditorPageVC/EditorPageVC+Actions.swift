@@ -91,7 +91,7 @@ extension EditorPageVC {
         guard let viewModel = viewModel else {return}
         self.view.endEditing(true)
 
-        contentTextView.textStorage.toContentBlock()
+        contentTextView.getContentBlock()
             .observeOn(MainScheduler.instance)
             .do(onSubscribe: {
                 self.navigationController?
