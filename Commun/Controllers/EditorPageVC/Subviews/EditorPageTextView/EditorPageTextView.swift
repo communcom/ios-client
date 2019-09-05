@@ -64,6 +64,7 @@ class EditorPageTextView: ExpandableTextView {
         attrStr.insert(NSAttributedString(string: String.invisible, attributes: typingAttributes), at: 0)
         attrStr.append(NSAttributedString(string: String.invisible, attributes: typingAttributes))
         textStorage.replaceCharacters(in: selectedRange, with: attrStr)
+        selectedRange.location += 1
     }
     
     func removeLink() {
