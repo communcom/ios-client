@@ -24,7 +24,7 @@ class EditorPageTextView: ExpandableTextView {
     // MARK: - Properties
     let bag = DisposeBag()
     let defaultFont = UIFont.systemFont(ofSize: 17)
-    var currentTextStyle = PublishSubject<TextStyle>()
+    var currentTextStyle = BehaviorRelay<TextStyle>(value: TextStyle(isBold: false, isItalic: false, textColor: .black, urlString: nil))
     
     override func awakeFromNib() {
         super.awakeFromNib()

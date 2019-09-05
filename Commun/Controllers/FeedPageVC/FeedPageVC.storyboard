@@ -94,6 +94,7 @@
                                                 <constraint firstAttribute="height" constant="24" id="CGS-9K-gET"/>
                                                 <constraint firstAttribute="width" constant="24" id="nOp-81-aKm"/>
                                             </constraints>
+                                            <color key="tintColor" red="0.41390401119999998" green="0.50106823440000003" blue="0.96205252409999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <state key="normal" image="photo_solid"/>
                                             <connections>
                                                 <action selector="photoButtonDidTouch:" destination="vaU-K6-LmS" eventType="touchUpInside" id="sCr-cW-f9p"/>

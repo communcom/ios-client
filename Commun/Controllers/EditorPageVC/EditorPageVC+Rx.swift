@@ -52,6 +52,7 @@ extension EditorPageVC {
             .disposed(by: disposeBag)
         
         contentTextView.currentTextStyle
+            .skip(1)
             .subscribe(onNext: { (textStyle) in
                 // bold
                 self.boldButton.isSelected = textStyle.isBold
