@@ -172,8 +172,7 @@ extension ContentBlock {
             let attachment = TextAttachment()
             attachment.embed = embed
             attachment.embed?.type = type
-            #warning("Add html later, when bug with sending html fixed")
-            attachment.embed?.html = nil
+            
             switch content {
             case .string(let url):
                 attachment.embed!.url = url

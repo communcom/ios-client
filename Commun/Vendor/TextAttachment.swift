@@ -43,6 +43,9 @@ class TextAttachment: NSTextAttachment {
             return nil
         }
         
+        // Prevent sending html
+        embed.html = nil
+        
         let url = embed.url
         if url == nil {
             if type == "image", let image = localImage {
