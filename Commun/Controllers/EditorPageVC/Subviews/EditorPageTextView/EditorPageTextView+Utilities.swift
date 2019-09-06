@@ -18,7 +18,7 @@ extension EditorPageTextView {
         let newWidth = frame.size.width - attachmentRightMargin
         let mediaView = MediaView(frame: CGRect(x: 0, y: 0, width: newWidth, height: image.size.height * newWidth / image.size.width + attachmentHeightForDescription))
         mediaView.showCloseButton = false
-        mediaView.setUp(image: image, url: attachment.embed?.url, description: attachment.embed?.description)
+        mediaView.setUp(image: image, url: attachment.embed?.url, description: attachment.embed?.title ?? attachment.embed?.description)
         addSubview(mediaView)
         
         attachment.view = mediaView

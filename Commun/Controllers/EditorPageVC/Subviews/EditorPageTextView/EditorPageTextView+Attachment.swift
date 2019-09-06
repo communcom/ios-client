@@ -64,7 +64,9 @@ extension EditorPageTextView {
     // MARK: - Link
     func addLink(_ urlString: String, placeholder: String?) {
         // if link has placeholder
-        if let placeholder = placeholder {
+        if let placeholder = placeholder,
+            !placeholder.isEmpty
+        {
             var attrs = typingAttributes
             attrs[.link] = urlString
             let attrStr = NSMutableAttributedString(string: placeholder, attributes: attrs)
