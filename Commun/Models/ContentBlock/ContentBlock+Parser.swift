@@ -90,10 +90,12 @@ extension ContentBlock {
             let url = attributes?.url ?? ""
             return "<a href=\"\(url)\">\(innerHTML)</a>"
         case "image":
-            let description = attributes?.description ?? ""
-            return "<div class=\"embeded\"><img style=\"display: block; width: 100%; height: auto;\" src=\"\(innerHTML)\" /><p>\(description)</p></div>"
+            let description = attributes?.description
+            return "<div class=\"embeded\"><img style=\"display: block; width: 100%; height: auto;\" src=\"\(innerHTML)\" />\(description != nil ? "<p>\(description!)</p>": "") </div>"
         case "video":
-            return "<div class=\"embeded\" style=\"position:relative;padding-top:56.25%;\"><iframe src=\"\(innerHTML)\" frameborder=\"0\" allowfullscreen style=\"position:absolute;top:0;left:0;width:100%;height:100%;\"></iframe></div>"
+            let description = attributes?.title
+            return "<div class=\"embeded\"><img style=\"display: block; width: 100%; height: auto;\" src=\"\(attributes?.thumbnail_url ?? "")\" />\(description != nil ? "<p>\(description!)</p>": "")</div>"
+//            return "<div class=\"embeded\" style=\"position:relative;padding-top:56.25%;\"><iframe src=\"\(innerHTML)\" frameborder=\"0\" allowfullscreen style=\"position:absolute;top:0;left:0;width:100%;height:100%;\"></iframe></div>"
         case "website":
             // TODO: Preview
             return ""
@@ -169,6 +171,9 @@ extension ContentBlock {
             
             let attachment = TextAttachment()
             attachment.embed = embed
+            attachment.embed?.type = type
+            #warning("Add html later, when bug with sending html fixed")
+            attachment.embed?.html = nil
             switch content {
             case .string(let url):
                 attachment.embed!.url = url

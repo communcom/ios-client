@@ -21,6 +21,7 @@ extension EditorPageTextView {
             return
         }
         attachment.embed = embed
+        attachment.embed?.type = "image"
         
         // save localImage to download later, if urlString not found
         if urlString == nil {
