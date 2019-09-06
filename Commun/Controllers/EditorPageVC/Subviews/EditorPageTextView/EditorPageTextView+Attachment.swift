@@ -1,17 +1,77 @@
 //
-//  EditorPageTextView+Actions.swift
+//  EditorPageTextView+Attachment.swift
 //  Commun
 //
-//  Created by Chung Tran on 9/3/19.
+//  Created by Chung Tran on 9/6/19.
 //  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
 //
 
 import Foundation
-import RxSwift
-import CyberSwift
 
 extension EditorPageTextView {
-    // MARK: - Methods
+    // MARK: - Link
+    func addLink(_ urlString: String, placeholder: String?) {
+        // if link has placeholder
+        if let placeholder = placeholder {
+            var attrs = typingAttributes
+            attrs[.link] = urlString
+            let attrStr = NSMutableAttributedString(string: placeholder, attributes: attrs)
+            attrStr.insert(NSAttributedString(string: String.invisible, attributes: typingAttributes), at: 0)
+            attrStr.append(NSAttributedString(string: String.invisible, attributes: typingAttributes))
+            textStorage.replaceCharacters(in: selectedRange, with: attrStr)
+            selectedRange.location += 1
+        }
+            // if link is a separated block
+        else {
+            // detect link type
+            NetworkService.shared.getEmbed(url: urlString)
+            
+            // show
+        }
+    }
+    
+    func removeLink() {
+        if selectedRange.length > 0 {
+            textStorage.removeAttribute(.link, range: selectedRange)
+        }
+            
+        else if var range = textStorage.rangeOfLink(at: selectedRange.location) {
+            textStorage.removeAttribute(.link, range: range)
+            if range.location > 0 {
+                var invisibleTextLocation = range.location - 1
+                var invisibleTextRange = NSMakeRange(invisibleTextLocation, 1)
+                if textStorage.attributedSubstring(from: invisibleTextRange).string == .invisible {
+                    textStorage.replaceCharacters(in: invisibleTextRange, with: "")
+                    range.location -= 1
+                    invisibleTextLocation = range.location + range.length
+                    
+                    if invisibleTextLocation >= textStorage.length {return}
+                    
+                    invisibleTextRange = NSMakeRange(invisibleTextLocation, 1)
+                    if textStorage.attributedSubstring(from: invisibleTextRange).string == .invisible {
+                        textStorage.replaceCharacters(in: invisibleTextRange, with: "")
+                    }
+                }
+            }
+        }
+    }
+    
+    // MARK: - Image
+    func add(_ image: UIImage, to attachment: inout TextAttachment) {
+        let attachmentRightMargin: CGFloat = 10
+        let attachmentHeightForDescription: CGFloat = MediaView.descriptionDefaultHeight
+        
+        // setup view
+        let newWidth = frame.size.width - attachmentRightMargin
+        let mediaView = MediaView(frame: CGRect(x: 0, y: 0, width: newWidth, height: image.size.height * newWidth / image.size.width + attachmentHeightForDescription))
+        mediaView.showCloseButton = false
+        mediaView.setUp(image: image, url: attachment.embed?.url, description: attachment.embed?.description)
+        addSubview(mediaView)
+        
+        attachment.view = mediaView
+        mediaView.removeFromSuperview()
+    }
+    
     private func attach(image: UIImage, urlString: String? = nil, description: String? = nil) {
         // Insert Attachment
         var attachment = TextAttachment()
@@ -78,49 +138,4 @@ extension EditorPageTextView {
             parentViewController?.showGeneralError()
         }
     }
-    
-    func parseText(_ string: String) {
-        // Plain string
-        var attributedText = NSAttributedString(string: string)
-        
-        // Parse data
-        if let jsonData = string.data(using: .utf8),
-            let block = try? JSONDecoder().decode(ContentBlock.self, from: jsonData) {
-            attributedText = block.toAttributedString(currentAttributes: typingAttributes)
-        }
-        
-        // Asign raw value first
-        self.attributedText = attributedText
-        
-        // Parse medias
-        parseContent()
-            .do(onSubscribe: {
-                self.parentViewController?.navigationController?
-                    .showIndetermineHudWithMessage("loading".localized().uppercaseFirst)
-            })
-            .subscribe(onCompleted: { [weak self] in
-                self?.parentViewController?.navigationController?.hideHud()
-            }) { [weak self] (error) in
-                self?.parentViewController?.navigationController?.showError(error)
-            }
-            .disposed(by: bag)
-    }
-    // TODO: Support pasting html
-//    override func paste(_ sender: Any?) {
-//        let pasteBoard = UIPasteboard.general
-//        if let html = pasteBoard.items.last?["public.html"] as? String {
-//            let htmlData = NSString(string: html).data(using: String.Encoding.unicode.rawValue)
-//            let options = [NSAttributedString.DocumentReadingOptionKey.documentType:
-//                NSAttributedString.DocumentType.html]
-//            if let attributedString = try? NSMutableAttributedString(data: htmlData ?? Data(),
-//                                                                  options: options,
-//                                                                  documentAttributes: nil) {
-//                attributedString.addAttribute(.font, value: defaultFont, range: NSMakeRange(0, attributedString.length))
-//                textStorage.replaceCharacters(in: selectedRange, with: attributedString)
-//                return
-//            }
-//        }
-//
-//        super.paste(sender)
-//    }
 }

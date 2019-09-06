@@ -10,74 +10,10 @@ import Foundation
 import RxSwift
 
 extension EditorPageTextView {
-    func add(_ image: UIImage, to attachment: inout TextAttachment) {
-        let attachmentRightMargin: CGFloat = 10
-        let attachmentHeightForDescription: CGFloat = MediaView.descriptionDefaultHeight
-        
-        // setup view
-        let newWidth = frame.size.width - attachmentRightMargin
-        let mediaView = MediaView(frame: CGRect(x: 0, y: 0, width: newWidth, height: image.size.height * newWidth / image.size.width + attachmentHeightForDescription))
-        mediaView.showCloseButton = false
-        mediaView.setUp(image: image, url: attachment.embed?.url, description: attachment.embed?.description)
-        addSubview(mediaView)
-        
-        attachment.view = mediaView
-        mediaView.removeFromSuperview()
-    }
-    
     func replaceCharacters(in range: NSRange, with attachment: TextAttachment) {
         let attachmentAS = NSAttributedString(attachment: attachment)
         textStorage.replaceCharacters(in: range, with: attachmentAS)
         textStorage.addAttributes(typingAttributes, range: NSMakeRange(range.location, 1))
-    }
-    
-    func parseContent() -> Completable {
-        var singles = [Single<UIImage>]()
-        
-        textStorage.enumerateAttribute(.attachment, in: NSMakeRange(0, textStorage.length), options: []) { (value, range, bool) in
-            // Get empty attachment
-            guard var attachment = value as? TextAttachment,
-                let embed = attachment.embed
-            else {return}
-            
-            // get image url or thumbnail (for website or video)
-            var imageURL = embed.url
-            if embed.type == "video" || embed.type == "website" {
-                imageURL = embed.thumbnail_url
-            }
-            
-            // don't know why, but has to add dummy text, length = 1
-            textStorage.replaceCharacters(in: range, with: NSAttributedString(string: " "))
-            
-            // return a downloadSingle
-            if let urlString = imageURL,
-                let url = URL(string: urlString) {
-                let downloadImage = NetworkService.shared.downloadImage(url)
-                    .catchErrorJustReturn(UIImage(named: "image-not-available")!)
-                    .do(onSuccess: { [weak self] (image) in
-                        guard let strongSelf = self else {return}
-                        strongSelf.add(image, to: &attachment)
-                        strongSelf.replaceCharacters(in: range, with: attachment)
-                    })
-                singles.append(downloadImage)
-            }
-            // return an error image if thumbnail not found
-            else {
-                singles.append(
-                    Single<UIImage>.just(UIImage(named: "image-not-available")!)
-                        .do(onSuccess: { [weak self] (image) in
-                            guard let strongSelf = self else {return}
-                            strongSelf.add(image, to: &attachment)
-                            strongSelf.replaceCharacters(in: range, with: attachment)
-                        })
-                )
-            }
-        }
-        
-        guard singles.count > 0 else {return .empty()}
-        
-        return Single.zip(singles)
-            .flatMapToCompletable()
     }
     
     func getContentBlock() -> Single<ContentBlock> {
@@ -149,4 +85,23 @@ extension EditorPageTextView {
                     content: .array(contentBlocks))
         }
     }
+    
+    // TODO: Support pasting html
+    //    override func paste(_ sender: Any?) {
+    //        let pasteBoard = UIPasteboard.general
+    //        if let html = pasteBoard.items.last?["public.html"] as? String {
+    //            let htmlData = NSString(string: html).data(using: String.Encoding.unicode.rawValue)
+    //            let options = [NSAttributedString.DocumentReadingOptionKey.documentType:
+    //                NSAttributedString.DocumentType.html]
+    //            if let attributedString = try? NSMutableAttributedString(data: htmlData ?? Data(),
+    //                                                                  options: options,
+    //                                                                  documentAttributes: nil) {
+    //                attributedString.addAttribute(.font, value: defaultFont, range: NSMakeRange(0, attributedString.length))
+    //                textStorage.replaceCharacters(in: selectedRange, with: attributedString)
+    //                return
+    //            }
+    //        }
+    //
+    //        super.paste(sender)
+    //    }
 }

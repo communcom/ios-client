@@ -208,7 +208,7 @@ extension EditorPageVC {
             }
             
             alert.addTextField { field in
-                field.placeholder = "placeholder".localized().uppercaseFirst
+                field.placeholder = "placeholder".localized().uppercaseFirst + "(" + "optional".localized() + ")"
                 let string = self.contentTextView.selectedAString.string
                 if !string.isEmpty {
                     field.text = string
@@ -216,13 +216,12 @@ extension EditorPageVC {
             }
             
             alert.addAction(UIAlertAction(title: "add".localized().uppercaseFirst, style: .cancel, handler: {[weak self] _ in
-                guard let urlString = alert.textFields?.first?.text,
-                    let placeholder = alert.textFields?.last?.text
+                guard let urlString = alert.textFields?.first?.text
                 else {
-                    self?.showErrorWithMessage("URL".localized() + " " + "or".localized() + " " + "placeholder".localized() + " " + "is missing".localized())
+                    self?.showErrorWithMessage("URL".localized() + " " + "is missing".localized())
                     return
                 }
-                self?.contentTextView.addLink(urlString, placeholder: placeholder)
+                self?.contentTextView.addLink(urlString, placeholder: alert.textFields?.last?.text)
             }))
             
             alert.addAction(UIAlertAction(title: "cancel".localized().uppercaseFirst, style: .default, handler: nil))
