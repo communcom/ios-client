@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 
 extension EditorPageTextView {
-    func imageAttachment(from image: UIImage, urlString: String? = nil, description: String? = nil) -> TextAttachment {
+    func add(_ image: UIImage, to attachment: inout TextAttachment) {
         let attachmentRightMargin: CGFloat = 10
         let attachmentHeightForDescription: CGFloat = MediaView.descriptionDefaultHeight
         
@@ -18,18 +18,11 @@ extension EditorPageTextView {
         let newWidth = frame.size.width - attachmentRightMargin
         let mediaView = MediaView(frame: CGRect(x: 0, y: 0, width: newWidth, height: image.size.height * newWidth / image.size.width + attachmentHeightForDescription))
         mediaView.showCloseButton = false
-        mediaView.setUp(image: image, url: urlString, description: description)
+        mediaView.setUp(image: image, url: attachment.embed?.url, description: attachment.embed?.description)
         addSubview(mediaView)
         
-        // setup attachment
-        let attachment = TextAttachment()
-        attachment.urlString    = urlString
-        attachment.desc         = description
-        attachment.view         = mediaView
-        attachment.type         = .image(originalImage: image)
+        attachment.view = mediaView
         mediaView.removeFromSuperview()
-        
-        return attachment
     }
     
     func replaceCharacters(in range: NSRange, with attachment: TextAttachment) {
@@ -39,68 +32,41 @@ extension EditorPageTextView {
     }
     
     func parseContent() -> Completable {
-        var singles = [Observable<Void>]()
-        textStorage.enumerateAttributes(in: NSMakeRange(0, textStorage.length), options: []) { (attrs, range, bool) in
-            let text = textStorage.attributedSubstring(from: range).string
+        var singles = [Single<UIImage>]()
+        
+        textStorage.enumerateAttribute(.attachment, in: NSMakeRange(0, textStorage.length), options: []) { (value, range, bool) in
+            // Get empty attachment
+            guard var attachment = value as? TextAttachment,
+                let embed = attachment.embed
+            else {return}
             
-            // images
-            if text.matches(pattern: "\\!\\[.*\\]\\(.*\\)") {
-                let description = text.slicing(from: "[", to: "]")
-                guard let urlString = text.slicing(from: "(", to: ")"),
-                    let url         = URL(string: urlString)
-                    else {return}
+            // get image url or thumbnail (for website or video)
+            var imageURL = embed.url
+            if embed.type == "video" || embed.type == "website" {
+                imageURL = embed.thumbnail_url
+            }
+            
+            // return a downloadSingle
+            if let urlString = imageURL,
+                let url = URL(string: urlString) {
                 let downloadImage = NetworkService.shared.downloadImage(url)
                     .catchErrorJustReturn(UIImage(named: "image-not-available")!)
                     .do(onSuccess: { [weak self] (image) in
                         guard let strongSelf = self else {return}
-                        let newRange = strongSelf.textStorage.nsRangeOfText(text)
-                        let attachment = strongSelf.imageAttachment(from: image, urlString: urlString, description: description)
-                        strongSelf.replaceCharacters(in: newRange, with: attachment)
+                        strongSelf.add(image, to: &attachment)
+                        strongSelf.replaceCharacters(in: range, with: attachment)
                     })
-                    .map {_ in ()}
-                    .asObservable()
                 singles.append(downloadImage)
             }
-                
-                // video or website
-            else if text.matches(pattern: "\\!(video|website)\\[.*\\]\\(.*\\)") {
-                guard let urlString = text.slicing(from: "(", to: ")") else {return}
-                let downloadPreview = NetworkService.shared.downloadLinkPreview(urlString)
-                    .flatMap {response -> Single<(UIImage, String?, String?)> in
-                        if let imageUrlString = response.image,
-                            let url = URL(string: imageUrlString) {
-                            return NetworkService.shared.downloadImage(url)
-                                .map {($0, urlString, response.title)}
-                                .catchErrorJustReturn((UIImage(named: "image-not-available")!, urlString, response.title))
-                        }
-                        throw ErrorAPI.unknown
-                    }
-                    .catchErrorJustReturn((UIImage(named: "image-not-available")!, urlString, nil))
-                    .do(onSuccess: { [weak self] (arg0) in
-                        let (image, urlString, description) = arg0
-                        guard let strongSelf = self else {return}
-                        let newRange = strongSelf.textStorage.nsRangeOfText(text)
-                        let attachment = strongSelf.imageAttachment(from: image, urlString: urlString, description: description)
-                        if text.contains("!video") {
-                            attachment.type = .video
-                        } else if text.contains("!website") {
-                            attachment.type = .website
-                        }
-                        
-                        strongSelf.replaceCharacters(in: newRange, with: attachment)
-                    })
-                    .map {_ in ()}
-                    .catchErrorJustReturn(())
-                    .asObservable()
-                singles.append(downloadPreview)
+            // return an error image if thumbnail not found
+            else {
+                singles.append(.just(UIImage(named: "image-not-available")!))
             }
         }
         
         guard singles.count > 0 else {return .empty()}
         
-        return Observable.zip(singles)
-            .take(1)
-            .asSingle()
+        return Single.zip(singles)
             .flatMapToCompletable()
     }
     
@@ -169,7 +135,7 @@ extension EditorPageTextView {
                 return ContentBlock(
                     id: 1,
                     type: "post",
-                    attributes: ContentBlockAttributes(version: 1, title: nil, style: nil, text_color: nil, anchor: nil, url: nil, description: nil, provider_name: nil, author: nil, author_url: nil, thumbnail_url: nil, thumbnail_size: nil, html: nil),
+                    attributes: ContentBlockAttributes(),
                     content: .array(contentBlocks))
         }
     }

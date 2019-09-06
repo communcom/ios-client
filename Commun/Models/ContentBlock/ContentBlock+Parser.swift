@@ -114,7 +114,9 @@ extension ContentBlock {
             }
             
         case .string(let string):
-            child.append(NSAttributedString(string: string))
+            if type != "website" && type != "image" && type != "video" {
+                child.append(NSAttributedString(string: string))
+            }
         case .unsupported:
             break
         }
@@ -159,29 +161,23 @@ extension ContentBlock {
             attr[.link] = url
             child.addAttributes(attr, range: NSMakeRange(0, child.length))
             return child
-        case "image":
-            let description = attributes?.description ?? ""
-            child.insert(NSAttributedString(string: "![\(description)]("), at: 0)
-            child.append(NSAttributedString(string: ")"))
-            child.append(NSAttributedString.separator)
-            child.addAttributes(currentAttributes, range: NSMakeRange(child.length - 1, 1))
-            return child
-        case "video":
-            // TODO: video
-            let description = attributes?.description ?? ""
-            child.insert(NSAttributedString(string: "!video[\(description)]("), at: 0)
-            child.append(NSAttributedString(string: ")"))
-            child.append(NSAttributedString.separator)
-            child.addAttributes(currentAttributes, range: NSMakeRange(child.length - 1, 1))
-            return child
-        case "website":
-            child.insert(NSAttributedString(string: "!website[]("), at: 0)
-            child.append(NSAttributedString(string: ")"))
-            child.append(NSAttributedString.separator)
-            child.addAttributes(currentAttributes, range: NSMakeRange(child.length - 1, 1))
-            return child
-        case "set":
-            // TODO: set
+        case "image", "video", "website":
+            // Atachment
+            guard let attributes = attributes,
+                let embed = try? ResponseAPIFrameGetEmbed(blockAttributes: attributes)
+            else {return NSAttributedString()}
+            
+            let attachment = TextAttachment()
+            attachment.embed = embed
+            switch content {
+            case .string(let url):
+                attachment.embed!.url = url
+            default:
+                break
+            }
+            
+            let attachmentAS = NSAttributedString(attachment: attachment)
+            child.append(attachmentAS)
             child.append(NSAttributedString.separator)
             child.addAttributes(currentAttributes, range: NSMakeRange(child.length - 1, 1))
             return child

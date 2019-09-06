@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CyberSwift
 
 struct ContentBlock: Codable {
     let id: UInt
@@ -15,17 +16,57 @@ struct ContentBlock: Codable {
     var content: ContentBlockContent
 }
 
+extension ResponseAPIFrameGetEmbed {
+    init(blockAttributes: ContentBlockAttributes) throws {
+        let data = try JSONEncoder().encode(blockAttributes)
+        self = try JSONDecoder().decode(ResponseAPIFrameGetEmbed.self, from: data)
+    }
+}
+
 struct ContentBlockAttributes: Codable {
+    init(embed: ResponseAPIFrameGetEmbed) {
+        self.title          =   embed.title
+        self.url            =   embed.url
+        self.description    =   embed.description
+        self.provider_name  =   embed.provider_name
+        self.author         =   embed.author
+        self.author_url     =   embed.author_url
+        self.thumbnail_url  =   embed.thumbnail_url
+        self.html           =   embed.html
+    }
+    
+    init(
+        title: String? = nil,
+        style: [String]? = nil,
+        text_color: String? = nil,
+        url: String? = nil,
+        description: String? = nil,
+        provider_name: String? = nil,
+        author: String? = nil,
+        author_url: String? = nil,
+        thumbnail_url: String? = nil,
+        thumbnail_size: [UInt]? = nil,
+        html: String? = nil
+    ){
+        self.title = title
+        self.style = style
+        self.text_color = text_color
+        self.url = url
+        self.description = description
+        self.provider_name = provider_name
+        self.author = author
+        self.author_url = author_url
+        self.thumbnail_url = thumbnail_url
+        self.thumbnail_size = thumbnail_size
+        self.html = html
+    }
+    
     // PostBlock
-    var version: UInt?
     var title: String?
     
     // TextBlock
     var style: [String]?
     var text_color: String?
-    
-    // TagBlock
-    var anchor: String?
     
     // LinkBlock
     var url: String?

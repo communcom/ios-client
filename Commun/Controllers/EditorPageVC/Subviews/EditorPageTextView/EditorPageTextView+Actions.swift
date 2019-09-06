@@ -7,13 +7,28 @@
 //
 
 import Foundation
+import RxSwift
+import CyberSwift
 
 extension EditorPageTextView {
     // MARK: - Methods
     private func attach(image: UIImage, urlString: String? = nil, description: String? = nil) {
         // Insert Attachment
-        let attachment = imageAttachment(from: image, urlString: urlString, description: description)
-        let imageAS = NSAttributedString(attachment: attachment)
+        var attachment = TextAttachment()
+        
+        // add embed to attachment
+        guard let embed = try? ResponseAPIFrameGetEmbed(blockAttributes: ContentBlockAttributes(url: urlString, description: description)) else {
+            return
+        }
+        attachment.embed = embed
+        
+        // save localImage to download later, if urlString not found
+        if urlString == nil {
+            attachment.localImage = image
+        }
+        
+        // add image to attachment
+        add(image, to: &attachment)
         
         // insert
         if var selectedTextRange = selectedTextRange {
@@ -103,7 +118,6 @@ extension EditorPageTextView {
             }
             .disposed(by: bag)
     }
-
     // TODO: Support pasting html
 //    override func paste(_ sender: Any?) {
 //        let pasteBoard = UIPasteboard.general

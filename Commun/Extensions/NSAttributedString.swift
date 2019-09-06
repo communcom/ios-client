@@ -45,7 +45,7 @@ extension NSAttributedString {
                     let block = ContentBlock(
                         id: id,
                         type: blockType,
-                        attributes: ContentBlockAttributes(version: nil, title: nil, style: nil, text_color: nil, anchor: nil, url: url, description: nil, provider_name: nil, author: nil, author_url: nil, thumbnail_url: nil, thumbnail_size: nil, html: nil),
+                        attributes: ContentBlockAttributes(url: url),
                         content: .string(content))
                     blocks.append(block)
                     return
@@ -59,7 +59,7 @@ extension NSAttributedString {
                     let block = ContentBlock(
                         id: id,
                         type: blockType,
-                        attributes: ContentBlockAttributes(version: nil, title: nil, style: nil, text_color: nil, anchor: url, url: nil, description: nil, provider_name: nil, author: nil, author_url: nil, thumbnail_url: nil, thumbnail_size: nil, html: nil),
+                        attributes: ContentBlockAttributes(),
                         content: .string(content))
                     blocks.append(block)
                     return
@@ -93,7 +93,7 @@ extension NSAttributedString {
                 let block = ContentBlock(
                     id: id,
                     type: blockType,
-                    attributes: ContentBlockAttributes(version: nil, title: nil, style: style, text_color: text_color, anchor: nil, url: nil, description: nil, provider_name: nil, author: nil, author_url: nil, thumbnail_url: nil, thumbnail_size: nil, html: nil),
+                    attributes: ContentBlockAttributes(style: style, text_color: text_color),
                     content: .string(content))
                 blocks.append(block)
             }
