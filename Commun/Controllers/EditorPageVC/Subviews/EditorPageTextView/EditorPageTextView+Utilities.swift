@@ -10,6 +10,39 @@ import Foundation
 import RxSwift
 
 extension EditorPageTextView {
+    func add(_ image: UIImage, to attachment: inout TextAttachment) {
+        let attachmentRightMargin: CGFloat = 10
+        let attachmentHeightForDescription: CGFloat = MediaView.descriptionDefaultHeight
+        
+        // setup view
+        let newWidth = frame.size.width - attachmentRightMargin
+        let mediaView = MediaView(frame: CGRect(x: 0, y: 0, width: newWidth, height: image.size.height * newWidth / image.size.width + attachmentHeightForDescription))
+        mediaView.showCloseButton = false
+        mediaView.setUp(image: image, url: attachment.embed?.url, description: attachment.embed?.description)
+        addSubview(mediaView)
+        
+        attachment.view = mediaView
+        mediaView.removeFromSuperview()
+    }
+    
+    func addAttachmentAtSelectedRange(_ attachment: NSTextAttachment) {
+        // attachmentAS to add
+        let attachmentAS = NSMutableAttributedString()
+        
+        // insert an separator at the beggining of attachment if not exists
+        if selectedRange.location > 0,
+            textStorage.attributedSubstring(from: NSMakeRange(selectedRange.location - 1, 1)).string != "\n" {
+            attachmentAS.append(NSAttributedString.separator)
+        }
+        
+        attachmentAS.append(NSAttributedString(attachment: attachment))
+        attachmentAS.append(NSAttributedString.separator)
+        attachmentAS.addAttributes(typingAttributes, range: NSMakeRange(0, attachmentAS.length))
+        
+        // replace
+        textStorage.replaceCharacters(in: selectedRange, with: attachmentAS)
+    }
+    
     func replaceCharacters(in range: NSRange, with attachment: TextAttachment) {
         let attachmentAS = NSAttributedString(attachment: attachment)
         textStorage.replaceCharacters(in: range, with: attachmentAS)

@@ -7,8 +7,60 @@
 //
 
 import Foundation
+import CyberSwift
+import RxSwift
 
 extension EditorPageTextView {
+    // MARK: - Methods
+    private func addEmbed(_ embed: ResponseAPIFrameGetEmbed) {
+        guard let type = embed.type else {return}
+        // url for images
+        var urlString = embed.url
+        
+        // thumbnail for website and video
+        if type == "website" || type == "video" {
+            urlString = embed.thumbnail_url
+        }
+        
+        // request
+        var downloadImage: Single<UIImage>
+        if urlString == nil || URL(string: urlString!) == nil {
+            downloadImage = .just(UIImage(named: "image-not-available")!)
+        }
+        else {
+            downloadImage = NetworkService.shared.downloadImage(URL(string: urlString!)!)
+        }
+        
+        // Donwload image
+        downloadImage
+            .do(onSubscribe: {
+                self.parentViewController?.navigationController?
+                    .showIndetermineHudWithMessage("loading".localized().uppercaseFirst)
+            })
+            .catchErrorJustReturn(UIImage(named: "image-not-available")!)
+            .subscribe(
+                onSuccess: { [weak self] (image) in
+                    guard let strongSelf = self else {return}
+                    strongSelf.parentViewController?.navigationController?.hideHud()
+                    
+                    // Insert Attachment
+                    var attachment = TextAttachment()
+                    attachment.embed = embed
+                    
+                    // Add image to attachment
+                    strongSelf.add(image, to: &attachment)
+                    
+                    // Add attachment
+                    strongSelf.addAttachmentAtSelectedRange(attachment)
+                },
+                onError: {[weak self] error in
+                    self?.parentViewController?.navigationController?.hideHud()
+                    self?.parentViewController?.showError(error)
+                }
+            )
+            .disposed(by: bag)
+    }
+    
     // MARK: - Link
     func addLink(_ urlString: String, placeholder: String?) {
         // if link has placeholder
@@ -25,7 +77,19 @@ extension EditorPageTextView {
         else {
             // detect link type
             NetworkService.shared.getEmbed(url: urlString)
-            
+                .do(onSubscribe: {
+                    self.parentViewController?
+                        .showIndetermineHudWithMessage(
+                            "loading".localized().uppercaseFirst)
+                })
+                .subscribe(onSuccess: {[weak self] embed in
+                    self?.parentViewController?.hideHud()
+                    self?.addEmbed(embed)
+                }, onError: {error in
+                    self.parentViewController?.hideHud()
+                    self.parentViewController?.showError(error)
+                })
+                .disposed(by: bag)
             // show
         }
     }
@@ -57,85 +121,31 @@ extension EditorPageTextView {
     }
     
     // MARK: - Image
-    func add(_ image: UIImage, to attachment: inout TextAttachment) {
-        let attachmentRightMargin: CGFloat = 10
-        let attachmentHeightForDescription: CGFloat = MediaView.descriptionDefaultHeight
-        
-        // setup view
-        let newWidth = frame.size.width - attachmentRightMargin
-        let mediaView = MediaView(frame: CGRect(x: 0, y: 0, width: newWidth, height: image.size.height * newWidth / image.size.width + attachmentHeightForDescription))
-        mediaView.showCloseButton = false
-        mediaView.setUp(image: image, url: attachment.embed?.url, description: attachment.embed?.description)
-        addSubview(mediaView)
-        
-        attachment.view = mediaView
-        mediaView.removeFromSuperview()
-    }
-    
-    private func attach(image: UIImage, urlString: String? = nil, description: String? = nil) {
-        // Insert Attachment
-        var attachment = TextAttachment()
-        
-        // add embed to attachment
-        guard let embed = try? ResponseAPIFrameGetEmbed(blockAttributes: ContentBlockAttributes(url: urlString, description: description)) else {
-            return
-        }
-        attachment.embed = embed
-        attachment.embed?.type = "image"
-        
-        // save localImage to download later, if urlString not found
-        if urlString == nil {
-            attachment.localImage = image
-        }
-        
-        // add image to attachment
-        add(image, to: &attachment)
-        
-        // attachmentAS to add
-        let attachmentAS = NSMutableAttributedString()
-        
-        // insert an separator at the beggining of attachment if not exists
-        if selectedRange.location > 0,
-            textStorage.attributedSubstring(from: NSMakeRange(selectedRange.location - 1, 1)).string != "\n" {
-            attachmentAS.append(NSAttributedString.separator)
-        }
-        
-        attachmentAS.append(NSAttributedString(attachment: attachment))
-        attachmentAS.append(NSAttributedString.separator)
-        attachmentAS.addAttributes(typingAttributes, range: NSMakeRange(0, attachmentAS.length))
-        
-        // replace
-        textStorage.replaceCharacters(in: selectedRange, with: attachmentAS)
-    }
-    
     func addImage(_ image: UIImage? = nil, urlString: String? = nil, description: String? = nil) {
+        var embed = try! ResponseAPIFrameGetEmbed(
+            blockAttributes: ContentBlockAttributes(
+                url: urlString, description: description
+            )
+        )
+        embed.type = "image"
         
-        // set image
+        // if image is local image
         if let image = image {
-            attach(image: image, urlString: urlString, description: description)
-        } else if let urlString = urlString,
-            let url = URL(string: urlString) {
+            // Insert Attachment
+            var attachment = TextAttachment()
+            attachment.embed = embed
+            attachment.localImage = image
             
-            NetworkService.shared.downloadImage(url)
-                .do(onSubscribe: {
-                    self.parentViewController?.navigationController?
-                        .showIndetermineHudWithMessage("loading".localized().uppercaseFirst)
-                })
-                .catchErrorJustReturn(UIImage(named: "image-not-available")!)
-                .subscribe(
-                    onSuccess: { [weak self] (image) in
-                        guard let strongSelf = self else {return}
-                        strongSelf.parentViewController?.navigationController?.hideHud()
-                        strongSelf.attach(image: image, urlString: urlString, description: description)
-                    },
-                    onError: {[weak self] error in
-                        self?.parentViewController?.navigationController?.hideHud()
-                        self?.parentViewController?.showError(error)
-                    }
-                )
-                .disposed(by: bag)
-        } else {
-            parentViewController?.showGeneralError()
+            // Add image to attachment
+            add(image, to: &attachment)
+            
+            // Add attachment
+            addAttachmentAtSelectedRange(attachment)
+        }
+            
+        // if image is from link
+        else {
+            addEmbed(embed)
         }
     }
 }
