@@ -46,6 +46,9 @@ extension EditorPageTextView {
                 imageURL = embed.thumbnail_url
             }
             
+            // don't know why, but has to add dummy text, length = 1
+            textStorage.replaceCharacters(in: range, with: NSAttributedString(string: " "))
+            
             // return a downloadSingle
             if let urlString = imageURL,
                 let url = URL(string: urlString) {
@@ -60,7 +63,14 @@ extension EditorPageTextView {
             }
             // return an error image if thumbnail not found
             else {
-                singles.append(.just(UIImage(named: "image-not-available")!))
+                singles.append(
+                    Single<UIImage>.just(UIImage(named: "image-not-available")!)
+                        .do(onSuccess: { [weak self] (image) in
+                            guard let strongSelf = self else {return}
+                            strongSelf.add(image, to: &attachment)
+                            strongSelf.replaceCharacters(in: range, with: attachment)
+                        })
+                )
             }
         }
         
