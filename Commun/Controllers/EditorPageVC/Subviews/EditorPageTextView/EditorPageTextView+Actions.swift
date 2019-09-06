@@ -30,35 +30,21 @@ extension EditorPageTextView {
         // add image to attachment
         add(image, to: &attachment)
         
-        // insert
-        if var selectedTextRange = selectedTextRange {
-            var location = offset(from: beginningOfDocument, to: selectedTextRange.start)
-            
-            // insert an endline character
-            if location > 0,
-                textStorage.attributedSubstring(from: NSMakeRange(location - 1, 1)).string != "\n"
-            {
-                textStorage.insert(NSAttributedString.separator, at: location)
-                textStorage.addAttributes(typingAttributes, range: NSMakeRange(location, 1))
-                location += 1
-                
-                let newStart = position(from: selectedTextRange.start, offset: 1)!
-                let newEnd = position(from: selectedTextRange.end, offset: 1)!
-                selectedTextRange = textRange(from: newStart, to: newEnd)!
-            }
-            
-            replace(selectedTextRange, withText: "")
-            location = offset(from: beginningOfDocument, to: selectedTextRange.start)
-            textStorage.insert(imageAS, at: location)
-            textStorage.insert(NSAttributedString.separator, at: location+1)
-            textStorage.addAttributes(typingAttributes, range: NSMakeRange(location, 2))
+        // attachmentAS to add
+        let attachmentAS = NSMutableAttributedString()
+        
+        // insert an separator at the beggining of attachment if not exists
+        if selectedRange.location > 0,
+            textStorage.attributedSubstring(from: NSMakeRange(selectedRange.location - 1, 1)).string != "\n" {
+            attachmentAS.append(NSAttributedString.separator)
         }
-        // append
-        else {
-            textStorage.append(NSAttributedString.separator)
-            textStorage.append(imageAS)
-            textStorage.addAttributes(typingAttributes, range: NSMakeRange(textStorage.length - 2, 1))
-        }
+        
+        attachmentAS.append(NSAttributedString(attachment: attachment))
+        attachmentAS.append(NSAttributedString.separator)
+        attachmentAS.addAttributes(typingAttributes, range: NSMakeRange(0, attachmentAS.length))
+        
+        // replace
+        textStorage.replaceCharacters(in: selectedRange, with: attachmentAS)
     }
     
     func addImage(_ image: UIImage? = nil, urlString: String? = nil, description: String? = nil) {
