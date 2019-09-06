@@ -282,4 +282,9 @@ class NetworkService: NSObject {
         return RestAPIManager.instance.markAsRead(notifies: ids)
             .flatMapToCompletable()
     }
+    
+    // MARK: - Other
+    func getEmbed(url: String) -> Single<ResponseAPIFrameGetEmbed> {
+        return RestAPIManager.instance.getEmbed(url: url)
+    }
 }

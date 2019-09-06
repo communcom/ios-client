@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import SwiftLinkPreview
 import RxSwift
 import CyberSwift
 

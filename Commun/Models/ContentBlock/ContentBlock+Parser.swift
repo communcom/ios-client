@@ -168,7 +168,8 @@ extension ContentBlock {
             return child
         case "video":
             // TODO: video
-            child.insert(NSAttributedString(string: "!video[]("), at: 0)
+            let description = attributes?.description ?? ""
+            child.insert(NSAttributedString(string: "!video[\(description)]("), at: 0)
             child.append(NSAttributedString(string: ")"))
             child.append(NSAttributedString.separator)
             child.addAttributes(currentAttributes, range: NSMakeRange(child.length - 1, 1))
