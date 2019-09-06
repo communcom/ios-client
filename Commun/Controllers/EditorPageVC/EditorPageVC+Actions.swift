@@ -190,8 +190,12 @@ extension EditorPageVC {
     }
     
     @IBAction func addLinkButtonDidTouch(_ sender: Any) {
-        if contentTextView.currentTextStyle.value.urlString != nil {
-            contentTextView.removeLink()
+        if let urlString = contentTextView.currentTextStyle.value.urlString {
+            showActionSheet(title: urlString, message: nil, actions: [
+                UIAlertAction(title: "remove".localized().uppercaseFirst, style: .destructive, handler: { (_) in
+                    self.contentTextView.removeLink()
+                })
+            ])
         } else {
             // Add link
             let alert = UIAlertController(
