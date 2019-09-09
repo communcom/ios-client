@@ -87,6 +87,24 @@ enum ContentBlockContent {
     case array([ContentBlock])
     case string(String)
     case unsupported
+    
+    var stringValue: String? {
+        switch self {
+        case .string(let string):
+            return string
+        default:
+            return nil
+        }
+    }
+    
+    var arrayValue: [ContentBlock]? {
+        switch self {
+        case .array(let array):
+            return array
+        default:
+            return nil
+        }
+    }
 }
 extension ContentBlockContent: Codable {
     func encode(to encoder: Encoder) throws {

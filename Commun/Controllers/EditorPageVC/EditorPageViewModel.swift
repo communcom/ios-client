@@ -27,14 +27,14 @@ class EditorPageViewModel {
                 if block.type == "image" {
                     return [
                         "type": "photo",
-                        "url": block.content,
+                        "url": block.content.stringValue!,
                         "id": Int(Date().timeIntervalSince1970)
                     ]
                 }
                 
                 if block.type == "video" || block.type == "website" {
                     return [
-                        "url": block.content
+                        "url": block.content.stringValue!
                     ]
                 }
                 return nil
