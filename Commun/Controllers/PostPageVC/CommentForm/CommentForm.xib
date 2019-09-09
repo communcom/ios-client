@@ -31,6 +31,7 @@
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xyo-9y-PfB">
                             <rect key="frame" x="328" y="6" width="24" height="24"/>
+                            <accessibility key="accessibilityConfiguration" identifier="ContentViewCameraButton" label="ContentViewCameraButton"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="24" id="XeK-jY-lEz"/>
                                 <constraint firstAttribute="height" constant="24" id="iJb-Ue-jRA"/>
@@ -42,6 +43,7 @@
                         </button>
                         <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="27b-40-1Op" customClass="ExpandableTextView" customModule="Commun" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="0.0" width="320" height="36"/>
+                            <accessibility key="accessibilityConfiguration" identifier="ContentViewExpandableTextView" label="ContentViewExpandableTextView"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="36" id="aMc-ew-m34"/>
                             </constraints>
@@ -71,6 +73,7 @@
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="53C-vv-nq2">
                     <rect key="frame" x="378" y="85" width="36" height="36"/>
+                    <accessibility key="accessibilityConfiguration" identifier="ContentViewSendButton" label="ContentViewSendButton"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="36" id="Eyy-S9-44e"/>
                         <constraint firstAttribute="width" constant="36" id="Igd-LI-rWd"/>
@@ -85,6 +88,9 @@
                     <subviews>
                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="wa2-TT-6xC">
                             <rect key="frame" x="0.0" y="6" width="63" height="63"/>
+                            <accessibility key="accessibilityConfiguration" identifier="ContentViewImageView" label="ContentViewImageView">
+                                <bool key="isElement" value="YES"/>
+                            </accessibility>
                             <userDefinedRuntimeAttributes>
                                 <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                     <real key="value" value="8"/>
@@ -93,6 +99,7 @@
                         </imageView>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KEA-WD-raw">
                             <rect key="frame" x="47" y="0.0" width="22" height="22"/>
+                            <accessibility key="accessibilityConfiguration" identifier="ContentViewImageViewCloseButton" label="ContentViewImageViewCloseButton"/>
                             <constraints>
                                 <constraint firstAttribute="width" secondItem="KEA-WD-raw" secondAttribute="height" multiplier="1:1" id="sWy-Mm-12f"/>
                             </constraints>
@@ -116,6 +123,9 @@
                 </view>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <accessibility key="accessibilityConfiguration" identifier="ContentView" label="ContentView">
+                <bool key="isElement" value="YES"/>
+            </accessibility>
             <constraints>
                 <constraint firstItem="xyo-9y-PfB" firstAttribute="centerY" secondItem="53C-vv-nq2" secondAttribute="centerY" id="6of-yN-G76"/>
                 <constraint firstItem="53C-vv-nq2" firstAttribute="leading" secondItem="SN8-pA-8fy" secondAttribute="trailing" constant="16" id="Bhf-vL-w09"/>

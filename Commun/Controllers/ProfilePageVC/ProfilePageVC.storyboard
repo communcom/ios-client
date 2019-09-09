@@ -38,6 +38,9 @@
                                     <subviews>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ProfilePageCover" translatesAutoresizingMaskIntoConstraints="NO" id="RFx-YH-sbl">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="160"/>
+                                            <accessibility key="accessibilityConfiguration" identifier="ProfilePageUserCoverImageView" label="ProfilePageUserCoverImageView">
+                                                <bool key="isElement" value="YES"/>
+                                            </accessibility>
                                         </imageView>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ProfilePageCoverGradient" translatesAutoresizingMaskIntoConstraints="NO" id="83H-er-Toz">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="88"/>
@@ -47,6 +50,9 @@
                                         </imageView>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ProfilePageUserAvatar" translatesAutoresizingMaskIntoConstraints="NO" id="CgS-tE-PNM">
                                             <rect key="frame" x="157" y="110" width="100" height="100"/>
+                                            <accessibility key="accessibilityConfiguration" identifier="ProfilePageUserAvatarImageView" label="ProfilePageUserAvatarImageView">
+                                                <bool key="isElement" value="YES"/>
+                                            </accessibility>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="100" id="drX-rh-jx6"/>
                                                 <constraint firstAttribute="width" constant="100" id="utA-AP-OT1"/>
@@ -65,6 +71,7 @@
                                         </imageView>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oS7-qC-7Er">
                                             <rect key="frame" x="368" y="114" width="30" height="30"/>
+                                            <accessibility key="accessibilityConfiguration" identifier="ProfilePageUserCoverChangeButton" label="ProfilePageUserCoverChangeButton"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="30" id="5nK-nP-jex"/>
                                                 <constraint firstAttribute="width" constant="30" id="ZXi-ei-DzO"/>
@@ -76,6 +83,7 @@
                                         </button>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UX7-zH-tx1">
                                             <rect key="frame" x="230" y="183" width="30" height="30"/>
+                                            <accessibility key="accessibilityConfiguration" identifier="ProfilePageUserAvatarChangeButton" label="ProfilePageUserAvatarChangeButton"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="30" id="FAv-Iy-zae"/>
                                                 <constraint firstAttribute="height" constant="30" id="x9U-kN-8oE"/>
@@ -87,12 +95,14 @@
                                         </button>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="sergey.marchenko" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jeD-UU-yV5">
                                             <rect key="frame" x="98.5" y="220" width="217.5" height="31.5"/>
+                                            <accessibility key="accessibilityConfiguration" identifier="ProfilePageUserNameLabel" label="ProfilePageUserNameLabel"/>
                                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="26"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" alpha="0.40000000596046448" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Joined April 12, 2018" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zzx-Z4-0fu">
                                             <rect key="frame" x="135.5" y="255.5" width="143" height="18"/>
+                                            <accessibility key="accessibilityConfiguration" identifier="ProfilePageJoinedDateLabel" label="ProfilePageJoinedDateLabel"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -100,6 +110,7 @@
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f8F-Po-a8Z">
                                             <rect key="frame" x="16" y="289.5" width="382" height="56"/>
                                             <color key="backgroundColor" red="0.95294117649999999" green="0.96078431369999995" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <accessibility key="accessibilityConfiguration" identifier="ProfilePageAddBioButton" label="ProfilePageAddBioButton"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="56" id="xG1-fz-nNF"/>
                                             </constraints>
@@ -131,6 +142,7 @@
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SP3-2b-y27">
                                             <rect key="frame" x="187" y="370.5" width="40" height="40"/>
                                             <color key="backgroundColor" red="0.95294117649999999" green="0.96078431369999995" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <accessibility key="accessibilityConfiguration" identifier="ProfilePageSettingsChangeButton" label="ProfilePageSettingsChangeButton"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="40" id="Q9L-dT-arC"/>
                                                 <constraint firstAttribute="height" constant="40" id="Vyu-t3-kny"/>
@@ -147,6 +159,7 @@
                                         </button>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Settings" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bwp-67-r1B">
                                             <rect key="frame" x="174.5" y="414.5" width="65.5" height="20.5"/>
+                                            <accessibility key="accessibilityConfiguration" identifier="ProfilePageSettingsLabel" label="ProfilePageSettingsLabel"/>
                                             <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
                                             <color key="textColor" red="0.41568627450000001" green="0.50196078430000002" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
@@ -159,12 +172,14 @@
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8lu-a4-7V6">
                                                             <rect key="frame" x="12" y="12" width="11.5" height="20.5"/>
+                                                            <accessibility key="accessibilityConfiguration" identifier="ProfilePageFollowersCountLabel" label="ProfilePageFollowersCountLabel"/>
                                                             <fontDescription key="fontDescription" name="SFProText-Semibold" family="SF Pro Text" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Followers" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hRj-Ct-vJ7">
                                                             <rect key="frame" x="12" y="32" width="60" height="16"/>
+                                                            <accessibility key="accessibilityConfiguration" identifier="ProfilePageFollowersLabel" label="ProfilePageFollowersLabel"/>
                                                             <fontDescription key="fontDescription" name="SFProText-Medium" family="SF Pro Text" pointSize="13"/>
                                                             <color key="textColor" red="0.60784313729999995" green="0.62352941179999999" blue="0.63529411759999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -194,12 +209,14 @@
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P9F-R4-4qL">
                                                             <rect key="frame" x="12" y="12" width="11.5" height="20.5"/>
+                                                            <accessibility key="accessibilityConfiguration" identifier="ProfilePageFollowingsCountLabel" label="ProfilePageFollowingsCountLabel"/>
                                                             <fontDescription key="fontDescription" name="SFProText-Semibold" family="SF Pro Text" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Followings" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S2t-8m-c4q">
                                                             <rect key="frame" x="12" y="32" width="67" height="16"/>
+                                                            <accessibility key="accessibilityConfiguration" identifier="ProfilePageFollowingsLabel" label="ProfilePageFollowingsLabel"/>
                                                             <fontDescription key="fontDescription" name="SFProText-Medium" family="SF Pro Text" pointSize="13"/>
                                                             <color key="textColor" red="0.60784313729999995" green="0.62352941179999999" blue="0.63529411759999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -229,12 +246,14 @@
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bNu-7d-aQd">
                                                             <rect key="frame" x="12" y="12" width="11.5" height="20.5"/>
+                                                            <accessibility key="accessibilityConfiguration" identifier="ProfilePageCommunitiesCountLabel" label="ProfilePageCommunitiesCountLabel"/>
                                                             <fontDescription key="fontDescription" name="SFProText-Semibold" family="SF Pro Text" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Subscribes" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="con-Qe-Yv8">
                                                             <rect key="frame" x="12" y="32" width="70.5" height="16"/>
+                                                            <accessibility key="accessibilityConfiguration" identifier="ProfilePageSubscribersLabel" label="ProfilePageSubscribersLabel"/>
                                                             <fontDescription key="fontDescription" name="SFProText-Medium" family="SF Pro Text" pointSize="13"/>
                                                             <color key="textColor" red="0.60784313729999995" green="0.62352941179999999" blue="0.63529411759999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -274,12 +293,16 @@
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fg1-OO-KT1" customClass="Segmentio" customModule="Segmentio">
                                             <rect key="frame" x="0.0" y="542" width="414" height="56"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <accessibility key="accessibilityConfiguration" identifier="ProfilePageSegmentio" label="ProfilePageSegmentio">
+                                                <bool key="isElement" value="YES"/>
+                                            </accessibility>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="56" id="b6B-Bi-5tQ"/>
                                             </constraints>
                                         </view>
                                         <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oe9-4A-of4">
                                             <rect key="frame" x="16" y="289.5" width="382" height="73"/>
+                                            <accessibility key="accessibilityConfiguration" identifier="ProfilePageBioLabel" label="ProfilePageBioLabel"/>
                                             <gestureRecognizers/>
                                             <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="17"/>
                                             <nil key="textColor"/>
@@ -291,6 +314,7 @@
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n6D-KW-1OL">
                                             <rect key="frame" x="117" y="370.5" width="40" height="40"/>
                                             <color key="backgroundColor" red="0.95294117649999999" green="0.96078431369999995" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <accessibility key="accessibilityConfiguration" identifier="ProfilePageSendPointsButton" label="ProfilePageSendPointsButton"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="40" id="PGF-Ja-2WI"/>
                                                 <constraint firstAttribute="height" constant="40" id="oCk-7G-aUU"/>
@@ -304,6 +328,7 @@
                                         </button>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Send points" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hNu-fY-IlY">
                                             <rect key="frame" x="90.5" y="414.5" width="93.5" height="20.5"/>
+                                            <accessibility key="accessibilityConfiguration" identifier="ProfilePageSendPointLabel" label="ProfilePageSendPointLabel"/>
                                             <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
                                             <color key="textColor" red="0.41568627450000001" green="0.50196078430000002" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
@@ -311,6 +336,7 @@
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8oM-IU-VVr">
                                             <rect key="frame" x="257" y="370.5" width="40" height="40"/>
                                             <color key="backgroundColor" red="0.41732367873191833" green="0.50173604488372803" blue="0.95928329229354858" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <accessibility key="accessibilityConfiguration" identifier="ProfilePageFollowButton" label="ProfilePageFollowButton"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="40" id="wbE-YY-Aqy"/>
                                                 <constraint firstAttribute="height" constant="40" id="zes-Re-ZhX"/>
@@ -327,6 +353,7 @@
                                         </button>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Follow" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gKH-t6-dL0">
                                             <rect key="frame" x="252" y="414.5" width="50.5" height="20.5"/>
+                                            <accessibility key="accessibilityConfiguration" identifier="ProfilePageFollowLabel" label="ProfilePageFollowLabel"/>
                                             <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
                                             <color key="textColor" red="0.41568627450000001" green="0.50196078430000002" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
@@ -392,12 +419,14 @@
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Invite Friends" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rqw-Dq-yqW">
                                             <rect key="frame" x="134" y="30" width="146.5" height="26"/>
+                                            <accessibility key="accessibilityConfiguration" identifier="ProfilePageInviteLabel" label="ProfilePageInviteLabel"/>
                                             <fontDescription key="fontDescription" name="SFProText-Semibold" family="SF Pro Text" pointSize="22"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="When they register we give you" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZzG-m0-CWD">
                                             <rect key="frame" x="96" y="72" width="222" height="18"/>
+                                            <accessibility key="accessibilityConfiguration" identifier="ProfilePageWhenLabel" label="ProfilePageWhenLabel"/>
                                             <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
                                             <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <nil key="highlightedColor"/>
@@ -410,10 +439,14 @@
                                         </label>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ProfilePageInviteFriendsPicture" translatesAutoresizingMaskIntoConstraints="NO" id="CVF-hW-TDs">
                                             <rect key="frame" x="40" y="137" width="334" height="216"/>
+                                            <accessibility key="accessibilityConfiguration" identifier="ProfilePageFriendsImageView" label="ProfilePageFriendsImageView">
+                                                <bool key="isElement" value="YES"/>
+                                            </accessibility>
                                         </imageView>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kqh-z7-9H2">
                                             <rect key="frame" x="43" y="321" width="328" height="56"/>
                                             <color key="backgroundColor" red="0.41568627450000001" green="0.50196078430000002" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <accessibility key="accessibilityConfiguration" identifier="ProfilePageCopyReferralLinkButton" label="ProfilePageCopyReferralLinkButton"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="56" id="bZO-VI-jMa"/>
                                             </constraints>
@@ -461,6 +494,7 @@
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="VgM-Ht-PRE">
                                         <rect key="frame" x="118" y="40" width="178" height="48"/>
+                                        <accessibility key="accessibilityConfiguration" identifier="ProfilePageCouldButton" label="ProfilePageCouldButton"/>
                                         <state key="normal" title="Could not retrieve profile.  Tap to try again">
                                             <color key="titleColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
@@ -474,6 +508,9 @@
                                         </connections>
                                     </button>
                                 </subviews>
+                                <accessibility key="accessibilityConfiguration" identifier="ProfilePageErrorView" label="ProfilePageErrorView">
+                                    <bool key="isElement" value="YES"/>
+                                </accessibility>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="128" id="CIg-1j-pGK"/>
                                     <constraint firstItem="VgM-Ht-PRE" firstAttribute="centerX" secondItem="YxM-em-tP8" secondAttribute="centerX" id="NZa-Wm-l1V"/>
@@ -557,6 +594,7 @@
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="gJ1-xi-lrj">
                                 <rect key="frame" x="16" y="104" width="382" height="100"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <accessibility key="accessibilityConfiguration" identifier="ProfileEditBioTextView" label="ProfileEditBioTextView"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="100" id="FIf-zT-SFd"/>
                                 </constraints>
@@ -568,6 +606,7 @@
                             </textView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0/100" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xQa-Bg-Qs9">
                                 <rect key="frame" x="363" y="212" width="35" height="16"/>
+                                <accessibility key="accessibilityConfiguration" identifier="ProfileEditBioCharactersCountLabel" label="ProfileEditBioCharactersCountLabel"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -626,9 +665,15 @@
                             <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ProfilePageCover" translatesAutoresizingMaskIntoConstraints="NO" id="8cF-Ek-qIg" customClass="VerticalDraggableImageView" customModule="Commun" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="88" width="414" height="160"/>
                                 <color key="backgroundColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <accessibility key="accessibilityConfiguration" identifier="ProfileEditCoverCoverImageView" label="ProfileEditCoverCoverImageView">
+                                    <bool key="isElement" value="YES"/>
+                                </accessibility>
                             </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ProfilePageUserAvatar" translatesAutoresizingMaskIntoConstraints="NO" id="jaP-Rf-dLD">
                                 <rect key="frame" x="157" y="198" width="100" height="100"/>
+                                <accessibility key="accessibilityConfiguration" identifier="ProfileEditCoverAvatarImageView" label="ProfileEditCoverAvatarImageView">
+                                    <bool key="isElement" value="YES"/>
+                                </accessibility>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="100" id="4UQ-sC-jSg"/>
                                     <constraint firstAttribute="width" constant="100" id="K6p-m4-U0e"/>
@@ -647,12 +692,14 @@
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" alpha="0.40000000596046448" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Joined April 12, 2018" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4iA-4Y-1yt">
                                 <rect key="frame" x="135.5" y="343.5" width="143" height="18"/>
+                                <accessibility key="accessibilityConfiguration" identifier="ProfileEditCoverJoinedDateLabel" label="ProfileEditCoverJoinedDateLabel"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="sergey.marchenko" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="drm-pZ-Nvs">
                                 <rect key="frame" x="98.5" y="308" width="217.5" height="31.5"/>
+                                <accessibility key="accessibilityConfiguration" identifier="ProfileEditCoverUserNameLabel" label="ProfileEditCoverUserNameLabel"/>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="26"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -671,12 +718,16 @@
                             </view>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ProfilePageCoverDragIcon" translatesAutoresizingMaskIntoConstraints="NO" id="zbE-KA-5Nk">
                                 <rect key="frame" x="103.5" y="132.5" width="21" height="21"/>
+                                <accessibility key="accessibilityConfiguration" identifier="ProfileEditCoverDragToMoveImageView" label="ProfileEditCoverDragToMoveImageView">
+                                    <bool key="isElement" value="YES"/>
+                                </accessibility>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="zbE-KA-5Nk" secondAttribute="height" id="yMU-Fm-Cv0"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Drag to move cover photo" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ell-cV-JLU">
                                 <rect key="frame" x="132.5" y="132.5" width="178" height="21"/>
+                                <accessibility key="accessibilityConfiguration" identifier="ProfileEditCoverDragToMoveLabel" label="ProfileEditCoverDragToMoveLabel"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
@@ -760,6 +811,9 @@
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="GGa-9V-Hrf">
                                                     <rect key="frame" x="0.0" y="0.0" width="138" height="132"/>
+                                                    <accessibility key="accessibilityConfiguration" identifier="PhotoLibraryCellImageView" label="PhotoLibraryCellImageView">
+                                                        <bool key="isElement" value="YES"/>
+                                                    </accessibility>
                                                 </imageView>
                                             </subviews>
                                         </view>
@@ -777,6 +831,7 @@
                             </collectionView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nrW-xH-jrY" customClass="BlankButton" customModule="Commun" customModuleProvider="target">
                                 <rect key="frame" x="103.5" y="685" width="207" height="30"/>
+                                <accessibility key="accessibilityConfiguration" identifier="ProfileChooseAvatarRequestAccessButton" label="ProfileChooseAvatarRequestAccessButton"/>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
                                 <state key="normal" title="Allow access to photo library"/>
                             </button>
@@ -785,6 +840,9 @@
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="G0v-Ih-Sla">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="414"/>
+                                        <accessibility key="accessibilityConfiguration" identifier="ProfileChooseAvatarAvatarImageView" label="ProfileChooseAvatarAvatarImageView">
+                                            <bool key="isElement" value="YES"/>
+                                        </accessibility>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="G0v-Ih-Sla" secondAttribute="height" multiplier="1:1" id="RKa-gf-RcY"/>
                                         </constraints>

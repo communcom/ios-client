@@ -36,6 +36,9 @@
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="UfI-uK-mA2">
                                                     <rect key="frame" x="20" y="19" width="56" height="56"/>
+                                                    <accessibility key="accessibilityConfiguration" identifier="CommunityCellImageView" label="CommunityCellImageView">
+                                                        <bool key="isElement" value="YES"/>
+                                                    </accessibility>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="56" id="0vY-3m-uZr"/>
                                                         <constraint firstAttribute="width" constant="56" id="c8v-4a-4G2"/>
@@ -48,12 +51,14 @@
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c34-8g-oxv">
                                                     <rect key="frame" x="92" y="37" width="45.5" height="20.5"/>
+                                                    <accessibility key="accessibilityConfiguration" identifier="CommunityCellNameLabel" label="CommunityCellNameLabel"/>
                                                     <fontDescription key="fontDescription" name="SFProText-Semibold" family="SF Pro Text" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Md7-nS-5sB">
                                                     <rect key="frame" x="329" y="32" width="69" height="30"/>
+                                                    <accessibility key="accessibilityConfiguration" identifier="CommunityCellJoinButton" label="CommunityCellJoinButton"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="m9f-jM-6tS"/>
                                                     </constraints>
@@ -84,6 +89,9 @@
                                                 <constraint firstItem="Md7-nS-5sB" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="c34-8g-oxv" secondAttribute="trailing" constant="8" id="zi2-wk-eAS"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <accessibility key="accessibilityConfiguration" identifier="CommunityCell" label="CommunityCell">
+                                            <bool key="isElement" value="YES"/>
+                                        </accessibility>
                                         <connections>
                                             <outlet property="communityImageView" destination="UfI-uK-mA2" id="Jtx-1h-cnH"/>
                                             <outlet property="joinButton" destination="Md7-nS-5sB" id="bVg-kl-SoC"/>
@@ -95,6 +103,9 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rDJ-4d-Y6e" customClass="Segmentio" customModule="Segmentio">
                                 <rect key="frame" x="16" y="88" width="382" height="52"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <accessibility key="accessibilityConfiguration" identifier="CommunitiesSegmentio" label="CommunitiesSegmentio">
+                                    <bool key="isElement" value="YES"/>
+                                </accessibility>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="52" id="waC-aJ-eD3"/>
                                 </constraints>

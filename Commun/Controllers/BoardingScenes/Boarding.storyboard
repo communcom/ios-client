@@ -24,7 +24,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="avatar-ellipse-placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="8so-Us-TH5">
-                                <rect key="frame" x="97" y="287" width="220" height="220"/>
+                                <rect key="frame" x="97" y="343" width="220" height="220"/>
                                 <accessibility key="accessibilityConfiguration" identifier="PickupAvatarUserAvatarImageView" label="PickupAvatarUserAvatarImageView">
                                     <bool key="isElement" value="YES"/>
                                 </accessibility>
@@ -43,7 +43,7 @@
                                 </connections>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gpy-Rf-usg">
-                                <rect key="frame" x="178" y="370.66666666666669" width="58" height="53"/>
+                                <rect key="frame" x="178" y="426.66666666666669" width="58" height="53"/>
                                 <accessibility key="accessibilityConfiguration" identifier="PickupAvatarChooseImageButton" label="PickupAvatarChooseImageButton"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="53" id="JzV-YF-HeM" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>

@@ -88,6 +88,7 @@
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Go to commun and scan QRasdfasdfasdf a asdf asdf asdf asdf" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AEd-90-k92">
                                                         <rect key="frame" x="0.0" y="358" width="414" height="56"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <accessibility key="accessibilityConfiguration" identifier="SignInViewQRContainerViewGotoLabel" label="SignInViewQRContainerViewGotoLabel"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="56" id="CFJ-is-L0z"/>
                                                         </constraints>
@@ -97,6 +98,9 @@
                                                     </label>
                                                 </subviews>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <accessibility key="accessibilityConfiguration" identifier="SignInViewQRContainerView" label="SignInViewQRContainerView">
+                                                    <bool key="isElement" value="YES"/>
+                                                </accessibility>
                                                 <constraints>
                                                     <constraint firstItem="AEd-90-k92" firstAttribute="leading" secondItem="gJG-3i-Ca7" secondAttribute="leading" id="6Pt-vL-8Ik"/>
                                                     <constraint firstItem="AEd-90-k92" firstAttribute="bottom" secondItem="ph5-py-HbL" secondAttribute="bottom" id="GPf-KZ-XeN"/>
@@ -113,6 +117,7 @@
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Login" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="MzH-Fh-ifk">
                                                         <rect key="frame" x="16" y="16" width="382" height="56"/>
                                                         <color key="backgroundColor" red="0.95212393999099731" green="0.95958274602890015" blue="0.97945135831832886" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <accessibility key="accessibilityConfiguration" identifier="SignInViewLoginTextField" label="SignInViewLoginTextField"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="56" id="M8s-eX-WGT" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                                                         </constraints>
@@ -128,6 +133,7 @@
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Key" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="siR-es-fG8">
                                                         <rect key="frame" x="16" y="80" width="382" height="56"/>
                                                         <color key="backgroundColor" red="0.95212393999099731" green="0.95958274602890015" blue="0.97945135831832886" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <accessibility key="accessibilityConfiguration" identifier="SignInViewPasswordTextField" label="SignInViewPasswordTextField"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="56" id="R4I-zP-x8F" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                                                         </constraints>
@@ -150,6 +156,7 @@
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2i2-iK-Xdn" customClass="StepButton" customModule="Commun" customModuleProvider="target">
                                                         <rect key="frame" x="16" y="176" width="382" height="56"/>
+                                                        <accessibility key="accessibilityConfiguration" identifier="SignInSignInButton" label="SignInSignInButton"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="56" id="Idr-z6-cLI" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                                                         </constraints>
@@ -160,12 +167,16 @@
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aoJ-xG-861" userLabel="Debug Button">
                                                         <rect key="frame" x="4" y="140" width="406" height="32"/>
+                                                        <accessibility key="accessibilityConfiguration" identifier="SignInDebugButton" label="SignInDebugButton"/>
                                                         <connections>
                                                             <action selector="debugButtonTapped:" destination="jR8-kO-b4x" eventType="touchUpInside" id="9eI-Q5-7zi"/>
                                                         </connections>
                                                     </button>
                                                 </subviews>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <accessibility key="accessibilityConfiguration" identifier="SignInViewLoginPasswordContainerView" label="SignInViewLoginPasswordContainerView">
+                                                    <bool key="isElement" value="YES"/>
+                                                </accessibility>
                                                 <constraints>
                                                     <constraint firstItem="siR-es-fG8" firstAttribute="top" secondItem="MzH-Fh-ifk" secondAttribute="bottom" constant="8" id="1eP-3k-yWm" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                                                     <constraint firstItem="MzH-Fh-ifk" firstAttribute="leading" secondItem="btM-xQ-6hP" secondAttribute="leading" constant="16" id="3QS-zj-l06" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>

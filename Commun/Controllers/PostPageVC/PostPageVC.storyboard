@@ -49,7 +49,9 @@
                                     </button>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tux" translatesAutoresizingMaskIntoConstraints="NO" id="JAo-Iq-Wdc">
                                         <rect key="frame" x="36" y="8" width="40" height="40"/>
-                                        <accessibility key="accessibilityConfiguration" identifier="PostPageAvatarImageView"/>
+                                        <accessibility key="accessibilityConfiguration" identifier="PostPageCommunityAvatarImageView" label="PostPageCommunityAvatarImageView">
+                                            <bool key="isElement" value="YES"/>
+                                        </accessibility>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="40" id="jG9-NI-5wV"/>
                                         </constraints>
@@ -61,12 +63,14 @@
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ComunityName" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z2m-2G-cmH">
                                         <rect key="frame" x="84" y="8" width="243" height="18"/>
+                                        <accessibility key="accessibilityConfiguration" identifier="PostPageCommunityNameLabel" label="PostPageCommunityNameLabel"/>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3h ago" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RsM-Yt-jdM">
                                         <rect key="frame" x="84" y="32" width="42.5" height="16"/>
+                                        <accessibility key="accessibilityConfiguration" identifier="PostPageTimeAgoLabel" label="PostPageTimeAgoLabel"/>
                                         <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="13"/>
                                         <color key="textColor" red="0.60784313725490191" green="0.62352941176470589" blue="0.63529411764705879" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -81,6 +85,7 @@
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="by Sergey" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AUu-SG-Yxw">
                                         <rect key="frame" x="130" y="32" width="61.5" height="16"/>
+                                        <accessibility key="accessibilityConfiguration" identifier="PostPageByUserLabel" label="PostPageByUserLabel"/>
                                         <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="13"/>
                                         <color key="textColor" red="0.60784313729999995" green="0.62352941179999999" blue="0.63529411759999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -121,12 +126,16 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="thI-Qg-Abq" customClass="CommentForm" customModule="Commun" customModuleProvider="target">
                                 <rect key="frame" x="16" y="601" width="343" height="36"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <accessibility key="accessibilityConfiguration" identifier="PostPageCommentForm" label="PostPageCommentForm">
+                                    <bool key="isElement" value="YES"/>
+                                </accessibility>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="36" placeholder="YES" id="JfU-Ts-gQr"/>
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Replying to" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="53b-Ty-ok2">
                                 <rect key="frame" x="40" y="645" width="68" height="16"/>
+                                <accessibility key="accessibilityConfiguration" identifier="PostPageReplyingLabel" label="PostPageReplyingLabel"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="16" id="NL0-sE-1wr"/>
                                 </constraints>
@@ -136,6 +145,7 @@
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z6n-rS-yU9">
                                 <rect key="frame" x="116" y="645" width="16" height="16"/>
+                                <accessibility key="accessibilityConfiguration" identifier="PostPageCloseButton" label="PostPageCloseButton"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="Z6n-rS-yU9" secondAttribute="height" multiplier="1:1" id="1QS-7w-vqp"/>
                                 </constraints>
