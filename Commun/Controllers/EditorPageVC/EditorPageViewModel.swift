@@ -15,107 +15,86 @@ class EditorPageViewModel {
     var postForEdit: ResponseAPIContentGetPost?
     
     let isAdult = BehaviorRelay<Bool>(value: false)
-    var embeds = [[String: Any]]()
     
-    func sendPost(with title: String, text attributedString: NSAttributedString) -> Single<SendPostCompletion> {
-        let mutableAS = NSMutableAttributedString(attributedString: attributedString)
-        
+    private var embeds = [[String: Any]]()
+    
+    func sendPost(title: String, block: ContentBlock) -> Single<SendPostCompletion> {
         // Prepare embeds
         embeds = [[String: Any]]()
+        switch block.content {
+        case .array(let childBlocks):
+            embeds = childBlocks.compactMap({ (block) -> [String: Any]? in
+                if block.type == "image" {
+                    return [
+                        "type": "photo",
+                        "url": block.content.stringValue!,
+                        "id": Int(Date().timeIntervalSince1970)
+                    ]
+                }
+                
+                if block.type == "video" || block.type == "website" {
+                    return [
+                        "url": block.content.stringValue!
+                    ]
+                }
+                return nil
+            })
+        case .string(_):
+            break
+        case .unsupported:
+            return .error(ErrorAPI.invalidData(message: "Content is invalid"))
+        }
         
         // Prepare tags
-        var tags = mutableAS.string.getTags()
+        var tags = block.getTags()
+        if isAdult.value {tags.append("18+")}
         
-        if isAdult.value {
-            tags.append("#18+")
+        // Prepare content
+        var string: String!
+        do {
+            string = try block.jsonString()
+        } catch {
+            return .error(ErrorAPI.invalidData(message: "Could not parse data"))
         }
         
-        // Detect links
-        let types = NSTextCheckingResult.CheckingType.link
-        if let detector = try? NSDataDetector(types: types.rawValue) {
-            let matches = detector.matches(in: mutableAS.string, options: .reportCompletion, range: NSMakeRange(0, mutableAS.string.count))
-            for match in matches {
-                guard let urlString = match.url?.absoluteString else {
-                    continue
-                }
-                if embeds.first(where: {($0["url"] as? String) == urlString}) != nil {continue}
-                #warning("Define type")
-                embeds.append(["url": urlString])
-            }
+        // If editing post
+        var request: Single<SendPostCompletion>!
+        if let post = self.postForEdit {
+            request = NetworkService.shared.editPostWithPermlink(post.contentId.permlink, title: title, text: string, metaData: ["embeds": embeds].jsonString() ?? "", withTags: tags)
         }
-
-        // get attachments
-        mutableAS.beginEditing()
-        var offset = 0
-        var attachments = [TextAttachment]()
-        attributedString.enumerateAttribute(.attachment, in: NSMakeRange(0, attributedString.length), options: []) { (value, range, stop) in
-            if let attachment = value as? TextAttachment {
-                attachments.append(attachment)
-                var newRange = range
-                newRange.location += offset
-                mutableAS.replaceCharacters(in: newRange, with: attachment.placeholderText)
-                offset += attachment.placeholderText.count - newRange.length
-            }
+            
+        // If creating new post
+        else {
+            request = NetworkService.shared.sendPost(withTitle: title, withText: string, metaData: ["embeds": embeds].jsonString() ?? "", withTags: tags)
         }
-        mutableAS.endEditing()
         
-        // parallelly uploading images
-        let uploadImages = Observable.zip(
-            attachments.reduce([]) { (result, attachment) -> [Observable<String>] in
-                guard let type = attachment.type else {return result}
-                switch type {
-                case .image(let originalImage):
-                    if let urlString = attachment.urlString {
-                        return result + [.just(urlString)]
+        // Request, then notify changes
+        return request
+            .do(onSuccess: { (transactionId, userId, permlink) in
+                // if editing post, then notify changes
+                if var post = self.postForEdit {
+                    post.content.title = title
+                    post.content.body.full = try block.jsonString()
+                    if let imageURL = self.embeds.first(where: {($0["type"] as? String) == "photo"})?["url"] as? String,
+                        let embeded = post.content.embeds.first,
+                        embeded.type == "photo" {
+                        post.content.embeds[0].result?.url = imageURL
                     }
-                    
-                    return result + [
-                        NetworkService.shared.uploadImage(originalImage!)
-                            .do(onSuccess: {imageURL in
-                                mutableAS.mutableString.replaceOccurrences(of: attachment.placeholderText, with: attachment.placeholderText.replacingOccurrences(of: "(id=\(attachment.id))", with: "(\(imageURL))"), options: [], range: NSMakeRange(0, mutableAS.mutableString.length))
-                            })
-                            .asObservable()
-                    ]
-                case .url:
-                    // TODO: later
-                    return result
+                    post.notifyChanged()
                 }
-            }
-        ).take(1).asSingle()
-        
-        // Send request
-        return uploadImages
-            .do(onSubscribe: {
-                UIApplication.topViewController()?.navigationController?
-                    .showIndetermineHudWithMessage("upload image".localized().uppercaseFirst)
-            })
-            .catchError({ (error) -> Single<[String]> in
-                if let error = error as? RxError {
-                    switch error {
-                    case .noElements:
-                        return .just([])
-                    default:
-                        break
-                    }
-                }
-                throw error
-            })
-            .flatMap({ (urls) in
-                for url in urls {
-                    self.embeds.append([
-                        "type": "photo",
-                        "url": url,
-                        "id": Int(Date().timeIntervalSince1970)
-                    ])
-                }
-                
-                if let post = self.postForEdit {
-                    return NetworkService.shared.editPostWithPermlink(post.contentId.permlink, title: title, text: mutableAS.string, metaData: ["embeds": self.embeds].jsonString() ?? "", withTags: tags)
-                } else {
-                    return NetworkService.shared.sendPost(withTitle: title, withText: mutableAS.string, metaData: ["embeds": self.embeds].jsonString() ?? "", withTags: tags)
-                }
-                
             })
     }
     
+    func waitForTransaction(_ sendPostCompletion: SendPostCompletion) -> Single<(userId: String, permlink: String)> {
+        guard let id = sendPostCompletion.transactionId,
+            let userId = sendPostCompletion.userId,
+            let permlink = sendPostCompletion.permlink else {
+                return .error(ErrorAPI.responseUnsuccessful(message: "post not found".localized().uppercaseFirst))
+        }
+        
+        return NetworkService.shared.waitForTransactionWith(id: id)
+            .observeOn(MainScheduler.instance)
+            .andThen(Single<(userId: String, permlink: String)>.just((userId: userId, permlink: permlink)))
+        
+    }
 }

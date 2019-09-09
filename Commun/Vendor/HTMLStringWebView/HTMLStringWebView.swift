@@ -9,7 +9,6 @@
 import Foundation
 import WebKit
 import SafariServices
-import Down
 
 class HTMLStringWebView: UIWebView {
     var htmlString: String?
@@ -19,10 +18,7 @@ class HTMLStringWebView: UIWebView {
         
         let htmlStart = "<HTML><HEAD><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, shrink-to-fit=no\"><link rel=\"stylesheet\" type=\"text/css\" href=\"HTMLStringWebView.css\"></HEAD><BODY><section style=\"word-break: hyphenate; -webkit-hyphens: auto; font-family: -apple-system; text-align: justify; font-size: 17\">"
         let htmlEnd = " </section></BODY></HTML>"
-        let down = Down(markdownString: string)
-        
-        let markdownToHTML = try? down.toHTML()
-        let html = htmlStart + (markdownToHTML ?? "") + htmlEnd
+        let html = htmlStart + string + htmlEnd
         super.loadHTMLString(html, baseURL: Bundle.main.bundleURL)
     }
     

@@ -14,6 +14,65 @@ extension EditorPageVC {
     
     func bindUI() {
         guard let viewModel = viewModel else {return}
+        // textViews
+        titleTextView.rx.didBeginEditing
+            .subscribe(onNext: {_ in
+                self.boldButton.isEnabled = false
+                self.italicButton.isEnabled = false
+                self.colorPickerButton.isEnabled = false
+                self.addLinkButton.isEnabled = false
+                self.photoPickerButton.isEnabled = false
+            })
+            .disposed(by: disposeBag)
+        
+        contentTextView.rx.didBeginEditing
+            .subscribe(onNext: {_ in
+                self.boldButton.isEnabled = true
+                self.italicButton.isEnabled = true
+                self.colorPickerButton.isEnabled = true
+                self.addLinkButton.isEnabled = true
+                self.photoPickerButton.isEnabled = true
+                
+                self.boldButton.isHidden = false
+                self.italicButton.isHidden = false
+                self.colorPickerButton.isHidden = false
+                self.addLinkButton.isHidden = false
+                self.photoPickerButton.isHidden = false
+            })
+            .disposed(by: disposeBag)
+        
+        contentTextView.rx.didEndEditing
+            .subscribe(onNext: {
+                self.boldButton.isHidden = true
+                self.italicButton.isHidden = true
+                self.colorPickerButton.isHidden = true
+                self.addLinkButton.isHidden = true
+                self.photoPickerButton.isHidden = true
+            })
+            .disposed(by: disposeBag)
+        
+        contentTextView.currentTextStyle
+            .skip(1)
+            .subscribe(onNext: { (textStyle) in
+                // bold
+                self.boldButton.isSelected = textStyle.isBold
+                self.boldButton.isEnabled = (textStyle.urlString == nil)
+                
+                // italic
+                self.italicButton.isSelected = textStyle.isItalic
+                self.italicButton.isEnabled = (textStyle.urlString == nil)
+                
+                // add link button
+                self.addLinkButton.isSelected = (textStyle.urlString != nil)
+                
+                // color picker
+                self.colorPickerButton.backgroundColor = textStyle.textColor
+                self.colorPickerButton.isEnabled = (textStyle.urlString == nil)
+            })
+            .disposed(by: disposeBag)
+        
+        contentTextView.rx.setDelegate(self)
+            .disposed(by: disposeBag)
         
         // isAdult
         adultButton.rx.tap
@@ -22,9 +81,7 @@ extension EditorPageVC {
             .disposed(by: disposeBag)
         
         viewModel.isAdult
-            .map {$0 ? "18ButtonSelected": "18Button"}
-            .map {UIImage(named: $0)}
-            .bind(to: self.adultButton.rx.image(for: .normal))
+            .bind(to: self.adultButton.rx.isSelected)
             .disposed(by: disposeBag)
         
         // hideKeyboard
@@ -42,15 +99,21 @@ extension EditorPageVC {
                 titleTextView.rx.text.orEmpty,
                 contentTextView.rx.text.orEmpty
             )
-            .map {
-                // Text field  is not empty
-                (!$0.0.isEmpty) && (!$0.1.isEmpty) &&
-                // Title or content has changed
-                ($0.0 != viewModel.postForEdit?.content.title ||
-                $0.1 != viewModel.postForEdit?.content.body.preview)
-            }
+            .map({ (title, content) -> Bool in
+                // both title and content are not empty
+                let result = !title.isEmpty && !content.isEmpty
+                // TODO: Compare contentBlock
+//                // compare content
+//                var contentChanged = (title != viewModel.postForEdit?.content.title)
+//                // Parse data
+//                if let jsonData = viewModel.postForEdit?.content.body.full?.data(using: .utf8),
+//                    let block = try? JSONDecoder().decode(ContentBlock.self, from: jsonData) {
+//                    attributedText = block.toAttributedString(currentAttributes: typingAttributes)
+//                }
+                
+                return result
+            })
             .bind(to: sendPostButton.rx.isEnabled)
             .disposed(by: disposeBag)
     }
-    
 }

@@ -8,6 +8,7 @@
 
 import UIKit
 import RxSwift
+import CyberSwift
 
 class EditorPageVC: UIViewController {
     
@@ -16,16 +17,18 @@ class EditorPageVC: UIViewController {
     @IBOutlet weak var titleTextView: ExpandableTextView!
     @IBOutlet weak var contentTextView: EditorPageTextView!
     @IBOutlet weak var dropDownView: UIView!
-    @IBOutlet weak var adultButton: UIButton!
+    @IBOutlet weak var adultButton: StateButton!
+    @IBOutlet weak var photoPickerButton: StateButton!
+    @IBOutlet weak var boldButton: StateButton!
+    @IBOutlet weak var italicButton: StateButton!
+    @IBOutlet weak var colorPickerButton: UIButton!
+    @IBOutlet weak var addLinkButton: StateButton!
     @IBOutlet weak var hideKeyboardButton: UIButton!
     @IBOutlet weak var sendPostButton: UIBarButtonItem!
     
     // MARK: - Properties
     var viewModel: EditorPageViewModel?
     let disposeBag = DisposeBag()
-    lazy var defaultAttributeForContentTextView: [NSAttributedString.Key: Any] = {
-        return [.font: UIFont.systemFont(ofSize: 17)]
-    }()
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -50,7 +53,6 @@ class EditorPageVC: UIViewController {
         contentTextView.textContainerInset = UIEdgeInsets.zero
         contentTextView.textContainer.lineFragmentPadding = 0
         contentTextView.placeholder = "write text placeholder".localized().uppercaseFirst + "..."
-        contentTextView.typingAttributes = defaultAttributeForContentTextView
         // you should ensure layout
         contentTextView.layoutManager
             .ensureLayout(for: contentTextView.textContainer)
@@ -60,10 +62,15 @@ class EditorPageVC: UIViewController {
             showIndetermineHudWithMessage("loading post".localized().uppercaseFirst)
             // Get full post
             NetworkService.shared.getPost(withPermLink: post.contentId.permlink, forUser: post.contentId.userId)
+                .do(onSuccess: { (post) in
+                    if post.content.body.full == nil {
+                        throw ErrorAPI.responseUnsuccessful(message: "Content not found")
+                    }
+                })
                 .subscribe(onSuccess: {post in
                     self.hideHud()
                     self.titleTextView.rx.text.onNext(post.content.title)
-                    self.contentTextView.parseText(post.content.body.full)
+                    self.contentTextView.parseText(post.content.body.full!)
                     self.viewModel?.postForEdit = post
                 }, onError: {error in
                     self.hideHud()
@@ -73,6 +80,12 @@ class EditorPageVC: UIViewController {
         }
         
         // bottom buttons
+        photoPickerButton.isSelected = true
+        
+        boldButton.isHidden = true
+        italicButton.isHidden = true
+        colorPickerButton.isHidden = true
+        addLinkButton.isHidden = true
         hideKeyboardButton.isHidden = true
         
         bindUI()

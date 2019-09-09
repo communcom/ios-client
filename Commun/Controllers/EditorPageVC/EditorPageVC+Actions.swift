@@ -90,38 +90,38 @@ extension EditorPageVC {
     @IBAction func sendPostButtonTap() {
         guard let viewModel = viewModel else {return}
         self.view.endEditing(true)
-        
-        viewModel.sendPost(with: titleTextView.text, text: contentTextView.attributedText)
-            .do(onSubscribe: {
-                self.navigationController?.showIndetermineHudWithMessage("sending post".localized().uppercaseFirst)
-            })
-            .flatMap { (transactionId, userId, permlink) -> Single<(userId: String, permlink: String)> in
-                guard let id = transactionId,
-                    let userId = userId,
-                    let permlink = permlink else {
-                        return .error(ErrorAPI.responseUnsuccessful(message: "post not found".localized().uppercaseFirst))
-                }
-                
-                self.navigationController?.showIndetermineHudWithMessage("wait for transaction".localized().uppercaseFirst)
-                
-                return NetworkService.shared.waitForTransactionWith(id: id)
-                    .andThen(Single<(userId: String, permlink: String)>.just((userId: userId, permlink: permlink)))
-            }
+
+        contentTextView.getContentBlock()
             .observeOn(MainScheduler.instance)
+            .do(onSubscribe: {
+                self.navigationController?
+                    .showIndetermineHudWithMessage(
+                        "uploading".localized().uppercaseFirst)
+            })
+            .flatMap {
+                viewModel.sendPost(title: self.titleTextView.text, block: $0)
+            }
+            .do(onSubscribe: {
+                self.navigationController?
+                    .showIndetermineHudWithMessage(
+                        "sending post".localized().uppercaseFirst)
+            })
+            .flatMap {
+                viewModel.waitForTransaction($0)
+            }
+            .do(onSubscribe: {
+                self.navigationController?
+                    .showIndetermineHudWithMessage(
+                        "wait for transaction".localized().uppercaseFirst)
+            })
             .subscribe(onSuccess: { (userId, permlink) in
                 self.navigationController?.hideHud()
                 // if editing post
-                if var post = self.viewModel?.postForEdit {
-                    post.content.title = self.titleTextView.text
-                    post.content.body.full = self.contentTextView.text
-                    if let imageURL = self.viewModel?.embeds.first(where: {($0["type"] as? String) == "photo"})?["url"] as? String,
-                        let embeded = post.content.embeds.first,
-                        embeded.type == "photo" {
-                        post.content.embeds[0].result?.url = imageURL
-                    }
-                    post.notifyChanged()
+                if (self.viewModel?.postForEdit) != nil {
                     self.dismiss(animated: true, completion: nil)
-                } else {
+                }
+                // if creating post
+                else {
                     // show post page
                     let postPageVC = controllerContainer.resolve(PostPageVC.self)!
                     postPageVC.viewModel.permlink = permlink
@@ -130,9 +130,8 @@ extension EditorPageVC {
                     viewControllers[0] = postPageVC
                     self.navigationController?.setViewControllers(viewControllers, animated: true)
                 }
-            }, onError: { (error) in
+            }) { (error) in
                 self.navigationController?.hideHud()
-                
                 if let error = error as? ErrorAPI {
                     switch error {
                     case .responseUnsuccessful(message: "post not found".localized().uppercaseFirst):
@@ -145,10 +144,8 @@ extension EditorPageVC {
                         break
                     }
                 }
-                
                 self.showError(error)
-                
-            })
+            }
             .disposed(by: disposeBag)
     }
     
@@ -158,5 +155,84 @@ extension EditorPageVC {
     
     @IBAction func hideKeyboardButtonDidTouch(_ sender: Any) {
         view.endEditing(true)
+    }
+    
+    @IBAction func richTextEditButtonDidTouch(_ sender: Any) {
+        let button = sender as! UIButton
+        
+        if button == boldButton {
+            contentTextView.setBold(from: button)
+        }
+        
+        if button == italicButton {
+            contentTextView.setItalic(from: button)
+        }
+    }
+    
+    @IBAction func colorPickerButtonDidTouch(_ sender: Any) {
+        guard let sender = sender as? UIView else {return}
+        let vc = ColorPickerViewController()
+        vc.modalPresentationStyle = .popover
+        
+        /* 3 */
+        if let popoverPresentationController = vc.popoverPresentationController {
+            popoverPresentationController.permittedArrowDirections = .any
+            popoverPresentationController.sourceView = sender
+            popoverPresentationController.sourceRect = sender.frame
+            popoverPresentationController.delegate = self
+            present(vc, animated: true, completion: nil)
+            
+            vc.didSelectColor = {color in
+                self.colorPickerButton.backgroundColor = color
+                self.contentTextView.setColor(color, sender: sender as! UIButton)
+            }
+        }
+    }
+    
+    @IBAction func addLinkButtonDidTouch(_ sender: Any) {
+        if let urlString = contentTextView.currentTextStyle.value.urlString {
+            showActionSheet(title: urlString, message: nil, actions: [
+                UIAlertAction(title: "remove".localized().uppercaseFirst, style: .destructive, handler: { (_) in
+                    self.contentTextView.removeLink()
+                })
+            ])
+        } else {
+            // Add link
+            let alert = UIAlertController(
+                title:          "add link".localized().uppercaseFirst,
+                message:        "select a link to add to text".localized().uppercaseFirst,
+                preferredStyle: .alert)
+            
+            alert.addTextField { field in
+                field.placeholder = "URL".localized()
+            }
+            
+            alert.addTextField { field in
+                field.placeholder = "placeholder".localized().uppercaseFirst + "(" + "optional".localized() + ")"
+                let string = self.contentTextView.selectedAString.string
+                if !string.isEmpty {
+                    field.text = string
+                }
+            }
+            
+            alert.addAction(UIAlertAction(title: "add".localized().uppercaseFirst, style: .cancel, handler: {[weak self] _ in
+                guard let urlString = alert.textFields?.first?.text
+                else {
+                    self?.showErrorWithMessage("URL".localized() + " " + "is missing".localized())
+                    return
+                }
+                self?.contentTextView.addLink(urlString, placeholder: alert.textFields?.last?.text)
+            }))
+            
+            alert.addAction(UIAlertAction(title: "cancel".localized().uppercaseFirst, style: .default, handler: nil))
+            
+            present(alert, animated: true, completion: nil)
+        }
+    }
+}
+
+extension EditorPageVC: UIPopoverPresentationControllerDelegate {
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        return .none
     }
 }

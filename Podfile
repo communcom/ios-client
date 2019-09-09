@@ -1,16 +1,14 @@
 # Uncomment the next line to define a global platform for your project
 platform :ios, '11.0'
+use_frameworks!
 
 # ignore all warnings from all pods
 inhibit_all_warnings!
 
-target 'Commun' do
-  # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
-  use_frameworks!
-
+def common_pods
   pod 'Fabric'
   pod 'Crashlytics'
-
+  
   pod 'Firebase/Core'
   pod 'Firebase/Messaging'
   
@@ -40,7 +38,7 @@ target 'Commun' do
   pod 'RxDataSources', '~> 3.0'
   
   pod 'ASSpinnerView'
-
+  
   pod 'ListPlaceholder'
   
   pod 'DZNEmptyDataSet'
@@ -53,5 +51,12 @@ target 'Commun' do
   pod 'AppImageViewer'
   pod 'SwiftLinkPreview', '~> 3.0.1'
   pod 'Down'
-  
+end
+
+target 'Commun' do
+  common_pods
+end
+
+target 'CommunTests' do
+  common_pods
 end

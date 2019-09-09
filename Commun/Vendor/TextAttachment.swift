@@ -7,21 +7,21 @@
 //
 
 import Foundation
+import RxSwift
+import CyberSwift
 
 class TextAttachment: NSTextAttachment {
-    enum AttachmentType {
-        case image(originalImage: UIImage?), url
-    }
-    
     private static var uniqueId = 0
     lazy var id: Int = {
         let id = TextAttachment.uniqueId
         TextAttachment.uniqueId += 1
         return id
     }()
-    var type: AttachmentType?
-    var desc: String?
-    var urlString: String?
+    
+    // embed
+    var embed: ResponseAPIFrameGetEmbed?
+    var localImage: UIImage?
+    
     var view: UIView? {
         didSet {
             image = view?.toImage
@@ -29,14 +29,52 @@ class TextAttachment: NSTextAttachment {
     }
     
     var placeholderText: String {
-        let placeholder = "[\(desc ?? "")](\(urlString ?? "id=\(id)"))"
-        guard let type = type else {return placeholder}
-        switch type {
-        case .image(_):
-            return "!\(placeholder)"
-        case .url:
-            return placeholder
+        return "!\(embed?.type == "image" ? "": embed?.type ?? "")[\(embed?.description ?? "")](\(embed?.url ?? "id=\(id)"))"
+    }
+    
+    override var description: String {
+        return "TextAttachment(\(placeholderText))"
+    }
+    
+    func toSingleContentBlock(id: inout UInt) -> Single<ContentBlock>? {
+        guard var embed = embed,
+            let type = embed.type
+        else {
+            return nil
         }
+        
+        // Prevent sending html
+        embed.html = nil
+        
+        let url = embed.url
+        if url == nil {
+            if type == "image", let image = localImage {
+                id += 1
+                let newId = id
+                return NetworkService.shared.uploadImage(image)
+                    .map { url in
+                        embed.url = url
+                        return ContentBlock(
+                            id: newId,
+                            type: "image",
+                            attributes: ContentBlockAttributes(embed: embed),
+                            content: .string(url))
+                    }
+            }
+            else {
+                // TODO: support uploading image
+                return nil
+            }
+        }
+        
+        id += 1
+        return .just(
+            ContentBlock(
+                id: id,
+                type: type,
+                attributes: ContentBlockAttributes(embed: embed),
+                content: .string(url!))
+        )
     }
 }
 

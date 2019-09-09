@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="portrait">
+    <device id="retina4_0" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -64,7 +64,7 @@
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="492.5" id="y5W-EZ-eXt"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
                                         </subviews>
@@ -96,22 +96,24 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="U7q-88-jfF">
                                 <rect key="frame" x="0.0" y="944" width="375" height="56"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aeQ-gX-bWx">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aeQ-gX-bWx" customClass="StateButton" customModule="Commun" customModuleProvider="target">
                                         <rect key="frame" x="16" y="19.5" width="29" height="17"/>
                                         <accessibility key="accessibilityConfiguration" identifier="EditorPageAdultButton" label="EditorPageAdultButton"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="29" id="gAH-Nj-Ddt"/>
                                             <constraint firstAttribute="height" constant="17" id="reZ-0u-ZGM"/>
                                         </constraints>
+                                        <color key="tintColor" red="0.41390401119999998" green="0.50106823440000003" blue="0.96205252409999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <state key="normal" image="18Button"/>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nwa-Mp-egE" userLabel="Photo Button">
-                                        <rect key="frame" x="71" y="19" width="20" height="18"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nwa-Mp-egE" userLabel="Photo Button" customClass="StateButton" customModule="Commun" customModuleProvider="target">
+                                        <rect key="frame" x="71" y="18" width="22" height="20"/>
                                         <accessibility key="accessibilityConfiguration" identifier="EditorPagePhotoButton" label="EditorPagePhotoButton"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="20" id="LzT-Oh-312"/>
-                                            <constraint firstAttribute="height" constant="18" id="heR-KI-1IM"/>
+                                            <constraint firstAttribute="width" constant="22" id="LzT-Oh-312"/>
+                                            <constraint firstAttribute="height" constant="20" id="heR-KI-1IM"/>
                                         </constraints>
+                                        <color key="tintColor" red="0.41390401119999998" green="0.50106823440000003" blue="0.96205252409999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <state key="normal" image="photo_solid"/>
                                         <connections>
                                             <action selector="cameraButtonTap" destination="AvE-EB-OTN" eventType="touchUpInside" id="BZC-lL-yl0"/>
@@ -130,15 +132,81 @@
                                             <action selector="hideKeyboardButtonDidTouch:" destination="AvE-EB-OTN" eventType="touchUpInside" id="VR1-af-6i3"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BgQ-FM-Lio" userLabel="Photo Button" customClass="StateButton" customModule="Commun" customModuleProvider="target">
+                                        <rect key="frame" x="119" y="20" width="20" height="16"/>
+                                        <accessibility key="accessibilityConfiguration" identifier="EditorPagePhotoButton" label="EditorPagePhotoButton"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="16" id="3T0-zc-QpY"/>
+                                            <constraint firstAttribute="width" constant="20" id="EmM-c2-ueV"/>
+                                        </constraints>
+                                        <color key="tintColor" red="0.41390401119999998" green="0.50106823440000003" blue="0.96205252409999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <state key="normal" image="bold"/>
+                                        <connections>
+                                            <action selector="richTextEditButtonDidTouch:" destination="AvE-EB-OTN" eventType="touchUpInside" id="ThT-TD-wpb"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ENk-8M-crN" userLabel="Photo Button" customClass="StateButton" customModule="Commun" customModuleProvider="target">
+                                        <rect key="frame" x="163" y="20" width="20" height="16"/>
+                                        <accessibility key="accessibilityConfiguration" identifier="EditorPagePhotoButton" label="EditorPagePhotoButton"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="16" id="3tc-hX-Qos"/>
+                                            <constraint firstAttribute="width" constant="20" id="J2i-mU-zfT"/>
+                                        </constraints>
+                                        <color key="tintColor" red="0.41390401119999998" green="0.50106823440000003" blue="0.96205252409999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <state key="normal" image="italic"/>
+                                        <connections>
+                                            <action selector="richTextEditButtonDidTouch:" destination="AvE-EB-OTN" eventType="touchUpInside" id="CDd-YX-D3G"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eHI-Fy-KHY" userLabel="Photo Button">
+                                        <rect key="frame" x="209" y="19" width="26" height="18"/>
+                                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <accessibility key="accessibilityConfiguration" identifier="EditorPagePhotoButton" label="EditorPagePhotoButton"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="18" id="1PQ-Dx-Y1i"/>
+                                            <constraint firstAttribute="width" constant="26" id="BI6-uw-eq4"/>
+                                        </constraints>
+                                        <color key="tintColor" red="0.41390401119999998" green="0.50106823440000003" blue="0.96205252409999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <real key="value" value="4"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="colorPickerButtonDidTouch:" destination="AvE-EB-OTN" eventType="touchUpInside" id="dAa-Ep-cjl"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aDH-6L-uUK" userLabel="Photo Button" customClass="StateButton" customModule="Commun" customModuleProvider="target">
+                                        <rect key="frame" x="261" y="18" width="25" height="20"/>
+                                        <accessibility key="accessibilityConfiguration" identifier="EditorPagePhotoButton" label="EditorPagePhotoButton"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="aDH-6L-uUK" secondAttribute="height" multiplier="5:4" id="8oH-Ir-Exx"/>
+                                            <constraint firstAttribute="height" constant="20" id="ciZ-QA-2Xd"/>
+                                        </constraints>
+                                        <color key="tintColor" red="0.41390401119999998" green="0.50106823440000003" blue="0.96205252409999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <state key="normal" image="add_link"/>
+                                        <connections>
+                                            <action selector="addLinkButtonDidTouch:" destination="AvE-EB-OTN" eventType="touchUpInside" id="IKo-aj-cpT"/>
+                                            <action selector="richTextEditButtonDidTouch:" destination="AvE-EB-OTN" eventType="touchUpInside" id="AWB-YJ-C4s"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="ra4-Bs-Xab" secondAttribute="trailing" constant="16" id="2EY-Ji-hBt"/>
                                     <constraint firstItem="nwa-Mp-egE" firstAttribute="leading" secondItem="aeQ-gX-bWx" secondAttribute="trailing" constant="26" id="Cgl-0u-dYc"/>
+                                    <constraint firstItem="aDH-6L-uUK" firstAttribute="centerY" secondItem="U7q-88-jfF" secondAttribute="centerY" id="QWR-wu-oJK"/>
+                                    <constraint firstItem="ENk-8M-crN" firstAttribute="leading" secondItem="BgQ-FM-Lio" secondAttribute="trailing" constant="24" id="TNK-Kg-dss"/>
+                                    <constraint firstItem="BgQ-FM-Lio" firstAttribute="centerY" secondItem="U7q-88-jfF" secondAttribute="centerY" id="VNi-se-2kv"/>
                                     <constraint firstAttribute="height" constant="56" id="bFX-Kv-Myi"/>
                                     <constraint firstItem="ra4-Bs-Xab" firstAttribute="centerY" secondItem="aeQ-gX-bWx" secondAttribute="centerY" id="h0O-pG-fwu"/>
+                                    <constraint firstItem="eHI-Fy-KHY" firstAttribute="centerY" secondItem="U7q-88-jfF" secondAttribute="centerY" id="iXg-t8-JgV"/>
                                     <constraint firstItem="aeQ-gX-bWx" firstAttribute="centerY" secondItem="U7q-88-jfF" secondAttribute="centerY" id="nzz-jo-t4v"/>
+                                    <constraint firstItem="eHI-Fy-KHY" firstAttribute="leading" secondItem="ENk-8M-crN" secondAttribute="trailing" constant="26" id="oh7-Hi-L2L"/>
                                     <constraint firstItem="aeQ-gX-bWx" firstAttribute="leading" secondItem="U7q-88-jfF" secondAttribute="leading" constant="16" id="quE-AG-kFf"/>
+                                    <constraint firstItem="aDH-6L-uUK" firstAttribute="leading" secondItem="eHI-Fy-KHY" secondAttribute="trailing" constant="26" id="rDn-Ub-8DA"/>
+                                    <constraint firstItem="ENk-8M-crN" firstAttribute="centerY" secondItem="U7q-88-jfF" secondAttribute="centerY" id="v5z-Yh-Nyg"/>
+                                    <constraint firstItem="BgQ-FM-Lio" firstAttribute="leading" secondItem="nwa-Mp-egE" secondAttribute="trailing" constant="26" id="wvj-M7-SrL"/>
                                     <constraint firstItem="nwa-Mp-egE" firstAttribute="centerY" secondItem="aeQ-gX-bWx" secondAttribute="centerY" id="yqy-5T-drz"/>
                                 </constraints>
                             </view>
@@ -181,10 +249,15 @@
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="375" height="1000"/>
                     <connections>
+                        <outlet property="addLinkButton" destination="aDH-6L-uUK" id="btM-EN-BXj"/>
                         <outlet property="adultButton" destination="aeQ-gX-bWx" id="Yli-e5-ttd"/>
+                        <outlet property="boldButton" destination="BgQ-FM-Lio" id="0rb-cn-eUE"/>
+                        <outlet property="colorPickerButton" destination="eHI-Fy-KHY" id="4Wf-kn-zWO"/>
                         <outlet property="contentTextView" destination="0Oi-CV-9TI" id="1eu-aX-BHL"/>
                         <outlet property="dropDownView" destination="U7q-88-jfF" id="Z2s-ew-Vrh"/>
                         <outlet property="hideKeyboardButton" destination="ra4-Bs-Xab" id="p5q-9A-EoT"/>
+                        <outlet property="italicButton" destination="ENk-8M-crN" id="m27-lc-5Ju"/>
+                        <outlet property="photoPickerButton" destination="nwa-Mp-egE" id="N6s-hE-WPM"/>
                         <outlet property="scrollView" destination="ru5-vQ-hj9" id="iIa-n7-xPb"/>
                         <outlet property="sendPostButton" destination="uJ6-gc-rL2" id="aVg-wp-gSO"/>
                         <outlet property="titleTextView" destination="94b-Gg-NR2" id="V6I-Q2-Vrx"/>
@@ -200,7 +273,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="dkd-fM-1cl" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="BKh-wI-m1C">
-                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <rect key="frame" x="0.0" y="20" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -215,6 +288,9 @@
     </scenes>
     <resources>
         <image name="18Button" width="873" height="512"/>
+        <image name="add_link" width="66.5" height="66.5"/>
+        <image name="bold" width="170.5" height="170.5"/>
+        <image name="italic" width="170.5" height="170.5"/>
         <image name="keyboard_hide" width="192" height="192"/>
         <image name="photo_solid" width="24" height="24"/>
         <image name="tux" width="56" height="56"/>
