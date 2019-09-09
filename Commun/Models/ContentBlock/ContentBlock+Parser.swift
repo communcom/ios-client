@@ -47,13 +47,13 @@ extension ContentBlock {
         return tags
     }
     
-    func toHTML() -> String {
+    func toHTML(embeds: [ResponseAPIContentEmbedResult]) -> String {
         
         var innerHTML = ""
         switch content {
         case .array(let array):
             for inner in array {
-                innerHTML += inner.toHTML()
+                innerHTML += inner.toHTML(embeds: embeds)
             }
         case .string(let string):
             innerHTML += string.replacingOccurrences(of: "\n", with: "<br/>")
@@ -93,9 +93,19 @@ extension ContentBlock {
             let description = attributes?.description
             return "<div class=\"embeded\"><img style=\"display: block; width: 100%; height: auto;\" src=\"\(innerHTML)\" />\(description != nil ? "<p>\(description!)</p>": "") </div>"
         case "video":
+            let embed = embeds.first(where: {embed in
+                embed.url == innerHTML
+            })
+            
+            let component: String
+            if let html = embed?.html {
+                component = html
+            } else {
+                component = "<a href=\"\(attributes?.url ?? "")\"><img style=\"display: block; width: 100%; height: auto;\" src=\"\(attributes?.thumbnail_url ?? "")\" /></a>"
+            }
+            
             let description = attributes?.title
-            return "<div class=\"embeded\"><img style=\"display: block; width: 100%; height: auto;\" src=\"\(attributes?.thumbnail_url ?? "")\" />\(description != nil ? "<p>\(description!)</p>": "")</div>"
-//            return "<div class=\"embeded\" style=\"position:relative;padding-top:56.25%;\"><iframe src=\"\(innerHTML)\" frameborder=\"0\" allowfullscreen style=\"position:absolute;top:0;left:0;width:100%;height:100%;\"></iframe></div>"
+            return "<div class=\"embeded\">\(component)\(description != nil ? "<p>\(description!)</p>": "")</div>"
         case "website":
             // TODO: Preview
             return ""

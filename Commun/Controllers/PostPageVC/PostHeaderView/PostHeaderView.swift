@@ -93,7 +93,7 @@ class PostHeaderView: UIView, UIWebViewDelegate, PostController {
             do {
                 if let jsonData = string.data(using: .utf8) {
                     let block = try JSONDecoder().decode(ContentBlock.self, from: jsonData)
-                    html = block.toHTML()
+                    html = block.toHTML(embeds: post.content.embeds.compactMap {$0.result} )
                 }
             } catch {
                 print(error)
