@@ -38,10 +38,13 @@ class TextAttachment: NSTextAttachment {
     
     func toSingleContentBlock(id: inout UInt) -> Single<ContentBlock>? {
         guard var embed = embed,
-            let type = embed.type
+            var type = embed.type
         else {
             return nil
         }
+        
+        // Fix conflict type
+        if type == "photo" {type = "image"}
         
         // Prevent sending html
         embed.html = nil

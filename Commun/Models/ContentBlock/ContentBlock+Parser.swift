@@ -84,7 +84,7 @@ extension ContentBlock {
             if style == "" {return innerHTML}
             return "<span style=\"\(style)\">\(innerHTML)</span>"
         case "tag":
-            return "<a href=\"https://commun.com/#\(innerHTML)\">#\(innerHTML)</a>"
+            return "<a href=\"https://commun.com/#\(innerHTML)\">#\(innerHTML)</a>&nbsp;"
         case "link":
             let url = attributes?.url ?? ""
             return "<a href=\"\(url)\">\(innerHTML)</a>"
