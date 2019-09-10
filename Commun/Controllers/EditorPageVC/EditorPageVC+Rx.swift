@@ -98,17 +98,14 @@ extension EditorPageVC {
             )
             .map({ (title, content) -> Bool in
                 // both title and content are not empty
-                let result = !title.isEmpty && !content.isEmpty
-                // TODO: Compare contentBlock
-//                // compare content
-//                var contentChanged = (title != viewModel.postForEdit?.content.title)
-//                // Parse data
-//                if let jsonData = viewModel.postForEdit?.content.body.full?.data(using: .utf8),
-//                    let block = try? JSONDecoder().decode(ContentBlock.self, from: jsonData) {
-//                    attributedText = block.toAttributedString(currentAttributes: typingAttributes)
-//                }
+                let titleAndContentAreNotEmpty = !title.isEmpty && !content.isEmpty
                 
-                return result
+                // compare content
+                var contentChanged = (title != viewModel.postForEdit?.content.title)
+                contentChanged = contentChanged || (self.contentTextView.attributedText != self.contentTextView.originalAttributedString)
+                
+                // reassign result
+                return titleAndContentAreNotEmpty && contentChanged
             })
             .bind(to: sendPostButton.rx.isEnabled)
             .disposed(by: disposeBag)

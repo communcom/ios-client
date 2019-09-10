@@ -13,7 +13,8 @@ import CyberSwift
 extension EditorPageTextView {
     func parseText(_ string: String) {
         // Plain string
-        var attributedText = NSAttributedString(string: string)
+        var attributedText = NSAttributedString(string: string, attributes: defaultTypingAttributes)
+        originalAttributedString = attributedText
         
         // Parse data
         if let jsonData = string.data(using: .utf8),
@@ -32,6 +33,7 @@ extension EditorPageTextView {
             })
             .subscribe(onCompleted: { [weak self] in
                 self?.parentViewController?.navigationController?.hideHud()
+                self?.originalAttributedString = self?.attributedText
             }) { [weak self] (error) in
                 self?.parentViewController?.navigationController?.showError(error)
             }

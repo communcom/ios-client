@@ -28,6 +28,8 @@ class EditorPageTextView: ExpandableTextView {
     
     var currentTextStyle = BehaviorRelay<TextStyle>(value: TextStyle(isBold: false, isItalic: false, textColor: .black, urlString: nil))
     
+    var originalAttributedString: NSAttributedString?
+    
     // MARK: - Lifecycle
     override func awakeFromNib() {
         super.awakeFromNib()
