@@ -195,6 +195,7 @@ extension ContentBlock {
             child.addAttributes(currentAttributes, range: NSMakeRange(child.length - 1, 1))
             return child
         default:
+            child.addAttributes(currentAttributes, range: NSMakeRange(0, child.length))
             return child
         }
     }
