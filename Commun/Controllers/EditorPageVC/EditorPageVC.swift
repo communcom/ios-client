@@ -75,6 +75,7 @@ class EditorPageVC: UIViewController {
                 }, onError: {error in
                     self.hideHud()
                     self.showError(error)
+                    self.closeButtonDidTouch(self)
                 })
                 .disposed(by: disposeBag)
         }
