@@ -122,20 +122,22 @@ class GridView: UIView {
             views.last?.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 1/2, constant: -padding).isActive = true
             views.last?.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 1/3, constant: -padding * 3 / 2).isActive = true
             
-            let label = UILabel(frame: views.last!.frame)
-            label.translatesAutoresizingMaskIntoConstraints = false
-            addSubview(label)
-            label.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
-            label.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
-            label.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 1/3, constant: -padding * 3 / 2).isActive = true
-            label.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 1/2, constant: -padding * 3 / 2).isActive = true
-            
-            label.backgroundColor = .black
-            label.alpha = 0.5
-            label.textColor = .white
-            label.textAlignment = .center
-            label.font = .boldSystemFont(ofSize: 20)
-            label.text = "+\(self.views.count - 4)"
+            if self.views.count > 5 {
+                let label = UILabel(frame: views.last!.frame)
+                label.translatesAutoresizingMaskIntoConstraints = false
+                addSubview(label)
+                label.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+                label.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
+                label.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 1/3, constant: -padding * 3 / 2).isActive = true
+                label.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 1/2, constant: -padding * 3 / 2).isActive = true
+                
+                label.backgroundColor = .black
+                label.alpha = 0.5
+                label.textColor = .white
+                label.textAlignment = .center
+                label.font = .boldSystemFont(ofSize: 20)
+                label.text = "+\(self.views.count - 4)"
+            }
         }
     }
     
