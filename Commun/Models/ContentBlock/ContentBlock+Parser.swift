@@ -162,6 +162,7 @@ extension ContentBlock {
         case "tag":
             let link = child.string
             child.insert(NSAttributedString(string: "#"), at: 0)
+            child.append(NSAttributedString(string: " "))
             var attr = currentAttributes
             attr[.link] = "https://commun.com/#\(link)"
             child.addAttributes(attr, range: NSMakeRange(0, child.length))
