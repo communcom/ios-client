@@ -131,6 +131,7 @@
 		3BE68AAA22EEA08600033B81 /* SettingsVC+SwitcherDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BE68AA922EEA08600033B81 /* SettingsVC+SwitcherDelegate.swift */; };
 		3BE68AAE22EEA1AE00033B81 /* SettingsVC+ButtonDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BE68AAD22EEA1AE00033B81 /* SettingsVC+ButtonDelegate.swift */; };
 		3BE68AB222EEA7C300033B81 /* LocalAuthVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BE68AB122EEA7C300033B81 /* LocalAuthVC.swift */; };
+		3BE85D262327A50200C7E7F6 /* GridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BE85D252327A50200C7E7F6 /* GridView.swift */; };
 		3BEA224422B3DA9C00FF42DA /* JSONParsingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BEA224322B3DA9C00FF42DA /* JSONParsingTests.swift */; };
 		3BEC38E3230F801600662374 /* UITextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BEC38E2230F801600662374 /* UITextView.swift */; };
 		3BEC38E7230FA17F00662374 /* EditorPageTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BEC38E6230FA17F00662374 /* EditorPageTextView.swift */; };
@@ -372,6 +373,7 @@
 		3BE68AA922EEA08600033B81 /* SettingsVC+SwitcherDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SettingsVC+SwitcherDelegate.swift"; sourceTree = "<group>"; };
 		3BE68AAD22EEA1AE00033B81 /* SettingsVC+ButtonDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SettingsVC+ButtonDelegate.swift"; sourceTree = "<group>"; };
 		3BE68AB122EEA7C300033B81 /* LocalAuthVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalAuthVC.swift; sourceTree = "<group>"; };
+		3BE85D252327A50200C7E7F6 /* GridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridView.swift; sourceTree = "<group>"; };
 		3BEA224122B3DA9C00FF42DA /* CommunTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CommunTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3BEA224322B3DA9C00FF42DA /* JSONParsingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONParsingTests.swift; sourceTree = "<group>"; };
 		3BEA224522B3DA9C00FF42DA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -1075,6 +1077,7 @@
 				3B11913823040A40008D0417 /* PreviewView.swift */,
 				3BD50572231387EB00F3F9D3 /* MediaView.swift */,
 				3BEC38EB230FED2B00662374 /* TextAttachment.swift */,
+				3BE85D252327A50200C7E7F6 /* GridView.swift */,
 			);
 			path = Vendor;
 			sourceTree = "<group>";
@@ -1635,6 +1638,7 @@
 				57840A202240DDEB00338FD5 /* Container.swift in Sources */,
 				57F9CAAC225B489000AC9ACA /* EditorPageVC+Rx.swift in Sources */,
 				3B0E9C6E227063F6002AB1C2 /* ProfilePageVC+Actions.swift in Sources */,
+				3BE85D262327A50200C7E7F6 /* GridView.swift in Sources */,
 				3B0E9C7122706985002AB1C2 /* ProfileChooseAvatarViewModel.swift in Sources */,
 				3B2538B6231E667800D0B1DA /* EditorPageTextView+Binding.swift in Sources */,
 				3BB342B022CA5CA6009546B2 /* PickupAvatarVC.swift in Sources */,
