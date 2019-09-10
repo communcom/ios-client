@@ -142,7 +142,6 @@
 		3BF37BD422A1414200A72FFE /* PlaceholderPostCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3BF37BD222A1414200A72FFE /* PlaceholderPostCell.xib */; };
 		3BF37BD622A162E000A72FFE /* ResponseAPIOnlineNotificationData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BF37BD522A162E000A72FFE /* ResponseAPIOnlineNotificationData.swift */; };
 		3BF37BD822A1666200A72FFE /* ResponseAPIOnlineNotifyHistoryResult.json in Resources */ = {isa = PBXBuildFile; fileRef = 3BF37BD722A1666200A72FFE /* ResponseAPIOnlineNotifyHistoryResult.json */; };
-		3BF3A7C723200E7F000969D5 /* EditorPageVC+UITextViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BF3A7C623200E7F000969D5 /* EditorPageVC+UITextViewDelegate.swift */; };
 		3BF3A7C923201C66000969D5 /* EditorPageTextView+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BF3A7C823201C66000969D5 /* EditorPageTextView+Utilities.swift */; };
 		3BF53CE4230B93E10082464F /* HTMLStringWebView.css in Resources */ = {isa = PBXBuildFile; fileRef = 3BF53CE3230B93E10082464F /* HTMLStringWebView.css */; };
 		571B14F4223A935C00630C8F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571B14F3223A935C00630C8F /* AppDelegate.swift */; };
@@ -386,7 +385,6 @@
 		3BF37BD222A1414200A72FFE /* PlaceholderPostCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlaceholderPostCell.xib; sourceTree = "<group>"; };
 		3BF37BD522A162E000A72FFE /* ResponseAPIOnlineNotificationData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseAPIOnlineNotificationData.swift; sourceTree = "<group>"; };
 		3BF37BD722A1666200A72FFE /* ResponseAPIOnlineNotifyHistoryResult.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ResponseAPIOnlineNotifyHistoryResult.json; sourceTree = "<group>"; };
-		3BF3A7C623200E7F000969D5 /* EditorPageVC+UITextViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EditorPageVC+UITextViewDelegate.swift"; sourceTree = "<group>"; };
 		3BF3A7C823201C66000969D5 /* EditorPageTextView+Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EditorPageTextView+Utilities.swift"; sourceTree = "<group>"; };
 		3BF53CE3230B93E10082464F /* HTMLStringWebView.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; path = HTMLStringWebView.css; sourceTree = "<group>"; };
 		4F0772CC6D820AD11B1FF48A /* Pods_Commun.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Commun.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1175,7 +1173,6 @@
 				57DE5BDB2252088C008566B9 /* EditorPageVC.swift */,
 				57F9CAAB225B489000AC9ACA /* EditorPageVC+Rx.swift */,
 				57CBD95D225517B4000BA8CC /* EditorPageVC+Actions.swift */,
-				3BF3A7C623200E7F000969D5 /* EditorPageVC+UITextViewDelegate.swift */,
 			);
 			path = EditorPageVC;
 			sourceTree = "<group>";
@@ -1665,7 +1662,6 @@
 				3BA4D089229315D60022A69D /* UIResponder.swift in Sources */,
 				3B5EDE2E22DF929D00897BF3 /* SettingsSwitcherCell.swift in Sources */,
 				3B197C8A226A33CF008CF10D /* Decodable+MockObjects.swift in Sources */,
-				3BF3A7C723200E7F000969D5 /* EditorPageVC+UITextViewDelegate.swift in Sources */,
 				578B94DA2263CBD800FB5BC6 /* ConfirmUserVC.swift in Sources */,
 				3B11913923040A40008D0417 /* PreviewView.swift in Sources */,
 				3BEC38E3230F801600662374 /* UITextView.swift in Sources */,
