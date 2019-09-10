@@ -28,6 +28,7 @@ class EditorPageTextView: ExpandableTextView {
     
     var currentTextStyle = BehaviorRelay<TextStyle>(value: TextStyle(isBold: false, isItalic: false, textColor: .black, urlString: nil))
     
+    // MARK: - Lifecycle
     override func awakeFromNib() {
         super.awakeFromNib()
         // set default attributes
@@ -37,6 +38,7 @@ class EditorPageTextView: ExpandableTextView {
         bind()
     }
     
+    // MARK: - Computed properties
     var selectedAString: NSAttributedString {
         return attributedText.attributedSubstring(from: selectedRange)
     }

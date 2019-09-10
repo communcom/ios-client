@@ -84,8 +84,7 @@ extension ContentBlock {
             if style == "" {return innerHTML}
             return "<span style=\"\(style)\">\(innerHTML)</span>"
         case "tag":
-            style = "color: blue;"
-            return "<span style=\"\(style)\">#\(innerHTML)</span>"
+            return "<a href=\"https://commun.com/#\(innerHTML)\">#\(innerHTML)</a>"
         case "link":
             let url = attributes?.url ?? ""
             return "<a href=\"\(url)\">\(innerHTML)</a>"
@@ -164,7 +163,7 @@ extension ContentBlock {
             let link = child.string
             child.insert(NSAttributedString(string: "#"), at: 0)
             var attr = currentAttributes
-            attr[.link] = "hash:\(link)"
+            attr[.link] = "https://commun.com/#\(link)"
             child.addAttributes(attr, range: NSMakeRange(0, child.length))
             return child
         case "link":
