@@ -28,9 +28,9 @@ class PostCardCell: UITableViewCell, PostController {
     @IBOutlet weak var upVoteButton: UIButton!
     @IBOutlet weak var downVoteButton: UIButton!
     
-    @IBOutlet weak var embededImageView: UIImageView!
+    @IBOutlet weak var gridView: GridView!
     @IBOutlet weak var embededViewHeightConstraint: NSLayoutConstraint!
-    @IBOutlet weak var embededImageViewToContainerBottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak var gridViewToContainerBottomConstraint: NSLayoutConstraint!
     var post: ResponseAPIContentGetPost?
     
     override func awakeFromNib() {
@@ -91,13 +91,15 @@ extension PostCardCell {
         self.mainTextLabel.text = post.content.title
         self.accessibilityLabel = "PostCardCell"
         
-        if let imageURL = post.firstEmbedImageURL {
-            embededImageView.sd_setImage(with: URL(string: imageURL))
-            embededViewHeightConstraint.constant = 31/40 * UIScreen.main.bounds.width
-            embededImageViewToContainerBottomConstraint.constant = 12
-        } else {
+        let embeds = post.content.embeds.compactMap {$0.result}
+        if embeds.isEmpty {
             embededViewHeightConstraint.constant = 0
-            embededImageViewToContainerBottomConstraint.constant = 0
+            gridViewToContainerBottomConstraint.constant = 0
+        }
+        else {
+            gridView.setUp(embeds: embeds)
+            embededViewHeightConstraint.constant = 31/40 * UIScreen.main.bounds.width
+            gridViewToContainerBottomConstraint.constant = 12
         }
         
 //        self.avatarImageView.sd_setImage(with: post.community.avatarUrl?.url, completed: nil)

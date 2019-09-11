@@ -85,21 +85,18 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5vT-Zh-8Yc">
                                 <rect key="frame" x="0.0" y="119" width="320" height="216.5"/>
                                 <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="UVz-za-s49">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5sP-OA-x8D" customClass="GridView" customModule="Commun" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="204.5"/>
-                                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <accessibility key="accessibilityConfiguration" identifier="PostCardCellEmbededImageView" label="PostCardCellEmbededImageView">
-                                            <bool key="isElement" value="YES"/>
-                                        </accessibility>
-                                    </imageView>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstItem="UVz-za-s49" firstAttribute="leading" secondItem="5vT-Zh-8Yc" secondAttribute="leading" id="AOS-eN-kMo"/>
-                                    <constraint firstAttribute="trailing" secondItem="UVz-za-s49" secondAttribute="trailing" id="Bfw-TC-jBE"/>
-                                    <constraint firstItem="UVz-za-s49" firstAttribute="top" secondItem="5vT-Zh-8Yc" secondAttribute="top" id="KlW-w3-AXe"/>
+                                    <constraint firstItem="5sP-OA-x8D" firstAttribute="top" secondItem="5vT-Zh-8Yc" secondAttribute="top" id="FH0-ik-7lF"/>
                                     <constraint firstAttribute="height" constant="216.5" id="YjY-cR-8HU"/>
-                                    <constraint firstAttribute="bottom" secondItem="UVz-za-s49" secondAttribute="bottom" constant="12" id="oZo-Hb-wyJ"/>
+                                    <constraint firstAttribute="bottom" secondItem="5sP-OA-x8D" secondAttribute="bottom" constant="12" id="eG0-lz-TDd"/>
+                                    <constraint firstAttribute="trailing" secondItem="5sP-OA-x8D" secondAttribute="trailing" id="qIe-DS-gj4"/>
+                                    <constraint firstItem="5sP-OA-x8D" firstAttribute="leading" secondItem="5vT-Zh-8Yc" secondAttribute="leading" id="qsl-EO-rhx"/>
                                 </constraints>
                             </view>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="UpSelected" translatesAutoresizingMaskIntoConstraints="NO" id="iSB-ET-CHf">
@@ -236,9 +233,9 @@
                 <outlet property="authorNameLabel" destination="C9N-L8-TzR" id="Qn4-tN-Kpn"/>
                 <outlet property="avatarImageView" destination="Ycg-ed-cff" id="uy7-KF-FlE"/>
                 <outlet property="downVoteButton" destination="fMs-g5-fNp" id="yyh-mT-KxX"/>
-                <outlet property="embededImageView" destination="UVz-za-s49" id="bIr-c2-jRn"/>
-                <outlet property="embededImageViewToContainerBottomConstraint" destination="oZo-Hb-wyJ" id="79u-VZ-b3L"/>
                 <outlet property="embededViewHeightConstraint" destination="YjY-cR-8HU" id="jVf-3t-fYx"/>
+                <outlet property="gridView" destination="5sP-OA-x8D" id="uOB-YU-NFE"/>
+                <outlet property="gridViewToContainerBottomConstraint" destination="eG0-lz-TDd" id="byc-tL-hU0"/>
                 <outlet property="likeCounterLabel" destination="kiT-nP-6oC" id="RCs-fD-VZd"/>
                 <outlet property="mainTextLabel" destination="t1b-fE-pfp" id="i1h-MC-N8n"/>
                 <outlet property="numberOfCommentsLabel" destination="wEL-E2-SmX" id="bli-rq-VW7"/>

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CyberSwift
 
 class GridView: UIView {
     // MARK: - Properties
@@ -143,6 +144,17 @@ class GridView: UIView {
     
     func setUp(images: [UIImage]) {
         let imageViews = images.map {UIImageView(image: $0)}
+        setUp(views: imageViews)
+    }
+    
+    func setUp(embeds: [ResponseAPIContentEmbedResult]) {
+        let imageViews = embeds.compactMap { (embed) -> UIImageView? in
+            let urlString = embed.thumbnail_url ?? embed.url
+            guard let url = URL(string: urlString) else {return nil}
+            let imageView = UIImageView(frame: .zero)
+            imageView.sd_setImageCachedError(with: url, completion: nil)
+            return imageView
+        }
         setUp(views: imageViews)
     }
 }
