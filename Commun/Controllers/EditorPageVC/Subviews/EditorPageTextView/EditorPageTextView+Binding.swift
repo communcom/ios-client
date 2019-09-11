@@ -20,6 +20,7 @@ extension EditorPageTextView {
         rx.didChange
             .subscribe(onNext: {
                 self.resolveHashTags()
+                self.resolveMentions()
                 
                 // reset
                 if self.attributedText.length == 0 {
