@@ -114,7 +114,7 @@ extension ContentBlock {
             // TODO: Set grid style
             return "<div>\(innerHTML)</div>"
         default:
-            return ""
+            return innerHTML
         }
     }
     
