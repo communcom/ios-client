@@ -138,7 +138,6 @@ extension ContentBlock {
         case "paragraph":
             child.append(NSAttributedString.separator)
             child.addAttributes(currentAttributes, range: NSMakeRange(child.length - 1, 1))
-            return child
         case "text":
             var attr = currentAttributes
             if let text_color = attributes?.text_color {
@@ -160,27 +159,23 @@ extension ContentBlock {
                 }
             }
             child.addAttributes(attr, range: NSMakeRange(0, child.length))
-            return child
         case "tag":
             let link = child.string
             child.insert(NSAttributedString(string: "#"), at: 0)
             var attr = currentAttributes
             attr[.link] = "https://commun.com/#\(link)"
             child.addAttributes(attr, range: NSMakeRange(0, child.length))
-            return child
         case "mention":
             let link = child.string
             child.insert(NSAttributedString(string: "@"), at: 0)
             var attr = currentAttributes
             attr[.link] = "https://commun.com/@\(link)"
             child.addAttributes(attr, range: NSMakeRange(0, child.length))
-            return child
         case "link":
             let url = attributes?.url ?? ""
             var attr = currentAttributes
             attr[.link] = url
             child.addAttributes(attr, range: NSMakeRange(0, child.length))
-            return child
         case "image", "video", "website":
             // Atachment
             guard let attributes = attributes,
@@ -202,10 +197,10 @@ extension ContentBlock {
             child.append(attachmentAS)
             child.append(NSAttributedString.separator)
             child.addAttributes(currentAttributes, range: NSMakeRange(child.length - 1, 1))
-            return child
         default:
-            child.addAttributes(currentAttributes, range: NSMakeRange(0, child.length))
-            return child
+            break
         }
+        
+        return child
     }
 }
