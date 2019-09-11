@@ -66,9 +66,9 @@ extension UIImageView {
     }
     
     func sd_setImageCachedError(with url: URL, completion: ((Error?) -> Void)?) {
-        showLoader()
+        showLoading()
         sd_setImage(with: url) { [weak self] (image, error, _, _) in
-            self?.hideLoader()
+            self?.hideLoading()
             if error != nil {
                 self?.image = UIImage(named: "image-not-found")
             }

@@ -69,15 +69,13 @@ class PostPageViewModel: CommentsListController, ListViewModelType {
     }
     
     func fetchNext() {
+        loadingHandler?()
         fetcher.fetchNext()
-            .do(onSubscribed: {
-                self.loadingHandler?()
-            })
-            .catchError { (error) -> Single<[ResponseAPIContentGetComment]> in
+            .do(onError: {error in
                 self.fetchNextErrorHandler?(error)
-                return .just([])
-            }
-            .subscribe(onSuccess: {[weak self] (list) in
+            })
+            .asDriver(onErrorJustReturn: [])
+            .drive(onNext: {[weak self] (list) in
                 guard let strongSelf = self else {return}
                 
                 if list.count > 0 {

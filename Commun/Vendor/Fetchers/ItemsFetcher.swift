@@ -31,13 +31,13 @@ class ItemsFetcher<T: Decodable> {
         sequenceKey     = nil
     }
     
-    func fetchNext() -> Single<[T]> {
+    func fetchNext() -> Maybe<[T]> {
         // Resign error
         lastError = nil
         
         // Prevent duplicate request
         if self.isFetching || self.reachedTheEnd {
-            return Single.never()
+            return .empty()
         }
         
         // Mark operation as fetching
@@ -66,5 +66,6 @@ class ItemsFetcher<T: Decodable> {
                 // resign error
                 self.lastError = error
             })
+            .asMaybe()
     }
 }

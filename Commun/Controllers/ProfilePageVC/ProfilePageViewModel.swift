@@ -53,7 +53,7 @@ class ProfilePageViewModel: ListViewModelType {
         // Retrieve items after segemented changes
         segmentedItem
             .filter {_ in self.profile.value != nil}
-            .flatMapLatest {item -> Single<[Decodable]> in
+            .flatMapLatest {item -> Maybe<[Decodable]> in
                 // Re-create fetcher
                 switch item {
                 case .posts:
@@ -68,8 +68,7 @@ class ProfilePageViewModel: ListViewModelType {
                 // Empty table
                 self.items.accept([])
                 
-                return self.fetchNextSingle()
-                    .catchErrorJustReturn([])
+                return self.fetchNextMaybe()
             }
             .asDriver(onErrorJustReturn: [])
             .map {self.items.value + $0}
@@ -105,11 +104,13 @@ class ProfilePageViewModel: ListViewModelType {
     
     // MARK: - For items in tableView
     func fetchNext() {
-        fetchNextSingle()
-            .do(onSubscribed: {
-                self.loadingHandler?()
+        loadingHandler?()
+        fetchNextMaybe()
+            .do(onError: {error in
+                self.fetchNextErrorHandler?(error)
             })
-            .subscribe(onSuccess: { (list) in
+            .asDriver(onErrorJustReturn: [])
+            .drive(onNext: { (list) in
                 if list.count > 0 {
                     self.items.accept(self.items.value + list)
                 }
@@ -127,14 +128,12 @@ class ProfilePageViewModel: ListViewModelType {
                     }
                 }
                 
-            }, onError: { (error) in
-                self.fetchNextErrorHandler?(error)
             })
             .disposed(by: bag)
     }
     
-    private func fetchNextSingle() -> Single<[Decodable]> {
-        let single: Single<[Decodable]>
+    private func fetchNextMaybe() -> Maybe<[Decodable]> {
+        let single: Maybe<[Decodable]>
         switch segmentedItem.value {
         case .posts:
             guard let fetcher = itemsFetcher as? PostsFetcher else {return .never()}

@@ -55,11 +55,13 @@ class FeedPageViewModel: PostsListController, ListViewModelType {
     }
     
     func fetchNext() {
+        loadingHandler?()
         fetcher.fetchNext()
-            .do(onSubscribe: {
-                self.loadingHandler?()
+            .do(onError: {error in
+                self.fetchNextErrorHandler?(error)
             })
-            .subscribe(onSuccess: { (list) in
+            .asDriver(onErrorJustReturn: [])
+            .drive(onNext: { (list) in
                 if list.count > 0 {
                     let newList = list.filter {!self.items.value.contains($0)}
                     self.items.accept(self.items.value + newList)
@@ -70,9 +72,7 @@ class FeedPageViewModel: PostsListController, ListViewModelType {
                     return
                 }
                 
-            }) { (error) in
-                self.fetchNextErrorHandler?(error)
-            }
+            })
             .disposed(by: disposeBag)
     }
     
