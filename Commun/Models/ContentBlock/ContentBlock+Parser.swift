@@ -94,9 +94,8 @@ extension ContentBlock {
             let description = attributes?.description
             return "<div class=\"embeded\"><img style=\"display: block; width: 100%; height: auto;\" src=\"\(innerHTML)\" />\(description != nil ? "<p>\(description!)</p>": "") </div>"
         case "video":
-            let embed = embeds.first(where: {embed in
-                embed.url == innerHTML
-            })
+            let embed = embeds.first(where:
+                {self.compareUrlString(str1: $0.url, str2: innerHTML)})
             
             let component: String
             if let html = embed?.html {
@@ -108,8 +107,11 @@ extension ContentBlock {
             let description = attributes?.title
             return "<div class=\"embeded\">\(component)\(description != nil ? "<p>\(description!)</p>": "")</div>"
         case "website":
-            // TODO: Preview
-            return ""
+            let embed = embeds.first(where:
+                {self.compareUrlString(str1: $0.url, str2: innerHTML)})
+            
+            let description = embed?.description
+            return "<div class=\"embeded\"><a href=\"\(embed?.url ?? "")\"><img style=\"display: block; width: 100%; height: auto;\" src=\"\(embed?.thumbnail_url ?? "")\" /></a>\(description != nil ? "<p>\(description!)</p>": "")</div>"
         case "set":
             // TODO: Set grid style
             return "<div>\(innerHTML)</div>"
@@ -202,5 +204,11 @@ extension ContentBlock {
         }
         
         return child
+    }
+    
+    private func compareUrlString(str1: String, str2: String) -> Bool {
+        let str1 = str1.ends(with: "/") ? str1: str1 + "/"
+        let str2 = str2.ends(with: "/") ? str2: str2 + "/"
+        return str1 == str2
     }
 }
