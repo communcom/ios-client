@@ -38,21 +38,8 @@ extension NSAttributedString {
             
             // Parse links and tags
             if let url = attrs[.link] as? String {
-                // links detector
-                if !content.starts(with: "#") {
-                    blockType = "link"
-                    id += 1
-                    let block = ContentBlock(
-                        id: id,
-                        type: blockType,
-                        attributes: ContentBlockAttributes(url: url),
-                        content: .string(content))
-                    blocks.append(block)
-                    return
-                }
-                
                 // tags detector
-                else {
+                if content.starts(with: "#") {
                     blockType = "tag"
                     content = content.replacingOccurrences(of: "#", with: "")
                     id += 1
@@ -62,8 +49,35 @@ extension NSAttributedString {
                         attributes: ContentBlockAttributes(),
                         content: .string(content))
                     blocks.append(block)
-                    return
                 }
+                    
+                // mention detector
+                else if content.starts(with: "@") {
+                    blockType = "mention"
+                    content = content.replacingOccurrences(of: "@", with: "")
+                    id += 1
+                    let block = ContentBlock(
+                        id: id,
+                        type: blockType,
+                        attributes: nil,
+                        content: .string(content)
+                    )
+                    blocks.append(block)
+                }
+                
+                // tags detector
+                else {
+                    blockType = "link"
+                    id += 1
+                    let block = ContentBlock(
+                        id: id,
+                        type: blockType,
+                        attributes: ContentBlockAttributes(url: url),
+                        content: .string(content))
+                    blocks.append(block)
+                }
+                
+                return
             }
             
             var text_color: String?
@@ -88,15 +102,13 @@ extension NSAttributedString {
             content = content.replacingOccurrences(of: String.invisible, with: "")
             
             // add block if content is not empty
-            if !content.trimmed.isEmpty {
-                id += 1
-                let block = ContentBlock(
-                    id: id,
-                    type: blockType,
-                    attributes: ContentBlockAttributes(style: style, text_color: text_color),
-                    content: .string(content))
-                blocks.append(block)
-            }
+            id += 1
+            let block = ContentBlock(
+                id: id,
+                type: blockType,
+                attributes: ContentBlockAttributes(style: style, text_color: text_color),
+                content: .string(content))
+            blocks.append(block)
         }
         
         if !blocks.isEmpty {

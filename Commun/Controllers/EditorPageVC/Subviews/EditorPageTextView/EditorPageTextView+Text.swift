@@ -80,4 +80,23 @@ extension EditorPageTextView {
             }
         }
     }
+    
+    // MARK: - Mentions
+    func resolveMentions() {
+        if let regex = try? NSRegularExpression(pattern: "\\@[\\p{L}_0-9]+", options: .caseInsensitive)
+        {
+            let string = text as NSString
+            
+            _ = regex.matches(in: text, options: [], range: NSRange(location: 0, length: string.length)).compactMap { match -> String in
+                
+                let mention = string.substring(with: match.range)
+                
+                let newAttr = NSMutableAttributedString(attributedString: self.attributedText)
+                newAttr.addAttribute(.link, value: "https://commun.com/\(mention)", range: match.range)
+                self.attributedText = newAttr
+                
+                return mention
+            }
+        }
+    }
 }
