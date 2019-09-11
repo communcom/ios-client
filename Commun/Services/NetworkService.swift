@@ -35,6 +35,7 @@ class NetworkService: NSObject {
                                              communityID:               AppProfileType.golos.rawValue,
                                              timeFrameMode:             sortType,
                                              sortMode:                  type,
+                                             paginationLimit:           20,
                                              paginationSequenceKey:     paginationKey)
         
     }
