@@ -80,6 +80,7 @@
 		3B5EDE3722E07DCC00897BF3 /* SettingsVC+SectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5EDE3622E07DCC00897BF3 /* SettingsVC+SectionHeader.swift */; };
 		3B5EDE3922E07F0300897BF3 /* SettingsVC+DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5EDE3822E07F0300897BF3 /* SettingsVC+DataSource.swift */; };
 		3B5EDE3B22E0DD5100897BF3 /* NotificationSettingType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5EDE3A22E0DD5100897BF3 /* NotificationSettingType.swift */; };
+		3B5F58AD232A2ABE0036533B /* SignInSelectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5F58AC232A2ABE0036533B /* SignInSelectionCell.swift */; };
 		3B61AC3422E1CA8A00F608AF /* LAContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B61AC3322E1CA8A00F608AF /* LAContext.swift */; };
 		3B6229AB22BD12410053B9EF /* TTTAttributedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6229AA22BD12410053B9EF /* TTTAttributedLabel.swift */; };
 		3B635F7F22772D87006DAAB2 /* PostsFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B635F7E22772D87006DAAB2 /* PostsFetcher.swift */; };
@@ -322,6 +323,7 @@
 		3B5EDE3622E07DCC00897BF3 /* SettingsVC+SectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SettingsVC+SectionHeader.swift"; sourceTree = "<group>"; };
 		3B5EDE3822E07F0300897BF3 /* SettingsVC+DataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SettingsVC+DataSource.swift"; sourceTree = "<group>"; };
 		3B5EDE3A22E0DD5100897BF3 /* NotificationSettingType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSettingType.swift; sourceTree = "<group>"; };
+		3B5F58AC232A2ABE0036533B /* SignInSelectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInSelectionCell.swift; sourceTree = "<group>"; };
 		3B61AC3322E1CA8A00F608AF /* LAContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LAContext.swift; sourceTree = "<group>"; };
 		3B6229AA22BD12410053B9EF /* TTTAttributedLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TTTAttributedLabel.swift; sourceTree = "<group>"; };
 		3B635F7E22772D87006DAAB2 /* PostsFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostsFetcher.swift; sourceTree = "<group>"; };
@@ -652,6 +654,14 @@
 				3B2F2263226892C4006B589E /* NotificationCell.xib */,
 				3B5CB30722A57AA400757533 /* PlaceholderNotificationCell.swift */,
 				3B5CB30922A57AB600757533 /* PlaceholderNotificationCell.xib */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		3B5F58AB232A2AA30036533B /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				3B5F58AC232A2ABE0036533B /* SignInSelectionCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -1235,6 +1245,7 @@
 		57FB179E224C077300563BF7 /* SignInVC */ = {
 			isa = PBXGroup;
 			children = (
+				3B5F58AB232A2AA30036533B /* Cells */,
 				57FB17A3224C15C400563BF7 /* SignInViewModel.swift */,
 				3B67FC0922C5018800D05F01 /* SignInViewController.storyboard */,
 				3B67FC0722C5016F00D05F01 /* SignInViewController.swift */,
@@ -1641,6 +1652,7 @@
 				3BE85D262327A50200C7E7F6 /* GridView.swift in Sources */,
 				3B0E9C7122706985002AB1C2 /* ProfileChooseAvatarViewModel.swift in Sources */,
 				3B2538B6231E667800D0B1DA /* EditorPageTextView+Binding.swift in Sources */,
+				3B5F58AD232A2ABE0036533B /* SignInSelectionCell.swift in Sources */,
 				3BB342B022CA5CA6009546B2 /* PickupAvatarVC.swift in Sources */,
 				3B02CD34228ADC100078BB52 /* UIWebView.swift in Sources */,
 				3B0E9C5E226F02AC002AB1C2 /* ProfileEditCoverVC.swift in Sources */,

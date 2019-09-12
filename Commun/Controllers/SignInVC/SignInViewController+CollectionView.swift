@@ -9,7 +9,7 @@
 import Foundation
 import QRCodeReaderViewController
 
-extension SignInViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+extension SignInViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
@@ -19,21 +19,21 @@ extension SignInViewController: UICollectionViewDelegate, UICollectionViewDataSo
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SignInSelectionCell", for: indexPath)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SignInSelectionCell", for: indexPath) as! SignInSelectionCell
         
         configureCell(cell: cell,
-                      text: selection[indexPath.row].localized(),
+                      text: selection[indexPath.row],
                       selected: selected == indexPath.row)
         
         return cell
     }
     
-    func configureCell(cell: UICollectionViewCell, text: String, selected: Bool) {
-        let label = (cell.viewWithTag(1) as! UILabel)
-        label.text = text
+    func configureCell(cell: SignInSelectionCell, text: String, selected: Bool) {
+        let label = cell.methodLabel
+        label?.text = text
         
-        label.backgroundColor = selected ? #colorLiteral(red: 0.9529411765, green: 0.9607843137, blue: 0.9803921569, alpha: 1) : #colorLiteral(red: 0.8971592784, green: 0.9046500325, blue: 0.9282500148, alpha: 1)
-        label.textColor = selected ? #colorLiteral(red: 0.6062102914, green: 0.6253217459, blue: 0.6361377239, alpha: 1): #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+        label?.backgroundColor = selected ? #colorLiteral(red: 0.9529411765, green: 0.9607843137, blue: 0.9803921569, alpha: 1) : #colorLiteral(red: 0.8971592784, green: 0.9046500325, blue: 0.9282500148, alpha: 1)
+        label?.textColor = selected ? #colorLiteral(red: 0.6062102914, green: 0.6253217459, blue: 0.6361377239, alpha: 1): #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -77,21 +77,13 @@ extension SignInViewController: UICollectionViewDelegate, UICollectionViewDataSo
         }
         add(qrReaderVC, to: qrCodeReaderView)
     }
-}
-
-extension SignInViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView,
-                        layout collectionViewLayout: UICollectionViewLayout,
-                        sizeForItemAt indexPath: IndexPath) -> CGSize {
-        
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SignInSelectionCell", for: indexPath)
-        configureCell(cell: cell,
-                      text: selection[indexPath.row].localized(),
-                      selected: selected == indexPath.row)
-        cell.setNeedsLayout()
-        cell.layoutIfNeeded()
-        
-        let size = cell.contentView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
-        return CGSize(width: size.width + 32, height: 37*Config.heightRatio)
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        var size = selection[indexPath.row].size(withAttributes: [
+            NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 17)
+            ])
+        size.width += 32
+        size.height += 32*Config.heightRatio
+        return size
     }
 }
