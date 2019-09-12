@@ -44,8 +44,13 @@ extension EditorPageTextView {
     }
     
     func clearFormatting() {
-        self.typingAttributes = self.defaultTypingAttributes
-        self.setCurrentTextStyle()
+        if selectedRange.length == 0 {
+            self.typingAttributes = defaultTypingAttributes
+            self.setCurrentTextStyle()
+        }
+        else {
+            textStorage.setAttributes(defaultTypingAttributes, range: selectedRange)
+        }
     }
     
     func add(_ image: UIImage, to attachment: inout TextAttachment) {
