@@ -8,7 +8,6 @@
 
 import UIKit
 import CyberSwift
-import SDWebImage
 import RxSwift
 
 
