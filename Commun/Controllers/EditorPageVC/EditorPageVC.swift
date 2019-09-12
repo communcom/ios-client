@@ -23,6 +23,7 @@ class EditorPageVC: UIViewController {
     @IBOutlet weak var italicButton: StateButton!
     @IBOutlet weak var colorPickerButton: UIButton!
     @IBOutlet weak var addLinkButton: StateButton!
+    @IBOutlet weak var clearFormattingButton: UIButton!
     @IBOutlet weak var hideKeyboardButton: UIButton!
     @IBOutlet weak var sendPostButton: UIBarButtonItem!
     
@@ -88,6 +89,7 @@ class EditorPageVC: UIViewController {
         colorPickerButton.isHidden = true
         addLinkButton.isHidden = true
         hideKeyboardButton.isHidden = true
+        clearFormattingButton.isHidden = true
         
         bindUI()
     }

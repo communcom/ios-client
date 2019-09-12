@@ -22,22 +22,18 @@ extension EditorPageVC {
                 self.colorPickerButton.isEnabled = false
                 self.addLinkButton.isEnabled = false
                 self.photoPickerButton.isEnabled = false
+                self.clearFormattingButton.isEnabled = false
             })
             .disposed(by: disposeBag)
         
         contentTextView.rx.didBeginEditing
             .subscribe(onNext: {_ in
-                self.boldButton.isEnabled = true
-                self.italicButton.isEnabled = true
-                self.colorPickerButton.isEnabled = true
-                self.addLinkButton.isEnabled = true
-                self.photoPickerButton.isEnabled = true
-                
                 self.boldButton.isHidden = false
                 self.italicButton.isHidden = false
                 self.colorPickerButton.isHidden = false
                 self.addLinkButton.isHidden = false
                 self.photoPickerButton.isHidden = false
+                self.clearFormattingButton.isHidden = false
             })
             .disposed(by: disposeBag)
         
@@ -48,6 +44,7 @@ extension EditorPageVC {
                 self.colorPickerButton.isHidden = true
                 self.addLinkButton.isHidden = true
                 self.photoPickerButton.isHidden = true
+                self.clearFormattingButton.isHidden = true
             })
             .disposed(by: disposeBag)
         
@@ -68,6 +65,12 @@ extension EditorPageVC {
                 // color picker
                 self.colorPickerButton.backgroundColor = textStyle.textColor
                 self.colorPickerButton.isEnabled = (textStyle.urlString == nil)
+                
+                // clear formatting
+                let isDefaultFormat = !textStyle.isBold && !textStyle.isItalic && textStyle.textColor == .black && textStyle.urlString == nil
+                self.clearFormattingButton.isSelected = !isDefaultFormat
+                self.clearFormattingButton.isEnabled = !isDefaultFormat
+                
             })
             .disposed(by: disposeBag)
         

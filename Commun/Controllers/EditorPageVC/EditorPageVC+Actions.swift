@@ -229,6 +229,10 @@ extension EditorPageVC {
             present(alert, animated: true, completion: nil)
         }
     }
+    
+    @IBAction func clearFormattingButtonDidTouch(_ sender: Any) {
+        contentTextView.clearFormatting()
+    }
 }
 
 extension EditorPageVC: UIPopoverPresentationControllerDelegate {

@@ -201,7 +201,7 @@
                                                             <action selector="addLinkButtonDidTouch:" destination="AvE-EB-OTN" eventType="touchUpInside" id="IKo-aj-cpT"/>
                                                         </connections>
                                                     </button>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CJD-hr-sF8" userLabel="Photo Button" customClass="StateButton" customModule="Commun" customModuleProvider="target">
+                                                    <button opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CJD-hr-sF8" userLabel="Photo Button" customClass="StateButton" customModule="Commun" customModuleProvider="target">
                                                         <rect key="frame" x="314" y="18" width="25" height="20"/>
                                                         <accessibility key="accessibilityConfiguration" identifier="EditorPagePhotoButton" label="EditorPagePhotoButton"/>
                                                         <constraints>
@@ -210,6 +210,9 @@
                                                         </constraints>
                                                         <color key="tintColor" red="0.41390401119999998" green="0.50106823440000003" blue="0.96205252409999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <state key="normal" image="clear-formatting"/>
+                                                        <connections>
+                                                            <action selector="clearFormattingButtonDidTouch:" destination="AvE-EB-OTN" eventType="touchUpInside" id="PXY-Pa-TxP"/>
+                                                        </connections>
                                                     </button>
                                                 </subviews>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -299,6 +302,7 @@
                         <outlet property="addLinkButton" destination="aDH-6L-uUK" id="btM-EN-BXj"/>
                         <outlet property="adultButton" destination="aeQ-gX-bWx" id="Yli-e5-ttd"/>
                         <outlet property="boldButton" destination="BgQ-FM-Lio" id="0rb-cn-eUE"/>
+                        <outlet property="clearFormattingButton" destination="CJD-hr-sF8" id="p1j-iT-KGn"/>
                         <outlet property="colorPickerButton" destination="eHI-Fy-KHY" id="4Wf-kn-zWO"/>
                         <outlet property="contentTextView" destination="0Oi-CV-9TI" id="1eu-aX-BHL"/>
                         <outlet property="dropDownView" destination="U7q-88-jfF" id="Z2s-ew-Vrh"/>

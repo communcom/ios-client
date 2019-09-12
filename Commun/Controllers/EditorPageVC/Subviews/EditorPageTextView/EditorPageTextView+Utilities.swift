@@ -10,6 +10,44 @@ import Foundation
 import RxSwift
 
 extension EditorPageTextView {
+    func setCurrentTextStyle() {
+        var bold = false
+        var italic = false
+        var textColor = UIColor.black
+        var urlString: String?
+        
+        let attrs = typingAttributes
+        
+        if let font = attrs[.font] as? UIFont {
+            if font.fontDescriptor.symbolicTraits.contains(.traitBold) {
+                bold = true
+            }
+            
+            if font.fontDescriptor.symbolicTraits.contains(.traitItalic) {
+                italic = true
+            }
+        }
+        
+        if let color = attrs[.foregroundColor] as? UIColor,
+            color != .black {
+            textColor = color
+        }
+        
+        if let link = attrs[.link] as? String {
+            urlString = link
+            textColor = .link
+        }
+        
+        let textStyle = TextStyle(isBold: bold, isItalic: italic, textColor: textColor, urlString: urlString)
+        
+        self.currentTextStyle.accept(textStyle)
+    }
+    
+    func clearFormatting() {
+        self.typingAttributes = self.defaultTypingAttributes
+        self.setCurrentTextStyle()
+    }
+    
     func add(_ image: UIImage, to attachment: inout TextAttachment) {
         let attachmentRightMargin: CGFloat = 10
         let attachmentHeightForDescription: CGFloat = MediaView.descriptionDefaultHeight
