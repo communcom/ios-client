@@ -64,8 +64,9 @@ extension EditorPageTextView {
     
     // MARK: - Hashtags
     func resolveHashTags() {
-        if let regex = try? NSRegularExpression(pattern: "\\#[\\p{L}_0-9]+", options: .caseInsensitive)
+        if let regex = try? NSRegularExpression(pattern: String.tagRegex, options: .caseInsensitive)
         {
+            let currentSelected = selectedRange
             let string = text as NSString
             
             _ = regex.matches(in: text, options: [], range: NSRange(location: 0, length: string.length)).compactMap { match -> String in
@@ -75,7 +76,7 @@ extension EditorPageTextView {
                 let newAttr = NSMutableAttributedString(attributedString: self.attributedText)
                 newAttr.addAttribute(.link, value: "https://commun.com/\(tag)", range: match.range)
                 self.attributedText = newAttr
-                
+                self.selectedRange = currentSelected
                 return tag
             }
         }
@@ -83,8 +84,9 @@ extension EditorPageTextView {
     
     // MARK: - Mentions
     func resolveMentions() {
-        if let regex = try? NSRegularExpression(pattern: "\\@[\\p{L}_0-9]+", options: .caseInsensitive)
+        if let regex = try? NSRegularExpression(pattern: String.mentionRegex, options: .caseInsensitive)
         {
+            let currentSelected = selectedRange
             let string = text as NSString
             
             _ = regex.matches(in: text, options: [], range: NSRange(location: 0, length: string.length)).compactMap { match -> String in
@@ -94,7 +96,7 @@ extension EditorPageTextView {
                 let newAttr = NSMutableAttributedString(attributedString: self.attributedText)
                 newAttr.addAttribute(.link, value: "https://commun.com/\(mention)", range: match.range)
                 self.attributedText = newAttr
-                
+                self.selectedRange = currentSelected
                 return mention
             }
         }

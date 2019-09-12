@@ -30,7 +30,7 @@ extension String {
     }
     
     static var nameRegex: String {
-        return "[a-z0-9-_]+"
+        return "[\\p{L}0-9-_]+"
     }
     
     static var mentionRegex: String {
