@@ -46,11 +46,11 @@ class HTMLStringWebView: UIWebView {
     func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebView.NavigationType) -> Bool {
         switch navigationType {
         case .linkClicked:
-            // if userName tapped
             guard let url = request.url else {return false}
             let urlString = url.absoluteString
             
-            if urlString.matches(pattern: "^\(NSRegularExpression.escapedPattern(for: "https://commun.com/"))\(String.mentionRegex)$"),
+            // if userName tapped
+            if urlString.removingPercentEncoding?.matches(pattern: "^\(NSRegularExpression.escapedPattern(for: "https://commun.com/"))\(String.mentionRegex)$") == true,
                 let userName = urlString.components(separatedBy: "@").last {
                 parentViewController?.showProfileWithUserId(userName)
                 return false
