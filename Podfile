@@ -51,6 +51,7 @@ def common_pods
   pod 'AppImageViewer'
   pod 'SwiftLinkPreview', '~> 3.0.1'
   pod 'Down'
+  pod 'SDURLCache', '~> 1.3'
 end
 
 target 'Commun' do

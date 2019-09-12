@@ -18,6 +18,7 @@ import UserNotifications
 import CyberSwift
 @_exported import CyberSwift
 import RxSwift
+import SDURLCache
 
 let isDebugMode: Bool = true
 let smsCodeDebug: UInt64 = isDebugMode ? 9999 : 0
@@ -82,7 +83,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Configure notification
         configureNotifications(application: application)
         
+        // cache
+        if let urlCache = SDURLCache(memoryCapacity: 0, diskCapacity: 2*1024*1024*1024, diskPath: SDURLCache.defaultCachePath(), enableForIOS5AndUp: true) {
+            URLCache.shared = urlCache
+        }
         
+        // config fabric
         Fabric.with([Crashlytics.self])
         
         return true
