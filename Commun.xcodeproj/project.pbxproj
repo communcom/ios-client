@@ -16,6 +16,7 @@
 		3B02CD34228ADC100078BB52 /* UIWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B02CD33228ADC100078BB52 /* UIWebView.swift */; };
 		3B0506EE22D7309900B4E4A3 /* KeysVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B0506ED22D7309900B4E4A3 /* KeysVC.swift */; };
 		3B0520A9231CC73F005CA9CE /* ContentBlockTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B0520A8231CC73F005CA9CE /* ContentBlockTests.swift */; };
+		3B0CEE13232B3CCF006BE8E1 /* EmbedsPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B0CEE12232B3CCF006BE8E1 /* EmbedsPageViewController.swift */; };
 		3B0E9C5E226F02AC002AB1C2 /* ProfileEditCoverVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B0E9C5D226F02AC002AB1C2 /* ProfileEditCoverVC.swift */; };
 		3B0E9C64226F4A0C002AB1C2 /* VerticalDraggableImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B0E9C63226F4A0C002AB1C2 /* VerticalDraggableImageView.swift */; };
 		3B0E9C66227050E3002AB1C2 /* UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B0E9C65227050E3002AB1C2 /* UIImageView.swift */; };
@@ -259,6 +260,7 @@
 		3B02CD33228ADC100078BB52 /* UIWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIWebView.swift; sourceTree = "<group>"; };
 		3B0506ED22D7309900B4E4A3 /* KeysVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeysVC.swift; sourceTree = "<group>"; };
 		3B0520A8231CC73F005CA9CE /* ContentBlockTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentBlockTests.swift; sourceTree = "<group>"; };
+		3B0CEE12232B3CCF006BE8E1 /* EmbedsPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbedsPageViewController.swift; sourceTree = "<group>"; };
 		3B0E9C5D226F02AC002AB1C2 /* ProfileEditCoverVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditCoverVC.swift; sourceTree = "<group>"; };
 		3B0E9C63226F4A0C002AB1C2 /* VerticalDraggableImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalDraggableImageView.swift; sourceTree = "<group>"; };
 		3B0E9C65227050E3002AB1C2 /* UIImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageView.swift; sourceTree = "<group>"; };
@@ -535,6 +537,7 @@
 		3B02CD262289B1D30078BB52 /* PostHeaderView */ = {
 			isa = PBXGroup;
 			children = (
+				3B0CEE12232B3CCF006BE8E1 /* EmbedsPageViewController.swift */,
 				3B02CD272289B23E0078BB52 /* PostHeaderView.swift */,
 				3B02CD292289B2620078BB52 /* PostHeaderView.xib */,
 			);
@@ -1584,6 +1587,7 @@
 				571B14FC223A935C00630C8F /* Commun.xcdatamodeld in Sources */,
 				3B17E7A8230CE10600D681AA /* CommentCell+Actions.swift in Sources */,
 				576DC921223E42C800EDED41 /* UIViewControllerExtension.swift in Sources */,
+				3B0CEE13232B3CCF006BE8E1 /* EmbedsPageViewController.swift in Sources */,
 				57DE5BDE225208A4008566B9 /* EditorPageViewModel.swift in Sources */,
 				3B2F227322689334006B589E /* NSMutableAttributedString.swift in Sources */,
 				3B2F226B226892C5006B589E /* NotificationsPageViewModel.swift in Sources */,

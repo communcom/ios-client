@@ -22,7 +22,7 @@ class PostHeaderView: UIView, UIWebViewDelegate, PostController {
     weak var viewDelegate: PostHeaderViewDelegate?
     
     // Media content
-    @IBOutlet weak var embedView: EmbededView!
+    @IBOutlet weak var embedView: UIView!
     @IBOutlet weak var embedViewHeightConstraint: NSLayoutConstraint!
     
     // Reactions
@@ -69,9 +69,20 @@ class PostHeaderView: UIView, UIWebViewDelegate, PostController {
             return
         }
         hideLoading()
-        // Show media
-        let embededResult = post.content.embeds.first?.result
-        embedView.setUpWithEmbeded(embededResult)
+        // Show medias
+        let embedViews = post.content.embeds
+            .compactMap {$0.result}
+            .compactMap {embed -> UIImageView? in
+                let imageView = UIImageView(frame: .zero)
+                guard let urlString = embed.thumbnail_url,
+                    let url = URL(string: urlString)
+                else {return nil}
+                
+                imageView.sd_setImageCachedError(with: url, completion: nil)
+                
+                return imageView
+            }
+        setUpPageController(views: embedViews)
         
         // Show count label
         commentCountLabel.text = "\(post.stats.commentsCount) " + "comments count".localized()
@@ -109,6 +120,27 @@ class PostHeaderView: UIView, UIWebViewDelegate, PostController {
         contentWebView.delegate = self
         contentWebView.scrollView.isScrollEnabled = false
         contentWebView.scrollView.bouncesZoom = false
+    }
+    
+    func setUpPageController(views: [UIView]) {
+        guard let parentViewController = parentViewController,
+            views.count > 0
+        else {
+            embedView.constraints.first(where: {$0.firstAttribute == .height})?.constant = 0
+            return
+        }
+        
+        let pageVC = EmbedsPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
+        
+        parentViewController.addChild(pageVC)
+        pageVC.view.translatesAutoresizingMaskIntoConstraints = false
+        embedView.addSubview(pageVC.view)
+        pageVC.view.topAnchor.constraint(equalTo: embedView.topAnchor).isActive = true
+        pageVC.view.bottomAnchor.constraint(equalTo: embedView.bottomAnchor).isActive = true
+        pageVC.view.leadingAnchor.constraint(equalTo: embedView.leadingAnchor).isActive = true
+        pageVC.view.trailingAnchor.constraint(equalTo: embedView.trailingAnchor).isActive = true
+        pageVC.didMove(toParent: parentViewController)
+        pageVC.views = views
     }
     
     func webViewDidStartLoad(_ webView: UIWebView) {
