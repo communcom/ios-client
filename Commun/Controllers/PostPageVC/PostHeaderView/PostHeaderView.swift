@@ -70,28 +70,7 @@ class PostHeaderView: UIView, UIWebViewDelegate, PostController {
         }
         hideLoading()
         // Show medias
-        let embedViews = post.content.embeds
-            .compactMap {$0.result}
-            .compactMap {embed -> UIView? in
-                if let html = embed.html {
-                    let webView = HTMLStringWebView(frame: .zero)
-                    webView.scrollView.isScrollEnabled = false
-                    webView.scrollView.bouncesZoom = false
-                    webView.loadHTMLString(html, baseURL: nil)
-                    return webView
-                }
-                else {
-                    let imageView = UIImageView(frame: .zero)
-                    let urlString = embed.thumbnail_url ?? embed.url
-                    guard let url = URL(string: urlString)
-                        else {return nil}
-                    
-                    imageView.sd_setImageCachedError(with: url, completion: nil)
-                    
-                    return imageView
-                }
-            }
-        setUpPageController(views: embedViews)
+        showEmbeds(post.content.embeds.compactMap {$0.result})
         
         // Show count label
         commentCountLabel.text = "\(post.stats.commentsCount) " + "comments count".localized()
@@ -131,13 +110,15 @@ class PostHeaderView: UIView, UIWebViewDelegate, PostController {
         contentWebView.scrollView.bouncesZoom = false
     }
     
-    func setUpPageController(views: [UIView]) {
+    func showEmbeds(_ embeds: [ResponseAPIContentEmbedResult]) {
         guard let parentViewController = parentViewController,
-            views.count > 0
+            embeds.count > 0
         else {
             embedView.constraints.first(where: {$0.firstAttribute == .height})?.constant = 0
             return
         }
+        
+        embedView.constraints.first(where: {$0.firstAttribute == .height})?.constant = UIScreen.main.bounds.width * 9 / 16
         
         let pageVC = EmbedsPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
         
@@ -149,7 +130,8 @@ class PostHeaderView: UIView, UIWebViewDelegate, PostController {
         pageVC.view.leadingAnchor.constraint(equalTo: embedView.leadingAnchor).isActive = true
         pageVC.view.trailingAnchor.constraint(equalTo: embedView.trailingAnchor).isActive = true
         pageVC.didMove(toParent: parentViewController)
-        pageVC.views = views
+//        pageVC.parentView = embedView
+        pageVC.embeds = embeds
     }
     
     func webViewDidStartLoad(_ webView: UIWebView) {
