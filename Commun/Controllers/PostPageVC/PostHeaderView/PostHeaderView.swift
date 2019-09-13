@@ -72,15 +72,24 @@ class PostHeaderView: UIView, UIWebViewDelegate, PostController {
         // Show medias
         let embedViews = post.content.embeds
             .compactMap {$0.result}
-            .compactMap {embed -> UIImageView? in
-                let imageView = UIImageView(frame: .zero)
-                guard let urlString = embed.thumbnail_url,
-                    let url = URL(string: urlString)
-                else {return nil}
-                
-                imageView.sd_setImageCachedError(with: url, completion: nil)
-                
-                return imageView
+            .compactMap {embed -> UIView? in
+                if let html = embed.html {
+                    let webView = HTMLStringWebView(frame: .zero)
+                    webView.scrollView.isScrollEnabled = false
+                    webView.scrollView.bouncesZoom = false
+                    webView.loadHTMLString(html, baseURL: nil)
+                    return webView
+                }
+                else {
+                    let imageView = UIImageView(frame: .zero)
+                    let urlString = embed.thumbnail_url ?? embed.url
+                    guard let url = URL(string: urlString)
+                        else {return nil}
+                    
+                    imageView.sd_setImageCachedError(with: url, completion: nil)
+                    
+                    return imageView
+                }
             }
         setUpPageController(views: embedViews)
         
