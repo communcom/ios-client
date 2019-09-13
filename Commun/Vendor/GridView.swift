@@ -11,7 +11,7 @@ import CyberSwift
 
 class GridView: UIView {
     // MARK: - Properties
-    var padding: CGFloat = 2
+    var padding: CGFloat = 0.5
     var views = [UIView]()
     
     // MARK: - Initializers

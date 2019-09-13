@@ -72,6 +72,7 @@ class EmbedsPageViewController: UIPageViewController {
                     guard let url = URL(string: urlString)
                         else {return}
                     imageView.sd_setImageCachedError(with: url) { (error) in
+                        imageView.addTapToViewer()
 //                        guard let strongSelf = self else {return}
 //                        let height = strongSelf.view.size.width * imageView.image!.size.height / imageView.image!.size.width
 //                        strongSelf.cachedHeight[index] = height
