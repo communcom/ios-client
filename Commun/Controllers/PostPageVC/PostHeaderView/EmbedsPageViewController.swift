@@ -106,8 +106,8 @@ class EmbedsPageViewController: UIPageViewController {
         view.addSubview(button)
         button.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         button.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16).isActive = true
-        button.widthAnchor.constraint(equalToConstant: 26).isActive = true
-        button.heightAnchor.constraint(equalToConstant: 26).isActive = true
+        button.widthAnchor.constraint(equalToConstant: 36).isActive = true
+        button.heightAnchor.constraint(equalToConstant: 36).isActive = true
         button.setImage(UIImage(named: "btn-prev"), for: .normal)
         return button
     }
@@ -118,8 +118,8 @@ class EmbedsPageViewController: UIPageViewController {
         view.addSubview(button)
         button.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         button.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16).isActive = true
-        button.widthAnchor.constraint(equalToConstant: 26).isActive = true
-        button.heightAnchor.constraint(equalToConstant: 26).isActive = true
+        button.widthAnchor.constraint(equalToConstant: 36).isActive = true
+        button.heightAnchor.constraint(equalToConstant: 36).isActive = true
         button.setImage(UIImage(named: "btn-next"), for: .normal)
         return button
     }
