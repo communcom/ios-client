@@ -13,12 +13,14 @@ import CyberSwift
 class EditorPageVC: UIViewController {
     // MARK: - Constant
     let titleLettersLimit = 240
+    let contentLettersLimit = 30000
     
     // MARK: - Outlets
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var titleTextView: ExpandableTextView!
     @IBOutlet weak var titleTextViewCharacterCountLabel: UILabel!
     @IBOutlet weak var contentTextView: EditorPageTextView!
+    @IBOutlet weak var contentTextViewCharacterCountLabel: UILabel!
     @IBOutlet weak var dropDownView: UIView!
     @IBOutlet weak var adultButton: StateButton!
     @IBOutlet weak var photoPickerButton: StateButton!
@@ -96,6 +98,7 @@ class EditorPageVC: UIViewController {
         hideKeyboardButton.isHidden = true
         clearFormattingButton.isHidden = true
         titleTextViewCharacterCountLabel.isHidden = true
+        contentTextViewCharacterCountLabel.isHidden = true
         
         bindUI()
     }

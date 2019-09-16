@@ -17,13 +17,6 @@ extension EditorPageVC {
         // textViews
         titleTextView.rx.didBeginEditing
             .subscribe(onNext: {_ in
-                self.boldButton.isEnabled = false
-                self.italicButton.isEnabled = false
-                self.colorPickerButton.isEnabled = false
-                self.addLinkButton.isEnabled = false
-                self.photoPickerButton.isEnabled = false
-                self.clearFormattingButton.isEnabled = false
-                
                 self.titleTextViewCharacterCountLabel.isHidden = false
             })
             .disposed(by: disposeBag)
@@ -53,6 +46,7 @@ extension EditorPageVC {
                 self.addLinkButton.isHidden = false
                 self.photoPickerButton.isHidden = false
                 self.clearFormattingButton.isHidden = false
+                self.contentTextViewCharacterCountLabel.isHidden = false
             })
             .disposed(by: disposeBag)
         
@@ -64,6 +58,13 @@ extension EditorPageVC {
                 self.addLinkButton.isHidden = true
                 self.photoPickerButton.isHidden = true
                 self.clearFormattingButton.isHidden = true
+                self.contentTextViewCharacterCountLabel.isHidden = true
+            })
+            .disposed(by: disposeBag)
+        
+        contentTextView.rx.text.orEmpty
+            .subscribe(onNext: {text in
+                self.contentTextViewCharacterCountLabel.text = "\(text.count)/\(self.contentLettersLimit)"
             })
             .disposed(by: disposeBag)
         

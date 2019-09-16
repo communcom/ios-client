@@ -11,6 +11,11 @@ import Foundation
 extension EditorPageVC: UITextViewDelegate {
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         if let textView = textView as? EditorPageTextView {
+            // Limit letters
+            if textView.text.count - range.length + text.count > contentLettersLimit {
+                return false
+            }
+            
             // Disable link effect after inputing a space or new line
             if text == "\n" || text == " " {
                 // if appended
