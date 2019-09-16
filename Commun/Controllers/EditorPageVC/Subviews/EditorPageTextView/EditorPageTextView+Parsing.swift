@@ -28,14 +28,14 @@ extension EditorPageTextView {
         // Parse medias
         parseContent()
             .do(onSubscribe: {
-                self.parentViewController?.navigationController?
+                self.parentViewController?
                     .showIndetermineHudWithMessage("loading".localized().uppercaseFirst)
             })
             .subscribe(onCompleted: { [weak self] in
-                self?.parentViewController?.navigationController?.hideHud()
+                self?.parentViewController?.hideHud()
                 self?.originalAttributedString = self?.attributedText
             }) { [weak self] (error) in
-                self?.parentViewController?.navigationController?.showError(error)
+                self?.parentViewController?.showError(error)
             }
             .disposed(by: bag)
     }

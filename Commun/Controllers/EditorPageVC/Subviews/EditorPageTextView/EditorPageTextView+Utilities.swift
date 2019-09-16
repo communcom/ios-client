@@ -116,7 +116,7 @@ extension EditorPageTextView {
     func addAttachmentAtSelectedRange(_ attachment: TextAttachment) {
         // check if can add attachment
         if !canAddAttachment(attachment) {
-            parentViewController?.navigationController?.showErrorWithMessage("can not add more than".localized().uppercaseFirst + " " + "\(embedsLimit)" + " " + "attachments".localized() + " " + "and" + " " + "\(videosLimit)" + " " + "videos".localized())
+            parentViewController?.showErrorWithMessage("can not add more than".localized().uppercaseFirst + " " + "\(embedsLimit)" + " " + "attachments".localized() + " " + "and" + " " + "\(videosLimit)" + " " + "videos".localized())
             return
         }
         
