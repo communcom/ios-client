@@ -11,10 +11,13 @@ import RxSwift
 import CyberSwift
 
 class EditorPageVC: UIViewController {
+    // MARK: - Constant
+    let titleLettersLimit = 240
     
     // MARK: - Outlets
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var titleTextView: ExpandableTextView!
+    @IBOutlet weak var titleTextViewCharacterCountLabel: UILabel!
     @IBOutlet weak var contentTextView: EditorPageTextView!
     @IBOutlet weak var dropDownView: UIView!
     @IBOutlet weak var adultButton: StateButton!
@@ -92,6 +95,7 @@ class EditorPageVC: UIViewController {
         addLinkButton.isHidden = true
         hideKeyboardButton.isHidden = true
         clearFormattingButton.isHidden = true
+        titleTextViewCharacterCountLabel.isHidden = true
         
         bindUI()
     }

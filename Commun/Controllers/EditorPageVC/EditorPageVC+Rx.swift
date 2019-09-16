@@ -23,7 +23,26 @@ extension EditorPageVC {
                 self.addLinkButton.isEnabled = false
                 self.photoPickerButton.isEnabled = false
                 self.clearFormattingButton.isEnabled = false
+                
+                self.titleTextViewCharacterCountLabel.isHidden = false
             })
+            .disposed(by: disposeBag)
+        
+        titleTextView.rx.didEndEditing
+            .subscribe(onNext: {_ in
+                self.titleTextViewCharacterCountLabel.isHidden = true
+            })
+            .disposed(by: disposeBag)
+        
+        titleTextView.rx.text.orEmpty
+            .subscribe(onNext: {text in
+                self.titleTextViewCharacterCountLabel.text = "\(text.count)/\(self.titleLettersLimit)"
+            })
+            .disposed(by: disposeBag)
+        
+        titleTextView.rx.text.orEmpty
+            .filter {$0.count > self.titleLettersLimit}
+            .subscribe(onNext: limitCharactersInTitle())
             .disposed(by: disposeBag)
         
         contentTextView.rx.didBeginEditing
@@ -119,5 +138,12 @@ extension EditorPageVC {
             })
             .bind(to: sendPostButton.rx.isEnabled)
             .disposed(by: disposeBag)
+    }
+    
+    func limitCharactersInTitle() -> (_ newText: String) -> Void {
+        return {newText in
+            self.titleTextView.text =
+                String(newText.prefix(self.titleLettersLimit))
+        }
     }
 }

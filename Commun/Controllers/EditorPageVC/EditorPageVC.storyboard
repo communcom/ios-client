@@ -27,7 +27,7 @@
                                 <rect key="frame" x="0.0" y="64" width="500" height="880"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sEN-wG-0Ug">
-                                        <rect key="frame" x="0.0" y="0.0" width="500" height="668"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="500" height="676"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tux" translatesAutoresizingMaskIntoConstraints="NO" id="Yh5-US-3Nd">
                                                 <rect key="frame" x="16" y="24" width="40" height="40"/>
@@ -64,7 +64,7 @@
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="0Oi-CV-9TI" customClass="EditorPageTextView" customModule="Commun" customModuleProvider="target">
-                                                <rect key="frame" x="16" y="159.5" width="468" height="492.5"/>
+                                                <rect key="frame" x="16" y="167.5" width="468" height="492.5"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <accessibility key="accessibilityConfiguration" identifier="EditorPageContentTextView" label="EditorPageContentTextView"/>
                                                 <constraints>
@@ -73,21 +73,29 @@
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0/240" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4r8-FQ-IET">
+                                                <rect key="frame" x="447.5" y="143.5" width="36.5" height="16"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="bottom" secondItem="0Oi-CV-9TI" secondAttribute="bottom" constant="16" id="0Gd-MZ-gC2"/>
                                             <constraint firstItem="Yh5-US-3Nd" firstAttribute="top" secondItem="sEN-wG-0Ug" secondAttribute="top" constant="24" id="6Af-al-35U"/>
+                                            <constraint firstAttribute="trailing" secondItem="4r8-FQ-IET" secondAttribute="trailing" constant="16" id="Hru-x1-wII"/>
                                             <constraint firstItem="0Oi-CV-9TI" firstAttribute="leading" secondItem="sEN-wG-0Ug" secondAttribute="leading" constant="16" id="JFG-pd-zWB"/>
                                             <constraint firstItem="94b-Gg-NR2" firstAttribute="top" secondItem="Yh5-US-3Nd" secondAttribute="bottom" constant="24" id="KZ3-sQ-HDx"/>
                                             <constraint firstItem="94b-Gg-NR2" firstAttribute="leading" secondItem="sEN-wG-0Ug" secondAttribute="leading" constant="16" id="MIs-Ct-8b1"/>
-                                            <constraint firstItem="0Oi-CV-9TI" firstAttribute="top" secondItem="94b-Gg-NR2" secondAttribute="bottom" constant="24" id="MSP-eN-dyd"/>
                                             <constraint firstAttribute="trailing" secondItem="94b-Gg-NR2" secondAttribute="trailing" constant="16" id="NSS-fa-RQ9"/>
                                             <constraint firstItem="bla-eK-cJX" firstAttribute="leading" secondItem="Yh5-US-3Nd" secondAttribute="trailing" constant="16" id="PYt-MM-7kK"/>
+                                            <constraint firstItem="4r8-FQ-IET" firstAttribute="top" secondItem="94b-Gg-NR2" secondAttribute="bottom" constant="8" id="Qhl-qa-IqF"/>
                                             <constraint firstItem="bla-eK-cJX" firstAttribute="bottom" secondItem="Yh5-US-3Nd" secondAttribute="bottom" id="Ux6-0J-LVH"/>
                                             <constraint firstItem="Yh5-US-3Nd" firstAttribute="leading" secondItem="sEN-wG-0Ug" secondAttribute="leading" constant="16" id="WaU-DB-mG9"/>
                                             <constraint firstItem="rXf-Vp-Izy" firstAttribute="top" secondItem="Yh5-US-3Nd" secondAttribute="top" id="daB-RR-zr9"/>
                                             <constraint firstAttribute="trailing" secondItem="0Oi-CV-9TI" secondAttribute="trailing" constant="16" id="hvR-oT-a83"/>
+                                            <constraint firstItem="0Oi-CV-9TI" firstAttribute="top" secondItem="4r8-FQ-IET" secondAttribute="bottom" constant="8" id="phl-H9-g0w"/>
                                             <constraint firstItem="rXf-Vp-Izy" firstAttribute="leading" secondItem="Yh5-US-3Nd" secondAttribute="trailing" constant="16" id="xb7-nt-KyL"/>
                                         </constraints>
                                     </view>
@@ -313,6 +321,7 @@
                         <outlet property="scrollView" destination="ru5-vQ-hj9" id="iIa-n7-xPb"/>
                         <outlet property="sendPostButton" destination="uJ6-gc-rL2" id="aVg-wp-gSO"/>
                         <outlet property="titleTextView" destination="94b-Gg-NR2" id="V6I-Q2-Vrx"/>
+                        <outlet property="titleTextViewCharacterCountLabel" destination="4r8-FQ-IET" id="XdA-FP-SYL"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FKW-jE-mea" userLabel="First Responder" sceneMemberID="firstResponder"/>
