@@ -34,14 +34,14 @@ extension EditorPageTextView {
         // Donwload image
         downloadImage
             .do(onSubscribe: {
-                self.parentViewController?.navigationController?
+                self.parentViewController?
                     .showIndetermineHudWithMessage("loading".localized().uppercaseFirst)
             })
             .catchErrorJustReturn(UIImage(named: "image-not-available")!)
             .subscribe(
                 onSuccess: { [weak self] (image) in
                     guard let strongSelf = self else {return}
-                    strongSelf.parentViewController?.navigationController?.hideHud()
+                    strongSelf.parentViewController?.hideHud()
                     
                     // Insert Attachment
                     var attachment = TextAttachment()
@@ -54,7 +54,7 @@ extension EditorPageTextView {
                     strongSelf.addAttachmentAtSelectedRange(attachment)
                 },
                 onError: {[weak self] error in
-                    self?.parentViewController?.navigationController?.hideHud()
+                    self?.parentViewController?.hideHud()
                     self?.parentViewController?.showError(error)
                 }
             )

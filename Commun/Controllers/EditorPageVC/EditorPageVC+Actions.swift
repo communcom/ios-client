@@ -94,28 +94,25 @@ extension EditorPageVC {
         contentTextView.getContentBlock()
             .observeOn(MainScheduler.instance)
             .do(onSubscribe: {
-                self.navigationController?
-                    .showIndetermineHudWithMessage(
+                self.showIndetermineHudWithMessage(
                         "uploading".localized().uppercaseFirst)
             })
             .flatMap {
                 viewModel.sendPost(title: self.titleTextView.text, block: $0)
             }
             .do(onSubscribe: {
-                self.navigationController?
-                    .showIndetermineHudWithMessage(
+                self.showIndetermineHudWithMessage(
                         "sending post".localized().uppercaseFirst)
             })
             .flatMap {
                 viewModel.waitForTransaction($0)
             }
             .do(onSubscribe: {
-                self.navigationController?
-                    .showIndetermineHudWithMessage(
+                self.showIndetermineHudWithMessage(
                         "wait for transaction".localized().uppercaseFirst)
             })
             .subscribe(onSuccess: { (userId, permlink) in
-                self.navigationController?.hideHud()
+                self.hideHud()
                 // if editing post
                 if (self.viewModel?.postForEdit) != nil {
                     self.dismiss(animated: true, completion: nil)
@@ -131,7 +128,7 @@ extension EditorPageVC {
                     self.navigationController?.setViewControllers(viewControllers, animated: true)
                 }
             }) { (error) in
-                self.navigationController?.hideHud()
+                self.hideHud()
                 if let error = error as? ErrorAPI {
                     switch error {
                     case .responseUnsuccessful(message: "post not found".localized().uppercaseFirst):

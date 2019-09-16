@@ -44,7 +44,11 @@ extension UIViewController {
     }
     
     func showErrorWithMessage(_ message: String) {
-        showAlert(title: "error".localized(), message: message)
+        if let nc = navigationController {
+            nc.showAlert(title: "error".localized().uppercaseFirst, message: message)
+        } else {
+            showAlert(title: "error".localized().uppercaseFirst, message: message)
+        }
     }
     
     func showErrorWithLocalizedMessage(_ message: String) {
@@ -56,19 +60,23 @@ extension UIViewController {
         if let error = error as? ErrorAPI {
             message = error.caseInfo.message
         }
-        showAlert(title: "error".localized().uppercaseFirst, message: message.localized())
+        showErrorWithLocalizedMessage(message)
     }
     
     func hideHud() {
-        MBProgressHUD.hide(for: self.view, animated: false)
+        let vc = navigationController ?? self
+        
+        MBProgressHUD.hide(for: vc.view, animated: false)
     }
     
     func showIndetermineHudWithMessage(_ message: String) {
+        let vc = navigationController ?? self
+        
         // Hide all previous hud
         hideHud()
         
         // show new hud
-        let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+        let hud = MBProgressHUD.showAdded(to: vc.view, animated: true)
         hud.mode = MBProgressHUDMode.indeterminate
         hud.isUserInteractionEnabled = true
         hud.label.text = message
@@ -77,11 +85,13 @@ extension UIViewController {
     }
     
     func showDone(_ message: String, completion: (()->Void)? = nil) {
+        let vc = navigationController ?? self
+        
         // Hide all previous hud
         hideHud()
         
         // show new hud
-        let hud = MBProgressHUD.showAdded(to: view, animated: true)
+        let hud = MBProgressHUD.showAdded(to: vc.view, animated: true)
         hud.mode = .customView
         let image = UIImage(named: "Checkmark")
         hud.customView = UIImageView(image: image)
