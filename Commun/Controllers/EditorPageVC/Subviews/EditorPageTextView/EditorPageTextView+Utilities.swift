@@ -63,7 +63,19 @@ extension EditorPageTextView {
             self.setCurrentTextStyle()
         }
         else {
-            textStorage.setAttributes(defaultTypingAttributes, range: selectedRange)
+            textStorage.enumerateAttributes(in: selectedRange, options: []) {
+                (attrs, range, stop) in
+                if let link = attrs[.link] as? String {
+                    if link.matches(NSRegularExpression.escapedPattern(for: "https://commun.com/") + String.tagRegex) {
+                        return
+                    }
+                    
+                    if link.matches(NSRegularExpression.escapedPattern(for: "https://commun.com/") + String.mentionRegex) {
+                        return
+                    }
+                }
+                textStorage.setAttributes(defaultTypingAttributes, range: range)
+            }
         }
     }
     
