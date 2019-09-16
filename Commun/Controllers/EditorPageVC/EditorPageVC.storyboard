@@ -252,9 +252,9 @@
                                     <constraint firstAttribute="bottom" secondItem="919-aJ-jr1" secondAttribute="bottom" id="7AQ-A0-iAi"/>
                                     <constraint firstItem="ABi-la-VPy" firstAttribute="height" secondItem="U7q-88-jfF" secondAttribute="height" id="JaY-iB-JTe"/>
                                     <constraint firstItem="ra4-Bs-Xab" firstAttribute="centerY" secondItem="U7q-88-jfF" secondAttribute="centerY" id="Jnx-Hb-WpV"/>
-                                    <constraint firstItem="ra4-Bs-Xab" firstAttribute="leading" secondItem="919-aJ-jr1" secondAttribute="trailing" constant="16" id="Sga-63-OAH"/>
                                     <constraint firstItem="919-aJ-jr1" firstAttribute="height" secondItem="U7q-88-jfF" secondAttribute="height" id="ZmD-Rq-zVN"/>
                                     <constraint firstAttribute="height" constant="56" id="bFX-Kv-Myi"/>
+                                    <constraint firstAttribute="trailing" secondItem="919-aJ-jr1" secondAttribute="trailing" constant="54" id="eyL-y1-LIi"/>
                                     <constraint firstItem="919-aJ-jr1" firstAttribute="top" secondItem="U7q-88-jfF" secondAttribute="top" id="hvn-Vi-Pd6"/>
                                     <constraint firstAttribute="trailing" secondItem="ra4-Bs-Xab" secondAttribute="trailing" constant="16" id="lZ8-09-GQ8"/>
                                     <constraint firstItem="919-aJ-jr1" firstAttribute="leading" secondItem="U7q-88-jfF" secondAttribute="leading" id="pZE-oQ-dAP"/>
@@ -306,6 +306,7 @@
                         <outlet property="colorPickerButton" destination="eHI-Fy-KHY" id="4Wf-kn-zWO"/>
                         <outlet property="contentTextView" destination="0Oi-CV-9TI" id="1eu-aX-BHL"/>
                         <outlet property="dropDownView" destination="U7q-88-jfF" id="Z2s-ew-Vrh"/>
+                        <outlet property="editorToolsToContainerTrailingSpace" destination="eyL-y1-LIi" id="pqd-Hm-PWe"/>
                         <outlet property="hideKeyboardButton" destination="ra4-Bs-Xab" id="p5q-9A-EoT"/>
                         <outlet property="italicButton" destination="ENk-8M-crN" id="m27-lc-5Ju"/>
                         <outlet property="photoPickerButton" destination="nwa-Mp-egE" id="N6s-hE-WPM"/>

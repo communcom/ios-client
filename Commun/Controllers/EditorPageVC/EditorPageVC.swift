@@ -27,6 +27,8 @@ class EditorPageVC: UIViewController {
     @IBOutlet weak var hideKeyboardButton: UIButton!
     @IBOutlet weak var sendPostButton: UIBarButtonItem!
     
+    @IBOutlet weak var editorToolsToContainerTrailingSpace: NSLayoutConstraint!
+    
     // MARK: - Properties
     var viewModel: EditorPageViewModel?
     let disposeBag = DisposeBag()
