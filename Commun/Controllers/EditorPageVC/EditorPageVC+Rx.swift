@@ -68,8 +68,10 @@ extension EditorPageVC {
                 
                 // clear formatting
                 let isDefaultFormat = !textStyle.isBold && !textStyle.isItalic && textStyle.textColor == .black && textStyle.urlString == nil
-                self.clearFormattingButton.isSelected = !isDefaultFormat
-                self.clearFormattingButton.isEnabled = !isDefaultFormat
+                let isMixed = textStyle.isMixed
+                let canTouchClearFormattingButton = isMixed || !isDefaultFormat
+                self.clearFormattingButton.isSelected = canTouchClearFormattingButton
+                self.clearFormattingButton.isEnabled = canTouchClearFormattingButton
                 
             })
             .disposed(by: disposeBag)

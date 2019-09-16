@@ -10,6 +10,7 @@ import Foundation
 import RxSwift
 
 extension EditorPageTextView {
+    // MARK: - typingAttributes modification
     func setCurrentTextStyle() {
         var bold = false
         var italic = false
@@ -38,9 +39,22 @@ extension EditorPageTextView {
             textColor = .link
         }
         
-        let textStyle = TextStyle(isBold: bold, isItalic: italic, textColor: textColor, urlString: urlString)
+        let textStyle = TextStyle(isBold: bold, isItalic: italic, isMixed: selectedRangeHasDifferentTextStyle,textColor: textColor, urlString: urlString)
         
         self.currentTextStyle.accept(textStyle)
+    }
+    
+    /// if text in selectedRange has different style
+    var selectedRangeHasDifferentTextStyle: Bool {
+        if selectedRange.length == 0 {return false}
+        var isMixed = false
+        textStorage.enumerateAttributes(in: selectedRange, options: []) { (attrs, range, stop) in
+            if range != selectedRange {
+                isMixed = true
+                stop.pointee = true
+            }
+        }
+        return isMixed
     }
     
     func clearFormatting() {
@@ -53,6 +67,7 @@ extension EditorPageTextView {
         }
     }
     
+    // MARK: - Attachment helper
     func add(_ image: UIImage, to attachment: inout TextAttachment) {
         let attachmentRightMargin: CGFloat = 10
         let attachmentHeightForDescription: CGFloat = MediaView.descriptionDefaultHeight

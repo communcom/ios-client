@@ -37,19 +37,25 @@ extension EditorPageTextView {
         }
             // Modify selectedText's attributes
         else {
-            // default font
-            var font = (selectedAString.attributes[.font] as? UIFont) ?? defaultFont
-            let fontDescriptor = font.fontDescriptor
-            var symbolicTraits = fontDescriptor.symbolicTraits
-            
-            if on {
-                symbolicTraits.insert(trait)
-            } else {
-                symbolicTraits.remove(trait)
+            // ignore link
+            textStorage.enumerateAttributes(in: selectedRange, options: []) {
+                (attrs, range, stop) in
+                if attrs[.link] != nil {
+                    return
+                }
+                var font = (attrs[.font] as? UIFont) ?? defaultFont
+                let fontDescriptor = font.fontDescriptor
+                var symbolicTraits = fontDescriptor.symbolicTraits
+                
+                if on {
+                    symbolicTraits.insert(trait)
+                } else {
+                    symbolicTraits.remove(trait)
+                }
+                
+                font = UIFont(descriptor: font.fontDescriptor.withSymbolicTraits(symbolicTraits)!, size: font.pointSize)
+                textStorage.addAttribute(.font, value: font, range: range)
             }
-            
-            font = UIFont(descriptor: font.fontDescriptor.withSymbolicTraits(symbolicTraits)!, size: font.pointSize)
-            textStorage.addAttribute(.font, value: font, range: selectedRange)
         }
     }
     
@@ -58,7 +64,11 @@ extension EditorPageTextView {
         if selectedRange.length == 0 {
             typingAttributes[.foregroundColor] = color
         } else {
-            textStorage.addAttribute(.foregroundColor, value: color, range: selectedRange)
+            textStorage.enumerateAttributes(in: selectedRange, options: []) {
+                (attrs, range, stop) in
+                if attrs[.link] != nil {return}
+                textStorage.addAttribute(.foregroundColor, value: color, range: range)
+            }
         }
     }
     

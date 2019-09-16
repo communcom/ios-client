@@ -13,9 +13,11 @@ import CyberSwift
 
 class EditorPageTextView: ExpandableTextView {
     // MARK: - Nested types
-    struct TextStyle {
+    struct TextStyle: Equatable {
         var isBold = false
         var isItalic = false
+        // if format is unpersisted alongside selection
+        var isMixed = false
         var textColor: UIColor = .black
         var urlString: String?
     }
@@ -25,7 +27,7 @@ class EditorPageTextView: ExpandableTextView {
     let defaultFont = UIFont.systemFont(ofSize: 17)
     lazy var defaultTypingAttributes: [NSAttributedString.Key: Any] = [.font: defaultFont]
     
-    var currentTextStyle = BehaviorRelay<TextStyle>(value: TextStyle(isBold: false, isItalic: false, textColor: .black, urlString: nil))
+    var currentTextStyle = BehaviorRelay<TextStyle>(value: TextStyle(isBold: false, isItalic: false, isMixed: false, textColor: .black, urlString: nil))
     
     var originalAttributedString: NSAttributedString?
     
