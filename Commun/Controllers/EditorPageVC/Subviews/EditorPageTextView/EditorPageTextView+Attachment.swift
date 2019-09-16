@@ -70,10 +70,10 @@ extension EditorPageTextView {
             var attrs = typingAttributes
             attrs[.link] = urlString
             let attrStr = NSMutableAttributedString(string: placeholder, attributes: attrs)
-            attrStr.insert(NSAttributedString(string: String.invisible, attributes: typingAttributes), at: 0)
-            attrStr.append(NSAttributedString(string: String.invisible, attributes: typingAttributes))
             textStorage.replaceCharacters(in: selectedRange, with: attrStr)
-            selectedRange.location += 1
+            let newSelectedRange = NSMakeRange(selectedRange.location + attrStr.length, 0)
+            selectedRange = newSelectedRange
+            typingAttributes = defaultTypingAttributes
         }
             // if link is a separated block
         else {
@@ -101,24 +101,8 @@ extension EditorPageTextView {
             textStorage.removeAttribute(.link, range: selectedRange)
         }
             
-        else if var range = textStorage.rangeOfLink(at: selectedRange.location) {
+        else if let range = textStorage.rangeOfLink(at: selectedRange.location) {
             textStorage.removeAttribute(.link, range: range)
-            if range.location > 0 {
-                var invisibleTextLocation = range.location - 1
-                var invisibleTextRange = NSMakeRange(invisibleTextLocation, 1)
-                if textStorage.attributedSubstring(from: invisibleTextRange).string == .invisible {
-                    textStorage.replaceCharacters(in: invisibleTextRange, with: "")
-                    range.location -= 1
-                    invisibleTextLocation = range.location + range.length
-                    
-                    if invisibleTextLocation >= textStorage.length {return}
-                    
-                    invisibleTextRange = NSMakeRange(invisibleTextLocation, 1)
-                    if textStorage.attributedSubstring(from: invisibleTextRange).string == .invisible {
-                        textStorage.replaceCharacters(in: invisibleTextRange, with: "")
-                    }
-                }
-            }
         }
     }
     

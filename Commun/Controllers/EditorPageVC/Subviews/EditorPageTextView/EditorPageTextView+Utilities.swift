@@ -135,6 +135,7 @@ extension EditorPageTextView {
         
         // replace
         textStorage.replaceCharacters(in: selectedRange, with: attachmentAS)
+        selectedRange = NSMakeRange(selectedRange.location + attachmentAS.length, 0)
     }
     
     func replaceCharacters(in range: NSRange, with attachment: TextAttachment) {

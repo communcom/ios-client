@@ -17,7 +17,7 @@ extension EditorPageVC: UITextViewDelegate {
             }
             
             // Disable link effect after inputing a space or new line
-            if text == "\n" || text == " " {
+            if text == "\n" || text == " " || text == "." {
                 // if appended
                 if range.length == 0 {
                     // get range of last character

@@ -97,10 +97,6 @@ extension NSAttributedString {
                 }
             }
             
-            // modify content
-            // remove invisible character
-            content = content.replacingOccurrences(of: String.invisible, with: "")
-            
             // add block if content is not empty
             id += 1
             let block = ContentBlock(
@@ -119,9 +115,9 @@ extension NSAttributedString {
         return nil
     }
     
-    /// find range of text which has the same attributes as text at index
+    /// find range of link which contains text at index
     func rangeOfLink(at index: Int) -> NSRange? {
-        if index >= length {return nil}
+        if index > length {return nil}
         let attrs = attributes(at: index, effectiveRange: nil)
         
         guard let urlString = attrs[.link] as? String else {return nil}
