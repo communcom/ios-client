@@ -34,11 +34,11 @@ extension String {
     }
     
     static var mentionRegex: String {
-        return "@\(nameRegex)"
+        return "\\B@\(nameRegex)"
     }
     
     static var tagRegex: String {
-        return "#\(nameRegex)"
+        return "\\B#\(nameRegex)"
     }
     
     fileprivate func getStringsStartWith(_ symbol: String) -> [String] {
