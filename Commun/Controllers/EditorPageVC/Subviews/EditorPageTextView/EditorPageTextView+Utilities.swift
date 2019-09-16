@@ -95,7 +95,31 @@ extension EditorPageTextView {
         mediaView.removeFromSuperview()
     }
     
-    func addAttachmentAtSelectedRange(_ attachment: NSTextAttachment) {
+    func canAddAttachment(_ attachment: TextAttachment) -> Bool {
+        var embedCount = 1
+        var videoCount = attachment.embed?.type == "video" ? 1 : 0
+        
+        // Count attachments
+        textStorage.enumerateAttribute(.attachment, in: NSMakeRange(0, textStorage.length), options: []) { (attr, range, stop) in
+            if let attr = attr as? TextAttachment {
+                embedCount += 1
+                if attr.embed?.type == "video"
+                {
+                    videoCount += 1
+                }
+            }
+        }
+        
+        return embedCount <= embedsLimit && videoCount <= videosLimit
+    }
+    
+    func addAttachmentAtSelectedRange(_ attachment: TextAttachment) {
+        // check if can add attachment
+        if !canAddAttachment(attachment) {
+            parentViewController?.navigationController?.showErrorWithMessage("can not add more than".localized().uppercaseFirst + " " + "\(embedsLimit)" + " " + "attachments".localized() + " " + "and" + " " + "\(videosLimit)" + " " + "videos".localized())
+            return
+        }
+        
         // attachmentAS to add
         let attachmentAS = NSMutableAttributedString()
         

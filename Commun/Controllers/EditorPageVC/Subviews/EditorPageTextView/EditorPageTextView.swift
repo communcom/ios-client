@@ -12,6 +12,10 @@ import RxCocoa
 import CyberSwift
 
 class EditorPageTextView: ExpandableTextView {
+    // MARK: - Constants
+    let embedsLimit = 15
+    let videosLimit = 10
+    
     // MARK: - Nested types
     struct TextStyle: Equatable {
         var isBold = false
