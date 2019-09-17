@@ -16,8 +16,10 @@ extension EditorPageVC: UITextViewDelegate {
                 return false
             }
             
-            // Disable link effect after inputing a space or new line
-            if text == "\n" || text == " " || text == "." {
+            // Disable link effect after non-allowed-in-name character
+            // Check if text is not a part of tag or mention
+            let regex = "^" + String(String.nameRegex.dropLast()) + "$"
+            if !text.matches(regex) {
                 // if appended
                 if range.length == 0 {
                     // get range of last character
