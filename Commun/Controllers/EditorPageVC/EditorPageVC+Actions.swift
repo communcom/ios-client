@@ -187,12 +187,17 @@ extension EditorPageVC {
     }
     
     @IBAction func addLinkButtonDidTouch(_ sender: Any) {
-        if let urlString = contentTextView.currentTextStyle.value.urlString {
-            showActionSheet(title: urlString, message: nil, actions: [
-                UIAlertAction(title: "remove".localized().uppercaseFirst, style: .destructive, handler: { (_) in
-                    self.contentTextView.removeLink()
-                })
-            ])
+        if let urlString = contentTextView.currentTextStyle.value.urlString
+        {
+            // Remove link that is not a mention or tag
+            if urlString.isLink {
+                showActionSheet(title: urlString, message: nil, actions: [
+                    UIAlertAction(title: "remove".localized().uppercaseFirst, style: .destructive, handler: { (_) in
+                        self.contentTextView.removeLink()
+                    })
+                ])
+            }
+            
         } else {
             // Add link
             let alert = UIAlertController(

@@ -108,8 +108,19 @@ extension EditorPageTextView {
             textStorage.removeAttribute(.link, range: selectedRange)
         }
             
-        else if let range = textStorage.rangeOfLink(at: selectedRange.location) {
-            textStorage.removeAttribute(.link, range: range)
+        else if selectedRange.length == 0 {
+            let attr = typingAttributes
+            if let link = attr[.link] as? String,
+                link.isLink
+            {
+                textStorage.enumerateAttribute(.link, in: NSMakeRange(0, textStorage.length), options: []) { (currentLink, range, stop) in
+                    if currentLink as? String == link,
+                        range.contains(selectedRange.location - 1)
+                    {
+                        textStorage.removeAttribute(.link, range: range)
+                    }
+                }
+            }
         }
     }
     

@@ -34,7 +34,12 @@ extension EditorPageVC: UITextViewDelegate {
                     }
                 }
                 // if inserted
-                
+            }
+            
+            // Remove link
+            if text == "", range.length > 0, range.location > 0
+            {
+                contentTextView.removeLink()
             }
         }
         return true

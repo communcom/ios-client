@@ -49,6 +49,10 @@ extension String {
         return self.matches("^\(NSRegularExpression.linkToTagRegexPattern)$")
     }
     
+    var isLink: Bool {
+        return self.matches("^\(NSRegularExpression.linkRegexPattern)$")
+    }
+    
 //    func highlightMentionAttributedString() -> NSAttributedString {
 //        let attributed = NSMutableAttributedString(string: self)
 //        if let regex = try? NSRegularExpression(pattern: "\\s" + .tagRegex, options: .caseInsensitive){
