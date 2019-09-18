@@ -21,6 +21,7 @@ extension EditorPageTextView {
             .subscribe(onNext: {
                 self.resolveHashTags()
                 self.resolveMentions()
+                self.resolveLinks()
                 
                 // reset
                 if self.attributedText.length == 0 {

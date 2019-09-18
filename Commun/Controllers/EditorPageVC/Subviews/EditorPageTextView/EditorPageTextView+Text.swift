@@ -76,19 +76,7 @@ extension EditorPageTextView {
     func resolveHashTags() {
         if let regex = try? NSRegularExpression(pattern: NSRegularExpression.tagRegexPattern, options: .caseInsensitive)
         {
-            let currentSelected = selectedRange
-            let string = text as NSString
-            
-            _ = regex.matches(in: text, options: [], range: NSRange(location: 0, length: string.length)).compactMap { match -> String in
-                
-                let tag = string.substring(with: match.range)
-                
-                let newAttr = NSMutableAttributedString(attributedString: self.attributedText)
-                newAttr.addAttribute(.link, value: "\(URL.appURL)/\(tag)", range: match.range)
-                self.attributedText = newAttr
-                self.selectedRange = currentSelected
-                return tag
-            }
+            addAppLink(regex: regex, prefix: "\(URL.appURL)/")
         }
     }
     
@@ -96,19 +84,26 @@ extension EditorPageTextView {
     func resolveMentions() {
         if let regex = try? NSRegularExpression(pattern: NSRegularExpression.mentionRegexPattern, options: .caseInsensitive)
         {
-            let currentSelected = selectedRange
-            let string = text as NSString
-            
-            _ = regex.matches(in: text, options: [], range: NSRange(location: 0, length: string.length)).compactMap { match -> String in
-                
-                let mention = string.substring(with: match.range)
-                
-                let newAttr = NSMutableAttributedString(attributedString: self.attributedText)
-                newAttr.addAttribute(.link, value: "\(URL.appURL)/\(mention)", range: match.range)
-                self.attributedText = newAttr
-                self.selectedRange = currentSelected
-                return mention
-            }
+            addAppLink(regex: regex, prefix: "\(URL.appURL)/")
+        }
+    }
+    
+    // MARK: - Link detector
+    func resolveLinks() {
+        if let regex = NSRegularExpression.linkRegex {
+            addAppLink(regex: regex)
+        }
+    }
+    
+    func addAppLink(regex: NSRegularExpression, prefix: String? = nil) {
+        let currentSelected = selectedRange
+        let matches = regex.matchedStrings(in: text)
+        for match in matches {
+            let range = textStorage.nsRangeOfText(match)
+            let newAttr = NSMutableAttributedString(attributedString: self.attributedText)
+            newAttr.addAttribute(.link, value: "\(prefix ?? "")\(match)", range: range)
+            self.attributedText = newAttr
+            self.selectedRange = currentSelected
         }
     }
 }
