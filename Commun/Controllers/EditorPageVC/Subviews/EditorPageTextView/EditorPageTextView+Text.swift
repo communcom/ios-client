@@ -84,7 +84,7 @@ extension EditorPageTextView {
                 let tag = string.substring(with: match.range)
                 
                 let newAttr = NSMutableAttributedString(attributedString: self.attributedText)
-                newAttr.addAttribute(.link, value: "https://commun.com/\(tag)", range: match.range)
+                newAttr.addAttribute(.link, value: "\(URL.appURL)/\(tag)", range: match.range)
                 self.attributedText = newAttr
                 self.selectedRange = currentSelected
                 return tag
@@ -104,7 +104,7 @@ extension EditorPageTextView {
                 let mention = string.substring(with: match.range)
                 
                 let newAttr = NSMutableAttributedString(attributedString: self.attributedText)
-                newAttr.addAttribute(.link, value: "https://commun.com/\(mention)", range: match.range)
+                newAttr.addAttribute(.link, value: "\(URL.appURL)/\(mention)", range: match.range)
                 self.attributedText = newAttr
                 self.selectedRange = currentSelected
                 return mention

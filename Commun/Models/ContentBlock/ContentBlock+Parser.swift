@@ -84,9 +84,9 @@ extension ContentBlock {
             if style == "" {return innerHTML}
             return "<span style=\"\(style)\">\(innerHTML)</span>"
         case "tag":
-            return "<a href=\"https://commun.com/#\(innerHTML)\">#\(innerHTML)</a>"
+            return "<a href=\"\(URL.appURL)/#\(innerHTML)\">#\(innerHTML)</a>"
         case "mention":
-            return "<a href=\"https://commun.com/@\(innerHTML)\">@\(innerHTML)</a>"
+            return "<a href=\"\(URL.appURL)/@\(innerHTML)\">@\(innerHTML)</a>"
         case "link":
             let url = attributes?.url ?? ""
             return "<a href=\"\(url)\">\(innerHTML)</a>"
@@ -165,13 +165,13 @@ extension ContentBlock {
             let link = child.string
             child.insert(NSAttributedString(string: "#"), at: 0)
             var attr = currentAttributes
-            attr[.link] = "https://commun.com/#\(link)"
+            attr[.link] = "\(URL.appURL)/#\(link)"
             child.addAttributes(attr, range: NSMakeRange(0, child.length))
         case "mention":
             let link = child.string
             child.insert(NSAttributedString(string: "@"), at: 0)
             var attr = currentAttributes
-            attr[.link] = "https://commun.com/@\(link)"
+            attr[.link] = "\(URL.appURL)/@\(link)"
             child.addAttributes(attr, range: NSMakeRange(0, child.length))
         case "link":
             let url = attributes?.url ?? ""

@@ -28,10 +28,10 @@ extension NSRegularExpression {
     }
     
     static var linkToTagRegexPattern: String {
-        return escapedPattern(for: "https://commun.com/") + tagRegexPattern
+        return escapedPattern(for: URL.appURL + "/") + tagRegexPattern
     }
     
     static var linkToMentionRegexPattern: String {
-        return escapedPattern(for: "https://commun.com/") + mentionRegexPattern
+        return escapedPattern(for: URL.appURL + "/") + mentionRegexPattern
     }
 }

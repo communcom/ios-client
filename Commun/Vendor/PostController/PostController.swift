@@ -191,7 +191,7 @@ extension PostController {
         // text to share
         var text = post.content.title + "\n"
         
-        text += "https://commun.com/posts/\(userId)/\(post.contentId.permlink)"
+        text += "\(URL.appURL)/posts/\(userId)/\(post.contentId.permlink)"
         
         
         // link to share

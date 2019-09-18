@@ -20,7 +20,7 @@ extension TTTAttributedLabel {
             }
 
             for user in matches {
-                addLinkToText(user, toUrl: "https://commun.com/\(user)")
+                addLinkToText(user, toUrl: "\(URL.appURL)/\(user)")
             }
         }
         
@@ -32,7 +32,7 @@ extension TTTAttributedLabel {
             }
             
             for tag in matches {
-                addLinkToText(tag, toUrl: "https://commun.com/\(tag)")
+                addLinkToText(tag, toUrl: "\(URL.appURL)/\(tag)")
             }
         }
         

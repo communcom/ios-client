@@ -147,6 +147,7 @@
 		3BF37BD622A162E000A72FFE /* ResponseAPIOnlineNotificationData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BF37BD522A162E000A72FFE /* ResponseAPIOnlineNotificationData.swift */; };
 		3BF37BD822A1666200A72FFE /* ResponseAPIOnlineNotifyHistoryResult.json in Resources */ = {isa = PBXBuildFile; fileRef = 3BF37BD722A1666200A72FFE /* ResponseAPIOnlineNotifyHistoryResult.json */; };
 		3BF3817F2331D17900C02123 /* NSRegularExpression.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BF3817E2331D17900C02123 /* NSRegularExpression.swift */; };
+		3BF381812331D9CD00C02123 /* URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BF381802331D9CD00C02123 /* URL.swift */; };
 		3BF3A7C923201C66000969D5 /* EditorPageTextView+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BF3A7C823201C66000969D5 /* EditorPageTextView+Utilities.swift */; };
 		3BF53CE4230B93E10082464F /* HTMLStringWebView.css in Resources */ = {isa = PBXBuildFile; fileRef = 3BF53CE3230B93E10082464F /* HTMLStringWebView.css */; };
 		571B14F4223A935C00630C8F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571B14F3223A935C00630C8F /* AppDelegate.swift */; };
@@ -395,6 +396,7 @@
 		3BF37BD522A162E000A72FFE /* ResponseAPIOnlineNotificationData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseAPIOnlineNotificationData.swift; sourceTree = "<group>"; };
 		3BF37BD722A1666200A72FFE /* ResponseAPIOnlineNotifyHistoryResult.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ResponseAPIOnlineNotifyHistoryResult.json; sourceTree = "<group>"; };
 		3BF3817E2331D17900C02123 /* NSRegularExpression.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSRegularExpression.swift; sourceTree = "<group>"; };
+		3BF381802331D9CD00C02123 /* URL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URL.swift; sourceTree = "<group>"; };
 		3BF3A7C823201C66000969D5 /* EditorPageTextView+Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EditorPageTextView+Utilities.swift"; sourceTree = "<group>"; };
 		3BF53CE3230B93E10082464F /* HTMLStringWebView.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; path = HTMLStringWebView.css; sourceTree = "<group>"; };
 		4F0772CC6D820AD11B1FF48A /* Pods_Commun.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Commun.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1076,6 +1078,7 @@
 				3BEC38E2230F801600662374 /* UITextView.swift */,
 				3BAD8E802318D838005A8AB3 /* UITextView+UILabel.swift */,
 				3BF3817E2331D17900C02123 /* NSRegularExpression.swift */,
+				3BF381802331D9CD00C02123 /* URL.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1732,6 +1735,7 @@
 				3BE68AAA22EEA08600033B81 /* SettingsVC+SwitcherDelegate.swift in Sources */,
 				575945A122607F1F004041C9 /* CountryCell.swift in Sources */,
 				57DE5BDC2252088C008566B9 /* EditorPageVC.swift in Sources */,
+				3BF381812331D9CD00C02123 /* URL.swift in Sources */,
 				3B2F226E226892C5006B589E /* NotificationType.swift in Sources */,
 				3BC3CA3322CA297900A893DC /* WelcomeVC.swift in Sources */,
 				3B2538B8231E6DF000D0B1DA /* EditorColorPicker.swift in Sources */,
