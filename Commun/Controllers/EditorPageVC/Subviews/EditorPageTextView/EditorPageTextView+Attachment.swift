@@ -13,12 +13,19 @@ import RxSwift
 extension EditorPageTextView {
     // MARK: - Methods
     private func addEmbed(_ embed: ResponseAPIFrameGetEmbed) {
-        guard let type = embed.type else {return}
+        // modification needed because of type conflict
+        var embed = embed
+        guard embed.type != nil else {return}
+        
         // url for images
         var urlString = embed.url
         
+        // Fix conflict type
+        if embed.type == "photo" {embed.type = "image"}
+        if embed.type == "link" {embed.type = "website"}
+        
         // thumbnail for website and video
-        if type == "website" || type == "video" {
+        if embed.type == "website" || embed.type == "video" {
             urlString = embed.thumbnail_url
         }
         

@@ -43,9 +43,6 @@ class TextAttachment: NSTextAttachment {
             return nil
         }
         
-        // Fix conflict type
-        if type == "photo" {type = "image"}
-        
         // Prevent sending html
         embed.html = nil
         
