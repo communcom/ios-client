@@ -38,7 +38,7 @@ class TextAttachment: NSTextAttachment {
     
     func toSingleContentBlock(id: inout UInt) -> Single<ContentBlock>? {
         guard var embed = embed,
-            var type = embed.type
+            let type = embed.type
         else {
             return nil
         }

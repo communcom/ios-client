@@ -7,6 +7,8 @@
 //
 
 import Foundation
+import SafariServices
+import AppImageViewer
 
 extension EditorPageVC: UITextViewDelegate {
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
@@ -59,6 +61,37 @@ extension EditorPageVC: UITextViewDelegate {
                         UIPasteboard.general
                             .setData(
                                 NSKeyedArchiver.archivedData(withRootObject: attachment), forPasteboardType: "attachment")
+                    }),
+                    UIAlertAction(title: "preview".localized().uppercaseFirst, style: .default, handler: { (_) in
+                        guard let type = attachment.embed?.type else {return}
+                        switch type {
+                        case "website", "video":
+                            guard let urlString = attachment.embed?.url,
+                                let url = URL(string: urlString) else {return}
+                            let safariVC = SFSafariViewController(url: url)
+                            self.present(safariVC, animated: true, completion: nil)
+                        case "image":
+                            if let localImage = attachment.localImage {
+                                let appImage = ViewerImage.appImage(forImage: localImage)
+                                let viewer = AppImageViewer(photos: [appImage])
+                                self.present(viewer, animated: false, completion: nil)
+                            }
+                            else if let imageUrl = attachment.embed?.url,
+                                let url = URL(string: imageUrl)
+                            {
+                                NetworkService.shared.downloadImage(url)
+                                    .subscribe(onSuccess: { [weak self] (image) in
+                                        let appImage = ViewerImage.appImage(forImage: image)
+                                        let viewer = AppImageViewer(photos: [appImage])
+                                        self?.present(viewer, animated: false, completion: nil)
+                                    }, onError: { (error) in
+                                        self.showError(error)
+                                    })
+                                    .disposed(by: self.disposeBag)
+                            }
+                        default:
+                            break
+                        }
                     })
                 ])
             
