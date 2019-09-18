@@ -39,4 +39,26 @@ extension EditorPageVC: UITextViewDelegate {
         }
         return true
     }
+    
+    func textView(_ textView: UITextView, shouldInteractWith textAttachment: NSTextAttachment, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
+        
+        if let attachment = textAttachment as? TextAttachment {
+            showActionSheet(title: "choose action".localized().uppercaseFirst, message: nil, actions: [
+                    UIAlertAction(title: "copy".localized().uppercaseFirst, style: .default, handler: { (_) in
+                        UIPasteboard.general
+                            .setData(
+                                NSKeyedArchiver.archivedData(withRootObject: attachment), forPasteboardType: "attachment")
+                    }),
+                    UIAlertAction(title: "cut".localized().uppercaseFirst, style: .default, handler: { (_) in
+                        self.contentTextView.textStorage.replaceCharacters(in: characterRange, with: "")
+                        UIPasteboard.general
+                            .setData(
+                                NSKeyedArchiver.archivedData(withRootObject: attachment), forPasteboardType: "attachment")
+                    })
+                ])
+            
+            return false
+        }
+        return true
+    }
 }

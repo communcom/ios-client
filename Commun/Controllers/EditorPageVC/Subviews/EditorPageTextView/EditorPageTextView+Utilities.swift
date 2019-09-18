@@ -214,22 +214,40 @@ extension EditorPageTextView {
         }
     }
     
-    // TODO: Support pasting html
-    //    override func paste(_ sender: Any?) {
-    //        let pasteBoard = UIPasteboard.general
-    //        if let html = pasteBoard.items.last?["public.html"] as? String {
-    //            let htmlData = NSString(string: html).data(using: String.Encoding.unicode.rawValue)
-    //            let options = [NSAttributedString.DocumentReadingOptionKey.documentType:
-    //                NSAttributedString.DocumentType.html]
-    //            if let attributedString = try? NSMutableAttributedString(data: htmlData ?? Data(),
-    //                                                                  options: options,
-    //                                                                  documentAttributes: nil) {
-    //                attributedString.addAttribute(.font, value: defaultFont, range: NSMakeRange(0, attributedString.length))
-    //                textStorage.replaceCharacters(in: selectedRange, with: attributedString)
-    //                return
-    //            }
-    //        }
-    //
-    //        super.paste(sender)
-    //    }
+    // MARK: - contextMenu modification
+    override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
+        if action == #selector(paste(_:)) {
+            let pasteBoard = UIPasteboard.general
+            if pasteBoard.items.last?["attachment"] != nil { return true }
+        }
+        return super.canPerformAction(action, withSender: sender)
+    }
+    
+    override func paste(_ sender: Any?) {
+        let pasteBoard = UIPasteboard.general
+        
+        // Paste attachment
+        if let data = pasteBoard.items.last?["attachment"] as? Data,
+            let attachment = NSKeyedUnarchiver.unarchiveObject(with: data) as? TextAttachment
+        {
+            addAttachmentAtSelectedRange(attachment)
+            return
+        }
+        
+        // TODO: Paste html
+//        if let html = pasteBoard.items.last?["public.html"] as? String {
+//            let htmlData = NSString(string: html).data(using: String.Encoding.unicode.rawValue)
+//            let options = [NSAttributedString.DocumentReadingOptionKey.documentType:
+//                NSAttributedString.DocumentType.html]
+//            if let attributedString = try? NSMutableAttributedString(data: htmlData ?? Data(),
+//                                                                  options: options,
+//                                                                  documentAttributes: nil) {
+//                attributedString.addAttribute(.font, value: defaultFont, range: NSMakeRange(0, attributedString.length))
+//                textStorage.replaceCharacters(in: selectedRange, with: attributedString)
+//                return
+//            }
+//        }
+
+        super.paste(sender)
+    }
 }
