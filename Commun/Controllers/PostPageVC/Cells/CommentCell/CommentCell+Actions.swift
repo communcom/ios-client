@@ -27,12 +27,12 @@ extension CommentCell: TTTAttributedLabelDelegate {
         }
         
         #warning("remove golos.io in production")
-        if urlString.matches(pattern: "^(?:\(NSRegularExpression.escapedPattern(for: "https://commun.com/"))|\(NSRegularExpression.escapedPattern(for: "https://golos.io/")))\(String.mentionRegex)$"),
+        if urlString.matches(pattern: "^(?:\(NSRegularExpression.escapedPattern(for: "https://commun.com/"))|\(NSRegularExpression.escapedPattern(for: "https://golos.io/")))\(NSRegularExpression.mentionRegexPattern)$"),
             let userName = urlString.components(separatedBy: "@").last {
             delegate?.cell(self, didTapOnUserName: userName)
             return
         }
-        if urlString.matches(pattern: "^(?:\(NSRegularExpression.escapedPattern(for: "https://commun.com/"))|\(NSRegularExpression.escapedPattern(for: "https://golos.io/")))\(String.tagRegex)$"),
+        if urlString.matches(pattern: "^(?:\(NSRegularExpression.escapedPattern(for: "https://commun.com/"))|\(NSRegularExpression.escapedPattern(for: "https://golos.io/")))\(NSRegularExpression.tagRegexPattern)$"),
             let tag = urlString.components(separatedBy: "#").last {
             delegate?.cell(self, didTapOnTag: tag)
             return

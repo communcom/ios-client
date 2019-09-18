@@ -66,11 +66,15 @@ extension EditorPageTextView {
             textStorage.enumerateAttributes(in: selectedRange, options: []) {
                 (attrs, range, stop) in
                 if let link = attrs[.link] as? String {
-                    if link.matches(NSRegularExpression.escapedPattern(for: "https://commun.com/") + String.tagRegex) {
+                    if link.matches(
+                        NSRegularExpression.linkToTagRegexPattern)
+                    {
                         return
                     }
                     
-                    if link.matches(NSRegularExpression.escapedPattern(for: "https://commun.com/") + String.mentionRegex) {
+                    if link.matches(
+                        NSRegularExpression.linkToMentionRegexPattern)
+                    {
                         return
                     }
                 }

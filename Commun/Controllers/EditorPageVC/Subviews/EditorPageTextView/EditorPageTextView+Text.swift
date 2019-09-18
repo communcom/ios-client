@@ -74,7 +74,7 @@ extension EditorPageTextView {
     
     // MARK: - Hashtags
     func resolveHashTags() {
-        if let regex = try? NSRegularExpression(pattern: String.tagRegex, options: .caseInsensitive)
+        if let regex = try? NSRegularExpression(pattern: NSRegularExpression.tagRegexPattern, options: .caseInsensitive)
         {
             let currentSelected = selectedRange
             let string = text as NSString
@@ -94,7 +94,7 @@ extension EditorPageTextView {
     
     // MARK: - Mentions
     func resolveMentions() {
-        if let regex = try? NSRegularExpression(pattern: String.mentionRegex, options: .caseInsensitive)
+        if let regex = try? NSRegularExpression(pattern: NSRegularExpression.mentionRegexPattern, options: .caseInsensitive)
         {
             let currentSelected = selectedRange
             let string = text as NSString

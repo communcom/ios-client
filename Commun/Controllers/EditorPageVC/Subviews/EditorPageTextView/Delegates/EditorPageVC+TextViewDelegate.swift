@@ -18,7 +18,7 @@ extension EditorPageVC: UITextViewDelegate {
             
             // Disable link effect after non-allowed-in-name character
             // Check if text is not a part of tag or mention
-            let regex = "^" + String(String.nameRegex.dropLast()) + "$"
+            let regex = "^" + String(NSRegularExpression.nameRegexPattern.dropLast()) + "$"
             if !text.matches(regex) {
                 // if appended
                 if range.length == 0 {

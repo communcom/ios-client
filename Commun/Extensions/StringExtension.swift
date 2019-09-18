@@ -29,37 +29,16 @@ extension String {
         }
     }
     
-    static var nameRegex: String {
-        return "[\\p{L}0-9-_]+"
-    }
-    
-    static var mentionRegex: String {
-        return "\\B@\(nameRegex)"
-    }
-    
-    static var tagRegex: String {
-        return "\\B#\(nameRegex)"
-    }
-    
-    fileprivate func getStringsStartWith(_ symbol: String) -> [String] {
-        if let regex = try? NSRegularExpression(pattern: "\(symbol)\(String.nameRegex)", options: .caseInsensitive)
+    func getTags() -> [String] {
+        if let regex = try? NSRegularExpression(pattern: NSRegularExpression.tagRegexPattern, options: .caseInsensitive)
         {
             let string = self as NSString
-            
-            return regex.matches(in: self, options: [], range: NSRange(location: 0, length: string.length)).map {
-                string.substring(with: $0.range).replacingOccurrences(of: symbol, with: "").lowercased()
+            return regex.matches(in: self, options: [], range: NSMakeRange(0, string.length)).map {
+                string.substring(with: $0.range)
+                    .replacingOccurrences(of: "#", with: "")
             }
         }
-        
         return []
-    }
-    
-    func getTags() -> [String] {
-        return getStringsStartWith("#")
-    }
-    
-    func getMentions() -> [String] {
-        return getStringsStartWith("@")
     }
     
 //    func highlightMentionAttributedString() -> NSAttributedString {

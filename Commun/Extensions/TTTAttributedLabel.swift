@@ -12,7 +12,7 @@ import TTTAttributedLabel
 extension TTTAttributedLabel {
     func highlightTagsAndUserNames() {
         guard let content = self.text as? String else {return}
-        if let regex = try? NSRegularExpression(pattern: "\(String.mentionRegex)", options: .caseInsensitive) {
+        if let regex = try? NSRegularExpression(pattern: "\(NSRegularExpression.mentionRegexPattern)", options: .caseInsensitive) {
             let string = content as NSString
             
             let matches = regex.matches(in: content, options: [], range: NSRange(location: 0, length: string.length)).map {
@@ -24,7 +24,7 @@ extension TTTAttributedLabel {
             }
         }
         
-        if let regex = try? NSRegularExpression(pattern: "\(String.tagRegex)", options: .caseInsensitive) {
+        if let regex = try? NSRegularExpression(pattern: "\(NSRegularExpression.tagRegexPattern)", options: .caseInsensitive) {
             let string = content as NSString
             
             let matches = regex.matches(in: content, options: [], range: NSRange(location: 0, length: string.length)).map {

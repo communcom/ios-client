@@ -50,7 +50,7 @@ class HTMLStringWebView: UIWebView {
             let urlString = url.absoluteString
             
             // if userName tapped
-            if urlString.removingPercentEncoding?.matches(pattern: "^\(NSRegularExpression.escapedPattern(for: "https://commun.com/"))\(String.mentionRegex)$") == true,
+            if urlString.removingPercentEncoding?.matches(pattern: "^\(NSRegularExpression.linkToMentionRegexPattern)$") == true,
                 let userName = urlString.components(separatedBy: "@").last {
                 parentViewController?.showProfileWithUserId(userName)
                 return false
