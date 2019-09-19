@@ -24,6 +24,21 @@ class EditorPageTextView: ExpandableTextView {
         var isMixed = false
         var textColor: UIColor = .black
         var urlString: String?
+        
+        static var `default`: TextStyle {
+            return TextStyle(isBold: false, isItalic: false, isMixed: false, textColor: .black, urlString: nil)
+        }
+        
+        /// Return new TextStyle by modifying current TextStyle
+        func setting(isBool: Bool? = nil, isItalic: Bool? = nil, isMixed: Bool? = nil, textColor: UIColor? = nil, urlString: String? = nil) -> TextStyle
+        {
+            let isBool = isBool ?? self.isBold
+            let isItalic = isItalic ?? self.isItalic
+            let isMixed = isMixed ?? self.isMixed
+            let textColor = textColor ?? self.textColor
+            let urlString = urlString ?? self.urlString
+            return TextStyle(isBold: isBool, isItalic: isItalic, isMixed: isMixed, textColor: textColor, urlString: urlString)
+        }
     }
     
     // MARK: - Properties

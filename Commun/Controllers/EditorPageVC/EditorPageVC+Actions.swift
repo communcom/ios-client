@@ -180,7 +180,6 @@ extension EditorPageVC {
             present(vc, animated: true, completion: nil)
             
             vc.didSelectColor = {color in
-                self.colorPickerButton.backgroundColor = color
                 self.contentTextView.setColor(color, sender: sender as! UIButton)
             }
         }

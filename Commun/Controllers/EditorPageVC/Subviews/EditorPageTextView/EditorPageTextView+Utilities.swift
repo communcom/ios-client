@@ -12,35 +12,33 @@ import RxSwift
 extension EditorPageTextView {
     // MARK: - typingAttributes modification
     func setCurrentTextStyle() {
-        var bold = false
-        var italic = false
-        var textColor = UIColor.black
-        var urlString: String?
+        var textStyle = TextStyle.default
         
+        // Get attributes from typingAttributes
         let attrs = typingAttributes
-        
         if let font = attrs[.font] as? UIFont {
             if font.fontDescriptor.symbolicTraits.contains(.traitBold) {
-                bold = true
+                textStyle = textStyle.setting(isBool: true)
             }
             
             if font.fontDescriptor.symbolicTraits.contains(.traitItalic) {
-                italic = true
+                textStyle = textStyle.setting(isItalic: true)
             }
         }
         
         if let color = attrs[.foregroundColor] as? UIColor,
             color != .black {
-            textColor = color
+            textStyle = textStyle.setting(textColor: color)
         }
         
         if let link = attrs[.link] as? String {
-            urlString = link
-            textColor = .link
+            textStyle = textStyle.setting(textColor: .link, urlString: link)
         }
         
-        let textStyle = TextStyle(isBold: bold, isItalic: italic, isMixed: selectedRangeHasDifferentTextStyle,textColor: textColor, urlString: urlString)
+        // Check if textStyle is mixed
+        textStyle = textStyle.setting(isMixed: selectedRangeHasDifferentTextStyle)
         
+        // Notify
         self.currentTextStyle.accept(textStyle)
     }
     
@@ -71,6 +69,7 @@ extension EditorPageTextView {
                     }
                 }
                 textStorage.setAttributes(defaultTypingAttributes, range: range)
+                currentTextStyle.accept(.default)
             }
         }
     }

@@ -12,12 +12,10 @@ extension EditorPageTextView {
     // MARK: - Font
     func setBold(from sender: UIButton) {
         setSymbolicTrait(.traitBold, on: !sender.isSelected)
-        sender.isSelected = !sender.isSelected
     }
     
     func setItalic(from sender: UIButton) {
         setSymbolicTrait(.traitItalic, on: !sender.isSelected)
-        sender.isSelected = !sender.isSelected
     }
     
     private func setSymbolicTrait(_ trait: UIFontDescriptor.SymbolicTraits, on: Bool) {
@@ -57,6 +55,17 @@ extension EditorPageTextView {
                 textStorage.addAttribute(.font, value: font, range: range)
             }
         }
+        
+        if trait.contains(.traitBold) {
+            currentTextStyle.accept(
+                currentTextStyle.value.setting(isBool: on)
+            )
+        }
+        else if trait.contains(.traitItalic) {
+            currentTextStyle.accept(
+                currentTextStyle.value.setting(isItalic: on)
+            )
+        }
     }
     
     // MARK: - Text color
@@ -70,6 +79,10 @@ extension EditorPageTextView {
                 textStorage.addAttribute(.foregroundColor, value: color, range: range)
             }
         }
+        
+        currentTextStyle.accept(
+            currentTextStyle.value.setting(textColor: color)
+        )
     }
     
     // MARK: - Hashtags
