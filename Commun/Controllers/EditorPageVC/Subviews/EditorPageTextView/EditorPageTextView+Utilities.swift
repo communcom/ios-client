@@ -224,7 +224,7 @@ extension EditorPageTextView {
         
         // Paste attachment
         if let data = pasteBoard.items.last?["attachment"] as? Data,
-            let attachment = NSKeyedUnarchiver.unarchiveObject(with: data) as? TextAttachment
+            let attachment = try? JSONDecoder().decode(TextAttachment.self, from: data)
         {
             addAttachmentAtSelectedRange(attachment)
             return

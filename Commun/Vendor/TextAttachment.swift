@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 import CyberSwift
 
-class TextAttachment: NSTextAttachment {
+final class TextAttachment: NSTextAttachment {
     private static var uniqueId = 0
     lazy var id: Int = {
         let id = TextAttachment.uniqueId
@@ -24,8 +24,13 @@ class TextAttachment: NSTextAttachment {
     
     var view: UIView? {
         didSet {
-            image = view?.toImage
+            setView()
         }
+    }
+    
+    fileprivate func setView() {
+        guard let view = view else {return}
+        image = view.toImage
     }
     
     var placeholderText: String {
@@ -94,5 +99,47 @@ private extension UIView {
         }
         
         return image
+    }
+}
+
+extension TextAttachment: Codable {
+    enum CodingKeys: String, CodingKey {
+        case embed
+        case localImage
+        case view
+        case id
+    }
+    
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(id, forKey: .id)
+        try container.encode(embed, forKey: .embed)
+        
+        if let localImage = localImage {
+            let imageData = NSKeyedArchiver.archivedData(withRootObject: localImage)
+            try container.encode(imageData, forKey: .localImage)
+        }
+        
+        if let view = view {
+            let viewData = NSKeyedArchiver.archivedData(withRootObject: view)
+            try container.encode(viewData, forKey: .view)
+        }
+    }
+    public convenience init(from decoder: Decoder) throws {
+        self.init()
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        id = try values.decode(Int.self, forKey: .id)
+        embed = try values.decode(ResponseAPIFrameGetEmbed.self, forKey: .embed)
+        if let image = NSKeyedUnarchiver.unarchiveObject(with: try values.decode(Data.self, forKey: .localImage)) as? UIImage {
+            localImage = image
+        }
+        
+        if let view = NSKeyedUnarchiver.unarchiveObject(with: try values.decode(Data.self, forKey: .view)) as? UIView {
+            self.view = view
+        }
+        
+        defer {
+            setView()
+        }
     }
 }
