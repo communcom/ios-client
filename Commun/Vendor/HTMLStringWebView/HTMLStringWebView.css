@@ -13,6 +13,7 @@ img {
 
 .embeded img {
     margin-bottom: 0px;
+    background: url(http://goo.gl/vyAs27) no-repeat scroll 0 0;
 }
 
 .embeded p {

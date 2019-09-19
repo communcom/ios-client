@@ -92,7 +92,7 @@ extension ContentBlock {
             return "<a href=\"\(url)\">\(innerHTML)</a>"
         case "image":
             let description = attributes?.description
-            return "<div class=\"embeded\"><img style=\"display: block; width: 100%; height: auto;\" src=\"\(innerHTML)\" />\(description != nil ? "<p>\(description!)</p>": "") </div>"
+            return "<div class=\"embeded\"><img style=\"display: block; width: 100%; height: auto;\" src=\"\(innerHTML)\" onerror=\"this.src='\(Bundle.main.url(forResource: "image-not-available", withExtension: "jpg")?.absoluteString ?? "")';\"/>\(description != nil ? "<p>\(description!)</p>": "") </div>"
         case "video":
             let embed = embeds.first(where:
                 {self.compareUrlString(str1: $0.url, str2: innerHTML)})
@@ -111,7 +111,7 @@ extension ContentBlock {
                 {self.compareUrlString(str1: $0.url, str2: innerHTML)})
             
             let description = embed?.description
-            return "<div class=\"embeded\"><a href=\"\(embed?.url ?? "")\"><img style=\"display: block; width: 100%; height: auto;\" src=\"\(embed?.thumbnail_url ?? "")\" /></a>\(description != nil ? "<p>\(description!)</p>": "")</div>"
+            return "<div class=\"embeded\"><a href=\"\(embed?.url ?? "")\"><img style=\"display: block; width: 100%; height: auto;\" src=\"\(embed?.thumbnail_url ?? "")\" onerror=\"this.src='\(Bundle.main.url(forResource: "image-not-available", withExtension: "jpg")?.absoluteString ?? "")';\" /></a>\(description != nil ? "<p>\(description!)</p>": "")</div>"
         case "set":
             // TODO: Set grid style
             return "<div>\(innerHTML)</div>"
