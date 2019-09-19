@@ -16,7 +16,7 @@ extension NSRegularExpression {
     }
     
     static var linkRegexPattern: String {
-        return "\\b(https:\\/\\/)?(www\\.)?((?!www\\.)[A-Za-z0-9_-]+)\\.[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)?(\\/[A-Za-z0-9_-]+)*"
+        return "\\b(http(s)?:\\/\\/)?(www\\.)?((?!www\\.)[A-Za-z0-9_-]+)\\.[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)?(\\/[A-Za-z0-9_-]+)*"
     }
     
     static var nameRegexPattern: String {

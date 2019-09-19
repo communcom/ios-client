@@ -130,7 +130,8 @@ extension TextAttachment: Codable {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         id = try values.decode(Int.self, forKey: .id)
         embed = try values.decode(ResponseAPIFrameGetEmbed.self, forKey: .embed)
-        if let image = NSKeyedUnarchiver.unarchiveObject(with: try values.decode(Data.self, forKey: .localImage)) as? UIImage {
+        if let data = try? values.decode(Data.self, forKey: .localImage),
+            let image = NSKeyedUnarchiver.unarchiveObject(with: data) as? UIImage {
             localImage = image
         }
         

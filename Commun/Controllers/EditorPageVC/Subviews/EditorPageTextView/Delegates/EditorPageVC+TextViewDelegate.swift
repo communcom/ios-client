@@ -52,15 +52,12 @@ extension EditorPageVC: UITextViewDelegate {
         if let attachment = textAttachment as? TextAttachment {
             showActionSheet(title: "choose action".localized().uppercaseFirst, message: nil, actions: [
                     UIAlertAction(title: "copy".localized().uppercaseFirst, style: .default, handler: { (_) in
-                        if let data = try? JSONEncoder().encode(attachment) {
-                            UIPasteboard.general.setData(data, forPasteboardType: "attachment")
-                        }
+                        self.copyAttachment(attachment)
                     }),
                     UIAlertAction(title: "cut".localized().uppercaseFirst, style: .default, handler: { (_) in
-                        self.contentTextView.textStorage.replaceCharacters(in: characterRange, with: "")
-                        if let data = try? JSONEncoder().encode(attachment) {
-                            UIPasteboard.general.setData(data, forPasteboardType: "attachment")
-                        }
+                        self.copyAttachment(attachment, completion: {
+                            self.contentTextView.textStorage.replaceCharacters(in: characterRange, with: "")
+                        })
                     }),
                     UIAlertAction(title: "preview".localized().uppercaseFirst, style: .default, handler: { (_) in
                         guard let type = attachment.embed?.type else {return}
@@ -98,5 +95,20 @@ extension EditorPageVC: UITextViewDelegate {
             return false
         }
         return true
+    }
+    
+    private func copyAttachment(_ attachment: TextAttachment, completion: (()->Void)? = nil) {
+        self.showIndetermineHudWithMessage(
+            "archiving".localized().uppercaseFirst)
+        
+        DispatchQueue(label: "archiving").async {
+            if let data = try? JSONEncoder().encode(attachment) {
+                UIPasteboard.general.setData(data, forPasteboardType: "attachment")
+            }
+            DispatchQueue.main.sync {
+                self.hideHud()
+                completion?()
+            }
+        }
     }
 }
