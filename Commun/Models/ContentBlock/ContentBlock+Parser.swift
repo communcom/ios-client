@@ -104,13 +104,13 @@ extension ContentBlock {
                 component = "<a href=\"\(attributes?.url ?? "")\"><img style=\"display: block; width: 100%; height: auto;\" src=\"\(attributes?.thumbnail_url ?? "")\" /></a>"
             }
             
-            let description = attributes?.title
+            let description = attributes?.title ?? embed?.description
             return "<div class=\"embeded\">\(component)\(description != nil ? "<p>\(description!)</p>": "")</div>"
         case "website":
             let embed = embeds.first(where:
                 {self.compareUrlString(str1: $0.url, str2: innerHTML)})
             
-            let description = embed?.description
+            let description = embed?.description ?? embed?.title
             return "<div class=\"embeded\"><a href=\"\(embed?.url ?? "")\"><img style=\"display: block; width: 100%; height: auto;\" src=\"\(embed?.thumbnail_url ?? "")\" onerror=\"this.src='\(Bundle.main.url(forResource: "image-not-available", withExtension: "jpg")?.absoluteString ?? "")';\" /></a>\(description != nil ? "<p>\(description!)</p>": "")</div>"
         case "set":
             // TODO: Set grid style
