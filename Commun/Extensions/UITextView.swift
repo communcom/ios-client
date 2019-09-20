@@ -40,4 +40,39 @@ extension UITextView {
         }
         return nil
     }
+    
+    // MARK: - Hashtags
+    func resolveHashTags() {
+        if let regex = try? NSRegularExpression(pattern: NSRegularExpression.tagRegexPattern, options: .caseInsensitive)
+        {
+            addAppLink(regex: regex, prefix: "\(URL.appURL)/")
+        }
+    }
+    
+    // MARK: - Mentions
+    func resolveMentions() {
+        if let regex = try? NSRegularExpression(pattern: NSRegularExpression.mentionRegexPattern, options: .caseInsensitive)
+        {
+            addAppLink(regex: regex, prefix: "\(URL.appURL)/")
+        }
+    }
+    
+    // MARK: - Link detector
+    func resolveLinks() {
+        if let regex = NSRegularExpression.linkRegex {
+            addAppLink(regex: regex)
+        }
+    }
+    
+    private func addAppLink(regex: NSRegularExpression, prefix: String? = nil) {
+        let currentSelected = selectedRange
+        let matches = regex.matchedStrings(in: text)
+        for match in matches {
+            let range = textStorage.nsRangeOfText(match)
+            let newAttr = NSMutableAttributedString(attributedString: self.attributedText)
+            newAttr.addAttribute(.link, value: "\(prefix ?? "")\(match)", range: range)
+            self.attributedText = newAttr
+            self.selectedRange = currentSelected
+        }
+    }
 }
