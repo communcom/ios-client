@@ -13,8 +13,21 @@ import RxCocoa
 extension EditorPageVC {
     
     func bindUI() {
-        guard let viewModel = viewModel else {return}
         // textViews
+        bindTitleTextView()
+        bindContentTextView()
+        
+        // isAdult
+        bindIsAdultButton()
+        
+        // keyboard
+        bindKeyboardHeight()
+        
+        // postButton
+        bindSendPostButton()
+    }
+    
+    private func bindTitleTextView() {
         titleTextView.rx.didBeginEditing
             .subscribe(onNext: {_ in
                 self.titleTextViewCharacterCountLabel.isHidden = false
@@ -23,21 +36,26 @@ extension EditorPageVC {
         
         titleTextView.rx.didEndEditing
             .subscribe(onNext: {_ in
-                self.titleTextViewCharacterCountLabel.isHidden = true
+                self.titleTextViewCharacterCountLabel.isHidden =
+                    self.titleTextViewCharacterCountLabel.textColor != .red
             })
             .disposed(by: disposeBag)
         
         titleTextView.rx.text.orEmpty
             .subscribe(onNext: {text in
-                self.titleTextViewCharacterCountLabel.text = "\(text.count)/\(self.titleLettersLimit)"
+                self.titleTextViewCharacterCountLabel.text = "\(text.utf8.count)/\(self.titleBytesLimit)"
             })
             .disposed(by: disposeBag)
         
         titleTextView.rx.text.orEmpty
-            .filter {$0.count > self.titleLettersLimit}
-            .subscribe(onNext: limitCharactersInTitle())
+            .map {$0.utf8.count > self.titleBytesLimit ? UIColor.red : UIColor.lightGray}
+            .subscribe(onNext: {color in
+                self.titleTextViewCharacterCountLabel.textColor = color
+            })
             .disposed(by: disposeBag)
-        
+    }
+    
+    private func bindContentTextView() {
         contentTextView.rx.didBeginEditing
             .subscribe(onNext: {_ in
                 self.boldButton.isHidden = false
@@ -97,8 +115,10 @@ extension EditorPageVC {
             .disposed(by: disposeBag)
         
         contentTextView.rx.setDelegate(self).disposed(by: disposeBag)
-        
-        // isAdult
+    }
+    
+    private func bindIsAdultButton() {
+        guard let viewModel = viewModel else {return}
         adultButton.rx.tap
             .map {_ in !viewModel.isAdult.value}
             .bind(to: viewModel.isAdult)
@@ -107,8 +127,9 @@ extension EditorPageVC {
         viewModel.isAdult
             .bind(to: self.adultButton.rx.isSelected)
             .disposed(by: disposeBag)
-        
-        // hideKeyboard
+    }
+    
+    private func bindKeyboardHeight() {
         UIResponder.keyboardHeightObservable
             .map {$0 == 0 ? true: false}
             .asDriver(onErrorJustReturn: true)
@@ -117,34 +138,32 @@ extension EditorPageVC {
                 self.editorToolsToContainerTrailingSpace.constant = isHidden ? 0 : 54
             })
             .disposed(by: disposeBag)
+    }
+    
+    private func bindSendPostButton() {
+        guard let viewModel = viewModel else {return}
         
-        // verification
-        
+        // Verification
         #warning("Verify community")
-        #warning("fix contentText later")
         Observable.combineLatest(
-                titleTextView.rx.text.orEmpty,
-                contentTextView.rx.text.orEmpty
+            titleTextView.rx.text.orEmpty,
+            contentTextView.rx.text.orEmpty
             )
             .map({ (title, content) -> Bool in
                 // both title and content are not empty
                 let titleAndContentAreNotEmpty = !title.isEmpty && !content.isEmpty
+                
+                // title is not beyond limit
+                let titleIsNotBeyondLimit = title.utf8.count <= self.titleBytesLimit
                 
                 // compare content
                 var contentChanged = (title != viewModel.postForEdit?.content.title)
                 contentChanged = contentChanged || (self.contentTextView.attributedText != self.contentTextView.originalAttributedString)
                 
                 // reassign result
-                return titleAndContentAreNotEmpty && contentChanged
+                return titleAndContentAreNotEmpty && titleIsNotBeyondLimit && contentChanged
             })
             .bind(to: sendPostButton.rx.isEnabled)
             .disposed(by: disposeBag)
-    }
-    
-    func limitCharactersInTitle() -> (_ newText: String) -> Void {
-        return {newText in
-            self.titleTextView.text =
-                String(newText.prefix(self.titleLettersLimit))
-        }
     }
 }

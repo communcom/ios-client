@@ -12,7 +12,7 @@ import CyberSwift
 
 class EditorPageVC: UIViewController {
     // MARK: - Constant
-    let titleLettersLimit = 240
+    let titleBytesLimit = 240
     let contentLettersLimit = 30000
     
     // MARK: - Outlets
