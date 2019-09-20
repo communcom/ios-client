@@ -18,9 +18,18 @@ img {
 
 .embeded p {
     margin-top: 0px;
-    padding: 8px;
     font-size: 0.8em;
-    text-align: center;
-    font-style: italic;
+}
+
+.embeded p.url {
+    padding: 8px 8px 0 8px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: graytext;
+}
+
+.embeded p.description {
+    padding: 0 8px 8px 8px;
     font-weight: bold;
 }

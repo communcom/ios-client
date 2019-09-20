@@ -92,7 +92,7 @@ extension ContentBlock {
             return "<a href=\"\(url)\">\(innerHTML)</a>"
         case "image":
             let description = attributes?.description
-            return "<div class=\"embeded\"><img style=\"display: block; width: 100%; height: auto;\" src=\"\(innerHTML)\" onerror=\"this.src='\(Bundle.main.url(forResource: "image-not-available", withExtension: "jpg")?.absoluteString ?? "")';\"/>\(description != nil ? "<p>\(description!)</p>": "") </div>"
+            return "<div class=\"embeded\"><img style=\"display: block; width: 100%; height: auto;\" src=\"\(innerHTML)\" onerror=\"this.src='\(Bundle.main.url(forResource: "image-not-available", withExtension: "jpg")?.absoluteString ?? "")';\"/>\(description != nil ? "<p class=\"description\">\(description!)</p>": "") </div>"
         case "video":
             let embed = embeds.first(where:
                 {self.compareUrlString(str1: $0.url, str2: innerHTML)})
@@ -105,16 +105,13 @@ extension ContentBlock {
             }
             
             let description = attributes?.title ?? embed?.description
-            return "<div class=\"embeded\">\(component)\(description != nil ? "<p>\(description!)</p>": "")</div>"
+            return "<div class=\"embeded\">\(component)\(embed?.url != nil ? "<p class=\"url\">\(embed!.url)</p>": "")\(description != nil ? "<p class=\"description\">\(description!)</p>": "")</div>"
         case "website":
             let embed = embeds.first(where:
                 {self.compareUrlString(str1: $0.url, str2: innerHTML)})
             
             let description = embed?.description ?? embed?.title
-            return "<div class=\"embeded\"><a href=\"\(embed?.url ?? "")\"><img style=\"display: block; width: 100%; height: auto;\" src=\"\(embed?.thumbnail_url ?? "")\" onerror=\"this.src='\(Bundle.main.url(forResource: "image-not-available", withExtension: "jpg")?.absoluteString ?? "")';\" /></a>\(description != nil ? "<p>\(description!)</p>": "")</div>"
-        case "set":
-            // TODO: Set grid style
-            return "<div>\(innerHTML)</div>"
+            return "<div class=\"embeded\"><a href=\"\(embed?.url ?? "")\"><img style=\"display: block; width: 100%; height: auto;\" src=\"\(embed?.thumbnail_url ?? "")\" onerror=\"this.src='\(Bundle.main.url(forResource: "image-not-available", withExtension: "jpg")?.absoluteString ?? "")';\" /></a>\(embed?.url != nil ? "<p class=\"url\">\(embed!.url)</p>": "")\(description != nil ? "<p class=\"description\">\(description!)</p>": "")</div>"
         default:
             return innerHTML
         }
