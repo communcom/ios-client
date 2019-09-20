@@ -59,6 +59,7 @@
 		3B2F227322689334006B589E /* NSMutableAttributedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B2F227222689334006B589E /* NSMutableAttributedString.swift */; };
 		3B49C90723224E6900376636 /* EditorPageTextView+Text.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B49C90623224E6900376636 /* EditorPageTextView+Text.swift */; };
 		3B49C90923224F2600376636 /* EditorPageTextView+Attachment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B49C90823224F2600376636 /* EditorPageTextView+Attachment.swift */; };
+		3B4A09D42334C21A00D272D5 /* EditorPageTextView+Delegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B4A09D32334C21A00D272D5 /* EditorPageTextView+Delegate.swift */; };
 		3B4ECA3D22A6741D00F59FC8 /* NotificationsPage+EmptyDataSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B4ECA3C22A6741D00F59FC8 /* NotificationsPage+EmptyDataSet.swift */; };
 		3B515819226DDE8D00108F17 /* EmptyCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3B515818226DDE8D00108F17 /* EmptyCell.xib */; };
 		3B51581C226DE28D00108F17 /* EmptyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B51581B226DE28D00108F17 /* EmptyCell.swift */; };
@@ -306,6 +307,7 @@
 		3B2F227222689334006B589E /* NSMutableAttributedString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSMutableAttributedString.swift; sourceTree = "<group>"; };
 		3B49C90623224E6900376636 /* EditorPageTextView+Text.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EditorPageTextView+Text.swift"; sourceTree = "<group>"; };
 		3B49C90823224F2600376636 /* EditorPageTextView+Attachment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EditorPageTextView+Attachment.swift"; sourceTree = "<group>"; };
+		3B4A09D32334C21A00D272D5 /* EditorPageTextView+Delegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EditorPageTextView+Delegate.swift"; sourceTree = "<group>"; };
 		3B4ECA3C22A6741D00F59FC8 /* NotificationsPage+EmptyDataSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotificationsPage+EmptyDataSet.swift"; sourceTree = "<group>"; };
 		3B515818226DDE8D00108F17 /* EmptyCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmptyCell.xib; sourceTree = "<group>"; };
 		3B51581B226DE28D00108F17 /* EmptyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyCell.swift; sourceTree = "<group>"; };
@@ -605,13 +607,13 @@
 		3B2538B2231E34A800D0B1DA /* EditorPageTextView */ = {
 			isa = PBXGroup;
 			children = (
-				3B848B69232F2E130021429F /* Delegates */,
 				3BEC38E6230FA17F00662374 /* EditorPageTextView.swift */,
 				3B2538B5231E667800D0B1DA /* EditorPageTextView+Binding.swift */,
 				3B49C90623224E6900376636 /* EditorPageTextView+Text.swift */,
 				3B49C90823224F2600376636 /* EditorPageTextView+Attachment.swift */,
 				3B2538B3231E34D900D0B1DA /* EditorPageTextView+Parsing.swift */,
 				3BF3A7C823201C66000969D5 /* EditorPageTextView+Utilities.swift */,
+				3B4A09D32334C21A00D272D5 /* EditorPageTextView+Delegate.swift */,
 			);
 			path = EditorPageTextView;
 			sourceTree = "<group>";
@@ -685,14 +687,6 @@
 				3B02CD2D228AB4580078BB52 /* NotificationsFetcher.swift */,
 			);
 			path = Fetchers;
-			sourceTree = "<group>";
-		};
-		3B848B69232F2E130021429F /* Delegates */ = {
-			isa = PBXGroup;
-			children = (
-				3B848B6A232F2E2C0021429F /* EditorPageVC+TextViewDelegate.swift */,
-			);
-			path = Delegates;
 			sourceTree = "<group>";
 		};
 		3B885BBA22B7A1B600FC4B7A /* EmbededView */ = {
@@ -1206,6 +1200,7 @@
 				57DE5BDB2252088C008566B9 /* EditorPageVC.swift */,
 				57F9CAAB225B489000AC9ACA /* EditorPageVC+Rx.swift */,
 				57CBD95D225517B4000BA8CC /* EditorPageVC+Actions.swift */,
+				3B848B6A232F2E2C0021429F /* EditorPageVC+TextViewDelegate.swift */,
 			);
 			path = EditorPageVC;
 			sourceTree = "<group>";
@@ -1691,6 +1686,7 @@
 				575AECAC226066F800A7EC2D /* FormTextField.swift in Sources */,
 				5725173C2243E4640033125C /* PostPageVC.swift in Sources */,
 				3BAF69C322675B420055CCEB /* ProfilePageVC.swift in Sources */,
+				3B4A09D42334C21A00D272D5 /* EditorPageTextView+Delegate.swift in Sources */,
 				3B197C572269CEEF008CF10D /* CommentsFetcher.swift in Sources */,
 				3B635F812277375A006DAAB2 /* FeedPageVC+Binding.swift in Sources */,
 				3B885BBC22B7A1FE00FC4B7A /* EmbededView.swift in Sources */,
