@@ -22,7 +22,8 @@ img {
 }
 
 .embeded p.url {
-    padding: 8px 8px 0 8px;
+    padding: 8px;
+    margin-bottom: -8px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -30,6 +31,6 @@ img {
 }
 
 .embeded p.description {
-    padding: 0 8px 8px 8px;
+    padding: 8px;
     font-weight: bold;
 }
