@@ -8,6 +8,7 @@
 
 import UIKit
 import RxSwift
+import RxCocoa
 
 class CommentForm: UIView {
     // MARK: - Properties
@@ -20,7 +21,7 @@ class CommentForm: UIView {
     
     // MARK: - Outlets
     @IBOutlet var contentView: UIView!
-    @IBOutlet weak var textView: ExpandableTextView!
+    @IBOutlet weak var textView: CommentTextView!
     @IBOutlet weak var sendButton: UIButton!
     @IBOutlet weak var imageView: UIImageView!
     
@@ -72,6 +73,10 @@ class CommentForm: UIView {
         imageView.rx.isEmpty
             .map {$0 ? 0: 85}
             .bind(to: imageWrapperHeightConstraint.rx.constant)
+            .disposed(by: bag)
+        
+        // forward delegate
+        textView.rx.setDelegate(self)
             .disposed(by: bag)
     }
     

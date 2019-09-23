@@ -49,6 +49,7 @@ extension EditorPageVC {
         
         titleTextView.rx.text.orEmpty
             .map {$0.utf8.count > self.titleBytesLimit ? UIColor.red : UIColor.lightGray}
+            .distinctUntilChanged()
             .subscribe(onNext: {color in
                 self.titleTextViewCharacterCountLabel.textColor = color
             })

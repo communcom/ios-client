@@ -11,7 +11,7 @@ import RxSwift
 import RxCocoa
 import CyberSwift
 
-class EditorPageTextView: ExpandableTextView {
+class EditorPageTextView: ContentTextView {
     // MARK: - Constants
     let embedsLimit = 15
     let videosLimit = 10
@@ -42,9 +42,7 @@ class EditorPageTextView: ExpandableTextView {
     }
     
     // MARK: - Properties
-    let bag = DisposeBag()
     let defaultFont = UIFont.systemFont(ofSize: 17)
-    lazy var defaultTypingAttributes: [NSAttributedString.Key: Any] = [.font: defaultFont]
     
     var currentTextStyle = BehaviorRelay<TextStyle>(value: TextStyle(isBold: false, isItalic: false, isMixed: false, textColor: .black, urlString: nil))
     
@@ -52,16 +50,45 @@ class EditorPageTextView: ExpandableTextView {
     
     // MARK: - Lifecycle
     override func awakeFromNib() {
-        super.awakeFromNib()
         // set default attributes
-        typingAttributes = [.font: defaultFont]
+        defaultTypingAttributes = [.font: defaultFont]
+        typingAttributes = defaultTypingAttributes
         
-        // bind actions
-        bind()
+        super.awakeFromNib()
     }
     
     // MARK: - Computed properties
     var selectedAString: NSAttributedString {
         return attributedText.attributedSubstring(from: selectedRange)
+    }
+    
+    override func bind() {
+        super.bind()
+        
+        rx.didChangeSelection
+            .subscribe(onNext: {
+                // get TextStyle at current selectedRange
+                self.setCurrentTextStyle()
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    override func clearFormatting() {
+        if selectedRange.length == 0 {
+            typingAttributes = defaultTypingAttributes
+            setCurrentTextStyle()
+        }
+        else {
+            textStorage.enumerateAttributes(in: selectedRange, options: []) {
+                (attrs, range, stop) in
+                if let link = attrs[.link] as? String {
+                    if link.isLinkToTag || link.isLinkToMention {
+                        return
+                    }
+                }
+                textStorage.setAttributes(defaultTypingAttributes, range: range)
+                currentTextStyle.accept(.default)
+            }
+        }
     }
 }

@@ -37,7 +37,7 @@ extension EditorPageTextView {
             }) { [weak self] (error) in
                 self?.parentViewController?.showError(error)
             }
-            .disposed(by: bag)
+            .disposed(by: disposeBag)
     }
     
     private func parseContent() -> Completable {

@@ -65,7 +65,7 @@ extension EditorPageTextView {
                     self?.parentViewController?.showError(error)
                 }
             )
-            .disposed(by: bag)
+            .disposed(by: disposeBag)
     }
     
     // MARK: - Link
@@ -98,29 +98,8 @@ extension EditorPageTextView {
                     self.parentViewController?.hideHud()
                     self.parentViewController?.showError(error)
                 })
-                .disposed(by: bag)
+                .disposed(by: disposeBag)
             // show
-        }
-    }
-    
-    func removeLink() {
-        if selectedRange.length > 0 {
-            textStorage.removeAttribute(.link, range: selectedRange)
-        }
-            
-        else if selectedRange.length == 0 {
-            let attr = typingAttributes
-            if let link = attr[.link] as? String,
-                link.isLink
-            {
-                textStorage.enumerateAttribute(.link, in: NSMakeRange(0, textStorage.length), options: []) { (currentLink, range, stop) in
-                    if currentLink as? String == link,
-                        range.contains(selectedRange.location - 1)
-                    {
-                        textStorage.removeAttribute(.link, range: range)
-                    }
-                }
-            }
         }
     }
     

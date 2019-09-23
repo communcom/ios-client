@@ -11,37 +11,6 @@ import SafariServices
 import AppImageViewer
 
 extension EditorPageTextView {
-    func shouldChangeCharacterInRange(_ range: NSRange, replacementText text: String) -> Bool
-    {
-        // Disable link effect after non-allowed-in-name character
-        // Check if text is not a part of tag or mention
-        let regex = "^" + String(NSRegularExpression.nameRegexPattern.dropLast()) + "$"
-        if !text.matches(regex) {
-            // if appended
-            if range.length == 0 {
-                // get range of last character
-                let lastLocation = range.location - 1
-                if lastLocation < 0 {
-                    return true
-                }
-                // get last link attribute
-                let attr = textStorage.attributes(at: lastLocation, effectiveRange: nil)
-                if attr.has(key: .link) {
-                    typingAttributes = defaultTypingAttributes
-                }
-            }
-            // if inserted
-        }
-        
-        // Remove link
-        if text == "", range.length > 0, range.location > 0
-        {
-            removeLink()
-        }
-        
-        return true
-    }
-    
     func shouldInteractWithTextAttachment(_ textAttachment: NSTextAttachment, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
         if let attachment = textAttachment as? TextAttachment {
             parentViewController?.showActionSheet(title: "choose action".localized().uppercaseFirst, message: nil, actions: [
@@ -78,7 +47,7 @@ extension EditorPageTextView {
                                     }, onError: { (error) in
                                         self.parentViewController?.showError(error)
                                 })
-                                .disposed(by: self.bag)
+                                .disposed(by: self.disposeBag)
                         }
                     default:
                         break

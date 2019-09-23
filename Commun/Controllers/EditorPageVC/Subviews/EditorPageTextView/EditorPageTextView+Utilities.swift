@@ -55,25 +55,6 @@ extension EditorPageTextView {
         return isMixed
     }
     
-    func clearFormatting() {
-        if selectedRange.length == 0 {
-            self.typingAttributes = defaultTypingAttributes
-            self.setCurrentTextStyle()
-        }
-        else {
-            textStorage.enumerateAttributes(in: selectedRange, options: []) {
-                (attrs, range, stop) in
-                if let link = attrs[.link] as? String {
-                    if link.isLinkToTag || link.isLinkToMention {
-                        return
-                    }
-                }
-                textStorage.setAttributes(defaultTypingAttributes, range: range)
-                currentTextStyle.accept(.default)
-            }
-        }
-    }
-    
     // MARK: - Attachment helper
     func add(_ image: UIImage, to attachment: inout TextAttachment) {
         let attachmentRightMargin: CGFloat = 10
