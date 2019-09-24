@@ -15,6 +15,7 @@ class EditorPageTextView: ContentTextView {
     // MARK: - Constants
     let embedsLimit = 15
     let videosLimit = 10
+    let draftKey = "EditorPageTextView.draftKey"
     
     // MARK: - Nested types
     struct TextStyle: Equatable {

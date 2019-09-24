@@ -14,6 +14,7 @@ class EditorPageVC: UIViewController {
     // MARK: - Constant
     let titleBytesLimit = 240
     let contentLettersLimit = 30000
+    let titleDraft = "EditorPageVC.titleDraft"
     
     // MARK: - Outlets
     @IBOutlet weak var scrollView: UIScrollView!
@@ -86,6 +87,24 @@ class EditorPageVC: UIViewController {
                     self.closeButtonDidTouch(self)
                 })
                 .disposed(by: disposeBag)
+        }
+        else {
+            // parse draft
+            if hasDraft {
+                showActionSheet(
+                    title: "retrieve your last edit".localized().uppercaseFirst + "?",
+                    actions:
+                        [
+                            UIAlertAction(title: "yes".localized().uppercaseFirst, style: .default, handler: { (_) in
+                                self.getDraft()
+                            })
+                        ],
+                    cancelCompletion:
+                        {
+                            self.removeDraft()
+                        }
+                )
+            }
         }
         
         // bottom buttons

@@ -226,4 +226,86 @@ extension EditorPageTextView {
 
         super.paste(sender)
     }
+    
+    // MARK: - Draft
+    func saveDraft(completion: (()->Void)? = nil) {
+        parentViewController?
+            .showIndetermineHudWithMessage("archiving".localized().uppercaseFirst)
+        var draft = [Data]()
+        let aText = self.attributedText!
+        DispatchQueue(label: "archiving").async {
+            aText.enumerateAttributes(in: NSMakeRange(0, aText.length), options: []) { (attributes, range, stop) in
+                if let attachment = attributes[.attachment] as? TextAttachment {
+                    if let data = try? JSONEncoder().encode(attachment) {
+                        draft.append(data)
+                    }
+                    return
+                }
+                if let data = try? aText.data(from: range, documentAttributes: [.documentType: NSAttributedString.DocumentType.rtfd])
+                {
+                    draft.append(data)
+                }
+            }
+            if let data = try? JSONEncoder().encode(draft) {
+                UserDefaults.standard.set(data, forKey: self.draftKey)
+            }
+            DispatchQueue.main.async {
+                self.parentViewController?.hideHud()
+                completion?()
+            }
+        }
+    }
+    
+    func getDraft() {
+        // show hud
+        self.parentViewController?
+            .showIndetermineHudWithMessage("retrieving draft".localized().uppercaseFirst)
+        
+        // retrieve draft on another thread
+        DispatchQueue(label: "pasting").async {
+            guard let data = UserDefaults.standard.data(forKey: self.draftKey),
+                let draft = try? JSONDecoder().decode([Data].self, from: data) else {
+                    DispatchQueue.main.async {
+                        self.parentViewController?.hideHud()
+                    }
+                    return
+            }
+            
+            let mutableAS = NSMutableAttributedString()
+            for data in draft {
+                var skip = false
+                DispatchQueue.main.sync {
+                    if let attachment = try? JSONDecoder().decode(TextAttachment.self, from: data)
+                    {
+                        let attachmentAS = NSAttributedString(attachment: attachment)
+                        mutableAS.append(attachmentAS)
+                        skip = true
+                    }
+                }
+                
+                if skip {continue}
+                
+                if let aStr = try? NSAttributedString(data: data, options: [.documentType: NSAttributedString.DocumentType.rtfd], documentAttributes: nil)
+                {
+                    mutableAS.append(aStr)
+                }
+            }
+            
+            self.removeDraft()
+            
+            DispatchQueue.main.async {
+                self.attributedText = mutableAS
+                self.parentViewController?
+                    .hideHud()
+            }
+        }
+    }
+    
+    func removeDraft() {
+        UserDefaults.standard.removeObject(forKey: self.draftKey)
+    }
+    
+    var hasDraft: Bool {
+        return UserDefaults.standard.object(forKey: self.draftKey) != nil
+    }
 }
