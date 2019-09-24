@@ -292,9 +292,24 @@ extension EditorPageTextView {
             }
             
             DispatchQueue.main.async {
+                // Has to modify font back to systemFont because of illegal font in data
+                mutableAS.enumerateAttributes(in: NSMakeRange(0, mutableAS.length), options: []) { (attributes, range, stop) in
+                    guard let currentFont = attributes[.font] as? UIFont else {return}
+                    var font = self.defaultFont
+                    let symbolicTraits = currentFont.fontDescriptor.symbolicTraits
+                    font = UIFont(
+                        descriptor: font.fontDescriptor.withSymbolicTraits(symbolicTraits)!,
+                        size: 17)
+                    mutableAS.addAttribute(.font, value: font, range: range)
+                }
+                
+                // set attributedText
                 self.attributedText = mutableAS
+                
+                // hide hud
                 self.parentViewController?
                     .hideHud()
+                
                 completion?()
             }
         }
