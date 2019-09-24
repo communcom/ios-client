@@ -285,7 +285,7 @@ extension EditorPageVC {
     }
     
     var hasDraft: Bool {
-        return UserDefaults.standard.object(forKey: titleDraft) != nil && contentTextView.hasDraft
+        return UserDefaults.standard.dictionaryRepresentation().keys.contains(titleDraft) && contentTextView.hasDraft
     }
 }
 

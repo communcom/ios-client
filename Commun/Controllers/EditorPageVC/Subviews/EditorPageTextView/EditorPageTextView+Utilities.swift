@@ -306,6 +306,6 @@ extension EditorPageTextView {
     }
     
     var hasDraft: Bool {
-        return UserDefaults.standard.object(forKey: self.draftKey) != nil
+        return UserDefaults.standard.dictionaryRepresentation().keys.contains(draftKey)
     }
 }
