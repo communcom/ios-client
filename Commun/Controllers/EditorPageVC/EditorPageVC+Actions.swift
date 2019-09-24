@@ -90,6 +90,9 @@ extension EditorPageVC {
     @IBAction func sendPostButtonTap() {
         guard let viewModel = viewModel else {return}
         self.view.endEditing(true)
+        
+        // remove draft
+        removeDraft()
 
         contentTextView.getContentBlock()
             .observeOn(MainScheduler.instance)
@@ -147,7 +150,28 @@ extension EditorPageVC {
     }
     
     @IBAction func closeButtonDidTouch(_ sender: Any) {
-        navigationController?.dismiss(animated: true, completion: nil)
+        guard viewModel?.postForEdit == nil,
+            !contentTextView.text.isEmpty else
+        {
+            self.navigationController?.dismiss(animated: true, completion: nil)
+            return
+        }
+        
+        showActionSheet(title: "save post as draft".localized().uppercaseFirst + "?", message: "draft let you save your edits, so you can come back later", actions: [
+            UIAlertAction(title: "save".localized().uppercaseFirst, style: .default, handler: { (_) in
+                self.saveDraft {
+                    self.navigationController?.dismiss(animated: true, completion: nil)
+                }
+            })
+        ]) {
+            // on cancel
+            
+            // remove draft if exists
+            self.removeDraft()
+            
+            // close
+            self.navigationController?.dismiss(animated: true, completion: nil)
+        }
     }
     
     @IBAction func hideKeyboardButtonDidTouch(_ sender: Any) {
@@ -233,6 +257,35 @@ extension EditorPageVC {
     
     @IBAction func clearFormattingButtonDidTouch(_ sender: Any) {
         contentTextView.clearFormatting()
+    }
+    
+    // MARK: - Draft
+    func saveDraft(completion: (()->Void)? = nil) {
+        // save title
+        UserDefaults.standard.set(titleTextView.text, forKey: titleDraft)
+        
+        // save content
+        contentTextView.saveDraft(completion: completion)
+    }
+    
+    func getDraft() {
+        // get title
+        titleTextView.text = UserDefaults.standard.string(forKey: titleDraft)
+        
+        // retrieve content
+        contentTextView.getDraft()
+        
+        // remove draft
+        removeDraft()
+    }
+    
+    func removeDraft() {
+        UserDefaults.standard.removeObject(forKey: titleDraft)
+        contentTextView.removeDraft()
+    }
+    
+    var hasDraft: Bool {
+        return UserDefaults.standard.dictionaryRepresentation().keys.contains(titleDraft) && contentTextView.hasDraft
     }
 }
 

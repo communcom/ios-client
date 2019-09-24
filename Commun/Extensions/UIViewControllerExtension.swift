@@ -27,14 +27,16 @@ extension UIViewController {
         return st.instantiateViewController(withIdentifier: identifier)
     }
     
-    func showActionSheet(title: String? = nil, message: String? = nil, actions: [UIAlertAction] = []) {
+    func showActionSheet(title: String? = nil, message: String? = nil, actions: [UIAlertAction] = [], cancelCompletion: (()->Void)? = nil) {
         let alert = UIAlertController(title: title, message: nil, preferredStyle: .actionSheet)
         
         for action in actions {
             alert.addAction(action)
         }
         
-        alert.addAction(UIAlertAction(title: "cancel".localized().uppercaseFirst, style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "cancel".localized().uppercaseFirst, style: .cancel, handler: {_ in
+            cancelCompletion?()
+        }))
         
         self.present(alert, animated: true, completion: nil)
     }
