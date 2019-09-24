@@ -90,6 +90,9 @@ extension EditorPageVC {
     @IBAction func sendPostButtonTap() {
         guard let viewModel = viewModel else {return}
         self.view.endEditing(true)
+        
+        // remove draft
+        removeDraft()
 
         contentTextView.getContentBlock()
             .observeOn(MainScheduler.instance)
