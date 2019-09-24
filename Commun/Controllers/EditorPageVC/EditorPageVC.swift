@@ -59,8 +59,7 @@ class EditorPageVC: UIViewController {
         titleTextView.textContainer.lineFragmentPadding = 0
         titleTextView.placeholder = "title placeholder".localized().uppercaseFirst
         
-        contentTextView.textContainerInset = UIEdgeInsets.zero
-        contentTextView.textContainer.lineFragmentPadding = 0
+        contentTextView.textContainerInset = UIEdgeInsets(top: 0, left: 16, bottom: 16, right: 16)
         contentTextView.placeholder = "write text placeholder".localized().uppercaseFirst + "..."
         // you should ensure layout
         contentTextView.layoutManager

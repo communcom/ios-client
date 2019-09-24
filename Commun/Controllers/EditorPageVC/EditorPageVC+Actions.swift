@@ -259,6 +259,10 @@ extension EditorPageVC {
         contentTextView.clearFormatting()
     }
     
+    @IBAction func contentTextViewBecomeFirstResponder(_ sender: Any) {
+        contentTextView.becomeFirstResponder()
+    }
+    
     // MARK: - Draft
     func saveDraft(completion: (()->Void)? = nil) {
         // save title
