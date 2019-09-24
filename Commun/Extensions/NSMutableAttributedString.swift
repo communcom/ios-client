@@ -45,4 +45,24 @@ extension NSMutableAttributedString {
         append(normal)
         return self
     }
+    
+    /**
+        Override current font with another font in entire attributedString
+        - Parameters:
+            - font: replacement font
+            - keepSymbolicTraits: keep current symbolic traits or not
+    */
+    func overrideFont(replacementFont font: UIFont, keepSymbolicTraits: Bool = false) {
+        enumerateAttributes(in: NSMakeRange(0, length), options: []) { (attributes, range, stop) in
+            guard let currentFont = attributes[.font] as? UIFont else {return}
+            var font = font
+            if keepSymbolicTraits {
+                let symbolicTraits = currentFont.fontDescriptor.symbolicTraits
+                font = UIFont(
+                    descriptor: font.fontDescriptor.withSymbolicTraits(symbolicTraits)!,
+                    size: 17)
+            }
+            addAttribute(.font, value: font, range: range)
+        }
+    }
 }
