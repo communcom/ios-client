@@ -256,7 +256,7 @@ extension EditorPageTextView {
         }
     }
     
-    func getDraft() {
+    func getDraft(completion: (()->Void)? = nil) {
         // show hud
         self.parentViewController?
             .showIndetermineHudWithMessage("retrieving draft".localized().uppercaseFirst)
@@ -291,12 +291,11 @@ extension EditorPageTextView {
                 }
             }
             
-            self.removeDraft()
-            
             DispatchQueue.main.async {
                 self.attributedText = mutableAS
                 self.parentViewController?
                     .hideHud()
+                completion?()
             }
         }
     }

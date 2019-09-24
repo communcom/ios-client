@@ -277,10 +277,10 @@ extension EditorPageVC {
         titleTextView.text = UserDefaults.standard.string(forKey: titleDraft)
         
         // retrieve content
-        contentTextView.getDraft()
-        
-        // remove draft
-        removeDraft()
+        contentTextView.getDraft {
+            // remove draft
+            self.removeDraft()
+        }
     }
     
     func removeDraft() {
