@@ -60,7 +60,7 @@ extension NSMutableAttributedString {
                 let symbolicTraits = currentFont.fontDescriptor.symbolicTraits
                 font = UIFont(
                     descriptor: font.fontDescriptor.withSymbolicTraits(symbolicTraits)!,
-                    size: 17)
+                    size: font.fontDescriptor.pointSize)
             }
             addAttribute(.font, value: font, range: range)
         }
