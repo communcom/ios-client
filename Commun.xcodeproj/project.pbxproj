@@ -193,7 +193,6 @@
 		57A95197224178010020F55D /* PostController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A95196224178010020F55D /* PostController.swift */; };
 		57B6FC25224A9E5600BCFDDA /* WelcomeVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 57B6FC24224A9E5600BCFDDA /* WelcomeVC.storyboard */; };
 		57B6FC2C224A9F2800BCFDDA /* WelcomeItemVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B6FC2B224A9F2800BCFDDA /* WelcomeItemVC.swift */; };
-		57CBD95C225511BD000BA8CC /* UITextView+Placeholder.m in Sources */ = {isa = PBXBuildFile; fileRef = 57CBD95B225511BD000BA8CC /* UITextView+Placeholder.m */; };
 		57CBD95E225517B4000BA8CC /* EditorPageVC+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CBD95D225517B4000BA8CC /* EditorPageVC+Actions.swift */; };
 		57DE5BDC2252088C008566B9 /* EditorPageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DE5BDB2252088C008566B9 /* EditorPageVC.swift */; };
 		57DE5BDE225208A4008566B9 /* EditorPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DE5BDD225208A4008566B9 /* EditorPageViewModel.swift */; };
@@ -453,8 +452,6 @@
 		57B6FC24224A9E5600BCFDDA /* WelcomeVC.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = WelcomeVC.storyboard; sourceTree = "<group>"; };
 		57B6FC2B224A9F2800BCFDDA /* WelcomeItemVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeItemVC.swift; sourceTree = "<group>"; };
 		57BB5CA922550B4300F0B88B /* Commun-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Commun-Bridging-Header.h"; sourceTree = "<group>"; };
-		57CBD95A225511BD000BA8CC /* UITextView+Placeholder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITextView+Placeholder.h"; sourceTree = "<group>"; };
-		57CBD95B225511BD000BA8CC /* UITextView+Placeholder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITextView+Placeholder.m"; sourceTree = "<group>"; };
 		57CBD95D225517B4000BA8CC /* EditorPageVC+Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EditorPageVC+Actions.swift"; sourceTree = "<group>"; };
 		57DE5BDB2252088C008566B9 /* EditorPageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorPageVC.swift; sourceTree = "<group>"; };
 		57DE5BDD225208A4008566B9 /* EditorPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorPageViewModel.swift; sourceTree = "<group>"; };
@@ -1109,7 +1106,6 @@
 				57FB1795224BFBD700563BF7 /* PageControls */,
 				3BDD9A09228EDA5700B2A1DA /* PostController */,
 				B1A8AC1922E6FD4800032030 /* UIButton */,
-				57CBD9592255117F000BA8CC /* UITextView+Placeholder */,
 				3BB48ACA22D4ECDC00F11B6A /* ContentFittingWebView.swift */,
 				3BDD99FD228DA59900B2A1DA /* ExpandableTextView.swift */,
 				3B28EFE1228C7C31002D4816 /* KeyboardLayoutConstraint.swift */,
@@ -1202,15 +1198,6 @@
 				5740957C2247767400E40E51 /* CommentCell */,
 			);
 			path = Cells;
-			sourceTree = "<group>";
-		};
-		57CBD9592255117F000BA8CC /* UITextView+Placeholder */ = {
-			isa = PBXGroup;
-			children = (
-				57CBD95A225511BD000BA8CC /* UITextView+Placeholder.h */,
-				57CBD95B225511BD000BA8CC /* UITextView+Placeholder.m */,
-			);
-			path = "UITextView+Placeholder";
 			sourceTree = "<group>";
 		};
 		57DE5BDA2252086C008566B9 /* EditorPageVC */ = {
@@ -1639,7 +1626,6 @@
 				3B82D0F722D8D56A004EE848 /* EnableBiometricsVC.swift in Sources */,
 				3B5D361822E820760012A991 /* PostPageVC+Header.swift in Sources */,
 				3B67FC0B22C50BC400D05F01 /* SignInViewController+CollectionView.swift in Sources */,
-				57CBD95C225511BD000BA8CC /* UITextView+Placeholder.m in Sources */,
 				3BF37BD622A162E000A72FFE /* ResponseAPIOnlineNotificationData.swift in Sources */,
 				3BE68AAE22EEA1AE00033B81 /* SettingsVC+ButtonDelegate.swift in Sources */,
 				3BA3779722E9DA6C0071AF3A /* SignupVC+Location.swift in Sources */,

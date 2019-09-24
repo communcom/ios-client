@@ -52,6 +52,7 @@ def common_pods
   pod 'SwiftLinkPreview', '~> 3.0.1'
   pod 'Down'
   pod 'SDURLCache', '~> 1.3'
+  pod 'UITextView+Placeholder'
 end
 
 target 'Commun' do

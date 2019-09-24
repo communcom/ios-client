@@ -126,17 +126,22 @@ class FeedPageVC: UIViewController {
     }
 
     @IBAction func postButtonDidTouch(_ sender: Any) {
-        let editorVC = controllerContainer.resolve(EditorPageVC.self)
-        let nav = UINavigationController(rootViewController: editorVC!)
-        present(nav, animated: true, completion: nil)
+        openEditor()
     }
     
     @IBAction func photoButtonDidTouch(_ sender: Any) {
+        openEditor { (editorVC) in
+            editorVC.cameraButtonTap()
+        }
+    }
+    
+    func openEditor(completion: ((EditorPageVC)->Void)? = nil) {
         let editorVC = controllerContainer.resolve(EditorPageVC.self)
         let nav = UINavigationController(rootViewController: editorVC!)
-        present(nav, animated: true) {
-            editorVC?.cameraButtonTap()
-        }
+        nav.modalPresentationStyle = .fullScreen
+        present(nav, animated: true, completion: {
+            completion?(editorVC!)
+        })
     }
     
     @IBAction func sortByTypeButtonDidTouch(_ sender: Any) {
