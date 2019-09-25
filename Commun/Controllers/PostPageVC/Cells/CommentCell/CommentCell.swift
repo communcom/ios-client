@@ -40,9 +40,15 @@ class CommentCell: UITableViewCell {
     
     var comment: ResponseAPIContentGetComment?
     var delegate: CommentCellDelegate?
-    let bag = DisposeBag()
+    var bag = DisposeBag()
     
     var expanded = false
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        // reset disposebag
+        bag = DisposeBag()
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()

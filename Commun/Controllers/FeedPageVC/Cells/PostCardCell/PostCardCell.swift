@@ -32,6 +32,13 @@ class PostCardCell: UITableViewCell, PostController {
     @IBOutlet weak var gridViewToContainerBottomConstraint: NSLayoutConstraint!
     var post: ResponseAPIContentGetPost?
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        // http://adamborek.com/top-7-rxswift-mistakes/
+        // have to reset disposeBag when reusing cell
+        disposeBag = DisposeBag()
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         self.selectionStyle = .none

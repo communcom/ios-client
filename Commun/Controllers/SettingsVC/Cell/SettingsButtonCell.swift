@@ -20,12 +20,17 @@ class SettingsButtonCell: UITableViewCell {
     @IBOutlet weak var button: UIButton!
     weak var delegate: SettingsButtonCellDelegate?
     var type: ButtonType?
-    let bag = DisposeBag()
+    var bag = DisposeBag()
     
     func setUpWithButtonType(_ type: ButtonType) {
         self.type = type
         button.setTitle(type.title.localized(), for: .normal)
         button.setTitleColor(type.titleColor, for: .normal)
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        bag = DisposeBag()
     }
     
     @IBAction func changePasswordButtonTap(_ sender: Any) {

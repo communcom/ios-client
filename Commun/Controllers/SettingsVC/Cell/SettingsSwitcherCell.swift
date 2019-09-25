@@ -35,6 +35,11 @@ class SettingsSwitcherCell: UITableViewCell {
         switcher.isOn = type.value
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        bag = DisposeBag()
+    }
+    
     @IBAction func switcherDidSwitch(_ sender: Any) {
         guard let key = key else {return}
         self.delegate?.switcherDidSwitch(value: self.switcher.isOn, for: key)
