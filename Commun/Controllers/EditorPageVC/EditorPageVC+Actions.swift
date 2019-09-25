@@ -157,20 +157,24 @@ extension EditorPageVC {
             return
         }
         
-        showActionSheet(title: "save post as draft".localized().uppercaseFirst + "?", message: "draft let you save your edits, so you can come back later", actions: [
-            UIAlertAction(title: "save".localized().uppercaseFirst, style: .default, handler: { (_) in
-                self.saveDraft {
+        showAlert(
+            title: "save post as draft".localized().uppercaseFirst + "?",
+            message: "draft let you save your edits, so you can come back later".localized().uppercaseFirst,
+            buttonTitles: ["save".localized().uppercaseFirst, "delete".localized().uppercaseFirst],
+            highlightedButtonIndex: 0) { (index) in
+                if index == 0 {
+                    self.saveDraft {
+                        self.navigationController?.dismiss(animated: true, completion: nil)
+                    }
+                }
+                
+                else if index == 1 {
+                    // remove draft if exists
+                    self.removeDraft()
+                    
+                    // close
                     self.navigationController?.dismiss(animated: true, completion: nil)
                 }
-            })
-        ]) {
-            // on cancel
-            
-            // remove draft if exists
-            self.removeDraft()
-            
-            // close
-            self.navigationController?.dismiss(animated: true, completion: nil)
         }
     }
     

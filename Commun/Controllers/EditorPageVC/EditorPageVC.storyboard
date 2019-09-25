@@ -25,7 +25,7 @@
                                 <rect key="frame" x="0.0" y="44" width="500" height="900"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sEN-wG-0Ug">
-                                        <rect key="frame" x="0.0" y="0.0" width="500" height="892"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="500" height="860"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tux" translatesAutoresizingMaskIntoConstraints="NO" id="Yh5-US-3Nd">
                                                 <rect key="frame" x="16" y="24" width="40" height="40"/>
@@ -84,8 +84,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Pzr-29-OVi">
-                                                <rect key="frame" x="0.0" y="692" width="500" height="200"/>
-                                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                <rect key="frame" x="0.0" y="660" width="500" height="200"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="200" id="Kwy-Tn-A9W"/>
                                                 </constraints>
@@ -103,7 +102,6 @@
                                             <constraint firstItem="0Oi-CV-9TI" firstAttribute="leading" secondItem="sEN-wG-0Ug" secondAttribute="leading" id="JFG-pd-zWB"/>
                                             <constraint firstItem="94b-Gg-NR2" firstAttribute="top" secondItem="Yh5-US-3Nd" secondAttribute="bottom" constant="24" id="KZ3-sQ-HDx"/>
                                             <constraint firstItem="94b-Gg-NR2" firstAttribute="leading" secondItem="sEN-wG-0Ug" secondAttribute="leading" constant="16" id="MIs-Ct-8b1"/>
-                                            <constraint firstItem="Pzr-29-OVi" firstAttribute="top" secondItem="vTP-vI-wr9" secondAttribute="bottom" constant="8" id="MlN-4C-DYn"/>
                                             <constraint firstAttribute="trailing" secondItem="94b-Gg-NR2" secondAttribute="trailing" constant="16" id="NSS-fa-RQ9"/>
                                             <constraint firstItem="bla-eK-cJX" firstAttribute="leading" secondItem="Yh5-US-3Nd" secondAttribute="trailing" constant="16" id="PYt-MM-7kK"/>
                                             <constraint firstAttribute="trailing" secondItem="vTP-vI-wr9" secondAttribute="trailing" constant="16" id="Pn1-iY-7Aw"/>
@@ -111,6 +109,7 @@
                                             <constraint firstItem="bla-eK-cJX" firstAttribute="bottom" secondItem="Yh5-US-3Nd" secondAttribute="bottom" id="Ux6-0J-LVH"/>
                                             <constraint firstItem="Yh5-US-3Nd" firstAttribute="leading" secondItem="sEN-wG-0Ug" secondAttribute="leading" constant="16" id="WaU-DB-mG9"/>
                                             <constraint firstItem="vTP-vI-wr9" firstAttribute="top" secondItem="0Oi-CV-9TI" secondAttribute="bottom" constant="8" id="XG2-fm-ZeP"/>
+                                            <constraint firstItem="Pzr-29-OVi" firstAttribute="top" secondItem="0Oi-CV-9TI" secondAttribute="bottom" id="cV9-ml-7qs"/>
                                             <constraint firstItem="rXf-Vp-Izy" firstAttribute="top" secondItem="Yh5-US-3Nd" secondAttribute="top" id="daB-RR-zr9"/>
                                             <constraint firstAttribute="trailing" secondItem="0Oi-CV-9TI" secondAttribute="trailing" id="hvR-oT-a83"/>
                                             <constraint firstItem="0Oi-CV-9TI" firstAttribute="top" secondItem="4r8-FQ-IET" secondAttribute="bottom" constant="8" id="phl-H9-g0w"/>

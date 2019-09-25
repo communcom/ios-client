@@ -90,19 +90,18 @@ class EditorPageVC: UIViewController {
         else {
             // parse draft
             if hasDraft {
-                showActionSheet(
-                    title: "retrieve your last edit".localized().uppercaseFirst + "?",
-                    actions:
-                        [
-                            UIAlertAction(title: "yes".localized().uppercaseFirst, style: .default, handler: { (_) in
-                                self.getDraft()
-                            })
-                        ],
-                    cancelCompletion:
-                        {
+                showAlert(
+                    title: "retrieve draft".localized().uppercaseFirst,
+                    message: "you have a draft version on your device".localized().uppercaseFirst + ". " + "continue editing it".localized().uppercaseFirst + "?",
+                    buttonTitles: ["OK".localized(), "cancel".localized().uppercaseFirst],
+                    highlightedButtonIndex: 0) { (index) in
+                        if index == 0 {
+                            self.getDraft()
+                        }
+                        else if index == 1 {
                             self.removeDraft()
                         }
-                )
+                }
             }
         }
         
