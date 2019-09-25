@@ -29,7 +29,7 @@
                     </constraints>
                 </webView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7nZ-VU-zZS">
-                    <rect key="frame" x="16" y="140.5" width="119" height="35"/>
+                    <rect key="frame" x="16" y="140.5" width="107" height="35"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dhT-2v-fjM">
                             <rect key="frame" x="2" y="10.5" width="30" height="14"/>
@@ -67,7 +67,7 @@
                     <color key="backgroundColor" red="0.95329588649999997" green="0.95977157349999997" blue="0.97960883379999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstItem="dhT-2v-fjM" firstAttribute="leading" secondItem="7nZ-VU-zZS" secondAttribute="leading" constant="2" id="Han-fD-YcO"/>
-                        <constraint firstAttribute="trailing" secondItem="pki-4g-1Ih" secondAttribute="trailing" constant="12" id="NMw-Pg-JoF"/>
+                        <constraint firstAttribute="trailing" secondItem="pki-4g-1Ih" secondAttribute="trailing" id="NMw-Pg-JoF"/>
                         <constraint firstItem="sZG-QI-8u8" firstAttribute="centerY" secondItem="7nZ-VU-zZS" secondAttribute="centerY" id="XmV-9s-n44"/>
                         <constraint firstItem="pki-4g-1Ih" firstAttribute="leading" secondItem="sZG-QI-8u8" secondAttribute="trailing" constant="8" id="b30-0W-fHI"/>
                         <constraint firstItem="sZG-QI-8u8" firstAttribute="leading" secondItem="dhT-2v-fjM" secondAttribute="trailing" constant="8" id="b9O-Qc-ndh"/>
