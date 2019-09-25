@@ -48,6 +48,7 @@
 		3B2538B8231E6DF000D0B1DA /* EditorColorPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B2538B7231E6DF000D0B1DA /* EditorColorPicker.swift */; };
 		3B2538BA231E6E5A00D0B1DA /* colorPalette.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3B2538B9231E6E5A00D0B1DA /* colorPalette.plist */; };
 		3B28EFE2228C7C31002D4816 /* KeyboardLayoutConstraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B28EFE1228C7C31002D4816 /* KeyboardLayoutConstraint.swift */; };
+		3B2B6862233B49D500DADBD0 /* PostPageVC+HeaderForSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B2B6861233B49D500DADBD0 /* PostPageVC+HeaderForSection.swift */; };
 		3B2F2269226892C5006B589E /* NotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B2F2262226892C4006B589E /* NotificationCell.swift */; };
 		3B2F226A226892C5006B589E /* NotificationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3B2F2263226892C4006B589E /* NotificationCell.xib */; };
 		3B2F226B226892C5006B589E /* NotificationsPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B2F2264226892C4006B589E /* NotificationsPageViewModel.swift */; };
@@ -297,6 +298,7 @@
 		3B2538B7231E6DF000D0B1DA /* EditorColorPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorColorPicker.swift; sourceTree = "<group>"; };
 		3B2538B9231E6E5A00D0B1DA /* colorPalette.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = colorPalette.plist; sourceTree = "<group>"; };
 		3B28EFE1228C7C31002D4816 /* KeyboardLayoutConstraint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardLayoutConstraint.swift; sourceTree = "<group>"; };
+		3B2B6861233B49D500DADBD0 /* PostPageVC+HeaderForSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PostPageVC+HeaderForSection.swift"; sourceTree = "<group>"; };
 		3B2F2262226892C4006B589E /* NotificationCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationCell.swift; sourceTree = "<group>"; };
 		3B2F2263226892C4006B589E /* NotificationCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NotificationCell.xib; sourceTree = "<group>"; };
 		3B2F2264226892C4006B589E /* NotificationsPageViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationsPageViewModel.swift; sourceTree = "<group>"; };
@@ -938,6 +940,7 @@
 				3B5D361722E820760012A991 /* PostPageVC+Header.swift */,
 				57F5CFC12244E3BE005A09AE /* PostPageVC+Rx.swift */,
 				5725173D2243E49C0033125C /* PostPageVC.storyboard */,
+				3B2B6861233B49D500DADBD0 /* PostPageVC+HeaderForSection.swift */,
 			);
 			path = PostPageVC;
 			sourceTree = "<group>";
@@ -1663,6 +1666,7 @@
 				3B6229AB22BD12410053B9EF /* TTTAttributedLabel.swift in Sources */,
 				3BDF4FA822C21B310029D616 /* ResponseAPIContentGetProfile.swift in Sources */,
 				3B5EDE3522E073C500897BF3 /* SettingsViewModel.swift in Sources */,
+				3B2B6862233B49D500DADBD0 /* PostPageVC+HeaderForSection.swift in Sources */,
 				3BDD9A0F228F07EF00B2A1DA /* UIApplication.swift in Sources */,
 				3B0E9C64226F4A0C002AB1C2 /* VerticalDraggableImageView.swift in Sources */,
 				3B02CD282289B23E0078BB52 /* PostHeaderView.swift in Sources */,
