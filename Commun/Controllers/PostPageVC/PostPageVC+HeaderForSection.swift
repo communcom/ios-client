@@ -25,6 +25,7 @@ extension PostPageVC: UITableViewDelegate {
         // Sort button
         let button = UIButton(frame: .zero)
         button.contentEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 18)
+        button.titleLabel?.font = .boldSystemFont(ofSize: 13)
         button.setTitleColor(.appMainColor, for: .normal)
         #warning("sorting")
         button.setTitle("interesting first".localized().uppercaseFirst, for: .normal)
