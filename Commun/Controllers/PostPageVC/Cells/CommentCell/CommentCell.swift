@@ -8,6 +8,7 @@
 
 import UIKit
 import RxSwift
+import TTTAttributedLabel
 
 protocol CommentCellDelegate: class {
     var replyingComment: ResponseAPIContentGetComment? {get set}
@@ -29,7 +30,7 @@ class CommentCell: UITableViewCell {
     // MARK: - Outlets
     @IBOutlet weak var avatarImageView: UIImageView!
     @IBOutlet weak var timeLabel: UILabel!
-    @IBOutlet weak var contentLabel: UILabel!
+    @IBOutlet weak var contentLabel: TTTAttributedLabel!
     @IBOutlet weak var embedView: UIView!
     @IBOutlet weak var embedViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var upVoteButton: UIButton!
@@ -48,17 +49,25 @@ class CommentCell: UITableViewCell {
         super.prepareForReuse()
         // reset disposebag
         bag = DisposeBag()
+        
+        // observe changge
+        observeCommentChanged()
     }
     
     override func awakeFromNib() {
         super.awakeFromNib()
         self.selectionStyle = .none
         
+        // avatar's tapGesture
         let tapOnAvatar = UITapGestureRecognizer(target: self, action: #selector(authorDidTouch(gesture:)))
         avatarImageView.isUserInteractionEnabled = true
         avatarImageView.addGestureRecognizer(tapOnAvatar)
         
-        observeCommentChanged()
+        // set textAttributes
+        contentLabel.linkAttributes = [
+            NSAttributedString.Key.foregroundColor: UIColor.appMainColor
+        ]
+        contentLabel.delegate = self
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -157,7 +166,7 @@ class CommentCell: UITableViewCell {
             mutableAS.resolveTags()
             mutableAS.resolveLinks()
             mutableAS.resolveMentions()
-            contentLabel.attributedText = mutableAS
+            contentLabel.text = mutableAS
             return
         }
         
@@ -182,7 +191,7 @@ class CommentCell: UITableViewCell {
             )
 
 
-        contentLabel.attributedText = mutableAS
+        contentLabel.text = mutableAS
     }
     
     // MARK: - Observing

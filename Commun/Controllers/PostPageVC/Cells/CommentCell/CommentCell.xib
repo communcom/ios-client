@@ -21,10 +21,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="218"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cXY-DD-DoZ">
-                                <rect key="frame" x="62" y="12" width="240.5" height="158"/>
+                                <rect key="frame" x="62" y="12" width="238" height="158"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Andrey Ivanov Welcome! 😄 Wow would love to wake" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cUo-vp-YwT">
-                                        <rect key="frame" x="10" y="8" width="220.5" height="41"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Andrey Ivanov Welcome! 😄 Wow would love to wake" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cUo-vp-YwT" customClass="TTTAttributedLabel">
+                                        <rect key="frame" x="10" y="8" width="218" height="41"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
