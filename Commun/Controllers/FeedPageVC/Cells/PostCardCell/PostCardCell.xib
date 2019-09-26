@@ -1,31 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
-    <customFonts key="customFonts">
-        <array key="SF-Pro-Text-Regular.otf">
-            <string>SFProText-Regular</string>
-        </array>
-    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="428" id="KGk-i7-Jjw" customClass="PostCardCell" customModule="Commun" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="428"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="394" id="KGk-i7-Jjw" customClass="PostCardCell" customModule="Commun" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="394"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="427.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="394"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yxa-RM-ecb" userLabel="Background View">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="427.5"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="394"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tux" translatesAutoresizingMaskIntoConstraints="NO" id="Ycg-ed-cff">
                                 <rect key="frame" x="16" y="14" width="40" height="40"/>
@@ -56,13 +49,6 @@
                                 <color key="textColor" red="0.60784313725490191" green="0.62352941176470589" blue="0.63529411764705879" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sergey" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C9N-L8-TzR">
-                                <rect key="frame" x="119" y="38" width="43" height="16"/>
-                                <accessibility key="accessibilityConfiguration" identifier="PostCardCellSubtitleLabel" label="PostCardCellSubtitleLabel"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                <color key="textColor" red="0.60784313729999995" green="0.62352941179999999" blue="0.63529411759999999" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ApL-HH-Dm0" userLabel="More Button">
                                 <rect key="frame" x="264" y="6" width="56" height="56"/>
                                 <accessibility key="accessibilityConfiguration" identifier="PostCardCellMoreButton" label="PostCardCellMoreButton"/>
@@ -76,14 +62,14 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t1b-fE-pfp">
-                                <rect key="frame" x="16" y="80" width="288" height="23"/>
+                                <rect key="frame" x="16" y="80" width="288" height="20.5"/>
                                 <accessibility key="accessibilityConfiguration" identifier="PostCardCellMainTextLabel" label="PostCardCellMainTextLabel"/>
                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5vT-Zh-8Yc">
-                                <rect key="frame" x="0.0" y="119" width="320" height="216.5"/>
+                                <rect key="frame" x="0.0" y="116.5" width="320" height="216.5"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5sP-OA-x8D" customClass="GridView" customModule="Commun" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="204.5"/>
@@ -99,71 +85,104 @@
                                     <constraint firstItem="5sP-OA-x8D" firstAttribute="leading" secondItem="5vT-Zh-8Yc" secondAttribute="leading" id="qsl-EO-rhx"/>
                                 </constraints>
                             </view>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="UpSelected" translatesAutoresizingMaskIntoConstraints="NO" id="iSB-ET-CHf">
-                                <rect key="frame" x="16" y="335.5" width="16" height="16"/>
-                                <accessibility key="accessibilityConfiguration" identifier="PostCardCellGroupImageView" label="PostCardCellGroupImageView">
-                                    <bool key="isElement" value="YES"/>
-                                </accessibility>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PD8-Im-z6w">
+                                <rect key="frame" x="16" y="343" width="109" height="35"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="juO-lf-QjU">
+                                        <rect key="frame" x="2" y="10.5" width="30" height="14"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="30" id="VpK-RH-80i"/>
+                                            <constraint firstAttribute="width" secondItem="juO-lf-QjU" secondAttribute="height" multiplier="15:7" id="pI5-c0-vNj"/>
+                                        </constraints>
+                                        <color key="tintColor" red="0.6074207425" green="0.62516635659999997" blue="0.63630086180000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <inset key="imageEdgeInsets" minX="10" minY="0.0" maxX="10" maxY="0.0"/>
+                                        <state key="normal" image="upVote"/>
+                                        <connections>
+                                            <action selector="upButtonTap:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="VtY-zU-g8E"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Pb-R7-9EG">
+                                        <rect key="frame" x="77" y="10.5" width="30" height="14"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="30" id="JyV-UL-hTj"/>
+                                            <constraint firstAttribute="width" secondItem="2Pb-R7-9EG" secondAttribute="height" multiplier="15:7" id="zVi-KP-kBy"/>
+                                        </constraints>
+                                        <color key="tintColor" red="0.6074207425" green="0.62516635659999997" blue="0.63630086180000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <inset key="imageEdgeInsets" minX="10" minY="0.0" maxX="10" maxY="0.0"/>
+                                        <state key="normal" image="downVote"/>
+                                        <connections>
+                                            <action selector="downButtonTap:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="LQY-qV-ktl"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1205" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m1X-xj-Nmb">
+                                        <rect key="frame" x="40" y="10.5" width="29" height="14.5"/>
+                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="12"/>
+                                        <color key="textColor" red="0.6074207425" green="0.62516635659999997" blue="0.63630086180000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="0.95329588649999997" green="0.95977157349999997" blue="0.97960883379999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="16" id="Opw-kY-GSE"/>
-                                    <constraint firstAttribute="width" constant="16" id="k8R-TG-EMf"/>
+                                    <constraint firstItem="2Pb-R7-9EG" firstAttribute="leading" secondItem="m1X-xj-Nmb" secondAttribute="trailing" constant="8" id="0xZ-wj-XYO"/>
+                                    <constraint firstAttribute="height" constant="35" id="4au-47-zCN"/>
+                                    <constraint firstItem="2Pb-R7-9EG" firstAttribute="centerY" secondItem="PD8-Im-z6w" secondAttribute="centerY" id="jn8-yN-rUQ"/>
+                                    <constraint firstItem="juO-lf-QjU" firstAttribute="centerY" secondItem="PD8-Im-z6w" secondAttribute="centerY" id="oMc-BW-wAd"/>
+                                    <constraint firstItem="juO-lf-QjU" firstAttribute="leading" secondItem="PD8-Im-z6w" secondAttribute="leading" constant="2" id="pek-rd-1nK"/>
+                                    <constraint firstAttribute="trailing" secondItem="2Pb-R7-9EG" secondAttribute="trailing" constant="2" id="rHj-qX-oyj"/>
+                                    <constraint firstItem="m1X-xj-Nmb" firstAttribute="centerY" secondItem="PD8-Im-z6w" secondAttribute="centerY" id="uAm-dO-lra"/>
+                                    <constraint firstItem="m1X-xj-Nmb" firstAttribute="leading" secondItem="juO-lf-QjU" secondAttribute="trailing" constant="8" id="xMP-tt-hqa"/>
                                 </constraints>
-                            </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kiT-nP-6oC">
-                                <rect key="frame" x="40" y="335.5" width="8.5" height="16"/>
-                                <accessibility key="accessibilityConfiguration" identifier="PostCardCellLikeCountLabel" label="PostCardCellLikeCountLabel"/>
-                                <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="13"/>
-                                <color key="textColor" red="0.41568627450980389" green="0.50196078431372548" blue="0.96078431372549022" alpha="1" colorSpace="calibratedRGB"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="17.5"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="278" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UXz-pe-CVI">
+                                <rect key="frame" x="282" y="353.5" width="22" height="14.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0 Comments" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wEL-E2-SmX">
-                                <rect key="frame" x="142" y="335.5" width="78" height="16"/>
-                                <accessibility key="accessibilityConfiguration" identifier="PostCardCellCommentsCountLabel" label="PostCardCellCommentsCountLabel"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="718-uO-0bJ">
+                                <rect key="frame" x="254" y="351.5" width="20" height="18"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="60" id="PgY-NI-pc4"/>
+                                    <constraint firstAttribute="width" constant="20" id="MRf-LH-vjQ"/>
+                                    <constraint firstAttribute="height" constant="18" id="pN6-pw-hts"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="13"/>
+                                <state key="normal" image="share-count"/>
+                                <connections>
+                                    <action selector="shareButtonTap:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="xMy-D6-nqS"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="278" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v36-DV-R7c">
+                                <rect key="frame" x="209" y="353.5" width="22" height="14.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HR2-Z9-ljc">
+                                <rect key="frame" x="181" y="351.5" width="20" height="18"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="20" id="aIY-xZ-4n0"/>
+                                    <constraint firstAttribute="height" constant="18" id="oAB-UD-rnC"/>
+                                </constraints>
+                                <state key="normal" image="comment-count"/>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="•" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pa7-4C-ONh">
+                                <rect key="frame" x="119" y="38.5" width="6" height="15"/>
+                                <accessibility key="accessibilityConfiguration" identifier="PostCardCellSubtitleLabel" label="PostCardCellSubtitleLabel"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <color key="textColor" red="0.60784313729999995" green="0.62352941179999999" blue="0.63529411759999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0 Views" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jus-YZ-IbU">
-                                <rect key="frame" x="244" y="335.5" width="60" height="16"/>
-                                <accessibility key="accessibilityConfiguration" identifier="PostCardCellSharesCountLabel" label="PostCardCellSharesCountLabel"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="60" id="7Xy-H1-giP"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="13"/>
-                                <color key="textColor" red="0.60784313725490191" green="0.62352941176470589" blue="0.63529411764705879" alpha="1" colorSpace="calibratedRGB"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sergey" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C9N-L8-TzR">
+                                <rect key="frame" x="129" y="38" width="43.5" height="16"/>
+                                <accessibility key="accessibilityConfiguration" identifier="PostCardCellSubtitleLabel" label="PostCardCellSubtitleLabel"/>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="13"/>
+                                <color key="textColor" red="0.40926253800000001" green="0.48644661900000002" blue="0.97343546150000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0DU-Io-mHz">
-                                <rect key="frame" x="16" y="373.5" width="36" height="36"/>
-                                <accessibility key="accessibilityConfiguration" identifier="PostCardCellUpvoteButton" label="PostCardCellUpvoteButton"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="36" id="IED-oe-5bZ"/>
-                                    <constraint firstAttribute="height" constant="36" id="pXn-IT-Dej"/>
-                                </constraints>
-                                <state key="normal" image="Up"/>
-                                <connections>
-                                    <action selector="upButtonTap:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="xgc-v2-NVG"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fMs-g5-fNp" userLabel="Unvote Button">
-                                <rect key="frame" x="64" y="373.5" width="36" height="36"/>
-                                <accessibility key="accessibilityConfiguration" identifier="PostCardCellUnvoteButton" label="PostCardCellUnvoteButton"/>
-                                <state key="normal" image="Down"/>
-                                <connections>
-                                    <action selector="downButtonTap:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="noF-bd-ANX"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EQe-sX-b19" userLabel="Share Button">
-                                <rect key="frame" x="268" y="373.5" width="36" height="36"/>
-                                <accessibility key="accessibilityConfiguration" identifier="PostCardCellShareButton" label="PostCardCellShareButton"/>
-                                <state key="normal" image="share"/>
-                                <connections>
-                                    <action selector="shareButtonTap:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="GZt-Hz-6VL"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <accessibility key="accessibilityConfiguration" identifier="PostCardCellBackgroundView" label="PostCardCellBackgroundView">
@@ -171,43 +190,38 @@
                         </accessibility>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="5vT-Zh-8Yc" secondAttribute="trailing" id="1F8-WB-Tgs"/>
-                            <constraint firstItem="fMs-g5-fNp" firstAttribute="leading" secondItem="0DU-Io-mHz" secondAttribute="trailing" constant="12" id="1hu-yO-nZn"/>
-                            <constraint firstItem="0DU-Io-mHz" firstAttribute="leading" secondItem="iSB-ET-CHf" secondAttribute="leading" id="3vk-OX-iNR"/>
-                            <constraint firstItem="Jus-YZ-IbU" firstAttribute="centerY" secondItem="iSB-ET-CHf" secondAttribute="centerY" id="4mG-K1-6pH"/>
-                            <constraint firstItem="EQe-sX-b19" firstAttribute="centerY" secondItem="0DU-Io-mHz" secondAttribute="centerY" id="4zm-iz-frH"/>
-                            <constraint firstItem="iSB-ET-CHf" firstAttribute="top" secondItem="5vT-Zh-8Yc" secondAttribute="bottom" id="8Gq-za-ptw"/>
                             <constraint firstItem="t1b-fE-pfp" firstAttribute="top" secondItem="Ycg-ed-cff" secondAttribute="bottom" constant="26" id="9HU-Gd-4Ye"/>
-                            <constraint firstItem="iSB-ET-CHf" firstAttribute="leading" secondItem="yxa-RM-ecb" secondAttribute="leading" constant="16" id="AXZ-Nq-ghn"/>
-                            <constraint firstItem="0DU-Io-mHz" firstAttribute="top" secondItem="iSB-ET-CHf" secondAttribute="bottom" constant="22" id="Big-qY-FXE"/>
                             <constraint firstItem="Ycg-ed-cff" firstAttribute="leading" secondItem="yxa-RM-ecb" secondAttribute="leading" constant="16" id="Bky-cE-qHg"/>
-                            <constraint firstItem="kiT-nP-6oC" firstAttribute="centerY" secondItem="iSB-ET-CHf" secondAttribute="centerY" id="EwW-ZT-Hxg"/>
                             <constraint firstItem="t1b-fE-pfp" firstAttribute="leading" secondItem="yxa-RM-ecb" secondAttribute="leading" constant="16" id="F2D-in-tOK"/>
+                            <constraint firstItem="C9N-L8-TzR" firstAttribute="leading" secondItem="pa7-4C-ONh" secondAttribute="trailing" constant="4" id="FNP-qM-m4P"/>
+                            <constraint firstAttribute="trailing" secondItem="UXz-pe-CVI" secondAttribute="trailing" constant="16" id="GEj-PL-Ujw"/>
+                            <constraint firstAttribute="bottom" secondItem="PD8-Im-z6w" secondAttribute="bottom" constant="16" id="GZe-v4-qov"/>
                             <constraint firstItem="5vT-Zh-8Yc" firstAttribute="leading" secondItem="yxa-RM-ecb" secondAttribute="leading" id="M9Y-h3-NwN"/>
                             <constraint firstItem="5vT-Zh-8Yc" firstAttribute="top" secondItem="t1b-fE-pfp" secondAttribute="bottom" constant="16" id="MEP-o4-v7R"/>
                             <constraint firstItem="ApL-HH-Dm0" firstAttribute="centerY" secondItem="Ycg-ed-cff" secondAttribute="centerY" id="N1a-Hi-4CV"/>
                             <constraint firstItem="2By-LQ-DfR" firstAttribute="leading" secondItem="ICX-s9-6dm" secondAttribute="leading" id="NJ0-xA-QlX"/>
                             <constraint firstItem="ICX-s9-6dm" firstAttribute="leading" secondItem="Ycg-ed-cff" secondAttribute="trailing" constant="16" id="O9h-Mk-phv"/>
+                            <constraint firstItem="v36-DV-R7c" firstAttribute="leading" secondItem="HR2-Z9-ljc" secondAttribute="trailing" constant="8" id="Pc6-BQ-rRE"/>
                             <constraint firstAttribute="trailing" secondItem="ApL-HH-Dm0" secondAttribute="trailing" id="R9u-UU-n6d"/>
                             <constraint firstItem="ICX-s9-6dm" firstAttribute="top" secondItem="yxa-RM-ecb" secondAttribute="top" constant="14" id="SZn-J9-Yhd"/>
-                            <constraint firstItem="C9N-L8-TzR" firstAttribute="leading" secondItem="2By-LQ-DfR" secondAttribute="trailing" constant="4" id="V73-Fc-2tB"/>
                             <constraint firstItem="C9N-L8-TzR" firstAttribute="centerY" secondItem="2By-LQ-DfR" secondAttribute="centerY" id="VYa-kh-o9t"/>
-                            <constraint firstAttribute="trailing" secondItem="EQe-sX-b19" secondAttribute="trailing" constant="16" id="bb4-6I-Hog"/>
-                            <constraint firstAttribute="trailing" secondItem="Jus-YZ-IbU" secondAttribute="trailing" constant="16" id="hSC-hi-Q3r"/>
-                            <constraint firstItem="Jus-YZ-IbU" firstAttribute="leading" secondItem="wEL-E2-SmX" secondAttribute="trailing" constant="24" id="jvt-yK-JxE"/>
-                            <constraint firstItem="fMs-g5-fNp" firstAttribute="centerY" secondItem="0DU-Io-mHz" secondAttribute="centerY" id="lTz-tu-a5u"/>
-                            <constraint firstItem="EQe-sX-b19" firstAttribute="width" secondItem="0DU-Io-mHz" secondAttribute="width" id="o21-3s-os8"/>
+                            <constraint firstItem="PD8-Im-z6w" firstAttribute="top" secondItem="5vT-Zh-8Yc" secondAttribute="bottom" constant="10" id="ViK-ml-nUB"/>
+                            <constraint firstItem="718-uO-0bJ" firstAttribute="centerY" secondItem="PD8-Im-z6w" secondAttribute="centerY" id="ZIv-fx-882"/>
+                            <constraint firstItem="HR2-Z9-ljc" firstAttribute="centerY" secondItem="PD8-Im-z6w" secondAttribute="centerY" id="ejR-vp-OUR"/>
+                            <constraint firstItem="pa7-4C-ONh" firstAttribute="centerY" secondItem="2By-LQ-DfR" secondAttribute="centerY" id="gGd-WU-N34"/>
+                            <constraint firstItem="PD8-Im-z6w" firstAttribute="leading" secondItem="yxa-RM-ecb" secondAttribute="leading" constant="16" id="ga9-as-UcT"/>
+                            <constraint firstItem="v36-DV-R7c" firstAttribute="centerY" secondItem="PD8-Im-z6w" secondAttribute="centerY" id="gjf-SI-kPP"/>
+                            <constraint firstItem="pa7-4C-ONh" firstAttribute="leading" secondItem="2By-LQ-DfR" secondAttribute="trailing" constant="4" id="juq-JZ-NSY"/>
+                            <constraint firstItem="UXz-pe-CVI" firstAttribute="leading" secondItem="718-uO-0bJ" secondAttribute="trailing" constant="8" id="lYT-Zc-ztj"/>
+                            <constraint firstItem="UXz-pe-CVI" firstAttribute="centerY" secondItem="PD8-Im-z6w" secondAttribute="centerY" id="mkl-Fc-KtX"/>
                             <constraint firstItem="Ycg-ed-cff" firstAttribute="top" secondItem="yxa-RM-ecb" secondAttribute="top" constant="14" id="oz7-QM-7sP"/>
-                            <constraint firstItem="fMs-g5-fNp" firstAttribute="width" secondItem="0DU-Io-mHz" secondAttribute="width" id="puq-aq-tae"/>
-                            <constraint firstItem="EQe-sX-b19" firstAttribute="height" secondItem="0DU-Io-mHz" secondAttribute="height" id="q3c-ko-B5P"/>
-                            <constraint firstItem="fMs-g5-fNp" firstAttribute="height" secondItem="0DU-Io-mHz" secondAttribute="height" id="szE-PS-j1b"/>
+                            <constraint firstItem="718-uO-0bJ" firstAttribute="leading" secondItem="v36-DV-R7c" secondAttribute="trailing" constant="23" id="sqI-hZ-TCb"/>
                             <constraint firstItem="2By-LQ-DfR" firstAttribute="bottom" secondItem="Ycg-ed-cff" secondAttribute="bottom" id="w8v-3c-kJd"/>
-                            <constraint firstItem="wEL-E2-SmX" firstAttribute="centerY" secondItem="iSB-ET-CHf" secondAttribute="centerY" id="w9i-bm-xak"/>
                             <constraint firstAttribute="trailing" secondItem="t1b-fE-pfp" secondAttribute="trailing" constant="16" id="y8y-ub-q5g"/>
-                            <constraint firstItem="kiT-nP-6oC" firstAttribute="leading" secondItem="iSB-ET-CHf" secondAttribute="trailing" constant="8" id="yPl-fz-iRU"/>
                         </constraints>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ahx-nL-77K">
-                        <rect key="frame" x="0.0" y="419.5" width="320" height="8"/>
+                        <rect key="frame" x="0.0" y="386" width="320" height="8"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="8" id="5hA-zd-wRe"/>
@@ -217,7 +231,6 @@
                 <constraints>
                     <constraint firstAttribute="bottom" secondItem="ahx-nL-77K" secondAttribute="bottom" id="IAY-X4-2mD"/>
                     <constraint firstItem="yxa-RM-ecb" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="IEI-Io-dxQ"/>
-                    <constraint firstItem="ahx-nL-77K" firstAttribute="top" secondItem="0DU-Io-mHz" secondAttribute="bottom" constant="10" id="U2u-K9-Raw"/>
                     <constraint firstItem="ahx-nL-77K" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="Y3e-Ze-ZAu"/>
                     <constraint firstAttribute="trailing" secondItem="ahx-nL-77K" secondAttribute="trailing" id="du8-hF-y1v"/>
                     <constraint firstItem="yxa-RM-ecb" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="fxG-s0-cKX"/>
@@ -232,27 +245,27 @@
             <connections>
                 <outlet property="authorNameLabel" destination="C9N-L8-TzR" id="Qn4-tN-Kpn"/>
                 <outlet property="avatarImageView" destination="Ycg-ed-cff" id="uy7-KF-FlE"/>
-                <outlet property="downVoteButton" destination="fMs-g5-fNp" id="yyh-mT-KxX"/>
+                <outlet property="downVoteButton" destination="2Pb-R7-9EG" id="vpj-if-p1W"/>
                 <outlet property="embededViewHeightConstraint" destination="YjY-cR-8HU" id="jVf-3t-fYx"/>
                 <outlet property="gridView" destination="5sP-OA-x8D" id="uOB-YU-NFE"/>
                 <outlet property="gridViewToContainerBottomConstraint" destination="eG0-lz-TDd" id="byc-tL-hU0"/>
-                <outlet property="likeCounterLabel" destination="kiT-nP-6oC" id="RCs-fD-VZd"/>
+                <outlet property="likeCounterLabel" destination="m1X-xj-Nmb" id="9tv-jj-6Kp"/>
                 <outlet property="mainTextLabel" destination="t1b-fE-pfp" id="i1h-MC-N8n"/>
-                <outlet property="numberOfCommentsLabel" destination="wEL-E2-SmX" id="bli-rq-VW7"/>
-                <outlet property="numberOfViewsLabel" destination="Jus-YZ-IbU" id="dkE-ki-Dii"/>
+                <outlet property="numberOfCommentsLabel" destination="v36-DV-R7c" id="bWt-kR-Iz6"/>
+                <outlet property="numberOfViewsLabel" destination="UXz-pe-CVI" id="pJH-Gr-WCN"/>
                 <outlet property="timeAgoLabel" destination="2By-LQ-DfR" id="rDT-ag-YtM"/>
                 <outlet property="titleLabel" destination="ICX-s9-6dm" id="r39-If-Xm3"/>
-                <outlet property="upVoteButton" destination="0DU-Io-mHz" id="VJW-uK-5rv"/>
+                <outlet property="upVoteButton" destination="juO-lf-QjU" id="1q0-gm-vgG"/>
             </connections>
-            <point key="canvasLocation" x="140.80000000000001" y="321.13943028485761"/>
+            <point key="canvasLocation" x="140.80000000000001" y="305.84707646176912"/>
         </tableViewCell>
     </objects>
     <resources>
-        <image name="Down" width="170.66667175292969" height="170.66667175292969"/>
-        <image name="Up" width="170.66667175292969" height="170.66667175292969"/>
-        <image name="UpSelected" width="170.66667175292969" height="170.66667175292969"/>
+        <image name="comment-count" width="20.5" height="18"/>
+        <image name="downVote" width="13" height="17"/>
         <image name="points" width="170.66667175292969" height="170.66667175292969"/>
-        <image name="share" width="170.66667175292969" height="170.66667175292969"/>
+        <image name="share-count" width="19.5" height="18"/>
         <image name="tux" width="56" height="56"/>
+        <image name="upVote" width="13" height="17"/>
     </resources>
 </document>
