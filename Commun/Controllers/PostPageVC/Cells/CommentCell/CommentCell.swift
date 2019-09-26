@@ -43,6 +43,7 @@ class CommentCell: UITableViewCell {
     var delegate: CommentCellDelegate?
     var bag = DisposeBag()
     var expanded = false
+    var themeColor = UIColor(hexString: "#6A80F5")!
     
     // MARK: - Methods
     override func prepareForReuse() {
@@ -65,7 +66,7 @@ class CommentCell: UITableViewCell {
         
         // set textAttributes
         contentLabel.linkAttributes = [
-            NSAttributedString.Key.foregroundColor: UIColor.appMainColor
+            NSAttributedString.Key.foregroundColor: themeColor
         ]
         contentLabel.delegate = self
     }
@@ -113,8 +114,8 @@ class CommentCell: UITableViewCell {
         #warning("change this number later")
         voteCountLabel.text = "\(comment.votes.upCount ?? 0)"
         
-        upVoteButton.tintColor = comment.votes.hasUpVote ? .appMainColor: .lightGray
-        downVoteButton.tintColor = comment.votes.hasDownVote ? .appMainColor: .lightGray
+        upVoteButton.tintColor = comment.votes.hasUpVote ? themeColor: .lightGray
+        downVoteButton.tintColor = comment.votes.hasDownVote ? themeColor: .lightGray
         
         timeLabel.text = Date.timeAgo(string: comment.meta.time)
     }
@@ -151,7 +152,7 @@ class CommentCell: UITableViewCell {
         let userId = comment?.author?.username ?? comment?.author?.userId ?? "Unknown user"
         let mutableAS = NSMutableAttributedString(string: userId, attributes: [
             .font: UIFont.boldSystemFont(ofSize: 13),
-            .foregroundColor: UIColor.appMainColor,
+            .foregroundColor: themeColor,
             .link: "https://commun.com/@\(comment?.author?.userId ?? comment?.author?.username ?? "unknown-user")"
         ])
         
@@ -186,7 +187,7 @@ class CommentCell: UITableViewCell {
                     string: "see more".localized().uppercaseFirst,
                     attributes: [
                         .link: "seemore://",
-                        .foregroundColor: UIColor.appMainColor
+                        .foregroundColor: themeColor
                 ])
             )
 
