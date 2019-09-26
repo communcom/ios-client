@@ -14,13 +14,21 @@ public typealias PostSection = AnimatableSectionModel<String, ResponseAPIContent
 
 extension FeedPageVC {
     func bindUI() {
-        // scrollview
-        self.tableView.rx.willDragDown
-            .map {$0 ? true: false}
-            .distinctUntilChanged()
-            .subscribe(onNext: {hide in
-                self.navigationController?.setNavigationBarHidden(hide, animated: true)
-            })
+        // feedTypeMode
+        viewModel.feedTypeMode
+            .bind { feedTypeMode in
+                switch feedTypeMode {
+                case .subscriptions:
+                    self.headerLabel.text = "my Feed".localized().uppercaseFirst
+                    self.changeFeedTypeButton.setTitle("trending".localized().uppercaseFirst, for: .normal)
+                case .community:
+                    self.headerLabel.text = "trending".localized().uppercaseFirst
+                    
+                    self.changeFeedTypeButton.setTitle("my Feed".localized().uppercaseFirst, for: .normal)
+                default:
+                    break
+                }
+            }
             .disposed(by: disposeBag)
         
         // feedType

@@ -64,4 +64,14 @@ extension FeedPageVC {
     @objc func refresh() {
         viewModel.reload()
     }
+    
+    @IBAction func changeFeedTypeButtonDidTouch(_ sender: Any) {
+        if viewModel.feedTypeMode.value == .subscriptions {
+            viewModel.feedTypeMode.accept(.community)
+        }
+        
+        else {
+            viewModel.feedTypeMode.accept(.subscriptions)
+        }
+    }
 }

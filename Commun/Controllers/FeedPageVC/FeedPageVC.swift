@@ -18,14 +18,10 @@ class FeedPageVC: UIViewController {
     var viewModel: FeedPageViewModel!
     var dataSource: MyRxTableViewSectionedAnimatedDataSource<PostSection>!
     let disposeBag = DisposeBag()
-    
-    var segmentedItems = [
-        "My feed".localized().uppercaseFirst,
-        "Trending".localized().uppercaseFirst]
-    
-    var selectedSegmentedItemsIndex = 1
 
     // MARK: - Outlets
+    @IBOutlet weak var headerLabel: UILabel!
+    @IBOutlet weak var changeFeedTypeButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var userAvatarImage: UIImageView!
     @IBOutlet weak var sortByTypeButton: UIButton!
