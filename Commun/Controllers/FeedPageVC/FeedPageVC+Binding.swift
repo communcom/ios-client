@@ -16,7 +16,7 @@ extension FeedPageVC {
     func bindUI() {
         // feedTypeMode
         viewModel.feedTypeMode
-            .bind { feedTypeMode in
+            .subscribe(onNext: { feedTypeMode in
                 switch feedTypeMode {
                 case .subscriptions:
                     self.headerLabel.text = "my Feed".localized().uppercaseFirst
@@ -28,7 +28,7 @@ extension FeedPageVC {
                 default:
                     break
                 }
-            }
+            })
             .disposed(by: disposeBag)
         
         // feedType

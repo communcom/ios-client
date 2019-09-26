@@ -72,6 +72,7 @@ extension FeedPageVC {
         
         else {
             viewModel.feedTypeMode.accept(.subscriptions)
+            viewModel.feedType.accept(.timeDesc)
         }
     }
 }

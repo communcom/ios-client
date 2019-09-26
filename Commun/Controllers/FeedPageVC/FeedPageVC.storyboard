@@ -215,6 +215,8 @@
                     <connections>
                         <outlet property="changeFeedTypeButton" destination="O5W-Ol-ZWI" id="VkF-W5-vSi"/>
                         <outlet property="headerLabel" destination="Yac-FO-8jX" id="EIp-rg-sRQ"/>
+                        <outlet property="sortByTimeButton" destination="d57-yH-JCE" id="v7V-HW-KsF"/>
+                        <outlet property="sortByTypeButton" destination="YpZ-V0-RF5" id="b7b-FO-Rhc"/>
                         <outlet property="tableView" destination="8YX-tZ-48z" id="qId-Qf-2c1"/>
                         <outlet property="userAvatarImage" destination="Z7e-MC-AaW" id="kXZ-6Z-Ba4"/>
                     </connections>
