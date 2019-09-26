@@ -40,8 +40,11 @@ extension CommentCell: TTTAttributedLabelDelegate {
             return
         }
         
-        let safariVC = SFSafariViewController(url: url)
-        parentViewController?.present(safariVC, animated: true, completion: nil)
+        if url.absoluteString.starts(with: "https://") ||
+            url.absoluteString.starts(with: "http://") {
+            let safariVC = SFSafariViewController(url: url)
+            parentViewController?.present(safariVC, animated: true, completion: nil)
+        }
     }
     
     
