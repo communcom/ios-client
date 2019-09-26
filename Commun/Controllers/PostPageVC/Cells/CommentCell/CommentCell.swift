@@ -24,7 +24,7 @@ protocol CommentCellDelegate: class {
 
 class CommentCell: UITableViewCell {
     // MARK: - Constants
-    private let defaultContentFontSize = 13
+    private let defaultContentFontSize: CGFloat = 13
     private let maxCharactersForReduction = 150
     
     // MARK: - Outlets
@@ -151,7 +151,7 @@ class CommentCell: UITableViewCell {
         
         let userId = comment?.author?.username ?? comment?.author?.userId ?? "Unknown user"
         let mutableAS = NSMutableAttributedString(string: userId, attributes: [
-            .font: UIFont.boldSystemFont(ofSize: 13),
+            .font: UIFont.boldSystemFont(ofSize: defaultContentFontSize),
             .foregroundColor: themeColor,
             .link: "https://commun.com/@\(comment?.author?.userId ?? comment?.author?.username ?? "unknown-user")"
         ])
@@ -161,7 +161,7 @@ class CommentCell: UITableViewCell {
         // If text is not so long or expanded
         if content.count < maxCharactersForReduction || expanded {
             let contentAS = NSAttributedString(string: content, attributes: [
-                .font: UIFont.systemFont(ofSize: 13)
+                .font: UIFont.systemFont(ofSize: defaultContentFontSize)
             ])
             mutableAS.append(contentAS)
             mutableAS.resolveTags()
@@ -175,7 +175,7 @@ class CommentCell: UITableViewCell {
         let contentAS = NSAttributedString(
             string: String(content.prefix(maxCharactersForReduction - 3)),
             attributes: [
-                .font: UIFont.systemFont(ofSize: 13)
+                .font: UIFont.systemFont(ofSize: defaultContentFontSize)
             ])
         mutableAS.append(contentAS)
         
