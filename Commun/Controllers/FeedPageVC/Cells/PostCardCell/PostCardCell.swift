@@ -37,6 +37,9 @@ class PostCardCell: UITableViewCell, PostController {
         // http://adamborek.com/top-7-rxswift-mistakes/
         // have to reset disposeBag when reusing cell
         disposeBag = DisposeBag()
+        
+        // Observe change
+        observePostChange()
     }
     
     override func awakeFromNib() {
@@ -50,9 +53,6 @@ class PostCardCell: UITableViewCell, PostController {
         let tap = UITapGestureRecognizer(target: self, action: #selector(userNameTapped(_:)))
         authorNameLabel.isUserInteractionEnabled = true
         authorNameLabel.addGestureRecognizer(tap)
-        
-        // Observe change
-        observePostChange()
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
