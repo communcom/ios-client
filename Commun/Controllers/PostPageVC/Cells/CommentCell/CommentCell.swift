@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import TTTAttributedLabel
 import RxSwift
 
 protocol CommentCellDelegate: class {
@@ -23,27 +22,28 @@ protocol CommentCellDelegate: class {
 }
 
 class CommentCell: UITableViewCell {
-
+    // MARK: - Constants
+    private let defaultContentFontSize = 13
+    private let maxCharactersForReduction = 150
+    
+    // MARK: - Outlets
     @IBOutlet weak var avatarImageView: UIImageView!
-    @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
-    @IBOutlet weak var contentLabel: TTTAttributedLabel!
+    @IBOutlet weak var contentLabel: UILabel!
     @IBOutlet weak var embedView: UIView!
     @IBOutlet weak var embedViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var upVoteButton: UIButton!
     @IBOutlet weak var downVoteButton: UIButton!
     @IBOutlet weak var voteCountLabel: UILabel!
     @IBOutlet weak var leftPaddingConstraint: NSLayoutConstraint!
-    @IBOutlet weak var rightPaddingConstraint: NSLayoutConstraint!
     
-    private let maxCharactersForReduction = 150
-    
+    // MARK: - Properties
     var comment: ResponseAPIContentGetComment?
     var delegate: CommentCellDelegate?
     var bag = DisposeBag()
-    
     var expanded = false
     
+    // MARK: - Methods
     override func prepareForReuse() {
         super.prepareForReuse()
         // reset disposebag
@@ -54,15 +54,9 @@ class CommentCell: UITableViewCell {
         super.awakeFromNib()
         self.selectionStyle = .none
         
-        contentLabel.delegate = self
-        
         let tapOnAvatar = UITapGestureRecognizer(target: self, action: #selector(authorDidTouch(gesture:)))
         avatarImageView.isUserInteractionEnabled = true
         avatarImageView.addGestureRecognizer(tapOnAvatar)
-        
-        let tapOnUserName = UITapGestureRecognizer(target: self, action: #selector(authorDidTouch(gesture:)))
-        nameLabel.isUserInteractionEnabled = true
-        nameLabel.addGestureRecognizer(tapOnUserName)
         
         observeCommentChanged()
     }
@@ -71,6 +65,7 @@ class CommentCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
     
+    // MARK: - Setup
     func setupFromComment(_ comment: ResponseAPIContentGetComment, expanded: Bool = false) {
         self.comment = comment
         self.expanded = expanded
@@ -78,18 +73,16 @@ class CommentCell: UITableViewCell {
         // if comment is a reply
         if comment.parent.comment != nil {
             leftPaddingConstraint.constant = 72
-            rightPaddingConstraint.constant = 16
         } else {
             leftPaddingConstraint.constant = 16
-            rightPaddingConstraint.constant = 72
         }
 //        leftPaddingConstraint.constant = CGFloat((comment.nestedLevel - 1 > 2 ? 2 : comment.nestedLevel - 1) * 72 + 16)
         
-        setText(expanded: expanded)
-        
+        // avatar
         avatarImageView.setAvatar(urlString: comment.author?.avatarUrl, namePlaceHolder: comment.author?.username ?? comment.author?.userId ?? "U")
-        nameLabel.text = comment.author?.username ?? comment.author?.userId
-        timeLabel.text = Date.timeAgo(string: comment.meta.time)
+        
+        // setContent
+        setText(expanded: expanded)
         
         // Show media
         let embededResult = comment.content.embeds.first?.result
@@ -98,16 +91,23 @@ class CommentCell: UITableViewCell {
             let urlString = embededResult?.url,
             let url = URL(string: urlString) {
             showPhoto(with: url)
-            embedViewHeightConstraint.constant = 142
+            embedViewHeightConstraint.constant = 101
+            embedView.trailingAnchor.constraint(equalTo: embedView.superview!.trailingAnchor, constant: -10).isActive = true
         } else {
             // TODO: Video
             embedViewHeightConstraint.constant = 0
+            if let constraint = embedView.constraints.first(where: {$0.firstAttribute == .trailing}) {
+                embedView.removeConstraint(constraint)
+            }
         }
         
         #warning("change this number later")
         voteCountLabel.text = "\(comment.votes.upCount ?? 0)"
         
-        setButton()
+        upVoteButton.tintColor = comment.votes.hasUpVote ? .appMainColor: .lightGray
+        downVoteButton.tintColor = comment.votes.hasDownVote ? .appMainColor: .lightGray
+        
+        timeLabel.text = Date.timeAgo(string: comment.meta.time)
     }
     
     func showPhoto(with url: URL) {
@@ -136,93 +136,53 @@ class CommentCell: UITableViewCell {
         }
     }
     
-    func setButton() {
-        // Handle button
-        upVoteButton.setImage(UIImage(named: comment?.votes.hasUpVote == true ? "icon-up-selected" : "icon-up-default"), for: .normal)
-        downVoteButton.setImage(UIImage(named: comment?.votes.hasDownVote == true ? "icon-down-selected" : "icon-down-default"), for: .normal)
-    }
-    
     func setText(expanded: Bool = false) {
         guard let content = comment?.content.body.full else {return}
         
-        // If text is not so long
-        if content.count < maxCharactersForReduction {
-            contentLabel.text = content
-            addLinksFromContent(content)
-            return
-        }
+        let userId = comment?.author?.username ?? comment?.author?.userId ?? "Unknown user"
+        let mutableAS = NSMutableAttributedString(string: userId, attributes: [
+            .font: UIFont.boldSystemFont(ofSize: 13),
+            .foregroundColor: UIColor.appMainColor,
+            .link: "https://commun.com/@\(comment?.author?.userId ?? comment?.author?.username ?? "unknown-user")"
+        ])
         
-        // If text is long
-        if expanded {
-            contentLabel.text = content
-            addLinksFromContent(content)
+        mutableAS.append(NSAttributedString(string: " "))
+        
+        // If text is not so long or expanded
+        if content.count < maxCharactersForReduction || expanded {
+            let contentAS = NSAttributedString(string: content, attributes: [
+                .font: UIFont.systemFont(ofSize: 13)
+            ])
+            mutableAS.append(contentAS)
+            mutableAS.resolveTags()
+            mutableAS.resolveLinks()
+            mutableAS.resolveMentions()
+            contentLabel.attributedText = mutableAS
             return
         }
         
         // If doesn't expanded
-        let text = NSMutableAttributedString()
-            .normal(String(content.prefix(maxCharactersForReduction - 3)))
+        let contentAS = NSAttributedString(
+            string: String(content.prefix(maxCharactersForReduction - 3)),
+            attributes: [
+                .font: UIFont.systemFont(ofSize: 13)
+            ])
+        mutableAS.append(contentAS)
+        
+        // add see more button
+        mutableAS
             .normal("...")
-            .semibold("see more".localized().uppercaseFirst, color: .appMainColor)
-        contentLabel.text = text
-        contentLabel.addLinkToText("see more".localized().uppercaseFirst, toUrl: "seemore://")
-    }
-    
-    func addLinksFromContent(_ content: String) {
-        // Detect links
-        addLinks(html: content)
-        
-        // tags and usernames
-        contentLabel.highlightTagsAndUserNames()
-    }
-    
-    func addLinks(html: String) {
-        // Result
-        var result = html
-        var links = [(url: String, description: String)]()
-        
-        // Detect links
-        let types = NSTextCheckingResult.CheckingType.link
-        guard let detector = try? NSDataDetector(types: types.rawValue) else {
-            return
-        }
-        let matches = detector.matches(in: result, options: .reportCompletion, range: NSMakeRange(0, result.count))
-        
-        var originals = matches.map {
-            result.nsString.substring(with: $0.range)
-        }
-        
-        for (index, match) in matches.enumerated() {
-            guard let urlString = match.url?.absoluteString else {continue}
-            
-            if let regex1 = try? NSRegularExpression(pattern: "\\!?\\[.*\\]\\(\(NSRegularExpression.escapedPattern(for: originals[index]))\\)", options: .caseInsensitive) {
-                
-                for embededString in regex1.matchedStrings(in: result) {
-                    var description: String?
-                    
-                    if let match = embededString.range(of: "\\[.*\\]", options: .regularExpression) {
-                        description = String(embededString[match]).replacingOccurrences(of: "[", with: "").replacingOccurrences(of: "]", with: "")
-                    }
-                    
-                    if let description = description, description.count > 0 {
-                        result = result.replacingOccurrences(of: embededString, with: description)
-                        links.append((url: urlString, description: description))
-                    } else {
-                        result = result.replacingOccurrences(of: embededString, with: urlString)
-                        links.append((url: urlString, description: urlString))
-                    }
-                }
-            }
-        }
-        contentLabel.text = result
-        for link in links {
-            contentLabel.addLinkToText(link.description, toUrl: link.url)
-        }
-        
-        for match in matches {
-            guard let urlString = match.url?.absoluteString else {continue}
-            contentLabel.addLinkToText(urlString)
-        }
+            .append(
+                NSAttributedString(
+                    string: "see more".localized().uppercaseFirst,
+                    attributes: [
+                        .link: "seemore://",
+                        .foregroundColor: UIColor.appMainColor
+                ])
+            )
+
+
+        contentLabel.attributedText = mutableAS
     }
     
     // MARK: - Observing
