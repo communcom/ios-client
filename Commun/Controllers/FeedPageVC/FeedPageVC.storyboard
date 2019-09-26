@@ -25,7 +25,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <view key="tableHeaderView" contentMode="scaleToFill" id="64B-KR-TBH">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="195"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="203"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6xJ-ph-coS">
@@ -127,22 +127,22 @@
                                             </connections>
                                         </button>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Z7e-MC-AaW">
-                                            <rect key="frame" x="16" y="145" width="40" height="40"/>
+                                            <rect key="frame" x="16" y="145" width="36" height="36"/>
                                             <accessibility key="accessibilityConfiguration" identifier="FeedPageUserAvatarImageView" label="FeedPageUserAvatarImageView">
                                                 <bool key="isElement" value="YES"/>
                                             </accessibility>
                                             <constraints>
-                                                <constraint firstAttribute="width" constant="40" id="K18-NN-wUy"/>
-                                                <constraint firstAttribute="height" constant="40" id="lWN-gx-2wx"/>
+                                                <constraint firstAttribute="width" constant="36" id="K18-NN-wUy"/>
+                                                <constraint firstAttribute="height" constant="36" id="lWN-gx-2wx"/>
                                             </constraints>
                                             <userDefinedRuntimeAttributes>
                                                 <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                    <real key="value" value="20"/>
+                                                    <real key="value" value="18"/>
                                                 </userDefinedRuntimeAttribute>
                                             </userDefinedRuntimeAttributes>
                                         </imageView>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vuH-5V-8Nx">
-                                            <rect key="frame" x="72" y="150" width="255" height="30"/>
+                                            <rect key="frame" x="68" y="148" width="259" height="30"/>
                                             <accessibility key="accessibilityConfiguration" identifier="EditorWidgetCellWhatsNewButton" label="EditorWidgetCellWhatsNewButton"/>
                                             <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                                             <state key="normal" title="What's new?">
@@ -153,7 +153,7 @@
                                             </connections>
                                         </button>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rH2-Vj-Raa" userLabel="Photo Button">
-                                            <rect key="frame" x="335" y="153" width="24" height="24"/>
+                                            <rect key="frame" x="335" y="151" width="24" height="24"/>
                                             <accessibility key="accessibilityConfiguration" identifier="EditorWidgetCellPhotoButton" label="EditorWidgetCellPhotoButton"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="24" id="CGS-9K-gET"/>
@@ -165,6 +165,13 @@
                                                 <action selector="photoButtonDidTouch:" destination="vaU-K6-LmS" eventType="touchUpInside" id="sCr-cW-f9p"/>
                                             </connections>
                                         </button>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GFL-OR-s7k">
+                                            <rect key="frame" x="0.0" y="191" width="375" height="8"/>
+                                            <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="8" id="9LQ-rx-vru"/>
+                                            </constraints>
+                                        </view>
                                     </subviews>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
@@ -184,6 +191,7 @@
                                         <constraint firstItem="d57-yH-JCE" firstAttribute="centerY" secondItem="YpZ-V0-RF5" secondAttribute="centerY" id="WNj-z6-Zh6"/>
                                         <constraint firstItem="YpZ-V0-RF5" firstAttribute="top" secondItem="QUh-zf-Whk" secondAttribute="bottom" constant="10" id="WUT-z7-w0g"/>
                                         <constraint firstItem="YpZ-V0-RF5" firstAttribute="leading" secondItem="64B-KR-TBH" secondAttribute="leading" constant="16" id="Wkz-6v-m8L"/>
+                                        <constraint firstItem="GFL-OR-s7k" firstAttribute="top" secondItem="Z7e-MC-AaW" secondAttribute="bottom" constant="10" id="XLl-B3-FmC"/>
                                         <constraint firstItem="RTF-ao-7Xs" firstAttribute="top" secondItem="d57-yH-JCE" secondAttribute="bottom" constant="10" id="ZIk-GK-nHu"/>
                                         <constraint firstItem="Z7e-MC-AaW" firstAttribute="leading" secondItem="64B-KR-TBH" secondAttribute="leading" constant="16" id="Zq5-yJ-CAk"/>
                                         <constraint firstAttribute="trailing" secondItem="rH2-Vj-Raa" secondAttribute="trailing" constant="16" id="cPm-zf-v2G"/>
@@ -194,10 +202,12 @@
                                         <constraint firstItem="QUh-zf-Whk" firstAttribute="top" secondItem="Yac-FO-8jX" secondAttribute="bottom" constant="20" id="hw8-Bj-8Nt"/>
                                         <constraint firstItem="vuH-5V-8Nx" firstAttribute="leading" secondItem="Z7e-MC-AaW" secondAttribute="trailing" constant="16" id="jZj-Pe-fI7"/>
                                         <constraint firstItem="rH2-Vj-Raa" firstAttribute="centerY" secondItem="Z7e-MC-AaW" secondAttribute="centerY" id="oUR-d6-OQQ"/>
+                                        <constraint firstAttribute="trailing" secondItem="GFL-OR-s7k" secondAttribute="trailing" id="q4n-mC-gce"/>
                                         <constraint firstItem="8m4-bX-a9M" firstAttribute="bottom" secondItem="RTF-ao-7Xs" secondAttribute="bottom" id="qLs-3f-Bki"/>
                                         <constraint firstItem="rH2-Vj-Raa" firstAttribute="leading" secondItem="vuH-5V-8Nx" secondAttribute="trailing" constant="8" id="t0U-ne-NLU"/>
                                         <constraint firstItem="Yac-FO-8jX" firstAttribute="leading" secondItem="64B-KR-TBH" secondAttribute="leading" constant="16" id="t4m-00-CZx"/>
                                         <constraint firstItem="Z7e-MC-AaW" firstAttribute="top" secondItem="RTF-ao-7Xs" secondAttribute="bottom" constant="10" id="tZ7-SN-dUq"/>
+                                        <constraint firstItem="GFL-OR-s7k" firstAttribute="leading" secondItem="64B-KR-TBH" secondAttribute="leading" id="tjI-bG-fN0"/>
                                         <constraint firstAttribute="trailing" secondItem="8m4-bX-a9M" secondAttribute="trailing" constant="16" id="uYc-jQ-13W"/>
                                     </constraints>
                                 </view>
