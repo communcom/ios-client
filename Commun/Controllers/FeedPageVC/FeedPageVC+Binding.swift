@@ -41,14 +41,6 @@ extension FeedPageVC {
         // sortType
         viewModel.sortType
             .bind { (mode) in
-                switch mode {
-                case .all:
-                    self.sortByTimeButton.backgroundColor = .white
-                    break
-                default:
-                    self.sortByTimeButton.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
-                    break
-                }
                 self.sortByTimeButton.setTitle(mode.toString(), for: .normal)
             }
             .disposed(by: disposeBag)
