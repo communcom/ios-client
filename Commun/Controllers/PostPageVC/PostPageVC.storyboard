@@ -11,6 +11,9 @@
         <array key="SF-Pro-Text-Regular.otf">
             <string>SFProText-Regular</string>
         </array>
+        <array key="SF-Pro-Text-Semibold.otf">
+            <string>SFProText-Semibold</string>
+        </array>
     </customFonts>
     <scenes>
         <!--Post PageVC-->
@@ -81,16 +84,23 @@
                                         </constraints>
                                         <state key="normal" image="more"/>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="by Sergey" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AUu-SG-Yxw">
-                                        <rect key="frame" x="130" y="32" width="61.5" height="16"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sergey" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AUu-SG-Yxw">
+                                        <rect key="frame" x="139.5" y="32" width="45" height="16"/>
                                         <accessibility key="accessibilityConfiguration" identifier="PostPageByUserLabel" label="PostPageByUserLabel"/>
-                                        <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="13"/>
-                                        <color key="textColor" red="0.60784313729999995" green="0.62352941179999999" blue="0.63529411759999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <fontDescription key="fontDescription" name="SFProText-Semibold" family="SF Pro Text" pointSize="13"/>
+                                        <color key="textColor" red="0.40926253800000001" green="0.48644661900000002" blue="0.97343546150000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="•" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z3e-YP-nzE">
+                                        <rect key="frame" x="130" y="32" width="6" height="16"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
+                                    <constraint firstItem="z3e-YP-nzE" firstAttribute="leading" secondItem="RsM-Yt-jdM" secondAttribute="trailing" constant="3.5" id="1mv-86-cY0"/>
                                     <constraint firstItem="Z2m-2G-cmH" firstAttribute="top" secondItem="JAo-Iq-Wdc" secondAttribute="top" id="39b-95-Oln"/>
                                     <constraint firstItem="ESO-Mb-GPX" firstAttribute="centerY" secondItem="xxf-Yw-cnd" secondAttribute="centerY" id="4Dc-0p-HiE"/>
                                     <constraint firstItem="RsM-Yt-jdM" firstAttribute="leading" secondItem="Z2m-2G-cmH" secondAttribute="leading" id="9hM-lI-o1W"/>
@@ -98,10 +108,10 @@
                                     <constraint firstItem="ESO-Mb-GPX" firstAttribute="height" secondItem="xxf-Yw-cnd" secondAttribute="height" multiplier="24:56" id="D0C-7o-z6M"/>
                                     <constraint firstItem="RsM-Yt-jdM" firstAttribute="height" secondItem="xxf-Yw-cnd" secondAttribute="height" multiplier="16:56" id="EWC-Zp-qvO"/>
                                     <constraint firstItem="epW-Br-j8v" firstAttribute="height" secondItem="xxf-Yw-cnd" secondAttribute="height" multiplier="36:56" id="G9w-Wa-9PM"/>
+                                    <constraint firstItem="AUu-SG-Yxw" firstAttribute="leading" secondItem="z3e-YP-nzE" secondAttribute="trailing" constant="3.5" id="Hrh-Me-rsn"/>
                                     <constraint firstItem="ESO-Mb-GPX" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="AUu-SG-Yxw" secondAttribute="trailing" constant="8" id="JUG-SJ-cCG"/>
                                     <constraint firstAttribute="height" constant="56" id="P2e-hR-1BQ"/>
                                     <constraint firstItem="epW-Br-j8v" firstAttribute="centerY" secondItem="xxf-Yw-cnd" secondAttribute="centerY" id="R0I-1s-okT"/>
-                                    <constraint firstItem="AUu-SG-Yxw" firstAttribute="leading" secondItem="RsM-Yt-jdM" secondAttribute="trailing" constant="3.5" id="R3d-mp-ebT"/>
                                     <constraint firstItem="AUu-SG-Yxw" firstAttribute="height" secondItem="RsM-Yt-jdM" secondAttribute="height" id="XSp-Ld-Ewt"/>
                                     <constraint firstItem="JAo-Iq-Wdc" firstAttribute="centerY" secondItem="epW-Br-j8v" secondAttribute="centerY" id="ZG7-Tm-63A"/>
                                     <constraint firstItem="JAo-Iq-Wdc" firstAttribute="height" secondItem="xxf-Yw-cnd" secondAttribute="height" multiplier="40:56" id="amV-Az-iLW"/>
@@ -111,6 +121,7 @@
                                     <constraint firstAttribute="trailing" secondItem="ESO-Mb-GPX" secondAttribute="trailing" constant="16" id="msL-I7-Pfq"/>
                                     <constraint firstItem="Z2m-2G-cmH" firstAttribute="height" secondItem="xxf-Yw-cnd" secondAttribute="height" multiplier="18:56" id="nZN-Sd-lFF"/>
                                     <constraint firstItem="JAo-Iq-Wdc" firstAttribute="leading" secondItem="epW-Br-j8v" secondAttribute="trailing" id="nbn-g5-6Jj"/>
+                                    <constraint firstItem="z3e-YP-nzE" firstAttribute="centerY" secondItem="RsM-Yt-jdM" secondAttribute="centerY" id="sFF-ae-m4m"/>
                                     <constraint firstItem="Z2m-2G-cmH" firstAttribute="leading" secondItem="JAo-Iq-Wdc" secondAttribute="trailing" constant="8" id="sgX-1h-tTA"/>
                                 </constraints>
                             </view>
