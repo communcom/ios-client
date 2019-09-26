@@ -14,18 +14,22 @@ import RxDataSources
 import Segmentio
 
 class FeedPageVC: UIViewController {
-
+    // MARK: - Properties
     var viewModel: FeedPageViewModel!
-    lazy var searchBar = UISearchBar(frame: CGRect(x: 0, y: 0, width: 200, height: 20))
+    var dataSource: MyRxTableViewSectionedAnimatedDataSource<PostSection>!
+    let disposeBag = DisposeBag()
+    
+    var segmentedItems = [
+        "My feed".localized().uppercaseFirst,
+        "Trending".localized().uppercaseFirst]
+    
+    var selectedSegmentedItemsIndex = 1
+
+    // MARK: - Outlets
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var userAvatarImage: UIImageView!
-    @IBOutlet weak var segmentioView: Segmentio!
     @IBOutlet weak var sortByTypeButton: UIButton!
     @IBOutlet weak var sortByTimeButton: UIButton!
-    
-    var dataSource: MyRxTableViewSectionedAnimatedDataSource<PostSection>!
-    
-    let disposeBag = DisposeBag()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,6 +49,12 @@ class FeedPageVC: UIViewController {
         navigationController?.setNavigationBarHidden(false, animated: animated)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
+    
+    // MARK: - Methods
     func setUpViewModel() {
         viewModel = FeedPageViewModel()
         
@@ -66,15 +76,6 @@ class FeedPageVC: UIViewController {
     }
     
     func setUpViews() {
-        navigationController?.navigationBar.barTintColor = .white
-
-        // searchBar
-        searchBar.placeholder = "search".localized().uppercaseFirst
-        self.navigationItem.titleView = searchBar
-        
-        let searchField: UITextField = searchBar.value(forKey: "searchField") as! UITextField
-        searchField.backgroundColor = #colorLiteral(red: 0.9529411765, green: 0.9607843137, blue: 0.9803921569, alpha: 1)
-        
         // avatarImage
         userAvatarImage
             .observeCurrentUserAvatar()
@@ -104,80 +105,7 @@ class FeedPageVC: UIViewController {
         tableView.emptyDataSetSource = self
         tableView.emptyDataSetDelegate = self
         
-        // Segmentio update
-        segmentioView.setup(content:    [SegmentioItem(title: "my Feed".localized().uppercaseFirst, image: nil), SegmentioItem(title: "trending".localized().uppercaseFirst, image: nil)],
-                            style:      SegmentioStyle.onlyLabel,
-                            options:    SegmentioOptions.default)
-        
-        segmentioView.valueDidChange = {_, index in
-            self.viewModel.feedTypeMode.accept(index == 0 ? .subscriptions : .community)
-            
-            // if feed is my feed, then sort by time
-            if index == 0 {
-                self.viewModel.feedType.accept(.timeDesc)
-            }
-        }
-        
-        // fire first filter
-        segmentioView.selectedSegmentioIndex = 1
-        
         // dismiss keyboard when dragging
         tableView.keyboardDismissMode = .onDrag
-    }
-
-    @IBAction func postButtonDidTouch(_ sender: Any) {
-        openEditor()
-    }
-    
-    @IBAction func photoButtonDidTouch(_ sender: Any) {
-        openEditor { (editorVC) in
-            editorVC.cameraButtonTap()
-        }
-    }
-    
-    func openEditor(completion: ((EditorPageVC)->Void)? = nil) {
-        let editorVC = controllerContainer.resolve(EditorPageVC.self)
-        let nav = UINavigationController(rootViewController: editorVC!)
-        nav.modalPresentationStyle = .fullScreen
-        present(nav, animated: true, completion: {
-            completion?(editorVC!)
-        })
-    }
-    
-    @IBAction func sortByTypeButtonDidTouch(_ sender: Any) {
-        var options = FeedSortMode.allCases
-        
-        if viewModel.feedTypeMode.value != .community {
-            options.removeAll(where: {$0 == .popular})
-        }
-        
-        showActionSheet(actions: options.map { mode in
-            UIAlertAction(title: mode.toString(), style: .default, handler: { (_) in
-                self.viewModel.feedType.accept(mode)
-            })
-        })
-
-    }
-    
-    @IBAction func sortByTimeButtonDidTouch(_ sender: Any) {
-        showActionSheet(actions: FeedTimeFrameMode.allCases.map { mode in
-            UIAlertAction(title: mode.toString(), style: .default, handler: { (_) in
-                self.viewModel.sortType.accept(mode)
-            })
-        })
-    }
-    
-    @objc func refresh() {
-        viewModel.reload()
-    }
-    
-    @objc func didTapTryAgain(gesture: UITapGestureRecognizer) {
-        guard let label = gesture.view as? UILabel,
-            let text = label.text else {return}
-        
-        let tryAgainRange = (text as NSString).range(of: "try again".localized().uppercaseFirst)
-        if gesture.didTapAttributedTextInLabel(label: label, inRange: tryAgainRange) {
-            self.viewModel.fetchNext()
-        }
     }
 }
