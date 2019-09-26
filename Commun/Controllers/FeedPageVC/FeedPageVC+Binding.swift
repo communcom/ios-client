@@ -14,12 +14,20 @@ public typealias PostSection = AnimatableSectionModel<String, ResponseAPIContent
 
 extension FeedPageVC {
     func bindUI() {
-        // scrollview
-        self.tableView.rx.willDragDown
-            .map {$0 ? true: false}
-            .distinctUntilChanged()
-            .subscribe(onNext: {hide in
-                self.navigationController?.setNavigationBarHidden(hide, animated: true)
+        // feedTypeMode
+        viewModel.feedTypeMode
+            .subscribe(onNext: { feedTypeMode in
+                switch feedTypeMode {
+                case .subscriptions:
+                    self.headerLabel.text = "my Feed".localized().uppercaseFirst
+                    self.changeFeedTypeButton.setTitle("trending".localized().uppercaseFirst, for: .normal)
+                case .community:
+                    self.headerLabel.text = "trending".localized().uppercaseFirst
+                    
+                    self.changeFeedTypeButton.setTitle("my Feed".localized().uppercaseFirst, for: .normal)
+                default:
+                    break
+                }
             })
             .disposed(by: disposeBag)
         
@@ -33,14 +41,6 @@ extension FeedPageVC {
         // sortType
         viewModel.sortType
             .bind { (mode) in
-                switch mode {
-                case .all:
-                    self.sortByTimeButton.backgroundColor = .white
-                    break
-                default:
-                    self.sortByTimeButton.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
-                    break
-                }
                 self.sortByTimeButton.setTitle(mode.toString(), for: .normal)
             }
             .disposed(by: disposeBag)

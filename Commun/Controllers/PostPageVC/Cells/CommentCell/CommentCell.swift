@@ -50,9 +50,6 @@ class CommentCell: UITableViewCell {
         super.prepareForReuse()
         // reset disposebag
         bag = DisposeBag()
-        
-        // observe changge
-        observeCommentChanged()
     }
     
     override func awakeFromNib() {
@@ -118,6 +115,9 @@ class CommentCell: UITableViewCell {
         downVoteButton.tintColor = comment.votes.hasDownVote ? themeColor: .lightGray
         
         timeLabel.text = Date.timeAgo(string: comment.meta.time)
+        
+        // observe changge
+        observeCommentChanged()
     }
     
     func showPhoto(with url: URL) {
