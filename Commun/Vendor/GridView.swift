@@ -39,7 +39,7 @@ class GridView: UIView {
         self.views = views
         
         // Get first 5 views
-        var views = views.prefix(5)
+        let views = views.prefix(5)
         
         // setup views
         for view in views {

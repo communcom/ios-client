@@ -14,35 +14,28 @@ public typealias PostSection = AnimatableSectionModel<String, ResponseAPIContent
 
 extension FeedPageVC {
     func bindUI() {
-        // scrollview
-        self.tableView.rx.willDragDown
-            .map {$0 ? true: false}
-            .distinctUntilChanged()
-            .subscribe(onNext: {hide in
-                self.navigationController?.setNavigationBarHidden(hide, animated: true)
-            })
-            .disposed(by: disposeBag)
-        
-        // feedType
-        viewModel.feedType
-            .bind {feedType in
-                self.sortByTypeButton.setTitle(feedType.toString(), for: .normal)
-            }
-            .disposed(by: disposeBag)
-        
-        // sortType
-        viewModel.sortType
-            .bind { (mode) in
-                switch mode {
-                case .all:
-                    self.sortByTimeButton.backgroundColor = .white
-                    break
+        // filter
+        viewModel.filter
+            .subscribe(onNext: {filter in
+                // feedTypeMode
+                switch filter.feedTypeMode {
+                case .subscriptions:
+                    self.headerLabel.text = "my Feed".localized().uppercaseFirst
+                    self.changeFeedTypeButton.setTitle("trending".localized().uppercaseFirst, for: .normal)
+                case .community:
+                    self.headerLabel.text = "trending".localized().uppercaseFirst
+                    
+                    self.changeFeedTypeButton.setTitle("my Feed".localized().uppercaseFirst, for: .normal)
                 default:
-                    self.sortByTimeButton.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
                     break
                 }
-                self.sortByTimeButton.setTitle(mode.toString(), for: .normal)
-            }
+                
+                // feedType
+                self.sortByTypeButton.setTitle(filter.feedType.toString(), for: .normal)
+                
+                // sortType
+                self.sortByTimeButton.setTitle(filter.sortType.toString(), for: .normal)
+            })
             .disposed(by: disposeBag)
         
         // items

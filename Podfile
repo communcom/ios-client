@@ -53,6 +53,8 @@ def common_pods
   pod 'Down'
   pod 'SDURLCache', '~> 1.3'
   pod 'UITextView+Placeholder'
+  
+  pod "ESPullToRefresh"
 end
 
 target 'Commun' do

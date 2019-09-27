@@ -104,6 +104,10 @@ class PostPageVC: UIViewController, CommentCellDelegate {
         // dismiss keyboard when dragging
         tableView.keyboardDismissMode = .onDrag
         
+        // forward delegate & datasource for header in section
+        tableView.rx.setDelegate(self)
+            .disposed(by: disposeBag)
+        
         // observe post deleted
         observePostDeleted()
         

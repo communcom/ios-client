@@ -48,6 +48,7 @@
 		3B2538B8231E6DF000D0B1DA /* EditorColorPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B2538B7231E6DF000D0B1DA /* EditorColorPicker.swift */; };
 		3B2538BA231E6E5A00D0B1DA /* colorPalette.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3B2538B9231E6E5A00D0B1DA /* colorPalette.plist */; };
 		3B28EFE2228C7C31002D4816 /* KeyboardLayoutConstraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B28EFE1228C7C31002D4816 /* KeyboardLayoutConstraint.swift */; };
+		3B2B6862233B49D500DADBD0 /* PostPageVC+HeaderForSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B2B6861233B49D500DADBD0 /* PostPageVC+HeaderForSection.swift */; };
 		3B2F2269226892C5006B589E /* NotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B2F2262226892C4006B589E /* NotificationCell.swift */; };
 		3B2F226A226892C5006B589E /* NotificationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3B2F2263226892C4006B589E /* NotificationCell.xib */; };
 		3B2F226B226892C5006B589E /* NotificationsPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B2F2264226892C4006B589E /* NotificationsPageViewModel.swift */; };
@@ -134,6 +135,8 @@
 		3BDD9A06228DBED000B2A1DA /* CommentForm.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3BDD9A05228DBED000B2A1DA /* CommentForm.xib */; };
 		3BDD9A0F228F07EF00B2A1DA /* UIApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BDD9A0E228F07EF00B2A1DA /* UIApplication.swift */; };
 		3BDF4FA822C21B310029D616 /* ResponseAPIContentGetProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BDF4FA722C21B310029D616 /* ResponseAPIContentGetProfile.swift */; };
+		3BE15B22233CBBC400D865F5 /* FeedHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BE15B21233CBBC400D865F5 /* FeedHeaderView.swift */; };
+		3BE15B24233CC47600D865F5 /* FeedPageVC+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BE15B23233CC47600D865F5 /* FeedPageVC+Actions.swift */; };
 		3BE68AAA22EEA08600033B81 /* SettingsVC+SwitcherDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BE68AA922EEA08600033B81 /* SettingsVC+SwitcherDelegate.swift */; };
 		3BE68AAE22EEA1AE00033B81 /* SettingsVC+ButtonDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BE68AAD22EEA1AE00033B81 /* SettingsVC+ButtonDelegate.swift */; };
 		3BE68AB222EEA7C300033B81 /* LocalAuthVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BE68AB122EEA7C300033B81 /* LocalAuthVC.swift */; };
@@ -297,6 +300,7 @@
 		3B2538B7231E6DF000D0B1DA /* EditorColorPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorColorPicker.swift; sourceTree = "<group>"; };
 		3B2538B9231E6E5A00D0B1DA /* colorPalette.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = colorPalette.plist; sourceTree = "<group>"; };
 		3B28EFE1228C7C31002D4816 /* KeyboardLayoutConstraint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardLayoutConstraint.swift; sourceTree = "<group>"; };
+		3B2B6861233B49D500DADBD0 /* PostPageVC+HeaderForSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PostPageVC+HeaderForSection.swift"; sourceTree = "<group>"; };
 		3B2F2262226892C4006B589E /* NotificationCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationCell.swift; sourceTree = "<group>"; };
 		3B2F2263226892C4006B589E /* NotificationCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NotificationCell.xib; sourceTree = "<group>"; };
 		3B2F2264226892C4006B589E /* NotificationsPageViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationsPageViewModel.swift; sourceTree = "<group>"; };
@@ -383,6 +387,8 @@
 		3BDD9A05228DBED000B2A1DA /* CommentForm.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CommentForm.xib; sourceTree = "<group>"; };
 		3BDD9A0E228F07EF00B2A1DA /* UIApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplication.swift; sourceTree = "<group>"; };
 		3BDF4FA722C21B310029D616 /* ResponseAPIContentGetProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseAPIContentGetProfile.swift; sourceTree = "<group>"; };
+		3BE15B21233CBBC400D865F5 /* FeedHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedHeaderView.swift; sourceTree = "<group>"; };
+		3BE15B23233CC47600D865F5 /* FeedPageVC+Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FeedPageVC+Actions.swift"; sourceTree = "<group>"; };
 		3BE68AA922EEA08600033B81 /* SettingsVC+SwitcherDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SettingsVC+SwitcherDelegate.swift"; sourceTree = "<group>"; };
 		3BE68AAD22EEA1AE00033B81 /* SettingsVC+ButtonDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SettingsVC+ButtonDelegate.swift"; sourceTree = "<group>"; };
 		3BE68AB122EEA7C300033B81 /* LocalAuthVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalAuthVC.swift; sourceTree = "<group>"; };
@@ -804,6 +810,14 @@
 			path = PostController;
 			sourceTree = "<group>";
 		};
+		3BE15B20233CBBAF00D865F5 /* Subviews */ = {
+			isa = PBXGroup;
+			children = (
+				3BE15B21233CBBC400D865F5 /* FeedHeaderView.swift */,
+			);
+			path = Subviews;
+			sourceTree = "<group>";
+		};
 		3BE68AAF22EEA23300033B81 /* Delegates */ = {
 			isa = PBXGroup;
 			children = (
@@ -938,6 +952,7 @@
 				3B5D361722E820760012A991 /* PostPageVC+Header.swift */,
 				57F5CFC12244E3BE005A09AE /* PostPageVC+Rx.swift */,
 				5725173D2243E49C0033125C /* PostPageVC.storyboard */,
+				3B2B6861233B49D500DADBD0 /* PostPageVC+HeaderForSection.swift */,
 			);
 			path = PostPageVC;
 			sourceTree = "<group>";
@@ -1041,9 +1056,11 @@
 		576DC917223E41CA00EDED41 /* FeedPageVC */ = {
 			isa = PBXGroup;
 			children = (
+				3BE15B20233CBBAF00D865F5 /* Subviews */,
 				576DC91C223E421A00EDED41 /* Cells */,
 				576DC91A223E41F600EDED41 /* FeedPageViewModel.swift */,
 				576DC918223E41E800EDED41 /* FeedPageVC.swift */,
+				3BE15B23233CC47600D865F5 /* FeedPageVC+Actions.swift */,
 				3B5CB31122A588EE00757533 /* FeedPageVC+EmptyDataSet.swift */,
 				3B635F802277375A006DAAB2 /* FeedPageVC+Binding.swift */,
 				576DC91D223E429C00EDED41 /* FeedPageVC.storyboard */,
@@ -1601,6 +1618,7 @@
 				3B5CB30322A56BD500757533 /* UITapGestureRecognizer.swift in Sources */,
 				3BEC38E7230FA17F00662374 /* EditorPageTextView.swift in Sources */,
 				3B28EFE2228C7C31002D4816 /* KeyboardLayoutConstraint.swift in Sources */,
+				3BE15B22233CBBC400D865F5 /* FeedHeaderView.swift in Sources */,
 				3BAF69CB226773000055CCEB /* UIView+Shadow.swift in Sources */,
 				3BAF69D522686A1B0055CCEB /* ItemsFetcher.swift in Sources */,
 				3BAD8E832318FB1C005A8AB3 /* NSAttributedString.swift in Sources */,
@@ -1663,6 +1681,7 @@
 				3B6229AB22BD12410053B9EF /* TTTAttributedLabel.swift in Sources */,
 				3BDF4FA822C21B310029D616 /* ResponseAPIContentGetProfile.swift in Sources */,
 				3B5EDE3522E073C500897BF3 /* SettingsViewModel.swift in Sources */,
+				3B2B6862233B49D500DADBD0 /* PostPageVC+HeaderForSection.swift in Sources */,
 				3BDD9A0F228F07EF00B2A1DA /* UIApplication.swift in Sources */,
 				3B0E9C64226F4A0C002AB1C2 /* VerticalDraggableImageView.swift in Sources */,
 				3B02CD282289B23E0078BB52 /* PostHeaderView.swift in Sources */,
@@ -1684,6 +1703,7 @@
 				3B02CD1F228965AF0078BB52 /* CommentCellDelegate+UIViewController.swift in Sources */,
 				3B5EDE3722E07DCC00897BF3 /* SettingsVC+SectionHeader.swift in Sources */,
 				3B197C532269BE0E008CF10D /* SegmentioExtension.swift in Sources */,
+				3BE15B24233CC47600D865F5 /* FeedPageVC+Actions.swift in Sources */,
 				57B6FC2C224A9F2800BCFDDA /* WelcomeItemVC.swift in Sources */,
 				3BF3817F2331D17900C02123 /* NSRegularExpression.swift in Sources */,
 				3B11911F2302B9B9008D0417 /* SwipeNavigationController.swift in Sources */,

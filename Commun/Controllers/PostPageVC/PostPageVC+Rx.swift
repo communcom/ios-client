@@ -49,7 +49,7 @@ extension PostPageVC {
                     self.communityAvatarImageView.setAvatar(urlString: post.community.avatarUrl, namePlaceHolder: post.community.name)
                     self.comunityNameLabel.text = post.community.name
                     self.timeAgoLabel.text = Date.timeAgo(string: post.meta.time)
-                    self.byUserLabel.text = "by".localized() + " " + (post.author?.username ?? post.author?.userId ?? "")
+                    self.byUserLabel.text = post.author?.username ?? post.author?.userId ?? ""
                     
                     // commentForm
                     if self.replyingComment == nil {

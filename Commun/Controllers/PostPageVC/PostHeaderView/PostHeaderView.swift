@@ -21,14 +21,10 @@ class PostHeaderView: UIView, UIWebViewDelegate, PostController {
     // Delegate
     weak var viewDelegate: PostHeaderViewDelegate?
     
-    // Media content
-    @IBOutlet weak var embedView: UIView!
-    @IBOutlet weak var embedViewHeightConstraint: NSLayoutConstraint!
-    
     // Reactions
     @IBOutlet weak var voteCountLabel: UILabel!
     @IBOutlet weak var commentCountLabel: UILabel!
-    @IBOutlet weak var viewCountLabel: UILabel!
+    @IBOutlet weak var shareCountLabel: UILabel!
     
     // Content
     @IBOutlet weak var postTitleLabel: UILabel!
@@ -69,17 +65,20 @@ class PostHeaderView: UIView, UIWebViewDelegate, PostController {
             return
         }
         hideLoading()
-        // Show medias
-        showEmbeds(post.content.embeds.compactMap {$0.result})
         
         // Show count label
-        commentCountLabel.text = "\(post.stats.commentsCount) " + "comments count".localized()
-        viewCountLabel.text = "\(post.stats.viewCount) " + "views count".localized()
+        commentCountLabel.text = "\(post.stats.commentsCount)"
+        
+        #warning("shareCount or viewCount???")
+        shareCountLabel.text = "\(post.stats.viewCount)"
+        
         voteCountLabel.text = "\(post.votes.upCount ?? 0)"
         
         // Handle button
-        self.upVoteButton.setImage(UIImage(named: post.votes.hasUpVote ? "icon-up-selected" : "icon-up-default"), for: .normal)
-        self.downVoteButton.setImage(UIImage(named: post.votes.hasDownVote ? "icon-down-selected" : "icon-down-default"), for: .normal)
+        self.upVoteButton.tintColor =
+            post.votes.hasUpVote ? .appMainColor: .lightGray
+        self.downVoteButton.tintColor =
+            post.votes.hasDownVote ? .appMainColor: .lightGray
 
         // Show title
         postTitleLabel.text = post.content.title
@@ -108,30 +107,6 @@ class PostHeaderView: UIView, UIWebViewDelegate, PostController {
         contentWebView.delegate = self
         contentWebView.scrollView.isScrollEnabled = false
         contentWebView.scrollView.bouncesZoom = false
-    }
-    
-    func showEmbeds(_ embeds: [ResponseAPIContentEmbedResult]) {
-        guard let parentViewController = parentViewController,
-            embeds.count > 0
-        else {
-            embedView.constraints.first(where: {$0.firstAttribute == .height})?.constant = 0
-            return
-        }
-        
-        embedView.constraints.first(where: {$0.firstAttribute == .height})?.constant = UIScreen.main.bounds.width * 9 / 16
-        
-        let pageVC = EmbedsPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
-        
-        parentViewController.addChild(pageVC)
-        pageVC.view.translatesAutoresizingMaskIntoConstraints = false
-        embedView.addSubview(pageVC.view)
-        pageVC.view.topAnchor.constraint(equalTo: embedView.topAnchor).isActive = true
-        pageVC.view.bottomAnchor.constraint(equalTo: embedView.bottomAnchor).isActive = true
-        pageVC.view.leadingAnchor.constraint(equalTo: embedView.leadingAnchor).isActive = true
-        pageVC.view.trailingAnchor.constraint(equalTo: embedView.trailingAnchor).isActive = true
-        pageVC.didMove(toParent: parentViewController)
-//        pageVC.parentView = embedView
-        pageVC.embeds = embeds
     }
     
     func webViewDidStartLoad(_ webView: UIWebView) {

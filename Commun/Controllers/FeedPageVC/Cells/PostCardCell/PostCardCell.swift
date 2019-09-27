@@ -50,9 +50,6 @@ class PostCardCell: UITableViewCell, PostController {
         let tap = UITapGestureRecognizer(target: self, action: #selector(userNameTapped(_:)))
         authorNameLabel.isUserInteractionEnabled = true
         authorNameLabel.addGestureRecognizer(tap)
-        
-        // Observe change
-        observePostChange()
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -92,7 +89,7 @@ extension PostCardCell {
         self.titleLabel.text = post.community.name.lowercased().uppercaseFirst
         self.timeAgoLabel.text = Date.timeAgo(string: post.meta.time)
         
-        self.authorNameLabel.text = "by".localized() + " " + (post.author?.username ?? post.author?.userId ?? "")
+        self.authorNameLabel.text = post.author?.username ?? post.author?.userId ?? ""
         
         self.mainTextLabel.text = post.content.title
         self.accessibilityLabel = "PostCardCell"
@@ -111,11 +108,14 @@ extension PostCardCell {
 //        self.avatarImageView.sd_setImage(with: post.community.avatarUrl?.url, completed: nil)
         #warning("change this number later")
         self.likeCounterLabel.text          =   "\(post.votes.upCount ?? 0)"
-        self.numberOfCommentsLabel.text     =   "\(post.stats.commentsCount) " + "comments".localized()
-        self.numberOfViewsLabel.text        =   "\(post.stats.viewCount) " + "views".localized()
+        self.numberOfCommentsLabel.text     =   "\(post.stats.commentsCount)"
+        self.numberOfViewsLabel.text        =   "\(post.stats.viewCount)"
         
         // Handle button
-        self.upVoteButton.setImage(UIImage(named: post.votes.hasUpVote ? "icon-up-selected" : "icon-up-default"), for: .normal)
-        self.downVoteButton.setImage(UIImage(named: post.votes.hasDownVote ? "icon-down-selected" : "icon-down-default"), for: .normal)
+        self.upVoteButton.tintColor = post.votes.hasUpVote ? .appMainColor: .lightGray
+        self.downVoteButton.tintColor = post.votes.hasDownVote ? .appMainColor: .lightGray
+        
+        // Observe change
+        observePostChange()
     }
 }

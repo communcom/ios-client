@@ -41,10 +41,12 @@
                         </button>
                         <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="27b-40-1Op" customClass="CommentTextView" customModule="Commun" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="0.0" width="320" height="36"/>
+                            <color key="backgroundColor" red="0.95329588649999997" green="0.95977157349999997" blue="0.97960883379999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <accessibility key="accessibilityConfiguration" identifier="ContentViewExpandableTextView" label="ContentViewExpandableTextView"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="36" id="aMc-ew-m34"/>
                             </constraints>
+                            <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             <userDefinedRuntimeAttributes>
@@ -52,10 +54,12 @@
                                 <userDefinedRuntimeAttribute type="number" keyPath="maxHeight">
                                     <real key="value" value="300"/>
                                 </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                    <real key="value" value="18"/>
+                                </userDefinedRuntimeAttribute>
                             </userDefinedRuntimeAttributes>
                         </textView>
                     </subviews>
-                    <color key="backgroundColor" red="0.95212393999099731" green="0.95958274602890015" blue="0.97945135831832886" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstItem="27b-40-1Op" firstAttribute="top" secondItem="SN8-pA-8fy" secondAttribute="top" id="M5S-WQ-D7d"/>
                         <constraint firstAttribute="trailing" secondItem="xyo-9y-PfB" secondAttribute="trailing" constant="10" id="Wak-hx-1h0"/>
@@ -144,7 +148,7 @@
     </objects>
     <resources>
         <image name="Close" width="512" height="512"/>
-        <image name="camera-gray" width="24" height="24"/>
+        <image name="camera-gray" width="20" height="20"/>
         <image name="sendComment" width="36" height="36"/>
     </resources>
 </document>
