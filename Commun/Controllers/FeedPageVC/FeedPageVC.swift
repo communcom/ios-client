@@ -12,6 +12,7 @@ import RxSwift
 import DZNEmptyDataSet
 import RxDataSources
 import Segmentio
+import ESPullToRefresh
 
 class FeedPageVC: UIViewController {
     // MARK: - Properties
@@ -96,8 +97,13 @@ class FeedPageVC: UIViewController {
         tableView.register(UINib(nibName: "PostCardCell", bundle: nil), forCellReuseIdentifier: "PostCardCell")
         tableView.rowHeight = UITableView.automaticDimension
         tableView.addPostLoadingFooterView()
-        tableView.refreshControl = UIRefreshControl()
-        tableView.refreshControl?.addTarget(self, action: #selector(refresh), for: .valueChanged)
+        
+        // RefreshControl
+        tableView.es.addPullToRefresh { [unowned self] in
+            self.refresh()
+            self.tableView.es.stopPullToRefresh()
+        }
+        
         tableView.emptyDataSetSource = self
         tableView.emptyDataSetDelegate = self
         
