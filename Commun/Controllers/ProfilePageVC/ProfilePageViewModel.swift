@@ -57,7 +57,7 @@ class ProfilePageViewModel: ListViewModelType {
                 // Re-create fetcher
                 switch item {
                 case .posts:
-                    let customFetcher = PostsFetcher(feedType: .timeDesc, feedTypeMode: .byUser)
+                    let customFetcher = PostsFetcher(filter: PostsFetcher.Filter(feedTypeMode: .byUser, feedType: .timeDesc, sortType: .all))
                     customFetcher.userId = self.userId
                     self.itemsFetcher = customFetcher
                 case .comments:

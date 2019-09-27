@@ -16,11 +16,9 @@ class FeedPageViewModel: PostsListController, ListViewModelType {
     var disposeBag = DisposeBag()
     var items = BehaviorRelay<[ResponseAPIContentGetPost]>(value: [])
     
-    let sortType = BehaviorRelay<FeedTimeFrameMode>(value: .all)
-    let feedType = BehaviorRelay<FeedSortMode>(value: .popular)
-    let feedTypeMode = BehaviorRelay<FeedTypeMode>(value: .community)
+    let filter = BehaviorRelay<PostsFetcher.Filter>(value: PostsFetcher.Filter(feedTypeMode: .community, feedType: .popular, sortType: .all))
     
-    let fetcher = PostsFetcher(sortType: .all, feedType: .popular, feedTypeMode: .community)
+    lazy var fetcher = PostsFetcher(filter: filter.value)
     
     // Handlers
     var listEndedHandler: (() -> Void)?
@@ -37,21 +35,48 @@ class FeedPageViewModel: PostsListController, ListViewModelType {
     }
     
     func bindFilter() {
-        Observable.combineLatest(sortType.distinctUntilChanged(), feedType.distinctUntilChanged(), feedTypeMode.distinctUntilChanged())
-            .filter({ (sortType, feedType, feedTypeMode) -> Bool in
-                if feedTypeMode != .community && feedType == .popular {return false}
+        filter.distinctUntilChanged()
+            .filter {filter in
+                if filter.feedTypeMode != .community && filter.feedType == .popular {return false}
                 return true
-            })
-            .subscribe(onNext: {(sortType, feedType, feedTypeMode) in
+            }
+            .subscribe(onNext: {filter in
                 self.items.accept([])
                 self.fetcher.reset()
-                self.fetcher.sortType = sortType
-                self.fetcher.feedType = feedType
-                self.fetcher.feedTypeMode = feedTypeMode
+                self.fetcher.filter = filter
                 self.fetchNext()
             })
             .disposed(by: disposeBag)
         
+    }
+    
+    func changeFilter(
+        feedTypeMode: FeedTypeMode? = nil,
+        feedType: FeedSortMode? = nil,
+        sortType: FeedTimeFrameMode? = nil,
+        searchKey: String? = nil
+    ) {
+        var newFilter = filter.value
+        if let feedTypeMode = feedTypeMode,
+            feedTypeMode != newFilter.feedTypeMode
+        {
+            newFilter.feedTypeMode = feedTypeMode
+        }
+        
+        if let feedType = feedType,
+            feedType != newFilter.feedType
+        {
+            newFilter.feedType = feedType
+        }
+        
+        if let sortType = sortType,
+            sortType != newFilter.sortType
+        {
+            newFilter.sortType = sortType
+        }
+        
+        newFilter.searchKey = searchKey
+        filter.accept(newFilter)
     }
     
     func fetchNext() {

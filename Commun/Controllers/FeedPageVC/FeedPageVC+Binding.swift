@@ -14,10 +14,11 @@ public typealias PostSection = AnimatableSectionModel<String, ResponseAPIContent
 
 extension FeedPageVC {
     func bindUI() {
-        // feedTypeMode
-        viewModel.feedTypeMode
-            .subscribe(onNext: { feedTypeMode in
-                switch feedTypeMode {
+        // filter
+        viewModel.filter
+            .subscribe(onNext: {filter in
+                // feedTypeMode
+                switch filter.feedTypeMode {
                 case .subscriptions:
                     self.headerLabel.text = "my Feed".localized().uppercaseFirst
                     self.changeFeedTypeButton.setTitle("trending".localized().uppercaseFirst, for: .normal)
@@ -28,21 +29,13 @@ extension FeedPageVC {
                 default:
                     break
                 }
+                
+                // feedType
+                self.sortByTypeButton.setTitle(filter.feedType.toString(), for: .normal)
+                
+                // sortType
+                self.sortByTimeButton.setTitle(filter.sortType.toString(), for: .normal)
             })
-            .disposed(by: disposeBag)
-        
-        // feedType
-        viewModel.feedType
-            .bind {feedType in
-                self.sortByTypeButton.setTitle(feedType.toString(), for: .normal)
-            }
-            .disposed(by: disposeBag)
-        
-        // sortType
-        viewModel.sortType
-            .bind { (mode) in
-                self.sortByTimeButton.setTitle(mode.toString(), for: .normal)
-            }
             .disposed(by: disposeBag)
         
         // items

@@ -31,13 +31,13 @@ extension FeedPageVC {
     @IBAction func sortByTypeButtonDidTouch(_ sender: Any) {
         var options = FeedSortMode.allCases
         
-        if viewModel.feedTypeMode.value != .community {
+        if viewModel.filter.value.feedTypeMode != .community {
             options.removeAll(where: {$0 == .popular})
         }
         
         showActionSheet(actions: options.map { mode in
             UIAlertAction(title: mode.toString(), style: .default, handler: { (_) in
-                self.viewModel.feedType.accept(mode)
+                self.viewModel.changeFilter(feedType: mode)
             })
         })
 
@@ -46,7 +46,7 @@ extension FeedPageVC {
     @IBAction func sortByTimeButtonDidTouch(_ sender: Any) {
         showActionSheet(actions: FeedTimeFrameMode.allCases.map { mode in
             UIAlertAction(title: mode.toString(), style: .default, handler: { (_) in
-                self.viewModel.sortType.accept(mode)
+                self.viewModel.changeFilter(sortType: mode)
             })
         })
     }
@@ -66,13 +66,12 @@ extension FeedPageVC {
     }
     
     @IBAction func changeFeedTypeButtonDidTouch(_ sender: Any) {
-        if viewModel.feedTypeMode.value == .subscriptions {
-            viewModel.feedTypeMode.accept(.community)
+        if viewModel.filter.value.feedTypeMode == .subscriptions {
+            viewModel.changeFilter(feedTypeMode: .community)
         }
         
         else {
-            viewModel.feedTypeMode.accept(.subscriptions)
-            viewModel.feedType.accept(.timeDesc)
+            viewModel.changeFilter(feedTypeMode: .subscriptions, feedType: .timeDesc)
         }
     }
 }
