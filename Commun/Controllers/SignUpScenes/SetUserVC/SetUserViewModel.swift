@@ -15,7 +15,7 @@ class SetUserViewModel {
     // MARK: - Class Functions
     func checkUserName(_ userName: String) -> Bool {
         let characterset = CharacterSet(charactersIn: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.-")
-        return !userName.isEmpty && userName.count <= 12 && userName.rangeOfCharacter(from: characterset.inverted) == nil
+        return !userName.isEmpty && userName.count > 5 && userName.count <= 12 && userName.rangeOfCharacter(from: characterset.inverted) == nil
     }
     
     func set(userName: String) -> Single<String> {

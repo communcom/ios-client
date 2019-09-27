@@ -194,6 +194,7 @@ class ConfirmUserVC: UIViewController, SignUpRouter {
                 self?.hideHud()
                 self?.signUpNextStep()
             }) { (error) in
+                self.pinCodeInputView.set(text: "")
                 guard let phone = Config.currentUser?.phoneNumber else {
                     self.hideHud()
                     self.showError(error)

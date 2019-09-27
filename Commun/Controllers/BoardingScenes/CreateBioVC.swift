@@ -13,7 +13,7 @@ import CyberSwift
 class CreateBioVC: UIViewController, BoardingRouter {
     // MARK: - Properties
     let disposeBag = DisposeBag()
-    private let charactersLimit = 100
+    private let charactersLimit = 180
 
 
     // MARK: - IBOutlets
@@ -71,7 +71,7 @@ class CreateBioVC: UIViewController, BoardingRouter {
         
         textView.rx.text.orEmpty
             .subscribe(onNext: {text in
-                self.characterCountLabel.text = "\(text.count)/100"
+                self.characterCountLabel.text = "\(text.count)/\(self.charactersLimit)"
             })
             .disposed(by: disposeBag)
         
