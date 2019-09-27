@@ -63,4 +63,13 @@ extension UIView {
         
         layer.add(animation, forKey: "position")
     }
+    
+    func removeConstraintToSuperView(withAttribute attribute: NSLayoutConstraint.Attribute)
+    {
+        guard let superview = superview else {return}
+        if let constraint = superview.constraints.first(where: {(($0.firstItem as? UIView) == self || ($0.secondItem as? UIView) == self) && $0.firstAttribute == attribute})
+        {
+            superview.removeConstraint(constraint)
+        }
+    }
 }

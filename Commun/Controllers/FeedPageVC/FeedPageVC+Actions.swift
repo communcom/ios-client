@@ -74,4 +74,59 @@ extension FeedPageVC {
             viewModel.changeFilter(feedTypeMode: .subscriptions, feedType: .timeDesc)
         }
     }
+    
+    func toggleSearchMode() {
+        filterContainerView
+            .removeConstraintToSuperView(
+                withAttribute: .trailing)
+        
+        searchBar
+            .removeConstraintToSuperView(
+                withAttribute: .leading)
+        
+        if isSearchMode {
+            self.searchBackgroundView.backgroundColor = .appMainColor
+            
+            self.headerLabel.textColor = .white
+            self.changeFeedTypeButton.setTitleColor(.white, for: .normal)
+            
+            self.changeFeedTypeButton.alpha = 0.5
+            
+            self.changeModeButton.setImage(#imageLiteral(resourceName: "feed-icon-settings"), for: .normal)
+            firstSeparatorView.backgroundColor = .appMainColor
+            filterContainerView.trailingAnchor
+                .constraint(equalTo: filterContainerView.leadingAnchor)
+                .isActive = true
+            searchBar.leadingAnchor
+                .constraint(equalTo: searchBar.superview!.leadingAnchor, constant: 8)
+                .isActive = true
+            searchBar.becomeFirstResponder()
+        }
+        else {
+            self.searchBackgroundView.backgroundColor = .clear
+            
+            self.headerLabel.textColor = .black
+            
+            self.changeFeedTypeButton.setTitleColor(.lightGray, for: .normal)
+            self.changeFeedTypeButton.alpha = 1
+            self.changeModeButton.setImage(#imageLiteral(resourceName: "search"), for: .normal)
+            
+            firstSeparatorView.backgroundColor = .groupTableViewBackground
+            searchBar.leadingAnchor
+                .constraint(equalTo: searchBar.trailingAnchor).isActive = true
+            filterContainerView.trailingAnchor
+                .constraint(equalTo: filterContainerView.superview!.trailingAnchor, constant: -16)
+                .isActive = true
+            searchBar.resignFirstResponder()
+        }
+        
+        UIView.animate(withDuration: 0.3) {
+            self.tableView.tableHeaderView?.layoutIfNeeded()
+        }
+    }
+    
+    @IBAction func changeModeButtonDidTouch(_ sender: Any) {
+        // toggle mode
+        isSearchMode = !isSearchMode
+    }
 }
