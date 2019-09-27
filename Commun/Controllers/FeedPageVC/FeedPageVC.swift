@@ -104,6 +104,12 @@ class FeedPageVC: UIViewController {
             }
         )
         
+        tableView.contentInset = UIEdgeInsets(
+            top: -UIApplication.shared.statusBarFrame.height,
+            left: 0,
+            bottom: 0,
+            right: 0)
+        
         tableView.register(UINib(nibName: "PostCardCell", bundle: nil), forCellReuseIdentifier: "PostCardCell")
         tableView.rowHeight = UITableView.automaticDimension
         tableView.addPostLoadingFooterView()

@@ -20,14 +20,14 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <view key="tableHeaderView" contentMode="scaleToFill" id="64B-KR-TBH">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="203"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="236"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6xJ-ph-coS">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="103"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="144"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="O5W-Ol-ZWI">
-                                                    <rect key="frame" x="144.5" y="20" width="88" height="38"/>
+                                                    <rect key="frame" x="144.5" y="61" width="88" height="38"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="21"/>
                                                     <state key="normal" title="Trending">
                                                         <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -40,13 +40,13 @@
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </view>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="My feed" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yac-FO-8jX">
-                                            <rect key="frame" x="16" y="18" width="112.5" height="36"/>
+                                            <rect key="frame" x="16" y="59" width="112.5" height="36"/>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8fv-S0-lVe">
-                                            <rect key="frame" x="324" y="18.5" width="35" height="35"/>
+                                            <rect key="frame" x="324" y="59.5" width="35" height="35"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="35" id="NHE-5L-gvM"/>
                                                 <constraint firstAttribute="width" constant="35" id="RHv-Ap-4a5"/>
@@ -57,26 +57,26 @@
                                             </connections>
                                         </button>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QUh-zf-Whk">
-                                            <rect key="frame" x="0.0" y="74" width="375" height="1"/>
+                                            <rect key="frame" x="0.0" y="115" width="375" height="1"/>
                                             <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="1" id="XIN-mZ-GmB"/>
                                             </constraints>
                                         </view>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RTF-ao-7Xs">
-                                            <rect key="frame" x="0.0" y="123" width="375" height="8"/>
+                                            <rect key="frame" x="0.0" y="164" width="375" height="8"/>
                                             <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="8" id="Bzl-Jy-2ex"/>
                                             </constraints>
                                         </view>
                                         <searchBar contentMode="redraw" searchBarStyle="minimal" placeholder="Search" translatesAutoresizingMaskIntoConstraints="NO" id="k4L-bs-bdt">
-                                            <rect key="frame" x="8" y="71" width="359" height="56"/>
+                                            <rect key="frame" x="8" y="112" width="359" height="56"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <textInputTraits key="textInputTraits"/>
                                         </searchBar>
                                         <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="avx-Pf-qwX">
-                                            <rect key="frame" x="16" y="83" width="343" height="32"/>
+                                            <rect key="frame" x="16" y="124" width="343" height="32"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YpZ-V0-RF5">
                                                     <rect key="frame" x="0.0" y="0.0" width="61" height="32"/>
@@ -132,7 +132,7 @@
                                             </constraints>
                                         </view>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Z7e-MC-AaW">
-                                            <rect key="frame" x="16" y="141" width="36" height="36"/>
+                                            <rect key="frame" x="16" y="182" width="36" height="36"/>
                                             <accessibility key="accessibilityConfiguration" identifier="FeedPageUserAvatarImageView" label="FeedPageUserAvatarImageView">
                                                 <bool key="isElement" value="YES"/>
                                             </accessibility>
@@ -147,7 +147,7 @@
                                             </userDefinedRuntimeAttributes>
                                         </imageView>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vuH-5V-8Nx">
-                                            <rect key="frame" x="68" y="144" width="259" height="30"/>
+                                            <rect key="frame" x="68" y="185" width="259" height="30"/>
                                             <accessibility key="accessibilityConfiguration" identifier="EditorWidgetCellWhatsNewButton" label="EditorWidgetCellWhatsNewButton"/>
                                             <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                                             <state key="normal" title="What's new?">
@@ -158,7 +158,7 @@
                                             </connections>
                                         </button>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rH2-Vj-Raa" userLabel="Photo Button">
-                                            <rect key="frame" x="335" y="147" width="24" height="24"/>
+                                            <rect key="frame" x="335" y="188" width="24" height="24"/>
                                             <accessibility key="accessibilityConfiguration" identifier="EditorWidgetCellPhotoButton" label="EditorWidgetCellPhotoButton"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="24" id="CGS-9K-gET"/>
@@ -171,7 +171,7 @@
                                             </connections>
                                         </button>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GFL-OR-s7k">
-                                            <rect key="frame" x="0.0" y="187" width="375" height="8"/>
+                                            <rect key="frame" x="0.0" y="228" width="375" height="8"/>
                                             <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="8" id="9LQ-rx-vru"/>
@@ -180,7 +180,7 @@
                                     </subviews>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
-                                        <constraint firstItem="Yac-FO-8jX" firstAttribute="top" secondItem="64B-KR-TBH" secondAttribute="top" constant="18" id="0mr-5e-rk4"/>
+                                        <constraint firstItem="Yac-FO-8jX" firstAttribute="top" secondItem="64B-KR-TBH" secondAttribute="top" constant="59" id="0mr-5e-rk4"/>
                                         <constraint firstItem="k4L-bs-bdt" firstAttribute="leading" secondItem="64B-KR-TBH" secondAttribute="leading" constant="8" id="2He-7j-X4B"/>
                                         <constraint firstItem="8fv-S0-lVe" firstAttribute="centerY" secondItem="Yac-FO-8jX" secondAttribute="centerY" id="55Y-gP-24r"/>
                                         <constraint firstItem="avx-Pf-qwX" firstAttribute="leading" secondItem="64B-KR-TBH" secondAttribute="leading" constant="16" id="8OM-5E-qgI"/>
