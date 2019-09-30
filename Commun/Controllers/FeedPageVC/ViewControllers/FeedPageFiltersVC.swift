@@ -16,7 +16,6 @@ class FeedPageFiltersVC: UIViewController {
     let disposeBag = DisposeBag()
     var filter = BehaviorRelay<PostsFetcher.Filter>(value: PostsFetcher.Filter(feedTypeMode: .community, feedType: .popular, sortType: .all, searchKey: nil))
     var completion: ((PostsFetcher.Filter) -> Void)?
-    var dismissCompletion: (() -> Void)?
 
     @IBOutlet weak var tableView: UITableView!
     
@@ -42,15 +41,10 @@ class FeedPageFiltersVC: UIViewController {
     
     @IBAction func nextButtonDidTouch(_ sender: Any) {
         completion?(filter.value)
-        dismissWithCompletion()
+        dismiss(animated: true, completion: nil)
     }
     
     @IBAction func closeButtonDidTouch(_ sender: Any) {
-        dismissWithCompletion()
-    }
-    
-    func dismissWithCompletion() {
-        dismissCompletion?()
         dismiss(animated: true, completion: nil)
     }
 }

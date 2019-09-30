@@ -20,10 +20,7 @@ extension FeedPageVC {
     }
     
     @IBAction func changeFilterButtonDidTouch(_ sender: Any) {
-        // dimmed background
-        let bgView = UIView(frame: self.view.bounds)
-        bgView.backgroundColor = UIColor.black.withAlphaComponent(0.7)
-        
+        // Create FiltersVC
         let vc = controllerContainer.resolve(FeedPageFiltersVC.self)!
         vc.filter.accept(viewModel.filter.value)
         vc.completion = { filter in
@@ -31,16 +28,6 @@ extension FeedPageVC {
         }
         vc.modalPresentationStyle = .custom
         vc.transitioningDelegate = self
-        
-        vc.dismissCompletion = {
-            UIView.animate(withDuration: 0.3) {
-                bgView.removeFromSuperview()
-            }
-        }
-        
-        UIView.animate(withDuration: 0.3) {
-            self.view.addSubview(bgView)
-        }
         
         present(vc, animated: true, completion: nil)
     }
