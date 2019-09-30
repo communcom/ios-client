@@ -56,26 +56,7 @@ class FeedPageViewModel: PostsListController, ListViewModelType {
         sortType: FeedTimeFrameMode? = nil,
         searchKey: String? = nil
     ) {
-        var newFilter = filter.value
-        if let feedTypeMode = feedTypeMode,
-            feedTypeMode != newFilter.feedTypeMode
-        {
-            newFilter.feedTypeMode = feedTypeMode
-        }
-        
-        if let feedType = feedType,
-            feedType != newFilter.feedType
-        {
-            newFilter.feedType = feedType
-        }
-        
-        if let sortType = sortType,
-            sortType != newFilter.sortType
-        {
-            newFilter.sortType = sortType
-        }
-        
-        newFilter.searchKey = searchKey
+        let newFilter = filter.value.newFilter(withFeedTypeMode: feedTypeMode, feedType: feedType, sortType: sortType, searchKey: searchKey)
         filter.accept(newFilter)
     }
     

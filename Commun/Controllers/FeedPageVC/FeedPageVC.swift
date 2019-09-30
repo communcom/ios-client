@@ -9,9 +9,7 @@
 import UIKit
 import CyberSwift
 import RxSwift
-import DZNEmptyDataSet
 import RxDataSources
-import Segmentio
 import ESPullToRefresh
 
 class FeedPageVC: UIViewController {
@@ -19,24 +17,12 @@ class FeedPageVC: UIViewController {
     var viewModel: FeedPageViewModel!
     var dataSource: MyRxTableViewSectionedAnimatedDataSource<PostSection>!
     let disposeBag = DisposeBag()
-    var isSearchMode = false {
-        didSet {
-            toggleSearchMode()
-        }
-    }
 
     // MARK: - Outlets
     @IBOutlet weak var headerLabel: UILabel!
     @IBOutlet weak var changeFeedTypeButton: UIButton!
-    @IBOutlet weak var firstSeparatorView: UIView!
-    @IBOutlet weak var changeModeButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var userAvatarImage: UIImageView!
-    @IBOutlet weak var searchBackgroundView: UIView!
-    @IBOutlet weak var searchBar: UISearchBar!
-    @IBOutlet weak var filterContainerView: UIView!
-    @IBOutlet weak var sortByTypeButton: UIButton!
-    @IBOutlet weak var sortByTimeButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -125,16 +111,5 @@ class FeedPageVC: UIViewController {
         
         // dismiss keyboard when dragging
         tableView.keyboardDismissMode = .onDrag
-        
-        // colapse searchBar to the right
-        searchBar.removeConstraintToSuperView(withAttribute: .leading)
-        searchBar.leadingAnchor.constraint(equalTo: searchBar.trailingAnchor).isActive = true
-        let textField = searchBar.value(forKey: "searchField") as? UITextField
-        textField?.backgroundColor = .white
-        
-        // cornerRadius for searchBackgroundView
-        searchBackgroundView.clipsToBounds = true
-        searchBackgroundView.layer.cornerRadius = 16
-        searchBackgroundView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
     }
 }
