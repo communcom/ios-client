@@ -89,24 +89,24 @@
                                 <rect key="frame" x="16" y="345" width="109" height="35"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="juO-lf-QjU">
-                                        <rect key="frame" x="2" y="0.0" width="30" height="35"/>
+                                        <rect key="frame" x="2" y="0.0" width="38" height="35"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="30" id="VpK-RH-80i"/>
+                                            <constraint firstAttribute="width" constant="38" id="VpK-RH-80i"/>
                                         </constraints>
                                         <color key="tintColor" red="0.6074207425" green="0.62516635659999997" blue="0.63630086180000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <inset key="imageEdgeInsets" minX="10" minY="10.5" maxX="10" maxY="10.5"/>
+                                        <inset key="imageEdgeInsets" minX="10" minY="10.5" maxX="18" maxY="10.5"/>
                                         <state key="normal" image="upVote"/>
                                         <connections>
                                             <action selector="upButtonTap:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="VtY-zU-g8E"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Pb-R7-9EG">
-                                        <rect key="frame" x="77" y="0.0" width="30" height="35"/>
+                                        <rect key="frame" x="69" y="0.0" width="38" height="35"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="30" id="JyV-UL-hTj"/>
+                                            <constraint firstAttribute="width" constant="38" id="JyV-UL-hTj"/>
                                         </constraints>
                                         <color key="tintColor" red="0.6074207425" green="0.62516635659999997" blue="0.63630086180000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <inset key="imageEdgeInsets" minX="10" minY="10.5" maxX="10" maxY="10.5"/>
+                                        <inset key="imageEdgeInsets" minX="18" minY="10.5" maxX="10" maxY="10.5"/>
                                         <state key="normal" image="downVote"/>
                                         <connections>
                                             <action selector="downButtonTap:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="LQY-qV-ktl"/>
@@ -121,7 +121,7 @@
                                 </subviews>
                                 <color key="backgroundColor" red="0.95329588649999997" green="0.95977157349999997" blue="0.97960883379999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstItem="2Pb-R7-9EG" firstAttribute="leading" secondItem="m1X-xj-Nmb" secondAttribute="trailing" constant="8" id="0xZ-wj-XYO"/>
+                                    <constraint firstItem="2Pb-R7-9EG" firstAttribute="leading" secondItem="m1X-xj-Nmb" secondAttribute="trailing" id="0xZ-wj-XYO"/>
                                     <constraint firstAttribute="height" constant="35" id="4au-47-zCN"/>
                                     <constraint firstItem="juO-lf-QjU" firstAttribute="height" secondItem="PD8-Im-z6w" secondAttribute="height" id="YTs-0M-8rP"/>
                                     <constraint firstItem="2Pb-R7-9EG" firstAttribute="centerY" secondItem="PD8-Im-z6w" secondAttribute="centerY" id="jn8-yN-rUQ"/>
@@ -130,7 +130,7 @@
                                     <constraint firstItem="juO-lf-QjU" firstAttribute="leading" secondItem="PD8-Im-z6w" secondAttribute="leading" constant="2" id="pek-rd-1nK"/>
                                     <constraint firstAttribute="trailing" secondItem="2Pb-R7-9EG" secondAttribute="trailing" constant="2" id="rHj-qX-oyj"/>
                                     <constraint firstItem="m1X-xj-Nmb" firstAttribute="centerY" secondItem="PD8-Im-z6w" secondAttribute="centerY" id="uAm-dO-lra"/>
-                                    <constraint firstItem="m1X-xj-Nmb" firstAttribute="leading" secondItem="juO-lf-QjU" secondAttribute="trailing" constant="8" id="xMP-tt-hqa"/>
+                                    <constraint firstItem="m1X-xj-Nmb" firstAttribute="leading" secondItem="juO-lf-QjU" secondAttribute="trailing" id="xMP-tt-hqa"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
