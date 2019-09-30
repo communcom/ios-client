@@ -53,29 +53,27 @@
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hmy-oW-jWg">
-                                <rect key="frame" x="62" y="175" width="107" height="35"/>
+                                <rect key="frame" x="62" y="175" width="109" height="35"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EgI-dA-zrq">
-                                        <rect key="frame" x="2" y="10.5" width="30" height="14"/>
+                                        <rect key="frame" x="2" y="0.0" width="30" height="35"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="30" id="7is-ms-pig"/>
-                                            <constraint firstAttribute="width" secondItem="EgI-dA-zrq" secondAttribute="height" multiplier="15:7" id="R0a-Uo-wn7"/>
                                         </constraints>
                                         <color key="tintColor" red="0.6074207425" green="0.62516635659999997" blue="0.63630086180000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <inset key="imageEdgeInsets" minX="10" minY="0.0" maxX="10" maxY="0.0"/>
+                                        <inset key="imageEdgeInsets" minX="10" minY="10.5" maxX="10" maxY="10.5"/>
                                         <state key="normal" image="upVote"/>
                                         <connections>
                                             <action selector="upVoteButtonTap:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="zpD-bp-Niv"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HhR-lT-YnA">
-                                        <rect key="frame" x="77" y="10.5" width="30" height="14"/>
+                                        <rect key="frame" x="77" y="0.0" width="30" height="35"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" secondItem="HhR-lT-YnA" secondAttribute="height" multiplier="15:7" id="EI9-8Y-lJJ"/>
                                             <constraint firstAttribute="width" constant="30" id="rZL-eG-SmW"/>
                                         </constraints>
                                         <color key="tintColor" red="0.6074207425" green="0.62516635659999997" blue="0.63630086180000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <inset key="imageEdgeInsets" minX="10" minY="0.0" maxX="10" maxY="0.0"/>
+                                        <inset key="imageEdgeInsets" minX="10" minY="10.5" maxX="10" maxY="10.5"/>
                                         <state key="normal" image="downVote"/>
                                         <connections>
                                             <action selector="downVoteButtonTap:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="XUO-aW-tRU"/>
@@ -90,11 +88,13 @@
                                 </subviews>
                                 <color key="backgroundColor" red="0.95329588649999997" green="0.95977157349999997" blue="0.97960883379999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
+                                    <constraint firstItem="HhR-lT-YnA" firstAttribute="height" secondItem="hmy-oW-jWg" secondAttribute="height" id="1Or-Af-Siy"/>
                                     <constraint firstItem="EgI-dA-zrq" firstAttribute="leading" secondItem="hmy-oW-jWg" secondAttribute="leading" constant="2" id="DGJ-9k-D7o"/>
+                                    <constraint firstItem="EgI-dA-zrq" firstAttribute="height" secondItem="hmy-oW-jWg" secondAttribute="height" id="HFv-az-nhW"/>
                                     <constraint firstItem="hnQ-pV-e4Y" firstAttribute="centerY" secondItem="hmy-oW-jWg" secondAttribute="centerY" id="KYX-3O-m4x"/>
                                     <constraint firstAttribute="height" constant="35" id="RGl-nm-B16"/>
                                     <constraint firstItem="EgI-dA-zrq" firstAttribute="centerY" secondItem="hmy-oW-jWg" secondAttribute="centerY" id="Yrx-bR-I5r"/>
-                                    <constraint firstAttribute="trailing" secondItem="HhR-lT-YnA" secondAttribute="trailing" id="ccR-DM-9Uq"/>
+                                    <constraint firstAttribute="trailing" secondItem="HhR-lT-YnA" secondAttribute="trailing" constant="2" id="ccR-DM-9Uq"/>
                                     <constraint firstItem="HhR-lT-YnA" firstAttribute="leading" secondItem="hnQ-pV-e4Y" secondAttribute="trailing" constant="8" id="jIo-nS-e1q"/>
                                     <constraint firstItem="HhR-lT-YnA" firstAttribute="centerY" secondItem="hmy-oW-jWg" secondAttribute="centerY" id="q14-fg-l2C"/>
                                     <constraint firstItem="hnQ-pV-e4Y" firstAttribute="leading" secondItem="EgI-dA-zrq" secondAttribute="trailing" constant="8" id="z5P-Cj-gk4"/>
@@ -106,7 +106,7 @@
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IzK-re-FlA">
-                                <rect key="frame" x="179" y="178.5" width="36" height="28"/>
+                                <rect key="frame" x="181" y="178.5" width="36" height="28"/>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="13"/>
                                 <state key="normal" title="Reply">
                                     <color key="titleColor" red="0.44826072449999999" green="0.51926565170000005" blue="0.97681576010000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -116,13 +116,13 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="•" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DwW-WA-vqX">
-                                <rect key="frame" x="217" y="182" width="8" height="21"/>
+                                <rect key="frame" x="219" y="182" width="8" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3h" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nsa-5d-gDu">
-                                <rect key="frame" x="227" y="184.5" width="17" height="16"/>
+                                <rect key="frame" x="229" y="184.5" width="17" height="16"/>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="13"/>
                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>

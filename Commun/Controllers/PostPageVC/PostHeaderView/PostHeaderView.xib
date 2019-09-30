@@ -29,29 +29,27 @@
                     </constraints>
                 </webView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7nZ-VU-zZS">
-                    <rect key="frame" x="16" y="140.5" width="107" height="35"/>
+                    <rect key="frame" x="16" y="140.5" width="109" height="35"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dhT-2v-fjM">
-                            <rect key="frame" x="2" y="10.5" width="30" height="14"/>
+                            <rect key="frame" x="2" y="0.0" width="30" height="35"/>
                             <constraints>
-                                <constraint firstAttribute="width" secondItem="dhT-2v-fjM" secondAttribute="height" multiplier="15:7" id="5qt-Qv-GDQ"/>
                                 <constraint firstAttribute="width" constant="30" id="ubi-Jr-idF"/>
                             </constraints>
                             <color key="tintColor" red="0.6074207425" green="0.62516635659999997" blue="0.63630086180000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            <inset key="imageEdgeInsets" minX="10" minY="0.0" maxX="10" maxY="0.0"/>
+                            <inset key="imageEdgeInsets" minX="10" minY="10.5" maxX="10" maxY="10.5"/>
                             <state key="normal" image="upVote"/>
                             <connections>
                                 <action selector="upVoteButtonDidTouch:" destination="iN0-l3-epB" eventType="touchUpInside" id="0o3-nQ-C5G"/>
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pki-4g-1Ih">
-                            <rect key="frame" x="77" y="10.5" width="30" height="14"/>
+                            <rect key="frame" x="77" y="0.0" width="30" height="35"/>
                             <constraints>
-                                <constraint firstAttribute="width" secondItem="pki-4g-1Ih" secondAttribute="height" multiplier="15:7" id="1pN-DY-hPV"/>
                                 <constraint firstAttribute="width" constant="30" id="MAR-CH-d1x"/>
                             </constraints>
                             <color key="tintColor" red="0.6074207425" green="0.62516635659999997" blue="0.63630086180000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            <inset key="imageEdgeInsets" minX="10" minY="0.0" maxX="10" maxY="0.0"/>
+                            <inset key="imageEdgeInsets" minX="10" minY="10.5" maxX="10" maxY="10.5"/>
                             <state key="normal" image="downVote"/>
                             <connections>
                                 <action selector="downVoteButtonDidTouch:" destination="iN0-l3-epB" eventType="touchUpInside" id="fI1-Hx-0R0"/>
@@ -66,8 +64,10 @@
                     </subviews>
                     <color key="backgroundColor" red="0.95329588649999997" green="0.95977157349999997" blue="0.97960883379999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
+                        <constraint firstItem="pki-4g-1Ih" firstAttribute="height" secondItem="7nZ-VU-zZS" secondAttribute="height" id="DsR-GV-9Q5"/>
                         <constraint firstItem="dhT-2v-fjM" firstAttribute="leading" secondItem="7nZ-VU-zZS" secondAttribute="leading" constant="2" id="Han-fD-YcO"/>
-                        <constraint firstAttribute="trailing" secondItem="pki-4g-1Ih" secondAttribute="trailing" id="NMw-Pg-JoF"/>
+                        <constraint firstItem="dhT-2v-fjM" firstAttribute="height" secondItem="7nZ-VU-zZS" secondAttribute="height" id="Ich-w3-OTE"/>
+                        <constraint firstAttribute="trailing" secondItem="pki-4g-1Ih" secondAttribute="trailing" constant="2" id="NMw-Pg-JoF"/>
                         <constraint firstItem="sZG-QI-8u8" firstAttribute="centerY" secondItem="7nZ-VU-zZS" secondAttribute="centerY" id="XmV-9s-n44"/>
                         <constraint firstItem="pki-4g-1Ih" firstAttribute="leading" secondItem="sZG-QI-8u8" secondAttribute="trailing" constant="8" id="b30-0W-fHI"/>
                         <constraint firstItem="sZG-QI-8u8" firstAttribute="leading" secondItem="dhT-2v-fjM" secondAttribute="trailing" constant="8" id="b9O-Qc-ndh"/>

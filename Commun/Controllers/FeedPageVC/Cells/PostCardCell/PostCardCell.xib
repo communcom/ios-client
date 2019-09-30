@@ -89,26 +89,24 @@
                                 <rect key="frame" x="16" y="343" width="109" height="35"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="juO-lf-QjU">
-                                        <rect key="frame" x="2" y="10.5" width="30" height="14"/>
+                                        <rect key="frame" x="2" y="0.0" width="30" height="35"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="30" id="VpK-RH-80i"/>
-                                            <constraint firstAttribute="width" secondItem="juO-lf-QjU" secondAttribute="height" multiplier="15:7" id="pI5-c0-vNj"/>
                                         </constraints>
                                         <color key="tintColor" red="0.6074207425" green="0.62516635659999997" blue="0.63630086180000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <inset key="imageEdgeInsets" minX="10" minY="0.0" maxX="10" maxY="0.0"/>
+                                        <inset key="imageEdgeInsets" minX="10" minY="10.5" maxX="10" maxY="10.5"/>
                                         <state key="normal" image="upVote"/>
                                         <connections>
                                             <action selector="upButtonTap:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="VtY-zU-g8E"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Pb-R7-9EG">
-                                        <rect key="frame" x="77" y="10.5" width="30" height="14"/>
+                                        <rect key="frame" x="77" y="0.0" width="30" height="35"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="30" id="JyV-UL-hTj"/>
-                                            <constraint firstAttribute="width" secondItem="2Pb-R7-9EG" secondAttribute="height" multiplier="15:7" id="zVi-KP-kBy"/>
                                         </constraints>
                                         <color key="tintColor" red="0.6074207425" green="0.62516635659999997" blue="0.63630086180000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <inset key="imageEdgeInsets" minX="10" minY="0.0" maxX="10" maxY="0.0"/>
+                                        <inset key="imageEdgeInsets" minX="10" minY="10.5" maxX="10" maxY="10.5"/>
                                         <state key="normal" image="downVote"/>
                                         <connections>
                                             <action selector="downButtonTap:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="LQY-qV-ktl"/>
@@ -125,7 +123,9 @@
                                 <constraints>
                                     <constraint firstItem="2Pb-R7-9EG" firstAttribute="leading" secondItem="m1X-xj-Nmb" secondAttribute="trailing" constant="8" id="0xZ-wj-XYO"/>
                                     <constraint firstAttribute="height" constant="35" id="4au-47-zCN"/>
+                                    <constraint firstItem="juO-lf-QjU" firstAttribute="height" secondItem="PD8-Im-z6w" secondAttribute="height" id="YTs-0M-8rP"/>
                                     <constraint firstItem="2Pb-R7-9EG" firstAttribute="centerY" secondItem="PD8-Im-z6w" secondAttribute="centerY" id="jn8-yN-rUQ"/>
+                                    <constraint firstItem="2Pb-R7-9EG" firstAttribute="height" secondItem="PD8-Im-z6w" secondAttribute="height" id="jvt-6Z-g6L"/>
                                     <constraint firstItem="juO-lf-QjU" firstAttribute="centerY" secondItem="PD8-Im-z6w" secondAttribute="centerY" id="oMc-BW-wAd"/>
                                     <constraint firstItem="juO-lf-QjU" firstAttribute="leading" secondItem="PD8-Im-z6w" secondAttribute="leading" constant="2" id="pek-rd-1nK"/>
                                     <constraint firstAttribute="trailing" secondItem="2Pb-R7-9EG" secondAttribute="trailing" constant="2" id="rHj-qX-oyj"/>
