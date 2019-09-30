@@ -17,6 +17,35 @@ class PostsFetcher: ItemsFetcher<ResponseAPIContentGetPost> {
         var feedType: FeedSortMode
         var sortType: FeedTimeFrameMode
         var searchKey: String?
+        
+        func newFilter(
+            withFeedTypeMode feedTypeMode: FeedTypeMode? = nil,
+            feedType: FeedSortMode? = nil,
+            sortType: FeedTimeFrameMode? = nil,
+            searchKey: String? = nil
+        ) -> Filter {
+            var newFilter = self
+            if let feedTypeMode = feedTypeMode,
+                feedTypeMode != newFilter.feedTypeMode
+            {
+                newFilter.feedTypeMode = feedTypeMode
+            }
+            
+            if let feedType = feedType,
+                feedType != newFilter.feedType
+            {
+                newFilter.feedType = feedType
+            }
+            
+            if let sortType = sortType,
+                sortType != newFilter.sortType
+            {
+                newFilter.sortType = sortType
+            }
+            
+            newFilter.searchKey = searchKey
+            return newFilter
+        }
     }
     
     var filter: Filter

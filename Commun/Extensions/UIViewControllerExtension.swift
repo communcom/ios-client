@@ -95,8 +95,10 @@ extension UIViewController {
         // show new hud
         let hud = MBProgressHUD.showAdded(to: vc.view, animated: true)
         hud.mode = .customView
-        let image = UIImage(named: "Checkmark")
-        hud.customView = UIImageView(image: image)
+        let image = UIImage(named: "checkmark")
+        let imageView = UIImageView(image: image)
+        imageView.tintColor = .black
+        hud.customView = imageView
         hud.label.text = message.localized()
         hud.hide(animated: true, afterDelay: 1)
         if let completion = completion {

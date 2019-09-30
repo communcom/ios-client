@@ -92,6 +92,11 @@ let controllerContainer: Container = {
         return vc as! FeedPageVC
     })
     
+    container.register(FeedPageFiltersVC.self) { r in
+        let vc = FeedPageFiltersVC.instanceController(fromStoryboard: "FeedPageFiltersVC", withIdentifier: "FeedPageFiltersVC")
+        return vc as! FeedPageFiltersVC
+    }
+    
     container.register(PostPageVC.self, factory: { r in
         let vc = PostPageVC.instanceController(fromStoryboard: "PostPageVC", withIdentifier: "PostPageVC") as! PostPageVC
         vc.viewModel = PostPageViewModel()

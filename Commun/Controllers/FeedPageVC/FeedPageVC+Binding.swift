@@ -29,23 +29,6 @@ extension FeedPageVC {
                 default:
                     break
                 }
-                
-                // feedType
-                self.sortByTypeButton.setTitle(filter.feedType.toString(), for: .normal)
-                
-                // sortType
-                if filter.feedTypeMode == .community &&
-                    filter.feedType == .popular
-                {
-                    self.sortByTimeButton.isHidden = false
-                    self.sortByTimeButton
-                        .setTitle(filter.sortType.toString(),
-                              for: .normal)
-                }
-                else {
-                    self.sortByTimeButton.isHidden = true
-                }
-                
             })
             .disposed(by: disposeBag)
         

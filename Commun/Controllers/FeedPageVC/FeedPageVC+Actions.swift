@@ -9,6 +9,30 @@
 import Foundation
 
 extension FeedPageVC {
+    @IBAction func changeFeedTypeButtonDidTouch(_ sender: Any) {
+        if viewModel.filter.value.feedTypeMode == .subscriptions {
+            viewModel.changeFilter(feedTypeMode: .community)
+        }
+        
+        else {
+            viewModel.changeFilter(feedTypeMode: .subscriptions, feedType: .timeDesc)
+        }
+    }
+    
+    @IBAction func changeFilterButtonDidTouch(_ sender: Any) {
+        // Create FiltersVC
+        let vc = controllerContainer.resolve(FeedPageFiltersVC.self)!
+        vc.filter.accept(viewModel.filter.value)
+        vc.completion = { filter in
+            self.viewModel.filter.accept(filter)
+        }
+        vc.modalPresentationStyle = .custom
+        vc.transitioningDelegate = self
+        vc.interactor = SwipeDownInteractor()
+        
+        present(vc, animated: true, completion: nil)
+    }
+    
     @IBAction func postButtonDidTouch(_ sender: Any) {
         openEditor()
     }
@@ -28,29 +52,6 @@ extension FeedPageVC {
         })
     }
     
-    @IBAction func sortByTypeButtonDidTouch(_ sender: Any) {
-        var options = FeedSortMode.allCases
-        
-        if viewModel.filter.value.feedTypeMode != .community {
-            options.removeAll(where: {$0 == .popular})
-        }
-        
-        showActionSheet(actions: options.map { mode in
-            UIAlertAction(title: mode.toString(), style: .default, handler: { (_) in
-                self.viewModel.changeFilter(feedType: mode)
-            })
-        })
-
-    }
-    
-    @IBAction func sortByTimeButtonDidTouch(_ sender: Any) {
-        showActionSheet(actions: FeedTimeFrameMode.allCases.map { mode in
-            UIAlertAction(title: mode.toString(), style: .default, handler: { (_) in
-                self.viewModel.changeFilter(sortType: mode)
-            })
-        })
-    }
-    
     @objc func didTapTryAgain(gesture: UITapGestureRecognizer) {
         guard let label = gesture.view as? UILabel,
             let text = label.text else {return}
@@ -64,69 +65,14 @@ extension FeedPageVC {
     @objc func refresh() {
         viewModel.reload()
     }
-    
-    @IBAction func changeFeedTypeButtonDidTouch(_ sender: Any) {
-        if viewModel.filter.value.feedTypeMode == .subscriptions {
-            viewModel.changeFilter(feedTypeMode: .community)
-        }
-        
-        else {
-            viewModel.changeFilter(feedTypeMode: .subscriptions, feedType: .timeDesc)
-        }
+}
+
+extension FeedPageVC: UIViewControllerTransitioningDelegate {
+    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
+        return HalfSizePresentationController(presentedViewController: presented, presenting: presenting)
     }
     
-    func toggleSearchMode() {
-        filterContainerView
-            .removeConstraintToSuperView(
-                withAttribute: .trailing)
-        
-        searchBar
-            .removeConstraintToSuperView(
-                withAttribute: .leading)
-        
-        if isSearchMode {
-            self.searchBackgroundView.backgroundColor = .appMainColor
-            
-            self.headerLabel.textColor = .white
-            self.changeFeedTypeButton.setTitleColor(.white, for: .normal)
-            
-            self.changeFeedTypeButton.alpha = 0.5
-            
-            self.changeModeButton.setImage(#imageLiteral(resourceName: "feed-icon-settings"), for: .normal)
-            firstSeparatorView.backgroundColor = .appMainColor
-            filterContainerView.trailingAnchor
-                .constraint(equalTo: filterContainerView.leadingAnchor)
-                .isActive = true
-            searchBar.leadingAnchor
-                .constraint(equalTo: searchBar.superview!.leadingAnchor, constant: 8)
-                .isActive = true
-            searchBar.becomeFirstResponder()
-        }
-        else {
-            self.searchBackgroundView.backgroundColor = .clear
-            
-            self.headerLabel.textColor = .black
-            
-            self.changeFeedTypeButton.setTitleColor(.lightGray, for: .normal)
-            self.changeFeedTypeButton.alpha = 1
-            self.changeModeButton.setImage(#imageLiteral(resourceName: "search"), for: .normal)
-            
-            firstSeparatorView.backgroundColor = .groupTableViewBackground
-            searchBar.leadingAnchor
-                .constraint(equalTo: searchBar.trailingAnchor).isActive = true
-            filterContainerView.trailingAnchor
-                .constraint(equalTo: filterContainerView.superview!.trailingAnchor, constant: -16)
-                .isActive = true
-            searchBar.resignFirstResponder()
-        }
-        
-        UIView.animate(withDuration: 0.3) {
-            self.tableView.tableHeaderView?.layoutIfNeeded()
-        }
-    }
-    
-    @IBAction func changeModeButtonDidTouch(_ sender: Any) {
-        // toggle mode
-        isSearchMode = !isSearchMode
+    func interactionControllerForDismissal(using animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
+        return interactor.hasStarted ? interactor : nil
     }
 }
