@@ -21,7 +21,10 @@ extension FeedPageVC {
     
     @IBAction func changeFilterButtonDidTouch(_ sender: Any) {
         let vc = controllerContainer.resolve(FeedPageFiltersVC.self)
-        vc!.filter = viewModel.filter
+        vc!.filter.accept(viewModel.filter.value)
+        vc!.completion = { filter in
+            self.viewModel.filter.accept(filter)
+        }
         present(vc!, animated: true, completion: nil)
     }
     

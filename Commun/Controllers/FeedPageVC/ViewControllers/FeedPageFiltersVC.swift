@@ -14,7 +14,8 @@ import CyberSwift
 class FeedPageFiltersVC: UIViewController {
     // MARK: - Properties
     let disposeBag = DisposeBag()
-    var filter: BehaviorRelay<PostsFetcher.Filter>!
+    var filter = BehaviorRelay<PostsFetcher.Filter>(value: PostsFetcher.Filter(feedTypeMode: .community, feedType: .popular, sortType: .all, searchKey: nil))
+    var completion: ((PostsFetcher.Filter) -> Void)?
 
     @IBOutlet weak var tableView: UITableView!
     
@@ -30,10 +31,15 @@ class FeedPageFiltersVC: UIViewController {
     
     func bind() {
         
-        filter
+        filter.skip(1)
             .distinctUntilChanged()
             .subscribe(onNext: {_ in self.tableView.reloadData()})
             .disposed(by: disposeBag)
+    }
+    
+    @IBAction func nextButtonDidTouch(_ sender: Any) {
+        completion?(filter.value)
+        dismiss(animated: true, completion: nil)
     }
 }
 

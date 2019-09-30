@@ -116,6 +116,9 @@
                                         <real key="value" value="25"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="nextButtonDidTouch:" destination="g46-Vc-4xV" eventType="touchUpInside" id="dPN-NL-kXF"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="0.95329588649999997" green="0.95977157349999997" blue="0.97960883379999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
