@@ -17,6 +17,7 @@ class FeedPageVC: UIViewController {
     var viewModel: FeedPageViewModel!
     var dataSource: MyRxTableViewSectionedAnimatedDataSource<PostSection>!
     let disposeBag = DisposeBag()
+    let interactor = SwipeDownInteractor()
 
     // MARK: - Outlets
     @IBOutlet weak var headerLabel: UILabel!

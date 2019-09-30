@@ -11,7 +11,7 @@ import RxSwift
 import RxCocoa
 import CyberSwift
 
-class FeedPageFiltersVC: UIViewController {
+class FeedPageFiltersVC: SwipeDownDismissViewController {
     // MARK: - Properties
     let disposeBag = DisposeBag()
     var filter = BehaviorRelay<PostsFetcher.Filter>(value: PostsFetcher.Filter(feedTypeMode: .community, feedType: .popular, sortType: .all, searchKey: nil))
