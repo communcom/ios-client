@@ -20,12 +20,29 @@ extension FeedPageVC {
     }
     
     @IBAction func changeFilterButtonDidTouch(_ sender: Any) {
-        let vc = controllerContainer.resolve(FeedPageFiltersVC.self)
-        vc!.filter.accept(viewModel.filter.value)
-        vc!.completion = { filter in
+        // dimmed background
+        let bgView = UIView(frame: self.view.bounds)
+        bgView.backgroundColor = UIColor.black.withAlphaComponent(0.7)
+        
+        let vc = controllerContainer.resolve(FeedPageFiltersVC.self)!
+        vc.filter.accept(viewModel.filter.value)
+        vc.completion = { filter in
             self.viewModel.filter.accept(filter)
         }
-        present(vc!, animated: true, completion: nil)
+        vc.modalPresentationStyle = .custom
+        vc.transitioningDelegate = self
+        
+        vc.dismissCompletion = {
+            UIView.animate(withDuration: 0.3) {
+                bgView.removeFromSuperview()
+            }
+        }
+        
+        UIView.animate(withDuration: 0.3) {
+            self.view.addSubview(bgView)
+        }
+        
+        present(vc, animated: true, completion: nil)
     }
     
     @IBAction func postButtonDidTouch(_ sender: Any) {
@@ -59,5 +76,11 @@ extension FeedPageVC {
     
     @objc func refresh() {
         viewModel.reload()
+    }
+}
+
+extension FeedPageVC: UIViewControllerTransitioningDelegate {
+    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
+        return HalfSizePresentationController(presentedViewController: presented, presenting: presenting)
     }
 }
