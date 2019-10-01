@@ -194,7 +194,7 @@ class ConfirmUserVC: UIViewController, SignUpRouter {
                 self?.hideHud()
                 self?.signUpNextStep()
             }) { (error) in
-                self.pinCodeInputView.set(text: "")
+                self.deleteCode()
                 guard let phone = Config.currentUser?.phoneNumber else {
                     self.hideHud()
                     self.showError(error)
@@ -203,5 +203,11 @@ class ConfirmUserVC: UIViewController, SignUpRouter {
                 self.handleSignUpError(error: error, with: phone)
             }
             .disposed(by: disposeBag)
+    }
+    
+    func deleteCode() {
+        for _ in 0..<ConfirmUserVC.numberOfDigits {
+            pinCodeInputView.deleteBackward()
+        }
     }
 }
