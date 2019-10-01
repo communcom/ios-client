@@ -7,6 +7,10 @@ img {
     margin-right: auto;
 }
 
+p.paragraph {
+    padding: 0 16px;
+}
+
 .embeded {
     background-color: #F5F5F5;
 }

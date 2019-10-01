@@ -107,6 +107,7 @@ class PostHeaderView: UIView, UIWebViewDelegate, PostController {
         contentWebView.delegate = self
         contentWebView.scrollView.isScrollEnabled = false
         contentWebView.scrollView.bouncesZoom = false
+        contentWebView.scrollView.contentInset = UIEdgeInsets(top: 0, left: -8, bottom: 0, right: -8)
     }
     
     func webViewDidStartLoad(_ webView: UIWebView) {

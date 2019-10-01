@@ -79,7 +79,7 @@ extension ContentBlock {
         case "post":
             return innerHTML
         case "paragraph":
-            return "<p>\(innerHTML)</p>"
+            return "<p class=\"paragraph\">\(innerHTML)</p>"
         case "text":
             if style == "" {return innerHTML}
             return "<span style=\"\(style)\">\(innerHTML)</span>"
