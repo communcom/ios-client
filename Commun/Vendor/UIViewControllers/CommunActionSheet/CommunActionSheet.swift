@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CommunActionSheet: UIViewController {
+class CommunActionSheet: SwipeDownDismissViewController {
     // MARK: - Nested types
     struct Action {
         var title: String
@@ -19,13 +19,28 @@ class CommunActionSheet: UIViewController {
         var action: Action?
     }
     
-    // MARK: - Properties
+    // MARK: - Constants
+    let defaultMargin: CGFloat = 16
     let buttonSize: CGFloat = 30
-    var defaultMargin: CGFloat = 16
     var headerHeight: CGFloat = 62
-    var headerToButtonsSpace: CGFloat = 30
+    let headerToButtonsSpace: CGFloat = 30
+    let actionViewHeight: CGFloat = 50
+    let actionViewSeparatorSpace: CGFloat = 8
+    
+    // MARK: - Properties
     var backgroundColor = UIColor(hexString: "#F7F7F9")
     var actions: [Action]?
+    
+    var height: CGFloat {
+        let actionsCount = actions?.count ?? 0
+        
+        let actionButtonsHeight = CGFloat(actionsCount) * (actionViewSeparatorSpace + actionViewHeight)
+        
+        return defaultMargin
+            + headerHeight
+            + headerToButtonsSpace
+            + actionButtonsHeight
+    }
     
     // MARK: - Subviews
     var headerView: UIView?
@@ -53,6 +68,9 @@ class CommunActionSheet: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        // Swipe down
+        interactor = SwipeDownInteractor()
+        
         // Setup view
         view.backgroundColor = backgroundColor
         view.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: 20)
@@ -98,9 +116,6 @@ class CommunActionSheet: UIViewController {
         guard let actions = actions else {return}
         for (index, action) in actions.enumerated() {
             // action views
-            let actionViewHeight: CGFloat = 50
-            let actionViewSeparatorSpace: CGFloat = 8
-            
             let actionView = UIView(frame: .zero)
             actionView.backgroundColor = .white
             actionView.cornerRadius = 10
