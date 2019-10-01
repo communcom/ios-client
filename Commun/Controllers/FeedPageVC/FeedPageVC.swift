@@ -48,6 +48,10 @@ class FeedPageVC: UIViewController {
         navigationController?.setNavigationBarHidden(true, animated: animated)
     }
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
     // MARK: - Methods
     func setUpViewModel() {
         viewModel = FeedPageViewModel()
