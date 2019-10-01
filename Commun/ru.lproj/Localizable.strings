@@ -128,7 +128,7 @@
 "of all time"                                   =   "за всё время";
 "of thematic"                                   =   "тематических";
 "old"                                           =   "старый";
-
+"only alphanumeric, non-uppercased characters, \"-\" and \".\" are allowed"                                    =   "допустимыми символами в имени пользователя являются строчные буквенно-цифровые, а также символ «дефис» и «точка»";
 
 // P
 "past 24 hours"                                 =   "за последние 24 часа";
@@ -185,7 +185,8 @@
 "trending"                                      =   "актуальные";
 "try again"                                     =   "попробуйте ещё раз";
 "turn on"                                       =   "включить";
-
+"the presence of two dots side by side is not allowed"  =   "наличие нахождения рядом двух символов «точка» недопустимо";
+"the hyphen character \"-\" cannot be at the beginning or end of a username."   =   "символ «дефис» не может находиться в начале или в конце имени пользователя.";
 
 // U
 "updating..."                                   =   "обновление...";
@@ -195,7 +196,7 @@
 "user already in blockchain."                   =   "пользователь уже зарегистрирован в блокчейне";
 "user keys info"                                =   "пользовательские ключи";
 "username placeholder"                          =   "введите имя пользователя";
-
+"username must be between 5-32 characters"      =   "общее количество символов в имени пользователя должно быть между 5-32 символов";
 
 // V
 "verification"                                  =   "верификация";

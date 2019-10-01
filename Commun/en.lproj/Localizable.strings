@@ -128,7 +128,7 @@
 "of all time"                                   =   "of all time";
 "of thematic"                                   =   "of thematic";
 "old"                                           =   "old";
-
+"only alphanumeric, non-uppercased characters, \"-\" and \".\" are allowed"                                    =   "only alphanumeric, non-uppercased characters, \"-\" and \".\" are allowed";
 
 // P
 "past 24 hours"                                 =   "past 24 hours";
@@ -185,7 +185,8 @@
 "trending"                                      =   "trending";
 "try again"                                     =   "try again";
 "turn on"                                       =   "turn on";
-
+"the presence of two dots side by side is not allowed"  =   "the presence of two dots side by side is not allowed";
+"the hyphen character \"-\" cannot be at the beginning or end of a username."   =   "the hyphen character \"-\" cannot be at the beginning or end of a username.";
 
 // U
 "updating..."                                   =   "updating...";
@@ -195,6 +196,7 @@
 "user already in blockchain."                   =   "user already in blockchain.";
 "user keys info"                                =   "user keys info";
 "username placeholder"                          =   "username";
+"username must be between 5-32 characters"      =   "username must be between 5-32 characters";
 
 
 // V

@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_1" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -23,22 +21,93 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Create your username" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kdi-h6-fMh" userLabel="Create your username Label">
-                                <rect key="frame" x="16" y="63" width="177.5" height="20"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <accessibility key="accessibilityConfiguration" identifier="SetUserUserNameLabel" label="SetUserUserNameLabel"/>
-                                <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Zrb-vq-uwO" customClass="FormTextField" customModule="Commun" customModuleProvider="target">
-                                <rect key="frame" x="47" y="135" width="320" height="62"/>
-                                <color key="backgroundColor" red="0.95294117647058818" green="0.96078431372549022" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
-                                <accessibility key="accessibilityConfiguration" identifier="SetUserUserNameTextField" label="SetUserUserNameTextField"/>
-                                <nil key="textColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocorrectionType="no" textContentType="nickname"/>
-                            </textField>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XTl-Sh-F4Y">
+                                <rect key="frame" x="0.0" y="44" width="414" height="706"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1Bs-tU-cvl">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="292"/>
+                                        <subviews>
+                                            <label clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Create your username" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kdi-h6-fMh" userLabel="Create your username Label">
+                                                <rect key="frame" x="16" y="19" width="177.5" height="20"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <accessibility key="accessibilityConfiguration" identifier="SetUserUserNameLabel" label="SetUserUserNameLabel"/>
+                                                <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Zrb-vq-uwO" customClass="FormTextField" customModule="Commun" customModuleProvider="target">
+                                                <rect key="frame" x="42" y="91" width="330" height="56"/>
+                                                <color key="backgroundColor" red="0.95294117647058818" green="0.96078431372549022" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
+                                                <accessibility key="accessibilityConfiguration" identifier="SetUserUserNameTextField" label="SetUserUserNameTextField"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="56" id="eV5-eR-bdq"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" autocorrectionType="no" textContentType="nickname"/>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                        <real key="value" value="12"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                            </textField>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="username must be between 5-32 characters" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YgN-ib-SVj">
+                                                <rect key="frame" x="16" y="163" width="382" height="16"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="the presence of two dots side by side is not allowed" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="keP-No-vf5">
+                                                <rect key="frame" x="16" y="226.5" width="382" height="16"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="only alphanumeric, non-uppercased characters, &quot;-&quot; and &quot;.&quot; are allowed" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g0n-yF-who">
+                                                <rect key="frame" x="16" y="187" width="382" height="31.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="the hyphen character &quot;-&quot; cannot be at the beginning or end of a username." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="btT-1y-R1h">
+                                                <rect key="frame" x="16" y="250.5" width="382" height="31.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="keP-No-vf5" secondAttribute="trailing" constant="16" id="1D7-t7-syl"/>
+                                            <constraint firstAttribute="trailing" secondItem="btT-1y-R1h" secondAttribute="trailing" constant="16" id="4Yl-sh-TBl"/>
+                                            <constraint firstAttribute="trailing" secondItem="Zrb-vq-uwO" secondAttribute="trailing" constant="42" id="C93-uM-Abs"/>
+                                            <constraint firstItem="YgN-ib-SVj" firstAttribute="leading" secondItem="1Bs-tU-cvl" secondAttribute="leading" constant="16" id="JPc-dL-Cbl"/>
+                                            <constraint firstItem="Kdi-h6-fMh" firstAttribute="top" secondItem="1Bs-tU-cvl" secondAttribute="top" constant="19" id="KZZ-qD-Eg9"/>
+                                            <constraint firstItem="YgN-ib-SVj" firstAttribute="top" secondItem="Zrb-vq-uwO" secondAttribute="bottom" constant="16" id="Ksb-PW-kbI"/>
+                                            <constraint firstItem="Zrb-vq-uwO" firstAttribute="leading" secondItem="1Bs-tU-cvl" secondAttribute="leading" constant="42" id="RSF-Vy-4oX"/>
+                                            <constraint firstItem="keP-No-vf5" firstAttribute="top" secondItem="g0n-yF-who" secondAttribute="bottom" constant="8" id="XUJ-sS-sAY"/>
+                                            <constraint firstAttribute="trailing" secondItem="g0n-yF-who" secondAttribute="trailing" constant="16" id="a5O-cd-x9k"/>
+                                            <constraint firstItem="btT-1y-R1h" firstAttribute="top" secondItem="keP-No-vf5" secondAttribute="bottom" constant="8" id="bZ6-pL-cKD"/>
+                                            <constraint firstItem="Kdi-h6-fMh" firstAttribute="leading" secondItem="1Bs-tU-cvl" secondAttribute="leading" constant="16" id="biq-nY-VFB"/>
+                                            <constraint firstItem="keP-No-vf5" firstAttribute="leading" secondItem="1Bs-tU-cvl" secondAttribute="leading" constant="16" id="dYS-fE-7si"/>
+                                            <constraint firstItem="g0n-yF-who" firstAttribute="leading" secondItem="1Bs-tU-cvl" secondAttribute="leading" constant="16" id="fqS-9L-TNJ"/>
+                                            <constraint firstItem="btT-1y-R1h" firstAttribute="leading" secondItem="1Bs-tU-cvl" secondAttribute="leading" constant="16" id="hyv-zV-lrV"/>
+                                            <constraint firstItem="g0n-yF-who" firstAttribute="top" secondItem="YgN-ib-SVj" secondAttribute="bottom" constant="8" id="knN-hY-zXJ"/>
+                                            <constraint firstAttribute="bottom" secondItem="btT-1y-R1h" secondAttribute="bottom" constant="10" id="lvj-jO-9z1"/>
+                                            <constraint firstAttribute="trailing" secondItem="YgN-ib-SVj" secondAttribute="trailing" constant="16" id="nXZ-cL-oo5"/>
+                                            <constraint firstItem="Zrb-vq-uwO" firstAttribute="top" secondItem="Kdi-h6-fMh" secondAttribute="bottom" constant="52" id="nhl-BW-piQ"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="1Bs-tU-cvl" secondAttribute="bottom" id="3uH-NU-qM1"/>
+                                    <constraint firstItem="1Bs-tU-cvl" firstAttribute="leading" secondItem="XTl-Sh-F4Y" secondAttribute="leading" id="8zL-2t-8fa"/>
+                                    <constraint firstItem="1Bs-tU-cvl" firstAttribute="top" secondItem="XTl-Sh-F4Y" secondAttribute="top" id="UML-Vs-LKR"/>
+                                    <constraint firstAttribute="trailing" secondItem="1Bs-tU-cvl" secondAttribute="trailing" id="qBA-h4-m3K"/>
+                                    <constraint firstItem="1Bs-tU-cvl" firstAttribute="top" secondItem="TTw-bP-xFD" secondAttribute="top" id="zUJ-u7-umr"/>
+                                </constraints>
+                                <viewLayoutGuide key="contentLayoutGuide" id="F2k-qo-Y6O"/>
+                                <viewLayoutGuide key="frameLayoutGuide" id="TTw-bP-xFD"/>
+                            </scrollView>
                             <button clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="596-PJ-wLC" customClass="StepButton" customModule="Commun" customModuleProvider="target">
                                 <rect key="frame" x="47" y="760" width="320" height="62"/>
                                 <accessibility key="accessibilityConfiguration" identifier="SetUserNextButton" label="SetUserNextButton"/>
@@ -51,30 +120,25 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="Zrb-vq-uwO" firstAttribute="top" secondItem="Kdi-h6-fMh" secondAttribute="bottom" constant="52" identifier="SetUsernameTextFieldTopConstraint" id="7bl-EF-REx" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                             <constraint firstItem="596-PJ-wLC" firstAttribute="width" secondItem="x7M-Uk-FDw" secondAttribute="width" multiplier="290:375" identifier="SetUsernameNextButtonWidthConstraint" id="Hi6-FX-CQx"/>
-                            <constraint firstItem="Zrb-vq-uwO" firstAttribute="width" secondItem="x7M-Uk-FDw" secondAttribute="width" multiplier="290:375" identifier="SetUsernameTextFieldWidthConstraint" id="MMB-sa-79r"/>
+                            <constraint firstItem="1Bs-tU-cvl" firstAttribute="width" secondItem="j0s-Hr-oj6" secondAttribute="width" id="KEC-LJ-zVp"/>
                             <constraint firstItem="596-PJ-wLC" firstAttribute="height" secondItem="x7M-Uk-FDw" secondAttribute="height" multiplier="56:812" identifier="SetUsernameNextButtonHeightConstraint" id="N4E-a6-ayl"/>
-                            <constraint firstItem="Kdi-h6-fMh" firstAttribute="leading" secondItem="j0s-Hr-oj6" secondAttribute="leading" constant="16" identifier="SetUsernameCreateUsernameLeadingConstraint" id="RMh-Zd-kCZ" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
-                            <constraint firstItem="Kdi-h6-fMh" firstAttribute="top" secondItem="j0s-Hr-oj6" secondAttribute="top" constant="19" identifier="SetUserCreateUsernameLabelTopConstraint" id="RsZ-iQ-wFh" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
-                            <constraint firstItem="j0s-Hr-oj6" firstAttribute="bottom" secondItem="596-PJ-wLC" secondAttribute="bottom" priority="999" constant="40" identifier="SetUserNextButtonBottomConstraint" id="Sbb-2I-0lW" customClass="KeyboardLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
-                            <constraint firstItem="Zrb-vq-uwO" firstAttribute="centerX" secondItem="x7M-Uk-FDw" secondAttribute="centerX" id="Z78-1U-cSz"/>
+                            <constraint firstItem="j0s-Hr-oj6" firstAttribute="bottom" secondItem="596-PJ-wLC" secondAttribute="bottom" constant="40" identifier="SetUserNextButtonBottomConstraint" id="Sbb-2I-0lW" customClass="KeyboardLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
+                            <constraint firstItem="XTl-Sh-F4Y" firstAttribute="leading" secondItem="j0s-Hr-oj6" secondAttribute="leading" id="l8d-Mv-mZP"/>
+                            <constraint firstItem="XTl-Sh-F4Y" firstAttribute="trailing" secondItem="j0s-Hr-oj6" secondAttribute="trailing" id="rSG-97-jSp"/>
                             <constraint firstItem="596-PJ-wLC" firstAttribute="centerX" secondItem="x7M-Uk-FDw" secondAttribute="centerX" id="t73-Se-8ey"/>
-                            <constraint firstItem="Zrb-vq-uwO" firstAttribute="height" secondItem="x7M-Uk-FDw" secondAttribute="height" multiplier="56:812" identifier="SetUsernameTextFieldHeightConstraint" id="zzj-OC-we0"/>
+                            <constraint firstItem="XTl-Sh-F4Y" firstAttribute="top" secondItem="j0s-Hr-oj6" secondAttribute="top" id="wad-uS-qQE"/>
+                            <constraint firstItem="596-PJ-wLC" firstAttribute="top" secondItem="XTl-Sh-F4Y" secondAttribute="bottom" constant="10" id="zWV-sM-v3n"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="j0s-Hr-oj6"/>
                         <variation key="default">
                             <mask key="constraints">
-                                <exclude reference="MMB-sa-79r"/>
-                                <exclude reference="zzj-OC-we0"/>
                                 <exclude reference="Hi6-FX-CQx"/>
                                 <exclude reference="N4E-a6-ayl"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
                             <mask key="constraints">
-                                <include reference="MMB-sa-79r"/>
-                                <include reference="zzj-OC-we0"/>
                                 <include reference="Hi6-FX-CQx"/>
                                 <include reference="N4E-a6-ayl"/>
                             </mask>
@@ -87,6 +151,10 @@
                         <outlet property="creatUsernameLabel" destination="Kdi-h6-fMh" id="k8w-Rw-VW2"/>
                         <outlet property="nextButton" destination="596-PJ-wLC" id="CqU-Ch-Lhn"/>
                         <outlet property="userNameTextField" destination="Zrb-vq-uwO" id="q1i-ss-1WT"/>
+                        <outletCollection property="traitLabels" destination="YgN-ib-SVj" collectionClass="NSMutableArray" id="nLh-TI-ilX"/>
+                        <outletCollection property="traitLabels" destination="g0n-yF-who" collectionClass="NSMutableArray" id="utY-cJ-MXq"/>
+                        <outletCollection property="traitLabels" destination="keP-No-vf5" collectionClass="NSMutableArray" id="liV-TK-jhJ"/>
+                        <outletCollection property="traitLabels" destination="btT-1y-R1h" collectionClass="NSMutableArray" id="Pwj-QT-36w"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8wN-X2-GYM" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -96,7 +164,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="39" y="320"/>
+            <point key="canvasLocation" x="37.681159420289859" y="319.41964285714283"/>
         </scene>
     </scenes>
 </document>

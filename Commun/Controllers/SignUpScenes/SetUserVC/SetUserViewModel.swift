@@ -13,9 +13,33 @@ import CyberSwift
 
 class SetUserViewModel {
     // MARK: - Class Functions
-    func checkUserName(_ userName: String) -> Bool {
-        let characterset = CharacterSet(charactersIn: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.-")
-        return !userName.isEmpty && userName.count > 5 && userName.count <= 12 && userName.rangeOfCharacter(from: characterset.inverted) == nil
+    func checkUserName(_ userName: String) -> [Bool] {
+        // username must be between 5-32 characters
+        let isBetween5To32Characters =
+            (userName.count >= 5 && userName.count <= 32)
+        
+        // only alphanumeric, non-uppercased characters, "-" and "." are allowed
+        let containsOnlyAllowedCharacters = userName.matches("^[a-z0-9-.]+$")
+        
+        // the presence of two dots side by side is not allowed
+        let twoDotsNotSideBySide = !userName.contains("..")
+        
+        // the hyphen character "-" cannot be at the beginning or end of a username.
+        let hyphenIsNotAtBeginOrEnd = !userName.starts(with: "-") && !userName.ends(with: "-")
+        
+        return [
+            isBetween5To32Characters,
+            containsOnlyAllowedCharacters,
+            twoDotsNotSideBySide,
+            hyphenIsNotAtBeginOrEnd
+        ]
+    }
+    
+    func isUserNameValid(_ userName: String) -> Bool {
+        return checkUserName(userName)
+            .reduce(true, { (result, element) -> Bool in
+                return result && element
+            })
     }
     
     func set(userName: String) -> Single<String> {

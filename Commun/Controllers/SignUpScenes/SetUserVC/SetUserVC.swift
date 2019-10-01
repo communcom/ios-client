@@ -20,25 +20,18 @@ class SetUserVC: UIViewController, SignUpRouter {
     // MARK: - IBOutlets
     @IBOutlet weak var creatUsernameLabel: UILabel! {
         didSet {
-            self.creatUsernameLabel.tune(withText:          "create your username".localized().uppercaseFirst,
-                                         hexColors:         blackWhiteColorPickers,
-                                         font:              UIFont(name: "SFProText-Regular", size: 17.0 * Config.widthRatio),
-                                         alignment:         .left,
-                                         isMultiLines:      false)
+            tuneCreateUserNameLabel()
         }
     }
     
     @IBOutlet weak var userNameTextField: FormTextField! {
         didSet {
-            self.userNameTextField.tune(withPlaceholder:    "username placeholder".localized().uppercaseFirst,
-                                        textColors:         blackWhiteColorPickers,
-                                        font:               UIFont.init(name: "SFProText-Regular", size: 17.0 * Config.widthRatio),
-                                        alignment:          .left)
-            
-            self.userNameTextField.inset = 16.0 * Config.widthRatio
-            self.userNameTextField.layer.cornerRadius = 8.0 * Config.heightRatio
-            self.userNameTextField.clipsToBounds = true
-            self.userNameTextField.keyboardType = .alphabet
+            tuneUserNameTextField()
+        }
+    }
+    @IBOutlet var traitLabels: [UILabel]! {
+        didSet {
+            tuneTraitLabels()
         }
     }
     
@@ -64,51 +57,20 @@ class SetUserVC: UIViewController, SignUpRouter {
     func bind() {
         userNameTextField.rx.text.orEmpty
             .subscribe(onNext: {text in
-                self.nextButton.isEnabled = self.viewModel.checkUserName(text)
-            })
-            .disposed(by: disposeBag)
-    }
-    
-    @IBAction func buttonNextDidTouch(_ sender: Any) {
-        guard KeychainManager.currentUser()?.phoneNumber != nil else {
-            resetSignUpProcess()
-            return
-        }
-        
-        guard let userName = userNameTextField.text,
-            viewModel.checkUserName(userName) else {
-                return
-        }
-        
-        self.view.endEditing(true)
-        
-        showIndetermineHudWithMessage("setting username".localized().uppercaseFirst + "...")
-        
-        viewModel.set(userName: userName)
-            .catchError({ (error) -> Single<String> in
-                if let error = error as? ErrorAPI {
-                    if error.caseInfo.message == "Invalid step taken",
-                        Config.currentUser?.registrationStep == .toBlockChain{
-                        return .just(Config.currentUser?.id ?? "")
-                    }
+                // result
+                let checkResult = self.viewModel.checkUserName(text)
+                
+                // Enable, disable nextButton
+                self.nextButton.isEnabled =
+                    checkResult.reduce(true, { (result, element) -> Bool in
+                        return result && element
+                    })
+                
+                // Change text color
+                for i in 0..<checkResult.count {
+                    self.traitLabels[i].textColor = checkResult[i] ? .lightGray: .red
                 }
-                throw error
-            })
-            .flatMapCompletable({ (id) -> Completable in
-                self.showIndetermineHudWithMessage("saving to blockchain...".localized().uppercaseFirst)
-                return RestAPIManager.instance.rx.toBlockChain()
-            })
-            .subscribe(onCompleted: {
-                AppDelegate.reloadSubject.onNext(true)
-            }, onError: {error in
-                self.hideHud()
-                self.showError(error)
             })
             .disposed(by: disposeBag)
-    }
-    
-    // MARK: - Gestures
-    @IBAction func handlerTapGestureRecognizer(_ sender: UITapGestureRecognizer) {
-        self.view.endEditing(true)
     }
 }

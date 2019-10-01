@@ -97,6 +97,8 @@
 		3B82D0F722D8D56A004EE848 /* EnableBiometricsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B82D0F622D8D56A004EE848 /* EnableBiometricsVC.swift */; };
 		3B848B6B232F2E2C0021429F /* EditorPageVC+TextViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B848B6A232F2E2C0021429F /* EditorPageVC+TextViewDelegate.swift */; };
 		3B885BBC22B7A1FE00FC4B7A /* EmbededView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B885BBB22B7A1FE00FC4B7A /* EmbededView.swift */; };
+		3B8E0ED5234302D600362F26 /* SetUserVC+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B8E0ED4234302D600362F26 /* SetUserVC+Actions.swift */; };
+		3B8E0ED72343032B00362F26 /* SetUserVC+Styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B8E0ED62343032B00362F26 /* SetUserVC+Styles.swift */; };
 		3B986B6522CF4C9E00C1E985 /* PhoneNumberTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B986B6422CF4C9E00C1E985 /* PhoneNumberTests.swift */; };
 		3B9BEB3D2300EC7D003C70B3 /* EmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B9BEB3C2300EC7D003C70B3 /* EmptyView.swift */; };
 		3B9BEB3F2300EC9C003C70B3 /* EmptyView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3B9BEB3E2300EC9C003C70B3 /* EmptyView.xib */; };
@@ -356,6 +358,8 @@
 		3B82D0F622D8D56A004EE848 /* EnableBiometricsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnableBiometricsVC.swift; sourceTree = "<group>"; };
 		3B848B6A232F2E2C0021429F /* EditorPageVC+TextViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EditorPageVC+TextViewDelegate.swift"; sourceTree = "<group>"; };
 		3B885BBB22B7A1FE00FC4B7A /* EmbededView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbededView.swift; sourceTree = "<group>"; };
+		3B8E0ED4234302D600362F26 /* SetUserVC+Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SetUserVC+Actions.swift"; sourceTree = "<group>"; };
+		3B8E0ED62343032B00362F26 /* SetUserVC+Styles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SetUserVC+Styles.swift"; sourceTree = "<group>"; };
 		3B986B6422CF4C9E00C1E985 /* PhoneNumberTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneNumberTests.swift; sourceTree = "<group>"; };
 		3B9BEB3C2300EC7D003C70B3 /* EmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyView.swift; sourceTree = "<group>"; };
 		3B9BEB3E2300EC9C003C70B3 /* EmptyView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmptyView.xib; sourceTree = "<group>"; };
@@ -1209,6 +1213,8 @@
 			children = (
 				5787C0C722650FC200568CEC /* SetUserVC.storyboard */,
 				5787C0C322650F9D00568CEC /* SetUserVC.swift */,
+				3B8E0ED4234302D600362F26 /* SetUserVC+Actions.swift */,
+				3B8E0ED62343032B00362F26 /* SetUserVC+Styles.swift */,
 				5787C0C522650FA500568CEC /* SetUserViewModel.swift */,
 			);
 			path = SetUserVC;
@@ -1711,6 +1717,7 @@
 				3BAF69CF226787940055CCEB /* Date.swift in Sources */,
 				3BE68AB222EEA7C300033B81 /* LocalAuthVC.swift in Sources */,
 				3BDD99FE228DA59900B2A1DA /* ExpandableTextView.swift in Sources */,
+				3B8E0ED5234302D600362F26 /* SetUserVC+Actions.swift in Sources */,
 				3BB48AD022D5F84D00F11B6A /* SetPasscodeVC.swift in Sources */,
 				3B24F86522F3777500B7091C /* CommunitiesViewModel.swift in Sources */,
 				3B5D7CF12299D79B0077B82C /* FeedSortMode.swift in Sources */,
@@ -1739,6 +1746,7 @@
 				3BF3A7C923201C66000969D5 /* EditorPageTextView+Utilities.swift in Sources */,
 				3B02A56922F013D50043F9A4 /* ResponseAPIContentGetComment.swift in Sources */,
 				57E515B62270F7B200A6F6DB /* SettingsButtonCell.swift in Sources */,
+				3B8E0ED72343032B00362F26 /* SetUserVC+Styles.swift in Sources */,
 				3B848B6B232F2E2C0021429F /* EditorPageVC+TextViewDelegate.swift in Sources */,
 				3B5EDE3022DF92D000897BF3 /* SettingsOptionsCell.swift in Sources */,
 				57A1CA632270FC4700E2A1E3 /* LanguageVC.swift in Sources */,
