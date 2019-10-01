@@ -22,7 +22,7 @@ class CommunActionSheet: SwipeDownDismissViewController {
     // MARK: - Constants
     let defaultMargin: CGFloat = 16
     let buttonSize: CGFloat = 30
-    var headerHeight: CGFloat = 62
+    var headerHeight: CGFloat = 40
     let headerToButtonsSpace: CGFloat = 30
     let actionViewHeight: CGFloat = 50
     let actionViewSeparatorSpace: CGFloat = 8
@@ -170,8 +170,9 @@ class CommunActionSheet: SwipeDownDismissViewController {
     
     @objc func actionViewDidTouch(_ tap: TapGesture) {
         guard let action = tap.action else {return}
-        action.handle?()
-        dismiss(animated: true, completion: nil)
+        dismiss(animated: true) {
+            action.handle?()
+        }
     }
 }
 

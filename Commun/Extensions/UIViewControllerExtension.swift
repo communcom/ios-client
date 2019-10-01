@@ -41,7 +41,7 @@ extension UIViewController {
         self.present(alert, animated: true, completion: nil)
     }
     
-    func showCommunActionSheet(headerView: UIView? = nil, title: String? = nil, actions: [CommunActionSheet.Action]) {
+    func showCommunActionSheet(headerView: UIView? = nil, title: String? = nil, actions: [CommunActionSheet.Action], completion: (() -> Void)? = nil) {
         let actionSheet = CommunActionSheet()
         actionSheet.title = title
         actionSheet.headerView = headerView
@@ -49,7 +49,7 @@ extension UIViewController {
         
         actionSheet.modalPresentationStyle = .custom
         actionSheet.transitioningDelegate = actionSheet
-        present(actionSheet, animated: true, completion: nil)
+        present(actionSheet, animated: true, completion: completion)
     }
     
     func showGeneralError() {

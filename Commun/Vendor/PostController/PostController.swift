@@ -45,26 +45,40 @@ extension PostController {
     func openMorePostActions() {
         guard let topController = UIApplication.topViewController() else {return}
         
-        var actions = [UIAlertAction]()
+        var actions = [CommunActionSheet.Action]()
         
         if post?.author?.userId == Config.currentUser?.id {
             actions += [
-                UIAlertAction(title: "edit".localized().uppercaseFirst, style: .default, handler: { (_) in
+                CommunActionSheet.Action(title: "edit".localized().uppercaseFirst, icon: UIImage(named: "edit"), handle: {
                     self.editPost()
                 }),
-                UIAlertAction(title: "delete".localized().uppercaseFirst, style: .destructive, handler: { (_) in
+                CommunActionSheet.Action(title: "delete".localized().uppercaseFirst, icon: UIImage(named: "delete"), handle: {
                     self.deletePost()
                 })
             ]
         } else {
             actions.append(
-                UIAlertAction(title: "report".localized().uppercaseFirst, style: .destructive, handler: { (_) in
+                CommunActionSheet.Action(title: "report".localized().uppercaseFirst, icon: UIImage(named: "report"), handle: {
                     self.reportPost()
                 })
             )
         }
         
-        topController.showActionSheet(title: nil, message: nil, actions: actions)
+        // headerView for actionSheet
+        let headerView = UIView(frame: .zero)
+        let avatarImageView = UIImageView()
+        avatarImageView.cornerRadius = 20
+        avatarImageView.translatesAutoresizingMaskIntoConstraints = false
+        headerView.addSubview(avatarImageView)
+        
+        avatarImageView.topAnchor.constraint(equalTo: headerView.topAnchor).isActive = true
+        avatarImageView.leadingAnchor.constraint(equalTo: headerView.leadingAnchor).isActive = true
+        avatarImageView.heightAnchor.constraint(equalTo: headerView.heightAnchor).isActive = true
+        avatarImageView.widthAnchor.constraint(equalTo: avatarImageView.heightAnchor).isActive = true
+        
+        topController.showCommunActionSheet(headerView: headerView, actions: actions) {
+            avatarImageView.setAvatar(urlString: self.post?.community.avatarUrl, namePlaceHolder: self.post?.community.name ?? "C")
+        }
     }
     
     // MARK: - Voting
