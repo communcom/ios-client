@@ -22,6 +22,8 @@ class FeedPageFiltersVC: SwipeDownDismissViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        interactor = SwipeDownInteractor()
+        
         view.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: 20)
         
         tableView.delegate = self
@@ -177,5 +179,15 @@ extension FeedPageFiltersVC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return 20
+    }
+}
+
+extension FeedPageFiltersVC: UIViewControllerTransitioningDelegate {
+    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
+        return HalfSizePresentationController(presentedViewController: presented, presenting: presenting)
+    }
+    
+    func interactionControllerForDismissal(using animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
+        return interactor?.hasStarted == true ? interactor : nil
     }
 }

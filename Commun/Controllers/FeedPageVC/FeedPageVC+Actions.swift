@@ -27,8 +27,7 @@ extension FeedPageVC {
             self.viewModel.filter.accept(filter)
         }
         vc.modalPresentationStyle = .custom
-        vc.transitioningDelegate = self
-        vc.interactor = interactor
+        vc.transitioningDelegate = vc
         
         present(vc, animated: true, completion: nil)
     }
@@ -64,15 +63,5 @@ extension FeedPageVC {
     
     @objc func refresh() {
         viewModel.reload()
-    }
-}
-
-extension FeedPageVC: UIViewControllerTransitioningDelegate {
-    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
-        return HalfSizePresentationController(presentedViewController: presented, presenting: presenting)
-    }
-    
-    func interactionControllerForDismissal(using animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
-        return interactor.hasStarted ? interactor : nil
     }
 }
