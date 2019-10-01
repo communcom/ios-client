@@ -118,6 +118,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 // if all set
                 RestAPIManager.instance.rx.authorize()
                     .subscribe(onSuccess: { (response) in
+                        // Retrieve favourites
+                        FavouritesList.shared.retrieve()
+                        
                         // Turn notify on
                         self.pushNotifyOn()
                         

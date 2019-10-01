@@ -28,7 +28,7 @@ extension FeedPageVC {
         }
         vc.modalPresentationStyle = .custom
         vc.transitioningDelegate = self
-        vc.interactor = SwipeDownInteractor()
+        vc.interactor = interactor
         
         present(vc, animated: true, completion: nil)
     }

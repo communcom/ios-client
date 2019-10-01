@@ -1,32 +1,18 @@
 //
-//  HalfSizePresentationController.swift
+//  DimmingPresentationController.swift
 //  Commun
 //
-//  Created by Chung Tran on 9/30/19.
+//  Created by Chung Tran on 10/1/19.
 //  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
 //
 
 import UIKit
 
-class HalfSizePresentationController: UIPresentationController {
-    private var dimmingView: UIView!
-    
+class DimmingPresentationController: UIPresentationController {
+    var dimmingView: UIView!
     override init(presentedViewController: UIViewController, presenting presentingViewController: UIViewController?) {
         super.init(presentedViewController: presentedViewController, presenting: presentingViewController)
         setupDimmingView()
-    }
-    
-    override var frameOfPresentedViewInContainerView: CGRect {
-        //1
-        var frame: CGRect = .zero
-        frame.size = size(forChildContentContainer: presentedViewController,
-                          withParentContainerSize: containerView!.bounds.size)
-        
-        //2
-        
-        frame.origin.y = containerView!.frame.height*(1.0/3.0)
-        
-        return frame
     }
     
     override func presentationTransitionWillBegin() {
@@ -57,11 +43,6 @@ class HalfSizePresentationController: UIPresentationController {
     
     override func containerViewWillLayoutSubviews() {
         presentedView?.frame = frameOfPresentedViewInContainerView
-    }
-    
-    override func size(forChildContentContainer container: UIContentContainer,
-                       withParentContainerSize parentSize: CGSize) -> CGSize {
-        return CGSize(width: parentSize.width, height: parentSize.height*(2.0/3.0))
     }
     
     override func dismissalTransitionWillBegin() {

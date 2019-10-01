@@ -41,6 +41,17 @@ extension UIViewController {
         self.present(alert, animated: true, completion: nil)
     }
     
+    func showCommunActionSheet(headerView: UIView? = nil, title: String? = nil, actions: [CommunActionSheet.Action]) {
+        let actionSheet = CommunActionSheet()
+        actionSheet.title = title
+        actionSheet.headerView = headerView
+        actionSheet.actions = actions
+        
+        actionSheet.modalPresentationStyle = .custom
+        actionSheet.transitioningDelegate = actionSheet
+        present(actionSheet, animated: true, completion: nil)
+    }
+    
     func showGeneralError() {
         showErrorWithLocalizedMessage("Something went wrong.\nPlease try again later")
     }
