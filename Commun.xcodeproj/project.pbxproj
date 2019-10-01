@@ -95,6 +95,7 @@
 		3B67FC0C22C50F1500D05F01 /* SignInViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3B67FC0922C5018800D05F01 /* SignInViewController.storyboard */; };
 		3B6CB73023432D6F0097B2A1 /* FavouritesList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6CB72F23432D6F0097B2A1 /* FavouritesList.swift */; };
 		3B6CB732234331830097B2A1 /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6CB731234331830097B2A1 /* Array.swift */; };
+		3B6CB734234335130097B2A1 /* CommunActionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6CB733234335130097B2A1 /* CommunActionSheet.swift */; };
 		3B77383923335829000965ED /* image-not-available.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 3B77383823335829000965ED /* image-not-available.jpg */; };
 		3B82D0F722D8D56A004EE848 /* EnableBiometricsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B82D0F622D8D56A004EE848 /* EnableBiometricsVC.swift */; };
 		3B848B6B232F2E2C0021429F /* EditorPageVC+TextViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B848B6A232F2E2C0021429F /* EditorPageVC+TextViewDelegate.swift */; };
@@ -358,6 +359,7 @@
 		3B67FC0A22C50BC400D05F01 /* SignInViewController+CollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SignInViewController+CollectionView.swift"; sourceTree = "<group>"; };
 		3B6CB72F23432D6F0097B2A1 /* FavouritesList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritesList.swift; sourceTree = "<group>"; };
 		3B6CB731234331830097B2A1 /* Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
+		3B6CB733234335130097B2A1 /* CommunActionSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunActionSheet.swift; sourceTree = "<group>"; };
 		3B77383823335829000965ED /* image-not-available.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "image-not-available.jpg"; path = "Commun/Assets.xcassets/image-not-available.imageset/image-not-available.jpg"; sourceTree = SOURCE_ROOT; };
 		3B82D0F622D8D56A004EE848 /* EnableBiometricsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnableBiometricsVC.swift; sourceTree = "<group>"; };
 		3B848B6A232F2E2C0021429F /* EditorPageVC+TextViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EditorPageVC+TextViewDelegate.swift"; sourceTree = "<group>"; };
@@ -833,6 +835,7 @@
 		3BC613AA23420FC400075570 /* UIViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				3B6CB733234335130097B2A1 /* CommunActionSheet.swift */,
 				3BC613AB23420FFC00075570 /* SwipeDownToDismissViewController */,
 			);
 			path = UIViewControllers;
@@ -1807,6 +1810,7 @@
 				3BB342A922CA2DBB009546B2 /* WelcomePageVC.swift in Sources */,
 				3BF37BCC22A1297C00A72FFE /* UITableView.swift in Sources */,
 				3B5CB31022A5880D00757533 /* MyRxTableViewSectionedAnimatedDataSource.swift in Sources */,
+				3B6CB734234335130097B2A1 /* CommunActionSheet.swift in Sources */,
 				3BC6139E23419EFC00075570 /* HalfSizePresentationController.swift in Sources */,
 				3B49C90923224F2600376636 /* EditorPageTextView+Attachment.swift in Sources */,
 				3B5CB31222A588EE00757533 /* FeedPageVC+EmptyDataSet.swift in Sources */,
