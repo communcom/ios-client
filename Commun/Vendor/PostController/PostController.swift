@@ -226,13 +226,24 @@ extension PostController {
         guard let post = post,
             let topController = UIApplication.topViewController() else {return}
         
-        NetworkService.shared.deletePost(permlink: post.contentId.permlink)
-            .subscribe(onCompleted: {
-                self.notifyPostDeleted(deletedPost: post)
-            }, onError: { error in
-                topController.showError(error)
-            })
-            .disposed(by: self.disposeBag)
+        topController.showAlert(
+            title: "delete".localized().uppercaseFirst,
+            message: "do you really want to delete this post".localized().uppercaseFirst + "?",
+            buttonTitles: [
+                "yes".localized().uppercaseFirst,
+                "no".localized().uppercaseFirst],
+            highlightedButtonIndex: 1)
+            { (index) in
+                if index == 0 {
+                    NetworkService.shared.deletePost(permlink: post.contentId.permlink)
+                    .subscribe(onCompleted: {
+                        self.notifyPostDeleted(deletedPost: post)
+                    }, onError: { error in
+                        topController.showError(error)
+                    })
+                    .disposed(by: self.disposeBag)
+                }
+            }
     }
     
     func editPost() {

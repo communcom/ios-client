@@ -40,6 +40,7 @@
 
 
 // D
+"do you really want to delete this post"        =   "вы действительно хотите удалить этот пост";
 "delete current"                                =   "удалить текущую";
 "delete"                                        =   "удаление";
 "deleted"                                       =   "удалено";
