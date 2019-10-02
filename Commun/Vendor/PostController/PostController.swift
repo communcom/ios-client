@@ -67,49 +67,10 @@ extension PostController {
         }
         
         // headerView for actionSheet
-        let headerView = UIView(frame: .zero)
-        let avatarImageView = UIImageView()
-        avatarImageView.cornerRadius = 20
-        avatarImageView.translatesAutoresizingMaskIntoConstraints = false
-        headerView.addSubview(avatarImageView)
-        
-        avatarImageView.topAnchor.constraint(equalTo: headerView.topAnchor).isActive = true
-        avatarImageView.leadingAnchor.constraint(equalTo: headerView.leadingAnchor).isActive = true
-        avatarImageView.heightAnchor.constraint(equalTo: headerView.heightAnchor).isActive = true
-        avatarImageView.widthAnchor.constraint(equalTo: avatarImageView.heightAnchor).isActive = true
-        
-        let comunityNameLabel = UILabel()
-        comunityNameLabel.font = .systemFont(ofSize: 15, weight: .semibold)
-        comunityNameLabel.text = post.community.name
-        comunityNameLabel.translatesAutoresizingMaskIntoConstraints = false
-        headerView.addSubview(comunityNameLabel)
-        
-        comunityNameLabel.topAnchor.constraint(equalTo: avatarImageView.topAnchor).isActive = true
-        comunityNameLabel.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: 16).isActive = true
-        comunityNameLabel.trailingAnchor.constraint(equalTo: headerView.trailingAnchor).isActive = true
-        
-        let timeAgoLabel = UILabel()
-        timeAgoLabel.font = .systemFont(ofSize: 13)
-        timeAgoLabel.textColor = .lightGray
-        timeAgoLabel.text = Date.timeAgo(string: post.meta.time) + " • "
-        timeAgoLabel.translatesAutoresizingMaskIntoConstraints = false
-        headerView.addSubview(timeAgoLabel)
-        
-        timeAgoLabel.bottomAnchor.constraint(equalTo: avatarImageView.bottomAnchor).isActive = true
-        timeAgoLabel.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: 16).isActive = true
-        
-        let byUserLabel = UILabel()
-        byUserLabel.font = .systemFont(ofSize: 13, weight: .semibold)
-        byUserLabel.textColor = .appMainColor
-        byUserLabel.text = post.author?.username ?? post.author?.userId
-        byUserLabel.translatesAutoresizingMaskIntoConstraints = false
-        headerView.addSubview(byUserLabel)
-        
-        byUserLabel.bottomAnchor.constraint(equalTo: avatarImageView.bottomAnchor).isActive = true
-        byUserLabel.leadingAnchor.constraint(equalTo: timeAgoLabel.trailingAnchor, constant: 0).isActive = true
+        let headerView = PostMetaView(frame: .zero)
         
         topController.showCommunActionSheet(headerView: headerView, actions: actions) {
-            avatarImageView.setAvatar(urlString: self.post?.community.avatarUrl, namePlaceHolder: self.post?.community.name ?? "C")
+            headerView.setUp(post: post)
         }
     }
     
