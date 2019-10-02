@@ -15,10 +15,65 @@ class TabBarVC: UITabBarController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-        self.view.backgroundColor = .white
         
+        // Config styles
+        configStyles()
+
+        // Config tabs
+        configTabs()
+        
+        // bind view model
+        bindViewModel()
+    }
+    
+    private func configStyles() {
+        view.backgroundColor = .white
+        
+        // Config styles
+        tabBar.unselectedItemTintColor = #colorLiteral(red: 0.8971592784, green: 0.9046500325, blue: 0.9282500148, alpha: 1)
+        tabBar.tintColor = UIColor.black
+        
+        UITabBar.appearance().barTintColor = .white
+        UITabBar.appearance().backgroundColor = .white
+        
+        // Remove default line
+        tabBar.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: 18)
+        
+        // Shadow
+        let shadowView = UIView(frame: tabBar.frame)
+        shadowView.backgroundColor = .white
+        shadowView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(shadowView)
+        view.bringSubviewToFront(tabBar)
+        
+        shadowView.topAnchor
+            .constraint(equalTo: tabBar.topAnchor)
+            .isActive = true
+        shadowView.bottomAnchor
+            .constraint(equalTo: tabBar.bottomAnchor)
+            .isActive = true
+        shadowView.leadingAnchor
+            .constraint(equalTo: tabBar.leadingAnchor)
+            .isActive = true
+        shadowView.trailingAnchor
+            .constraint(equalTo: tabBar.trailingAnchor)
+            .isActive = true
+        
+        let shadowLayer = CAShapeLayer()
+        
+        shadowLayer.path = UIBezierPath(roundedRect: shadowView.bounds, cornerRadius: 18).cgPath
+        shadowLayer.fillColor = UIColor.black.cgColor
+
+        shadowLayer.shadowColor = UIColor.black.cgColor
+        shadowLayer.shadowPath = shadowLayer.path
+        shadowLayer.shadowOffset = CGSize(width: 0.0, height: 1.0)
+        shadowLayer.shadowOpacity = 0.2
+        shadowLayer.shadowRadius = 30
+
+        shadowView.layer.insertSublayer(shadowLayer, at: 0)
+    }
+    
+    private func configTabs() {
         // Feed Tab
         let feed = controllerContainer.resolve(FeedPageVC.self)!
         let feedNC = SwipeNavigationController(rootViewController: feed)
@@ -51,15 +106,7 @@ class TabBarVC: UITabBarController {
         notifications.accessibilityLabel = "TabBarNotificationsTabBarItem"
         
         // Set up controllers
-        self.viewControllers = [feedNC, communitiesNC,/* wallet,*/ notificationsNC, profileNC]
-        
-        // Config styles
-        self.tabBar.unselectedItemTintColor = #colorLiteral(red: 0.8971592784, green: 0.9046500325, blue: 0.9282500148, alpha: 1)
-        self.tabBar.tintColor = UIColor.black
-        UITabBar.appearance().barTintColor = .white
-        
-        // bind view model
-        bindViewModel()
+        viewControllers = [feedNC, communitiesNC,/* wallet,*/ notificationsNC, profileNC]
     }
     
     private func centerTabBarItem(withImageName imageName: String, tag: Int) -> UITabBarItem {
