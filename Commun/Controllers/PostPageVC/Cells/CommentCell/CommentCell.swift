@@ -109,7 +109,7 @@ class CommentCell: UITableViewCell {
         }
         
         #warning("change this number later")
-        voteCountLabel.text = "\(comment.votes.upCount ?? 0)"
+        voteCountLabel.text = "\((comment.votes.upCount ?? 0) - (comment.votes.downCount ?? 0))"
         
         upVoteButton.tintColor = comment.votes.hasUpVote ? themeColor: .lightGray
         downVoteButton.tintColor = comment.votes.hasDownVote ? themeColor: .lightGray

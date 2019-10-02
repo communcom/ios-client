@@ -72,7 +72,7 @@ class PostHeaderView: UIView, UIWebViewDelegate, PostController {
         #warning("shareCount or viewCount???")
         shareCountLabel.text = "\(post.stats.viewCount)"
         
-        voteCountLabel.text = "\(post.votes.upCount ?? 0)"
+        voteCountLabel.text = "\((post.votes.upCount ?? 0) - (post.votes.downCount ?? 0))"
         
         // Handle button
         self.upVoteButton.tintColor =

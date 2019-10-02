@@ -107,7 +107,7 @@ extension PostCardCell {
         
 //        self.avatarImageView.sd_setImage(with: post.community.avatarUrl?.url, completed: nil)
         #warning("change this number later")
-        self.likeCounterLabel.text          =   "\(post.votes.upCount ?? 0)"
+        self.likeCounterLabel.text          =   "\((post.votes.upCount ?? 0) - (post.votes.downCount ?? 0))"
         self.numberOfCommentsLabel.text     =   "\(post.stats.commentsCount)"
         self.numberOfViewsLabel.text        =   "\(post.stats.viewCount)"
         
