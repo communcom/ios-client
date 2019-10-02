@@ -91,5 +91,9 @@ class ContentTextView: ExpandableTextView {
             }
         }
     }
+    
+    func insertTextWithDefaultAttributes(_ text: String, at index: Int) {
+        textStorage.insert(NSAttributedString(string: text, attributes: defaultTypingAttributes), at: index)
+    }
 }
  

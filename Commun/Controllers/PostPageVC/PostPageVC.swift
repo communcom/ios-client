@@ -42,8 +42,17 @@ class PostPageVC: UIViewController, CommentCellDelegate {
                 }
                 commentForm.parentAuthor = comment.contentId.userId
                 commentForm.parentPermlink = comment.contentId.permlink
-                replyingToLabel.text = "Replying to".localized() + " " + (comment.author?.username ?? "")
-                commentForm.textView.text = "@\(comment.author?.username ?? comment.contentId.userId) \(commentForm.textView.text ?? "")"
+                replyingToLabel.text = "replying to".localized().uppercaseFirst + " " + (comment.author?.username ?? "")
+                
+                let mention = "@" + (comment.author?.username ?? comment.contentId.userId)
+                
+                var attrs = commentForm.textView.defaultTypingAttributes!
+                attrs[.link] = URL.appURL + "/" + mention
+                
+                let mentionAS = NSMutableAttributedString(string: mention, attributes: attrs)
+                commentForm.textView.textStorage.insert(mentionAS, at: 0)
+                commentForm.textView.insertTextWithDefaultAttributes(" ", at: mentionAS.length)
+                commentForm.textView.selectedRange = NSMakeRange(commentForm.textView.textStorage.length, 0)
                 commentForm.textView.becomeFirstResponder()
             } else {
                 replyingToLabelHeightConstraint.constant = 0
