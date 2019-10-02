@@ -64,6 +64,21 @@ extension PostController {
                     self.reportPost()
                 })
             )
+            
+            if !FavouritesList.shared.list.contains(post.contentId.permlink) {
+                actions.append(
+                    CommunActionSheet.Action(title: "add to favourite".localized().uppercaseFirst, icon: UIImage(named: "favourite"), handle: {
+                        self.addPostToFavourite()
+                    })
+                )
+            }
+            else {
+                actions.append(
+                    CommunActionSheet.Action(title: "remove from favourite".localized().uppercaseFirst, icon: UIImage(named: "favourite"), handle: {
+                        self.removeFromFavourite()
+                    })
+                )
+            }
         }
         
         // headerView for actionSheet
@@ -253,6 +268,38 @@ extension PostController {
         let nav = UINavigationController(rootViewController: vc)
         
         topController.present(nav, animated: true, completion: nil)
+    }
+    
+    func addPostToFavourite() {
+        let favourites = FavouritesList.shared.list
+        guard let post = post,
+            !favourites.contains(post.contentId.permlink),
+            let topController = UIApplication.topViewController()
+        else {
+            return
+        }
+        
+        FavouritesList.shared.add(permlink: post.contentId.permlink)
+            .subscribe(onCompleted: {
+                topController.showDone("added to favourite".localized().uppercaseFirst)
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    func removeFromFavourite() {
+        let favourites = FavouritesList.shared.list
+        guard let post = post,
+            favourites.contains(post.contentId.permlink),
+            let topController = UIApplication.topViewController()
+        else {
+            return
+        }
+        
+        FavouritesList.shared.remove(permlink: post.contentId.permlink)
+            .subscribe(onCompleted: {
+                topController.showDone("removed from favourite".localized().uppercaseFirst)
+            })
+            .disposed(by: disposeBag)
     }
     
     // MARK: - Commented
