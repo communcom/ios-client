@@ -81,6 +81,12 @@ extension PostController {
             }
         }
         
+        actions.append(
+            CommunActionSheet.Action(title: "share".localized().uppercaseFirst, icon: UIImage(named: "share-count"), handle: {
+                self.sharePost()
+            })
+        )
+        
         // headerView for actionSheet
         let headerView = PostMetaView(frame: .zero)
         headerView.isUserNameTappable = false

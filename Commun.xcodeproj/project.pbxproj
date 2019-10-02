@@ -126,6 +126,7 @@
 		3BB32F1623438C44006572F3 /* CommunActionSheet+TransitioningDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BB32F1523438C44006572F3 /* CommunActionSheet+TransitioningDelegate.swift */; };
 		3BB32F1923438D4F006572F3 /* DimmingPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BB32F1823438D4F006572F3 /* DimmingPresentationController.swift */; };
 		3BB32F1B234436EF006572F3 /* PostMetaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BB32F1A234436EF006572F3 /* PostMetaView.swift */; };
+		3BB32F1D23445618006572F3 /* VCWithParallax.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BB32F1C23445618006572F3 /* VCWithParallax.swift */; };
 		3BB342A922CA2DBB009546B2 /* WelcomePageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BB342A822CA2DBB009546B2 /* WelcomePageVC.swift */; };
 		3BB342B022CA5CA6009546B2 /* PickupAvatarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BB342AF22CA5CA6009546B2 /* PickupAvatarVC.swift */; };
 		3BB342B222CA64EA009546B2 /* Boarding.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3BB342B122CA64EA009546B2 /* Boarding.storyboard */; };
@@ -134,7 +135,6 @@
 		3BB48AD022D5F84D00F11B6A /* SetPasscodeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BB48ACF22D5F84D00F11B6A /* SetPasscodeVC.swift */; };
 		3BB48AD322D6432200F11B6A /* BoardingRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BB48AD222D6432200F11B6A /* BoardingRouter.swift */; };
 		3BB48AD522D645FF00F11B6A /* BoardingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BB48AD422D645FF00F11B6A /* BoardingVC.swift */; };
-		3BB86B47227222DE008F1C64 /* ProfilePage+Parallax.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BB86B46227222DE008F1C64 /* ProfilePage+Parallax.swift */; };
 		3BB86B4922734AE4008F1C64 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BB86B4822734AE4008F1C64 /* UIColor.swift */; };
 		3BC3CA3322CA297900A893DC /* WelcomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BC3CA3222CA297900A893DC /* WelcomeVC.swift */; };
 		3BC6139E23419EFC00075570 /* HalfSizePresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BC6139D23419EFC00075570 /* HalfSizePresentationController.swift */; };
@@ -393,6 +393,7 @@
 		3BB32F1523438C44006572F3 /* CommunActionSheet+TransitioningDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CommunActionSheet+TransitioningDelegate.swift"; sourceTree = "<group>"; };
 		3BB32F1823438D4F006572F3 /* DimmingPresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DimmingPresentationController.swift; sourceTree = "<group>"; };
 		3BB32F1A234436EF006572F3 /* PostMetaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostMetaView.swift; sourceTree = "<group>"; };
+		3BB32F1C23445618006572F3 /* VCWithParallax.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCWithParallax.swift; sourceTree = "<group>"; };
 		3BB342A822CA2DBB009546B2 /* WelcomePageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomePageVC.swift; sourceTree = "<group>"; };
 		3BB342AF22CA5CA6009546B2 /* PickupAvatarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickupAvatarVC.swift; sourceTree = "<group>"; };
 		3BB342B122CA64EA009546B2 /* Boarding.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Boarding.storyboard; sourceTree = "<group>"; };
@@ -401,7 +402,6 @@
 		3BB48ACF22D5F84D00F11B6A /* SetPasscodeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetPasscodeVC.swift; sourceTree = "<group>"; };
 		3BB48AD222D6432200F11B6A /* BoardingRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardingRouter.swift; sourceTree = "<group>"; };
 		3BB48AD422D645FF00F11B6A /* BoardingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardingVC.swift; sourceTree = "<group>"; };
-		3BB86B46227222DE008F1C64 /* ProfilePage+Parallax.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProfilePage+Parallax.swift"; sourceTree = "<group>"; };
 		3BB86B4822734AE4008F1C64 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		3BC3CA3222CA297900A893DC /* WelcomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeVC.swift; sourceTree = "<group>"; };
 		3BC6139D23419EFC00075570 /* HalfSizePresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HalfSizePresentationController.swift; sourceTree = "<group>"; };
@@ -802,7 +802,6 @@
 				3B51581F226E1D3700108F17 /* ViewControllers */,
 				3B51581A226DE27200108F17 /* Cells */,
 				3BAF69C222675B420055CCEB /* ProfilePageVC.swift */,
-				3BB86B46227222DE008F1C64 /* ProfilePage+Parallax.swift */,
 				3B197C5A2269EF3F008CF10D /* ProfilePageVC+Binding.swift */,
 				3B0E9C6D227063F6002AB1C2 /* ProfilePageVC+Actions.swift */,
 				3BAF69D0226792C60055CCEB /* ProfilePageVC+Rx.swift */,
@@ -1228,6 +1227,7 @@
 				3BAE5CD2233899C20055F23E /* ContentTextView */,
 				3BC613A42341AAAF00075570 /* CommunCheckbox.swift */,
 				3BB32F1A234436EF006572F3 /* PostMetaView.swift */,
+				3BB32F1C23445618006572F3 /* VCWithParallax.swift */,
 			);
 			path = Vendor;
 			sourceTree = "<group>";
@@ -1743,6 +1743,7 @@
 				3B82D0F722D8D56A004EE848 /* EnableBiometricsVC.swift in Sources */,
 				3B5D361822E820760012A991 /* PostPageVC+Header.swift in Sources */,
 				3BC613A52341AAAF00075570 /* CommunCheckbox.swift in Sources */,
+				3BB32F1D23445618006572F3 /* VCWithParallax.swift in Sources */,
 				3B67FC0B22C50BC400D05F01 /* SignInViewController+CollectionView.swift in Sources */,
 				3BF37BD622A162E000A72FFE /* ResponseAPIOnlineNotificationData.swift in Sources */,
 				3BE68AAE22EEA1AE00033B81 /* SettingsVC+ButtonDelegate.swift in Sources */,
@@ -1840,7 +1841,6 @@
 				3BC6139E23419EFC00075570 /* HalfSizePresentationController.swift in Sources */,
 				3B49C90923224F2600376636 /* EditorPageTextView+Attachment.swift in Sources */,
 				3B5CB31222A588EE00757533 /* FeedPageVC+EmptyDataSet.swift in Sources */,
-				3BB86B47227222DE008F1C64 /* ProfilePage+Parallax.swift in Sources */,
 				571B14F4223A935C00630C8F /* AppDelegate.swift in Sources */,
 				3B49C90723224E6900376636 /* EditorPageTextView+Text.swift in Sources */,
 				3B0E9C6C2270634B002AB1C2 /* ProfileChooseAvatarVC.swift in Sources */,

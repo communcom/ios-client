@@ -11,7 +11,9 @@ import RxSwift
 import CyberSwift
 import Segmentio
 
-class ProfilePageVC: UIViewController {
+class ProfilePageVC: UIViewController, VCWithParallax {
+    var headerHeight: CGFloat = 598
+    
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var userAvatarImage: UIImageView!
     @IBOutlet weak var changeAvatarButton: UIButton!

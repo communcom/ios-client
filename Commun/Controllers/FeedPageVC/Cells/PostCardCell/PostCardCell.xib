@@ -151,9 +151,6 @@
                                     <constraint firstAttribute="height" constant="18" id="pN6-pw-hts"/>
                                 </constraints>
                                 <state key="normal" image="share-count"/>
-                                <connections>
-                                    <action selector="shareButtonTap:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="xMy-D6-nqS"/>
-                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="278" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v36-DV-R7c">
                                 <rect key="frame" x="209" y="355.5" width="22" height="14.5"/>

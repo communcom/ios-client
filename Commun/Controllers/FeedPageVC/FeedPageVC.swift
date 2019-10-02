@@ -12,11 +12,13 @@ import RxSwift
 import RxDataSources
 import ESPullToRefresh
 
-class FeedPageVC: UIViewController {
+class FeedPageVC: UIViewController, VCWithParallax {
     // MARK: - Properties
     var viewModel: FeedPageViewModel!
     var dataSource: MyRxTableViewSectionedAnimatedDataSource<PostSection>!
     let disposeBag = DisposeBag()
+    var headerView: UIView! // for parallax
+    var headerHeight: CGFloat = 195 // for parallax
 
     // MARK: - Outlets
     @IBOutlet weak var headerLabel: UILabel!
@@ -73,6 +75,15 @@ class FeedPageVC: UIViewController {
     }
     
     func setUpViews() {
+        // RefreshControl
+        tableView.es.addPullToRefresh { [unowned self] in
+            self.tableView.es.stopPullToRefresh()
+            self.refresh()
+        }
+        
+        // parallax
+        constructParallax()
+        
         // avatarImage
         userAvatarImage
             .observeCurrentUserAvatar()
@@ -94,21 +105,9 @@ class FeedPageVC: UIViewController {
             }
         )
         
-        tableView.contentInset = UIEdgeInsets(
-            top: -UIApplication.shared.statusBarFrame.height,
-            left: 0,
-            bottom: 0,
-            right: 0)
-        
         tableView.register(UINib(nibName: "PostCardCell", bundle: nil), forCellReuseIdentifier: "PostCardCell")
         tableView.rowHeight = UITableView.automaticDimension
         tableView.addPostLoadingFooterView()
-        
-        // RefreshControl
-        tableView.es.addPullToRefresh { [unowned self] in
-            self.refresh()
-            self.tableView.es.stopPullToRefresh()
-        }
         
         tableView.emptyDataSetSource = self
         tableView.emptyDataSetDelegate = self

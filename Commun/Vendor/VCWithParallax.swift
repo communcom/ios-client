@@ -1,22 +1,31 @@
 //
-//  ProfilePage+Parallax.swift
+//  WithParallax.swift
 //  Commun
 //
-//  Created by Chung Tran on 25/04/2019.
+//  Created by Chung Tran on 10/2/19.
 //  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
 //
 
 import Foundation
+import RxSwift
 
-extension ProfilePageVC {
+protocol VCWithParallax: UIViewController {
+    var tableView: UITableView! {get set}
+    var headerView: UIView! {get set}
+    var disposeBag: DisposeBag {get}
+    var headerHeight: CGFloat {get}
+}
+
+extension VCWithParallax {
     func constructParallax() {
         headerView = self.tableView.tableHeaderView!
         self.tableView.tableHeaderView = nil
         self.tableView.addSubview(headerView)
-        let height = 598
-        self.tableView.contentInset = UIEdgeInsets(top: CGFloat(height), left: CGFloat(0.0), bottom: CGFloat(0.0), right: CGFloat(0.0))
-        self.tableView.contentOffset = CGPoint(x: 0, y: -height)
-        self.tableView.bringSubviewToFront(self.tableView.refreshControl!)
+        self.tableView.contentInset = UIEdgeInsets(top: CGFloat(headerHeight), left: CGFloat(0.0), bottom: CGFloat(0.0), right: CGFloat(0.0))
+        self.tableView.contentOffset = CGPoint(x: 0, y: -headerHeight)
+        if let rc = tableView.refreshControl {
+            self.tableView.bringSubviewToFront(rc)
+        }
         
         tableView.rx.contentOffset
             .map {$0.y}
@@ -27,9 +36,8 @@ extension ProfilePageVC {
     }
     
     func updateHeaderView() {
-        let height = CGFloat(598)
-        var headerRect = CGRect(x: CGFloat(0.0), y: -height, width: UIScreen.main.bounds.width, height: height)
-        if self.tableView.contentOffset.y < -height {
+        var headerRect = CGRect(x: CGFloat(0.0), y: -headerHeight, width: UIScreen.main.bounds.width, height: headerHeight)
+        if self.tableView.contentOffset.y < -headerHeight {
             let originHeight = headerRect.height
             
             headerRect.origin.y = self.tableView.contentOffset.y

@@ -69,10 +69,6 @@ class PostCardCell: UITableViewCell, PostController {
         downVote()
     }
     
-    @IBAction func shareButtonTap(_ sender: Any) {
-        sharePost()
-    }
-    
     @objc func userNameTapped(_ sender: UITapGestureRecognizer) {
         guard let userId = post?.author?.userId else {return}
         parentViewController?.showProfileWithUserId(userId)
