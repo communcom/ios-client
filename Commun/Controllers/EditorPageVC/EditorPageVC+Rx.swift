@@ -156,15 +156,15 @@ extension EditorPageVC {
                 
                 // title is not beyond limit
                 let titleIsInsideLimit =
-                    title.count >= self.titleMinLettersLimit &&
-                        title.utf8.count <= self.titleBytesLimit
+                    (title.count >= self.titleMinLettersLimit) &&
+                        (title.utf8.count <= self.titleBytesLimit)
                 
                 // compare content
                 var contentChanged = (title != viewModel.postForEdit?.content.title)
                 contentChanged = contentChanged || (self.contentTextView.attributedText != self.contentTextView.originalAttributedString)
                 
                 // reassign result
-                return titleAndContentAreNotEmpty && titleIsNotBeyondLimit && contentChanged
+                return titleAndContentAreNotEmpty && titleIsInsideLimit && contentChanged
             })
             .bind(to: sendPostButton.rx.isEnabled)
             .disposed(by: disposeBag)
