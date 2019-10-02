@@ -16,8 +16,8 @@ enum NotificationSettingType: String {
     case mention = "Mention"
     case rewardsPosts = "Rewards for posts"
     case rewardsVote = "Rewards for vote"
-    case following = "following"
-    case repost = "repost"
+    case following = "Following"
+    case repost = "Repost"
     
     static var allCases: [NotificationSettingType] {
         return [.upvote, .downvote, .points, .comment, .mention, .rewardsVote, .rewardsPosts, .following, .repost]
