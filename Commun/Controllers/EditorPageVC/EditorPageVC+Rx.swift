@@ -155,7 +155,9 @@ extension EditorPageVC {
                 let titleAndContentAreNotEmpty = !title.isEmpty && !content.isEmpty
                 
                 // title is not beyond limit
-                let titleIsNotBeyondLimit = title.utf8.count <= self.titleBytesLimit
+                let titleIsInsideLimit =
+                    title.count >= self.titleMinLettersLimit &&
+                        title.utf8.count <= self.titleBytesLimit
                 
                 // compare content
                 var contentChanged = (title != viewModel.postForEdit?.content.title)
