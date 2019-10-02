@@ -46,6 +46,10 @@ class PostMetaView: UIView {
         return byUserLabel
     }()
     
+    // MARK: - Properties
+    var isUserNameTappable = true
+    
+    // MARK: - Methods
     override init(frame: CGRect) {
         super.init(frame: frame)
         commonInit()
@@ -112,10 +116,12 @@ class PostMetaView: UIView {
         byUserLabel.text = post.author?.username ?? post.author?.userId
         
         // add gesture
-//        let tap = TapGesture(target: self, action: #selector(userNameTapped(_:)))
-//        tap.post = post
-//        byUserLabel.isUserInteractionEnabled = true
-//        byUserLabel.addGestureRecognizer(tap)
+        if isUserNameTappable {
+            let tap = TapGesture(target: self, action: #selector(userNameTapped(_:)))
+            tap.post = post
+            byUserLabel.isUserInteractionEnabled = true
+            byUserLabel.addGestureRecognizer(tap)
+        }
     }
     
     @objc func userNameTapped(_ sender: TapGesture) {

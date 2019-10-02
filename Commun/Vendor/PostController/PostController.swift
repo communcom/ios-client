@@ -68,6 +68,7 @@ extension PostController {
         
         // headerView for actionSheet
         let headerView = PostMetaView(frame: .zero)
+        headerView.isUserNameTappable = false
         
         topController.showCommunActionSheet(headerView: headerView, actions: actions) {
             headerView.setUp(post: post)

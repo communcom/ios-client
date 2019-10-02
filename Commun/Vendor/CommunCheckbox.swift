@@ -28,21 +28,23 @@ class CommunCheckbox: UIButton {
         
     }
     
-    func setSelected(_ isSelected: Bool) {
-        self.isSelected = isSelected
-        if isSelected {
-            backgroundColor = .appMainColor
-            borderWidth = 0
-            setImage(UIImage(named: "checkmark"), for: .selected)
-            imageView?.tintColor = .white
-            imageEdgeInsets = UIEdgeInsets(top: 8, left: 6, bottom: 8, right: 6)
-        }
-        else {
-            backgroundColor = .white
-            borderWidth = 1
-            borderColor = .lightGray
-            setImage(nil, for: .normal)
-            imageEdgeInsets = UIEdgeInsets.zero
+    override var isSelected: Bool {
+        didSet {
+            if isSelected {
+                backgroundColor = .appMainColor
+                borderWidth = 0
+                let image = UIImage(named: "checkmark")!.withRenderingMode(.alwaysOriginal)
+                setImage(image, for: .selected)
+                tintColor = .clear
+                imageEdgeInsets = UIEdgeInsets(top: 8, left: 6, bottom: 8, right: 6)
+            }
+            else {
+                backgroundColor = .white
+                borderWidth = 1
+                borderColor = .lightGray
+                setImage(nil, for: .normal)
+                imageEdgeInsets = UIEdgeInsets.zero
+            }
         }
     }
 }

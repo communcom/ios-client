@@ -100,7 +100,7 @@ extension FeedPageFiltersVC: UITableViewDelegate, UITableViewDataSource {
                 return UITableViewCell()
             }
             cell.filterLabel.text = feedSortMode.toString()
-            cell.checkBox.setSelected(filter.value.feedType == feedSortMode)
+            cell.checkBox.isSelected = (filter.value.feedType == feedSortMode)
         case 1:
             var timeFrameMode: FeedTimeFrameMode!
             switch indexPath.row {
@@ -118,7 +118,7 @@ extension FeedPageFiltersVC: UITableViewDelegate, UITableViewDataSource {
                 return UITableViewCell()
             }
             cell.filterLabel.text = timeFrameMode.toString()
-            cell.checkBox.setSelected(filter.value.sortType == timeFrameMode)
+            cell.checkBox.isSelected = (filter.value.sortType == timeFrameMode)
         default:
             return UITableViewCell()
         }
