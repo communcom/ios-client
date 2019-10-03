@@ -43,11 +43,10 @@ extension FeedPageVC {
     }
     
     func openEditor(completion: ((ArticleEditorVC)->Void)? = nil) {
-        let editorVC = controllerContainer.resolve(ArticleEditorVC.self)
-        let nav = UINavigationController(rootViewController: editorVC!)
-        nav.modalPresentationStyle = .fullScreen
-        present(nav, animated: true, completion: {
-            completion?(editorVC!)
+        let editorVC = controllerContainer.resolve(ArticleEditorVC.self)!
+        editorVC.modalPresentationStyle = .fullScreen
+        present(editorVC, animated: true, completion: {
+            completion?(editorVC)
         })
     }
     

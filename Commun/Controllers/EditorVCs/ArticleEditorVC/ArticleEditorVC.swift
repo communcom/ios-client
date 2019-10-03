@@ -19,6 +19,7 @@ class ArticleEditorVC: UIViewController {
     
     // MARK: - Outlets
     @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var titleTextView: ExpandableTextView!
     @IBOutlet weak var titleTextViewCharacterCountLabel: UILabel!
     @IBOutlet weak var contentTextView: EditorPageTextView!
@@ -32,9 +33,9 @@ class ArticleEditorVC: UIViewController {
     @IBOutlet weak var addLinkButton: StateButton!
     @IBOutlet weak var clearFormattingButton: UIButton!
     @IBOutlet weak var hideKeyboardButton: UIButton!
-    @IBOutlet weak var sendPostButton: UIBarButtonItem!
+    @IBOutlet weak var sendPostButton: UIButton!
     
-    @IBOutlet weak var editorToolsToContainerTrailingSpace: NSLayoutConstraint!
+    @IBOutlet weak var editorToolsToContainerLeadingSpace: NSLayoutConstraint!
     
     // MARK: - Properties
     var viewModel: ArticleEditorViewModel?
@@ -48,7 +49,7 @@ class ArticleEditorVC: UIViewController {
             viewModel = ArticleEditorViewModel()
         }
         
-        self.title = (viewModel?.postForEdit != nil ? "edit post" : "create post").localized().uppercaseFirst
+        titleLabel.text = (viewModel?.postForEdit != nil ? "edit post" : "create post").localized().uppercaseFirst
         
         self.navigationController?.navigationBar.barTintColor = .white
         self.navigationController?.navigationBar.isTranslucent = false

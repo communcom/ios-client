@@ -153,7 +153,7 @@ extension ArticleEditorVC {
         guard viewModel?.postForEdit == nil,
             !contentTextView.text.isEmpty else
         {
-            self.navigationController?.dismiss(animated: true, completion: nil)
+            dismiss(animated: true, completion: nil)
             return
         }
         

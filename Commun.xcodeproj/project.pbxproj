@@ -127,6 +127,8 @@
 		3BB32F1923438D4F006572F3 /* DimmingPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BB32F1823438D4F006572F3 /* DimmingPresentationController.swift */; };
 		3BB32F1B234436EF006572F3 /* PostMetaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BB32F1A234436EF006572F3 /* PostMetaView.swift */; };
 		3BB32F1D23445618006572F3 /* VCWithParallax.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BB32F1C23445618006572F3 /* VCWithParallax.swift */; };
+		3BB32F462345DD26006572F3 /* BasicEditorVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3BB32F442345DD26006572F3 /* BasicEditorVC.storyboard */; };
+		3BB32F472345DD26006572F3 /* BasicEditorVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BB32F452345DD26006572F3 /* BasicEditorVC.swift */; };
 		3BB342A922CA2DBB009546B2 /* WelcomePageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BB342A822CA2DBB009546B2 /* WelcomePageVC.swift */; };
 		3BB342B022CA5CA6009546B2 /* PickupAvatarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BB342AF22CA5CA6009546B2 /* PickupAvatarVC.swift */; };
 		3BB342B222CA64EA009546B2 /* Boarding.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3BB342B122CA64EA009546B2 /* Boarding.storyboard */; };
@@ -394,6 +396,8 @@
 		3BB32F1823438D4F006572F3 /* DimmingPresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DimmingPresentationController.swift; sourceTree = "<group>"; };
 		3BB32F1A234436EF006572F3 /* PostMetaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostMetaView.swift; sourceTree = "<group>"; };
 		3BB32F1C23445618006572F3 /* VCWithParallax.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCWithParallax.swift; sourceTree = "<group>"; };
+		3BB32F442345DD26006572F3 /* BasicEditorVC.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = BasicEditorVC.storyboard; sourceTree = "<group>"; };
+		3BB32F452345DD26006572F3 /* BasicEditorVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicEditorVC.swift; sourceTree = "<group>"; };
 		3BB342A822CA2DBB009546B2 /* WelcomePageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomePageVC.swift; sourceTree = "<group>"; };
 		3BB342AF22CA5CA6009546B2 /* PickupAvatarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickupAvatarVC.swift; sourceTree = "<group>"; };
 		3BB342B122CA64EA009546B2 /* Boarding.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Boarding.storyboard; sourceTree = "<group>"; };
@@ -833,9 +837,19 @@
 		3BB32F3A2345DC04006572F3 /* EditorVCs */ = {
 			isa = PBXGroup;
 			children = (
+				3BB32F482345DD2B006572F3 /* BasicEditorVC */,
 				57DE5BDA2252086C008566B9 /* ArticleEditorVC */,
 			);
 			path = EditorVCs;
+			sourceTree = "<group>";
+		};
+		3BB32F482345DD2B006572F3 /* BasicEditorVC */ = {
+			isa = PBXGroup;
+			children = (
+				3BB32F442345DD26006572F3 /* BasicEditorVC.storyboard */,
+				3BB32F452345DD26006572F3 /* BasicEditorVC.swift */,
+			);
+			path = BasicEditorVC;
 			sourceTree = "<group>";
 		};
 		3BB48AD122D641C800F11B6A /* BoardingScenes */ = {
@@ -1592,6 +1606,7 @@
 				B1EA02EB2289882A00835244 /* SF-Pro-Text-Heavy.otf in Resources */,
 				B1EA02DD2289882A00835244 /* SF-Pro-Display-Light.otf in Resources */,
 				571B14F9223A935C00630C8F /* Main.storyboard in Resources */,
+				3BB32F462345DD26006572F3 /* BasicEditorVC.storyboard in Resources */,
 				3BC613A32341A05800075570 /* FeedPageFiltersVC.storyboard in Resources */,
 				578B94DC2263CBE300FB5BC6 /* ConfirmUserVC.storyboard in Resources */,
 			);
@@ -1793,6 +1808,7 @@
 				3B6229AB22BD12410053B9EF /* TTTAttributedLabel.swift in Sources */,
 				3BDF4FA822C21B310029D616 /* ResponseAPIContentGetProfile.swift in Sources */,
 				3B5EDE3522E073C500897BF3 /* SettingsViewModel.swift in Sources */,
+				3BB32F472345DD26006572F3 /* BasicEditorVC.swift in Sources */,
 				3B2B6862233B49D500DADBD0 /* PostPageVC+HeaderForSection.swift in Sources */,
 				3BDD9A0F228F07EF00B2A1DA /* UIApplication.swift in Sources */,
 				3B0E9C64226F4A0C002AB1C2 /* VerticalDraggableImageView.swift in Sources */,

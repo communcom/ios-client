@@ -136,7 +136,7 @@ extension ArticleEditorVC {
             .asDriver(onErrorJustReturn: true)
             .drive(onNext: { (isHidden) in
                 self.hideKeyboardButton.isHidden = isHidden
-                self.editorToolsToContainerTrailingSpace.constant = isHidden ? 0 : 54
+                self.editorToolsToContainerLeadingSpace.constant = isHidden ? 0 : 54
             })
             .disposed(by: disposeBag)
     }

@@ -271,9 +271,7 @@ extension PostController {
         let vc = controllerContainer.resolve(ArticleEditorVC.self)!
         vc.viewModel = viewModel
         
-        let nav = UINavigationController(rootViewController: vc)
-        
-        topController.present(nav, animated: true, completion: nil)
+        topController.present(vc, animated: true, completion: nil)
     }
     
     func addPostToFavourite() {
