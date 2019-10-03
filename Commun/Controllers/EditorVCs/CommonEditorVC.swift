@@ -17,8 +17,12 @@ class CommonEditorVC: UIViewController {
     var contentCombined: Observable<[Any]>! {
         return nil
     }
+    var contentTextView: ContentTextView {
+        fatalError("Must override")
+    }
     
     // MARK: - Outlets
+    @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var dropDownView: UIView!
     @IBOutlet weak var adultButton: StateButton!
@@ -51,6 +55,12 @@ class CommonEditorVC: UIViewController {
     }
     
     func setUpViews() {
+//        contentTextView.textContainerInset = UIEdgeInsets(top: 0, left: 16, bottom: 16, right: 16)
+        contentTextView.placeholder = "write text placeholder".localized().uppercaseFirst + "..."
+        // you should ensure layout
+        contentTextView.layoutManager
+            .ensureLayout(for: contentTextView.textContainer)
+        
         dropDownView.layer.borderWidth = 1.0
         dropDownView.layer.borderColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1).cgColor
         

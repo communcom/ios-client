@@ -13,6 +13,34 @@ import MBProgressHUD
 import TLPhotoPicker
 
 extension ArticleEditorVC {
+    @IBAction func closeButtonDidTouch(_ sender: Any) {
+        guard viewModel?.postForEdit == nil,
+            !contentTextView.text.isEmpty else
+        {
+            dismiss(animated: true, completion: nil)
+            return
+        }
+        
+        showAlert(
+            title: "save post as draft".localized().uppercaseFirst + "?",
+            message: "draft let you save your edits, so you can come back later".localized().uppercaseFirst,
+            buttonTitles: ["save".localized().uppercaseFirst, "delete".localized().uppercaseFirst],
+            highlightedButtonIndex: 0) { (index) in
+                if index == 0 {
+                    self.saveDraft {
+                        self.dismiss(animated: true, completion: nil)
+                    }
+                }
+                
+                else if index == 1 {
+                    // remove draft if exists
+                    self.removeDraft()
+                    
+                    // close
+                    self.dismiss(animated: true, completion: nil)
+                }
+        }
+    }
     
     @IBAction func cameraButtonTap() {
         view.endEditing(true)
@@ -126,9 +154,10 @@ extension ArticleEditorVC {
                     let postPageVC = controllerContainer.resolve(PostPageVC.self)!
                     postPageVC.viewModel.permlink = permlink
                     postPageVC.viewModel.userId = userId
-                    var viewControllers = self.navigationController!.viewControllers
-                    viewControllers[0] = postPageVC
-                    self.navigationController?.setViewControllers(viewControllers, animated: true)
+                    
+                    self.dismiss(animated: true) {
+                        UIApplication.topViewController()?.show(postPageVC, sender: nil)
+                    }
                 }
             }) { (error) in
                 self.hideHud()
@@ -147,35 +176,6 @@ extension ArticleEditorVC {
                 self.showError(error)
             }
             .disposed(by: disposeBag)
-    }
-    
-    @IBAction func closeButtonDidTouch(_ sender: Any) {
-        guard viewModel?.postForEdit == nil,
-            !contentTextView.text.isEmpty else
-        {
-            dismiss(animated: true, completion: nil)
-            return
-        }
-        
-        showAlert(
-            title: "save post as draft".localized().uppercaseFirst + "?",
-            message: "draft let you save your edits, so you can come back later".localized().uppercaseFirst,
-            buttonTitles: ["save".localized().uppercaseFirst, "delete".localized().uppercaseFirst],
-            highlightedButtonIndex: 0) { (index) in
-                if index == 0 {
-                    self.saveDraft {
-                        self.navigationController?.dismiss(animated: true, completion: nil)
-                    }
-                }
-                
-                else if index == 1 {
-                    // remove draft if exists
-                    self.removeDraft()
-                    
-                    // close
-                    self.navigationController?.dismiss(animated: true, completion: nil)
-                }
-        }
     }
     
     @IBAction func richTextEditButtonDidTouch(_ sender: Any) {

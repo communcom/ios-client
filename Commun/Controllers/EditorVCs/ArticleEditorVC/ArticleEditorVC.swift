@@ -18,10 +18,12 @@ class ArticleEditorVC: CommonEditorVC {
     let titleDraft = "EditorPageVC.titleDraft"
     
     // MARK: - Outlets
-    @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var titleTextView: ExpandableTextView!
     @IBOutlet weak var titleTextViewCharacterCountLabel: UILabel!
-    @IBOutlet weak var contentTextView: EditorPageTextView!
+    @IBOutlet weak var _contentTextView: EditorPageTextView!
+    override var contentTextView: EditorPageTextView {
+        return _contentTextView
+    }
     
     // MARK: - Properties
     override var contentCombined: Observable<[Any]>! {
@@ -40,12 +42,6 @@ class ArticleEditorVC: CommonEditorVC {
         titleTextView.textContainerInset = UIEdgeInsets.zero
         titleTextView.textContainer.lineFragmentPadding = 0
         titleTextView.placeholder = "title placeholder".localized().uppercaseFirst
-        
-        contentTextView.textContainerInset = UIEdgeInsets(top: 0, left: 16, bottom: 16, right: 16)
-        contentTextView.placeholder = "write text placeholder".localized().uppercaseFirst + "..."
-        // you should ensure layout
-        contentTextView.layoutManager
-            .ensureLayout(for: contentTextView.textContainer)
         
         // if editing post
         if let post = viewModel?.postForEdit {

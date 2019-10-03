@@ -47,8 +47,6 @@ class EditorPageTextView: ContentTextView {
     
     var currentTextStyle = BehaviorRelay<TextStyle>(value: TextStyle(isBold: false, isItalic: false, isMixed: false, textColor: .black, urlString: nil))
     
-    var originalAttributedString: NSAttributedString?
-    
     // MARK: - Lifecycle
     override func awakeFromNib() {
         // set default attributes

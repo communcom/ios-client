@@ -15,6 +15,7 @@ class ContentTextView: ExpandableTextView {
     // Must override!!!
     var defaultTypingAttributes: [NSAttributedString.Key: Any]!
     let disposeBag = DisposeBag()
+    var originalAttributedString: NSAttributedString?
     
     override func awakeFromNib() {
         super.awakeFromNib()

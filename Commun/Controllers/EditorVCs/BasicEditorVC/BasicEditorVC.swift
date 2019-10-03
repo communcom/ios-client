@@ -7,12 +7,37 @@
 //
 
 import UIKit
+import RxSwift
 
-class BasicEditorVC: UIViewController {
-
+class BasicEditorVC: CommonEditorVC {
+    // MARK: - Outlets
+    @IBOutlet weak var _contentTextView: BasicEditorTextView!
+    override var contentTextView: BasicEditorTextView {
+        return _contentTextView
+    }
+    
+    // MARK: - Properties
+    override var contentCombined: Observable<[Any]>! {
+        return contentTextView.rx.text.orEmpty
+            .map {[$0]}
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+    }
+    
+    override func verify() -> Bool {
+        let content = contentTextView.text ?? ""
+    
+        // both title and content are not empty
+        let contentAreNotEmpty = !content.isEmpty
+        
+        // compare content
+        let contentChanged = (self.contentTextView.attributedText != self.contentTextView.originalAttributedString)
+        
+        // reassign result
+        return contentAreNotEmpty && contentChanged
     }
 }

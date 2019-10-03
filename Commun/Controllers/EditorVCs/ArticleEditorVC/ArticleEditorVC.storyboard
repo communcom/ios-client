@@ -376,12 +376,12 @@
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="600" height="1000"/>
                     <connections>
+                        <outlet property="_contentTextView" destination="0Oi-CV-9TI" id="mi1-ih-UYi"/>
                         <outlet property="addLinkButton" destination="aDH-6L-uUK" id="btM-EN-BXj"/>
                         <outlet property="adultButton" destination="aeQ-gX-bWx" id="Yli-e5-ttd"/>
                         <outlet property="boldButton" destination="BgQ-FM-Lio" id="0rb-cn-eUE"/>
                         <outlet property="clearFormattingButton" destination="CJD-hr-sF8" id="p1j-iT-KGn"/>
                         <outlet property="colorPickerButton" destination="eHI-Fy-KHY" id="4Wf-kn-zWO"/>
-                        <outlet property="contentTextView" destination="0Oi-CV-9TI" id="1eu-aX-BHL"/>
                         <outlet property="contentTextViewCharacterCountLabel" destination="vTP-vI-wr9" id="dRC-Ff-2SV"/>
                         <outlet property="dropDownView" destination="U7q-88-jfF" id="Z2s-ew-Vrh"/>
                         <outlet property="editorToolsToContainerLeadingSpace" destination="qV7-VO-K1L" id="is3-xT-MaY"/>
