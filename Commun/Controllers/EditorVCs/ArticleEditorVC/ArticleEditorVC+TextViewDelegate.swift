@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension EditorPageVC: UITextViewDelegate {
+extension ArticleEditorVC: UITextViewDelegate {
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         if textView == contentTextView {
             // Limit letters

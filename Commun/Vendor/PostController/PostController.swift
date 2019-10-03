@@ -265,10 +265,10 @@ extension PostController {
         guard let post = post,
             let topController = UIApplication.topViewController() else {return}
         
-        let viewModel = EditorPageViewModel()
+        let viewModel = ArticleEditorViewModel()
         viewModel.postForEdit = post
         
-        let vc = controllerContainer.resolve(EditorPageVC.self)!
+        let vc = controllerContainer.resolve(ArticleEditorVC.self)!
         vc.viewModel = viewModel
         
         let nav = UINavigationController(rootViewController: vc)

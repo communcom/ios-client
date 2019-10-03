@@ -12,7 +12,7 @@ import RxSwift
 import MBProgressHUD
 import TLPhotoPicker
 
-extension EditorPageVC {
+extension ArticleEditorVC {
     
     @IBAction func cameraButtonTap() {
         view.endEditing(true)
@@ -297,7 +297,7 @@ extension EditorPageVC {
     }
 }
 
-extension EditorPageVC: UIPopoverPresentationControllerDelegate {
+extension ArticleEditorVC: UIPopoverPresentationControllerDelegate {
     func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
         return .none
     }

@@ -10,7 +10,7 @@ import UIKit
 import RxSwift
 import CyberSwift
 
-class EditorPageVC: UIViewController {
+class ArticleEditorVC: UIViewController {
     // MARK: - Constant
     let titleMinLettersLimit = 2
     let titleBytesLimit = 240
@@ -37,7 +37,7 @@ class EditorPageVC: UIViewController {
     @IBOutlet weak var editorToolsToContainerTrailingSpace: NSLayoutConstraint!
     
     // MARK: - Properties
-    var viewModel: EditorPageViewModel?
+    var viewModel: ArticleEditorViewModel?
     let disposeBag = DisposeBag()
     
     // MARK: - Lifecycle
@@ -45,7 +45,7 @@ class EditorPageVC: UIViewController {
         super.viewDidLoad()
 
         if viewModel == nil {
-            viewModel = EditorPageViewModel()
+            viewModel = ArticleEditorViewModel()
         }
         
         self.title = (viewModel?.postForEdit != nil ? "edit post" : "create post").localized().uppercaseFirst

@@ -103,8 +103,8 @@ let controllerContainer: Container = {
         return vc
     })
     
-    container.register(EditorPageVC.self, factory: { r in
-        let vc = EditorPageVC.instanceController(fromStoryboard: "EditorPageVC", withIdentifier: "EditorPageVC") as! EditorPageVC
+    container.register(ArticleEditorVC.self, factory: { r in
+        let vc = ArticleEditorVC.instanceController(fromStoryboard: "ArticleEditorVC", withIdentifier: "ArticleEditorVC") as! ArticleEditorVC
         return vc
     })
     

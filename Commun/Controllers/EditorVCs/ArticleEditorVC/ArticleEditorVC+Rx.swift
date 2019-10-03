@@ -10,7 +10,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-extension EditorPageVC {
+extension ArticleEditorVC {
     
     func bindUI() {
         // textViews

@@ -16,7 +16,7 @@
         <!--Create post-->
         <scene sceneID="jvH-vc-edb">
             <objects>
-                <viewController storyboardIdentifier="EditorPageVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="AvE-EB-OTN" customClass="EditorPageVC" customModule="Commun" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ArticleEditorVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="AvE-EB-OTN" customClass="ArticleEditorVC" customModule="Commun" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="OjV-hD-IF3">
                         <rect key="frame" x="0.0" y="0.0" width="500" height="1000"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
