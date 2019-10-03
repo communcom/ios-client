@@ -106,7 +106,7 @@ extension UIViewController {
         // show new hud
         let hud = MBProgressHUD.showAdded(to: vc.view, animated: true)
         hud.mode = .customView
-        let image = UIImage(named: "checkmark")
+        let image = UIImage(named: "checkmark-large")
         let imageView = UIImageView(image: image)
         imageView.tintColor = .black
         hud.customView = imageView
