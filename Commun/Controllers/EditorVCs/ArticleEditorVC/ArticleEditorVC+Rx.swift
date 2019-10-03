@@ -11,23 +11,7 @@ import RxSwift
 import RxCocoa
 
 extension ArticleEditorVC {
-    
-    func bindUI() {
-        // textViews
-        bindTitleTextView()
-        bindContentTextView()
-        
-        // isAdult
-        bindIsAdultButton()
-        
-        // keyboard
-        bindKeyboardHeight()
-        
-        // postButton
-        bindSendPostButton()
-    }
-    
-    private func bindTitleTextView() {
+    func bindTitleTextView() {
         titleTextView.rx.didBeginEditing
             .subscribe(onNext: {_ in
                 self.titleTextViewCharacterCountLabel.isHidden = false
@@ -56,7 +40,7 @@ extension ArticleEditorVC {
             .disposed(by: disposeBag)
     }
     
-    private func bindContentTextView() {
+    func bindContentTextView() {
         contentTextView.rx.didBeginEditing
             .subscribe(onNext: {_ in
                 self.boldButton.isHidden = false
@@ -116,57 +100,5 @@ extension ArticleEditorVC {
             .disposed(by: disposeBag)
         
         contentTextView.rx.setDelegate(self).disposed(by: disposeBag)
-    }
-    
-    private func bindIsAdultButton() {
-        guard let viewModel = viewModel else {return}
-        adultButton.rx.tap
-            .map {_ in !viewModel.isAdult.value}
-            .bind(to: viewModel.isAdult)
-            .disposed(by: disposeBag)
-        
-        viewModel.isAdult
-            .bind(to: self.adultButton.rx.isSelected)
-            .disposed(by: disposeBag)
-    }
-    
-    private func bindKeyboardHeight() {
-        UIResponder.keyboardHeightObservable
-            .map {$0 == 0 ? true: false}
-            .asDriver(onErrorJustReturn: true)
-            .drive(onNext: { (isHidden) in
-                self.hideKeyboardButton.isHidden = isHidden
-                self.editorToolsToContainerLeadingSpace.constant = isHidden ? 0 : 54
-            })
-            .disposed(by: disposeBag)
-    }
-    
-    private func bindSendPostButton() {
-        guard let viewModel = viewModel else {return}
-        
-        // Verification
-        #warning("Verify community")
-        Observable.combineLatest(
-            titleTextView.rx.text.orEmpty,
-            contentTextView.rx.text.orEmpty
-            )
-            .map({ (title, content) -> Bool in
-                // both title and content are not empty
-                let titleAndContentAreNotEmpty = !title.isEmpty && !content.isEmpty
-                
-                // title is not beyond limit
-                let titleIsInsideLimit =
-                    (title.count >= self.titleMinLettersLimit) &&
-                        (title.utf8.count <= self.titleBytesLimit)
-                
-                // compare content
-                var contentChanged = (title != viewModel.postForEdit?.content.title)
-                contentChanged = contentChanged || (self.contentTextView.attributedText != self.contentTextView.originalAttributedString)
-                
-                // reassign result
-                return titleAndContentAreNotEmpty && titleIsInsideLimit && contentChanged
-            })
-            .bind(to: sendPostButton.rx.isEnabled)
-            .disposed(by: disposeBag)
     }
 }

@@ -11,7 +11,7 @@ import RxSwift
 import RxCocoa
 import CyberSwift
 
-class ArticleEditorViewModel {
+class EditorViewModel {
     var postForEdit: ResponseAPIContentGetPost?
     
     let isAdult = BehaviorRelay<Bool>(value: false)

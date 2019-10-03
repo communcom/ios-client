@@ -265,7 +265,7 @@ extension PostController {
         guard let post = post,
             let topController = UIApplication.topViewController() else {return}
         
-        let viewModel = ArticleEditorViewModel()
+        let viewModel = EditorViewModel()
         viewModel.postForEdit = post
         
         let vc = controllerContainer.resolve(ArticleEditorVC.self)!

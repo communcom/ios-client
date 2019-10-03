@@ -7,55 +7,35 @@
 //
 
 import UIKit
-import RxSwift
 import CyberSwift
+import RxSwift
+import RxCocoa
 
-class ArticleEditorVC: UIViewController {
+class ArticleEditorVC: CommonEditorVC {
     // MARK: - Constant
     let titleMinLettersLimit = 2
     let titleBytesLimit = 240
-    let contentLettersLimit = 30000
     let titleDraft = "EditorPageVC.titleDraft"
     
     // MARK: - Outlets
-    @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var titleTextView: ExpandableTextView!
     @IBOutlet weak var titleTextViewCharacterCountLabel: UILabel!
     @IBOutlet weak var contentTextView: EditorPageTextView!
-    @IBOutlet weak var contentTextViewCharacterCountLabel: UILabel!
-    @IBOutlet weak var dropDownView: UIView!
-    @IBOutlet weak var adultButton: StateButton!
-    @IBOutlet weak var photoPickerButton: StateButton!
-    @IBOutlet weak var boldButton: StateButton!
-    @IBOutlet weak var italicButton: StateButton!
-    @IBOutlet weak var colorPickerButton: UIButton!
-    @IBOutlet weak var addLinkButton: StateButton!
-    @IBOutlet weak var clearFormattingButton: UIButton!
-    @IBOutlet weak var hideKeyboardButton: UIButton!
-    @IBOutlet weak var sendPostButton: UIButton!
-    
-    @IBOutlet weak var editorToolsToContainerLeadingSpace: NSLayoutConstraint!
     
     // MARK: - Properties
-    var viewModel: ArticleEditorViewModel?
-    let disposeBag = DisposeBag()
+    override var contentCombined: Observable<[Any]>! {
+        return Observable.combineLatest(
+            titleTextView.rx.text.orEmpty,
+            contentTextView.rx.text.orEmpty
+        ).map {[$0, $1]}
+    }
     
-    // MARK: - Lifecycle
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        if viewModel == nil {
-            viewModel = ArticleEditorViewModel()
-        }
-        
+    // MARK: - Methods
+    override func setUpViews() {
+        super.setUpViews()
+        titleTextViewCharacterCountLabel.isHidden = true
         titleLabel.text = (viewModel?.postForEdit != nil ? "edit post" : "create post").localized().uppercaseFirst
-        
-        self.navigationController?.navigationBar.barTintColor = .white
-        self.navigationController?.navigationBar.isTranslucent = false
-        
-        dropDownView.layer.borderWidth = 1.0
-        dropDownView.layer.borderColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1).cgColor
         
         titleTextView.textContainerInset = UIEdgeInsets.zero
         titleTextView.textContainer.lineFragmentPadding = 0
@@ -106,19 +86,34 @@ class ArticleEditorVC: UIViewController {
                 }
             }
         }
+    }
+    
+    override func bindUI() {
+        super.bindUI()
         
-        // bottom buttons
-        photoPickerButton.isSelected = true
+        // textViews
+        bindTitleTextView()
+        bindContentTextView()
+    }
+    
+    override func verify() -> Bool {
+        guard let viewModel = viewModel else {return false}
+        let title = titleTextView.text ?? ""
+        let content = contentTextView.text ?? ""
+    
+        // both title and content are not empty
+        let titleAndContentAreNotEmpty = !title.isEmpty && !content.isEmpty
         
-        boldButton.isHidden = true
-        italicButton.isHidden = true
-        colorPickerButton.isHidden = true
-        addLinkButton.isHidden = true
-        hideKeyboardButton.isHidden = true
-        clearFormattingButton.isHidden = true
-        titleTextViewCharacterCountLabel.isHidden = true
-        contentTextViewCharacterCountLabel.isHidden = true
+        // title is not beyond limit
+        let titleIsInsideLimit =
+            (title.count >= self.titleMinLettersLimit) &&
+                (title.utf8.count <= self.titleBytesLimit)
         
-        bindUI()
+        // compare content
+        var contentChanged = (title != viewModel.postForEdit?.content.title)
+        contentChanged = contentChanged || (self.contentTextView.attributedText != self.contentTextView.originalAttributedString)
+        
+        // reassign result
+        return titleAndContentAreNotEmpty && titleIsInsideLimit && contentChanged
     }
 }

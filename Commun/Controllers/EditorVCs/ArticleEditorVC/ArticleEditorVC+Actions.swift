@@ -178,10 +178,6 @@ extension ArticleEditorVC {
         }
     }
     
-    @IBAction func hideKeyboardButtonDidTouch(_ sender: Any) {
-        view.endEditing(true)
-    }
-    
     @IBAction func richTextEditButtonDidTouch(_ sender: Any) {
         let button = sender as! UIButton
         
