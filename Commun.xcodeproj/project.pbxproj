@@ -616,7 +616,7 @@
 		3B06863823471163008953C5 /* Subviews */ = {
 			isa = PBXGroup;
 			children = (
-				3B06863323470A33008953C5 /* BasicEditorTextView.swift */,
+				3B3C8B9623478DFA00D8BADB /* BasicEditorTextView */,
 			);
 			path = Subviews;
 			sourceTree = "<group>";
@@ -709,13 +709,37 @@
 		3B3C8B872347874400D8BADB /* ArticleEditorVC */ = {
 			isa = PBXGroup;
 			children = (
+				3B3C8B9523478DF100D8BADB /* Subviews */,
+			);
+			path = ArticleEditorVC;
+			sourceTree = "<group>";
+		};
+		3B3C8B9423478DDA00D8BADB /* ArticleEditorTextView */ = {
+			isa = PBXGroup;
+			children = (
 				3B3C8B8B2347876000D8BADB /* ArticleEditorTextView.swift */,
 				3B3C8B8A2347876000D8BADB /* ArticleEditorTextView+Attachment.swift */,
 				3B3C8B8D2347876000D8BADB /* ArticleEditorTextView+Delegate.swift */,
 				3B3C8B8C2347876000D8BADB /* ArticleEditorTextView+Parsing.swift */,
 				3B3C8B892347875F00D8BADB /* ArticleEditorTextView+Utilities.swift */,
 			);
-			path = ArticleEditorVC;
+			path = ArticleEditorTextView;
+			sourceTree = "<group>";
+		};
+		3B3C8B9523478DF100D8BADB /* Subviews */ = {
+			isa = PBXGroup;
+			children = (
+				3B3C8B9423478DDA00D8BADB /* ArticleEditorTextView */,
+			);
+			path = Subviews;
+			sourceTree = "<group>";
+		};
+		3B3C8B9623478DFA00D8BADB /* BasicEditorTextView */ = {
+			isa = PBXGroup;
+			children = (
+				3B06863323470A33008953C5 /* BasicEditorTextView.swift */,
+			);
+			path = BasicEditorTextView;
 			sourceTree = "<group>";
 		};
 		3B51581A226DE27200108F17 /* Cells */ = {
