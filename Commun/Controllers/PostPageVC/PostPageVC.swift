@@ -46,7 +46,7 @@ class PostPageVC: UIViewController, CommentCellDelegate {
                 
                 let mention = "@" + (comment.author?.username ?? comment.contentId.userId)
                 
-                var attrs = commentForm.textView.defaultTypingAttributes!
+                var attrs = commentForm.textView.defaultTypingAttributes
                 attrs[.link] = URL.appURL + "/" + mention
                 
                 let mentionAS = NSMutableAttributedString(string: mention, attributes: attrs)

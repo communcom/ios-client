@@ -13,21 +13,19 @@ import RxSwift
 class ContentTextView: ExpandableTextView {
     // MARK: - Properties
     // Must override!!!
-    var defaultTypingAttributes: [NSAttributedString.Key: Any]!
+    var defaultTypingAttributes: [NSAttributedString.Key: Any] {
+        return [:]
+    }
     let disposeBag = DisposeBag()
     var originalAttributedString: NSAttributedString?
     
-    override init(frame: CGRect, textContainer: NSTextContainer?) {
-        super.init(frame: frame, textContainer: textContainer)
-        bind()
+    override func setUpViews() {
+        super.setUpViews()
+        typingAttributes = defaultTypingAttributes
     }
     
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        bind()
-    }
-    
-    func bind() {
+    override func bind() {
+        super.bind()
         rx.didChange
             .subscribe(onNext: {
                 self.resolveMentions()

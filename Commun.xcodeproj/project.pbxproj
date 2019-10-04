@@ -18,6 +18,7 @@
 		3B0520A9231CC73F005CA9CE /* ContentBlockTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B0520A8231CC73F005CA9CE /* ContentBlockTests.swift */; };
 		3B0686302346FFA6008953C5 /* CommunButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B06862F2346FFA6008953C5 /* CommunButton.swift */; };
 		3B068632234700DC008953C5 /* BasicEditorVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B068631234700DC008953C5 /* BasicEditorVC.swift */; };
+		3B06863423470A33008953C5 /* BasicEditorTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B06863323470A33008953C5 /* BasicEditorTextView.swift */; };
 		3B0CEE13232B3CCF006BE8E1 /* EmbedsPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B0CEE12232B3CCF006BE8E1 /* EmbedsPageViewController.swift */; };
 		3B0E9C5E226F02AC002AB1C2 /* ProfileEditCoverVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B0E9C5D226F02AC002AB1C2 /* ProfileEditCoverVC.swift */; };
 		3B0E9C64226F4A0C002AB1C2 /* VerticalDraggableImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B0E9C63226F4A0C002AB1C2 /* VerticalDraggableImageView.swift */; };
@@ -278,6 +279,7 @@
 		3B0520A8231CC73F005CA9CE /* ContentBlockTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentBlockTests.swift; sourceTree = "<group>"; };
 		3B06862F2346FFA6008953C5 /* CommunButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunButton.swift; sourceTree = "<group>"; };
 		3B068631234700DC008953C5 /* BasicEditorVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicEditorVC.swift; sourceTree = "<group>"; };
+		3B06863323470A33008953C5 /* BasicEditorTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicEditorTextView.swift; sourceTree = "<group>"; };
 		3B0CEE12232B3CCF006BE8E1 /* EmbedsPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbedsPageViewController.swift; sourceTree = "<group>"; };
 		3B0E9C5D226F02AC002AB1C2 /* ProfileEditCoverVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditCoverVC.swift; sourceTree = "<group>"; };
 		3B0E9C63226F4A0C002AB1C2 /* VerticalDraggableImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalDraggableImageView.swift; sourceTree = "<group>"; };
@@ -579,6 +581,7 @@
 			isa = PBXGroup;
 			children = (
 				3B06862F2346FFA6008953C5 /* CommunButton.swift */,
+				3B06863323470A33008953C5 /* BasicEditorTextView.swift */,
 			);
 			path = Subviews;
 			sourceTree = "<group>";
@@ -1705,6 +1708,7 @@
 				3B51581E226E0D3A00108F17 /* TLPhotosPickerViewController+Rx.swift in Sources */,
 				3BB48AD322D6432200F11B6A /* BoardingRouter.swift in Sources */,
 				3B289B9E2346EB0400598407 /* UIView+PureLayout.swift in Sources */,
+				3B06863423470A33008953C5 /* BasicEditorTextView.swift in Sources */,
 				3B67FC0822C5016F00D05F01 /* SignInViewController.swift in Sources */,
 				3B0506EE22D7309900B4E4A3 /* KeysVC.swift in Sources */,
 				3BB48ACB22D4ECDC00F11B6A /* ContentFittingWebView.swift in Sources */,

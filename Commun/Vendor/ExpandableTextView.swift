@@ -31,6 +31,16 @@ class ExpandableTextView: UITextView {
     }
     
     func commonInit() {
+        setUpViews()
+        bind()
+//        textContainerInset = UIEdgeInsets(top: 10, left: 16, bottom: 10, right: 16)
+    }
+    
+    func setUpViews() {
+        
+    }
+    
+    func bind() {
         self.rx.text
             .skip(1)
             .distinctUntilChanged()
@@ -49,9 +59,6 @@ class ExpandableTextView: UITextView {
                 self.layoutIfNeeded()
             })
             .disposed(by: bag)
-        
-        
-//        textContainerInset = UIEdgeInsets(top: 10, left: 16, bottom: 10, right: 16)
     }
     
     

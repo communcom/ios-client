@@ -11,7 +11,7 @@ import PureLayout
 
 class BasicEditorVC: EditorVC {
     // MARK: - Subviews
-    var contentTextView = ContentTextView(height: 47.5)
+    var contentTextView = BasicEditorTextView(height: 47.5)
     var contentTextViewCountLabel = UILabel.descriptionLabel("0/30000")
     
     override func layoutContentView() {
