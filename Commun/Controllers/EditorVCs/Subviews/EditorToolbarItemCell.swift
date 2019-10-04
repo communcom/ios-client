@@ -61,7 +61,7 @@ class EditorToolbarItemCell: UICollectionViewCell {
         if let desc = item.description {
             itemImageView.autoPinEdge(toSuperviewEdge: .leading, withInset: EditorToolbarItemCell.padding)
             
-            descriptionLabel = UILabel.with(text: desc, textSize: EditorToolbarItemCell.fontSize, weight: EditorToolbarItemCell.fontWeight, textColor: textColor)
+            descriptionLabel = UILabel.with(text: desc.localized().uppercaseFirst, textSize: EditorToolbarItemCell.fontSize, weight: EditorToolbarItemCell.fontWeight, textColor: textColor)
             contentView.addSubview(descriptionLabel!)
             descriptionLabel!.autoPinEdge(.leading, to: .trailing, of: itemImageView, withOffset: EditorToolbarItemCell.separatorSpace)
             descriptionLabel!.autoAlignAxis(toSuperviewAxis: .horizontal)

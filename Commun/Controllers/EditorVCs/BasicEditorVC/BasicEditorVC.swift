@@ -17,15 +17,7 @@ class BasicEditorVC: EditorVC {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        appendTool(EditorToolbarItem(
-            name: "open-article",
-            icon: "editor-open-article",
-            iconSize: CGSize(width: 19, height: 19),
-            description: "article".localized().uppercaseFirst,
-            isHighlighted: false,
-            action: {
-                
-        }))
+        appendTool(EditorToolbarItem.addArticle)
     }
     
     override func layoutContentView() {

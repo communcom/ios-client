@@ -15,12 +15,8 @@ class EditorVC: UIViewController {
     let disposeBag = DisposeBag()
     
     let tools = BehaviorRelay<[EditorToolbarItem]>(value: [
-        EditorToolbarItem(name: "18+", icon: "18Button", iconSize: CGSize(width: 23, height: 12), description: nil, isHighlighted: false, action: {
-            print("18+")
-        }),
-        EditorToolbarItem(name: "open-photo", icon: "editor-open-photo", iconSize: CGSize(width: 18, height: 18), description: nil, isHighlighted: false, action: {
-            print("18+")
-        })
+        EditorToolbarItem.toggleIsAdult,
+        EditorToolbarItem.addPhoto
     ]) 
     
     // MARK: - Subviews
@@ -162,7 +158,18 @@ class EditorVC: UIViewController {
                 }
             .disposed(by: disposeBag)
         
+        buttonsCollectionView.rx
+            .modelSelected(EditorToolbarItem.self)
+            .subscribe(onNext: { [unowned self] item in
+                self.itemSelected(item)
+            })
+            .disposed(by: disposeBag)
+        
         buttonsCollectionView.rx.setDelegate(self)
             .disposed(by: disposeBag)
+    }
+    
+    func itemSelected(_ item: EditorToolbarItem) {
+        
     }
 }

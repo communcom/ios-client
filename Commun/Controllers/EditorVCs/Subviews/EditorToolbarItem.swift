@@ -16,8 +16,69 @@ struct EditorToolbarItem: Equatable {
     var name: String
     var icon: String
     var iconSize: CGSize
-    var description: String?
-    var isHighlighted = true
-    var isEnabled = false
-    var action: (()->Void)
+    var description: String? = nil
+    var isHighlighted = false
+    var isEnabled = true
+    
+    static var hideKeyboard: EditorToolbarItem {
+        return EditorToolbarItem(
+            name: "hideKeyboard",
+            icon: "keyboard_hide",
+            iconSize: CGSize(width: 18, height: 18))
+    }
+    
+    static var toggleIsAdult: EditorToolbarItem {
+        return EditorToolbarItem(
+            name: "toggleIsAdult",
+            icon: "18Button",
+            iconSize: CGSize(width: 23, height: 12))
+    }
+    
+    static var addPhoto: EditorToolbarItem {
+        return EditorToolbarItem(
+            name: "addPhoto",
+            icon: "editor-open-photo",
+            iconSize: CGSize(width: 18, height: 18))
+    }
+    
+    static var setBold: EditorToolbarItem {
+        return EditorToolbarItem(
+            name: "setBold",
+            icon: "bold",
+            iconSize: CGSize(width: 18, height: 18))
+    }
+    static var setItalic: EditorToolbarItem {
+        return EditorToolbarItem(
+            name: "setItalic",
+            icon: "italic",
+            iconSize: CGSize(width: 18, height: 18))
+    }
+    static var setColor: EditorToolbarItem {
+        return EditorToolbarItem(
+            name: "setColor",
+            icon: "--missing--",
+            iconSize: CGSize(width: 23, height: 12))
+    }
+    
+    static var addLink: EditorToolbarItem {
+        return EditorToolbarItem(
+            name: "addLink",
+            icon: "add_link",
+            iconSize: CGSize(width: 18, height: 18))
+    }
+    
+    static var clearFormatting: EditorToolbarItem {
+        return EditorToolbarItem(
+            name: "clearFormatting",
+            icon: "clear-formatting",
+            iconSize: CGSize(width: 18, height: 18))
+    }
+    
+    static var addArticle: EditorToolbarItem {
+        return EditorToolbarItem(
+            name: "keyboard_hide",
+            icon: "keyboard_hide",
+            iconSize: CGSize(width: 19, height: 19),
+            description: "article")
+    }
 }
