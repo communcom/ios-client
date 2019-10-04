@@ -10,7 +10,7 @@ import Foundation
 import CyberSwift
 import RxSwift
 
-extension EditorPageTextView {
+extension ArticleEditorTextView {
     // MARK: - Methods
     private func addEmbed(_ embed: ResponseAPIFrameGetEmbed) {
         // modification needed because of type conflict

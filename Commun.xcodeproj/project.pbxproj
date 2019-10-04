@@ -70,7 +70,7 @@
 		3B3C8B862347866D00D8BADB /* ContentTextView+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3C8B852347866D00D8BADB /* ContentTextView+Utilities.swift */; };
 		3B3C8B8E2347876000D8BADB /* EditorPageTextView+Text.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3C8B882347875F00D8BADB /* EditorPageTextView+Text.swift */; };
 		3B3C8B8F2347876000D8BADB /* ArticleEditorTextView+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3C8B892347875F00D8BADB /* ArticleEditorTextView+Utilities.swift */; };
-		3B3C8B902347876000D8BADB /* EditorPageTextView+Attachment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3C8B8A2347876000D8BADB /* EditorPageTextView+Attachment.swift */; };
+		3B3C8B902347876000D8BADB /* ArticleEditorTextView+Attachment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3C8B8A2347876000D8BADB /* ArticleEditorTextView+Attachment.swift */; };
 		3B3C8B912347876000D8BADB /* ArticleEditorTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3C8B8B2347876000D8BADB /* ArticleEditorTextView.swift */; };
 		3B3C8B922347876000D8BADB /* EditorPageTextView+Parsing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3C8B8C2347876000D8BADB /* EditorPageTextView+Parsing.swift */; };
 		3B3C8B932347876000D8BADB /* EditorPageTextView+Delegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3C8B8D2347876000D8BADB /* EditorPageTextView+Delegate.swift */; };
@@ -344,7 +344,7 @@
 		3B3C8B852347866D00D8BADB /* ContentTextView+Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContentTextView+Utilities.swift"; sourceTree = "<group>"; };
 		3B3C8B882347875F00D8BADB /* EditorPageTextView+Text.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EditorPageTextView+Text.swift"; sourceTree = "<group>"; };
 		3B3C8B892347875F00D8BADB /* ArticleEditorTextView+Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ArticleEditorTextView+Utilities.swift"; sourceTree = "<group>"; };
-		3B3C8B8A2347876000D8BADB /* EditorPageTextView+Attachment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EditorPageTextView+Attachment.swift"; sourceTree = "<group>"; };
+		3B3C8B8A2347876000D8BADB /* ArticleEditorTextView+Attachment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ArticleEditorTextView+Attachment.swift"; sourceTree = "<group>"; };
 		3B3C8B8B2347876000D8BADB /* ArticleEditorTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticleEditorTextView.swift; sourceTree = "<group>"; };
 		3B3C8B8C2347876000D8BADB /* EditorPageTextView+Parsing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EditorPageTextView+Parsing.swift"; sourceTree = "<group>"; };
 		3B3C8B8D2347876000D8BADB /* EditorPageTextView+Delegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EditorPageTextView+Delegate.swift"; sourceTree = "<group>"; };
@@ -710,7 +710,7 @@
 			isa = PBXGroup;
 			children = (
 				3B3C8B8B2347876000D8BADB /* ArticleEditorTextView.swift */,
-				3B3C8B8A2347876000D8BADB /* EditorPageTextView+Attachment.swift */,
+				3B3C8B8A2347876000D8BADB /* ArticleEditorTextView+Attachment.swift */,
 				3B3C8B8D2347876000D8BADB /* EditorPageTextView+Delegate.swift */,
 				3B3C8B8C2347876000D8BADB /* EditorPageTextView+Parsing.swift */,
 				3B3C8B882347875F00D8BADB /* EditorPageTextView+Text.swift */,
@@ -1845,7 +1845,7 @@
 				3B289B9C2346E7FC00598407 /* UIImage+PureLayout.swift in Sources */,
 				3B0E9C7122706985002AB1C2 /* ProfileChooseAvatarViewModel.swift in Sources */,
 				3B5F58AD232A2ABE0036533B /* SignInSelectionCell.swift in Sources */,
-				3B3C8B902347876000D8BADB /* EditorPageTextView+Attachment.swift in Sources */,
+				3B3C8B902347876000D8BADB /* ArticleEditorTextView+Attachment.swift in Sources */,
 				3BB342B022CA5CA6009546B2 /* PickupAvatarVC.swift in Sources */,
 				3B02CD34228ADC100078BB52 /* UIWebView.swift in Sources */,
 				3B0E9C5E226F02AC002AB1C2 /* ProfileEditCoverVC.swift in Sources */,
