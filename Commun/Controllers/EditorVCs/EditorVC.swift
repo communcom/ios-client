@@ -85,7 +85,11 @@ class EditorVC: UIViewController {
     
     func setUpToolbar() {
         view.addSubview(toolbar)
-//        toolbar.addShadow(offset: CGSize(width: 0, height: -10))
+        toolbar.backgroundColor = .white
+        toolbar.clipsToBounds = true
+        toolbar.cornerRadius = 16
+        toolbar.addShadow(offset: CGSize.init(width: 0, height: 1), color: .black, radius: 10, opacity: 0.2)
+        
         toolbar.autoPinEdge(toSuperviewSafeArea: .leading)
         toolbar.autoPinEdge(toSuperviewSafeArea: .trailing)
         let keyboardViewV = KeyboardLayoutConstraint(item: view!, attribute: .bottom, relatedBy: .equal, toItem: toolbar, attribute: .bottom, multiplier: 1.0, constant: 0.0)
