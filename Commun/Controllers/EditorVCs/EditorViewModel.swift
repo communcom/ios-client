@@ -13,7 +13,7 @@ import CyberSwift
 
 class EditorViewModel {
     var postForEdit: ResponseAPIContentGetPost?
-    let isAdult = BehaviorRelay<Bool>(value: false)
+    var isAdult = false
     
     var embeds = [[String: Any]]()
     
@@ -46,7 +46,7 @@ class EditorViewModel {
         
         // Prepare tags
         var tags = block.getTags()
-        if isAdult.value {tags.append("18+")}
+        if isAdult {tags.append("18+")}
         
         // Prepare content
         var string: String!

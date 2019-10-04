@@ -76,6 +76,7 @@
 		3B3C8B932347876000D8BADB /* ArticleEditorTextView+Delegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3C8B8D2347876000D8BADB /* ArticleEditorTextView+Delegate.swift */; };
 		3B3C8B982347911D00D8BADB /* EditorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3C8B972347911D00D8BADB /* EditorViewModel.swift */; };
 		3B3C8B9A2347916400D8BADB /* BasicEditorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3C8B992347916400D8BADB /* BasicEditorViewModel.swift */; };
+		3B3C8B9C2347928D00D8BADB /* EditorVC+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3C8B9B2347928D00D8BADB /* EditorVC+Layout.swift */; };
 		3B4ECA3D22A6741D00F59FC8 /* NotificationsPage+EmptyDataSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B4ECA3C22A6741D00F59FC8 /* NotificationsPage+EmptyDataSet.swift */; };
 		3B515819226DDE8D00108F17 /* EmptyCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3B515818226DDE8D00108F17 /* EmptyCell.xib */; };
 		3B51581C226DE28D00108F17 /* EmptyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B51581B226DE28D00108F17 /* EmptyCell.swift */; };
@@ -352,6 +353,7 @@
 		3B3C8B8D2347876000D8BADB /* ArticleEditorTextView+Delegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ArticleEditorTextView+Delegate.swift"; sourceTree = "<group>"; };
 		3B3C8B972347911D00D8BADB /* EditorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorViewModel.swift; sourceTree = "<group>"; };
 		3B3C8B992347916400D8BADB /* BasicEditorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicEditorViewModel.swift; sourceTree = "<group>"; };
+		3B3C8B9B2347928D00D8BADB /* EditorVC+Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EditorVC+Layout.swift"; sourceTree = "<group>"; };
 		3B4ECA3C22A6741D00F59FC8 /* NotificationsPage+EmptyDataSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotificationsPage+EmptyDataSet.swift"; sourceTree = "<group>"; };
 		3B515818226DDE8D00108F17 /* EmptyCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmptyCell.xib; sourceTree = "<group>"; };
 		3B51581B226DE28D00108F17 /* EmptyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyCell.swift; sourceTree = "<group>"; };
@@ -791,6 +793,7 @@
 				3B3C8B7823472AC000D8BADB /* Subviews */,
 				3B3C8B972347911D00D8BADB /* EditorViewModel.swift */,
 				3B6205592346E4220017FEB7 /* EditorVC.swift */,
+				3B3C8B9B2347928D00D8BADB /* EditorVC+Layout.swift */,
 				3B3C8B8123475AA100D8BADB /* EditorVC+Tools.swift */,
 				3B3C8B7D23473ED900D8BADB /* EditorVC+CollectionViewFlowLayoutDelegate.swift */,
 				3B06863723471152008953C5 /* BasicEditorVC */,
@@ -1918,6 +1921,7 @@
 				3B5CB31222A588EE00757533 /* FeedPageVC+EmptyDataSet.swift in Sources */,
 				3B289B972346E51600598407 /* UIButton+PureLayout.swift in Sources */,
 				571B14F4223A935C00630C8F /* AppDelegate.swift in Sources */,
+				3B3C8B9C2347928D00D8BADB /* EditorVC+Layout.swift in Sources */,
 				3B0E9C6C2270634B002AB1C2 /* ProfileChooseAvatarVC.swift in Sources */,
 				3B3C8B922347876000D8BADB /* ArticleEditorTextView+Parsing.swift in Sources */,
 				3B61AC3422E1CA8A00F608AF /* LAContext.swift in Sources */,

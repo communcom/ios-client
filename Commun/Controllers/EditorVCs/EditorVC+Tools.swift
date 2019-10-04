@@ -25,4 +25,22 @@ extension EditorVC {
         let tools = self.tools.value.filter {$0 != tool}
         self.tools.accept(tools)
     }
+    
+    func toggleHighlight(tool: EditorToolbarItem) {
+        guard var tool = tools.value.first(where: {$0 == tool}) else {return}
+        tool.isHighlighted = !tool.isHighlighted
+        if let index = tools.value.firstIndex(of: tool) {
+            var tools = self.tools.value
+            tools[index] = tool
+            self.tools.accept(tools)
+        }
+        else {
+            appendTool(tool)
+        }
+    }
+    
+    // MARK: - immutable action
+    func hideKeyboard() {
+        view.endEditing(true)
+    }
 }

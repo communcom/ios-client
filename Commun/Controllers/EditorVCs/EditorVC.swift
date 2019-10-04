@@ -25,7 +25,6 @@ class EditorVC: UIViewController {
     var viewModel = EditorViewModel()
     
     let tools = BehaviorRelay<[EditorToolbarItem]>(value: [
-        EditorToolbarItem.hideKeyboard,
         EditorToolbarItem.toggleIsAdult,
         EditorToolbarItem.addPhoto
     ]) 
@@ -71,16 +70,7 @@ class EditorVC: UIViewController {
         setUpToolbar()
         
         // add scrollview
-        let scrollView = UIScrollView(forAutoLayout: ())
-        view.addSubview(scrollView)
-        scrollView.autoPinEdgesToSuperviewSafeArea(with: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0), excludingEdge: .bottom)
-        scrollView.autoPinEdge(.bottom, to: .top, of: toolbar)
-        
-        // add childview of scrollview
-        contentView = UIView(forAutoLayout: ())
-        scrollView.addSubview(contentView)
-        contentView.autoPinEdgesToSuperviewEdges()
-        contentView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
+        addScrollView()
         
         // fix contentView
         layoutContentView()
@@ -91,43 +81,6 @@ class EditorVC: UIViewController {
         
         // bind
         bind()
-    }
-    
-    func setUpToolbar() {
-        view.addSubview(toolbar)
-        toolbar.backgroundColor = .white
-        toolbar.clipsToBounds = true
-        toolbar.cornerRadius = 16
-        toolbar.addShadow(offset: CGSize.init(width: 0, height: 1), color: .black, radius: 10, opacity: 0.2)
-        
-        toolbar.autoPinEdge(toSuperviewSafeArea: .leading)
-        toolbar.autoPinEdge(toSuperviewSafeArea: .trailing)
-        let keyboardViewV = KeyboardLayoutConstraint(item: view!, attribute: .bottom, relatedBy: .equal, toItem: toolbar, attribute: .bottom, multiplier: 1.0, constant: 0.0)
-        keyboardViewV.observeKeyboardHeight()
-        self.view.addConstraint(keyboardViewV)
-        
-        // buttons
-        setUpToolbarButtons()
-        
-        // sendpost button
-        toolbar.addSubview(postButton)
-        postButton.autoPinEdge(.leading, to: .trailing, of: buttonsCollectionView, withOffset: 10)
-        postButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
-        postButton.autoAlignAxis(toSuperviewAxis: .horizontal)
-    }
-    
-    func setUpToolbarButtons() {
-        let layout = UICollectionViewFlowLayout()
-        layout.sectionInset = .zero
-        layout.scrollDirection = .horizontal
-        buttonsCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        buttonsCollectionView.showsHorizontalScrollIndicator = false
-        buttonsCollectionView.backgroundColor = .clear
-        buttonsCollectionView.configureForAutoLayout()
-        toolbar.addSubview(buttonsCollectionView)
-        // layout
-        buttonsCollectionView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 10, left: 16, bottom: 10, right: 0), excludingEdge: .right)
-        buttonsCollectionView.register(EditorToolbarItemCell.self, forCellWithReuseIdentifier: "EditorToolbarItemCell")
     }
     
     func layoutContentView() {
@@ -181,9 +134,28 @@ class EditorVC: UIViewController {
         
         buttonsCollectionView.rx.setDelegate(self)
             .disposed(by: disposeBag)
+        
+        bindKeyboardHeight()
+    }
+    
+    func bindKeyboardHeight() {
+        UIResponder.keyboardHeightObservable
+            .map {$0 == 0 ? true: false}
+            .asDriver(onErrorJustReturn: true)
+            .drive(onNext: { (isHidden) in
+                if isHidden {
+                    self.removeTool(.hideKeyboard)
+                }
+                else {
+                    self.insertTool(.hideKeyboard, at: 0)
+                }
+            })
+            .disposed(by: disposeBag)
     }
     
     func itemSelected(_ item: EditorToolbarItem) {
+        guard item.isEnabled else {return}
+        
         if item == .hideKeyboard {
             hideKeyboard()
         }
@@ -191,13 +163,14 @@ class EditorVC: UIViewController {
         if item == .addPhoto {
             addPhoto()
         }
+        
+        if item == .toggleIsAdult {
+            viewModel.isAdult = !item.isHighlighted
+            toggleHighlight(tool: item)
+        }
     }
     
-    // MARK: - Actions
-    func hideKeyboard() {
-        view.endEditing(true)
-    }
-    
+    // MARK: - action for inheriting
     func addPhoto() {
         
     }
