@@ -687,7 +687,6 @@
 		3B3C8B7823472AC000D8BADB /* Subviews */ = {
 			isa = PBXGroup;
 			children = (
-				3B3C8B7B23472BF000D8BADB /* EditorToolbarItem.swift */,
 				3B3C8B7923472ADA00D8BADB /* EditorToolbarItemCell.swift */,
 			);
 			path = Subviews;
@@ -733,6 +732,7 @@
 		3B6205582346E40A0017FEB7 /* EditorVCs */ = {
 			isa = PBXGroup;
 			children = (
+				3B3C8B7B23472BF000D8BADB /* EditorToolbarItem.swift */,
 				3B3C8B7823472AC000D8BADB /* Subviews */,
 				3B6205592346E4220017FEB7 /* EditorVC.swift */,
 				3B3C8B8123475AA100D8BADB /* EditorVC+Tools.swift */,

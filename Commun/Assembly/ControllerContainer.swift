@@ -103,10 +103,6 @@ let controllerContainer: Container = {
         return vc
     })
     
-    container.register(ArticleEditorVC.self, factory: { r in
-        let vc = ArticleEditorVC.instanceController(fromStoryboard: "ArticleEditorVC", withIdentifier: "ArticleEditorVC") as! ArticleEditorVC
-        return vc
-    })
     
     // Communities scene
     container.register(CommunitiesVC.self, factory: { r in

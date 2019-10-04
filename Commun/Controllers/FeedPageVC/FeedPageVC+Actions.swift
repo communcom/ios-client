@@ -38,12 +38,12 @@ extension FeedPageVC {
     
     @IBAction func photoButtonDidTouch(_ sender: Any) {
         openEditor { (editorVC) in
-            editorVC.cameraButtonTap()
+            editorVC.addPhoto()
         }
     }
     
-    func openEditor(completion: ((ArticleEditorVC)->Void)? = nil) {
-        let editorVC = controllerContainer.resolve(ArticleEditorVC.self)!
+    func openEditor(completion: ((BasicEditorVC)->Void)? = nil) {
+        let editorVC = BasicEditorVC()
         editorVC.modalPresentationStyle = .fullScreen
         present(editorVC, animated: true, completion: {
             completion?(editorVC)

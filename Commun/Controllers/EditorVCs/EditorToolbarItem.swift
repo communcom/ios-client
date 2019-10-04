@@ -76,8 +76,8 @@ struct EditorToolbarItem: Equatable {
     
     static var addArticle: EditorToolbarItem {
         return EditorToolbarItem(
-            name: "keyboard_hide",
-            icon: "keyboard_hide",
+            name: "addArticle",
+            icon: "editor-open-article",
             iconSize: CGSize(width: 19, height: 19),
             description: "article")
     }

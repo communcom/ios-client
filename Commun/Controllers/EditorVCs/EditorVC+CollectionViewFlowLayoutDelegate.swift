@@ -14,14 +14,13 @@ extension EditorVC: UICollectionViewDelegateFlowLayout {
         let height: CGFloat = 35
         var width: CGFloat = 35
         
-        if let desc = item.description {
+        if let desc = item.description?.localized().uppercaseFirst {
             width = 2.0 * EditorToolbarItemCell.padding +
                 EditorToolbarItemCell.separatorSpace +
                 item.iconSize.width +
                 desc.nsString.size(withAttributes: [
                     .font : UIFont.systemFont(ofSize: EditorToolbarItemCell.fontSize, weight: EditorToolbarItemCell.fontWeight)
                     ]).width
-                + 0.1 // Don't know why, but needed
         }
         return CGSize(width: width, height: height)
     }

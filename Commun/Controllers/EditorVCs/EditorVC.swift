@@ -15,6 +15,7 @@ class EditorVC: UIViewController {
     let disposeBag = DisposeBag()
     
     let tools = BehaviorRelay<[EditorToolbarItem]>(value: [
+        EditorToolbarItem.hideKeyboard,
         EditorToolbarItem.toggleIsAdult,
         EditorToolbarItem.addPhoto
     ]) 
@@ -170,6 +171,21 @@ class EditorVC: UIViewController {
     }
     
     func itemSelected(_ item: EditorToolbarItem) {
+        if item == .hideKeyboard {
+            hideKeyboard()
+        }
+        
+        if item == .addPhoto {
+            addPhoto()
+        }
+    }
+    
+    // MARK: - Actions
+    func hideKeyboard() {
+        view.endEditing(true)
+    }
+    
+    func addPhoto() {
         
     }
 }
