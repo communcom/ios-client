@@ -12,7 +12,10 @@ import RxCocoa
 
 class BasicEditorVC: EditorVC {
     // MARK: - Subviews
-    var contentTextView = BasicEditorTextView(height: 47.5)
+    var _contentTextView = BasicEditorTextView(height: 47.5)
+    override var contentTextView: ContentTextView {
+        return _contentTextView
+    }
     var contentTextViewCountLabel = UILabel.descriptionLabel("0/30000")
     
     override func viewDidLoad() {
@@ -24,16 +27,15 @@ class BasicEditorVC: EditorVC {
         super.layoutContentView()
         
         // textView
-        contentView.addSubview(contentTextView)
-        contentTextView.placeholder = "enter text".localized().uppercaseFirst + "..."
-        contentTextView.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
-        contentTextView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
-        contentTextView.autoPinEdge(.top, to: .bottom, of: communityAvatarImage, withOffset: 20)
-        contentTextView.rx.setDelegate(self).disposed(by: disposeBag)
+        contentView.addSubview(_contentTextView)
+        _contentTextView.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
+        _contentTextView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
+        _contentTextView.autoPinEdge(.top, to: .bottom, of: communityAvatarImage, withOffset: 20)
+        _contentTextView.rx.setDelegate(self).disposed(by: disposeBag)
         
         // countlabel
         contentView.addSubview(contentTextViewCountLabel)
-        contentTextViewCountLabel.autoPinEdge(.top, to: .bottom, of: contentTextView, withOffset: -12)
+        contentTextViewCountLabel.autoPinEdge(.top, to: .bottom, of: _contentTextView, withOffset: -12)
         contentTextViewCountLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
         
     }

@@ -14,6 +14,13 @@ class EditorVC: UIViewController {
     // MARK: - Properties
     let disposeBag = DisposeBag()
     
+    var contentCombined: Observable<[Any]>! {
+        return nil
+    }
+    var contentTextView: ContentTextView {
+        fatalError("Must override")
+    }
+    
     let tools = BehaviorRelay<[EditorToolbarItem]>(value: [
         EditorToolbarItem.hideKeyboard,
         EditorToolbarItem.toggleIsAdult,
@@ -75,6 +82,9 @@ class EditorVC: UIViewController {
         // fix contentView
         layoutContentView()
         pinContentViewBottom()
+        
+        // common contentTextView
+        contentTextView.placeholder = "write text placeholder".localized().uppercaseFirst + "..."
         
         // bind
         bind()
