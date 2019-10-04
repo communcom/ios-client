@@ -96,6 +96,6 @@ class EditorVC: UIViewController {
     }
     
     func pinContentViewBottom() {
-        communityAvatarImage.autoPinEdge(toSuperviewEdge: .bottom, withInset: 16)
+        fatalError("Must override this method")
     }
 }

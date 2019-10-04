@@ -13,14 +13,24 @@ import RxSwift
 class ExpandableTextView: UITextView {
     // MARK: - Properties
     private let bag = DisposeBag()
-    var heightConstraint: NSLayoutConstraint!
+    var heightConstraint: NSLayoutConstraint? {
+        return constraints.first {$0.firstAttribute == .height}
+    }
     @IBInspectable var maxHeight: CGFloat = 0
     
     
     // MARK: - Class Initialization
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        
+        commonInit()
+    }
+    
+    override init(frame: CGRect, textContainer: NSTextContainer?) {
+        super.init(frame: frame, textContainer: textContainer)
+        commonInit()
+    }
+    
+    func commonInit() {
         self.rx.text
             .skip(1)
             .distinctUntilChanged()
@@ -35,13 +45,13 @@ class ExpandableTextView: UITextView {
                 if (self.maxHeight > 0 && newFrame.size.height > self.maxHeight) {return}
                 
                 self.frame = newFrame
-                self.heightConstraint.constant = newSize.height
+                self.heightConstraint?.constant = newSize.height
                 self.layoutIfNeeded()
             })
             .disposed(by: bag)
         
-        heightConstraint = constraints.first {$0.firstAttribute == .height}
-        textContainerInset = UIEdgeInsets(top: 10, left: 16, bottom: 10, right: 16)
+        
+//        textContainerInset = UIEdgeInsets(top: 10, left: 16, bottom: 10, right: 16)
     }
     
     

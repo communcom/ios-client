@@ -17,8 +17,13 @@ class ContentTextView: ExpandableTextView {
     let disposeBag = DisposeBag()
     var originalAttributedString: NSAttributedString?
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
+    override init(frame: CGRect, textContainer: NSTextContainer?) {
+        super.init(frame: frame, textContainer: textContainer)
+        bind()
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
         bind()
     }
     
