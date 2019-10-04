@@ -77,6 +77,7 @@
 		3B3C8B982347911D00D8BADB /* EditorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3C8B972347911D00D8BADB /* EditorViewModel.swift */; };
 		3B3C8B9A2347916400D8BADB /* BasicEditorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3C8B992347916400D8BADB /* BasicEditorViewModel.swift */; };
 		3B3C8B9C2347928D00D8BADB /* EditorVC+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3C8B9B2347928D00D8BADB /* EditorVC+Layout.swift */; };
+		3B3C8B9E234796D900D8BADB /* EditorVC+Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3C8B9D234796D900D8BADB /* EditorVC+Binding.swift */; };
 		3B4ECA3D22A6741D00F59FC8 /* NotificationsPage+EmptyDataSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B4ECA3C22A6741D00F59FC8 /* NotificationsPage+EmptyDataSet.swift */; };
 		3B515819226DDE8D00108F17 /* EmptyCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3B515818226DDE8D00108F17 /* EmptyCell.xib */; };
 		3B51581C226DE28D00108F17 /* EmptyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B51581B226DE28D00108F17 /* EmptyCell.swift */; };
@@ -354,6 +355,7 @@
 		3B3C8B972347911D00D8BADB /* EditorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorViewModel.swift; sourceTree = "<group>"; };
 		3B3C8B992347916400D8BADB /* BasicEditorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicEditorViewModel.swift; sourceTree = "<group>"; };
 		3B3C8B9B2347928D00D8BADB /* EditorVC+Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EditorVC+Layout.swift"; sourceTree = "<group>"; };
+		3B3C8B9D234796D900D8BADB /* EditorVC+Binding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EditorVC+Binding.swift"; sourceTree = "<group>"; };
 		3B4ECA3C22A6741D00F59FC8 /* NotificationsPage+EmptyDataSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotificationsPage+EmptyDataSet.swift"; sourceTree = "<group>"; };
 		3B515818226DDE8D00108F17 /* EmptyCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmptyCell.xib; sourceTree = "<group>"; };
 		3B51581B226DE28D00108F17 /* EmptyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyCell.swift; sourceTree = "<group>"; };
@@ -793,6 +795,7 @@
 				3B3C8B7823472AC000D8BADB /* Subviews */,
 				3B3C8B972347911D00D8BADB /* EditorViewModel.swift */,
 				3B6205592346E4220017FEB7 /* EditorVC.swift */,
+				3B3C8B9D234796D900D8BADB /* EditorVC+Binding.swift */,
 				3B3C8B9B2347928D00D8BADB /* EditorVC+Layout.swift */,
 				3B3C8B8123475AA100D8BADB /* EditorVC+Tools.swift */,
 				3B3C8B7D23473ED900D8BADB /* EditorVC+CollectionViewFlowLayoutDelegate.swift */,
@@ -1856,6 +1859,7 @@
 				3B3C8B932347876000D8BADB /* ArticleEditorTextView+Delegate.swift in Sources */,
 				3B0E9C752270C691002AB1C2 /* ProfileEditBioVC.swift in Sources */,
 				57A95197224178010020F55D /* PostController.swift in Sources */,
+				3B3C8B9E234796D900D8BADB /* EditorVC+Binding.swift in Sources */,
 				3B67FC0622C4BB5100D05F01 /* SplashViewController.swift in Sources */,
 				3BB32F1B234436EF006572F3 /* PostMetaView.swift in Sources */,
 				3B3C8B8E2347876000D8BADB /* ContentTextView+Text.swift in Sources */,

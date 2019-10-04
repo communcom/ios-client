@@ -12,10 +12,15 @@ import RxCocoa
 
 class EditorVC: UIViewController {
     // MARK: - Properties
+    let contentLettersLimit = 30000
     let disposeBag = DisposeBag()
     
-    var contentCombined: Observable<[Any]>! {
-        return nil
+    var contentCombined: Observable<Void> {
+        fatalError("Must override")
+    }
+    
+    var shouldSendPost: Bool {
+        fatalError("Must override")
     }
     
     var contentTextView: ContentTextView {
@@ -136,21 +141,8 @@ class EditorVC: UIViewController {
             .disposed(by: disposeBag)
         
         bindKeyboardHeight()
-    }
-    
-    func bindKeyboardHeight() {
-        UIResponder.keyboardHeightObservable
-            .map {$0 == 0 ? true: false}
-            .asDriver(onErrorJustReturn: true)
-            .drive(onNext: { (isHidden) in
-                if isHidden {
-                    self.removeTool(.hideKeyboard)
-                }
-                else {
-                    self.insertTool(.hideKeyboard, at: 0)
-                }
-            })
-            .disposed(by: disposeBag)
+        
+        bindSendPostButton()
     }
     
     func itemSelected(_ item: EditorToolbarItem) {

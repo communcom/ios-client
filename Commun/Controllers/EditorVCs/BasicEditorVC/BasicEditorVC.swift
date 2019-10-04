@@ -9,6 +9,7 @@
 import Foundation
 import PureLayout
 import RxCocoa
+import RxSwift
 
 class BasicEditorVC: EditorVC {
     // MARK: - Subviews
@@ -18,6 +19,25 @@ class BasicEditorVC: EditorVC {
     }
     var contentTextViewCountLabel = UILabel.descriptionLabel("0/30000")
     
+    // MARK: - Override
+    override var contentCombined: Observable<Void> {
+        return contentTextView.rx.text.orEmpty.map {_ in ()}
+    }
+    
+    override var shouldSendPost: Bool {
+        let content = contentTextView.text ?? ""
+        
+        // both title and content are not empty
+        let contentAreNotEmpty = !content.isEmpty
+        
+        // compare content
+        let contentChanged = (self.contentTextView.attributedText != self.contentTextView.originalAttributedString)
+        
+        // reassign result
+        return contentAreNotEmpty && contentChanged
+    }
+    
+    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         appendTool(EditorToolbarItem.addArticle)
