@@ -13,6 +13,7 @@ extension UIImageView {
         let imageView = UIImageView(forAutoLayout: ())
         imageView.autoSetDimensions(to: CGSize(width: size, height: size))
         imageView.backgroundColor = .orange
+        imageView.cornerRadius = size / 2
         if let imageName = imageName {
             imageView.image = UIImage(named: imageName)
         }

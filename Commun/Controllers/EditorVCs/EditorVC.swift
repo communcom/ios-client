@@ -14,11 +14,12 @@ class EditorVC: UIViewController {
     lazy var closeButton = UIButton.circleGray(imageName: "close-x")
     lazy var headerLabel = UILabel.title("create post".localized().uppercaseFirst)
     // community
-    lazy var communityAvatarImage = UIImageView.circle(size: 40)
+    lazy var communityAvatarImage = UIImageView.circle(size: 40, imageName: "tux")
     lazy var youWillPostIn = UILabel.descriptionLabel("you will post in".localized().uppercaseFirst)
-    lazy var communityNameLabel = UILabel.with(text: "Overwatch", textSize: 15, weight: .semibold)
+    lazy var communityNameLabel = UILabel.with(text: "Commun", textSize: 15, weight: .semibold)
     lazy var dropdownButton = UIButton.circleGray(imageName: "drop-down")
     // TODO: - Content
+    var contentView: UIView!
     
     // Toolbar
     lazy var toolbar = UIView(height: 55)
@@ -30,22 +31,33 @@ class EditorVC: UIViewController {
         //
         view.backgroundColor = .white
         
-        layoutSubviews()
+        setUpViews()
     }
     
-    func layoutSubviews() {
+    func setUpViews() {
+        // toolbars
+        view.addSubview(toolbar)
+        toolbar.autoPinEdgesToSuperviewSafeArea(with: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0), excludingEdge: .top)
+        
         // add scrollview
         let scrollView = UIScrollView(forAutoLayout: ())
         view.addSubview(scrollView)
-        scrollView.autoPinEdgesToSuperviewSafeArea()
+        scrollView.autoPinEdgesToSuperviewSafeArea(with: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0), excludingEdge: .bottom)
+        scrollView.autoPinEdge(.bottom, to: .top, of: toolbar)
         
         // add childview of scrollview
-        let contentView = UIView(forAutoLayout: ())
+        contentView = UIView(forAutoLayout: ())
         scrollView.addSubview(contentView)
         contentView.autoPinEdgesToSuperviewEdges()
         contentView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
         
         // fix contentView
+        layoutContentView()
+        pinContentViewBottom()
+    }
+    
+    func layoutContentView() {
+        // header
         contentView.addSubview(closeButton)
         contentView.addSubview(headerLabel)
         closeButton.autoPinEdge(toSuperviewEdge: .top, withInset: 25)
@@ -53,7 +65,27 @@ class EditorVC: UIViewController {
         headerLabel.autoAlignAxis(toSuperviewAxis: .vertical)
         headerLabel.autoAlignAxis(.horizontal, toSameAxisOf: closeButton)
         
+        // community
+        contentView.addSubview(communityAvatarImage)
+        contentView.addSubview(youWillPostIn)
+        contentView.addSubview(communityNameLabel)
+        contentView.addSubview(dropdownButton)
         
-        closeButton.autoPinEdge(toSuperviewEdge: .bottom, withInset: 16)
+        communityAvatarImage.autoPinEdge(.top, to: .bottom, of: closeButton, withOffset: 25)
+        communityAvatarImage.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
+        
+        youWillPostIn.autoPinEdge(.top, to: .top, of: communityAvatarImage, withOffset: 5)
+        youWillPostIn.autoPinEdge(.leading, to: .trailing, of: communityAvatarImage, withOffset: 10)
+        
+        communityNameLabel.autoPinEdge(.leading, to: .trailing, of: communityAvatarImage, withOffset: 10)
+        communityNameLabel.autoPinEdge(.bottom, to: .bottom, of: communityAvatarImage, withOffset: -4)
+        
+        dropdownButton.autoAlignAxis(.horizontal, toSameAxisOf: communityAvatarImage)
+        dropdownButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
+        
+    }
+    
+    func pinContentViewBottom() {
+        communityAvatarImage.autoPinEdge(toSuperviewEdge: .bottom, withInset: 16)
     }
 }
