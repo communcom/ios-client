@@ -22,17 +22,20 @@ class EditorVC: UIViewController {
     lazy var youWillPostIn = UILabel.descriptionLabel("you will post in".localized().uppercaseFirst)
     lazy var communityNameLabel = UILabel.with(text: "Commun", textSize: 15, weight: .semibold)
     lazy var dropdownButton = UIButton.circleGray(imageName: "drop-down")
-    // TODO: - Content
+    // Content
     var contentView: UIView!
     
     // Toolbar
     lazy var toolbar = UIView(height: 55)
+    var buttonsCollectionView: UICollectionView!
+    
+    // PostButton
     lazy var postButton = CommunButton(height: 36, label: "post".localized().uppercaseFirst, backgroundColor: .appMainColor, textColor: .white, cornerRadius: 18, contentInsets: UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16))
     
     // MARK: - Methods
     override func viewDidLoad() {
         super.viewDidLoad()
-        //
+        // custom view
         view.backgroundColor = .white
         
         setUpViews()
@@ -64,10 +67,26 @@ class EditorVC: UIViewController {
 //        toolbar.addShadow(offset: CGSize(width: 0, height: -10))
         toolbar.autoPinEdgesToSuperviewSafeArea(with: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0), excludingEdge: .top)
         
+        // buttons
+        setUpToolbarButtons()
+        
         // sendpost button
         toolbar.addSubview(postButton)
+        postButton.autoPinEdge(.leading, to: .trailing, of: buttonsCollectionView, withOffset: 16)
         postButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
         postButton.autoAlignAxis(toSuperviewAxis: .horizontal)
+    }
+    
+    func setUpToolbarButtons() {
+        let layout = UICollectionViewFlowLayout()
+        layout.sectionInset = .zero
+        layout.itemSize = CGSize(width: 45, height: 45)
+        buttonsCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        buttonsCollectionView.backgroundColor = .clear
+        buttonsCollectionView.configureForAutoLayout()
+        toolbar.addSubview(buttonsCollectionView)
+        // layout
+        buttonsCollectionView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 10, left: 16, bottom: 10, right: 0), excludingEdge: .right)
     }
     
     func layoutContentView() {
