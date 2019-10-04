@@ -12,4 +12,8 @@ class BasicEditorTextView: ContentTextView {
     override var defaultTypingAttributes: [NSAttributedString.Key : Any] {
         return [.font: UIFont.systemFont(ofSize: 17)]
     }
+    
+    let draftKey = "BasicEditorTextView.draftKey"
+    
+    
 }

@@ -11,13 +11,45 @@ import RxCocoa
 import RxSwift
 
 class ContentTextView: ExpandableTextView {
+    // MARK: - Nested types
+    struct TextStyle: Equatable {
+        var isBold = false
+        var isItalic = false
+        // if format is unpersisted alongside selection
+        var isMixed = false
+        var textColor: UIColor = .black
+        var urlString: String?
+        
+        static var `default`: TextStyle {
+            return TextStyle(isBold: false, isItalic: false, isMixed: false, textColor: .black, urlString: nil)
+        }
+        
+        /// Return new TextStyle by modifying current TextStyle
+        func setting(isBool: Bool? = nil, isItalic: Bool? = nil, isMixed: Bool? = nil, textColor: UIColor? = nil, urlString: String? = nil) -> TextStyle
+        {
+            let isBool = isBool ?? self.isBold
+            let isItalic = isItalic ?? self.isItalic
+            let isMixed = isMixed ?? self.isMixed
+            let textColor = textColor ?? self.textColor
+            let urlString = urlString ?? self.urlString
+            return TextStyle(isBold: isBool, isItalic: isItalic, isMixed: isMixed, textColor: textColor, urlString: urlString)
+        }
+    }
+    
     // MARK: - Properties
     // Must override!!!
     var defaultTypingAttributes: [NSAttributedString.Key: Any] {
-        return [:]
+        fatalError("Must override")
     }
+    
+    var selectedAString: NSAttributedString {
+        return attributedText.attributedSubstring(from: selectedRange)
+    }
+    
     let disposeBag = DisposeBag()
     var originalAttributedString: NSAttributedString?
+    
+    var currentTextStyle = BehaviorRelay<TextStyle>(value: TextStyle(isBold: false, isItalic: false, isMixed: false, textColor: .black, urlString: nil))
     
     override func setUpViews() {
         super.setUpViews()
@@ -38,11 +70,19 @@ class ContentTextView: ExpandableTextView {
                 }
             })
             .disposed(by: disposeBag)
+        
+        rx.didChangeSelection
+            .subscribe(onNext: {
+                // get TextStyle at current selectedRange
+                self.setCurrentTextStyle()
+            })
+            .disposed(by: disposeBag)
     }
     
     func clearFormatting() {
         if selectedRange.length == 0 {
             typingAttributes = defaultTypingAttributes
+            setCurrentTextStyle()
         }
         else {
             textStorage.enumerateAttributes(in: selectedRange, options: []) {
@@ -54,6 +94,7 @@ class ContentTextView: ExpandableTextView {
                 }
                 textStorage.setAttributes(defaultTypingAttributes, range: range)
             }
+            currentTextStyle.accept(.default)
         }
     }
     
@@ -111,6 +152,23 @@ class ContentTextView: ExpandableTextView {
     
     func insertTextWithDefaultAttributes(_ text: String, at index: Int) {
         textStorage.insert(NSAttributedString(string: text, attributes: defaultTypingAttributes), at: index)
+    }
+    
+    // MARK: - Draft
+    @objc func saveDraft(completion: (()->Void)? = nil) {
+        // for overriding
+    }
+    
+    @objc func getDraft(completion: (()->Void)? = nil) {
+        // for overriding
+    }
+    
+    @objc func removeDraft() {
+        // for overriding
+    }
+    
+    @objc var hasDraft: Bool {
+        fatalError("must override")
     }
 }
  
