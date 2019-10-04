@@ -26,7 +26,7 @@ class BasicEditorVC: EditorVC {
         
         // countlabel
         contentView.addSubview(contentTextViewCountLabel)
-        contentTextViewCountLabel.autoPinEdge(.top, to: .bottom, of: contentTextView, withOffset: 8)
+        contentTextViewCountLabel.autoPinEdge(.top, to: .bottom, of: contentTextView, withOffset: -12)
         contentTextViewCountLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
         
     }
