@@ -43,7 +43,7 @@ class EditorToolbarItemCell: UICollectionViewCell {
     func setUp(item: EditorToolbarItem) {
         // enabled state
         var textColor = UIColor(hexString: "#A5A7BD")!
-        if item.isEnabled {
+        if item.isHighlighted {
             contentView.backgroundColor = .appMainColor
             textColor = .white
         }

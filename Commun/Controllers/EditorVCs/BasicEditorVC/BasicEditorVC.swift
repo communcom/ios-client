@@ -15,6 +15,19 @@ class BasicEditorVC: EditorVC {
     var contentTextView = BasicEditorTextView(height: 47.5)
     var contentTextViewCountLabel = UILabel.descriptionLabel("0/30000")
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        appendTool(EditorToolbarItem(
+            name: "open-article",
+            icon: "editor-open-article",
+            iconSize: CGSize(width: 19, height: 19),
+            description: "article".localized().uppercaseFirst,
+            isHighlighted: false,
+            action: {
+                
+        }))
+    }
+    
     override func layoutContentView() {
         super.layoutContentView()
         

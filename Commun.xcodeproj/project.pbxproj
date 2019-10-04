@@ -65,6 +65,7 @@
 		3B3C8B7A23472ADA00D8BADB /* EditorToolbarItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3C8B7923472ADA00D8BADB /* EditorToolbarItemCell.swift */; };
 		3B3C8B7C23472BF000D8BADB /* EditorToolbarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3C8B7B23472BF000D8BADB /* EditorToolbarItem.swift */; };
 		3B3C8B7E23473ED900D8BADB /* EditorVC+CollectionViewFlowLayoutDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3C8B7D23473ED900D8BADB /* EditorVC+CollectionViewFlowLayoutDelegate.swift */; };
+		3B3C8B8223475AA100D8BADB /* EditorVC+Tools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3C8B8123475AA100D8BADB /* EditorVC+Tools.swift */; };
 		3B4ECA3D22A6741D00F59FC8 /* NotificationsPage+EmptyDataSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B4ECA3C22A6741D00F59FC8 /* NotificationsPage+EmptyDataSet.swift */; };
 		3B515819226DDE8D00108F17 /* EmptyCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3B515818226DDE8D00108F17 /* EmptyCell.xib */; };
 		3B51581C226DE28D00108F17 /* EmptyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B51581B226DE28D00108F17 /* EmptyCell.swift */; };
@@ -330,6 +331,7 @@
 		3B3C8B7923472ADA00D8BADB /* EditorToolbarItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorToolbarItemCell.swift; sourceTree = "<group>"; };
 		3B3C8B7B23472BF000D8BADB /* EditorToolbarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorToolbarItem.swift; sourceTree = "<group>"; };
 		3B3C8B7D23473ED900D8BADB /* EditorVC+CollectionViewFlowLayoutDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EditorVC+CollectionViewFlowLayoutDelegate.swift"; sourceTree = "<group>"; };
+		3B3C8B8123475AA100D8BADB /* EditorVC+Tools.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EditorVC+Tools.swift"; sourceTree = "<group>"; };
 		3B4ECA3C22A6741D00F59FC8 /* NotificationsPage+EmptyDataSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotificationsPage+EmptyDataSet.swift"; sourceTree = "<group>"; };
 		3B515818226DDE8D00108F17 /* EmptyCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmptyCell.xib; sourceTree = "<group>"; };
 		3B51581B226DE28D00108F17 /* EmptyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyCell.swift; sourceTree = "<group>"; };
@@ -731,6 +733,7 @@
 			children = (
 				3B3C8B7823472AC000D8BADB /* Subviews */,
 				3B6205592346E4220017FEB7 /* EditorVC.swift */,
+				3B3C8B8123475AA100D8BADB /* EditorVC+Tools.swift */,
 				3B3C8B7D23473ED900D8BADB /* EditorVC+CollectionViewFlowLayoutDelegate.swift */,
 				3B06863723471152008953C5 /* BasicEditorVC */,
 			);
@@ -1768,6 +1771,7 @@
 				3BDD99FE228DA59900B2A1DA /* ExpandableTextView.swift in Sources */,
 				3B8E0ED5234302D600362F26 /* SetUserVC+Actions.swift in Sources */,
 				3BB48AD022D5F84D00F11B6A /* SetPasscodeVC.swift in Sources */,
+				3B3C8B8223475AA100D8BADB /* EditorVC+Tools.swift in Sources */,
 				3B24F86522F3777500B7091C /* CommunitiesViewModel.swift in Sources */,
 				3B5D7CF12299D79B0077B82C /* FeedSortMode.swift in Sources */,
 				3BB48AD522D645FF00F11B6A /* BoardingVC.swift in Sources */,

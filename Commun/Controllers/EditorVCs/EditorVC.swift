@@ -15,10 +15,10 @@ class EditorVC: UIViewController {
     let disposeBag = DisposeBag()
     
     let tools = BehaviorRelay<[EditorToolbarItem]>(value: [
-        EditorToolbarItem(name: "18+", icon: "18Button", iconSize: CGSize(width: 23, height: 12), description: nil, isEnabled: false, action: {
+        EditorToolbarItem(name: "18+", icon: "18Button", iconSize: CGSize(width: 23, height: 12), description: nil, isHighlighted: false, action: {
             print("18+")
         }),
-        EditorToolbarItem(name: "open-photo", icon: "editor-open-photo", iconSize: CGSize(width: 18, height: 18), description: "testa sad", action: {
+        EditorToolbarItem(name: "open-photo", icon: "editor-open-photo", iconSize: CGSize(width: 18, height: 18), description: nil, isHighlighted: false, action: {
             print("18+")
         })
     ]) 
