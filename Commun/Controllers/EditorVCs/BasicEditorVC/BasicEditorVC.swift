@@ -24,19 +24,6 @@ class BasicEditorVC: EditorVC {
         return contentTextView.rx.text.orEmpty.map {_ in ()}
     }
     
-    override var shouldSendPost: Bool {
-        let content = contentTextView.text ?? ""
-        
-        // both title and content are not empty
-        let contentAreNotEmpty = !content.isEmpty
-        
-        // compare content
-        let contentChanged = (self.contentTextView.attributedText != self.contentTextView.originalAttributedString)
-        
-        // reassign result
-        return contentAreNotEmpty && contentChanged
-    }
-    
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()

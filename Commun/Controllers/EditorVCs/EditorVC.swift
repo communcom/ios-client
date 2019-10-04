@@ -19,8 +19,18 @@ class EditorVC: UIViewController {
         fatalError("Must override")
     }
     
+    #warning("Must override in ArticleVC")
     var shouldSendPost: Bool {
-        fatalError("Must override")
+        let content = contentTextView.text ?? ""
+        
+        // both title and content are not empty
+        let contentAreNotEmpty = !content.isEmpty
+        
+        // compare content
+        let contentChanged = (self.contentTextView.attributedText != self.contentTextView.originalAttributedString)
+        
+        // reassign result
+        return contentAreNotEmpty && contentChanged
     }
     
     var contentTextView: ContentTextView {
