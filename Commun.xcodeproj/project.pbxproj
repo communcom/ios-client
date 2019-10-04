@@ -16,6 +16,7 @@
 		3B02CD34228ADC100078BB52 /* UIWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B02CD33228ADC100078BB52 /* UIWebView.swift */; };
 		3B0506EE22D7309900B4E4A3 /* KeysVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B0506ED22D7309900B4E4A3 /* KeysVC.swift */; };
 		3B0520A9231CC73F005CA9CE /* ContentBlockTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B0520A8231CC73F005CA9CE /* ContentBlockTests.swift */; };
+		3B0686302346FFA6008953C5 /* CommunButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B06862F2346FFA6008953C5 /* CommunButton.swift */; };
 		3B0CEE13232B3CCF006BE8E1 /* EmbedsPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B0CEE12232B3CCF006BE8E1 /* EmbedsPageViewController.swift */; };
 		3B0E9C5E226F02AC002AB1C2 /* ProfileEditCoverVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B0E9C5D226F02AC002AB1C2 /* ProfileEditCoverVC.swift */; };
 		3B0E9C64226F4A0C002AB1C2 /* VerticalDraggableImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B0E9C63226F4A0C002AB1C2 /* VerticalDraggableImageView.swift */; };
@@ -274,6 +275,7 @@
 		3B02CD33228ADC100078BB52 /* UIWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIWebView.swift; sourceTree = "<group>"; };
 		3B0506ED22D7309900B4E4A3 /* KeysVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeysVC.swift; sourceTree = "<group>"; };
 		3B0520A8231CC73F005CA9CE /* ContentBlockTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentBlockTests.swift; sourceTree = "<group>"; };
+		3B06862F2346FFA6008953C5 /* CommunButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunButton.swift; sourceTree = "<group>"; };
 		3B0CEE12232B3CCF006BE8E1 /* EmbedsPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbedsPageViewController.swift; sourceTree = "<group>"; };
 		3B0E9C5D226F02AC002AB1C2 /* ProfileEditCoverVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditCoverVC.swift; sourceTree = "<group>"; };
 		3B0E9C63226F4A0C002AB1C2 /* VerticalDraggableImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalDraggableImageView.swift; sourceTree = "<group>"; };
@@ -571,6 +573,14 @@
 			path = PostHeaderView;
 			sourceTree = "<group>";
 		};
+		3B06862E2346FF3C008953C5 /* Subviews */ = {
+			isa = PBXGroup;
+			children = (
+				3B06862F2346FFA6008953C5 /* CommunButton.swift */,
+			);
+			path = Subviews;
+			sourceTree = "<group>";
+		};
 		3B0E9C6F22706965002AB1C2 /* ProfileChooseAvatarVC */ = {
 			isa = PBXGroup;
 			children = (
@@ -688,6 +698,7 @@
 		3B6205582346E40A0017FEB7 /* EditorVCs */ = {
 			isa = PBXGroup;
 			children = (
+				3B06862E2346FF3C008953C5 /* Subviews */,
 				3B6205592346E4220017FEB7 /* EditorVC.swift */,
 			);
 			path = EditorVCs;
@@ -1824,6 +1835,7 @@
 				3BDD9A04228DBEC200B2A1DA /* CommentForm.swift in Sources */,
 				3BD50573231387EB00F3F9D3 /* MediaView.swift in Sources */,
 				3BAE92A922DE553D00E97AE8 /* ScalableLayoutConstraint.swift in Sources */,
+				3B0686302346FFA6008953C5 /* CommunButton.swift in Sources */,
 				3BB342B422CA7412009546B2 /* CreateBioVC.swift in Sources */,
 				3BB32F1923438D4F006572F3 /* DimmingPresentationController.swift in Sources */,
 				3B5CB30522A5752100757533 /* ListViewModelType.swift in Sources */,

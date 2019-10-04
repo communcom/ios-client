@@ -23,7 +23,7 @@ class EditorVC: UIViewController {
     
     // Toolbar
     lazy var toolbar = UIView(height: 55)
-    lazy var postButton = StepButton(height: 36, label: "post".localized().uppercaseFirst, textColor: .white, cornerRadius: 18, contentInsets: UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16))
+    lazy var postButton = CommunButton(height: 36, label: "post".localized().uppercaseFirst, backgroundColor: .appMainColor, textColor: .white, cornerRadius: 18, contentInsets: UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16))
     
     // MARK: - Methods
     override func viewDidLoad() {
@@ -36,8 +36,7 @@ class EditorVC: UIViewController {
     
     func setUpViews() {
         // toolbars
-        view.addSubview(toolbar)
-        toolbar.autoPinEdgesToSuperviewSafeArea(with: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0), excludingEdge: .top)
+        setUpToolbar()
         
         // add scrollview
         let scrollView = UIScrollView(forAutoLayout: ())
@@ -54,6 +53,17 @@ class EditorVC: UIViewController {
         // fix contentView
         layoutContentView()
         pinContentViewBottom()
+    }
+    
+    func setUpToolbar() {
+        view.addSubview(toolbar)
+//        toolbar.addShadow(offset: CGSize(width: 0, height: -10))
+        toolbar.autoPinEdgesToSuperviewSafeArea(with: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0), excludingEdge: .top)
+        
+        // sendpost button
+        toolbar.addSubview(postButton)
+        postButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
+        postButton.autoAlignAxis(toSuperviewAxis: .horizontal)
     }
     
     func layoutContentView() {
