@@ -19,6 +19,7 @@
 		3B0686302346FFA6008953C5 /* CommunButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B06862F2346FFA6008953C5 /* CommunButton.swift */; };
 		3B068632234700DC008953C5 /* BasicEditorVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B068631234700DC008953C5 /* BasicEditorVC.swift */; };
 		3B06863423470A33008953C5 /* BasicEditorTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B06863323470A33008953C5 /* BasicEditorTextView.swift */; };
+		3B068636234710BC008953C5 /* BasicEditorVC+Delegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B068635234710BC008953C5 /* BasicEditorVC+Delegate.swift */; };
 		3B0CEE13232B3CCF006BE8E1 /* EmbedsPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B0CEE12232B3CCF006BE8E1 /* EmbedsPageViewController.swift */; };
 		3B0E9C5E226F02AC002AB1C2 /* ProfileEditCoverVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B0E9C5D226F02AC002AB1C2 /* ProfileEditCoverVC.swift */; };
 		3B0E9C64226F4A0C002AB1C2 /* VerticalDraggableImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B0E9C63226F4A0C002AB1C2 /* VerticalDraggableImageView.swift */; };
@@ -280,6 +281,7 @@
 		3B06862F2346FFA6008953C5 /* CommunButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunButton.swift; sourceTree = "<group>"; };
 		3B068631234700DC008953C5 /* BasicEditorVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicEditorVC.swift; sourceTree = "<group>"; };
 		3B06863323470A33008953C5 /* BasicEditorTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicEditorTextView.swift; sourceTree = "<group>"; };
+		3B068635234710BC008953C5 /* BasicEditorVC+Delegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BasicEditorVC+Delegate.swift"; sourceTree = "<group>"; };
 		3B0CEE12232B3CCF006BE8E1 /* EmbedsPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbedsPageViewController.swift; sourceTree = "<group>"; };
 		3B0E9C5D226F02AC002AB1C2 /* ProfileEditCoverVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditCoverVC.swift; sourceTree = "<group>"; };
 		3B0E9C63226F4A0C002AB1C2 /* VerticalDraggableImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalDraggableImageView.swift; sourceTree = "<group>"; };
@@ -577,10 +579,19 @@
 			path = PostHeaderView;
 			sourceTree = "<group>";
 		};
-		3B06862E2346FF3C008953C5 /* Subviews */ = {
+		3B06863723471152008953C5 /* BasicEditorVC */ = {
 			isa = PBXGroup;
 			children = (
-				3B06862F2346FFA6008953C5 /* CommunButton.swift */,
+				3B06863823471163008953C5 /* Subviews */,
+				3B068631234700DC008953C5 /* BasicEditorVC.swift */,
+				3B068635234710BC008953C5 /* BasicEditorVC+Delegate.swift */,
+			);
+			path = BasicEditorVC;
+			sourceTree = "<group>";
+		};
+		3B06863823471163008953C5 /* Subviews */ = {
+			isa = PBXGroup;
+			children = (
 				3B06863323470A33008953C5 /* BasicEditorTextView.swift */,
 			);
 			path = Subviews;
@@ -703,9 +714,8 @@
 		3B6205582346E40A0017FEB7 /* EditorVCs */ = {
 			isa = PBXGroup;
 			children = (
-				3B06862E2346FF3C008953C5 /* Subviews */,
 				3B6205592346E4220017FEB7 /* EditorVC.swift */,
-				3B068631234700DC008953C5 /* BasicEditorVC.swift */,
+				3B06863723471152008953C5 /* BasicEditorVC */,
 			);
 			path = EditorVCs;
 			sourceTree = "<group>";
@@ -1189,6 +1199,7 @@
 		578409EA223FAC0000338FD5 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				3B06862F2346FFA6008953C5 /* CommunButton.swift */,
 				3BB32F1723438D32006572F3 /* UIPresentationControllers */,
 				3BC613AA23420FC400075570 /* UIViewControllers */,
 				3B9BEB3B2300E210003C70B3 /* EmptyViews */,
@@ -1691,6 +1702,7 @@
 				3BAD8E832318FB1C005A8AB3 /* NSAttributedString.swift in Sources */,
 				3B6CB73023432D6F0097B2A1 /* FavouritesList.swift in Sources */,
 				3BC613B12342140000075570 /* SwipeDownInteractor.swift in Sources */,
+				3B068636234710BC008953C5 /* BasicEditorVC+Delegate.swift in Sources */,
 				5787C0C622650FA500568CEC /* SetUserViewModel.swift in Sources */,
 				575AECB122606F6600A7EC2D /* SelectCountryVC.swift in Sources */,
 				571B14FC223A935C00630C8F /* Commun.xcdatamodeld in Sources */,

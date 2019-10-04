@@ -8,6 +8,7 @@
 
 import Foundation
 import PureLayout
+import RxCocoa
 
 class BasicEditorVC: EditorVC {
     // MARK: - Subviews
@@ -23,6 +24,7 @@ class BasicEditorVC: EditorVC {
         contentTextView.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
         contentTextView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
         contentTextView.autoPinEdge(.top, to: .bottom, of: communityAvatarImage, withOffset: 20)
+        contentTextView.rx.setDelegate(self).disposed(by: disposeBag)
         
         // countlabel
         contentView.addSubview(contentTextViewCountLabel)

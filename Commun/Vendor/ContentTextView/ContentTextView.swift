@@ -41,7 +41,20 @@ class ContentTextView: ExpandableTextView {
     }
     
     func clearFormatting() {
-        // for overriding
+        if selectedRange.length == 0 {
+            typingAttributes = defaultTypingAttributes
+        }
+        else {
+            textStorage.enumerateAttributes(in: selectedRange, options: []) {
+                (attrs, range, stop) in
+                if let link = attrs[.link] as? String {
+                    if link.isLinkToTag || link.isLinkToMention {
+                        return
+                    }
+                }
+                textStorage.setAttributes(defaultTypingAttributes, range: range)
+            }
+        }
     }
     
     func shouldChangeCharacterInRange(_ range: NSRange, replacementText text: String) -> Bool

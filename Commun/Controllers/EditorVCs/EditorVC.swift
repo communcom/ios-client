@@ -7,8 +7,12 @@
 //
 
 import Foundation
+import RxSwift
 
 class EditorVC: UIViewController {
+    // MARK: - Properties
+    let disposeBag = DisposeBag()
+    
     // MARK: - Subviews
     // header
     lazy var closeButton = UIButton.circleGray(imageName: "close-x")
