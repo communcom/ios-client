@@ -17,9 +17,12 @@ class EditorVC: UIViewController {
     var contentCombined: Observable<[Any]>! {
         return nil
     }
+    
     var contentTextView: ContentTextView {
         fatalError("Must override")
     }
+    
+    var viewModel = EditorViewModel()
     
     let tools = BehaviorRelay<[EditorToolbarItem]>(value: [
         EditorToolbarItem.hideKeyboard,
