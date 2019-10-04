@@ -55,7 +55,7 @@ class ExpandableTextView: UITextView {
                 if (self.maxHeight > 0 && newFrame.size.height > self.maxHeight) {return}
                 
                 self.frame = newFrame
-                self.heightConstraint?.constant = newSize.height
+                self.heightConstraint?.constant = newSize.height + 20
                 self.layoutIfNeeded()
             })
             .disposed(by: bag)
