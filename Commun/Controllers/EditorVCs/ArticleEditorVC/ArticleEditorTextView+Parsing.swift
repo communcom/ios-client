@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 import CyberSwift
 
-extension EditorPageTextView {
+extension ArticleEditorTextView {
     func parseText(_ string: String) {
         // Plain string
         var attributedText = NSAttributedString(string: string, attributes: defaultTypingAttributes)

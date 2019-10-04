@@ -68,12 +68,12 @@
 		3B3C8B8223475AA100D8BADB /* EditorVC+Tools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3C8B8123475AA100D8BADB /* EditorVC+Tools.swift */; };
 		3B3C8B84234779FE00D8BADB /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3C8B83234779FE00D8BADB /* UIImage.swift */; };
 		3B3C8B862347866D00D8BADB /* ContentTextView+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3C8B852347866D00D8BADB /* ContentTextView+Utilities.swift */; };
-		3B3C8B8E2347876000D8BADB /* EditorPageTextView+Text.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3C8B882347875F00D8BADB /* EditorPageTextView+Text.swift */; };
+		3B3C8B8E2347876000D8BADB /* ContentTextView+Text.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3C8B882347875F00D8BADB /* ContentTextView+Text.swift */; };
 		3B3C8B8F2347876000D8BADB /* ArticleEditorTextView+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3C8B892347875F00D8BADB /* ArticleEditorTextView+Utilities.swift */; };
 		3B3C8B902347876000D8BADB /* ArticleEditorTextView+Attachment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3C8B8A2347876000D8BADB /* ArticleEditorTextView+Attachment.swift */; };
 		3B3C8B912347876000D8BADB /* ArticleEditorTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3C8B8B2347876000D8BADB /* ArticleEditorTextView.swift */; };
-		3B3C8B922347876000D8BADB /* EditorPageTextView+Parsing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3C8B8C2347876000D8BADB /* EditorPageTextView+Parsing.swift */; };
-		3B3C8B932347876000D8BADB /* EditorPageTextView+Delegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3C8B8D2347876000D8BADB /* EditorPageTextView+Delegate.swift */; };
+		3B3C8B922347876000D8BADB /* ArticleEditorTextView+Parsing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3C8B8C2347876000D8BADB /* ArticleEditorTextView+Parsing.swift */; };
+		3B3C8B932347876000D8BADB /* ArticleEditorTextView+Delegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3C8B8D2347876000D8BADB /* ArticleEditorTextView+Delegate.swift */; };
 		3B4ECA3D22A6741D00F59FC8 /* NotificationsPage+EmptyDataSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B4ECA3C22A6741D00F59FC8 /* NotificationsPage+EmptyDataSet.swift */; };
 		3B515819226DDE8D00108F17 /* EmptyCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3B515818226DDE8D00108F17 /* EmptyCell.xib */; };
 		3B51581C226DE28D00108F17 /* EmptyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B51581B226DE28D00108F17 /* EmptyCell.swift */; };
@@ -342,12 +342,12 @@
 		3B3C8B8123475AA100D8BADB /* EditorVC+Tools.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EditorVC+Tools.swift"; sourceTree = "<group>"; };
 		3B3C8B83234779FE00D8BADB /* UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
 		3B3C8B852347866D00D8BADB /* ContentTextView+Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContentTextView+Utilities.swift"; sourceTree = "<group>"; };
-		3B3C8B882347875F00D8BADB /* EditorPageTextView+Text.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EditorPageTextView+Text.swift"; sourceTree = "<group>"; };
+		3B3C8B882347875F00D8BADB /* ContentTextView+Text.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ContentTextView+Text.swift"; sourceTree = "<group>"; };
 		3B3C8B892347875F00D8BADB /* ArticleEditorTextView+Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ArticleEditorTextView+Utilities.swift"; sourceTree = "<group>"; };
 		3B3C8B8A2347876000D8BADB /* ArticleEditorTextView+Attachment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ArticleEditorTextView+Attachment.swift"; sourceTree = "<group>"; };
 		3B3C8B8B2347876000D8BADB /* ArticleEditorTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticleEditorTextView.swift; sourceTree = "<group>"; };
-		3B3C8B8C2347876000D8BADB /* EditorPageTextView+Parsing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EditorPageTextView+Parsing.swift"; sourceTree = "<group>"; };
-		3B3C8B8D2347876000D8BADB /* EditorPageTextView+Delegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EditorPageTextView+Delegate.swift"; sourceTree = "<group>"; };
+		3B3C8B8C2347876000D8BADB /* ArticleEditorTextView+Parsing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ArticleEditorTextView+Parsing.swift"; sourceTree = "<group>"; };
+		3B3C8B8D2347876000D8BADB /* ArticleEditorTextView+Delegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ArticleEditorTextView+Delegate.swift"; sourceTree = "<group>"; };
 		3B4ECA3C22A6741D00F59FC8 /* NotificationsPage+EmptyDataSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotificationsPage+EmptyDataSet.swift"; sourceTree = "<group>"; };
 		3B515818226DDE8D00108F17 /* EmptyCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmptyCell.xib; sourceTree = "<group>"; };
 		3B51581B226DE28D00108F17 /* EmptyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyCell.swift; sourceTree = "<group>"; };
@@ -711,9 +711,8 @@
 			children = (
 				3B3C8B8B2347876000D8BADB /* ArticleEditorTextView.swift */,
 				3B3C8B8A2347876000D8BADB /* ArticleEditorTextView+Attachment.swift */,
-				3B3C8B8D2347876000D8BADB /* EditorPageTextView+Delegate.swift */,
-				3B3C8B8C2347876000D8BADB /* EditorPageTextView+Parsing.swift */,
-				3B3C8B882347875F00D8BADB /* EditorPageTextView+Text.swift */,
+				3B3C8B8D2347876000D8BADB /* ArticleEditorTextView+Delegate.swift */,
+				3B3C8B8C2347876000D8BADB /* ArticleEditorTextView+Parsing.swift */,
 				3B3C8B892347875F00D8BADB /* ArticleEditorTextView+Utilities.swift */,
 			);
 			path = ArticleEditorVC;
@@ -840,6 +839,7 @@
 			isa = PBXGroup;
 			children = (
 				3BAE5CD3233899F30055F23E /* ContentTextView.swift */,
+				3B3C8B882347875F00D8BADB /* ContentTextView+Text.swift */,
 				3B3C8B852347866D00D8BADB /* ContentTextView+Utilities.swift */,
 			);
 			path = ContentTextView;
@@ -1820,12 +1820,12 @@
 				3B3C8B8F2347876000D8BADB /* ArticleEditorTextView+Utilities.swift in Sources */,
 				3B197C5B2269EF3F008CF10D /* ProfilePageVC+Binding.swift in Sources */,
 				3B24F86F22F37FB800B7091C /* CommunitiesVC+DataSource.swift in Sources */,
-				3B3C8B932347876000D8BADB /* EditorPageTextView+Delegate.swift in Sources */,
+				3B3C8B932347876000D8BADB /* ArticleEditorTextView+Delegate.swift in Sources */,
 				3B0E9C752270C691002AB1C2 /* ProfileEditBioVC.swift in Sources */,
 				57A95197224178010020F55D /* PostController.swift in Sources */,
 				3B67FC0622C4BB5100D05F01 /* SplashViewController.swift in Sources */,
 				3BB32F1B234436EF006572F3 /* PostMetaView.swift in Sources */,
-				3B3C8B8E2347876000D8BADB /* EditorPageTextView+Text.swift in Sources */,
+				3B3C8B8E2347876000D8BADB /* ContentTextView+Text.swift in Sources */,
 				3B9BEB3D2300EC7D003C70B3 /* EmptyView.swift in Sources */,
 				3B6229AB22BD12410053B9EF /* TTTAttributedLabel.swift in Sources */,
 				3BDF4FA822C21B310029D616 /* ResponseAPIContentGetProfile.swift in Sources */,
@@ -1888,7 +1888,7 @@
 				3B289B972346E51600598407 /* UIButton+PureLayout.swift in Sources */,
 				571B14F4223A935C00630C8F /* AppDelegate.swift in Sources */,
 				3B0E9C6C2270634B002AB1C2 /* ProfileChooseAvatarVC.swift in Sources */,
-				3B3C8B922347876000D8BADB /* EditorPageTextView+Parsing.swift in Sources */,
+				3B3C8B922347876000D8BADB /* ArticleEditorTextView+Parsing.swift in Sources */,
 				3B61AC3422E1CA8A00F608AF /* LAContext.swift in Sources */,
 				3B24F86322F376FF00B7091C /* CommunitiesVC+Binding.swift in Sources */,
 				3B2538B1231E318400D0B1DA /* StateButton.swift in Sources */,

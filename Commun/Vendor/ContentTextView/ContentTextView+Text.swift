@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension EditorPageTextView {
+extension ContentTextView {
     // MARK: - Font
     func setBold(from sender: UIButton) {
         setSymbolicTrait(.traitBold, on: !sender.isSelected)
@@ -21,7 +21,7 @@ extension EditorPageTextView {
     private func setSymbolicTrait(_ trait: UIFontDescriptor.SymbolicTraits, on: Bool) {
         // Modify typingAttributes
         if selectedRange.length == 0 {
-            var font = (typingAttributes[.font] as? UIFont) ?? defaultFont
+            var font = (typingAttributes[.font] as? UIFont) ?? (defaultTypingAttributes[.font] as! UIFont)
             var symbolicTraits = font.fontDescriptor.symbolicTraits
             
             if on {
@@ -41,7 +41,7 @@ extension EditorPageTextView {
                 if attrs[.link] != nil {
                     return
                 }
-                var font = (attrs[.font] as? UIFont) ?? defaultFont
+                var font = (attrs[.font] as? UIFont) ?? (defaultTypingAttributes[.font] as! UIFont)
                 let fontDescriptor = font.fontDescriptor
                 var symbolicTraits = fontDescriptor.symbolicTraits
                 

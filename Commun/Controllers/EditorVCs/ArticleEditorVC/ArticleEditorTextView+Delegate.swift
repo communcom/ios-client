@@ -10,7 +10,7 @@ import Foundation
 import SafariServices
 import AppImageViewer
 
-extension EditorPageTextView {
+extension ArticleEditorTextView {
     func shouldInteractWithTextAttachment(_ textAttachment: NSTextAttachment, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
         if let attachment = textAttachment as? TextAttachment {
             parentViewController?.showActionSheet(title: "choose action".localized().uppercaseFirst, message: nil, actions: [
