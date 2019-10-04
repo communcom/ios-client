@@ -93,6 +93,7 @@ class EditorVC: UIViewController {
         
         // common contentTextView
         contentTextView.placeholder = "write text placeholder".localized().uppercaseFirst + "..."
+        headerLabel.text = (viewModel.postForEdit != nil ? "edit post" : "create post").localized().uppercaseFirst
         
         // bind
         bind()
