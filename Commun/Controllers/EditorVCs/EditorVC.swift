@@ -8,10 +8,20 @@
 
 import Foundation
 import RxSwift
+import RxCocoa
 
 class EditorVC: UIViewController {
     // MARK: - Properties
     let disposeBag = DisposeBag()
+    
+    let tools = BehaviorRelay<[EditorToolbarItem]>(value: [
+        EditorToolbarItem(name: "18+", icon: "18Button", iconSize: CGSize(width: 23, height: 12), description: nil, isEnabled: false, action: {
+            print("18+")
+        }),
+        EditorToolbarItem(name: "open-photo", icon: "editor-open-photo", iconSize: CGSize(width: 18, height: 18), description: "testa sad", action: {
+            print("18+")
+        })
+    ]) 
     
     // MARK: - Subviews
     // header
@@ -60,6 +70,9 @@ class EditorVC: UIViewController {
         // fix contentView
         layoutContentView()
         pinContentViewBottom()
+        
+        // bind
+        bind()
     }
     
     func setUpToolbar() {
@@ -80,13 +93,14 @@ class EditorVC: UIViewController {
     func setUpToolbarButtons() {
         let layout = UICollectionViewFlowLayout()
         layout.sectionInset = .zero
-        layout.itemSize = CGSize(width: 45, height: 45)
+        layout.estimatedItemSize = CGSize(width: 35, height: 35)
         buttonsCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         buttonsCollectionView.backgroundColor = .clear
         buttonsCollectionView.configureForAutoLayout()
         toolbar.addSubview(buttonsCollectionView)
         // layout
         buttonsCollectionView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 10, left: 16, bottom: 10, right: 0), excludingEdge: .right)
+        buttonsCollectionView.register(EditorToolbarItemCell.self, forCellWithReuseIdentifier: "EditorToolbarItemCell")
     }
     
     func layoutContentView() {
@@ -120,5 +134,18 @@ class EditorVC: UIViewController {
     
     func pinContentViewBottom() {
         fatalError("Must override this method")
+    }
+    
+    func bind() {
+        tools
+            .bind(to: buttonsCollectionView.rx.items(
+                cellIdentifier: "EditorToolbarItemCell", cellType: EditorToolbarItemCell.self))
+                { (index, item, cell) in
+                    cell.setUp(item: item)
+                }
+            .disposed(by: disposeBag)
+        
+        buttonsCollectionView.rx.setDelegate(self)
+            .disposed(by: disposeBag)
     }
 }

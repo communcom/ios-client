@@ -62,6 +62,9 @@
 		3B2F226F226892C5006B589E /* NotificationsPageVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3B2F2268226892C5006B589E /* NotificationsPageVC.storyboard */; };
 		3B2F227122689308006B589E /* TabBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B2F227022689308006B589E /* TabBarViewModel.swift */; };
 		3B2F227322689334006B589E /* NSMutableAttributedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B2F227222689334006B589E /* NSMutableAttributedString.swift */; };
+		3B3C8B7A23472ADA00D8BADB /* EditorToolbarItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3C8B7923472ADA00D8BADB /* EditorToolbarItemCell.swift */; };
+		3B3C8B7C23472BF000D8BADB /* EditorToolbarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3C8B7B23472BF000D8BADB /* EditorToolbarItem.swift */; };
+		3B3C8B7E23473ED900D8BADB /* EditorVC+CollectionViewFlowLayoutDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3C8B7D23473ED900D8BADB /* EditorVC+CollectionViewFlowLayoutDelegate.swift */; };
 		3B4ECA3D22A6741D00F59FC8 /* NotificationsPage+EmptyDataSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B4ECA3C22A6741D00F59FC8 /* NotificationsPage+EmptyDataSet.swift */; };
 		3B515819226DDE8D00108F17 /* EmptyCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3B515818226DDE8D00108F17 /* EmptyCell.xib */; };
 		3B51581C226DE28D00108F17 /* EmptyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B51581B226DE28D00108F17 /* EmptyCell.swift */; };
@@ -324,6 +327,9 @@
 		3B2F2268226892C5006B589E /* NotificationsPageVC.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = NotificationsPageVC.storyboard; sourceTree = "<group>"; };
 		3B2F227022689308006B589E /* TabBarViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarViewModel.swift; sourceTree = "<group>"; };
 		3B2F227222689334006B589E /* NSMutableAttributedString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSMutableAttributedString.swift; sourceTree = "<group>"; };
+		3B3C8B7923472ADA00D8BADB /* EditorToolbarItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorToolbarItemCell.swift; sourceTree = "<group>"; };
+		3B3C8B7B23472BF000D8BADB /* EditorToolbarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorToolbarItem.swift; sourceTree = "<group>"; };
+		3B3C8B7D23473ED900D8BADB /* EditorVC+CollectionViewFlowLayoutDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EditorVC+CollectionViewFlowLayoutDelegate.swift"; sourceTree = "<group>"; };
 		3B4ECA3C22A6741D00F59FC8 /* NotificationsPage+EmptyDataSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotificationsPage+EmptyDataSet.swift"; sourceTree = "<group>"; };
 		3B515818226DDE8D00108F17 /* EmptyCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmptyCell.xib; sourceTree = "<group>"; };
 		3B51581B226DE28D00108F17 /* EmptyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyCell.swift; sourceTree = "<group>"; };
@@ -674,6 +680,15 @@
 			path = NotificationsPageVC;
 			sourceTree = "<group>";
 		};
+		3B3C8B7823472AC000D8BADB /* Subviews */ = {
+			isa = PBXGroup;
+			children = (
+				3B3C8B7B23472BF000D8BADB /* EditorToolbarItem.swift */,
+				3B3C8B7923472ADA00D8BADB /* EditorToolbarItemCell.swift */,
+			);
+			path = Subviews;
+			sourceTree = "<group>";
+		};
 		3B51581A226DE27200108F17 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
@@ -714,7 +729,9 @@
 		3B6205582346E40A0017FEB7 /* EditorVCs */ = {
 			isa = PBXGroup;
 			children = (
+				3B3C8B7823472AC000D8BADB /* Subviews */,
 				3B6205592346E4220017FEB7 /* EditorVC.swift */,
+				3B3C8B7D23473ED900D8BADB /* EditorVC+CollectionViewFlowLayoutDelegate.swift */,
 				3B06863723471152008953C5 /* BasicEditorVC */,
 			);
 			path = EditorVCs;
@@ -1715,6 +1732,7 @@
 				B17A970C228002440081B8E0 /* SignUpRouter.swift in Sources */,
 				5787C0C422650F9D00568CEC /* SetUserVC.swift in Sources */,
 				5721E87122650AC0003BE04B /* StringExtension.swift in Sources */,
+				3B3C8B7E23473ED900D8BADB /* EditorVC+CollectionViewFlowLayoutDelegate.swift in Sources */,
 				3B0E9C732270785E002AB1C2 /* PhotoLibraryCell.swift in Sources */,
 				3B6CB732234331830097B2A1 /* Array.swift in Sources */,
 				3B51581E226E0D3A00108F17 /* TLPhotosPickerViewController+Rx.swift in Sources */,
@@ -1731,6 +1749,7 @@
 				3B67FC0B22C50BC400D05F01 /* SignInViewController+CollectionView.swift in Sources */,
 				3BF37BD622A162E000A72FFE /* ResponseAPIOnlineNotificationData.swift in Sources */,
 				3BE68AAE22EEA1AE00033B81 /* SettingsVC+ButtonDelegate.swift in Sources */,
+				3B3C8B7C23472BF000D8BADB /* EditorToolbarItem.swift in Sources */,
 				3BA3779722E9DA6C0071AF3A /* SignupVC+Location.swift in Sources */,
 				57FB179D224BFBD700563BF7 /* PillPageControl.swift in Sources */,
 				3BAD8E7F2318C524005A8AB3 /* ContentBlock.swift in Sources */,
@@ -1745,6 +1764,7 @@
 				3BAD8E812318D838005A8AB3 /* UITextView+UILabel.swift in Sources */,
 				3BAF69CF226787940055CCEB /* Date.swift in Sources */,
 				3BE68AB222EEA7C300033B81 /* LocalAuthVC.swift in Sources */,
+				3B3C8B7A23472ADA00D8BADB /* EditorToolbarItemCell.swift in Sources */,
 				3BDD99FE228DA59900B2A1DA /* ExpandableTextView.swift in Sources */,
 				3B8E0ED5234302D600362F26 /* SetUserVC+Actions.swift in Sources */,
 				3BB48AD022D5F84D00F11B6A /* SetPasscodeVC.swift in Sources */,
