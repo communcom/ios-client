@@ -72,4 +72,8 @@ extension UIView {
             superview.removeConstraint(constraint)
         }
     }
+    
+    func removeAllConstraints() {
+        for c in constraints { removeConstraint(c) }
+    }
 }

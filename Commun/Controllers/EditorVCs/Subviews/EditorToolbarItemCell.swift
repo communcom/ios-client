@@ -36,6 +36,8 @@ class EditorToolbarItemCell: UICollectionViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         descriptionLabel?.removeFromSuperview()
+        contentView.removeAllConstraints()
+        itemImageView.removeAllConstraints()
     }
     
     func setUp(item: EditorToolbarItem) {

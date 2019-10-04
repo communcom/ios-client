@@ -14,6 +14,7 @@ extension UIButton {
         width: CGFloat? = nil,
         height: CGFloat? = nil,
         label: String? = nil,
+        labelFont: UIFont? = nil,
         backgroundColor: UIColor? = nil,
         textColor: UIColor? = nil,
         cornerRadius: CGFloat = 8,
@@ -21,6 +22,9 @@ extension UIButton {
     ) {
         self.init(width: width, height: height, backgroundColor: backgroundColor)
         setTitle(label, for: .normal)
+        if let font = labelFont {
+            titleLabel?.font = font
+        }
         if let textColor = textColor {
             setTitleColor(textColor, for: .normal)
         }

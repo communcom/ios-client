@@ -21,6 +21,7 @@ extension EditorVC: UICollectionViewDelegateFlowLayout {
                 desc.nsString.size(withAttributes: [
                     .font : UIFont.systemFont(ofSize: EditorToolbarItemCell.fontSize, weight: EditorToolbarItemCell.fontWeight)
                     ]).width
+                + 0.1 // Don't know why, but needed
         }
         return CGSize(width: width, height: height)
     }

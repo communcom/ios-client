@@ -40,7 +40,15 @@ class EditorVC: UIViewController {
     var buttonsCollectionView: UICollectionView!
     
     // PostButton
-    lazy var postButton = CommunButton(height: 36, label: "post".localized().uppercaseFirst, backgroundColor: .appMainColor, textColor: .white, cornerRadius: 18, contentInsets: UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16))
+    lazy var postButton = CommunButton(
+        height: 36,
+        label: "post".localized().uppercaseFirst,
+        labelFont: .systemFont(ofSize: 15, weight: .semibold),
+        backgroundColor: .appMainColor,
+        textColor: .white,
+        cornerRadius: 18,
+        contentInsets: UIEdgeInsets(
+            top: 0, left: 16, bottom: 0, right: 16))
     
     // MARK: - Methods
     override func viewDidLoad() {
@@ -85,7 +93,7 @@ class EditorVC: UIViewController {
         
         // sendpost button
         toolbar.addSubview(postButton)
-        postButton.autoPinEdge(.leading, to: .trailing, of: buttonsCollectionView, withOffset: 16)
+        postButton.autoPinEdge(.leading, to: .trailing, of: buttonsCollectionView, withOffset: 10)
         postButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
         postButton.autoAlignAxis(toSuperviewAxis: .horizontal)
     }
@@ -93,8 +101,9 @@ class EditorVC: UIViewController {
     func setUpToolbarButtons() {
         let layout = UICollectionViewFlowLayout()
         layout.sectionInset = .zero
-        layout.estimatedItemSize = CGSize(width: 35, height: 35)
+        layout.scrollDirection = .horizontal
         buttonsCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        buttonsCollectionView.showsHorizontalScrollIndicator = false
         buttonsCollectionView.backgroundColor = .clear
         buttonsCollectionView.configureForAutoLayout()
         toolbar.addSubview(buttonsCollectionView)
