@@ -42,7 +42,7 @@ extension EditorVC {
                 self.appendTool(.addLink)
                 self.appendTool(.clearFormatting)
                 #warning("change color")
-                self.contentTextViewCharacterCountLabel.isHidden = false
+                self.contentTextViewCountLabel.isHidden = false
             })
             .disposed(by: disposeBag)
         
@@ -53,13 +53,13 @@ extension EditorVC {
                 self.removeTool(.setColor)
                 self.removeTool(.addLink)
                 self.removeTool(.clearFormatting)
-                self.contentTextViewCharacterCountLabel.isHidden = true
+                self.contentTextViewCountLabel.isHidden = true
             })
             .disposed(by: disposeBag)
         
         contentTextView.rx.text.orEmpty
             .subscribe(onNext: {text in
-                self.contentTextViewCharacterCountLabel.text = "\(text.count)/\(self.contentLettersLimit)"
+                self.contentTextViewCountLabel.text = "\(text.count)/\(self.contentLettersLimit)"
             })
             .disposed(by: disposeBag)
         

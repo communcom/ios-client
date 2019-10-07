@@ -37,9 +37,7 @@ class EditorVC: UIViewController {
         fatalError("Must override")
     }
     
-    var contentTextViewCharacterCountLabel: UILabel {
-        fatalError("Must override")
-    }
+    var contentTextViewCountLabel = UILabel.descriptionLabel("0/30000")
     
     var viewModel = EditorViewModel()
     
@@ -99,7 +97,6 @@ class EditorVC: UIViewController {
         
         // fix contentView
         layoutContentView()
-        pinContentViewBottom()
         
         // common contentTextView
         contentTextView.placeholder = "write text placeholder".localized().uppercaseFirst + "..."
@@ -144,9 +141,32 @@ class EditorVC: UIViewController {
         dropdownButton.autoAlignAxis(.horizontal, toSameAxisOf: communityAvatarImage)
         dropdownButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
         
+        // textView
+        contentView.addSubview(contentTextView)
+        
+        layoutTopContentTextView()
+        layoutContentTextView()
+        layoutBottomContentTextView()
     }
     
-    func pinContentViewBottom() {
+    func layoutTopContentTextView() {
+        fatalError("Must override")
+    }
+    
+    func layoutContentTextView() {
+        contentTextView.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
+        contentTextView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
+        
+        // forward delegate
+        contentTextView.rx.setDelegate(self).disposed(by: disposeBag)
+        
+        // countlabel
+        contentView.addSubview(contentTextViewCountLabel)
+        contentTextViewCountLabel.autoPinEdge(.top, to: .bottom, of: contentTextView, withOffset: -12)
+        contentTextViewCountLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
+    }
+    
+    func layoutBottomContentTextView() {
         fatalError("Must override this method")
     }
     
