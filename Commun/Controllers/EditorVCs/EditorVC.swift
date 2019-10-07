@@ -207,6 +207,10 @@ class EditorVC: UIViewController {
         if item == .clearFormatting {
             contentTextView.clearFormatting()
         }
+        
+        if item == .setColor {
+            pickColor(sender: buttonsCollectionView)
+        }
     }
     
     // MARK: - action for overriding

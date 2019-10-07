@@ -11,12 +11,16 @@ import Foundation
 extension EditorVC {
     func insertTool(_ tool: EditorToolbarItem, at index: Int) {
         var tools = self.tools.value
-        tools.insert(tool, at: index)
-        self.tools.accept(tools)
+        tools.removeAll(tool)
+        if index >= 0 && index < tools.count {
+            tools.insert(tool, at: index)
+            self.tools.accept(tools)
+        }
     }
     
     func appendTool(_ tool: EditorToolbarItem) {
         var tools = self.tools.value
+        tools.removeAll(tool)
         tools.append(tool)
         self.tools.accept(tools)
     }

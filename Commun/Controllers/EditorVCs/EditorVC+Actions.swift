@@ -197,4 +197,29 @@ extension EditorVC {
             present(alert, animated: true, completion: nil)
         }
     }
+    
+    // MARK: - Add color
+    func pickColor(sender: UIView) {
+        let vc = ColorPickerViewController()
+        vc.modalPresentationStyle = .popover
+        
+        /* 3 */
+        if let popoverPresentationController = vc.popoverPresentationController {
+            popoverPresentationController.permittedArrowDirections = .any
+            popoverPresentationController.sourceView = sender
+            popoverPresentationController.sourceRect = sender.frame
+            popoverPresentationController.delegate = self
+            present(vc, animated: true, completion: nil)
+            
+            vc.didSelectColor = {color in
+                self.contentTextView.setColor(color)
+            }
+        }
+    }
+}
+
+extension EditorVC: UIPopoverPresentationControllerDelegate {
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        return .none
+    }
 }

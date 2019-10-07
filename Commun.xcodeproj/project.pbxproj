@@ -121,6 +121,8 @@
 		3B8DDF56234AD5D500B213F0 /* ContentTextView+Parsing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B8DDF55234AD5D500B213F0 /* ContentTextView+Parsing.swift */; };
 		3B8DDF58234AEA9600B213F0 /* ContentTextView+Draft.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B8DDF57234AEA9600B213F0 /* ContentTextView+Draft.swift */; };
 		3B8DDF5A234AF04C00B213F0 /* ArticleEditorVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B8DDF59234AF04C00B213F0 /* ArticleEditorVC.swift */; };
+		3B8DDF5C234B121D00B213F0 /* EditorColorPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B8DDF5B234B121D00B213F0 /* EditorColorPicker.swift */; };
+		3B8DDF5E234B122500B213F0 /* colorPalette.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3B8DDF5D234B122500B213F0 /* colorPalette.plist */; };
 		3B8E0ED5234302D600362F26 /* SetUserVC+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B8E0ED4234302D600362F26 /* SetUserVC+Actions.swift */; };
 		3B8E0ED72343032B00362F26 /* SetUserVC+Styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B8E0ED62343032B00362F26 /* SetUserVC+Styles.swift */; };
 		3B986B6522CF4C9E00C1E985 /* PhoneNumberTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B986B6422CF4C9E00C1E985 /* PhoneNumberTests.swift */; };
@@ -402,6 +404,8 @@
 		3B8DDF55234AD5D500B213F0 /* ContentTextView+Parsing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContentTextView+Parsing.swift"; sourceTree = "<group>"; };
 		3B8DDF57234AEA9600B213F0 /* ContentTextView+Draft.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContentTextView+Draft.swift"; sourceTree = "<group>"; };
 		3B8DDF59234AF04C00B213F0 /* ArticleEditorVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleEditorVC.swift; sourceTree = "<group>"; };
+		3B8DDF5B234B121D00B213F0 /* EditorColorPicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditorColorPicker.swift; sourceTree = "<group>"; };
+		3B8DDF5D234B122500B213F0 /* colorPalette.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = colorPalette.plist; sourceTree = "<group>"; };
 		3B8E0ED4234302D600362F26 /* SetUserVC+Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SetUserVC+Actions.swift"; sourceTree = "<group>"; };
 		3B8E0ED62343032B00362F26 /* SetUserVC+Styles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SetUserVC+Styles.swift"; sourceTree = "<group>"; };
 		3B986B6422CF4C9E00C1E985 /* PhoneNumberTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneNumberTests.swift; sourceTree = "<group>"; };
@@ -716,6 +720,7 @@
 		3B3C8B7823472AC000D8BADB /* Subviews */ = {
 			isa = PBXGroup;
 			children = (
+				3B8DDF5F234B122A00B213F0 /* ColorPicker */,
 				3B3C8B7923472ADA00D8BADB /* EditorToolbarItemCell.swift */,
 			);
 			path = Subviews;
@@ -837,6 +842,15 @@
 				3B885BBB22B7A1FE00FC4B7A /* EmbededView.swift */,
 			);
 			path = EmbededView;
+			sourceTree = "<group>";
+		};
+		3B8DDF5F234B122A00B213F0 /* ColorPicker */ = {
+			isa = PBXGroup;
+			children = (
+				3B8DDF5D234B122500B213F0 /* colorPalette.plist */,
+				3B8DDF5B234B121D00B213F0 /* EditorColorPicker.swift */,
+			);
+			path = ColorPicker;
 			sourceTree = "<group>";
 		};
 		3B986B6322CE4B8100C1E985 /* SignUpScenes */ = {
@@ -1640,6 +1654,7 @@
 				B1EA02F02289882A00835244 /* SF-Pro-Text-MediumItalic.otf in Resources */,
 				57E515A12270E66900A6F6DB /* SettingsVC.storyboard in Resources */,
 				3B02CD2A2289B2620078BB52 /* PostHeaderView.xib in Resources */,
+				3B8DDF5E234B122500B213F0 /* colorPalette.plist in Resources */,
 				B1EA02DE2289882A00835244 /* SF-Pro-Display-LightItalic.otf in Resources */,
 				B1EA02EE2289882A00835244 /* SF-Pro-Text-LightItalic.otf in Resources */,
 				B1EA02E02289882A00835244 /* SF-Pro-Display-MediumItalic.otf in Resources */,
@@ -1861,6 +1876,7 @@
 				3B63CD9322AA7AA200DC828B /* UIScrollView.swift in Sources */,
 				3B068632234700DC008953C5 /* BasicEditorVC.swift in Sources */,
 				3BAD8E7E2318C524005A8AB3 /* ContentBlock+Parser.swift in Sources */,
+				3B8DDF5C234B121D00B213F0 /* EditorColorPicker.swift in Sources */,
 				3B5D361C22E8303C0012A991 /* HTMLStringWebView.swift in Sources */,
 				3BB86B4922734AE4008F1C64 /* UIColor.swift in Sources */,
 				3B2F227122689308006B589E /* TabBarViewModel.swift in Sources */,

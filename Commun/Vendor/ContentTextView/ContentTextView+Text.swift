@@ -69,7 +69,7 @@ extension ContentTextView {
     }
     
     // MARK: - Text color
-    func setColor(_ color: UIColor, sender: UIButton) {
+    func setColor(_ color: UIColor) {
         if selectedRange.length == 0 {
             typingAttributes[.foregroundColor] = color
         } else {
