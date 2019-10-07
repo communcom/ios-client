@@ -10,12 +10,12 @@ import Foundation
 
 extension ContentTextView {
     // MARK: - Font
-    func setBold(from sender: UIButton) {
-        setSymbolicTrait(.traitBold, on: !sender.isSelected)
+    func toggleBold() {
+        setSymbolicTrait(.traitBold, on: !currentTextStyle.value.isBold)
     }
     
-    func setItalic(from sender: UIButton) {
-        setSymbolicTrait(.traitItalic, on: !sender.isSelected)
+    func toggleItalic() {
+        setSymbolicTrait(.traitItalic, on: !currentTextStyle.value.isItalic)
     }
     
     private func setSymbolicTrait(_ trait: UIFontDescriptor.SymbolicTraits, on: Bool) {

@@ -191,6 +191,14 @@ class EditorVC: UIViewController {
             viewModel.isAdult = !item.isHighlighted
             toggleIsHighlightedForTool(item)
         }
+        
+        if item == .setBold {
+            contentTextView.toggleBold()
+        }
+        
+        if item == .setItalic {
+            contentTextView.toggleItalic()
+        }
     }
     
     // MARK: - action for overriding

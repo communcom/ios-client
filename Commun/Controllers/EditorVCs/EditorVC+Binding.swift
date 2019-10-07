@@ -41,6 +41,7 @@ extension EditorVC {
                 self.appendTool(.setColor)
                 self.appendTool(.addLink)
                 self.appendTool(.clearFormatting)
+                #warning("change color")
                 self.contentTextViewCharacterCountLabel.isHidden = false
             })
             .disposed(by: disposeBag)
