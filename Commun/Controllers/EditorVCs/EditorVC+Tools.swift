@@ -54,6 +54,22 @@ extension EditorVC {
         }
     }
     
+    func setOtherOptionForTool(_ tool: EditorToolbarItem, value: Any?)
+    {
+        guard var tool = tools.value.first(where: {$0 == tool}) else {return}
+        tool.other = value
+        if tool == .setColor,
+            let index = tools.value.firstIndex(of: tool)
+        {
+            var tools = self.tools.value
+            tools[index] = tool
+            self.tools.accept(tools)
+        }
+        else {
+            appendTool(tool)
+        }
+    }
+    
     // MARK: - immutable tools
     func hideKeyboard() {
         view.endEditing(true)

@@ -41,6 +41,12 @@ class EditorToolbarItemCell: UICollectionViewCell {
     }
     
     func setUp(item: EditorToolbarItem) {
+        if item == .setColor {
+            contentView.backgroundColor = item.other as? UIColor
+            itemImageView.image = nil
+            return
+        }
+        
         // enabled state
         var textColor = UIColor(hexString: "#A5A7BD")!
         if item.isHighlighted {

@@ -19,6 +19,7 @@ struct EditorToolbarItem: Equatable {
     var description: String? = nil
     var isHighlighted = false
     var isEnabled = true
+    var other: Any? = nil // for colorPicking and other
     
     static var hideKeyboard: EditorToolbarItem {
         return EditorToolbarItem(
@@ -57,7 +58,8 @@ struct EditorToolbarItem: Equatable {
         return EditorToolbarItem(
             name: "setColor",
             icon: "--missing--",
-            iconSize: CGSize(width: 23, height: 12))
+            iconSize: .zero,
+            other: UIColor.black)
     }
     
     static var addLink: EditorToolbarItem {

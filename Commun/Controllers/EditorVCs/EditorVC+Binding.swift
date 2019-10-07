@@ -78,7 +78,7 @@ extension EditorVC {
                 self.toggleIsEnabledForTool(.addLink, isEnabled: (textStyle.urlString != nil))
                 
                 // color picker
-                #warning("set Color")
+                self.setOtherOptionForTool(.setColor, value: textStyle.textColor)
                 self.toggleIsEnabledForTool(.setColor, isEnabled: (textStyle.urlString == nil))
                 
                 // clear formatting
