@@ -13,7 +13,7 @@ import RxSwift
 
 class BasicEditorVC: EditorVC {
     // MARK: - Subviews
-    var _contentTextView = BasicEditorTextView(height: 47.5)
+    var _contentTextView = BasicEditorTextView(forExpandable: ())
     override var contentTextView: ContentTextView {
         return _contentTextView
     }

@@ -20,7 +20,7 @@ class CreateBioVC: UIViewController, BoardingRouter {
     @IBOutlet weak var characterCountLabel: UILabel!
     @IBOutlet weak var nextButton: StepButton!
     
-    @IBOutlet weak var textView: ExpandableTextView! {
+    @IBOutlet weak var textView: UITextView! {
         didSet {
             self.textView.placeholder = "write text placeholder".localized().uppercaseFirst
         }

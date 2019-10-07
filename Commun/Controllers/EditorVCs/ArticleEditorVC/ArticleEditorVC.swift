@@ -16,10 +16,10 @@ class ArticleEditorVC: EditorVC {
     let titleDraft = "EditorPageVC.titleDraft"
     
     // MARK: - Subviews
-    var titleTextView = ExpandableTextView(height: 47.5)
+    var titleTextView = UITextView(forExpandable: ())
     var titleTextViewCountLabel = UILabel.descriptionLabel("0/240")
     
-    var _contentTextView = ArticleEditorTextView(height: 47.5)
+    var _contentTextView = ArticleEditorTextView(forExpandable: ())
     override var contentTextView: ContentTextView {
         return _contentTextView
     }
@@ -73,7 +73,7 @@ class ArticleEditorVC: EditorVC {
         titleTextViewCountLabel.autoPinEdge(.top, to: .bottom, of: titleTextView, withOffset: -12)
         titleTextViewCountLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
         
-        contentTextView.autoPinEdge(.top, to: .bottom, of: titleTextView)
+        contentTextView.autoPinEdge(.top, to: .bottom, of: titleTextView, withOffset: 20)
     }
     
     

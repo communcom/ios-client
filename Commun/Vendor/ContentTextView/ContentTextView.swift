@@ -11,7 +11,7 @@ import RxCocoa
 import RxSwift
 import CyberSwift
 
-class ContentTextView: ExpandableTextView {
+class ContentTextView: UITextView {
     // MARK: - Nested types
     enum CTVError: Error {
         case parsingError(message: String)
@@ -70,13 +70,24 @@ class ContentTextView: ExpandableTextView {
     
     var currentTextStyle = BehaviorRelay<TextStyle>(value: TextStyle(isBold: false, isItalic: false, isMixed: false, textColor: .black, urlString: nil))
     
-    override func setUpViews() {
-        super.setUpViews()
-        typingAttributes = defaultTypingAttributes
+    // MARK: - Class Initialization
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        commonInit()
     }
     
-    override func bind() {
-        super.bind()
+    override init(frame: CGRect, textContainer: NSTextContainer?) {
+        super.init(frame: frame, textContainer: textContainer)
+        commonInit()
+    }
+    
+    func commonInit() {
+        isScrollEnabled = false
+        typingAttributes = defaultTypingAttributes
+        bind()
+    }
+    
+    func bind() {
         rx.didChange
             .subscribe(onNext: {
                 self.resolveMentions()
