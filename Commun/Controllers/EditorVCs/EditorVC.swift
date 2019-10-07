@@ -203,6 +203,10 @@ class EditorVC: UIViewController {
         if item == .addLink {
             addLink()
         }
+        
+        if item == .clearFormatting {
+            contentTextView.clearFormatting()
+        }
     }
     
     // MARK: - action for overriding
