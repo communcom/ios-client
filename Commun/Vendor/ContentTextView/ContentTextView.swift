@@ -84,6 +84,7 @@ class ContentTextView: UITextView {
     func commonInit() {
         isScrollEnabled = false
         typingAttributes = defaultTypingAttributes
+        textContainer.lineFragmentPadding = 0
         bind()
     }
     
