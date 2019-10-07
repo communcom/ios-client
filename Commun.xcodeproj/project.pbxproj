@@ -804,16 +804,7 @@
 		3B6205582346E40A0017FEB7 /* EditorVCs */ = {
 			isa = PBXGroup;
 			children = (
-				3B3C8B7B23472BF000D8BADB /* EditorToolbarItem.swift */,
-				3B3C8B7823472AC000D8BADB /* Subviews */,
-				3B3C8B972347911D00D8BADB /* EditorViewModel.swift */,
-				3B6205592346E4220017FEB7 /* EditorVC.swift */,
-				3B3C8B9B2347928D00D8BADB /* EditorVC+Layout.swift */,
-				3B3C8B9D234796D900D8BADB /* EditorVC+Binding.swift */,
-				3B8DDF53234AD15A00B213F0 /* EditorVC+Actions.swift */,
-				3B3C8B8123475AA100D8BADB /* EditorVC+Tools.swift */,
-				3B3C8B7D23473ED900D8BADB /* EditorVC+CollectionViewFlowLayoutDelegate.swift */,
-				3B8DDF62234B213E00B213F0 /* EditorVC+TextViewDelegate.swift */,
+				3B8DDF66234B227800B213F0 /* EditorVC */,
 				3B06863723471152008953C5 /* BasicEditorVC */,
 				3B3C8B872347874400D8BADB /* ArticleEditorVC */,
 			);
@@ -854,6 +845,23 @@
 				3B8DDF5B234B121D00B213F0 /* EditorColorPicker.swift */,
 			);
 			path = ColorPicker;
+			sourceTree = "<group>";
+		};
+		3B8DDF66234B227800B213F0 /* EditorVC */ = {
+			isa = PBXGroup;
+			children = (
+				3B3C8B7B23472BF000D8BADB /* EditorToolbarItem.swift */,
+				3B3C8B7823472AC000D8BADB /* Subviews */,
+				3B3C8B972347911D00D8BADB /* EditorViewModel.swift */,
+				3B6205592346E4220017FEB7 /* EditorVC.swift */,
+				3B3C8B9B2347928D00D8BADB /* EditorVC+Layout.swift */,
+				3B3C8B9D234796D900D8BADB /* EditorVC+Binding.swift */,
+				3B8DDF53234AD15A00B213F0 /* EditorVC+Actions.swift */,
+				3B3C8B8123475AA100D8BADB /* EditorVC+Tools.swift */,
+				3B3C8B7D23473ED900D8BADB /* EditorVC+CollectionViewFlowLayoutDelegate.swift */,
+				3B8DDF62234B213E00B213F0 /* EditorVC+TextViewDelegate.swift */,
+			);
+			path = EditorVC;
 			sourceTree = "<group>";
 		};
 		3B986B6322CE4B8100C1E985 /* SignUpScenes */ = {

@@ -107,25 +107,25 @@ class ArticleEditorVC: EditorVC {
         _contentTextView.addLink(urlString, placeholder: description)
     }
     
-//    // MARK: - Draft
-//    override var hasDraft: Bool {
-//       return super.hasDraft && titleTextView.hasDraft
-//    }
-//
-//    override func saveDraft(completion: (()->Void)? = nil) {
-//       // save title
-//       UserDefaults.standard.set(titleTextView.text, forKey: titleDraft)
-//       super.saveDraft()
-//    }
-//
-//    override func getDraft() {
-//       // get title
-//       titleTextView.text = UserDefaults.standard.string(forKey: titleDraft)
-//       super.getDraft()
-//    }
-//
-//    override func removeDraft() {
-//       UserDefaults.standard.removeObject(forKey: titleDraft)
-//       super.removeDraft()
-//    }
+    // MARK: - Draft
+    override var hasDraft: Bool {
+       return super.hasDraft && UserDefaults.standard.dictionaryRepresentation().keys.contains(titleDraft)
+    }
+    
+    override func getDraft() {
+       // get title
+       titleTextView.text = UserDefaults.standard.string(forKey: titleDraft)
+       super.getDraft()
+    }
+
+    override func saveDraft(completion: (()->Void)? = nil) {
+       // save title
+       UserDefaults.standard.set(titleTextView.text, forKey: titleDraft)
+       super.saveDraft()
+    }
+    
+    override func removeDraft() {
+       UserDefaults.standard.removeObject(forKey: titleDraft)
+       super.removeDraft()
+    }
 }

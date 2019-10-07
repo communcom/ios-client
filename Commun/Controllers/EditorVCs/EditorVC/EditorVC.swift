@@ -19,7 +19,6 @@ class EditorVC: UIViewController {
         fatalError("Must override")
     }
     
-    #warning("Must override in ArticleVC")
     var shouldSendPost: Bool {
         let content = contentTextView.text ?? ""
         
@@ -114,56 +113,8 @@ class EditorVC: UIViewController {
         }
     }
     
-    func layoutContentView() {
-        // header
-        contentView.addSubview(closeButton)
-        contentView.addSubview(headerLabel)
-        closeButton.autoPinEdge(toSuperviewEdge: .top, withInset: 25)
-        closeButton.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
-        headerLabel.autoAlignAxis(toSuperviewAxis: .vertical)
-        headerLabel.autoAlignAxis(.horizontal, toSameAxisOf: closeButton)
-        
-        // community
-        contentView.addSubview(communityAvatarImage)
-        contentView.addSubview(youWillPostIn)
-        contentView.addSubview(communityNameLabel)
-        contentView.addSubview(dropdownButton)
-        
-        communityAvatarImage.autoPinEdge(.top, to: .bottom, of: closeButton, withOffset: 25)
-        communityAvatarImage.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
-        
-        youWillPostIn.autoPinEdge(.top, to: .top, of: communityAvatarImage, withOffset: 5)
-        youWillPostIn.autoPinEdge(.leading, to: .trailing, of: communityAvatarImage, withOffset: 10)
-        
-        communityNameLabel.autoPinEdge(.leading, to: .trailing, of: communityAvatarImage, withOffset: 10)
-        communityNameLabel.autoPinEdge(.bottom, to: .bottom, of: communityAvatarImage, withOffset: -4)
-        
-        dropdownButton.autoAlignAxis(.horizontal, toSameAxisOf: communityAvatarImage)
-        dropdownButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
-        
-        // textView
-        contentView.addSubview(contentTextView)
-        
-        layoutTopContentTextView()
-        layoutContentTextView()
-        layoutBottomContentTextView()
-    }
-    
     func layoutTopContentTextView() {
         fatalError("Must override")
-    }
-    
-    func layoutContentTextView() {
-        contentTextView.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
-        contentTextView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
-        
-        // forward delegate
-        contentTextView.rx.setDelegate(self).disposed(by: disposeBag)
-        
-        // countlabel
-        contentView.addSubview(contentTextViewCountLabel)
-        contentTextViewCountLabel.autoPinEdge(.top, to: .bottom, of: contentTextView, withOffset: -12)
-        contentTextViewCountLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
     }
     
     func layoutBottomContentTextView() {
