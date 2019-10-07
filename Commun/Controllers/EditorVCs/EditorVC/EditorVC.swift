@@ -182,6 +182,10 @@ class EditorVC: UIViewController {
         if item == .setColor {
             pickColor(sender: buttonsCollectionView)
         }
+        
+        if item == .addArticle {
+            addArticle()
+        }
     }
     
     // MARK: - action for overriding
@@ -201,6 +205,11 @@ class EditorVC: UIViewController {
         fatalError("Must override")
     }
     
+    func addArticle() {
+        // for overriding in BasicEditorVC
+    }
+    
+    // MARK: - draft
     var hasDraft: Bool {
         return contentTextView.hasDraft
     }

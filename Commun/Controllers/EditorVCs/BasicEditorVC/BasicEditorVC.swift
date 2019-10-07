@@ -40,6 +40,16 @@ class BasicEditorVC: EditorVC {
     }
     
     // MARK: - overriding actions
+    override func addArticle() {
+        weak var presentingViewController = self.presentingViewController
+
+        dismiss(animated: true, completion: {
+            let vc = ArticleEditorVC()
+            vc.modalPresentationStyle = .fullScreen
+            presentingViewController?.present(vc, animated: true, completion: nil)
+        })
+    }
+    
     override func didChooseImageFromGallery(_ image: UIImage, description: String? = nil) {
         // TODO: - Add embeds
     }
