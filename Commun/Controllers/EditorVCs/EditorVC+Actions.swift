@@ -149,4 +149,52 @@ extension EditorVC {
         
         present(alert, animated: true, completion: nil)
     }
+    
+    // MARK: - Add link
+    func addLink() {
+        if let urlString = contentTextView.currentTextStyle.value.urlString
+        {
+            // Remove link that is not a mention or tag
+            if urlString.isLink {
+                showActionSheet(title: urlString, message: nil, actions: [
+                    UIAlertAction(title: "remove".localized().uppercaseFirst, style: .destructive, handler: { (_) in
+                        self.contentTextView.removeLink()
+                    })
+                ])
+            }
+            
+        }
+        else {
+            // Add link
+            let alert = UIAlertController(
+                title:          "add link".localized().uppercaseFirst,
+                message:        "select a link to add to text".localized().uppercaseFirst,
+                preferredStyle: .alert)
+            
+            alert.addTextField { field in
+                field.placeholder = "URL".localized()
+            }
+            
+            alert.addTextField { field in
+                field.placeholder = "placeholder".localized().uppercaseFirst + "(" + "optional".localized() + ")"
+                let string = self.contentTextView.selectedAString.string
+                if !string.isEmpty {
+                    field.text = string
+                }
+            }
+            
+            alert.addAction(UIAlertAction(title: "add".localized().uppercaseFirst, style: .cancel, handler: {[weak self] _ in
+                guard let urlString = alert.textFields?.first?.text
+                else {
+                    self?.showErrorWithMessage("URL".localized() + " " + "is missing".localized())
+                    return
+                }
+                self?.didAddLink(urlString, placeholder: alert.textFields?.last?.text)
+            }))
+            
+            alert.addAction(UIAlertAction(title: "cancel".localized().uppercaseFirst, style: .default, handler: nil))
+            
+            present(alert, animated: true, completion: nil)
+        }
+    }
 }

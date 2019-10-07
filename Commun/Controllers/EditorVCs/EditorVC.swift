@@ -199,6 +199,10 @@ class EditorVC: UIViewController {
         if item == .setItalic {
             contentTextView.toggleItalic()
         }
+        
+        if item == .addLink {
+            addLink()
+        }
     }
     
     // MARK: - action for overriding
@@ -211,6 +215,10 @@ class EditorVC: UIViewController {
     }
     
     func didAddImageFromURLString(_ urlString: String, description: String? = nil) {
+        fatalError("Must override")
+    }
+    
+    func didAddLink(_ urlString: String, placeholder: String? = nil) {
         fatalError("Must override")
     }
     

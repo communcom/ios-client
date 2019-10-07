@@ -60,10 +60,14 @@ class BasicEditorVC: EditorVC {
     
     // MARK: - overriding actions
     override func didChooseImageFromGallery(_ image: UIImage, description: String? = nil) {
-        
+        // TODO: - Add embeds
     }
     
     override func didAddImageFromURLString(_ urlString: String, description: String? = nil) {
-        
+        // TODO: - Add embeds
+    }
+    
+    override func didAddLink(_ urlString: String, placeholder: String? = nil) {
+        // TODO: - Add link
     }
 }
