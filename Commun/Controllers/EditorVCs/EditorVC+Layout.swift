@@ -42,7 +42,8 @@ extension EditorVC {
         buttonsCollectionView.configureForAutoLayout()
         toolbar.addSubview(buttonsCollectionView)
         // layout
-        buttonsCollectionView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 10, left: 16, bottom: 10, right: 0), excludingEdge: .right)
+        buttonsCollectionView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0), excludingEdge: .right)
+        buttonsCollectionView.contentInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 0)
         buttonsCollectionView.register(EditorToolbarItemCell.self, forCellWithReuseIdentifier: "EditorToolbarItemCell")
     }
     
