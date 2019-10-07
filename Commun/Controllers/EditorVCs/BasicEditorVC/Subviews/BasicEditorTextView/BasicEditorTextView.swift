@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import RxSwift
 
 class BasicEditorTextView: ContentTextView {
     override var defaultTypingAttributes: [NSAttributedString.Key : Any] {
@@ -15,5 +16,8 @@ class BasicEditorTextView: ContentTextView {
     
     let draftKey = "BasicEditorTextView.draftKey"
     
+    override var acceptedPostType: String {
+        return "basic"
+    }
     
 }

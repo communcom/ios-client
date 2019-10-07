@@ -9,9 +9,20 @@
 import UIKit
 import RxCocoa
 import RxSwift
+import CyberSwift
 
 class ContentTextView: ExpandableTextView {
     // MARK: - Nested types
+    enum CTVError: Error {
+        case parsingError(message: String)
+        var localizedDescription: String {
+            switch self {
+            case .parsingError(let message):
+                return message
+            }
+        }
+    }
+    
     struct TextStyle: Equatable {
         var isBold = false
         var isItalic = false
@@ -42,8 +53,8 @@ class ContentTextView: ExpandableTextView {
         fatalError("Must override")
     }
     
-    var selectedAString: NSAttributedString {
-        return attributedText.attributedSubstring(from: selectedRange)
+    var acceptedPostType: String {
+        fatalError("Must override")
     }
     
     let disposeBag = DisposeBag()
@@ -169,6 +180,11 @@ class ContentTextView: ExpandableTextView {
     
     @objc var hasDraft: Bool {
         fatalError("must override")
+    }
+    
+    /// For parsing attachments only, if attachments are not allowed, leave an empty Completable
+    func parseAttachments() -> Completable {
+        return .empty()
     }
 }
  
