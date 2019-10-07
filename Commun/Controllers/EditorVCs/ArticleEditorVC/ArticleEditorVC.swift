@@ -68,15 +68,12 @@ class ArticleEditorVC: EditorVC {
         titleTextView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
         titleTextView.autoPinEdge(.top, to: .bottom, of: communityAvatarImage, withOffset: 20)
         
-        // forward delegate
-        titleTextView.rx.setDelegate(self).disposed(by: disposeBag)
-        
         // countLabel
         contentView.addSubview(titleTextViewCountLabel)
         titleTextViewCountLabel.autoPinEdge(.top, to: .bottom, of: titleTextView, withOffset: -12)
         titleTextViewCountLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
         
-        contentTextView.autoPinEdge(.top, to: .bottom, of: titleTextView, withOffset: 20)
+        contentTextView.autoPinEdge(.top, to: .bottom, of: titleTextView)
     }
     
     
