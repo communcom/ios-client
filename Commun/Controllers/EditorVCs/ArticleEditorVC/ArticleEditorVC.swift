@@ -102,7 +102,7 @@ class ArticleEditorVC: EditorVC {
     }
     
     override func didAddLink(_ urlString: String, placeholder: String? = nil) {
-        _contentTextView.addLink(urlString, placeholder: description)
+        _contentTextView.addLink(urlString, placeholder: placeholder)
     }
     
     // MARK: - Draft

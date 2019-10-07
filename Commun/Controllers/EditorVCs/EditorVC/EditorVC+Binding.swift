@@ -75,7 +75,7 @@ extension EditorVC {
                 self.toggleIsEnabledForTool(.setItalic, isEnabled: (textStyle.urlString == nil))
                 
                 // add link button
-                self.toggleIsEnabledForTool(.addLink, isEnabled: (textStyle.urlString != nil))
+//                self.toggleIsEnabledForTool(.addLink, isEnabled: (textStyle.urlString != nil))
                 
                 // color picker
                 self.setOtherOptionForTool(.setColor, value: textStyle.textColor)
