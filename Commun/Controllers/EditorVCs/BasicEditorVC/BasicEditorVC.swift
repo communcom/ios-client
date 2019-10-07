@@ -52,4 +52,9 @@ class BasicEditorVC: EditorVC {
     override func pinContentViewBottom() {
         contentTextViewCountLabel.autoPinEdge(toSuperviewEdge: .bottom, withInset: 16)
     }
+    
+    // MARK: - overriding actions
+    override func setUp(with post: ResponseAPIContentGetPost) {
+        
+    }
 }

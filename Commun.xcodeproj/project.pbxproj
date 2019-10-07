@@ -118,6 +118,7 @@
 		3B77383923335829000965ED /* image-not-available.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 3B77383823335829000965ED /* image-not-available.jpg */; };
 		3B82D0F722D8D56A004EE848 /* EnableBiometricsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B82D0F622D8D56A004EE848 /* EnableBiometricsVC.swift */; };
 		3B885BBC22B7A1FE00FC4B7A /* EmbededView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B885BBB22B7A1FE00FC4B7A /* EmbededView.swift */; };
+		3B8DDF54234AD15A00B213F0 /* EditorVC+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B8DDF53234AD15A00B213F0 /* EditorVC+Actions.swift */; };
 		3B8E0ED5234302D600362F26 /* SetUserVC+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B8E0ED4234302D600362F26 /* SetUserVC+Actions.swift */; };
 		3B8E0ED72343032B00362F26 /* SetUserVC+Styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B8E0ED62343032B00362F26 /* SetUserVC+Styles.swift */; };
 		3B986B6522CF4C9E00C1E985 /* PhoneNumberTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B986B6422CF4C9E00C1E985 /* PhoneNumberTests.swift */; };
@@ -396,6 +397,7 @@
 		3B77383823335829000965ED /* image-not-available.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "image-not-available.jpg"; path = "Commun/Assets.xcassets/image-not-available.imageset/image-not-available.jpg"; sourceTree = SOURCE_ROOT; };
 		3B82D0F622D8D56A004EE848 /* EnableBiometricsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnableBiometricsVC.swift; sourceTree = "<group>"; };
 		3B885BBB22B7A1FE00FC4B7A /* EmbededView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbededView.swift; sourceTree = "<group>"; };
+		3B8DDF53234AD15A00B213F0 /* EditorVC+Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EditorVC+Actions.swift"; sourceTree = "<group>"; };
 		3B8E0ED4234302D600362F26 /* SetUserVC+Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SetUserVC+Actions.swift"; sourceTree = "<group>"; };
 		3B8E0ED62343032B00362F26 /* SetUserVC+Styles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SetUserVC+Styles.swift"; sourceTree = "<group>"; };
 		3B986B6422CF4C9E00C1E985 /* PhoneNumberTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneNumberTests.swift; sourceTree = "<group>"; };
@@ -795,8 +797,9 @@
 				3B3C8B7823472AC000D8BADB /* Subviews */,
 				3B3C8B972347911D00D8BADB /* EditorViewModel.swift */,
 				3B6205592346E4220017FEB7 /* EditorVC.swift */,
-				3B3C8B9D234796D900D8BADB /* EditorVC+Binding.swift */,
 				3B3C8B9B2347928D00D8BADB /* EditorVC+Layout.swift */,
+				3B3C8B9D234796D900D8BADB /* EditorVC+Binding.swift */,
+				3B8DDF53234AD15A00B213F0 /* EditorVC+Actions.swift */,
 				3B3C8B8123475AA100D8BADB /* EditorVC+Tools.swift */,
 				3B3C8B7D23473ED900D8BADB /* EditorVC+CollectionViewFlowLayoutDelegate.swift */,
 				3B06863723471152008953C5 /* BasicEditorVC */,
@@ -1965,6 +1968,7 @@
 				3B5CB30522A5752100757533 /* ListViewModelType.swift in Sources */,
 				5740957F2247768C00E40E51 /* CommentCell.swift in Sources */,
 				3B635F7F22772D87006DAAB2 /* PostsFetcher.swift in Sources */,
+				3B8DDF54234AD15A00B213F0 /* EditorVC+Actions.swift in Sources */,
 				57E5159E2270E5DE00A6F6DB /* SettingsVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

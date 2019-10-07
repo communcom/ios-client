@@ -81,6 +81,9 @@ class EditorVC: UIViewController {
     }
     
     func setUpViews() {
+        // close button
+        closeButton.addTarget(self, action: #selector(close), for: .touchUpInside)
+        
         // toolbars
         setUpToolbar()
         
@@ -94,6 +97,17 @@ class EditorVC: UIViewController {
         // common contentTextView
         contentTextView.placeholder = "write text placeholder".localized().uppercaseFirst + "..."
         headerLabel.text = (viewModel.postForEdit != nil ? "edit post" : "create post").localized().uppercaseFirst
+        
+        // if editing post
+        if let post = viewModel.postForEdit {
+            parsePost(post)
+        }
+        else {
+            // parse draft
+            if hasDraft {
+                retrieveDraft()
+            }
+        }
         
         // bind
         bind()
@@ -173,8 +187,30 @@ class EditorVC: UIViewController {
         }
     }
     
-    // MARK: - action for inheriting
+    // MARK: - action for overriding
+    func setUp(with post: ResponseAPIContentGetPost) {
+//        self.titleTextView.rx.text.onNext(post.content.title)
+//        self.contentTextView.parseText(post.content.body.full!)
+        fatalError("Must override")
+    }
+    
     func addPhoto() {
-        
+        fatalError("Must override")
+    }
+    
+    var hasDraft: Bool {
+        fatalError("Must override")
+    }
+    
+    func getDraft() {
+        fatalError("Must override")
+    }
+    
+    func saveDraft(completion: (()->Void)? = nil) {
+        fatalError("Must override")
+    }
+    
+    func removeDraft() {
+        fatalError("Must override")
     }
 }

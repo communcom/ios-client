@@ -39,7 +39,7 @@ extension EditorVC {
         }
     }
     
-    // MARK: - immutable action
+    // MARK: - immutable tools
     func hideKeyboard() {
         view.endEditing(true)
     }
