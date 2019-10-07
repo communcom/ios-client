@@ -19,7 +19,6 @@
 		3B0686302346FFA6008953C5 /* CommunButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B06862F2346FFA6008953C5 /* CommunButton.swift */; };
 		3B068632234700DC008953C5 /* BasicEditorVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B068631234700DC008953C5 /* BasicEditorVC.swift */; };
 		3B06863423470A33008953C5 /* BasicEditorTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B06863323470A33008953C5 /* BasicEditorTextView.swift */; };
-		3B068636234710BC008953C5 /* BasicEditorVC+Delegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B068635234710BC008953C5 /* BasicEditorVC+Delegate.swift */; };
 		3B0CEE13232B3CCF006BE8E1 /* EmbedsPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B0CEE12232B3CCF006BE8E1 /* EmbedsPageViewController.swift */; };
 		3B0E9C5E226F02AC002AB1C2 /* ProfileEditCoverVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B0E9C5D226F02AC002AB1C2 /* ProfileEditCoverVC.swift */; };
 		3B0E9C64226F4A0C002AB1C2 /* VerticalDraggableImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B0E9C63226F4A0C002AB1C2 /* VerticalDraggableImageView.swift */; };
@@ -74,7 +73,6 @@
 		3B3C8B912347876000D8BADB /* ArticleEditorTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3C8B8B2347876000D8BADB /* ArticleEditorTextView.swift */; };
 		3B3C8B932347876000D8BADB /* ArticleEditorTextView+Delegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3C8B8D2347876000D8BADB /* ArticleEditorTextView+Delegate.swift */; };
 		3B3C8B982347911D00D8BADB /* EditorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3C8B972347911D00D8BADB /* EditorViewModel.swift */; };
-		3B3C8B9A2347916400D8BADB /* BasicEditorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3C8B992347916400D8BADB /* BasicEditorViewModel.swift */; };
 		3B3C8B9C2347928D00D8BADB /* EditorVC+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3C8B9B2347928D00D8BADB /* EditorVC+Layout.swift */; };
 		3B3C8B9E234796D900D8BADB /* EditorVC+Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3C8B9D234796D900D8BADB /* EditorVC+Binding.swift */; };
 		3B4ECA3D22A6741D00F59FC8 /* NotificationsPage+EmptyDataSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B4ECA3C22A6741D00F59FC8 /* NotificationsPage+EmptyDataSet.swift */; };
@@ -124,6 +122,8 @@
 		3B8DDF5C234B121D00B213F0 /* EditorColorPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B8DDF5B234B121D00B213F0 /* EditorColorPicker.swift */; };
 		3B8DDF5E234B122500B213F0 /* colorPalette.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3B8DDF5D234B122500B213F0 /* colorPalette.plist */; };
 		3B8DDF61234B1FC200B213F0 /* ArticleEditorVC+Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B8DDF60234B1FC200B213F0 /* ArticleEditorVC+Binding.swift */; };
+		3B8DDF63234B213E00B213F0 /* EditorVC+TextViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B8DDF62234B213E00B213F0 /* EditorVC+TextViewDelegate.swift */; };
+		3B8DDF65234B219D00B213F0 /* ArticleEditorVC+TextViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B8DDF64234B219D00B213F0 /* ArticleEditorVC+TextViewDelegate.swift */; };
 		3B8E0ED5234302D600362F26 /* SetUserVC+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B8E0ED4234302D600362F26 /* SetUserVC+Actions.swift */; };
 		3B8E0ED72343032B00362F26 /* SetUserVC+Styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B8E0ED62343032B00362F26 /* SetUserVC+Styles.swift */; };
 		3B986B6522CF4C9E00C1E985 /* PhoneNumberTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B986B6422CF4C9E00C1E985 /* PhoneNumberTests.swift */; };
@@ -303,7 +303,6 @@
 		3B06862F2346FFA6008953C5 /* CommunButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunButton.swift; sourceTree = "<group>"; };
 		3B068631234700DC008953C5 /* BasicEditorVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicEditorVC.swift; sourceTree = "<group>"; };
 		3B06863323470A33008953C5 /* BasicEditorTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicEditorTextView.swift; sourceTree = "<group>"; };
-		3B068635234710BC008953C5 /* BasicEditorVC+Delegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BasicEditorVC+Delegate.swift"; sourceTree = "<group>"; };
 		3B0CEE12232B3CCF006BE8E1 /* EmbedsPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbedsPageViewController.swift; sourceTree = "<group>"; };
 		3B0E9C5D226F02AC002AB1C2 /* ProfileEditCoverVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditCoverVC.swift; sourceTree = "<group>"; };
 		3B0E9C63226F4A0C002AB1C2 /* VerticalDraggableImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalDraggableImageView.swift; sourceTree = "<group>"; };
@@ -358,7 +357,6 @@
 		3B3C8B8B2347876000D8BADB /* ArticleEditorTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticleEditorTextView.swift; sourceTree = "<group>"; };
 		3B3C8B8D2347876000D8BADB /* ArticleEditorTextView+Delegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ArticleEditorTextView+Delegate.swift"; sourceTree = "<group>"; };
 		3B3C8B972347911D00D8BADB /* EditorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorViewModel.swift; sourceTree = "<group>"; };
-		3B3C8B992347916400D8BADB /* BasicEditorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicEditorViewModel.swift; sourceTree = "<group>"; };
 		3B3C8B9B2347928D00D8BADB /* EditorVC+Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EditorVC+Layout.swift"; sourceTree = "<group>"; };
 		3B3C8B9D234796D900D8BADB /* EditorVC+Binding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EditorVC+Binding.swift"; sourceTree = "<group>"; };
 		3B4ECA3C22A6741D00F59FC8 /* NotificationsPage+EmptyDataSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotificationsPage+EmptyDataSet.swift"; sourceTree = "<group>"; };
@@ -408,6 +406,8 @@
 		3B8DDF5B234B121D00B213F0 /* EditorColorPicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditorColorPicker.swift; sourceTree = "<group>"; };
 		3B8DDF5D234B122500B213F0 /* colorPalette.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = colorPalette.plist; sourceTree = "<group>"; };
 		3B8DDF60234B1FC200B213F0 /* ArticleEditorVC+Binding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ArticleEditorVC+Binding.swift"; sourceTree = "<group>"; };
+		3B8DDF62234B213E00B213F0 /* EditorVC+TextViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EditorVC+TextViewDelegate.swift"; sourceTree = "<group>"; };
+		3B8DDF64234B219D00B213F0 /* ArticleEditorVC+TextViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ArticleEditorVC+TextViewDelegate.swift"; sourceTree = "<group>"; };
 		3B8E0ED4234302D600362F26 /* SetUserVC+Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SetUserVC+Actions.swift"; sourceTree = "<group>"; };
 		3B8E0ED62343032B00362F26 /* SetUserVC+Styles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SetUserVC+Styles.swift"; sourceTree = "<group>"; };
 		3B986B6422CF4C9E00C1E985 /* PhoneNumberTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneNumberTests.swift; sourceTree = "<group>"; };
@@ -628,8 +628,6 @@
 			children = (
 				3B06863823471163008953C5 /* Subviews */,
 				3B068631234700DC008953C5 /* BasicEditorVC.swift */,
-				3B3C8B992347916400D8BADB /* BasicEditorViewModel.swift */,
-				3B068635234710BC008953C5 /* BasicEditorVC+Delegate.swift */,
 			);
 			path = BasicEditorVC;
 			sourceTree = "<group>";
@@ -734,6 +732,7 @@
 				3B3C8B9523478DF100D8BADB /* Subviews */,
 				3B8DDF59234AF04C00B213F0 /* ArticleEditorVC.swift */,
 				3B8DDF60234B1FC200B213F0 /* ArticleEditorVC+Binding.swift */,
+				3B8DDF64234B219D00B213F0 /* ArticleEditorVC+TextViewDelegate.swift */,
 			);
 			path = ArticleEditorVC;
 			sourceTree = "<group>";
@@ -814,6 +813,7 @@
 				3B8DDF53234AD15A00B213F0 /* EditorVC+Actions.swift */,
 				3B3C8B8123475AA100D8BADB /* EditorVC+Tools.swift */,
 				3B3C8B7D23473ED900D8BADB /* EditorVC+CollectionViewFlowLayoutDelegate.swift */,
+				3B8DDF62234B213E00B213F0 /* EditorVC+TextViewDelegate.swift */,
 				3B06863723471152008953C5 /* BasicEditorVC */,
 				3B3C8B872347874400D8BADB /* ArticleEditorVC */,
 			);
@@ -1819,7 +1819,6 @@
 				3B6CB73023432D6F0097B2A1 /* FavouritesList.swift in Sources */,
 				3BC613B12342140000075570 /* SwipeDownInteractor.swift in Sources */,
 				3B8DDF5A234AF04C00B213F0 /* ArticleEditorVC.swift in Sources */,
-				3B068636234710BC008953C5 /* BasicEditorVC+Delegate.swift in Sources */,
 				5787C0C622650FA500568CEC /* SetUserViewModel.swift in Sources */,
 				575AECB122606F6600A7EC2D /* SelectCountryVC.swift in Sources */,
 				571B14FC223A935C00630C8F /* Commun.xcdatamodeld in Sources */,
@@ -1851,6 +1850,7 @@
 				3BE68AAE22EEA1AE00033B81 /* SettingsVC+ButtonDelegate.swift in Sources */,
 				3B8DDF58234AEA9600B213F0 /* ContentTextView+Draft.swift in Sources */,
 				3B3C8B7C23472BF000D8BADB /* EditorToolbarItem.swift in Sources */,
+				3B8DDF65234B219D00B213F0 /* ArticleEditorVC+TextViewDelegate.swift in Sources */,
 				3BA3779722E9DA6C0071AF3A /* SignupVC+Location.swift in Sources */,
 				57FB179D224BFBD700563BF7 /* PillPageControl.swift in Sources */,
 				3BAD8E7F2318C524005A8AB3 /* ContentBlock.swift in Sources */,
@@ -1918,7 +1918,6 @@
 				3B02CD34228ADC100078BB52 /* UIWebView.swift in Sources */,
 				3B0E9C5E226F02AC002AB1C2 /* ProfileEditCoverVC.swift in Sources */,
 				3B02CD1F228965AF0078BB52 /* CommentCellDelegate+UIViewController.swift in Sources */,
-				3B3C8B9A2347916400D8BADB /* BasicEditorViewModel.swift in Sources */,
 				3B5EDE3722E07DCC00897BF3 /* SettingsVC+SectionHeader.swift in Sources */,
 				3B197C532269BE0E008CF10D /* SegmentioExtension.swift in Sources */,
 				3BE15B24233CC47600D865F5 /* FeedPageVC+Actions.swift in Sources */,
@@ -1927,6 +1926,7 @@
 				3B11911F2302B9B9008D0417 /* SwipeNavigationController.swift in Sources */,
 				3B4ECA3D22A6741D00F59FC8 /* NotificationsPage+EmptyDataSet.swift in Sources */,
 				3BAF69CD22677E440055CCEB /* ProfilePageViewModel.swift in Sources */,
+				3B8DDF63234B213E00B213F0 /* EditorVC+TextViewDelegate.swift in Sources */,
 				3B5CB30822A57AA400757533 /* PlaceholderNotificationCell.swift in Sources */,
 				B1A8AC1B22E6FF5400032030 /* BlankButton.swift in Sources */,
 				575AECAC226066F800A7EC2D /* FormTextField.swift in Sources */,

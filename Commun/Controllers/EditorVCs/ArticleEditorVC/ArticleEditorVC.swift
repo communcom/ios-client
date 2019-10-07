@@ -85,9 +85,6 @@ class ArticleEditorVC: EditorVC {
     
     override func bind() {
         super.bind()
-        
-        contentTextView.rx.setDelegate(self).disposed(by: disposeBag)
-        
         // textViews
         bindTitleTextView()
     }
