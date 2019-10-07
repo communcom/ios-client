@@ -32,7 +32,34 @@ class ArticleEditorVC: EditorVC {
         ).map {_ in ()}
     }
     
+    override var shouldSendPost: Bool {
+        let title = titleTextView.text ?? ""
+    
+        // title is not empty
+        let titleIsNotEmpty = !title.isEmpty
+        
+        // title is not beyond limit
+        let titleIsInsideLimit =
+            (title.count >= self.titleMinLettersLimit) &&
+                (title.utf8.count <= self.titleBytesLimit)
+        
+        // compare content
+        let titleChanged = (title != viewModel.postForEdit?.content.title)
+        
+        // reassign result
+        return super.shouldSendPost && titleIsNotEmpty && titleIsInsideLimit && titleChanged
+    }
+    
     // MARK: - Lifecycle
+    override func setUpViews() {
+        super.setUpViews()
+        titleTextViewCountLabel.isHidden = true
+        
+        titleTextView.textContainerInset = UIEdgeInsets.zero
+        titleTextView.textContainer.lineFragmentPadding = 0
+        titleTextView.placeholder = "title placeholder".localized().uppercaseFirst
+    }
+    
     override func layoutTopContentTextView() {
         // title
         contentView.addSubview(titleTextView)
@@ -54,6 +81,33 @@ class ArticleEditorVC: EditorVC {
     
     override func layoutBottomContentTextView() {
         contentTextViewCountLabel.autoPinEdge(toSuperviewEdge: .bottom, withInset: 16)
+    }
+    
+    override func bind() {
+        super.bind()
+        
+        contentTextView.rx.setDelegate(self).disposed(by: disposeBag)
+        
+        // textViews
+        bindTitleTextView()
+    }
+    
+    override func setUp(with post: ResponseAPIContentGetPost) {
+        self.titleTextView.rx.text.onNext(post.content.title)
+        super.setUp(with: post)
+    }
+    
+    // MARK: - overriding actions
+    override func didChooseImageFromGallery(_ image: UIImage, description: String? = nil) {
+        _contentTextView.addImage(image, description: description)
+    }
+    
+    override func didAddImageFromURLString(_ urlString: String, description: String? = nil) {
+        _contentTextView.addImage(nil, urlString: urlString, description: description)
+    }
+    
+    override func didAddLink(_ urlString: String, placeholder: String? = nil) {
+        _contentTextView.addLink(urlString, placeholder: description)
     }
     
 //    // MARK: - Draft

@@ -123,6 +123,7 @@
 		3B8DDF5A234AF04C00B213F0 /* ArticleEditorVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B8DDF59234AF04C00B213F0 /* ArticleEditorVC.swift */; };
 		3B8DDF5C234B121D00B213F0 /* EditorColorPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B8DDF5B234B121D00B213F0 /* EditorColorPicker.swift */; };
 		3B8DDF5E234B122500B213F0 /* colorPalette.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3B8DDF5D234B122500B213F0 /* colorPalette.plist */; };
+		3B8DDF61234B1FC200B213F0 /* ArticleEditorVC+Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B8DDF60234B1FC200B213F0 /* ArticleEditorVC+Binding.swift */; };
 		3B8E0ED5234302D600362F26 /* SetUserVC+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B8E0ED4234302D600362F26 /* SetUserVC+Actions.swift */; };
 		3B8E0ED72343032B00362F26 /* SetUserVC+Styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B8E0ED62343032B00362F26 /* SetUserVC+Styles.swift */; };
 		3B986B6522CF4C9E00C1E985 /* PhoneNumberTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B986B6422CF4C9E00C1E985 /* PhoneNumberTests.swift */; };
@@ -406,6 +407,7 @@
 		3B8DDF59234AF04C00B213F0 /* ArticleEditorVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleEditorVC.swift; sourceTree = "<group>"; };
 		3B8DDF5B234B121D00B213F0 /* EditorColorPicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditorColorPicker.swift; sourceTree = "<group>"; };
 		3B8DDF5D234B122500B213F0 /* colorPalette.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = colorPalette.plist; sourceTree = "<group>"; };
+		3B8DDF60234B1FC200B213F0 /* ArticleEditorVC+Binding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ArticleEditorVC+Binding.swift"; sourceTree = "<group>"; };
 		3B8E0ED4234302D600362F26 /* SetUserVC+Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SetUserVC+Actions.swift"; sourceTree = "<group>"; };
 		3B8E0ED62343032B00362F26 /* SetUserVC+Styles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SetUserVC+Styles.swift"; sourceTree = "<group>"; };
 		3B986B6422CF4C9E00C1E985 /* PhoneNumberTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneNumberTests.swift; sourceTree = "<group>"; };
@@ -731,6 +733,7 @@
 			children = (
 				3B3C8B9523478DF100D8BADB /* Subviews */,
 				3B8DDF59234AF04C00B213F0 /* ArticleEditorVC.swift */,
+				3B8DDF60234B1FC200B213F0 /* ArticleEditorVC+Binding.swift */,
 			);
 			path = ArticleEditorVC;
 			sourceTree = "<group>";
@@ -1993,6 +1996,7 @@
 				5740957F2247768C00E40E51 /* CommentCell.swift in Sources */,
 				3B635F7F22772D87006DAAB2 /* PostsFetcher.swift in Sources */,
 				3B8DDF54234AD15A00B213F0 /* EditorVC+Actions.swift in Sources */,
+				3B8DDF61234B1FC200B213F0 /* ArticleEditorVC+Binding.swift in Sources */,
 				57E5159E2270E5DE00A6F6DB /* SettingsVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
