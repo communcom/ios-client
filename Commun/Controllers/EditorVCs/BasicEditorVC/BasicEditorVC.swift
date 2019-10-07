@@ -43,6 +43,8 @@ class BasicEditorVC: EditorVC {
         _contentTextView.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
         _contentTextView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
         _contentTextView.autoPinEdge(.top, to: .bottom, of: communityAvatarImage, withOffset: 20)
+        
+        // forward delegate
         _contentTextView.rx.setDelegate(self).disposed(by: disposeBag)
         
         // countlabel

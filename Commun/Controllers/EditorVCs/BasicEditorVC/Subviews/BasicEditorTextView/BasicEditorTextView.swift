@@ -14,10 +14,14 @@ class BasicEditorTextView: ContentTextView {
         return [.font: UIFont.systemFont(ofSize: 17)]
     }
     
-    let draftKey = "BasicEditorTextView.draftKey"
+    override var draftKey: String { "BasicEditorTextView.draftKey" }
     
     override var acceptedPostType: String {
         return "basic"
+    }
+    
+    override var canContainAttachments: Bool {
+        return false
     }
     
 }

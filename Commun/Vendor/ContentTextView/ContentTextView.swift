@@ -57,6 +57,14 @@ class ContentTextView: ExpandableTextView {
         fatalError("Must override")
     }
     
+    var draftKey: String {
+        fatalError("Must override")
+    }
+    
+    var canContainAttachments: Bool {
+        fatalError("Must override")
+    }
+    
     let disposeBag = DisposeBag()
     var originalAttributedString: NSAttributedString?
     
@@ -166,21 +174,7 @@ class ContentTextView: ExpandableTextView {
     }
     
     // MARK: - Draft
-    @objc func saveDraft(completion: (()->Void)? = nil) {
-        // for overriding
-    }
     
-    @objc func getDraft(completion: (()->Void)? = nil) {
-        // for overriding
-    }
-    
-    @objc func removeDraft() {
-        // for overriding
-    }
-    
-    @objc var hasDraft: Bool {
-        fatalError("must override")
-    }
     
     /// For parsing attachments only, if attachments are not allowed, leave an empty Completable
     func parseAttachments() -> Completable {

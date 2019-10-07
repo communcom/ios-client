@@ -189,7 +189,7 @@ class EditorVC: UIViewController {
         
         if item == .toggleIsAdult {
             viewModel.isAdult = !item.isHighlighted
-            toggleHighlight(tool: item)
+            toggleIsHighlightedForTool(item)
         }
     }
     
@@ -203,18 +203,24 @@ class EditorVC: UIViewController {
     }
     
     var hasDraft: Bool {
-        fatalError("Must override")
+        return contentTextView.hasDraft
     }
     
     func getDraft() {
-        fatalError("Must override")
+        // retrieve content
+        contentTextView.getDraft {
+            // remove draft
+            self.removeDraft()
+        }
     }
     
     func saveDraft(completion: (()->Void)? = nil) {
-        fatalError("Must override")
+        // save content
+        contentTextView.saveDraft(completion: completion)
     }
     
+    #warning("Must override in ArticleVC")
     func removeDraft() {
-        fatalError("Must override")
+        contentTextView.removeDraft()
     }
 }
