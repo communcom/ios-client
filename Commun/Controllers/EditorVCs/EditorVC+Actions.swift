@@ -75,4 +75,78 @@ extension EditorVC {
                 }
         }
     }
+    
+    // MARK: - Add image
+    func addImage() {
+        view.endEditing(true)
+        showActionSheet(title:     "add image".localized().uppercaseFirst,
+                             actions:   [
+                                UIAlertAction(title:    "choose from gallery".localized().uppercaseFirst,
+                                              style:    .default,
+                                              handler:  { _ in
+                                                self.chooseFromGallery()
+                                }),
+                                UIAlertAction(title:   "insert image from URL".localized().uppercaseFirst,
+                                              style:    .default,
+                                              handler:  { _ in
+                                                self.selectImageFromUrl()
+                                })])
+    }
+    
+    func chooseFromGallery() {
+        let pickerVC = CustomTLPhotosPickerVC.singleImage
+        self.present(pickerVC, animated: true, completion: nil)
+        
+        pickerVC.rx.didSelectAssets
+            .filter {($0.count > 0) && ($0.first?.fullResolutionImage != nil)}
+            .map {$0.first!.fullResolutionImage!}
+            .subscribe(onNext: {[weak self] image in
+                guard let strongSelf = self else {return}
+                let alert = UIAlertController(
+                    title:          "description".localized().uppercaseFirst,
+                    message:        "add a description for your image".localized().uppercaseFirst,
+                    preferredStyle: .alert)
+                
+                alert.addTextField { field in
+                    field.placeholder = "description".localized().uppercaseFirst + "(" + "optional".localized() + ")"
+                }
+                
+                alert.addAction(UIAlertAction(title: "add".localized().uppercaseFirst, style: .cancel, handler: { _ in
+                    strongSelf.didChooseImageFromGallery(image, description: alert.textFields?.first?.text)
+                    pickerVC.dismiss(animated: true, completion: nil)
+                }))
+                
+                alert.addAction(UIAlertAction(title: "cancel".localized().uppercaseFirst, style: .default, handler: {_ in
+                    strongSelf.didChooseImageFromGallery(image)
+                    pickerVC.dismiss(animated: true, completion: nil)
+                }))
+                
+                pickerVC.present(alert, animated: true, completion: nil)
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    func selectImageFromUrl() {
+        let alert = UIAlertController(
+            title:          "select image".localized().uppercaseFirst,
+            message:        "select image from an URL".localized().uppercaseFirst,
+            preferredStyle: .alert)
+        
+        alert.addTextField { field in
+            field.placeholder = "image URL".localized().uppercaseFirst
+        }
+        
+        alert.addTextField { field in
+            field.placeholder = "description".localized().uppercaseFirst + "(" + "optional".localized() + ")"
+        }
+        
+        alert.addAction(UIAlertAction(title: "add".localized().uppercaseFirst, style: .cancel, handler: {[weak self] _ in
+            guard let urlString = alert.textFields?.first?.text else { return }
+            self?.didAddImageFromURLString(urlString, description: alert.textFields?.last?.text)
+        }))
+        
+        alert.addAction(UIAlertAction(title: "cancel".localized().uppercaseFirst, style: .default, handler: nil))
+        
+        present(alert, animated: true, completion: nil)
+    }
 }

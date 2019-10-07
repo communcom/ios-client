@@ -38,7 +38,7 @@ extension FeedPageVC {
     
     @IBAction func photoButtonDidTouch(_ sender: Any) {
         openEditor { (editorVC) in
-            editorVC.addPhoto()
+            editorVC.addImage()
         }
     }
     

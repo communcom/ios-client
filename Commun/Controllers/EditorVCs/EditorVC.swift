@@ -184,7 +184,7 @@ class EditorVC: UIViewController {
         }
         
         if item == .addPhoto {
-            addPhoto()
+            addImage()
         }
         
         if item == .toggleIsAdult {
@@ -198,7 +198,11 @@ class EditorVC: UIViewController {
         try? contentTextView.parseText(post.content.body.full!)
     }
     
-    func addPhoto() {
+    func didChooseImageFromGallery(_ image: UIImage, description: String? = nil) {
+        fatalError("Must override")
+    }
+    
+    func didAddImageFromURLString(_ urlString: String, description: String? = nil) {
         fatalError("Must override")
     }
     
