@@ -9,9 +9,8 @@
 import UIKit
 
 class CommentTextView: ContentTextView {
-    override func awakeFromNib() {
-        defaultTypingAttributes = [.font: UIFont.systemFont(ofSize: 14)]
-        super.awakeFromNib()
+    override var defaultTypingAttributes: [NSAttributedString.Key : Any] {
+        return [.font: UIFont.systemFont(ofSize: 14)]
     }
     
     override func clearFormatting() {

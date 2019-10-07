@@ -9,15 +9,82 @@
 import UIKit
 import RxCocoa
 import RxSwift
+import CyberSwift
 
-class ContentTextView: ExpandableTextView {
+class ContentTextView: UITextView {
+    // MARK: - Nested types
+    enum CTVError: Error {
+        case parsingError(message: String)
+        var localizedDescription: String {
+            switch self {
+            case .parsingError(let message):
+                return message
+            }
+        }
+    }
+    
+    struct TextStyle: Equatable {
+        var isBold = false
+        var isItalic = false
+        // if format is unpersisted alongside selection
+        var isMixed = false
+        var textColor: UIColor = .black
+        var urlString: String?
+        
+        static var `default`: TextStyle {
+            return TextStyle(isBold: false, isItalic: false, isMixed: false, textColor: .black, urlString: nil)
+        }
+        
+        /// Return new TextStyle by modifying current TextStyle
+        func setting(isBool: Bool? = nil, isItalic: Bool? = nil, isMixed: Bool? = nil, textColor: UIColor? = nil, urlString: String? = nil) -> TextStyle
+        {
+            let isBool = isBool ?? self.isBold
+            let isItalic = isItalic ?? self.isItalic
+            let isMixed = isMixed ?? self.isMixed
+            let textColor = textColor ?? self.textColor
+            let urlString = urlString ?? self.urlString
+            return TextStyle(isBold: isBool, isItalic: isItalic, isMixed: isMixed, textColor: textColor, urlString: urlString)
+        }
+    }
+    
     // MARK: - Properties
     // Must override!!!
-    var defaultTypingAttributes: [NSAttributedString.Key: Any]!
-    let disposeBag = DisposeBag()
+    var defaultTypingAttributes: [NSAttributedString.Key: Any] {
+        fatalError("Must override")
+    }
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
+    var acceptedPostType: String {
+        fatalError("Must override")
+    }
+    
+    var draftKey: String {
+        fatalError("Must override")
+    }
+    
+    var canContainAttachments: Bool {
+        fatalError("Must override")
+    }
+    
+    let disposeBag = DisposeBag()
+    var originalAttributedString: NSAttributedString?
+    
+    var currentTextStyle = BehaviorRelay<TextStyle>(value: TextStyle(isBold: false, isItalic: false, isMixed: false, textColor: .black, urlString: nil))
+    
+    // MARK: - Class Initialization
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        commonInit()
+    }
+    
+    override init(frame: CGRect, textContainer: NSTextContainer?) {
+        super.init(frame: frame, textContainer: textContainer)
+        commonInit()
+    }
+    
+    func commonInit() {
+        isScrollEnabled = false
+        typingAttributes = defaultTypingAttributes
+        textContainer.lineFragmentPadding = 0
         bind()
     }
     
@@ -34,10 +101,32 @@ class ContentTextView: ExpandableTextView {
                 }
             })
             .disposed(by: disposeBag)
+        
+        rx.didChangeSelection
+            .subscribe(onNext: {
+                // get TextStyle at current selectedRange
+                self.setCurrentTextStyle()
+            })
+            .disposed(by: disposeBag)
     }
     
     func clearFormatting() {
-        // for overriding
+        if selectedRange.length == 0 {
+            typingAttributes = defaultTypingAttributes
+            setCurrentTextStyle()
+        }
+        else {
+            textStorage.enumerateAttributes(in: selectedRange, options: []) {
+                (attrs, range, stop) in
+                if let link = attrs[.link] as? String {
+                    if link.isLinkToTag || link.isLinkToMention {
+                        return
+                    }
+                }
+                textStorage.setAttributes(defaultTypingAttributes, range: range)
+            }
+            currentTextStyle.accept(.default)
+        }
     }
     
     func shouldChangeCharacterInRange(_ range: NSRange, replacementText text: String) -> Bool
@@ -94,6 +183,14 @@ class ContentTextView: ExpandableTextView {
     
     func insertTextWithDefaultAttributes(_ text: String, at index: Int) {
         textStorage.insert(NSAttributedString(string: text, attributes: defaultTypingAttributes), at: index)
+    }
+    
+    // MARK: - Draft
+    
+    
+    /// For parsing attachments only, if attachments are not allowed, leave an empty Completable
+    func parseAttachments() -> Completable {
+        return .empty()
     }
 }
  

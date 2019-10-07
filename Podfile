@@ -55,6 +55,7 @@ def common_pods
   pod 'UITextView+Placeholder'
   
   pod "ESPullToRefresh"
+  pod 'PureLayout'
 end
 
 target 'Commun' do

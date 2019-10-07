@@ -9,6 +9,10 @@
 import Foundation
 
 extension UITextView {
+    var selectedAString: NSAttributedString {
+        return attributedText.attributedSubstring(from: selectedRange)
+    }
+    
     func addAttachment(_ attachment: NSTextAttachment) {
         let attachmentAS = NSAttributedString(attachment: attachment)
         let currentMAS = NSMutableAttributedString(attributedString: attributedText)

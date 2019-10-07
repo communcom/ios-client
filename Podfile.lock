@@ -111,6 +111,7 @@ PODS:
     - PhoneNumberKit/PhoneNumberKitCore
   - PinCodeInputView (1.0.0)
   - Protobuf (3.9.0)
+  - PureLayout (3.1.5)
   - QRCodeReaderViewController (4.0.2)
   - ReachabilitySwift (4.3.1)
   - RxCocoa (4.5.0):
@@ -159,6 +160,7 @@ DEPENDENCIES:
   - MBProgressHUD (~> 1.1.0)
   - PhoneNumberKit (~> 2.6)
   - PinCodeInputView
+  - PureLayout
   - QRCodeReaderViewController (~> 4.0.2)
   - RxDataSources (~> 3.0)
   - SDURLCache (~> 1.3)
@@ -230,6 +232,7 @@ SPEC REPOS:
     - "UITextView+Placeholder"
   trunk:
     - ESPullToRefresh
+    - PureLayout
 
 EXTERNAL SOURCES:
   CyberSwift:
@@ -280,6 +283,7 @@ SPEC CHECKSUMS:
   PhoneNumberKit: 167ee1f0bbb6efce7c62559e620eae745595532f
   PinCodeInputView: 0a7361aaec76b639ff6521f1b6c38ed27b8144e3
   Protobuf: 1097ca58584c8d9be81bfbf2c5ff5975648dd87a
+  PureLayout: 9b4ad47b2f0388c84ff534af23d96e720c1b875a
   QRCodeReaderViewController: e8f27d035b3e72b1d4b1c61ff66458287e3be0ff
   ReachabilitySwift: 4032e2f59586e11e3b0ebe15b167abdd587a388b
   RxCocoa: cbf70265dc65a981d4ac982e513c10cf23df24a0
@@ -302,6 +306,6 @@ SPEC CHECKSUMS:
   UIImageView-Letters: f62db28076797adf3560ab7410647dc6899b9eef
   "UITextView+Placeholder": c407b27599ea23cca425946fee3cf1db5d547008
 
-PODFILE CHECKSUM: d213b9a24c3670b267a920730cb1603fd0a20c51
+PODFILE CHECKSUM: 5d68cb50d13d5a3054358c665df9c6f692f36336
 
 COCOAPODS: 1.8.0

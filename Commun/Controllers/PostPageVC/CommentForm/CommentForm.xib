@@ -39,12 +39,12 @@
                                 <action selector="addImageDidTouch:" destination="-1" eventType="touchUpInside" id="AIJ-Cu-k19"/>
                             </connections>
                         </button>
-                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="27b-40-1Op" customClass="CommentTextView" customModule="Commun" customModuleProvider="target">
+                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalCompressionResistancePriority="1000" scrollEnabled="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="27b-40-1Op" customClass="CommentTextView" customModule="Commun" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="0.0" width="320" height="36"/>
                             <color key="backgroundColor" red="0.95329588649999997" green="0.95977157349999997" blue="0.97960883379999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <accessibility key="accessibilityConfiguration" identifier="ContentViewExpandableTextView" label="ContentViewExpandableTextView"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="36" id="aMc-ew-m34"/>
+                                <constraint firstAttribute="height" priority="750" constant="36" placeholder="YES" id="aMc-ew-m34"/>
                             </constraints>
                             <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>

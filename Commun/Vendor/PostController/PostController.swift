@@ -265,15 +265,15 @@ extension PostController {
         guard let post = post,
             let topController = UIApplication.topViewController() else {return}
         
-        let viewModel = EditorPageViewModel()
+        let viewModel = EditorViewModel()
         viewModel.postForEdit = post
         
-        let vc = controllerContainer.resolve(EditorPageVC.self)!
+        #warning("define which VC")
+        let vc = controllerContainer.resolve(BasicEditorVC.self)!
         vc.viewModel = viewModel
+        vc.modalPresentationStyle = .fullScreen
         
-        let nav = UINavigationController(rootViewController: vc)
-        
-        topController.present(nav, animated: true, completion: nil)
+        topController.present(vc, animated: true, completion: nil)
     }
     
     func addPostToFavourite() {
