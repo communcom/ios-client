@@ -26,9 +26,24 @@ extension EditorVC {
         self.tools.accept(tools)
     }
     
-    func toggleHighlight(tool: EditorToolbarItem) {
+    func toggleIsHighlightedForTool(_ tool: EditorToolbarItem, isHighlighted: Bool? = nil)
+    {
         guard var tool = tools.value.first(where: {$0 == tool}) else {return}
-        tool.isHighlighted = !tool.isHighlighted
+        tool.isHighlighted = isHighlighted ?? !tool.isHighlighted
+        if let index = tools.value.firstIndex(of: tool) {
+            var tools = self.tools.value
+            tools[index] = tool
+            self.tools.accept(tools)
+        }
+        else {
+            appendTool(tool)
+        }
+    }
+    
+    func toggleIsEnabledForTool(_ tool: EditorToolbarItem, isEnabled: Bool? = nil)
+    {
+        guard var tool = tools.value.first(where: {$0 == tool}) else {return}
+        tool.isEnabled = isEnabled ?? !tool.isEnabled
         if let index = tools.value.firstIndex(of: tool) {
             var tools = self.tools.value
             tools[index] = tool

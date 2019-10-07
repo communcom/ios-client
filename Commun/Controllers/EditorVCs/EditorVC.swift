@@ -37,6 +37,10 @@ class EditorVC: UIViewController {
         fatalError("Must override")
     }
     
+    var contentTextViewCharacterCountLabel: UILabel {
+        fatalError("Must override")
+    }
+    
     var viewModel = EditorViewModel()
     
     let tools = BehaviorRelay<[EditorToolbarItem]>(value: [
@@ -78,6 +82,9 @@ class EditorVC: UIViewController {
         view.backgroundColor = .white
         
         setUpViews()
+        
+        // bind
+        bind()
     }
     
     func setUpViews() {
@@ -108,9 +115,6 @@ class EditorVC: UIViewController {
                 retrieveDraft()
             }
         }
-        
-        // bind
-        bind()
     }
     
     func layoutContentView() {
@@ -158,7 +162,7 @@ class EditorVC: UIViewController {
         buttonsCollectionView.rx
             .modelSelected(EditorToolbarItem.self)
             .subscribe(onNext: { [unowned self] item in
-                self.itemSelected(item)
+                self.didSelectTool(item)
             })
             .disposed(by: disposeBag)
         
@@ -168,9 +172,11 @@ class EditorVC: UIViewController {
         bindKeyboardHeight()
         
         bindSendPostButton()
+        
+        bindContentTextView()
     }
     
-    func itemSelected(_ item: EditorToolbarItem) {
+    func didSelectTool(_ item: EditorToolbarItem) {
         guard item.isEnabled else {return}
         
         if item == .hideKeyboard {
@@ -189,9 +195,7 @@ class EditorVC: UIViewController {
     
     // MARK: - action for overriding
     func setUp(with post: ResponseAPIContentGetPost) {
-//        self.titleTextView.rx.text.onNext(post.content.title)
-//        self.contentTextView.parseText(post.content.body.full!)
-        fatalError("Must override")
+        try? contentTextView.parseText(post.content.body.full!)
     }
     
     func addPhoto() {

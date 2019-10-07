@@ -17,7 +17,10 @@ class BasicEditorVC: EditorVC {
     override var contentTextView: ContentTextView {
         return _contentTextView
     }
-    var contentTextViewCountLabel = UILabel.descriptionLabel("0/30000")
+    var _contentTextViewCountLabel = UILabel.descriptionLabel("0/30000")
+    override var contentTextViewCharacterCountLabel: UILabel {
+        return _contentTextViewCountLabel
+    }
     
     // MARK: - Override
     override var contentCombined: Observable<Void> {
@@ -43,18 +46,15 @@ class BasicEditorVC: EditorVC {
         _contentTextView.rx.setDelegate(self).disposed(by: disposeBag)
         
         // countlabel
-        contentView.addSubview(contentTextViewCountLabel)
-        contentTextViewCountLabel.autoPinEdge(.top, to: .bottom, of: _contentTextView, withOffset: -12)
-        contentTextViewCountLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
+        contentView.addSubview(_contentTextViewCountLabel)
+        _contentTextViewCountLabel.autoPinEdge(.top, to: .bottom, of: _contentTextView, withOffset: -12)
+        _contentTextViewCountLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
         
     }
     
     override func pinContentViewBottom() {
-        contentTextViewCountLabel.autoPinEdge(toSuperviewEdge: .bottom, withInset: 16)
+        _contentTextViewCountLabel.autoPinEdge(toSuperviewEdge: .bottom, withInset: 16)
     }
     
     // MARK: - overriding actions
-    override func setUp(with post: ResponseAPIContentGetPost) {
-        
-    }
 }
