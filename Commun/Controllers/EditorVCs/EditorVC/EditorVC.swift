@@ -84,6 +84,20 @@ class EditorVC: UIViewController {
         bind()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        // if editing post
+        if let post = viewModel.postForEdit {
+            parsePost(post)
+        }
+        else {
+            // parse draft
+            if hasDraft {
+                retrieveDraft()
+            }
+        }
+    }
+    
     func setUpViews() {
         // close button
         closeButton.addTarget(self, action: #selector(close), for: .touchUpInside)
@@ -100,17 +114,6 @@ class EditorVC: UIViewController {
         // common contentTextView
         contentTextView.placeholder = "write text placeholder".localized().uppercaseFirst + "..."
         headerLabel.text = (viewModel.postForEdit != nil ? "edit post" : "create post").localized().uppercaseFirst
-        
-        // if editing post
-        if let post = viewModel.postForEdit {
-            parsePost(post)
-        }
-        else {
-            // parse draft
-            if hasDraft {
-                retrieveDraft()
-            }
-        }
     }
     
     func layoutTopContentTextView() {

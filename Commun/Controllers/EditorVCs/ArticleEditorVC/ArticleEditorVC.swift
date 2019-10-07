@@ -119,7 +119,7 @@ class ArticleEditorVC: EditorVC {
     override func saveDraft(completion: (()->Void)? = nil) {
        // save title
        UserDefaults.standard.set(titleTextView.text, forKey: titleDraft)
-       super.saveDraft()
+       super.saveDraft(completion: completion)
     }
     
     override func removeDraft() {
