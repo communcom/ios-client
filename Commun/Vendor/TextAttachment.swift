@@ -41,7 +41,7 @@ final class TextAttachment: NSTextAttachment {
         return "TextAttachment(\(placeholderText))"
     }
     
-    func toSingleContentBlock(id: inout UInt) -> Single<ContentBlock>? {
+    func toSingleContentBlock(id: inout UInt64) -> Single<ContentBlock>? {
         guard var embed = embed,
             let type = embed.type
         else {

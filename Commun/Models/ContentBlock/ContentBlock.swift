@@ -10,10 +10,12 @@ import Foundation
 import CyberSwift
 
 struct ContentBlock: Codable {
-    let id: UInt
+    let id: UInt64
     var type: String
     var attributes: ContentBlockAttributes?
     var content: ContentBlockContent
+    
+    var maxId: UInt64?
 }
 
 extension ResponseAPIFrameGetEmbed {

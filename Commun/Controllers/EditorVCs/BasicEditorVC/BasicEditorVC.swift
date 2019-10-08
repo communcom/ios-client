@@ -113,12 +113,27 @@ class BasicEditorVC: EditorVC {
     
     override func getContentBlock() -> Single<ContentBlock> {
         // TODO: - Attachments
-        super.getContentBlock()
-//            .flatMap {contentBlock -> Single<ContentBlock> in
-//                // transform attachments to contentBlock
-//                self._viewModel.attachments.value.compactMap { (attachment) -> Single<ContentBlock>? in
-//                    <#code#>
-//                }
-//            }
+        var block: ContentBlock?
+        var id: UInt64!
+        return super.getContentBlock()
+            .flatMap {contentBlock -> Single<[ContentBlock]> in
+                block = contentBlock
+                // transform attachments to contentBlock
+                id = (contentBlock.maxId ?? 100) + 1
+                var childId = id!
+                
+                return Single.zip(self._viewModel.attachments.value.compactMap { (attachment) -> Single<ContentBlock>? in
+                    return attachment.toSingleContentBlock(id: &childId)
+                })
+            }
+            .map {contentBlocks -> ContentBlock in
+                guard var childs = block?.content.arrayValue else {return block!}
+                childs.append(ContentBlock(id: id, type: "attachments", attributes: nil, content: .array(contentBlocks)))
+                block!.content = .array(childs)
+                
+                print(block)
+                
+                return block!
+            }
     }
 }

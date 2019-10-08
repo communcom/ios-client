@@ -27,7 +27,7 @@ extension NSAttributedString {
         return result
     }
     
-    func toParagraphContentBlock(id: inout UInt) -> ContentBlock? {
+    func toParagraphContentBlock(id: inout UInt64) -> ContentBlock? {
         let originalId = id
         id += 1
         

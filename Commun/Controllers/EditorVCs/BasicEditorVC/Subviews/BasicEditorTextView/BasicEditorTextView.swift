@@ -38,7 +38,7 @@ class BasicEditorTextView: ContentTextView {
     
     override func getContentBlock(postTitle: String? = nil) -> Single<ContentBlock> {
         // spend id = 1 for PostBlock, so id starts from 1
-        var id: UInt = 1
+        var id: UInt64 = 1
         
         // child blocks of post block
         var contentBlocks = [Single<ContentBlock>]()
