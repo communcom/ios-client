@@ -30,6 +30,8 @@ class FeedPageFiltersVC: SwipeDownDismissViewController {
         tableView.dataSource = self
         tableView.tableFooterView = UIView()
         
+        tableView.showsVerticalScrollIndicator = false
+        
         bind()
     }
     
