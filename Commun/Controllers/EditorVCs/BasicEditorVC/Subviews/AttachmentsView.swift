@@ -43,22 +43,25 @@ class AttachmentsView: UIView {
         didRemoveAttachmentAtIndex?(index)
     }
     
+    private func imageViewWithCloseButton(index: Int) -> UIImageView {
+        let imageView = UIImageView(forAutoLayout: ())
+        imageView.isUserInteractionEnabled = true
+        let closeButton = UIButton.circleGray(imageName: "close-x")
+        closeButton.tag = index
+        imageView.addSubview(closeButton)
+        closeButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
+        closeButton.autoPinEdge(toSuperviewEdge: .top, withInset: 16)
+        closeButton.addTarget(self, action: #selector(close(sender:)), for: .touchUpInside)
+        return imageView
+    }
+    
     func setUp(with attachments: [Attachment]) {
         // if 1 attachment attached
 //        if attachments.count == 1 {
             let attachment = attachments[0]
-            let imageView = UIImageView(forAutoLayout: ())
+            let imageView = imageViewWithCloseButton(index: 0)
             addSubview(imageView)
             imageView.autoPinEdgesToSuperviewEdges()
-        
-            imageView.isUserInteractionEnabled = true
-            
-            let closeButton = UIButton.circleGray(imageName: "close-x")
-            closeButton.tag = 0
-            imageView.addSubview(closeButton)
-            closeButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
-            closeButton.autoPinEdge(toSuperviewEdge: .top, withInset: 16)
-            closeButton.addTarget(self, action: #selector(close(sender:)), for: .touchUpInside)
         
             let heightConstraint = imageView.heightAnchor.constraint(equalTo: imageView.widthAnchor, multiplier: 2/3)
         
