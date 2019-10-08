@@ -93,6 +93,9 @@ class PostHeaderView: UIView, UIWebViewDelegate, PostController {
                     let block = try JSONDecoder().decode(ContentBlock.self, from: jsonData)
                     html = block.toHTML(embeds: post.content.embeds.compactMap {$0.result} )
                 }
+                
+                contentWebView.scrollView.contentInset = UIEdgeInsets(top: 0, left: -8, bottom: 0, right: -8)
+                
             } catch {
                 print(error)
                 #warning("MARKDOWN: Remove later")
@@ -100,6 +103,7 @@ class PostHeaderView: UIView, UIWebViewDelegate, PostController {
                 if let downHtml = try? down.toHTML(){
                     html = downHtml
                 }
+                contentWebView.scrollView.contentInset = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 8)
             }
         }
         
@@ -107,7 +111,6 @@ class PostHeaderView: UIView, UIWebViewDelegate, PostController {
         contentWebView.delegate = self
         contentWebView.scrollView.isScrollEnabled = false
         contentWebView.scrollView.bouncesZoom = false
-        contentWebView.scrollView.contentInset = UIEdgeInsets(top: 0, left: -8, bottom: 0, right: -8)
     }
     
     func webViewDidStartLoad(_ webView: UIWebView) {
