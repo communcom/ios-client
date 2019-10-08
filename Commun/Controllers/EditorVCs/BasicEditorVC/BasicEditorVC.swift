@@ -24,6 +24,10 @@ class BasicEditorVC: EditorVC {
         return contentTextView.rx.text.orEmpty.map {_ in ()}
     }
     
+    override var postTitle: String? {
+        return nil
+    }
+    
     var _viewModel = BasicEditorViewModel()
     override var viewModel: EditorViewModel {
         return _viewModel

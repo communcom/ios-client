@@ -192,5 +192,10 @@ class ContentTextView: UITextView {
     func parseAttachments() -> Completable {
         return .empty()
     }
+    
+    // MARK: - ContentBlock
+    func getContentBlock(postTitle: String? = nil) -> Single<ContentBlock> {
+        fatalError("Must override")
+    }
 }
  

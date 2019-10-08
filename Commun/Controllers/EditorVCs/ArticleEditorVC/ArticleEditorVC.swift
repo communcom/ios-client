@@ -55,6 +55,10 @@ class ArticleEditorVC: EditorVC {
         return super.shouldSendPost && titleIsNotEmpty && titleIsInsideLimit && titleChanged
     }
     
+    override var postTitle: String? {
+        self.titleTextView.text
+    }
+    
     // MARK: - Lifecycle
     override func setUpViews() {
         super.setUpViews()
@@ -64,6 +68,9 @@ class ArticleEditorVC: EditorVC {
         titleTextView.textContainer.lineFragmentPadding = 0
         titleTextView.typingAttributes = [.font: UIFont.systemFont(ofSize: 21, weight: .bold)]
         titleTextView.placeholder = "title placeholder".localized().uppercaseFirst
+        
+        contentTextView.layoutManager
+            .ensureLayout(for: contentTextView.textContainer)
     }
     
     override func layoutTopContentTextView() {

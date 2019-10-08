@@ -37,6 +37,8 @@ struct ContentBlockAttributes: Codable {
     
     init(
         title: String? = nil,
+        type: String? = nil,
+        version: String? = nil,
         style: [String]? = nil,
         text_color: String? = nil,
         url: String? = nil,
@@ -49,6 +51,8 @@ struct ContentBlockAttributes: Codable {
         html: String? = nil
     ){
         self.title = title
+        self.type = type
+        self.version = version
         self.style = style
         self.text_color = text_color
         self.url = url
@@ -63,6 +67,8 @@ struct ContentBlockAttributes: Codable {
     
     // PostBlock
     var title: String?
+    var type: String?
+    var version: String?
     
     // TextBlock
     var style: [String]?

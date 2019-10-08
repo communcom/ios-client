@@ -42,6 +42,10 @@ class EditorVC: UIViewController {
         fatalError("Must override")
     }
     
+    var postTitle: String? {
+        fatalError("Must override")
+    }
+    
     let tools = BehaviorRelay<[EditorToolbarItem]>(value: [
         EditorToolbarItem.toggleIsAdult,
         EditorToolbarItem.addPhoto
@@ -103,6 +107,7 @@ class EditorVC: UIViewController {
     func setUpViews() {
         // close button
         closeButton.addTarget(self, action: #selector(close), for: .touchUpInside)
+        postButton.addTarget(self, action: #selector(sendPost), for: .touchUpInside)
         
         // toolbars
         setUpToolbar()

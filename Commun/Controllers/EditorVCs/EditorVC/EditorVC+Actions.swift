@@ -8,6 +8,7 @@
 
 import Foundation
 import CyberSwift
+import RxSwift
 
 extension EditorVC {
     // MARK: - Immutable actions
@@ -216,6 +217,69 @@ extension EditorVC {
             }
         }
     }
+    
+    // MARK: - Send post
+    @objc func sendPost() {
+       self.view.endEditing(true)
+       
+       // remove draft
+       removeDraft()
+       
+       contentTextView.getContentBlock(postTitle: postTitle)
+           .observeOn(MainScheduler.instance)
+           .do(onSubscribe: {
+               self.showIndetermineHudWithMessage(
+                       "uploading".localized().uppercaseFirst)
+           })
+           .flatMap {
+               self.viewModel.sendPost(title: self.postTitle ?? " ", block: $0)
+           }
+           .do(onSubscribe: {
+               self.showIndetermineHudWithMessage(
+                       "sending post".localized().uppercaseFirst)
+           })
+           .flatMap {
+               self.viewModel.waitForTransaction($0)
+           }
+           .do(onSubscribe: {
+               self.showIndetermineHudWithMessage(
+                       "wait for transaction".localized().uppercaseFirst)
+           })
+           .subscribe(onSuccess: { (userId, permlink) in
+               self.hideHud()
+               // if editing post
+               if (self.viewModel.postForEdit) != nil {
+                   self.dismiss(animated: true, completion: nil)
+               }
+               // if creating post
+               else {
+                   // show post page
+                   let postPageVC = controllerContainer.resolve(PostPageVC.self)!
+                   postPageVC.viewModel.permlink = permlink
+                   postPageVC.viewModel.userId = userId
+                   
+                   self.dismiss(animated: true) {
+                       UIApplication.topViewController()?.show(postPageVC, sender: nil)
+                   }
+               }
+           }) { (error) in
+               self.hideHud()
+               if let error = error as? ErrorAPI {
+                   switch error {
+                   case .responseUnsuccessful(message: "post not found".localized().uppercaseFirst):
+                       self.dismiss(animated: true, completion: nil)
+                       break
+                   case .blockchain(message: let message):
+                       self.showAlert(title: "error".localized().uppercaseFirst, message: message)
+                       break
+                   default:
+                       break
+                   }
+               }
+               self.showError(error)
+           }
+           .disposed(by: disposeBag)
+       }
 }
 
 extension EditorVC: UIPopoverPresentationControllerDelegate {
