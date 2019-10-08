@@ -221,6 +221,10 @@ class EditorVC: UIViewController {
         // for overriding in BasicEditorVC
     }
     
+    func getContentBlock() -> Single<ContentBlock> {
+        contentTextView.getContentBlock(postTitle: postTitle)
+    }
+    
     // MARK: - draft
     var hasDraft: Bool {
         return contentTextView.hasDraft

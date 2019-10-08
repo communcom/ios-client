@@ -225,7 +225,7 @@ extension EditorVC {
        // remove draft
        removeDraft()
        
-       contentTextView.getContentBlock(postTitle: postTitle)
+       getContentBlock()
            .observeOn(MainScheduler.instance)
            .do(onSubscribe: {
                self.showIndetermineHudWithMessage(

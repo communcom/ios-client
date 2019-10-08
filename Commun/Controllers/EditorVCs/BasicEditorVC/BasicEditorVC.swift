@@ -88,4 +88,15 @@ class BasicEditorVC: EditorVC {
     override func didAddLink(_ urlString: String, placeholder: String? = nil) {
         // TODO: - Add link
     }
+    
+    override func getContentBlock() -> Single<ContentBlock> {
+        // TODO: - Attachments
+        super.getContentBlock()
+//            .flatMap {contentBlock -> Single<ContentBlock> in
+//                // transform attachments to contentBlock
+//                self._viewModel.attachments.value.compactMap { (attachment) -> Single<ContentBlock>? in
+//                    <#code#>
+//                }
+//            }
+    }
 }
