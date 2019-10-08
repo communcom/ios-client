@@ -15,7 +15,6 @@ class BasicEditorViewModel: EditorViewModel {
     
     func addAttachment(_ attachment: AttachmentsView.Attachment) {
         var value = attachments.value
-        value.removeAll(attachment)
         value.append(attachment)
         attachments.accept(value)
     }

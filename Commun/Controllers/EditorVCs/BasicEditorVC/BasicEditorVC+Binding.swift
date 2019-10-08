@@ -17,9 +17,11 @@ extension BasicEditorVC {
                     else {return}
                 self.contentTextView.removeConstraint(bottomConstraint)
                 
+                self.attachmentsView.removeFromSuperview()
+                self.attachmentsView.removeAllConstraints()
+                
                 // if no attachment is attached
                 if attachments.count == 0 {
-                    self.attachmentsView.removeFromSuperview()
                     self.layoutBottomContentTextView()
                     return
                 }

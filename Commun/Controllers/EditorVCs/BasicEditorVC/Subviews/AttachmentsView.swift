@@ -56,9 +56,11 @@ class AttachmentsView: UIView {
     }
     
     func setUp(with attachments: [Attachment]) {
+        removeSubviews()
+        
         // if 1 attachment attached
 //        if attachments.count == 1 {
-            let attachment = attachments[0]
+        let attachment = attachments.last!
             let imageView = imageViewWithCloseButton(index: 0)
             addSubview(imageView)
             imageView.autoPinEdgesToSuperviewEdges()
@@ -84,18 +86,32 @@ class AttachmentsView: UIView {
         // TODO: support more than 1 images
 //        else {
 //            let numberOfImagesInARow = 3
-//            let padding = 4
-//            for (index, attachment) in attachments.enumerated() {
-//                let imageView = UIImageView(forAutoLayout: ())
-//                self.attachmentsView?.addSubview(imageView)
+//            let padding: CGFloat = 4
 //
-//                imageView.widthAnchor.constraint(equalTo: self.attachmentsView!.widthAnchor, multiplier: CGFloat(1/numberOfImagesInARow))
+//            let itemSize = size.width - CGFloat(numberOfImagesInARow - 1) * padding / CGFloat(numberOfImagesInARow)
+//
+//            for (index, _) in attachments.enumerated() {
+//                let imageView = imageViewWithCloseButton(index: index)
+//                addSubview(imageView)
+//
+//                imageView.widthAnchor.constraint(equalToConstant: itemSize)
 //                    .isActive = true
+//
 //                imageView.heightAnchor.constraint(equalTo: imageView.widthAnchor)
 //                    .isActive = true
 //
-//                if index < numberOfImagesInARow {
-//                    imageView.autoPinEdge(toSuperviewEdge: .top)
+//                imageView.topAnchor.constraint(equalTo: topAnchor, constant: CGFloat(Int(index/numberOfImagesInARow)) * (itemSize + padding))
+//                    .isActive = true
+//                imageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: CGFloat(Int(index%numberOfImagesInARow)) * (itemSize + padding))
+//                    .isActive = true
+////                let topConstraint = NSLayoutConstraint(item: imageView, attribute: .centerY, relatedBy: .equal, toItem: self, attribute: .centerY, multiplier: CGFloat(Int(index/numberOfImagesInARow)), constant: 0)
+////                self.addConstraint(topConstraint)
+////
+////                let leadingConstraint = NSLayoutConstraint(item: imageView, attribute: .centerX, relatedBy: .equal, toItem: self, attribute: .centerX, multiplier: CGFloat(Int(index%numberOfImagesInARow)), constant: 0)
+////                self.addConstraint(leadingConstraint)
+//
+//                if index == attachments.count - 1 {
+//                    imageView.autoPinEdge(toSuperviewEdge: .bottom)
 //                }
 //            }
 //        }
