@@ -69,24 +69,46 @@ class BasicEditorVC: EditorVC {
     }
     
     override func didChooseImageFromGallery(_ image: UIImage, description: String? = nil) {
+        
+        var embed = try! ResponseAPIFrameGetEmbed(
+            blockAttributes: ContentBlockAttributes(
+                description: description
+            )
+        )
+        embed.type = "image"
+        
+        let attachment = TextAttachment()
+        attachment.embed = embed
+        attachment.localImage = image
+        
         // Add embeds
-        _viewModel.addAttachment(
-            AttachmentsView.Attachment(
-                originalImage: image,
-                urlString: nil,
-                description: description))
+        _viewModel.addAttachment(attachment)
     }
     
     override func didAddImageFromURLString(_ urlString: String, description: String? = nil) {
-        _viewModel.addAttachment(
-            AttachmentsView.Attachment(
-                originalImage: nil,
-                urlString: urlString,
-                description: description))
+        var embed = try! ResponseAPIFrameGetEmbed(
+            blockAttributes: ContentBlockAttributes(
+                url: urlString, description: description
+            )
+        )
+        embed.type = "image"
+        
+        let attachment = TextAttachment()
+        attachment.embed = embed
+        
+        _viewModel.addAttachment(attachment)
     }
     
     override func didAddLink(_ urlString: String, placeholder: String? = nil) {
-        _contentTextView.addLink(urlString, placeholder: placeholder)
+        if let placeholder = placeholder,
+            !placeholder.isEmpty
+        {
+            _contentTextView.addLink(urlString, placeholder: placeholder)
+        }
+        else {
+            parseLink(urlString)
+        }
+        
     }
     
     override func getContentBlock() -> Single<ContentBlock> {

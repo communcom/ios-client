@@ -13,49 +13,22 @@ import RxSwift
 extension ArticleEditorTextView {
     // MARK: - Methods
     private func addEmbed(_ embed: ResponseAPIFrameGetEmbed) {
-        // modification needed because of type conflict
-        var embed = embed
-        guard embed.type != nil else {return}
+        guard let single = embed.toTextAttachmentSingle() else {return}
         
-        // url for images
-        var urlString = embed.url
-        
-        // Fix conflict type
-        if embed.type == "photo" {embed.type = "image"}
-        if embed.type == "link" {embed.type = "website"}
-        
-        // thumbnail for website and video
-        if embed.type == "website" || embed.type == "video" {
-            urlString = embed.thumbnail_url
-        }
-        
-        // request
-        var downloadImage: Single<UIImage>
-        if urlString == nil || URL(string: urlString!) == nil {
-            downloadImage = .just(UIImage(named: "image-not-available")!)
-        }
-        else {
-            downloadImage = NetworkService.shared.downloadImage(URL(string: urlString!)!)
-        }
-        
-        // Donwload image
-        downloadImage
+        single
             .do(onSubscribe: {
                 self.parentViewController?
                     .showIndetermineHudWithMessage("loading".localized().uppercaseFirst)
             })
-            .catchErrorJustReturn(UIImage(named: "image-not-available")!)
             .subscribe(
-                onSuccess: { [weak self] (image) in
+                onSuccess: { [weak self] (attachment) in
                     guard let strongSelf = self else {return}
                     strongSelf.parentViewController?.hideHud()
                     
-                    // Insert Attachment
-                    var attachment = TextAttachment()
-                    attachment.embed = embed
+                    var attachment = attachment
                     
                     // Add image to attachment
-                    strongSelf.add(image, to: &attachment)
+                    strongSelf.add(attachment.localImage!, to: &attachment)
                     
                     // Add attachment
                     strongSelf.addAttachmentAtSelectedRange(attachment)

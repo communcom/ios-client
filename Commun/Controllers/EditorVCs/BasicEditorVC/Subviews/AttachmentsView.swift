@@ -9,18 +9,6 @@
 import Foundation
 
 class AttachmentsView: UIView {
-    struct Attachment: Equatable {
-        var originalImage: UIImage?
-        var urlString: String?
-        var description: String?
-        
-        static func == (lhs: Attachment, rhs: Attachment) -> Bool {
-            if lhs.originalImage == rhs.originalImage {return true}
-            if lhs.urlString == rhs.urlString {return true}
-            return false
-        }
-    }
-    
     var imageViews: [UIImageView]?
     
 //    override init(frame: CGRect) {
@@ -55,7 +43,7 @@ class AttachmentsView: UIView {
         return imageView
     }
     
-    func setUp(with attachments: [Attachment]) {
+    func setUp(with attachments: [TextAttachment]) {
         removeSubviews()
         
         let gridView = GridView(forAutoLayout: ())
@@ -66,11 +54,8 @@ class AttachmentsView: UIView {
         var imageViews = [UIImageView]()
         for (index, attachment) in attachments.enumerated() {
             let imageView = imageViewWithCloseButton(index: index)
-            if let image = attachment.originalImage {
+            if let image = attachment.localImage {
                 imageView.image = image
-            }
-            if let urlString = attachment.urlString {
-                imageView.sd_setImageCachedError(with: URL(string: urlString), completion: nil)
             }
             imageViews.append(imageView)
         }
@@ -86,19 +71,19 @@ class AttachmentsView: UIView {
             let heightConstraint = imageView.heightAnchor.constraint(equalTo: imageView.widthAnchor, multiplier: 2/3)
         
             heightConstraint.isActive = true
-            if let image = attachment.originalImage {
+            if let image = attachment.localImage {
                 
                 imageView.image = image
             }
-            else {
-                imageView.sd_setImageCachedError(with: URL(string: attachment.urlString!)) { (error, image) in
-                    if let image = image {
-                        heightConstraint.isActive = false
-                        let fixedHeightConstraint = imageView.heightAnchor.constraint(equalTo: imageView.widthAnchor, multiplier: image.size.height / image.size.width)
-                        fixedHeightConstraint.isActive = true
-                    }
-                }
-            }
+//            else {
+//                imageView.sd_setImageCachedError(with: URL(string: attachment.urlString!)) { (error, image) in
+//                    if let image = image {
+//                        heightConstraint.isActive = false
+//                        let fixedHeightConstraint = imageView.heightAnchor.constraint(equalTo: imageView.widthAnchor, multiplier: image.size.height / image.size.width)
+//                        fixedHeightConstraint.isActive = true
+//                    }
+//                }
+//            }
 //        }
                             
         // TODO: support more than 1 images

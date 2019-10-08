@@ -11,15 +11,15 @@ import RxCocoa
 import RxSwift
 
 class BasicEditorViewModel: EditorViewModel {
-    let attachments = BehaviorRelay<[AttachmentsView.Attachment]>(value: [])
+    let attachments = BehaviorRelay<[TextAttachment]>(value: [])
     
-    func addAttachment(_ attachment: AttachmentsView.Attachment) {
+    func addAttachment(_ attachment: TextAttachment) {
         var value = attachments.value
         value.append(attachment)
         attachments.accept(value)
     }
     
-    func removeAttachment(_ attachment: AttachmentsView.Attachment) {
+    func removeAttachment(_ attachment: TextAttachment) {
         var value = attachments.value
         value.removeAll(attachment)
         attachments.accept(value)

@@ -50,6 +50,8 @@
 		3B25E5BE234C2A0C005BD1B8 /* BasicEditorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B25E5BD234C2A0C005BD1B8 /* BasicEditorViewModel.swift */; };
 		3B25E5C0234C2F66005BD1B8 /* BasicEditorVC+Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B25E5BF234C2F66005BD1B8 /* BasicEditorVC+Binding.swift */; };
 		3B25E5C2234C4205005BD1B8 /* AttachmentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B25E5C1234C4205005BD1B8 /* AttachmentsView.swift */; };
+		3B25E5C4234C6E4E005BD1B8 /* BasicEditorVC+Link.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B25E5C3234C6E4E005BD1B8 /* BasicEditorVC+Link.swift */; };
+		3B25E5C6234C6EF6005BD1B8 /* ResponseAPIFrameGetEmbed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B25E5C5234C6EF6005BD1B8 /* ResponseAPIFrameGetEmbed.swift */; };
 		3B289B972346E51600598407 /* UIButton+PureLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B289B962346E51600598407 /* UIButton+PureLayout.swift */; };
 		3B289B9A2346E6D800598407 /* UILabel+PureLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B289B992346E6D800598407 /* UILabel+PureLayout.swift */; };
 		3B289B9C2346E7FC00598407 /* UIImage+PureLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B289B9B2346E7FC00598407 /* UIImage+PureLayout.swift */; };
@@ -337,6 +339,8 @@
 		3B25E5BD234C2A0C005BD1B8 /* BasicEditorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicEditorViewModel.swift; sourceTree = "<group>"; };
 		3B25E5BF234C2F66005BD1B8 /* BasicEditorVC+Binding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BasicEditorVC+Binding.swift"; sourceTree = "<group>"; };
 		3B25E5C1234C4205005BD1B8 /* AttachmentsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentsView.swift; sourceTree = "<group>"; };
+		3B25E5C3234C6E4E005BD1B8 /* BasicEditorVC+Link.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BasicEditorVC+Link.swift"; sourceTree = "<group>"; };
+		3B25E5C5234C6EF6005BD1B8 /* ResponseAPIFrameGetEmbed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseAPIFrameGetEmbed.swift; sourceTree = "<group>"; };
 		3B289B962346E51600598407 /* UIButton+PureLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+PureLayout.swift"; sourceTree = "<group>"; };
 		3B289B992346E6D800598407 /* UILabel+PureLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+PureLayout.swift"; sourceTree = "<group>"; };
 		3B289B9B2346E7FC00598407 /* UIImage+PureLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+PureLayout.swift"; sourceTree = "<group>"; };
@@ -635,6 +639,7 @@
 				3B06863823471163008953C5 /* Subviews */,
 				3B068631234700DC008953C5 /* BasicEditorVC.swift */,
 				3B25E5BF234C2F66005BD1B8 /* BasicEditorVC+Binding.swift */,
+				3B25E5C3234C6E4E005BD1B8 /* BasicEditorVC+Link.swift */,
 				3B25E5BD234C2A0C005BD1B8 /* BasicEditorViewModel.swift */,
 			);
 			path = BasicEditorVC;
@@ -1324,6 +1329,7 @@
 				3BF381802331D9CD00C02123 /* URL.swift */,
 				3B6CB731234331830097B2A1 /* Array.swift */,
 				3B3C8B83234779FE00D8BADB /* UIImage.swift */,
+				3B25E5C5234C6EF6005BD1B8 /* ResponseAPIFrameGetEmbed.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1895,6 +1901,7 @@
 				3BF2E09822D3A49F003B37AE /* StepButton.swift in Sources */,
 				3B63CD9322AA7AA200DC828B /* UIScrollView.swift in Sources */,
 				3B068632234700DC008953C5 /* BasicEditorVC.swift in Sources */,
+				3B25E5C4234C6E4E005BD1B8 /* BasicEditorVC+Link.swift in Sources */,
 				3BAD8E7E2318C524005A8AB3 /* ContentBlock+Parser.swift in Sources */,
 				3B8DDF5C234B121D00B213F0 /* EditorColorPicker.swift in Sources */,
 				3B5D361C22E8303C0012A991 /* HTMLStringWebView.swift in Sources */,
@@ -1997,6 +2004,7 @@
 				3B3C8B982347911D00D8BADB /* EditorViewModel.swift in Sources */,
 				576DC91B223E41F600EDED41 /* FeedPageViewModel.swift in Sources */,
 				3BB32F1623438C44006572F3 /* CommunActionSheet+TransitioningDelegate.swift in Sources */,
+				3B25E5C6234C6EF6005BD1B8 /* ResponseAPIFrameGetEmbed.swift in Sources */,
 				3BA4D0872292BA710022A69D /* ResponseAPIContentGetPost.swift in Sources */,
 				3BAE5CD92338A5A70055F23E /* CommentForm+TextViewDelegate.swift in Sources */,
 				3B5EDE3922E07F0300897BF3 /* SettingsVC+DataSource.swift in Sources */,
