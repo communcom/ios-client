@@ -131,7 +131,7 @@ class MediaView: UIView {
         delegate?.mediaViewCloseButtonDidTouch()
     }
     
-    func setUp(image: UIImage?, url: String? = nil, description: String? = nil, completion: ((Error?)->Void)? = nil) {
+    func setUp(image: UIImage?, url: String? = nil, description: String? = nil, completion: ((Error?, UIImage?)->Void)? = nil) {
         // Set description
         titleLabel.text = description
         urlLabel.text = url
@@ -139,7 +139,7 @@ class MediaView: UIView {
         // Set image
         if let image = image {
             imageView.image = image
-            completion?(nil)
+            completion?(nil, image)
         } else if let urlString = url,
             let url = URL(string: urlString){
             imageView.sd_setImageCachedError(with: url, completion: completion)
@@ -157,7 +157,7 @@ class MediaView: UIView {
         descriptionViewHeightConstraint.constant = newValue
     }
     
-    func setUp(url: String, description: String? = nil, completion: ((Error?)->Void)? = nil) {
+    func setUp(url: String, description: String? = nil, completion: ((Error?, UIImage?)->Void)? = nil) {
         // Get preview
         let slp = SwiftLinkPreview(cache: InMemoryCache())
         
@@ -177,7 +177,7 @@ class MediaView: UIView {
         }
         
         let errorHandler: ((PreviewError) -> Void) = {error in
-            completion?(error)
+            completion?(error, nil)
         }
         
         if let cached = slp.cache.slp_getCachedResponse(url: url) {

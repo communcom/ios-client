@@ -17,6 +17,7 @@ class BasicEditorVC: EditorVC {
     override var contentTextView: ContentTextView {
         return _contentTextView
     }
+    var attachmentsView: UIView?
     
     // MARK: - Override
     override var contentCombined: Observable<Void> {
@@ -44,6 +45,12 @@ class BasicEditorVC: EditorVC {
         contentTextView.autoPinEdge(toSuperviewEdge: .bottom)
     }
     
+    override func bind() {
+        super.bind()
+        
+        bindAttachments()
+    }
+    
     // MARK: - overriding actions
     override func addArticle() {
         weak var presentingViewController = self.presentingViewController
@@ -58,11 +65,20 @@ class BasicEditorVC: EditorVC {
     }
     
     override func didChooseImageFromGallery(_ image: UIImage, description: String? = nil) {
-        // TODO: - Add embeds
+        // Add embeds
+        _viewModel.addAttachment(
+            BasicEditorViewModel.Attachment(
+                originalImage: image,
+                urlString: nil,
+                description: description))
     }
     
     override func didAddImageFromURLString(_ urlString: String, description: String? = nil) {
-        // TODO: - Add embeds
+        _viewModel.addAttachment(
+            BasicEditorViewModel.Attachment(
+                originalImage: nil,
+                urlString: urlString,
+                description: description))
     }
     
     override func didAddLink(_ urlString: String, placeholder: String? = nil) {

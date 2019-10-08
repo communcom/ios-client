@@ -48,6 +48,7 @@
 		3B24F86F22F37FB800B7091C /* CommunitiesVC+DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B24F86E22F37FB800B7091C /* CommunitiesVC+DataSource.swift */; };
 		3B2538B1231E318400D0B1DA /* StateButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B2538B0231E318400D0B1DA /* StateButton.swift */; };
 		3B25E5BE234C2A0C005BD1B8 /* BasicEditorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B25E5BD234C2A0C005BD1B8 /* BasicEditorViewModel.swift */; };
+		3B25E5C0234C2F66005BD1B8 /* BasicEditorVC+Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B25E5BF234C2F66005BD1B8 /* BasicEditorVC+Binding.swift */; };
 		3B289B972346E51600598407 /* UIButton+PureLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B289B962346E51600598407 /* UIButton+PureLayout.swift */; };
 		3B289B9A2346E6D800598407 /* UILabel+PureLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B289B992346E6D800598407 /* UILabel+PureLayout.swift */; };
 		3B289B9C2346E7FC00598407 /* UIImage+PureLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B289B9B2346E7FC00598407 /* UIImage+PureLayout.swift */; };
@@ -333,6 +334,7 @@
 		3B24F86E22F37FB800B7091C /* CommunitiesVC+DataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CommunitiesVC+DataSource.swift"; sourceTree = "<group>"; };
 		3B2538B0231E318400D0B1DA /* StateButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateButton.swift; sourceTree = "<group>"; };
 		3B25E5BD234C2A0C005BD1B8 /* BasicEditorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicEditorViewModel.swift; sourceTree = "<group>"; };
+		3B25E5BF234C2F66005BD1B8 /* BasicEditorVC+Binding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BasicEditorVC+Binding.swift"; sourceTree = "<group>"; };
 		3B289B962346E51600598407 /* UIButton+PureLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+PureLayout.swift"; sourceTree = "<group>"; };
 		3B289B992346E6D800598407 /* UILabel+PureLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+PureLayout.swift"; sourceTree = "<group>"; };
 		3B289B9B2346E7FC00598407 /* UIImage+PureLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+PureLayout.swift"; sourceTree = "<group>"; };
@@ -630,6 +632,7 @@
 			children = (
 				3B06863823471163008953C5 /* Subviews */,
 				3B068631234700DC008953C5 /* BasicEditorVC.swift */,
+				3B25E5BF234C2F66005BD1B8 /* BasicEditorVC+Binding.swift */,
 				3B25E5BD234C2A0C005BD1B8 /* BasicEditorViewModel.swift */,
 			);
 			path = BasicEditorVC;
@@ -1855,6 +1858,7 @@
 				3B82D0F722D8D56A004EE848 /* EnableBiometricsVC.swift in Sources */,
 				3B5D361822E820760012A991 /* PostPageVC+Header.swift in Sources */,
 				3BC613A52341AAAF00075570 /* CommunCheckbox.swift in Sources */,
+				3B25E5C0234C2F66005BD1B8 /* BasicEditorVC+Binding.swift in Sources */,
 				3BB32F1D23445618006572F3 /* VCWithParallax.swift in Sources */,
 				3B67FC0B22C50BC400D05F01 /* SignInViewController+CollectionView.swift in Sources */,
 				3BF37BD622A162E000A72FFE /* ResponseAPIOnlineNotificationData.swift in Sources */,

@@ -266,10 +266,8 @@ extension PostController {
             let topController = UIApplication.topViewController() else {return}
         
         #warning("define which VC")
-        let viewModel = BasicEditorViewModel()
-        viewModel.postForEdit = post
-        let vc = controllerContainer.resolve(BasicEditorVC.self)!
-        vc._viewModel = viewModel
+        let vc = BasicEditorVC()
+        vc.viewModel.postForEdit = post
         vc.modalPresentationStyle = .fullScreen
         
         topController.present(vc, animated: true, completion: nil)
