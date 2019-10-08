@@ -9,7 +9,7 @@
 import Foundation
 
 extension ContentTextView {
-    func parseText(_ string: String) throws {
+    func parseText(_ string: String) {
         // Plain string
         var attributedText = NSAttributedString(string: string, attributes: defaultTypingAttributes)
         originalAttributedString = attributedText
@@ -18,9 +18,6 @@ extension ContentTextView {
         if let jsonData = string.data(using: .utf8),
             let block = try? JSONDecoder().decode(ContentBlock.self, from: jsonData)
         {
-            if block.type != acceptedPostType {
-                throw CTVError.parsingError(message: "could not parse data")
-            }
             attributedText = block.toAttributedString(currentAttributes: typingAttributes)
         }
         

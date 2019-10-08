@@ -94,7 +94,7 @@ class EditorVC: UIViewController {
         super.viewDidAppear(animated)
         // if editing post
         if let post = viewModel.postForEdit {
-            parsePost(post)
+            setUp(with: post)
         }
         else {
             // parse draft

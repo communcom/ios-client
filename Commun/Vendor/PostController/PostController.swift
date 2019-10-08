@@ -265,12 +265,43 @@ extension PostController {
         guard let post = post,
             let topController = UIApplication.topViewController() else {return}
         
-        #warning("define which VC")
-        let vc = BasicEditorVC()
-        vc.viewModel.postForEdit = post
-        vc.modalPresentationStyle = .fullScreen
-        
-        topController.present(vc, animated: true, completion: nil)
+        topController.showIndetermineHudWithMessage("loading post".localized().uppercaseFirst)
+        // Get full post
+        NetworkService.shared.getPost(withPermLink: post.contentId.permlink, forUser: post.contentId.userId)
+            .do(onSuccess: { (post) in
+                if post.content.body.full == nil {
+                    throw ErrorAPI.responseUnsuccessful(message: "Content not found")
+                }
+            })
+            .subscribe(onSuccess: {post in
+                topController.hideHud()
+                
+                // Parse data
+                if let jsonData = post.content.body.full?.data(using: .utf8),
+                    let block = try? JSONDecoder().decode(ContentBlock.self, from: jsonData)
+                {
+                    if block.type == "basic" {
+                        let vc = BasicEditorVC()
+                        vc.viewModel.postForEdit = post
+                        vc.modalPresentationStyle = .fullScreen
+                        
+                        topController.present(vc, animated: true, completion: nil)
+                        
+                        
+                        return
+                    }
+                }
+                
+                let vc = ArticleEditorVC()
+                vc.viewModel.postForEdit = post
+                vc.modalPresentationStyle = .fullScreen
+                topController.present(vc, animated: true, completion: nil)
+                
+            }, onError: {error in
+                topController.hideHud()
+                topController.showError(error)
+            })
+            .disposed(by: disposeBag)
     }
     
     func addPostToFavourite() {

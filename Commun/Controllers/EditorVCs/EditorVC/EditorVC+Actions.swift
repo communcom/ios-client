@@ -41,27 +41,6 @@ extension EditorVC {
         }
     }
     
-    func parsePost(_ post: ResponseAPIContentGetPost) {
-        showIndetermineHudWithMessage("loading post".localized().uppercaseFirst)
-        // Get full post
-        NetworkService.shared.getPost(withPermLink: post.contentId.permlink, forUser: post.contentId.userId)
-            .do(onSuccess: { (post) in
-                if post.content.body.full == nil {
-                    throw ErrorAPI.responseUnsuccessful(message: "Content not found")
-                }
-            })
-            .subscribe(onSuccess: {post in
-                self.hideHud()
-                self.viewModel.postForEdit = post
-                self.setUp(with: post)
-            }, onError: {error in
-                self.hideHud()
-                self.showError(error)
-                self.close()
-            })
-            .disposed(by: disposeBag)
-    }
-    
     func retrieveDraft() {
         showAlert(
             title: "retrieve draft".localized().uppercaseFirst,
