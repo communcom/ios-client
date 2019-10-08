@@ -58,6 +58,24 @@ class AttachmentsView: UIView {
     func setUp(with attachments: [Attachment]) {
         removeSubviews()
         
+        let gridView = GridView(forAutoLayout: ())
+        addSubview(gridView)
+        gridView.autoPinEdgesToSuperviewEdges()
+        gridView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.width).isActive = true
+        
+        var imageViews = [UIImageView]()
+        for (index, attachment) in attachments.enumerated() {
+            let imageView = imageViewWithCloseButton(index: index)
+            if let image = attachment.originalImage {
+                imageView.image = image
+            }
+            if let urlString = attachment.urlString {
+                imageView.sd_setImageCachedError(with: URL(string: urlString), completion: nil)
+            }
+            imageViews.append(imageView)
+        }
+        gridView.setUp(views: imageViews)
+        return
         // if 1 attachment attached
 //        if attachments.count == 1 {
         let attachment = attachments.last!

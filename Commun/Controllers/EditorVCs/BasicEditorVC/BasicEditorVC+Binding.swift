@@ -32,8 +32,7 @@ extension BasicEditorVC {
                     self._viewModel.removeAttachment(at: index)
                 }
                 self.contentView.addSubview(self.attachmentsView)
-                self.attachmentsView.autoPinEdge(toSuperviewEdge: .leading)
-                self.attachmentsView.autoPinEdge(toSuperviewEdge: .trailing)
+                self.attachmentsView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0), excludingEdge: .top)
                 self.attachmentsView.autoPinEdge(.top, to: .bottom, of: self.contentTextViewCountLabel, withOffset: 16)
                 
                 self.attachmentsView.setUp(with: attachments)
