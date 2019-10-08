@@ -38,7 +38,9 @@ class EditorVC: UIViewController {
     
     var contentTextViewCountLabel = UILabel.descriptionLabel("0/30000")
     
-    var viewModel = EditorViewModel()
+    var viewModel: EditorViewModel {
+        fatalError("Must override")
+    }
     
     let tools = BehaviorRelay<[EditorToolbarItem]>(value: [
         EditorToolbarItem.toggleIsAdult,

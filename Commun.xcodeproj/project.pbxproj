@@ -47,6 +47,7 @@
 		3B24F86D22F37B6F00B7091C /* CommunityCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B24F86C22F37B6F00B7091C /* CommunityCell.swift */; };
 		3B24F86F22F37FB800B7091C /* CommunitiesVC+DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B24F86E22F37FB800B7091C /* CommunitiesVC+DataSource.swift */; };
 		3B2538B1231E318400D0B1DA /* StateButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B2538B0231E318400D0B1DA /* StateButton.swift */; };
+		3B25E5BE234C2A0C005BD1B8 /* BasicEditorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B25E5BD234C2A0C005BD1B8 /* BasicEditorViewModel.swift */; };
 		3B289B972346E51600598407 /* UIButton+PureLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B289B962346E51600598407 /* UIButton+PureLayout.swift */; };
 		3B289B9A2346E6D800598407 /* UILabel+PureLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B289B992346E6D800598407 /* UILabel+PureLayout.swift */; };
 		3B289B9C2346E7FC00598407 /* UIImage+PureLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B289B9B2346E7FC00598407 /* UIImage+PureLayout.swift */; };
@@ -331,6 +332,7 @@
 		3B24F86C22F37B6F00B7091C /* CommunityCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityCell.swift; sourceTree = "<group>"; };
 		3B24F86E22F37FB800B7091C /* CommunitiesVC+DataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CommunitiesVC+DataSource.swift"; sourceTree = "<group>"; };
 		3B2538B0231E318400D0B1DA /* StateButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateButton.swift; sourceTree = "<group>"; };
+		3B25E5BD234C2A0C005BD1B8 /* BasicEditorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicEditorViewModel.swift; sourceTree = "<group>"; };
 		3B289B962346E51600598407 /* UIButton+PureLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+PureLayout.swift"; sourceTree = "<group>"; };
 		3B289B992346E6D800598407 /* UILabel+PureLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+PureLayout.swift"; sourceTree = "<group>"; };
 		3B289B9B2346E7FC00598407 /* UIImage+PureLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+PureLayout.swift"; sourceTree = "<group>"; };
@@ -628,6 +630,7 @@
 			children = (
 				3B06863823471163008953C5 /* Subviews */,
 				3B068631234700DC008953C5 /* BasicEditorVC.swift */,
+				3B25E5BD234C2A0C005BD1B8 /* BasicEditorViewModel.swift */,
 			);
 			path = BasicEditorVC;
 			sourceTree = "<group>";
@@ -1901,6 +1904,7 @@
 				3B67FC0622C4BB5100D05F01 /* SplashViewController.swift in Sources */,
 				3BB32F1B234436EF006572F3 /* PostMetaView.swift in Sources */,
 				3B3C8B8E2347876000D8BADB /* ContentTextView+Text.swift in Sources */,
+				3B25E5BE234C2A0C005BD1B8 /* BasicEditorViewModel.swift in Sources */,
 				3B9BEB3D2300EC7D003C70B3 /* EmptyView.swift in Sources */,
 				3B6229AB22BD12410053B9EF /* TTTAttributedLabel.swift in Sources */,
 				3BDF4FA822C21B310029D616 /* ResponseAPIContentGetProfile.swift in Sources */,

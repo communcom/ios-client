@@ -25,6 +25,11 @@ class ArticleEditorVC: EditorVC {
     }
     
     // MARK: - Properties
+    var _viewModel = EditorViewModel()
+    override var viewModel: EditorViewModel {
+        return _viewModel
+    }
+    
     override var contentCombined: Observable<Void> {
         return Observable.combineLatest(
             titleTextView.rx.text.orEmpty,

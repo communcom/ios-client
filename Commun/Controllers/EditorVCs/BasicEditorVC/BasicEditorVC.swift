@@ -23,6 +23,11 @@ class BasicEditorVC: EditorVC {
         return contentTextView.rx.text.orEmpty.map {_ in ()}
     }
     
+    var _viewModel = BasicEditorViewModel()
+    override var viewModel: EditorViewModel {
+        return _viewModel
+    }
+    
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,11 +47,13 @@ class BasicEditorVC: EditorVC {
     // MARK: - overriding actions
     override func addArticle() {
         weak var presentingViewController = self.presentingViewController
-
+        let attrStr = contentTextView.attributedText
         dismiss(animated: true, completion: {
             let vc = ArticleEditorVC()
             vc.modalPresentationStyle = .fullScreen
-            presentingViewController?.present(vc, animated: true, completion: nil)
+            presentingViewController?.present(vc, animated: true, completion: {
+                vc.contentTextView.attributedText = attrStr
+            })
         })
     }
     
