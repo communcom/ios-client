@@ -109,9 +109,9 @@ class ArticleEditorVC: EditorVC {
         _contentTextView.addImage(image, description: description)
     }
     
-    override func didAddImageFromURLString(_ urlString: String, description: String? = nil) {
-        _contentTextView.addImage(nil, urlString: urlString, description: description)
-    }
+//    override func didAddImageFromURLString(_ urlString: String, description: String? = nil) {
+//        _contentTextView.addImage(nil, urlString: urlString, description: description)
+//    }
     
     override func didAddLink(_ urlString: String, placeholder: String? = nil) {
         _contentTextView.addLink(urlString, placeholder: placeholder)

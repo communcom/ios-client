@@ -80,18 +80,20 @@ extension EditorVC {
     // MARK: - Add image
     func addImage() {
         view.endEditing(true)
-        showActionSheet(title:     "add image".localized().uppercaseFirst,
-                             actions:   [
-                                UIAlertAction(title:    "choose from gallery".localized().uppercaseFirst,
-                                              style:    .default,
-                                              handler:  { _ in
-                                                self.chooseFromGallery()
-                                }),
-                                UIAlertAction(title:   "insert image from URL".localized().uppercaseFirst,
-                                              style:    .default,
-                                              handler:  { _ in
-                                                self.selectImageFromUrl()
-                                })])
+        
+        chooseFromGallery()
+//        showActionSheet(title:     "add image".localized().uppercaseFirst,
+//                             actions:   [
+//                                UIAlertAction(title:    "choose from gallery".localized().uppercaseFirst,
+//                                              style:    .default,
+//                                              handler:  { _ in
+//                                                self.chooseFromGallery()
+//                                }),
+//                                UIAlertAction(title:   "insert image from URL".localized().uppercaseFirst,
+//                                              style:    .default,
+//                                              handler:  { _ in
+//                                                self.selectImageFromUrl()
+//                                })])
     }
     
     func chooseFromGallery() {
@@ -127,29 +129,29 @@ extension EditorVC {
             .disposed(by: disposeBag)
     }
     
-    func selectImageFromUrl() {
-        let alert = UIAlertController(
-            title:          "select image".localized().uppercaseFirst,
-            message:        "select image from an URL".localized().uppercaseFirst,
-            preferredStyle: .alert)
-        
-        alert.addTextField { field in
-            field.placeholder = "image URL".localized().uppercaseFirst
-        }
-        
-        alert.addTextField { field in
-            field.placeholder = "description".localized().uppercaseFirst + "(" + "optional".localized() + ")"
-        }
-        
-        alert.addAction(UIAlertAction(title: "add".localized().uppercaseFirst, style: .cancel, handler: {[weak self] _ in
-            guard let urlString = alert.textFields?.first?.text else { return }
-            self?.didAddImageFromURLString(urlString, description: alert.textFields?.last?.text)
-        }))
-        
-        alert.addAction(UIAlertAction(title: "cancel".localized().uppercaseFirst, style: .default, handler: nil))
-        
-        present(alert, animated: true, completion: nil)
-    }
+//    func selectImageFromUrl() {
+//        let alert = UIAlertController(
+//            title:          "select image".localized().uppercaseFirst,
+//            message:        "select image from an URL".localized().uppercaseFirst,
+//            preferredStyle: .alert)
+//        
+//        alert.addTextField { field in
+//            field.placeholder = "image URL".localized().uppercaseFirst
+//        }
+//        
+//        alert.addTextField { field in
+//            field.placeholder = "description".localized().uppercaseFirst + "(" + "optional".localized() + ")"
+//        }
+//        
+//        alert.addAction(UIAlertAction(title: "add".localized().uppercaseFirst, style: .cancel, handler: {[weak self] _ in
+//            guard let urlString = alert.textFields?.first?.text else { return }
+//            self?.didAddImageFromURLString(urlString, description: alert.textFields?.last?.text)
+//        }))
+//        
+//        alert.addAction(UIAlertAction(title: "cancel".localized().uppercaseFirst, style: .default, handler: nil))
+//        
+//        present(alert, animated: true, completion: nil)
+//    }
     
     // MARK: - Add link
     func addLink() {

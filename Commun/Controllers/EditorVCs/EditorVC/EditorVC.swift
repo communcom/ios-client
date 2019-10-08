@@ -209,10 +209,6 @@ class EditorVC: UIViewController {
         fatalError("Must override")
     }
     
-    func didAddImageFromURLString(_ urlString: String, description: String? = nil) {
-        fatalError("Must override")
-    }
-    
     func didAddLink(_ urlString: String, placeholder: String? = nil) {
         fatalError("Must override")
     }

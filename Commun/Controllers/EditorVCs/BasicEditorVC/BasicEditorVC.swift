@@ -85,19 +85,9 @@ class BasicEditorVC: EditorVC {
         _viewModel.addAttachment(attachment)
     }
     
-    override func didAddImageFromURLString(_ urlString: String, description: String? = nil) {
-        var embed = try! ResponseAPIFrameGetEmbed(
-            blockAttributes: ContentBlockAttributes(
-                url: urlString, description: description
-            )
-        )
-        embed.type = "image"
-        
-        let attachment = TextAttachment()
-        attachment.embed = embed
-        
-        _viewModel.addAttachment(attachment)
-    }
+//    override func didAddImageFromURLString(_ urlString: String, description: String? = nil) {
+//        parseLink(urlString)
+//    }
     
     override func didAddLink(_ urlString: String, placeholder: String? = nil) {
         if let placeholder = placeholder,
