@@ -11,30 +11,24 @@ import RxCocoa
 import RxSwift
 
 class BasicEditorViewModel: EditorViewModel {
-    struct Attachment: Equatable {
-        var originalImage: UIImage?
-        var urlString: String?
-        var description: String?
-        
-        static func == (lhs: Attachment, rhs: Attachment) -> Bool {
-            if lhs.originalImage == rhs.originalImage {return true}
-            if lhs.urlString == rhs.urlString {return true}
-            return false
-        }
-    }
+    let attachments = BehaviorRelay<[AttachmentsView.Attachment]>(value: [])
     
-    let attachments = BehaviorRelay<[Attachment]>(value: [])
-    
-    func addAttachment(_ attachment: Attachment) {
+    func addAttachment(_ attachment: AttachmentsView.Attachment) {
         var value = attachments.value
         value.removeAll(attachment)
         value.append(attachment)
         attachments.accept(value)
     }
     
-    func removeAttachment(_ attachment: Attachment) {
+    func removeAttachment(_ attachment: AttachmentsView.Attachment) {
         var value = attachments.value
         value.removeAll(attachment)
+        attachments.accept(value)
+    }
+    
+    func removeAttachment(at index: Int) {
+        var value = attachments.value
+        value.remove(at: index)
         attachments.accept(value)
     }
 }

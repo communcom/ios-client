@@ -17,7 +17,7 @@ class BasicEditorVC: EditorVC {
     override var contentTextView: ContentTextView {
         return _contentTextView
     }
-    var attachmentsView: UIView?
+    var attachmentsView = AttachmentsView(forAutoLayout: ())
     
     // MARK: - Override
     override var contentCombined: Observable<Void> {
@@ -67,7 +67,7 @@ class BasicEditorVC: EditorVC {
     override func didChooseImageFromGallery(_ image: UIImage, description: String? = nil) {
         // Add embeds
         _viewModel.addAttachment(
-            BasicEditorViewModel.Attachment(
+            AttachmentsView.Attachment(
                 originalImage: image,
                 urlString: nil,
                 description: description))
@@ -75,7 +75,7 @@ class BasicEditorVC: EditorVC {
     
     override func didAddImageFromURLString(_ urlString: String, description: String? = nil) {
         _viewModel.addAttachment(
-            BasicEditorViewModel.Attachment(
+            AttachmentsView.Attachment(
                 originalImage: nil,
                 urlString: urlString,
                 description: description))
