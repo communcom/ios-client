@@ -24,6 +24,18 @@ class BasicEditorTextView: ContentTextView {
         return false
     }
     
+    // MARK: - Link
+    func addLink(_ urlString: String, placeholder: String?) {
+        let placeholder = placeholder ?? urlString
+        var attrs = typingAttributes
+        attrs[.link] = urlString
+        let attrStr = NSMutableAttributedString(string: placeholder, attributes: attrs)
+        textStorage.replaceCharacters(in: selectedRange, with: attrStr)
+        let newSelectedRange = NSMakeRange(selectedRange.location + attrStr.length, 0)
+        selectedRange = newSelectedRange
+        typingAttributes = defaultTypingAttributes
+    }
+    
     override func getContentBlock(postTitle: String? = nil) -> Single<ContentBlock> {
         // spend id = 1 for PostBlock, so id starts from 1
         var id: UInt = 1

@@ -86,7 +86,7 @@ class BasicEditorVC: EditorVC {
     }
     
     override func didAddLink(_ urlString: String, placeholder: String? = nil) {
-        // TODO: - Add link
+        _contentTextView.addLink(urlString, placeholder: placeholder)
     }
     
     override func getContentBlock() -> Single<ContentBlock> {
