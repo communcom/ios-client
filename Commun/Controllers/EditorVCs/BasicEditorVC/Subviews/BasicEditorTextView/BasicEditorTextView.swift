@@ -23,4 +23,34 @@ class BasicEditorTextView: ContentTextView {
     override var canContainAttachments: Bool {
         return false
     }
+    
+    override func getContentBlock(postTitle: String? = nil) -> Single<ContentBlock> {
+        // spend id = 1 for PostBlock, so id starts from 1
+        var id: UInt = 1
+        
+        // child blocks of post block
+        var contentBlocks = [Single<ContentBlock>]()
+        
+        // separate blocks by \n
+        let components = attributedString.components(separatedBy: "\n")
+        
+        for component in components {
+            if let block = component.toParagraphContentBlock(id: &id) {
+                contentBlocks.append(.just(block))
+            }
+        }
+        
+        return Single.zip(contentBlocks)
+            .map {contentBlocks -> ContentBlock in
+                return ContentBlock(
+                    id: 1,
+                    type: "post",
+                    attributes: ContentBlockAttributes(
+                        title: postTitle,
+                        type: self.acceptedPostType,
+                        version: "1.0"
+                    ),
+                    content: .array(contentBlocks))
+        }
+    }
 }

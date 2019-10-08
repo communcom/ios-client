@@ -150,7 +150,8 @@ class ArticleEditorTextView: ContentTextView {
                     type: "post",
                     attributes: ContentBlockAttributes(
                         title: postTitle,
-                        type: self.acceptedPostType
+                        type: self.acceptedPostType,
+                        version: "1.0"
                     ),
                     content: .array(contentBlocks))
         }
