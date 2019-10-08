@@ -70,7 +70,7 @@ class EditorVC: UIViewController {
     // PostButton
     lazy var postButton = CommunButton(
         height: 36,
-        label: "post".localized().uppercaseFirst,
+        label: "send post".localized().uppercaseFirst,
         labelFont: .systemFont(ofSize: 15, weight: .semibold),
         backgroundColor: .appMainColor,
         textColor: .white,
