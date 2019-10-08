@@ -280,7 +280,7 @@ extension PostController {
                 if let jsonData = post.content.body.full?.data(using: .utf8),
                     let block = try? JSONDecoder().decode(ContentBlock.self, from: jsonData)
                 {
-                    if block.type == "basic" {
+                    if block.attributes?.type == "basic" {
                         let vc = BasicEditorVC()
                         vc.viewModel.postForEdit = post
                         vc.modalPresentationStyle = .fullScreen
