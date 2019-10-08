@@ -18,7 +18,7 @@ class FeedPageVC: UIViewController, VCWithParallax {
     var dataSource: MyRxTableViewSectionedAnimatedDataSource<PostSection>!
     let disposeBag = DisposeBag()
     var headerView: UIView! // for parallax
-    var headerHeight: CGFloat = 195 // for parallax
+    var headerHeight: CGFloat = 151 // for parallax
 
     // MARK: - Outlets
     @IBOutlet weak var headerLabel: UILabel!
