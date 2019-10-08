@@ -78,7 +78,7 @@ class ArticleEditorVC: EditorVC {
     
     
     override func layoutBottomContentTextView() {
-        contentTextViewCountLabel.autoPinEdge(toSuperviewEdge: .bottom, withInset: 16)
+        contentTextView.autoPinEdge(toSuperviewEdge: .bottom)
     }
     
     override func bind() {

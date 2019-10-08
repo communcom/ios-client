@@ -114,6 +114,8 @@ class EditorVC: UIViewController {
         // common contentTextView
         contentTextView.placeholder = "write text placeholder".localized().uppercaseFirst + "..."
         headerLabel.text = (viewModel.postForEdit != nil ? "edit post" : "create post").localized().uppercaseFirst
+        
+        contentTextView.textContainerInset = UIEdgeInsets(top: 0, left: 0, bottom: 200, right: 0)
     }
     
     func layoutTopContentTextView() {

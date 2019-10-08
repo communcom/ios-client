@@ -23,5 +23,4 @@ class BasicEditorTextView: ContentTextView {
     override var canContainAttachments: Bool {
         return false
     }
-    
 }
