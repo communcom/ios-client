@@ -38,8 +38,7 @@ extension BasicEditorVC {
                 onSuccess: { [weak self] (attachment) in
                     guard let strongSelf = self else {return}
                     strongSelf.hideHud()
-                    
-                    var attachment = attachment
+                    strongSelf._viewModel.addAttachment(attachment)
                 },
                 onError: {[weak self] error in
                     self?.hideHud()
