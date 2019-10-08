@@ -13,6 +13,11 @@ class CommentTextView: ContentTextView {
         return [.font: UIFont.systemFont(ofSize: 14)]
     }
     
+    override func commonInit() {
+        super.commonInit()
+        textContainerInset = UIEdgeInsets(top: 10, left: 16, bottom: 10, right: 16)
+    }
+    
     override func clearFormatting() {
         if selectedRange.length == 0 {
             typingAttributes = defaultTypingAttributes
