@@ -231,8 +231,11 @@ extension EditorVC {
                self.showIndetermineHudWithMessage(
                        "uploading".localized().uppercaseFirst)
            })
-           .flatMap {
-               self.viewModel.sendPost(title: self.postTitle ?? " ", block: $0)
+           .flatMap { block in
+                //clean
+                var block = block
+                block.maxId = nil
+               return self.viewModel.sendPost(title: self.postTitle ?? " ", block: block)
            }
            .do(onSubscribe: {
                self.showIndetermineHudWithMessage(

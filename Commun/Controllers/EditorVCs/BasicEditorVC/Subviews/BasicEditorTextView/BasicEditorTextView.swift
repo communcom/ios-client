@@ -54,7 +54,7 @@ class BasicEditorTextView: ContentTextView {
         
         return Single.zip(contentBlocks)
             .map {contentBlocks -> ContentBlock in
-                return ContentBlock(
+                var block = ContentBlock(
                     id: 1,
                     type: "post",
                     attributes: ContentBlockAttributes(
@@ -63,6 +63,8 @@ class BasicEditorTextView: ContentTextView {
                         version: "1.0"
                     ),
                     content: .array(contentBlocks))
+                block.maxId = id
+                return block
         }
     }
 }
