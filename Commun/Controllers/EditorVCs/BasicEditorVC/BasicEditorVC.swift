@@ -131,8 +131,6 @@ class BasicEditorVC: EditorVC {
                 childs.append(ContentBlock(id: id, type: "attachments", attributes: nil, content: .array(contentBlocks)))
                 block!.content = .array(childs)
                 
-                print(block)
-                
                 return block!
             }
     }
