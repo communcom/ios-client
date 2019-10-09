@@ -154,7 +154,7 @@
 "reward for post"                               =   "награда за сообщение";
 "reward for votes"                              =   "награда за голоса";
 "send post"                                     =   "Отправить";
-
+"send report"                                   =   "Жаловаться";
 
 // S
 "saving to blockchain..."                       =   "сохранение в блокчейн...";

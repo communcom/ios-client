@@ -60,7 +60,7 @@ extension PostController {
             ]
         } else {
             actions.append(
-                CommunActionSheet.Action(title: "report".localized().uppercaseFirst, icon: UIImage(named: "report"), handle: {
+                CommunActionSheet.Action(title: "send report".localized().uppercaseFirst, icon: UIImage(named: "report"), handle: {
                     self.reportPost()
                 })
             )
