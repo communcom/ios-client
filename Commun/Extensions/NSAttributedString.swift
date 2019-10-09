@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CyberSwift
 
 extension NSAttributedString {
     func nsRangeOfText(_ text: String) -> NSRange {
@@ -27,11 +28,11 @@ extension NSAttributedString {
         return result
     }
     
-    func toParagraphContentBlock(id: inout UInt64) -> ContentBlock? {
+    func toParagraphContentBlock(id: inout UInt64) -> ResponseAPIContentBlock? {
         let originalId = id
         id += 1
         
-        var blocks = [ContentBlock]()
+        var blocks = [ResponseAPIContentBlock]()
         enumerateAttributes(in: NSMakeRange(0, length), options: []) { (attrs, range, bool) in
             var content = attributedSubstring(from: range).string
             var blockType = "text"
@@ -43,10 +44,10 @@ extension NSAttributedString {
                     blockType = "tag"
                     content = content.replacingOccurrences(of: "#", with: "")
                     id += 1
-                    let block = ContentBlock(
+                    let block = ResponseAPIContentBlock(
                         id: id,
                         type: blockType,
-                        attributes: ContentBlockAttributes(),
+                        attributes: ResponseAPIContentBlockAttributes(),
                         content: .string(content))
                     blocks.append(block)
                 }
@@ -56,7 +57,7 @@ extension NSAttributedString {
                     blockType = "mention"
                     content = content.replacingOccurrences(of: "@", with: "")
                     id += 1
-                    let block = ContentBlock(
+                    let block = ResponseAPIContentBlock(
                         id: id,
                         type: blockType,
                         attributes: nil,
@@ -69,10 +70,10 @@ extension NSAttributedString {
                 else {
                     blockType = "link"
                     id += 1
-                    let block = ContentBlock(
+                    let block = ResponseAPIContentBlock(
                         id: id,
                         type: blockType,
-                        attributes: ContentBlockAttributes(url: url),
+                        attributes: ResponseAPIContentBlockAttributes(url: url),
                         content: .string(content))
                     blocks.append(block)
                 }
@@ -99,19 +100,25 @@ extension NSAttributedString {
             
             // add block if content is not empty
             id += 1
-            let block = ContentBlock(
+            let block = ResponseAPIContentBlock(
                 id: id,
                 type: blockType,
-                attributes: ContentBlockAttributes(style: style, text_color: text_color),
+                attributes: ResponseAPIContentBlockAttributes(style: style, text_color: text_color),
                 content: .string(content))
             blocks.append(block)
         }
         
         if !blocks.isEmpty {
-            return ContentBlock(id: originalId + 1, type: "paragraph", attributes: nil, content: .array(blocks))
+            return ResponseAPIContentBlock(id: originalId + 1, type: "paragraph", attributes: nil, content: .array(blocks))
         } else {
             id = originalId
         }
         return nil
+    }
+    
+    static var separator: NSAttributedString {
+        // \u2063 means Invisible Separator
+        let separator = NSMutableAttributedString(string: "\n")
+        return separator
     }
 }

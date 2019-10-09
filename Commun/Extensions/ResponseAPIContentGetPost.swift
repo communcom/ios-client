@@ -19,15 +19,6 @@ extension ResponseAPIContentGetPost: Equatable, IdentifiableType {
         return self.contentId.userId + "/" + self.contentId.permlink
     }
     
-    public var firstEmbedImageURL: String? {
-        let embeds = content.embeds
-        if embeds.count > 0,
-            let imageURL = embeds[0].result?.thumbnail_url ?? embeds[0].result?.url {
-            return imageURL
-        }
-        return nil
-    }
-    
     public func notifyChanged() {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: PostControllerPostDidChangeNotification), object: self)
     }

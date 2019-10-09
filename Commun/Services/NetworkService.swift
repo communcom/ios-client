@@ -40,9 +40,8 @@ class NetworkService: NSObject {
         
     }
     
-    func getPost(withPermLink permLink: String, forUser user: String) -> Single<ResponseAPIContentGetPost> {
-        return RestAPIManager.instance.loadPost(userID:        user,
-                                             permlink:      permLink)
+    func getPost(withPermLink permLink: String) -> Single<ResponseAPIContentGetPost> {
+        return RestAPIManager.instance.loadPost(permlink: permLink, communityId: "GOLOS")
     }
     
     func deletePost(permlink: String) -> Completable {
@@ -51,18 +50,11 @@ class NetworkService: NSObject {
     }
     
     func getUserComments(_ paginationKey: String? = nil, nickName: String? = nil) -> Single<ResponseAPIContentGetComments> {
-        return RestAPIManager.instance.loadUserComments(
-            nickName:               nickName,
-            paginationLimit:        30,
-            paginationSequenceKey:  paginationKey)
+        return RestAPIManager.instance.loadUserComments(sortBy: .time, sequenceKey: paginationKey, userId: nickName)
     }
     
     func getPostComment(_ paginationKey: String? = nil, withPermLink permLink: String, forUser user: String) -> Single<ResponseAPIContentGetComments> {
-        return RestAPIManager.instance.loadPostComments(
-            nickName:               user,
-            permlink:               permLink,
-            paginationLimit:        30,
-            paginationSequenceKey:  paginationKey)
+        return RestAPIManager.instance.loadPostComments(sequenceKey: paginationKey, limit: 30, userId: user, permlink: permLink)
     }
     
     func voteMessage(voteType: VoteActionType, messagePermlink: String, messageAuthor: String) -> Completable {
@@ -141,9 +133,10 @@ class NetworkService: NSObject {
     
     
     func getUserProfile(userId: String? = nil) -> Single<ResponseAPIContentGetProfile> {
+        // if userId = nil => retrieving current user
         guard let userNickName = userId ?? Config.currentUser?.id else { return .error(ErrorAPI.requestFailed(message: "userId missing")) }
         
-        return RestAPIManager.instance.getProfile(userID: userNickName)
+        return RestAPIManager.instance.getProfile(user: userNickName)
             .do(onSuccess: { (profile) in
                 if userId == nil, let avatarUrl = profile.personal.avatarUrl {
                     self.saveUserAvatarUrl(avatarUrl)

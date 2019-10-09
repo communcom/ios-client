@@ -133,7 +133,7 @@ PODS:
   - SwifterSwift/SwiftStdlib (5.0.0)
   - SwifterSwift/UIKit (5.0.0)
   - SwiftLinkPreview (3.0.1)
-  - SwiftTheme (0.4.5)
+  - SwiftTheme (0.4.7)
   - SwiftyJSON (4.3.0)
   - Swinject (2.6.2)
   - THPinViewController (1.2.6)
@@ -148,7 +148,7 @@ DEPENDENCIES:
   - AppImageViewer
   - ASSpinnerView
   - Crashlytics
-  - CyberSwift (from `https://github.com/GolosChain/cyberSwift.git`)
+  - CyberSwift (from `https://github.com/GolosChain/cyberSwift.git`, branch `features/new_bc`)
   - DateToolsSwift
   - Down
   - DZNEmptyDataSet
@@ -178,7 +178,7 @@ DEPENDENCIES:
   - "UITextView+Placeholder"
 
 SPEC REPOS:
-  https://github.com/CocoaPods/Specs.git:
+  trunk:
     - Action
     - Alamofire
     - AppImageViewer
@@ -192,6 +192,7 @@ SPEC REPOS:
     - Down
     - DZNEmptyDataSet
     - eosswift
+    - ESPullToRefresh
     - Fabric
     - Firebase
     - FirebaseAnalytics
@@ -210,6 +211,7 @@ SPEC REPOS:
     - PhoneNumberKit
     - PinCodeInputView
     - Protobuf
+    - PureLayout
     - QRCodeReaderViewController
     - ReachabilitySwift
     - RxCocoa
@@ -230,12 +232,10 @@ SPEC REPOS:
     - TTTAttributedLabel
     - UIImageView-Letters
     - "UITextView+Placeholder"
-  trunk:
-    - ESPullToRefresh
-    - PureLayout
 
 EXTERNAL SOURCES:
   CyberSwift:
+    :branch: features/new_bc
     :git: https://github.com/GolosChain/cyberSwift.git
   THPinViewController:
     :branch: commun
@@ -243,7 +243,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   CyberSwift:
-    :commit: 1949b296bac81c9e3dab50fd68053de4b6b0d35d
+    :commit: 923732f5873840a2aa40d9ecebc988a3f6231167
     :git: https://github.com/GolosChain/cyberSwift.git
   THPinViewController:
     :commit: 3a9214d337cb96e6491325f8e0a72e50d62fc210
@@ -297,7 +297,7 @@ SPEC CHECKSUMS:
   Starscream: 08172b481e145289c4930cb567230fb55897cfa4
   SwifterSwift: 96f90594b370802f01647c2b1229c74a84ffafee
   SwiftLinkPreview: 7524438c43bf63a5041615713777c3d8f19a9a31
-  SwiftTheme: 4560ca4a4274aef71dd3f985aa8007c6e59993fd
+  SwiftTheme: 67bbb51f2ef69570164562376f441655a143399d
   SwiftyJSON: 6faa0040f8b59dead0ee07436cbf76b73c08fd08
   Swinject: cf7458774b1b00323080a9c67e47a1ee7f9d2af1
   THPinViewController: e0dc717a61c8a0a0f251764da26b9ca8a4fd2ec1
@@ -306,6 +306,6 @@ SPEC CHECKSUMS:
   UIImageView-Letters: f62db28076797adf3560ab7410647dc6899b9eef
   "UITextView+Placeholder": c407b27599ea23cca425946fee3cf1db5d547008
 
-PODFILE CHECKSUM: 5d68cb50d13d5a3054358c665df9c6f692f36336
+PODFILE CHECKSUM: b5bc759027fceeb7ae68b684c948b2b4dd6d35ed
 
-COCOAPODS: 1.8.0
+COCOAPODS: 1.8.3

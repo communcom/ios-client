@@ -218,7 +218,8 @@ extension PostController {
             let controller = UIApplication.topViewController()
             else {return}
         // text to share
-        var text = post.content.title + "\n"
+        let title = post.content.body.attributes?.title
+        var text = (title != nil) ? (title! + "\n"): ""
         
         text += "\(URL.appURL)/posts/\(userId)/\(post.contentId.permlink)"
         
@@ -267,36 +268,26 @@ extension PostController {
         
         topController.showIndetermineHudWithMessage("loading post".localized().uppercaseFirst)
         // Get full post
-        NetworkService.shared.getPost(withPermLink: post.contentId.permlink, forUser: post.contentId.userId)
-            .do(onSuccess: { (post) in
-                if post.content.body.full == nil {
-                    throw ErrorAPI.responseUnsuccessful(message: "Content not found")
-                }
-            })
+        NetworkService.shared.getPost(withPermLink: post.contentId.permlink)
             .subscribe(onSuccess: {post in
                 topController.hideHud()
-                
-                // Parse data
-                if let jsonData = post.content.body.full?.data(using: .utf8),
-                    let block = try? JSONDecoder().decode(ContentBlock.self, from: jsonData)
-                {
-                    if block.attributes?.type == "basic" {
-                        let vc = BasicEditorVC()
-                        vc.viewModel.postForEdit = post
-                        vc.modalPresentationStyle = .fullScreen
-                        
-                        topController.present(vc, animated: true, completion: nil)
-                        
-                        
-                        return
-                    }
+                if post.content.type == "basic" {
+                    let vc = BasicEditorVC()
+                    vc.viewModel.postForEdit = post
+                    vc.modalPresentationStyle = .fullScreen
+                    topController.present(vc, animated: true, completion: nil)
+                    return
                 }
                 
-                let vc = ArticleEditorVC()
-                vc.viewModel.postForEdit = post
-                vc.modalPresentationStyle = .fullScreen
-                topController.present(vc, animated: true, completion: nil)
-                
+                if post.content.type == "article" {
+                    let vc = ArticleEditorVC()
+                    vc.viewModel.postForEdit = post
+                    vc.modalPresentationStyle = .fullScreen
+                    topController.present(vc, animated: true, completion: nil)
+                    return
+                }
+                topController.hideHud()
+                topController.showError(ErrorAPI.invalidData(message: "Unsupported type of post"))
             }, onError: {error in
                 topController.hideHud()
                 topController.showError(error)

@@ -103,7 +103,7 @@ class PostPageVC: UIViewController, CommentCellDelegate {
         
         tableView.rowHeight = UITableView.automaticDimension
         
-        comunityNameLabel.text = viewModel.postForRequest?.community.name
+        comunityNameLabel.text = viewModel.postForRequest?.community.communityName
         
         // action for labels
         let tap = UITapGestureRecognizer(target: self, action: #selector(userNameTapped(_:)))

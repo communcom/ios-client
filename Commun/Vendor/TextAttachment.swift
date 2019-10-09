@@ -41,7 +41,7 @@ final class TextAttachment: NSTextAttachment {
         return "TextAttachment(\(placeholderText))"
     }
     
-    func toSingleContentBlock(id: inout UInt64) -> Single<ContentBlock>? {
+    func toSingleContentBlock(id: inout UInt64) -> Single<ResponseAPIContentBlock>? {
         guard var embed = embed,
             let type = embed.type
         else {
@@ -59,10 +59,10 @@ final class TextAttachment: NSTextAttachment {
                 return NetworkService.shared.uploadImage(image)
                     .map { url in
                         embed.url = url
-                        return ContentBlock(
+                        return ResponseAPIContentBlock(
                             id: newId,
                             type: "image",
-                            attributes: ContentBlockAttributes(embed: embed),
+                            attributes: ResponseAPIContentBlockAttributes(embed: embed),
                             content: .string(url))
                     }
             }
@@ -74,10 +74,10 @@ final class TextAttachment: NSTextAttachment {
         
         id += 1
         return .just(
-            ContentBlock(
+            ResponseAPIContentBlock(
                 id: id,
                 type: type,
-                attributes: ContentBlockAttributes(embed: embed),
+                attributes: ResponseAPIContentBlockAttributes(embed: embed),
                 content: .string(url!))
         )
     }

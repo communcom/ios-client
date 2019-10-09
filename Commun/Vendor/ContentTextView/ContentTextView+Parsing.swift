@@ -7,20 +7,11 @@
 //
 
 import Foundation
+import CyberSwift
 
 extension ContentTextView {
-    func parseText(_ string: String) {
-        // Plain string
-        var attributedText = NSAttributedString(string: string, attributes: defaultTypingAttributes)
-        originalAttributedString = attributedText
-        
-        // Parse data
-        if let jsonData = string.data(using: .utf8),
-            let block = try? JSONDecoder().decode(ContentBlock.self, from: jsonData)
-        {
-            attributedText = block.toAttributedString(currentAttributes: typingAttributes)
-        }
-        
+    func parseContentBlock(_ block: ResponseAPIContentBlock) {
+        let attributedText = block.toAttributedString(currentAttributes: typingAttributes)
         // Asign raw value first
         self.attributedText = attributedText
         

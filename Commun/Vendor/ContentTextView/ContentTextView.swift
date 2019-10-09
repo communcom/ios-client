@@ -194,7 +194,7 @@ class ContentTextView: UITextView {
     }
     
     // MARK: - ContentBlock
-    func getContentBlock(postTitle: String? = nil) -> Single<ContentBlock> {
+    func getContentBlock(postTitle: String? = nil) -> Single<ResponseAPIContentBlock> {
         fatalError("Must override")
     }
 }

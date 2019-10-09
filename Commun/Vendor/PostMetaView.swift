@@ -110,9 +110,9 @@ class PostMetaView: UIView {
     }
     
     func setUp(post: ResponseAPIContentGetPost) {
-        avatarImageView.setAvatar(urlString: post.community.avatarUrl, namePlaceHolder: post.community.name)
-        comunityNameLabel.text = post.community.name
-        timeAgoLabel.text = Date.timeAgo(string: post.meta.time) + " • "
+        avatarImageView.setAvatar(urlString: post.community.avatarUrl, namePlaceHolder: post.community.communityName ?? post.community.communityId)
+        comunityNameLabel.text = post.community.communityName ?? post.community.communityId
+        timeAgoLabel.text = Date.timeAgo(string: post.meta.creationTime) + " • "
         byUserLabel.text = post.author?.username ?? post.author?.userId
         
         // add gesture

@@ -1,27 +1,15 @@
 //
-//  ContentBlock+Parser.swift
-//  CyberSwift
+//  ResponseAPIContentBlock.swift
+//  Commun
 //
-//  Created by Chung Tran on 8/29/19.
-//  Copyright © 2019 golos.io. All rights reserved.
+//  Created by Chung Tran on 10/9/19.
+//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
 //
 
 import Foundation
 import CyberSwift
 
-class ContentBlockAttributedString: NSAttributedString {
-    var block: ContentBlock?
-}
-
-extension NSAttributedString {
-    static var separator: NSAttributedString {
-        // \u2063 means Invisible Separator
-        let separator = NSMutableAttributedString(string: "\n")
-        return separator
-    }
-}
-
-extension ContentBlock {
+extension ResponseAPIContentBlock {
     func jsonString() throws -> String {
         let data = try JSONEncoder().encode(self)
         guard let string = String(data: data, encoding: .utf8) else {
@@ -47,13 +35,13 @@ extension ContentBlock {
         return tags
     }
     
-    func toHTML(embeds: [ResponseAPIContentEmbedResult]) -> String {
+    func toHTML() -> String {
         
         var innerHTML = ""
         switch content {
         case .array(let array):
             for inner in array {
-                innerHTML += inner.toHTML(embeds: embeds)
+                innerHTML += inner.toHTML()
             }
         case .string(let string):
             innerHTML += string.replacingOccurrences(of: "\n", with: "<br/>")
@@ -94,24 +82,20 @@ extension ContentBlock {
             let description = attributes?.description
             return "<div class=\"embeded\"><img style=\"display: block; width: 100%; height: auto;\" src=\"\(innerHTML)\" onerror=\"this.src='\(Bundle.main.url(forResource: "image-not-available", withExtension: "jpg")?.absoluteString ?? "")';\"/>\(description != nil ? "<p class=\"description\">\(description!)</p>": "") </div>"
         case "video":
-            let embed = embeds.first(where:
-                {self.compareUrlString(str1: $0.url, str2: innerHTML)})
             
             let component: String
-            if let html = embed?.html {
+            if let html = attributes?.html {
                 component = html
             } else {
                 component = "<a href=\"\(attributes?.url ?? "")\"><img style=\"display: block; width: 100%; height: auto;\" src=\"\(attributes?.thumbnail_url ?? "")\" /></a>"
             }
             
-            let description = attributes?.title ?? embed?.description
-            return "<div class=\"embeded\">\(component)\(embed?.url != nil ? "<p class=\"url\">\(embed!.url)</p>": "")\(description != nil ? "<p class=\"description\">\(description!)</p>": "")</div>"
+            let description = attributes?.title ?? attributes?.description
+            return "<div class=\"embeded\">\(component)\(attributes?.url != nil ? "<p class=\"url\">\(attributes?.url ?? "")</p>": "")\(description != nil ? "<p class=\"description\">\(description!)</p>": "")</div>"
         case "website":
-            let embed = embeds.first(where:
-                {self.compareUrlString(str1: $0.url, str2: innerHTML)})
             
-            let description = embed?.description ?? embed?.title
-            return "<div class=\"embeded\"><a href=\"\(embed?.url ?? "")\"><img style=\"display: block; width: 100%; height: auto;\" src=\"\(embed?.thumbnail_url ?? "")\" onerror=\"this.src='\(Bundle.main.url(forResource: "image-not-available", withExtension: "jpg")?.absoluteString ?? "")';\" /></a>\(embed?.url != nil ? "<p class=\"url\">\(embed!.url)</p>": "")\(description != nil ? "<p class=\"description\">\(description!)</p>": "")</div>"
+            let description = attributes?.description ?? attributes?.title
+            return "<div class=\"embeded\"><a href=\"\(attributes?.url ?? "")\"><img style=\"display: block; width: 100%; height: auto;\" src=\"\(attributes?.thumbnail_url ?? "")\" onerror=\"this.src='\(Bundle.main.url(forResource: "image-not-available", withExtension: "jpg")?.absoluteString ?? "")';\" /></a>\(attributes?.url != nil ? "<p class=\"url\">\(attributes?.url ?? "")</p>": "")\(description != nil ? "<p class=\"description\">\(description!)</p>": "")</div>"
         default:
             return innerHTML
         }
@@ -202,10 +186,5 @@ extension ContentBlock {
         
         return child
     }
-    
-    private func compareUrlString(str1: String, str2: String) -> Bool {
-        let str1 = str1.ends(with: "/") ? str1: str1 + "/"
-        let str2 = str2.ends(with: "/") ? str2: str2 + "/"
-        return str1 == str2
-    }
 }
+

@@ -49,7 +49,7 @@ class ArticleEditorVC: EditorVC {
                 (title.utf8.count <= self.titleBytesLimit)
         
         // compare content
-        let titleChanged = (title != viewModel.postForEdit?.content.title)
+        let titleChanged = (title != viewModel.postForEdit?.content.body.attributes?.title)
         
         // reassign result
         return super.shouldSendPost && titleIsNotEmpty && titleIsInsideLimit && titleChanged
@@ -100,7 +100,7 @@ class ArticleEditorVC: EditorVC {
     }
     
     override func setUp(with post: ResponseAPIContentGetPost) {
-        self.titleTextView.rx.text.onNext(post.content.title)
+        self.titleTextView.rx.text.onNext(post.content.body.attributes?.title)
         super.setUp(with: post)
     }
     

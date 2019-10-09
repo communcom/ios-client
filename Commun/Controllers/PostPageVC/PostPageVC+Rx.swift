@@ -46,9 +46,9 @@ extension PostPageVC {
                     self.byUserLabel.isHidden = false
                     self.communityAvatarImageView.isHidden = false
                     
-                    self.communityAvatarImageView.setAvatar(urlString: post.community.avatarUrl, namePlaceHolder: post.community.name)
-                    self.comunityNameLabel.text = post.community.name
-                    self.timeAgoLabel.text = Date.timeAgo(string: post.meta.time)
+                    self.communityAvatarImageView.setAvatar(urlString: post.community.avatarUrl, namePlaceHolder: post.community.communityName ?? post.community.communityId)
+                    self.comunityNameLabel.text = post.community.communityName ?? post.community.communityId
+                    self.timeAgoLabel.text = Date.timeAgo(string: post.meta.creationTime)
                     self.byUserLabel.text = post.author?.username ?? post.author?.userId ?? ""
                     
                     // commentForm

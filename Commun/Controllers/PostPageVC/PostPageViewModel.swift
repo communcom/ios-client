@@ -13,13 +13,9 @@ import CyberSwift
 
 class PostPageViewModel: CommentsListController, ListViewModelType {
     // MARK: - type
-    struct GroupedComment: CustomStringConvertible {
+    struct GroupedComment {
         var comment: ResponseAPIContentGetComment
         var replies = [GroupedComment]()
-        
-        var description: String {
-            return "{comment: \"\(comment.content.body.full!)\", childs: \(replies)}"
-        }
     }
     
     // MARK: - Handlers
@@ -51,8 +47,7 @@ class PostPageViewModel: CommentsListController, ListViewModelType {
         let userId = postForRequest?.contentId.userId ?? self.userId ?? ""
         
         // Bind post
-        NetworkService.shared.getPost(withPermLink: permLink,
-                                      forUser: userId)
+        NetworkService.shared.getPost(withPermLink: permLink)
             .catchError({ (error) -> Single<ResponseAPIContentGetPost> in
                 if let post = self.postForRequest {
                     return .just(post)

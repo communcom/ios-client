@@ -81,31 +81,11 @@ class PostHeaderView: UIView, UIWebViewDelegate, PostController {
             post.votes.hasDownVote ? .appMainColor: .lightGray
 
         // Show title
-        postTitleLabel.text = post.content.title
+        postTitleLabel.text = post.content.body.attributes?.title
         
         // Show content
         // Parse data
-        var html = post.content.body.full ?? ""
-        
-        if let string = post.content.body.full {
-            do {
-                if let jsonData = string.data(using: .utf8) {
-                    let block = try JSONDecoder().decode(ContentBlock.self, from: jsonData)
-                    html = block.toHTML(embeds: post.content.embeds.compactMap {$0.result} )
-                }
-                
-                contentWebView.scrollView.contentInset = UIEdgeInsets(top: 0, left: -8, bottom: 0, right: -8)
-                
-            } catch {
-                print(error)
-                #warning("MARKDOWN: Remove later")
-                let down = Down(markdownString: html)
-                if let downHtml = try? down.toHTML(){
-                    html = downHtml
-                }
-                contentWebView.scrollView.contentInset = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 8)
-            }
-        }
+        let html = post.content.body.toHTML()
         
         contentWebView.loadHTMLString(html, baseURL: nil)
         contentWebView.delegate = self

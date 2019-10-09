@@ -11,6 +11,13 @@ import CyberSwift
 import RxSwift
 
 extension ResponseAPIFrameGetEmbed {
+    init(blockAttributes: ResponseAPIContentBlockAttributes) throws {
+        let data = try JSONEncoder().encode(blockAttributes)
+        self = try JSONDecoder().decode(ResponseAPIFrameGetEmbed.self, from: data)
+        if self.type == "image" {self.type = "photo"}
+        if self.type == "website" {self.type = "link"}
+    }
+    
     func toTextAttachmentSingle() -> Single<TextAttachment>? {
         var embed = self
         guard embed.type != nil else {return nil}

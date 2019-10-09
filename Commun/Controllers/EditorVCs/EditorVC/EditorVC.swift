@@ -202,7 +202,7 @@ class EditorVC: UIViewController {
     
     // MARK: - action for overriding
     func setUp(with post: ResponseAPIContentGetPost) {
-        try? contentTextView.parseText(post.content.body.full!)
+        contentTextView.parseContentBlock(post.content.body)
     }
     
     func didChooseImageFromGallery(_ image: UIImage, description: String? = nil) {
@@ -217,7 +217,7 @@ class EditorVC: UIViewController {
         // for overriding in BasicEditorVC
     }
     
-    func getContentBlock() -> Single<ContentBlock> {
+    func getContentBlock() -> Single<ResponseAPIContentBlock> {
         contentTextView.getContentBlock(postTitle: postTitle)
     }
     
@@ -239,7 +239,6 @@ class EditorVC: UIViewController {
         contentTextView.saveDraft(completion: completion)
     }
     
-    #warning("Must override in ArticleVC")
     func removeDraft() {
         contentTextView.removeDraft()
     }

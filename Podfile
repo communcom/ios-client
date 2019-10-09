@@ -12,7 +12,7 @@ def common_pods
   pod 'Firebase/Core'
   pod 'Firebase/Messaging'
   
-  pod 'CyberSwift', :git => "https://github.com/GolosChain/cyberSwift.git" # "https://github.com/Monserg/cyber-ios.git"
+  pod 'CyberSwift', :git => "https://github.com/GolosChain/cyberSwift.git", :branch => "features/new_bc" # "https://github.com/Monserg/cyber-ios.git"
   
   pod 'Alamofire'
   pod 'Swinject'
@@ -60,6 +60,17 @@ end
 
 target 'Commun' do
   common_pods
+  
+  post_install do |installer|
+    installer.pods_project.targets.each do |target|
+      if ['CyberSwift'].include? target.name
+        target.build_configurations.each do |config|
+          config.build_settings['SWIFT_VERSION'] = '5'
+        end
+      end
+    end
+  end
+  
 end
 
 target 'CommunTests' do

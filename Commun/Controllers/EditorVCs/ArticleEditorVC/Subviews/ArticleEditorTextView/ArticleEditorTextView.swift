@@ -83,12 +83,12 @@ class ArticleEditorTextView: ContentTextView {
     }
     
     // MARK: - ContentBlock
-    override func getContentBlock(postTitle: String? = nil) -> Single<ContentBlock> {
+    override func getContentBlock(postTitle: String? = nil) -> Single<ResponseAPIContentBlock> {
         // spend id = 1 for PostBlock, so id starts from 1
         var id: UInt64 = 1
         
         // child blocks of post block
-        var contentBlocks = [Single<ContentBlock>]()
+        var contentBlocks = [Single<ResponseAPIContentBlock>]()
         
         // get AS, which was separated by the Escaping String
         var attachmentRanges = [NSRange]()
@@ -144,26 +144,18 @@ class ArticleEditorTextView: ContentTextView {
         
         
         return Single.zip(contentBlocks)
-            .map {contentBlocks -> ContentBlock in
-                var block = ContentBlock(
+            .map {contentBlocks -> ResponseAPIContentBlock in
+                var block = ResponseAPIContentBlock(
                     id: 1,
                     type: "post",
-                    attributes: ContentBlockAttributes(
+                    attributes: ResponseAPIContentBlockAttributes(
                         title: postTitle,
                         type: self.acceptedPostType,
                         version: "1.0"
                     ),
                     content: .array(contentBlocks))
                 block.maxId = id
-                return ContentBlock(
-                    id: 1,
-                    type: "post",
-                    attributes: ContentBlockAttributes(
-                        title: postTitle,
-                        type: self.acceptedPostType,
-                        version: "1.0"
-                    ),
-                    content: .array(contentBlocks))
+                return block
         }
     }
 }
