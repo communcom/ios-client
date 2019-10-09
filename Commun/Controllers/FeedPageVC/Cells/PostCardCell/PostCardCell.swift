@@ -83,14 +83,14 @@ extension PostCardCell {
         self.avatarImageView.setAvatar(urlString: post.community.avatarUrl, namePlaceHolder: post.community.communityName ?? post.community.communityId)
         
         self.titleLabel.text = post.community.communityName?.lowercased().uppercaseFirst
-        self.timeAgoLabel.text = Date.timeAgo(string: post.meta.time)
+        self.timeAgoLabel.text = Date.timeAgo(string: post.meta.creationTime)
         
         self.authorNameLabel.text = post.author?.username ?? post.author?.userId ?? ""
         
         self.mainTextLabel.text = post.content.body.attributes?.title
         self.accessibilityLabel = "PostCardCell"
         
-        let embeds = post.content.embeds.compactMap {$0.result}
+        let embeds = post.content.attachments
         if embeds.isEmpty {
             embededViewHeightConstraint.constant = 0
             gridViewToContainerBottomConstraint.constant = 0

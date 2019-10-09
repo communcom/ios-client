@@ -92,10 +92,10 @@ class CommentCell: UITableViewCell {
         setText(expanded: expanded)
         
         // Show media
-        let embededResult = comment.content.embeds.first?.result
+        let embededResult = comment.attachments.first
         
-        if embededResult?.type == "photo",
-            let urlString = embededResult?.url,
+        if embededResult?.type == "image",
+            let urlString = embededResult?.attributes?.thumbnail_url,
             let url = URL(string: urlString) {
             showPhoto(with: url)
             embedViewHeightConstraint.constant = 101
@@ -147,7 +147,7 @@ class CommentCell: UITableViewCell {
     }
     
     func setText(expanded: Bool = false) {
-        guard let content = comment?.content.body.full else {return}
+        guard let content = comment?.content.body.toAttributedString(currentAttributes: [.font: UIFont.boldSystemFont(ofSize: defaultContentFontSize)]) else {return}
         
         let userId = comment?.author?.username ?? comment?.author?.userId ?? "Unknown user"
         let mutableAS = NSMutableAttributedString(string: userId, attributes: [
@@ -159,8 +159,8 @@ class CommentCell: UITableViewCell {
         mutableAS.append(NSAttributedString(string: " "))
         
         // If text is not so long or expanded
-        if content.count < maxCharactersForReduction || expanded {
-            let contentAS = NSAttributedString(string: content, attributes: [
+        if content.string.count < maxCharactersForReduction || expanded {
+            let contentAS = NSAttributedString(string: content.string, attributes: [
                 .font: UIFont.systemFont(ofSize: defaultContentFontSize)
             ])
             mutableAS.append(contentAS)
@@ -173,7 +173,7 @@ class CommentCell: UITableViewCell {
         
         // If doesn't expanded
         let contentAS = NSAttributedString(
-            string: String(content.prefix(maxCharactersForReduction - 3)),
+            string: String(content.string.prefix(maxCharactersForReduction - 3)),
             attributes: [
                 .font: UIFont.systemFont(ofSize: defaultContentFontSize)
             ])

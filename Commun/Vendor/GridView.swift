@@ -147,9 +147,9 @@ class GridView: UIView {
         setUp(views: imageViews)
     }
     
-    func setUp(embeds: [ResponseAPIContentEmbedResult]) {
+    func setUp(embeds: [ResponseAPIContentBlock]) {
         let imageViews = embeds.compactMap { (embed) -> UIImageView? in
-            let urlString = embed.thumbnail_url ?? embed.url
+            let urlString = embed.attributes?.thumbnail_url ?? embed.content.stringValue ?? ""
             guard let url = URL(string: urlString) else {return nil}
             let imageView = UIImageView(frame: .zero)
             imageView.sd_setImageCachedError(with: url, completion: nil)

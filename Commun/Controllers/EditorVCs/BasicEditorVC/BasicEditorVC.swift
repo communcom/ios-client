@@ -71,7 +71,7 @@ class BasicEditorVC: EditorVC {
     override func didChooseImageFromGallery(_ image: UIImage, description: String? = nil) {
         
         var embed = try! ResponseAPIFrameGetEmbed(
-            blockAttributes: ContentBlockAttributes(
+            blockAttributes: ResponseAPIContentBlockAttributes(
                 description: description
             )
         )

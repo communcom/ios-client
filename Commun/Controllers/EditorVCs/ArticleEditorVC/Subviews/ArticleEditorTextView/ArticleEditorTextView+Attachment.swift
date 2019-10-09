@@ -79,7 +79,7 @@ extension ArticleEditorTextView {
     // MARK: - Image
     func addImage(_ image: UIImage? = nil, urlString: String? = nil, description: String? = nil) {
         var embed = try! ResponseAPIFrameGetEmbed(
-            blockAttributes: ContentBlockAttributes(
+            blockAttributes: ResponseAPIContentBlockAttributes(
                 url: urlString, description: description
             )
         )
