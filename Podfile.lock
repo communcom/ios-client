@@ -133,7 +133,7 @@ PODS:
   - SwifterSwift/SwiftStdlib (5.0.0)
   - SwifterSwift/UIKit (5.0.0)
   - SwiftLinkPreview (3.0.1)
-  - SwiftTheme (0.4.5)
+  - SwiftTheme (0.4.7)
   - SwiftyJSON (4.3.0)
   - Swinject (2.6.2)
   - THPinViewController (1.2.6)
@@ -178,7 +178,7 @@ DEPENDENCIES:
   - "UITextView+Placeholder"
 
 SPEC REPOS:
-  https://github.com/CocoaPods/Specs.git:
+  trunk:
     - Action
     - Alamofire
     - AppImageViewer
@@ -192,6 +192,7 @@ SPEC REPOS:
     - Down
     - DZNEmptyDataSet
     - eosswift
+    - ESPullToRefresh
     - Fabric
     - Firebase
     - FirebaseAnalytics
@@ -210,6 +211,7 @@ SPEC REPOS:
     - PhoneNumberKit
     - PinCodeInputView
     - Protobuf
+    - PureLayout
     - QRCodeReaderViewController
     - ReachabilitySwift
     - RxCocoa
@@ -230,9 +232,6 @@ SPEC REPOS:
     - TTTAttributedLabel
     - UIImageView-Letters
     - "UITextView+Placeholder"
-  trunk:
-    - ESPullToRefresh
-    - PureLayout
 
 EXTERNAL SOURCES:
   CyberSwift:
@@ -297,7 +296,7 @@ SPEC CHECKSUMS:
   Starscream: 08172b481e145289c4930cb567230fb55897cfa4
   SwifterSwift: 96f90594b370802f01647c2b1229c74a84ffafee
   SwiftLinkPreview: 7524438c43bf63a5041615713777c3d8f19a9a31
-  SwiftTheme: 4560ca4a4274aef71dd3f985aa8007c6e59993fd
+  SwiftTheme: 67bbb51f2ef69570164562376f441655a143399d
   SwiftyJSON: 6faa0040f8b59dead0ee07436cbf76b73c08fd08
   Swinject: cf7458774b1b00323080a9c67e47a1ee7f9d2af1
   THPinViewController: e0dc717a61c8a0a0f251764da26b9ca8a4fd2ec1
@@ -308,4 +307,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 5d68cb50d13d5a3054358c665df9c6f692f36336
 
-COCOAPODS: 1.8.0
+COCOAPODS: 1.8.3

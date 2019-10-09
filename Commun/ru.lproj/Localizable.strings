@@ -11,6 +11,7 @@
 "add bio"                                       =   "добавить биографию";
 "add short PIN code"                            =   "добавьте короткий PIN-код";
 "ago"                                           =   "назад";
+"add to favourite"                              =   "добавить в избранное";
 
 
 // B
@@ -153,8 +154,7 @@
 "resend verification code"                      =   "отправить код подтверждения";
 "reward for post"                               =   "награда за сообщение";
 "reward for votes"                              =   "награда за голоса";
-"send post"                                     =   "Отправить";
-"send report"                                   =   "Жаловаться";
+"remove from favourite"                         =   "remove from favourite";
 
 // S
 "saving to blockchain..."                       =   "сохранение в блокчейн...";
@@ -175,6 +175,8 @@
 "subscribe to your"                             =   "подпишитесь на ваши";
 "subscribed you"                                =   "подписался на вас";
 "successfully resend code"                      =   "код подтверждения успешно отправлен";
+"send post"                                     =   "Отправить";
+"send report"                                   =   "Жаловаться";
 
 
 // T
