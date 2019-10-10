@@ -48,6 +48,9 @@ class ContentTextView: UITextView {
     }
     
     // MARK: - Properties
+    var addLinkDidTouch: (()->Void)?
+    var setColorDidTouch: (()->Void)?
+    
     // Must override!!!
     var defaultTypingAttributes: [NSAttributedString.Key: Any] {
         fatalError("Must override")
@@ -106,11 +109,43 @@ class ContentTextView: UITextView {
             .subscribe(onNext: {
                 // get TextStyle at current selectedRange
                 self.setCurrentTextStyle()
+                
+                // menuItems
+                UIMenuController.shared.menuItems = [
+                    UIMenuItem(
+                        title: "𝐁",
+                        action: #selector(self.toggleBold)
+                    ),
+                    UIMenuItem(
+                        title: "𝐼",
+                        action: #selector(self.toggleItalic)
+                    ),
+                    UIMenuItem(
+                        title: "🔗".localized().uppercaseFirst,
+                        action: #selector(self.addLink)
+                    ),
+                    UIMenuItem(
+                        title: "clear formatting".localized().uppercaseFirst,
+                        action: #selector(self.clearFormatting)
+                    ),
+                    UIMenuItem(
+                        title: "color".localized().uppercaseFirst,
+                        action: #selector(self.setColorMenu)
+                    )
+                ]
             })
             .disposed(by: disposeBag)
     }
     
-    func clearFormatting() {
+    @objc private func addLink() {
+        addLinkDidTouch?()
+    }
+    
+    @objc private func setColorMenu() {
+        setColorDidTouch?()
+    }
+    
+    @objc func clearFormatting() {
         if selectedRange.length == 0 {
             typingAttributes = defaultTypingAttributes
             setCurrentTextStyle()

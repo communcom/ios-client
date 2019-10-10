@@ -126,6 +126,15 @@ class EditorVC: UIViewController {
         headerLabel.text = (viewModel.postForEdit != nil ? "edit post" : "create post").localized().uppercaseFirst
         
         contentTextView.textContainerInset = UIEdgeInsets(top: 0, left: 0, bottom: 200, right: 0)
+        
+        contentTextView.addLinkDidTouch = {[weak self] in
+            self?.addLink()
+        }
+        
+        contentTextView.setColorDidTouch = {[weak self] in
+            guard let strongSelf = self else {return}
+            strongSelf.didSelectTool(.setColor)
+        }
     }
     
     func layoutTopContentTextView() {
