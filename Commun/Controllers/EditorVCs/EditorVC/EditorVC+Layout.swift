@@ -18,7 +18,7 @@ extension EditorVC {
         
         toolbar.autoPinEdge(toSuperviewSafeArea: .leading)
         toolbar.autoPinEdge(toSuperviewSafeArea: .trailing)
-        let keyboardViewV = KeyboardLayoutConstraint(item: view!, attribute: .bottom, relatedBy: .equal, toItem: toolbar, attribute: .bottom, multiplier: 1.0, constant: 0.0)
+        let keyboardViewV = KeyboardLayoutConstraint(item: view!.safeAreaLayoutGuide, attribute: .bottom, relatedBy: .equal, toItem: toolbar, attribute: .bottom, multiplier: 1.0, constant: 0.0)
         keyboardViewV.observeKeyboardHeight()
         self.view.addConstraint(keyboardViewV)
         

@@ -87,7 +87,8 @@ extension PostCardCell {
         
         self.authorNameLabel.text = post.author?.username ?? post.author?.userId ?? ""
         
-        self.mainTextLabel.text = post.content.title
+        #warning("fix later")
+        self.mainTextLabel.text = post.content.title == " " ? "<Basic post: untitled, fix later>" : post.content.title
         self.accessibilityLabel = "PostCardCell"
         
         let embeds = post.content.embeds.compactMap {$0.result}
