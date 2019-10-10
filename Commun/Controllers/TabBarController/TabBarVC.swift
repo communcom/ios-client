@@ -37,40 +37,7 @@ class TabBarVC: UITabBarController {
         UITabBar.appearance().backgroundColor = .white
         
         // Remove default line
-        tabBar.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: 18)
-        
-        // Shadow
-        let shadowView = UIView(frame: tabBar.frame)
-        shadowView.backgroundColor = .white
-        shadowView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(shadowView)
-        view.bringSubviewToFront(tabBar)
-        
-        shadowView.topAnchor
-            .constraint(equalTo: tabBar.topAnchor)
-            .isActive = true
-        shadowView.bottomAnchor
-            .constraint(equalTo: tabBar.bottomAnchor)
-            .isActive = true
-        shadowView.leadingAnchor
-            .constraint(equalTo: tabBar.leadingAnchor)
-            .isActive = true
-        shadowView.trailingAnchor
-            .constraint(equalTo: tabBar.trailingAnchor)
-            .isActive = true
-        
-        let shadowLayer = CAShapeLayer()
-        
-        shadowLayer.path = UIBezierPath(roundedRect: shadowView.bounds, cornerRadius: 18).cgPath
-        shadowLayer.fillColor = UIColor.black.cgColor
-
-        shadowLayer.shadowColor = UIColor.black.cgColor
-        shadowLayer.shadowPath = shadowLayer.path
-        shadowLayer.shadowOffset = CGSize(width: 0.0, height: 1.0)
-        shadowLayer.shadowOpacity = 0.2
-        shadowLayer.shadowRadius = 30
-
-        shadowView.layer.insertSublayer(shadowLayer, at: 0)
+        tabBar.addShadow(offset: CGSize.init(width: 0, height: 1), color: .black, radius: 10, opacity: 0.2)
     }
     
     private func configTabs() {
