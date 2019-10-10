@@ -129,6 +129,7 @@ extension EditorVC {
     
     // MARK: - Add link
     func addLink() {
+        var currentSelectedRange = contentTextView.selectedRange
         if let urlString = contentTextView.currentTextStyle.value.urlString
         {
             // Remove link that is not a mention or tag
@@ -166,6 +167,7 @@ extension EditorVC {
                     self?.showErrorWithMessage("URL".localized() + " " + "is missing".localized())
                     return
                 }
+                self?.contentTextView.selectedRange = currentSelectedRange
                 self?.didAddLink(urlString, placeholder: alert.textFields?.last?.text)
             }))
             
