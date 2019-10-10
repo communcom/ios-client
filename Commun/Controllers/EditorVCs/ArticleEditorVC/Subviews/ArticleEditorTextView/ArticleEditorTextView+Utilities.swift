@@ -77,11 +77,43 @@ extension ArticleEditorTextView {
     
     // MARK: - contextMenu modification
     override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
+        // if selected attachment
+        if selectedAttachment != nil
+        {
+            if action == #selector(copy(_:)) || action == #selector(cut(_:)) {
+                return true
+            }
+        }
+        else {
+            if action == #selector(previewAttachment(_:)) {
+                return false
+            }
+        }
+        
         if action == #selector(paste(_:)) {
             let pasteBoard = UIPasteboard.general
             if pasteBoard.items.last?["attachment"] != nil { return true }
         }
         return super.canPerformAction(action, withSender: sender)
+    }
+    
+    override func copy(_ sender: Any?) {
+        if let attachment = selectedAttachment {
+            copyAttachment(attachment)
+            return
+        }
+        return super.copy(sender)
+    }
+
+    override func cut(_ sender: Any?) {
+        if let attachment = selectedAttachment {
+            self.copyAttachment(attachment, completion: {
+                self.textStorage.replaceCharacters(in: self.selectedRange, with: "")
+                self.selectedRange = NSMakeRange(self.selectedRange.location, 0)
+            })
+            return
+        }
+        return super.cut(sender)
     }
     
     override func paste(_ sender: Any?) {
