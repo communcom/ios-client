@@ -80,9 +80,9 @@ extension PostCardCell {
     func setUp(with post: ResponseAPIContentGetPost?) {
         guard let post = post else {return}
         self.post = post
-        self.avatarImageView.setAvatar(urlString: post.community.avatarUrl, namePlaceHolder: post.community.communityName ?? post.community.communityId)
+        self.avatarImageView.setAvatar(urlString: post.community.avatarUrl, namePlaceHolder: post.community.name ?? post.community.communityId ?? "C")
         
-        self.titleLabel.text = post.community.communityName?.lowercased().uppercaseFirst
+        self.titleLabel.text = post.community.name?.lowercased().uppercaseFirst
         self.timeAgoLabel.text = Date.timeAgo(string: post.meta.creationTime)
         
         self.authorNameLabel.text = post.author?.username ?? post.author?.userId ?? ""

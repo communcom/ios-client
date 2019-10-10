@@ -110,8 +110,8 @@ class PostMetaView: UIView {
     }
     
     func setUp(post: ResponseAPIContentGetPost) {
-        avatarImageView.setAvatar(urlString: post.community.avatarUrl, namePlaceHolder: post.community.communityName ?? post.community.communityId)
-        comunityNameLabel.text = post.community.communityName ?? post.community.communityId
+        avatarImageView.setAvatar(urlString: post.community.avatarUrl, namePlaceHolder: post.community.name ?? post.community.communityId ?? "C")
+        comunityNameLabel.text = post.community.name ?? post.community.communityId
         timeAgoLabel.text = Date.timeAgo(string: post.meta.creationTime) + " • "
         byUserLabel.text = post.author?.username ?? post.author?.userId
         
