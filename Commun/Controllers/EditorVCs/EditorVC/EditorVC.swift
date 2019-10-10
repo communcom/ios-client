@@ -125,7 +125,7 @@ class EditorVC: UIViewController {
         contentTextView.placeholder = "write text placeholder".localized().uppercaseFirst + "..."
         headerLabel.text = (viewModel.postForEdit != nil ? "edit post" : "create post").localized().uppercaseFirst
         
-        contentTextView.textContainerInset = UIEdgeInsets(top: 0, left: 0, bottom: 200, right: 0)
+        contentTextView.textContainerInset = UIEdgeInsets(top: 0, left: 16, bottom: 200, right: 16)
         
         contentTextView.addLinkDidTouch = {[weak self] in
             self?.addLink()

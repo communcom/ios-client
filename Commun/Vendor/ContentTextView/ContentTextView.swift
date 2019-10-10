@@ -125,13 +125,13 @@ class ContentTextView: UITextView {
                         action: #selector(self.addLink)
                     ),
                     UIMenuItem(
+                        title: "color".localized().uppercaseFirst,
+                        action: #selector(self.setColorMenu)
+                    ),
+                    UIMenuItem(
                         title: "clear formatting".localized().uppercaseFirst,
                         action: #selector(self.clearFormatting)
                     ),
-                    UIMenuItem(
-                        title: "color".localized().uppercaseFirst,
-                        action: #selector(self.setColorMenu)
-                    )
                 ]
             })
             .disposed(by: disposeBag)

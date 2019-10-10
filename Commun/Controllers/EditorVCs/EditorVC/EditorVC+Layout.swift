@@ -96,8 +96,8 @@ extension EditorVC {
     }
     
     func layoutContentTextView() {
-        contentTextView.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
-        contentTextView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
+        contentTextView.autoPinEdge(toSuperviewSafeArea: .leading)
+        contentTextView.autoPinEdge(toSuperviewSafeArea: .trailing)
         
         // forward delegate
         contentTextView.rx.setDelegate(self).disposed(by: disposeBag)
