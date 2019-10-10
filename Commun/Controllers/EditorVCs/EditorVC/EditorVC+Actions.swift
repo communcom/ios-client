@@ -98,11 +98,6 @@ extension EditorVC {
                     pickerVC.dismiss(animated: true, completion: nil)
                 }))
                 
-                alert.addAction(UIAlertAction(title: "cancel".localized().uppercaseFirst, style: .default, handler: {_ in
-                    strongSelf.didChooseImageFromGallery(image)
-                    pickerVC.dismiss(animated: true, completion: nil)
-                }))
-                
                 pickerVC.present(alert, animated: true, completion: nil)
             })
             .disposed(by: disposeBag)
