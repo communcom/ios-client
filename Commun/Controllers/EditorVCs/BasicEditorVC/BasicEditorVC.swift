@@ -57,15 +57,28 @@ class BasicEditorVC: EditorVC {
     
     // MARK: - overriding actions
     override func addArticle() {
-        weak var presentingViewController = self.presentingViewController
-        let attrStr = contentTextView.attributedText
-        dismiss(animated: true, completion: {
-            let vc = ArticleEditorVC()
-            vc.modalPresentationStyle = .fullScreen
-            presentingViewController?.present(vc, animated: true, completion: {
-                vc.contentTextView.attributedText = attrStr
+        let showArticleVC = {[weak self] in
+            weak var presentingViewController = self?.presentingViewController
+            let attrStr = self?.contentTextView.attributedText
+            self?.dismiss(animated: true, completion: {
+                let vc = ArticleEditorVC()
+                vc.modalPresentationStyle = .fullScreen
+                presentingViewController?.present(vc, animated: true, completion: {
+                    vc.contentTextView.attributedText = attrStr
+                })
             })
-        })
+        }
+        
+        if contentTextView.text.isEmpty {
+            showArticleVC()
+        }
+        else {
+            showAlert(title: "add article".localized().uppercaseFirst, message: "override current work and add a new article".localized().uppercaseFirst + "?", buttonTitles: ["OK".localized(), "cancel".localized().uppercaseFirst], highlightedButtonIndex: 0) { (index) in
+                if index == 0 {
+                    showArticleVC()
+                }
+            }
+        }
     }
     
     override func didChooseImageFromGallery(_ image: UIImage, description: String? = nil) {
