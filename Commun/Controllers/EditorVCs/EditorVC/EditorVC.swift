@@ -214,7 +214,7 @@ class EditorVC: UIViewController {
     
     // MARK: - action for overriding
     func setUp(with post: ResponseAPIContentGetPost) {
-        try? contentTextView.parseText(post.content.body.full!)
+        contentTextView.parseText(post.content.body.full!)
     }
     
     func didChooseImageFromGallery(_ image: UIImage, description: String? = nil) {
