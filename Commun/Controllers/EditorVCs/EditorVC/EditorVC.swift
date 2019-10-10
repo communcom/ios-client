@@ -25,11 +25,14 @@ class EditorVC: UIViewController {
         // both title and content are not empty
         let contentAreNotEmpty = !content.isEmpty
         
+        // content inside limit
+        let contentInsideLimit = (content.count <= contentLettersLimit)
+        
         // compare content
         let contentChanged = (self.contentTextView.attributedText != self.contentTextView.originalAttributedString)
         
         // reassign result
-        return contentAreNotEmpty && contentChanged
+        return contentAreNotEmpty && contentInsideLimit && contentChanged
     }
     
     var contentTextView: ContentTextView {
