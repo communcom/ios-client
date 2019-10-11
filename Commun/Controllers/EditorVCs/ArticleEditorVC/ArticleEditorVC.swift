@@ -88,10 +88,10 @@ class ArticleEditorVC: EditorVC {
         
         // countLabel
         contentView.addSubview(titleTextViewCountLabel)
-        titleTextViewCountLabel.autoPinEdge(.top, to: .bottom, of: titleTextView, withOffset: -12)
+        titleTextViewCountLabel.autoPinEdge(.top, to: .bottom, of: titleTextView, withOffset: 8)
         titleTextViewCountLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
         
-        contentTextView.autoPinEdge(.top, to: .bottom, of: titleTextView, withOffset: 20)
+        contentTextView.autoPinEdge(.top, to: .bottom, of: titleTextView, withOffset: 28)
     }
     
     
