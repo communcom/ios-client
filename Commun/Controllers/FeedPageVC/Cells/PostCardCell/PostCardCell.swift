@@ -87,10 +87,10 @@ extension PostCardCell {
         
         self.authorNameLabel.text = post.author?.username ?? post.author?.userId ?? ""
         
-        self.mainTextLabel.text = post.content.body.attributes?.title
+        self.mainTextLabel.text = post.content.attributes?.title
         self.accessibilityLabel = "PostCardCell"
         
-        let embeds = post.content.attachments
+        let embeds = post.attachments
         if embeds.isEmpty {
             embededViewHeightConstraint.constant = 0
             gridViewToContainerBottomConstraint.constant = 0

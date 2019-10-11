@@ -218,7 +218,7 @@ extension PostController {
             let controller = UIApplication.topViewController()
             else {return}
         // text to share
-        let title = post.content.body.attributes?.title
+        let title = post.content.attributes?.title
         var text = (title != nil) ? (title! + "\n"): ""
         
         text += "\(URL.appURL)/posts/\(userId)/\(post.contentId.permlink)"

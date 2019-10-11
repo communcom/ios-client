@@ -69,7 +69,7 @@ class PostHeaderView: UIView, UIWebViewDelegate, PostController {
         
         if post.content.type == "article" {
             // Show title
-            postTitleLabel.text = post.content.body.attributes?.title
+            postTitleLabel.text = post.content.attributes?.title
             
             titleToWebViewSpaceConstraint.constant = 20
         }
@@ -94,7 +94,7 @@ class PostHeaderView: UIView, UIWebViewDelegate, PostController {
         
         // Show content
         // Parse data
-        let html = post.content.body.toHTML()
+        let html = post.content.toHTML()
         contentWebView.scrollView.contentInset = UIEdgeInsets(top: -8, left: 0, bottom: 0, right: 0)
         contentWebView.loadHTMLString(html, baseURL: nil)
         contentWebView.delegate = self
