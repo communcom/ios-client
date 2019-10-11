@@ -57,11 +57,16 @@ class PostsFetcher: ItemsFetcher<ResponseAPIContentGetPost> {
     }
     
     override var request: Single<[ResponseAPIContentGetPost]>! {
-        return NetworkService.shared.loadFeed(sequenceKey, withSortType: filter.sortType, withFeedType: filter.feedType, withFeedTypeMode: filter.feedTypeMode, userId: userId)
-            .do(onSuccess: { (result) in
-                // assign next sequenceKey
-                self.sequenceKey = result.sequenceKey
-            })
-            .map {$0.items ?? []}
+        #warning("Mocking")
+        return ResponseAPIContentGetPosts.singleWithMockData()
+            .map {$0.items!}
+//        return RestAPIManager.instance.getPosts(userId: userId, communityId: AppProfileType.golos.rawValue, allowNsfw: false, type: filter.feedTypeMode, sortBy: filter.feedType, limit: <#T##UInt#>, offset: <#T##UInt#>)
+//
+//        return NetworkService.shared.loadFeed(sequenceKey, withSortType: filter.sortType, withFeedType: filter.feedType, withFeedTypeMode: filter.feedTypeMode, userId: userId)
+//            .do(onSuccess: { (result) in
+//                // assign next sequenceKey
+//                self.sequenceKey = result.sequenceKey
+//            })
+//            .map {$0.items ?? []}
     }
 }

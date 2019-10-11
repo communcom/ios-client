@@ -111,8 +111,8 @@ class CommentCell: UITableViewCell {
         #warning("change this number later")
         voteCountLabel.text = "\((comment.votes.upCount ?? 0) - (comment.votes.downCount ?? 0))"
         
-        upVoteButton.tintColor = comment.votes.hasUpVote ? themeColor: .lightGray
-        downVoteButton.tintColor = comment.votes.hasDownVote ? themeColor: .lightGray
+        upVoteButton.tintColor = comment.votes.hasUpVote ?? false ? themeColor: .lightGray
+        downVoteButton.tintColor = comment.votes.hasDownVote ?? false ? themeColor: .lightGray
         
         timeLabel.text = Date.timeAgo(string: comment.meta.time)
         

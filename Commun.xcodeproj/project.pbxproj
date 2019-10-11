@@ -35,10 +35,7 @@
 		3B197C552269BF74008CF10D /* ProfilePageSegmentioItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B197C542269BF74008CF10D /* ProfilePageSegmentioItem.swift */; };
 		3B197C572269CEEF008CF10D /* CommentsFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B197C562269CEEF008CF10D /* CommentsFetcher.swift */; };
 		3B197C5B2269EF3F008CF10D /* ProfilePageVC+Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B197C5A2269EF3F008CF10D /* ProfilePageVC+Binding.swift */; };
-		3B197C88226A33CF008CF10D /* ResponseAPIContentGetProfileResult.json in Resources */ = {isa = PBXBuildFile; fileRef = 3B197C84226A33CF008CF10D /* ResponseAPIContentGetProfileResult.json */; };
-		3B197C89226A33CF008CF10D /* ResponseAPIContentGetCommentsResult.json in Resources */ = {isa = PBXBuildFile; fileRef = 3B197C85226A33CF008CF10D /* ResponseAPIContentGetCommentsResult.json */; };
 		3B197C8A226A33CF008CF10D /* Decodable+MockObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B197C86226A33CF008CF10D /* Decodable+MockObjects.swift */; };
-		3B197C8B226A33CF008CF10D /* ResponseAPIContentGetFeedResult.json in Resources */ = {isa = PBXBuildFile; fileRef = 3B197C87226A33CF008CF10D /* ResponseAPIContentGetFeedResult.json */; };
 		3B24F85F22F36A7100B7091C /* Communities.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3B24F85E22F36A7100B7091C /* Communities.storyboard */; };
 		3B24F86122F3715E00B7091C /* CommunitiesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B24F86022F3715E00B7091C /* CommunitiesVC.swift */; };
 		3B24F86322F376FF00B7091C /* CommunitiesVC+Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B24F86222F376FF00B7091C /* CommunitiesVC+Binding.swift */; };
@@ -189,10 +186,8 @@
 		3BF2E09822D3A49F003B37AE /* StepButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BF2E09722D3A49F003B37AE /* StepButton.swift */; };
 		3BF37BCA22A11FA700A72FFE /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BF37BC922A11FA700A72FFE /* UIView.swift */; };
 		3BF37BCC22A1297C00A72FFE /* UITableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BF37BCB22A1297C00A72FFE /* UITableView.swift */; };
-		3BF37BD022A137EE00A72FFE /* ResponseAPIContentGetPost.json in Resources */ = {isa = PBXBuildFile; fileRef = 3BF37BCF22A137EE00A72FFE /* ResponseAPIContentGetPost.json */; };
 		3BF37BD422A1414200A72FFE /* PlaceholderPostCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3BF37BD222A1414200A72FFE /* PlaceholderPostCell.xib */; };
 		3BF37BD622A162E000A72FFE /* ResponseAPIOnlineNotificationData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BF37BD522A162E000A72FFE /* ResponseAPIOnlineNotificationData.swift */; };
-		3BF37BD822A1666200A72FFE /* ResponseAPIOnlineNotifyHistoryResult.json in Resources */ = {isa = PBXBuildFile; fileRef = 3BF37BD722A1666200A72FFE /* ResponseAPIOnlineNotifyHistoryResult.json */; };
 		3BF3817F2331D17900C02123 /* NSRegularExpression.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BF3817E2331D17900C02123 /* NSRegularExpression.swift */; };
 		3BF381812331D9CD00C02123 /* URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BF381802331D9CD00C02123 /* URL.swift */; };
 		3BF53CE4230B93E10082464F /* HTMLStringWebView.css in Resources */ = {isa = PBXBuildFile; fileRef = 3BF53CE3230B93E10082464F /* HTMLStringWebView.css */; };
@@ -282,6 +277,7 @@
 		B1EA02F22289882A00835244 /* SF-Pro-Text-RegularItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 57F9CAA1225B3AAA00AC9ACA /* SF-Pro-Text-RegularItalic.otf */; };
 		B1EA02F32289882A00835244 /* SF-Pro-Text-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 57F9CA94225B3A9900AC9ACA /* SF-Pro-Text-Semibold.otf */; };
 		B1EA02F42289882A00835244 /* SF-Pro-Text-SemiboldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 57F9CAA6225B3AAF00AC9ACA /* SF-Pro-Text-SemiboldItalic.otf */; };
+		BC3D97612350384E00421718 /* ResponseAPIContentGetPosts.json in Resources */ = {isa = PBXBuildFile; fileRef = BC3D97602350384E00421718 /* ResponseAPIContentGetPosts.json */; };
 		BCE9390B234DBBC300226E39 /* ResponseAPIContentBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCE9390A234DBBC300226E39 /* ResponseAPIContentBlock.swift */; };
 		BCE9390F234DD28400226E39 /* ResponseAPIContentGetPostContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCE9390E234DD28400226E39 /* ResponseAPIContentGetPostContent.swift */; };
 /* End PBXBuildFile section */
@@ -324,10 +320,7 @@
 		3B197C542269BF74008CF10D /* ProfilePageSegmentioItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePageSegmentioItem.swift; sourceTree = "<group>"; };
 		3B197C562269CEEF008CF10D /* CommentsFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentsFetcher.swift; sourceTree = "<group>"; };
 		3B197C5A2269EF3F008CF10D /* ProfilePageVC+Binding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProfilePageVC+Binding.swift"; sourceTree = "<group>"; };
-		3B197C84226A33CF008CF10D /* ResponseAPIContentGetProfileResult.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ResponseAPIContentGetProfileResult.json; sourceTree = "<group>"; };
-		3B197C85226A33CF008CF10D /* ResponseAPIContentGetCommentsResult.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ResponseAPIContentGetCommentsResult.json; sourceTree = "<group>"; };
 		3B197C86226A33CF008CF10D /* Decodable+MockObjects.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Decodable+MockObjects.swift"; sourceTree = "<group>"; };
-		3B197C87226A33CF008CF10D /* ResponseAPIContentGetFeedResult.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ResponseAPIContentGetFeedResult.json; sourceTree = "<group>"; };
 		3B24F85E22F36A7100B7091C /* Communities.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Communities.storyboard; sourceTree = "<group>"; };
 		3B24F86022F3715E00B7091C /* CommunitiesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunitiesVC.swift; sourceTree = "<group>"; };
 		3B24F86222F376FF00B7091C /* CommunitiesVC+Binding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CommunitiesVC+Binding.swift"; sourceTree = "<group>"; };
@@ -480,10 +473,8 @@
 		3BF2E09722D3A49F003B37AE /* StepButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepButton.swift; sourceTree = "<group>"; };
 		3BF37BC922A11FA700A72FFE /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
 		3BF37BCB22A1297C00A72FFE /* UITableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableView.swift; sourceTree = "<group>"; };
-		3BF37BCF22A137EE00A72FFE /* ResponseAPIContentGetPost.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ResponseAPIContentGetPost.json; sourceTree = "<group>"; };
 		3BF37BD222A1414200A72FFE /* PlaceholderPostCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlaceholderPostCell.xib; sourceTree = "<group>"; };
 		3BF37BD522A162E000A72FFE /* ResponseAPIOnlineNotificationData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseAPIOnlineNotificationData.swift; sourceTree = "<group>"; };
-		3BF37BD722A1666200A72FFE /* ResponseAPIOnlineNotifyHistoryResult.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ResponseAPIOnlineNotifyHistoryResult.json; sourceTree = "<group>"; };
 		3BF3817E2331D17900C02123 /* NSRegularExpression.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSRegularExpression.swift; sourceTree = "<group>"; };
 		3BF381802331D9CD00C02123 /* URL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URL.swift; sourceTree = "<group>"; };
 		3BF53CE3230B93E10082464F /* HTMLStringWebView.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; path = HTMLStringWebView.css; sourceTree = "<group>"; };
@@ -586,6 +577,7 @@
 		B1D1CF9C22F8A28F0071F1B6 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		B1EA02D42289734800835244 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		B1EA02D62289734E00835244 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
+		BC3D97602350384E00421718 /* ResponseAPIContentGetPosts.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ResponseAPIContentGetPosts.json; sourceTree = "<group>"; };
 		BCE9390A234DBBC300226E39 /* ResponseAPIContentBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseAPIContentBlock.swift; sourceTree = "<group>"; };
 		BCE9390E234DD28400226E39 /* ResponseAPIContentGetPostContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseAPIContentGetPostContent.swift; sourceTree = "<group>"; };
 		C1D6A6DAA916F8782899DFE5 /* Pods-CommunTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CommunTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CommunTests/Pods-CommunTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -667,11 +659,7 @@
 			isa = PBXGroup;
 			children = (
 				3B197C86226A33CF008CF10D /* Decodable+MockObjects.swift */,
-				3B197C85226A33CF008CF10D /* ResponseAPIContentGetCommentsResult.json */,
-				3B197C87226A33CF008CF10D /* ResponseAPIContentGetFeedResult.json */,
-				3B197C84226A33CF008CF10D /* ResponseAPIContentGetProfileResult.json */,
-				3BF37BCF22A137EE00A72FFE /* ResponseAPIContentGetPost.json */,
-				3BF37BD722A1666200A72FFE /* ResponseAPIOnlineNotifyHistoryResult.json */,
+				BC3D97602350384E00421718 /* ResponseAPIContentGetPosts.json */,
 			);
 			path = Mocking;
 			sourceTree = "<group>";
@@ -1643,18 +1631,14 @@
 				B1EA02D92289882A00835244 /* SF-Pro-Display-Bold.otf in Resources */,
 				B1EA02ED2289882A00835244 /* SF-Pro-Text-Light.otf in Resources */,
 				B1EA02D82289882A00835244 /* SF-Pro-Display-BlackItalic.otf in Resources */,
-				3BF37BD822A1666200A72FFE /* ResponseAPIOnlineNotifyHistoryResult.json in Resources */,
 				B1EA02F42289882A00835244 /* SF-Pro-Text-SemiboldItalic.otf in Resources */,
 				3B2F226A226892C5006B589E /* NotificationCell.xib in Resources */,
 				571B1501223A935D00630C8F /* LaunchScreen.storyboard in Resources */,
-				3B197C8B226A33CF008CF10D /* ResponseAPIContentGetFeedResult.json in Resources */,
 				57A1CA652270FCF000E2A1E3 /* LanguageVC.storyboard in Resources */,
 				3BF37BD422A1414200A72FFE /* PlaceholderPostCell.xib in Resources */,
 				B1EA02DC2289882A00835244 /* SF-Pro-Display-HeavyItalic.otf in Resources */,
 				3B67FC0C22C50F1500D05F01 /* SignInViewController.storyboard in Resources */,
-				3BF37BD022A137EE00A72FFE /* ResponseAPIContentGetPost.json in Resources */,
 				5787C0C822650FC200568CEC /* SetUserVC.storyboard in Resources */,
-				3B197C88226A33CF008CF10D /* ResponseAPIContentGetProfileResult.json in Resources */,
 				B1EA02F32289882A00835244 /* SF-Pro-Text-Semibold.otf in Resources */,
 				B1A6EE5122D5C8E300A5D6F0 /* GoogleService-Info.plist in Resources */,
 				B1EA02E92289882A00835244 /* SF-Pro-Text-Bold.otf in Resources */,
@@ -1674,8 +1658,8 @@
 				3B5CB30A22A57AB600757533 /* PlaceholderNotificationCell.xib in Resources */,
 				571B14FE223A935D00630C8F /* Assets.xcassets in Resources */,
 				3B515819226DDE8D00108F17 /* EmptyCell.xib in Resources */,
-				3B197C89226A33CF008CF10D /* ResponseAPIContentGetCommentsResult.json in Resources */,
 				B1EA02EC2289882A00835244 /* SF-Pro-Text-HeavyItalic.otf in Resources */,
+				BC3D97612350384E00421718 /* ResponseAPIContentGetPosts.json in Resources */,
 				B1EA02E82289882A00835244 /* SF-Pro-Display-UltralightItalic.otf in Resources */,
 				3BB342B222CA64EA009546B2 /* Boarding.storyboard in Resources */,
 				5725173E2243E49C0033125C /* PostPageVC.storyboard in Resources */,

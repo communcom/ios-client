@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -22,7 +22,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <webView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BBW-Hf-RpW" customClass="HTMLStringWebView" customModule="Commun" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="84" width="414" height="56.5"/>
+                    <rect key="frame" x="-8" y="84" width="430" height="56.5"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="56.5" id="gLI-kU-Q8S"/>
@@ -126,8 +126,8 @@
                 <constraint firstItem="lok-c7-hnm" firstAttribute="centerY" secondItem="7nZ-VU-zZS" secondAttribute="centerY" id="Ivx-kF-t0j"/>
                 <constraint firstItem="9F8-o9-PTQ" firstAttribute="centerY" secondItem="7nZ-VU-zZS" secondAttribute="centerY" id="LT9-9b-Y5H"/>
                 <constraint firstItem="k3o-1c-C5p" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="16" id="Lcp-13-DM4"/>
-                <constraint firstItem="BBW-Hf-RpW" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="Sls-u2-edn"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="BBW-Hf-RpW" secondAttribute="trailing" id="X0K-2W-KOX"/>
+                <constraint firstItem="BBW-Hf-RpW" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="-8" id="Sls-u2-edn"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="BBW-Hf-RpW" secondAttribute="trailing" constant="-8" id="X0K-2W-KOX"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="9F8-o9-PTQ" secondAttribute="trailing" constant="16" id="bjc-lO-9ac"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="k3o-1c-C5p" secondAttribute="trailing" constant="16" id="c4n-FS-fBy"/>
                 <constraint firstItem="lok-c7-hnm" firstAttribute="leading" secondItem="cmy-SM-J10" secondAttribute="trailing" constant="8" id="cBA-Ri-gL7"/>

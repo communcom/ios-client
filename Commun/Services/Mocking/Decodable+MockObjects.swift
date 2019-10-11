@@ -15,9 +15,9 @@ extension Decodable {
         if let path = Bundle.main.path(forResource: String(describing: self), ofType: "json") {
             do {
                 let data = try Data(contentsOf: URL(fileURLWithPath: path), options: .mappedIfSafe)
-                let result = try JSONDecoder().decode(Self.self, from: data)
+                let result = try JSONDecoder().decode(ResponseAPIResult<Self>.self, from: data)
 //                Logger.log(message: "Retrieved mocking objects for \(String(describing: self)): \(result)", event: .debug)
-                return result
+                return result.result
             } catch {
                 print(error)
                 // handle error
@@ -26,7 +26,7 @@ extension Decodable {
         return nil
     }
     
-    static func observableWithMockData() -> Observable<Self> {
-        return Observable.just(mockData()!)
+    static func singleWithMockData() -> Single<Self> {
+        return .just(mockData()!)
     }
 }

@@ -53,7 +53,7 @@ class ArticleEditorVC: EditorVC {
         let contentInsideLimit = (content.count <= contentLettersLimit)
         
         // compare content
-        var contentChanged = (title != viewModel.postForEdit?.content.title)
+        var contentChanged = (title != viewModel.postForEdit?.content.body.attributes?.title)
         contentChanged = contentChanged || (self.contentTextView.attributedText != self.contentTextView.originalAttributedString)
         
         // reassign result

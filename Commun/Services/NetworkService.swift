@@ -28,17 +28,17 @@ class NetworkService: NSObject {
     }
     
     // MARK: - Methods API
-    func loadFeed(_ paginationKey: String?, withSortType sortType: FeedTimeFrameMode = .all, withFeedType type: FeedSortMode = .popular, withFeedTypeMode typeMode: FeedTypeMode = .community, userId: String? = nil) -> Single<ResponseAPIContentGetFeed> {
-        
-        return RestAPIManager.instance.loadFeed(typeMode: typeMode,
-                                             userID: userId ?? Config.currentUser?.id,
-                                             communityID:               AppProfileType.golos.rawValue,
-                                             timeFrameMode:             sortType,
-                                             sortMode:                  type,
-                                             paginationLimit:           20,
-                                             paginationSequenceKey:     paginationKey)
-        
-    }
+//    func loadFeed(_ paginationKey: String?, withSortType sortType: FeedTimeFrameMode = .all, withFeedType type: FeedSortMode = .popular, withFeedTypeMode typeMode: FeedTypeMode = .community, userId: String? = nil) -> Single<ResponseAPIContentGetPosts> {
+//        
+//        return RestAPIManager.instance.loadFeed(typeMode: typeMode,
+//                                             userID: userId ?? Config.currentUser?.id,
+//                                             communityID:               AppProfileType.golos.rawValue,
+//                                             timeFrameMode:             sortType,
+//                                             sortMode:                  type,
+//                                             paginationLimit:           20,
+//                                             paginationSequenceKey:     paginationKey)
+//        
+//    }
     
     func getPost(withPermLink permLink: String) -> Single<ResponseAPIContentGetPost> {
         return RestAPIManager.instance.loadPost(permlink: permLink, communityId: "GOLOS")

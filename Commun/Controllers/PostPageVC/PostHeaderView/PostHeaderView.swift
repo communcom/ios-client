@@ -67,18 +67,18 @@ class PostHeaderView: UIView, UIWebViewDelegate, PostController {
         hideLoading()
         
         // Show count label
-        commentCountLabel.text = "\(post.stats.commentsCount)"
+        commentCountLabel.text = "\(post.stats?.commentsCount ?? 0)"
         
         #warning("shareCount or viewCount???")
-        shareCountLabel.text = "\(post.stats.viewCount)"
+        shareCountLabel.text = "\(post.stats?.viewCount ?? 0)"
         
         voteCountLabel.text = "\((post.votes.upCount ?? 0) - (post.votes.downCount ?? 0))"
         
         // Handle button
         self.upVoteButton.tintColor =
-            post.votes.hasUpVote ? .appMainColor: .lightGray
+            post.votes.hasUpVote ?? false ? .appMainColor: .lightGray
         self.downVoteButton.tintColor =
-            post.votes.hasDownVote ? .appMainColor: .lightGray
+            post.votes.hasDownVote ?? false ? .appMainColor: .lightGray
 
         // Show title
         postTitleLabel.text = post.content.body.attributes?.title
@@ -86,7 +86,6 @@ class PostHeaderView: UIView, UIWebViewDelegate, PostController {
         // Show content
         // Parse data
         let html = post.content.body.toHTML()
-        
         contentWebView.loadHTMLString(html, baseURL: nil)
         contentWebView.delegate = self
         contentWebView.scrollView.isScrollEnabled = false

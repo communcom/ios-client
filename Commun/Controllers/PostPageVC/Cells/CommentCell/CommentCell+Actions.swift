@@ -64,13 +64,13 @@ extension CommentCell: TTTAttributedLabelDelegate {
         if type == .downvote && value == comment.votes.hasDownVote {return}
         
         if type == .upvote {
-            let voted = !self.comment!.votes.hasUpVote
+            let voted = !(self.comment!.votes.hasUpVote ?? false)
             self.comment!.votes.hasUpVote = voted
             self.comment!.votes.upCount = (self.comment?.votes.upCount ?? 0) + (voted ? 1: -1)
         }
         
         if type == .downvote {
-            let voted = !self.comment!.votes.hasDownVote
+            let voted = !(self.comment!.votes.hasDownVote ?? false)
             self.comment!.votes.hasDownVote = voted
             self.comment!.votes.downCount = (self.comment?.votes.downCount ?? 0) + (voted ? 1: -1)
         }
@@ -80,8 +80,8 @@ extension CommentCell: TTTAttributedLabelDelegate {
         guard let comment = comment else {return}
         
         // save original state
-        let originHasUpVote = comment.votes.hasUpVote
-        let originHasDownVote = comment.votes.hasDownVote
+        let originHasUpVote = comment.votes.hasUpVote ?? false
+        let originHasDownVote = comment.votes.hasDownVote ?? false
         
         // change state
         setHasVote(originHasUpVote ? false: true, for: .upvote)
@@ -125,8 +125,8 @@ extension CommentCell: TTTAttributedLabelDelegate {
         guard let comment = comment else {return}
         
         // save original state
-        let originHasUpVote = comment.votes.hasUpVote
-        let originHasDownVote = comment.votes.hasDownVote
+        let originHasUpVote = comment.votes.hasUpVote ?? false
+        let originHasDownVote = comment.votes.hasDownVote ?? false
         
         // change state
         setHasVote(originHasDownVote ? false: true, for: .downvote)

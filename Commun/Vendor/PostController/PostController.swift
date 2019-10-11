@@ -105,13 +105,13 @@ extension PostController {
         if type == .downvote && value == post.votes.hasDownVote {return}
         
         if type == .upvote {
-            let voted = !self.post!.votes.hasUpVote
+            let voted = !(self.post!.votes.hasUpVote ?? false)
             self.post!.votes.hasUpVote = voted
             self.post!.votes.upCount = (self.post?.votes.upCount ?? 0) + (voted ? 1: -1)
         }
         
         if type == .downvote {
-            let downVoted = !self.post!.votes.hasDownVote
+            let downVoted = !(self.post!.votes.hasDownVote ?? false)
             self.post!.votes.hasDownVote = downVoted
             self.post!.votes.downCount = (self.post?.votes.downCount ?? 0) + (downVoted ? 1: -1)
         }
@@ -121,8 +121,8 @@ extension PostController {
         guard let post = post else {return}
         
         // save original state
-        let originHasUpVote = post.votes.hasUpVote
-        let originHasDownVote = post.votes.hasDownVote
+        let originHasUpVote = post.votes.hasUpVote ?? false
+        let originHasDownVote = post.votes.hasDownVote ?? false
         
         // change state
         setHasVote(originHasUpVote ? false: true, for: .upvote)
@@ -168,8 +168,8 @@ extension PostController {
         guard let post = post else {return}
         
         // save original state
-        let originHasUpVote = post.votes.hasUpVote
-        let originHasDownVote = post.votes.hasDownVote
+        let originHasUpVote = post.votes.hasUpVote ?? false
+        let originHasDownVote = post.votes.hasDownVote ?? false
         
         // change state
         setHasVote(originHasDownVote ? false: true, for: .downvote)
@@ -330,7 +330,7 @@ extension PostController {
     // MARK: - Commented
     func postDidComment() {
         guard post != nil else {return}
-        self.post!.stats.commentsCount += 1
+        self.post!.stats?.commentsCount += 1
         notifyPostChange(newPost: self.post!)
     }
 
