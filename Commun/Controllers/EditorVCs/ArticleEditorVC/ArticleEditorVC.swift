@@ -39,20 +39,25 @@ class ArticleEditorVC: EditorVC {
     
     override var shouldSendPost: Bool {
         let title = titleTextView.text ?? ""
-    
-        // title is not empty
-        let titleIsNotEmpty = !title.isEmpty
+        let content = contentTextView.text ?? ""
+        
+        // both title and content are not empty
+        let titleAndContentAreNotEmpty = !title.isEmpty && !content.isEmpty
         
         // title is not beyond limit
         let titleIsInsideLimit =
             (title.count >= self.titleMinLettersLimit) &&
                 (title.utf8.count <= self.titleBytesLimit)
         
+        // content inside limit
+        let contentInsideLimit = (content.count <= contentLettersLimit)
+        
         // compare content
-        let titleChanged = (title != viewModel.postForEdit?.content.body.attributes?.title)
+        var contentChanged = (title != viewModel.postForEdit?.content.title)
+        contentChanged = contentChanged || (self.contentTextView.attributedText != self.contentTextView.originalAttributedString)
         
         // reassign result
-        return super.shouldSendPost && titleIsNotEmpty && titleIsInsideLimit && titleChanged
+        return titleAndContentAreNotEmpty && titleIsInsideLimit && contentInsideLimit && contentChanged
     }
     
     override var postTitle: String? {

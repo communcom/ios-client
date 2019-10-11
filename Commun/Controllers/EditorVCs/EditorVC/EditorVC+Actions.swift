@@ -98,11 +98,6 @@ extension EditorVC {
                     pickerVC.dismiss(animated: true, completion: nil)
                 }))
                 
-                alert.addAction(UIAlertAction(title: "cancel".localized().uppercaseFirst, style: .default, handler: {_ in
-                    strongSelf.didChooseImageFromGallery(image)
-                    pickerVC.dismiss(animated: true, completion: nil)
-                }))
-                
                 pickerVC.present(alert, animated: true, completion: nil)
             })
             .disposed(by: disposeBag)
@@ -134,6 +129,7 @@ extension EditorVC {
     
     // MARK: - Add link
     func addLink() {
+        var currentSelectedRange = contentTextView.selectedRange
         if let urlString = contentTextView.currentTextStyle.value.urlString
         {
             // Remove link that is not a mention or tag
@@ -171,6 +167,7 @@ extension EditorVC {
                     self?.showErrorWithMessage("URL".localized() + " " + "is missing".localized())
                     return
                 }
+                self?.contentTextView.selectedRange = currentSelectedRange
                 self?.didAddLink(urlString, placeholder: alert.textFields?.last?.text)
             }))
             

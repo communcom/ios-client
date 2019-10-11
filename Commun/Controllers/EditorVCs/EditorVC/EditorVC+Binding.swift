@@ -36,11 +36,11 @@ extension EditorVC {
     func bindContentTextView() {
         contentTextView.rx.didBeginEditing
             .subscribe(onNext: {[unowned self] _ in
-                self.appendTool(.setBold)
-                self.appendTool(.setItalic)
-                self.appendTool(.setColor)
-                self.appendTool(.addLink)
-                self.appendTool(.clearFormatting)
+//                self.appendTool(.setBold)
+//                self.appendTool(.setItalic)
+//                self.appendTool(.setColor)
+//                self.appendTool(.addLink)
+//                self.appendTool(.clearFormatting)
                 #warning("change color")
                 self.contentTextViewCountLabel.isHidden = false
             })
@@ -48,11 +48,11 @@ extension EditorVC {
         
         contentTextView.rx.didEndEditing
             .subscribe(onNext: {
-                self.removeTool(.setBold)
-                self.removeTool(.setItalic)
-                self.removeTool(.setColor)
-                self.removeTool(.addLink)
-                self.removeTool(.clearFormatting)
+//                self.removeTool(.setBold)
+//                self.removeTool(.setItalic)
+//                self.removeTool(.setColor)
+//                self.removeTool(.addLink)
+//                self.removeTool(.clearFormatting)
                 self.contentTextViewCountLabel.isHidden = true
             })
             .disposed(by: disposeBag)

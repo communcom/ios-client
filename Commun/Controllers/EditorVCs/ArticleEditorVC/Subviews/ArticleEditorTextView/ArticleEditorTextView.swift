@@ -12,6 +12,14 @@ import RxCocoa
 import CyberSwift
 
 class ArticleEditorTextView: ContentTextView {
+    class AttachmentMenuItem: UIMenuItem {
+        let attachment: TextAttachment
+        init(title: String, action: Selector, attachment: TextAttachment) {
+            self.attachment = attachment
+            super.init(title: title, action: action)
+        }
+    }
+    
     // MARK: - Constants
     let embedsLimit = 15
     let videosLimit = 10
@@ -30,6 +38,24 @@ class ArticleEditorTextView: ContentTextView {
     
     override var canContainAttachments: Bool {
         return true
+    }
+    
+    override func bind() {
+        super.bind()
+        rx.didChangeSelection
+            .subscribe(onNext: {
+                // if an attachment is selected
+                if self.selectedAttachment != nil {
+                    UIMenuController.shared.menuItems = [
+                        AttachmentMenuItem(
+                            title: "preview".localized().uppercaseFirst,
+                            action: #selector(self.previewAttachment(_:)),
+                            attachment:  self.selectedAttachment!
+                        )
+                    ]
+                }
+            })
+            .disposed(by: disposeBag)
     }
     
     // MARK: - Parsing

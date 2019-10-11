@@ -15,4 +15,8 @@ extension EditorVC: UITextViewDelegate {
         }
         return true
     }
+    
+    func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange) -> Bool {
+        return false
+    }
 }

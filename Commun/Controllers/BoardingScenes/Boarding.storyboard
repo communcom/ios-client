@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -128,7 +128,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0/100" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gBp-pN-Bw1">
-                                <rect key="frame" x="359" y="212" width="35" height="16"/>
+                                <rect key="frame" x="359" y="197.66666666666666" width="35" height="16"/>
                                 <accessibility key="accessibilityConfiguration" identifier="CreateBioCountLabel" label="CreateBioCountLabel"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                 <nil key="textColor"/>
@@ -158,7 +158,7 @@
                                     <action selector="skipButtonDidTouch:" destination="9Z9-bd-gq9" eventType="touchUpInside" id="Bte-an-yu1"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Describe yourself" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="IgH-PI-taQ">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" text="Describe yourself" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="IgH-PI-taQ">
                                 <rect key="frame" x="16" y="100" width="382" height="40.666666666666657"/>
                                 <accessibility key="accessibilityConfiguration" identifier="CreateBioTitleLabel" label="CreateBioTitleLabel"/>
                                 <fontDescription key="fontDescription" name="SFProDisplay-Bold" family="SF Pro Display" pointSize="34"/>
@@ -166,12 +166,9 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalCompressionResistancePriority="1000" scrollEnabled="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="6by-68-hfJ">
-                                <rect key="frame" x="16" y="156.33333333333334" width="382" height="47.666666666666657"/>
+                                <rect key="frame" x="16" y="156.66666666666666" width="382" height="33"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <accessibility key="accessibilityConfiguration" identifier="CreateBioTextView" label="CreateBioTextView"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" priority="750" constant="47.5" id="0gg-fz-IHe" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
-                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                 <userDefinedRuntimeAttributes>
@@ -188,7 +185,7 @@
                             <constraint firstItem="3xA-oL-1Ck" firstAttribute="trailing" secondItem="Nu6-hE-aK0" secondAttribute="trailing" constant="42" id="KCO-3u-UlP" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                             <constraint firstItem="IgH-PI-taQ" firstAttribute="top" secondItem="3xA-oL-1Ck" secondAttribute="top" constant="56" id="Nd1-bi-f5Z" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                             <constraint firstItem="3xA-oL-1Ck" firstAttribute="trailing" secondItem="gBp-pN-Bw1" secondAttribute="trailing" constant="20" id="Z1w-4N-7Sf"/>
-                            <constraint firstItem="6by-68-hfJ" firstAttribute="firstBaseline" secondItem="IgH-PI-taQ" secondAttribute="baseline" constant="24" symbolType="layoutAnchor" id="Z2g-eX-83Z" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
+                            <constraint firstItem="6by-68-hfJ" firstAttribute="top" secondItem="IgH-PI-taQ" secondAttribute="bottom" constant="16" id="Z2g-eX-83Z" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                             <constraint firstItem="Nu6-hE-aK0" firstAttribute="leading" secondItem="3xA-oL-1Ck" secondAttribute="leading" constant="42" id="bgj-Gx-KAZ" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                             <constraint firstItem="3xA-oL-1Ck" firstAttribute="trailing" secondItem="IgH-PI-taQ" secondAttribute="trailing" constant="16" id="gnG-NY-vvQ" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                             <constraint firstItem="3xA-oL-1Ck" firstAttribute="trailing" secondItem="9ES-MA-cOv" secondAttribute="trailing" constant="42" id="liv-YM-HNw" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>

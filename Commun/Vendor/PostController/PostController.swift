@@ -60,21 +60,21 @@ extension PostController {
             ]
         } else {
             actions.append(
-                CommunActionSheet.Action(title: "report".localized().uppercaseFirst, icon: UIImage(named: "report"), handle: {
+                CommunActionSheet.Action(title: "send report".localized().uppercaseFirst, icon: UIImage(named: "report"), handle: {
                     self.reportPost()
                 })
             )
             
             if !FavouritesList.shared.list.contains(post.contentId.permlink) {
                 actions.append(
-                    CommunActionSheet.Action(title: "add to favourite".localized().uppercaseFirst, icon: UIImage(named: "favourite"), handle: {
+                    CommunActionSheet.Action(title: "add to favourite".localized().uppercaseFirst, icon: UIImage(named: "favourite-add"), handle: {
                         self.addPostToFavourite()
                     })
                 )
             }
             else {
                 actions.append(
-                    CommunActionSheet.Action(title: "remove from favourite".localized().uppercaseFirst, icon: UIImage(named: "favourite"), handle: {
+                    CommunActionSheet.Action(title: "remove from favourite".localized().uppercaseFirst, icon: UIImage(named: "favourite-remove"), handle: {
                         self.removeFromFavourite()
                     })
                 )

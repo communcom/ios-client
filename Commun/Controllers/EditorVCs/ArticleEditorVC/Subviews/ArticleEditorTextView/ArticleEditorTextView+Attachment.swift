@@ -11,6 +11,15 @@ import CyberSwift
 import RxSwift
 
 extension ArticleEditorTextView {
+    var selectedAttachment: TextAttachment? {
+        if selectedRange.length == 1,
+            let attachment = textStorage.attribute(.attachment, at: selectedRange.location, effectiveRange: nil) as? TextAttachment
+        {
+            return attachment
+        }
+        return nil
+    }
+    
     // MARK: - Methods
     private func addEmbed(_ embed: ResponseAPIFrameGetEmbed) {
         guard let single = embed.toTextAttachmentSingle() else {return}

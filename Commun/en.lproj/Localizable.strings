@@ -11,6 +11,7 @@
 "add bio"                                       =   "add bio";
 "add short PIN code"                            =   "add short PIN code";
 "ago"                                           =   "ago";
+"add to favourite"                              =   "add to favourite";
 
 
 // B
@@ -153,6 +154,7 @@
 "resend verification code"                      =   "resend verification code";
 "reward for post"                               =   "reward for post";
 "reward for votes"                              =   "reward for votes";
+"remove from favourite"                         =   "remove from favourite";
 
 
 // S
@@ -175,7 +177,7 @@
 "subscribed you"                                =   "subscribed you";
 "successfully resend code"                      =   "successfully resend code";
 "send post"                                     =   "post";
-
+"send report"                                   =   "report";
 
 // T
 "tap to try again"                              =   "tap to try again";

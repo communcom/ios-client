@@ -25,11 +25,14 @@ class EditorVC: UIViewController {
         // both title and content are not empty
         let contentAreNotEmpty = !content.isEmpty
         
+        // content inside limit
+        let contentInsideLimit = (content.count <= contentLettersLimit)
+        
         // compare content
         let contentChanged = (self.contentTextView.attributedText != self.contentTextView.originalAttributedString)
         
         // reassign result
-        return contentAreNotEmpty && contentChanged
+        return contentAreNotEmpty && contentInsideLimit && contentChanged
     }
     
     var contentTextView: ContentTextView {
@@ -122,7 +125,16 @@ class EditorVC: UIViewController {
         contentTextView.placeholder = "write text placeholder".localized().uppercaseFirst + "..."
         headerLabel.text = (viewModel.postForEdit != nil ? "edit post" : "create post").localized().uppercaseFirst
         
-        contentTextView.textContainerInset = UIEdgeInsets(top: 0, left: 0, bottom: 200, right: 0)
+        contentTextView.textContainerInset = UIEdgeInsets(top: 0, left: 16, bottom: 200, right: 16)
+        
+        contentTextView.addLinkDidTouch = {[weak self] in
+            self?.addLink()
+        }
+        
+        contentTextView.setColorDidTouch = {[weak self] in
+            guard let strongSelf = self else {return}
+            strongSelf.didSelectTool(.setColor)
+        }
     }
     
     func layoutTopContentTextView() {
