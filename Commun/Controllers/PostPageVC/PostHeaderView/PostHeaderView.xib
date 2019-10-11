@@ -15,7 +15,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Discussion - The Dangerous Path Overwatch is Headed: Giving Players" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k3o-1c-C5p">
-                    <rect key="frame" x="16" y="16" width="382" height="48"/>
+                    <rect key="frame" x="16" y="8" width="382" height="56"/>
                     <accessibility key="accessibilityConfiguration" identifier="PostHeaderViewPostTitleLabel" label="PostHeaderViewPostTitleLabel"/>
                     <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                     <nil key="textColor"/>
@@ -125,7 +125,7 @@
                 <constraint firstItem="cmy-SM-J10" firstAttribute="centerY" secondItem="7nZ-VU-zZS" secondAttribute="centerY" id="IeM-b0-i9f"/>
                 <constraint firstItem="lok-c7-hnm" firstAttribute="centerY" secondItem="7nZ-VU-zZS" secondAttribute="centerY" id="Ivx-kF-t0j"/>
                 <constraint firstItem="9F8-o9-PTQ" firstAttribute="centerY" secondItem="7nZ-VU-zZS" secondAttribute="centerY" id="LT9-9b-Y5H"/>
-                <constraint firstItem="k3o-1c-C5p" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="16" id="Lcp-13-DM4"/>
+                <constraint firstItem="k3o-1c-C5p" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="8" id="Lcp-13-DM4"/>
                 <constraint firstItem="BBW-Hf-RpW" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="-8" id="Sls-u2-edn"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="BBW-Hf-RpW" secondAttribute="trailing" constant="-8" id="X0K-2W-KOX"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="9F8-o9-PTQ" secondAttribute="trailing" constant="16" id="bjc-lO-9ac"/>
@@ -147,6 +147,7 @@
                 <outlet property="postTitleLabel" destination="k3o-1c-C5p" id="h1N-K3-JIx"/>
                 <outlet property="shareButton" destination="j8J-Em-XPd" id="wte-Mr-OBx"/>
                 <outlet property="shareCountLabel" destination="9F8-o9-PTQ" id="TgW-JE-mOX"/>
+                <outlet property="titleToWebViewSpaceConstraint" destination="pc3-76-gjv" id="o3a-1c-jjO"/>
                 <outlet property="upVoteButton" destination="dhT-2v-fjM" id="rIL-go-gdy"/>
                 <outlet property="voteCountLabel" destination="sZG-QI-8u8" id="Ev6-7j-edk"/>
             </connections>

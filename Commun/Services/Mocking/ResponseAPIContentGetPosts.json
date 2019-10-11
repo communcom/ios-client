@@ -5,10 +5,10 @@
         "items": [
             {
                 "content": {
-                    "type": "basic",
+                    "type": "article",
                     "body": {
                         "attributes": {
-                            "type": "basic",
+                            "type": "article",
                             "version": "1.0",
                             "title": "Apollo fights with Hercules against Astraeus and common man named Mr.Gary HartmannPhD on New Ghis"
                         },
@@ -27,16 +27,21 @@
                                 ]
                             },
                             {
-                                "id": 13,
-                                "type": "attachments",
+                                "id": 3,
+                                "type": "image",
+                                "content": "https://i.gifer.com/1HOf.gif"
+                            },
+                            {
+                                "id": 4,
+                                "type": "paragraph",
                                 "content": [
                                     {
-                                        "id": 14,
-                                        "type": "website",
-                                        "content": "https://www.youtube.com/watch?v=KIJ8MrIR2Gw"
+                                        "id": 5,
+                                        "type": "text",
+                                        "content": "Quantum cryptography does not work on Chuck Norris. When something is being observed by Chuck it stays in the same state until he's finished.\n at the moment he lives at 2727 Tonisha Isle, New Robchester, VA 48056     \n\n and YODA said: Truly wonderful, the mind of a child is. \n\n witcher quote: You get what you get and be happy with it \n\n Rick and Morty quote: Can somebody just let me out of here? If I die in a cage I lose a bet. \n\n SuperHero Illustrious Magneto of Hearts has power to Reality Warping and Magic Resistance \n\n Harry Potter quote: Never trust anything that can think for itself if you can't see where it keeps its brain. \n\n and some Lorem to finish text: Sint architecto alias veniam aut deserunt natus eos eveniet corrupti non eos expedita mollitia explicabo illum corporis ab sit quisquam quod cumque dolorem quae voluptatibus unde et repellendus suscipit qui sequi dolorem quia sed qui ipsum quae commodi dolorem soluta est qui pariatur eos quo hic et quia qui expedita dolorem sit nihil voluptatem voluptas voluptatem hic velit facere et ut neque cum necessitatibus natus est aut excepturi et libero nisi autem consequuntur quisquam repellat incidunt iusto esse perspiciatis accusantium at iure cum illo asperiores quidem voluptates perspiciatis asperiores tempora maxime repellat perferendis consectetur dolorem qui sed quia atque eum unde est hic expedita eos consequatur quo nobis asperiores voluptas est qui unde autem quia id nihil dolorem consequatur rerum eum odit architecto tempora voluptatem ipsa aut aspernatur aut mollitia doloremque earum quod quod maiores sed consequatur perferendis consequatur ut doloremque consequuntur ratione alias commodi repellat non debitis aperiam rem voluptas tempore ducimus."
                                     }
                                 ]
-                            }
+                            },
                         ]
                     }
                 },
@@ -68,8 +73,7 @@
                     "body": {
                         "attributes": {
                             "type": "basic",
-                            "version": "1.0",
-                            "title": "Hera fights with Abderus against Prometheus and common man named Mr.Delois HegmannIV on New Ghis"
+                            "version": "1.0"
                         },
                         "id": 1,
                         "type": "post",
@@ -127,8 +131,7 @@
                     "body": {
                         "attributes": {
                             "type": "basic",
-                            "version": "1.0",
-                            "title": "Hera fights with Abderus against Prometheus and common man named Mr.Delois HegmannIV on New Ghis"
+                            "version": "1.0"
                         },
                         "id": 1,
                         "type": "post",

@@ -28,6 +28,7 @@ class PostHeaderView: UIView, UIWebViewDelegate, PostController {
     
     // Content
     @IBOutlet weak var postTitleLabel: UILabel!
+    @IBOutlet weak var titleToWebViewSpaceConstraint: NSLayoutConstraint!
     @IBOutlet weak var contentWebView: HTMLStringWebView!
     @IBOutlet weak var contentWebViewHeightConstraint: NSLayoutConstraint!
     
@@ -66,6 +67,17 @@ class PostHeaderView: UIView, UIWebViewDelegate, PostController {
         }
         hideLoading()
         
+        if post.content.type == "article" {
+            // Show title
+            postTitleLabel.text = post.content.body.attributes?.title
+            
+            titleToWebViewSpaceConstraint.constant = 20
+        }
+        else {
+            postTitleLabel.text = nil
+            titleToWebViewSpaceConstraint.constant = 0
+        }
+        
         // Show count label
         commentCountLabel.text = "\(post.stats?.commentsCount ?? 0)"
         
@@ -79,13 +91,11 @@ class PostHeaderView: UIView, UIWebViewDelegate, PostController {
             post.votes.hasUpVote ?? false ? .appMainColor: .lightGray
         self.downVoteButton.tintColor =
             post.votes.hasDownVote ?? false ? .appMainColor: .lightGray
-
-        // Show title
-        postTitleLabel.text = post.content.body.attributes?.title
         
         // Show content
         // Parse data
         let html = post.content.body.toHTML()
+        contentWebView.scrollView.contentInset = UIEdgeInsets(top: -8, left: 0, bottom: 0, right: 0)
         contentWebView.loadHTMLString(html, baseURL: nil)
         contentWebView.delegate = self
         contentWebView.scrollView.isScrollEnabled = false

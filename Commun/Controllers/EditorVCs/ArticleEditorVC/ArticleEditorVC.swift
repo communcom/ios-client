@@ -73,6 +73,7 @@ class ArticleEditorVC: EditorVC {
         titleTextView.textContainer.lineFragmentPadding = 0
         titleTextView.typingAttributes = [.font: UIFont.systemFont(ofSize: 21, weight: .bold)]
         titleTextView.placeholder = "title placeholder".localized().uppercaseFirst
+        titleTextView.delegate = self
         
         contentTextView.layoutManager
             .ensureLayout(for: contentTextView.textContainer)

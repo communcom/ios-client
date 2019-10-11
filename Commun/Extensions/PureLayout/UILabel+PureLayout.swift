@@ -10,6 +10,19 @@ import Foundation
 import PureLayout
 
 extension UILabel {
+    convenience init(
+        text: String?,
+        font: UIFont = .systemFont(ofSize: 15),
+        numberOfLines: Int = 1,
+        color: UIColor? = nil
+    ) {
+        self.init(forAutoLayout: ())
+        self.text = text
+        self.font = font
+        self.numberOfLines = numberOfLines
+        self.textColor = color
+    }
+    
     static func title(_ text: String?) -> UILabel {
         let label = UILabel(forAutoLayout: ())
         label.text = text
