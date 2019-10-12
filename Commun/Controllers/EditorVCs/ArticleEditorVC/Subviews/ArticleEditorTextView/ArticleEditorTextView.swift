@@ -29,7 +29,9 @@ class ArticleEditorTextView: ContentTextView {
     let defaultFont = UIFont.systemFont(ofSize: 17)
     
     override var defaultTypingAttributes: [NSAttributedString.Key : Any] {
-        return [.font: defaultFont]
+        var attrs = super.defaultTypingAttributes
+        attrs[.font] = defaultFont
+        return attrs
     }
     
     override var acceptedPostType: String {
