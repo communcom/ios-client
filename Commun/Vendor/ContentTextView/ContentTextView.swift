@@ -54,7 +54,7 @@ class ContentTextView: UITextView {
     // Must override!!!
     var defaultTypingAttributes: [NSAttributedString.Key: Any] {
         let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.lineSpacing = 8
+        paragraphStyle.paragraphSpacing = 20
         return [.paragraphStyle: paragraphStyle]
     }
     
