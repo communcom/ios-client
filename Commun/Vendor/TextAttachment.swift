@@ -106,6 +106,7 @@ extension TextAttachment: Codable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(id, forKey: .id)
         try container.encode(embed, forKey: .embed)
+        try container.encode(size, forKey: .size)
         
         if let localImage = localImage {
             let imageData = NSKeyedArchiver.archivedData(withRootObject: localImage)

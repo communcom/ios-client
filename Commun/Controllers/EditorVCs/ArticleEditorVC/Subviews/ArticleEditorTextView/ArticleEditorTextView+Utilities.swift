@@ -104,6 +104,7 @@ extension ArticleEditorTextView {
         if let data = pasteBoard.items.last?["attachment"] as? Data,
             let attachment = try? JSONDecoder().decode(TextAttachment.self, from: data)
         {
+            attachment.delegate = self.parentViewController as? AttachmentViewDelegate
             addAttachmentAtSelectedRange(attachment)
             return
         }
