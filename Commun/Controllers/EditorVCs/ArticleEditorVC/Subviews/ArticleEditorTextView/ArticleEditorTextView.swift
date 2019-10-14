@@ -26,7 +26,7 @@ class ArticleEditorTextView: ContentTextView {
     let videosLimit = 10
     
     lazy var attachmentSize: CGSize = {
-        let width = size.width - textContainerInset.left - textContainerInset.right
+        let width = size.width - textContainerInset.left - textContainerInset.right - 3
         return CGSize(width: width, height: 238)
     }()
     

@@ -88,6 +88,7 @@ extension ArticleEditorTextView {
     override func cut(_ sender: Any?) {
         if let attachment = selectedAttachment {
             self.copyAttachment(attachment, completion: {
+                attachment.attachmentView?.removeFromSuperview()
                 self.textStorage.replaceCharacters(in: self.selectedRange, with: "")
                 self.selectedRange = NSMakeRange(self.selectedRange.location, 0)
             })
