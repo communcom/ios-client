@@ -184,6 +184,7 @@ extension ContentBlock {
             // dummy attachment
             let attachment = TextAttachment(embed: embed, localImage: nil, size: .zero)
             
+            attachment.embed?.type = type
             switch content {
             case .string(let url):
                 attachment.embed!.url = url
