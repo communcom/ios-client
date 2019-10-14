@@ -47,6 +47,9 @@ final class TextAttachment: SubviewTextAttachment {
         self.localImage = localImage
         self.size = size
         self.attachmentView = attachmentView
+        defer {
+            attachmentView.attachment = self
+        }
     }
     
     func toSingleContentBlock(id: inout UInt64) -> Single<ContentBlock>? {

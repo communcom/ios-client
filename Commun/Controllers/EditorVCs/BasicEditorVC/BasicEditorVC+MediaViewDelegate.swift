@@ -8,8 +8,8 @@
 
 import Foundation
 
-extension BasicEditorVC: AttachmentViewDelegate {
-    func attachmentViewCloseButtonDidTouch(_ attachmentView: AttachmentView) {
+extension BasicEditorVC {
+    override func attachmentViewCloseButtonDidTouch(_ attachmentView: AttachmentView) {
         print("close")
     }
 }

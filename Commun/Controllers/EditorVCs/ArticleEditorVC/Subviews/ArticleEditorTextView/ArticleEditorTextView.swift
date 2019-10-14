@@ -27,7 +27,7 @@ class ArticleEditorTextView: ContentTextView {
     
     lazy var attachmentSize: CGSize = {
         let width = size.width - textContainerInset.left - textContainerInset.right
-        return CGSize(width: width, height: 200)
+        return CGSize(width: width, height: 238)
     }()
     
     override var draftKey: String { "ArticleEditorTextView.draftKey" }
@@ -63,24 +63,6 @@ class ArticleEditorTextView: ContentTextView {
         self.layoutManager.delegate = self.attachmentBehavior
         self.textStorage.delegate = self.attachmentBehavior
         super.commonInit()
-    }
-    
-    override func bind() {
-        super.bind()
-        rx.didChangeSelection
-            .subscribe(onNext: {
-                // if an attachment is selected
-                if self.selectedAttachment != nil {
-                    UIMenuController.shared.menuItems = [
-                        AttachmentMenuItem(
-                            title: "preview".localized().uppercaseFirst,
-                            action: #selector(self.previewAttachment(_:)),
-                            attachment:  self.selectedAttachment!
-                        )
-                    ]
-                }
-            })
-            .disposed(by: disposeBag)
     }
     
     // MARK: - Parsing

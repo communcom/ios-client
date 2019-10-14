@@ -69,11 +69,6 @@ extension ArticleEditorTextView {
                 return true
             }
         }
-        else {
-            if action == #selector(previewAttachment(_:)) {
-                return false
-            }
-        }
         
         if action == #selector(paste(_:)) {
             let pasteBoard = UIPasteboard.general

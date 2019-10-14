@@ -41,4 +41,12 @@ extension UIButton {
         button.tintColor = UIColor(hexString: "#A5A7BD")
         return button
     }
+    
+    static func circleBlack(size: CGFloat = 24, imageName: String) -> UIButton {
+        let button = UIButton(width: size, height: size, backgroundColor: UIColor(hexString: "#000000"), cornerRadius: size / 2)
+        button.setImage(UIImage(named: imageName), for: .normal)
+        button.imageEdgeInsets = UIEdgeInsets(top: 6, left: 6, bottom: 6, right: 6)
+        button.tintColor = .white
+        return button
+    }
 }

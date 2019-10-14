@@ -10,6 +10,7 @@ import Foundation
 
 protocol AttachmentViewDelegate: class {
     func attachmentViewCloseButtonDidTouch(_ attachmentView: AttachmentView)
+    func attachmentViewExpandButtonDidTouch(_ attachmentView: AttachmentView)
 }
 
 class AttachmentView: UIView {
@@ -20,9 +21,11 @@ class AttachmentView: UIView {
             closeButton.isHidden = !showCloseButton
         }
     }
+    weak var attachment: TextAttachment?
     
     // MARK: - Subviews
-    lazy var closeButton = UIButton.circleGray(imageName: "close-x")
+    lazy var closeButton = UIButton.circleBlack(imageName: "close-x")
+    lazy var expandButton = UIButton.circleBlack(imageName: "expand")
     lazy var imageView: UIImageView = {
         let imageView = UIImageView(forAutoLayout: ())
         imageView.contentMode = .scaleAspectFill
@@ -60,9 +63,25 @@ class AttachmentView: UIView {
         addSubview(closeButton)
         closeButton.autoPinEdge(.top, to: .top, of: imageView, withOffset: 10)
         closeButton.autoPinEdge(.trailing, to: .trailing, of: imageView, withOffset: -10)
+        closeButton.addTarget(self, action: #selector(clear), for: .touchUpInside)
+        
+        // pin expandButton
+        addSubview(expandButton)
+        expandButton.autoPinEdge(.top, to: .bottom, of: imageView, withOffset: -34)
+        expandButton.autoPinEdge(.trailing, to: .trailing, of: imageView, withOffset: -10)
+        expandButton.addTarget(self, action: #selector(expand), for: .touchUpInside)
     }
     
-    func setUp(image: UIImage?, url: String? = nil, description: String? = nil) {
+    // MARK: - Methods
+    @objc func clear() {
+        delegate?.attachmentViewCloseButtonDidTouch(self)
+    }
+    
+    @objc func expand() {
+        delegate?.attachmentViewExpandButtonDidTouch(self)
+    }
+    
+    func setUp(image: UIImage?, url: String? = nil, description: String? = nil, absoluteHeight: CGFloat? = nil) {
         
         // remove all subviews
         imageView.removeConstraintToSuperView(withAttribute: .bottom)
@@ -82,22 +101,27 @@ class AttachmentView: UIView {
         
         if url == nil && description == nil {
             imageView.autoPinEdge(toSuperviewEdge: .bottom)
+            if let height = absoluteHeight {
+                imageView.autoSetDimension(.height, toSize: height)
+            }
         }
         else {
             addSubview(descriptionView)
             titleLabel.text = description
             urlLabel.text = url
             
+            var descriptionHeight: CGFloat = 0
+            
             if description != nil && url == nil {
                 descriptionView.addSubview(titleLabel)
                 titleLabel.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 10, left: 16, bottom: 10, right: 16))
-                descriptionView.autoSetDimension(.height, toSize: 38)
+                descriptionHeight = 38
             }
             
             if description == nil && url != nil {
                 descriptionView.addSubview(urlLabel)
                 urlLabel.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 10, left: 16, bottom: 10, right: 16))
-                descriptionView.autoSetDimension(.height, toSize: 34)
+                descriptionHeight = 34
             }
             
             if description != nil && url != nil {
@@ -105,7 +129,12 @@ class AttachmentView: UIView {
                 descriptionView.addSubview(urlLabel)
                 titleLabel.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 10, left: 16, bottom: 10, right: 16), excludingEdge: .bottom)
                 urlLabel.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 10, left: 16, bottom: 10, right: 16), excludingEdge: .top)
-                descriptionView.autoSetDimension(.height, toSize: 55)
+                descriptionHeight = 55
+            }
+            
+            descriptionView.autoSetDimension(.height, toSize: descriptionHeight)
+            if let height = absoluteHeight {
+                imageView.autoSetDimension(.height, toSize: height - descriptionHeight)
             }
             
             descriptionView.autoPinEdge(.top, to: .bottom, of: imageView)
