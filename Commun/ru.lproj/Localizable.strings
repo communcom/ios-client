@@ -190,8 +190,8 @@
 "trending"                                      =   "актуальные";
 "try again"                                     =   "попробуйте ещё раз";
 "turn on"                                       =   "включить";
-"the presence of two dots side by side is not allowed"  =   "наличие нахождения рядом двух символов «точка» недопустимо";
-"the hyphen character \"-\" cannot be at the beginning or end of a username."   =   "символ «дефис» не может находиться в начале или в конце имени пользователя.";
+"the presence of non-alphanumeric characters side by side is not allowed"  =   "наличие не-буквенно-цифровых символов рядом не допускается";
+"non-alphanumeric character cannot be at the beginning or end of a username"   =   "не-буквенно-цифровый символ не может находиться в начале или в конце имени пользователя.";
 
 // U
 "updating..."                                   =   "обновление...";
