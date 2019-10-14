@@ -89,8 +89,29 @@ extension ArticleEditorTextView {
         if let attachment = selectedAttachment {
             self.copyAttachment(attachment, completion: {
                 attachment.attachmentView?.removeFromSuperview()
-                self.textStorage.replaceCharacters(in: self.selectedRange, with: "")
-                self.selectedRange = NSMakeRange(self.selectedRange.location, 0)
+                
+                // insert an separator at the beggining of attachment if not exists
+                var range = self.selectedRange
+                
+                // Remove "\n" before attachment
+                if self.selectedRange.location > 0,
+                    self.textStorage.attributedSubstring(from: NSMakeRange(self.selectedRange.location - 1, 1)).string == "\n"
+                {
+                    self.textStorage.replaceCharacters(in: NSMakeRange(self.selectedRange.location - 1, 1), with: "")
+                    range = NSMakeRange(self.selectedRange.location - 1, 1)
+                }
+                
+                self.textStorage.replaceCharacters(in: range, with: "")
+                
+                // Remove "\n" after attachment
+                if range.location < self.textStorage.length,
+                    self.textStorage.attributedSubstring(from: NSMakeRange(range.location, 1)).string == "\n"
+                {
+                    self.textStorage.replaceCharacters(in: NSMakeRange(range.location, 1), with: "")
+                }
+                
+                // Resign selection
+                self.selectedRange = NSMakeRange(range.location, 0)
             })
             return
         }
