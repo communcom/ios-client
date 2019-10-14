@@ -8,8 +8,8 @@
 
 import Foundation
 
-extension BasicEditorVC: MediaViewDelegate {
-    func mediaViewCloseButtonDidTouch() {
+extension BasicEditorVC: AttachmentViewDelegate {
+    func attachmentViewCloseButtonDidTouch(_ attachmentView: AttachmentView) {
         print("close")
     }
 }

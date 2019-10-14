@@ -93,7 +93,7 @@ extension ArticleEditorTextView {
         if let image = image {
             // Insert Attachment
             let attachment = TextAttachment(embed: embed, localImage: image, size: attachmentSize)
-            attachment.delegate = parentViewController as? MediaViewDelegate
+            attachment.delegate = parentViewController as? AttachmentViewDelegate
             
             // Add attachment
             addAttachmentAtSelectedRange(attachment)

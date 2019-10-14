@@ -23,11 +23,11 @@ final class TextAttachment: SubviewTextAttachment {
     var size: CGSize?
     var embed: ResponseAPIFrameGetEmbed?
     var localImage: UIImage?
-    var mediaView: MediaView?
+    var attachmentView: AttachmentView?
     
-    weak var delegate: MediaViewDelegate? {
+    weak var delegate: AttachmentViewDelegate? {
         didSet {
-            mediaView?.delegate = delegate
+            attachmentView?.delegate = delegate
         }
     }
     
@@ -40,13 +40,13 @@ final class TextAttachment: SubviewTextAttachment {
     }
     
     convenience init(embed: ResponseAPIFrameGetEmbed?, localImage: UIImage?, size: CGSize) {
-        let mediaView = MediaView(frame: .zero)
-        mediaView.setUp(image: localImage, url: embed?.url, description: embed?.title ?? embed?.description)
-        self.init(view: mediaView, size: size)
+        let attachmentView = AttachmentView(frame: .zero)
+        attachmentView.setUp(image: localImage, url: embed?.url, description: embed?.title ?? embed?.description)
+        self.init(view: attachmentView, size: size)
         self.embed = embed
         self.localImage = localImage
         self.size = size
-        self.mediaView = mediaView
+        self.attachmentView = attachmentView
     }
     
     func toSingleContentBlock(id: inout UInt64) -> Single<ContentBlock>? {

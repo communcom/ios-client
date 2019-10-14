@@ -42,7 +42,7 @@ extension ResponseAPIFrameGetEmbed {
             .map { (image) -> TextAttachment in
                 // Insert Attachment
                 let attachment = TextAttachment(embed: embed, localImage: image, size: size)
-                attachment.delegate = textView.parentViewController as? MediaViewDelegate
+                attachment.delegate = textView.parentViewController as? AttachmentViewDelegate
                 return attachment
             }
     }

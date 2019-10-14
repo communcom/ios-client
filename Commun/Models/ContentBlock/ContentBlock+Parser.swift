@@ -187,7 +187,7 @@ extension ContentBlock {
                 size = textView.attachmentSize
             }
             let attachment = TextAttachment(embed: embed, localImage: nil, size: size)
-            attachment.delegate = textView.parentViewController as? MediaViewDelegate
+            attachment.delegate = textView.parentViewController as? AttachmentViewDelegate
             
             switch content {
             case .string(let url):

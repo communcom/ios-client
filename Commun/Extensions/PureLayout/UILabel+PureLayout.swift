@@ -25,11 +25,14 @@ extension UILabel {
         return label
     }
     
-    static func with(text: String? = nil, textSize: CGFloat, weight: UIFont.Weight = .regular, textColor: UIColor = .black) -> UILabel {
+    static func with(text: String? = nil, textSize: CGFloat, weight: UIFont.Weight = .regular, textColor: UIColor = .black, numberOfLines: Int? = nil) -> UILabel {
         let label = UILabel(forAutoLayout: ())
         label.text = text
         label.font = .systemFont(ofSize: textSize, weight: weight)
         label.textColor = textColor
+        if let numberOfLines = numberOfLines {
+            label.numberOfLines = numberOfLines
+        }
         return label
     }
 }
