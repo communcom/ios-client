@@ -71,6 +71,7 @@ extension ContentTextView {
                     DispatchQueue.main.sync {
                         if let attachment = try? JSONDecoder().decode(TextAttachment.self, from: data)
                         {
+                            attachment.delegate = self.parentViewController as? AttachmentViewDelegate
                             let attachmentAS = NSAttributedString(attachment: attachment)
                             mutableAS.append(attachmentAS)
                             skip = true
