@@ -10,22 +10,7 @@ import Foundation
 import RxSwift
 
 extension ArticleEditorTextView {
-    // MARK: - Attachment helper
-    func add(_ image: UIImage, to attachment: inout TextAttachment) {
-        let attachmentRightMargin: CGFloat = 10
-        let attachmentHeightForDescription: CGFloat = MediaView.descriptionDefaultHeight
-        
-        // setup view
-        let newWidth = frame.size.width - attachmentRightMargin - textContainerInset.left - textContainerInset.right
-        let mediaView = MediaView(frame: CGRect(x: 0, y: 0, width: newWidth, height: image.size.height * newWidth / image.size.width + attachmentHeightForDescription))
-        mediaView.showCloseButton = false
-        mediaView.setUp(image: image, url: attachment.embed?.url, description: attachment.embed?.title ?? attachment.embed?.description)
-        addSubview(mediaView)
-        
-        attachment.view = mediaView
-        mediaView.removeFromSuperview()
-    }
-    
+    // MARK: - Attachment helper    
     func canAddAttachment(_ attachment: TextAttachment) -> Bool {
         var embedCount = 1
         var videoCount = attachment.embed?.type == "video" ? 1 : 0

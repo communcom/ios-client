@@ -11,7 +11,7 @@ import CyberSwift
 import RxSwift
 
 extension ResponseAPIFrameGetEmbed {
-    func toTextAttachmentSingle() -> Single<TextAttachment>? {
+    func toTextAttachmentSingle(withSize size: CGSize, forTextView textView: UITextView) -> Single<TextAttachment>? {
         var embed = self
         guard embed.type != nil else {return nil}
         
@@ -41,9 +41,8 @@ extension ResponseAPIFrameGetEmbed {
         return downloadImage
             .map { (image) -> TextAttachment in
                 // Insert Attachment
-                let attachment = TextAttachment()
-                attachment.embed = embed
-                attachment.localImage = image
+                let attachment = TextAttachment(embed: embed, localImage: image, size: size)
+                attachment.delegate = textView.parentViewController as? MediaViewDelegate
                 return attachment
             }
     }

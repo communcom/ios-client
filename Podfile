@@ -56,6 +56,7 @@ def common_pods
   
   pod "ESPullToRefresh"
   pod 'PureLayout'
+  pod 'SubviewAttachingTextView', :git => "https://github.com/boyuanx/SubviewAttachingTextView.git"
 end
 
 target 'Commun' do

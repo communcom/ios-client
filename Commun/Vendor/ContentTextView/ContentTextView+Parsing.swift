@@ -18,7 +18,7 @@ extension ContentTextView {
         if let jsonData = string.data(using: .utf8),
             let block = try? JSONDecoder().decode(ContentBlock.self, from: jsonData)
         {
-            attributedText = block.toAttributedString(currentAttributes: typingAttributes)
+            attributedText = block.toAttributedString(forTextView: self)
         }
         
         // Asign raw value first

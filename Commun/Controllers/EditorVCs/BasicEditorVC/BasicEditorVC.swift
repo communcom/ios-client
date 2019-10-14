@@ -12,6 +12,9 @@ import RxCocoa
 import RxSwift
 
 class BasicEditorVC: EditorVC {
+    // MARK: - Constants
+    let attachmentHeight: CGFloat = 300
+    
     // MARK: - Subviews
     var _contentTextView = BasicEditorTextView(forExpandable: ())
     override var contentTextView: ContentTextView {
@@ -90,9 +93,8 @@ class BasicEditorVC: EditorVC {
         )
         embed.type = "image"
         
-        let attachment = TextAttachment()
-        attachment.embed = embed
-        attachment.localImage = image
+        let attachment = TextAttachment(embed: embed, localImage: image, size: CGSize(width: view.size.width, height: attachmentHeight))
+        attachment.delegate = self
         
         // Add embeds
         _viewModel.addAttachment(attachment)

@@ -27,7 +27,7 @@ extension BasicEditorVC {
     }
     
     private func addEmbed(_ embed: ResponseAPIFrameGetEmbed) {
-        guard let single = embed.toTextAttachmentSingle() else {return}
+        guard let single = embed.toTextAttachmentSingle(withSize: CGSize(width: contentTextView.size.width, height: attachmentHeight), forTextView: _contentTextView) else {return}
         
         single
             .do(onSubscribe: {
