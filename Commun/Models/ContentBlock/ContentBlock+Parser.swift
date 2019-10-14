@@ -117,13 +117,12 @@ extension ContentBlock {
         }
     }
     
-    func toAttributedString(forTextView textView: UITextView) -> NSAttributedString {
+    func toAttributedString(currentAttributes: [NSAttributedString.Key: Any]) -> NSAttributedString {
         let child = NSMutableAttributedString()
-        let currentAttributes = textView.typingAttributes
         switch content {
         case .array(let array):
             for inner in array {
-                child.append(inner.toAttributedString(forTextView: textView))
+                child.append(inner.toAttributedString(currentAttributes: currentAttributes))
             }
             
         case .string(let string):
@@ -182,12 +181,8 @@ extension ContentBlock {
                 let embed = try? ResponseAPIFrameGetEmbed(blockAttributes: attributes)
             else {return NSAttributedString()}
             
-            var size = CGSize(width: textView.size.width, height: 200)
-            if let textView = textView as? ArticleEditorTextView {
-                size = textView.attachmentSize
-            }
-            let attachment = TextAttachment(embed: embed, localImage: nil, size: size)
-            attachment.delegate = textView.parentViewController as? AttachmentViewDelegate
+            // dummy attachment
+            let attachment = TextAttachment(embed: embed, localImage: nil, size: .zero)
             
             switch content {
             case .string(let url):

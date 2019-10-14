@@ -55,6 +55,8 @@ extension ArticleEditorTextView {
     }
     
     func replaceCharacters(in range: NSRange, with attachment: TextAttachment) {
+        let attachment = TextAttachment(embed: attachment.embed, localImage: attachment.localImage, size: attachmentSize)
+        attachment.delegate = parentViewController as? AttachmentViewDelegate
         let attachmentAS = NSAttributedString(attachment: attachment)
         textStorage.replaceCharacters(in: range, with: attachmentAS)
         textStorage.addAttributes(typingAttributes, range: NSMakeRange(range.location, 1))

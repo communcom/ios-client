@@ -91,6 +91,7 @@ class ArticleEditorTextView: ContentTextView {
                     .catchErrorJustReturn(UIImage(named: "image-not-available")!)
                     .do(onSuccess: { [weak self] (image) in
                         guard let strongSelf = self else {return}
+                        attachment.localImage = image
                         strongSelf.replaceCharacters(in: range, with: attachment)
                     })
                 singles.append(downloadImage)
@@ -101,6 +102,7 @@ class ArticleEditorTextView: ContentTextView {
                     Single<UIImage>.just(UIImage(named: "image-not-available")!)
                         .do(onSuccess: { [weak self] (image) in
                             guard let strongSelf = self else {return}
+                            attachment.localImage = image
                             strongSelf.replaceCharacters(in: range, with: attachment)
                         })
                 )
