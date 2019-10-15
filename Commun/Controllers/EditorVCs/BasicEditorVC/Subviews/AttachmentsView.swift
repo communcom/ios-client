@@ -25,15 +25,33 @@ class AttachmentsView: UIView {
         gridView.autoPinEdgesToSuperviewEdges()
         
         var attachmentViews = [AttachmentView]()
-        for (index, attachment) in attachments.enumerated() {
+        
+        if attachments.count == 1,
+            attachments[0].embed?.type == "website" || attachments[0].embed?.type == "video"
+        {
             let attachmentView = AttachmentView(forAutoLayout: ())
-            attachmentView.tag = index
+            attachmentView.attachment = attachments[0]
+            attachmentView.isUserInteractionEnabled = true
+            attachmentView.tag = 0
             attachmentView.delegate = self
             
-            if let image = attachment.localImage {
-                attachmentView.setUp(image: image)
-            }
+            attachmentView.setUp(image: attachments[0].localImage, url: attachments[0].embed?.url, description: attachments[0].embed?.title ?? attachments[0].embed?.description)
+            
             attachmentViews.append(attachmentView)
+        }
+        else {
+            for (index, attachment) in attachments.enumerated() {
+                let attachmentView = AttachmentView(forAutoLayout: ())
+                attachmentView.attachment = attachment
+                attachmentView.isUserInteractionEnabled = true
+                attachmentView.tag = index
+                attachmentView.delegate = self
+                
+                if let image = attachment.localImage {
+                    attachmentView.setUp(image: image)
+                }
+                attachmentViews.append(attachmentView)
+            }
         }
         gridView.setUp(views: attachmentViews)
     }
