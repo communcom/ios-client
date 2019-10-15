@@ -89,9 +89,7 @@ class CommentForm: UIView {
         let pickerVC = CustomTLPhotosPickerVC.singleImage
         self.parentViewController?.present(pickerVC, animated: true, completion: nil)
         
-        pickerVC.rx.didSelectAssets
-            .filter {($0.count > 0) && ($0.first?.fullResolutionImage != nil)}
-            .map {$0.first!.fullResolutionImage!}
+        pickerVC.rx.didSelectAnImage
             .subscribe(onNext: {image in
                 self.imageView.image = image
                 pickerVC.dismiss(animated: true, completion: nil)

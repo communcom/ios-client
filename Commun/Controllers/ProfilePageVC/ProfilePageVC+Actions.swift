@@ -50,13 +50,8 @@ extension ProfilePageVC {
         let pickerVC = CustomTLPhotosPickerVC.singleImage
         self.present(pickerVC, animated: true, completion: nil)
             
-        pickerVC.rx.didSelectAssets
-            .flatMap { assets -> Observable<UIImage> in
-                if assets.count == 0 || assets[0].type != TLPHAsset.AssetType.photo || assets[0].fullResolutionImage == nil {
-                    return .empty()
-                }
-                
-                let image = assets[0].fullResolutionImage!
+        pickerVC.rx.didSelectAnImage
+            .flatMap { image -> Observable<UIImage> in
                 
                 let coverEditVC = controllerContainer.resolve(ProfileEditCoverVC.self)!
                 

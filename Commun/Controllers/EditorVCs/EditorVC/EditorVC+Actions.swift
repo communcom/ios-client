@@ -81,9 +81,7 @@ extension EditorVC {
         let pickerVC = CustomTLPhotosPickerVC.singleImage
         self.present(pickerVC, animated: true, completion: nil)
         
-        pickerVC.rx.didSelectAssets
-            .filter {($0.count > 0) && ($0.first?.fullResolutionImage != nil)}
-            .map {$0.first!.fullResolutionImage!}
+        pickerVC.rx.didSelectAnImage
             .subscribe(onNext: {[weak self] image in
                 guard let strongSelf = self else {return}
                 let alert = UIAlertController(
@@ -96,6 +94,7 @@ extension EditorVC {
                 }
                 
                 alert.addAction(UIAlertAction(title: "add".localized().uppercaseFirst, style: .cancel, handler: { _ in
+                    guard let image = image else {return}
                     strongSelf.didChooseImageFromGallery(image, description: alert.textFields?.first?.text)
                     pickerVC.dismiss(animated: true, completion: nil)
                 }))
