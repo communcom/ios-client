@@ -70,4 +70,11 @@ extension Reactive where Base: TLPhotosPickerViewController {
     var didSelectAssets: Observable<[TLPHAsset]> {
         return (delegate as! RxTLPhotosPickerViewControllerDelegateProxy).didSelectAssets
     }
+    
+    var didSelectAnImage: Observable<UIImage> {
+        return didSelectAssets
+            .filter {($0.count > 0) && ($0.first?.fullResolutionImage != nil)}
+            .map {$0.first!.fullResolutionImage!}
+            
+    }
 }
