@@ -130,7 +130,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     }, onError: { (error) in
                         if let error = error as? ErrorAPI {
                             switch error.caseInfo.message {
-                            case "Cannot get such account from BC":
+                            case "Cannot get such account from BC",
+                                 _ where error.caseInfo.message.hasPrefix("Can't resolve name"):
                                 do {
                                     try KeychainManager.deleteUser()
                                     AppDelegate.reloadSubject.onNext(true)
