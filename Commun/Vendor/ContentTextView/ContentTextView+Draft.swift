@@ -72,7 +72,8 @@ extension ContentTextView {
                         if let attachment = try? JSONDecoder().decode(TextAttachment.self, from: data)
                         {
                             attachment.delegate = self.parentViewController as? AttachmentViewDelegate
-                            let attachmentAS = NSAttributedString(attachment: attachment)
+                            let attachmentAS = NSMutableAttributedString(attachment: attachment)
+                            attachmentAS.addAttributes(self.defaultTypingAttributes, range: NSMakeRange(0, 1))
                             mutableAS.append(attachmentAS)
                             skip = true
                         }
