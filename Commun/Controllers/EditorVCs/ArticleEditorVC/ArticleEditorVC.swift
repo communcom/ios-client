@@ -124,7 +124,7 @@ class ArticleEditorVC: EditorVC {
     
     // MARK: - Draft
     override var hasDraft: Bool {
-       return super.hasDraft && UserDefaults.standard.dictionaryRepresentation().keys.contains(titleDraft)
+       return super.hasDraft || UserDefaults.standard.dictionaryRepresentation().keys.contains(titleDraft)
     }
     
     override func getDraft() {
