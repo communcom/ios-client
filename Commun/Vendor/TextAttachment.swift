@@ -84,11 +84,14 @@ final class TextAttachment: SubviewTextAttachment {
         }
         
         id += 1
+        let attributes = ContentBlockAttributes(
+            url: embed.url
+        )
         return .just(
             ContentBlock(
                 id: id,
                 type: type,
-                attributes: ContentBlockAttributes(embed: embed),
+                attributes: attributes,
                 content: .string(url!))
         )
     }
