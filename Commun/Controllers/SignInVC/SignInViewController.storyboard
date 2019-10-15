@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_1" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -124,7 +122,6 @@
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="56" id="M8s-eX-WGT" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                                                         </constraints>
-                                                        <nil key="textColor"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                         <textInputTraits key="textInputTraits" autocorrectionType="no" textContentType="username"/>
                                                         <userDefinedRuntimeAttributes>
@@ -140,7 +137,6 @@
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="56" id="R4I-zP-x8F" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                                                         </constraints>
-                                                        <nil key="textColor"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                         <textInputTraits key="textInputTraits" autocorrectionType="no" secureTextEntry="YES" textContentType="password"/>
                                                         <userDefinedRuntimeAttributes>
@@ -168,13 +164,6 @@
                                                             <action selector="signInButtonDidTouch:" destination="jR8-kO-b4x" eventType="touchUpInside" id="znk-Sc-gmk"/>
                                                         </connections>
                                                     </button>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aoJ-xG-861" userLabel="Debug Button">
-                                                        <rect key="frame" x="4" y="140" width="406" height="32"/>
-                                                        <accessibility key="accessibilityConfiguration" identifier="SignInDebugButton" label="SignInDebugButton"/>
-                                                        <connections>
-                                                            <action selector="debugButtonTapped:" destination="jR8-kO-b4x" eventType="touchUpInside" id="9eI-Q5-7zi"/>
-                                                        </connections>
-                                                    </button>
                                                 </subviews>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <accessibility key="accessibilityConfiguration" identifier="SignInViewLoginPasswordContainerView" label="SignInViewLoginPasswordContainerView">
@@ -188,11 +177,7 @@
                                                     <constraint firstItem="MzH-Fh-ifk" firstAttribute="top" secondItem="btM-xQ-6hP" secondAttribute="top" constant="16" id="HGp-zZ-fPX" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                                                     <constraint firstItem="Yxv-l2-Yad" firstAttribute="centerX" secondItem="btM-xQ-6hP" secondAttribute="centerX" id="QKy-Ds-FfW"/>
                                                     <constraint firstItem="Yxv-l2-Yad" firstAttribute="top" secondItem="2i2-iK-Xdn" secondAttribute="bottom" constant="23" id="TwR-iI-u0l" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
-                                                    <constraint firstItem="2i2-iK-Xdn" firstAttribute="top" secondItem="aoJ-xG-861" secondAttribute="bottom" constant="4" id="XhV-cs-nMZ"/>
                                                     <constraint firstAttribute="bottom" secondItem="Yxv-l2-Yad" secondAttribute="bottom" constant="16" id="YUm-7H-EEh" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
-                                                    <constraint firstItem="aoJ-xG-861" firstAttribute="top" secondItem="siR-es-fG8" secondAttribute="bottom" constant="4" id="cfv-oJ-SvQ"/>
-                                                    <constraint firstAttribute="trailing" secondItem="aoJ-xG-861" secondAttribute="trailing" constant="4" id="gfk-ST-NvQ"/>
-                                                    <constraint firstItem="aoJ-xG-861" firstAttribute="leading" secondItem="btM-xQ-6hP" secondAttribute="leading" constant="4" id="iEG-bI-uWK"/>
                                                     <constraint firstItem="siR-es-fG8" firstAttribute="leading" secondItem="btM-xQ-6hP" secondAttribute="leading" constant="16" id="p4Y-IE-GV6" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                                                     <constraint firstItem="2i2-iK-Xdn" firstAttribute="top" secondItem="siR-es-fG8" secondAttribute="bottom" constant="40" id="sdd-FS-4OY" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                                                     <constraint firstAttribute="trailing" secondItem="MzH-Fh-ifk" secondAttribute="trailing" constant="16" id="tJi-BQ-Jod" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
