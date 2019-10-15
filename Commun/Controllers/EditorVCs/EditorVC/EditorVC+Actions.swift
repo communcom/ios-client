@@ -131,7 +131,7 @@ extension EditorVC {
     
     // MARK: - Add link
     func addLink() {
-        var currentSelectedRange = contentTextView.selectedRange
+        let currentSelectedRange = contentTextView.selectedRange
         if let urlString = contentTextView.currentTextStyle.value.urlString
         {
             // Remove link that is not a mention or tag

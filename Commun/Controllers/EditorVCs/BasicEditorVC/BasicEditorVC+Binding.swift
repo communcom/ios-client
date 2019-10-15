@@ -9,6 +9,12 @@
 import Foundation
 
 extension BasicEditorVC {
+    override func bind() {
+        super.bind()
+        
+        bindAttachments()
+    }
+    
     func bindAttachments() {
         _viewModel.attachments.skip(1)
             .subscribe(onNext: {[unowned self] (attachments) in

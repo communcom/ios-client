@@ -9,6 +9,47 @@
 import Foundation
 
 extension EditorVC {
+    func didSelectTool(_ item: EditorToolbarItem) {
+        guard item.isEnabled else {return}
+        
+        if item == .hideKeyboard {
+            hideKeyboard()
+        }
+        
+        if item == .addPhoto {
+            addImage()
+        }
+        
+        if item == .toggleIsAdult {
+            viewModel.isAdult = !item.isHighlighted
+            toggleIsHighlightedForTool(item)
+        }
+        
+        if item == .setBold {
+            contentTextView.toggleBold()
+        }
+        
+        if item == .setItalic {
+            contentTextView.toggleItalic()
+        }
+        
+        if item == .addLink {
+            addLink()
+        }
+        
+        if item == .clearFormatting {
+            contentTextView.clearFormatting()
+        }
+        
+        if item == .setColor {
+            pickColor(sender: buttonsCollectionView)
+        }
+        
+        if item == .addArticle {
+            addArticle()
+        }
+    }
+    
     func insertTool(_ tool: EditorToolbarItem, at index: Int) {
         var tools = self.tools.value
         tools.removeAll(tool)
@@ -74,8 +115,12 @@ extension EditorVC {
         }
     }
     
-    // MARK: - immutable tools
+    // MARK: - tools
     func hideKeyboard() {
         view.endEditing(true)
+    }
+    
+    @objc func addArticle() {
+        // for overriding in BasicEditorVC
     }
 }

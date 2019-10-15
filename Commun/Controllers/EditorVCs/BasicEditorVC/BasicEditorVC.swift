@@ -45,45 +45,7 @@ class BasicEditorVC: EditorVC {
         }
     }
     
-    override func layoutTopContentTextView() {
-        contentTextView.autoPinEdge(.top, to: .bottom, of: communityAvatarImage, withOffset: 20)
-    }
-    
-    override func layoutBottomContentTextView() {
-        contentTextView.autoPinEdge(toSuperviewEdge: .bottom)
-    }
-    
-    override func bind() {
-        super.bind()
-        
-        bindAttachments()
-    }
-    
     // MARK: - overriding actions
-    override func addArticle() {
-        let showArticleVC = {[weak self] in
-            weak var presentingViewController = self?.presentingViewController
-            let attrStr = self?.contentTextView.attributedText
-            self?.dismiss(animated: true, completion: {
-                let vc = ArticleEditorVC()
-                vc.modalPresentationStyle = .fullScreen
-                presentingViewController?.present(vc, animated: true, completion: {
-                    vc.contentTextView.attributedText = attrStr
-                })
-            })
-        }
-        
-        if contentTextView.text.isEmpty {
-            showArticleVC()
-        }
-        else {
-            showAlert(title: "add article".localized().uppercaseFirst, message: "override current work and add a new article".localized().uppercaseFirst + "?", buttonTitles: ["OK".localized(), "cancel".localized().uppercaseFirst], highlightedButtonIndex: 0) { (index) in
-                if index == 0 {
-                    showArticleVC()
-                }
-            }
-        }
-    }
     
     override func didChooseImageFromGallery(_ image: UIImage, description: String? = nil) {
         
@@ -139,65 +101,5 @@ class BasicEditorVC: EditorVC {
                 
                 return block!
             }
-    }
-    
-    // MARK: - Draft
-    override var hasDraft: Bool {
-        return super.hasDraft ||
-            UserDefaults.standard.dictionaryRepresentation().keys.contains(attachmentDraftKey)
-    }
-    
-    override func saveDraft(completion: (() -> Void)? = nil) {
-        showIndetermineHudWithMessage("archiving".localized().uppercaseFirst)
-        
-        DispatchQueue(label: "archiving").async {
-            var draft = [Data]()
-            for attachment in self._viewModel.attachments.value {
-                if let data = try? JSONEncoder().encode(attachment) {
-                    draft.append(data)
-                }
-            }
-            
-            if let data = try? JSONEncoder().encode(draft) {
-                UserDefaults.standard.set(data, forKey: self.attachmentDraftKey)
-            }
-            
-            DispatchQueue.main.async {
-                super.saveDraft(completion: completion)
-            }
-        }
-    }
-    
-    override func getDraft() {
-        // show hud
-        showIndetermineHudWithMessage("retrieving attachments".localized().uppercaseFirst)
-        
-        // retrieve draft on another thread
-        DispatchQueue(label: "pasting").async {
-            guard let data = UserDefaults.standard.data(forKey: self.attachmentDraftKey),
-                let draft = try? JSONDecoder().decode([Data].self, from: data)
-            else {
-                    DispatchQueue.main.async {
-                        self.hideHud()
-                    }
-                    return
-            }
-            for data in draft {
-                DispatchQueue.main.sync {
-                    if let attachment = try? JSONDecoder().decode(TextAttachment.self, from: data)
-                    {
-                        self._viewModel.addAttachment(attachment)
-                    }
-                }
-            }
-            DispatchQueue.main.sync {
-                super.getDraft()
-            }
-        }
-    }
-    
-    override func removeDraft() {
-       UserDefaults.standard.removeObject(forKey: attachmentDraftKey)
-       super.removeDraft()
     }
 }

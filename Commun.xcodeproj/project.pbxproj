@@ -284,6 +284,12 @@
 		B1EA02F42289882A00835244 /* SF-Pro-Text-SemiboldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 57F9CAA6225B3AAF00AC9ACA /* SF-Pro-Text-SemiboldItalic.otf */; };
 		BCB2A6E22354512D00B3582B /* AttachmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB2A6E12354512D00B3582B /* AttachmentView.swift */; };
 		BCB2A6E423546AF500B3582B /* EditorVC+AttachmentViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB2A6E323546AF500B3582B /* EditorVC+AttachmentViewDelegate.swift */; };
+		BCB2A6E62355536D00B3582B /* UITableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB2A6E52355536D00B3582B /* UITableViewCell.swift */; };
+		BCB2A6E823556DFA00B3582B /* EditorVC+Draft.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB2A6E723556DFA00B3582B /* EditorVC+Draft.swift */; };
+		BCB2A6EA23556E1E00B3582B /* BasicEditorVC+Draft.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB2A6E923556E1E00B3582B /* BasicEditorVC+Draft.swift */; };
+		BCB2A6EC23556E7100B3582B /* ArticleEditorVC+Draft.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB2A6EB23556E7100B3582B /* ArticleEditorVC+Draft.swift */; };
+		BCB2A6EE23556EE400B3582B /* BasicEditorVC+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB2A6ED23556EE400B3582B /* BasicEditorVC+Layout.swift */; };
+		BCB2A6F023556FC100B3582B /* BasicEditorVC+Tools.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB2A6EF23556FC100B3582B /* BasicEditorVC+Tools.swift */; };
 		BCD453AD2354473F005A454C /* BasicEditorVC+MediaViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD453AC2354473F005A454C /* BasicEditorVC+MediaViewDelegate.swift */; };
 		BCD453AF2354476B005A454C /* ArticleEditorVC+MediaViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD453AE2354476B005A454C /* ArticleEditorVC+MediaViewDelegate.swift */; };
 /* End PBXBuildFile section */
@@ -590,6 +596,12 @@
 		B1EA02D62289734E00835244 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		BCB2A6E12354512D00B3582B /* AttachmentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentView.swift; sourceTree = "<group>"; };
 		BCB2A6E323546AF500B3582B /* EditorVC+AttachmentViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EditorVC+AttachmentViewDelegate.swift"; sourceTree = "<group>"; };
+		BCB2A6E52355536D00B3582B /* UITableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableViewCell.swift; sourceTree = "<group>"; };
+		BCB2A6E723556DFA00B3582B /* EditorVC+Draft.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EditorVC+Draft.swift"; sourceTree = "<group>"; };
+		BCB2A6E923556E1E00B3582B /* BasicEditorVC+Draft.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BasicEditorVC+Draft.swift"; sourceTree = "<group>"; };
+		BCB2A6EB23556E7100B3582B /* ArticleEditorVC+Draft.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ArticleEditorVC+Draft.swift"; sourceTree = "<group>"; };
+		BCB2A6ED23556EE400B3582B /* BasicEditorVC+Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BasicEditorVC+Layout.swift"; sourceTree = "<group>"; };
+		BCB2A6EF23556FC100B3582B /* BasicEditorVC+Tools.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BasicEditorVC+Tools.swift"; sourceTree = "<group>"; };
 		BCD453AC2354473F005A454C /* BasicEditorVC+MediaViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BasicEditorVC+MediaViewDelegate.swift"; sourceTree = "<group>"; };
 		BCD453AE2354476B005A454C /* ArticleEditorVC+MediaViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ArticleEditorVC+MediaViewDelegate.swift"; sourceTree = "<group>"; };
 		C1D6A6DAA916F8782899DFE5 /* Pods-CommunTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CommunTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CommunTests/Pods-CommunTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -642,7 +654,10 @@
 			children = (
 				3B06863823471163008953C5 /* Subviews */,
 				3B068631234700DC008953C5 /* BasicEditorVC.swift */,
+				BCB2A6E923556E1E00B3582B /* BasicEditorVC+Draft.swift */,
+				BCB2A6ED23556EE400B3582B /* BasicEditorVC+Layout.swift */,
 				3B25E5BF234C2F66005BD1B8 /* BasicEditorVC+Binding.swift */,
+				BCB2A6EF23556FC100B3582B /* BasicEditorVC+Tools.swift */,
 				3B25E5C3234C6E4E005BD1B8 /* BasicEditorVC+Link.swift */,
 				3B25E5BD234C2A0C005BD1B8 /* BasicEditorViewModel.swift */,
 				BCD453AC2354473F005A454C /* BasicEditorVC+MediaViewDelegate.swift */,
@@ -751,6 +766,7 @@
 			children = (
 				3B3C8B9523478DF100D8BADB /* Subviews */,
 				3B8DDF59234AF04C00B213F0 /* ArticleEditorVC.swift */,
+				BCB2A6EB23556E7100B3582B /* ArticleEditorVC+Draft.swift */,
 				3B8DDF60234B1FC200B213F0 /* ArticleEditorVC+Binding.swift */,
 				3B8DDF64234B219D00B213F0 /* ArticleEditorVC+TextViewDelegate.swift */,
 				BCD453AE2354476B005A454C /* ArticleEditorVC+MediaViewDelegate.swift */,
@@ -875,6 +891,7 @@
 				3B3C8B7823472AC000D8BADB /* Subviews */,
 				3B3C8B972347911D00D8BADB /* EditorViewModel.swift */,
 				3B6205592346E4220017FEB7 /* EditorVC.swift */,
+				BCB2A6E723556DFA00B3582B /* EditorVC+Draft.swift */,
 				3B3C8B9B2347928D00D8BADB /* EditorVC+Layout.swift */,
 				3B3C8B9D234796D900D8BADB /* EditorVC+Binding.swift */,
 				3B8DDF53234AD15A00B213F0 /* EditorVC+Actions.swift */,
@@ -1337,6 +1354,7 @@
 				3B6CB731234331830097B2A1 /* Array.swift */,
 				3B3C8B83234779FE00D8BADB /* UIImage.swift */,
 				3B25E5C5234C6EF6005BD1B8 /* ResponseAPIFrameGetEmbed.swift */,
+				BCB2A6E52355536D00B3582B /* UITableViewCell.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1886,6 +1904,7 @@
 				3B8DDF65234B219D00B213F0 /* ArticleEditorVC+TextViewDelegate.swift in Sources */,
 				3BA3779722E9DA6C0071AF3A /* SignupVC+Location.swift in Sources */,
 				57FB179D224BFBD700563BF7 /* PillPageControl.swift in Sources */,
+				BCB2A6E62355536D00B3582B /* UITableViewCell.swift in Sources */,
 				3BAD8E7F2318C524005A8AB3 /* ContentBlock.swift in Sources */,
 				572F81A7223C164C0007F2F9 /* PostCardCell.swift in Sources */,
 				3B635F8322774A37006DAAB2 /* FeedTimeFrameMode.swift in Sources */,
@@ -1913,6 +1932,7 @@
 				3B25E5C4234C6E4E005BD1B8 /* BasicEditorVC+Link.swift in Sources */,
 				3BAD8E7E2318C524005A8AB3 /* ContentBlock+Parser.swift in Sources */,
 				3B8DDF5C234B121D00B213F0 /* EditorColorPicker.swift in Sources */,
+				BCB2A6F023556FC100B3582B /* BasicEditorVC+Tools.swift in Sources */,
 				3B5D361C22E8303C0012A991 /* HTMLStringWebView.swift in Sources */,
 				3BB86B4922734AE4008F1C64 /* UIColor.swift in Sources */,
 				3B2F227122689308006B589E /* TabBarViewModel.swift in Sources */,
@@ -1934,6 +1954,7 @@
 				3B8DDF68234B388500B213F0 /* UITextView+PureLayout.swift in Sources */,
 				3B5EDE3522E073C500897BF3 /* SettingsViewModel.swift in Sources */,
 				3B2B6862233B49D500DADBD0 /* PostPageVC+HeaderForSection.swift in Sources */,
+				BCB2A6EA23556E1E00B3582B /* BasicEditorVC+Draft.swift in Sources */,
 				3BDD9A0F228F07EF00B2A1DA /* UIApplication.swift in Sources */,
 				3B0E9C64226F4A0C002AB1C2 /* VerticalDraggableImageView.swift in Sources */,
 				3B02CD282289B23E0078BB52 /* PostHeaderView.swift in Sources */,
@@ -1976,6 +1997,7 @@
 				3BAF69D1226792C60055CCEB /* ProfilePageVC+Rx.swift in Sources */,
 				57FB17A4224C15C400563BF7 /* SignInViewModel.swift in Sources */,
 				3BA4D089229315D60022A69D /* UIResponder.swift in Sources */,
+				BCB2A6EE23556EE400B3582B /* BasicEditorVC+Layout.swift in Sources */,
 				3B3C8B84234779FE00D8BADB /* UIImage.swift in Sources */,
 				3B5EDE2E22DF929D00897BF3 /* SettingsSwitcherCell.swift in Sources */,
 				BCB2A6E423546AF500B3582B /* EditorVC+AttachmentViewDelegate.swift in Sources */,
@@ -1990,6 +2012,7 @@
 				3B6CB734234335130097B2A1 /* CommunActionSheet.swift in Sources */,
 				3BC6139E23419EFC00075570 /* HalfSizePresentationController.swift in Sources */,
 				3B5CB31222A588EE00757533 /* FeedPageVC+EmptyDataSet.swift in Sources */,
+				BCB2A6E823556DFA00B3582B /* EditorVC+Draft.swift in Sources */,
 				3B289B972346E51600598407 /* UIButton+PureLayout.swift in Sources */,
 				571B14F4223A935C00630C8F /* AppDelegate.swift in Sources */,
 				3B3C8B9C2347928D00D8BADB /* EditorVC+Layout.swift in Sources */,
@@ -2025,6 +2048,7 @@
 				57F5CFC22244E3BE005A09AE /* PostPageVC+Rx.swift in Sources */,
 				3BDD9A04228DBEC200B2A1DA /* CommentForm.swift in Sources */,
 				3BAE92A922DE553D00E97AE8 /* ScalableLayoutConstraint.swift in Sources */,
+				BCB2A6EC23556E7100B3582B /* ArticleEditorVC+Draft.swift in Sources */,
 				3B0686302346FFA6008953C5 /* CommunButton.swift in Sources */,
 				3BB342B422CA7412009546B2 /* CreateBioVC.swift in Sources */,
 				3BB32F1923438D4F006572F3 /* DimmingPresentationController.swift in Sources */,

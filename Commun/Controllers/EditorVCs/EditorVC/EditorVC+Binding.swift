@@ -9,6 +9,32 @@
 import Foundation
 
 extension EditorVC {
+    @objc func bind() {
+        tools
+            .bind(to: buttonsCollectionView.rx.items(
+                cellIdentifier: "EditorToolbarItemCell", cellType: EditorToolbarItemCell.self))
+                { (index, item, cell) in
+                    cell.setUp(item: item)
+                }
+            .disposed(by: disposeBag)
+        
+        buttonsCollectionView.rx
+            .modelSelected(EditorToolbarItem.self)
+            .subscribe(onNext: { [unowned self] item in
+                self.didSelectTool(item)
+            })
+            .disposed(by: disposeBag)
+        
+        buttonsCollectionView.rx.setDelegate(self)
+            .disposed(by: disposeBag)
+        
+        bindKeyboardHeight()
+        
+        bindSendPostButton()
+        
+        bindContentTextView()
+    }
+    
     func bindKeyboardHeight() {
         UIResponder.keyboardHeightObservable
             .map {$0 == 0 ? true: false}
