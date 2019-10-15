@@ -244,7 +244,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   CyberSwift:
-    :commit: a2347a1ebf162ee21f7dc53cb1abadb71c9ef582
+    :commit: a96f397b92aef80ecfe7f3739c73c57b52c4b9ad
     :git: https://github.com/GolosChain/cyberSwift.git
   SubviewAttachingTextView:
     :commit: cbe8d44f2c50a75f15b5aeb434472615e5c3d250
