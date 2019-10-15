@@ -35,9 +35,6 @@ extension FeedPageVC {
         // items
         viewModel.items
             .map {[PostSection(model: "", items: $0)]}
-            .do(onNext: {section in
-                self.tableView.refreshControl?.endRefreshing()
-            })
             .bind(to: tableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
         

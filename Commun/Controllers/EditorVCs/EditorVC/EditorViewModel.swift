@@ -74,11 +74,6 @@ class EditorViewModel {
                 if var post = self.postForEdit {
                     post.content.title = title
                     post.content.body.full = try block.jsonString()
-                    if let imageURL = self.embeds.first(where: {($0["type"] as? String) == "photo"})?["url"] as? String,
-                        let embeded = post.content.embeds.first,
-                        embeded.type == "photo" {
-                        post.content.embeds[0].result?.url = imageURL
-                    }
                     post.notifyChanged()
                 }
             })
