@@ -10,6 +10,7 @@ import Foundation
 import TLPhotoPicker
 import RxCocoa
 import RxSwift
+import Photos
 
 class CustomTLPhotosPickerVC: TLPhotosPickerViewController {
     
@@ -71,10 +72,27 @@ extension Reactive where Base: TLPhotosPickerViewController {
         return (delegate as! RxTLPhotosPickerViewControllerDelegateProxy).didSelectAssets
     }
     
-    var didSelectAnImage: Observable<UIImage> {
+    var didSelectAnImage: Observable<UIImage?> {
         return didSelectAssets
-            .filter {($0.count > 0) && ($0.first?.fullResolutionImage != nil)}
-            .map {$0.first!.fullResolutionImage!}
-            
+            .filter {$0.count == 1}
+            .flatMap { (tlAssets) -> Observable<UIImage?> in
+                let tlAsset = tlAssets.first!
+                if let image = tlAsset.fullResolutionImage {
+                    return .just(image)
+                }
+                
+                let asset = tlAsset.phAsset!
+                
+                let imageManager = PHImageManager.default()
+                let requestOptions = PHImageRequestOptions()
+                requestOptions.isSynchronous = true
+                requestOptions.isNetworkAccessAllowed = true
+
+                return .create {observer in
+                    imageManager.requestImage(for: asset, targetSize: PHImageManagerMaximumSize, contentMode: .aspectFill, options: requestOptions) { image, info in                        observer.onNext(image)
+                    }
+                    return Disposables.create()
+                }
+            }
     }
 }

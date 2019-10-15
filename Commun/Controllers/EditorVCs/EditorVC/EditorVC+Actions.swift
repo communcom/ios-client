@@ -94,6 +94,7 @@ extension EditorVC {
                 }
                 
                 alert.addAction(UIAlertAction(title: "add".localized().uppercaseFirst, style: .cancel, handler: { _ in
+                    guard let image = image else {return}
                     strongSelf.didChooseImageFromGallery(image, description: alert.textFields?.first?.text)
                     pickerVC.dismiss(animated: true, completion: nil)
                 }))
