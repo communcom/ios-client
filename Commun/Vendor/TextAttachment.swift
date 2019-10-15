@@ -9,8 +9,9 @@
 import Foundation
 import RxSwift
 import CyberSwift
+import SubviewAttachingTextView
 
-final class TextAttachment: NSTextAttachment {
+final class TextAttachment: SubviewTextAttachment {
     private static var uniqueId = 0
     lazy var id: Int = {
         let id = TextAttachment.uniqueId
@@ -19,18 +20,15 @@ final class TextAttachment: NSTextAttachment {
     }()
     
     // embed
+    var size: CGSize?
     var embed: ResponseAPIFrameGetEmbed?
     var localImage: UIImage?
+    var attachmentView: AttachmentView?
     
-    var view: UIView? {
+    weak var delegate: AttachmentViewDelegate? {
         didSet {
-            setView()
+            attachmentView?.delegate = delegate
         }
-    }
-    
-    fileprivate func setView() {
-        guard let view = view else {return}
-        image = view.toImage
     }
     
     var placeholderText: String {
@@ -39,6 +37,19 @@ final class TextAttachment: NSTextAttachment {
     
     override var description: String {
         return "TextAttachment(\(placeholderText))"
+    }
+    
+    convenience init(embed: ResponseAPIFrameGetEmbed?, localImage: UIImage?, size: CGSize) {
+        let attachmentView = AttachmentView(frame: .zero)
+        attachmentView.setUp(image: localImage, url: embed?.url, description: embed?.title ?? embed?.description)
+        self.init(view: attachmentView, size: size)
+        self.embed = embed
+        self.localImage = localImage
+        self.size = size
+        self.attachmentView = attachmentView
+        defer {
+            attachmentView.attachment = self
+        }
     }
     
     func toSingleContentBlock(id: inout UInt64) -> Single<ResponseAPIContentBlock>? {
@@ -83,64 +94,44 @@ final class TextAttachment: NSTextAttachment {
     }
 }
 
-private extension UIView {
-    var toImage: UIImage {
-        let image: UIImage
-        if #available(iOS 10.0, *) {
-            let renderer = UIGraphicsImageRenderer(size: self.frame.size)
-            image = renderer.image {
-                self.layer.render(in: $0.cgContext)
-            }
-        } else {
-            UIGraphicsBeginImageContextWithOptions(self.frame.size, false, UIScreen.main.scale)
-            self.layer.render(in: UIGraphicsGetCurrentContext()! )
-            image = UIGraphicsGetImageFromCurrentImageContext()!
-            UIGraphicsEndImageContext()
-        }
-        
-        return image
-    }
-}
-
 extension TextAttachment: Codable {
     enum CodingKeys: String, CodingKey {
         case embed
         case localImage
-        case view
         case id
+        case size
     }
     
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(id, forKey: .id)
         try container.encode(embed, forKey: .embed)
+        try container.encode(size, forKey: .size)
         
         if let localImage = localImage {
             let imageData = NSKeyedArchiver.archivedData(withRootObject: localImage)
             try container.encode(imageData, forKey: .localImage)
         }
-        
-        if let view = view {
-            let viewData = NSKeyedArchiver.archivedData(withRootObject: view)
-            try container.encode(viewData, forKey: .view)
-        }
     }
+    
     public convenience init(from decoder: Decoder) throws {
-        self.init()
         let values = try decoder.container(keyedBy: CodingKeys.self)
-        id = try values.decode(Int.self, forKey: .id)
-        embed = try values.decode(ResponseAPIFrameGetEmbed.self, forKey: .embed)
+        let id = try values.decode(Int.self, forKey: .id)
+        let embed = try values.decode(ResponseAPIFrameGetEmbed.self, forKey: .embed)
+        let size = try values.decode(CGSize.self, forKey: .size)
+        
+        var localImage: UIImage?
         if let data = try? values.decode(Data.self, forKey: .localImage),
             let image = NSKeyedUnarchiver.unarchiveObject(with: data) as? UIImage {
             localImage = image
         }
         
-        if let view = NSKeyedUnarchiver.unarchiveObject(with: try values.decode(Data.self, forKey: .view)) as? UIView {
-            self.view = view
-        }
+        // setup view
+        // temporary size
+        self.init(embed: embed, localImage: localImage, size: size)
         
-        defer {
-            setView()
-        }
+        // reassign id
+        self.id = id
+        
     }
 }

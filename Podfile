@@ -49,13 +49,13 @@ def common_pods
   pod 'THPinViewController', :git => "https://github.com/bigearsenal/THPinViewController.git", :branch => "commun"
   
   pod 'AppImageViewer'
-  pod 'SwiftLinkPreview', '~> 3.0.1'
   pod 'Down'
   pod 'SDURLCache', '~> 1.3'
   pod 'UITextView+Placeholder'
   
   pod "ESPullToRefresh"
   pod 'PureLayout'
+  pod 'SubviewAttachingTextView', :git => "https://github.com/boyuanx/SubviewAttachingTextView.git"
 end
 
 target 'Commun' do

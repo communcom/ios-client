@@ -9,6 +9,12 @@
 import Foundation
 
 extension ArticleEditorVC {
+    override func bind() {
+        super.bind()
+        // textViews
+        bindTitleTextView()
+    }
+    
     func bindTitleTextView() {
         titleTextView.rx.didBeginEditing
             .subscribe(onNext: {_ in

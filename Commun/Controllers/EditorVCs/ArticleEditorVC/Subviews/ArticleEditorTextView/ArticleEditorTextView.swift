@@ -10,6 +10,7 @@ import Foundation
 import RxSwift
 import RxCocoa
 import CyberSwift
+import SubviewAttachingTextView
 
 class ArticleEditorTextView: ContentTextView {
     class AttachmentMenuItem: UIMenuItem {
@@ -23,13 +24,22 @@ class ArticleEditorTextView: ContentTextView {
     // MARK: - Constants
     let embedsLimit = 15
     let videosLimit = 10
+    
+    lazy var attachmentSize: CGSize = {
+        let width = size.width - textContainerInset.left - textContainerInset.right - 3
+        return CGSize(width: width, height: 238)
+    }()
+    
     override var draftKey: String { "ArticleEditorTextView.draftKey" }
     
     // MARK: - Properties
     let defaultFont = UIFont.systemFont(ofSize: 17)
+    private let attachmentBehavior = SubviewAttachingTextViewBehavior()
     
     override var defaultTypingAttributes: [NSAttributedString.Key : Any] {
-        return [.font: defaultFont]
+        var attrs = super.defaultTypingAttributes
+        attrs[.font] = defaultFont
+        return attrs
     }
     
     override var acceptedPostType: String {
@@ -40,22 +50,19 @@ class ArticleEditorTextView: ContentTextView {
         return true
     }
     
-    override func bind() {
-        super.bind()
-        rx.didChangeSelection
-            .subscribe(onNext: {
-                // if an attachment is selected
-                if self.selectedAttachment != nil {
-                    UIMenuController.shared.menuItems = [
-                        AttachmentMenuItem(
-                            title: "preview".localized().uppercaseFirst,
-                            action: #selector(self.previewAttachment(_:)),
-                            attachment:  self.selectedAttachment!
-                        )
-                    ]
-                }
-            })
-            .disposed(by: disposeBag)
+    override var textContainerInset: UIEdgeInsets {
+        didSet {
+            // Text container insets are used to convert coordinates between the text container and text view, so a change to these insets must trigger a layout update
+            self.attachmentBehavior.layoutAttachedSubviews()
+        }
+    }
+    
+    override func commonInit() {
+        // Connect the attachment behavior
+        self.attachmentBehavior.textView = self
+        self.layoutManager.delegate = self.attachmentBehavior
+        self.textStorage.delegate = self.attachmentBehavior
+        super.commonInit()
     }
     
     // MARK: - Parsing
@@ -64,7 +71,7 @@ class ArticleEditorTextView: ContentTextView {
 
         textStorage.enumerateAttribute(.attachment, in: NSMakeRange(0, textStorage.length), options: []) { (value, range, bool) in
             // Get empty attachment
-            guard var attachment = value as? TextAttachment,
+            guard let attachment = value as? TextAttachment,
                 let embed = attachment.embed
                 else {return}
 
@@ -84,7 +91,7 @@ class ArticleEditorTextView: ContentTextView {
                     .catchErrorJustReturn(UIImage(named: "image-not-available")!)
                     .do(onSuccess: { [weak self] (image) in
                         guard let strongSelf = self else {return}
-                        strongSelf.add(image, to: &attachment)
+                        attachment.localImage = image
                         strongSelf.replaceCharacters(in: range, with: attachment)
                     })
                 singles.append(downloadImage)
@@ -95,7 +102,7 @@ class ArticleEditorTextView: ContentTextView {
                     Single<UIImage>.just(UIImage(named: "image-not-available")!)
                         .do(onSuccess: { [weak self] (image) in
                             guard let strongSelf = self else {return}
-                            strongSelf.add(image, to: &attachment)
+                            attachment.localImage = image
                             strongSelf.replaceCharacters(in: range, with: attachment)
                         })
                 )
@@ -183,5 +190,20 @@ class ArticleEditorTextView: ContentTextView {
                 block.maxId = id
                 return block
         }
+    }
+    
+    // MARK: - Delegate
+    override func shouldChangeCharacterInRange(_ range: NSRange, replacementText text: String) -> Bool {
+        // Add a newline after attachment
+//        if range.location > 0, range.length == 0 {
+//            let newRange = NSMakeRange(range.location - 1, 1)
+//            textStorage.enumerateAttributes(in: newRange, options: []) { (attribute, range, stop) in
+//                if (attribute[.attachment] as? TextAttachment) != nil {
+//                    textStorage.insert(NSAttributedString(string: "\n", attributes: typingAttributes), at: range.location + 1)
+//                    
+//                }
+//            }
+//        }
+        return super.shouldChangeCharacterInRange(range, replacementText: text)
     }
 }

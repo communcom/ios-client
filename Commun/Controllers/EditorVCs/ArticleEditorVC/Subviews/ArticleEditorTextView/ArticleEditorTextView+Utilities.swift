@@ -10,22 +10,7 @@ import Foundation
 import RxSwift
 
 extension ArticleEditorTextView {
-    // MARK: - Attachment helper
-    func add(_ image: UIImage, to attachment: inout TextAttachment) {
-        let attachmentRightMargin: CGFloat = 10
-        let attachmentHeightForDescription: CGFloat = MediaView.descriptionDefaultHeight
-        
-        // setup view
-        let newWidth = frame.size.width - attachmentRightMargin - textContainerInset.left - textContainerInset.right
-        let mediaView = MediaView(frame: CGRect(x: 0, y: 0, width: newWidth, height: image.size.height * newWidth / image.size.width + attachmentHeightForDescription))
-        mediaView.showCloseButton = false
-        mediaView.setUp(image: image, url: attachment.embed?.url, description: attachment.embed?.title ?? attachment.embed?.description)
-        addSubview(mediaView)
-        
-        attachment.view = mediaView
-        mediaView.removeFromSuperview()
-    }
-    
+    // MARK: - Attachment helper    
     func canAddAttachment(_ attachment: TextAttachment) -> Bool {
         var embedCount = 1
         var videoCount = attachment.embed?.type == "video" ? 1 : 0
@@ -70,6 +55,8 @@ extension ArticleEditorTextView {
     }
     
     func replaceCharacters(in range: NSRange, with attachment: TextAttachment) {
+        let attachment = TextAttachment(embed: attachment.embed, localImage: attachment.localImage, size: attachmentSize)
+        attachment.delegate = parentViewController as? AttachmentViewDelegate
         let attachmentAS = NSAttributedString(attachment: attachment)
         textStorage.replaceCharacters(in: range, with: attachmentAS)
         textStorage.addAttributes(typingAttributes, range: NSMakeRange(range.location, 1))
@@ -82,11 +69,6 @@ extension ArticleEditorTextView {
         {
             if action == #selector(copy(_:)) || action == #selector(cut(_:)) {
                 return true
-            }
-        }
-        else {
-            if action == #selector(previewAttachment(_:)) {
-                return false
             }
         }
         
@@ -108,8 +90,11 @@ extension ArticleEditorTextView {
     override func cut(_ sender: Any?) {
         if let attachment = selectedAttachment {
             self.copyAttachment(attachment, completion: {
-                self.textStorage.replaceCharacters(in: self.selectedRange, with: "")
-                self.selectedRange = NSMakeRange(self.selectedRange.location, 0)
+                var location = self.selectedRange.location
+                self.removeAttachment(at: &location)
+                
+                // Resign selection
+                self.selectedRange = NSMakeRange(location, 0)
             })
             return
         }
@@ -123,6 +108,7 @@ extension ArticleEditorTextView {
         if let data = pasteBoard.items.last?["attachment"] as? Data,
             let attachment = try? JSONDecoder().decode(TextAttachment.self, from: data)
         {
+            attachment.delegate = self.parentViewController as? AttachmentViewDelegate
             addAttachmentAtSelectedRange(attachment)
             return
         }

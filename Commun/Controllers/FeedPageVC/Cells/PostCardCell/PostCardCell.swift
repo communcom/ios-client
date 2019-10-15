@@ -37,6 +37,8 @@ class PostCardCell: UITableViewCell, PostController {
         // http://adamborek.com/top-7-rxswift-mistakes/
         // have to reset disposeBag when reusing cell
         disposeBag = DisposeBag()
+        
+        observePostChange()
     }
     
     override func awakeFromNib() {
@@ -110,8 +112,5 @@ extension PostCardCell {
         // Handle button
         self.upVoteButton.tintColor = post.votes.hasUpVote ?? false ? .appMainColor: .lightGray
         self.downVoteButton.tintColor = post.votes.hasDownVote ?? false ? .appMainColor: .lightGray
-        
-        // Observe change
-        observePostChange()
     }
 }

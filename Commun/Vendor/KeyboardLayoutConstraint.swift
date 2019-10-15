@@ -58,7 +58,9 @@ class KeyboardLayoutConstraint: ScalableLayoutConstraint {
                 }
                 
                 if let vc = UIApplication.topViewController(),
-                    !vc.isModal {
+                    !vc.isModal,
+                    vc.hidesBottomBarWhenPushed == false
+                {
                     keyboardVisibleHeight -= vc.tabBarController?.tabBar.height ?? 0
                 }
                 

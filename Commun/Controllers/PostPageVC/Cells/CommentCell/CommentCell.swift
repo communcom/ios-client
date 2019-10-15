@@ -124,8 +124,8 @@ class CommentCell: UITableViewCell {
         embedView.removeSubviews()
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.contentMode = .scaleAspectFit
-        imageView.backgroundColor = .black
+        imageView.contentMode = .scaleAspectFill
+        imageView.layer.masksToBounds = true
         imageView.addTapToViewer()
         
         embedView.addSubview(imageView)

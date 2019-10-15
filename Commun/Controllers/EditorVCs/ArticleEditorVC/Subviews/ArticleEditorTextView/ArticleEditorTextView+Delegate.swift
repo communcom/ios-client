@@ -7,8 +7,6 @@
 //
 
 import Foundation
-import SafariServices
-import AppImageViewer
 
 extension ArticleEditorTextView {
     func shouldInteractWithTextAttachment(_ textAttachment: NSTextAttachment, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
@@ -30,41 +28,35 @@ extension ArticleEditorTextView {
         }
     }
     
-    @objc func previewAttachment(_ sender: Any?) {
-        guard let sender = sender as? UIMenuController,
-            let item = sender.menuItems?.first(where: {$0 is AttachmentMenuItem}) as? AttachmentMenuItem
-        else {return}
+    func removeAttachment(at location: inout Int) {
+        let range = NSRange(location: location, length: 1)
         
-        let attachment = item.attachment
-        guard let type = attachment.embed?.type else {return}
-
-        switch type {
-        case "website", "video":
-            guard let urlString = attachment.embed?.url,
-                let url = URL(string: urlString) else {return}
-            let safariVC = SFSafariViewController(url: url)
-            self.parentViewController?.present(safariVC, animated: true, completion: nil)
-        case "image":
-            if let localImage = attachment.localImage {
-                let appImage = ViewerImage.appImage(forImage: localImage)
-                let viewer = AppImageViewer(photos: [appImage])
-                self.parentViewController?.present(viewer, animated: false, completion: nil)
+        var isAttachment = false
+        textStorage.enumerateAttribute(.attachment, in: range, options: []) { (att, range, stop) in
+            if let attachment = att as? TextAttachment {
+                attachment.attachmentView?.removeFromSuperview()
+                isAttachment = true
             }
-            else if let imageUrl = attachment.embed?.url,
-                let url = URL(string: imageUrl)
-            {
-                NetworkService.shared.downloadImage(url)
-                    .subscribe(onSuccess: { [weak self] (image) in
-                        let appImage = ViewerImage.appImage(forImage: image)
-                        let viewer = AppImageViewer(photos: [appImage])
-                        self?.parentViewController?.present(viewer, animated: false, completion: nil)
-                        }, onError: { (error) in
-                            self.parentViewController?.showError(error)
-                    })
-                    .disposed(by: self.disposeBag)
-            }
-        default:
-            break
+            stop.pointee = true
+        }
+        
+        if !isAttachment {return}
+        
+        // Remove "\n" before attachment
+        if location > 0,
+            self.textStorage.attributedSubstring(from: NSMakeRange(location - 1, 1)).string == "\n"
+        {
+            self.textStorage.replaceCharacters(in: NSMakeRange(self.selectedRange.location - 1, 1), with: "")
+            location -= 1
+        }
+        
+        self.textStorage.replaceCharacters(in: NSMakeRange(location, 1), with: "")
+        
+        // Remove "\n" after attachment
+        if location < self.textStorage.length,
+            self.textStorage.attributedSubstring(from: NSMakeRange(location, 1)).string == "\n"
+        {
+            self.textStorage.replaceCharacters(in: NSMakeRange(location, 1), with: "")
         }
     }
 }

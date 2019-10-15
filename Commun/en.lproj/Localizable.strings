@@ -190,8 +190,8 @@
 "trending"                                      =   "trending";
 "try again"                                     =   "try again";
 "turn on"                                       =   "turn on";
-"the presence of two dots side by side is not allowed"  =   "the presence of two dots side by side is not allowed";
-"the hyphen character \"-\" cannot be at the beginning or end of a username."   =   "the hyphen character \"-\" cannot be at the beginning or end of a username.";
+"the presence of non-alphanumeric characters side by side is not allowed"  =   "the presence of non-alphanumeric characters side by side is not allowed";
+"non-alphanumeric character cannot be at the beginning or end of a username"   =   "non-alphanumeric character cannot be at the beginning or end of a username";
 
 // U
 "updating..."                                   =   "updating...";

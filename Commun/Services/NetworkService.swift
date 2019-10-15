@@ -13,7 +13,6 @@ import CyberSwift
 import SwifterSwift
 import eosswift
 import SDWebImage
-import SwiftLinkPreview
 
 class NetworkService: NSObject {
     // MARK: - Properties
@@ -210,26 +209,7 @@ class NetworkService: NSObject {
         }
     }
     
-    func downloadLinkPreview(_ urlString: String) -> Single<Response> {
-        Logger.log(message: "Downloading preview for \(urlString)", event: .debug)
-        let slp = SwiftLinkPreview(cache: InMemoryCache())
-        if let cached = slp.cache.slp_getCachedResponse(url: urlString) {
-            // Do whatever with the cached response
-            return .just(cached)
-        } else {
-            // Perform preview otherwise
-            return Single<Response>.create {single in
-                slp.preview(urlString, onSuccess: { (response) in
-                    single(.success(response))
-                }, onError: { (error) in
-                    Logger.log(message: "Preview error for \(urlString): \(error)", event: .error)
-                    single(.error(error))
-                })
-                return Disposables.create()
-            }
-            
-        }
-    }
+    
     
     //  Update updatemeta
     func updateMeta(params: [String: String], waitForTransaction: Bool = true) -> Completable {

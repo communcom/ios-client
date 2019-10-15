@@ -137,81 +137,6 @@ class EditorVC: UIViewController {
         }
     }
     
-    func layoutTopContentTextView() {
-        fatalError("Must override")
-    }
-    
-    func layoutBottomContentTextView() {
-        fatalError("Must override this method")
-    }
-    
-    func bind() {
-        tools
-            .bind(to: buttonsCollectionView.rx.items(
-                cellIdentifier: "EditorToolbarItemCell", cellType: EditorToolbarItemCell.self))
-                { (index, item, cell) in
-                    cell.setUp(item: item)
-                }
-            .disposed(by: disposeBag)
-        
-        buttonsCollectionView.rx
-            .modelSelected(EditorToolbarItem.self)
-            .subscribe(onNext: { [unowned self] item in
-                self.didSelectTool(item)
-            })
-            .disposed(by: disposeBag)
-        
-        buttonsCollectionView.rx.setDelegate(self)
-            .disposed(by: disposeBag)
-        
-        bindKeyboardHeight()
-        
-        bindSendPostButton()
-        
-        bindContentTextView()
-    }
-    
-    func didSelectTool(_ item: EditorToolbarItem) {
-        guard item.isEnabled else {return}
-        
-        if item == .hideKeyboard {
-            hideKeyboard()
-        }
-        
-        if item == .addPhoto {
-            addImage()
-        }
-        
-        if item == .toggleIsAdult {
-            viewModel.isAdult = !item.isHighlighted
-            toggleIsHighlightedForTool(item)
-        }
-        
-        if item == .setBold {
-            contentTextView.toggleBold()
-        }
-        
-        if item == .setItalic {
-            contentTextView.toggleItalic()
-        }
-        
-        if item == .addLink {
-            addLink()
-        }
-        
-        if item == .clearFormatting {
-            contentTextView.clearFormatting()
-        }
-        
-        if item == .setColor {
-            pickColor(sender: buttonsCollectionView)
-        }
-        
-        if item == .addArticle {
-            addArticle()
-        }
-    }
-    
     // MARK: - action for overriding
     func setUp(with post: ResponseAPIContentGetPost) {
         contentTextView.parseContentBlock(post.content)
@@ -225,33 +150,7 @@ class EditorVC: UIViewController {
         fatalError("Must override")
     }
     
-    func addArticle() {
-        // for overriding in BasicEditorVC
-    }
-    
     func getContentBlock() -> Single<ResponseAPIContentBlock> {
         contentTextView.getContentBlock(postTitle: postTitle)
-    }
-    
-    // MARK: - draft
-    var hasDraft: Bool {
-        return contentTextView.hasDraft
-    }
-    
-    func getDraft() {
-        // retrieve content
-        contentTextView.getDraft {
-            // remove draft
-            self.removeDraft()
-        }
-    }
-    
-    func saveDraft(completion: (()->Void)? = nil) {
-        // save content
-        contentTextView.saveDraft(completion: completion)
-    }
-    
-    func removeDraft() {
-        contentTextView.removeDraft()
     }
 }

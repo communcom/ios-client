@@ -11,7 +11,9 @@ import RxSwift
 
 class BasicEditorTextView: ContentTextView {
     override var defaultTypingAttributes: [NSAttributedString.Key : Any] {
-        return [.font: UIFont.systemFont(ofSize: 17)]
+        var attrs = super.defaultTypingAttributes
+        attrs[.font] = UIFont.systemFont(ofSize: 17)
+        return attrs
     }
     
     override var draftKey: String { "BasicEditorTextView.draftKey" }

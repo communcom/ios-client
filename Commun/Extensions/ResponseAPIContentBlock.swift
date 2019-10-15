@@ -165,10 +165,10 @@ extension ResponseAPIContentBlock {
                 let embed = try? ResponseAPIFrameGetEmbed(blockAttributes: attributes)
             else {return NSAttributedString()}
             
-            let attachment = TextAttachment()
-            attachment.embed = embed
-            attachment.embed?.type = type
+            // dummy attachment
+            let attachment = TextAttachment(embed: embed, localImage: nil, size: .zero)
             
+            attachment.embed?.type = type
             switch content {
             case .string(let url):
                 attachment.embed!.url = url

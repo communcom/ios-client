@@ -53,7 +53,9 @@ class ContentTextView: UITextView {
     
     // Must override!!!
     var defaultTypingAttributes: [NSAttributedString.Key: Any] {
-        fatalError("Must override")
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.paragraphSpacing = 8
+        return [.paragraphStyle: paragraphStyle]
     }
     
     var acceptedPostType: String {

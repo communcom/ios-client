@@ -9,13 +9,20 @@
 import Foundation
 
 extension BasicEditorVC {
+    override func bind() {
+        super.bind()
+        
+        bindAttachments()
+    }
+    
     func bindAttachments() {
         _viewModel.attachments.skip(1)
             .subscribe(onNext: {[unowned self] (attachments) in
                 // remove bottom constraint
-                guard let bottomConstraint = self.contentView.constraints.first(where: {$0.firstAttribute == .bottom && ($0.firstItem as? BasicEditorTextView) == self.contentTextView})
-                    else {return}
-                self.contentTextView.removeConstraint(bottomConstraint)
+                if let bottomConstraint = self.contentView.constraints.first(where: {$0.firstAttribute == .bottom && ($0.firstItem as? BasicEditorTextView) == self.contentTextView})
+                {
+                    self.contentView.removeConstraint(bottomConstraint)
+                }
                 
                 self.attachmentsView.removeFromSuperview()
                 self.attachmentsView.removeAllConstraints()
@@ -28,12 +35,18 @@ extension BasicEditorVC {
                 
                 // construct attachmentsView
                 self.attachmentsView = AttachmentsView(forAutoLayout: ())
-                self.attachmentsView.didRemoveAttachmentAtIndex = { index in
-                    self._viewModel.removeAttachment(at: index)
+                self.attachmentsView.didRemoveAttachmentAtIndex = {[weak self] index in
+                    self?._viewModel.removeAttachment(at: index)
                 }
                 self.contentView.addSubview(self.attachmentsView)
                 self.attachmentsView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0), excludingEdge: .top)
                 self.attachmentsView.autoPinEdge(.top, to: .bottom, of: self.contentTextViewCountLabel, withOffset: 16)
+                
+                var height = self.view.bounds.width / 377 * 200
+                if attachments.count > 2  {
+                    height = height + height / 2
+                }
+                self.attachmentsView.autoSetDimension(.height, toSize: height)
                 
                 self.attachmentsView.setUp(with: attachments)
             })

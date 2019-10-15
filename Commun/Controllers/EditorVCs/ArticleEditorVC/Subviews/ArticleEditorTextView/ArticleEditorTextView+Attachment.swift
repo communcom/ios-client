@@ -22,7 +22,7 @@ extension ArticleEditorTextView {
     
     // MARK: - Methods
     private func addEmbed(_ embed: ResponseAPIFrameGetEmbed) {
-        guard let single = embed.toTextAttachmentSingle() else {return}
+        guard let single = embed.toTextAttachmentSingle(withSize: attachmentSize, forTextView: self) else {return}
         
         single
             .do(onSubscribe: {
@@ -33,11 +33,6 @@ extension ArticleEditorTextView {
                 onSuccess: { [weak self] (attachment) in
                     guard let strongSelf = self else {return}
                     strongSelf.parentViewController?.hideHud()
-                    
-                    var attachment = attachment
-                    
-                    // Add image to attachment
-                    strongSelf.add(attachment.localImage!, to: &attachment)
                     
                     // Add attachment
                     strongSelf.addAttachmentAtSelectedRange(attachment)
@@ -97,12 +92,8 @@ extension ArticleEditorTextView {
         // if image is local image
         if let image = image {
             // Insert Attachment
-            var attachment = TextAttachment()
-            attachment.embed = embed
-            attachment.localImage = image
-            
-            // Add image to attachment
-            add(image, to: &attachment)
+            let attachment = TextAttachment(embed: embed, localImage: image, size: attachmentSize)
+            attachment.delegate = parentViewController as? AttachmentViewDelegate
             
             // Add attachment
             addAttachmentAtSelectedRange(attachment)

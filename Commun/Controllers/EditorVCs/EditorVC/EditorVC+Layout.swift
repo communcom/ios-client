@@ -9,6 +9,14 @@
 import Foundation
 
 extension EditorVC {
+    @objc func layoutTopContentTextView() {
+        fatalError("Must override")
+    }
+    
+    @objc func layoutBottomContentTextView() {
+        fatalError("Must override this method")
+    }
+    
     func setUpToolbar() {
         view.addSubview(toolbar)
         toolbar.backgroundColor = .white

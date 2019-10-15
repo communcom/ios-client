@@ -22,16 +22,17 @@ class SetUserViewModel {
         let containsOnlyAllowedCharacters = userName.matches("^[a-z0-9-.]+$")
         
         // the presence of two dots side by side is not allowed
-        let twoDotsNotSideBySide = !userName.contains("..")
+        let twoNonAlphanumericCharacterNotSideBySide = !userName.contains("..") && !userName.contains(".-") && !userName.contains("-.") && !userName.contains("--")
         
         // the hyphen character "-" cannot be at the beginning or end of a username.
-        let hyphenIsNotAtBeginOrEnd = !userName.starts(with: "-") && !userName.ends(with: "-")
+        let nonAlphanumericCharacterIsNotAtBeginOrEnd = !userName.starts(with: "-") && !userName.ends(with: "-") &&
+            !userName.starts(with: ".") && !userName.ends(with: ".")
         
         return [
             isBetween5To32Characters,
             containsOnlyAllowedCharacters,
-            twoDotsNotSideBySide,
-            hyphenIsNotAtBeginOrEnd
+            twoNonAlphanumericCharacterNotSideBySide,
+            nonAlphanumericCharacterIsNotAtBeginOrEnd
         ]
     }
     

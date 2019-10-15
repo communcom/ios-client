@@ -12,6 +12,10 @@ import RxCocoa
 import RxSwift
 
 class BasicEditorVC: EditorVC {
+    // MARK: - Constants
+    let attachmentHeight: CGFloat = 300
+    let attachmentDraftKey = "BasicEditorVC.attachmentDraftKey"
+    
     // MARK: - Subviews
     var _contentTextView = BasicEditorTextView(forExpandable: ())
     override var contentTextView: ContentTextView {
@@ -41,45 +45,7 @@ class BasicEditorVC: EditorVC {
         }
     }
     
-    override func layoutTopContentTextView() {
-        contentTextView.autoPinEdge(.top, to: .bottom, of: communityAvatarImage, withOffset: 20)
-    }
-    
-    override func layoutBottomContentTextView() {
-        contentTextView.autoPinEdge(toSuperviewEdge: .bottom)
-    }
-    
-    override func bind() {
-        super.bind()
-        
-        bindAttachments()
-    }
-    
     // MARK: - overriding actions
-    override func addArticle() {
-        let showArticleVC = {[weak self] in
-            weak var presentingViewController = self?.presentingViewController
-            let attrStr = self?.contentTextView.attributedText
-            self?.dismiss(animated: true, completion: {
-                let vc = ArticleEditorVC()
-                vc.modalPresentationStyle = .fullScreen
-                presentingViewController?.present(vc, animated: true, completion: {
-                    vc.contentTextView.attributedText = attrStr
-                })
-            })
-        }
-        
-        if contentTextView.text.isEmpty {
-            showArticleVC()
-        }
-        else {
-            showAlert(title: "add article".localized().uppercaseFirst, message: "override current work and add a new article".localized().uppercaseFirst + "?", buttonTitles: ["OK".localized(), "cancel".localized().uppercaseFirst], highlightedButtonIndex: 0) { (index) in
-                if index == 0 {
-                    showArticleVC()
-                }
-            }
-        }
-    }
     
     override func didChooseImageFromGallery(_ image: UIImage, description: String? = nil) {
         
@@ -90,9 +56,8 @@ class BasicEditorVC: EditorVC {
         )
         embed.type = "image"
         
-        let attachment = TextAttachment()
-        attachment.embed = embed
-        attachment.localImage = image
+        let attachment = TextAttachment(embed: embed, localImage: image, size: CGSize(width: view.size.width, height: attachmentHeight))
+        attachment.delegate = self
         
         // Add embeds
         _viewModel.addAttachment(attachment)
