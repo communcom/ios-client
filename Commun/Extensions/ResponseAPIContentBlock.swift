@@ -159,18 +159,26 @@ extension ResponseAPIContentBlock {
             var attr = currentAttributes
             attr[.link] = url
             child.addAttributes(attr, range: NSMakeRange(0, child.length))
-        case "image":
+        case "image", "video", "website":
             // get url
-            guard let url = content.stringValue else {
+            var url: String?
+            if type == "image" {
+                url = content.stringValue ?? attributes?.url
+            }
+            else {
+                url = content.stringValue ?? attributes?.thumbnail_url
+            }
+            
+            guard url != nil else {
                 return NSAttributedString()
             }
             
             // set up attributes
             var attrs = attributes ?? ResponseAPIContentBlockAttributes(
-                type: "image",
+                type: type,
                 url: url)
             
-            attrs.type = "image"
+            attrs.type = type
             attrs.url = url
             
             // attachment
@@ -180,9 +188,6 @@ extension ResponseAPIContentBlock {
             child.append(attachmentAS)
             child.append(NSAttributedString.separator)
             child.addAttributes(currentAttributes, range: NSMakeRange(child.length - 1, 1))
-        case "video", "website":
-            // Atachment
-            return NSAttributedString()
         default:
             break
         }

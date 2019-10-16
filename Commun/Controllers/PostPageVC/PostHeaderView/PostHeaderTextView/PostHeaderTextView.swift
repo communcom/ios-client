@@ -20,7 +20,7 @@ class PostHeaderTextView: MySubviewAttachingTextView {
     
     var defaultAttributes: [NSAttributedString.Key : Any] {
         let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.paragraphSpacing = 8
+        paragraphStyle.paragraphSpacing = 20
         return [
             .font: defaultFont,
             .paragraphStyle: paragraphStyle
