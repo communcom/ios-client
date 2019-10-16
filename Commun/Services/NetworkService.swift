@@ -66,24 +66,37 @@ class NetworkService: NSObject {
     }
     
     // return transactionId
-    func sendPost(withTitle title: String, withText text: String, metaData json: String, withTags tags: [String]) -> Single<SendPostCompletion> {
-        return RestAPIManager.instance.rx.create(message:       text,
-                                                 headline:      title,
-                                                 author:        Config.currentUser?.id ?? "Commun",
-                                                 tags:          tags,
-                                                 metaData:      json)
+    func sendPost(
+        communCode: String,
+        title: String?,
+        body: String,
+        tags: [String]? = nil
+    ) -> Single<SendPostCompletion> {
+        return RestAPIManager.instance.rx.create(
+            commun_code: communCode,
+            message: body,
+            headline: title,
+            tags: tags
+        )
             .observeOn(MainScheduler.instance)
     }
     
-    func editPostWithPermlink(_ permlink: String, title: String, text: String, metaData json: String, withTags tags: [String])  -> Single<SendPostCompletion> {
+    func editPostWithPermlink(
+        _ permlink: String,
+        communCode: String,
+        title: String?,
+        text: String,
+        tags: [String]
+    ) -> Single<SendPostCompletion> {
+        
+        #warning("fix communCode")
         return RestAPIManager.instance.rx.updateMessage(
-                permlink:       permlink,
-                parentPermlink: nil,
-                headline:       title,
-                message:        text,
-                tags:           tags,
-                metaData:       json
-            )
+            communCode:     communCode,
+            permlink:       permlink,
+            headline:       title,
+            message:        text,
+            tags:           tags
+        )
             .observeOn(MainScheduler.instance)
     }
     
@@ -91,16 +104,23 @@ class NetworkService: NSObject {
         return RestAPIManager.instance.waitForTransactionWith(id: id)
     }
     
-    func sendComment(withMessage comment: String, parentAuthor: String, parentPermlink: String, metaData: String = "", tags: [String]) -> Completable {
-        return RestAPIManager.instance.rx.create(message:           comment,
-                                                 parentPermlink:    parentPermlink,
-                                                 author:            parentAuthor,
-                                                 tags:              tags,
-                                                 metaData:          metaData
-            )
+    func sendComment(
+        communCode:             String,
+        parentAuthor:           String,
+        parentPermlink:         String,
+        message:                String,
+        tags:                   [String]? = nil
+    ) -> Completable {
+        
+        return RestAPIManager.instance.rx.create(
+            commun_code: communCode,
+            message: message,
+            parentPermlink: parentPermlink,
+            parentAuthor: parentAuthor,
+            tags: tags
+        )
             .flatMapCompletable({ (msgInfo) -> Completable in
                 #warning("Remove this chaining to use socket in production")
-                
                 return self.waitForTransactionWith(id: msgInfo.transactionId!)
             })
             .observeOn(MainScheduler.instance)

@@ -38,7 +38,7 @@ class BasicEditorTextView: ContentTextView {
         typingAttributes = defaultTypingAttributes
     }
     
-    override func getContentBlock(postTitle: String? = nil) -> Single<ResponseAPIContentBlock> {
+    override func getContentBlock() -> Single<ResponseAPIContentBlock> {
         // spend id = 1 for PostBlock, so id starts from 1
         var id: UInt64 = 1
         
@@ -60,7 +60,6 @@ class BasicEditorTextView: ContentTextView {
                     id: 1,
                     type: "post",
                     attributes: ResponseAPIContentBlockAttributes(
-                        title: postTitle,
                         type: self.acceptedPostType,
                         version: "1.0"
                     ),

@@ -23,10 +23,10 @@ class CommentsFetcher: ItemsFetcher<ResponseAPIContentGetComment> {
             result = NetworkService.shared.getUserComments(sequenceKey, nickName: userId)
         }
         return result
-            .do(onSuccess: { (result) in
-                // assign next sequenceKey
-                self.sequenceKey = result.sequenceKey
-            })
+//            .do(onSuccess: { (result) in
+//                // assign next sequenceKey
+//                self.sequenceKey = result.sequenceKey
+//            })
             .map {$0.items ?? []}
     }
 }

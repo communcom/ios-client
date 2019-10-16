@@ -82,7 +82,7 @@ class PostPageViewModel: CommentsListController, ListViewModelType {
                     newList = strongSelf.items.value + newList
                     
                     // sort
-                    newList = strongSelf.sortComments(newList)
+//                    newList = strongSelf.sortComments(newList)
                     
                     // resign
                     strongSelf.items.accept(newList)
@@ -103,37 +103,37 @@ class PostPageViewModel: CommentsListController, ListViewModelType {
         fetchNext()
     }
     
-    func sortComments(_ comments: [ResponseAPIContentGetComment]) -> [ResponseAPIContentGetComment] {
-        guard comments.count > 0 else {return []}
-        
-        // result array
-        let result = comments.filter {$0.parent.comment == nil}
-            .reduce([GroupedComment]()) { (result, comment) -> [GroupedComment] in
-                return result + [GroupedComment(comment: comment, replies: getChildForComment(comment, in: comments))]
-        }
-        
-        return flat(result)
-    }
-    
-    var maxNestedLevel = 6
-    
-    func getChildForComment(_ comment: ResponseAPIContentGetComment, in source: [ResponseAPIContentGetComment]) -> [GroupedComment] {
-        
-        var result = [GroupedComment]()
-        
-        // filter child
-        let childComments = source
-            .filter {$0.parent.comment?.contentId?.permlink == comment.contentId.permlink && $0.parent.comment?.contentId?.userId == comment.contentId.userId}
-        
-        if childComments.count > 0 {
-            // append child
-            result = childComments.reduce([GroupedComment](), { (result, comment) -> [GroupedComment] in
-                return result + [GroupedComment(comment: comment, replies: getChildForComment(comment, in: source))]
-            })
-        }
-        
-        return result
-    }
+//    func sortComments(_ comments: [ResponseAPIContentGetComment]) -> [ResponseAPIContentGetComment] {
+//        guard comments.count > 0 else {return []}
+//
+//        // result array
+//        let result = comments.filter {$0.parents.comment == nil}
+//            .reduce([GroupedComment]()) { (result, comment) -> [GroupedComment] in
+//                return result + [GroupedComment(comment: comment, replies: getChildForComment(comment, in: comments))]
+//        }
+//
+//        return flat(result)
+//    }
+//
+//    var maxNestedLevel = 6
+//
+//    func getChildForComment(_ comment: ResponseAPIContentGetComment, in source: [ResponseAPIContentGetComment]) -> [GroupedComment] {
+//
+//        var result = [GroupedComment]()
+//
+//        // filter child
+//        let childComments = source
+//            .filter {$0.parents.comment?.contentId.permlink == comment.contentId.permlink && $0.parents.comment.contentId.userId == comment.contentId.userId}
+//
+//        if childComments.count > 0 {
+//            // append child
+//            result = childComments.reduce([GroupedComment](), { (result, comment) -> [GroupedComment] in
+//                return result + [GroupedComment(comment: comment, replies: getChildForComment(comment, in: source))]
+//            })
+//        }
+//
+//        return result
+//    }
     
     func flat(_ array:[GroupedComment]) -> [ResponseAPIContentGetComment] {
         var myArray = [ResponseAPIContentGetComment]()

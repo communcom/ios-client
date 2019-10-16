@@ -78,7 +78,7 @@ class CommentCell: UITableViewCell {
         self.expanded = expanded
         
         // if comment is a reply
-        if comment.parent.comment != nil {
+        if comment.parents.comment != nil {
             leftPaddingConstraint.constant = 72
         } else {
             leftPaddingConstraint.constant = 16
@@ -114,7 +114,7 @@ class CommentCell: UITableViewCell {
         upVoteButton.tintColor = comment.votes.hasUpVote ?? false ? themeColor: .lightGray
         downVoteButton.tintColor = comment.votes.hasDownVote ?? false ? themeColor: .lightGray
         
-        timeLabel.text = Date.timeAgo(string: comment.meta.time)
+        timeLabel.text = Date.timeAgo(string: comment.meta.creationTime)
         
         // observe changge
         observeCommentChanged()
@@ -147,7 +147,7 @@ class CommentCell: UITableViewCell {
     }
     
     func setText(expanded: Bool = false) {
-        guard let content = comment?.content.body.toAttributedString(currentAttributes: [.font: UIFont.boldSystemFont(ofSize: defaultContentFontSize)]) else {return}
+        guard let content = comment?.content.toAttributedString(currentAttributes: [.font: UIFont.boldSystemFont(ofSize: defaultContentFontSize)]) else {return}
         
         let userId = comment?.author?.username ?? comment?.author?.userId ?? "Unknown user"
         let mutableAS = NSMutableAttributedString(string: userId, attributes: [

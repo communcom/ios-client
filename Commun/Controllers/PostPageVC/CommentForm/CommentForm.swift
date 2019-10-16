@@ -107,7 +107,9 @@ class CommentForm: UIView {
                 .subscribe(onSuccess: {[weak self] url in
                     guard let strongSelf = self else {return}
                     
-                    strongSelf.sendComment(text: strongSelf.textView.text, metaData: strongSelf.prepareEmbeds(imageURL: url) ?? "", tags: strongSelf.textView.text.getTags())
+                    strongSelf.sendComment(
+                        text: strongSelf.textView.text,
+                        tags: strongSelf.textView.text.getTags())
                     
                 }, onError: {[weak self] error in
                     self?.sendButton.isEnabled = true
@@ -115,21 +117,23 @@ class CommentForm: UIView {
                 })
                 .disposed(by: bag)
         } else {
-            sendComment(text: textView.text, metaData: prepareEmbeds() ?? "", tags: textView.text.getTags())
+            sendComment(text: textView.text, tags: textView.text.getTags())
         }
     }
     
-    func sendComment(text: String, metaData: String, tags: [String]) {
+    func sendComment(text: String, tags: [String]) {
         var text = text
         // support posting image without text
         if text == "" {text = "  "}
         
+        #warning("fix commun code")
         NetworkService.shared.sendComment(
-            withMessage:       text,
-            parentAuthor:      parentAuthor ?? "",
-            parentPermlink:    parentPermlink ?? "",
-            metaData:          metaData,
-            tags:              tags)
+        communCode:         "CATS",
+        parentAuthor:       parentAuthor ?? "",
+            parentPermlink: parentPermlink ?? "",
+            message:        text,
+            tags:           tags
+        )
             .do(onSubscribe: { [weak self] in
                 self?.sendButton.isEnabled = false
             })
@@ -146,29 +150,6 @@ class CommentForm: UIView {
                 self?.commentDidFailedToSend.onNext(error)
             })
             .disposed(by: bag)
-    }
-    
-    func prepareEmbeds(imageURL: String? = nil) -> String? {
-        var embeds = [[String: Any]]()
-        if let url = imageURL {
-            // Add photo
-            embeds.append([
-                "type": "photo",
-                "url": url,
-                "id": Int(Date().timeIntervalSince1970)
-                ])
-        }
-        
-        for word in textView.text.components(separatedBy: " ") {
-            if word.contains("http://") || word.contains("https://") {
-                embeds.append(["url": word])
-            }
-        }
-        
-        // Prepare embeded
-        let json = ["embeds": embeds]
-        
-        return json.jsonString()
     }
     
 }

@@ -73,7 +73,7 @@ final class TextAttachment: SubviewTextAttachment {
                         return ResponseAPIContentBlock(
                             id: newId,
                             type: "image",
-                            attributes: ResponseAPIContentBlockAttributes(embed: embed),
+                            attributes: nil,
                             content: .string(url))
                     }
             }
@@ -84,14 +84,12 @@ final class TextAttachment: SubviewTextAttachment {
         }
         
         id += 1
-        let attributes = ResponseAPIContentBlockAttributes (
-            url: embed.url
-        )
+        
         return .just(
             ResponseAPIContentBlock(
                 id: id,
                 type: type,
-                attributes: attributes,
+                attributes: nil,
                 content: .string(url!))
         )
     }

@@ -32,7 +32,7 @@ extension EditorVC {
                         self.dismiss(animated: true, completion: nil)
                     }
                 }
-                
+                    
                 else if index == 1 {
                     // remove draft if exists
                     self.removeDraft()
@@ -63,18 +63,18 @@ extension EditorVC {
         view.endEditing(true)
         
         chooseFromGallery()
-//        showActionSheet(title:     "add image".localized().uppercaseFirst,
-//                             actions:   [
-//                                UIAlertAction(title:    "choose from gallery".localized().uppercaseFirst,
-//                                              style:    .default,
-//                                              handler:  { _ in
-//                                                self.chooseFromGallery()
-//                                }),
-//                                UIAlertAction(title:   "insert image from URL".localized().uppercaseFirst,
-//                                              style:    .default,
-//                                              handler:  { _ in
-//                                                self.selectImageFromUrl()
-//                                })])
+        //        showActionSheet(title:     "add image".localized().uppercaseFirst,
+        //                             actions:   [
+        //                                UIAlertAction(title:    "choose from gallery".localized().uppercaseFirst,
+        //                                              style:    .default,
+        //                                              handler:  { _ in
+        //                                                self.chooseFromGallery()
+        //                                }),
+        //                                UIAlertAction(title:   "insert image from URL".localized().uppercaseFirst,
+        //                                              style:    .default,
+        //                                              handler:  { _ in
+        //                                                self.selectImageFromUrl()
+        //                                })])
     }
     
     func chooseFromGallery() {
@@ -104,29 +104,29 @@ extension EditorVC {
             .disposed(by: disposeBag)
     }
     
-//    func selectImageFromUrl() {
-//        let alert = UIAlertController(
-//            title:          "select image".localized().uppercaseFirst,
-//            message:        "select image from an URL".localized().uppercaseFirst,
-//            preferredStyle: .alert)
-//        
-//        alert.addTextField { field in
-//            field.placeholder = "image URL".localized().uppercaseFirst
-//        }
-//        
-//        alert.addTextField { field in
-//            field.placeholder = "description".localized().uppercaseFirst + "(" + "optional".localized() + ")"
-//        }
-//        
-//        alert.addAction(UIAlertAction(title: "add".localized().uppercaseFirst, style: .cancel, handler: {[weak self] _ in
-//            guard let urlString = alert.textFields?.first?.text else { return }
-//            self?.didAddImageFromURLString(urlString, description: alert.textFields?.last?.text)
-//        }))
-//        
-//        alert.addAction(UIAlertAction(title: "cancel".localized().uppercaseFirst, style: .default, handler: nil))
-//        
-//        present(alert, animated: true, completion: nil)
-//    }
+    //    func selectImageFromUrl() {
+    //        let alert = UIAlertController(
+    //            title:          "select image".localized().uppercaseFirst,
+    //            message:        "select image from an URL".localized().uppercaseFirst,
+    //            preferredStyle: .alert)
+    //
+    //        alert.addTextField { field in
+    //            field.placeholder = "image URL".localized().uppercaseFirst
+    //        }
+    //
+    //        alert.addTextField { field in
+    //            field.placeholder = "description".localized().uppercaseFirst + "(" + "optional".localized() + ")"
+    //        }
+    //
+    //        alert.addAction(UIAlertAction(title: "add".localized().uppercaseFirst, style: .cancel, handler: {[weak self] _ in
+    //            guard let urlString = alert.textFields?.first?.text else { return }
+    //            self?.didAddImageFromURLString(urlString, description: alert.textFields?.last?.text)
+    //        }))
+    //
+    //        alert.addAction(UIAlertAction(title: "cancel".localized().uppercaseFirst, style: .default, handler: nil))
+    //
+    //        present(alert, animated: true, completion: nil)
+    //    }
     
     // MARK: - Add link
     func addLink() {
@@ -164,9 +164,9 @@ extension EditorVC {
             
             alert.addAction(UIAlertAction(title: "add".localized().uppercaseFirst, style: .cancel, handler: {[weak self] _ in
                 guard let urlString = alert.textFields?.first?.text
-                else {
-                    self?.showErrorWithMessage("URL".localized() + " " + "is missing".localized())
-                    return
+                    else {
+                        self?.showErrorWithMessage("URL".localized() + " " + "is missing".localized())
+                        return
                 }
                 self?.contentTextView.selectedRange = currentSelectedRange
                 self?.didAddLink(urlString, placeholder: alert.textFields?.last?.text)
@@ -199,73 +199,73 @@ extension EditorVC {
     
     // MARK: - Send post
     @objc func sendPost() {
-       self.view.endEditing(true)
-       
-       // remove draft
-       removeDraft()
-       
-       getContentBlock()
-           .observeOn(MainScheduler.instance)
-           .do(onSubscribe: {
-               self.showIndetermineHudWithMessage(
-                       "uploading".localized().uppercaseFirst)
-           })
-           .flatMap { block in
+        self.view.endEditing(true)
+        
+        // remove draft
+        removeDraft()
+        
+        getContentBlock()
+            .observeOn(MainScheduler.instance)
+            .do(onSubscribe: {
+                self.showIndetermineHudWithMessage(
+                    "uploading".localized().uppercaseFirst)
+            })
+            .flatMap { block in
                 //clean
                 var block = block
                 block.maxId = nil
-               return self.viewModel.sendPost(title: self.postTitle ?? " ", block: block)
-           }
-           .do(onSubscribe: {
-               self.showIndetermineHudWithMessage(
-                       "sending post".localized().uppercaseFirst)
-           })
-           .flatMap {
-               self.viewModel.waitForTransaction($0)
-           }
-           .do(onSubscribe: {
-               self.showIndetermineHudWithMessage(
-                       "wait for transaction".localized().uppercaseFirst)
-           })
-           .subscribe(onSuccess: { (userId, permlink) in
-               self.hideHud()
-               // if editing post
-               if (self.viewModel.postForEdit) != nil {
-                   self.dismiss(animated: true, completion: nil)
-               }
-               // if creating post
-               else {
-                   // show post page
-                   let postPageVC = controllerContainer.resolve(PostPageVC.self)!
-                   postPageVC.viewModel.permlink = permlink
-                   postPageVC.viewModel.userId = userId
-                   
-                   self.dismiss(animated: true) {
-                       UIApplication.topViewController()?.show(postPageVC, sender: nil)
-                   }
-               }
-           }) { (error) in
-               self.hideHud()
-               if let error = error as? ErrorAPI {
-                   switch error {
-                   case .responseUnsuccessful(message: "post not found".localized().uppercaseFirst):
-                       self.dismiss(animated: true, completion: nil)
-                       break
-                   case .blockchain(message: let message):
-                       self.showAlert(title: "error".localized().uppercaseFirst, message: message)
-                       break
-                   default:
-                       break
-                   }
-               }
-               self.showError(error)
-           }
-           .disposed(by: disposeBag)
-       }
+                return self.viewModel.sendPost(title: self.postTitle, block: block)
+        }
+        .do(onSubscribe: {
+            self.showIndetermineHudWithMessage(
+                "sending post".localized().uppercaseFirst)
+        })
+            .flatMap {
+                self.viewModel.waitForTransaction($0)
+        }
+        .do(onSubscribe: {
+            self.showIndetermineHudWithMessage(
+                "wait for transaction".localized().uppercaseFirst)
+        })
+            .subscribe(onSuccess: { (userId, permlink) in
+                self.hideHud()
+                // if editing post
+                if (self.viewModel.postForEdit) != nil {
+                    self.dismiss(animated: true, completion: nil)
+                }
+                    // if creating post
+                else {
+                    // show post page
+                    let postPageVC = controllerContainer.resolve(PostPageVC.self)!
+                    postPageVC.viewModel.permlink = permlink
+                    postPageVC.viewModel.userId = userId
+                    
+                    self.dismiss(animated: true) {
+                        UIApplication.topViewController()?.show(postPageVC, sender: nil)
+                    }
+                }
+            }) { (error) in
+                self.hideHud()
+                if let error = error as? ErrorAPI {
+                    switch error {
+                    case .responseUnsuccessful(message: "post not found".localized().uppercaseFirst):
+                        self.dismiss(animated: true, completion: nil)
+                        break
+                    case .blockchain(message: let message):
+                        self.showAlert(title: "error".localized().uppercaseFirst, message: message)
+                        break
+                    default:
+                        break
+                    }
+                }
+                self.showError(error)
+        }
+        .disposed(by: disposeBag)
+    }
     
     func previewAttachment(_ attachment: TextAttachment) {
         guard let type = attachment.embed?.type else {return}
-
+        
         switch type {
         case "website", "video":
             guard let urlString = attachment.embed?.url,
@@ -286,8 +286,8 @@ extension EditorVC {
                         let appImage = ViewerImage.appImage(forImage: image)
                         let viewer = AppImageViewer(photos: [appImage])
                         self?.present(viewer, animated: false, completion: nil)
-                    }, onError: {[weak self] (error) in
-                        self?.showError(error)
+                        }, onError: {[weak self] (error) in
+                            self?.showError(error)
                     })
                     .disposed(by: self.disposeBag)
             }

@@ -15,7 +15,7 @@ class EditorViewModel {
     var postForEdit: ResponseAPIContentGetPost?
     var isAdult = false
     
-    func sendPost(title: String, block: ResponseAPIContentBlock) -> Single<SendPostCompletion> {
+    func sendPost(title: String?, block: ResponseAPIContentBlock) -> Single<SendPostCompletion> {
         // Prepare tags
         var tags = block.getTags()
         if isAdult {tags.append("18+")}
@@ -30,13 +30,25 @@ class EditorViewModel {
         
         // If editing post
         var request: Single<SendPostCompletion>!
+        
+        #warning("fix communCode")
         if let post = self.postForEdit {
-            request = NetworkService.shared.editPostWithPermlink(post.contentId.permlink, title: title, text: string, metaData: "", withTags: tags)
+            request = NetworkService.shared.editPostWithPermlink(
+                post.contentId.permlink,
+                communCode: "CATS",
+                title: title,
+                text: string,
+                tags: tags)
         }
             
         // If creating new post
         else {
-            request = NetworkService.shared.sendPost(withTitle: title, withText: string, metaData: "", withTags: tags)
+            request = NetworkService.shared.sendPost(
+                communCode: "CATS",
+                title: title,
+                body: string,
+                tags: tags
+            )
         }
         
         // Request, then notify changes

@@ -151,6 +151,6 @@ class EditorVC: UIViewController {
     }
     
     func getContentBlock() -> Single<ResponseAPIContentBlock> {
-        contentTextView.getContentBlock(postTitle: postTitle)
+        contentTextView.getContentBlock()
     }
 }

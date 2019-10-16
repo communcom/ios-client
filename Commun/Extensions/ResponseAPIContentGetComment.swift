@@ -26,10 +26,10 @@ extension ResponseAPIContentGetComment: Equatable, IdentifiableType {
     }
     
     var firstEmbedImageURL: String? {
-        return content.body.content.arrayValue?.first(where: {$0.type == "attachments"})?.content.arrayValue?.first?.attributes?.thumbnail_url
+        return content.content.arrayValue?.first(where: {$0.type == "attachments"})?.content.arrayValue?.first?.attributes?.thumbnail_url
     }
     
     var attachments: [ResponseAPIContentBlock] {
-        return content.body.content.arrayValue?.first(where: {$0.type == "attachments"})?.content.arrayValue ?? []
+        return content.content.arrayValue?.first(where: {$0.type == "attachments"})?.content.arrayValue ?? []
     }
 }
