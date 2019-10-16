@@ -13,13 +13,13 @@ extension ArticleEditorTextView {
     // MARK: - Attachment helper    
     func canAddAttachment(_ attachment: TextAttachment) -> Bool {
         var embedCount = 1
-        var videoCount = attachment.embed?.type == "video" ? 1 : 0
+        var videoCount = attachment.attributes?.type == "video" ? 1 : 0
         
         // Count attachments
         textStorage.enumerateAttribute(.attachment, in: NSMakeRange(0, textStorage.length), options: []) { (attr, range, stop) in
             if let attr = attr as? TextAttachment {
                 embedCount += 1
-                if attr.embed?.type == "video"
+                if attr.attributes?.type == "video"
                 {
                     videoCount += 1
                 }
@@ -55,7 +55,7 @@ extension ArticleEditorTextView {
     }
     
     func replaceCharacters(in range: NSRange, with attachment: TextAttachment) {
-        let attachment = TextAttachment(embed: attachment.embed, localImage: attachment.localImage, size: attachmentSize)
+        let attachment = TextAttachment(attributes: attachment.attributes, localImage: attachment.localImage, size: attachmentSize)
         attachment.delegate = parentViewController as? AttachmentViewDelegate
         let attachmentAS = NSAttributedString(attachment: attachment)
         textStorage.replaceCharacters(in: range, with: attachmentAS)

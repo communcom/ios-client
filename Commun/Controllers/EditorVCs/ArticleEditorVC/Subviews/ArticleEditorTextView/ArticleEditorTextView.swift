@@ -72,13 +72,13 @@ class ArticleEditorTextView: ContentTextView {
         textStorage.enumerateAttribute(.attachment, in: NSMakeRange(0, textStorage.length), options: []) { (value, range, bool) in
             // Get empty attachment
             guard let attachment = value as? TextAttachment,
-                let embed = attachment.embed
+                let attributes = attachment.attributes
                 else {return}
 
             // get image url or thumbnail (for website or video)
-            var imageURL = embed.url
-            if embed.type == "video" || embed.type == "website" {
-                imageURL = embed.thumbnail_url
+            var imageURL = attributes.url
+            if attributes.type == "video" || attributes.type == "website" {
+                imageURL = attributes.thumbnail_url
             }
 
             // don't know why, but has to add dummy text, length = 1

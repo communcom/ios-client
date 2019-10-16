@@ -90,7 +90,19 @@ class AttachmentView: UIView {
         descriptionView.removeFromSuperview()
         
         // image
-        imageView.image = image
+        if let image = image {
+            imageView.image = image
+        }
+        else if let urlString = url,
+            let url = URL(string: urlString)
+        {
+            showLoading()
+            imageView.sd_setImageCachedError(with: url) {[weak self] (error, image) in
+                self?.hideLoading()
+            }
+        }
+        
+        
         
         // description
         var url = url

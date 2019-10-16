@@ -101,12 +101,12 @@ extension ResponseAPIContentBlock {
         }
     }
     
-    func toAttributedString(currentAttributes: [NSAttributedString.Key: Any]) -> NSAttributedString {
+    func toAttributedString(currentAttributes: [NSAttributedString.Key: Any], attachmentSize: CGSize = .zero) -> NSAttributedString {
         let child = NSMutableAttributedString()
         switch content {
         case .array(let array):
             for inner in array {
-                child.append(inner.toAttributedString(currentAttributes: currentAttributes))
+                child.append(inner.toAttributedString(currentAttributes: currentAttributes, attachmentSize: attachmentSize))
             }
             
         case .string(let string):
@@ -159,27 +159,30 @@ extension ResponseAPIContentBlock {
             var attr = currentAttributes
             attr[.link] = url
             child.addAttributes(attr, range: NSMakeRange(0, child.length))
-        case "image", "video", "website":
-            // Atachment
-            guard let attributes = attributes,
-                let embed = try? ResponseAPIFrameGetEmbed(blockAttributes: attributes)
-            else {return NSAttributedString()}
-            
-            // dummy attachment
-            let attachment = TextAttachment(embed: embed, localImage: nil, size: .zero)
-            
-            attachment.embed?.type = type
-            switch content {
-            case .string(let url):
-                attachment.embed!.url = url
-            default:
-                break
+        case "image":
+            // get url
+            guard let url = content.stringValue else {
+                return NSAttributedString()
             }
             
+            // set up attributes
+            var attrs = attributes ?? ResponseAPIContentBlockAttributes(
+                type: "image",
+                url: url)
+            
+            attrs.type = "image"
+            attrs.url = url
+            
+            // attachment
+            let attachment = TextAttachment(attributes: attrs, localImage: nil, size: attachmentSize)
+            attachment.attachmentView?.showCloseButton = false
             let attachmentAS = NSAttributedString(attachment: attachment)
             child.append(attachmentAS)
             child.append(NSAttributedString.separator)
             child.addAttributes(currentAttributes, range: NSMakeRange(child.length - 1, 1))
+        case "video", "website":
+            // Atachment
+            return NSAttributedString()
         default:
             break
         }

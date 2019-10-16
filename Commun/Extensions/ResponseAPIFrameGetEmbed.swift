@@ -20,19 +20,17 @@ extension ResponseAPIFrameGetEmbed {
     
 
     func toTextAttachmentSingle(withSize size: CGSize, forTextView textView: UITextView) -> Single<TextAttachment>? {
-        var embed = self
-        guard embed.type != nil else {return nil}
+        guard type != nil else {return nil}
         
         // url for images
-        var urlString = embed.url
+        var urlString = url
         
         // Fix conflict type
-        if embed.type == "photo" {embed.type = "image"}
-        if embed.type == "link" {embed.type = "website"}
+        let attributes = ResponseAPIContentBlockAttributes(embed: self)
         
         // thumbnail for website and video
-        if embed.type == "website" || embed.type == "video" {
-            urlString = embed.thumbnail_url
+        if type == "website" || type == "video" {
+            urlString = thumbnail_url
         }
         
         // request
@@ -49,7 +47,7 @@ extension ResponseAPIFrameGetEmbed {
         return downloadImage
             .map { (image) -> TextAttachment in
                 // Insert Attachment
-                let attachment = TextAttachment(embed: embed, localImage: image, size: size)
+                let attachment = TextAttachment(attributes: attributes, localImage: image, size: size)
                 attachment.delegate = textView.parentViewController as? AttachmentViewDelegate
                 return attachment
             }

@@ -27,7 +27,7 @@ class AttachmentsView: UIView {
         var attachmentViews = [AttachmentView]()
         
         if attachments.count == 1,
-            attachments[0].embed?.type == "website" || attachments[0].embed?.type == "video"
+            attachments[0].attributes?.type == "website" || attachments[0].attributes?.type == "video"
         {
             let attachmentView = AttachmentView(forAutoLayout: ())
             attachmentView.attachment = attachments[0]
@@ -35,7 +35,7 @@ class AttachmentsView: UIView {
             attachmentView.tag = 0
             attachmentView.delegate = self
             
-            attachmentView.setUp(image: attachments[0].localImage, url: attachments[0].embed?.url, description: attachments[0].embed?.title ?? attachments[0].embed?.description)
+            attachmentView.setUp(image: attachments[0].localImage, url: attachments[0].attributes?.url, description: attachments[0].attributes?.title ?? attachments[0].attributes?.description)
             
             attachmentViews.append(attachmentView)
         }

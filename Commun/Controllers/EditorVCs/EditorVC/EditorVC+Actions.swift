@@ -264,11 +264,11 @@ extension EditorVC {
     }
     
     func previewAttachment(_ attachment: TextAttachment) {
-        guard let type = attachment.embed?.type else {return}
+        guard let type = attachment.attributes?.type else {return}
         
         switch type {
         case "website", "video":
-            guard let urlString = attachment.embed?.url,
+            guard let urlString = attachment.attributes?.url,
                 let url = URL(string: urlString) else {return}
             let safariVC = SFSafariViewController(url: url)
             present(safariVC, animated: true, completion: nil)
@@ -278,7 +278,7 @@ extension EditorVC {
                 let viewer = AppImageViewer(photos: [appImage])
                 present(viewer, animated: false, completion: nil)
             }
-            else if let imageUrl = attachment.embed?.url,
+            else if let imageUrl = attachment.attributes?.url,
                 let url = URL(string: imageUrl)
             {
                 NetworkService.shared.downloadImage(url)

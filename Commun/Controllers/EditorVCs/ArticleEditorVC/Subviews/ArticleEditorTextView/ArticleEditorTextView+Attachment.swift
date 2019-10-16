@@ -82,17 +82,15 @@ extension ArticleEditorTextView {
     
     // MARK: - Image
     func addImage(_ image: UIImage? = nil, urlString: String? = nil, description: String? = nil) {
-        var embed = try! ResponseAPIFrameGetEmbed(
-            blockAttributes: ResponseAPIContentBlockAttributes(
-                url: urlString, description: description
-            )
+        var attributes = ResponseAPIContentBlockAttributes(
+            url: urlString, description: description
         )
-        embed.type = "image"
+        attributes.type = "image"
         
         // if image is local image
         if let image = image {
             // Insert Attachment
-            let attachment = TextAttachment(embed: embed, localImage: image, size: attachmentSize)
+            let attachment = TextAttachment(attributes: attributes, localImage: image, size: attachmentSize)
             attachment.delegate = parentViewController as? AttachmentViewDelegate
             
             // Add attachment
@@ -100,7 +98,7 @@ extension ArticleEditorTextView {
         }
             
         // if image is from link
-        else {
+        else if let embed = try? ResponseAPIFrameGetEmbed(blockAttributes: attributes) {
             addEmbed(embed)
         }
     }

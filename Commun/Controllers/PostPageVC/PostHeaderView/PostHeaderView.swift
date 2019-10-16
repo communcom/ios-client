@@ -28,9 +28,8 @@ class PostHeaderView: UIView, UIWebViewDelegate, PostController {
     
     // Content
     @IBOutlet weak var postTitleLabel: UILabel!
-    @IBOutlet weak var titleToWebViewSpaceConstraint: NSLayoutConstraint!
-    @IBOutlet weak var contentWebView: HTMLStringWebView!
-    @IBOutlet weak var contentWebViewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var titleToContentTextViewSpaceConstraint: NSLayoutConstraint!
+    @IBOutlet weak var contentTextView: PostHeaderTextView!
     
     // Buttons
     @IBOutlet weak var upVoteButton: UIButton!
@@ -71,11 +70,11 @@ class PostHeaderView: UIView, UIWebViewDelegate, PostController {
             // Show title
             postTitleLabel.text = post.content.attributes?.title
             
-            titleToWebViewSpaceConstraint.constant = 20
+            titleToContentTextViewSpaceConstraint.constant = 20
         }
         else {
             postTitleLabel.text = nil
-            titleToWebViewSpaceConstraint.constant = 0
+            titleToContentTextViewSpaceConstraint.constant = 0
         }
         
         // Show count label
@@ -94,22 +93,10 @@ class PostHeaderView: UIView, UIWebViewDelegate, PostController {
         
         // Show content
         // Parse data
-        let html = post.content.toHTML()
-        contentWebView.scrollView.contentInset = UIEdgeInsets(top: -8, left: 0, bottom: 0, right: 0)
-        contentWebView.loadHTMLString(html, baseURL: nil)
-        contentWebView.delegate = self
-        contentWebView.scrollView.isScrollEnabled = false
-        contentWebView.scrollView.bouncesZoom = false
-    }
-    
-    func webViewDidStartLoad(_ webView: UIWebView) {
-        webView.showLoading()
-    }
-    
-    func webViewDidFinishLoad(_ webView: UIWebView) {
-        webView.hideLoading()
-        let height  = webView.contentHeight
-        contentWebViewHeightConstraint.constant = height + 16
+        let attributedString = post.content.toAttributedString(currentAttributes: [.font: UIFont.systemFont(ofSize: 17)], attachmentSize: CGSize(width: contentTextView.width - contentTextView.contentInset.left - contentTextView.contentInset.right, height: 200))
+        
+        contentTextView.attributedText = attributedString
+        layoutSubviews()
     }
     
     func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebView.NavigationType) -> Bool {

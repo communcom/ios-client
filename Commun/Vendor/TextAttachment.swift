@@ -21,7 +21,7 @@ final class TextAttachment: SubviewTextAttachment {
     
     // embed
     var size: CGSize?
-    var embed: ResponseAPIFrameGetEmbed?
+    var attributes: ResponseAPIContentBlockAttributes?
     var localImage: UIImage?
     var attachmentView: AttachmentView?
     
@@ -32,18 +32,18 @@ final class TextAttachment: SubviewTextAttachment {
     }
     
     var placeholderText: String {
-        return "!\(embed?.type == "image" ? "": embed?.type ?? "")[\(embed?.description ?? "")](\(embed?.url ?? "id=\(id)"))"
+        return "!\(attributes?.type == "image" ? "": attributes?.type ?? "")[\(attributes?.description ?? "")](\(attributes?.url ?? "id=\(id)"))"
     }
     
     override var description: String {
         return "TextAttachment(\(placeholderText))"
     }
     
-    convenience init(embed: ResponseAPIFrameGetEmbed?, localImage: UIImage?, size: CGSize) {
+    convenience init(attributes: ResponseAPIContentBlockAttributes?, localImage: UIImage?, size: CGSize) {
         let attachmentView = AttachmentView(frame: .zero)
-        attachmentView.setUp(image: localImage, url: embed?.url, description: embed?.title ?? embed?.description)
+        attachmentView.setUp(image: localImage, url: attributes?.url, description: attributes?.title ?? attributes?.description)
         self.init(view: attachmentView, size: size)
-        self.embed = embed
+        self.attributes = attributes
         self.localImage = localImage
         self.size = size
         self.attachmentView = attachmentView
@@ -53,23 +53,23 @@ final class TextAttachment: SubviewTextAttachment {
     }
     
     func toSingleContentBlock(id: inout UInt64) -> Single<ResponseAPIContentBlock>? {
-        guard var embed = embed,
-            let type = embed.type
+        guard var attributes = attributes,
+            let type = attributes.type
         else {
             return nil
         }
         
         // Prevent sending html
-        embed.html = nil
+        attributes.html = nil
         
-        let url = embed.url
+        let url = attributes.url
         if url == nil {
             if type == "image", let image = localImage {
                 id += 1
                 let newId = id
                 return NetworkService.shared.uploadImage(image)
                     .map { url in
-                        embed.url = url
+                        attributes.url = url
                         return ResponseAPIContentBlock(
                             id: newId,
                             type: "image",
@@ -97,7 +97,7 @@ final class TextAttachment: SubviewTextAttachment {
 
 extension TextAttachment: Codable {
     enum CodingKeys: String, CodingKey {
-        case embed
+        case attributes
         case localImage
         case id
         case size
@@ -106,7 +106,7 @@ extension TextAttachment: Codable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(id, forKey: .id)
-        try container.encode(embed, forKey: .embed)
+        try container.encode(attributes, forKey: .attributes)
         try container.encode(size, forKey: .size)
         
         if let localImage = localImage {
@@ -118,7 +118,7 @@ extension TextAttachment: Codable {
     public convenience init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         let id = try values.decode(Int.self, forKey: .id)
-        let embed = try values.decode(ResponseAPIFrameGetEmbed.self, forKey: .embed)
+        let attributes = try values.decode(ResponseAPIContentBlockAttributes.self, forKey: .attributes)
         let size = try values.decode(CGSize.self, forKey: .size)
         
         var localImage: UIImage?
@@ -129,7 +129,7 @@ extension TextAttachment: Codable {
         
         // setup view
         // temporary size
-        self.init(embed: embed, localImage: localImage, size: size)
+        self.init(attributes: attributes, localImage: localImage, size: size)
         
         // reassign id
         self.id = id

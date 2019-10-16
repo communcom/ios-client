@@ -49,14 +49,12 @@ class BasicEditorVC: EditorVC {
     
     override func didChooseImageFromGallery(_ image: UIImage, description: String? = nil) {
         
-        var embed = try! ResponseAPIFrameGetEmbed(
-            blockAttributes: ResponseAPIContentBlockAttributes(
-                description: description
-            )
+        var attributes = ResponseAPIContentBlockAttributes(
+            description: description
         )
-        embed.type = "image"
+        attributes.type = "image"
         
-        let attachment = TextAttachment(embed: embed, localImage: image, size: CGSize(width: view.size.width, height: attachmentHeight))
+        let attachment = TextAttachment(attributes: attributes, localImage: image, size: CGSize(width: view.size.width, height: attachmentHeight))
         attachment.delegate = self
         
         // Add embeds
