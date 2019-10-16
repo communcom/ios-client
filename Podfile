@@ -13,6 +13,7 @@ def common_pods
   pod 'Firebase/Messaging'
   
   pod 'CyberSwift', :git => "https://github.com/GolosChain/cyberSwift.git", :branch => "features/new_bc" # "https://github.com/Monserg/cyber-ios.git"
+  pod 'eosswift', :git => "https://github.com/communcom/eos-swift.git"
   
   pod 'Alamofire'
   pod 'Swinject'

@@ -11,7 +11,6 @@ import Foundation
 import Alamofire
 import CyberSwift
 import SwifterSwift
-import eosswift
 import SDWebImage
 
 class NetworkService: NSObject {

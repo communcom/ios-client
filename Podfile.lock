@@ -14,7 +14,7 @@ PODS:
   - CyberSwift (1.0.9):
     - Checksum
     - CryptoSwift
-    - eosswift (~> 1.5)
+    - eosswift
     - GoloCrypto
     - Localize-Swift (~> 2.0)
     - Locksmith
@@ -152,6 +152,7 @@ DEPENDENCIES:
   - DateToolsSwift
   - Down
   - DZNEmptyDataSet
+  - eosswift (from `https://github.com/communcom/eos-swift.git`)
   - ESPullToRefresh
   - Fabric
   - Firebase/Core
@@ -191,7 +192,6 @@ SPEC REPOS:
     - Differentiator
     - Down
     - DZNEmptyDataSet
-    - eosswift
     - ESPullToRefresh
     - Fabric
     - Firebase
@@ -236,6 +236,8 @@ EXTERNAL SOURCES:
   CyberSwift:
     :branch: features/new_bc
     :git: https://github.com/GolosChain/cyberSwift.git
+  eosswift:
+    :git: https://github.com/communcom/eos-swift.git
   SubviewAttachingTextView:
     :git: https://github.com/communcom/SubviewAttachingTextView.git
   THPinViewController:
@@ -244,8 +246,11 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   CyberSwift:
-    :commit: 9dc4c1419e667cb35bdffc2ef1a4b81e20690260
+    :commit: a60d976da289efeade1eb0cf4bc9fac7e4a39939
     :git: https://github.com/GolosChain/cyberSwift.git
+  eosswift:
+    :commit: c124b20575b4a70923a52301427dfab6b4db70f5
+    :git: https://github.com/communcom/eos-swift.git
   SubviewAttachingTextView:
     :commit: 141dcc300ee804e5d11f27fa9e685dc91889c262
     :git: https://github.com/communcom/SubviewAttachingTextView.git
@@ -262,12 +267,12 @@ SPEC CHECKSUMS:
   Checksum: f1aa56a27dea5db4006c819e2e129ee6aeb1d9af
   Crashlytics: 2dfd686bcb918dc10ee0e76f7f853fe42c7bd552
   CryptoSwift: 31dacd1f13427439ddae5b5cbaae4c8dbc43047e
-  CyberSwift: 60d1e17af4524dff1252f17cd50527ca05a295da
+  CyberSwift: ae317b8352ca0fb63e817062628452ed40dd3fc6
   DateToolsSwift: 875d97ff9e3a5d54abdd67a269b3f51c757b71ab
   Differentiator: be49ca3408f0ecfc761e4c7763d20c62be01b9ad
   Down: 3c758f2388fa739663023f400e742a988fa1e21d
   DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
-  eosswift: 22bc931fd65bbd446c3f828233b8fd2916cec4a7
+  eosswift: 6b36cff0d2ccdf2f2429d6b11ca6272b4481c249
   ESPullToRefresh: ce058a36454a5032519cc9d8b45da217728cf104
   Fabric: 706c8b8098fff96c33c0db69cbf81f9c551d0d74
   Firebase: dedc9e48ea3f3649ad5f6b982f8a0c73508a14b5
@@ -310,6 +315,6 @@ SPEC CHECKSUMS:
   UIImageView-Letters: f62db28076797adf3560ab7410647dc6899b9eef
   "UITextView+Placeholder": c407b27599ea23cca425946fee3cf1db5d547008
 
-PODFILE CHECKSUM: 4cb500a154855abc0a3bfd9f19db633ce9ac7672
+PODFILE CHECKSUM: 2297762ae2ca21e78a210880e0c55691baa7fa8e
 
 COCOAPODS: 1.8.3
