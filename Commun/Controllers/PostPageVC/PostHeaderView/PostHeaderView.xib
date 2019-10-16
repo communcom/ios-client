@@ -105,7 +105,7 @@
                     </connections>
                 </button>
                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalHuggingPriority="1000" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" text="Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="97L-2V-bGt" customClass="PostHeaderTextView" customModule="Commun" customModuleProvider="target">
-                    <rect key="frame" x="16" y="76" width="382" height="49.5"/>
+                    <rect key="frame" x="0.0" y="76" width="414" height="49.5"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                     <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -127,11 +127,11 @@
                 <constraint firstItem="lok-c7-hnm" firstAttribute="centerY" secondItem="7nZ-VU-zZS" secondAttribute="centerY" id="Ivx-kF-t0j"/>
                 <constraint firstItem="9F8-o9-PTQ" firstAttribute="centerY" secondItem="7nZ-VU-zZS" secondAttribute="centerY" id="LT9-9b-Y5H"/>
                 <constraint firstItem="k3o-1c-C5p" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="8" id="Lcp-13-DM4"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="97L-2V-bGt" secondAttribute="trailing" constant="16" id="PzN-gL-0fL"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="97L-2V-bGt" secondAttribute="trailing" id="PzN-gL-0fL"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="9F8-o9-PTQ" secondAttribute="trailing" constant="16" id="bjc-lO-9ac"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="k3o-1c-C5p" secondAttribute="trailing" constant="16" id="c4n-FS-fBy"/>
                 <constraint firstItem="lok-c7-hnm" firstAttribute="leading" secondItem="cmy-SM-J10" secondAttribute="trailing" constant="8" id="cBA-Ri-gL7"/>
-                <constraint firstItem="97L-2V-bGt" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="16" id="cIN-d6-BQm"/>
+                <constraint firstItem="97L-2V-bGt" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="cIN-d6-BQm"/>
                 <constraint firstItem="9F8-o9-PTQ" firstAttribute="leading" secondItem="j8J-Em-XPd" secondAttribute="trailing" constant="8" id="eNe-Lz-JFr"/>
                 <constraint firstItem="k3o-1c-C5p" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="16" id="iXv-f7-0Fy"/>
             </constraints>

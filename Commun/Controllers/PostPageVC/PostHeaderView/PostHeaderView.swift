@@ -93,7 +93,9 @@ class PostHeaderView: UIView, UIWebViewDelegate, PostController {
         
         // Show content
         // Parse data
-        let attributedString = post.content.toAttributedString(currentAttributes: [.font: UIFont.systemFont(ofSize: 17)], attachmentSize: CGSize(width: contentTextView.width - contentTextView.contentInset.left - contentTextView.contentInset.right, height: 200))
+        let attributedString = post.content.toAttributedString(
+            currentAttributes: contentTextView.defaultAttributes,
+            attachmentSize: contentTextView.attachmentSize)
         
         contentTextView.attributedText = attributedString
         layoutSubviews()

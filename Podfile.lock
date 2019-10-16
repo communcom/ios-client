@@ -166,7 +166,7 @@ DEPENDENCIES:
   - SDURLCache (~> 1.3)
   - SDWebImage (~> 4.0)
   - Segmentio
-  - SubviewAttachingTextView (from `https://github.com/boyuanx/SubviewAttachingTextView.git`)
+  - SubviewAttachingTextView (from `https://github.com/communcom/SubviewAttachingTextView.git`)
   - SwifterSwift/Foundation
   - SwifterSwift/SwiftStdlib
   - SwifterSwift/UIKit
@@ -237,7 +237,7 @@ EXTERNAL SOURCES:
     :branch: features/new_bc
     :git: https://github.com/GolosChain/cyberSwift.git
   SubviewAttachingTextView:
-    :git: https://github.com/boyuanx/SubviewAttachingTextView.git
+    :git: https://github.com/communcom/SubviewAttachingTextView.git
   THPinViewController:
     :branch: commun
     :git: https://github.com/bigearsenal/THPinViewController.git
@@ -247,8 +247,8 @@ CHECKOUT OPTIONS:
     :commit: 9dc4c1419e667cb35bdffc2ef1a4b81e20690260
     :git: https://github.com/GolosChain/cyberSwift.git
   SubviewAttachingTextView:
-    :commit: cbe8d44f2c50a75f15b5aeb434472615e5c3d250
-    :git: https://github.com/boyuanx/SubviewAttachingTextView.git
+    :commit: 141dcc300ee804e5d11f27fa9e685dc91889c262
+    :git: https://github.com/communcom/SubviewAttachingTextView.git
   THPinViewController:
     :commit: 3a9214d337cb96e6491325f8e0a72e50d62fc210
     :git: https://github.com/bigearsenal/THPinViewController.git
@@ -310,6 +310,6 @@ SPEC CHECKSUMS:
   UIImageView-Letters: f62db28076797adf3560ab7410647dc6899b9eef
   "UITextView+Placeholder": c407b27599ea23cca425946fee3cf1db5d547008
 
-PODFILE CHECKSUM: 593bc46b1c0df8821e43d12fa7b192ae46ee196f
+PODFILE CHECKSUM: 4cb500a154855abc0a3bfd9f19db633ce9ac7672
 
 COCOAPODS: 1.8.3
