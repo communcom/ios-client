@@ -182,7 +182,7 @@ extension ResponseAPIContentBlock {
             attrs.url = url
             
             // attachment
-            let attachment = TextAttachment(attributes: attrs, localImage: nil, size: attachmentSize)
+            let attachment = TextAttachment(block: self, size: attachmentSize)
             attachment.attachmentView?.showCloseButton = false
             let attachmentAS = NSAttributedString(attachment: attachment)
             child.append(attachmentAS)

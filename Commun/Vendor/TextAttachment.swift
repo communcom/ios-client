@@ -52,6 +52,18 @@ final class TextAttachment: SubviewTextAttachment {
         }
     }
     
+    convenience init(block: ResponseAPIContentBlock, size: CGSize) {
+        let attachmentView = AttachmentView(frame: .zero)
+        attachmentView.setUp(block: block)
+        self.init(view: attachmentView, size: size)
+        self.attributes = block.attributes
+        self.size = size
+        self.attachmentView = attachmentView
+        defer {
+            attachmentView.attachment = self
+        }
+    }
+    
     func toSingleContentBlock(id: inout UInt64) -> Single<ResponseAPIContentBlock>? {
         guard var attributes = attributes,
             let type = attributes.type
