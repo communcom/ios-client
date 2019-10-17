@@ -93,7 +93,9 @@ class BasicEditorVC: EditorVC {
                 })
             }
             .map {contentBlocks -> ResponseAPIContentBlock in
-                guard var childs = block?.content.arrayValue else {return block!}
+                guard var childs = block?.content.arrayValue,
+                    contentBlocks.count > 0
+                else {return block!}
                 childs.append(ResponseAPIContentBlock(id: id, type: "attachments", attributes: nil, content: .array(contentBlocks)))
                 block!.content = .array(childs)
                 

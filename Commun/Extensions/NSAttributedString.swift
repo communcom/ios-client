@@ -83,7 +83,10 @@ extension NSAttributedString {
             
             var text_color: String?
             if let color = attrs[.foregroundColor] as? UIColor {
-                text_color = color.hexString
+                let hexString = color.hexString
+                if hexString != "#000000" {
+                    text_color = hexString
+                }
             }
             
             var style: [String]?
@@ -100,10 +103,17 @@ extension NSAttributedString {
             
             // add block if content is not empty
             id += 1
+            
+            var attributes: ResponseAPIContentBlockAttributes?
+            
+            if style != nil || text_color != nil {
+                attributes = ResponseAPIContentBlockAttributes(style: style, text_color: text_color)
+            }
+            
             let block = ResponseAPIContentBlock(
                 id: id,
                 type: blockType,
-                attributes: ResponseAPIContentBlockAttributes(style: style, text_color: text_color),
+                attributes: attributes,
                 content: .string(content))
             blocks.append(block)
         }

@@ -79,8 +79,6 @@ class NetworkService: NSObject {
         text: String,
         tags: [String]
     ) -> Single<SendPostCompletion> {
-        
-        #warning("fix communCode")
         return RestAPIManager.instance.rx.updateMessage(
             communCode:     communCode,
             permlink:       permlink,
