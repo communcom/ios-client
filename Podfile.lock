@@ -148,7 +148,7 @@ DEPENDENCIES:
   - AppImageViewer
   - ASSpinnerView
   - Crashlytics
-  - CyberSwift (from `https://github.com/GolosChain/cyberSwift.git`, branch `features/new_bc`)
+  - CyberSwift (from `https://github.com/GolosChain/cyberSwift.git`)
   - DateToolsSwift
   - Down
   - DZNEmptyDataSet
@@ -234,7 +234,6 @@ SPEC REPOS:
 
 EXTERNAL SOURCES:
   CyberSwift:
-    :branch: features/new_bc
     :git: https://github.com/GolosChain/cyberSwift.git
   eosswift:
     :git: https://github.com/communcom/eos-swift.git
@@ -315,6 +314,6 @@ SPEC CHECKSUMS:
   UIImageView-Letters: f62db28076797adf3560ab7410647dc6899b9eef
   "UITextView+Placeholder": c407b27599ea23cca425946fee3cf1db5d547008
 
-PODFILE CHECKSUM: 2297762ae2ca21e78a210880e0c55691baa7fa8e
+PODFILE CHECKSUM: c8d09c0d05ace340e1758125dba5b5e8e43d6fbd
 
 COCOAPODS: 1.8.3
