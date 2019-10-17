@@ -14,6 +14,7 @@ class CommunActionSheet: SwipeDownDismissViewController {
         var title: String
         var icon: UIImage?
         var handle: (() -> Void)?
+        var tintColor: UIColor = .black
     }
     class TapGesture: UITapGestureRecognizer {
         var action: Action?
@@ -134,7 +135,7 @@ class CommunActionSheet: SwipeDownDismissViewController {
             
             // icon
             let iconImageView = UIImageView(frame: .zero)
-            iconImageView.tintColor = .black
+            iconImageView.tintColor = action.tintColor
             iconImageView.image = action.icon
             iconImageView.translatesAutoresizingMaskIntoConstraints = false
             actionView.addSubview(iconImageView)
@@ -146,6 +147,7 @@ class CommunActionSheet: SwipeDownDismissViewController {
             
             // title
             let titleLabel = UILabel(frame: .zero)
+            titleLabel.textColor = action.tintColor
             titleLabel.font = .systemFont(ofSize: 15, weight: .medium)
             titleLabel.text = action.title
             titleLabel.translatesAutoresizingMaskIntoConstraints = false

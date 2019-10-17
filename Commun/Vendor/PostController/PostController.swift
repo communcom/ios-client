@@ -49,22 +49,7 @@ extension PostController {
         
         var actions = [CommunActionSheet.Action]()
         
-        if post.author?.userId == Config.currentUser?.id {
-            actions += [
-                CommunActionSheet.Action(title: "edit".localized().uppercaseFirst, icon: UIImage(named: "edit"), handle: {
-                    self.editPost()
-                }),
-                CommunActionSheet.Action(title: "delete".localized().uppercaseFirst, icon: UIImage(named: "delete"), handle: {
-                    self.deletePost()
-                })
-            ]
-        } else {
-            actions.append(
-                CommunActionSheet.Action(title: "send report".localized().uppercaseFirst, icon: UIImage(named: "report"), handle: {
-                    self.reportPost()
-                })
-            )
-            
+        if post.author?.userId != Config.currentUser?.id {
             if !FavouritesList.shared.list.contains(post.contentId.permlink) {
                 actions.append(
                     CommunActionSheet.Action(title: "add to favourite".localized().uppercaseFirst, icon: UIImage(named: "favourite-add"), handle: {
@@ -79,6 +64,22 @@ extension PostController {
                     })
                 )
             }
+            
+            actions.append(
+                CommunActionSheet.Action(title: "send report".localized().uppercaseFirst, icon: UIImage(named: "report"), handle: {
+                    self.reportPost()
+                }, tintColor: UIColor(hexString: "#ED2C5B")!)
+            )
+        }
+        else {
+            actions += [
+                CommunActionSheet.Action(title: "edit".localized().uppercaseFirst, icon: UIImage(named: "edit"), handle: {
+                    self.editPost()
+                }),
+                CommunActionSheet.Action(title: "delete".localized().uppercaseFirst, icon: UIImage(named: "delete"), handle: {
+                    self.deletePost()
+                }, tintColor: UIColor(hexString: "#ED2C5B")!)
+            ]
         }
         
         actions.append(

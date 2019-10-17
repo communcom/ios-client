@@ -40,11 +40,23 @@ class PostPageViewModel: CommentsListController, ListViewModelType {
     // MARK: - Methods
     init() {
         observeCommentChange()
+        
+        post.subscribe(onNext: { (post) in
+            guard let post = post else {return}
+            let permLink = post.contentId.permlink
+            let userId = post.contentId.userId
+            // Configure fetcher
+            self.fetcher.communityId = post.community.communityId
+            self.fetcher.permlink = permLink
+            self.fetcher.userId = userId
+            
+            self.reload()
+        })
+        .disposed(by: disposeBag)
     }
     
     func loadPost() {
         let permLink = postForRequest?.contentId.permlink ?? permlink ?? ""
-        let userId = postForRequest?.contentId.userId ?? self.userId ?? ""
         
         // Bind post
         NetworkService.shared.getPost(withPermLink: permLink)
@@ -58,9 +70,7 @@ class PostPageViewModel: CommentsListController, ListViewModelType {
             .bind(to: post)
             .disposed(by: disposeBag)
         
-        // Configure fetcher
-        fetcher.permlink = permLink
-        fetcher.userId = userId
+        
     }
     
     func fetchNext() {
