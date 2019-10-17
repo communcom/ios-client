@@ -89,7 +89,8 @@ extension PostCardCell {
         
         self.authorNameLabel.text = post.author?.username ?? post.author?.userId ?? ""
         
-        self.mainTextLabel.text = post.content.attributes?.title
+        let aString = post.content.toAttributedString(currentAttributes: [.font: UIFont.systemFont(ofSize: 17, weight: .medium)], attachmentSize: .zero)
+        self.mainTextLabel.attributedText = aString
         self.accessibilityLabel = "PostCardCell"
         
         let embeds = post.attachments
