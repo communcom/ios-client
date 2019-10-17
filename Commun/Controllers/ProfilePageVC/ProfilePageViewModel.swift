@@ -61,8 +61,7 @@ class ProfilePageViewModel: ListViewModelType {
                     customFetcher.userId = self.userId
                     self.itemsFetcher = customFetcher
                 case .comments:
-                    let customFetcher = CommentsFetcher()
-                    customFetcher.userId = self.userId
+                    let customFetcher = CommentsFetcher(type: .user, userId: self.userId)
                     self.itemsFetcher = customFetcher
                 }
                 // Empty table

@@ -22,7 +22,7 @@ extension FeedPageVC {
                 case .subscriptions:
                     self.headerLabel.text = "my Feed".localized().uppercaseFirst
                     self.changeFeedTypeButton.setTitle("trending".localized().uppercaseFirst, for: .normal)
-                case .community:
+                case .new:
                     self.headerLabel.text = "trending".localized().uppercaseFirst
                     
                     self.changeFeedTypeButton.setTitle("my Feed".localized().uppercaseFirst, for: .normal)

@@ -16,7 +16,7 @@ class FeedPageViewModel: PostsListController, ListViewModelType {
     var disposeBag = DisposeBag()
     var items = BehaviorRelay<[ResponseAPIContentGetPost]>(value: [])
     
-    let filter = BehaviorRelay<PostsFetcher.Filter>(value: PostsFetcher.Filter(feedTypeMode: .community, feedType: .popular, sortType: .all))
+    let filter = BehaviorRelay<PostsFetcher.Filter>(value: PostsFetcher.Filter(feedTypeMode: .new, feedType: .popular, sortType: .all))
     
     lazy var fetcher = PostsFetcher(filter: filter.value)
     
@@ -37,7 +37,7 @@ class FeedPageViewModel: PostsListController, ListViewModelType {
     func bindFilter() {
         filter.distinctUntilChanged()
             .filter {filter in
-                if filter.feedTypeMode != .community && filter.feedType == .popular {return false}
+                if filter.feedTypeMode != .new && filter.feedType == .popular {return false}
                 return true
             }
             .subscribe(onNext: {filter in

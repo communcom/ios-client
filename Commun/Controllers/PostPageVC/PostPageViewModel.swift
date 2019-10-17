@@ -35,7 +35,7 @@ class PostPageViewModel: CommentsListController, ListViewModelType {
     var items = BehaviorRelay<[ResponseAPIContentGetComment]>(value: [])
     
     let disposeBag = DisposeBag()
-    let fetcher = CommentsFetcher()
+    let fetcher = CommentsFetcher(type: .post)
     
     // MARK: - Methods
     init() {

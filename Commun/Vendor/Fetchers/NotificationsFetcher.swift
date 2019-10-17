@@ -12,11 +12,7 @@ import RxSwift
 
 class NotificationsFetcher: ItemsFetcher<ResponseAPIOnlineNotificationData> {
     override var request: Single<[ResponseAPIOnlineNotificationData]>! {
-        return NetworkService.shared.getNotifications(fromId: sequenceKey)
-            .do(onSuccess: { (result) in
-                // assign next sequenceKey
-                self.sequenceKey = result.data.last?._id
-            })
+        return NetworkService.shared.getNotifications(fromId: nil)
             .map {$0.data}
     }
 }

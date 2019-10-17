@@ -47,14 +47,6 @@ class NetworkService: NSObject {
             .observeOn(MainScheduler.instance)
     }
     
-    func getUserComments(_ paginationKey: String? = nil, nickName: String? = nil) -> Single<ResponseAPIContentGetComments> {
-        return RestAPIManager.instance.loadUserComments(sortBy: .time, sequenceKey: paginationKey, userId: nickName)
-    }
-    
-    func getPostComment(_ paginationKey: String? = nil, withPermLink permLink: String, forUser user: String) -> Single<ResponseAPIContentGetComments> {
-        return RestAPIManager.instance.loadPostComments(sequenceKey: paginationKey, limit: 30, userId: user, permlink: permLink)
-    }
-    
     func voteMessage(voteType: VoteActionType, messagePermlink: String, messageAuthor: String) -> Completable {
         return RestAPIManager.instance.rx.vote(
                 voteType:   voteType,

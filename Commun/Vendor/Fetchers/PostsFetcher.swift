@@ -50,9 +50,11 @@ class PostsFetcher: ItemsFetcher<ResponseAPIContentGetPost> {
     
     var filter: Filter
     var userId: String?
+    var communityId: String?
     
-    required init(filter: Filter) {
+    required init(filter: Filter, communityId: String? = nil) {
         self.filter = filter
+        self.communityId = communityId
         super.init()
     }
     
@@ -60,7 +62,7 @@ class PostsFetcher: ItemsFetcher<ResponseAPIContentGetPost> {
         #warning("Mocking")
 //        return ResponseAPIContentGetPosts.singleWithMockData()
 //            .map {$0.items!}
-        return RestAPIManager.instance.getPosts(communityId: "CATS", allowNsfw: false, type: filter.feedTypeMode, sortBy: filter.feedType)
+        return RestAPIManager.instance.getPosts(communityId: communityId, allowNsfw: false, type: filter.feedTypeMode, sortBy: filter.feedType, limit: limit, offset: offset)
             .map {$0.items ?? []}
     }
 }

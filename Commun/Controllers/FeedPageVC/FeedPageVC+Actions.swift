@@ -11,7 +11,7 @@ import Foundation
 extension FeedPageVC {
     @IBAction func changeFeedTypeButtonDidTouch(_ sender: Any) {
         if viewModel.filter.value.feedTypeMode == .subscriptions {
-            viewModel.changeFilter(feedTypeMode: .community)
+            viewModel.changeFilter(feedTypeMode: .new)
         }
         
         else {

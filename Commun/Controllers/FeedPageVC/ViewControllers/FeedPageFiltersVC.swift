@@ -14,7 +14,7 @@ import CyberSwift
 class FeedPageFiltersVC: SwipeDownDismissViewController {
     // MARK: - Properties
     let disposeBag = DisposeBag()
-    var filter = BehaviorRelay<PostsFetcher.Filter>(value: PostsFetcher.Filter(feedTypeMode: .community, feedType: .popular, sortType: .all, searchKey: nil))
+    var filter = BehaviorRelay<PostsFetcher.Filter>(value: PostsFetcher.Filter(feedTypeMode: .new, feedType: .popular, sortType: .all, searchKey: nil))
     var completion: ((PostsFetcher.Filter) -> Void)?
 
     @IBOutlet weak var tableView: UITableView!
@@ -61,14 +61,14 @@ extension FeedPageFiltersVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 1
         {
-            if filter.value.feedTypeMode == .community &&
+            if filter.value.feedTypeMode == .new &&
                 filter.value.feedType == .popular {
                 return 5
             }
             return 0
         }
         
-        if section == 0, filter.value.feedTypeMode != .community {
+        if section == 0, filter.value.feedTypeMode != .new {
             return 2
         }
         
@@ -84,14 +84,14 @@ extension FeedPageFiltersVC: UITableViewDelegate, UITableViewDataSource {
             var feedSortMode: FeedSortMode!
             switch indexPath.row {
             case 0:
-                if filter.value.feedTypeMode != .community {
+                if filter.value.feedTypeMode != .new {
                     feedSortMode = .timeDesc
                 } else {
                     feedSortMode = .popular
                 }
                 
             case 1:
-                if filter.value.feedTypeMode != .community {
+                if filter.value.feedTypeMode != .new {
                     feedSortMode = .time
                 } else {
                     feedSortMode = .timeDesc
@@ -132,13 +132,13 @@ extension FeedPageFiltersVC: UITableViewDelegate, UITableViewDataSource {
         case 0:
             switch indexPath.row {
             case 0:
-                if filter.value.feedTypeMode != .community {
+                if filter.value.feedTypeMode != .new {
                     filter.accept(filter.value.newFilter(feedType: .timeDesc))
                 } else {
                     filter.accept(filter.value.newFilter(feedType: .popular))
                 }
             case 1:
-                if filter.value.feedTypeMode != .community {
+                if filter.value.feedTypeMode != .new {
                     filter.accept(filter.value.newFilter(feedType: .time))
                 }
                 else {

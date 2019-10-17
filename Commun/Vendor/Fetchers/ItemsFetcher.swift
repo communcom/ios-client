@@ -15,9 +15,9 @@ class ItemsFetcher<T: Decodable> {
     
     // MARK: - Parammeters
     var isFetching = false
-    let limit = Config.paginationLimit
+    let limit = UInt(Config.paginationLimit)
+    var offset: UInt = 0
     var reachedTheEnd = false
-    var sequenceKey: String?
     var request: Single<[T]>! {
         return nil
     }
@@ -28,7 +28,7 @@ class ItemsFetcher<T: Decodable> {
         lastError       = nil
         reachedTheEnd   = false
         isFetching      = false
-        sequenceKey     = nil
+        offset = 0
     }
     
     func fetchNext() -> Maybe<[T]> {
@@ -49,16 +49,18 @@ class ItemsFetcher<T: Decodable> {
         }
         return request
             .do(onSuccess: { result in
+                // next
+                self.offset += self.limit
+                
                 // mark isFetching as false
                 self.isFetching = false
                 
                 // mark the end of the fetch
-                if result.count < self.limit || self.sequenceKey == nil {
+                if result.count < self.limit {
                     self.reachedTheEnd = true
                 }
                 
                 self.lastError = nil
-                
             }, onError: { (error) in
                 // mark isFetching as false
                 self.isFetching = false
