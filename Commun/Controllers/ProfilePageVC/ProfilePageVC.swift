@@ -132,10 +132,6 @@ class ProfilePageVC: UIViewController, VCWithParallax {
         tableView.register(UINib(nibName: "EmptyCell", bundle: nil), forCellReuseIdentifier: "EmptyCell")
         tableView.rowHeight = UITableView.automaticDimension
         
-        var contentInsets = tableView.contentInset
-        contentInsets.bottom = tabBarController!.tabBar.height - (UIApplication.shared.keyWindow?.safeAreaInsets.bottom ?? 0)
-        tableView.contentInset = contentInsets
-        
         // RefreshControl
         let refreshControl = UIRefreshControl()
         refreshControl.tintColor = .white
@@ -157,6 +153,10 @@ class ProfilePageVC: UIViewController, VCWithParallax {
         
         // Parallax
         self.constructParallax()
+        
+        var contentInsets = tableView.contentInset
+        contentInsets.bottom = tabBarController!.tabBar.height - (UIApplication.shared.keyWindow?.safeAreaInsets.bottom ?? 0)
+        tableView.contentInset = contentInsets
     }
     
     func showTitle(_ show: Bool, animated: Bool = false) {

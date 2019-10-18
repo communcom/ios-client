@@ -137,7 +137,7 @@ class TabBarVC: UITabBarController {
         view.autoAlignAxis(toSuperviewAxis: .vertical)
         view.autoAlignAxis(toSuperviewAxis: .horizontal)
         view.isUserInteractionEnabled = false
-        view.addShadow(offset: .zero, color: .appMainColor, radius: 4, opacity: 0.3)
+        view.addShadow(offset: CGSize.init(width: 0, height: -1), color: .black, radius: 10, opacity: 0.2)
         
         button.tag = viewControllers!.count + 1
         button.addTarget(self, action: #selector(buttonAddTapped), for: .touchUpInside)
