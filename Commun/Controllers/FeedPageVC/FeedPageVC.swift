@@ -114,5 +114,10 @@ class FeedPageVC: UIViewController, VCWithParallax {
         
         // dismiss keyboard when dragging
         tableView.keyboardDismissMode = .onDrag
+        
+        var contentInsets = tableView.contentInset
+        contentInsets.bottom = tabBarController!.tabBar.height - (UIApplication.shared.keyWindow?.safeAreaInsets.bottom ?? 0)
+        
+        tableView.contentInset = contentInsets
     }
 }

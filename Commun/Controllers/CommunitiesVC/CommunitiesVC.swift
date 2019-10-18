@@ -35,6 +35,7 @@ class CommunitiesVC: UIViewController {
     func setUp() {
         setUpSearchBar()
         setUpSegmentio()
+        setUpTableView()
     }
     
     func setUpSearchBar() {
@@ -68,5 +69,11 @@ class CommunitiesVC: UIViewController {
         
         // fire first filter
         segmentio.selectedSegmentioIndex = 1
+    }
+    
+    func setUpTableView() {
+        var contentInsets = tableView.contentInset
+        contentInsets.bottom = tabBarController!.tabBar.height - (UIApplication.shared.keyWindow?.safeAreaInsets.bottom ?? 0)
+        tableView.contentInset = contentInsets
     }
 }

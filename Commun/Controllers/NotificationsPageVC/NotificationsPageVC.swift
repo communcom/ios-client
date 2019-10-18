@@ -29,6 +29,10 @@ class NotificationsPageVC: UIViewController {
         tableView.tableFooterView = UIView()
         tableView.register(UINib(nibName: "NotificationCell", bundle: nil), forCellReuseIdentifier: "NotificationCell")
         
+        var contentInsets = tableView.contentInset
+        contentInsets.bottom = tabBarController!.tabBar.height - (UIApplication.shared.keyWindow?.safeAreaInsets.bottom ?? 0)
+        tableView.contentInset = contentInsets
+        
         // tableView dataSource
         dataSource = MyRxTableViewSectionedAnimatedDataSource<NotificationSection>(configureCell: {_, _, indexPath, item in
             let cell = self.tableView.dequeueReusableCell(withIdentifier: "NotificationCell") as! NotificationCell

@@ -14,7 +14,6 @@ class TabBarVC: UITabBarController {
     let selectedColor = UIColor.black
     let unselectedColor = UIColor(hexString: "#E5E7ED")
     let extraSpaceForTabBar: CGFloat = 14
-    let contentToTabBarSpace: CGFloat = 8
     
     // MARK: - Properties
     let viewModel = TabBarViewModel()
@@ -38,10 +37,10 @@ class TabBarVC: UITabBarController {
     }
     
     private func configStyles() {
-        view.backgroundColor = #colorLiteral(red: 0.9361910224, green: 0.9426880479, blue: 0.9626035094, alpha: 1)
+        view.backgroundColor = .white
         
         // hide default tabBar
-        tabBar.alpha = 0
+        tabBar.isHidden = true
         
         // tabBarContainerView
         let tabBarContainerView: UIView = UIView(backgroundColor: .white)
@@ -49,8 +48,9 @@ class TabBarVC: UITabBarController {
         tabBarContainerView.autoPinEdge(toSuperviewEdge: .trailing)
         tabBarContainerView.autoPinEdge(toSuperviewEdge: .leading)
         tabBarContainerView.autoPinEdge(toSuperviewEdge: .bottom)
-        tabBarContainerView.autoPinEdge(.top, to: .top, of: tabBar, withOffset: contentToTabBarSpace)
-        tabBarContainerView.cornerRadius = 16
+        tabBarContainerView.autoPinEdge(.top, to: .top, of: tabBar)
+        tabBarContainerView.cornerRadius = 24.5
+        tabBarContainerView.addShadow(offset: CGSize.init(width: 0, height: 1), color: .black, radius: 10, opacity: 0.2)
         // tabBarStackView
         tabBarContainerView.addSubview(tabBarStackView)
         tabBarStackView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .bottom)
@@ -66,7 +66,7 @@ class TabBarVC: UITabBarController {
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         tabBar.frame.size.height = tabBar.frame.size.height + extraSpaceForTabBar
-        tabBar.frame.origin.y = view.frame.height - tabBar.frame.size.height - contentToTabBarSpace
+        tabBar.frame.origin.y = view.frame.height - tabBar.frame.size.height
     }
     
     private func configTabs() {

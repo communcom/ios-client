@@ -145,11 +145,15 @@ class PostPageVC: UIViewController, CommentCellDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: animated)
+        let tabBar = (tabBarController as? TabBarVC)?.tabBarStackView.superview
+        tabBar?.isHidden = true
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         navigationController?.setNavigationBarHidden(false, animated: animated)
+        let tabBar = (tabBarController as? TabBarVC)?.tabBarStackView.superview
+        tabBar?.isHidden = false
     }
     
     func observePostDeleted() {
