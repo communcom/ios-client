@@ -99,7 +99,6 @@ let controllerContainer: Container = {
     
     container.register(PostPageVC.self, factory: { r in
         let vc = PostPageVC.instanceController(fromStoryboard: "PostPageVC", withIdentifier: "PostPageVC") as! PostPageVC
-        vc.hidesBottomBarWhenPushed = true
         vc.viewModel = PostPageViewModel()
         return vc
     })
