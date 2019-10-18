@@ -10,9 +10,20 @@ import UIKit
 import RxSwift
 
 class TabBarVC: UITabBarController {
+    // MARK: - Constraint
+    let selectedColor = UIColor.black
+    let unselectedColor = UIColor(hexString: "#E5E7ED")
+    let extraSpaceForTabBar: CGFloat = 14
+    let contentToTabBarSpace: CGFloat = 8
+    
+    // MARK: - Properties
     let viewModel = TabBarViewModel()
     let bag = DisposeBag()
     
+    // MARK: - Subviews
+    lazy var tabBarStackView: UIStackView = UIStackView(forAutoLayout: ())
+    
+    // MARK: - Methods
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -27,67 +38,147 @@ class TabBarVC: UITabBarController {
     }
     
     private func configStyles() {
-        view.backgroundColor = .white
+        view.backgroundColor = #colorLiteral(red: 0.9361910224, green: 0.9426880479, blue: 0.9626035094, alpha: 1)
         
-        // Config styles
-        tabBar.unselectedItemTintColor = #colorLiteral(red: 0.8971592784, green: 0.9046500325, blue: 0.9282500148, alpha: 1)
-        tabBar.tintColor = UIColor.black
+        // hide default tabBar
+        tabBar.alpha = 0
         
-        UITabBar.appearance().barTintColor = .white
-        UITabBar.appearance().backgroundColor = .white
+        // tabBarContainerView
+        let tabBarContainerView: UIView = UIView(backgroundColor: .white)
+        view.addSubview(tabBarContainerView)
+        tabBarContainerView.autoPinEdge(toSuperviewEdge: .trailing)
+        tabBarContainerView.autoPinEdge(toSuperviewEdge: .leading)
+        tabBarContainerView.autoPinEdge(toSuperviewEdge: .bottom)
+        tabBarContainerView.autoPinEdge(.top, to: .top, of: tabBar, withOffset: contentToTabBarSpace)
+        tabBarContainerView.cornerRadius = 16
+        // tabBarStackView
+        tabBarContainerView.addSubview(tabBarStackView)
+        tabBarStackView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .bottom)
+        tabBarStackView.autoSetDimension(.height, toSize: tabBar.size.height + extraSpaceForTabBar)
+        tabBarStackView.axis = .horizontal
+        tabBarStackView.alignment = .center
+        tabBarStackView.distribution = .fillEqually
+        tabBarStackView.spacing = 0
         
-        // Remove default line
-        tabBar.addShadow(offset: CGSize.init(width: 0, height: 1), color: .black, radius: 10, opacity: 0.2)
+        
+    }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        tabBar.frame.size.height = tabBar.frame.size.height + extraSpaceForTabBar
+        tabBar.frame.origin.y = view.frame.height - tabBar.frame.size.height - contentToTabBarSpace
     }
     
     private func configTabs() {
         // Feed Tab
         let feed = controllerContainer.resolve(FeedPageVC.self)!
         let feedNC = SwipeNavigationController(rootViewController: feed)
-        feedNC.tabBarItem = centerTabBarItem(withImageName: "feed", tag: 0)
+        let feedItem = buttonTabBarItem(image: UIImage(named: "feed")!, tag: 0)
         feed.accessibilityLabel = "TabBarFeedTabBarItem"
 
         // Comunities Tab
         let comunities = controllerContainer.resolve(CommunitiesVC.self)!
         let communitiesNC = SwipeNavigationController(rootViewController: comunities)
-        communitiesNC.tabBarItem = centerTabBarItem(withImageName: "comunities", tag: 1)
+        let communitiesItem = buttonTabBarItem(image: UIImage(named: "tabbar-search")!, tag: 1)
         comunities.accessibilityLabel = "TabBarComunitiesTabBarItem"
-
-        // Profile Tab
-        let profile = controllerContainer.resolve(ProfilePageVC.self)!
-        let profileNC = SwipeNavigationController(rootViewController: profile)
-        profileNC.tabBarItem = centerTabBarItem(withImageName: "profile", tag: 2)
-        profileNC.accessibilityLabel = "TabBarProfileTabBarItem"
-        profileNC.navigationBar.tintColor = UIColor.appMainColor
-
-        // Wallet Tab
-        let wallet = UIViewController()
-        wallet.tabBarItem = centerTabBarItem(withImageName: "wallet", tag: 3)
-        wallet.accessibilityLabel = "TabBarWalletTabBarItem"
         
         // Notifications Tab
         let notifications = controllerContainer.resolve(NotificationsPageVC.self)!
         let notificationsNC = SwipeNavigationController(rootViewController: notifications)
-        notificationsNC.tabBarItem = centerTabBarItem(withImageName: "notifications", tag: 4)
+        let notificationsItem = buttonTabBarItem(image: UIImage(named: "notifications")!, tag: 2)
         notificationsNC.navigationBar.prefersLargeTitles = true
         notifications.accessibilityLabel = "TabBarNotificationsTabBarItem"
-        
+
+        // Profile Tab
+        let profile = controllerContainer.resolve(ProfilePageVC.self)!
+        let profileNC = SwipeNavigationController(rootViewController: profile)
+        let profileItem = buttonTabBarItem(image: UIImage(named: "tabbar-profile")!, tag: 3)
+        profileNC.accessibilityLabel = "TabBarProfileTabBarItem"
+        profileNC.navigationBar.tintColor = UIColor.appMainColor
+
         // Set up controllers
         viewControllers = [feedNC, communitiesNC,/* wallet,*/ notificationsNC, profileNC]
+        
+        tabBarStackView.addArrangedSubviews([
+            feedItem,
+            communitiesItem,
+            tabBarItemAdd,
+            notificationsItem,
+            profileItem
+        ])
+        
+        // highlight first
+        feedItem.tintColor = selectedColor
     }
     
-    private func centerTabBarItem(withImageName imageName: String, tag: Int) -> UITabBarItem {
-        let item = UITabBarItem(title: nil, image: UIImage(named: imageName), tag: tag)
-        item.imageInsets = UIEdgeInsets(top: 6, left: 0, bottom: -6, right: 0)
-        return item
+    private func buttonTabBarItem(image: UIImage, tag: Int) -> UIButton {
+        let button = UIButton(type: .system)
+        button.setImage(image, for: .normal)
+        button.tintColor = unselectedColor
+        button.tag = tag
+        button.addTarget(self, action: #selector(switchTab(button:)), for: .touchUpInside)
+        return button
+    }
+    
+    var tabBarItemAdd: UIButton {
+        let button = UIButton(type: .system)
+        
+        let view = UIView(width: 45, height: 45, backgroundColor: .appMainColor)
+        view.cornerRadius = 45 / 2
+        
+        let imageView = UIImageView(image: UIImage(named: "add"))
+        imageView.configureForAutoLayout()
+        imageView.tintColor = .white
+        
+        view.addSubview(imageView)
+        imageView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 14, left: 14, bottom: 14, right: 14))
+        
+        button.addSubview(view)
+        view.autoAlignAxis(toSuperviewAxis: .vertical)
+        view.autoAlignAxis(toSuperviewAxis: .horizontal)
+        view.isUserInteractionEnabled = false
+        view.addShadow(offset: .zero, color: .appMainColor, radius: 4, opacity: 0.3)
+        
+        button.tag = viewControllers!.count + 1
+        button.addTarget(self, action: #selector(buttonAddTapped), for: .touchUpInside)
+        return button
+    }
+    
+    @objc func switchTab(button: UIButton) {
+        // change selected index
+        selectedIndex = button.tag
+        
+        // change tabs' color
+        let items = tabBarStackView.arrangedSubviews.filter {$0.tag != (viewControllers?.count ?? 0) + 1}
+        let selectedItem = items.first {$0.tag == selectedIndex}
+        let unselectedItems = items.filter {$0.tag != selectedIndex}
+        selectedItem?.tintColor = selectedColor
+        for item in unselectedItems {
+            item.tintColor = unselectedColor
+        }
+    }
+    
+    @objc func buttonAddTapped() {
+        showActionSheet(title: "choose an editor".localized().uppercaseFirst, actions: [
+            UIAlertAction(title: "basic editor".localized().uppercaseFirst, style: .default, handler: { (_) in
+                let vc = BasicEditorVC()
+                vc.modalPresentationStyle = .fullScreen
+                self.present(vc, animated: true, completion: nil)
+            }),
+            UIAlertAction(title: "article editor".localized().uppercaseFirst, style: .default, handler: { (_) in
+                let vc = ArticleEditorVC()
+                vc.modalPresentationStyle = .fullScreen
+                self.present(vc, animated: true, completion: nil)
+            }),
+        ])
     }
 
     func bindViewModel() {
         // Get number of fresh notifications
-        viewModel.getFreshCount()
-            .asDriver(onErrorJustReturn: 0)
-            .map {$0 > 0 ? "\($0)" : nil}
-            .drive(tabBar.items!.first(where: {$0.tag == 4})!.rx.badgeValue)
-            .disposed(by: bag)
+//        viewModel.getFreshCount()
+//            .asDriver(onErrorJustReturn: 0)
+//            .map {$0 > 0 ? "\($0)" : nil}
+//            .drive(tabBar.items!.first(where: {$0.tag == 4})!.rx.badgeValue)
+//            .disposed(by: bag)
     }
 }
