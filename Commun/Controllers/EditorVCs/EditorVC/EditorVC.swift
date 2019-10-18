@@ -67,7 +67,7 @@ class EditorVC: UIViewController {
     var contentView: UIView!
     
     // Toolbar
-    lazy var toolbar = UIView(height: 55)
+    lazy var toolbar = UIView(forAutoLayout: ())
     var buttonsCollectionView: UICollectionView!
     
     // PostButton

@@ -26,7 +26,8 @@ extension EditorVC {
         
         toolbar.autoPinEdge(toSuperviewSafeArea: .leading)
         toolbar.autoPinEdge(toSuperviewSafeArea: .trailing)
-        let keyboardViewV = KeyboardLayoutConstraint(item: view!.safeAreaLayoutGuide, attribute: .bottom, relatedBy: .equal, toItem: toolbar, attribute: .bottom, multiplier: 1.0, constant: 0.0)
+        toolbar.autoSetDimension(.height, toSize: 55 + (UIApplication.shared.keyWindow?.safeAreaInsets.bottom ?? 0))
+        let keyboardViewV = KeyboardLayoutConstraint(item: view!, attribute: .bottom, relatedBy: .equal, toItem: toolbar, attribute: .bottom, multiplier: 1.0, constant: 0.0)
         keyboardViewV.observeKeyboardHeight()
         self.view.addConstraint(keyboardViewV)
         
@@ -37,7 +38,7 @@ extension EditorVC {
         toolbar.addSubview(postButton)
         postButton.autoPinEdge(.leading, to: .trailing, of: buttonsCollectionView, withOffset: 10)
         postButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
-        postButton.autoAlignAxis(toSuperviewAxis: .horizontal)
+        postButton.autoPinEdge(toSuperviewEdge: .top, withInset: 10)
     }
     
     func setUpToolbarButtons() {
@@ -50,7 +51,10 @@ extension EditorVC {
         buttonsCollectionView.configureForAutoLayout()
         toolbar.addSubview(buttonsCollectionView)
         // layout
-        buttonsCollectionView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0), excludingEdge: .right)
+        buttonsCollectionView.autoPinEdge(toSuperviewEdge: .top, withInset: 10)
+        buttonsCollectionView.autoPinEdge(toSuperviewEdge: .left, withInset: 0)
+        buttonsCollectionView.autoSetDimension(.height, toSize: 45)
+        
         buttonsCollectionView.contentInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 0)
         buttonsCollectionView.register(EditorToolbarItemCell.self, forCellWithReuseIdentifier: "EditorToolbarItemCell")
     }
@@ -59,7 +63,7 @@ extension EditorVC {
         let scrollView = UIScrollView(forAutoLayout: ())
         view.addSubview(scrollView)
         scrollView.autoPinEdgesToSuperviewSafeArea(with: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0), excludingEdge: .bottom)
-        scrollView.autoPinEdge(.bottom, to: .top, of: toolbar)
+        scrollView.autoPinEdge(.bottom, to: .top, of: toolbar, withOffset: -12)
         
         // add childview of scrollview
         contentView = UIView(forAutoLayout: ())
