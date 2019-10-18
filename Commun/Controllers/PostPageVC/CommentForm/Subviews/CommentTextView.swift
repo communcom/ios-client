@@ -34,4 +34,14 @@ class CommentTextView: ContentTextView {
             }
         }
     }
+    
+    override func modifyContextMenu() {
+        super.modifyContextMenu()
+        
+        // remove unused
+        var items = UIMenuController.shared.menuItems
+        
+        items = items!.filter {$0.title != "🔗"}
+        UIMenuController.shared.menuItems = items
+    }
 }

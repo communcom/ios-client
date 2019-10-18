@@ -41,10 +41,6 @@ extension EditorVC {
             contentTextView.clearFormatting()
         }
         
-        if item == .setColor {
-            pickColor(sender: buttonsCollectionView)
-        }
-        
         if item == .addArticle {
             addArticle()
         }

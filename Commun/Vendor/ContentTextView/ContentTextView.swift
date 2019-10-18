@@ -49,7 +49,6 @@ class ContentTextView: UITextView {
     
     // MARK: - Properties
     var addLinkDidTouch: (()->Void)?
-    var setColorDidTouch: (()->Void)?
     
     // Must override!!!
     var defaultTypingAttributes: [NSAttributedString.Key: Any] {
@@ -112,31 +111,35 @@ class ContentTextView: UITextView {
                 // get TextStyle at current selectedRange
                 self.setCurrentTextStyle()
                 
-                // menuItems
-                UIMenuController.shared.menuItems = [
-                    UIMenuItem(
-                        title: "𝐁",
-                        action: #selector(self.toggleBold)
-                    ),
-                    UIMenuItem(
-                        title: "𝐼",
-                        action: #selector(self.toggleItalic)
-                    ),
-                    UIMenuItem(
-                        title: "🔗".localized().uppercaseFirst,
-                        action: #selector(self.addLink)
-                    ),
-                    UIMenuItem(
-                        title: "color".localized().uppercaseFirst,
-                        action: #selector(self.setColorMenu)
-                    ),
-                    UIMenuItem(
-                        title: "clear formatting".localized().uppercaseFirst,
-                        action: #selector(self.clearFormatting)
-                    ),
-                ]
+                self.modifyContextMenu()
             })
             .disposed(by: disposeBag)
+    }
+    
+    func modifyContextMenu() {
+        // menuItems
+        UIMenuController.shared.menuItems = [
+            UIMenuItem(
+                title: "𝐁",
+                action: #selector(self.toggleBold)
+            ),
+            UIMenuItem(
+                title: "𝐼",
+                action: #selector(self.toggleItalic)
+            ),
+            UIMenuItem(
+                title: "🔗".localized().uppercaseFirst,
+                action: #selector(self.addLink)
+            ),
+            UIMenuItem(
+                title: "color".localized().uppercaseFirst,
+                action: #selector(self.setColorMenu)
+            ),
+            UIMenuItem(
+                title: "clear formatting".localized().uppercaseFirst,
+                action: #selector(self.clearFormatting)
+            ),
+        ]
     }
     
     @objc private func addLink() {
@@ -144,7 +147,25 @@ class ContentTextView: UITextView {
     }
     
     @objc private func setColorMenu() {
-        setColorDidTouch?()
+        let vc = ColorPickerViewController()
+        vc.modalPresentationStyle = .popover
+        
+        /* 3 */
+        if let popoverPresentationController = vc.popoverPresentationController {
+            popoverPresentationController.permittedArrowDirections = .any
+            popoverPresentationController.sourceView = self
+            let selectionRange = selectedTextRange
+            let selectionStartRect = caretRect(for: selectionRange!.start)
+            let selectionEndRect = caretRect(for: selectionRange!.end)
+            let selectionCenterPoint = CGPoint(x: (selectionStartRect.origin.x + selectionEndRect.origin.x) / 2, y: (selectionStartRect.origin.y + selectionStartRect.size.height / 2))
+            popoverPresentationController.sourceRect = CGRect(x: selectionCenterPoint.x, y: selectionCenterPoint.y, width: 0, height: 0)
+            popoverPresentationController.delegate = self
+            parentViewController?.present(vc, animated: true, completion: nil)
+            
+            vc.didSelectColor = {color in
+                self.setColor(color)
+            }
+        }
     }
     
     @objc func clearFormatting() {
@@ -236,3 +257,8 @@ class ContentTextView: UITextView {
     }
 }
  
+extension ContentTextView: UIPopoverPresentationControllerDelegate {
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        return .none
+    }
+}

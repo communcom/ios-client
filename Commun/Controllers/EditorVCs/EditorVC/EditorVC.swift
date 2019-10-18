@@ -130,11 +130,6 @@ class EditorVC: UIViewController {
         contentTextView.addLinkDidTouch = {[weak self] in
             self?.addLink()
         }
-        
-        contentTextView.setColorDidTouch = {[weak self] in
-            guard let strongSelf = self else {return}
-            strongSelf.didSelectTool(.setColor)
-        }
     }
     
     // MARK: - action for overriding
