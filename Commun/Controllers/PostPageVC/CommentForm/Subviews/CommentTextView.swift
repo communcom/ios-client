@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import RxSwift
 
 class CommentTextView: ContentTextView {
     override var defaultTypingAttributes: [NSAttributedString.Key : Any] {
@@ -43,5 +44,36 @@ class CommentTextView: ContentTextView {
         
         items = items!.filter {$0.title != "🔗"}
         UIMenuController.shared.menuItems = items
+    }
+    
+    override func getContentBlock() -> Single<ResponseAPIContentBlock> {
+        // spend id = 1 for PostBlock, so id starts from 1
+        var id: UInt64 = 1
+        
+        // child blocks of post block
+        var contentBlocks = [Single<ResponseAPIContentBlock>]()
+        
+        // separate blocks by \n
+        let components = attributedString.components(separatedBy: "\n")
+        
+        for component in components {
+            if let block = component.toParagraphContentBlock(id: &id) {
+                contentBlocks.append(.just(block))
+            }
+        }
+        
+        return Single.zip(contentBlocks)
+            .map {contentBlocks -> ResponseAPIContentBlock in
+                var block = ResponseAPIContentBlock(
+                    id: 1,
+                    type: "comment",
+                    attributes: ResponseAPIContentBlockAttributes(
+                        type: "comment",
+                        version: "1.0"
+                    ),
+                    content: .array(contentBlocks))
+                block.maxId = id
+                return block
+        }
     }
 }

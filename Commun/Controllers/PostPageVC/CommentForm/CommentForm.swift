@@ -98,46 +98,56 @@ class CommentForm: UIView {
     }
     
     @IBAction func btnSendDidTouch(_ sender: Any) {
-        if let image = imageView.image {
-            NetworkService.shared.uploadImage(image)
-                .do(onSubscribe: { [weak self] in
-                    self?.sendButton.isEnabled = false
-                })
-                .observeOn(MainScheduler.instance)
-                .subscribe(onSuccess: {[weak self] url in
-                    guard let strongSelf = self else {return}
-                    
-                    strongSelf.sendComment(
-                        text: strongSelf.textView.text,
-                        tags: strongSelf.textView.text.getTags())
-                    
-                }, onError: {[weak self] error in
-                    self?.sendButton.isEnabled = true
-                    self?.parentViewController?.showError(error)
-                })
-                .disposed(by: bag)
-        } else {
-            sendComment(text: textView.text, tags: textView.text.getTags())
-        }
-    }
-    
-    func sendComment(text: String, tags: [String]) {
-        var text = text
-        // support posting image without text
-        if text == "" {text = "  "}
+        var block: ResponseAPIContentBlock?
+        var id: UInt64!
         
-        #warning("fix commun code")
-        NetworkService.shared.sendComment(
-        communCode:         "CATS",
-        parentAuthor:       parentAuthor ?? "",
-            parentPermlink: parentPermlink ?? "",
-            message:        text,
-            tags:           tags
-        )
+        textView.getContentBlock()
+            .flatMap {contentBlock -> Single<ResponseAPIContentBlock?> in
+                block = contentBlock
+                // transform attachments to contentBlock
+                id = (contentBlock.maxId ?? 100) + 1
+                var childId = id!
+                
+                if let image = self.imageView.image {
+                    childId += 1
+                    return NetworkService.shared.uploadImage(image)
+                        .map {ResponseAPIContentBlock(
+                                id: childId,
+                                type: "image",
+                                attributes: nil,
+                                content: ResponseAPIContentBlockContent.string($0))}
+                }
+                else {
+                    return .just(nil)
+                }
+            }
             .do(onSubscribe: { [weak self] in
                 self?.sendButton.isEnabled = false
             })
-            .observeOn(MainScheduler.instance)
+            .map {contentBlock -> ResponseAPIContentBlock in
+                guard var childs = block?.content.arrayValue,
+                    contentBlock != nil
+                else {return block!}
+                
+                childs.append(ResponseAPIContentBlock(id: id, type: "attachments", attributes: nil, content: .array([contentBlock!])))
+                block!.content = .array(childs)
+                
+                return block!
+            }
+            .flatMapCompletable { [weak self] contentBlock in
+                guard let strongSelf = self else {return .empty()}
+                var block = contentBlock
+                block.maxId = nil
+                let string = try block.jsonString()
+                #warning("fix commun code")
+                return NetworkService.shared.sendComment(
+                    communCode: "cats",
+                    parentAuthor: strongSelf.parentAuthor ?? "",
+                    parentPermlink: strongSelf.parentPermlink ?? "",
+                    message: string,
+                    tags: strongSelf.textView.text.getTags())
+                .observeOn(MainScheduler.instance)
+            }
             .subscribe(onCompleted: { [weak self] in
                 self?.textView.text = ""
                 self?.imageView.image = nil
