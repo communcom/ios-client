@@ -95,6 +95,9 @@ class SignUpVC: UIViewController, SignUpRouter {
     // MARK: - Custom Functions
     func setupBindings() {
         let country = viewModel.selectedCountry
+            
+        country
+            .filter {$0 != nil}
             .subscribe(onNext: { (_) in
                 self.shouldDefineLocation = false
             })
