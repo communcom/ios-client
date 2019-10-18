@@ -147,7 +147,7 @@ class CommentCell: UITableViewCell {
     }
     
     func setText(expanded: Bool = false) {
-        guard let content = comment?.content.toAttributedString(currentAttributes: [.font: UIFont.boldSystemFont(ofSize: defaultContentFontSize)]) else {return}
+        guard let content = comment?.content.toAttributedString(currentAttributes: [.font: UIFont.systemFont(ofSize: defaultContentFontSize)]) else {return}
         
         let userId = comment?.author?.username ?? comment?.author?.userId ?? "Unknown user"
         let mutableAS = NSMutableAttributedString(string: userId, attributes: [
@@ -160,14 +160,8 @@ class CommentCell: UITableViewCell {
         
         // If text is not so long or expanded
         if content.string.count < maxCharactersForReduction || expanded {
-            let contentAS = NSAttributedString(string: content.string, attributes: [
-                .font: UIFont.systemFont(ofSize: defaultContentFontSize)
-            ])
-            mutableAS.append(contentAS)
-            mutableAS.resolveTags()
-            mutableAS.resolveLinks()
-            mutableAS.resolveMentions()
-            contentLabel.text = mutableAS
+            mutableAS.append(content)
+            contentLabel.attributedText = mutableAS
             return
         }
         

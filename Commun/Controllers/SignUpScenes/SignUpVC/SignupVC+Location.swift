@@ -24,8 +24,7 @@ extension SignUpVC: CLLocationManagerDelegate {
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        
-        guard locations.count > 0 else {return}
+        guard shouldDefineLocation, locations.count > 0 else {return}
         let location = locations[0]
         
         let geocoder = CLGeocoder()

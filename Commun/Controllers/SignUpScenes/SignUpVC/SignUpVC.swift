@@ -18,6 +18,7 @@ class SignUpVC: UIViewController, SignUpRouter {
     let viewModel   =   SignUpViewModel()
     let disposeBag  =   DisposeBag()
     var locationManager: CLLocationManager!
+    var shouldDefineLocation = true
     
     // MARK: - IBOutlets
     @IBOutlet weak var countryButton: UIButton!
@@ -94,6 +95,10 @@ class SignUpVC: UIViewController, SignUpRouter {
     // MARK: - Custom Functions
     func setupBindings() {
         let country = viewModel.selectedCountry
+            .subscribe(onNext: { (_) in
+                self.shouldDefineLocation = false
+            })
+            .disposed(by: disposeBag)
         
         // Bind country name
         let countryName = country.map {$0?.localizedName}
