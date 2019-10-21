@@ -9,15 +9,7 @@
 import Foundation
 
 extension NSRegularExpression {
-    static var linkRegex: NSRegularExpression? {
-        // regex from @diegoperini
-        // https://mathiasbynens.be/demo/url-regex
-        return try? NSRegularExpression(pattern: linkRegexPattern, options: .caseInsensitive)
-    }
     
-    static var linkRegexPattern: String {
-        return "\\b(http(s)?:\\/\\/)?(www\\.)?((?!www\\.)[A-Za-z0-9_-]+)\\.[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)?(\\/[A-Za-z0-9_-]+)*"
-    }
     
     static var nameRegexPattern: String {
         return "[\\p{L}0-9-_]+"

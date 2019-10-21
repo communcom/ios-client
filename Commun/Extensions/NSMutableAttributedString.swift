@@ -66,15 +66,7 @@ extension NSMutableAttributedString {
         }
     }
     
-    func resolveLinks() {
-        if let regex = NSRegularExpression.linkRegex {
-            let matches = regex.matchedStrings(in: string)
-            for match in matches {
-                let range = nsRangeOfText(match)
-                addAttribute(.link, value: match, range: range)
-            }
-        }
-    }
+    
     
     func resolveTags() {
         if let regex = try? NSRegularExpression(pattern: NSRegularExpression.tagRegexPattern, options: .caseInsensitive)

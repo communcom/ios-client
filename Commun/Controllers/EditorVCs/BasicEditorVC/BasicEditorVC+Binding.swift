@@ -15,6 +15,50 @@ extension BasicEditorVC {
         bindAttachments()
     }
     
+    override func bindContentTextView() {
+        super.bindContentTextView()
+        
+        // Parse link inside text
+        contentTextView.rx.text
+            .subscribe(onNext: { (text) in
+                // ignore if one or more attachment existed
+                if self._viewModel.attachments.value.count > 0 ||
+                    self.link != nil
+                {return}
+                
+                // get link in text
+                guard let text = text,
+                    !text.isEmpty
+                else {
+                    self.ignoredLinks = []
+                    return
+                }
+                
+                // detect link
+                let detector = try! NSDataDetector(types: NSTextCheckingResult.CheckingType.link.rawValue)
+                let matches = detector.matches(in: text, options: [], range: NSRange(location: 0, length: text.utf16.count))
+
+                if matches.count < 1 {return}
+                let match = matches[0]
+                guard let range = Range(match.range, in: text) else { return }
+                let url = self.contentTextView.text[range]
+                
+                // check ignored
+                if self.ignoredLinks.contains(String(url)) {
+                    return
+                }
+                else {
+                    self.ignoredLinks.append(String(url))
+                }
+                
+                self.link = String(url)
+                
+                // parseLink
+                self.parseLink(self.link!)
+            })
+            .disposed(by: disposeBag)
+    }
+    
     func bindAttachments() {
         _viewModel.attachments.skip(1)
             .subscribe(onNext: {[unowned self] (attachments) in
@@ -36,6 +80,9 @@ extension BasicEditorVC {
                 // construct attachmentsView
                 self.attachmentsView = AttachmentsView(forAutoLayout: ())
                 self.attachmentsView.didRemoveAttachmentAtIndex = {[weak self] index in
+                    if self?._viewModel.attachments.value[index].attributes?.url == self?.link {
+                        self?.link = nil
+                    }
                     self?._viewModel.removeAttachment(at: index)
                 }
                 self.contentView.addSubview(self.attachmentsView)

@@ -59,7 +59,7 @@ extension EditorVC {
             .disposed(by: disposeBag)
     }
     
-    func bindContentTextView() {
+    @objc func bindContentTextView() {
         contentTextView.rx.didBeginEditing
             .subscribe(onNext: {[unowned self] _ in
 //                self.appendTool(.setBold)

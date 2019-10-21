@@ -656,13 +656,13 @@
 			isa = PBXGroup;
 			children = (
 				3B06863823471163008953C5 /* Subviews */,
+				3B25E5BD234C2A0C005BD1B8 /* BasicEditorViewModel.swift */,
 				3B068631234700DC008953C5 /* BasicEditorVC.swift */,
 				BCB2A6E923556E1E00B3582B /* BasicEditorVC+Draft.swift */,
 				BCB2A6ED23556EE400B3582B /* BasicEditorVC+Layout.swift */,
 				3B25E5BF234C2F66005BD1B8 /* BasicEditorVC+Binding.swift */,
 				BCB2A6EF23556FC100B3582B /* BasicEditorVC+Tools.swift */,
 				3B25E5C3234C6E4E005BD1B8 /* BasicEditorVC+Link.swift */,
-				3B25E5BD234C2A0C005BD1B8 /* BasicEditorViewModel.swift */,
 				BCD453AC2354473F005A454C /* BasicEditorVC+MediaViewDelegate.swift */,
 			);
 			path = BasicEditorVC;

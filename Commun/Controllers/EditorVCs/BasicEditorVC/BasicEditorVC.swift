@@ -16,6 +16,20 @@ class BasicEditorVC: EditorVC {
     let attachmentHeight: CGFloat = 300
     let attachmentDraftKey = "BasicEditorVC.attachmentDraftKey"
     
+    // MARK: - Properties
+    var link: String? {
+        didSet {
+            if link == nil {
+                appendTool(.addPhoto)
+            }
+            else {
+                removeTool(.addPhoto)
+            }
+        }
+    }
+    
+    var ignoredLinks = [String]()
+    
     // MARK: - Subviews
     var _contentTextView = BasicEditorTextView(forExpandable: ())
     override var contentTextView: ContentTextView {
@@ -48,7 +62,7 @@ class BasicEditorVC: EditorVC {
     // MARK: - overriding actions
     
     override func didChooseImageFromGallery(_ image: UIImage, description: String? = nil) {
-        
+        if link != nil {return}
         var attributes = ResponseAPIContentBlockAttributes(
             description: description
         )

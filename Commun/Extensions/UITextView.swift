@@ -63,8 +63,13 @@ extension UITextView {
     
     // MARK: - Link detector
     func resolveLinks() {
-        if let regex = NSRegularExpression.linkRegex {
-            addAppLink(regex: regex)
+        let detector = try! NSDataDetector(types: NSTextCheckingResult.CheckingType.link.rawValue)
+        let matches = detector.matches(in: text, options: [], range: NSRange(location: 0, length: text.utf16.count))
+
+        for match in matches {
+            guard let range = Range(match.range, in: text) else { continue }
+            let url = text[range]
+            textStorage.addAttributes([.link: url], range: match.range)
         }
     }
     

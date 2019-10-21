@@ -24,6 +24,9 @@ final class TextAttachment: SubviewTextAttachment {
     var attributes: ResponseAPIContentBlockAttributes?
     var localImage: UIImage?
     var attachmentView: AttachmentView?
+    var type: String? {
+        return attributes?.type
+    }
     
     weak var delegate: AttachmentViewDelegate? {
         didSet {
