@@ -54,9 +54,12 @@ class BasicEditorVC: EditorVC {
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         if viewModel.postForEdit == nil {
             appendTool(EditorToolbarItem.addArticle)
         }
+        
+        contentTextView.becomeFirstResponder()
     }
     
     // MARK: - overriding actions

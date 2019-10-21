@@ -65,6 +65,12 @@ class ArticleEditorVC: EditorVC {
     }
     
     // MARK: - Lifecycle
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        titleTextView.becomeFirstResponder()
+    }
+    
     override func setUpViews() {
         super.setUpViews()
         titleTextViewCountLabel.isHidden = true
