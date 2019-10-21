@@ -29,7 +29,7 @@ extension ResponseAPIFrameGetEmbed {
         let attributes = ResponseAPIContentBlockAttributes(embed: self)
         
         // thumbnail for website and video
-        if type == "website" || type == "video" {
+        if attributes.type == "website" || attributes.type == "video" {
             urlString = thumbnail_url
         }
         

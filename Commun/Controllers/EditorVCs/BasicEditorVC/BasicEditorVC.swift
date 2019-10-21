@@ -20,7 +20,14 @@ class BasicEditorVC: EditorVC {
     var link: String? {
         didSet {
             if link == nil {
-                appendTool(.addPhoto)
+                if let indexOfAddArticle = tools.value.firstIndex(of: .addArticle)
+                {
+                    insertTool(.addPhoto, at: indexOfAddArticle)
+                }
+                else {
+                    appendTool(.addPhoto)
+                }
+
             }
             else {
                 removeTool(.addPhoto)
