@@ -78,9 +78,16 @@ extension ProfilePageVC: CommentCellDelegate {
                 }
                 
                 if let post = element as? ResponseAPIContentGetPost {
-                    let cell = self.tableView.dequeueReusableCell(withIdentifier: "PostCardCell") as! PostCardCell
-                    cell.setUp(with: post)
-                    return cell
+                    switch post.content.attributes?.type {
+                    case "article":
+                        let cell = self.tableView.dequeueReusableCell(withIdentifier: "ArticlePostCell") as! ArticlePostCell
+                        cell.setUp(with: post)
+                    case "basic":
+                        let cell = self.tableView.dequeueReusableCell(withIdentifier: "BasicPostCell") as! BasicPostCell
+                        cell.setUp(with: post)
+                    default:
+                        return UITableViewCell()
+                    }
                 }
                 
                 if let comment = element as? ResponseAPIContentGetComment {
@@ -106,7 +113,7 @@ extension ProfilePageVC: CommentCellDelegate {
             .subscribe(onNext: {indexPath in
                 let cell = self.tableView.cellForRow(at: indexPath)
                 switch cell {
-                case is PostCardCell:
+                case is PostCell:
                     if let postPageVC = controllerContainer.resolve(PostPageVC.self),
                         let post = self.viewModel.items.value[indexPath.row] as? ResponseAPIContentGetPost{
                         postPageVC.viewModel.postForRequest = post

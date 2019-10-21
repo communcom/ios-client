@@ -105,4 +105,9 @@ extension UIView {
         backgroundColor = nil
         layer.backgroundColor =  backgroundCGColor
     }
+        
+    var heightConstraint: NSLayoutConstraint? {
+        return constraints.first(where: {$0.firstAttribute == .height && $0.secondItem == nil})
+    }
+
 }

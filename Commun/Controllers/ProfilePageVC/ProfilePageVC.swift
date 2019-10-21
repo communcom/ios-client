@@ -127,7 +127,8 @@ class ProfilePageVC: UIViewController, VCWithParallax {
         }
         
         // Configure tableView
-        tableView.register(UINib(nibName: "PostCardCell", bundle: nil), forCellReuseIdentifier: "PostCardCell")
+        tableView.register(BasicPostCell.self, forCellReuseIdentifier: "BasicPostCell")
+        tableView.register(ArticlePostCell.self, forCellReuseIdentifier: "ArticlePostCell")
         tableView.register(UINib(nibName: "CommentCell", bundle: nil), forCellReuseIdentifier: "CommentCell")
         tableView.register(UINib(nibName: "EmptyCell", bundle: nil), forCellReuseIdentifier: "EmptyCell")
         tableView.rowHeight = UITableView.automaticDimension

@@ -94,14 +94,15 @@ final class ArticlePostCell: PostCell {
         super.setUp(with: post)
         cardImageView.image = UIImage(named: "article-placeholder")
         
-        titleLabel.text = post?.content.title
+        titleLabel.text = post?.content.attributes?.title
         
-        if let embeds = post?.content.embeds.compactMap({$0.result}),
+        if let embeds = post?.attachments,
             !embeds.isEmpty,
-            let firstEmbed = embeds.first
+            let firstEmbed = embeds.first,
+            let urlString = firstEmbed.attributes?.thumbnail_url ?? firstEmbed.attributes?.url,
+            let url = URL(string: urlString)
         {
-            let urlString = firstEmbed.thumbnail_url ?? firstEmbed.url
-            cardImageView.sd_setImageCachedError(with: URL(string: urlString), completion: nil)
+            cardImageView.sd_setImageCachedError(with: url, completion: nil)
         }
     }
 }

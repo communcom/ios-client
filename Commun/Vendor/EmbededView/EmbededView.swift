@@ -12,23 +12,6 @@ import CyberSwift
 
 class EmbededView: UIView, UIWebViewDelegate {
     var bag = DisposeBag()
-    var heightConstraint: NSLayoutConstraint!
-//    let didShowContentWithHeight = PublishSubject<CGFloat>()
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        commonInit()
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        commonInit()
-    }
-    
-    private func commonInit() {
-        // assign height constraint
-        self.heightConstraint = self.constraints.first {$0.firstAttribute == .height}
-    }
     
     func setUpWithEmbeded(_ embededResult: ResponseAPIContentEmbedResult?){
         if embededResult?.type == "video",
@@ -101,7 +84,7 @@ class EmbededView: UIView, UIWebViewDelegate {
     }
     
     private func adjustHeight(withHeight height: CGFloat) {
-        self.heightConstraint.constant = height
+        self.heightConstraint?.constant = height
         hideLoading()
         self.setNeedsLayout()
 //        self.didShowContentWithHeight.onNext(height)

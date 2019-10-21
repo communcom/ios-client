@@ -41,18 +41,23 @@ final class BasicPostCell: PostCell {
         super.setUp(with: post)
         self.accessibilityLabel = "PostCardCell"
         
-        #warning("remove later")
-        if let title = post?.content.title,
-            title != " "
+        let defaultAttributes: [NSAttributedString.Key: Any] = [.font: UIFont.systemFont(ofSize: 14)]
+        
+        if let content = post?.content.content.arrayValue,
+            let firstSentence = content.first(where: {$0.type == "paragraph"})
         {
-            self.contentLabel.text = title
+            let mutableAS = NSMutableAttributedString()
+            var attributedText = firstSentence
+                .toAttributedString(currentAttributes: defaultAttributes)
+            if attributedText.length > 150 {
+                attributedText = attributedText.attributedSubstring(from: NSMakeRange(0, 150))
+                mutableAS.append(NSAttributedString(string: "...", attributes: defaultAttributes))
+            }
+            mutableAS.insert(attributedText, at: 0)
+            contentLabel.attributedText = mutableAS
         }
-        else {
-            // TODO: Parsing
-            self.contentLabel.text = post?.content.body.full
-        }
-         
-        if let embeds = post?.content.embeds.compactMap({$0.result}),
+        
+        if let embeds = post?.attachments,
             !embeds.isEmpty
         {
             gridView.setUp(embeds: embeds)

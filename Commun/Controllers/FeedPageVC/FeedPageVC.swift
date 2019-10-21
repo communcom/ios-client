@@ -92,10 +92,22 @@ class FeedPageVC: UIViewController, VCWithParallax {
         userAvatarImage.addTapToViewer()
         
         // tableView
+        tableView.register(BasicPostCell.self, forCellReuseIdentifier: "BasicPostCell")
+        tableView.register(ArticlePostCell.self, forCellReuseIdentifier: "ArticlePostCell")
+        
         dataSource = MyRxTableViewSectionedAnimatedDataSource<PostSection>(
-            configureCell: { dataSource, tableView, indexPath, item in
-                let cell = tableView.dequeueReusableCell(withIdentifier: "PostCardCell", for: indexPath) as! PostCardCell
-                cell.setUp(with: item)
+            configureCell: { dataSource, tableView, indexPath, post in
+                let cell: PostCell
+                switch post.content.attributes?.type {
+                case "article":
+                    cell = self.tableView.dequeueReusableCell(withIdentifier: "ArticlePostCell") as! ArticlePostCell
+                    cell.setUp(with: post)
+                case "basic":
+                    cell = self.tableView.dequeueReusableCell(withIdentifier: "BasicPostCell") as! BasicPostCell
+                    cell.setUp(with: post)
+                default:
+                    return UITableViewCell()
+                }
                 
                 if indexPath.row >= self.viewModel.items.value.count - 5 {
                     self.viewModel.fetchNext()
@@ -105,7 +117,7 @@ class FeedPageVC: UIViewController, VCWithParallax {
             }
         )
         
-        tableView.register(UINib(nibName: "PostCardCell", bundle: nil), forCellReuseIdentifier: "PostCardCell")
+        
         tableView.rowHeight = UITableView.automaticDimension
         tableView.addPostLoadingFooterView()
         

@@ -154,14 +154,14 @@ class PostCell: MyTableViewCell, PostController {
         metaView.setUp(post: post)
         
         // Handle button
-        self.upVoteButton.tintColor         = post.votes.hasUpVote ? .appMainColor: .lightGray
+        self.upVoteButton.tintColor         = post.votes.hasUpVote ?? false ? .appMainColor: .lightGray
         self.likeCountLabel.text            =   "\((post.votes.upCount ?? 0) - (post.votes.downCount ?? 0))"
-        self.downVoteButton.tintColor       = post.votes.hasDownVote ? .appMainColor: .lightGray
+        self.downVoteButton.tintColor       = post.votes.hasDownVote ?? false ? .appMainColor: .lightGray
         
         // comments // shares count
-        self.commentsCountLabel.text        =   "\(post.stats.commentsCount)"
+        self.commentsCountLabel.text        =   "\(post.stats?.commentsCount ?? 0)"
         #warning("change this number later")
-        self.sharesCountLabel.text         =   "\(post.stats.viewCount)"
+        self.sharesCountLabel.text         =   "\(post.stats?.viewCount ?? 0)"
         
     }
 }
