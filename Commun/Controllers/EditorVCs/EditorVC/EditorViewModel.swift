@@ -13,12 +13,10 @@ import CyberSwift
 
 class EditorViewModel {
     var postForEdit: ResponseAPIContentGetPost?
-    var isAdult = false
     
     func sendPost(title: String?, block: ResponseAPIContentBlock) -> Single<SendPostCompletion> {
         // Prepare tags
         var tags = block.getTags()
-        if isAdult {tags.append("18+")}
         
         // Prepare content
         var string: String!

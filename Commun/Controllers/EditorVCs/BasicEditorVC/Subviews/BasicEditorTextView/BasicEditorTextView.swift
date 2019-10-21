@@ -26,6 +26,10 @@ class BasicEditorTextView: ContentTextView {
         return false
     }
     
+    override var contextMenuItems: [UIMenuItem] {
+        return []
+    }
+    
     // MARK: - Link
     func addLink(_ urlString: String, placeholder: String?) {
         let placeholder = placeholder ?? urlString

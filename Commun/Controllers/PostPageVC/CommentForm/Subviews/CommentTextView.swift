@@ -36,14 +36,11 @@ class CommentTextView: ContentTextView {
         }
     }
     
-    override func modifyContextMenu() {
-        super.modifyContextMenu()
-        
-        // remove unused
-        var items = UIMenuController.shared.menuItems
-        
-        items = items!.filter {$0.title != "🔗"}
-        UIMenuController.shared.menuItems = items
+    override var contextMenuItems: [UIMenuItem] {
+        var items = super.contextMenuItems
+        // don't allow add link
+        items = items.filter {$0.title != "🔗"}
+        return items
     }
     
     override func getContentBlock() -> Single<ResponseAPIContentBlock> {

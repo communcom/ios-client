@@ -69,6 +69,31 @@ class ContentTextView: UITextView {
         fatalError("Must override")
     }
     
+    var contextMenuItems: [UIMenuItem] {
+        return [
+            UIMenuItem(
+                title: "𝐁",
+                action: #selector(self.toggleBold)
+            ),
+            UIMenuItem(
+                title: "𝐼",
+                action: #selector(self.toggleItalic)
+            ),
+            UIMenuItem(
+                title: "🔗".localized().uppercaseFirst,
+                action: #selector(self.addLink)
+            ),
+            UIMenuItem(
+                title: "color".localized().uppercaseFirst,
+                action: #selector(self.setColorMenu)
+            ),
+            UIMenuItem(
+                title: "clear formatting".localized().uppercaseFirst,
+                action: #selector(self.clearFormatting)
+            ),
+        ]
+    }
+    
     let disposeBag = DisposeBag()
     var originalAttributedString: NSAttributedString?
     
@@ -116,30 +141,9 @@ class ContentTextView: UITextView {
             .disposed(by: disposeBag)
     }
     
-    func modifyContextMenu() {
+    private func modifyContextMenu() {
         // menuItems
-        UIMenuController.shared.menuItems = [
-            UIMenuItem(
-                title: "𝐁",
-                action: #selector(self.toggleBold)
-            ),
-            UIMenuItem(
-                title: "𝐼",
-                action: #selector(self.toggleItalic)
-            ),
-            UIMenuItem(
-                title: "🔗".localized().uppercaseFirst,
-                action: #selector(self.addLink)
-            ),
-            UIMenuItem(
-                title: "color".localized().uppercaseFirst,
-                action: #selector(self.setColorMenu)
-            ),
-            UIMenuItem(
-                title: "clear formatting".localized().uppercaseFirst,
-                action: #selector(self.clearFormatting)
-            ),
-        ]
+        UIMenuController.shared.menuItems = contextMenuItems
     }
     
     @objc private func addLink() {

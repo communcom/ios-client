@@ -20,11 +20,6 @@ extension EditorVC {
             addImage()
         }
         
-        if item == .toggleIsAdult {
-            viewModel.isAdult = !item.isHighlighted
-            toggleIsHighlightedForTool(item)
-        }
-        
         if item == .setBold {
             contentTextView.toggleBold()
         }

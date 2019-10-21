@@ -159,18 +159,24 @@ class TabBarVC: UITabBarController {
     }
     
     @objc func buttonAddTapped() {
-        showActionSheet(title: "choose an editor".localized().uppercaseFirst, actions: [
-            UIAlertAction(title: "basic editor".localized().uppercaseFirst, style: .default, handler: { (_) in
-                let vc = BasicEditorVC()
-                vc.modalPresentationStyle = .fullScreen
-                self.present(vc, animated: true, completion: nil)
-            }),
-            UIAlertAction(title: "article editor".localized().uppercaseFirst, style: .default, handler: { (_) in
-                let vc = ArticleEditorVC()
-                vc.modalPresentationStyle = .fullScreen
-                self.present(vc, animated: true, completion: nil)
-            }),
-        ])
+        // open basic editor
+        let vc = BasicEditorVC()
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated: true, completion: nil)
+        
+        // or select editor ???
+//        showActionSheet(title: "choose an editor".localized().uppercaseFirst, actions: [
+//            UIAlertAction(title: "basic editor".localized().uppercaseFirst, style: .default, handler: { (_) in
+//                let vc = BasicEditorVC()
+//                vc.modalPresentationStyle = .fullScreen
+//                self.present(vc, animated: true, completion: nil)
+//            }),
+//            UIAlertAction(title: "article editor".localized().uppercaseFirst, style: .default, handler: { (_) in
+//                let vc = ArticleEditorVC()
+//                vc.modalPresentationStyle = .fullScreen
+//                self.present(vc, animated: true, completion: nil)
+//            }),
+//        ])
     }
 
     func bindViewModel() {

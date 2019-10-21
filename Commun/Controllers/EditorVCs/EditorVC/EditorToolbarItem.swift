@@ -28,13 +28,6 @@ struct EditorToolbarItem: Equatable {
             iconSize: CGSize(width: 18, height: 18))
     }
     
-    static var toggleIsAdult: EditorToolbarItem {
-        return EditorToolbarItem(
-            name: "toggleIsAdult",
-            icon: "18Button",
-            iconSize: CGSize(width: 23, height: 12))
-    }
-    
     static var addPhoto: EditorToolbarItem {
         return EditorToolbarItem(
             name: "addPhoto",

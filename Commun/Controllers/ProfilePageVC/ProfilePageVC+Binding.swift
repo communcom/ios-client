@@ -82,9 +82,11 @@ extension ProfilePageVC: CommentCellDelegate {
                     case "article":
                         let cell = self.tableView.dequeueReusableCell(withIdentifier: "ArticlePostCell") as! ArticlePostCell
                         cell.setUp(with: post)
+                        return cell
                     case "basic":
                         let cell = self.tableView.dequeueReusableCell(withIdentifier: "BasicPostCell") as! BasicPostCell
                         cell.setUp(with: post)
+                        return cell
                     default:
                         return UITableViewCell()
                     }

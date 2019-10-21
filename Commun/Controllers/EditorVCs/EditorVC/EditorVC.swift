@@ -50,7 +50,6 @@ class EditorVC: UIViewController {
     }
     
     let tools = BehaviorRelay<[EditorToolbarItem]>(value: [
-        EditorToolbarItem.toggleIsAdult,
         EditorToolbarItem.addPhoto
     ]) 
     
