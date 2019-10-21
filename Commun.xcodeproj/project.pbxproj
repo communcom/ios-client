@@ -80,7 +80,6 @@
 		3B515819226DDE8D00108F17 /* EmptyCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3B515818226DDE8D00108F17 /* EmptyCell.xib */; };
 		3B51581C226DE28D00108F17 /* EmptyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B51581B226DE28D00108F17 /* EmptyCell.swift */; };
 		3B51581E226E0D3A00108F17 /* TLPhotosPickerViewController+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B51581D226E0D3A00108F17 /* TLPhotosPickerViewController+Rx.swift */; };
-		3B5CB30122A55D3E00757533 /* PlaceholderPostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5CB30022A55D3E00757533 /* PlaceholderPostCell.swift */; };
 		3B5CB30322A56BD500757533 /* UITapGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5CB30222A56BD500757533 /* UITapGestureRecognizer.swift */; };
 		3B5CB30522A5752100757533 /* ListViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5CB30422A5752100757533 /* ListViewModelType.swift */; };
 		3B5CB30822A57AA400757533 /* PlaceholderNotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5CB30722A57AA400757533 /* PlaceholderNotificationCell.swift */; };
@@ -184,7 +183,6 @@
 		3BF2E09822D3A49F003B37AE /* StepButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BF2E09722D3A49F003B37AE /* StepButton.swift */; };
 		3BF37BCA22A11FA700A72FFE /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BF37BC922A11FA700A72FFE /* UIView.swift */; };
 		3BF37BCC22A1297C00A72FFE /* UITableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BF37BCB22A1297C00A72FFE /* UITableView.swift */; };
-		3BF37BD422A1414200A72FFE /* PlaceholderPostCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3BF37BD222A1414200A72FFE /* PlaceholderPostCell.xib */; };
 		3BF37BD622A162E000A72FFE /* ResponseAPIOnlineNotificationData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BF37BD522A162E000A72FFE /* ResponseAPIOnlineNotificationData.swift */; };
 		3BF3817F2331D17900C02123 /* NSRegularExpression.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BF3817E2331D17900C02123 /* NSRegularExpression.swift */; };
 		3BF381812331D9CD00C02123 /* URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BF381802331D9CD00C02123 /* URL.swift */; };
@@ -201,7 +199,6 @@
 		5725173C2243E4640033125C /* PostPageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5725173B2243E4640033125C /* PostPageVC.swift */; };
 		5725173E2243E49C0033125C /* PostPageVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5725173D2243E49C0033125C /* PostPageVC.storyboard */; };
 		572517402243E4D70033125C /* PostPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5725173F2243E4D70033125C /* PostPageViewModel.swift */; };
-		572F81A7223C164C0007F2F9 /* PostCardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572F81A0223C164B0007F2F9 /* PostCardCell.swift */; };
 		572F81AB223C164C0007F2F9 /* SF-Pro-Text-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 572F81A6223C164C0007F2F9 /* SF-Pro-Text-Regular.otf */; };
 		5740957F2247768C00E40E51 /* CommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5740957D2247768C00E40E51 /* CommentCell.swift */; };
 		574095802247768C00E40E51 /* CommentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5740957E2247768C00E40E51 /* CommentCell.xib */; };
@@ -240,7 +237,6 @@
 		57FB17A4224C15C400563BF7 /* SignInViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FB17A3224C15C400563BF7 /* SignInViewModel.swift */; };
 		7472E4613CDA904305E42A4F /* Pods_Commun.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F0772CC6D820AD11B1FF48A /* Pods_Commun.framework */; };
 		B170AC15228AFBDA00C6FFBC /* SignUpVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5797E0F9225DDA490026C4D5 /* SignUpVC.storyboard */; };
-		B170AC16228AFBF500C6FFBC /* PostCardCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 572F81A1223C164B0007F2F9 /* PostCardCell.xib */; };
 		B17A970C228002440081B8E0 /* SignUpRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17A970B228002440081B8E0 /* SignUpRouter.swift */; };
 		B1A6EE5122D5C8E300A5D6F0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B1A6EE5022D5C8E100A5D6F0 /* GoogleService-Info.plist */; };
 		B1A8AC1B22E6FF5400032030 /* BlankButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A8AC1A22E6FF5400032030 /* BlankButton.swift */; };
@@ -275,6 +271,12 @@
 		B1EA02F22289882A00835244 /* SF-Pro-Text-RegularItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 57F9CAA1225B3AAA00AC9ACA /* SF-Pro-Text-RegularItalic.otf */; };
 		B1EA02F32289882A00835244 /* SF-Pro-Text-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 57F9CA94225B3A9900AC9ACA /* SF-Pro-Text-Semibold.otf */; };
 		B1EA02F42289882A00835244 /* SF-Pro-Text-SemiboldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 57F9CAA6225B3AAF00AC9ACA /* SF-Pro-Text-SemiboldItalic.otf */; };
+		BC016D42235DA0D400F1319F /* ArticlePostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC016D39235DA0D400F1319F /* ArticlePostCell.swift */; };
+		BC016D43235DA0D400F1319F /* PostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC016D3B235DA0D400F1319F /* PostCell.swift */; };
+		BC016D44235DA0D400F1319F /* PostCell+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC016D3C235DA0D400F1319F /* PostCell+Actions.swift */; };
+		BC016D45235DA0D400F1319F /* BasicPostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC016D3E235DA0D400F1319F /* BasicPostCell.swift */; };
+		BC016D46235DA0D400F1319F /* PlaceholderPostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC016D40235DA0D400F1319F /* PlaceholderPostCell.swift */; };
+		BC016D47235DA0D400F1319F /* PlaceholderPostCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BC016D41235DA0D400F1319F /* PlaceholderPostCell.xib */; };
 		BC3D97612350384E00421718 /* ResponseAPIContentGetPosts.json in Resources */ = {isa = PBXBuildFile; fileRef = BC3D97602350384E00421718 /* ResponseAPIContentGetPosts.json */; };
 		BC757EF92356E6EC00CB4ADE /* PostHeaderTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC757EF82356E6EC00CB4ADE /* PostHeaderTextView.swift */; };
 		BCB2A6E22354512D00B3582B /* AttachmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB2A6E12354512D00B3582B /* AttachmentView.swift */; };
@@ -375,7 +377,6 @@
 		3B515818226DDE8D00108F17 /* EmptyCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmptyCell.xib; sourceTree = "<group>"; };
 		3B51581B226DE28D00108F17 /* EmptyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyCell.swift; sourceTree = "<group>"; };
 		3B51581D226E0D3A00108F17 /* TLPhotosPickerViewController+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TLPhotosPickerViewController+Rx.swift"; sourceTree = "<group>"; };
-		3B5CB30022A55D3E00757533 /* PlaceholderPostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceholderPostCell.swift; sourceTree = "<group>"; };
 		3B5CB30222A56BD500757533 /* UITapGestureRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITapGestureRecognizer.swift; sourceTree = "<group>"; };
 		3B5CB30422A5752100757533 /* ListViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewModelType.swift; sourceTree = "<group>"; };
 		3B5CB30722A57AA400757533 /* PlaceholderNotificationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceholderNotificationCell.swift; sourceTree = "<group>"; };
@@ -481,7 +482,6 @@
 		3BF2E09722D3A49F003B37AE /* StepButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepButton.swift; sourceTree = "<group>"; };
 		3BF37BC922A11FA700A72FFE /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
 		3BF37BCB22A1297C00A72FFE /* UITableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableView.swift; sourceTree = "<group>"; };
-		3BF37BD222A1414200A72FFE /* PlaceholderPostCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlaceholderPostCell.xib; sourceTree = "<group>"; };
 		3BF37BD522A162E000A72FFE /* ResponseAPIOnlineNotificationData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseAPIOnlineNotificationData.swift; sourceTree = "<group>"; };
 		3BF3817E2331D17900C02123 /* NSRegularExpression.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSRegularExpression.swift; sourceTree = "<group>"; };
 		3BF381802331D9CD00C02123 /* URL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URL.swift; sourceTree = "<group>"; };
@@ -501,8 +501,6 @@
 		5725173B2243E4640033125C /* PostPageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostPageVC.swift; sourceTree = "<group>"; };
 		5725173D2243E49C0033125C /* PostPageVC.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PostPageVC.storyboard; sourceTree = "<group>"; };
 		5725173F2243E4D70033125C /* PostPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostPageViewModel.swift; sourceTree = "<group>"; };
-		572F81A0223C164B0007F2F9 /* PostCardCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostCardCell.swift; sourceTree = "<group>"; };
-		572F81A1223C164B0007F2F9 /* PostCardCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PostCardCell.xib; sourceTree = "<group>"; };
 		572F81A6223C164C0007F2F9 /* SF-Pro-Text-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Regular.otf"; sourceTree = "<group>"; };
 		5740957D2247768C00E40E51 /* CommentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentCell.swift; sourceTree = "<group>"; };
 		5740957E2247768C00E40E51 /* CommentCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CommentCell.xib; sourceTree = "<group>"; };
@@ -585,6 +583,12 @@
 		B1D1CF9C22F8A28F0071F1B6 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		B1EA02D42289734800835244 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		B1EA02D62289734E00835244 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
+		BC016D39235DA0D400F1319F /* ArticlePostCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticlePostCell.swift; sourceTree = "<group>"; };
+		BC016D3B235DA0D400F1319F /* PostCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostCell.swift; sourceTree = "<group>"; };
+		BC016D3C235DA0D400F1319F /* PostCell+Actions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PostCell+Actions.swift"; sourceTree = "<group>"; };
+		BC016D3E235DA0D400F1319F /* BasicPostCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicPostCell.swift; sourceTree = "<group>"; };
+		BC016D40235DA0D400F1319F /* PlaceholderPostCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceholderPostCell.swift; sourceTree = "<group>"; };
+		BC016D41235DA0D400F1319F /* PlaceholderPostCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlaceholderPostCell.xib; sourceTree = "<group>"; };
 		BC3D97602350384E00421718 /* ResponseAPIContentGetPosts.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ResponseAPIContentGetPosts.json; sourceTree = "<group>"; };
 		BC757EF82356E6EC00CB4ADE /* PostHeaderTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostHeaderTextView.swift; sourceTree = "<group>"; };
 		BCB2A6E12354512D00B3582B /* AttachmentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentView.swift; sourceTree = "<group>"; };
@@ -1174,17 +1178,6 @@
 			path = PostPageVC;
 			sourceTree = "<group>";
 		};
-		572F819F223C164B0007F2F9 /* PostCardCell */ = {
-			isa = PBXGroup;
-			children = (
-				572F81A0223C164B0007F2F9 /* PostCardCell.swift */,
-				572F81A1223C164B0007F2F9 /* PostCardCell.xib */,
-				3BF37BD222A1414200A72FFE /* PlaceholderPostCell.xib */,
-				3B5CB30022A55D3E00757533 /* PlaceholderPostCell.swift */,
-			);
-			path = PostCardCell;
-			sourceTree = "<group>";
-		};
 		572F81A5223C164C0007F2F9 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
@@ -1289,7 +1282,10 @@
 		576DC91C223E421A00EDED41 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				572F819F223C164B0007F2F9 /* PostCardCell */,
+				BC016D3F235DA0D400F1319F /* PlaceholderPostCell */,
+				BC016D3A235DA0D400F1319F /* PostCell */,
+				BC016D3D235DA0D400F1319F /* BasicPostCell */,
+				BC016D38235DA0D400F1319F /* ArticlePostCell */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -1532,6 +1528,40 @@
 			path = UIButton;
 			sourceTree = "<group>";
 		};
+		BC016D38235DA0D400F1319F /* ArticlePostCell */ = {
+			isa = PBXGroup;
+			children = (
+				BC016D39235DA0D400F1319F /* ArticlePostCell.swift */,
+			);
+			path = ArticlePostCell;
+			sourceTree = "<group>";
+		};
+		BC016D3A235DA0D400F1319F /* PostCell */ = {
+			isa = PBXGroup;
+			children = (
+				BC016D3B235DA0D400F1319F /* PostCell.swift */,
+				BC016D3C235DA0D400F1319F /* PostCell+Actions.swift */,
+			);
+			path = PostCell;
+			sourceTree = "<group>";
+		};
+		BC016D3D235DA0D400F1319F /* BasicPostCell */ = {
+			isa = PBXGroup;
+			children = (
+				BC016D3E235DA0D400F1319F /* BasicPostCell.swift */,
+			);
+			path = BasicPostCell;
+			sourceTree = "<group>";
+		};
+		BC016D3F235DA0D400F1319F /* PlaceholderPostCell */ = {
+			isa = PBXGroup;
+			children = (
+				BC016D40235DA0D400F1319F /* PlaceholderPostCell.swift */,
+				BC016D41235DA0D400F1319F /* PlaceholderPostCell.xib */,
+			);
+			path = PlaceholderPostCell;
+			sourceTree = "<group>";
+		};
 		BC757EF72356E6C200CB4ADE /* PostHeaderTextView */ = {
 			isa = PBXGroup;
 			children = (
@@ -1649,6 +1679,7 @@
 				575945A222607F1F004041C9 /* CountryCell.xib in Resources */,
 				B1EA02E42289882A00835244 /* SF-Pro-Display-SemiboldItalic.otf in Resources */,
 				574095802247768C00E40E51 /* CommentCell.xib in Resources */,
+				BC016D47235DA0D400F1319F /* PlaceholderPostCell.xib in Resources */,
 				57FB179C224BFBD700563BF7 /* README.md in Resources */,
 				B1EA02E32289882A00835244 /* SF-Pro-Display-Semibold.otf in Resources */,
 				B1EA02DB2289882A00835244 /* SF-Pro-Display-Heavy.otf in Resources */,
@@ -1674,7 +1705,6 @@
 				3B2F226A226892C5006B589E /* NotificationCell.xib in Resources */,
 				571B1501223A935D00630C8F /* LaunchScreen.storyboard in Resources */,
 				57A1CA652270FCF000E2A1E3 /* LanguageVC.storyboard in Resources */,
-				3BF37BD422A1414200A72FFE /* PlaceholderPostCell.xib in Resources */,
 				B1EA02DC2289882A00835244 /* SF-Pro-Display-HeavyItalic.otf in Resources */,
 				3B67FC0C22C50F1500D05F01 /* SignInViewController.storyboard in Resources */,
 				5787C0C822650FC200568CEC /* SetUserVC.storyboard in Resources */,
@@ -1683,7 +1713,6 @@
 				B1EA02E92289882A00835244 /* SF-Pro-Text-Bold.otf in Resources */,
 				3BDD9A06228DBED000B2A1DA /* CommentForm.xib in Resources */,
 				B1EA02E62289882A00835244 /* SF-Pro-Display-ThinItalic.otf in Resources */,
-				B170AC16228AFBF500C6FFBC /* PostCardCell.xib in Resources */,
 				B1EA02F02289882A00835244 /* SF-Pro-Text-MediumItalic.otf in Resources */,
 				57E515A12270E66900A6F6DB /* SettingsVC.storyboard in Resources */,
 				3B02CD2A2289B2620078BB52 /* PostHeaderView.xib in Resources */,
@@ -1859,6 +1888,7 @@
 				576DC921223E42C800EDED41 /* UIViewControllerExtension.swift in Sources */,
 				3B0CEE13232B3CCF006BE8E1 /* EmbedsPageViewController.swift in Sources */,
 				3B2F227322689334006B589E /* NSMutableAttributedString.swift in Sources */,
+				BC016D42235DA0D400F1319F /* ArticlePostCell.swift in Sources */,
 				3B2F226B226892C5006B589E /* NotificationsPageViewModel.swift in Sources */,
 				3B5D7CEF2297F3FA0077B82C /* ItemsListController.swift in Sources */,
 				B17A970C228002440081B8E0 /* SignUpRouter.swift in Sources */,
@@ -1888,7 +1918,6 @@
 				3BA3779722E9DA6C0071AF3A /* SignupVC+Location.swift in Sources */,
 				57FB179D224BFBD700563BF7 /* PillPageControl.swift in Sources */,
 				BCB2A6E62355536D00B3582B /* UITableViewCell.swift in Sources */,
-				572F81A7223C164C0007F2F9 /* PostCardCell.swift in Sources */,
 				3B635F8322774A37006DAAB2 /* FeedTimeFrameMode.swift in Sources */,
 				57E515B12270F4EA00A6F6DB /* SettingsKeyCell.swift in Sources */,
 				3B02CD2E228AB4580078BB52 /* NotificationsFetcher.swift in Sources */,
@@ -1940,6 +1969,7 @@
 				3B0E9C64226F4A0C002AB1C2 /* VerticalDraggableImageView.swift in Sources */,
 				3B02CD282289B23E0078BB52 /* PostHeaderView.swift in Sources */,
 				3B02A56922F013D50043F9A4 /* ResponseAPIContentGetComment.swift in Sources */,
+				BC016D43235DA0D400F1319F /* PostCell.swift in Sources */,
 				57E515B62270F7B200A6F6DB /* SettingsButtonCell.swift in Sources */,
 				3B8E0ED72343032B00362F26 /* SetUserVC+Styles.swift in Sources */,
 				3B5EDE3022DF92D000897BF3 /* SettingsOptionsCell.swift in Sources */,
@@ -1959,6 +1989,7 @@
 				3B5EDE3722E07DCC00897BF3 /* SettingsVC+SectionHeader.swift in Sources */,
 				3B197C532269BE0E008CF10D /* SegmentioExtension.swift in Sources */,
 				3BE15B24233CC47600D865F5 /* FeedPageVC+Actions.swift in Sources */,
+				BC016D44235DA0D400F1319F /* PostCell+Actions.swift in Sources */,
 				57B6FC2C224A9F2800BCFDDA /* WelcomeItemVC.swift in Sources */,
 				3BF3817F2331D17900C02123 /* NSRegularExpression.swift in Sources */,
 				3B11911F2302B9B9008D0417 /* SwipeNavigationController.swift in Sources */,
@@ -1985,6 +2016,7 @@
 				3B5EDE2E22DF929D00897BF3 /* SettingsSwitcherCell.swift in Sources */,
 				BCB2A6E423546AF500B3582B /* EditorVC+AttachmentViewDelegate.swift in Sources */,
 				3B197C8A226A33CF008CF10D /* Decodable+MockObjects.swift in Sources */,
+				BC016D45235DA0D400F1319F /* BasicPostCell.swift in Sources */,
 				BC757EF92356E6EC00CB4ADE /* PostHeaderTextView.swift in Sources */,
 				578B94DA2263CBD800FB5BC6 /* ConfirmUserVC.swift in Sources */,
 				3B25E5C2234C4205005BD1B8 /* AttachmentsView.swift in Sources */,
@@ -2011,11 +2043,11 @@
 				3B24F86122F3715E00B7091C /* CommunitiesVC.swift in Sources */,
 				3BF37BCA22A11FA700A72FFE /* UIView.swift in Sources */,
 				575AECAE22606D0800A7EC2D /* SignUpViewModel.swift in Sources */,
+				BC016D46235DA0D400F1319F /* PlaceholderPostCell.swift in Sources */,
 				3B289B9A2346E6D800598407 /* UILabel+PureLayout.swift in Sources */,
 				3B2F2269226892C5006B589E /* NotificationCell.swift in Sources */,
 				3B5EDE3B22E0DD5100897BF3 /* NotificationSettingType.swift in Sources */,
 				57840A1B2240DB9400338FD5 /* NetworkService.swift in Sources */,
-				3B5CB30122A55D3E00757533 /* PlaceholderPostCell.swift in Sources */,
 				572517322243935C0033125C /* ControllerContainer.swift in Sources */,
 				3B3C8B982347911D00D8BADB /* EditorViewModel.swift in Sources */,
 				576DC91B223E41F600EDED41 /* FeedPageViewModel.swift in Sources */,
