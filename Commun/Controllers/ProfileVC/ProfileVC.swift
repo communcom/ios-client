@@ -20,7 +20,7 @@ class ProfileVC: BaseViewController, VCWithParallax {
     override var contentScrollView: UIScrollView? {tableView}
     
     // MARK: - Subviews
-    lazy var tableView: UITableView! = UITableView()
+    lazy var tableView: UITableView! = UITableView(forAutoLayout: ())
     
     
     // MARK: - Methods
@@ -28,15 +28,31 @@ class ProfileVC: BaseViewController, VCWithParallax {
         super.setUp()
         // assign tableView
         view.addSubview(tableView)
+        tableView.insetsContentViewsToSafeArea = false
+        tableView.contentInsetAdjustmentBehavior = .never
         tableView.autoPinEdgesToSuperviewEdges()
-        tableView.contentInset = UIEdgeInsets(top: headerHeight, left: 0, bottom: 0, right: 0)
+        tableView.insetsContentViewsToSafeArea = false
         
         // assign header
-        let headerView = ProfileHeaderView(forAutoLayout: ())
-        view.addSubview(headerView)
-        headerView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .bottom)
-        
+        let headerView = ProfileHeaderView(frame: .zero)
         headerView.coverImageView.image = UIImage(named: "ProfilePageCover")
         headerView.avatarImageView.image = UIImage(named: "ProfilePageCover")
+        
+        let containerView = UIView(forAutoLayout: ())
+        
+        containerView.addSubview(headerView)
+        headerView.autoPinEdgesToSuperviewEdges()
+        
+        tableView.tableHeaderView = containerView
+        
+        containerView.centerXAnchor.constraint(equalTo: tableView.centerXAnchor).isActive = true
+        containerView.widthAnchor.constraint(equalTo: tableView.widthAnchor).isActive = true
+        containerView.topAnchor.constraint(equalTo: tableView.topAnchor).isActive = true
+        
+        tableView.tableHeaderView?.layoutIfNeeded()
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
     }
 }

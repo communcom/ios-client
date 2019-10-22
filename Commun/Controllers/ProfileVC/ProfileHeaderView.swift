@@ -9,6 +9,9 @@
 import Foundation
 
 class ProfileHeaderView: UIView {
+    // MARK: - Properties
+    weak var tableView: UITableView?
+    
     // MARK: - Subviews
     lazy var coverImageView: UIImageView = {
         let imageView = UIImageView(height: 210)
@@ -53,7 +56,7 @@ class ProfileHeaderView: UIView {
     lazy var descriptionLabel = UILabel.descriptionLabel("Join on Mar 2017", size: 12)
     
     lazy var addBioButton: UIButton = {
-        let button = UIButton(height: 40, label: "add bio".localized().uppercaseFirst, labelFont: .systemFont(ofSize: 15), backgroundColor: UIColor(hexString: "#F3F5FA"), textColor: UIColor(hexString: "#6A80F5"), cornerRadius: 20)
+        let button = UIButton(height: 40, label: "add bio".localized().uppercaseFirst, labelFont: .boldSystemFont(ofSize: 15), backgroundColor: UIColor(hexString: "#F3F5FA"), textColor: UIColor(hexString: "#6A80F5"), cornerRadius: 20)
         return button
     }()
     
@@ -124,6 +127,8 @@ class ProfileHeaderView: UIView {
     }
     
     func commonInit() {
+        backgroundColor = .white
+        
         addSubview(coverImageView)
         coverImageView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .bottom)
         coverImageView.cornerRadius = 24
@@ -167,5 +172,10 @@ class ProfileHeaderView: UIView {
         addSubview(separatorView)
         separatorView.autoPinEdge(.top, to: .bottom, of: subscriptionsStackView)
         separatorView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        tableView?.tableHeaderView = tableView?.tableHeaderView
     }
 }
