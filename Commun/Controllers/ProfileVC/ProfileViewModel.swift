@@ -46,6 +46,20 @@ class ProfileViewModel {
     public let profileLoadingState = PublishSubject<LoadingState>()
     public let listLoadingState = PublishSubject<ListLoadingState>()
     
+    var items: Observable<[AnyObject?]> {
+        return Observable.combineLatest(commentsVM.items, postsVM.items)
+            .share()
+            .skip(1)
+            .map {items -> [AnyObject?] in
+                if self.segmentedItem.value == .comments {
+                    if items.0.count == 0 {return [nil]}
+                    return items.0 as [AnyObject?]
+                }
+                if items.1.count == 0 {return [nil]}
+                return items.1 as [AnyObject?]
+            }
+    }
+    
     // MARK: - Methods
     init(userId: String?) {
         self.userId = userId

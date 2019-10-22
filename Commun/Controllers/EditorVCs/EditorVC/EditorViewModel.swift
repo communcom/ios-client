@@ -54,7 +54,7 @@ class EditorViewModel {
             .do(onSuccess: { (transactionId, userId, permlink) in
                 // if editing post, then notify changes
                 if var post = self.postForEdit {
-                    post.content = block
+                    post.document = block
                     post.notifyChanged()
                 }
             })

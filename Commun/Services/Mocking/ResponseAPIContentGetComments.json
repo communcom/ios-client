@@ -6,200 +6,7 @@
             {
                 "votes": {
                     "upCount": 0,
-                    "downCount": 0,
-                    "hasUpVote": false,
-                    "hasDownVote": false
-                },
-                "meta": {
-                    "creationTime": "2019-10-09T12:01:12.000Z"
-                },
-                "childCommentsCount": 1,
-                "contentId": {
-                    "communityId": "WWAPEPA",
-                    "userId": "tst3xtckjyrn",
-                    "permlink": "zeus-fights-with-icarus-against-eurynome-and-common-man-named-mr-kaylee-hudsoni-on-pentos-1570622469320"
-                },
-                "parents": {
-                    "post": {
-                        "communityId": "WWAPEPA",
-                        "userId": "tst1zfzkzodb",
-                        "permlink": "hestia-fights-with-medea-against-helios-and-common-man-named-mr-august-leffler-iiii-on-yunkai-1570622466236"
-                    },
-                    "comment": null
-                },
-                "content": {
-                    "attributes": {
-                        "type": "comment",
-                        "version": "1.0",
-                        "title": "Zeus fights with Icarus against Eurynome and common man named Mr.Kaylee HudsonI on Pentos"
-                    },
-                    "id": 1,
-                    "type": "post",
-                    "content": [
-                        {
-                          "id": 2,
-                          "type": "paragraph",
-                          "content": [
-                            {
-                              "id": 3,
-                              "type": "text",
-                              "content": "Много лет тому назад, "
-                            },
-                            {
-                              "id": 4,
-                              "type": "mention",
-                              "content": "Царь"
-                            },
-                            {
-                              "id": 4,
-                              "type": "text",
-                              "content": " купил себе айпад. ",
-                              "attributes": {
-                                "style": ["bold", "italic"],
-                                "text_color": "#ff0000"
-                              }
-                            },
-                            {
-                              "id": 5,
-                              "type": "tag",
-                              "content": "с_той_поры_прошли_века"
-                            },
-                            {
-                              "id": 6,
-                              "type": "link",
-                              "content": " , Люди ",
-                              "attributes": {
-                                "url": "https://www.youtube.com/watch?v=UiYlRkVxC_4"
-                              }
-                            },
-                            {
-                              "id": 7,
-                              "type": "link",
-                              "content": "помнят ",
-                              "attributes": {
-                                "url": "https://assets.pixyblog.com/wp-content/uploads/sites/3/2018/10/JULIE-LONDON-51-copy-515x600.jpg"
-                              }
-                            },
-                            {
-                              "id": 8,
-                              "type": "link",
-                              "content": "чудака.",
-                              "attributes": {
-                                "url": "https://diletant.media"
-                              }
-                            }
-                          ]
-                        },
-                        {
-                            "id": 13,
-                            "type": "attachments",
-                            "content": [
-                                {
-                                    "id": 14,
-                                    "type": "image",
-                                    "content": "https://i.gifer.com/1HOf.gif"
-                                }
-                            ]
-                        }
-                    ]
-                },
-                "author": {
-                    "userId": "tst3xtckjyrn",
-                    "username": "von-chi-iv",
-                    "avatarUrl": "https://i.pravatar.cc/300?u=fa98c7309783247e76d30664dbb5441dddc7b006",
-                    "isSubscribed": false
-                },
-                "community": {
-                    "communityId": "WWAPEPA",
-                    "alias": "id4197175299",
-                    "name": "WWAPEPA comunity",
-                    "avatarUrl": "https://i.pravatar.cc/300?u=4533b2fcfd06fdf86b990e9e99f3f6bfc67824b0",
-                    "isSubscribed": false
-                },
-                "children": [
-                    {
-                        "votes": {
-                            "upCount": 0,
-                            "downCount": 0,
-                            "hasUpVote": false,
-                            "hasDownVote": false
-                        },
-                        "meta": {
-                            "creationTime": "2019-10-09T12:01:12.000Z"
-                        },
-                        "childCommentsCount": 1,
-                        "contentId": {
-                            "communityId": "WWAPEPA",
-                            "userId": "tst4zkborxrl",
-                            "permlink": "zeus-fights-with-hercules-against-perses-and-common-man-named-mrs-chong-reicherti-on-qarth-1570622469887"
-                        },
-                        "parents": {
-                            "post": {
-                                "communityId": "WWAPEPA",
-                                "userId": "tst1zfzkzodb",
-                                "permlink": "hestia-fights-with-medea-against-helios-and-common-man-named-mr-august-leffler-iiii-on-yunkai-1570622466236"
-                            },
-                            "comment": {
-                                "communityId": "WWAPEPA",
-                                "userId": "tst3xtckjyrn",
-                                "permlink": "zeus-fights-with-icarus-against-eurynome-and-common-man-named-mr-kaylee-hudsoni-on-pentos-1570622469320"
-                            }
-                        },
-                        "content": {
-                            "attributes": {
-                                "type": "comment",
-                                "version": "1.0",
-                                "title": "Zeus fights with Hercules against Perses and common man named Mrs.Chong ReichertI on Qarth"
-                            },
-                            "id": 1,
-                            "type": "post",
-                            "content": [
-                                {
-                                    "id": 2,
-                                    "type": "paragraph",
-                                    "content": [
-                                        {
-                                            "id": 3,
-                                            "type": "text",
-                                            "content": "Quantum cryptography does not work on Chuck Norris. When something is being observed by Chuck it stays in the same state until he's finished.\n at the moment he lives at Apt. 337 00918 Mann Path, Lake Grover, KS 09747     \n\n and YODA said: Adventure. Excitement. A Jedi craves not these things. \n\n witcher quote: I'll stick me boot so far up yer arse your tongue'll taste like wench twat \n\n Rick and Morty quote: Keep Summer safe. \n\n SuperHero Goblin Queen has power to Symbiote Costume and Melting \n\n Harry Potter quote: I solemnly swear that I am up to no good. \n\n and some Lorem to finish text: Architecto neque ab nesciunt quod ea qui eaque vitae voluptatem quasi ex expedita rerum hic qui et numquam ipsam illum non sint possimus et ipsum reiciendis sed enim laudantium beatae qui aut doloribus atque non earum cumque at aperiam recusandae dignissimos facilis dolorem dolores pariatur non deleniti est accusamus adipisci laboriosam fugit ullam porro nobis assumenda deserunt aperiam quo libero eligendi nam molestiae est repudiandae nulla unde delectus vel consequatur impedit blanditiis est quia ut officia dolorem consequatur laudantium in et fugit qui autem quia repudiandae cum repudiandae dolor vel labore sunt minus qui quibusdam eligendi rerum qui tempora explicabo consequuntur sed est quam dolor quo non dolores dolores inventore sapiente praesentium ullam molestias adipisci doloremque in vitae sit aperiam facere natus corporis amet temporibus doloribus eos et aut fugiat sunt esse illo vero enim sed dignissimos dolorem perspiciatis qui consequuntur sed exercitationem sint esse saepe nobis facilis sint aut libero eum sit eligendi aspernatur."
-                                        }
-                                    ]
-                                },
-                                {
-                                    "id": 13,
-                                    "type": "attachments",
-                                    "content": [
-                                        {
-                                            "id": 14,
-                                            "type": "website",
-                                            "content": "https://www.youtube.com/watch?v=KIJ8MrIR2Gw"
-                                        }
-                                    ]
-                                }
-                            ]
-                        },
-                        "author": {
-                            "userId": "tst4zkborxrl",
-                            "username": "bartoletti-cassi-jr",
-                            "avatarUrl": "https://i.pravatar.cc/300?u=e616310912d3222b9f50a2a1a5bbf87e8c07ae76",
-                            "isSubscribed": false
-                        },
-                        "community": {
-                            "communityId": "WWAPEPA",
-                            "alias": "id4197175299",
-                            "name": "WWAPEPA comunity",
-                            "avatarUrl": "https://i.pravatar.cc/300?u=4533b2fcfd06fdf86b990e9e99f3f6bfc67824b0",
-                            "isSubscribed": false
-                        }
-                    }
-                ]
-            },
-            {
-                "votes": {
-                    "upCount": 0,
-                    "downCount": 0,
-                    "hasUpVote": false,
-                    "hasDownVote": false
+                    "downCount": 0
                 },
                 "meta": {
                     "creationTime": "2019-10-09T12:01:09.000Z"
@@ -218,7 +25,7 @@
                     },
                     "comment": null
                 },
-                "content": {
+                "document": {
                     "attributes": {
                         "type": "comment",
                         "version": "1.0",
@@ -254,17 +61,83 @@
                 "author": {
                     "userId": "tst2fdikvpfh",
                     "username": "swift-donald-dds",
-                    "avatarUrl": "https://i.pravatar.cc/300?u=777533b3b7583a0e764ef4ed5266f0a3fd161b0e",
-                    "isSubscribed": false
+                    "avatarUrl": "https://i.pravatar.cc/300?u=777533b3b7583a0e764ef4ed5266f0a3fd161b0e"
                 },
                 "community": {
                     "communityId": "WWAPEPA",
                     "alias": "id4197175299",
                     "name": "WWAPEPA comunity",
-                    "avatarUrl": "https://i.pravatar.cc/300?u=4533b2fcfd06fdf86b990e9e99f3f6bfc67824b0",
-                    "isSubscribed": false
+                    "avatarUrl": "https://i.pravatar.cc/300?u=4533b2fcfd06fdf86b990e9e99f3f6bfc67824b0"
                 },
-                "children": []
+                "type": "comment"
+            },
+            {
+                "votes": {
+                    "upCount": 0,
+                    "downCount": 0
+                },
+                "meta": {
+                    "creationTime": "2019-10-09T12:01:12.000Z"
+                },
+                "childCommentsCount": 1,
+                "contentId": {
+                    "communityId": "WWAPEPA",
+                    "userId": "tst3xtckjyrn",
+                    "permlink": "zeus-fights-with-icarus-against-eurynome-and-common-man-named-mr-kaylee-hudsoni-on-pentos-1570622469320"
+                },
+                "parents": {
+                    "post": {
+                        "communityId": "WWAPEPA",
+                        "userId": "tst1zfzkzodb",
+                        "permlink": "hestia-fights-with-medea-against-helios-and-common-man-named-mr-august-leffler-iiii-on-yunkai-1570622466236"
+                    },
+                    "comment": null
+                },
+                "document": {
+                    "attributes": {
+                        "type": "comment",
+                        "version": "1.0",
+                        "title": "Zeus fights with Icarus against Eurynome and common man named Mr.Kaylee HudsonI on Pentos"
+                    },
+                    "id": 1,
+                    "type": "post",
+                    "content": [
+                        {
+                            "id": 2,
+                            "type": "paragraph",
+                            "content": [
+                                {
+                                    "id": 3,
+                                    "type": "text",
+                                    "content": "Chuck Norris can write multi-threaded applications with a single thread.\n at the moment he lives at 4607 Lino Lights, Dillonberg, MT 46961     \n\n and YODA said: Do. Or do not. There is no try. \n\n witcher quote: When you know about something it stops being a nightmare. When you know how to fight something, it stops being so threatening. \n\n Rick and Morty quote: The first rule of space travel kids is always check out distress beacons. Nine out of ten times it's a ship full of dead aliens and a bunch of free shit! One out of ten times it's a deadly trap, but... I'm ready to roll those dice! \n\n SuperHero Agent Mimic XI has power to Intangibility and Magic \n\n Harry Potter quote: There are some things you can't share without ending up liking each other, and knocking out a twelve-foot mountain troll is one of them. \n\n and some Lorem to finish text: Iure et eligendi rerum minus quia cumque odit tenetur adipisci quibusdam sit quos nam sit nobis eos voluptatibus et neque molestias officia consequatur error deleniti officia quos molestias ut ut ut quo ut est alias temporibus quia ut nobis non placeat eius consectetur velit voluptatem accusantium velit quisquam inventore voluptas porro in nesciunt nisi officia sit est voluptatibus ut molestiae perferendis blanditiis odit molestiae a sunt alias aut adipisci et maxime et aut repellendus voluptatem voluptate molestiae optio voluptate non culpa velit alias aliquam ut enim qui doloribus quis ut iste iusto quia natus deleniti et quae ipsam maiores nisi quisquam id quasi beatae nisi enim qui quam minima voluptatum qui incidunt dicta rerum id ad et est vel in incidunt vero numquam modi ut doloremque eum nisi reprehenderit possimus ab sint nobis animi maiores labore adipisci accusamus soluta dolores atque deleniti quo dicta ea odit et facilis provident tenetur."
+                                }
+                            ]
+                        },
+                        {
+                            "id": 13,
+                            "type": "attachments",
+                            "content": [
+                                {
+                                    "id": 14,
+                                    "type": "image",
+                                    "content": "https://i.gifer.com/1HOf.gif"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "author": {
+                    "userId": "tst3xtckjyrn",
+                    "username": "von-chi-iv",
+                    "avatarUrl": "https://i.pravatar.cc/300?u=fa98c7309783247e76d30664dbb5441dddc7b006"
+                },
+                "community": {
+                    "communityId": "WWAPEPA",
+                    "alias": "id4197175299",
+                    "name": "WWAPEPA comunity",
+                    "avatarUrl": "https://i.pravatar.cc/300?u=4533b2fcfd06fdf86b990e9e99f3f6bfc67824b0"
+                },
+                "type": "comment"
             }
         ]
     }

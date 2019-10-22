@@ -53,7 +53,7 @@ class ArticleEditorVC: EditorVC {
         let contentInsideLimit = (content.count <= contentLettersLimit)
         
         // compare content
-        var contentChanged = (title != viewModel.postForEdit?.content.attributes?.title)
+        var contentChanged = (title != viewModel.postForEdit?.document.attributes?.title)
         contentChanged = contentChanged || (self.contentTextView.attributedText != self.contentTextView.originalAttributedString)
         
         // reassign result
@@ -106,7 +106,7 @@ class ArticleEditorVC: EditorVC {
     }
     
     override func setUp(with post: ResponseAPIContentGetPost) {
-        self.titleTextView.rx.text.onNext(post.content.attributes?.title)
+        self.titleTextView.rx.text.onNext(post.document.attributes?.title)
         super.setUp(with: post)
     }
     

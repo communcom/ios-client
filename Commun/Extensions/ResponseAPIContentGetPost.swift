@@ -22,4 +22,8 @@ extension ResponseAPIContentGetPost: Equatable, IdentifiableType {
     public func notifyChanged() {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: PostControllerPostDidChangeNotification), object: self)
     }
+    
+    public var content: [ResponseAPIContentBlock]? {
+        return document.content.arrayValue
+    }
 }

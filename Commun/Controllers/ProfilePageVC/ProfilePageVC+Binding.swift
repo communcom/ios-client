@@ -59,18 +59,7 @@ extension ProfilePageVC: CommentCellDelegate {
         }
         
         // Bind items
-        let items = Observable.combineLatest(viewModel.commentsVM.items, viewModel.postsVM.items)
-            .share()
-        
-        items.skip(1)
-            .map {items -> [AnyObject?] in
-                if self.viewModel.segmentedItem.value == .comments {
-                    if items.0.count == 0 {return [nil]}
-                    return items.0 as [AnyObject?]
-                }
-                if items.1.count == 0 {return [nil]}
-                return items.1 as [AnyObject?]
-            }
+        viewModel.items
             .bind(to: tableView.rx.items) {table, index, element in
                 guard let element = element else {
                     let cell = self.tableView.dequeueReusableCell(withIdentifier: "EmptyCell") as! EmptyCell
@@ -83,7 +72,7 @@ extension ProfilePageVC: CommentCellDelegate {
                 }
                 
                 if let post = element as? ResponseAPIContentGetPost {
-                    switch post.content.attributes?.type {
+                    switch post.document.attributes?.type {
                     case "article":
                         let cell = self.tableView.dequeueReusableCell(withIdentifier: "ArticlePostCell") as! ArticlePostCell
                         cell.setUp(with: post)
@@ -109,7 +98,7 @@ extension ProfilePageVC: CommentCellDelegate {
             .disposed(by: disposeBag)
         
         // Reset expandable
-        items
+        viewModel.items
             .subscribe(onNext: {_ in
                 self.expandedIndexes = []
             })

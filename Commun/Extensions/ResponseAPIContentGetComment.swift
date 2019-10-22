@@ -25,11 +25,15 @@ extension ResponseAPIContentGetComment: Equatable, IdentifiableType {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: CommentControllerCommentDidChangeNotification), object: self)
     }
     
+    var content: [ResponseAPIContentBlock]? {
+        return document.content.arrayValue
+    }
+    
     var firstEmbedImageURL: String? {
-        return content.content.arrayValue?.first(where: {$0.type == "attachments"})?.content.arrayValue?.first?.attributes?.thumbnail_url
+        return content?.first(where: {$0.type == "attachments"})?.content.arrayValue?.first?.attributes?.thumbnail_url
     }
     
     var attachments: [ResponseAPIContentBlock] {
-        return content.content.arrayValue?.first(where: {$0.type == "attachments"})?.content.arrayValue ?? []
+        return content?.first(where: {$0.type == "attachments"})?.content.arrayValue ?? []
     }
 }

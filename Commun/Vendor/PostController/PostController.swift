@@ -219,7 +219,7 @@ extension PostController {
             let controller = UIApplication.topViewController()
             else {return}
         // text to share
-        let title = post.content.attributes?.title
+        let title = post.document.attributes?.title
         var text = (title != nil) ? (title! + "\n"): ""
         
         text += "\(URL.appURL)/posts/\(userId)/\(post.contentId.permlink)"
@@ -272,7 +272,7 @@ extension PostController {
         NetworkService.shared.getPost(withPermLink: post.contentId.permlink)
             .subscribe(onSuccess: {post in
                 topController.hideHud()
-                if post.content.type == "basic" {
+                if post.document.attributes?.type == "basic" {
                     let vc = BasicEditorVC()
                     vc.viewModel.postForEdit = post
                     vc.modalPresentationStyle = .fullScreen
@@ -280,7 +280,7 @@ extension PostController {
                     return
                 }
                 
-                if post.content.type == "article" {
+                if post.document.attributes?.type == "article" {
                     let vc = ArticleEditorVC()
                     vc.viewModel.postForEdit = post
                     vc.modalPresentationStyle = .fullScreen

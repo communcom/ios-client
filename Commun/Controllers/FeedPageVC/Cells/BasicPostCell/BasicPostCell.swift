@@ -43,7 +43,7 @@ final class BasicPostCell: PostCell {
         
         let defaultAttributes: [NSAttributedString.Key: Any] = [.font: UIFont.systemFont(ofSize: 14)]
         
-        if let content = post?.content.content.arrayValue,
+        if let content = post?.content,
             let firstSentence = content.first(where: {$0.type == "paragraph"})
         {
             let mutableAS = NSMutableAttributedString()

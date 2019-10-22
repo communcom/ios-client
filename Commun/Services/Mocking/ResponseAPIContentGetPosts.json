@@ -4,7 +4,7 @@
     "result": {
         "items": [
             {
-                "content": {
+                "document": {
                     "attributes": {
                         "type": "article",
                         "version": "1.0",
@@ -175,7 +175,7 @@
                 }
             },
             {
-                "content": {
+                "document": {
                     "attributes": {
                         "type": "article",
                         "version": "1.0",
@@ -273,7 +273,7 @@
                 }
             },
             {
-                "content": {
+                "document": {
                     "attributes": {
                         "type": "basic",
                         "version": "1.0"
@@ -328,7 +328,7 @@
                 }
             },
             {
-                "content": {
+                "document": {
                     "attributes": {
                         "type": "basic",
                         "version": "1.0"

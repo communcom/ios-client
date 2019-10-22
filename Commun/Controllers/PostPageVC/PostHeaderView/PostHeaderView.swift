@@ -66,9 +66,9 @@ class PostHeaderView: UIView, UIWebViewDelegate, PostController {
         }
         hideLoading()
         
-        if post.content.type == "article" {
+        if post.document.attributes?.type == "article" {
             // Show title
-            postTitleLabel.text = post.content.attributes?.title
+            postTitleLabel.text = post.document.attributes?.title
             
             titleToContentTextViewSpaceConstraint.constant = 20
         }
@@ -93,7 +93,7 @@ class PostHeaderView: UIView, UIWebViewDelegate, PostController {
         
         // Show content
         // Parse data
-        let attributedString = post.content.toAttributedString(
+        let attributedString = post.document.toAttributedString(
             currentAttributes: contentTextView.defaultAttributes,
             attachmentSize: contentTextView.attachmentSize)
         
