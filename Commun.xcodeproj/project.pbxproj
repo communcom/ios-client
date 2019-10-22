@@ -285,6 +285,7 @@
 		BC31BA57235ECA840007D89A /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC31BA56235ECA840007D89A /* ProfileViewModel.swift */; };
 		BC31BA59235ECC2D0007D89A /* CommentsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC31BA58235ECC2D0007D89A /* CommentsViewModel.swift */; };
 		BC3D97612350384E00421718 /* ResponseAPIContentGetPosts.json in Resources */ = {isa = PBXBuildFile; fileRef = BC3D97602350384E00421718 /* ResponseAPIContentGetPosts.json */; };
+		BC430E7C235EEB44002E4593 /* ProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC430E7B235EEB44002E4593 /* ProfileHeaderView.swift */; };
 		BC757EF92356E6EC00CB4ADE /* PostHeaderTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC757EF82356E6EC00CB4ADE /* PostHeaderTextView.swift */; };
 		BCB2A6E22354512D00B3582B /* AttachmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB2A6E12354512D00B3582B /* AttachmentView.swift */; };
 		BCB2A6E423546AF500B3582B /* EditorVC+AttachmentViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB2A6E323546AF500B3582B /* EditorVC+AttachmentViewDelegate.swift */; };
@@ -604,6 +605,7 @@
 		BC31BA56235ECA840007D89A /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		BC31BA58235ECC2D0007D89A /* CommentsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentsViewModel.swift; sourceTree = "<group>"; };
 		BC3D97602350384E00421718 /* ResponseAPIContentGetPosts.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ResponseAPIContentGetPosts.json; sourceTree = "<group>"; };
+		BC430E7B235EEB44002E4593 /* ProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderView.swift; sourceTree = "<group>"; };
 		BC757EF82356E6EC00CB4ADE /* PostHeaderTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostHeaderTextView.swift; sourceTree = "<group>"; };
 		BCB2A6E12354512D00B3582B /* AttachmentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentView.swift; sourceTree = "<group>"; };
 		BCB2A6E323546AF500B3582B /* EditorVC+AttachmentViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EditorVC+AttachmentViewDelegate.swift"; sourceTree = "<group>"; };
@@ -1602,6 +1604,7 @@
 			isa = PBXGroup;
 			children = (
 				BC31BA54235EBD7C0007D89A /* ProfileVC.swift */,
+				BC430E7B235EEB44002E4593 /* ProfileHeaderView.swift */,
 				BC31BA56235ECA840007D89A /* ProfileViewModel.swift */,
 			);
 			path = ProfileVC;
@@ -2074,6 +2077,7 @@
 				3B25E5C2234C4205005BD1B8 /* AttachmentsView.swift in Sources */,
 				3BEC38E3230F801600662374 /* UITextView.swift in Sources */,
 				3BB342A922CA2DBB009546B2 /* WelcomePageVC.swift in Sources */,
+				BC430E7C235EEB44002E4593 /* ProfileHeaderView.swift in Sources */,
 				3B62055A2346E4220017FEB7 /* EditorVC.swift in Sources */,
 				3BF37BCC22A1297C00A72FFE /* UITableView.swift in Sources */,
 				3B5CB31022A5880D00757533 /* MyRxTableViewSectionedAnimatedDataSource.swift in Sources */,

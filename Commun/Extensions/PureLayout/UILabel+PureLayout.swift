@@ -30,10 +30,10 @@ extension UILabel {
         return label
     }
     
-    static func descriptionLabel(_ text: String?) -> UILabel {
+    static func descriptionLabel(_ text: String? = nil, size: CGFloat = 10) -> UILabel {
         let label = UILabel(forAutoLayout: ())
         label.text = text
-        label.font = .systemFont(ofSize: 10, weight: .semibold)
+        label.font = .systemFont(ofSize: size, weight: .semibold)
         label.textColor = UIColor(hexString: "#A5A7BD")
         return label
     }
