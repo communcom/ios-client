@@ -83,7 +83,7 @@ extension PostController {
         }
         
         actions.append(
-            CommunActionSheet.Action(title: "share".localized().uppercaseFirst, icon: UIImage(named: "share-count"), handle: {
+            CommunActionSheet.Action(title: "share".localized().uppercaseFirst, icon: UIImage(named: "share"), handle: {
                 self.sharePost()
             })
         )
