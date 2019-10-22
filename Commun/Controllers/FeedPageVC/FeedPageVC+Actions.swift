@@ -10,26 +10,11 @@ import Foundation
 
 extension FeedPageVC {
     @IBAction func changeFeedTypeButtonDidTouch(_ sender: Any) {
-        if viewModel.filter.value.feedTypeMode == .subscriptions {
-            viewModel.changeFilter(feedTypeMode: .new)
-        }
-        
-        else {
-            viewModel.changeFilter(feedTypeMode: .subscriptions, feedType: .timeDesc)
-        }
+        toggleFeedType()
     }
     
     @IBAction func changeFilterButtonDidTouch(_ sender: Any) {
-        // Create FiltersVC
-        let vc = controllerContainer.resolve(FeedPageFiltersVC.self)!
-        vc.filter.accept(viewModel.filter.value)
-        vc.completion = { filter in
-            self.viewModel.filter.accept(filter)
-        }
-        vc.modalPresentationStyle = .custom
-        vc.transitioningDelegate = vc
-        
-        present(vc, animated: true, completion: nil)
+        openFilterVC()
     }
     
     @IBAction func postButtonDidTouch(_ sender: Any) {
@@ -48,19 +33,5 @@ extension FeedPageVC {
         present(editorVC, animated: true, completion: {
             completion?(editorVC)
         })
-    }
-    
-    @objc func didTapTryAgain(gesture: UITapGestureRecognizer) {
-        guard let label = gesture.view as? UILabel,
-            let text = label.text else {return}
-        
-        let tryAgainRange = (text as NSString).range(of: "try again".localized().uppercaseFirst)
-        if gesture.didTapAttributedTextInLabel(label: label, inRange: tryAgainRange) {
-            self.viewModel.fetchNext()
-        }
-    }
-    
-    @objc func refresh() {
-        viewModel.reload()
     }
 }

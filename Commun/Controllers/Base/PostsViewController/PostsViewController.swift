@@ -1,0 +1,80 @@
+//
+//  PostsViewController.swift
+//  Commun
+//
+//  Created by Chung Tran on 10/22/19.
+//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//
+
+import UIKit
+import CyberSwift
+import DZNEmptyDataSet
+
+class PostsViewController: ListViewController<ResponseAPIContentGetPost> {
+    override func setUp() {
+        super.setUp()
+        // setup viewmodel
+        viewModel = PostsViewModel()
+        
+        // setup datasource
+        tableView.register(BasicPostCell.self, forCellReuseIdentifier: "BasicPostCell")
+        tableView.register(ArticlePostCell.self, forCellReuseIdentifier: "ArticlePostCell")
+        
+        dataSource = MyRxTableViewSectionedAnimatedDataSource<ListSection>(
+            configureCell: { dataSource, tableView, indexPath, post in
+                let cell: PostCell
+                switch post.content.attributes?.type {
+                case "article":
+                    cell = self.tableView.dequeueReusableCell(withIdentifier: "ArticlePostCell") as! ArticlePostCell
+                    cell.setUp(with: post)
+                case "basic":
+                    cell = self.tableView.dequeueReusableCell(withIdentifier: "BasicPostCell") as! BasicPostCell
+                    cell.setUp(with: post)
+                default:
+                    return UITableViewCell()
+                }
+                
+                if indexPath.row >= self.viewModel.items.value.count - 5 {
+                    self.viewModel.fetchNext()
+                }
+                
+                return cell
+            }
+        )
+        
+        tableView.emptyDataSetSource = self
+        tableView.emptyDataSetDelegate = self
+        
+        // dismiss keyboard when dragging
+        tableView.keyboardDismissMode = .onDrag
+    }
+    
+    override func bind() {
+        super.bind()
+        viewModel.loading
+            .subscribe(onNext: {[weak self] isLoading in
+                if self?.viewModel.fetcher.reachedTheEnd == true {return}
+                self?.tableView.addPostLoadingFooterView()
+            })
+            .disposed(by: disposeBag)
+        
+        tableView.rx.modelSelected(ResponseAPIContentGetPost.self)
+            .subscribe(onNext: {post in
+                let postPageVC = controllerContainer.resolve(PostPageVC.self)!
+                postPageVC.viewModel.postForRequest = post
+                self.show(postPageVC, sender: nil)
+            })
+            .disposed(by: disposeBag)
+        
+        // filter
+        (viewModel as! PostsViewModel).filter
+            .subscribe(onNext: {[weak self] filter in
+                self?.filterChanged(filter: filter)
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    func filterChanged(filter: PostsFetcher.Filter) {
+        
+    }
+}

@@ -9,7 +9,7 @@
 import Foundation
 import DZNEmptyDataSet
 
-extension FeedPageVC: DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
+extension PostsViewController: DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
     func image(forEmptyDataSet scrollView: UIScrollView!) -> UIImage! {
         return UIImage(named: "ProfilePageItemsEmptyPost")
     }
