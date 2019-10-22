@@ -38,7 +38,7 @@ class ProfilePageVC: UIViewController, VCWithParallax {
     @IBOutlet weak var errorView: UIView!
     
     let disposeBag = DisposeBag()
-    var viewModel: ProfilePageViewModel!
+    var viewModel: ProfileViewModel!
     var expandedIndexes = [Int]()
     var replyingComment: ResponseAPIContentGetComment?
     
@@ -48,7 +48,7 @@ class ProfilePageVC: UIViewController, VCWithParallax {
     override func viewDidLoad() {
         super.viewDidLoad()
         // construct view model
-        if viewModel == nil { viewModel = ProfilePageViewModel(userId: nil) }
+        if viewModel == nil { viewModel = ProfileViewModel(userId: nil) }
         
         // setup view
         setUpViews()
@@ -105,26 +105,34 @@ class ProfilePageVC: UIViewController, VCWithParallax {
         userCoverImage.addTapToViewer()
         
         // Configure viewModel
-        viewModel.profileLoadingHandler = { [weak self] loading in
-            loading ? self?.view.showLoading(): self?.view.hideLoading()
-        }
+        viewModel.profileLoadingState
+            .subscribe(onNext: {[weak self] (state) in
+                switch state {
+                case .loading:
+                    self?.view.showLoading()
+                case .finished:
+                    self?.view.hideLoading()
+                case .error(_):
+                    self?.showTitle(true)
+                }
+            })
+            .disposed(by: disposeBag)
         
-        viewModel.profileFetchingErrorHandler = {[weak self] error in
-            self?.errorView.isHidden = (error == nil)
-            if error != nil {
-                self?.showTitle(true)
-            }
-        }
-        
-        viewModel.loadingHandler = {[weak self] in
-            
-        }
-        
-        viewModel.listEndedHandler = {[weak self] in
-        }
-        
-        viewModel.fetchNextErrorHandler = {[weak self] error in
-        }
+//        viewModel.listLoadingState
+//            .subscribe(onNext: { [weak self] (state) in
+//                switch state {
+//                    case .loading:
+//                        self?.tableView.addPostLoadingFooterView()
+//                        break
+//                    case .listEnded:
+//                        self?.tableView.tableFooterView = UIView()
+//                    case .error(_):
+//                        guard let strongSelf = self else {return}
+//                        strongSelf.tableView.addListErrorFooterView(with: #selector(strongSelf.btnRetryDidTouch(_:)), on: strongSelf)
+//                        strongSelf.tableView.reloadData()
+//                }
+//            })
+//            .disposed(by: disposeBag)
         
         // Configure tableView
         tableView.register(BasicPostCell.self, forCellReuseIdentifier: "BasicPostCell")

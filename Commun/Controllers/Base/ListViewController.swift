@@ -47,7 +47,7 @@ class ListViewController<T: Decodable & Equatable & IdentifiableType>: BaseViewC
                     break
                 case .listEnded:
                     self?.tableView.tableFooterView = UIView()
-                case .error(let _):
+                case .error(_):
                     guard let strongSelf = self else {return}
                     strongSelf.tableView.addListErrorFooterView(with: #selector(strongSelf.didTapTryAgain(gesture:)), on: strongSelf)
                     strongSelf.tableView.reloadData()

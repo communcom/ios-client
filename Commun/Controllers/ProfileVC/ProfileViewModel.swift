@@ -98,4 +98,13 @@ class ProfileViewModel {
         // reload profile
         loadProfile()
     }
+    
+    func fetchNext() {
+        switch segmentedItem.value {
+        case .posts:
+            postsVM.fetchNext()
+        case .comments:
+            commentsVM.fetchNext()
+        }
+    }
 }

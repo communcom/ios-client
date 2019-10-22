@@ -12,7 +12,7 @@ import CyberSwift
 
 class PostsFetcher: ItemsFetcher<ResponseAPIContentGetPost> {
     // MARK: - Enums
-    struct Filter: Equatable {
+    struct Filter: FilterType {
         var feedTypeMode: FeedTypeMode
         var feedType: FeedSortMode
         var sortType: FeedTimeFrameMode

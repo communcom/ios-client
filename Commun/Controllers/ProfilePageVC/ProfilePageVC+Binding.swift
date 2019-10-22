@@ -59,12 +59,17 @@ extension ProfilePageVC: CommentCellDelegate {
         }
         
         // Bind items
-        viewModel.items.skip(1)
-            .map { items -> [AnyObject?] in
-                if items.count == 0 {
-                    return [nil]
+        let items = Observable.combineLatest(viewModel.commentsVM.items, viewModel.postsVM.items)
+            .share()
+        
+        items.skip(1)
+            .map {items -> [AnyObject?] in
+                if self.viewModel.segmentedItem.value == .comments {
+                    if items.0.count == 0 {return [nil]}
+                    return items.0 as [AnyObject?]
                 }
-                return items as [AnyObject?]
+                if items.1.count == 0 {return [nil]}
+                return items.1 as [AnyObject?]
             }
             .bind(to: tableView.rx.items) {table, index, element in
                 guard let element = element else {
@@ -73,7 +78,7 @@ extension ProfilePageVC: CommentCellDelegate {
                     return cell
                 }
                 
-                if index == self.viewModel.items.value.count - 2 {
+                if index == self.tableView.numberOfRows(inSection: 0) - 2 {
                     self.viewModel.fetchNext()
                 }
                 
@@ -104,7 +109,7 @@ extension ProfilePageVC: CommentCellDelegate {
             .disposed(by: disposeBag)
         
         // Reset expandable
-        viewModel.items
+        items
             .subscribe(onNext: {_ in
                 self.expandedIndexes = []
             })
@@ -116,8 +121,9 @@ extension ProfilePageVC: CommentCellDelegate {
                 let cell = self.tableView.cellForRow(at: indexPath)
                 switch cell {
                 case is PostCell:
-                    if let postPageVC = controllerContainer.resolve(PostPageVC.self),
-                        let post = self.viewModel.items.value[indexPath.row] as? ResponseAPIContentGetPost{
+                    if let postPageVC = controllerContainer.resolve(PostPageVC.self)
+                    {
+                        let post = self.viewModel.postsVM.items.value[indexPath.row]
                         postPageVC.viewModel.postForRequest = post
                         self.show(postPageVC, sender: nil)
                     } else {
