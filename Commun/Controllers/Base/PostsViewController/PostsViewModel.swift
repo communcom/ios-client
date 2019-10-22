@@ -13,8 +13,8 @@ import RxCocoa
 class PostsViewModel: ListViewModel<ResponseAPIContentGetPost>, PostsListController {
     var filter: BehaviorRelay<PostsFetcher.Filter>!
     
-    convenience init() {
-        let filter = PostsFetcher.Filter(feedTypeMode: .new, feedType: .popular, sortType: .all)
+    convenience init(filter: PostsFetcher.Filter = PostsFetcher.Filter(feedTypeMode: .new, feedType: .popular, sortType: .all)) {
+        let filter = filter
         let fetcher = PostsFetcher(filter: filter)
         self.init(fetcher: fetcher)
         self.filter = BehaviorRelay<PostsFetcher.Filter>(value: filter)

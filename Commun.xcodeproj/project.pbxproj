@@ -282,6 +282,9 @@
 		BC016D54235EA32600F1319F /* PostsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC016D53235EA32600F1319F /* PostsViewModel.swift */; };
 		BC016D56235EA33C00F1319F /* ListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC016D55235EA33C00F1319F /* ListViewModel.swift */; };
 		BC016D5A235EB88400F1319F /* PostsVC+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC016D59235EB88400F1319F /* PostsVC+Actions.swift */; };
+		BC31BA55235EBD7C0007D89A /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC31BA54235EBD7C0007D89A /* ProfileVC.swift */; };
+		BC31BA57235ECA840007D89A /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC31BA56235ECA840007D89A /* ProfileViewModel.swift */; };
+		BC31BA59235ECC2D0007D89A /* CommentsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC31BA58235ECC2D0007D89A /* CommentsViewModel.swift */; };
 		BC3D97612350384E00421718 /* ResponseAPIContentGetPosts.json in Resources */ = {isa = PBXBuildFile; fileRef = BC3D97602350384E00421718 /* ResponseAPIContentGetPosts.json */; };
 		BC757EF92356E6EC00CB4ADE /* PostHeaderTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC757EF82356E6EC00CB4ADE /* PostHeaderTextView.swift */; };
 		BCB2A6E22354512D00B3582B /* AttachmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB2A6E12354512D00B3582B /* AttachmentView.swift */; };
@@ -599,6 +602,9 @@
 		BC016D53235EA32600F1319F /* PostsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostsViewModel.swift; sourceTree = "<group>"; };
 		BC016D55235EA33C00F1319F /* ListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewModel.swift; sourceTree = "<group>"; };
 		BC016D59235EB88400F1319F /* PostsVC+Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PostsVC+Actions.swift"; sourceTree = "<group>"; };
+		BC31BA54235EBD7C0007D89A /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
+		BC31BA56235ECA840007D89A /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
+		BC31BA58235ECC2D0007D89A /* CommentsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentsViewModel.swift; sourceTree = "<group>"; };
 		BC3D97602350384E00421718 /* ResponseAPIContentGetPosts.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ResponseAPIContentGetPosts.json; sourceTree = "<group>"; };
 		BC757EF82356E6EC00CB4ADE /* PostHeaderTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostHeaderTextView.swift; sourceTree = "<group>"; };
 		BCB2A6E12354512D00B3582B /* AttachmentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentView.swift; sourceTree = "<group>"; };
@@ -1144,6 +1150,7 @@
 		571B1508223A937200630C8F /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				BC31BA53235EBD6A0007D89A /* ProfileVC */,
 				BC016D5B235EB95000F1319F /* Base */,
 				3B67FC0522C4BB5100D05F01 /* SplashViewController.swift */,
 				57B6FC23224A9E4900BCFDDA /* WelcomeScreenVC */,
@@ -1589,8 +1596,18 @@
 				BC016D51235EA25B00F1319F /* ListViewController.swift */,
 				BC016D55235EA33C00F1319F /* ListViewModel.swift */,
 				BC016D4C235EA0DB00F1319F /* PostsViewController */,
+				BC31BA58235ECC2D0007D89A /* CommentsViewModel.swift */,
 			);
 			path = Base;
+			sourceTree = "<group>";
+		};
+		BC31BA53235EBD6A0007D89A /* ProfileVC */ = {
+			isa = PBXGroup;
+			children = (
+				BC31BA54235EBD7C0007D89A /* ProfileVC.swift */,
+				BC31BA56235ECA840007D89A /* ProfileViewModel.swift */,
+			);
+			path = ProfileVC;
 			sourceTree = "<group>";
 		};
 		BC757EF72356E6C200CB4ADE /* PostHeaderTextView */ = {
@@ -1933,6 +1950,7 @@
 				3B51581E226E0D3A00108F17 /* TLPhotosPickerViewController+Rx.swift in Sources */,
 				3BB48AD322D6432200F11B6A /* BoardingRouter.swift in Sources */,
 				3B289B9E2346EB0400598407 /* UIView+PureLayout.swift in Sources */,
+				BC31BA59235ECC2D0007D89A /* CommentsViewModel.swift in Sources */,
 				3B06863423470A33008953C5 /* BasicEditorTextView.swift in Sources */,
 				3B67FC0822C5016F00D05F01 /* SignInViewController.swift in Sources */,
 				3B0506EE22D7309900B4E4A3 /* KeysVC.swift in Sources */,
@@ -1992,6 +2010,7 @@
 				3B3C8B9E234796D900D8BADB /* EditorVC+Binding.swift in Sources */,
 				3B67FC0622C4BB5100D05F01 /* SplashViewController.swift in Sources */,
 				3BB32F1B234436EF006572F3 /* PostMetaView.swift in Sources */,
+				BC31BA57235ECA840007D89A /* ProfileViewModel.swift in Sources */,
 				3B3C8B8E2347876000D8BADB /* ContentTextView+Text.swift in Sources */,
 				3B25E5BE234C2A0C005BD1B8 /* BasicEditorViewModel.swift in Sources */,
 				3B9BEB3D2300EC7D003C70B3 /* EmptyView.swift in Sources */,
@@ -2015,6 +2034,7 @@
 				BC016D4E235EA1DE00F1319F /* BaseViewController.swift in Sources */,
 				3BE85D262327A50200C7E7F6 /* GridView.swift in Sources */,
 				3B289B9C2346E7FC00598407 /* UIImage+PureLayout.swift in Sources */,
+				BC31BA55235EBD7C0007D89A /* ProfileVC.swift in Sources */,
 				BCE9390B234DBBC300226E39 /* ResponseAPIContentBlock.swift in Sources */,
 				3B0E9C7122706985002AB1C2 /* ProfileChooseAvatarViewModel.swift in Sources */,
 				3B5F58AD232A2ABE0036533B /* SignInSelectionCell.swift in Sources */,

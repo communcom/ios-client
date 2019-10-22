@@ -11,6 +11,8 @@ import RxSwift
 import RxDataSources
 
 class ListViewController<T: Decodable & Equatable & IdentifiableType>: BaseViewController {
+    override var contentScrollView: UIScrollView? { tableView }
+    
     public typealias ListSection = AnimatableSectionModel<String, T>
     
     var disposeBag = DisposeBag()
@@ -18,12 +20,6 @@ class ListViewController<T: Decodable & Equatable & IdentifiableType>: BaseViewC
     var dataSource: MyRxTableViewSectionedAnimatedDataSource<ListSection>!
     
     lazy var tableView: UITableView! = UITableView()
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        avoidTabBar()
-    }
     
     override func setUp() {
         super.setUp()
@@ -56,14 +52,6 @@ class ListViewController<T: Decodable & Equatable & IdentifiableType>: BaseViewC
                 strongSelf.tableView.reloadData()
             })
             .disposed(by: disposeBag)
-    }
-    
-    private func avoidTabBar() {
-        // avoid tabBar
-        var contentInsets = tableView.contentInset
-        contentInsets.bottom = tabBarController!.tabBar.height - (UIApplication.shared.keyWindow?.safeAreaInsets.bottom ?? 0)
-        
-        tableView.contentInset = contentInsets
     }
     
     @objc func refresh() {

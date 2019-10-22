@@ -9,11 +9,14 @@
 import UIKit
 
 class BaseViewController: UIViewController {
+    // Override this property to avoid Tabbar
+    var contentScrollView: UIScrollView? { nil }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setUp()
         bind()
+        avoidTabBar()
     }
     
     func setUp() {
@@ -22,5 +25,14 @@ class BaseViewController: UIViewController {
     
     func bind() {
         
+    }
+    
+    func avoidTabBar() {
+        // avoid tabBar
+        guard let scrollView = contentScrollView else {return}
+        var contentInsets = scrollView.contentInset
+        contentInsets.bottom = tabBarController!.tabBar.height - (UIApplication.shared.keyWindow?.safeAreaInsets.bottom ?? 0)
+        
+        scrollView.contentInset = contentInsets
     }
 }

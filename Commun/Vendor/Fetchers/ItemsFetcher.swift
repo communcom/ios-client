@@ -11,6 +11,8 @@ import RxSwift
 import RxCocoa
 import CyberSwift
 
+typealias FilterType = Equatable
+
 class ItemsFetcher<T: Decodable> {
     
     // MARK: - Parammeters

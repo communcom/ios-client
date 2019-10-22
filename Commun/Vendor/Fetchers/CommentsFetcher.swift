@@ -11,39 +11,40 @@ import CyberSwift
 import RxSwift
 
 class CommentsFetcher: ItemsFetcher<ResponseAPIContentGetComment> {
-    var permlink: String?
-    var userId: String?
-    var communityId: String?
-    var communityAlias: String?
-    var type: GetCommentsType
+    // MARK: - Enums
+    struct Filter: FilterType {
+        var permlink: String?
+        var userId: String?
+        var communityId: String?
+        var communityAlias: String?
+        var type: GetCommentsType
+    }
     
-    init(type: GetCommentsType, userId: String? = nil, permlink: String? = nil, communityId: String? = nil, communityAlias: String? = nil) {
-        self.type = type
-        self.userId = userId
-        self.permlink = permlink
-        self.communityId = communityId
-        self.communityAlias = communityAlias
+    var filter: Filter
+    
+    init(filter: Filter) {
+        self.filter = filter
     }
     
     override var request: Single<[ResponseAPIContentGetComment]>! {
         var result: Single<ResponseAPIContentGetComments>
         
-        switch type {
+        switch filter.type {
         case .post:
             // get post's comment
             result = RestAPIManager.instance.loadPostComments(
                 sortBy: .time,
                 offset: offset,
                 limit: 30,
-                permlink: permlink ?? "",
-                communityId: communityId,
-                communityAlias: communityAlias
+                permlink: filter.permlink ?? "",
+                communityId: filter.communityId,
+                communityAlias: filter.communityAlias
             )
         case .user:
             result = RestAPIManager.instance.loadUserComments(
                 offset: offset,
                 limit: 30,
-                userId: userId)
+                userId: filter.userId)
         case .replies:
             fatalError("Implementing")
         }

@@ -35,7 +35,7 @@ class PostPageViewModel: CommentsListController, ListViewModelType {
     var items = BehaviorRelay<[ResponseAPIContentGetComment]>(value: [])
     
     let disposeBag = DisposeBag()
-    let fetcher = CommentsFetcher(type: .post)
+    let fetcher = CommentsFetcher(filter: CommentsFetcher.Filter(type: .post))
     
     // MARK: - Methods
     init() {
@@ -46,9 +46,9 @@ class PostPageViewModel: CommentsListController, ListViewModelType {
             let permLink = post.contentId.permlink
             let userId = post.contentId.userId
             // Configure fetcher
-            self.fetcher.communityId = post.community.communityId
-            self.fetcher.permlink = permLink
-            self.fetcher.userId = userId
+            self.fetcher.filter.communityId = post.community.communityId
+            self.fetcher.filter.permlink = permLink
+            self.fetcher.filter.userId = userId
             
             self.reload()
         })
