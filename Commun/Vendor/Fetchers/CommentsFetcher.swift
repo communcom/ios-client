@@ -29,6 +29,10 @@ class CommentsFetcher: ItemsFetcher<ResponseAPIContentGetComment> {
     override var request: Single<[ResponseAPIContentGetComment]>! {
         var result: Single<ResponseAPIContentGetComments>
         
+//        #warning("mocking")
+//        return ResponseAPIContentGetComments.singleWithMockData()
+//            .map {$0.items!}
+        
         switch filter.type {
         case .post:
             // get post's comment

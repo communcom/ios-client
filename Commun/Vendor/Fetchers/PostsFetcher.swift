@@ -59,7 +59,7 @@ class PostsFetcher: ItemsFetcher<ResponseAPIContentGetPost> {
     }
     
     override var request: Single<[ResponseAPIContentGetPost]>! {
-        #warning("Mocking")
+//        #warning("Mocking")
 //        return ResponseAPIContentGetPosts.singleWithMockData()
 //            .map {$0.items!}
         return RestAPIManager.instance.getPosts(communityId: communityId, allowNsfw: false, type: filter.feedTypeMode, sortBy: filter.feedType, limit: limit, offset: offset)
