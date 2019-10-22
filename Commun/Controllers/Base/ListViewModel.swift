@@ -14,7 +14,7 @@ import RxDataSources
 class ListViewModel<T: Decodable & Equatable & IdentifiableType> {
     // MARK: - Properties
     public let disposeBag   = DisposeBag()
-    public let items        = BehaviorRelay<[T]>(value: [])
+    public var items        = BehaviorRelay<[T]>(value: [])
     public let loading      = PublishSubject<Bool>()
     public let listEnded    = PublishSubject<Void>()
     public let error        = PublishSubject<Error>()
