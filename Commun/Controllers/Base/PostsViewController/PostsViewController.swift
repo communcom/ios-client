@@ -51,12 +51,6 @@ class PostsViewController: ListViewController<ResponseAPIContentGetPost> {
     
     override func bind() {
         super.bind()
-        viewModel.loading
-            .subscribe(onNext: {[weak self] isLoading in
-                if self?.viewModel.fetcher.reachedTheEnd == true {return}
-                self?.tableView.addPostLoadingFooterView()
-            })
-            .disposed(by: disposeBag)
         
         tableView.rx.modelSelected(ResponseAPIContentGetPost.self)
             .subscribe(onNext: {post in
@@ -72,6 +66,11 @@ class PostsViewController: ListViewController<ResponseAPIContentGetPost> {
                 self?.filterChanged(filter: filter)
             })
             .disposed(by: disposeBag)
+    }
+    
+    override func handleLoading() {
+        if viewModel.fetcher.reachedTheEnd == true {return}
+        tableView.addPostLoadingFooterView()
     }
     
     func filterChanged(filter: PostsFetcher.Filter) {

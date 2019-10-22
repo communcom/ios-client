@@ -39,19 +39,25 @@ class ListViewController<T: Decodable & Equatable & IdentifiableType>: BaseViewC
             .bind(to: tableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
         
-        viewModel.listEnded
-            .subscribe(onNext: {[weak self] _ in
-                self?.tableView.tableFooterView = UIView()
+        viewModel.state
+            .subscribe(onNext: {[weak self] state in
+                switch state {
+                case .loading:
+                    self?.handleLoading()
+                    break
+                case .listEnded:
+                    self?.tableView.tableFooterView = UIView()
+                case .error(let _):
+                    guard let strongSelf = self else {return}
+                    strongSelf.tableView.addListErrorFooterView(with: #selector(strongSelf.didTapTryAgain(gesture:)), on: strongSelf)
+                    strongSelf.tableView.reloadData()
+                }
             })
             .disposed(by: disposeBag)
+    }
+    
+    func handleLoading() {
         
-        viewModel.error
-            .subscribe(onNext: {[weak self] error in
-                guard let strongSelf = self else {return}
-                strongSelf.tableView.addListErrorFooterView(with: #selector(strongSelf.didTapTryAgain(gesture:)), on: strongSelf)
-                strongSelf.tableView.reloadData()
-            })
-            .disposed(by: disposeBag)
     }
     
     @objc func refresh() {

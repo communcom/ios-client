@@ -13,6 +13,12 @@ import CyberSwift
 
 typealias FilterType = Equatable
 
+enum ListLoadingState {
+    case loading
+    case listEnded
+    case error(error: Error)
+}
+
 class ItemsFetcher<T: Decodable> {
     
     // MARK: - Parammeters

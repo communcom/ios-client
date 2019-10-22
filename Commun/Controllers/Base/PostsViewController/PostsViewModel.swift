@@ -14,7 +14,6 @@ class PostsViewModel: ListViewModel<ResponseAPIContentGetPost>, PostsListControl
     var filter: BehaviorRelay<PostsFetcher.Filter>!
     
     convenience init(filter: PostsFetcher.Filter = PostsFetcher.Filter(feedTypeMode: .new, feedType: .popular, sortType: .all)) {
-        let filter = filter
         let fetcher = PostsFetcher(filter: filter)
         self.init(fetcher: fetcher)
         self.filter = BehaviorRelay<PostsFetcher.Filter>(value: filter)
