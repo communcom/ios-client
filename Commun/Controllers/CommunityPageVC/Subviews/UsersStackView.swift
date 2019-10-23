@@ -79,7 +79,7 @@ class UsersStackView: UIView {
             }
             
             let label1 = UILabel.with(text: "+\(Double(i - 3).kmFormatted)", textSize: 15, weight: .bold)
-            let label2 = UILabel.with(text: "friends".localized().uppercaseFirst, textSize: 15, weight: .bold, textColor: .gray)
+            let label2 = UILabel.with(text: "friends".localized().uppercaseFirst, textSize: 12, weight: .bold, textColor: .gray)
             
             addSubview(label1)
             label1.autoPinEdge(.leading, to: .trailing, of: avatarsStackView, withOffset: 5)
