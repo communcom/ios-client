@@ -10,6 +10,7 @@ import Foundation
 
 class CommunityPageVC: PostsViewController {
     let communityId: String
+    var headerView: CommunityHeaderView!
     
     init(communityId: String) {
         self.communityId = communityId
@@ -30,20 +31,7 @@ class CommunityPageVC: PostsViewController {
         tableView.insetsContentViewsToSafeArea = false
         
         // assign header
-        let headerView = CommunityHeaderView(frame: .zero)
-        headerView.tableView = tableView
-        let containerView = UIView(forAutoLayout: ())
-        
-        containerView.addSubview(headerView)
-        headerView.autoPinEdgesToSuperviewEdges()
-        
-        tableView.tableHeaderView = containerView
-        
-        containerView.centerXAnchor.constraint(equalTo: tableView.centerXAnchor).isActive = true
-        containerView.widthAnchor.constraint(equalTo: tableView.widthAnchor).isActive = true
-        containerView.topAnchor.constraint(equalTo: tableView.topAnchor).isActive = true
-        
-        tableView.tableHeaderView?.layoutIfNeeded()
+        headerView = CommunityHeaderView(tableView: tableView)
     }
     
     override func bind() {

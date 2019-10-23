@@ -18,6 +18,26 @@ class MyTableHeaderView: UIView {
     }
     
     // MARK: - Initializers
+    convenience init(tableView: UITableView) {
+        self.init(frame: .zero)
+        self.tableView = tableView
+        
+        defer {
+            let containerView = UIView(forAutoLayout: ())
+            
+            containerView.addSubview(self)
+            self.autoPinEdgesToSuperviewEdges()
+            
+            tableView.tableHeaderView = containerView
+            
+            containerView.centerXAnchor.constraint(equalTo: tableView.centerXAnchor).isActive = true
+            containerView.widthAnchor.constraint(equalTo: tableView.widthAnchor).isActive = true
+            containerView.topAnchor.constraint(equalTo: tableView.topAnchor).isActive = true
+            
+            tableView.tableHeaderView?.layoutIfNeeded()
+        }
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         commonInit()

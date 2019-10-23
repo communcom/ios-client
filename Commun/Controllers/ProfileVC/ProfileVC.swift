@@ -9,18 +9,14 @@
 import Foundation
 import RxSwift
 
-class ProfileVC: BaseViewController, VCWithParallax {
-    // MARK: - Constants
-    // for parallax
-    var headerHeight: CGFloat = 421
-    var headerView: UIView!
-    
+class ProfileVC: BaseViewController {
     // MARK: - Properties
     var disposeBag = DisposeBag()
     override var contentScrollView: UIScrollView? {tableView}
     
     // MARK: - Subviews
     lazy var tableView: UITableView! = UITableView(forAutoLayout: ())
+    var headerView: ProfileHeaderView!
     
     
     // MARK: - Methods
@@ -34,23 +30,9 @@ class ProfileVC: BaseViewController, VCWithParallax {
         tableView.insetsContentViewsToSafeArea = false
         
         // assign header
-        let headerView = ProfileHeaderView(frame: .zero)
-        headerView.tableView = tableView
+        headerView = ProfileHeaderView(tableView: tableView)
         headerView.coverImageView.image = UIImage(named: "ProfilePageCover")
         headerView.avatarImageView.image = UIImage(named: "ProfilePageCover")
-        
-        let containerView = UIView(forAutoLayout: ())
-        
-        containerView.addSubview(headerView)
-        headerView.autoPinEdgesToSuperviewEdges()
-        
-        tableView.tableHeaderView = containerView
-        
-        containerView.centerXAnchor.constraint(equalTo: tableView.centerXAnchor).isActive = true
-        containerView.widthAnchor.constraint(equalTo: tableView.widthAnchor).isActive = true
-        containerView.topAnchor.constraint(equalTo: tableView.topAnchor).isActive = true
-        
-        tableView.tableHeaderView?.layoutIfNeeded()
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
