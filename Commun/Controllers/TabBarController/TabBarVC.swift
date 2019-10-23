@@ -83,7 +83,7 @@ class TabBarVC: UITabBarController {
         comunities.accessibilityLabel = "TabBarComunitiesTabBarItem"
         
         // Notifications Tab
-        let notifications = controllerContainer.resolve(NotificationsPageVC.self)!
+        let notifications = NotificationsPageVC()
         let notificationsNC = SwipeNavigationController(rootViewController: notifications)
         let notificationsItem = buttonTabBarItem(image: UIImage(named: "notifications")!, tag: 2)
         notificationsNC.navigationBar.prefersLargeTitles = true
