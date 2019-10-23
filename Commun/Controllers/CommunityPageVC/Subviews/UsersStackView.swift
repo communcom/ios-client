@@ -87,7 +87,7 @@ class UsersStackView: UIView {
             
             addSubview(label2)
             label2.autoPinEdge(.leading, to: .trailing, of: label1, withOffset: 5)
-            label2.autoAlignAxis(.horizontal, toSameAxisOf: avatarsStackView)
+            label2.autoPinEdge(.bottom, to: .bottom, of: label1, withOffset: -1)
             label2.autoPinEdge(toSuperviewEdge: .trailing)
         }
     }
