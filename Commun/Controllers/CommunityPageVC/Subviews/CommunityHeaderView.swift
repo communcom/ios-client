@@ -72,6 +72,10 @@ class CommunityHeaderView: MyTableHeaderView {
         leadsLabel.autoPinEdge(.leading, to: .trailing, of: leadsCountLabel, withOffset: 4)
         leadsLabel.autoPinEdge(.bottom, to: .bottom, of: leadsCountLabel, withOffset: -1)
         
+        view.addSubview(usersStackView)
+        usersStackView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
+        usersStackView.autoAlignAxis(.horizontal, toSameAxisOf: leadsLabel)
+        
         view.addSubview(pointsContainerView)
         pointsContainerView.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
         pointsContainerView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
@@ -110,13 +114,18 @@ class CommunityHeaderView: MyTableHeaderView {
     }()
     
     lazy var membersCountLabel: UILabel = {
-        let label = UILabel.with(text: "1,2 k", textSize: 15, weight: .bold)
+        let label = UILabel.with(text: Double(10000000).kmFormatted, textSize: 15, weight: .bold)
         return label
     }()
     
     lazy var leadsCountLabel: UILabel = {
         let label = UILabel.with(text: "7", textSize: 15, weight: .bold)
         return label
+    }()
+    
+    lazy var usersStackView: UsersStackView = {
+        let stackView = UsersStackView(height: 34)
+        return stackView
     }()
     
     lazy var pointsContainerView: UIView = {

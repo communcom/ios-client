@@ -287,6 +287,8 @@
 		BCA9711F2360380400AE37E1 /* CommunityPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA9711E2360380400AE37E1 /* CommunityPageViewModel.swift */; };
 		BCA9712223603C6C00AE37E1 /* CommunityHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA9712123603C6C00AE37E1 /* CommunityHeaderView.swift */; };
 		BCA971242360400200AE37E1 /* MyTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA971232360400200AE37E1 /* MyTableHeaderView.swift */; };
+		BCA971262360883D00AE37E1 /* Double.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA971252360883D00AE37E1 /* Double.swift */; };
+		BCA9712823608ABD00AE37E1 /* UsersStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA9712723608ABD00AE37E1 /* UsersStackView.swift */; };
 		BCB2A6E22354512D00B3582B /* AttachmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB2A6E12354512D00B3582B /* AttachmentView.swift */; };
 		BCB2A6E423546AF500B3582B /* EditorVC+AttachmentViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB2A6E323546AF500B3582B /* EditorVC+AttachmentViewDelegate.swift */; };
 		BCB2A6E62355536D00B3582B /* UITableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB2A6E52355536D00B3582B /* UITableViewCell.swift */; };
@@ -611,6 +613,8 @@
 		BCA9711E2360380400AE37E1 /* CommunityPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityPageViewModel.swift; sourceTree = "<group>"; };
 		BCA9712123603C6C00AE37E1 /* CommunityHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityHeaderView.swift; sourceTree = "<group>"; };
 		BCA971232360400200AE37E1 /* MyTableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTableHeaderView.swift; sourceTree = "<group>"; };
+		BCA971252360883D00AE37E1 /* Double.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Double.swift; sourceTree = "<group>"; };
+		BCA9712723608ABD00AE37E1 /* UsersStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersStackView.swift; sourceTree = "<group>"; };
 		BCB2A6E12354512D00B3582B /* AttachmentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentView.swift; sourceTree = "<group>"; };
 		BCB2A6E323546AF500B3582B /* EditorVC+AttachmentViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EditorVC+AttachmentViewDelegate.swift"; sourceTree = "<group>"; };
 		BCB2A6E52355536D00B3582B /* UITableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableViewCell.swift; sourceTree = "<group>"; };
@@ -1341,6 +1345,7 @@
 				BCE9390A234DBBC300226E39 /* ResponseAPIContentBlock.swift */,
 				BCE9390E234DD28400226E39 /* ResponseAPIContentGetPostContent.swift */,
 				BCB2A6E52355536D00B3582B /* UITableViewCell.swift */,
+				BCA971252360883D00AE37E1 /* Double.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1639,6 +1644,7 @@
 			isa = PBXGroup;
 			children = (
 				BCA9712123603C6C00AE37E1 /* CommunityHeaderView.swift */,
+				BCA9712723608ABD00AE37E1 /* UsersStackView.swift */,
 			);
 			path = Subviews;
 			sourceTree = "<group>";
@@ -2119,6 +2125,7 @@
 				BCA9711B236033D100AE37E1 /* ResponseAPIContentGetCommunity.swift in Sources */,
 				3B62055A2346E4220017FEB7 /* EditorVC.swift in Sources */,
 				3BF37BCC22A1297C00A72FFE /* UITableView.swift in Sources */,
+				BCA971262360883D00AE37E1 /* Double.swift in Sources */,
 				3B5CB31022A5880D00757533 /* MyRxTableViewSectionedAnimatedDataSource.swift in Sources */,
 				3B6CB734234335130097B2A1 /* CommunActionSheet.swift in Sources */,
 				3BC6139E23419EFC00075570 /* HalfSizePresentationController.swift in Sources */,
@@ -2139,6 +2146,7 @@
 				3BF37BCA22A11FA700A72FFE /* UIView.swift in Sources */,
 				575AECAE22606D0800A7EC2D /* SignUpViewModel.swift in Sources */,
 				BCF39150235FEEC100A9D1ED /* PostsListFetcher.swift in Sources */,
+				BCA9712823608ABD00AE37E1 /* UsersStackView.swift in Sources */,
 				BC016D46235DA0D400F1319F /* PlaceholderPostCell.swift in Sources */,
 				3B289B9A2346E6D800598407 /* UILabel+PureLayout.swift in Sources */,
 				3B2F2269226892C5006B589E /* NotificationCell.swift in Sources */,
