@@ -77,7 +77,6 @@ class CommunityHeaderView: MyTableHeaderView {
         pointsContainerView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
         pointsContainerView.autoPinEdge(.top, to: .bottom, of: membersCountLabel, withOffset: 22)
         
-        #warning("remove later")
         pointsContainerView.autoPinEdge(toSuperviewEdge: .bottom, withInset: 16)
         
         return view
@@ -201,8 +200,15 @@ class CommunityHeaderView: MyTableHeaderView {
         contentView.autoPinEdge(toSuperviewEdge: .leading)
         contentView.autoPinEdge(toSuperviewEdge: .trailing)
         
-        #warning("remove later")
-        contentView.autoPinEdge(toSuperviewEdge: .bottom)
+        let separator = UIView(height: 10, backgroundColor: #colorLiteral(red: 0.9599978328, green: 0.966491878, blue: 0.9829974771, alpha: 1))
+        addSubview(separator)
+        
+        #warning("change later")
+        separator.autoPinEdge(.top, to: .bottom, of: contentView)
+        
+        // pin bottom
+        separator.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
+        
     }
     
     @objc func backButtonTapped(_ sender: UIButton) {
