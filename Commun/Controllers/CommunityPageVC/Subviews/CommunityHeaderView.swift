@@ -72,6 +72,11 @@ class CommunityHeaderView: MyTableHeaderView {
         leadsLabel.autoPinEdge(.leading, to: .trailing, of: leadsCountLabel, withOffset: 4)
         leadsLabel.autoPinEdge(.bottom, to: .bottom, of: leadsCountLabel, withOffset: -1)
         
+        view.addSubview(pointsContainerView)
+        pointsContainerView.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
+        pointsContainerView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
+        pointsContainerView.autoPinEdge(.top, to: .bottom, of: membersCountLabel, withOffset: 22)
+        
         return view
     }()
     
@@ -109,6 +114,59 @@ class CommunityHeaderView: MyTableHeaderView {
     
     lazy var leadsCountLabel: UILabel = {
         let label = UILabel.with(text: "7", textSize: 15, weight: .bold)
+        return label
+    }()
+    
+    lazy var pointsContainerView: UIView = {
+        let view = UIView(height: 70, backgroundColor: .appMainColor)
+        view.cornerRadius = 10
+        view.addSubview(walletImageView)
+        walletImageView.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
+        walletImageView.autoAlignAxis(toSuperviewAxis: .horizontal)
+        
+        view.addSubview(walletCurrencyValue)
+        walletCurrencyValue.autoPinEdge(.leading, to: .trailing, of: walletImageView, withOffset: 10)
+        walletCurrencyValue.autoPinEdge(.top, to: .top, of: walletImageView)
+        
+        view.addSubview(walletCurrencyLabel)
+        walletCurrencyLabel.autoPinEdge(.leading, to: .trailing, of: walletCurrencyValue, withOffset: 2)
+        walletCurrencyLabel.autoPinEdge(.bottom, to: .bottom, of: walletCurrencyValue, withOffset: -2)
+        
+        let equalLabel = UILabel.with(text: "=", textSize: 12, weight: .semibold, textColor: .white)
+        view.addSubview(equalLabel)
+        equalLabel.autoPinEdge(.leading, to: .trailing, of: walletImageView, withOffset: 10)
+        equalLabel.autoPinEdge(.top, to: .bottom, of: walletCurrencyValue, withOffset: 2)
+        
+        view.addSubview(communValueLabel)
+        communValueLabel.autoPinEdge(.leading, to: .trailing, of: equalLabel, withOffset: 2)
+        communValueLabel.autoAlignAxis(.horizontal, toSameAxisOf: equalLabel)
+        
+        let communLabel = UILabel.with(text: "Commun", textSize: 12, weight: .semibold, textColor: .white)
+        view.addSubview(communLabel)
+        communLabel.autoPinEdge(.leading, to: .trailing, of: communValueLabel, withOffset: 2)
+        communLabel.autoAlignAxis(.horizontal, toSameAxisOf: equalLabel)
+        return view
+    }()
+    
+    lazy var walletImageView: UIImageView = {
+        let imageView = UIImageView(width: 40, height: 40, backgroundColor: .clear)
+        imageView.cornerRadius = 20
+        imageView.image = UIImage(named: "community-wallet")
+        return imageView
+    }()
+    
+    lazy var walletCurrencyValue: UILabel = {
+        let label = UILabel.with(text: "1000", textSize: 20, weight: .semibold, textColor: .white)
+        return label
+    }()
+    
+    lazy var walletCurrencyLabel: UILabel = {
+        let label = UILabel.with(text: "Binance", textSize: 12, weight: .semibold, textColor: .white)
+        return label
+    }()
+    
+    lazy var communValueLabel: UILabel = {
+        let label = UILabel.with(text: "1", textSize: 12, weight: .semibold, textColor: .white)
         return label
     }()
     
