@@ -55,7 +55,7 @@ class ListViewController<T: ListItemType>: BaseViewController {
                     }
                     break
                 case .listEnded:
-                    self?.tableView.tableFooterView = UIView()
+                    self?.handleListEnded()
                 case .error(_):
                     guard let strongSelf = self else {return}
                     strongSelf.tableView.addListErrorFooterView(with: #selector(strongSelf.didTapTryAgain(gesture:)), on: strongSelf)
@@ -67,6 +67,10 @@ class ListViewController<T: ListItemType>: BaseViewController {
     
     func handleLoading() {
         
+    }
+    
+    func handleListEnded() {
+        tableView.tableFooterView = UIView()
     }
     
     @objc func refresh() {

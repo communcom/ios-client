@@ -21,6 +21,7 @@ class CommentsViewModel: ListViewModel<ResponseAPIContentGetComment>, CommentsLi
         
         defer {
             observeCommentChange()
+            observeCommentDelete()
         }
     }
 }

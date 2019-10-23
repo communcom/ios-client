@@ -72,5 +72,14 @@ extension CommentsListController {
             })
             .disposed(by: disposeBag)
     }
+    func observeCommentDelete() {
+        NotificationCenter.default.rx.notification(.init(rawValue: CommentControllerCommentDeletedNotification))
+            .subscribe(onNext: { (notification) in
+                guard let newComment = notification.object as? ResponseAPIContentGetComment
+                    else {return}
+                self.deleteItem(newComment)
+            })
+            .disposed(by: disposeBag)
+    }
 }
 

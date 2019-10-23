@@ -11,14 +11,7 @@ import RxSwift
 import RxCocoa
 import CyberSwift
 
-typealias FilterType = Equatable
-
-enum ListLoadingState {
-    case loading
-    case listEnded
-    case error(error: Error)
-}
-
+@available(*, deprecated, message: "Use ListFetcher instead")
 class ItemsFetcher<T: Decodable> {
     
     // MARK: - Parammeters

@@ -11,6 +11,7 @@ import CyberSwift
 import RxDataSources
 
 let CommentControllerCommentDidChangeNotification = "CommentControllerCommentDidChangeNotification"
+let CommentControllerCommentDeletedNotification = "CommentControllerCommentDeletedNotification"
 
 extension ResponseAPIContentGetComment: Equatable, IdentifiableType {
     public static func == (lhs: ResponseAPIContentGetComment, rhs: ResponseAPIContentGetComment) -> Bool {

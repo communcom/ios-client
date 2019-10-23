@@ -11,6 +11,8 @@ import RxSwift
 import RxCocoa
 import CyberSwift
 
+typealias FilterType = Equatable
+
 enum ListFetcherState {
     case loading(Bool)
     case listEnded
