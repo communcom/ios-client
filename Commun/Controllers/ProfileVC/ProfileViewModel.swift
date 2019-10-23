@@ -43,8 +43,8 @@ class ProfileViewModel {
             sortType: .all))
     let commentsVM = CommentsViewModel()
     
-    public let profileLoadingState = PublishSubject<LoadingState>()
-    public let listLoadingState = PublishSubject<ListLoadingState>()
+    public let profileLoadingState = BehaviorRelay<LoadingState>(value: .loading)
+    public let listLoadingState = BehaviorRelay<ListLoadingState>(value: .loading)
     
     var items: Observable<[AnyObject?]> {
         return Observable.combineLatest(commentsVM.items, postsVM.items)
@@ -70,11 +70,11 @@ class ProfileViewModel {
     func loadProfile() {
         NetworkService.shared.getUserProfile(userId: userId)
             .do(onSuccess: { (profile) in
-                self.profileLoadingState.onNext(.finished)
+                self.profileLoadingState.accept(.finished)
             }, onError: { (error) in
-                self.profileLoadingState.onNext(.error(error: error))
+                self.profileLoadingState.accept(.error(error: error))
             }, onSubscribe: {
-                self.profileLoadingState.onNext(.loading)
+                self.profileLoadingState.accept(.loading)
             })
             .subscribe(onSuccess: { (profile) in
                 self.profile.accept(profile)
@@ -83,11 +83,17 @@ class ProfileViewModel {
     }
     
     func bind() {
-        postsVM.state
-            .bind(to: listLoadingState)
-            .disposed(by: disposeBag)
-        
-        commentsVM.state
+        Observable.merge(postsVM.state.asObservable(), commentsVM.state.asObservable())
+            .distinctUntilChanged { (lhs, rhs) -> Bool in
+                switch (lhs, rhs) {
+                case (.loading, .loading):
+                    return true
+                case (.listEnded, .listEnded):
+                    return true
+                default:
+                    return false
+                }
+            }
             .bind(to: listLoadingState)
             .disposed(by: disposeBag)
         

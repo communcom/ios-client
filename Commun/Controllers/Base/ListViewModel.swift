@@ -15,7 +15,7 @@ class ListViewModel<T: Decodable & Equatable & IdentifiableType> {
     // MARK: - Properties
     public let disposeBag   = DisposeBag()
     public var items        = BehaviorRelay<[T]>(value: [])
-    public let state        = PublishSubject<ListLoadingState>()
+    public let state        = BehaviorRelay<ListLoadingState>(value: .loading)
     
     // MARK: - Filter & Fetcher
     public var fetcher: ItemsFetcher<T>
@@ -27,17 +27,17 @@ class ListViewModel<T: Decodable & Equatable & IdentifiableType> {
     
     func fetchNext() {
         // show loading
-        state.onNext(.loading)
+        state.accept(.loading)
         
         fetcher.fetchNext()
             .do(onError: { error in
-                self.state.onNext(.error(error: error))
+                self.state.accept(.error(error: error))
             })
             .asDriver(onErrorJustReturn: [])
             .drive(onNext: { [weak self] list in
                 self?.onItemsFetched(items: list)
                 if self?.fetcher.reachedTheEnd == true {
-                    self?.state.onNext(.listEnded)
+                    self?.state.accept(.listEnded)
                 }
             })
             .disposed(by: disposeBag)

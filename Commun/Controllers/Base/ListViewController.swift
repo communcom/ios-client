@@ -40,6 +40,10 @@ class ListViewController<T: Decodable & Equatable & IdentifiableType>: BaseViewC
             .disposed(by: disposeBag)
         
         viewModel.state
+            .do(onNext: { (state) in
+                Logger.log(message: "\(state)", event: .debug)
+                return
+            })
             .subscribe(onNext: {[weak self] state in
                 switch state {
                 case .loading:
