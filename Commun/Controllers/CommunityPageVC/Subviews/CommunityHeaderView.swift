@@ -27,7 +27,89 @@ class CommunityHeaderView: MyTableHeaderView {
     lazy var contentView: UIView = {
         let view = UIView(height: 243, backgroundColor: .white)
         view.cornerRadius = 25
+        
+        view.addSubview(avatarImageView)
+        avatarImageView.autoPinEdge(toSuperviewEdge: .top, withInset: 16)
+        avatarImageView.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
+        
+        view.addSubview(nameLabel)
+        nameLabel.autoPinEdge(toSuperviewEdge: .top, withInset: 20)
+        nameLabel.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 10)
+        
+        view.addSubview(joinedDateLabel)
+        joinedDateLabel.autoPinEdge(.top, to: .bottom, of: nameLabel)
+        joinedDateLabel.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 10)
+        
+        view.addSubview(joinButton)
+        joinButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
+        joinButton.autoAlignAxis(.horizontal, toSameAxisOf: avatarImageView)
+        
+        view.addSubview(descriptionLabel)
+        descriptionLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
+        descriptionLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
+        descriptionLabel.autoPinEdge(.top, to: .bottom, of: avatarImageView, withOffset: 10)
+        
+        view.addSubview(membersCountLabel)
+        membersCountLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
+        membersCountLabel.autoPinEdge(.top, to: .bottom, of: descriptionLabel, withOffset: 24)
+        
+        let memberLabel = UILabel.with(text: "members".localized().uppercaseFirst, textSize: 12, weight: .semibold, textColor: UIColor(hexString: "#A5A7BD")!)
+        view.addSubview(memberLabel)
+        memberLabel.autoPinEdge(.leading, to: .trailing, of: membersCountLabel, withOffset: 4)
+        memberLabel.autoPinEdge(.bottom, to: .bottom, of: membersCountLabel, withOffset: -1)
+
+        let dotLabel = UILabel.with(text: "•", textSize: 15, weight: .semibold, textColor: UIColor(hexString: "#A5A7BD")!)
+        view.addSubview(dotLabel)
+        dotLabel.autoPinEdge(.leading, to: .trailing, of: memberLabel, withOffset: 2)
+        dotLabel.autoPinEdge(.bottom, to: .bottom, of: memberLabel)
+
+        view.addSubview(leadsCountLabel)
+        leadsCountLabel.autoPinEdge(.leading, to: .trailing, of: dotLabel, withOffset: 2)
+        leadsCountLabel.autoAlignAxis(.horizontal, toSameAxisOf: membersCountLabel)
+
+        let leadsLabel = UILabel.with(text: "leads".localized().uppercaseFirst, textSize: 12, weight: .semibold, textColor: UIColor(hexString: "#A5A7BD")!)
+        view.addSubview(leadsLabel)
+        leadsLabel.autoPinEdge(.leading, to: .trailing, of: leadsCountLabel, withOffset: 4)
+        leadsLabel.autoPinEdge(.bottom, to: .bottom, of: leadsCountLabel, withOffset: -1)
+        
         return view
+    }()
+    
+    lazy var avatarImageView: UIImageView = {
+        let imageView = UIImageView(width: 50, height: 50)
+        imageView.cornerRadius = 25
+        imageView.image = UIImage(named: "ProfilePageCover")
+        return imageView
+    }()
+    
+    lazy var nameLabel: UILabel = {
+        let label = UILabel.with(text: "Community", textSize: 20, weight: .bold)
+        return label
+    }()
+    
+    lazy var joinedDateLabel: UILabel = {
+        let label = UILabel.descriptionLabel("Joined", size: 12)
+        return label
+    }()
+    
+    lazy var joinButton: UIButton = {
+        let button = UIButton(height: 35, label: "join".localized().uppercaseFirst, labelFont: .boldSystemFont(ofSize: 15), backgroundColor: .appMainColor, textColor: .white, cornerRadius: 35 / 2, contentInsets: UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 20))
+        return button
+    }()
+    
+    lazy var descriptionLabel: UILabel = {
+        let label = UILabel.with(text: "Binance Exchange provides cryptocurrency trading for fintech and blockchain enthusiasts", textSize: 14, numberOfLines: 0)
+        return label
+    }()
+    
+    lazy var membersCountLabel: UILabel = {
+        let label = UILabel.with(text: "1,2 k", textSize: 15, weight: .bold)
+        return label
+    }()
+    
+    lazy var leadsCountLabel: UILabel = {
+        let label = UILabel.with(text: "7", textSize: 15, weight: .bold)
+        return label
     }()
     
     override func commonInit() {
