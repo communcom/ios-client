@@ -283,7 +283,7 @@
 		BCA97113236004F500AE37E1 /* CommentsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA97112236004F500AE37E1 /* CommentsViewModel.swift */; };
 		BCA971172360301100AE37E1 /* NotificationsListFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA971162360301100AE37E1 /* NotificationsListFetcher.swift */; };
 		BCA9711B236033D100AE37E1 /* ResponseAPIContentGetCommunity.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA9711A236033D100AE37E1 /* ResponseAPIContentGetCommunity.swift */; };
-		BCA9711D2360347D00AE37E1 /* CommunityVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA9711C2360347D00AE37E1 /* CommunityVC.swift */; };
+		BCA9711D2360347D00AE37E1 /* CommunityPageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA9711C2360347D00AE37E1 /* CommunityPageVC.swift */; };
 		BCA9711F2360380400AE37E1 /* CommunityPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA9711E2360380400AE37E1 /* CommunityPageViewModel.swift */; };
 		BCB2A6E22354512D00B3582B /* AttachmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB2A6E12354512D00B3582B /* AttachmentView.swift */; };
 		BCB2A6E423546AF500B3582B /* EditorVC+AttachmentViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB2A6E323546AF500B3582B /* EditorVC+AttachmentViewDelegate.swift */; };
@@ -605,7 +605,7 @@
 		BCA97112236004F500AE37E1 /* CommentsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentsViewModel.swift; sourceTree = "<group>"; };
 		BCA971162360301100AE37E1 /* NotificationsListFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsListFetcher.swift; sourceTree = "<group>"; };
 		BCA9711A236033D100AE37E1 /* ResponseAPIContentGetCommunity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseAPIContentGetCommunity.swift; sourceTree = "<group>"; };
-		BCA9711C2360347D00AE37E1 /* CommunityVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityVC.swift; sourceTree = "<group>"; };
+		BCA9711C2360347D00AE37E1 /* CommunityPageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityPageVC.swift; sourceTree = "<group>"; };
 		BCA9711E2360380400AE37E1 /* CommunityPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityPageViewModel.swift; sourceTree = "<group>"; };
 		BCB2A6E12354512D00B3582B /* AttachmentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentView.swift; sourceTree = "<group>"; };
 		BCB2A6E323546AF500B3582B /* EditorVC+AttachmentViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EditorVC+AttachmentViewDelegate.swift"; sourceTree = "<group>"; };
@@ -1154,7 +1154,7 @@
 				57A1CA612270FC3300E2A1E3 /* LanguageVC */,
 				3B2F225322689252006B589E /* NotificationsPageVC */,
 				5725173A2243E4510033125C /* PostPageVC */,
-				BCA971192360339B00AE37E1 /* CommunityVC */,
+				BCA971192360339B00AE37E1 /* CommunityPageVC */,
 				3BAF69C122675ADB0055CCEB /* ProfilePageVC */,
 				575AECAF22606F5200A7EC2D /* SelectCountryVC */,
 				57E5159A2270E5C700A6F6DB /* SettingsVC */,
@@ -1620,13 +1620,13 @@
 			path = CommentsViewController;
 			sourceTree = "<group>";
 		};
-		BCA971192360339B00AE37E1 /* CommunityVC */ = {
+		BCA971192360339B00AE37E1 /* CommunityPageVC */ = {
 			isa = PBXGroup;
 			children = (
-				BCA9711C2360347D00AE37E1 /* CommunityVC.swift */,
+				BCA9711C2360347D00AE37E1 /* CommunityPageVC.swift */,
 				BCA9711E2360380400AE37E1 /* CommunityPageViewModel.swift */,
 			);
-			path = CommunityVC;
+			path = CommunityPageVC;
 			sourceTree = "<group>";
 		};
 		BCF3914A235FEAA500A9D1ED /* Fetchers */ = {
@@ -2045,7 +2045,7 @@
 				3B0E9C64226F4A0C002AB1C2 /* VerticalDraggableImageView.swift in Sources */,
 				3B02CD282289B23E0078BB52 /* PostHeaderView.swift in Sources */,
 				3B02A56922F013D50043F9A4 /* ResponseAPIContentGetComment.swift in Sources */,
-				BCA9711D2360347D00AE37E1 /* CommunityVC.swift in Sources */,
+				BCA9711D2360347D00AE37E1 /* CommunityPageVC.swift in Sources */,
 				BC016D43235DA0D400F1319F /* PostCell.swift in Sources */,
 				57E515B62270F7B200A6F6DB /* SettingsButtonCell.swift in Sources */,
 				3B8E0ED72343032B00362F26 /* SetUserVC+Styles.swift in Sources */,
