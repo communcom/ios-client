@@ -178,6 +178,7 @@
                         <viewLayoutGuide key="safeArea" id="Pgb-4l-LXo"/>
                     </view>
                     <connections>
+                        <outlet property="_tableView" destination="Dx8-8W-zVf" id="b0Q-BC-t0g"/>
                         <outlet property="byUserLabel" destination="AUu-SG-Yxw" id="lrc-9d-vRE"/>
                         <outlet property="commentForm" destination="thI-Qg-Abq" id="Mpq-Sz-QkR"/>
                         <outlet property="communityAvatarImageView" destination="JAo-Iq-Wdc" id="7kU-x0-5tY"/>
@@ -186,7 +187,6 @@
                         <outlet property="navigationBarHeightConstraint" destination="P2e-hR-1BQ" id="vjY-NO-7TV"/>
                         <outlet property="replyingToLabel" destination="53b-Ty-ok2" id="RLe-aJ-Sdw"/>
                         <outlet property="replyingToLabelHeightConstraint" destination="NL0-sE-1wr" id="FTv-5j-5gZ"/>
-                        <outlet property="tableView" destination="Dx8-8W-zVf" id="OtS-57-Afj"/>
                         <outlet property="timeAgoLabel" destination="RsM-Yt-jdM" id="Azv-hd-vTh"/>
                     </connections>
                 </viewController>

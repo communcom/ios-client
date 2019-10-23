@@ -61,8 +61,8 @@ extension NotificationsPageVC {
                 // navigate to post page
                 if let post = notification.post,
                     let postPageVC = controllerContainer.resolve(PostPageVC.self) {
-                    postPageVC.viewModel.permlink = post.contentId.permlink
-                    postPageVC.viewModel.userId = post.contentId.userId
+                    (postPageVC.viewModel as! PostPageViewModel).permlink = post.contentId.permlink
+                    (postPageVC.viewModel as! PostPageViewModel).userId = post.contentId.userId
                     self?.show(postPageVC, sender: nil)
                     return
                 }

@@ -28,7 +28,7 @@ class MyTableViewCell: UITableViewCell {
     // MARK: - Methods
     
     func setUpViews() {
-        
+        observe()
     }
     
     override func prepareForReuse() {

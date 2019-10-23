@@ -237,8 +237,8 @@ extension EditorVC {
                 else {
                     // show post page
                     let postPageVC = controllerContainer.resolve(PostPageVC.self)!
-                    postPageVC.viewModel.permlink = permlink
-                    postPageVC.viewModel.userId = userId
+                    (postPageVC.viewModel as! PostPageViewModel).permlink = permlink
+                    (postPageVC.viewModel as! PostPageViewModel).userId = userId
                     
                     self.dismiss(animated: true) {
                         UIApplication.topViewController()?.show(postPageVC, sender: nil)

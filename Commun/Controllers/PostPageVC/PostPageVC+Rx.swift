@@ -13,17 +13,6 @@ import RxSwift
 
 extension PostPageVC {
     
-    func bindUI() {
-        // Observe post
-        bindPost()
-        
-        // Observe comments
-        bindComments()
-        
-        // Observe commentForm
-        bindCommentForm()
-    }
-    
     func bindPost() {
         // scrollView
         self.tableView.rx.willDragDown
@@ -37,7 +26,7 @@ extension PostPageVC {
             })
             .disposed(by: disposeBag)
         
-        viewModel.post
+        (viewModel as! PostPageViewModel).post
             .subscribe(onNext: {post in
                 if let post = post {
                     // Time ago & community
@@ -74,7 +63,7 @@ extension PostPageVC {
             .disposed(by: disposeBag)
         
         // more button
-        let nonNilPost = viewModel.post.filter {$0 != nil}
+        let nonNilPost = (viewModel as! PostPageViewModel).post.filter {$0 != nil}
             .map {$0!}
         
         nonNilPost
@@ -96,11 +85,6 @@ extension PostPageVC {
     }
     
     func bindComments() {
-        viewModel.items
-            .map {[CommentSection(model: "", items: $0)]}
-            .bind(to: tableView.rx.items(dataSource: dataSource))
-            .disposed(by: disposeBag)
-        
         viewModel.items
             .subscribe(onNext: {_ in
                 self.expandedIndexes = []

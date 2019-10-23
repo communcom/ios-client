@@ -11,12 +11,16 @@ import RxSwift
 import CyberSwift
 import RxDataSources
 
-public typealias CommentSection = AnimatableSectionModel<String, ResponseAPIContentGetComment>
-class PostPageVC: UIViewController, CommentCellDelegate {
-    var viewModel: PostPageViewModel!
+class PostPageVC: ListViewController<ResponseAPIContentGetComment>, CommentCellDelegate {
     
     var headerView: PostHeaderView!
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var _tableView: UITableView!
+    
+    override var tableView: UITableView! {
+        get {return _tableView}
+        set {_tableView = newValue}
+    }
+    
     @IBOutlet weak var comunityNameLabel: UILabel!
     @IBOutlet weak var timeAgoLabel: UILabel!
     @IBOutlet weak var byUserLabel: UILabel!
@@ -27,11 +31,7 @@ class PostPageVC: UIViewController, CommentCellDelegate {
     @IBOutlet weak var replyingToLabelHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var navigationBarHeightConstraint: NSLayoutConstraint!
     
-    let disposeBag = DisposeBag()
-    
     var expandedIndexes = [Int]()
-    
-    var dataSource: MyRxTableViewSectionedAnimatedDataSource<CommentSection>!
     
     var replyingComment: ResponseAPIContentGetComment? {
         didSet {
@@ -59,51 +59,19 @@ class PostPageVC: UIViewController, CommentCellDelegate {
                 UIView.animate(withDuration: 0.3) {
                     self.view.layoutIfNeeded()
                 }
-                commentForm.parentAuthor = viewModel.post.value?.contentId.userId
-                commentForm.parentPermlink = viewModel.post.value?.contentId.permlink
+                commentForm.parentAuthor = (viewModel as! PostPageViewModel).post.value?.contentId.userId
+                commentForm.parentPermlink = (viewModel as! PostPageViewModel).post.value?.contentId.permlink
                 commentForm.textView.text = nil
             }
         }
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        // setup viewModel
-        viewModel.loadPost()
-        viewModel.fetchNext()
-        
-        viewModel.loadingHandler = { [weak self] in
-            if self?.viewModel.fetcher.reachedTheEnd == true {return}
-            self?.tableView.addLoadingFooterView(
-                rowType:        PlaceholderNotificationCell.self,
-                tag:            notificationsLoadingFooterViewTag,
-                rowHeight:      88,
-                numberOfRows:   1
-            )
-        }
-        
-        viewModel.listEndedHandler = { [weak self] in
-            if self?.dataSource.isEmpty == true {
-                self?.addEmptyCell()
-            } else {
-                self?.tableView.tableFooterView = UIView()
-            }
-            
-        }
-        
-        viewModel.fetchNextErrorHandler = {[weak self] error in
-            guard let strongSelf = self else {return}
-            strongSelf.tableView.addListErrorFooterView(with: #selector(strongSelf.didTapTryAgain(gesture:)), on: strongSelf)
-            strongSelf.tableView.reloadData()
-        }
-        
+    override func setUp() {
+        super.setUp()
         // setupView
         tableView.register(UINib(nibName: "CommentCell", bundle: nil), forCellReuseIdentifier: "CommentCell")
         
-        tableView.rowHeight = UITableView.automaticDimension
-        
-        comunityNameLabel.text = viewModel.postForRequest?.community.name
+        comunityNameLabel.text = (viewModel as! PostPageViewModel).postForRequest?.community.name
         
         // action for labels
         let tap = UITapGestureRecognizer(target: self, action: #selector(userNameTapped(_:)))
@@ -113,10 +81,6 @@ class PostPageVC: UIViewController, CommentCellDelegate {
         // dismiss keyboard when dragging
         tableView.keyboardDismissMode = .onDrag
         
-        // forward delegate & datasource for header in section
-        tableView.rx.setDelegate(self)
-            .disposed(by: disposeBag)
-        
         // observe post deleted
         observePostDeleted()
         
@@ -124,7 +88,7 @@ class PostPageVC: UIViewController, CommentCellDelegate {
         replyingComment = nil
         
         // dataSource
-        dataSource = MyRxTableViewSectionedAnimatedDataSource<CommentSection>(
+        dataSource = MyRxTableViewSectionedAnimatedDataSource<ListSection>(
             configureCell: { dataSource, tableView, indexPath, comment in
                 let cell = self.tableView.dequeueReusableCell(withIdentifier: "CommentCell") as! CommentCell
                 cell.setupFromComment(comment, expanded: self.expandedIndexes.contains(indexPath.row))
@@ -137,9 +101,39 @@ class PostPageVC: UIViewController, CommentCellDelegate {
                 return cell
             }
         )
+    }
+    
+    override func bind() {
+        super.bind()
+        // Observe post
+        bindPost()
         
-        // bind ui
-        bindUI()
+        // Observe comments
+        bindComments()
+        
+        // Observe commentForm
+        bindCommentForm()
+        
+        // forward delegate & datasource for header in section
+        tableView.rx.setDelegate(self)
+            .disposed(by: disposeBag)
+    }
+    
+    override func handleLoading() {
+        tableView.addLoadingFooterView(
+            rowType:        PlaceholderNotificationCell.self,
+            tag:            notificationsLoadingFooterViewTag,
+            rowHeight:      88,
+            numberOfRows:   1
+        )
+    }
+    
+    override func handleListEnded() {
+        if dataSource.isEmpty == true {
+            addEmptyCell()
+        } else {
+            tableView.tableFooterView = UIView()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -160,7 +154,7 @@ class PostPageVC: UIViewController, CommentCellDelegate {
         NotificationCenter.default.rx.notification(.init(rawValue: PostControllerPostDidDeleteNotification))
             .subscribe(onNext: { (notification) in
                 guard let deletedPost = notification.object as? ResponseAPIContentGetPost,
-                    deletedPost.identity == self.viewModel.post.value?.identity
+                    deletedPost.identity == (self.viewModel as! PostPageViewModel).post.value?.identity
                     else {return}
                 self.showAlert(title: "deleted".localized().uppercaseFirst, message: "the post has been deleted".localized().uppercaseFirst, completion: { (_) in
                     self.back()
@@ -182,21 +176,11 @@ class PostPageVC: UIViewController, CommentCellDelegate {
     }
     
     @objc func userNameTapped(_ sender: UITapGestureRecognizer) {
-        guard let userId = viewModel.post.value?.author?.userId else {return}
+        guard let userId = (viewModel as! PostPageViewModel).post.value?.author?.userId else {return}
         showProfileWithUserId(userId)
     }
     @IBAction func replyingToCloseDidTouch(_ sender: Any) {
         replyingComment = nil
-    }
-    
-    @objc func didTapTryAgain(gesture: UITapGestureRecognizer) {
-        guard let label = gesture.view as? UILabel,
-            let text = label.text else {return}
-        
-        let tryAgainRange = (text as NSString).range(of: "Try again".localized())
-        if gesture.didTapAttributedTextInLabel(label: label, inRange: tryAgainRange) {
-            self.viewModel.fetchNext()
-        }
     }
     
     func addEmptyCell() {
@@ -222,6 +206,10 @@ class PostPageVC: UIViewController, CommentCellDelegate {
         
         tableView.tableFooterView = containerView
         emptyView.setUpEmptyComment()
+    }
+    
+    override func refresh() {
+        (viewModel as! PostPageViewModel).loadPost()
     }
 }
 

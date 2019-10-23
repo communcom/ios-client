@@ -55,7 +55,7 @@ class PostsViewController: ListViewController<ResponseAPIContentGetPost> {
         tableView.rx.modelSelected(ResponseAPIContentGetPost.self)
             .subscribe(onNext: {post in
                 let postPageVC = controllerContainer.resolve(PostPageVC.self)!
-                postPageVC.viewModel.postForRequest = post
+                (postPageVC.viewModel as! PostPageViewModel).postForRequest = post
                 self.show(postPageVC, sender: nil)
             })
             .disposed(by: disposeBag)

@@ -32,7 +32,6 @@
 		3B17E7A8230CE10600D681AA /* CommentCell+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B17E7A7230CE10600D681AA /* CommentCell+Actions.swift */; };
 		3B197C532269BE0E008CF10D /* SegmentioExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B197C522269BE0E008CF10D /* SegmentioExtension.swift */; };
 		3B197C552269BF74008CF10D /* ProfilePageSegmentioItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B197C542269BF74008CF10D /* ProfilePageSegmentioItem.swift */; };
-		3B197C572269CEEF008CF10D /* CommentsFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B197C562269CEEF008CF10D /* CommentsFetcher.swift */; };
 		3B197C5B2269EF3F008CF10D /* ProfilePageVC+Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B197C5A2269EF3F008CF10D /* ProfilePageVC+Binding.swift */; };
 		3B197C8A226A33CF008CF10D /* Decodable+MockObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B197C86226A33CF008CF10D /* Decodable+MockObjects.swift */; };
 		3B24F85F22F36A7100B7091C /* Communities.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3B24F85E22F36A7100B7091C /* Communities.storyboard */; };
@@ -340,7 +339,6 @@
 		3B17E7A7230CE10600D681AA /* CommentCell+Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CommentCell+Actions.swift"; sourceTree = "<group>"; };
 		3B197C522269BE0E008CF10D /* SegmentioExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentioExtension.swift; sourceTree = "<group>"; };
 		3B197C542269BF74008CF10D /* ProfilePageSegmentioItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePageSegmentioItem.swift; sourceTree = "<group>"; };
-		3B197C562269CEEF008CF10D /* CommentsFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentsFetcher.swift; sourceTree = "<group>"; };
 		3B197C5A2269EF3F008CF10D /* ProfilePageVC+Binding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProfilePageVC+Binding.swift"; sourceTree = "<group>"; };
 		3B197C86226A33CF008CF10D /* Decodable+MockObjects.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Decodable+MockObjects.swift"; sourceTree = "<group>"; };
 		3B24F85E22F36A7100B7091C /* Communities.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Communities.storyboard; sourceTree = "<group>"; };
@@ -872,7 +870,6 @@
 			isa = PBXGroup;
 			children = (
 				3BAF69D422686A1B0055CCEB /* ItemsFetcher.swift */,
-				3B197C562269CEEF008CF10D /* CommentsFetcher.swift */,
 				3B02CD2D228AB4580078BB52 /* NotificationsFetcher.swift */,
 			);
 			path = Fetchers;
@@ -2084,7 +2081,6 @@
 				3BAE5CD72338A1620055F23E /* CommentTextView.swift in Sources */,
 				5725173C2243E4640033125C /* PostPageVC.swift in Sources */,
 				3BAF69C322675B420055CCEB /* ProfilePageVC.swift in Sources */,
-				3B197C572269CEEF008CF10D /* CommentsFetcher.swift in Sources */,
 				3B885BBC22B7A1FE00FC4B7A /* EmbededView.swift in Sources */,
 				BCF39152235FF7F900A9D1ED /* CommentsListFetcher.swift in Sources */,
 				3B197C552269BF74008CF10D /* ProfilePageSegmentioItem.swift in Sources */,
