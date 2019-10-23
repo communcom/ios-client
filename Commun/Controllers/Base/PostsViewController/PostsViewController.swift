@@ -41,12 +41,6 @@ class PostsViewController: ListViewController<ResponseAPIContentGetPost> {
                 return cell
             }
         )
-        
-        tableView.emptyDataSetSource = self
-        tableView.emptyDataSetDelegate = self
-        
-        // dismiss keyboard when dragging
-        tableView.keyboardDismissMode = .onDrag
     }
     
     override func bind() {

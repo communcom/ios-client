@@ -41,6 +41,12 @@ class FeedPageVC: PostsViewController, VCWithParallax {
             .disposed(by: disposeBag)
         
         userAvatarImage.addTapToViewer()
+        
+        tableView.emptyDataSetSource = self
+        tableView.emptyDataSetDelegate = self
+        
+        // dismiss keyboard when dragging
+        tableView.keyboardDismissMode = .onDrag
     }
     
     override func filterChanged(filter: PostsListFetcher.Filter) {
