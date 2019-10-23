@@ -170,4 +170,12 @@ extension UIViewController {
         view.removeFromSuperview()
         removeFromParent()
     }
+    
+    func back() {
+        if (self.isModal) {
+            self.dismiss(animated: true, completion: nil)
+        } else {
+            self.navigationController?.popViewController()
+        }
+    }
 }

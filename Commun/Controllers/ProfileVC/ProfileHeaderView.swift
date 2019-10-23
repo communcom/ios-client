@@ -8,10 +8,7 @@
 
 import Foundation
 
-class ProfileHeaderView: UIView {
-    // MARK: - Properties
-    weak var tableView: UITableView?
-    
+class ProfileHeaderView: MyTableHeaderView {
     // MARK: - Subviews
     lazy var coverImageView: UIImageView = {
         let imageView = UIImageView(height: 210)
@@ -115,18 +112,10 @@ class ProfileHeaderView: UIView {
     lazy var followingsCountLabel = UILabel.with(text: "0", textSize: 24, weight: .bold)
     lazy var myCommunitiesCountLabel = UILabel.with(text: "0", textSize: 24, weight: .bold)
     
-    // MARK: - Initializers
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        commonInit()
-    }
     
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        commonInit()
-    }
-    
-    func commonInit() {
+    override func commonInit() {
+        super.commonInit()
+        
         backgroundColor = .white
         
         addSubview(coverImageView)
@@ -174,8 +163,5 @@ class ProfileHeaderView: UIView {
         separatorView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        tableView?.tableHeaderView = tableView?.tableHeaderView
-    }
+    
 }

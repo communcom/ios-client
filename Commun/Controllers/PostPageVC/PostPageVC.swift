@@ -167,14 +167,6 @@ class PostPageVC: ListViewController<ResponseAPIContentGetComment>, CommentCellD
         back()
     }
     
-    func back() {
-        if (self.isModal) {
-            self.dismiss(animated: true, completion: nil)
-        } else {
-            self.navigationController?.popViewController()
-        }
-    }
-    
     @objc func userNameTapped(_ sender: UITapGestureRecognizer) {
         guard let userId = (viewModel as! PostPageViewModel).post.value?.author?.userId else {return}
         showProfileWithUserId(userId)
