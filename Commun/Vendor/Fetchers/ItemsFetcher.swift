@@ -27,7 +27,7 @@ class ItemsFetcher<T: Decodable> {
     var offset: UInt = 0
     var reachedTheEnd = false
     var request: Single<[T]>! {
-        return nil
+        fatalError("Must override request")
     }
     var lastError: Error?
     
@@ -52,9 +52,6 @@ class ItemsFetcher<T: Decodable> {
         self.isFetching = true
         
         // Send request
-        if request == nil {
-            fatalError("Must override request")
-        }
         return request
             .do(onSuccess: { result in
                 // next
