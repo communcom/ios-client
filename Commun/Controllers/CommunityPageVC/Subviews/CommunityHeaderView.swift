@@ -25,7 +25,7 @@ class CommunityHeaderView: MyTableHeaderView {
     }()
     
     lazy var contentView: UIView = {
-        let view = UIView(height: 243, backgroundColor: .white)
+        let view = UIView(backgroundColor: .white)
         view.cornerRadius = 25
         
         view.addSubview(avatarImageView)
@@ -76,6 +76,9 @@ class CommunityHeaderView: MyTableHeaderView {
         pointsContainerView.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
         pointsContainerView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
         pointsContainerView.autoPinEdge(.top, to: .bottom, of: membersCountLabel, withOffset: 22)
+        
+        #warning("remove later")
+        pointsContainerView.autoPinEdge(toSuperviewEdge: .bottom, withInset: 16)
         
         return view
     }()
@@ -145,6 +148,11 @@ class CommunityHeaderView: MyTableHeaderView {
         view.addSubview(communLabel)
         communLabel.autoPinEdge(.leading, to: .trailing, of: communValueLabel, withOffset: 2)
         communLabel.autoAlignAxis(.horizontal, toSameAxisOf: equalLabel)
+        
+        view.addSubview(walletButton)
+        walletButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
+        walletButton.autoAlignAxis(toSuperviewAxis: .horizontal)
+        
         return view
     }()
     
@@ -168,6 +176,11 @@ class CommunityHeaderView: MyTableHeaderView {
     lazy var communValueLabel: UILabel = {
         let label = UILabel.with(text: "1", textSize: 12, weight: .semibold, textColor: .white)
         return label
+    }()
+    
+    lazy var walletButton: UIButton = {
+        let button = UIButton(height: 35, label: "get points".localized().uppercaseFirst, labelFont: .boldSystemFont(ofSize: 15), backgroundColor: .white, textColor: .appMainColor, cornerRadius: 35 / 2, contentInsets: UIEdgeInsets(top: 10, left: 16, bottom: 10, right: 16))
+        return button
     }()
     
     override func commonInit() {
