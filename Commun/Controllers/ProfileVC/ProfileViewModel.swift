@@ -21,7 +21,7 @@ class ProfileViewModel {
     
     // MARK: - Properties
     // userId for non-current user
-    var userId: String? = nil {
+    var userId: String? {
         didSet {
             if userId == Config.currentUser?.id {
                 userId = nil
@@ -36,12 +36,8 @@ class ProfileViewModel {
     // MARK: - Subjects
     let profile = BehaviorRelay<ResponseAPIContentGetProfile?>(value: nil)
     let segmentedItem = BehaviorRelay<ProfilePageSegmentioItem>(value: .posts)
-    let postsVM = PostsViewModel(
-        filter: PostsListFetcher.Filter(
-            feedTypeMode: .byUser,
-            feedType: .timeDesc,
-            sortType: .all))
-    let commentsVM = CommentsViewModel()
+    let postsVM: PostsViewModel
+    let commentsVM: CommentsViewModel
     
     public let profileLoadingState = BehaviorRelay<LoadingState>(value: .loading)
     public let listLoadingState = BehaviorRelay<ListFetcherState>(value: .loading(false))
@@ -62,6 +58,18 @@ class ProfileViewModel {
     // MARK: - Methods
     init(userId: String?) {
         self.userId = userId
+        self.postsVM = PostsViewModel(
+            filter: PostsListFetcher.Filter(
+                feedTypeMode: .byUser,
+                feedType: .timeDesc,
+                sortType: .all,
+                userId: userId))
+        
+        self.commentsVM = CommentsViewModel(
+            filter: CommentsListFetcher.Filter(
+                userId: userId,
+                type: .user))
+        
         loadProfile()
         bind()
     }
