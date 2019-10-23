@@ -59,7 +59,9 @@ extension ProfilePageVC: CommentCellDelegate {
         }
         
         // Bind items
-        viewModel.items
+        let items = viewModel.items.share()
+        
+        items
             .bind(to: tableView.rx.items) {table, index, element in
                 guard let element = element else {
                     let cell = self.tableView.dequeueReusableCell(withIdentifier: "EmptyCell") as! EmptyCell
@@ -98,7 +100,7 @@ extension ProfilePageVC: CommentCellDelegate {
             .disposed(by: disposeBag)
         
         // Reset expandable
-        viewModel.items
+        items
             .subscribe(onNext: {_ in
                 self.expandedIndexes = []
             })

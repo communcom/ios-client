@@ -134,7 +134,7 @@ class ProfileHeaderView: UIView {
         coverImageView.cornerRadius = 24
         
         addSubview(moreActionsButton)
-        moreActionsButton.autoPinEdge(toSuperviewEdge: .top, withInset: 32)
+        moreActionsButton.autoPinEdge(toSuperviewSafeArea: .top, withInset: 16)
         moreActionsButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
         
         addSubview(changeCoverButton)

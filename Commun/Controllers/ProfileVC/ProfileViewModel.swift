@@ -48,7 +48,6 @@ class ProfileViewModel {
     
     var items: Observable<[AnyObject?]> {
         return Observable.combineLatest(commentsVM.items, postsVM.items)
-            .share()
             .skip(1)
             .map {items -> [AnyObject?] in
                 if self.segmentedItem.value == .comments {
