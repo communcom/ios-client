@@ -144,20 +144,21 @@ extension PostController {
                                           messagePermlink:   post.contentId.permlink,
                                           messageAuthor:     post.author?.userId ?? "")
             .subscribe(
-                onCompleted: {
+                onCompleted: { [weak self] in
                     // re-enable buttons
-                    self.upVoteButton.isEnabled = true
-                    self.downVoteButton.isEnabled = true
+                    self?.upVoteButton.isEnabled = true
+                    self?.downVoteButton.isEnabled = true
                 },
-                onError: {error in
+                onError: {[weak self] error in
+                    guard let strongSelf = self else {return}
                     // reset state
-                    self.setHasVote(originHasUpVote, for: .upvote)
-                    self.setHasVote(originHasDownVote, for: .downvote)
-                    self.notifyPostChange(newPost: self.post!)
+                    strongSelf.setHasVote(originHasUpVote, for: .upvote)
+                    strongSelf.setHasVote(originHasDownVote, for: .downvote)
+                    strongSelf.notifyPostChange(newPost: strongSelf.post!)
                     
                     // re-enable buttons
-                    self.upVoteButton.isEnabled = true
-                    self.downVoteButton.isEnabled = true
+                    strongSelf.upVoteButton.isEnabled = true
+                    strongSelf.downVoteButton.isEnabled = true
                     
                     // show general error
                     UIApplication.topViewController()?.showError(error)
@@ -191,20 +192,21 @@ extension PostController {
                                           messagePermlink:   post.contentId.permlink,
                                           messageAuthor:     post.author?.userId ?? "")
             .subscribe(
-                onCompleted: {
+                onCompleted: { [weak self] in
                     // re-enable buttons
-                    self.upVoteButton.isEnabled = true
-                    self.downVoteButton.isEnabled = true
+                    self?.upVoteButton.isEnabled = true
+                    self?.downVoteButton.isEnabled = true
                 },
-                onError: { error in
+                onError: { [weak self] error in
+                    guard let strongSelf = self else {return}
                     // reset state
-                    self.setHasVote(originHasUpVote, for: .upvote)
-                    self.setHasVote(originHasDownVote, for: .downvote)
-                    self.notifyPostChange(newPost: self.post!)
+                    strongSelf.setHasVote(originHasUpVote, for: .upvote)
+                    strongSelf.setHasVote(originHasDownVote, for: .downvote)
+                    strongSelf.notifyPostChange(newPost: strongSelf.post!)
                     
                     // re-enable buttons
-                    self.upVoteButton.isEnabled = true
-                    self.downVoteButton.isEnabled = true
+                    strongSelf.upVoteButton.isEnabled = true
+                    strongSelf.downVoteButton.isEnabled = true
                     
                     // show general error
                     UIApplication.topViewController()?.showError(error)
