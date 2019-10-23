@@ -22,10 +22,28 @@ class CommunityPageVC: PostsViewController {
     
     override func setUp() {
         super.setUp()
-        // asign tableView
-        view = tableView
+        // assign tableView
+        view.addSubview(tableView)
+        tableView.insetsContentViewsToSafeArea = false
+        tableView.contentInsetAdjustmentBehavior = .never
+        tableView.autoPinEdgesToSuperviewEdges()
+        tableView.insetsContentViewsToSafeArea = false
         
+        // assign header
+        let headerView = CommunityHeaderView(frame: .zero)
+        headerView.tableView = tableView
+        let containerView = UIView(forAutoLayout: ())
         
+        containerView.addSubview(headerView)
+        headerView.autoPinEdgesToSuperviewEdges()
+        
+        tableView.tableHeaderView = containerView
+        
+        containerView.centerXAnchor.constraint(equalTo: tableView.centerXAnchor).isActive = true
+        containerView.widthAnchor.constraint(equalTo: tableView.widthAnchor).isActive = true
+        containerView.topAnchor.constraint(equalTo: tableView.topAnchor).isActive = true
+        
+        tableView.tableHeaderView?.layoutIfNeeded()
     }
     
     override func bind() {

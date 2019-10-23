@@ -35,6 +35,7 @@ class ProfileVC: BaseViewController, VCWithParallax {
         
         // assign header
         let headerView = ProfileHeaderView(frame: .zero)
+        headerView.tableView = tableView
         headerView.coverImageView.image = UIImage(named: "ProfilePageCover")
         headerView.avatarImageView.image = UIImage(named: "ProfilePageCover")
         

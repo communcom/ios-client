@@ -43,7 +43,8 @@
                                         <constraints>
                                             <constraint firstAttribute="width" constant="36" id="Sn4-fu-Sfi"/>
                                         </constraints>
-                                        <state key="normal" image="Back"/>
+                                        <color key="tintColor" red="0.68740922209999999" green="0.693797946" blue="0.7710194588" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <state key="normal" image="back"/>
                                         <connections>
                                             <action selector="backButtonTap:" destination="e29-hK-EV2" eventType="touchUpInside" id="YLl-3U-GIb"/>
                                         </connections>
@@ -196,8 +197,8 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Back" width="512" height="512"/>
         <image name="Close" width="512" height="512"/>
+        <image name="back" width="12.5" height="21"/>
         <image name="more" width="512" height="512"/>
         <image name="tux" width="56" height="56"/>
     </resources>
