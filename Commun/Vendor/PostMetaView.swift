@@ -48,6 +48,7 @@ class PostMetaView: UIView {
     
     // MARK: - Properties
     var isUserNameTappable = true
+    var isCommunityNameTappable = true
     
     // MARK: - Methods
     override init(frame: CGRect) {
@@ -122,10 +123,23 @@ class PostMetaView: UIView {
             byUserLabel.isUserInteractionEnabled = true
             byUserLabel.addGestureRecognizer(tap)
         }
+        
+        if isCommunityNameTappable {
+            let tap = TapGesture(target: self, action: #selector(communityNameTapped(_:)))
+            tap.post = post
+            comunityNameLabel.isUserInteractionEnabled = true
+            comunityNameLabel.addGestureRecognizer(tap)
+        }
     }
     
     @objc func userNameTapped(_ sender: TapGesture) {
         guard let userId = sender.post.author?.userId else {return}
         parentViewController?.showProfileWithUserId(userId)
+    }
+    
+    @objc func communityNameTapped(_ sender: TapGesture) {
+        guard let communityId = sender.post.community.communityId else {return}
+        let communityVC = CommunityPageVC(communityId: communityId)
+        parentViewController?.show(communityVC, sender: nil)
     }
 }

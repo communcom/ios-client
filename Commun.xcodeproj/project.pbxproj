@@ -282,6 +282,9 @@
 		BC757EF92356E6EC00CB4ADE /* PostHeaderTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC757EF82356E6EC00CB4ADE /* PostHeaderTextView.swift */; };
 		BCA97113236004F500AE37E1 /* CommentsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA97112236004F500AE37E1 /* CommentsViewModel.swift */; };
 		BCA971172360301100AE37E1 /* NotificationsListFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA971162360301100AE37E1 /* NotificationsListFetcher.swift */; };
+		BCA9711B236033D100AE37E1 /* ResponseAPIContentGetCommunity.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA9711A236033D100AE37E1 /* ResponseAPIContentGetCommunity.swift */; };
+		BCA9711D2360347D00AE37E1 /* CommunityVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA9711C2360347D00AE37E1 /* CommunityVC.swift */; };
+		BCA9711F2360380400AE37E1 /* CommunityPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA9711E2360380400AE37E1 /* CommunityPageViewModel.swift */; };
 		BCB2A6E22354512D00B3582B /* AttachmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB2A6E12354512D00B3582B /* AttachmentView.swift */; };
 		BCB2A6E423546AF500B3582B /* EditorVC+AttachmentViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB2A6E323546AF500B3582B /* EditorVC+AttachmentViewDelegate.swift */; };
 		BCB2A6E62355536D00B3582B /* UITableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB2A6E52355536D00B3582B /* UITableViewCell.swift */; };
@@ -601,6 +604,9 @@
 		BC757EF82356E6EC00CB4ADE /* PostHeaderTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostHeaderTextView.swift; sourceTree = "<group>"; };
 		BCA97112236004F500AE37E1 /* CommentsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentsViewModel.swift; sourceTree = "<group>"; };
 		BCA971162360301100AE37E1 /* NotificationsListFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsListFetcher.swift; sourceTree = "<group>"; };
+		BCA9711A236033D100AE37E1 /* ResponseAPIContentGetCommunity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseAPIContentGetCommunity.swift; sourceTree = "<group>"; };
+		BCA9711C2360347D00AE37E1 /* CommunityVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityVC.swift; sourceTree = "<group>"; };
+		BCA9711E2360380400AE37E1 /* CommunityPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityPageViewModel.swift; sourceTree = "<group>"; };
 		BCB2A6E12354512D00B3582B /* AttachmentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentView.swift; sourceTree = "<group>"; };
 		BCB2A6E323546AF500B3582B /* EditorVC+AttachmentViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EditorVC+AttachmentViewDelegate.swift"; sourceTree = "<group>"; };
 		BCB2A6E52355536D00B3582B /* UITableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableViewCell.swift; sourceTree = "<group>"; };
@@ -1148,6 +1154,7 @@
 				57A1CA612270FC3300E2A1E3 /* LanguageVC */,
 				3B2F225322689252006B589E /* NotificationsPageVC */,
 				5725173A2243E4510033125C /* PostPageVC */,
+				BCA971192360339B00AE37E1 /* CommunityVC */,
 				3BAF69C122675ADB0055CCEB /* ProfilePageVC */,
 				575AECAF22606F5200A7EC2D /* SelectCountryVC */,
 				57E5159A2270E5C700A6F6DB /* SettingsVC */,
@@ -1302,6 +1309,7 @@
 				3BAD8E822318FB1C005A8AB3 /* NSAttributedString.swift */,
 				3BA4D0862292BA710022A69D /* ResponseAPIContentGetPost.swift */,
 				3B02A56822F013D50043F9A4 /* ResponseAPIContentGetComment.swift */,
+				BCA9711A236033D100AE37E1 /* ResponseAPIContentGetCommunity.swift */,
 				3BF37BD522A162E000A72FFE /* ResponseAPIOnlineNotificationData.swift */,
 				5721E87022650AC0003BE04B /* StringExtension.swift */,
 				3B51581D226E0D3A00108F17 /* TLPhotosPickerViewController+Rx.swift */,
@@ -1610,6 +1618,15 @@
 				BCA97112236004F500AE37E1 /* CommentsViewModel.swift */,
 			);
 			path = CommentsViewController;
+			sourceTree = "<group>";
+		};
+		BCA971192360339B00AE37E1 /* CommunityVC */ = {
+			isa = PBXGroup;
+			children = (
+				BCA9711C2360347D00AE37E1 /* CommunityVC.swift */,
+				BCA9711E2360380400AE37E1 /* CommunityPageViewModel.swift */,
+			);
+			path = CommunityVC;
 			sourceTree = "<group>";
 		};
 		BCF3914A235FEAA500A9D1ED /* Fetchers */ = {
@@ -2028,6 +2045,7 @@
 				3B0E9C64226F4A0C002AB1C2 /* VerticalDraggableImageView.swift in Sources */,
 				3B02CD282289B23E0078BB52 /* PostHeaderView.swift in Sources */,
 				3B02A56922F013D50043F9A4 /* ResponseAPIContentGetComment.swift in Sources */,
+				BCA9711D2360347D00AE37E1 /* CommunityVC.swift in Sources */,
 				BC016D43235DA0D400F1319F /* PostCell.swift in Sources */,
 				57E515B62270F7B200A6F6DB /* SettingsButtonCell.swift in Sources */,
 				3B8E0ED72343032B00362F26 /* SetUserVC+Styles.swift in Sources */,
@@ -2054,6 +2072,7 @@
 				57B6FC2C224A9F2800BCFDDA /* WelcomeItemVC.swift in Sources */,
 				3BF3817F2331D17900C02123 /* NSRegularExpression.swift in Sources */,
 				3B11911F2302B9B9008D0417 /* SwipeNavigationController.swift in Sources */,
+				BCA9711F2360380400AE37E1 /* CommunityPageViewModel.swift in Sources */,
 				3B4ECA3D22A6741D00F59FC8 /* NotificationsPage+EmptyDataSet.swift in Sources */,
 				3B8DDF63234B213E00B213F0 /* EditorVC+TextViewDelegate.swift in Sources */,
 				3B5CB30822A57AA400757533 /* PlaceholderNotificationCell.swift in Sources */,
@@ -2082,6 +2101,7 @@
 				3BEC38E3230F801600662374 /* UITextView.swift in Sources */,
 				3BB342A922CA2DBB009546B2 /* WelcomePageVC.swift in Sources */,
 				BC430E7C235EEB44002E4593 /* ProfileHeaderView.swift in Sources */,
+				BCA9711B236033D100AE37E1 /* ResponseAPIContentGetCommunity.swift in Sources */,
 				3B62055A2346E4220017FEB7 /* EditorVC.swift in Sources */,
 				3BF37BCC22A1297C00A72FFE /* UITableView.swift in Sources */,
 				3B5CB31022A5880D00757533 /* MyRxTableViewSectionedAnimatedDataSource.swift in Sources */,

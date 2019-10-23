@@ -14,7 +14,7 @@ class PostsViewController: ListViewController<ResponseAPIContentGetPost> {
     override func setUp() {
         super.setUp()
         // setup viewmodel
-        viewModel = PostsViewModel()
+        setUpViewModel()
         
         // setup datasource
         tableView.register(BasicPostCell.self, forCellReuseIdentifier: "BasicPostCell")
@@ -41,6 +41,10 @@ class PostsViewController: ListViewController<ResponseAPIContentGetPost> {
                 return cell
             }
         )
+    }
+    
+    func setUpViewModel() {
+        viewModel = PostsViewModel()
     }
     
     override func bind() {
