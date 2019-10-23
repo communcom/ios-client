@@ -10,7 +10,7 @@ import UIKit
 import RxSwift
 import RxDataSources
 
-class ListViewController<T: Decodable & Equatable & IdentifiableType>: BaseViewController {
+class ListViewController<T: ListItemType>: BaseViewController {
     override var contentScrollView: UIScrollView? { tableView }
     
     public typealias ListSection = AnimatableSectionModel<String, T>
@@ -46,8 +46,13 @@ class ListViewController<T: Decodable & Equatable & IdentifiableType>: BaseViewC
             })
             .subscribe(onNext: {[weak self] state in
                 switch state {
-                case .loading:
-                    self?.handleLoading()
+                case .loading(let isLoading):
+                    if (isLoading) {
+                        self?.handleLoading()
+                    }
+                    else {
+                        self?.tableView.tableFooterView = UIView()
+                    }
                     break
                 case .listEnded:
                     self?.tableView.tableFooterView = UIView()
@@ -74,7 +79,7 @@ class ListViewController<T: Decodable & Equatable & IdentifiableType>: BaseViewC
         
         let tryAgainRange = (text as NSString).range(of: "try again".localized().uppercaseFirst)
         if gesture.didTapAttributedTextInLabel(label: label, inRange: tryAgainRange) {
-            self.viewModel.fetchNext()
+            self.viewModel.fetchNext(forceRetry: true)
         }
     }
 }

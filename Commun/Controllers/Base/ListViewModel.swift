@@ -11,48 +11,29 @@ import RxSwift
 import RxCocoa
 import RxDataSources
 
-class ListViewModel<T: Decodable & Equatable & IdentifiableType> {
+class ListViewModel<T: ListItemType> {
     // MARK: - Properties
     public let disposeBag   = DisposeBag()
-    public var items        = BehaviorRelay<[T]>(value: [])
-    public let state        = BehaviorRelay<ListLoadingState>(value: .loading)
+    
+    var items: BehaviorRelay<[T]>
+    public var state: BehaviorRelay<ListFetcherState> {
+        return fetcher.state
+    }
     
     // MARK: - Filter & Fetcher
-    public var fetcher: ItemsFetcher<T>
+    public var fetcher: ListFetcher<T>
     
     // MARK: - Methods
-    init(fetcher: ItemsFetcher<T>) {
+    init(fetcher: ListFetcher<T>) {
         self.fetcher = fetcher
+        self.items = self.fetcher.items
     }
     
-    func fetchNext() {
-        // show loading
-        state.accept(.loading)
-        
-        fetcher.fetchNext()
-            .do(onError: { error in
-                self.state.accept(.error(error: error))
-            })
-            .asDriver(onErrorJustReturn: [])
-            .drive(onNext: { [weak self] list in
-                self?.onItemsFetched(items: list)
-                if self?.fetcher.reachedTheEnd == true {
-                    self?.state.accept(.listEnded)
-                }
-            })
-            .disposed(by: disposeBag)
-    }
-    
-    func onItemsFetched(items: [T]) {
-        // default behavior: add to the end of the list
-        if items.count > 0 {
-            let newList = items.filter {!self.items.value.contains($0)}
-            self.items.accept(self.items.value + newList)
-        }
+    func fetchNext(forceRetry: Bool = false) {
+        fetcher.fetchNext(forceRetry: forceRetry)
     }
     
     func reload() {
-        items.accept([])
         fetcher.reset()
         fetchNext()
     }

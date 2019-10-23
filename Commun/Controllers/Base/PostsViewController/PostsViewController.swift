@@ -69,11 +69,10 @@ class PostsViewController: ListViewController<ResponseAPIContentGetPost> {
     }
     
     override func handleLoading() {
-        if viewModel.fetcher.reachedTheEnd == true {return}
         tableView.addPostLoadingFooterView()
     }
     
-    func filterChanged(filter: PostsFetcher.Filter) {
+    func filterChanged(filter: PostsListFetcher.Filter) {
         
     }
 }

@@ -300,6 +300,10 @@
 		BCE7F5702359A44A0008D91B /* ResponseAPIContentGetComments.json in Resources */ = {isa = PBXBuildFile; fileRef = BCE7F56F2359A44A0008D91B /* ResponseAPIContentGetComments.json */; };
 		BCE9390B234DBBC300226E39 /* ResponseAPIContentBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCE9390A234DBBC300226E39 /* ResponseAPIContentBlock.swift */; };
 		BCE9390F234DD28400226E39 /* ResponseAPIContentGetPostContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCE9390E234DD28400226E39 /* ResponseAPIContentGetPostContent.swift */; };
+		BCF3914C235FEAB300A9D1ED /* ListFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCF3914B235FEAB300A9D1ED /* ListFetcher.swift */; };
+		BCF3914E235FEAEE00A9D1ED /* ListItemType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCF3914D235FEAEE00A9D1ED /* ListItemType.swift */; };
+		BCF39150235FEEC100A9D1ED /* PostsListFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCF3914F235FEEC100A9D1ED /* PostsListFetcher.swift */; };
+		BCF39152235FF7F900A9D1ED /* CommentsListFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCF39151235FF7F900A9D1ED /* CommentsListFetcher.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -620,6 +624,10 @@
 		BCE7F56F2359A44A0008D91B /* ResponseAPIContentGetComments.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ResponseAPIContentGetComments.json; sourceTree = "<group>"; };
 		BCE9390A234DBBC300226E39 /* ResponseAPIContentBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseAPIContentBlock.swift; sourceTree = "<group>"; };
 		BCE9390E234DD28400226E39 /* ResponseAPIContentGetPostContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseAPIContentGetPostContent.swift; sourceTree = "<group>"; };
+		BCF3914B235FEAB300A9D1ED /* ListFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListFetcher.swift; sourceTree = "<group>"; };
+		BCF3914D235FEAEE00A9D1ED /* ListItemType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListItemType.swift; sourceTree = "<group>"; };
+		BCF3914F235FEEC100A9D1ED /* PostsListFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostsListFetcher.swift; sourceTree = "<group>"; };
+		BCF39151235FF7F900A9D1ED /* CommentsListFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentsListFetcher.swift; sourceTree = "<group>"; };
 		C1D6A6DAA916F8782899DFE5 /* Pods-CommunTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CommunTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CommunTests/Pods-CommunTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -1592,6 +1600,8 @@
 			isa = PBXGroup;
 			children = (
 				BC016D4D235EA1DE00F1319F /* BaseViewController.swift */,
+				BCF3914D235FEAEE00A9D1ED /* ListItemType.swift */,
+				BCF3914A235FEAA500A9D1ED /* Fetchers */,
 				BC016D51235EA25B00F1319F /* ListViewController.swift */,
 				BC016D55235EA33C00F1319F /* ListViewModel.swift */,
 				BC016D4C235EA0DB00F1319F /* PostsViewController */,
@@ -1616,6 +1626,16 @@
 				BC757EF82356E6EC00CB4ADE /* PostHeaderTextView.swift */,
 			);
 			path = PostHeaderTextView;
+			sourceTree = "<group>";
+		};
+		BCF3914A235FEAA500A9D1ED /* Fetchers */ = {
+			isa = PBXGroup;
+			children = (
+				BCF3914B235FEAB300A9D1ED /* ListFetcher.swift */,
+				BCF3914F235FEEC100A9D1ED /* PostsListFetcher.swift */,
+				BCF39151235FF7F900A9D1ED /* CommentsListFetcher.swift */,
+			);
+			path = Fetchers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1984,6 +2004,7 @@
 				3B8E0ED5234302D600362F26 /* SetUserVC+Actions.swift in Sources */,
 				3B3C8B912347876000D8BADB /* ArticleEditorTextView.swift in Sources */,
 				3BB48AD022D5F84D00F11B6A /* SetPasscodeVC.swift in Sources */,
+				BCF3914E235FEAEE00A9D1ED /* ListItemType.swift in Sources */,
 				3B3C8B8223475AA100D8BADB /* EditorVC+Tools.swift in Sources */,
 				3B24F86522F3777500B7091C /* CommunitiesViewModel.swift in Sources */,
 				3B5D7CF12299D79B0077B82C /* FeedSortMode.swift in Sources */,
@@ -2060,6 +2081,7 @@
 				3BAF69C322675B420055CCEB /* ProfilePageVC.swift in Sources */,
 				3B197C572269CEEF008CF10D /* CommentsFetcher.swift in Sources */,
 				3B885BBC22B7A1FE00FC4B7A /* EmbededView.swift in Sources */,
+				BCF39152235FF7F900A9D1ED /* CommentsListFetcher.swift in Sources */,
 				3B197C552269BF74008CF10D /* ProfilePageSegmentioItem.swift in Sources */,
 				3B0E9C66227050E3002AB1C2 /* UIImageView.swift in Sources */,
 				3BAF69D1226792C60055CCEB /* ProfilePageVC+Rx.swift in Sources */,
@@ -2096,9 +2118,11 @@
 				3B5CB30C22A57D5B00757533 /* NotificationPageVC+Binding.swift in Sources */,
 				575AECB322606F7100A7EC2D /* SelectCountryViewModel.swift in Sources */,
 				3B24F86722F3784900B7091C /* MockupCommunity.swift in Sources */,
+				BCF3914C235FEAB300A9D1ED /* ListFetcher.swift in Sources */,
 				3B24F86122F3715E00B7091C /* CommunitiesVC.swift in Sources */,
 				3BF37BCA22A11FA700A72FFE /* UIView.swift in Sources */,
 				575AECAE22606D0800A7EC2D /* SignUpViewModel.swift in Sources */,
+				BCF39150235FEEC100A9D1ED /* PostsListFetcher.swift in Sources */,
 				BC016D46235DA0D400F1319F /* PlaceholderPostCell.swift in Sources */,
 				3B289B9A2346E6D800598407 /* UILabel+PureLayout.swift in Sources */,
 				3B2F2269226892C5006B589E /* NotificationCell.swift in Sources */,

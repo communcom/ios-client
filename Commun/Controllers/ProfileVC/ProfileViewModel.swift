@@ -37,14 +37,14 @@ class ProfileViewModel {
     let profile = BehaviorRelay<ResponseAPIContentGetProfile?>(value: nil)
     let segmentedItem = BehaviorRelay<ProfilePageSegmentioItem>(value: .posts)
     let postsVM = PostsViewModel(
-        filter: PostsFetcher.Filter(
+        filter: PostsListFetcher.Filter(
             feedTypeMode: .byUser,
             feedType: .timeDesc,
             sortType: .all))
     let commentsVM = CommentsViewModel()
     
     public let profileLoadingState = BehaviorRelay<LoadingState>(value: .loading)
-    public let listLoadingState = BehaviorRelay<ListLoadingState>(value: .loading)
+    public let listLoadingState = BehaviorRelay<ListFetcherState>(value: .loading(false))
     
     var items: Observable<[AnyObject?]> {
         return Observable.combineLatest(commentsVM.items, postsVM.items)
@@ -86,8 +86,8 @@ class ProfileViewModel {
         Observable.merge(postsVM.state.asObservable(), commentsVM.state.asObservable())
             .distinctUntilChanged { (lhs, rhs) -> Bool in
                 switch (lhs, rhs) {
-                case (.loading, .loading):
-                    return true
+                case (.loading(let isLoading1), .loading(let isLoading2)):
+                    return isLoading1 == isLoading2
                 case (.listEnded, .listEnded):
                     return true
                 default:

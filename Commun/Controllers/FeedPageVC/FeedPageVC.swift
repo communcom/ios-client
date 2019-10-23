@@ -43,7 +43,7 @@ class FeedPageVC: PostsViewController, VCWithParallax {
         userAvatarImage.addTapToViewer()
     }
     
-    override func filterChanged(filter: PostsFetcher.Filter) {
+    override func filterChanged(filter: PostsListFetcher.Filter) {
         super.filterChanged(filter: filter)
         // feedTypeMode
         switch filter.feedTypeMode {

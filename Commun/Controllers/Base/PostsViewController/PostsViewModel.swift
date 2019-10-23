@@ -11,12 +11,12 @@ import CyberSwift
 import RxCocoa
 
 class PostsViewModel: ListViewModel<ResponseAPIContentGetPost>, PostsListController {
-    var filter: BehaviorRelay<PostsFetcher.Filter>!
+    var filter: BehaviorRelay<PostsListFetcher.Filter>!
     
-    convenience init(filter: PostsFetcher.Filter = PostsFetcher.Filter(feedTypeMode: .new, feedType: .popular, sortType: .all)) {
-        let fetcher = PostsFetcher(filter: filter)
+    convenience init(filter: PostsListFetcher.Filter = PostsListFetcher.Filter(feedTypeMode: .new, feedType: .popular, sortType: .all)) {
+        let fetcher = PostsListFetcher(filter: filter)
         self.init(fetcher: fetcher)
-        self.filter = BehaviorRelay<PostsFetcher.Filter>(value: filter)
+        self.filter = BehaviorRelay<PostsListFetcher.Filter>(value: filter)
         defer {
             bindFilter()
             observePostDelete()
@@ -33,7 +33,7 @@ class PostsViewModel: ListViewModel<ResponseAPIContentGetPost>, PostsListControl
             .subscribe(onNext: {filter in
                 self.items.accept([])
                 self.fetcher.reset()
-                (self.fetcher as! PostsFetcher).filter = filter
+                (self.fetcher as! PostsListFetcher).filter = filter
                 self.fetchNext()
             })
             .disposed(by: disposeBag)

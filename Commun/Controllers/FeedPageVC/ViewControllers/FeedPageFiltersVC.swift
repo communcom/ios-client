@@ -14,8 +14,8 @@ import CyberSwift
 class FeedPageFiltersVC: SwipeDownDismissViewController {
     // MARK: - Properties
     let disposeBag = DisposeBag()
-    var filter = BehaviorRelay<PostsFetcher.Filter>(value: PostsFetcher.Filter(feedTypeMode: .new, feedType: .popular, sortType: .all, searchKey: nil))
-    var completion: ((PostsFetcher.Filter) -> Void)?
+    var filter = BehaviorRelay<PostsListFetcher.Filter>(value: PostsListFetcher.Filter(feedTypeMode: .new, feedType: .popular, sortType: .all, searchKey: nil))
+    var completion: ((PostsListFetcher.Filter) -> Void)?
 
     @IBOutlet weak var tableView: UITableView!
     
