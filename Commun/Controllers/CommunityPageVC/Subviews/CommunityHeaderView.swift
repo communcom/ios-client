@@ -115,10 +115,22 @@ class CommunityHeaderView: MyTableHeaderView {
         return button
     }()
     
+    lazy var segmentedControl: CMSegmentedControl = {
+        let segmentedControl = CMSegmentedControl(height: 46, backgroundColor: .clear)
+        
+        segmentedControl.setUp(with: [
+            CMSegmentedControl.Item(name: "posts".localized().uppercaseFirst, isActive: true),
+            CMSegmentedControl.Item(name: "leads".localized().uppercaseFirst, isActive: false),
+            CMSegmentedControl.Item(name: "about".localized().uppercaseFirst, isActive: false),
+            CMSegmentedControl.Item(name: "rules".localized().uppercaseFirst, isActive: false)
+        ])
+        
+        return segmentedControl
+    }()
+    
     override func commonInit() {
         super.commonInit()
         backgroundColor = .white
-        cornerRadius = 25
         
         addSubview(avatarImageView)
         avatarImageView.autoPinEdge(toSuperviewEdge: .top, withInset: 16)
@@ -173,11 +185,15 @@ class CommunityHeaderView: MyTableHeaderView {
         pointsContainerView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
         pointsContainerView.autoPinEdge(.top, to: .bottom, of: membersCountLabel, withOffset: 22)
         
+        addSubview(segmentedControl)
+        segmentedControl.autoPinEdge(.top, to: .bottom, of: pointsContainerView)
+        segmentedControl.autoPinEdge(toSuperviewEdge: .leading)
+        segmentedControl.autoPinEdge(toSuperviewEdge: .trailing)
+        
         let separator = UIView(height: 10, backgroundColor: #colorLiteral(red: 0.9599978328, green: 0.966491878, blue: 0.9829974771, alpha: 1))
         addSubview(separator)
         
-        #warning("change later")
-        separator.autoPinEdge(.top, to: .bottom, of: pointsContainerView, withOffset: 16)
+        separator.autoPinEdge(.top, to: .bottom, of: segmentedControl)
         
         // pin bottom
         separator.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)

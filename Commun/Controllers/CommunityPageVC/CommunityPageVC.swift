@@ -70,6 +70,7 @@ class CommunityPageVC: BaseViewController {
         tableView.contentInset = UIEdgeInsets(top: coverHeight - 24, left: 0, bottom: 0, right: 0)
         
         headerView = CommunityHeaderView(tableView: tableView)
+        headerView.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: 25)
         
         view.bringSubviewToFront(backButton)
     }

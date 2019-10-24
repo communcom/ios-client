@@ -312,6 +312,7 @@
 		BCF74A6023617F5700B91089 /* SubscribersListFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCF74A5F23617F5700B91089 /* SubscribersListFetcher.swift */; };
 		BCF74A62236180B900B91089 /* SubscribersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCF74A61236180B900B91089 /* SubscribersViewModel.swift */; };
 		BCF74A6523618BA800B91089 /* ResponseAPIContentGetCommunity.json in Resources */ = {isa = PBXBuildFile; fileRef = BCF74A63236182B200B91089 /* ResponseAPIContentGetCommunity.json */; };
+		BCF74A6723618D9000B91089 /* CMSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCF74A6623618D9000B91089 /* CMSegmentedControl.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -644,6 +645,7 @@
 		BCF74A5F23617F5700B91089 /* SubscribersListFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscribersListFetcher.swift; sourceTree = "<group>"; };
 		BCF74A61236180B900B91089 /* SubscribersViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscribersViewModel.swift; sourceTree = "<group>"; };
 		BCF74A63236182B200B91089 /* ResponseAPIContentGetCommunity.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ResponseAPIContentGetCommunity.json; sourceTree = "<group>"; };
+		BCF74A6623618D9000B91089 /* CMSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMSegmentedControl.swift; sourceTree = "<group>"; };
 		C1D6A6DAA916F8782899DFE5 /* Pods-CommunTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CommunTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CommunTests/Pods-CommunTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -1659,6 +1661,7 @@
 			isa = PBXGroup;
 			children = (
 				BCA9712123603C6C00AE37E1 /* CommunityHeaderView.swift */,
+				BCF74A6623618D9000B91089 /* CMSegmentedControl.swift */,
 				BCA9712723608ABD00AE37E1 /* UsersStackView.swift */,
 			);
 			path = Subviews;
@@ -2051,6 +2054,7 @@
 				3B3C8B7A23472ADA00D8BADB /* EditorToolbarItemCell.swift in Sources */,
 				3B8E0ED5234302D600362F26 /* SetUserVC+Actions.swift in Sources */,
 				3B3C8B912347876000D8BADB /* ArticleEditorTextView.swift in Sources */,
+				BCF74A6723618D9000B91089 /* CMSegmentedControl.swift in Sources */,
 				3BB48AD022D5F84D00F11B6A /* SetPasscodeVC.swift in Sources */,
 				BCF3914E235FEAEE00A9D1ED /* ListItemType.swift in Sources */,
 				3B3C8B8223475AA100D8BADB /* EditorVC+Tools.swift in Sources */,
