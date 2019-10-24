@@ -8,7 +8,7 @@
 
 import Foundation
 
-class CommunityHeaderView: MyView {
+class CommunityHeaderView: MyTableHeaderView {
     // MARK: - Subviews
     lazy var avatarImageView: UIImageView = {
         let imageView = UIImageView(width: 50, height: 50)
