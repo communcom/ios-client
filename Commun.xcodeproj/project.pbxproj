@@ -289,6 +289,7 @@
 		BCA971242360400200AE37E1 /* MyTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA971232360400200AE37E1 /* MyTableHeaderView.swift */; };
 		BCA971262360883D00AE37E1 /* Double.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA971252360883D00AE37E1 /* Double.swift */; };
 		BCA9712823608ABD00AE37E1 /* UsersStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA9712723608ABD00AE37E1 /* UsersStackView.swift */; };
+		BCA9712B2361306700AE37E1 /* MyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA9712A2361306700AE37E1 /* MyView.swift */; };
 		BCB2A6E22354512D00B3582B /* AttachmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB2A6E12354512D00B3582B /* AttachmentView.swift */; };
 		BCB2A6E423546AF500B3582B /* EditorVC+AttachmentViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB2A6E323546AF500B3582B /* EditorVC+AttachmentViewDelegate.swift */; };
 		BCB2A6E62355536D00B3582B /* UITableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB2A6E52355536D00B3582B /* UITableViewCell.swift */; };
@@ -615,6 +616,7 @@
 		BCA971232360400200AE37E1 /* MyTableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTableHeaderView.swift; sourceTree = "<group>"; };
 		BCA971252360883D00AE37E1 /* Double.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Double.swift; sourceTree = "<group>"; };
 		BCA9712723608ABD00AE37E1 /* UsersStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersStackView.swift; sourceTree = "<group>"; };
+		BCA9712A2361306700AE37E1 /* MyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyView.swift; sourceTree = "<group>"; };
 		BCB2A6E12354512D00B3582B /* AttachmentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentView.swift; sourceTree = "<group>"; };
 		BCB2A6E323546AF500B3582B /* EditorVC+AttachmentViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EditorVC+AttachmentViewDelegate.swift"; sourceTree = "<group>"; };
 		BCB2A6E52355536D00B3582B /* UITableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableViewCell.swift; sourceTree = "<group>"; };
@@ -1353,6 +1355,7 @@
 		578409EA223FAC0000338FD5 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				BCA971292361304800AE37E1 /* UIViews */,
 				3B06862F2346FFA6008953C5 /* CommunButton.swift */,
 				3BB32F1723438D32006572F3 /* UIPresentationControllers */,
 				3BC613AA23420FC400075570 /* UIViewControllers */,
@@ -1378,8 +1381,6 @@
 				3BB32F1A234436EF006572F3 /* PostMetaView.swift */,
 				3BB32F1C23445618006572F3 /* VCWithParallax.swift */,
 				BCB2A6E12354512D00B3582B /* AttachmentView.swift */,
-				BC016D48235DA2AC00F1319F /* MyTableViewCell.swift */,
-				BCA971232360400200AE37E1 /* MyTableHeaderView.swift */,
 			);
 			path = Vendor;
 			sourceTree = "<group>";
@@ -1647,6 +1648,16 @@
 				BCA9712723608ABD00AE37E1 /* UsersStackView.swift */,
 			);
 			path = Subviews;
+			sourceTree = "<group>";
+		};
+		BCA971292361304800AE37E1 /* UIViews */ = {
+			isa = PBXGroup;
+			children = (
+				BCA9712A2361306700AE37E1 /* MyView.swift */,
+				BC016D48235DA2AC00F1319F /* MyTableViewCell.swift */,
+				BCA971232360400200AE37E1 /* MyTableHeaderView.swift */,
+			);
+			path = UIViews;
 			sourceTree = "<group>";
 		};
 		BCF3914A235FEAA500A9D1ED /* Fetchers */ = {
@@ -2035,6 +2046,7 @@
 				3B63CD9322AA7AA200DC828B /* UIScrollView.swift in Sources */,
 				3B068632234700DC008953C5 /* BasicEditorVC.swift in Sources */,
 				3B25E5C4234C6E4E005BD1B8 /* BasicEditorVC+Link.swift in Sources */,
+				BCA9712B2361306700AE37E1 /* MyView.swift in Sources */,
 				3B8DDF5C234B121D00B213F0 /* EditorColorPicker.swift in Sources */,
 				BC016D49235DA2AC00F1319F /* MyTableViewCell.swift in Sources */,
 				BCB2A6F023556FC100B3582B /* BasicEditorVC+Tools.swift in Sources */,

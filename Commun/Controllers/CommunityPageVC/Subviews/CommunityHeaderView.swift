@@ -8,84 +8,8 @@
 
 import Foundation
 
-class CommunityHeaderView: MyTableHeaderView {
+class CommunityHeaderView: MyView {
     // MARK: - Subviews
-    lazy var backButton: UIButton = {
-        let button = UIButton(width: 24, height: 40, contentInsets: UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 12))
-        button.tintColor = .white
-        button.setImage(UIImage(named: "back"), for: .normal)
-        button.addTarget(self, action: #selector(backButtonTapped(_:)), for: .touchUpInside)
-        return button
-    }()
-    
-    lazy var coverImageView: UIImageView = {
-        let imageView = UIImageView(height: 180)
-        imageView.image = UIImage(named: "ProfilePageCover")
-        return imageView
-    }()
-    
-    lazy var contentView: UIView = {
-        let view = UIView(backgroundColor: .white)
-        view.cornerRadius = 25
-        
-        view.addSubview(avatarImageView)
-        avatarImageView.autoPinEdge(toSuperviewEdge: .top, withInset: 16)
-        avatarImageView.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
-        
-        view.addSubview(nameLabel)
-        nameLabel.autoPinEdge(toSuperviewEdge: .top, withInset: 20)
-        nameLabel.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 10)
-        
-        view.addSubview(joinedDateLabel)
-        joinedDateLabel.autoPinEdge(.top, to: .bottom, of: nameLabel)
-        joinedDateLabel.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 10)
-        
-        view.addSubview(joinButton)
-        joinButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
-        joinButton.autoAlignAxis(.horizontal, toSameAxisOf: avatarImageView)
-        
-        view.addSubview(descriptionLabel)
-        descriptionLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
-        descriptionLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
-        descriptionLabel.autoPinEdge(.top, to: .bottom, of: avatarImageView, withOffset: 10)
-        
-        view.addSubview(membersCountLabel)
-        membersCountLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
-        membersCountLabel.autoPinEdge(.top, to: .bottom, of: descriptionLabel, withOffset: 24)
-        
-        let memberLabel = UILabel.with(text: "members".localized().uppercaseFirst, textSize: 12, weight: .semibold, textColor: UIColor(hexString: "#A5A7BD")!)
-        view.addSubview(memberLabel)
-        memberLabel.autoPinEdge(.leading, to: .trailing, of: membersCountLabel, withOffset: 4)
-        memberLabel.autoPinEdge(.bottom, to: .bottom, of: membersCountLabel, withOffset: -1)
-
-        let dotLabel = UILabel.with(text: "•", textSize: 15, weight: .semibold, textColor: UIColor(hexString: "#A5A7BD")!)
-        view.addSubview(dotLabel)
-        dotLabel.autoPinEdge(.leading, to: .trailing, of: memberLabel, withOffset: 2)
-        dotLabel.autoPinEdge(.bottom, to: .bottom, of: memberLabel)
-
-        view.addSubview(leadsCountLabel)
-        leadsCountLabel.autoPinEdge(.leading, to: .trailing, of: dotLabel, withOffset: 2)
-        leadsCountLabel.autoAlignAxis(.horizontal, toSameAxisOf: membersCountLabel)
-
-        let leadsLabel = UILabel.with(text: "leads".localized().uppercaseFirst, textSize: 12, weight: .semibold, textColor: UIColor(hexString: "#A5A7BD")!)
-        view.addSubview(leadsLabel)
-        leadsLabel.autoPinEdge(.leading, to: .trailing, of: leadsCountLabel, withOffset: 4)
-        leadsLabel.autoPinEdge(.bottom, to: .bottom, of: leadsCountLabel, withOffset: -1)
-        
-        view.addSubview(usersStackView)
-        usersStackView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
-        usersStackView.autoAlignAxis(.horizontal, toSameAxisOf: leadsLabel)
-        
-        view.addSubview(pointsContainerView)
-        pointsContainerView.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
-        pointsContainerView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
-        pointsContainerView.autoPinEdge(.top, to: .bottom, of: membersCountLabel, withOffset: 22)
-        
-        pointsContainerView.autoPinEdge(toSuperviewEdge: .bottom, withInset: 16)
-        
-        return view
-    }()
-    
     lazy var avatarImageView: UIImageView = {
         let imageView = UIImageView(width: 50, height: 50)
         imageView.cornerRadius = 25
@@ -194,33 +118,75 @@ class CommunityHeaderView: MyTableHeaderView {
     override func commonInit() {
         super.commonInit()
         backgroundColor = .white
+        cornerRadius = 25
         
-        addSubview(backButton)
-        backButton.autoPinEdge(toSuperviewSafeArea: .top, withInset: 8)
-        backButton.autoPinEdge(toSuperviewSafeArea: .leading, withInset: 16)
+        addSubview(avatarImageView)
+        avatarImageView.autoPinEdge(toSuperviewEdge: .top, withInset: 16)
+        avatarImageView.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
         
-        addSubview(coverImageView)
-        coverImageView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .bottom)
+        addSubview(nameLabel)
+        nameLabel.autoPinEdge(toSuperviewEdge: .top, withInset: 20)
+        nameLabel.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 10)
         
-        bringSubviewToFront(backButton)
+        addSubview(joinedDateLabel)
+        joinedDateLabel.autoPinEdge(.top, to: .bottom, of: nameLabel)
+        joinedDateLabel.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 10)
         
-        addSubview(contentView)
-        contentView.autoPinEdge(.top, to: .bottom, of: coverImageView, withOffset: -25)
-        contentView.autoPinEdge(toSuperviewEdge: .leading)
-        contentView.autoPinEdge(toSuperviewEdge: .trailing)
+        addSubview(joinButton)
+        joinButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
+        joinButton.autoAlignAxis(.horizontal, toSameAxisOf: avatarImageView)
+        
+        addSubview(descriptionLabel)
+        descriptionLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
+        descriptionLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
+        descriptionLabel.autoPinEdge(.top, to: .bottom, of: avatarImageView, withOffset: 10)
+        
+        addSubview(membersCountLabel)
+        membersCountLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
+        membersCountLabel.autoPinEdge(.top, to: .bottom, of: descriptionLabel, withOffset: 24)
+        
+        let memberLabel = UILabel.with(text: "members".localized().uppercaseFirst, textSize: 12, weight: .semibold, textColor: UIColor(hexString: "#A5A7BD")!)
+        addSubview(memberLabel)
+        memberLabel.autoPinEdge(.leading, to: .trailing, of: membersCountLabel, withOffset: 4)
+        memberLabel.autoPinEdge(.bottom, to: .bottom, of: membersCountLabel, withOffset: -1)
+
+        let dotLabel = UILabel.with(text: "•", textSize: 15, weight: .semibold, textColor: UIColor(hexString: "#A5A7BD")!)
+        addSubview(dotLabel)
+        dotLabel.autoPinEdge(.leading, to: .trailing, of: memberLabel, withOffset: 2)
+        dotLabel.autoPinEdge(.bottom, to: .bottom, of: memberLabel)
+
+        addSubview(leadsCountLabel)
+        leadsCountLabel.autoPinEdge(.leading, to: .trailing, of: dotLabel, withOffset: 2)
+        leadsCountLabel.autoAlignAxis(.horizontal, toSameAxisOf: membersCountLabel)
+
+        let leadsLabel = UILabel.with(text: "leads".localized().uppercaseFirst, textSize: 12, weight: .semibold, textColor: UIColor(hexString: "#A5A7BD")!)
+        addSubview(leadsLabel)
+        leadsLabel.autoPinEdge(.leading, to: .trailing, of: leadsCountLabel, withOffset: 4)
+        leadsLabel.autoPinEdge(.bottom, to: .bottom, of: leadsCountLabel, withOffset: -1)
+        
+        addSubview(usersStackView)
+        usersStackView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
+        usersStackView.autoAlignAxis(.horizontal, toSameAxisOf: leadsLabel)
+        
+        addSubview(pointsContainerView)
+        pointsContainerView.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
+        pointsContainerView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
+        pointsContainerView.autoPinEdge(.top, to: .bottom, of: membersCountLabel, withOffset: 22)
         
         let separator = UIView(height: 10, backgroundColor: #colorLiteral(red: 0.9599978328, green: 0.966491878, blue: 0.9829974771, alpha: 1))
         addSubview(separator)
         
         #warning("change later")
-        separator.autoPinEdge(.top, to: .bottom, of: contentView)
+        separator.autoPinEdge(.top, to: .bottom, of: pointsContainerView, withOffset: 16)
         
         // pin bottom
         separator.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
         
-    }
-    
-    @objc func backButtonTapped(_ sender: UIButton) {
-        parentViewController?.back()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            UIView.animate(withDuration: 0.3) {
+                self.usersStackView.setNumberOfAvatars(i: 10000000)
+            }
+        }
+        
     }
 }

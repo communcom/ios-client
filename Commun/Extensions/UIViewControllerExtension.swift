@@ -171,7 +171,7 @@ extension UIViewController {
         removeFromParent()
     }
     
-    func back() {
+    @objc func back() {
         if (self.isModal) {
             self.dismiss(animated: true, completion: nil)
         } else {

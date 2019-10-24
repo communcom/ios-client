@@ -8,9 +8,36 @@
 
 import Foundation
 
-class CommunityPageVC: PostsViewController {
+class CommunityPageVC: BaseViewController {
+    // MARK: - Properties
     let communityId: String
-    var headerView: CommunityHeaderView!
+    let coverHeight: CGFloat = 180
+    
+    // MARK: - Subviews
+    lazy var backButton: UIButton = {
+        let button = UIButton(width: 24, height: 40, contentInsets: UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 12))
+        button.tintColor = .white
+        button.setImage(UIImage(named: "back"), for: .normal)
+        button.addTarget(self, action: #selector(back), for: .touchUpInside)
+        return button
+    }()
+    
+    lazy var coverImageView: UIImageView = {
+        let imageView = UIImageView(height: coverHeight)
+        imageView.image = UIImage(named: "ProfilePageCover")
+        return imageView
+    }()
+    
+    lazy var scrollView: UIScrollView = {
+        let scrollView = UIScrollView(forAutoLayout: ())
+        return scrollView
+    }()
+    
+    
+    lazy var headerView: CommunityHeaderView = {
+        let headerView = CommunityHeaderView(forAutoLayout: ())
+        return headerView
+    }()
     
     init(communityId: String) {
         self.communityId = communityId
@@ -23,25 +50,28 @@ class CommunityPageVC: PostsViewController {
     
     override func setUp() {
         super.setUp()
-        // assign tableView
-        view.addSubview(tableView)
-        tableView.insetsContentViewsToSafeArea = false
-        tableView.contentInsetAdjustmentBehavior = .never
-        tableView.autoPinEdgesToSuperviewEdges()
-        tableView.insetsContentViewsToSafeArea = false
+        view.backgroundColor = .white
         
-        // assign header
-        headerView = CommunityHeaderView(tableView: tableView)
+        view.addSubview(coverImageView)
+        coverImageView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .bottom)
+        
+        view.addSubview(backButton)
+        backButton.autoPinEdge(toSuperviewSafeArea: .top, withInset: 8)
+        backButton.autoPinEdge(toSuperviewSafeArea: .leading, withInset: 16)
+        
+        view.addSubview(scrollView)
+        scrollView.autoPinEdgesToSuperviewEdges()
+        scrollView.contentInset = UIEdgeInsets(top: coverHeight - 24, left: 0, bottom: 0, right: 0)
+        
+        scrollView.addSubview(headerView)
+        headerView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .bottom)
+        headerView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
     }
     
     override func bind() {
         super.bind()
         
         
-    }
-    
-    override func setUpViewModel() {
-        viewModel = PostsViewModel(filter: PostsListFetcher.Filter(feedTypeMode: .community, feedType: .time, sortType: .all, communityId: communityId))
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -56,5 +86,32 @@ class CommunityPageVC: PostsViewController {
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
+    }
+}
+
+class CommunityPagePostsVC: PostsViewController {
+    let communityId: String
+    
+    init(communityId: String) {
+        self.communityId = communityId
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func setUp() {
+        super.setUp()
+        // assign tableView
+        view.addSubview(tableView)
+//        tableView.insetsContentViewsToSafeArea = false
+//        tableView.contentInsetAdjustmentBehavior = .never
+        tableView.autoPinEdgesToSuperviewEdges()
+        tableView.insetsContentViewsToSafeArea = false
+    }
+    
+    override func setUpViewModel() {
+        viewModel = PostsViewModel(filter: PostsListFetcher.Filter(feedTypeMode: .community, feedType: .time, sortType: .all, communityId: communityId))
     }
 }
