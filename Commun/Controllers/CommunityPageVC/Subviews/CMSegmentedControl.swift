@@ -93,16 +93,18 @@ class CMSegmentedControl: MyView {
         }
         
         // remove constraint
-        if let centerXConstraint = indicatorView.constraints.first(where: {$0.firstAttribute == .centerX}) {
-            indicatorView.removeConstraint(centerXConstraint)
-        }
+        let multiplier: CGFloat = CGFloat(CGFloat(2 * selectedIndex.value + 1) / CGFloat(labels.count))
+        
+        indicatorView.removeConstraintToSuperView(withAttribute: .centerX)
         
         // move indicator
+        NSLayoutConstraint(item: indicatorView, attribute: .centerX, relatedBy: .equal, toItem: stackView, attribute: .centerX, multiplier: multiplier, constant: 0).isActive = true
+           
         
-        let multiplier: CGFloat = CGFloat(selectedIndex.value / self.items.count)
-        indicatorView.centerXAnchor.constraint(equalToSystemSpacingAfter: stackView.centerXAnchor, multiplier: multiplier).isActive = true
+        UIView.animate(withDuration: 0.2) {
+            self.layoutIfNeeded()
+        }
         
-
     }
     
     @objc func changeSelection(_ sender: TapGesture) {
