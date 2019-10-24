@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import RxSwift
 
 class CommunityPageVC: BaseViewController {
     override var contentScrollView: UIScrollView? {tableView}
@@ -14,6 +15,8 @@ class CommunityPageVC: BaseViewController {
     // MARK: - Properties
     let communityId: String
     let coverHeight: CGFloat = 180
+    lazy var viewModel: CommunityPageViewModel = CommunityPageViewModel(communityId: communityId)
+    private let disposeBag = DisposeBag()
     
     // MARK: - Subviews
     lazy var backButton: UIButton = {
@@ -73,6 +76,11 @@ class CommunityPageVC: BaseViewController {
     
     override func bind() {
         super.bind()
+        viewModel.community
+            .subscribe(onNext: { (community) in
+                print(community)
+            })
+            .disposed(by: disposeBag)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
