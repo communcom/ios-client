@@ -7,6 +7,8 @@
 //
 
 import Foundation
+import RxSwift
+import RxCocoa
 
 class CommunityHeaderView: MyTableHeaderView {
     // MARK: - Subviews
@@ -117,16 +119,19 @@ class CommunityHeaderView: MyTableHeaderView {
     
     lazy var segmentedControl: CMSegmentedControl = {
         let segmentedControl = CMSegmentedControl(height: 46, backgroundColor: .clear)
-        
-        segmentedControl.setUp(with: [
-            CMSegmentedControl.Item(name: "posts".localized().uppercaseFirst, isActive: true),
-            CMSegmentedControl.Item(name: "leads".localized().uppercaseFirst, isActive: false),
-            CMSegmentedControl.Item(name: "about".localized().uppercaseFirst, isActive: false),
-            CMSegmentedControl.Item(name: "rules".localized().uppercaseFirst, isActive: false)
-        ])
-        
+        segmentedControl.items = [
+            CMSegmentedControl.Item(name: "posts".localized().uppercaseFirst),
+            CMSegmentedControl.Item(name: "leads".localized().uppercaseFirst),
+            CMSegmentedControl.Item(name: "about".localized().uppercaseFirst),
+            CMSegmentedControl.Item(name: "rules".localized().uppercaseFirst)
+        ]
         return segmentedControl
     }()
+    
+    // MARK: - Properties
+    var selectedIndex: BehaviorRelay<Int> {
+        return segmentedControl.selectedIndex
+    }
     
     override func commonInit() {
         super.commonInit()

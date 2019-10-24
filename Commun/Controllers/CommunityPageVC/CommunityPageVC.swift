@@ -53,7 +53,7 @@ class CommunityPageVC: BaseViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MET
+    // MARK: - Methods
     override func setUp() {
         super.setUp()
         view.backgroundColor = .white
@@ -109,6 +109,11 @@ class CommunityPageVC: BaseViewController {
         
         // bind tableview
         #warning("bind tableview")
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        headerView.selectedIndex.accept(1)
     }
     
     func setUpWithCommunity(_ community: ResponseAPIContentGetCommunity) {

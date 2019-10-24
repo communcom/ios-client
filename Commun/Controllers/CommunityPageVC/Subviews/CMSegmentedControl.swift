@@ -7,19 +7,48 @@
 //
 
 import Foundation
+import RxCocoa
 import RxSwift
 
 class CMSegmentedControl: MyView {
     // MARK: - Nested type
+    class TapGesture: UITapGestureRecognizer {
+        var index = 0
+    }
+    
     struct Item {
         var name: String
-        var isActive = false
-        fileprivate(set) var label: UILabel? = nil
     }
     
     // MARK: - Properties
-    var items: [Item]!
-    let selectedIndex = PublishSubject<Int>()
+    var labels: [UILabel]!
+    var items: [Item]! {
+        didSet {
+            // clean
+            if labels != nil {
+                labels.forEach {$0.removeFromSuperview()}
+            }
+            labels = [UILabel]()
+            
+            stackView.removeArrangedSubviews()
+            
+            // setup label
+            for i in 0..<items.count {
+                let label = UILabel.with(text: items[i].name, textSize: 15, weight: .bold)
+                
+                label.textAlignment = .center
+                label.isUserInteractionEnabled = true
+                let tap = TapGesture(target: self, action: #selector(changeSelection(_:)))
+                tap.index = i
+                label.addGestureRecognizer(tap)
+                
+                stackView.addArrangedSubview(label)
+                labels.append(label)
+            }
+        }
+    }
+    let selectedIndex = BehaviorRelay<Int>(value: 0)
+    let bag = DisposeBag()
     
     // MARK: - Subviews
     lazy var stackView: UIStackView = {
@@ -47,25 +76,20 @@ class CMSegmentedControl: MyView {
         addSubview(indicatorView)
         indicatorView.autoPinEdge(.top, to: .bottom, of: stackView)
         indicatorView.autoPinEdge(toSuperviewEdge: .bottom)
+        
+        selectedIndex
+            .skip(1)
+            .subscribe(onNext: { (index) in
+                self.setUp()
+            })
+            .disposed(by: bag)
     }
     
-    func setUp(with newItems: [Item]) {
-        guard newItems.count > 0 else {return}
+    func setUp() {
+        if selectedIndex.value >= items.count {return}
         
-        items = newItems
-        
-        stackView.removeArrangedSubviews()
-        
-        // setup label
-        var activeLabel: UILabel!
-        for i in 0..<items.count {
-            let label = UILabel.with(text: items[i].name, textSize: 15, weight: .bold, textColor: items[i].isActive ? .black: UIColor(hexString: "#A5A7BD")!)
-            label.textAlignment = .center
-            items[i].label = label
-            stackView.addArrangedSubview(label)
-            if items[i].isActive {
-                activeLabel = label
-            }
+        for i in 0..<labels.count {
+            labels[i].textColor = (selectedIndex.value == i) ? .black : UIColor(hexString: "#A5A7BD")
         }
         
         // remove constraint
@@ -74,9 +98,15 @@ class CMSegmentedControl: MyView {
         }
         
         // move indicator
-        if let label = activeLabel {
-            indicatorView.centerXAnchor.constraint(equalTo: label.centerXAnchor).isActive = true
-        }
+        
+        let multiplier: CGFloat = CGFloat(selectedIndex.value / self.items.count)
+        indicatorView.centerXAnchor.constraint(equalToSystemSpacingAfter: stackView.centerXAnchor, multiplier: multiplier).isActive = true
+        
 
+    }
+    
+    @objc func changeSelection(_ sender: TapGesture) {
+        if sender.index == selectedIndex.value {return}
+        selectedIndex.accept(sender.index)
     }
 }
