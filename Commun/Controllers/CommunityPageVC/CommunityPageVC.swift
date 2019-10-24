@@ -77,6 +77,8 @@ class CommunityPageVC: BaseViewController {
         // setup datasource
         tableView.register(BasicPostCell.self, forCellReuseIdentifier: "BasicPostCell")
         tableView.register(ArticlePostCell.self, forCellReuseIdentifier: "ArticlePostCell")
+        #warning("remove later")
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "TestCell")
     }
     
     override func bind() {
@@ -100,7 +102,34 @@ class CommunityPageVC: BaseViewController {
             .disposed(by: disposeBag)
         
         // list loading state
-        #warning("list loading state")
+        viewModel.listLoadingState
+            .subscribe(onNext: { [weak self] (state) in
+                switch state {
+                case .loading(let isLoading):
+                    if (isLoading) {
+                        switch self?.viewModel.segmentedItem.value {
+                        case .posts:
+                            self?.tableView.addPostLoadingFooterView()
+                        case .leads:
+                            self?.tableView.addNotificationsLoadingFooterView()
+                        default:
+                            break
+                        }
+                    }
+                    else {
+                        self?.tableView.tableFooterView = UIView()
+                    }
+                    break
+                case .listEnded:
+                    #warning("add empty state")
+                    self?.tableView.tableFooterView = UIView()
+                case .error(_):
+                    guard let strongSelf = self else {return}
+                    strongSelf.tableView.addListErrorFooterView(with: #selector(strongSelf.didTapTryAgain(gesture:)), on: strongSelf)
+                    strongSelf.tableView.reloadData()
+                }
+            })
+            .disposed(by: disposeBag)
         
         // bind content
         viewModel.community
@@ -119,13 +148,6 @@ class CommunityPageVC: BaseViewController {
         
         items
             .bind(to: tableView.rx.items) {table, index, element in
-                guard let element = element else {
-                    let cell = self.tableView.dequeueReusableCell(withIdentifier: "EmptyCell") as! EmptyCell
-                    #warning("fix later")
-                    cell.setUp(with: .posts)
-                    return cell
-                }
-                
                 if index == self.tableView.numberOfRows(inSection: 0) - 2 {
                     self.viewModel.fetchNext()
                 }
@@ -145,7 +167,21 @@ class CommunityPageVC: BaseViewController {
                     }
                 }
                 
-                fatalError("Unknown cell type")
+                #warning("fix later")
+                if let user = element as? ResponseAPIContentResolveProfile {
+                    let cell = UITableViewCell(style: .default, reuseIdentifier: "TestCell")
+                    cell.textLabel?.text = user.username
+                    cell.imageView?.setAvatar(urlString: user.avatarUrl, namePlaceHolder: user.username)
+                    return cell
+                }
+                
+                if let string = element as? String {
+                    let cell = UITableViewCell(style: .default, reuseIdentifier: "TestCell")
+                    cell.textLabel?.text = string
+                    return cell
+                }
+                
+                return UITableViewCell()
             }
             .disposed(by: disposeBag)
         
@@ -195,5 +231,15 @@ class CommunityPageVC: BaseViewController {
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
+    }
+    
+    @objc func didTapTryAgain(gesture: UITapGestureRecognizer) {
+        guard let label = gesture.view as? UILabel,
+            let text = label.text else {return}
+        
+        let tryAgainRange = (text as NSString).range(of: "try again".localized().uppercaseFirst)
+        if gesture.didTapAttributedTextInLabel(label: label, inRange: tryAgainRange) {
+            self.viewModel.fetchNext(forceRetry: true)
+        }
     }
 }

@@ -46,12 +46,28 @@ class CommunityPageViewModel {
     lazy var aboutSubject = PublishSubject<String>()
     lazy var rulesSubject = PublishSubject<[String]>()
     
-    var items: Observable<[Any?]> {
-        let posts         = postsVM.items.map {$0.count == 0 ? [nil] : $0 as [Any?]}.skip(1)
-        let leads         = leadsVM.items.map {$0.count == 0 ? [nil] : $0 as [Any?]}.skip(1)
-        let about         = aboutSubject.map {[$0] as [Any?]}
-        let rules         = rulesSubject.map {$0 as [Any?]}
+    var items: Observable<[Any]> {
+        let posts         = postsVM.items.map {$0 as [Any]}.skip(1)
+        let leads         = leadsVM.items.map {$0 as [Any]}.skip(1)
+        let about         = aboutSubject.map {[$0] as [Any]}
+        let rules         = rulesSubject.map {$0 as [Any]}
         return Observable.merge(posts, leads, about, rules)
+            .filter({ items -> Bool in
+                if items is [ResponseAPIContentGetPost] && self.segmentedItem.value == .posts {
+                    return true
+                }
+                if items is [ResponseAPIContentResolveProfile] && self.segmentedItem.value == .leads {
+                    return true
+                }
+                #warning("fix later")
+                if items is [String] && self.segmentedItem.value == .about {
+                    return true
+                }
+                if items is [String] && self.segmentedItem.value == .rules {
+                    return true
+                }
+                return false
+            })
             .skip(1)
     }
     
@@ -137,12 +153,12 @@ class CommunityPageViewModel {
         loadCommunity()
     }
     
-    func fetchNext() {
+    func fetchNext(forceRetry: Bool = false) {
         switch segmentedItem.value {
         case .posts:
-            postsVM.fetchNext()
+            postsVM.fetchNext(forceRetry: forceRetry)
         case .leads:
-            leadsVM.fetchNext()
+            leadsVM.fetchNext(forceRetry: forceRetry)
         default:
             return
         }

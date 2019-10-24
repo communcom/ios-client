@@ -182,8 +182,13 @@ class CommunityHeaderView: MyTableHeaderView {
         leadsLabel.autoPinEdge(.bottom, to: .bottom, of: leadsCountLabel, withOffset: -1)
         
         addSubview(usersStackView)
-        usersStackView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
         usersStackView.autoAlignAxis(.horizontal, toSameAxisOf: leadsLabel)
+        
+        let friendLabel = UILabel.with(text: "friends".localized().uppercaseFirst, textSize: 12, weight: .bold, textColor: .gray)
+        addSubview(friendLabel)
+        friendLabel.autoAlignAxis(.horizontal, toSameAxisOf: leadsLabel)
+        friendLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
+        friendLabel.autoPinEdge(.leading, to: .trailing, of: usersStackView, withOffset: 5)
         
         addSubview(pointsContainerView)
         pointsContainerView.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
