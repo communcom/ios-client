@@ -73,6 +73,10 @@ class CommunityPageVC: BaseViewController {
         headerView.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: 25)
         
         view.bringSubviewToFront(backButton)
+        
+        // setup datasource
+        tableView.register(BasicPostCell.self, forCellReuseIdentifier: "BasicPostCell")
+        tableView.register(ArticlePostCell.self, forCellReuseIdentifier: "ArticlePostCell")
     }
     
     override func bind() {
@@ -102,18 +106,69 @@ class CommunityPageVC: BaseViewController {
         viewModel.community
             .filter {$0 != nil}
             .map {$0!}
+            .do(onNext: { (_) in
+                self.headerView.selectedIndex.accept(0)
+            })
             .subscribe(onNext: { [weak self] (community) in
                 self?.setUpWithCommunity(community)
             })
             .disposed(by: disposeBag)
         
         // bind tableview
-        #warning("bind tableview")
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        headerView.selectedIndex.accept(1)
+        let items = viewModel.items
+        
+        items
+            .bind(to: tableView.rx.items) {table, index, element in
+                guard let element = element else {
+                    let cell = self.tableView.dequeueReusableCell(withIdentifier: "EmptyCell") as! EmptyCell
+                    #warning("fix later")
+                    cell.setUp(with: .posts)
+                    return cell
+                }
+                
+                if index == self.tableView.numberOfRows(inSection: 0) - 2 {
+                    self.viewModel.fetchNext()
+                }
+                
+                if let post = element as? ResponseAPIContentGetPost {
+                    switch post.document.attributes?.type {
+                    case "article":
+                        let cell = self.tableView.dequeueReusableCell(withIdentifier: "ArticlePostCell") as! ArticlePostCell
+                        cell.setUp(with: post)
+                        return cell
+                    case "basic":
+                        let cell = self.tableView.dequeueReusableCell(withIdentifier: "BasicPostCell") as! BasicPostCell
+                        cell.setUp(with: post)
+                        return cell
+                    default:
+                        return UITableViewCell()
+                    }
+                }
+                
+                fatalError("Unknown cell type")
+            }
+            .disposed(by: disposeBag)
+        
+        
+        // Bind segmentedItem
+        headerView.selectedIndex
+            .map { index -> CommunityPageViewModel.SegmentioItem in
+                switch index {
+                case 0:
+                    return .posts
+                case 1:
+                    return .leads
+                case 2:
+                    return .about
+                case 3:
+                    return .rules
+                default:
+                    fatalError("not found selected index")
+                }
+            }
+            .bind(to: viewModel.segmentedItem)
+            .disposed(by: disposeBag)
+            
     }
     
     func setUpWithCommunity(_ community: ResponseAPIContentGetCommunity) {
