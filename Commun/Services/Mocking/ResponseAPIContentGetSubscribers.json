@@ -1,0 +1,43 @@
+{
+    "jsonrpc": "2.0",
+    "id": 1,
+    "result": {
+        "items": [
+            {
+                "userId": "tst3fwejlkvx",
+                "username": "heidenreich-odessa-v",
+                "avatarUrl": "https://i.pravatar.cc/300?u=e8f13335de09997afb44b808a2fdada046016d92"
+            },
+            {
+                "userId": "tst2hjvcmdnt",
+                "username": "daniel-dwight-dvm",
+                "avatarUrl": "https://i.pravatar.cc/300?u=fa7b2527200945ab3b8598162adf72a643869b52"
+            },
+            {
+                "userId": "tst3fwerlkvx",
+                "username": "heireich-odessa-v",
+                "avatarUrl": "https://hips.hearstapps.com/ghk.h-cdn.co/assets/17/30/2560x1280/landscape-1500925839-golden-retriever-puppy.jpg"
+            },
+            {
+                "userId": "ts13fwerlkvx",
+                "username": "heireichssa-v",
+                "avatarUrl": "https://hips.hearstapps.com/ghk.h-cdn.co/assets/17/30/pembroke-welsh-corgi.jpg"
+            },
+            {
+                "userId": "ts130werlkvx",
+                "username": "ireichssa-v",
+                "avatarUrl": "https://hips.hearstapps.com/ghk.h-cdn.co/assets/17/30/bernese-mountain-dog.jpg"
+            },
+            {
+                "userId": "ts130tyrlkvx",
+                "username": "eichssa-v",
+                "avatarUrl": "https://www.hindustantimes.com/rf/image_size_960x540/HT/p2/2018/05/16/Pictures/_1571873a-58de-11e8-b431-73159b4b09e2.jpg"
+            },
+            {
+                "userId": "ts130tyrlkrt",
+                "username": "eicssa-v",
+                "avatarUrl": "https://d17fnq9dkz9hgj.cloudfront.net/uploads/2018/04/Bulldog_02.jpg"
+            },
+        ]
+    }
+}

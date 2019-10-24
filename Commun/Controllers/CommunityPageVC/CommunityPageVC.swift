@@ -76,11 +76,50 @@ class CommunityPageVC: BaseViewController {
     
     override func bind() {
         super.bind()
-        viewModel.community
-            .subscribe(onNext: { (community) in
-                print(community)
+        #warning("retry button")
+//        let retryButton = UIButton(forAutoLayout: ())
+//        retryButton.setTitleColor(.gray, for: .normal)
+        // bind state
+        viewModel.loadingState
+            .subscribe(onNext: { [weak self] loadingState in
+                switch loadingState {
+                case .loading:
+                    self?.view.showLoading()
+                case .finished:
+                    self?.view.hideLoading()
+                case .error(let error):
+                    self?.showError(error)
+                    self?.back()
+                }
             })
             .disposed(by: disposeBag)
+        
+        // list loading state
+        #warning("list loading state")
+        
+        // bind content
+        viewModel.community
+            .filter {$0 != nil}
+            .map {$0!}
+            .subscribe(onNext: { [weak self] (community) in
+                self?.setUpWithCommunity(community)
+            })
+            .disposed(by: disposeBag)
+        
+        // bind tableview
+        #warning("bind tableview")
+    }
+    
+    func setUpWithCommunity(_ community: ResponseAPIContentGetCommunity) {
+        // cover
+        if let urlString = community.coverUrl,
+            let url = URL(string: urlString)
+        {
+            coverImageView.sd_setImage(with: url, completed: nil)
+        }
+        
+        // header
+        headerView.setUp(with: community)
     }
     
     override func viewWillDisappear(_ animated: Bool) {

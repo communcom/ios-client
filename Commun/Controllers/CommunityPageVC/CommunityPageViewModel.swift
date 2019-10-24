@@ -41,17 +41,14 @@ class CommunityPageViewModel {
     let segmentedItem = BehaviorRelay<SegmentioItem>(value: .posts)
     
     lazy var postsVM: PostsViewModel = PostsViewModel(filter: PostsListFetcher.Filter(feedTypeMode: .community, feedType: .time, sortType: .all, communityId: communityId))
-    
-    #warning("fix later")
-    lazy var leadsVM = PublishSubject<[String]>()
+    lazy var leadsVM = SubscribersViewModel(communityId: communityId)
     
     lazy var aboutSubject = PublishSubject<String>()
     lazy var rulesSubject = PublishSubject<[String]>()
     
     var items: Observable<[Any?]> {
-        #warning("combine more")
         let posts         = postsVM.items.map {$0.count == 0 ? [nil] : $0 as [Any?]}.skip(1)
-        let leads         = leadsVM.map {$0.count == 0 ? [nil] : $0 as [Any?]}.skip(1)
+        let leads         = leadsVM.items.map {$0.count == 0 ? [nil] : $0 as [Any?]}.skip(1)
         let about         = aboutSubject.map {[$0] as [Any?]}
         let rules         = rulesSubject.map {$0 as [Any?]}
         return Observable.merge(posts, leads, about, rules)
@@ -96,8 +93,7 @@ class CommunityPageViewModel {
     }
     
     func bind() {
-        #warning("add leadsVM")
-        Observable.merge(postsVM.state.asObservable())
+        Observable.merge(postsVM.state.asObservable(), leadsVM.state.asObservable())
             .distinctUntilChanged { (lhs, rhs) -> Bool in
                 switch (lhs, rhs) {
                 case (.loading(let isLoading1), .loading(let isLoading2)):
@@ -118,9 +114,7 @@ class CommunityPageViewModel {
                 case .posts:
                     self.postsVM.reload()
                 case .leads:
-                    #warning("add leadsVM")
-                    self.leadsVM.onNext([])
-                    self.listLoadingState.accept(.listEnded)
+                    self.leadsVM.reload()
                 case .about:
                     self.aboutSubject.onNext("Binance is a blockchain ecosystem comprised of Exchange, Labs, Launchpad, and Info. Binance Exchange is one of the fastest growing and most popular cryptocurrency exchanges in the world. Founded by a team of fintech and crypto experts — it is capable of processing more than 1.4 million orders per second, making it one of the fastest exchanges in the world. The platform focuses on security, robustness, and execution speed — attracting enthusiasts and professional traders alike.")
                     self.listLoadingState.accept(.listEnded)
@@ -144,10 +138,11 @@ class CommunityPageViewModel {
     }
     
     func fetchNext() {
-        #warning("add leadsVM")
         switch segmentedItem.value {
         case .posts:
             postsVM.fetchNext()
+        case .leads:
+            leadsVM.fetchNext()
         default:
             return
         }

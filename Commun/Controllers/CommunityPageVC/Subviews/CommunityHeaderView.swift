@@ -181,12 +181,36 @@ class CommunityHeaderView: MyTableHeaderView {
         
         // pin bottom
         separator.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
+    }
+    
+    func setUp(with community: ResponseAPIContentGetCommunity) {
+        // avatar
+        avatarImageView.setAvatar(urlString: community.avatarUrl, namePlaceHolder: community.name ?? community.communityId ?? "C")
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            UIView.animate(withDuration: 0.3) {
-                self.usersStackView.setNumberOfAvatars(i: 10000000)
-            }
+        // name
+        nameLabel.text = community.name ?? community.communityId
+        
+        // joined date
+        #warning("join date missing")
+//        let dateFormatter = DateFormatter()
+//        dateFormatter.dateStyle = .long
+//        let dateString = dateFormatter.string(from: Date.from(string: community.registration.time))
+//        profilePageVC.joinedDateLabel.text = String(format: "%@ %@", "joined".localized().uppercaseFirst, dateString)
+        joinedDateLabel.text = "joined".localized().uppercaseFirst + " " + ""
+        
+        // description
+        descriptionLabel.text = community.description
+        
+        // membersCount
+        membersCountLabel.text = Double(community.subscribersCount ?? 0).kmFormatted
+        
+        // leadsCount
+        #warning("leads count missing")
+        leadsCountLabel.text = "0"
+        
+        // friends
+        if let friends = community.friends {
+            usersStackView.setUp(with: friends)
         }
-        
     }
 }
