@@ -205,6 +205,13 @@ class CommunityPageVC: BaseViewController {
             .bind(to: viewModel.segmentedItem)
             .disposed(by: disposeBag)
             
+        // headerView parallax
+        tableView.rx.contentOffset
+            .map {$0.y}
+            .subscribe(onNext: {offsetY in
+                self.updateHeaderView()
+            })
+            .disposed(by: disposeBag)
     }
     
     func setUpWithCommunity(_ community: ResponseAPIContentGetCommunity) {
@@ -241,5 +248,18 @@ class CommunityPageVC: BaseViewController {
         if gesture.didTapAttributedTextInLabel(label: label, inRange: tryAgainRange) {
             self.viewModel.fetchNext(forceRetry: true)
         }
+    }
+    
+    func updateHeaderView() {
+        let offset = tableView.contentOffset.y
+        if offset < -coverHeight {
+            let originHeight = coverHeight
+            
+            let scale = -offset / (originHeight  - 24)
+            coverImageView.transform = CGAffineTransform(scaleX: scale, y: scale)
+        } else {
+            coverImageView.transform = CGAffineTransform(scaleX: 1, y: 1)
+        }
+        coverImageView.layoutIfNeeded()
     }
 }
