@@ -50,7 +50,7 @@ class CommunityPageVC: BaseViewController {
     // MARK: - Methods
     override func setUp() {
         super.setUp()
-        view.backgroundColor = .white
+        view.backgroundColor = #colorLiteral(red: 0.9605136514, green: 0.9644123912, blue: 0.9850376248, alpha: 1)
         
         view.addSubview(coverImageView)
         coverImageView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .bottom)
@@ -96,7 +96,7 @@ class CommunityPageVC: BaseViewController {
         if let urlString = community.coverUrl,
             let url = URL(string: urlString)
         {
-            coverImageView.sd_setImage(with: url, completed: nil)
+            coverImageView.sd_setImage(with: url, placeholderImage: UIImage(named: "ProfilePageCover"))
         }
         
         // header
