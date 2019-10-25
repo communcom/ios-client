@@ -35,8 +35,10 @@ class BaseViewController: UIViewController {
         
         var insetsBottom = contentInsets.bottom + tabBarController.tabBarHeight
         
-        if scrollView.insetsLayoutMarginsFromSafeArea {
-            insetsBottom -= (UIApplication.shared.keyWindow?.safeAreaInsets.bottom ?? 0)
+        if let tableView = scrollView as? UITableView {
+            if tableView.insetsContentViewsToSafeArea {
+                insetsBottom -= (UIApplication.shared.keyWindow?.safeAreaInsets.bottom ?? 0)
+            }
         }
         
         contentInsets.bottom = insetsBottom

@@ -27,7 +27,6 @@ class ProfileVC: BaseViewController {
         tableView.insetsContentViewsToSafeArea = false
         tableView.contentInsetAdjustmentBehavior = .never
         tableView.autoPinEdgesToSuperviewEdges()
-        tableView.insetsContentViewsToSafeArea = false
         
         // assign header
         headerView = ProfileHeaderView(tableView: tableView)
