@@ -19,10 +19,9 @@ def common_pods
   pod 'Swinject'
   pod 'SDWebImage', '~> 4.0'
   pod 'Action'
-  pod 'UIImageView-Letters'
   pod 'DateToolsSwift'
   
-  pod 'UIImageView-Letters'
+  pod "InitialsImageView"
   
   pod 'SwifterSwift/SwiftStdlib'   # Standard Library Extensions
   pod 'SwifterSwift/Foundation'    # Foundation Extensions

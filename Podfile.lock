@@ -94,6 +94,7 @@ PODS:
     - GoogleUtilities/Logger
   - GoogleUtilities/UserDefaults (6.2.3):
     - GoogleUtilities/Logger
+  - InitialsImageView (0.7.0)
   - ListPlaceholder (1.4)
   - Localize-Swift (2.0.0)
   - Locksmith (4.0.0)
@@ -139,7 +140,6 @@ PODS:
   - THPinViewController (1.2.6)
   - TLPhotoPicker (1.9.3)
   - TTTAttributedLabel (2.0.0)
-  - UIImageView-Letters (1.1.4)
   - "UITextView+Placeholder (1.3.3)"
 
 DEPENDENCIES:
@@ -157,6 +157,7 @@ DEPENDENCIES:
   - Fabric
   - Firebase/Core
   - Firebase/Messaging
+  - InitialsImageView
   - ListPlaceholder
   - MBProgressHUD (~> 1.1.0)
   - PhoneNumberKit (~> 2.6)
@@ -175,7 +176,6 @@ DEPENDENCIES:
   - THPinViewController (from `https://github.com/bigearsenal/THPinViewController.git`, branch `commun`)
   - TLPhotoPicker
   - TTTAttributedLabel
-  - UIImageView-Letters
   - "UITextView+Placeholder"
 
 SPEC REPOS:
@@ -203,6 +203,7 @@ SPEC REPOS:
     - GoloCrypto
     - GoogleAppMeasurement
     - GoogleUtilities
+    - InitialsImageView
     - ListPlaceholder
     - Localize-Swift
     - Locksmith
@@ -229,7 +230,6 @@ SPEC REPOS:
     - Swinject
     - TLPhotoPicker
     - TTTAttributedLabel
-    - UIImageView-Letters
     - "UITextView+Placeholder"
 
 EXTERNAL SOURCES:
@@ -283,6 +283,7 @@ SPEC CHECKSUMS:
   GoloCrypto: 3f60e824b57ca657be702fb2cf4bd1f7a379257a
   GoogleAppMeasurement: 183bd916af7f80deb67c01888368f1108d641832
   GoogleUtilities: d2b0e277a95962e09bb27f5cd42f5f0b6a506c7d
+  InitialsImageView: 7a416d36fc6df5434198664db28a3ffb0228426d
   ListPlaceholder: 08ddaddf67520a20fc52cf37160fb56aa64d071d
   Localize-Swift: c798ec9286494866f7068f85f7c71283ac5bdab4
   Locksmith: e9bebbaaa4cee3c511bc358a44f843c3fe00e21f
@@ -311,9 +312,8 @@ SPEC CHECKSUMS:
   THPinViewController: e0dc717a61c8a0a0f251764da26b9ca8a4fd2ec1
   TLPhotoPicker: 565ec4244e70ec8e09bff7ed6e05da952d394c1c
   TTTAttributedLabel: 8cffe8e127e4e82ff3af1e5386d4cd0ad000b656
-  UIImageView-Letters: f62db28076797adf3560ab7410647dc6899b9eef
   "UITextView+Placeholder": c407b27599ea23cca425946fee3cf1db5d547008
 
-PODFILE CHECKSUM: c8d09c0d05ace340e1758125dba5b5e8e43d6fbd
+PODFILE CHECKSUM: f8accb3747a167abd18a826dc27b39cf44181c95
 
 COCOAPODS: 1.8.3

@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import UIImageView_Letters
+import InitialsImageView
 import RxSwift
 import AppImageViewer
 import CyberSwift
@@ -24,7 +24,7 @@ extension UIImageView {
             nonAvatarColors[id] = color
         }
         
-        setImageWith(id, color: color)
+        setImageForName(id, backgroundColor: color, circular: true, textAttributes: nil, gradient: false)
     }
     
     func setAvatar(urlString: String?, namePlaceHolder: String) {

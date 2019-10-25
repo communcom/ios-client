@@ -73,7 +73,7 @@ class MyAvatarImageView: MyView {
             nonAvatarColors[id] = color
         }
         
-        imageView.setImageWith(id, color: color)
+        imageView.setImageForName(id, backgroundColor: color, circular: true, textAttributes: nil, gradient: false)
     }
     
     func addTapToViewer() {
