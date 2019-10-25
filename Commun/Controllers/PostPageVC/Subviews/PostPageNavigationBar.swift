@@ -9,12 +9,7 @@
 import Foundation
 
 class PostPageNavigationBar: MyView {
-    lazy var backButton: UIButton = {
-        let button = UIButton(width: 36, height: 40, contentInsets: UIEdgeInsets(top: 10, left: 12, bottom: 10, right: 12))
-        button.tintColor = .a5a7bd
-        button.setImage(UIImage(named: "back"), for: .normal)
-        return button
-    }()
+    lazy var backButton: UIButton = .back(tintColor: .a5a7bd)
     
     lazy var postMetaView: PostMetaView = {
         let view = PostMetaView(height: 40)

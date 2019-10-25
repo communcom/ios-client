@@ -19,13 +19,7 @@ class CommunityPageVC: BaseViewController {
     let disposeBag = DisposeBag()
     
     // MARK: - Subviews
-    lazy var backButton: UIButton = {
-        let button = UIButton(width: 24, height: 40, contentInsets: UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 12))
-        button.tintColor = .white
-        button.setImage(UIImage(named: "back"), for: .normal)
-        button.addTarget(self, action: #selector(back), for: .touchUpInside)
-        return button
-    }()
+    lazy var backButton: UIButton = .back(tintColor: .white)
     
     lazy var coverImageView: UIImageView = {
         let imageView = UIImageView(height: coverHeight)
@@ -63,7 +57,8 @@ class CommunityPageVC: BaseViewController {
         
         view.addSubview(backButton)
         backButton.autoPinEdge(toSuperviewSafeArea: .top, withInset: 8)
-        backButton.autoPinEdge(toSuperviewSafeArea: .leading, withInset: 16)
+        backButton.autoPinEdge(toSuperviewSafeArea: .leading, withInset: 4)
+        backButton.addTarget(self, action: #selector(back), for: .touchUpInside)
         
         view.addSubview(tableView)
         tableView.autoPinEdgesToSuperviewEdges()

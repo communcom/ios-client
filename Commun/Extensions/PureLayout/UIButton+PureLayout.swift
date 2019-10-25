@@ -49,4 +49,11 @@ extension UIButton {
         button.tintColor = .white
         return button
     }
+    
+    static func back(tintColor: UIColor = .black) -> UIButton {
+        let button = UIButton(width: 36, height: 40, contentInsets: UIEdgeInsets(top: 10, left: 12, bottom: 10, right: 12))
+        button.tintColor = tintColor
+        button.setImage(UIImage(named: "back"), for: .normal)
+        return button
+    }
 }
