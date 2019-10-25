@@ -115,6 +115,30 @@ extension CommunityPageVC {
                 return UITableViewCell()
             }
             .disposed(by: disposeBag)
+        
+        // OnItemSelected
+        tableView.rx.itemSelected
+            .subscribe(onNext: {indexPath in
+                let cell = self.tableView.cellForRow(at: indexPath)
+                switch cell {
+                case is PostCell:
+                    if let postPageVC = controllerContainer.resolve(PostPageVC.self)
+                    {
+                        let post = self.viewModel.postsVM.items.value[indexPath.row]
+                        (postPageVC.viewModel as! PostPageViewModel).postForRequest = post
+                        self.show(postPageVC, sender: nil)
+                    } else {
+                        self.showAlert(title: "error".localized().uppercaseFirst, message: "something went wrong".localized().uppercaseFirst)
+                    }
+                    break
+                case is CommunityLeaderCell:
+                    #warning("Tap a comment")
+                    break
+                default:
+                    break
+                }
+            })
+            .disposed(by: disposeBag)
     }
     
     func bindControls() {
