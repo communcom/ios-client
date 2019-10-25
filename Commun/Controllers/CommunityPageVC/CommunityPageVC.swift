@@ -94,6 +94,9 @@ class CommunityPageVC: BaseViewController {
     }
     
     func setUpWithCommunity(_ community: ResponseAPIContentGetCommunity) {
+        // title
+        title = community.name
+        
         // cover
         if let urlString = community.coverUrl,
             let url = URL(string: urlString)

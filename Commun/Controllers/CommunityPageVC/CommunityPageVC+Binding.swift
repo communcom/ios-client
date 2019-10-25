@@ -144,6 +144,16 @@ extension CommunityPageVC {
                 self.updateHeaderView()
             })
             .disposed(by: disposeBag)
+        
+        // scrolling
+        tableView.rx.didScroll
+            .map {_ in self.tableView.contentOffset.y < -43}
+            .distinctUntilChanged()
+            .subscribe(onNext: { showNavBar in
+                self.backButton.isHidden = !showNavBar
+                self.navigationController?.setNavigationBarHidden(showNavBar, animated: false)
+            })
+            .disposed(by: disposeBag)
     }
     
     private func updateHeaderView() {
