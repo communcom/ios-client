@@ -21,6 +21,7 @@ class MyTableHeaderView: MyView {
     convenience init(tableView: UITableView) {
         self.init(frame: .zero)
         self.tableView = tableView
+        commonInit()
         
         defer {
             let containerView = UIView(forAutoLayout: ())
