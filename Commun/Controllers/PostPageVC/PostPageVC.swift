@@ -21,11 +21,7 @@ class PostPageVC: ListViewController<ResponseAPIContentGetComment>, CommentCellD
         set {_tableView = newValue}
     }
     
-    @IBOutlet weak var comunityNameLabel: UILabel!
-    @IBOutlet weak var timeAgoLabel: UILabel!
-    @IBOutlet weak var byUserLabel: UILabel!
-    @IBOutlet weak var communityAvatarImageView: UIImageView!
-    @IBOutlet weak var moreButton: UIButton!
+    @IBOutlet weak var navigationBar: PostPageNavigationBar!
     @IBOutlet weak var commentForm: CommentForm!
     @IBOutlet weak var replyingToLabel: UILabel!
     @IBOutlet weak var replyingToLabelHeightConstraint: NSLayoutConstraint!
@@ -68,15 +64,12 @@ class PostPageVC: ListViewController<ResponseAPIContentGetComment>, CommentCellD
     
     override func setUp() {
         super.setUp()
+        // navigation bar
+        navigationBar.backButton.addTarget(self, action: #selector(back), for: .touchUpInside)
+        navigationBar.moreButton.addTarget(self, action: #selector(openMorePostActions), for: .touchUpInside)
+        
         // setupView
         tableView.register(UINib(nibName: "CommentCell", bundle: nil), forCellReuseIdentifier: "CommentCell")
-        
-        comunityNameLabel.text = (viewModel as! PostPageViewModel).postForRequest?.community.name
-        
-        // action for labels
-        let tap = UITapGestureRecognizer(target: self, action: #selector(userNameTapped(_:)))
-        byUserLabel.isUserInteractionEnabled = true
-        byUserLabel.addGestureRecognizer(tap)
         
         // dismiss keyboard when dragging
         tableView.keyboardDismissMode = .onDrag
@@ -202,6 +195,11 @@ class PostPageVC: ListViewController<ResponseAPIContentGetComment>, CommentCellD
     
     override func refresh() {
         (viewModel as! PostPageViewModel).loadPost()
+    }
+    
+    @objc func openMorePostActions() {
+        guard let headerView = self.tableView.tableHeaderView as? PostHeaderView else {return}
+        headerView.openMorePostActions()
     }
 }
 

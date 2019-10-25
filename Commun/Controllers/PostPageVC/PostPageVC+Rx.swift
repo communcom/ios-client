@@ -29,27 +29,13 @@ extension PostPageVC {
         (viewModel as! PostPageViewModel).post
             .subscribe(onNext: {post in
                 if let post = post {
-                    // Time ago & community
-                    self.comunityNameLabel.isHidden = false
-                    self.timeAgoLabel.isHidden = false
-                    self.byUserLabel.isHidden = false
-                    self.communityAvatarImageView.isHidden = false
-                    
-                    self.communityAvatarImageView.setAvatar(urlString: post.community.avatarUrl, namePlaceHolder: post.community.name ?? post.community.communityId ?? "C")
-                    self.comunityNameLabel.text = post.community.name ?? post.community.communityId
-                    self.timeAgoLabel.text = Date.timeAgo(string: post.meta.creationTime)
-                    self.byUserLabel.text = post.author?.username ?? post.author?.userId ?? ""
+                    self.navigationBar.setUp(with: post)
                     
                     // commentForm
                     if self.replyingComment == nil {
                         self.commentForm.parentAuthor = post.contentId.userId
                         self.commentForm.parentPermlink = post.contentId.permlink
                     }
-                } else {
-                    self.comunityNameLabel.isHidden = true
-                    self.timeAgoLabel.isHidden = true
-                    self.byUserLabel.isHidden = true
-                    self.communityAvatarImageView.isHidden = true
                 }
                 
                 
@@ -72,14 +58,6 @@ extension PostPageVC {
             .flatMap {NetworkService.shared.markPostAsRead(permlink: $0.contentId.permlink)}
             .subscribe(onSuccess: {_ in
                 Logger.log(message: "Marked post as read", event: .severe)
-            })
-            .disposed(by: disposeBag)
-        
-        moreButton.rx.tap
-            .withLatestFrom(nonNilPost)
-            .subscribe(onNext: {_ in
-                guard let headerView = self.tableView.tableHeaderView as? PostHeaderView else {return}
-                headerView.openMorePostActions()
             })
             .disposed(by: disposeBag)
     }

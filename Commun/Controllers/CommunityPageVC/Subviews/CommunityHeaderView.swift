@@ -12,12 +12,7 @@ import RxCocoa
 
 class CommunityHeaderView: MyTableHeaderView {
     // MARK: - Subviews
-    lazy var avatarImageView: UIImageView = {
-        let imageView = UIImageView(width: 50, height: 50)
-        imageView.cornerRadius = 25
-        imageView.image = UIImage(named: "ProfilePageCover")
-        return imageView
-    }()
+    lazy var avatarImageView = MyAvatarImageView(size: 50)
     
     lazy var nameLabel: UILabel = {
         let label = UILabel.with(text: "Community", textSize: 20, weight: .bold)
@@ -29,10 +24,7 @@ class CommunityHeaderView: MyTableHeaderView {
         return label
     }()
     
-    lazy var joinButton: CommunButton = {
-        let button = CommunButton(height: 35, label: "join".localized().uppercaseFirst, labelFont: .boldSystemFont(ofSize: 15), backgroundColor: .appMainColor, textColor: .white, cornerRadius: 35 / 2, contentInsets: UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 20))
-        return button
-    }()
+    lazy var joinButton = CommunButton.join
     
     lazy var descriptionLabel: UILabel = {
         let label = UILabel.with(text: "Binance Exchange provides cryptocurrency trading for fintech and blockchain enthusiasts", textSize: 14, numberOfLines: 0)
