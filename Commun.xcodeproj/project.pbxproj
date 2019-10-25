@@ -281,6 +281,7 @@
 		BC430E7C235EEB44002E4593 /* ProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC430E7B235EEB44002E4593 /* ProfileHeaderView.swift */; };
 		BC702C8E2362817700D9E88A /* CommunityLeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC702C8D2362817700D9E88A /* CommunityLeaderCell.swift */; };
 		BC702C902362825100D9E88A /* MyAvatarImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC702C8F2362825100D9E88A /* MyAvatarImageView.swift */; };
+		BC702C942362974C00D9E88A /* CommunityPageVC+Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC702C932362974C00D9E88A /* CommunityPageVC+Binding.swift */; };
 		BC757EF92356E6EC00CB4ADE /* PostHeaderTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC757EF82356E6EC00CB4ADE /* PostHeaderTextView.swift */; };
 		BCA97113236004F500AE37E1 /* CommentsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA97112236004F500AE37E1 /* CommentsViewModel.swift */; };
 		BCA971172360301100AE37E1 /* NotificationsListFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA971162360301100AE37E1 /* NotificationsListFetcher.swift */; };
@@ -616,6 +617,7 @@
 		BC430E7B235EEB44002E4593 /* ProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderView.swift; sourceTree = "<group>"; };
 		BC702C8D2362817700D9E88A /* CommunityLeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityLeaderCell.swift; sourceTree = "<group>"; };
 		BC702C8F2362825100D9E88A /* MyAvatarImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAvatarImageView.swift; sourceTree = "<group>"; };
+		BC702C932362974C00D9E88A /* CommunityPageVC+Binding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CommunityPageVC+Binding.swift"; sourceTree = "<group>"; };
 		BC757EF82356E6EC00CB4ADE /* PostHeaderTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostHeaderTextView.swift; sourceTree = "<group>"; };
 		BCA97112236004F500AE37E1 /* CommentsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentsViewModel.swift; sourceTree = "<group>"; };
 		BCA971162360301100AE37E1 /* NotificationsListFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsListFetcher.swift; sourceTree = "<group>"; };
@@ -1656,6 +1658,7 @@
 			children = (
 				BCA9712023603C5D00AE37E1 /* Subviews */,
 				BCA9711C2360347D00AE37E1 /* CommunityPageVC.swift */,
+				BC702C932362974C00D9E88A /* CommunityPageVC+Binding.swift */,
 				BCA9711E2360380400AE37E1 /* CommunityPageViewModel.swift */,
 			);
 			path = CommunityPageVC;
@@ -2170,6 +2173,7 @@
 				3B62055A2346E4220017FEB7 /* EditorVC.swift in Sources */,
 				3BF37BCC22A1297C00A72FFE /* UITableView.swift in Sources */,
 				BCA971262360883D00AE37E1 /* Double.swift in Sources */,
+				BC702C942362974C00D9E88A /* CommunityPageVC+Binding.swift in Sources */,
 				3B5CB31022A5880D00757533 /* MyRxTableViewSectionedAnimatedDataSource.swift in Sources */,
 				3B6CB734234335130097B2A1 /* CommunActionSheet.swift in Sources */,
 				3BC6139E23419EFC00075570 /* HalfSizePresentationController.swift in Sources */,
