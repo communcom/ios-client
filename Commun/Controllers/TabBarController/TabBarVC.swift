@@ -20,7 +20,11 @@ class TabBarVC: UITabBarController {
     let bag = DisposeBag()
     
     // MARK: - Subviews
+    private lazy var tabBarContainerView: UIView = UIView(backgroundColor: .white)
     lazy var tabBarStackView: UIStackView = UIStackView(forAutoLayout: ())
+    var tabBarHeight: CGFloat {
+        return tabBarContainerView.height
+    }
     
     // MARK: - Methods
     override func viewDidLoad() {
@@ -43,7 +47,6 @@ class TabBarVC: UITabBarController {
         tabBar.isHidden = true
         
         // tabBarContainerView
-        let tabBarContainerView: UIView = UIView(backgroundColor: .white)
         view.addSubview(tabBarContainerView)
         tabBarContainerView.autoPinEdge(toSuperviewEdge: .trailing)
         tabBarContainerView.autoPinEdge(toSuperviewEdge: .leading)

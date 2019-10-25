@@ -279,6 +279,8 @@
 		BC31BA57235ECA840007D89A /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC31BA56235ECA840007D89A /* ProfileViewModel.swift */; };
 		BC3D97612350384E00421718 /* ResponseAPIContentGetPosts.json in Resources */ = {isa = PBXBuildFile; fileRef = BC3D97602350384E00421718 /* ResponseAPIContentGetPosts.json */; };
 		BC430E7C235EEB44002E4593 /* ProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC430E7B235EEB44002E4593 /* ProfileHeaderView.swift */; };
+		BC702C8E2362817700D9E88A /* CommunityLeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC702C8D2362817700D9E88A /* CommunityLeaderCell.swift */; };
+		BC702C902362825100D9E88A /* MyAvatarImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC702C8F2362825100D9E88A /* MyAvatarImageView.swift */; };
 		BC757EF92356E6EC00CB4ADE /* PostHeaderTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC757EF82356E6EC00CB4ADE /* PostHeaderTextView.swift */; };
 		BCA97113236004F500AE37E1 /* CommentsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA97112236004F500AE37E1 /* CommentsViewModel.swift */; };
 		BCA971172360301100AE37E1 /* NotificationsListFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA971162360301100AE37E1 /* NotificationsListFetcher.swift */; };
@@ -612,6 +614,8 @@
 		BC31BA56235ECA840007D89A /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		BC3D97602350384E00421718 /* ResponseAPIContentGetPosts.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ResponseAPIContentGetPosts.json; sourceTree = "<group>"; };
 		BC430E7B235EEB44002E4593 /* ProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderView.swift; sourceTree = "<group>"; };
+		BC702C8D2362817700D9E88A /* CommunityLeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityLeaderCell.swift; sourceTree = "<group>"; };
+		BC702C8F2362825100D9E88A /* MyAvatarImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAvatarImageView.swift; sourceTree = "<group>"; };
 		BC757EF82356E6EC00CB4ADE /* PostHeaderTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostHeaderTextView.swift; sourceTree = "<group>"; };
 		BCA97112236004F500AE37E1 /* CommentsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentsViewModel.swift; sourceTree = "<group>"; };
 		BCA971162360301100AE37E1 /* NotificationsListFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsListFetcher.swift; sourceTree = "<group>"; };
@@ -1663,6 +1667,7 @@
 				BCA9712123603C6C00AE37E1 /* CommunityHeaderView.swift */,
 				BCF74A6623618D9000B91089 /* CMSegmentedControl.swift */,
 				BCA9712723608ABD00AE37E1 /* UsersStackView.swift */,
+				BC702C8D2362817700D9E88A /* CommunityLeaderCell.swift */,
 			);
 			path = Subviews;
 			sourceTree = "<group>";
@@ -1673,6 +1678,7 @@
 				BCA9712A2361306700AE37E1 /* MyView.swift */,
 				BC016D48235DA2AC00F1319F /* MyTableViewCell.swift */,
 				BCA971232360400200AE37E1 /* MyTableHeaderView.swift */,
+				BC702C8F2362825100D9E88A /* MyAvatarImageView.swift */,
 			);
 			path = UIViews;
 			sourceTree = "<group>";
@@ -2077,6 +2083,7 @@
 				BCF74A6023617F5700B91089 /* SubscribersListFetcher.swift in Sources */,
 				BC016D52235EA25B00F1319F /* ListViewController.swift in Sources */,
 				3B3C8B8F2347876000D8BADB /* ArticleEditorTextView+Utilities.swift in Sources */,
+				BC702C902362825100D9E88A /* MyAvatarImageView.swift in Sources */,
 				3B197C5B2269EF3F008CF10D /* ProfilePageVC+Binding.swift in Sources */,
 				3B24F86F22F37FB800B7091C /* CommunitiesVC+DataSource.swift in Sources */,
 				3B3C8B932347876000D8BADB /* ArticleEditorTextView+Delegate.swift in Sources */,
@@ -2084,6 +2091,7 @@
 				3B8DDF56234AD5D500B213F0 /* ContentTextView+Parsing.swift in Sources */,
 				57A95197224178010020F55D /* PostController.swift in Sources */,
 				3B3C8B9E234796D900D8BADB /* EditorVC+Binding.swift in Sources */,
+				BC702C8E2362817700D9E88A /* CommunityLeaderCell.swift in Sources */,
 				3B67FC0622C4BB5100D05F01 /* SplashViewController.swift in Sources */,
 				3BB32F1B234436EF006572F3 /* PostMetaView.swift in Sources */,
 				BC31BA57235ECA840007D89A /* ProfileViewModel.swift in Sources */,

@@ -16,4 +16,8 @@ extension UIColor {
     static var link: UIColor {
         return .init(red: 50/255, green: 146/255, blue: 252/255, alpha: 1)
     }
+    
+    static var a5a7bd: UIColor {
+        return UIColor(hexString: "#A5A7BD")!
+    }
 }

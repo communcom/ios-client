@@ -10,7 +10,12 @@ import Foundation
 import PureLayout
 
 extension UIView {
-    public convenience init(width: CGFloat? = nil, height: CGFloat? = nil, backgroundColor: UIColor? = nil) {
+    public convenience init(
+        width: CGFloat? = nil,
+        height: CGFloat? = nil,
+        backgroundColor: UIColor? = nil,
+        cornerRadius: CGFloat? = nil
+    ){
         self.init(forAutoLayout: ())
         if let width = width {
             autoSetDimension(.width, toSize: width)
@@ -18,6 +23,31 @@ extension UIView {
         if let height = height {
             autoSetDimension(.height, toSize: height)
         }
-        self.backgroundColor = backgroundColor
+        if let backgroundColor = backgroundColor {
+            self.backgroundColor = backgroundColor
+        }
+        if let cornerRadius = cornerRadius {
+            self.cornerRadius = cornerRadius
+        }
+    }
+    
+    func autoPinTopAndLeadingToSuperView(inset: CGFloat = 16) {
+        autoPinEdge(toSuperviewEdge: .leading, withInset: inset)
+        autoPinEdge(toSuperviewEdge: .top, withInset: inset)
+    }
+    
+    func autoPinTopAndTrailingToSuperView(inset: CGFloat = 16) {
+        autoPinEdge(toSuperviewEdge: .top, withInset: inset)
+        autoPinEdge(toSuperviewEdge: .trailing, withInset: inset)
+    }
+    
+    func autoPinBottomAndLeadingToSuperView(inset: CGFloat = 16) {
+        autoPinEdge(toSuperviewEdge: .bottom, withInset: inset)
+        autoPinEdge(toSuperviewEdge: .leading, withInset: inset)
+    }
+    
+    func autoPinBottomAndTrailingToSuperView(inset: CGFloat = 16) {
+        autoPinEdge(toSuperviewEdge: .bottom, withInset: inset)
+        autoPinEdge(toSuperviewEdge: .trailing, withInset: inset)
     }
 }

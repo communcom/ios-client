@@ -20,4 +20,8 @@ extension UIImage {
       guard let cgImage = image?.cgImage else { return nil }
       self.init(cgImage: cgImage)
     }
+    
+    static var placeholder: UIImage {
+        return UIImage(named: "ProfilePageCover")!
+    }
 }

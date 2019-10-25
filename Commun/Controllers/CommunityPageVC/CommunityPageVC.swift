@@ -66,7 +66,7 @@ class CommunityPageVC: BaseViewController {
         backButton.autoPinEdge(toSuperviewSafeArea: .leading, withInset: 16)
         
         view.addSubview(tableView)
-        tableView.autoPinEdgesToSuperviewEdges()
+        tableView.autoPinEdgesToSuperviewSafeArea()
         tableView.contentInset = UIEdgeInsets(top: coverHeight - 24, left: 0, bottom: 0, right: 0)
         
         headerView = CommunityHeaderView(tableView: tableView)
@@ -77,8 +77,11 @@ class CommunityPageVC: BaseViewController {
         // setup datasource
         tableView.register(BasicPostCell.self, forCellReuseIdentifier: "BasicPostCell")
         tableView.register(ArticlePostCell.self, forCellReuseIdentifier: "ArticlePostCell")
+        tableView.register(CommunityLeaderCell.self, forCellReuseIdentifier: "CommunityLeaderCell")
         #warning("remove later")
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "TestCell")
+        
+        tableView.separatorStyle = .none
     }
     
     override func bind() {
@@ -167,11 +170,11 @@ class CommunityPageVC: BaseViewController {
                     }
                 }
                 
-                #warning("fix later")
                 if let user = element as? ResponseAPIContentResolveProfile {
-                    let cell = UITableViewCell(style: .default, reuseIdentifier: "TestCell")
-                    cell.textLabel?.text = user.username
-                    cell.imageView?.setAvatar(urlString: user.avatarUrl, namePlaceHolder: user.username)
+                    let cell = self.tableView.dequeueReusableCell(withIdentifier: "CommunityLeaderCell") as! CommunityLeaderCell
+                    #warning("fix later")
+//                    cell.textLabel?.text = user.username
+//                    cell.imageView?.setAvatar(urlString: user.avatarUrl, namePlaceHolder: user.username)
                     return cell
                 }
                 

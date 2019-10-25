@@ -30,9 +30,16 @@ class BaseViewController: UIViewController {
     func avoidTabBar() {
         // avoid tabBar
         guard let scrollView = contentScrollView,
-            let tabBarController = tabBarController else {return}
+            let tabBarController = tabBarController as? TabBarVC else {return}
         var contentInsets = scrollView.contentInset
-        contentInsets.bottom = tabBarController.tabBar.height - (UIApplication.shared.keyWindow?.safeAreaInsets.bottom ?? 0)
+        
+        var insetsBottom = contentInsets.bottom + tabBarController.tabBarHeight
+        
+        if scrollView.insetsLayoutMarginsFromSafeArea {
+            insetsBottom -= (UIApplication.shared.keyWindow?.safeAreaInsets.bottom ?? 0)
+        }
+        
+        contentInsets.bottom = insetsBottom
         
         scrollView.contentInset = contentInsets
     }
