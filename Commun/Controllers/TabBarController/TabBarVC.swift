@@ -53,6 +53,7 @@ class TabBarVC: UITabBarController {
         tabBarContainerView.autoPinEdge(toSuperviewEdge: .bottom)
         tabBarContainerView.autoPinEdge(.top, to: .top, of: tabBar)
         tabBarContainerView.cornerRadius = 24.5
+        tabBarContainerView.addShadow(ofColor: UIColor(red: 56, green: 60, blue: 71)!, radius: 4, offset: CGSize(width: 0, height: -6), opacity: 0.1)
         // tabBarStackView
         tabBarContainerView.addSubview(tabBarStackView)
         tabBarStackView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .bottom)
