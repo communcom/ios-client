@@ -9,10 +9,8 @@
 import Foundation
 
 class CommunityLeaderCell: MyTableViewCell {
-    lazy var avatarImageView: UIImageView = {
-        let imageView = UIImageView(width: 50, height: 50)
-        imageView.cornerRadius = 25
-        imageView.image = .placeholder
+    lazy var avatarImageView: MyAvatarImageView = {
+        let imageView = MyAvatarImageView(size: 50)
         return imageView
     }()
     
