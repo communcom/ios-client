@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import RxSwift
 
 class MyAvatarImageView: MyView {
     private lazy var imageView: UIImageView = {
@@ -23,6 +24,7 @@ class MyAvatarImageView: MyView {
     
     override func commonInit() {
         super.commonInit()
+        backgroundColor = .clear
         addSubview(imageView)
         imageView.autoPinEdgesToSuperviewEdges()
     }
@@ -41,14 +43,41 @@ class MyAvatarImageView: MyView {
                 self?.hideLoader()
                 if (error != nil) {
                     // Placeholder image
-                    self?.imageView.setNonAvatarImageWithId(namePlaceHolder)
+                    self?.setNonAvatarImageWithId(namePlaceHolder)
                 }
             }
         } else {
             // Placeholder image
             hideLoader()
-            imageView.setNonAvatarImageWithId(namePlaceHolder)
+            setNonAvatarImageWithId(namePlaceHolder)
             setNeedsLayout()
         }
+    }
+    
+    func observeCurrentUserAvatar() -> Disposable {
+        // avatarImage
+        return UserDefaults.standard.rx
+            .observe(String.self, Config.currentUserAvatarUrlKey)
+            .distinctUntilChanged()
+            .subscribe(onNext: {urlString in
+                self.setAvatar(urlString: urlString, namePlaceHolder: Config.currentUser?.id ?? "U")
+            })
+    }
+    
+    func setNonAvatarImageWithId(_ id: String) {
+        var color = nonAvatarColors[id]
+        if color == nil {
+            repeat {
+                color = UIColor.random
+            } while nonAvatarColors.contains {$1==color}
+            nonAvatarColors[id] = color
+        }
+        
+        imageView.setImageWith(id, color: color)
+    }
+    
+    func addTapToViewer() {
+        isUserInteractionEnabled = true
+        imageView.addTapToViewer()
     }
 }

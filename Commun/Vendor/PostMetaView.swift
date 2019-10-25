@@ -16,10 +16,8 @@ class PostMetaView: UIView {
     }
     
     // MARK: - Subviews
-    lazy var avatarImageView: UIImageView = {
-        let avatarImageView = UIImageView()
-        avatarImageView.cornerRadius = 20
-        avatarImageView.translatesAutoresizingMaskIntoConstraints = false
+    lazy var avatarImageView: MyAvatarImageView = {
+        let avatarImageView = MyAvatarImageView(size: 40)
         return avatarImageView
     }()
     

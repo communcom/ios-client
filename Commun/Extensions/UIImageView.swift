@@ -12,7 +12,7 @@ import RxSwift
 import AppImageViewer
 import CyberSwift
 
-fileprivate var nonAvatarColors = [String: UIColor]()
+var nonAvatarColors = [String: UIColor]()
 
 extension UIImageView {
     func setNonAvatarImageWithId(_ id: String) {
