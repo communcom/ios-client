@@ -30,17 +30,15 @@ class MyAvatarImageView: MyView {
     }
     
     var image: UIImage? {
-        didSet {
-            imageView.image = image
-        }
+        return imageView.image
     }
     
     func setAvatar(urlString: String?, namePlaceHolder: String) {
-        showLoader()
+        showLoading()
         // profile image
         if let avatarUrl = urlString {
             imageView.sd_setImage(with: URL(string: avatarUrl), placeholderImage: UIImage(named: "ProfilePageUserAvatar")) { [weak self] (_, error, _, _) in
-                self?.hideLoader()
+                self?.hideLoading()
                 if (error != nil) {
                     // Placeholder image
                     self?.setNonAvatarImageWithId(namePlaceHolder)
@@ -48,9 +46,8 @@ class MyAvatarImageView: MyView {
             }
         } else {
             // Placeholder image
-            hideLoader()
+            hideLoading()
             setNonAvatarImageWithId(namePlaceHolder)
-            setNeedsLayout()
         }
     }
     
@@ -65,6 +62,7 @@ class MyAvatarImageView: MyView {
     }
     
     func setNonAvatarImageWithId(_ id: String) {
+        imageView.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
         var color = nonAvatarColors[id]
         if color == nil {
             repeat {

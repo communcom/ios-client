@@ -16,6 +16,7 @@ var nonAvatarColors = [String: UIColor]()
 
 extension UIImageView {
     func setNonAvatarImageWithId(_ id: String) {
+        frame = CGRect(x: 0, y: 0, width: 100, height: 100)
         var color = nonAvatarColors[id]
         if color == nil {
             repeat {
