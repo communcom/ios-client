@@ -11,6 +11,8 @@ import InitialsImageView
 import RxSwift
 import AppImageViewer
 import CyberSwift
+import SDWebImage
+import SwiftyGif
 
 var nonAvatarColors = [String: UIColor]()
 
@@ -40,6 +42,18 @@ extension UIImageView {
         } else {
             // Placeholder image
             setNonAvatarImageWithId(namePlaceHolder)
+        }
+    }
+    
+    func setImageDetectGif(with urlString: String?, completed: SDExternalCompletionBlock? = nil) {
+        guard let urlString = urlString,
+            let url = URL(string: urlString)
+        else {return}
+        if urlString.lowercased().ends(with: ".gif") {
+            setGifFromURL(url)
+        }
+        else {
+            sd_setImage(with: url, placeholderImage: image, completed: completed)
         }
     }
     

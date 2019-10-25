@@ -135,6 +135,7 @@ PODS:
   - SwifterSwift/SwiftStdlib (5.0.0)
   - SwifterSwift/UIKit (5.0.0)
   - SwiftTheme (0.4.7)
+  - SwiftyGif (5.2.0)
   - SwiftyJSON (4.3.0)
   - Swinject (2.6.2)
   - THPinViewController (1.2.6)
@@ -172,6 +173,7 @@ DEPENDENCIES:
   - SwifterSwift/Foundation
   - SwifterSwift/SwiftStdlib
   - SwifterSwift/UIKit
+  - SwiftyGif
   - Swinject
   - THPinViewController (from `https://github.com/bigearsenal/THPinViewController.git`, branch `commun`)
   - TLPhotoPicker
@@ -226,6 +228,7 @@ SPEC REPOS:
     - Starscream
     - SwifterSwift
     - SwiftTheme
+    - SwiftyGif
     - SwiftyJSON
     - Swinject
     - TLPhotoPicker
@@ -307,6 +310,7 @@ SPEC CHECKSUMS:
   SubviewAttachingTextView: 1f6a12782b5d53241f8a05424dfe81fae6c33602
   SwifterSwift: 96f90594b370802f01647c2b1229c74a84ffafee
   SwiftTheme: 67bbb51f2ef69570164562376f441655a143399d
+  SwiftyGif: b85c6b33a9411859d9e1db998b6a8214aea942df
   SwiftyJSON: 6faa0040f8b59dead0ee07436cbf76b73c08fd08
   Swinject: cf7458774b1b00323080a9c67e47a1ee7f9d2af1
   THPinViewController: e0dc717a61c8a0a0f251764da26b9ca8a4fd2ec1
@@ -314,6 +318,6 @@ SPEC CHECKSUMS:
   TTTAttributedLabel: 8cffe8e127e4e82ff3af1e5386d4cd0ad000b656
   "UITextView+Placeholder": c407b27599ea23cca425946fee3cf1db5d547008
 
-PODFILE CHECKSUM: f8accb3747a167abd18a826dc27b39cf44181c95
+PODFILE CHECKSUM: 23c7c745381348f98366255ab8fc442afa89025f
 
 COCOAPODS: 1.8.3

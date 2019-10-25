@@ -20,6 +20,7 @@ def common_pods
   pod 'SDWebImage', '~> 4.0'
   pod 'Action'
   pod 'DateToolsSwift'
+  pod 'SwiftyGif'
   
   pod "InitialsImageView"
   

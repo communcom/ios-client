@@ -93,10 +93,9 @@ class CommunityPageVC: BaseViewController {
         title = community.name
         
         // cover
-        if let urlString = community.coverUrl,
-            let url = URL(string: urlString)
+        if let urlString = community.coverUrl
         {
-            coverImageView.sd_setImage(with: url, placeholderImage: UIImage(named: "ProfilePageCover"))
+            coverImageView.setImageDetectGif(with: urlString)
         }
         
         // header
