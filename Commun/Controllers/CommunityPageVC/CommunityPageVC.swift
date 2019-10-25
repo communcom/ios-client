@@ -78,8 +78,7 @@ class CommunityPageVC: BaseViewController {
         tableView.register(BasicPostCell.self, forCellReuseIdentifier: "BasicPostCell")
         tableView.register(ArticlePostCell.self, forCellReuseIdentifier: "ArticlePostCell")
         tableView.register(CommunityLeaderCell.self, forCellReuseIdentifier: "CommunityLeaderCell")
-        #warning("remove later")
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "TestCell")
+        tableView.register(CommunityAboutCell.self, forCellReuseIdentifier: "CommunityAboutCell")
         
         tableView.separatorStyle = .none
     }

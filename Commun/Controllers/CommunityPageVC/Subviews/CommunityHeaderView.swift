@@ -207,6 +207,9 @@ class CommunityHeaderView: MyTableHeaderView {
         
         // pin bottom
         separator.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
+        
+        segmentedControl.backgroundColor = .clear
+        pointsContainerView.addShadow(ofColor: UIColor(red: 106, green: 128, blue: 245)!, radius: 19, offset: CGSize(width: 0, height: 14), opacity: 0.3)
     }
     
     func setUp(with community: ResponseAPIContentGetCommunity) {

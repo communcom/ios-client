@@ -105,8 +105,8 @@ extension CommunityPageVC {
                 }
                 
                 if let string = element as? String {
-                    let cell = UITableViewCell(style: .default, reuseIdentifier: "TestCell")
-                    cell.textLabel?.text = string
+                    let cell = self.tableView.dequeueReusableCell(withIdentifier: "CommunityAboutCell") as! CommunityAboutCell
+                    cell.label.text = string
                     return cell
                 }
                 

@@ -22,7 +22,7 @@ extension EditorVC {
         toolbar.backgroundColor = .white
         toolbar.clipsToBounds = true
         toolbar.cornerRadius = 16
-        toolbar.addShadow(offset: CGSize.init(width: 0, height: 1), color: .black, radius: 10, opacity: 0.2)
+        toolbar.addShadow(ofColor: UIColor(red: 56, green: 60, blue: 71)!, radius: 16, offset: CGSize(width: 0, height: -6), opacity: 0.07)
         
         toolbar.autoPinEdge(toSuperviewSafeArea: .leading)
         toolbar.autoPinEdge(toSuperviewSafeArea: .trailing)

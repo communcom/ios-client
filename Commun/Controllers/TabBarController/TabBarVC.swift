@@ -53,7 +53,6 @@ class TabBarVC: UITabBarController {
         tabBarContainerView.autoPinEdge(toSuperviewEdge: .bottom)
         tabBarContainerView.autoPinEdge(.top, to: .top, of: tabBar)
         tabBarContainerView.cornerRadius = 24.5
-        tabBarContainerView.addShadow(offset: CGSize.init(width: 0, height: 1), color: .black, radius: 10, opacity: 0.2)
         // tabBarStackView
         tabBarContainerView.addSubview(tabBarStackView)
         tabBarStackView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .bottom)
@@ -140,7 +139,7 @@ class TabBarVC: UITabBarController {
         view.autoAlignAxis(toSuperviewAxis: .vertical)
         view.autoAlignAxis(toSuperviewAxis: .horizontal)
         view.isUserInteractionEnabled = false
-        view.addShadow(offset: CGSize.init(width: 0, height: -1), color: .black, radius: 10, opacity: 0.2)
+        view.addShadow(ofColor: UIColor(red: 106, green: 128, blue: 245)!, radius: 10, offset: CGSize(width: 0, height: 6), opacity: 0.35)
         
         button.tag = viewControllers!.count + 1
         button.addTarget(self, action: #selector(buttonAddTapped), for: .touchUpInside)

@@ -94,17 +94,6 @@ extension UIView {
         self.removeConstraints(self.constraints)
     }
     
-    func addShadow(offset: CGSize, color: UIColor, radius: CGFloat, opacity: Float) {
-        layer.masksToBounds = false
-        layer.shadowOffset = offset
-        layer.shadowColor = color.cgColor
-        layer.shadowRadius = radius
-        layer.shadowOpacity = opacity
-
-        let backgroundCGColor = backgroundColor?.cgColor
-        backgroundColor = nil
-        layer.backgroundColor =  backgroundCGColor
-    }
         
     var heightConstraint: NSLayoutConstraint? {
         return constraints.first(where: {$0.firstAttribute == .height && $0.secondItem == nil})
