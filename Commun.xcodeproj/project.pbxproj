@@ -1206,9 +1206,7 @@
 		5725173A2243E4510033125C /* PostPageVC */ = {
 			isa = PBXGroup;
 			children = (
-				3B02CD262289B1D30078BB52 /* PostHeaderView */,
-				3BDD9A02228DBE9D00B2A1DA /* CommentForm */,
-				57C33A402244D2BB00073FAE /* Cells */,
+				BCBC51212362F3590031C061 /* Subviews */,
 				5725173F2243E4D70033125C /* PostPageViewModel.swift */,
 				5725173B2243E4640033125C /* PostPageVC.swift */,
 				3B5D361722E820760012A991 /* PostPageVC+Header.swift */,
@@ -1687,6 +1685,16 @@
 				BC702C8F2362825100D9E88A /* MyAvatarImageView.swift */,
 			);
 			path = UIViews;
+			sourceTree = "<group>";
+		};
+		BCBC51212362F3590031C061 /* Subviews */ = {
+			isa = PBXGroup;
+			children = (
+				3B02CD262289B1D30078BB52 /* PostHeaderView */,
+				3BDD9A02228DBE9D00B2A1DA /* CommentForm */,
+				57C33A402244D2BB00073FAE /* Cells */,
+			);
+			path = Subviews;
 			sourceTree = "<group>";
 		};
 		BCF3914A235FEAA500A9D1ED /* Fetchers */ = {
