@@ -16,9 +16,39 @@
         "friendsCount": 1,
         "friends": [
             {
-                "userId": "tst3evxcjgjn",
-                "username": "bayer-van-dds",
-                "avatarUrl": "https://img.golos.io/images/12DcKUF5SFgXyt9dazqn7ibu5Pn.jpg"
+                "userId": "tst3dvxcjgjn",
+                "username": "bayer-tan-dds",
+                "avatarUrl": "https://i.pravatar.cc/300"
+            },
+            {
+                "userId": "tst3evxcj5jn",
+                "username": "bayer-vai-dds",
+                "avatarUrl": "https://i.pravatar.cc/301"
+            },
+            {
+                "userId": "ts23evxcjgjn",
+                "username": "bayep-van-dds",
+                "avatarUrl": "https://i.pravatar.cc/302"
+            },
+            {
+                "userId": "tst3evxcjgpn",
+                "username": "bayer-van-ddu",
+                "avatarUrl": "https://i.pravatar.cc/303"
+            },
+            {
+                "userId": "tst3ev7cjgjn",
+                "username": "bayer-van-dos",
+                "avatarUrl": "https://i.pravatar.cc/304"
+            },
+            {
+                "userId": "tst3evxcjgj0",
+                "username": "bamer-van-dds",
+                "avatarUrl": "https://i.pravatar.cc/305"
+            },
+            {
+                "userId": "tst7evxcjgjn",
+                "username": "bayor-van-dds",
+                "avatarUrl": "https://i.pravatar.cc/306"
             }
         ]
     }

@@ -171,7 +171,7 @@
                 "community": {
                     "communityId": "LLUPLO",
                     "name": null,
-                    "avatarUrl": null
+                    "avatarUrl": "https://i.pravatar.cc/400"
                 }
             },
             {
@@ -269,7 +269,7 @@
                 "community": {
                     "communityId": "LLUPLO",
                     "name": null,
-                    "avatarUrl": null
+                    "avatarUrl": "https://i.pravatar.cc/401"
                 }
             },
             {
@@ -324,7 +324,7 @@
                 "community": {
                     "communityId": "LLUILA",
                     "name": null,
-                    "avatarUrl": null
+                    "avatarUrl": "https://i.pravatar.cc/402"
                 }
             },
             {
@@ -379,7 +379,7 @@
                 "community": {
                     "communityId": "LLUILA",
                     "name": null,
-                    "avatarUrl": null
+                    "avatarUrl": "https://i.pravatar.cc/403"
                 }
             }
         ]
