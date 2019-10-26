@@ -283,6 +283,7 @@
 		BC702C902362825100D9E88A /* MyAvatarImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC702C8F2362825100D9E88A /* MyAvatarImageView.swift */; };
 		BC702C942362974C00D9E88A /* CommunityPageVC+Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC702C932362974C00D9E88A /* CommunityPageVC+Binding.swift */; };
 		BC702C96236298CC00D9E88A /* CommunityAboutCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC702C95236298CC00D9E88A /* CommunityAboutCell.swift */; };
+		BC74A18223643C6400D94EF2 /* CommunityController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC74A18123643C6400D94EF2 /* CommunityController.swift */; };
 		BC757EF92356E6EC00CB4ADE /* PostHeaderTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC757EF82356E6EC00CB4ADE /* PostHeaderTextView.swift */; };
 		BCA97113236004F500AE37E1 /* CommentsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA97112236004F500AE37E1 /* CommentsViewModel.swift */; };
 		BCA971172360301100AE37E1 /* NotificationsListFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA971162360301100AE37E1 /* NotificationsListFetcher.swift */; };
@@ -621,6 +622,7 @@
 		BC702C8F2362825100D9E88A /* MyAvatarImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAvatarImageView.swift; sourceTree = "<group>"; };
 		BC702C932362974C00D9E88A /* CommunityPageVC+Binding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CommunityPageVC+Binding.swift"; sourceTree = "<group>"; };
 		BC702C95236298CC00D9E88A /* CommunityAboutCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityAboutCell.swift; sourceTree = "<group>"; };
+		BC74A18123643C6400D94EF2 /* CommunityController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityController.swift; sourceTree = "<group>"; };
 		BC757EF82356E6EC00CB4ADE /* PostHeaderTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostHeaderTextView.swift; sourceTree = "<group>"; };
 		BCA97112236004F500AE37E1 /* CommentsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentsViewModel.swift; sourceTree = "<group>"; };
 		BCA971162360301100AE37E1 /* NotificationsListFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsListFetcher.swift; sourceTree = "<group>"; };
@@ -1071,13 +1073,14 @@
 			path = CommentForm;
 			sourceTree = "<group>";
 		};
-		3BDD9A09228EDA5700B2A1DA /* PostController */ = {
+		3BDD9A09228EDA5700B2A1DA /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				57A95196224178010020F55D /* PostController.swift */,
 				3B5D7CEE2297F3FA0077B82C /* ItemsListController.swift */,
+				57A95196224178010020F55D /* PostController.swift */,
+				BC74A18123643C6400D94EF2 /* CommunityController.swift */,
 			);
-			path = PostController;
+			path = Controllers;
 			sourceTree = "<group>";
 		};
 		3BE15B20233CBBAF00D865F5 /* Subviews */ = {
@@ -1378,6 +1381,7 @@
 		578409EA223FAC0000338FD5 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				3BDD9A09228EDA5700B2A1DA /* Controllers */,
 				BCA971292361304800AE37E1 /* UIViews */,
 				3B06862F2346FFA6008953C5 /* CommunButton.swift */,
 				3BB32F1723438D32006572F3 /* UIPresentationControllers */,
@@ -1387,7 +1391,6 @@
 				3B885BBA22B7A1B600FC4B7A /* EmbededView */,
 				575AECAA226066F000A7EC2D /* FormTextField */,
 				57FB1795224BFBD700563BF7 /* PageControls */,
-				3BDD9A09228EDA5700B2A1DA /* PostController */,
 				B1A8AC1922E6FD4800032030 /* UIButton */,
 				3BB48ACA22D4ECDC00F11B6A /* ContentFittingWebView.swift */,
 				3B28EFE1228C7C31002D4816 /* KeyboardLayoutConstraint.swift */,
@@ -2178,6 +2181,7 @@
 				BCB2A6E423546AF500B3582B /* EditorVC+AttachmentViewDelegate.swift in Sources */,
 				3B197C8A226A33CF008CF10D /* Decodable+MockObjects.swift in Sources */,
 				BC016D45235DA0D400F1319F /* BasicPostCell.swift in Sources */,
+				BC74A18223643C6400D94EF2 /* CommunityController.swift in Sources */,
 				BC757EF92356E6EC00CB4ADE /* PostHeaderTextView.swift in Sources */,
 				578B94DA2263CBD800FB5BC6 /* ConfirmUserVC.swift in Sources */,
 				3B25E5C2234C4205005BD1B8 /* AttachmentsView.swift in Sources */,

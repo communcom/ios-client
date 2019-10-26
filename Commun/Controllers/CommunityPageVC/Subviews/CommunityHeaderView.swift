@@ -10,7 +10,12 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-class CommunityHeaderView: MyTableHeaderView {
+class CommunityHeaderView: MyTableHeaderView, CommunityController {
+    
+    // MARK: - CommunityController
+    let disposeBag = DisposeBag()
+    var community: ResponseAPIContentGetCommunity?
+    
     // MARK: - Subviews
     lazy var avatarImageView = MyAvatarImageView(size: 50)
     
@@ -144,6 +149,7 @@ class CommunityHeaderView: MyTableHeaderView {
         addSubview(joinButton)
         joinButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
         joinButton.autoAlignAxis(.horizontal, toSameAxisOf: avatarImageView)
+        joinButton.addTarget(self, action: #selector(joinButtonDidTouch(_:)), for: .touchUpInside)
         
         addSubview(descriptionLabel)
         descriptionLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
@@ -202,9 +208,14 @@ class CommunityHeaderView: MyTableHeaderView {
         
         segmentedControl.backgroundColor = .clear
         pointsContainerView.addShadow(ofColor: UIColor(red: 106, green: 128, blue: 245)!, radius: 19, offset: CGSize(width: 0, height: 14), opacity: 0.3)
+        
+        // observe
+        observerCommunityChange()
     }
     
     func setUp(with community: ResponseAPIContentGetCommunity) {
+        self.community = community
+        
         // avatar
         avatarImageView.setAvatar(urlString: community.avatarUrl, namePlaceHolder: community.name ?? community.communityId ?? "C")
         
@@ -218,6 +229,12 @@ class CommunityHeaderView: MyTableHeaderView {
 //        let dateString = dateFormatter.string(from: Date.from(string: community.registration.time))
 //        profilePageVC.joinedDateLabel.text = String(format: "%@ %@", "joined".localized().uppercaseFirst, dateString)
         joinedDateLabel.text = "joined".localized().uppercaseFirst + " " + ""
+        
+        // joinButton
+        let joined = community.isSubscribed ?? false
+        joinButton.backgroundColor = joined ? #colorLiteral(red: 0.9525656104, green: 0.9605062604, blue: 0.9811610579, alpha: 1): .appMainColor
+        joinButton.setTitleColor(joined ? .appMainColor: .white , for: .normal)
+        joinButton.setTitle(joined ? "joined".localized().uppercaseFirst : "join".localized().uppercaseFirst, for: .normal)
         
         // description
         descriptionLabel.text = community.description
@@ -233,5 +250,9 @@ class CommunityHeaderView: MyTableHeaderView {
         if let friends = community.friends {
             usersStackView.setUp(with: friends)
         }
+    }
+    
+    @objc func joinButtonDidTouch(_ button: UIButton) {
+        join()
     }
 }
