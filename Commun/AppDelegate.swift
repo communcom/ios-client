@@ -37,6 +37,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // MARK: - Class Functions
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        // global tintColor
+        window?.tintColor = .appMainColor
         // Logger
 //        Logger.showEvents = [.error]
         

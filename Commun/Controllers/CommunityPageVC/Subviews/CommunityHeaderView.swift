@@ -29,6 +29,12 @@ class CommunityHeaderView: MyTableHeaderView, CommunityController {
         return label
     }()
     
+    lazy var notificationButton: UIButton = {
+        let button = UIButton(width: 35, height: 35, backgroundColor: .f3f5fa, cornerRadius: 35/2, contentInsets: UIEdgeInsets(top: 10, left: 11, bottom: 10, right: 11))
+        button.tintColor = .appMainColor
+        button.setImage(UIImage(named: "profilepage-notification")!, for: .normal)
+        return button
+    }()
     lazy var joinButton = CommunButton.join
     
     lazy var descriptionLabel: UILabel = {
@@ -235,6 +241,14 @@ class CommunityHeaderView: MyTableHeaderView, CommunityController {
         joinButton.backgroundColor = joined ? #colorLiteral(red: 0.9525656104, green: 0.9605062604, blue: 0.9811610579, alpha: 1): .appMainColor
         joinButton.setTitleColor(joined ? .appMainColor: .white , for: .normal)
         joinButton.setTitle(joined ? "joined".localized().uppercaseFirst : "join".localized().uppercaseFirst, for: .normal)
+        
+        // notification button
+        notificationButton.removeFromSuperview()
+        if joined {
+            addSubview(notificationButton)
+            notificationButton.autoPinEdge(.trailing, to: .leading, of: joinButton, withOffset: -5)
+            notificationButton.autoAlignAxis(.horizontal, toSameAxisOf: avatarImageView)
+        }
         
         // description
         descriptionLabel.text = community.description

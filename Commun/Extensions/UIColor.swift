@@ -20,4 +20,8 @@ extension UIColor {
     static var a5a7bd: UIColor {
         return UIColor(hexString: "#A5A7BD")!
     }
+    
+    static var f3f5fa: UIColor {
+        return UIColor(hexString: "#F3F5FA")!
+    }
 }

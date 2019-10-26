@@ -86,7 +86,7 @@ extension CommunityController {
             value != community?.isSubscribed
         else {return}
         community!.isSubscribed = value
-        var subscribersCount: UInt16 = (community!.subscribersCount ?? 0)
+        var subscribersCount: UInt64 = (community!.subscribersCount ?? 0)
         if value == false && subscribersCount == 0 {subscribersCount = 0}
         else {
             if value == true {

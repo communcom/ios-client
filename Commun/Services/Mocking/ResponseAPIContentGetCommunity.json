@@ -2,7 +2,7 @@
     "jsonrpc": "2.0",
     "id": 1,
     "result": {
-        "subscribersCount": 0,
+        "subscribersCount": 13,
         "communityId": "WREK",
         "alias": "id2599799600",
         "name": "WREK comunity",
@@ -13,7 +13,7 @@
         "rules": "WREK comunity rules ",
         "isSubscribed": true,
         "isBlocked": false,
-        "friendsCount": 1,
+        "friendsCount": 7,
         "friends": [
             {
                 "userId": "tst3dvxcjgjn",

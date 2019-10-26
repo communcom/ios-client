@@ -51,6 +51,7 @@ class CommunityPageVC: BaseViewController {
     override func setUp() {
         super.setUp()
         view.backgroundColor = #colorLiteral(red: 0.9605136514, green: 0.9644123912, blue: 0.9850376248, alpha: 1)
+        navigationItem.backBarButtonItem?.title = ""
         
         view.addSubview(coverImageView)
         coverImageView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .bottom)
