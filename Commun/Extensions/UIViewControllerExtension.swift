@@ -128,16 +128,15 @@ extension UIViewController {
     
     func showProfileWithUserId(_ userId: String) {
         // if profile was opened, shake it off!!
-        if let profileVC = self as? ProfilePageVC, profileVC.viewModel.userId == userId {
+        if let profileVC = self as? UserProfilePageVC, profileVC.userId == userId {
             profileVC.view.shake()
             return
         }
         
         // Open other user's profile
         if userId != Config.currentUser?.id {
-            let profile = controllerContainer.resolve(ProfilePageVC.self)!
-            profile.viewModel = ProfilePageViewModel(userId: userId)
-            show(profile, sender: nil)
+            let profileVC = UserProfilePageVC(userId: userId)
+            show(profileVC, sender: nil)
             return
         }
         

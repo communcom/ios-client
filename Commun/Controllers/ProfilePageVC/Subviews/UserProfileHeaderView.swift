@@ -32,7 +32,7 @@ class UserProfileHeaderView: ProfileHeaderView {
     
     lazy var communitiesMutualCountLabel = UILabel.with(text: "300", textSize: 15, weight: .semibold, textColor: .a5a7bd)
     
-    lazy var communitiesCollectionView = UICollectionView(height: 171)
+    lazy var communitiesCollectionView = UIView(height: 171)
     
     // MARK: - Initializers
     override func commonInit() {
@@ -62,7 +62,7 @@ class UserProfileHeaderView: ProfileHeaderView {
         followingsCountLabel.autoPinEdge(.leading, to: .trailing, of: dotLabel, withOffset: 2)
         followingsCountLabel.autoAlignAxis(.horizontal, toSameAxisOf: followersCountLabel)
         
-        let followingsLabel = UILabel.with(text: "leads".localized().uppercaseFirst, textSize: 12, weight: .semibold, textColor: UIColor(hexString: "#A5A7BD")!)
+        let followingsLabel = UILabel.with(text: "followings".localized().uppercaseFirst, textSize: 12, weight: .semibold, textColor: UIColor(hexString: "#A5A7BD")!)
         addSubview(followingsLabel)
         followingsLabel.autoPinEdge(.leading, to: .trailing, of: followingsCountLabel, withOffset: 4)
         followingsLabel.autoAlignAxis(.horizontal, toSameAxisOf: followersCountLabel)
@@ -73,7 +73,7 @@ class UserProfileHeaderView: ProfileHeaderView {
         friendLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
         friendLabel.autoPinEdge(.leading, to: .trailing, of: usersStackView, withOffset: 5)
         
-        let separator1 = UIView(height: 1, backgroundColor: .a5a7bd)
+        let separator1 = UIView(height: 1, backgroundColor: #colorLiteral(red: 0.9599978328, green: 0.966491878, blue: 0.9829974771, alpha: 1))
         addSubview(separator1)
         separator1.autoPinEdge(toSuperviewEdge: .leading)
         separator1.autoPinEdge(toSuperviewEdge: .trailing)
@@ -111,7 +111,7 @@ class UserProfileHeaderView: ProfileHeaderView {
         communitiesCollectionView.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
         communitiesCollectionView.autoPinEdge(toSuperviewEdge: .trailing)
         
-        let separator2 = UIView(height: 1, backgroundColor: .a5a7bd)
+        let separator2 = UIView(height: 1, backgroundColor: #colorLiteral(red: 0.9599978328, green: 0.966491878, blue: 0.9829974771, alpha: 1))
         addSubview(separator2)
         separator2.autoPinEdge(.top, to: .bottom, of: communitiesCollectionView, withOffset: 20)
         separator2.autoPinEdge(toSuperviewEdge: .leading)
