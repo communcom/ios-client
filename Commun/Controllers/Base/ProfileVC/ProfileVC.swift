@@ -11,14 +11,6 @@ import RxSwift
 
 class ProfileVC<ProfileType: Decodable>: BaseViewController {
     override var contentScrollView: UIScrollView? {tableView}
-    override var title: String? {
-        get {
-            return navigationBar.title
-        }
-        set {
-            navigationBar.title = newValue
-        }
-    }
     
     // MARK: - Constants
     let coverHeight: CGFloat = 180
@@ -30,7 +22,7 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
     }
     
     // MARK: - Subviews
-    lazy var navigationBar = MyNavigationBar(height: 60)
+    lazy var backButton = UIButton.back(tintColor: .white, contentInsets: UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 24))
     
     lazy var coverImageView: UIImageView = {
         let imageView = UIImageView(height: coverHeight)
@@ -54,14 +46,15 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
         super.setUp()
         view.backgroundColor = #colorLiteral(red: 0.9605136514, green: 0.9644123912, blue: 0.9850376248, alpha: 1)
         navigationItem.backBarButtonItem?.title = " "
+        let leftButtonView = UIView(frame: CGRect(x: 0, y: 0, width: 36, height: 40))
         
-        view.addSubview(navigationBar)
-        navigationBar.autoPinEdge(toSuperviewEdge: .leading)
-        navigationBar.autoPinEdge(toSuperviewEdge: .trailing)
-        navigationBar.autoPinEdge(toSuperviewSafeArea: .top)
-        navigationBar.backButton.tintColor = .white
-        navigationBar.titleLabel.textColor = .clear
-        navigationBar.backgroundColor = .clear
+        leftButtonView.addSubview(backButton)
+        backButton.autoPinEdgesToSuperviewEdges()
+        backButton.addTarget(self, action: #selector(back), for: .touchUpInside)
+        leftButtonView.addSubview(backButton)
+
+        let leftBarButton = UIBarButtonItem(customView: leftButtonView)
+        navigationItem.leftBarButtonItem = leftBarButton
         
         view.addSubview(coverImageView)
         coverImageView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .bottom)
@@ -69,8 +62,6 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
         view.addSubview(tableView)
         tableView.autoPinEdgesToSuperviewEdges()
         tableView.contentInset = UIEdgeInsets(top: coverHeight - 24, left: 0, bottom: 0, right: 0)
-        
-        view.bringSubviewToFront(navigationBar)
         
         // setup datasource
         tableView.register(BasicPostCell.self, forCellReuseIdentifier: "BasicPostCell")
@@ -134,12 +125,12 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        navigationController?.setNavigationBarHidden(false, animated: animated)
+        showTitle(true)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(true, animated: animated)
+        showTitle(false)
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -160,6 +151,22 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
                 headerView.frame = headerFrame
                 tableView.tableHeaderView = headerView
             }
+        }
+    }
+    
+    func showTitle(_ show: Bool, animated: Bool = false) {
+        UIView.animate(withDuration: animated ? 0.3: 0) {
+            self.navigationController?.navigationBar.setBackgroundImage(
+                show ? nil: UIImage(), for: .default)
+            self.navigationController?.navigationBar.shadowImage =
+                show ? nil: UIImage()
+            self.navigationController?.view.backgroundColor =
+                show ? .white: .clear
+            self.navigationController?.navigationBar.setTitleFont(.boldSystemFont(ofSize: 17), color:
+                show ? .black: .clear)
+            self.navigationController?.navigationBar.tintColor =
+                show ? .appMainColor: .white
+            self.backButton.tintColor = show ? .black: .white
         }
     }
 }

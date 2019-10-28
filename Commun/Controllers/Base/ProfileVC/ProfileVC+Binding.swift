@@ -23,9 +23,7 @@ extension ProfileVC {
             .map {_ in self.tableView.contentOffset.y < -43}
             .distinctUntilChanged()
             .subscribe(onNext: { showNavBar in
-                self.navigationBar.backButton.tintColor = !showNavBar ? .black: .white
-                self.navigationBar.titleLabel.textColor = !showNavBar ? .black: .clear
-                self.navigationBar.backgroundColor = !showNavBar ? .white: .clear
+                self.showTitle(!showNavBar)
             })
             .disposed(by: disposeBag)
         
