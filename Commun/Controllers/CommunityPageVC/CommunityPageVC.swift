@@ -13,7 +13,6 @@ class CommunityPageVC: ProfileVC {
     // MARK: - Properties
     let communityId: String
     lazy var viewModel: CommunityPageViewModel = CommunityPageViewModel(communityId: communityId)
-    let disposeBag = DisposeBag()
     
     // MARK: - Initializers
     init(communityId: String) {
@@ -32,8 +31,6 @@ class CommunityPageVC: ProfileVC {
         bindCommunity()
         
         bindList()
-        
-        bindControls()
     }
     
     func setUpWithCommunity(_ community: ResponseAPIContentGetCommunity) {

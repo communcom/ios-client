@@ -22,6 +22,7 @@ class ProfileVC: BaseViewController {
     
     // MARK: - Constants
     let coverHeight: CGFloat = 180
+    let disposeBag = DisposeBag()
     
     // MARK: - Subviews
     lazy var navigationBar = MyNavigationBar(height: 60)
@@ -74,6 +75,11 @@ class ProfileVC: BaseViewController {
         tableView.register(CommunityAboutCell.self, forCellReuseIdentifier: "CommunityAboutCell")
         
         tableView.separatorStyle = .none
+    }
+    
+    override func bind() {
+        super.bind()
+        bindControls()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
