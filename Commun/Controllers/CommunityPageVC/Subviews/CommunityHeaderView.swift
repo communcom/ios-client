@@ -267,6 +267,6 @@ class CommunityHeaderView: MyTableHeaderView, CommunityController {
     }
     
     @objc func joinButtonDidTouch(_ button: UIButton) {
-        join()
+        toggleJoin()
     }
 }

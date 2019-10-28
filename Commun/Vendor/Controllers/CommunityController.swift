@@ -36,8 +36,8 @@ extension CommunityController {
     }
     
     // join
-    func join() {
-        guard community != nil else {return}
+    func toggleJoin() {
+        guard community != nil, let id = community!.communityId else {return}
         
         // for reverse
         let originIsSubscribed = community!.isSubscribed ?? false
@@ -52,9 +52,20 @@ extension CommunityController {
         community!.notifyChanged()
         
         // send request
-        #warning("Mocking request")
-        Completable.empty()
-            .delay(0.8, scheduler: MainScheduler.instance)
+//        Completable.empty()
+//            .delay(0.8, scheduler: MainScheduler.instance)
+        let request: Completable
+        
+        if originIsSubscribed {
+            request = RestAPIManager.instance.rx.unfollowCommunity(id)
+                .flatMapToCompletable()
+        }
+        else {
+            request = RestAPIManager.instance.rx.followCommunity(id)
+                .flatMapToCompletable()
+        }
+        
+        request
             .do(onSubscribe: { [weak self] in
                 self?.joinButton.isEnabled = false
             })
