@@ -142,12 +142,11 @@ extension UIViewController {
         }
         
         // open profile tabbar
-        if let profileNC = tabBarController?.viewControllers?.first(where: {$0.tabBarItem.tag == 2}),
-            profileNC != tabBarController?.selectedViewController{
-            
-            UIView.transition(from: tabBarController!.selectedViewController!.view, to: profileNC.view, duration: 0.3, options: UIView.AnimationOptions.transitionFlipFromLeft, completion: nil)
-            
-            tabBarController?.selectedViewController = profileNC
+        if let profileNC = tabBarController?.viewControllers?.first(where: {($0 as? UINavigationController)?.viewControllers.first is ProfilePageVC}),
+            profileNC != tabBarController?.selectedViewController,
+            let tabBarVC = tabBarController as? TabBarVC
+        {
+            tabBarVC.switchTab(index: tabBarVC.profileTabIndex)
         } else {
             self.view.shake()
         }

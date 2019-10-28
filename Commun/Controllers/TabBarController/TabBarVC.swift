@@ -10,6 +10,12 @@ import UIKit
 import RxSwift
 
 class TabBarVC: UITabBarController {
+    // MARK: - Constants
+    let feedTabIndex = 0
+    let searchTabIndex = 1
+    let notificationTabIndex = 2
+    let profileTabIndex = 3
+    
     // MARK: - Constraint
     let selectedColor = UIColor.black
     let unselectedColor = UIColor(hexString: "#E5E7ED")
@@ -76,26 +82,26 @@ class TabBarVC: UITabBarController {
         // Feed Tab
         let feed = controllerContainer.resolve(FeedPageVC.self)!
         let feedNC = SwipeNavigationController(rootViewController: feed)
-        let feedItem = buttonTabBarItem(image: UIImage(named: "feed")!, tag: 0)
+        let feedItem = buttonTabBarItem(image: UIImage(named: "feed")!, tag: feedTabIndex)
         feed.accessibilityLabel = "TabBarFeedTabBarItem"
 
         // Comunities Tab
         let comunities = controllerContainer.resolve(CommunitiesVC.self)!
         let communitiesNC = SwipeNavigationController(rootViewController: comunities)
-        let communitiesItem = buttonTabBarItem(image: UIImage(named: "tabbar-search")!, tag: 1)
+        let communitiesItem = buttonTabBarItem(image: UIImage(named: "tabbar-search")!, tag: searchTabIndex)
         comunities.accessibilityLabel = "TabBarComunitiesTabBarItem"
         
         // Notifications Tab
         let notifications = NotificationsPageVC()
         let notificationsNC = SwipeNavigationController(rootViewController: notifications)
-        let notificationsItem = buttonTabBarItem(image: UIImage(named: "notifications")!, tag: 2)
+        let notificationsItem = buttonTabBarItem(image: UIImage(named: "notifications")!, tag: notificationTabIndex)
         notificationsNC.navigationBar.prefersLargeTitles = true
         notifications.accessibilityLabel = "TabBarNotificationsTabBarItem"
 
         // Profile Tab
         let profile = controllerContainer.resolve(ProfilePageVC.self)!
         let profileNC = SwipeNavigationController(rootViewController: profile)
-        let profileItem = buttonTabBarItem(image: UIImage(named: "tabbar-profile")!, tag: 3)
+        let profileItem = buttonTabBarItem(image: UIImage(named: "tabbar-profile")!, tag: profileTabIndex)
         profileNC.accessibilityLabel = "TabBarProfileTabBarItem"
         profileNC.navigationBar.tintColor = UIColor.appMainColor
 
@@ -148,8 +154,18 @@ class TabBarVC: UITabBarController {
     }
     
     @objc func switchTab(button: UIButton) {
+        switchTab(index: button.tag)
+    }
+    
+    func switchTab(index: Int) {
+        // pop to first if index is selected
+        if selectedIndex == index {
+            (viewControllers?[index] as? UINavigationController)?.popToRootViewController(animated: true)
+            return
+        }
+        
         // change selected index
-        selectedIndex = button.tag
+        selectedIndex = index
         
         // change tabs' color
         let items = tabBarStackView.arrangedSubviews.filter {$0.tag != (viewControllers?.count ?? 0) + 1}
