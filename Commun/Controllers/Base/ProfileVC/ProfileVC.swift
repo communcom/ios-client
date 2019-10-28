@@ -130,7 +130,12 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        showTitle(false)
+        if tableView.contentOffset.y >= -43 {
+            showTitle(true)
+        }
+        else {
+            showTitle(false)
+        }
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {

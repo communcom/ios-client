@@ -11,17 +11,19 @@ import Foundation
 extension ProfileVC {
     func bindControls() {
         // headerView parallax
-        tableView.rx.contentOffset
+        let offSetY = tableView.rx.contentOffset
             .map {$0.y}
+            .share()
+            
+        offSetY
             .subscribe(onNext: {offsetY in
                 self.updateHeaderView()
             })
             .disposed(by: disposeBag)
         
         // scrolling
-        tableView.rx.didScroll
-            .map {_ in self.tableView.contentOffset.y < -43}
-            .distinctUntilChanged()
+        offSetY
+            .map {$0 < -43}
             .subscribe(onNext: { showNavBar in
                 self.showTitle(!showNavBar)
             })
