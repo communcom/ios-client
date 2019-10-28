@@ -13,6 +13,9 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile> {
     // MARK: - Properties
     let userId: String
     lazy var viewModel = UserProfilePageViewModel(profileId: userId)
+    override var _viewModel: ProfileViewModel<ResponseAPIContentGetProfile> {
+        return viewModel
+    }
     
     // MARK: - Initializers
     init(userId: String) {
@@ -28,6 +31,36 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile> {
     override func bind() {
         super.bind()
         
+        headerView.selectedIndex
+            .map { index -> UserProfilePageViewModel.SegmentioItem in
+                switch index {
+                case 0:
+                    return .posts
+                case 1:
+                    return .comments
+                default:
+                    fatalError("not found selected index")
+                }
+            }
+            .bind(to: viewModel.segmentedItem)
+            .disposed(by: disposeBag)
+    }
+    
+    override func setUp(profile: ResponseAPIContentGetProfile) {
+        super.setUp(profile: profile)
+        // Register new cell type
+        tableView.register(UINib(nibName: "CommentCell", bundle: nil), forCellReuseIdentifier: "CommentCell")
+        
+        // title
+        title = profile.username ?? profile.userId
+        
+        // cover
+        if let urlString = profile.personal.coverUrl
+        {
+            coverImageView.setImageDetectGif(with: urlString)
+        }
+        
+        // header
         
     }
 }

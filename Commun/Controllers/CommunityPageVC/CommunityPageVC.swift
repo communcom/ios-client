@@ -51,7 +51,7 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>{
     
     override func setUp(profile: ResponseAPIContentGetCommunity) {
         super.setUp(profile: profile)
-        // Register new cell
+        // Register new cell type
         tableView.register(CommunityLeaderCell.self, forCellReuseIdentifier: "CommunityLeaderCell")
         tableView.register(CommunityAboutCell.self, forCellReuseIdentifier: "CommunityAboutCell")
     

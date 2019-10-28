@@ -1003,6 +1003,7 @@
 		3BAF69C122675ADB0055CCEB /* ProfilePageVC */ = {
 			isa = PBXGroup;
 			children = (
+				BCABF13A2366E94B006B05F5 /* Subviews */,
 				BCABF1362366DC3D006B05F5 /* UserProfilePageViewModel.swift */,
 				BCABF1382366DF2B006B05F5 /* UserProfilePageVC.swift */,
 				3B51581F226E1D3700108F17 /* ViewControllers */,
@@ -1710,6 +1711,13 @@
 				BCABF1302366CDC6006B05F5 /* MyNavigationBar.swift */,
 			);
 			path = UIViews;
+			sourceTree = "<group>";
+		};
+		BCABF13A2366E94B006B05F5 /* Subviews */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Subviews;
 			sourceTree = "<group>";
 		};
 		BCBC51212362F3590031C061 /* Subviews */ = {
