@@ -39,4 +39,35 @@ class ProfileHeaderView: MyTableHeaderView {
         let segmentedControl = CMSegmentedControl(height: 46, backgroundColor: .clear)
         return segmentedControl
     }()
+    
+    // MARK: - Properties
+    var selectedIndex: BehaviorRelay<Int> {
+        return segmentedControl.selectedIndex
+    }
+    
+    override func commonInit() {
+        super.commonInit()
+        backgroundColor = .white
+        
+        addSubview(avatarImageView)
+        avatarImageView.autoPinEdge(toSuperviewEdge: .top, withInset: 16)
+        avatarImageView.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
+        
+        addSubview(nameLabel)
+        nameLabel.autoPinEdge(toSuperviewEdge: .top, withInset: 20)
+        nameLabel.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 10)
+        
+        addSubview(joinedDateLabel)
+        joinedDateLabel.autoPinEdge(.top, to: .bottom, of: nameLabel)
+        joinedDateLabel.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 10)
+        
+        addSubview(descriptionLabel)
+        descriptionLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
+        descriptionLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
+        descriptionLabel.autoPinEdge(.top, to: .bottom, of: avatarImageView, withOffset: 10)
+        
+        addSubview(usersStackView)
+        usersStackView.autoPinEdge(.top, to: .bottom, of: descriptionLabel, withOffset: 14)
+        
+    }
 }

@@ -98,45 +98,23 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
         return button
     }()
     
-    // MARK: - Properties
-    var selectedIndex: BehaviorRelay<Int> {
-        return segmentedControl.selectedIndex
-    }
-    
     override func commonInit() {
         super.commonInit()
-        backgroundColor = .white
-        
-        addSubview(avatarImageView)
-        avatarImageView.autoPinEdge(toSuperviewEdge: .top, withInset: 16)
-        avatarImageView.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
-        
-        addSubview(nameLabel)
-        nameLabel.autoPinEdge(toSuperviewEdge: .top, withInset: 20)
-        nameLabel.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 10)
-        
-        addSubview(joinedDateLabel)
-        joinedDateLabel.autoPinEdge(.top, to: .bottom, of: nameLabel)
-        joinedDateLabel.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 10)
         
         addSubview(joinButton)
         joinButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
         joinButton.autoAlignAxis(.horizontal, toSameAxisOf: avatarImageView)
         joinButton.addTarget(self, action: #selector(joinButtonDidTouch(_:)), for: .touchUpInside)
         
-        addSubview(descriptionLabel)
-        descriptionLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
-        descriptionLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
-        descriptionLabel.autoPinEdge(.top, to: .bottom, of: avatarImageView, withOffset: 10)
-        
         addSubview(membersCountLabel)
         membersCountLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
         membersCountLabel.autoPinEdge(.top, to: .bottom, of: descriptionLabel, withOffset: 24)
+        membersCountLabel.autoAlignAxis(.horizontal, toSameAxisOf: usersStackView)
         
         let memberLabel = UILabel.with(text: "members".localized().uppercaseFirst, textSize: 12, weight: .semibold, textColor: UIColor(hexString: "#A5A7BD")!)
         addSubview(memberLabel)
         memberLabel.autoPinEdge(.leading, to: .trailing, of: membersCountLabel, withOffset: 4)
-        memberLabel.autoPinEdge(.bottom, to: .bottom, of: membersCountLabel, withOffset: -1)
+        memberLabel.autoAlignAxis(.horizontal, toSameAxisOf: membersCountLabel)
 
         let dotLabel = UILabel.with(text: "•", textSize: 15, weight: .semibold, textColor: UIColor(hexString: "#A5A7BD")!)
         addSubview(dotLabel)
@@ -150,10 +128,7 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
         let leadsLabel = UILabel.with(text: "leads".localized().uppercaseFirst, textSize: 12, weight: .semibold, textColor: UIColor(hexString: "#A5A7BD")!)
         addSubview(leadsLabel)
         leadsLabel.autoPinEdge(.leading, to: .trailing, of: leadsCountLabel, withOffset: 4)
-        leadsLabel.autoPinEdge(.bottom, to: .bottom, of: leadsCountLabel, withOffset: -1)
-        
-        addSubview(usersStackView)
-        usersStackView.autoAlignAxis(.horizontal, toSameAxisOf: leadsLabel)
+        leadsLabel.autoAlignAxis(.horizontal, toSameAxisOf: membersCountLabel)
         
         let friendLabel = UILabel.with(text: "friends".localized().uppercaseFirst, textSize: 12, weight: .bold, textColor: .gray)
         addSubview(friendLabel)
