@@ -96,10 +96,10 @@ extension CommunityPageVC {
                     }
                 }
                 
-                if let user = element as? ResponseAPIContentResolveProfile {
+                if let user = element as? ResponseAPIContentGetLeader {
                     let cell = self.tableView.dequeueReusableCell(withIdentifier: "CommunityLeaderCell") as! CommunityLeaderCell
                     #warning("fix later")
-                    cell.avatarImageView.setAvatar(urlString: user.avatarUrl, namePlaceHolder: user.username)
+                    cell.avatarImageView.setAvatar(urlString: user.avatarUrl, namePlaceHolder: user.username ?? user.userId)
                     cell.userNameLabel.text = user.username
 //                    cell.textLabel?.text = user.username
 //                    cell.imageView?.setAvatar(urlString: user.avatarUrl, namePlaceHolder: user.username)

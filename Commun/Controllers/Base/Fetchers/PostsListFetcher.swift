@@ -73,6 +73,8 @@ class PostsListFetcher: ListFetcher<ResponseAPIContentGetPost> {
     }
         
     override var request: Single<[ResponseAPIContentGetPost]> {
+//        return ResponseAPIContentGetPosts.singleWithMockData()
+//            .delay(0.8, scheduler: MainScheduler.instance)
         return RestAPIManager.instance.getPosts(userId: filter.userId, communityId: filter.communityId, allowNsfw: false, type: filter.feedTypeMode, sortBy: filter.feedType, limit: limit, offset: offset)
         .map {$0.items ?? []}
     }

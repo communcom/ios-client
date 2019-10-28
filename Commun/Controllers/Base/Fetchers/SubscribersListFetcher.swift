@@ -16,6 +16,8 @@ class SubscribersListFetcher: ListFetcher<ResponseAPIContentResolveProfile> {
     
     override var request: Single<[ResponseAPIContentResolveProfile]> {
         return RestAPIManager.instance.getSubscribers(userId: userId, communityId: communityId, offset: Int(offset), limit: Int(limit))
+//        return ResponseAPIContentGetSubscribers.singleWithMockData()
+//            .delay(0.8, scheduler: MainScheduler.instance)
             .map {$0.items}
     }
 }

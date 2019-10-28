@@ -41,7 +41,7 @@ class CommunityPageViewModel {
     let segmentedItem = BehaviorRelay<SegmentioItem>(value: .posts)
     
     lazy var postsVM: PostsViewModel = PostsViewModel(filter: PostsListFetcher.Filter(feedTypeMode: .community, feedType: .time, sortType: .all, communityId: communityId))
-    lazy var leadsVM = SubscribersViewModel(communityId: communityId)
+    lazy var leadsVM = LeadersViewModel(communityId: communityId ?? "")
     
     lazy var aboutSubject = PublishSubject<String>()
     lazy var rulesSubject = PublishSubject<[String]>()
@@ -56,7 +56,7 @@ class CommunityPageViewModel {
                 if items is [ResponseAPIContentGetPost] && self.segmentedItem.value == .posts {
                     return true
                 }
-                if items is [ResponseAPIContentResolveProfile] && self.segmentedItem.value == .leads {
+                if items is [ResponseAPIContentGetLeader] && self.segmentedItem.value == .leads {
                     return true
                 }
                 #warning("fix later")
@@ -94,6 +94,10 @@ class CommunityPageViewModel {
     
     // MARK: - Methods
     func loadCommunity() {
+        #warning("mocking")
+//        ResponseAPIContentGetCommunity.singleWithMockData()
+//            .map {$0 as ResponseAPIContentGetCommunity?}
+//            .delay(0.8, scheduler: MainScheduler.instance)
         RestAPIManager.instance.getCommunity(id: communityId ?? "")
             .map {$0 as ResponseAPIContentGetCommunity?}
             .do(onSuccess: { (profile) in
