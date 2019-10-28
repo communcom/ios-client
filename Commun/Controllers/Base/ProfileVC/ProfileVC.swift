@@ -38,7 +38,9 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
         return imageView
     }()
     
-    var headerView: CommunityHeaderView!
+    var _headerView: ProfileHeaderView! {
+        fatalError("Must override")
+    }
     
     lazy var tableView: UITableView = {
         let tableView = UITableView(forAutoLayout: ())
@@ -67,9 +69,6 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
         view.addSubview(tableView)
         tableView.autoPinEdgesToSuperviewEdges()
         tableView.contentInset = UIEdgeInsets(top: coverHeight - 24, left: 0, bottom: 0, right: 0)
-        
-        headerView = CommunityHeaderView(tableView: tableView)
-        headerView.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: 25)
         
         view.bringSubviewToFront(navigationBar)
         

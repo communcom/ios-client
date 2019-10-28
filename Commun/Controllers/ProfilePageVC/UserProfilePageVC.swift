@@ -17,6 +17,12 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile> {
         return viewModel
     }
     
+    // MARK: - Subviews
+    var headerView: UserProfileHeaderView!
+    override var _headerView: ProfileHeaderView! {
+        return headerView
+    }
+    
     // MARK: - Initializers
     init(userId: String) {
         self.userId = userId
@@ -28,9 +34,14 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile> {
     }
     
     // MARK: - Methods
+    override func setUp() {
+        super.setUp()
+        headerView = UserProfileHeaderView(tableView: tableView)
+        headerView.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: 25)
+    }
+    
     override func bind() {
         super.bind()
-        
         headerView.selectedIndex
             .map { index -> UserProfilePageViewModel.SegmentioItem in
                 switch index {
@@ -61,6 +72,6 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile> {
         }
         
         // header
-        
+        headerView.setUp(with: profile)
     }
 }

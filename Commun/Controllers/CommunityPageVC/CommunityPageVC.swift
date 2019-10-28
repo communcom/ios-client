@@ -17,6 +17,12 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>{
         return viewModel
     }
     
+    // MARK: - Subviews
+    var headerView: CommunityHeaderView!
+    override var _headerView: ProfileHeaderView! {
+        return headerView
+    }
+    
     // MARK: - Initializers
     init(communityId: String) {
         self.communityId = communityId
@@ -28,6 +34,12 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>{
     }
     
     // MARK: - Methods
+    override func setUp() {
+        super.setUp()
+        headerView = CommunityHeaderView(tableView: tableView)
+        headerView.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: 25)
+    }
+    
     override func bind() {
         super.bind()
         headerView.selectedIndex

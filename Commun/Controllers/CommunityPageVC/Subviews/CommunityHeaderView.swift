@@ -13,7 +13,6 @@ import RxCocoa
 class CommunityHeaderView: ProfileHeaderView, CommunityController {
     
     // MARK: - CommunityController
-    let disposeBag = DisposeBag()
     var community: ResponseAPIContentGetCommunity?
     
     // MARK: - Subviews
@@ -132,7 +131,7 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
         
         let friendLabel = UILabel.with(text: "friends".localized().uppercaseFirst, textSize: 12, weight: .bold, textColor: .gray)
         addSubview(friendLabel)
-        friendLabel.autoAlignAxis(.horizontal, toSameAxisOf: leadsLabel)
+        friendLabel.autoAlignAxis(.horizontal, toSameAxisOf: usersStackView)
         friendLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
         friendLabel.autoPinEdge(.leading, to: .trailing, of: usersStackView, withOffset: 5)
         
@@ -153,8 +152,7 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
         
         // pin bottom
         separator.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
-        
-        segmentedControl.backgroundColor = .clear
+    
         pointsContainerView.addShadow(ofColor: UIColor(red: 106, green: 128, blue: 245)!, radius: 19, offset: CGSize(width: 0, height: 14), opacity: 0.3)
         
         segmentedControl.items = [

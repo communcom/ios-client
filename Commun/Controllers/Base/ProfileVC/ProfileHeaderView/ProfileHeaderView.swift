@@ -12,6 +12,9 @@ import RxCocoa
 
 
 class ProfileHeaderView: MyTableHeaderView {
+    // MARK: - Properties
+    let disposeBag = DisposeBag()
+    
     // MARK: - Subviews
     lazy var avatarImageView = MyAvatarImageView(size: 50)
     
@@ -37,6 +40,7 @@ class ProfileHeaderView: MyTableHeaderView {
     
     lazy var segmentedControl: CMSegmentedControl = {
         let segmentedControl = CMSegmentedControl(height: 46, backgroundColor: .clear)
+        segmentedControl.backgroundColor = .clear
         return segmentedControl
     }()
     

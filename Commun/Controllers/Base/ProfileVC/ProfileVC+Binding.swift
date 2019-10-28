@@ -75,7 +75,7 @@ extension ProfileVC {
             .filter {$0 != nil}
             .map {$0!}
             .do(onNext: { (_) in
-                self.headerView.selectedIndex.accept(0)
+                self._headerView.selectedIndex.accept(0)
             })
             .subscribe(onNext: { [weak self] (item) in
                 self?.setUp(profile: item)
