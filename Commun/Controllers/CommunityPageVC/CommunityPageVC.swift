@@ -108,20 +108,9 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>{
         tableView.addEmptyPlaceholderFooterView(title: title.localized().uppercaseFirst, description: description.localized().uppercaseFirst)
     }
     
-    override func createCell(for table: UITableView, index: Int, element: Any) -> UITableViewCell {
-        if let post = element as? ResponseAPIContentGetPost {
-            switch post.document.attributes?.type {
-            case "article":
-                let cell = self.tableView.dequeueReusableCell(withIdentifier: "ArticlePostCell") as! ArticlePostCell
-                cell.setUp(with: post)
-                return cell
-            case "basic":
-                let cell = self.tableView.dequeueReusableCell(withIdentifier: "BasicPostCell") as! BasicPostCell
-                cell.setUp(with: post)
-                return cell
-            default:
-                return UITableViewCell()
-            }
+    override func createCell(for table: UITableView, index: Int, element: Any) -> UITableViewCell? {
+        if let cell = super.createCell(for: table, index: index, element: element) {
+            return cell
         }
         
         if let user = element as? ResponseAPIContentGetLeader {
@@ -157,7 +146,7 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>{
             }
             break
         case is CommunityLeaderCell:
-            #warning("Tap a comment")
+            #warning("Tap a leaderCell")
             break
         default:
             break

@@ -74,4 +74,66 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile> {
         // header
         headerView.setUp(with: profile)
     }
+    
+    override func handleListLoading() {
+        switch viewModel.segmentedItem.value {
+        case .posts:
+            tableView.addPostLoadingFooterView()
+        case .comments:
+            tableView.addNotificationsLoadingFooterView()
+        }
+    }
+    
+    override func handleListEmpty() {
+        var title = "empty"
+        var description = "not found"
+        switch viewModel.segmentedItem.value {
+        case .posts:
+            title = "no posts"
+            description = "posts not found"
+        case .comments:
+            title = "no comments"
+            description = "comments not found"
+        }
+        
+        tableView.addEmptyPlaceholderFooterView(title: title.localized().uppercaseFirst, description: description.localized().uppercaseFirst)
+    }
+    
+    override func createCell(for table: UITableView, index: Int, element: Any) -> UITableViewCell? {
+        if let cell = super.createCell(for: table, index: index, element: element) {
+            return cell
+        }
+        
+        if let user = element as? ResponseAPIContentGetLeader {
+            let cell = self.tableView.dequeueReusableCell(withIdentifier: "CommunityLeaderCell") as! CommunityLeaderCell
+            #warning("fix later")
+            cell.avatarImageView.setAvatar(urlString: user.avatarUrl, namePlaceHolder: user.username ?? user.userId)
+            cell.userNameLabel.text = user.username
+//                    cell.textLabel?.text = user.username
+//                    cell.imageView?.setAvatar(urlString: user.avatarUrl, namePlaceHolder: user.username)
+            return cell
+        }
+        return UITableViewCell()
+    }
+    
+    override func cellSelected(_ indexPath: IndexPath) {
+        let cell = self.tableView.cellForRow(at: indexPath)
+        switch cell {
+        case is PostCell:
+            if let postPageVC = controllerContainer.resolve(PostPageVC.self)
+            {
+                let post = self.viewModel.postsVM.items.value[indexPath.row]
+                (postPageVC.viewModel as! PostPageViewModel).postForRequest = post
+                self.show(postPageVC, sender: nil)
+            } else {
+                self.showAlert(title: "error".localized().uppercaseFirst, message: "something went wrong".localized().uppercaseFirst)
+            }
+            break
+        case is CommentCell:
+            #warning("Tap a comment")
+            break
+        default:
+            break
+        }
+    }
 }
