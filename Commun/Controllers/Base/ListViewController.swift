@@ -35,6 +35,14 @@ class ListViewController<T: ListItemType>: BaseViewController {
     override func bind() {
         super.bind()
         viewModel.items
+            .do(onNext: { [weak self] newItems in
+                // handle empty state
+                if self?.viewModel.state.value == .listEnded,
+                    newItems.count == 0
+                {
+                    self?.handleListEmpty()
+                }
+            })
             .map {[ListSection(model: "", items: $0)]}
             .bind(to: tableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
@@ -71,6 +79,10 @@ class ListViewController<T: ListItemType>: BaseViewController {
     
     func handleListEnded() {
         tableView.tableFooterView = UIView()
+    }
+    
+    func handleListEmpty() {
+        
     }
     
     @objc func refresh() {

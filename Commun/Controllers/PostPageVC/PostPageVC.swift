@@ -121,12 +121,10 @@ class PostPageVC: ListViewController<ResponseAPIContentGetComment>, CommentCellD
         )
     }
     
-    override func handleListEnded() {
-        if dataSource.isEmpty == true {
-            addEmptyCell()
-        } else {
-            tableView.tableFooterView = UIView()
-        }
+    override func handleListEmpty() {
+        let title = "no comments"
+        let description = "comments not found"
+        tableView.addEmptyPlaceholderFooterView(title: title.localized().uppercaseFirst, description: description.localized().uppercaseFirst)
     }
     
     override func viewWillAppear(_ animated: Bool) {

@@ -16,6 +16,8 @@ let loadingViewTag = 9999
 let postLoadingFooterViewTag = 99991
 let listErrorFooterViewTag = 99992
 
+let emptyPlaceholderViewTag = 99996
+
 let notificationsLoadingFooterViewTag = 99993
 let commentLoadingFooterViewTag = 99994
 let commentEmptyFooterViewTag   = 99995
@@ -172,5 +174,22 @@ extension UITableView {
         )
         let source = insertEnded.map { $0.insertedRows }
         return ControlEvent(events: source)
+    }
+    
+    func addEmptyPlaceholderFooterView(height: CGFloat = 150, title: String, description: String? = nil) {
+        // Prevent dupplicating
+        if tableFooterView?.tag == emptyPlaceholderViewTag {
+            return
+        }
+        
+        let containerView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: height + 40))
+        containerView.tag = tag
+        
+        let placeholderView = MyEmptyPlaceHolderView(title: title, description: description)
+        containerView.addSubview(placeholderView)
+        
+        placeholderView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10))
+        
+        self.tableFooterView = containerView
     }
 }

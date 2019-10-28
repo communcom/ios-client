@@ -62,7 +62,6 @@ extension CommunityPageVC {
                     }
                     break
                 case .listEnded:
-                    #warning("add empty state")
                     self?.tableView.tableFooterView = UIView()
                 case .error(_):
                     guard let strongSelf = self else {return}
@@ -73,9 +72,28 @@ extension CommunityPageVC {
             .disposed(by: disposeBag)
         
         // bind items
-        let items = viewModel.items
-        
-        items
+        viewModel.items.skip(1)
+            .do(onNext: { [weak self] newItems in
+                // handle empty state
+                if self?.viewModel.listLoadingState.value == .listEnded,
+                    newItems.count == 0
+                {
+                    var title = "empty"
+                    var description = "not found"
+                    switch self?.viewModel.segmentedItem.value {
+                    case .posts:
+                        title = "no posts"
+                        description = "posts not found"
+                    case .leads:
+                        title = "no leaders"
+                        description = "leaders not found"
+                    default:
+                        break
+                    }
+                    
+                    self?.tableView.addEmptyPlaceholderFooterView(title: title.localized().uppercaseFirst, description: description.localized().uppercaseFirst)
+                }
+            })
             .bind(to: tableView.rx.items) {table, index, element in
                 if index == self.tableView.numberOfRows(inSection: 0) - 2 {
                     self.viewModel.fetchNext()

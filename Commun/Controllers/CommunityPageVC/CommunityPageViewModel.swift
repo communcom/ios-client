@@ -46,30 +46,7 @@ class CommunityPageViewModel {
     lazy var aboutSubject = PublishSubject<String>()
     lazy var rulesSubject = PublishSubject<[String]>()
     
-    var items: Observable<[Any]> {
-        let posts         = postsVM.items.map {$0 as [Any]}.skip(1)
-        let leads         = leadsVM.items.map {$0 as [Any]}.skip(1)
-        let about         = aboutSubject.map {[$0] as [Any]}
-        let rules         = rulesSubject.map {$0 as [Any]}
-        return Observable.merge(posts, leads, about, rules)
-            .filter({ items -> Bool in
-                if items is [ResponseAPIContentGetPost] && self.segmentedItem.value == .posts {
-                    return true
-                }
-                if items is [ResponseAPIContentGetLeader] && self.segmentedItem.value == .leads {
-                    return true
-                }
-                #warning("fix later")
-                if items is [String] && self.segmentedItem.value == .about {
-                    return true
-                }
-                if items is [String] && self.segmentedItem.value == .rules {
-                    return true
-                }
-                return false
-            })
-            .skip(1)
-    }
+    let items = BehaviorRelay<[Any]>(value: [])
     
     // MARK: - Initializers
     convenience init(community: ResponseAPIContentGetCommunity?) {
@@ -94,10 +71,6 @@ class CommunityPageViewModel {
     
     // MARK: - Methods
     func loadCommunity() {
-        #warning("mocking")
-//        ResponseAPIContentGetCommunity.singleWithMockData()
-//            .map {$0 as ResponseAPIContentGetCommunity?}
-//            .delay(0.8, scheduler: MainScheduler.instance)
         RestAPIManager.instance.getCommunity(id: communityId ?? "")
             .map {$0 as ResponseAPIContentGetCommunity?}
             .do(onSuccess: { (profile) in
@@ -113,7 +86,7 @@ class CommunityPageViewModel {
     }
     
     func bind() {
-        Observable.merge(postsVM.state.asObservable(), leadsVM.state.asObservable())
+        Observable.merge(postsVM.state.asObservable().filter {[weak self] _ in self?.segmentedItem.value == .posts}, leadsVM.state.asObservable().filter {[weak self] _ in self?.segmentedItem.value == .leads})
             .distinctUntilChanged { (lhs, rhs) -> Bool in
                 switch (lhs, rhs) {
                 case (.loading(let isLoading1), .loading(let isLoading2)):
@@ -136,6 +109,7 @@ class CommunityPageViewModel {
                 case .leads:
                     self.leadsVM.reload()
                 case .about:
+                    #warning("fix about and rules")
                     self.aboutSubject.onNext("Binance is a blockchain ecosystem comprised of Exchange, Labs, Launchpad, and Info. Binance Exchange is one of the fastest growing and most popular cryptocurrency exchanges in the world. Founded by a team of fintech and crypto experts — it is capable of processing more than 1.4 million orders per second, making it one of the fastest exchanges in the world. The platform focuses on security, robustness, and execution speed — attracting enthusiasts and professional traders alike.")
                     self.listLoadingState.accept(.listEnded)
                 case .rules:
@@ -146,6 +120,32 @@ class CommunityPageViewModel {
                     self.listLoadingState.accept(.listEnded)
                 }
             })
+            .disposed(by: disposeBag)
+        
+        let posts         = postsVM.items.map {$0 as [Any]}.skip(1)
+        let leads         = leadsVM.items.map {$0 as [Any]}.skip(1)
+        let about         = aboutSubject.map {[$0] as [Any]}
+        let rules         = rulesSubject.map {$0 as [Any]}
+        Observable.merge(posts, leads, about, rules)
+            .filter({ items -> Bool in
+                if items is [ResponseAPIContentGetPost] && self.segmentedItem.value == .posts {
+                    return true
+                }
+                if items is [ResponseAPIContentGetLeader] && self.segmentedItem.value == .leads {
+                    return true
+                }
+                #warning("fix later")
+                if items is [String] && self.segmentedItem.value == .about {
+                    return true
+                }
+                if items is [String] && self.segmentedItem.value == .rules {
+                    return true
+                }
+                return false
+            })
+            .skip(1)
+            .asDriver(onErrorJustReturn: [])
+            .drive(items)
             .disposed(by: disposeBag)
     }
     
