@@ -192,8 +192,9 @@ extension CommunityPageVC {
             .map {_ in self.tableView.contentOffset.y < -43}
             .distinctUntilChanged()
             .subscribe(onNext: { showNavBar in
-                self.backButton.isHidden = !showNavBar
-                self.navigationController?.setNavigationBarHidden(showNavBar, animated: false)
+                self.navigationBar.backButton.tintColor = !showNavBar ? .black: .white
+                self.navigationBar.titleLabel.textColor = !showNavBar ? .black: .clear
+                self.navigationBar.backgroundColor = !showNavBar ? .white: .clear
             })
             .disposed(by: disposeBag)
     }

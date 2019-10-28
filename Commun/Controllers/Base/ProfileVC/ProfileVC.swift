@@ -11,12 +11,20 @@ import RxSwift
 
 class ProfileVC: BaseViewController {
     override var contentScrollView: UIScrollView? {tableView}
+    override var title: String? {
+        get {
+            return navigationBar.title
+        }
+        set {
+            navigationBar.title = newValue
+        }
+    }
     
     // MARK: - Constants
     let coverHeight: CGFloat = 180
     
     // MARK: - Subviews
-    lazy var backButton: UIButton = .back(tintColor: .white)
+    lazy var navigationBar = MyNavigationBar(height: 60)
     
     lazy var coverImageView: UIImageView = {
         let imageView = UIImageView(height: coverHeight)
@@ -39,13 +47,16 @@ class ProfileVC: BaseViewController {
         view.backgroundColor = #colorLiteral(red: 0.9605136514, green: 0.9644123912, blue: 0.9850376248, alpha: 1)
         navigationItem.backBarButtonItem?.title = " "
         
+        view.addSubview(navigationBar)
+        navigationBar.autoPinEdge(toSuperviewEdge: .leading)
+        navigationBar.autoPinEdge(toSuperviewEdge: .trailing)
+        navigationBar.autoPinEdge(toSuperviewSafeArea: .top)
+        navigationBar.backButton.tintColor = .white
+        navigationBar.titleLabel.textColor = .clear
+        navigationBar.backgroundColor = .clear
+        
         view.addSubview(coverImageView)
         coverImageView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .bottom)
-        
-        view.addSubview(backButton)
-        backButton.autoPinEdge(toSuperviewSafeArea: .top, withInset: 8)
-        backButton.autoPinEdge(toSuperviewSafeArea: .leading, withInset: 4)
-        backButton.addTarget(self, action: #selector(back), for: .touchUpInside)
         
         view.addSubview(tableView)
         tableView.autoPinEdgesToSuperviewEdges()
@@ -54,7 +65,7 @@ class ProfileVC: BaseViewController {
         headerView = CommunityHeaderView(tableView: tableView)
         headerView.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: 25)
         
-        view.bringSubviewToFront(backButton)
+        view.bringSubviewToFront(navigationBar)
         
         // setup datasource
         tableView.register(BasicPostCell.self, forCellReuseIdentifier: "BasicPostCell")
