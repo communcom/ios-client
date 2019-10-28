@@ -10,25 +10,13 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-class CommunityHeaderView: MyTableHeaderView, CommunityController {
+class CommunityHeaderView: ProfileHeaderView, CommunityController {
     
     // MARK: - CommunityController
     let disposeBag = DisposeBag()
     var community: ResponseAPIContentGetCommunity?
     
     // MARK: - Subviews
-    lazy var avatarImageView = MyAvatarImageView(size: 50)
-    
-    lazy var nameLabel: UILabel = {
-        let label = UILabel.with(text: "Community", textSize: 20, weight: .bold)
-        return label
-    }()
-    
-    lazy var joinedDateLabel: UILabel = {
-        let label = UILabel.descriptionLabel("Joined", size: 12)
-        return label
-    }()
-    
     lazy var notificationButton: UIButton = {
         let button = UIButton(width: 35, height: 35, backgroundColor: .f3f5fa, cornerRadius: 35/2, contentInsets: UIEdgeInsets(top: 10, left: 11, bottom: 10, right: 11))
         button.tintColor = .appMainColor
@@ -36,11 +24,6 @@ class CommunityHeaderView: MyTableHeaderView, CommunityController {
         return button
     }()
     lazy var joinButton = CommunButton.join
-    
-    lazy var descriptionLabel: UILabel = {
-        let label = UILabel.with(text: "Binance Exchange provides cryptocurrency trading for fintech and blockchain enthusiasts", textSize: 14, numberOfLines: 0)
-        return label
-    }()
     
     lazy var membersCountLabel: UILabel = {
         let label = UILabel.with(text: Double(10000000).kmFormatted, textSize: 15, weight: .bold)
@@ -50,11 +33,6 @@ class CommunityHeaderView: MyTableHeaderView, CommunityController {
     lazy var leadsCountLabel: UILabel = {
         let label = UILabel.with(text: "7", textSize: 15, weight: .bold)
         return label
-    }()
-    
-    lazy var usersStackView: UsersStackView = {
-        let stackView = UsersStackView(height: 34)
-        return stackView
     }()
     
     lazy var pointsContainerView: UIView = {
@@ -118,17 +96,6 @@ class CommunityHeaderView: MyTableHeaderView, CommunityController {
     lazy var walletButton: UIButton = {
         let button = UIButton(height: 35, label: "get points".localized().uppercaseFirst, labelFont: .boldSystemFont(ofSize: 15), backgroundColor: .white, textColor: .appMainColor, cornerRadius: 35 / 2, contentInsets: UIEdgeInsets(top: 10, left: 16, bottom: 10, right: 16))
         return button
-    }()
-    
-    lazy var segmentedControl: CMSegmentedControl = {
-        let segmentedControl = CMSegmentedControl(height: 46, backgroundColor: .clear)
-        segmentedControl.items = [
-            CMSegmentedControl.Item(name: "posts".localized().uppercaseFirst),
-            CMSegmentedControl.Item(name: "leads".localized().uppercaseFirst),
-            CMSegmentedControl.Item(name: "about".localized().uppercaseFirst),
-            CMSegmentedControl.Item(name: "rules".localized().uppercaseFirst)
-        ]
-        return segmentedControl
     }()
     
     // MARK: - Properties
@@ -214,6 +181,13 @@ class CommunityHeaderView: MyTableHeaderView, CommunityController {
         
         segmentedControl.backgroundColor = .clear
         pointsContainerView.addShadow(ofColor: UIColor(red: 106, green: 128, blue: 245)!, radius: 19, offset: CGSize(width: 0, height: 14), opacity: 0.3)
+        
+        segmentedControl.items = [
+            CMSegmentedControl.Item(name: "posts".localized().uppercaseFirst),
+            CMSegmentedControl.Item(name: "leads".localized().uppercaseFirst),
+            CMSegmentedControl.Item(name: "about".localized().uppercaseFirst),
+            CMSegmentedControl.Item(name: "rules".localized().uppercaseFirst)
+        ]
         
         // observe
         observerCommunityChange()
