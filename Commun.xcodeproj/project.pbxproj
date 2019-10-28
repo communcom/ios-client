@@ -301,6 +301,7 @@
 		BCABF1312366CDC6006B05F5 /* MyNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCABF1302366CDC6006B05F5 /* MyNavigationBar.swift */; };
 		BCABF1332366D4E2006B05F5 /* ProfileVC+Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCABF1322366D4E2006B05F5 /* ProfileVC+Binding.swift */; };
 		BCABF1352366D5DC006B05F5 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCABF1342366D5DC006B05F5 /* ProfileViewModel.swift */; };
+		BCABF1372366DC3D006B05F5 /* UserProfilePageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCABF1362366DC3D006B05F5 /* UserProfilePageViewModel.swift */; };
 		BCB2A6E22354512D00B3582B /* AttachmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB2A6E12354512D00B3582B /* AttachmentView.swift */; };
 		BCB2A6E423546AF500B3582B /* EditorVC+AttachmentViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB2A6E323546AF500B3582B /* EditorVC+AttachmentViewDelegate.swift */; };
 		BCB2A6E62355536D00B3582B /* UITableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB2A6E52355536D00B3582B /* UITableViewCell.swift */; };
@@ -646,6 +647,7 @@
 		BCABF1302366CDC6006B05F5 /* MyNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyNavigationBar.swift; sourceTree = "<group>"; };
 		BCABF1322366D4E2006B05F5 /* ProfileVC+Binding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProfileVC+Binding.swift"; sourceTree = "<group>"; };
 		BCABF1342366D5DC006B05F5 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
+		BCABF1362366DC3D006B05F5 /* UserProfilePageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfilePageViewModel.swift; sourceTree = "<group>"; };
 		BCB2A6E12354512D00B3582B /* AttachmentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentView.swift; sourceTree = "<group>"; };
 		BCB2A6E323546AF500B3582B /* EditorVC+AttachmentViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EditorVC+AttachmentViewDelegate.swift"; sourceTree = "<group>"; };
 		BCB2A6E52355536D00B3582B /* UITableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableViewCell.swift; sourceTree = "<group>"; };
@@ -1001,6 +1003,7 @@
 		3BAF69C122675ADB0055CCEB /* ProfilePageVC */ = {
 			isa = PBXGroup;
 			children = (
+				BCABF1362366DC3D006B05F5 /* UserProfilePageViewModel.swift */,
 				3B51581F226E1D3700108F17 /* ViewControllers */,
 				3B51581A226DE27200108F17 /* Cells */,
 				BC31BA56235ECA840007D89A /* ProfilePageViewModel.swift */,
@@ -2217,6 +2220,7 @@
 				BCA971262360883D00AE37E1 /* Double.swift in Sources */,
 				BC702C942362974C00D9E88A /* CommunityPageVC+Binding.swift in Sources */,
 				3B5CB31022A5880D00757533 /* MyRxTableViewSectionedAnimatedDataSource.swift in Sources */,
+				BCABF1372366DC3D006B05F5 /* UserProfilePageViewModel.swift in Sources */,
 				3B6CB734234335130097B2A1 /* CommunActionSheet.swift in Sources */,
 				BC48FC42236689DC0049C4F4 /* LeadersViewModel.swift in Sources */,
 				3BC6139E23419EFC00075570 /* HalfSizePresentationController.swift in Sources */,

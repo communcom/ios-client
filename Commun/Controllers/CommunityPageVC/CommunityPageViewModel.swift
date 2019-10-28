@@ -57,11 +57,12 @@ class CommunityPageViewModel: ProfileViewModel<ResponseAPIContentGetCommunity> {
     }
     
     override var listLoadingStateObservable: Observable<ListFetcherState> {
-        return Observable.merge(postsVM.state.asObservable().filter {[weak self] _ in self?.segmentedItem.value == .posts}, leadsVM.state.asObservable().filter {[weak self] _ in self?.segmentedItem.value == .leads})
+        Observable.merge(postsVM.state.asObservable().filter {[weak self] _ in self?.segmentedItem.value == .posts}, leadsVM.state.asObservable().filter {[weak self] _ in self?.segmentedItem.value == .leads})
     }
     
     override func bind() {
         super.bind()
+        
         segmentedItem
             .filter {_ in self.community.value != nil}
             .subscribe(onNext: { (item) in
