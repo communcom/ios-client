@@ -136,7 +136,7 @@ extension UIViewController {
         // Open other user's profile
         if userId != Config.currentUser?.id {
             let profile = controllerContainer.resolve(ProfilePageVC.self)!
-            profile.viewModel = ProfileViewModel(userId: userId)
+            profile.viewModel = ProfilePageViewModel(userId: userId)
             show(profile, sender: nil)
             return
         }

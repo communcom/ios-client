@@ -38,7 +38,7 @@ class ProfilePageVC: UIViewController, VCWithParallax {
     @IBOutlet weak var errorView: UIView!
     
     let disposeBag = DisposeBag()
-    var viewModel: ProfileViewModel!
+    var viewModel: ProfilePageViewModel!
     var expandedIndexes = [Int]()
     var replyingComment: ResponseAPIContentGetComment?
     
@@ -48,7 +48,7 @@ class ProfilePageVC: UIViewController, VCWithParallax {
     override func viewDidLoad() {
         super.viewDidLoad()
         // construct view model
-        if viewModel == nil { viewModel = ProfileViewModel(userId: nil) }
+        if viewModel == nil { viewModel = ProfilePageViewModel(userId: nil) }
         
         // setup view
         setUpViews()

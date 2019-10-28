@@ -11,7 +11,7 @@ import RxDataSources
 import RxCocoa
 import RxSwift
 
-class ProfileViewModel {
+class ProfilePageViewModel {
     // MARK: - Nested type
     enum LoadingState {
         case loading

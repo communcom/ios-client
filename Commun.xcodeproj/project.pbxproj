@@ -276,9 +276,8 @@
 		BC016D56235EA33C00F1319F /* ListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC016D55235EA33C00F1319F /* ListViewModel.swift */; };
 		BC016D5A235EB88400F1319F /* PostsVC+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC016D59235EB88400F1319F /* PostsVC+Actions.swift */; };
 		BC31BA55235EBD7C0007D89A /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC31BA54235EBD7C0007D89A /* ProfileVC.swift */; };
-		BC31BA57235ECA840007D89A /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC31BA56235ECA840007D89A /* ProfileViewModel.swift */; };
+		BC31BA57235ECA840007D89A /* ProfilePageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC31BA56235ECA840007D89A /* ProfilePageViewModel.swift */; };
 		BC3D97612350384E00421718 /* ResponseAPIContentGetPosts.json in Resources */ = {isa = PBXBuildFile; fileRef = BC3D97602350384E00421718 /* ResponseAPIContentGetPosts.json */; };
-		BC430E7C235EEB44002E4593 /* ProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC430E7B235EEB44002E4593 /* ProfileHeaderView.swift */; };
 		BC48FC40236682F90049C4F4 /* ResponseAPIContentGetLeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC48FC3F236682F90049C4F4 /* ResponseAPIContentGetLeader.swift */; };
 		BC48FC42236689DC0049C4F4 /* LeadersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC48FC41236689DC0049C4F4 /* LeadersViewModel.swift */; };
 		BC48FC4423668A080049C4F4 /* LeadersListFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC48FC4323668A080049C4F4 /* LeadersListFetcher.swift */; };
@@ -619,9 +618,8 @@
 		BC016D55235EA33C00F1319F /* ListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewModel.swift; sourceTree = "<group>"; };
 		BC016D59235EB88400F1319F /* PostsVC+Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PostsVC+Actions.swift"; sourceTree = "<group>"; };
 		BC31BA54235EBD7C0007D89A /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
-		BC31BA56235ECA840007D89A /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
+		BC31BA56235ECA840007D89A /* ProfilePageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePageViewModel.swift; sourceTree = "<group>"; };
 		BC3D97602350384E00421718 /* ResponseAPIContentGetPosts.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ResponseAPIContentGetPosts.json; sourceTree = "<group>"; };
-		BC430E7B235EEB44002E4593 /* ProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderView.swift; sourceTree = "<group>"; };
 		BC48FC3F236682F90049C4F4 /* ResponseAPIContentGetLeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseAPIContentGetLeader.swift; sourceTree = "<group>"; };
 		BC48FC41236689DC0049C4F4 /* LeadersViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeadersViewModel.swift; sourceTree = "<group>"; };
 		BC48FC4323668A080049C4F4 /* LeadersListFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeadersListFetcher.swift; sourceTree = "<group>"; };
@@ -999,6 +997,7 @@
 			children = (
 				3B51581F226E1D3700108F17 /* ViewControllers */,
 				3B51581A226DE27200108F17 /* Cells */,
+				BC31BA56235ECA840007D89A /* ProfilePageViewModel.swift */,
 				3BAF69C222675B420055CCEB /* ProfilePageVC.swift */,
 				3B197C5A2269EF3F008CF10D /* ProfilePageVC+Binding.swift */,
 				3B0E9C6D227063F6002AB1C2 /* ProfilePageVC+Actions.swift */,
@@ -1185,7 +1184,6 @@
 		571B1508223A937200630C8F /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				BC31BA53235EBD6A0007D89A /* ProfileVC */,
 				BC016D5B235EB95000F1319F /* Base */,
 				3B67FC0522C4BB5100D05F01 /* SplashViewController.swift */,
 				57B6FC23224A9E4900BCFDDA /* WelcomeScreenVC */,
@@ -1636,6 +1634,7 @@
 				BC016D55235EA33C00F1319F /* ListViewModel.swift */,
 				BC016D4C235EA0DB00F1319F /* PostsViewController */,
 				BCA97111236004F500AE37E1 /* CommentsViewController */,
+				BC31BA53235EBD6A0007D89A /* ProfileVC */,
 				BCF74A61236180B900B91089 /* SubscribersViewModel.swift */,
 				BC48FC41236689DC0049C4F4 /* LeadersViewModel.swift */,
 			);
@@ -1646,8 +1645,6 @@
 			isa = PBXGroup;
 			children = (
 				BC31BA54235EBD7C0007D89A /* ProfileVC.swift */,
-				BC430E7B235EEB44002E4593 /* ProfileHeaderView.swift */,
-				BC31BA56235ECA840007D89A /* ProfileViewModel.swift */,
 			);
 			path = ProfileVC;
 			sourceTree = "<group>";
@@ -2129,7 +2126,7 @@
 				BC702C8E2362817700D9E88A /* CommunityLeaderCell.swift in Sources */,
 				3B67FC0622C4BB5100D05F01 /* SplashViewController.swift in Sources */,
 				3BB32F1B234436EF006572F3 /* PostMetaView.swift in Sources */,
-				BC31BA57235ECA840007D89A /* ProfileViewModel.swift in Sources */,
+				BC31BA57235ECA840007D89A /* ProfilePageViewModel.swift in Sources */,
 				3B3C8B8E2347876000D8BADB /* ContentTextView+Text.swift in Sources */,
 				3B25E5BE234C2A0C005BD1B8 /* BasicEditorViewModel.swift in Sources */,
 				3B9BEB3D2300EC7D003C70B3 /* EmptyView.swift in Sources */,
@@ -2201,7 +2198,6 @@
 				3B25E5C2234C4205005BD1B8 /* AttachmentsView.swift in Sources */,
 				3BEC38E3230F801600662374 /* UITextView.swift in Sources */,
 				3BB342A922CA2DBB009546B2 /* WelcomePageVC.swift in Sources */,
-				BC430E7C235EEB44002E4593 /* ProfileHeaderView.swift in Sources */,
 				BCA9711B236033D100AE37E1 /* ResponseAPIContentGetCommunity.swift in Sources */,
 				BCF74A5E23617EF700B91089 /* ResponseAPIContentResolveProfile.swift in Sources */,
 				3B62055A2346E4220017FEB7 /* EditorVC.swift in Sources */,
