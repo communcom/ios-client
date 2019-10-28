@@ -153,6 +153,15 @@ extension UIViewController {
         }
     }
     
+    func showCommunityWithCommunityId(_ id: String) {
+        if let vc = self as? CommunityPageVC, vc.communityId == id {
+            vc.view.shake()
+            return
+        }
+        let communityVC = CommunityPageVC(communityId: id)
+        show(communityVC, sender: nil)
+    }
+    
     // MARK: - ChildVC
     func add(_ child: UIViewController, to view: UIView? = nil) {
         addChild(child)
