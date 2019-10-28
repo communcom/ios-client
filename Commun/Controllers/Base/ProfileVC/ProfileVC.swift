@@ -9,7 +9,7 @@
 import Foundation
 import RxSwift
 
-class ProfileVC: BaseViewController {
+class ProfileVC<ProfileType: Decodable>: BaseViewController {
     override var contentScrollView: UIScrollView? {tableView}
     override var title: String? {
         get {
@@ -23,6 +23,11 @@ class ProfileVC: BaseViewController {
     // MARK: - Constants
     let coverHeight: CGFloat = 180
     let disposeBag = DisposeBag()
+    
+    // MARK: - Properties
+    var _viewModel: ProfileViewModel<ProfileType> {
+        fatalError("Must override")
+    }
     
     // MARK: - Subviews
     lazy var navigationBar = MyNavigationBar(height: 60)
@@ -71,8 +76,6 @@ class ProfileVC: BaseViewController {
         // setup datasource
         tableView.register(BasicPostCell.self, forCellReuseIdentifier: "BasicPostCell")
         tableView.register(ArticlePostCell.self, forCellReuseIdentifier: "ArticlePostCell")
-        tableView.register(CommunityLeaderCell.self, forCellReuseIdentifier: "CommunityLeaderCell")
-        tableView.register(CommunityAboutCell.self, forCellReuseIdentifier: "CommunityAboutCell")
         
         tableView.separatorStyle = .none
     }
@@ -80,6 +83,39 @@ class ProfileVC: BaseViewController {
     override func bind() {
         super.bind()
         bindControls()
+        
+        bindProfile()
+        
+        bindList()
+    }
+    
+    func setUp(profile: ProfileType) {
+    }
+    
+    func handleListLoading() {
+        
+    }
+    
+    func handleListEmpty() {
+        
+    }
+    
+    func createCell(for table: UITableView, index: Int, element: Any) -> UITableViewCell {
+        fatalError("Must override")
+    }
+    
+    func cellSelected(_ indexPath: IndexPath) {
+        
+    }
+    
+    @objc func didTapTryAgain(gesture: UITapGestureRecognizer) {
+        guard let label = gesture.view as? UILabel,
+            let text = label.text else {return}
+        
+        let tryAgainRange = (text as NSString).range(of: "try again".localized().uppercaseFirst)
+        if gesture.didTapAttributedTextInLabel(label: label, inRange: tryAgainRange) {
+            _viewModel.fetchNext(forceRetry: true)
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
