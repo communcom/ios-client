@@ -11,14 +11,8 @@ import RxSwift
 import RxCocoa
 import CyberSwift
 
-class CommunityPageViewModel {
+class CommunityPageViewModel: ProfileViewModel<ResponseAPIContentGetCommunity> {
     // MARK: - Nested type
-    enum LoadingState {
-        case loading
-        case finished
-        case error(error: Error)
-    }
-    
     enum SegmentioItem: String, CaseIterable {
         case posts = "posts"
         case leads = "leads"
@@ -27,17 +21,17 @@ class CommunityPageViewModel {
     }
     
     // MARK: - Input
-    var communityForRequest: ResponseAPIContentGetCommunity?
-    var communityId: String?
-    
-    // MARK: - Properties
-    private let disposeBag = DisposeBag()
+    var communityForRequest: ResponseAPIContentGetCommunity? {
+        return profileForRequest
+    }
+    var communityId: String? {
+        return profileId
+    }
     
     // MARK: - Objects
-    let loadingState = BehaviorRelay<LoadingState>(value: .loading)
-    let listLoadingState = BehaviorRelay<ListFetcherState>(value: .loading(false))
-    
-    let community = BehaviorRelay<ResponseAPIContentGetCommunity?>(value: nil)
+    var community: BehaviorRelay<ResponseAPIContentGetCommunity?> {
+        return profile
+    }
     let segmentedItem = BehaviorRelay<SegmentioItem>(value: .posts)
     
     lazy var postsVM: PostsViewModel = PostsViewModel(filter: PostsListFetcher.Filter(feedTypeMode: .community, feedType: .time, sortType: .all, communityId: communityId))
@@ -46,60 +40,28 @@ class CommunityPageViewModel {
     lazy var aboutSubject = PublishSubject<String>()
     lazy var rulesSubject = PublishSubject<[String]>()
     
-    let items = BehaviorRelay<[Any]>(value: [])
-    
     // MARK: - Initializers
     convenience init(community: ResponseAPIContentGetCommunity?) {
         self.init()
-        self.communityForRequest = community
-        self.communityId = community?.communityId
-        
-        defer {
-            loadCommunity()
-        }
+        self.profileForRequest = community
+        self.init(profileId: community?.communityId)
     }
     
     convenience init(communityId: String?) {
-        self.init()
-        self.communityId = communityId
-        
-        defer {
-            loadCommunity()
-            bind()
-        }
+        self.init(profileId: communityId)
     }
     
     // MARK: - Methods
-    func loadCommunity() {
+    override var loadProfileRequest: Single<ResponseAPIContentGetCommunity> {
         RestAPIManager.instance.getCommunity(id: communityId ?? "")
-            .map {$0 as ResponseAPIContentGetCommunity?}
-            .do(onSuccess: { (profile) in
-                self.loadingState.accept(.finished)
-            }, onError: { (error) in
-                self.loadingState.accept(.error(error: error))
-            }, onSubscribe: {
-                self.loadingState.accept(.loading)
-            })
-            .asDriver(onErrorJustReturn: communityForRequest)
-            .drive(community)
-            .disposed(by: disposeBag)
     }
     
-    func bind() {
-        Observable.merge(postsVM.state.asObservable().filter {[weak self] _ in self?.segmentedItem.value == .posts}, leadsVM.state.asObservable().filter {[weak self] _ in self?.segmentedItem.value == .leads})
-            .distinctUntilChanged { (lhs, rhs) -> Bool in
-                switch (lhs, rhs) {
-                case (.loading(let isLoading1), .loading(let isLoading2)):
-                    return isLoading1 == isLoading2
-                case (.listEnded, .listEnded):
-                    return true
-                default:
-                    return false
-                }
-            }
-            .bind(to: listLoadingState)
-            .disposed(by: disposeBag)
-        
+    override var listLoadingStateObservable: Observable<ListFetcherState> {
+        return Observable.merge(postsVM.state.asObservable().filter {[weak self] _ in self?.segmentedItem.value == .posts}, leadsVM.state.asObservable().filter {[weak self] _ in self?.segmentedItem.value == .leads})
+    }
+    
+    override func bind() {
+        super.bind()
         segmentedItem
             .filter {_ in self.community.value != nil}
             .subscribe(onNext: { (item) in
@@ -149,15 +111,8 @@ class CommunityPageViewModel {
             .disposed(by: disposeBag)
     }
     
-    func reload() {
-        // reload community
-        community.accept(nil)
-        
-        // retrieve
-        loadCommunity()
-    }
-    
-    func fetchNext(forceRetry: Bool = false) {
+    override func fetchNext(forceRetry: Bool = false) {
+        super.fetchNext(forceRetry: forceRetry)
         switch segmentedItem.value {
         case .posts:
             postsVM.fetchNext(forceRetry: forceRetry)
