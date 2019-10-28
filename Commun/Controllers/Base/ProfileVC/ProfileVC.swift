@@ -77,6 +77,7 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
         tableView.register(ArticlePostCell.self, forCellReuseIdentifier: "ArticlePostCell")
         
         tableView.separatorStyle = .none
+        tableView.setContentOffset(CGPoint(x: 0, y: -coverHeight), animated: true)
     }
     
     override func bind() {

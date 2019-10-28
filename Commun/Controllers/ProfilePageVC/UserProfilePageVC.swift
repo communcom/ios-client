@@ -104,15 +104,13 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile> {
             return cell
         }
         
-        if let user = element as? ResponseAPIContentGetLeader {
-            let cell = self.tableView.dequeueReusableCell(withIdentifier: "CommunityLeaderCell") as! CommunityLeaderCell
-            #warning("fix later")
-            cell.avatarImageView.setAvatar(urlString: user.avatarUrl, namePlaceHolder: user.username ?? user.userId)
-            cell.userNameLabel.text = user.username
-//                    cell.textLabel?.text = user.username
-//                    cell.imageView?.setAvatar(urlString: user.avatarUrl, namePlaceHolder: user.username)
+       if let comment = element as? ResponseAPIContentGetComment {
+            let cell = self.tableView.dequeueReusableCell(withIdentifier: "CommentCell") as! CommentCell
+//            cell.delegate = self
+            cell.setupFromComment(comment, expanded: true)
             return cell
         }
+        
         return UITableViewCell()
     }
     
