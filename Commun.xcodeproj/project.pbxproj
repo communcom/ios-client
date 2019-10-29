@@ -318,6 +318,7 @@
 		BCCE0AA42367E83900A183AA /* UserProfilePageVC+Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCE0AA32367E83900A183AA /* UserProfilePageVC+Binding.swift */; };
 		BCCE0AA62367EB1100A183AA /* SubscriptionCommunityCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCE0AA52367EB1100A183AA /* SubscriptionCommunityCell.swift */; };
 		BCCE0AA82367EB5900A183AA /* MyCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCE0AA72367EB5900A183AA /* MyCollectionViewCell.swift */; };
+		BCCE0AAD23681B2400A183AA /* ProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCE0AAC23681B2400A183AA /* ProfileController.swift */; };
 		BCD453AD2354473F005A454C /* BasicEditorVC+MediaViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD453AC2354473F005A454C /* BasicEditorVC+MediaViewDelegate.swift */; };
 		BCD453AF2354476B005A454C /* ArticleEditorVC+MediaViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD453AE2354476B005A454C /* ArticleEditorVC+MediaViewDelegate.swift */; };
 		BCE7F5702359A44A0008D91B /* ResponseAPIContentGetComments.json in Resources */ = {isa = PBXBuildFile; fileRef = BCE7F56F2359A44A0008D91B /* ResponseAPIContentGetComments.json */; };
@@ -671,6 +672,7 @@
 		BCCE0AA32367E83900A183AA /* UserProfilePageVC+Binding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserProfilePageVC+Binding.swift"; sourceTree = "<group>"; };
 		BCCE0AA52367EB1100A183AA /* SubscriptionCommunityCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionCommunityCell.swift; sourceTree = "<group>"; };
 		BCCE0AA72367EB5900A183AA /* MyCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCollectionViewCell.swift; sourceTree = "<group>"; };
+		BCCE0AAC23681B2400A183AA /* ProfileController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileController.swift; sourceTree = "<group>"; };
 		BCD453AC2354473F005A454C /* BasicEditorVC+MediaViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BasicEditorVC+MediaViewDelegate.swift"; sourceTree = "<group>"; };
 		BCD453AE2354476B005A454C /* ArticleEditorVC+MediaViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ArticleEditorVC+MediaViewDelegate.swift"; sourceTree = "<group>"; };
 		BCE7F56F2359A44A0008D91B /* ResponseAPIContentGetComments.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ResponseAPIContentGetComments.json; sourceTree = "<group>"; };
@@ -1113,6 +1115,7 @@
 				3B5D7CEE2297F3FA0077B82C /* ItemsListController.swift */,
 				57A95196224178010020F55D /* PostController.swift */,
 				BC74A18123643C6400D94EF2 /* CommunityController.swift */,
+				BCCE0AAC23681B2400A183AA /* ProfileController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -1406,7 +1409,6 @@
 			isa = PBXGroup;
 			children = (
 				BC016D5B235EB95000F1319F /* Base */,
-				3BDD9A09228EDA5700B2A1DA /* Controllers */,
 				BCA971292361304800AE37E1 /* UIViews */,
 				3BB32F1723438D32006572F3 /* UIPresentationControllers */,
 				3BC613AA23420FC400075570 /* UIViewControllers */,
@@ -1643,6 +1645,7 @@
 		BC016D5B235EB95000F1319F /* Base */ = {
 			isa = PBXGroup;
 			children = (
+				3BDD9A09228EDA5700B2A1DA /* Controllers */,
 				BC016D4D235EA1DE00F1319F /* BaseViewController.swift */,
 				BCF3914D235FEAEE00A9D1ED /* ListItemType.swift */,
 				BCF3914A235FEAA500A9D1ED /* Fetchers */,
@@ -2298,6 +2301,7 @@
 				3B24F86122F3715E00B7091C /* CommunitiesVC.swift in Sources */,
 				3BF37BCA22A11FA700A72FFE /* UIView.swift in Sources */,
 				575AECAE22606D0800A7EC2D /* SignUpViewModel.swift in Sources */,
+				BCCE0AAD23681B2400A183AA /* ProfileController.swift in Sources */,
 				BCF39150235FEEC100A9D1ED /* PostsListFetcher.swift in Sources */,
 				BCCE0AA42367E83900A183AA /* UserProfilePageVC+Binding.swift in Sources */,
 				BCCE0AA82367EB5900A183AA /* MyCollectionViewCell.swift in Sources */,

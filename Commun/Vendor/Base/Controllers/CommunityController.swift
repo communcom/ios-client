@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 import CyberSwift
 
-let CommunityControllerPostDidChangeNotification = "CommunityControllerPostDidChangeNotification"
+let CommunityControllerCommunityDidChangeNotification = "CommunityControllerCommunityDidChangeNotification"
 
 protocol CommunityType: Equatable {
     var communityId: String {get}
@@ -21,7 +21,7 @@ protocol CommunityType: Equatable {
 
 extension CommunityType {
     public func notifyChanged() {
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: CommunityControllerPostDidChangeNotification), object: self)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: CommunityControllerCommunityDidChangeNotification), object: self)
     }
 }
 
@@ -51,7 +51,7 @@ protocol CommunityController: class {
 extension CommunityController {
     // Apply changes to view when community changed
     func observerCommunityChange() {
-        NotificationCenter.default.rx.notification(.init(rawValue: CommunityControllerPostDidChangeNotification))
+        NotificationCenter.default.rx.notification(.init(rawValue: CommunityControllerCommunityDidChangeNotification))
             .subscribe(onNext: {notification in
                 guard let newCommunity = notification.object as? Community,
                     newCommunity == self.community

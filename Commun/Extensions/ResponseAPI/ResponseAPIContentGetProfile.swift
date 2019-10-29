@@ -8,8 +8,9 @@
 
 import Foundation
 import CyberSwift
+import RxDataSources
 
-extension ResponseAPIContentGetProfile {
+extension ResponseAPIContentGetProfile: Equatable, IdentifiableType {
     mutating func triggerFollow() {
         isSubscribed = !(isSubscribed ?? false)
         if (isSubscribed!) {
@@ -19,5 +20,17 @@ extension ResponseAPIContentGetProfile {
             let usersCount = (subscribers?.usersCount ?? 1) - 1
             subscribers?.usersCount = usersCount
         }
+    }
+    
+    public static func == (lhs: ResponseAPIContentGetProfile, rhs: ResponseAPIContentGetProfile) -> Bool {
+        return lhs.identity == rhs.identity
+    }
+    
+    public var identity: String {
+        return userId + "/" + (username ?? "")
+    }
+    
+    public func notifyChanged() {
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: ProfileControllerProfileDidChangeNotification), object: self)
     }
 }
