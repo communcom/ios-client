@@ -40,7 +40,7 @@ class UserProfileHeaderView: ProfileHeaderView, UICollectionViewDelegateFlowLayo
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.backgroundColor = .clear
         collectionView.configureForAutoLayout()
-        collectionView.autoSetDimension(.height, toSize: 171)
+        collectionView.autoSetDimension(.height, toSize: 187)
         return collectionView
     }()
     
@@ -125,7 +125,7 @@ class UserProfileHeaderView: ProfileHeaderView, UICollectionViewDelegateFlowLayo
         
         let separator2 = UIView(height: 1, backgroundColor: #colorLiteral(red: 0.9599978328, green: 0.966491878, blue: 0.9829974771, alpha: 1))
         addSubview(separator2)
-        separator2.autoPinEdge(.top, to: .bottom, of: communitiesCollectionView, withOffset: 20)
+        separator2.autoPinEdge(.top, to: .bottom, of: communitiesCollectionView, withOffset: 4)
         separator2.autoPinEdge(toSuperviewEdge: .leading)
         separator2.autoPinEdge(toSuperviewEdge: .trailing)
         

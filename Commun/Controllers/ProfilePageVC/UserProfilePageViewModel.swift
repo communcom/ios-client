@@ -37,6 +37,8 @@ class UserProfilePageViewModel: ProfileViewModel<ResponseAPIContentGetProfile> {
     override func bind() {
         super.bind()
         
+        subscriptionsVM.fetchNext()
+        
         segmentedItem
             .filter {_ in self.profile.value != nil}
             .subscribe(onNext: { (item) in

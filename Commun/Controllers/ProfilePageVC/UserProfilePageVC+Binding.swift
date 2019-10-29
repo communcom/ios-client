@@ -29,13 +29,28 @@ extension UserProfilePageVC: UICollectionViewDelegateFlowLayout {
     func bindCommunities() {
         // communities loading state
         viewModel.subscriptionsVM.state
-            .subscribe(onNext: { (state) in
-                
+            .subscribe(onNext: {[weak self] (state) in
+                switch state {
+                case .loading(let isLoading):
+                    if isLoading {
+                        self?.communitiesCollectionView.showLoading()
+                    }
+                    else {
+                        self?.communitiesCollectionView.hideLoading()
+                    }
+                case .listEnded:
+                    #warning("empty state")
+                    self?.communitiesCollectionView.hideLoading()
+                case .error(let error):
+                    #warning("error state")
+                    self?.communitiesCollectionView.hideLoading()
+                }
             })
             .disposed(by: disposeBag)
         
         // communities
         viewModel.subscriptionsVM.items
+            .skip(1)
             .map {$0.compactMap {$0.communityValue}}
             .bind(to: communitiesCollectionView.rx.items(cellIdentifier: "SubscriptionCommunityCell", cellType: SubscriptionCommunityCell.self)) { index, model, cell in
 //                cell.setUp(with: model as! ResponseAPIContentGet)
@@ -47,7 +62,7 @@ extension UserProfilePageVC: UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 140, height: 171)
+        return CGSize(width: 140, height: 187)
     }
 }
 

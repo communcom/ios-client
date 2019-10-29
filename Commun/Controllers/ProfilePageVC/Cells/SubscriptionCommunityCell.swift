@@ -33,11 +33,11 @@ class SubscriptionCommunityCell: MyCollectionViewCell, CommunityController {
     override func setUpViews() {
         super.setUpViews()
         contentView.addSubview(coverImageView)
-        coverImageView.autoPinEdgesToSuperviewEdges()
+        coverImageView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 0, bottom: 16, right: 0))
         
         let containerView = UIView(backgroundColor: .white, cornerRadius: 10)
         contentView.addSubview(containerView)
-        contentView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 46, left: 5, bottom: 0, right: 5))
+        containerView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 46, left: 5, bottom: 16, right: 5))
         
         contentView.addSubview(avatarImageView)
         avatarImageView.autoPinEdge(toSuperviewEdge: .top, withInset: 20)
@@ -55,6 +55,8 @@ class SubscriptionCommunityCell: MyCollectionViewCell, CommunityController {
         
         containerView.addSubview(joinButton)
         joinButton.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 10, bottom: 10, right: 10), excludingEdge: .top)
+        
+        containerView.addShadow(ofColor: UIColor(red: 176, green: 176, blue: 204)!, radius: 25, offset: CGSize(width: 0, height: 10), opacity: 0.25)
         
         joinButton.addTarget(self, action: #selector(joinButtonDidTouch), for: .touchUpInside)
     }
