@@ -73,8 +73,6 @@ class ListFetcher<T: ListItemType> {
             if !forceRetry {
                 return
             }
-        default:
-            break
         }
         
         // assign loading state

@@ -146,7 +146,6 @@
 		3BB342B022CA5CA6009546B2 /* PickupAvatarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BB342AF22CA5CA6009546B2 /* PickupAvatarVC.swift */; };
 		3BB342B222CA64EA009546B2 /* Boarding.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3BB342B122CA64EA009546B2 /* Boarding.storyboard */; };
 		3BB342B422CA7412009546B2 /* CreateBioVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BB342B322CA7412009546B2 /* CreateBioVC.swift */; };
-		3BB48ACB22D4ECDC00F11B6A /* ContentFittingWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BB48ACA22D4ECDC00F11B6A /* ContentFittingWebView.swift */; };
 		3BB48AD022D5F84D00F11B6A /* SetPasscodeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BB48ACF22D5F84D00F11B6A /* SetPasscodeVC.swift */; };
 		3BB48AD322D6432200F11B6A /* BoardingRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BB48AD222D6432200F11B6A /* BoardingRouter.swift */; };
 		3BB48AD522D645FF00F11B6A /* BoardingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BB48AD422D645FF00F11B6A /* BoardingVC.swift */; };
@@ -479,7 +478,6 @@
 		3BB342AF22CA5CA6009546B2 /* PickupAvatarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickupAvatarVC.swift; sourceTree = "<group>"; };
 		3BB342B122CA64EA009546B2 /* Boarding.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Boarding.storyboard; sourceTree = "<group>"; };
 		3BB342B322CA7412009546B2 /* CreateBioVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateBioVC.swift; sourceTree = "<group>"; };
-		3BB48ACA22D4ECDC00F11B6A /* ContentFittingWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentFittingWebView.swift; sourceTree = "<group>"; };
 		3BB48ACF22D5F84D00F11B6A /* SetPasscodeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetPasscodeVC.swift; sourceTree = "<group>"; };
 		3BB48AD222D6432200F11B6A /* BoardingRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardingRouter.swift; sourceTree = "<group>"; };
 		3BB48AD422D645FF00F11B6A /* BoardingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardingVC.swift; sourceTree = "<group>"; };
@@ -1199,7 +1197,6 @@
 		571B1508223A937200630C8F /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				BC016D5B235EB95000F1319F /* Base */,
 				3B67FC0522C4BB5100D05F01 /* SplashViewController.swift */,
 				57B6FC23224A9E4900BCFDDA /* WelcomeScreenVC */,
 				57FB179E224C077300563BF7 /* SignInVC */,
@@ -1356,6 +1353,7 @@
 		576DC91F223E42B200EDED41 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				BCCE0A982367D12800A183AA /* ResponseAPI */,
 				3B289B982346E6C300598407 /* PureLayout */,
 				3B197C522269BE0E008CF10D /* SegmentioExtension.swift */,
 				3BAF69CE226787940055CCEB /* Date.swift */,
@@ -1363,12 +1361,6 @@
 				3B635F8222774A37006DAAB2 /* FeedTimeFrameMode.swift */,
 				3B2F227222689334006B589E /* NSMutableAttributedString.swift */,
 				3BAD8E822318FB1C005A8AB3 /* NSAttributedString.swift */,
-				3BA4D0862292BA710022A69D /* ResponseAPIContentGetPost.swift */,
-				3B02A56822F013D50043F9A4 /* ResponseAPIContentGetComment.swift */,
-				BCA9711A236033D100AE37E1 /* ResponseAPIContentGetCommunity.swift */,
-				3BF37BD522A162E000A72FFE /* ResponseAPIOnlineNotificationData.swift */,
-				BCF74A5D23617EF700B91089 /* ResponseAPIContentResolveProfile.swift */,
-				BC48FC3F236682F90049C4F4 /* ResponseAPIContentGetLeader.swift */,
 				5721E87022650AC0003BE04B /* StringExtension.swift */,
 				3B51581D226E0D3A00108F17 /* TLPhotosPickerViewController+Rx.swift */,
 				3BDD9A0E228F07EF00B2A1DA /* UIApplication.swift */,
@@ -1379,7 +1371,6 @@
 				3B5CB30222A56BD500757533 /* UITapGestureRecognizer.swift */,
 				3B63CD9222AA7AA200DC828B /* UIScrollView.swift */,
 				3B6229AA22BD12410053B9EF /* TTTAttributedLabel.swift */,
-				3BDF4FA722C21B310029D616 /* ResponseAPIContentGetProfile.swift */,
 				3BF37BC922A11FA700A72FFE /* UIView.swift */,
 				3BAF69CA226773000055CCEB /* UIView+Shadow.swift */,
 				576DC920223E42C800EDED41 /* UIViewControllerExtension.swift */,
@@ -1391,9 +1382,6 @@
 				3BF381802331D9CD00C02123 /* URL.swift */,
 				3B6CB731234331830097B2A1 /* Array.swift */,
 				3B3C8B83234779FE00D8BADB /* UIImage.swift */,
-				3B25E5C5234C6EF6005BD1B8 /* ResponseAPIFrameGetEmbed.swift */,
-				BCE9390A234DBBC300226E39 /* ResponseAPIContentBlock.swift */,
-				BCE9390E234DD28400226E39 /* ResponseAPIContentGetPostContent.swift */,
 				BCB2A6E52355536D00B3582B /* UITableViewCell.swift */,
 				BCA971252360883D00AE37E1 /* Double.swift */,
 			);
@@ -1403,6 +1391,7 @@
 		578409EA223FAC0000338FD5 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				BC016D5B235EB95000F1319F /* Base */,
 				3BDD9A09228EDA5700B2A1DA /* Controllers */,
 				BCA971292361304800AE37E1 /* UIViews */,
 				3BB32F1723438D32006572F3 /* UIPresentationControllers */,
@@ -1413,7 +1402,6 @@
 				575AECAA226066F000A7EC2D /* FormTextField */,
 				57FB1795224BFBD700563BF7 /* PageControls */,
 				B1A8AC1922E6FD4800032030 /* UIButton */,
-				3BB48ACA22D4ECDC00F11B6A /* ContentFittingWebView.swift */,
 				3B28EFE1228C7C31002D4816 /* KeyboardLayoutConstraint.swift */,
 				3B5CB30422A5752100757533 /* ListViewModelType.swift */,
 				3B5CB30F22A5880D00757533 /* MyRxTableViewSectionedAnimatedDataSource.swift */,
@@ -1743,6 +1731,23 @@
 				57C33A402244D2BB00073FAE /* Cells */,
 			);
 			path = Subviews;
+			sourceTree = "<group>";
+		};
+		BCCE0A982367D12800A183AA /* ResponseAPI */ = {
+			isa = PBXGroup;
+			children = (
+				3BDF4FA722C21B310029D616 /* ResponseAPIContentGetProfile.swift */,
+				3BA4D0862292BA710022A69D /* ResponseAPIContentGetPost.swift */,
+				3B02A56822F013D50043F9A4 /* ResponseAPIContentGetComment.swift */,
+				BCA9711A236033D100AE37E1 /* ResponseAPIContentGetCommunity.swift */,
+				3BF37BD522A162E000A72FFE /* ResponseAPIOnlineNotificationData.swift */,
+				BC48FC3F236682F90049C4F4 /* ResponseAPIContentGetLeader.swift */,
+				BCF74A5D23617EF700B91089 /* ResponseAPIContentResolveProfile.swift */,
+				3B25E5C5234C6EF6005BD1B8 /* ResponseAPIFrameGetEmbed.swift */,
+				BCE9390A234DBBC300226E39 /* ResponseAPIContentBlock.swift */,
+				BCE9390E234DD28400226E39 /* ResponseAPIContentGetPostContent.swift */,
+			);
+			path = ResponseAPI;
 			sourceTree = "<group>";
 		};
 		BCF3914A235FEAA500A9D1ED /* Fetchers */ = {
@@ -2097,7 +2102,6 @@
 				3B06863423470A33008953C5 /* BasicEditorTextView.swift in Sources */,
 				3B67FC0822C5016F00D05F01 /* SignInViewController.swift in Sources */,
 				3B0506EE22D7309900B4E4A3 /* KeysVC.swift in Sources */,
-				3BB48ACB22D4ECDC00F11B6A /* ContentFittingWebView.swift in Sources */,
 				3B82D0F722D8D56A004EE848 /* EnableBiometricsVC.swift in Sources */,
 				3B5D361822E820760012A991 /* PostPageVC+Header.swift in Sources */,
 				3BC613A52341AAAF00075570 /* CommunCheckbox.swift in Sources */,
