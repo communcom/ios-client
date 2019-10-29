@@ -136,7 +136,7 @@ class PostMetaView: UIView {
     }
     
     @objc func communityNameTapped(_ sender: TapGesture) {
-        guard let communityId = sender.post.community.communityId else {return}
+        let communityId = sender.post.community.communityId
         parentViewController?.showCommunityWithCommunityId(communityId)
     }
 }

@@ -18,8 +18,4 @@ extension ResponseAPIContentGetCommunity: Equatable, IdentifiableType {
     public var identity: String {
         return (communityId ?? "") + "/" + (name ?? "")
     }
-    
-    public func notifyChanged() {
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: CommunityControllerPostDidChangeNotification), object: self)
-    }
 }

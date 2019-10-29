@@ -39,7 +39,6 @@ extension UserProfilePageVC: UICollectionViewDelegateFlowLayout {
                         self?.communitiesCollectionView.hideLoading()
                     }
                 case .listEnded:
-                    #warning("empty state")
                     self?.communitiesCollectionView.hideLoading()
                 case .error(let error):
                     #warning("error state")
@@ -52,12 +51,25 @@ extension UserProfilePageVC: UICollectionViewDelegateFlowLayout {
         viewModel.subscriptionsVM.items
             .skip(1)
             .map {$0.compactMap {$0.communityValue}}
+            .do(onNext: { [weak self] (items) in
+                if self?.viewModel.subscriptionsVM.state.value == .listEnded, items.count == 0 {
+                    self?.communitiesCollectionView.heightConstraint?.constant = 0
+                }
+            })
             .bind(to: communitiesCollectionView.rx.items(cellIdentifier: "SubscriptionCommunityCell", cellType: SubscriptionCommunityCell.self)) { index, model, cell in
-//                cell.setUp(with: model as! ResponseAPIContentGet)
+                cell.setUp(with: model)
             }
             .disposed(by: disposeBag)
         
         communitiesCollectionView.rx.setDelegate(self)
+            .disposed(by: disposeBag)
+        
+        // select
+        communitiesCollectionView.rx
+            .modelSelected(ResponseAPIContentGetSubscriptionsCommunity.self)
+            .subscribe(onNext: { (community) in
+                self.showCommunityWithCommunityId(community.communityId)
+            })
             .disposed(by: disposeBag)
     }
     

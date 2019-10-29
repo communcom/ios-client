@@ -885,7 +885,7 @@
 			isa = PBXGroup;
 			children = (
 				3B0E9C722270785E002AB1C2 /* PhotoLibraryCell.swift */,
-				BCCE0AA52367EB1100A183AA /* SubscriptionCommunityCell.swift */,
+				BCCE0AA92368192000A183AA /* SubscriptionCommunityCell */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -1765,6 +1765,14 @@
 				BCE9390E234DD28400226E39 /* ResponseAPIContentGetPostContent.swift */,
 			);
 			path = ResponseAPI;
+			sourceTree = "<group>";
+		};
+		BCCE0AA92368192000A183AA /* SubscriptionCommunityCell */ = {
+			isa = PBXGroup;
+			children = (
+				BCCE0AA52367EB1100A183AA /* SubscriptionCommunityCell.swift */,
+			);
+			path = SubscriptionCommunityCell;
 			sourceTree = "<group>";
 		};
 		BCF3914A235FEAA500A9D1ED /* Fetchers */ = {

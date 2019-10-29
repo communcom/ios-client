@@ -12,14 +12,40 @@ import CyberSwift
 
 let CommunityControllerPostDidChangeNotification = "CommunityControllerPostDidChangeNotification"
 
+protocol CommunityType: Equatable {
+    var communityId: String {get}
+    var name: String {get}
+    var isSubscribed: Bool? {get set}
+    var subscribersCount: UInt64? {get set}
+}
+
+extension CommunityType {
+    public func notifyChanged() {
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: CommunityControllerPostDidChangeNotification), object: self)
+    }
+}
+
+extension ResponseAPIContentGetCommunity: CommunityType {}
+extension ResponseAPIContentGetSubscriptionsCommunity: CommunityType {
+    var subscribersCount: UInt64? {
+        get {
+            return nil
+        }
+        set {
+            
+        }
+    }
+}
+
 protocol CommunityController: class {
+    associatedtype Community: CommunityType
     // Required views
     var joinButton: CommunButton {get set}
     
     // Required properties
     var disposeBag: DisposeBag {get}
-    var community: ResponseAPIContentGetCommunity? {get set}
-    func setUp(with community: ResponseAPIContentGetCommunity)
+    var community: Community? {get set}
+    func setUp(with community: Community)
 }
 
 extension CommunityController {
@@ -27,7 +53,7 @@ extension CommunityController {
     func observerCommunityChange() {
         NotificationCenter.default.rx.notification(.init(rawValue: CommunityControllerPostDidChangeNotification))
             .subscribe(onNext: {notification in
-                guard let newCommunity = notification.object as? ResponseAPIContentGetCommunity,
+                guard let newCommunity = notification.object as? Community,
                     newCommunity == self.community
                     else {return}
                 self.setUp(with: newCommunity)
@@ -37,7 +63,8 @@ extension CommunityController {
     
     // join
     func toggleJoin() {
-        guard community != nil, let id = community!.communityId else {return}
+        guard community != nil else {return}
+        let id = community!.communityId
         
         // for reverse
         let originIsSubscribed = community!.isSubscribed ?? false

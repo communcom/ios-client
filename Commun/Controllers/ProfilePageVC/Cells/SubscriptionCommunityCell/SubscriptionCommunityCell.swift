@@ -10,7 +10,7 @@ import Foundation
 
 class SubscriptionCommunityCell: MyCollectionViewCell, CommunityController {
     // MARK: - Properties
-    var community: ResponseAPIContentGetCommunity?
+    var community: ResponseAPIContentGetSubscriptionsCommunity?
     
     // MARK: - Subviews
     lazy var coverImageView: UIImageView = {
@@ -66,9 +66,19 @@ class SubscriptionCommunityCell: MyCollectionViewCell, CommunityController {
         observerCommunityChange()
     }
     
-    func setUp(with community: ResponseAPIContentGetCommunity) {
+    func setUp(with community: ResponseAPIContentGetSubscriptionsCommunity) {
         self.community = community
+        #warning("avatar and cover missing")
         
+        nameLabel.text = community.name
+        
+        #warning("subscribersCount missing")
+        
+        // joinButton
+        let joined = community.isSubscribed ?? false
+        joinButton.backgroundColor = joined ? #colorLiteral(red: 0.9525656104, green: 0.9605062604, blue: 0.9811610579, alpha: 1): .appMainColor
+        joinButton.setTitleColor(joined ? .appMainColor: .white , for: .normal)
+        joinButton.setTitle(joined ? "joined".localized().uppercaseFirst : "join".localized().uppercaseFirst, for: .normal)
     }
     
     @objc func joinButtonDidTouch() {
