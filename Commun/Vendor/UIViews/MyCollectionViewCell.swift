@@ -1,23 +1,24 @@
 //
-//  TableViewCell.swift
+//  MyCollectionViewCell.swift
 //  Commun
 //
-//  Created by Chung Tran on 10/21/19.
+//  Created by Chung Tran on 10/29/19.
 //  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
 //
 
-import UIKit
+import Foundation
 import RxSwift
 
-class MyTableViewCell: UITableViewCell {
+class MyCollectionViewCell: UICollectionViewCell {
     // MARK: - Constants
     var disposeBag = DisposeBag()
     
     // MARK: - Properties
     
     // MARK: - Initializer
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         setUpViews()
     }
     
@@ -42,9 +43,10 @@ class MyTableViewCell: UITableViewCell {
     func observe() {
         
     }
-
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        setUpViews()
     }
 }

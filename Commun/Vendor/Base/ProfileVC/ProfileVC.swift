@@ -26,7 +26,7 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
     
     lazy var coverImageView: UIImageView = {
         let imageView = UIImageView(height: coverHeight)
-        imageView.image = UIImage(named: "ProfilePageCover")
+        imageView.image = .placeholder
         return imageView
     }()
     

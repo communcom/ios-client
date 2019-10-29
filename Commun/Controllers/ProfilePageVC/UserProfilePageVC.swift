@@ -23,6 +23,10 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile> {
         return headerView
     }
     
+    var communitiesCollectionView: UICollectionView {
+        headerView.communitiesCollectionView
+    }
+    
     // MARK: - Initializers
     init(userId: String) {
         self.userId = userId

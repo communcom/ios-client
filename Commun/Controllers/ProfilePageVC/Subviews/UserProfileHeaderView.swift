@@ -9,7 +9,7 @@
 import Foundation
 import CyberSwift
 
-class UserProfileHeaderView: ProfileHeaderView {
+class UserProfileHeaderView: ProfileHeaderView, UICollectionViewDelegateFlowLayout {
     // MARK: - Properties
     var profile: ResponseAPIContentGetProfile?
     
@@ -32,7 +32,17 @@ class UserProfileHeaderView: ProfileHeaderView {
     
     lazy var communitiesMutualCountLabel = UILabel.with(text: "300", textSize: 15, weight: .semibold, textColor: .a5a7bd)
     
-    lazy var communitiesCollectionView = UIView(height: 171)
+    lazy var communitiesCollectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.sectionInset = .zero
+        layout.scrollDirection = .horizontal
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.backgroundColor = .clear
+        collectionView.configureForAutoLayout()
+        collectionView.autoSetDimension(.height, toSize: 171)
+        return collectionView
+    }()
     
     // MARK: - Initializers
     override func commonInit() {
@@ -106,9 +116,11 @@ class UserProfileHeaderView: ProfileHeaderView {
         mutualLabel.autoPinEdge(.leading, to: .trailing, of: communitiesMutualCountLabel, withOffset: 2)
         mutualLabel.autoAlignAxis(.horizontal, toSameAxisOf: communitiesCountLabel)
         
+        communitiesCollectionView.register(SubscriptionCommunityCell.self, forCellWithReuseIdentifier: "SubscriptionCommunityCell")
+        communitiesCollectionView.contentInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
         addSubview(communitiesCollectionView)
         communitiesCollectionView.autoPinEdge(.top, to: .bottom, of: communitiesCountLabel, withOffset: 16)
-        communitiesCollectionView.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
+        communitiesCollectionView.autoPinEdge(toSuperviewEdge: .leading)
         communitiesCollectionView.autoPinEdge(toSuperviewEdge: .trailing)
         
         let separator2 = UIView(height: 1, backgroundColor: #colorLiteral(red: 0.9599978328, green: 0.966491878, blue: 0.9829974771, alpha: 1))

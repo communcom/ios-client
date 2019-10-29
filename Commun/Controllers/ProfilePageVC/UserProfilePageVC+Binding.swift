@@ -9,7 +9,7 @@
 import Foundation
 import CyberSwift
 
-extension UserProfilePageVC {
+extension UserProfilePageVC: UICollectionViewDelegateFlowLayout {
     func bindSegmentedControl() {
         headerView.selectedIndex
             .map { index -> UserProfilePageViewModel.SegmentioItem in
@@ -37,7 +37,17 @@ extension UserProfilePageVC {
         // communities
         viewModel.subscriptionsVM.items
             .map {$0.compactMap {$0.communityValue}}
-            .asDriver(onErrorJustReturn: [])
-            
+            .bind(to: communitiesCollectionView.rx.items(cellIdentifier: "SubscriptionCommunityCell", cellType: SubscriptionCommunityCell.self)) { index, model, cell in
+//                cell.setUp(with: model as! ResponseAPIContentGet)
+            }
+            .disposed(by: disposeBag)
+        
+        communitiesCollectionView.rx.setDelegate(self)
+            .disposed(by: disposeBag)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 140, height: 171)
     }
 }
+

@@ -38,13 +38,16 @@ extension UILabel {
         return label
     }
     
-    static func with(text: String? = nil, textSize: CGFloat, weight: UIFont.Weight = .regular, textColor: UIColor = .black, numberOfLines: Int? = nil) -> UILabel {
+    static func with(text: String? = nil, textSize: CGFloat, weight: UIFont.Weight = .regular, textColor: UIColor = .black, numberOfLines: Int? = nil, textAlignment: NSTextAlignment? = nil) -> UILabel {
         let label = UILabel(forAutoLayout: ())
         label.text = text
         label.font = .systemFont(ofSize: textSize, weight: weight)
         label.textColor = textColor
         if let numberOfLines = numberOfLines {
             label.numberOfLines = numberOfLines
+        }
+        if let textAlignment = textAlignment {
+            label.textAlignment = textAlignment
         }
         return label
     }
