@@ -45,18 +45,24 @@ extension MyProfilePageVC {
     
     // MARK: - Covers + Avatar
     func openActionSheet(cover: Bool) {
-        self.showActionSheet(title:     String(format: "%@ %@", "change".localized().uppercaseFirst, (cover ? "cover photo" : "profile photo").localized()),
-                             actions:   [
-                                UIAlertAction(title:    "choose from gallery".localized().uppercaseFirst,
-                                              style:    .default,
-                                              handler:  { _ in
-                                                cover ? self.onUpdateCover() : self.onUpdateAvatar()
-                                }),
-                                UIAlertAction(title:    String(format: "%@ %@", "delete current".localized().uppercaseFirst, (cover ? "cover photo" : "profile photo").localized()),
-                                              style:    .destructive,
-                                              handler:  { _ in
-                                                cover ? self.onUpdateCover(delete: true) : self.onUpdateAvatar(delete: true)
-                                })])
+        showCommunActionSheet(
+            title: String(format: "%@ %@", "change".localized().uppercaseFirst, (cover ? "cover photo" : "profile photo").localized()),
+            actions: [
+                CommunActionSheet.Action(
+                    title: "choose from gallery".localized().uppercaseFirst,
+                    icon: UIImage(named: "edit"),
+                    handle: {[unowned self] in
+                        cover ? self.onUpdateCover() : self.onUpdateAvatar()
+                }),
+                CommunActionSheet.Action(
+                    title: String(format: "%@ %@", "delete current".localized().uppercaseFirst, (cover ? "cover photo" : "profile photo").localized()),
+                    icon: UIImage(named: "edit"),
+                    handle: {[unowned self] in
+                        cover ? self.onUpdateCover(delete: true) : self.onUpdateAvatar(delete: true)
+                    },
+                    tintColor: .red
+                )
+        ])
     }
     
     func onUpdateCover(delete: Bool = false) {
