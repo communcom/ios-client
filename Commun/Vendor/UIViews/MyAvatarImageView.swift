@@ -30,7 +30,12 @@ class MyAvatarImageView: MyView {
     }
     
     var image: UIImage? {
-        return imageView.image
+        get {
+            imageView.image
+        }
+        set {
+            imageView.image = newValue
+        }
     }
     
     func setAvatar(urlString: String?, namePlaceHolder: String) {

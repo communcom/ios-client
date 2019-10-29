@@ -88,6 +88,18 @@ extension ProfileController {
     }
     
     func animateFollow() {
+        CATransaction.begin()
         
+        let moveDownAnim = CABasicAnimation(keyPath: "transform.scale")
+        moveDownAnim.byValue = 1.2
+        moveDownAnim.autoreverses = true
+        followButton.layer.add(moveDownAnim, forKey: "transform.scale")
+        
+        let fadeAnim = CABasicAnimation(keyPath: "opacity")
+        fadeAnim.byValue = -1
+        fadeAnim.autoreverses = true
+        followButton.layer.add(fadeAnim, forKey: "Fade")
+        
+        CATransaction.commit()
     }
 }

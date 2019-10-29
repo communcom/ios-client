@@ -49,4 +49,18 @@ class MyProfilePageVC: UserProfilePageVC {
     override func setHeaderView() {
         headerView = MyProfileHeaderView(tableView: tableView)
     }
+    
+    override func showTitle(_ show: Bool, animated: Bool = false) {
+        // disable effect
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: animated)
+    }
 }
