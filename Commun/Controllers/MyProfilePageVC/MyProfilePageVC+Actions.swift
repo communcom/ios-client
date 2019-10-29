@@ -22,12 +22,16 @@ extension MyProfilePageVC {
         self.onUpdateBio(new: true)
     }
     
+    @objc func moreActionsButtonDidTouch(_ sender: Any) {
+        
+    }
+    
     @objc func settingsButtonDidTouch(_ sender: Any) {
         let settingsVC = controllerContainer.resolve(SettingsVC.self)!
         self.show(settingsVC, sender: nil)
     }
     
-    @objc func bioLableDidTouch(_ sender: Any) {
+    @objc func bioLabelDidTouch(_ sender: Any) {
         self.showActionSheet(title:     String(format: "%@ %@", "change".localized().uppercaseFirst, "profile description".localized()),
                              actions:   [
                                 UIAlertAction(title: "edit".localized().uppercaseFirst, style: .default, handler: { (_) in

@@ -45,7 +45,6 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
     override func setUp() {
         super.setUp()
         view.backgroundColor = #colorLiteral(red: 0.9605136514, green: 0.9644123912, blue: 0.9850376248, alpha: 1)
-        navigationItem.backBarButtonItem?.title = " "
         let leftButtonView = UIView(frame: CGRect(x: 0, y: 0, width: 36, height: 40))
         
         leftButtonView.addSubview(backButton)
