@@ -40,8 +40,12 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile> {
     // MARK: - Methods
     override func setUp() {
         super.setUp()
-        headerView = UserProfileHeaderView(tableView: tableView)
+        setHeaderView()
         headerView.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: 25)
+    }
+    
+    func setHeaderView() {
+        headerView = UserProfileHeaderView(tableView: tableView)
     }
     
     override func bind() {

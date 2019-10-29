@@ -11,11 +11,6 @@ import UIKit
 class EmptyCell: UITableViewCell {
     @IBOutlet weak var emptyView: EmptyView!
     
-    
-    func setUp(with segmentedItem: ProfilePageSegmentioItem) {
-        emptyView.setUp(with: segmentedItem)
-    }
-    
     func setUpEmptyComment() {
         emptyView.setUpEmptyComment()
     }

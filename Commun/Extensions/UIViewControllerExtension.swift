@@ -141,7 +141,7 @@ extension UIViewController {
         }
         
         // open profile tabbar
-        if let profileNC = tabBarController?.viewControllers?.first(where: {($0 as? UINavigationController)?.viewControllers.first is ProfilePageVC}),
+        if let profileNC = tabBarController?.viewControllers?.first(where: {($0 as? UINavigationController)?.viewControllers.first is MyProfilePageVC}),
             profileNC != tabBarController?.selectedViewController,
             let tabBarVC = tabBarController as? TabBarVC
         {

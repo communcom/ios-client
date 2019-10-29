@@ -99,7 +99,7 @@ class TabBarVC: UITabBarController {
         notifications.accessibilityLabel = "TabBarNotificationsTabBarItem"
 
         // Profile Tab
-        let profile = controllerContainer.resolve(ProfilePageVC.self)!
+        let profile = MyProfilePageVC()
         let profileNC = SwipeNavigationController(rootViewController: profile)
         let profileItem = buttonTabBarItem(image: UIImage(named: "tabbar-profile")!, tag: profileTabIndex)
         profileNC.accessibilityLabel = "TabBarProfileTabBarItem"
