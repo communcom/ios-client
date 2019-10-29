@@ -42,19 +42,9 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile> {
     
     override func bind() {
         super.bind()
-        headerView.selectedIndex
-            .map { index -> UserProfilePageViewModel.SegmentioItem in
-                switch index {
-                case 0:
-                    return .posts
-                case 1:
-                    return .comments
-                default:
-                    fatalError("not found selected index")
-                }
-            }
-            .bind(to: viewModel.segmentedItem)
-            .disposed(by: disposeBag)
+        bindSegmentedControl()
+        
+        bindCommunities()
     }
     
     override func setUp(profile: ResponseAPIContentGetProfile) {

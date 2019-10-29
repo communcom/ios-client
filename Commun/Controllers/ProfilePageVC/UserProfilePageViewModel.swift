@@ -21,8 +21,9 @@ class UserProfilePageViewModel: ProfileViewModel<ResponseAPIContentGetProfile> {
     // MARK: - Objects
     let segmentedItem = BehaviorRelay<SegmentioItem>(value: .posts)
     
-    lazy var postsVM: PostsViewModel = PostsViewModel(filter: PostsListFetcher.Filter(feedTypeMode: .byUser, feedType: .timeDesc, sortType: .all, userId: profileId))
-    lazy var commentsVM: CommentsViewModel = CommentsViewModel(filter: CommentsListFetcher.Filter(userId: profileId, type: .user))
+    lazy var postsVM = PostsViewModel(filter: PostsListFetcher.Filter(feedTypeMode: .byUser, feedType: .timeDesc, sortType: .all, userId: profileId))
+    lazy var commentsVM = CommentsViewModel(filter: CommentsListFetcher.Filter(userId: profileId, type: .user))
+    lazy var subscriptionsVM = SubscriptionsViewModel(userId: profileId, type: .community)
     
     // MARK: - Methods
     override var loadProfileRequest: Single<ResponseAPIContentGetProfile> {
