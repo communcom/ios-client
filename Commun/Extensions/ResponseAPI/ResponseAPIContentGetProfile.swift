@@ -11,17 +11,6 @@ import CyberSwift
 import RxDataSources
 
 extension ResponseAPIContentGetProfile: Equatable, IdentifiableType {
-    mutating func triggerFollow() {
-        isSubscribed = !(isSubscribed ?? false)
-        if (isSubscribed!) {
-            let usersCount = (subscribers?.usersCount ?? 0) + 1
-            subscribers?.usersCount = usersCount
-        } else {
-            let usersCount = (subscribers?.usersCount ?? 1) - 1
-            subscribers?.usersCount = usersCount
-        }
-    }
-    
     public static func == (lhs: ResponseAPIContentGetProfile, rhs: ResponseAPIContentGetProfile) -> Bool {
         return lhs.identity == rhs.identity
     }

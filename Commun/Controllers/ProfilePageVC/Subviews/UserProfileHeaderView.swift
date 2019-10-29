@@ -9,12 +9,12 @@
 import Foundation
 import CyberSwift
 
-class UserProfileHeaderView: ProfileHeaderView, UICollectionViewDelegateFlowLayout {
+class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionViewDelegateFlowLayout {
     // MARK: - Properties
     var profile: ResponseAPIContentGetProfile?
     
     // MARK: - Subviews
-    lazy var followButton: UIButton = CommunButton.default(label: "follow".localized().uppercaseFirst)
+    lazy var followButton = CommunButton.default(label: "follow".localized().uppercaseFirst)
     
     lazy var followersCountLabel: UILabel = {
         let label = UILabel.with(text: Double(10000000).kmFormatted, textSize: 15, weight: .bold)
@@ -146,7 +146,7 @@ class UserProfileHeaderView: ProfileHeaderView, UICollectionViewDelegateFlowLayo
             CMSegmentedControl.Item(name: "comments".localized().uppercaseFirst)
         ]
         
-        #warning("observe change")
+        observeProfileChange()
     }
     
     func setUp(with userProfile: ResponseAPIContentGetProfile) {
@@ -186,6 +186,6 @@ class UserProfileHeaderView: ProfileHeaderView, UICollectionViewDelegateFlowLayo
     }
     
     @objc func followButtonDidTouch(_ sender: UIButton) {
-        #warning("follow")
+        toggleFollow()
     }
 }
