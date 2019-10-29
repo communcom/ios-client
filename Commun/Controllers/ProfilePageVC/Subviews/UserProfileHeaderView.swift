@@ -166,6 +166,7 @@ class UserProfileHeaderView: ProfileHeaderView {
         followersCountLabel.text = "\(userProfile.subscribers?.usersCount ?? 0)"
         followingsCountLabel.text = "\(userProfile.subscriptions?.usersCount ?? 0)"
         communitiesCountLabel.text = "\(userProfile.subscriptions?.communitiesCount ?? 0)"
+        communitiesMutualCountLabel.text = "\(userProfile.commonCommunitiesCount ?? 0)"
         
         // friends
         #warning("fix later")
