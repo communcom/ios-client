@@ -55,11 +55,20 @@ class MyProfilePageVC: UserProfilePageVC {
     
     override func bind() {
         super.bind()
-        tableView.rx.contentOffset
-            .map {$0.y}
+        let offSetY = tableView.rx.contentOffset
+            .map {$0.y}.share()
+            
+        offSetY
             .map {$0 < -140}
             .subscribe(onNext: { show in
                 self.changeCoverButton.isHidden = !show
+            })
+            .disposed(by: disposeBag)
+        
+        offSetY
+            .map {$0 < -43}
+            .subscribe(onNext: { showNavBar in
+                self.optionsButton.tintColor = !showNavBar ? .black : .white
             })
             .disposed(by: disposeBag)
     }
