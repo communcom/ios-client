@@ -146,7 +146,7 @@ class NetworkService: NSObject {
         
         return RestAPIManager.instance.getProfile(user: userNickName)
             .do(onSuccess: { (profile) in
-                if userId == nil, let avatarUrl = profile.personal.avatarUrl {
+                if userId == nil, let avatarUrl = profile.personal?.avatarUrl {
                     self.saveUserAvatarUrl(avatarUrl)
                 }
             })

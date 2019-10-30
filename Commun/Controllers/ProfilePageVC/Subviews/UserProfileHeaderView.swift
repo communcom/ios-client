@@ -153,7 +153,7 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
         self.profile = userProfile
         
         // avatar
-        avatarImageView.setAvatar(urlString: userProfile.personal.avatarUrl, namePlaceHolder: userProfile.username ?? userProfile.userId)
+        avatarImageView.setAvatar(urlString: userProfile.personal?.avatarUrl, namePlaceHolder: userProfile.username ?? userProfile.userId)
         
         // name
         nameLabel.text = userProfile.username ?? userProfile.userId
@@ -171,7 +171,7 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
         followButton.setTitle(isFollowing ? "following".localized().uppercaseFirst : "follow".localized().uppercaseFirst, for: .normal)
         
         // bio
-        descriptionLabel.text = userProfile.personal.biography
+        descriptionLabel.text = userProfile.personal?.biography
         
         #warning("fix these number later")
         // stats

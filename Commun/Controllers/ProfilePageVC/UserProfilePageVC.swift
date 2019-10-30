@@ -64,7 +64,7 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile> {
         title = profile.username ?? profile.userId
         
         // cover
-        if let urlString = profile.personal.coverUrl
+        if let urlString = profile.personal?.coverUrl
         {
             coverImageView.setImageDetectGif(with: urlString)
         }
