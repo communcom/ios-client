@@ -1403,6 +1403,7 @@
 		578409EA223FAC0000338FD5 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				BC3694F0236987AA00B2E078 /* EditorVC */,
 				BC016D5B235EB95000F1319F /* Base */,
 				BCA971292361304800AE37E1 /* UIViews */,
 				3BB32F1723438D32006572F3 /* UIPresentationControllers */,
@@ -1651,7 +1652,6 @@
 				BCF74A61236180B900B91089 /* SubscribersViewModel.swift */,
 				BC48FC41236689DC0049C4F4 /* LeadersViewModel.swift */,
 				BCCE0AA12367E60A00A183AA /* SubscriptionsViewModel.swift */,
-				BC3694F0236987AA00B2E078 /* EditorVC */,
 			);
 			path = Base;
 			sourceTree = "<group>";
