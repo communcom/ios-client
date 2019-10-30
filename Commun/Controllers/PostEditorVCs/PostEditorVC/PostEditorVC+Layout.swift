@@ -53,7 +53,7 @@ extension PostEditorVC {
         
         // countlabel
         contentView.addSubview(contentTextViewCountLabel)
-        contentTextViewCountLabel.autoPinEdge(.top, to: .bottom, of: contentTextView, withOffset: -188)
+        contentTextViewCountLabel.autoPinEdge(.top, to: .bottom, of: contentTextView, withOffset: -88)
         contentTextViewCountLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
     }
 }
