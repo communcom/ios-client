@@ -25,6 +25,10 @@ class NetworkService: NSObject {
         UserDefaults.standard.set(url, forKey: Config.currentUserAvatarUrlKey)
     }
     
+    private func removeUserAvatar() {
+        UserDefaults.standard.removeObject(forKey: Config.currentUserAvatarUrlKey)
+    }
+    
     // MARK: - Methods API
 //    func loadFeed(_ paginationKey: String?, withSortType sortType: FeedTimeFrameMode = .all, withFeedType type: FeedSortMode = .popular, withFeedTypeMode typeMode: FeedTypeMode = .community, userId: String? = nil) -> Single<ResponseAPIContentGetPosts> {
 //        
@@ -146,10 +150,16 @@ class NetworkService: NSObject {
         
         return RestAPIManager.instance.getProfile(user: userNickName)
             .do(onSuccess: { (profile) in
-                if userId == Config.currentUser?.id,
-                    let avatarUrl = profile.personal?.avatarUrl
+                if userId == Config.currentUser?.id
                 {
-                    self.saveUserAvatarUrl(avatarUrl)
+//                    Config.currentUserAvatarUrlKey
+                    if let avatarUrl = profile.personal?.avatarUrl {
+                        self.saveUserAvatarUrl(avatarUrl)
+                    }
+                    else {
+                        self.removeUserAvatar()
+                    }
+                    
                 }
             })
     }

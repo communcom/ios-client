@@ -33,9 +33,6 @@ class PostEditorVC: EditorVC {
     // MARK: - Methods
     override func viewDidLoad() {
         super.viewDidLoad()
-        // add default tool
-        appendTool(EditorToolbarItem.addPhoto)
-        
         // if editing post
         if let post = viewModel.postForEdit {
             setUp(with: post)
@@ -43,7 +40,10 @@ class PostEditorVC: EditorVC {
         else {
             // parse draft
             if hasDraft {
-                retrieveDraft()
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                    // your code here
+                    self.retrieveDraft()
+                }
             }
         }
     }
@@ -57,11 +57,13 @@ class PostEditorVC: EditorVC {
         contentTextView.placeholder = "write text placeholder".localized().uppercaseFirst + "..."
         headerLabel.text = (viewModel.postForEdit != nil ? "edit post" : "create post").localized().uppercaseFirst
         
-        contentTextView.textContainerInset = UIEdgeInsets(top: 0, left: 16, bottom: 200, right: 16)
+        contentTextView.textContainerInset = UIEdgeInsets(top: 0, left: 16, bottom: 100, right: 16)
         
         contentTextView.addLinkDidTouch = {[weak self] in
             self?.addLink()
         }
+        // add default tool
+        appendTool(EditorToolbarItem.addPhoto)
     }
     
     override func bind() {
