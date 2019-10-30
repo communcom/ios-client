@@ -19,12 +19,12 @@ class ProfileHeaderView: MyTableHeaderView {
     lazy var avatarImageView = MyAvatarImageView(size: 50)
     
     lazy var nameLabel: UILabel = {
-        let label = UILabel.with(text: "Profile", textSize: 20, weight: .bold)
+        let label = UILabel.with(text: "Profile", textSize: 20, weight: .bold, numberOfLines: 0)
         return label
     }()
     
     lazy var joinedDateLabel: UILabel = {
-        let label = UILabel.descriptionLabel("Joined", size: 12)
+        let label = UILabel.descriptionLabel("Joined", size: 12, numberOfLines: 0)
         return label
     }()
     

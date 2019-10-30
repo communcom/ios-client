@@ -105,6 +105,11 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
         joinButton.autoAlignAxis(.horizontal, toSameAxisOf: avatarImageView)
         joinButton.addTarget(self, action: #selector(joinButtonDidTouch(_:)), for: .touchUpInside)
         
+        nameLabel.trailingAnchor.constraint(lessThanOrEqualTo: joinButton.leadingAnchor, constant: -8)
+            .isActive = true
+        joinedDateLabel.trailingAnchor.constraint(lessThanOrEqualTo: joinButton.leadingAnchor, constant: -8)
+            .isActive = true
+        
         addSubview(membersCountLabel)
         membersCountLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
         membersCountLabel.autoPinEdge(.top, to: .bottom, of: descriptionLabel, withOffset: 24)
@@ -170,10 +175,10 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
         self.community = community
         
         // avatar
-        avatarImageView.setAvatar(urlString: community.avatarUrl, namePlaceHolder: community.name ?? community.communityId ?? "C")
+        avatarImageView.setAvatar(urlString: community.avatarUrl, namePlaceHolder: community.name)
         
         // name
-        nameLabel.text = community.name ?? community.communityId
+        nameLabel.text = community.name
         
         // joined date
         #warning("join date missing")
