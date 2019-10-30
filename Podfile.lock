@@ -248,10 +248,10 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   CyberSwift:
-    :commit: 6a11abc3963ec8e2890fe0c0e89a0dce6dbd9ded
+    :commit: 60a58ab4d02229ccd43ee728908a69adf677f91d
     :git: https://github.com/GolosChain/cyberSwift.git
   eosswift:
-    :commit: 9bca6a1a65f03f8739ba289afb7594b49e7abbd6
+    :commit: d919b66d452de46568b94745451111123af80ca9
     :git: https://github.com/communcom/eos-swift.git
   SubviewAttachingTextView:
     :commit: 141dcc300ee804e5d11f27fa9e685dc91889c262
