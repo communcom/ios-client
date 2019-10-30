@@ -41,6 +41,8 @@ class FeedPageVC: PostsViewController, VCWithParallax {
             .disposed(by: disposeBag)
         
         userAvatarImage.addTapToViewer()
+        userAvatarImage.observeCurrentUserAvatar()
+            .disposed(by: disposeBag)
         
         tableView.emptyDataSetSource = self
         tableView.emptyDataSetDelegate = self

@@ -14,6 +14,7 @@ class MyAvatarImageView: MyView {
         let imageView = UIImageView(forAutoLayout: ())
         imageView.image = .placeholder
         imageView.contentMode = .scaleAspectFill
+        imageView.addTapToViewer()
         return imageView
     }()
     
@@ -67,7 +68,10 @@ class MyAvatarImageView: MyView {
     }
     
     func setNonAvatarImageWithId(_ id: String) {
-        imageView.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
+        if imageView.frame.width == 0 {
+            imageView.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
+        }
+        
         var color = nonAvatarColors[id]
         if color == nil {
             repeat {
