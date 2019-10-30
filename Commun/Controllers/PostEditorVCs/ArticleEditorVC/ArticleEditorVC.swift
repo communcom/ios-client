@@ -71,8 +71,8 @@ class ArticleEditorVC: PostEditorVC {
         titleTextView.becomeFirstResponder()
     }
     
-    override func setUpViews() {
-        super.setUpViews()
+    override func setUp() {
+        super.setUp()
         titleTextViewCountLabel.isHidden = true
         
         titleTextView.textContainerInset = UIEdgeInsets.zero
@@ -83,6 +83,12 @@ class ArticleEditorVC: PostEditorVC {
         
         contentTextView.layoutManager
             .ensureLayout(for: contentTextView.textContainer)
+    }
+    
+    override func bind() {
+        super.bind()
+        // textViews
+        bindTitleTextView()
     }
     
     override func layoutTopContentTextView() {

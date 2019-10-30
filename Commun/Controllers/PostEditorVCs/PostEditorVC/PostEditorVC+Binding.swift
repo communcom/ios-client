@@ -9,32 +9,6 @@
 import Foundation
 
 extension PostEditorVC {
-    @objc func bind() {
-        tools
-            .bind(to: buttonsCollectionView.rx.items(
-                cellIdentifier: "EditorToolbarItemCell", cellType: EditorToolbarItemCell.self))
-                { (index, item, cell) in
-                    cell.setUp(item: item)
-                }
-            .disposed(by: disposeBag)
-        
-        buttonsCollectionView.rx
-            .modelSelected(EditorToolbarItem.self)
-            .subscribe(onNext: { [unowned self] item in
-                self.didSelectTool(item)
-            })
-            .disposed(by: disposeBag)
-        
-        buttonsCollectionView.rx.setDelegate(self)
-            .disposed(by: disposeBag)
-        
-        bindKeyboardHeight()
-        
-        bindSendPostButton()
-        
-        bindContentTextView()
-    }
-    
     func bindKeyboardHeight() {
         UIResponder.keyboardHeightObservable
             .map {$0 == 0 ? true: false}
@@ -55,7 +29,7 @@ extension PostEditorVC {
         #warning("Verify community")
         contentCombined
             .map {_ in self.isContentValid}
-            .bind(to: postButton.rx.isEnabled)
+            .bind(to: actionButton.rx.isEnabled)
             .disposed(by: disposeBag)
     }
     

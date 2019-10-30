@@ -9,12 +9,6 @@
 import Foundation
 
 extension BasicEditorVC {
-    override func bind() {
-        super.bind()
-        
-        bindAttachments()
-    }
-    
     override func bindContentTextView() {
         super.bindContentTextView()
         

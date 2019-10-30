@@ -23,50 +23,19 @@ class PostEditorVC: EditorVC {
     }
     
     // MARK: - Subviews
-    // header
-    lazy var closeButton = UIButton.circleGray(imageName: "close-x")
-    lazy var headerLabel = UILabel.title("create post".localized().uppercaseFirst)
     // community
     lazy var communityAvatarImage = UIImageView.circle(size: 40, imageName: "tux")
     lazy var youWillPostIn = UILabel.descriptionLabel("you will post in".localized().uppercaseFirst)
     lazy var communityNameLabel = UILabel.with(text: "Commun", textSize: 15, weight: .semibold)
     lazy var dropdownButton = UIButton.circleGray(imageName: "drop-down")
-    // Content
-    var contentView: UIView!
     lazy var contentTextViewCountLabel = UILabel.descriptionLabel("0/30000")
-    
-    // Toolbar
-    lazy var toolbar = UIView(forAutoLayout: ())
-    var buttonsCollectionView: UICollectionView!
-    
-    // PostButton
-    lazy var postButton = CommunButton(
-        height: 36,
-        label: "send post".localized().uppercaseFirst,
-        labelFont: .systemFont(ofSize: 15, weight: .semibold),
-        backgroundColor: .appMainColor,
-        textColor: .white,
-        cornerRadius: 18,
-        contentInsets: UIEdgeInsets(
-            top: 0, left: 16, bottom: 0, right: 16))
     
     // MARK: - Methods
     override func viewDidLoad() {
         super.viewDidLoad()
-        // custom view
-        view.backgroundColor = .white
-        
-        setUpViews()
-        
-        // bind
-        bind()
-        
         // add default tool
         appendTool(EditorToolbarItem.addPhoto)
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+        
         // if editing post
         if let post = viewModel.postForEdit {
             setUp(with: post)
@@ -79,16 +48,10 @@ class PostEditorVC: EditorVC {
         }
     }
     
-    func setUpViews() {
-        // close button
-        closeButton.addTarget(self, action: #selector(close), for: .touchUpInside)
-        postButton.addTarget(self, action: #selector(sendPost), for: .touchUpInside)
-        
-        // toolbars
-        setUpToolbar()
-        
-        // add scrollview
-        addScrollView()
+    override func setUp() {
+        super.setUp()
+        actionButton.setTitle("send post".localized().uppercaseFirst, for: .normal)
+        actionButton.backgroundColor = .appMainColor
         
         // fix contentView
         layoutContentView()
@@ -102,6 +65,33 @@ class PostEditorVC: EditorVC {
         contentTextView.addLinkDidTouch = {[weak self] in
             self?.addLink()
         }
+    }
+    
+    override func bind() {
+        super.bind()
+        tools
+            .bind(to: buttonsCollectionView.rx.items(
+                cellIdentifier: "EditorToolbarItemCell", cellType: EditorToolbarItemCell.self))
+                { (index, item, cell) in
+                    cell.setUp(item: item)
+                }
+            .disposed(by: disposeBag)
+        
+        buttonsCollectionView.rx
+            .modelSelected(EditorToolbarItem.self)
+            .subscribe(onNext: { [unowned self] item in
+                self.didSelectTool(item)
+            })
+            .disposed(by: disposeBag)
+        
+        buttonsCollectionView.rx.setDelegate(self)
+            .disposed(by: disposeBag)
+        
+        bindKeyboardHeight()
+        
+        bindSendPostButton()
+        
+        bindContentTextView()
     }
     
     // MARK: - action for overriding

@@ -85,6 +85,12 @@ class BasicEditorVC: PostEditorVC {
         contentTextView.becomeFirstResponder()
     }
     
+    override func bind() {
+        super.bind()
+        
+        bindAttachments()
+    }
+    
     // MARK: - overriding actions
     
     override func didChooseImageFromGallery(_ image: UIImage, description: String? = nil) {

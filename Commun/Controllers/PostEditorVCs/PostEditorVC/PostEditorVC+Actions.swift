@@ -14,11 +14,11 @@ import AppImageViewer
 
 extension PostEditorVC {
     // MARK: - Immutable actions
-    @objc func close() {
+    @objc override func close() {
         guard viewModel.postForEdit == nil,
             !contentTextView.text.isEmpty else
         {
-            dismiss(animated: true, completion: nil)
+            back()
             return
         }
         
@@ -198,7 +198,7 @@ extension PostEditorVC {
     }
     
     // MARK: - Send post
-    @objc func sendPost() {
+    @objc override func send() {
         self.view.endEditing(true)
         
         // remove draft
