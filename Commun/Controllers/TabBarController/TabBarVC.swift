@@ -8,6 +8,7 @@
 
 import UIKit
 import RxSwift
+import SwifterSwift
 
 class TabBarVC: UITabBarController {
     // MARK: - Constants
@@ -15,22 +16,18 @@ class TabBarVC: UITabBarController {
     let searchTabIndex = 1
     let notificationTabIndex = 2
     let profileTabIndex = 3
-    
-    // MARK: - Constraint
     let selectedColor = UIColor.black
     let unselectedColor = UIColor(hexString: "#E5E7ED")
-    let extraSpaceForTabBar: CGFloat = 14
+    let tabBarHeight: CGFloat = 60
     
     // MARK: - Properties
     let viewModel = TabBarViewModel()
     let bag = DisposeBag()
     
     // MARK: - Subviews
-    private lazy var tabBarContainerView: UIView = UIView(backgroundColor: .white)
-    lazy var tabBarStackView: UIStackView = UIStackView(forAutoLayout: ())
-    var tabBarHeight: CGFloat {
-        return tabBarContainerView.height
-    }
+    private lazy var tabBarContainerView = UIView(backgroundColor: .white)
+    private lazy var shadowView = UIView(height: tabBarHeight)
+    lazy var tabBarStackView = UIStackView(forAutoLayout: ())
     
     // MARK: - Methods
     override func viewDidLoad() {
@@ -52,30 +49,30 @@ class TabBarVC: UITabBarController {
         // hide default tabBar
         tabBar.isHidden = true
         
+        // shadow
+        view.addSubview(shadowView)
+        shadowView.autoPinEdgesToSuperviewSafeArea(with: .zero, excludingEdge: .top)
+        shadowView.addShadow(ofColor: UIColor(red: 56, green: 60, blue: 71)!, radius: 4, offset: CGSize(width: 0, height: -6), opacity: 0.1)
+        
         // tabBarContainerView
-        view.addSubview(tabBarContainerView)
-        tabBarContainerView.autoPinEdge(toSuperviewEdge: .trailing)
-        tabBarContainerView.autoPinEdge(toSuperviewEdge: .leading)
-        tabBarContainerView.autoPinEdge(toSuperviewEdge: .bottom)
-        tabBarContainerView.autoPinEdge(.top, to: .top, of: tabBar)
-        tabBarContainerView.cornerRadius = 24.5
-        tabBarContainerView.addShadow(ofColor: UIColor(red: 56, green: 60, blue: 71)!, radius: 4, offset: CGSize(width: 0, height: -6), opacity: 0.1)
+        shadowView.addSubview(tabBarContainerView)
+        tabBarContainerView.autoPinEdgesToSuperviewEdges()
+        
+//
         // tabBarStackView
         tabBarContainerView.addSubview(tabBarStackView)
-        tabBarStackView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .bottom)
-        tabBarStackView.autoSetDimension(.height, toSize: tabBar.size.height + extraSpaceForTabBar)
+        tabBarStackView.autoPinEdgesToSuperviewEdges(with: .zero)
         tabBarStackView.axis = .horizontal
         tabBarStackView.alignment = .center
         tabBarStackView.distribution = .fillEqually
         tabBarStackView.spacing = 0
-        
-        
     }
     
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        tabBar.frame.size.height = tabBar.frame.size.height + extraSpaceForTabBar
-        tabBar.frame.origin.y = view.frame.height - tabBar.frame.size.height
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        // https://stackoverflow.com/questions/39578530/since-xcode-8-and-ios10-views-are-not-sized-properly-on-viewdidlayoutsubviews
+        shadowView.layoutIfNeeded()
+        tabBarContainerView.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: 24.5)
     }
     
     private func configTabs() {
