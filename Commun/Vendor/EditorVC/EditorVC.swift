@@ -84,7 +84,9 @@ class EditorVC: BaseViewController {
         // scrollView
         let scrollView = UIScrollView(forAutoLayout: ())
         view.addSubview(scrollView)
-        scrollView.autoPinEdgesToSuperviewSafeArea(with: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0), excludingEdge: .bottom)
+        scrollView.autoPinEdge(.top, to: .bottom, of: navigationBar)
+        scrollView.autoPinEdge(toSuperviewEdge: .leading)
+        scrollView.autoPinEdge(toSuperviewEdge: .trailing)
         // add childview of scrollview
         scrollView.addSubview(contentView)
         contentView.autoPinEdgesToSuperviewEdges()
@@ -148,7 +150,7 @@ class EditorVC: BaseViewController {
         // layout
         buttonsCollectionView.autoPinEdge(toSuperviewEdge: .top, withInset: 10)
         buttonsCollectionView.autoPinEdge(toSuperviewEdge: .left, withInset: 0)
-        buttonsCollectionView.autoSetDimension(.height, toSize: 45)
+        buttonsCollectionView.autoSetDimension(.height, toSize: 35)
         
         buttonsCollectionView.contentInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 0)
         buttonsCollectionView.register(EditorToolbarItemCell.self, forCellWithReuseIdentifier: "EditorToolbarItemCell")
