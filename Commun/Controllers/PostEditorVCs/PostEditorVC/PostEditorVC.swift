@@ -53,9 +53,6 @@ class PostEditorVC: EditorVC {
         actionButton.setTitle("send post".localized().uppercaseFirst, for: .normal)
         actionButton.backgroundColor = .appMainColor
         
-        // fix contentView
-        layoutContentView()
-        
         // common contentTextView
         contentTextView.placeholder = "write text placeholder".localized().uppercaseFirst + "..."
         headerLabel.text = (viewModel.postForEdit != nil ? "edit post" : "create post").localized().uppercaseFirst
@@ -97,14 +94,6 @@ class PostEditorVC: EditorVC {
     // MARK: - action for overriding
     func setUp(with post: ResponseAPIContentGetPost) {
         contentTextView.parseContentBlock(post.document)
-    }
-    
-    func didChooseImageFromGallery(_ image: UIImage, description: String? = nil) {
-        fatalError("Must override")
-    }
-    
-    func didAddLink(_ urlString: String, placeholder: String? = nil) {
-        fatalError("Must override")
     }
     
     func getContentBlock() -> Single<ResponseAPIContentBlock> {

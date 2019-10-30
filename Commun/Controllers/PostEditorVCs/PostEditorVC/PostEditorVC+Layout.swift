@@ -17,7 +17,7 @@ extension PostEditorVC {
         fatalError("Must override this method")
     }
     
-    func layoutContentView() {
+    override func layoutContentView() {
         // community
         contentView.addSubview(communityAvatarImage)
         contentView.addSubview(youWillPostIn)

@@ -77,12 +77,14 @@ class BasicEditorVC: PostEditorVC {
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        contentTextView.becomeFirstResponder()
+    }
+    
+    override func setUp() {
+        super.setUp()
         if viewModel.postForEdit == nil {
             appendTool(EditorToolbarItem.addArticle)
         }
-        
-        contentTextView.becomeFirstResponder()
     }
     
     override func bind() {
@@ -91,38 +93,7 @@ class BasicEditorVC: PostEditorVC {
         bindAttachments()
     }
     
-    // MARK: - overriding actions
-    
-    override func didChooseImageFromGallery(_ image: UIImage, description: String? = nil) {
-        if link != nil {return}
-        var attributes = ResponseAPIContentBlockAttributes(
-            description: description
-        )
-        attributes.type = "image"
-        
-        let attachment = TextAttachment(attributes: attributes, localImage: image, size: CGSize(width: view.size.width, height: attachmentHeight))
-        attachment.delegate = self
-        
-        // Add embeds
-        _viewModel.addAttachment(attachment)
-    }
-    
-//    override func didAddImageFromURLString(_ urlString: String, description: String? = nil) {
-//        parseLink(urlString)
-//    }
-    
-    override func didAddLink(_ urlString: String, placeholder: String? = nil) {
-        if let placeholder = placeholder,
-            !placeholder.isEmpty
-        {
-            _contentTextView.addLink(urlString, placeholder: placeholder)
-        }
-        else {
-            parseLink(urlString)
-        }
-        
-    }
-    
+    // MARK: - GetContentBlock
     override func getContentBlock() -> Single<ResponseAPIContentBlock> {
         // TODO: - Attachments
         var block: ResponseAPIContentBlock?

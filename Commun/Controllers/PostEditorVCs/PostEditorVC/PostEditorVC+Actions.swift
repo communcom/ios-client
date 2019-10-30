@@ -13,6 +13,14 @@ import SafariServices
 import AppImageViewer
 
 extension PostEditorVC {
+    @objc func didChooseImageFromGallery(_ image: UIImage, description: String? = nil) {
+        fatalError("Must override")
+    }
+    
+    @objc func didAddLink(_ urlString: String, placeholder: String? = nil) {
+        fatalError("Must override")
+    }
+    
     // MARK: - Immutable actions
     @objc override func close() {
         guard viewModel.postForEdit == nil,

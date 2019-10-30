@@ -90,6 +90,9 @@ class EditorVC: BaseViewController {
         contentView.autoPinEdgesToSuperviewEdges()
         contentView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
         
+        // layout contentView
+        layoutContentView()
+        
         // toolBar
         view.addSubview(toolbar)
         toolbar.autoPinEdge(toSuperviewSafeArea: .leading)
