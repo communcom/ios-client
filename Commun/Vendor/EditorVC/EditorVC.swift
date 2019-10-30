@@ -160,21 +160,5 @@ class EditorVC: BaseViewController {
         if item == .hideKeyboard {
             hideKeyboard()
         }
-        
-        if item == .setBold {
-            contentTextView.toggleBold()
-        }
-        
-        if item == .setItalic {
-            contentTextView.toggleItalic()
-        }
-        
-        if item == .clearFormatting {
-            contentTextView.clearFormatting()
-        }
-        
-        if item == .addArticle {
-            addArticle()
-        }
     }
 }
