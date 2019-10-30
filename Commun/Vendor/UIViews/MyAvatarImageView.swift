@@ -39,6 +39,19 @@ class MyAvatarImageView: MyView {
         }
     }
     
+    var gifImage: UIImage? {
+        get {
+            imageView.gifImage
+        }
+        set {
+            imageView.gifImage = newValue
+        }
+    }
+    
+    func setGifImage(_ gifImage: UIImage) {
+        imageView.setGifImage(gifImage)
+    }
+    
     func setAvatar(urlString: String?, namePlaceHolder: String) {
         showLoading()
         // profile image

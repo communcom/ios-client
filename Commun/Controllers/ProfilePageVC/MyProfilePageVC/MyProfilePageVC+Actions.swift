@@ -8,6 +8,7 @@
 
 import Foundation
 import RxSwift
+import SwiftyGif
 
 extension MyProfilePageVC {
     @objc func changeCoverBtnDidTouch(_ sender: Any) {
@@ -68,13 +69,20 @@ extension MyProfilePageVC {
     func onUpdateCover(delete: Bool = false) {
         // Save originalImage for reverse when update failed
         let originalImage = coverImageView.image
+        let originGif = headerView.avatarImageView.gifImage
         
         // If deleting
         if delete {
             coverImageView.image = .placeholder
             NetworkService.shared.updateMeta(params: ["cover_image": ""])
                 .subscribe(onError: {[weak self] error in
-                    self?.coverImageView.image = originalImage
+                    if let gif = originGif {
+                        self?.coverImageView.setGifImage(gif)
+                    }
+                    else {
+                        self?.coverImageView.image = originalImage
+                    }
+                    
                     self?.showError(error)
                 })
                 .disposed(by: disposeBag)
@@ -126,13 +134,20 @@ extension MyProfilePageVC {
     func onUpdateAvatar(delete: Bool = false) {
         // Save image for reversing when update failed
         let originalImage = headerView.avatarImageView.image
+        let originGif = headerView.avatarImageView.gifImage
         
         // On deleting
         if delete {
             headerView.avatarImageView.setNonAvatarImageWithId(self.viewModel.profile.value!.username ?? self.viewModel.profile.value!.userId)
             NetworkService.shared.updateMeta(params: ["profile_image": ""])
                 .subscribe(onError: {[weak self] error in
-                    self?.headerView.avatarImageView.image = originalImage
+                    if let gif = originGif {
+                        self?.headerView.avatarImageView.setGifImage(gif)
+                    }
+                    else {
+                        self?.headerView.avatarImageView.image = originalImage
+                    }
+                    
                     self?.showError(error)
                 })
                 .disposed(by: disposeBag)
