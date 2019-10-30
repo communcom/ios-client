@@ -115,6 +115,27 @@ class EditorVC: BaseViewController {
         scrollView.autoPinEdge(.bottom, to: .top, of: toolbar, withOffset: -12)
     }
     
+    override func bind() {
+        super.bind()
+        tools
+            .bind(to: buttonsCollectionView.rx.items(
+                cellIdentifier: "EditorToolbarItemCell", cellType: EditorToolbarItemCell.self))
+                { (index, item, cell) in
+                    cell.setUp(item: item)
+                }
+            .disposed(by: disposeBag)
+        
+        buttonsCollectionView.rx
+            .modelSelected(EditorToolbarItem.self)
+            .subscribe(onNext: { [unowned self] item in
+                self.didSelectTool(item)
+            })
+            .disposed(by: disposeBag)
+        
+        buttonsCollectionView.rx.setDelegate(self)
+            .disposed(by: disposeBag)
+    }
+    
     func setUpToolbarButtons() {
         let layout = UICollectionViewFlowLayout()
         layout.sectionInset = .zero
@@ -131,5 +152,29 @@ class EditorVC: BaseViewController {
         
         buttonsCollectionView.contentInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 0)
         buttonsCollectionView.register(EditorToolbarItemCell.self, forCellWithReuseIdentifier: "EditorToolbarItemCell")
+    }
+    
+    func didSelectTool(_ item: EditorToolbarItem) {
+        guard item.isEnabled else {return}
+        
+        if item == .hideKeyboard {
+            hideKeyboard()
+        }
+        
+        if item == .setBold {
+            contentTextView.toggleBold()
+        }
+        
+        if item == .setItalic {
+            contentTextView.toggleItalic()
+        }
+        
+        if item == .clearFormatting {
+            contentTextView.clearFormatting()
+        }
+        
+        if item == .addArticle {
+            addArticle()
+        }
     }
 }

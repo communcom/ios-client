@@ -8,39 +8,7 @@
 
 import Foundation
 
-extension PostEditorVC {
-    func didSelectTool(_ item: EditorToolbarItem) {
-        guard item.isEnabled else {return}
-        
-        if item == .hideKeyboard {
-            hideKeyboard()
-        }
-        
-        if item == .addPhoto {
-            addImage()
-        }
-        
-        if item == .setBold {
-            contentTextView.toggleBold()
-        }
-        
-        if item == .setItalic {
-            contentTextView.toggleItalic()
-        }
-        
-        if item == .addLink {
-            addLink()
-        }
-        
-        if item == .clearFormatting {
-            contentTextView.clearFormatting()
-        }
-        
-        if item == .addArticle {
-            addArticle()
-        }
-    }
-    
+extension EditorVC {
     func insertTool(_ tool: EditorToolbarItem, at index: Int) {
         var tools = self.tools.value
         tools.removeAll(tool)

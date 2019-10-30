@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension PostEditorVC: UICollectionViewDelegateFlowLayout {
+extension EditorVC: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let item = tools.value[indexPath.row]
         let height: CGFloat = 35

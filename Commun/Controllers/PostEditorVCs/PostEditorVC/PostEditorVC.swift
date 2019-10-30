@@ -66,29 +66,24 @@ class PostEditorVC: EditorVC {
     
     override func bind() {
         super.bind()
-        tools
-            .bind(to: buttonsCollectionView.rx.items(
-                cellIdentifier: "EditorToolbarItemCell", cellType: EditorToolbarItemCell.self))
-                { (index, item, cell) in
-                    cell.setUp(item: item)
-                }
-            .disposed(by: disposeBag)
-        
-        buttonsCollectionView.rx
-            .modelSelected(EditorToolbarItem.self)
-            .subscribe(onNext: { [unowned self] item in
-                self.didSelectTool(item)
-            })
-            .disposed(by: disposeBag)
-        
-        buttonsCollectionView.rx.setDelegate(self)
-            .disposed(by: disposeBag)
-        
         bindKeyboardHeight()
         
         bindSendPostButton()
         
         bindContentTextView()
+    }
+    
+    override func didSelectTool(_ item: EditorToolbarItem) {
+        super.didSelectTool(item)
+        guard item.isEnabled else {return}
+        
+        if item == .addPhoto {
+            addImage()
+        }
+        
+        if item == .addLink {
+            addLink()
+        }
     }
     
     // MARK: - action for overriding

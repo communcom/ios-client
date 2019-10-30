@@ -58,8 +58,8 @@
 		3B2F227322689334006B589E /* NSMutableAttributedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B2F227222689334006B589E /* NSMutableAttributedString.swift */; };
 		3B3C8B7A23472ADA00D8BADB /* PostEditorToolbarItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3C8B7923472ADA00D8BADB /* PostEditorToolbarItemCell.swift */; };
 		3B3C8B7C23472BF000D8BADB /* EditorToolbarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3C8B7B23472BF000D8BADB /* EditorToolbarItem.swift */; };
-		3B3C8B7E23473ED900D8BADB /* PostEditorVC+CollectionViewFlowLayoutDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3C8B7D23473ED900D8BADB /* PostEditorVC+CollectionViewFlowLayoutDelegate.swift */; };
-		3B3C8B8223475AA100D8BADB /* PostEditorVC+Tools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3C8B8123475AA100D8BADB /* PostEditorVC+Tools.swift */; };
+		3B3C8B7E23473ED900D8BADB /* EditorVC+CollectionViewFlowLayoutDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3C8B7D23473ED900D8BADB /* EditorVC+CollectionViewFlowLayoutDelegate.swift */; };
+		3B3C8B8223475AA100D8BADB /* EditorVC+Tools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3C8B8123475AA100D8BADB /* EditorVC+Tools.swift */; };
 		3B3C8B84234779FE00D8BADB /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3C8B83234779FE00D8BADB /* UIImage.swift */; };
 		3B3C8B862347866D00D8BADB /* ContentTextView+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3C8B852347866D00D8BADB /* ContentTextView+Utilities.swift */; };
 		3B3C8B8E2347876000D8BADB /* ContentTextView+Text.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3C8B882347875F00D8BADB /* ContentTextView+Text.swift */; };
@@ -399,8 +399,8 @@
 		3B2F227222689334006B589E /* NSMutableAttributedString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSMutableAttributedString.swift; sourceTree = "<group>"; };
 		3B3C8B7923472ADA00D8BADB /* PostEditorToolbarItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostEditorToolbarItemCell.swift; sourceTree = "<group>"; };
 		3B3C8B7B23472BF000D8BADB /* EditorToolbarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorToolbarItem.swift; sourceTree = "<group>"; };
-		3B3C8B7D23473ED900D8BADB /* PostEditorVC+CollectionViewFlowLayoutDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PostEditorVC+CollectionViewFlowLayoutDelegate.swift"; sourceTree = "<group>"; };
-		3B3C8B8123475AA100D8BADB /* PostEditorVC+Tools.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PostEditorVC+Tools.swift"; sourceTree = "<group>"; };
+		3B3C8B7D23473ED900D8BADB /* EditorVC+CollectionViewFlowLayoutDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EditorVC+CollectionViewFlowLayoutDelegate.swift"; sourceTree = "<group>"; };
+		3B3C8B8123475AA100D8BADB /* EditorVC+Tools.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EditorVC+Tools.swift"; sourceTree = "<group>"; };
 		3B3C8B83234779FE00D8BADB /* UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
 		3B3C8B852347866D00D8BADB /* ContentTextView+Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContentTextView+Utilities.swift"; sourceTree = "<group>"; };
 		3B3C8B882347875F00D8BADB /* ContentTextView+Text.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ContentTextView+Text.swift"; sourceTree = "<group>"; };
@@ -971,8 +971,6 @@
 				3B3C8B9B2347928D00D8BADB /* PostEditorVC+Layout.swift */,
 				3B3C8B9D234796D900D8BADB /* PostEditorVC+Binding.swift */,
 				3B8DDF53234AD15A00B213F0 /* PostEditorVC+Actions.swift */,
-				3B3C8B8123475AA100D8BADB /* PostEditorVC+Tools.swift */,
-				3B3C8B7D23473ED900D8BADB /* PostEditorVC+CollectionViewFlowLayoutDelegate.swift */,
 				3B8DDF62234B213E00B213F0 /* PostEditorVC+TextViewDelegate.swift */,
 				BCB2A6E323546AF500B3582B /* PostEditorVC+AttachmentViewDelegate.swift */,
 			);
@@ -1677,6 +1675,8 @@
 				BC3694EE2369850100B2E078 /* EditorVC.swift */,
 				BC3694F423698FEE00B2E078 /* EditorVC+Actions.swift */,
 				BC3694F623699A7E00B2E078 /* EditorVC+Layout.swift */,
+				3B3C8B8123475AA100D8BADB /* EditorVC+Tools.swift */,
+				3B3C8B7D23473ED900D8BADB /* EditorVC+CollectionViewFlowLayoutDelegate.swift */,
 			);
 			path = EditorVC;
 			sourceTree = "<group>";
@@ -2162,7 +2162,7 @@
 				B17A970C228002440081B8E0 /* SignUpRouter.swift in Sources */,
 				5787C0C422650F9D00568CEC /* SetUserVC.swift in Sources */,
 				5721E87122650AC0003BE04B /* StringExtension.swift in Sources */,
-				3B3C8B7E23473ED900D8BADB /* PostEditorVC+CollectionViewFlowLayoutDelegate.swift in Sources */,
+				3B3C8B7E23473ED900D8BADB /* EditorVC+CollectionViewFlowLayoutDelegate.swift in Sources */,
 				3B0E9C732270785E002AB1C2 /* PhotoLibraryCell.swift in Sources */,
 				3B6CB732234331830097B2A1 /* Array.swift in Sources */,
 				3B51581E226E0D3A00108F17 /* TLPhotosPickerViewController+Rx.swift in Sources */,
@@ -2203,7 +2203,7 @@
 				BCF74A6723618D9000B91089 /* CMSegmentedControl.swift in Sources */,
 				3BB48AD022D5F84D00F11B6A /* SetPasscodeVC.swift in Sources */,
 				BCF3914E235FEAEE00A9D1ED /* ListItemType.swift in Sources */,
-				3B3C8B8223475AA100D8BADB /* PostEditorVC+Tools.swift in Sources */,
+				3B3C8B8223475AA100D8BADB /* EditorVC+Tools.swift in Sources */,
 				3B24F86522F3777500B7091C /* CommunitiesViewModel.swift in Sources */,
 				3B5D7CF12299D79B0077B82C /* FeedSortMode.swift in Sources */,
 				BCA971172360301100AE37E1 /* NotificationsListFetcher.swift in Sources */,
