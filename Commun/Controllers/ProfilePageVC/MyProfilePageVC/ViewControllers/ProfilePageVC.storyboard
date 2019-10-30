@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Profile Edit BioVC-->
+        <scene sceneID="7DK-jR-E55">
+            <objects>
+                <viewController storyboardIdentifier="ProfileEditBioVC" id="DnA-T7-pHc" customClass="ProfileEditBioVC" customModule="Commun" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="T33-9U-B4W">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="C4I-yg-0Pt">
+                                <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                                <color key="tintColor" red="0.41568627450000001" green="0.50196078430000002" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="barTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <items>
+                                    <navigationItem title="Add bio" id="FUx-BA-4ki">
+                                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="X4X-tK-xBt">
+                                            <connections>
+                                                <action selector="cancelButtonDidTouch:" destination="DnA-T7-pHc" id="heZ-2j-QP1"/>
+                                            </connections>
+                                        </barButtonItem>
+                                        <barButtonItem key="rightBarButtonItem" title="Post" id="NIb-5z-Of3">
+                                            <connections>
+                                                <action selector="postButtonDidTouch:" destination="DnA-T7-pHc" id="ZpD-Dm-4r3"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalCompressionResistancePriority="1000" scrollEnabled="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="gJ1-xi-lrj">
+                                <rect key="frame" x="16" y="104" width="382" height="36.5"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <accessibility key="accessibilityConfiguration" identifier="ProfileEditBioTextView" label="ProfileEditBioTextView"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Enter text..."/>
+                                </userDefinedRuntimeAttributes>
+                            </textView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0/100" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xQa-Bg-Qs9">
+                                <rect key="frame" x="363" y="148.5" width="35" height="16"/>
+                                <accessibility key="accessibilityConfiguration" identifier="ProfileEditBioCharactersCountLabel" label="ProfileEditBioCharactersCountLabel"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="C4I-yg-0Pt" firstAttribute="leading" secondItem="LoW-mp-VKe" secondAttribute="leading" id="6N7-MP-08z"/>
+                            <constraint firstItem="xQa-Bg-Qs9" firstAttribute="top" secondItem="gJ1-xi-lrj" secondAttribute="bottom" constant="8" id="6it-OV-3US"/>
+                            <constraint firstItem="gJ1-xi-lrj" firstAttribute="leading" secondItem="LoW-mp-VKe" secondAttribute="leading" constant="16" id="BZd-yq-J9c"/>
+                            <constraint firstItem="LoW-mp-VKe" firstAttribute="trailing" secondItem="xQa-Bg-Qs9" secondAttribute="trailing" constant="16" id="C4w-48-L6i"/>
+                            <constraint firstItem="C4I-yg-0Pt" firstAttribute="trailing" secondItem="LoW-mp-VKe" secondAttribute="trailing" id="J5H-Q8-r9E"/>
+                            <constraint firstItem="gJ1-xi-lrj" firstAttribute="top" secondItem="C4I-yg-0Pt" secondAttribute="bottom" constant="16" id="P81-97-jqx"/>
+                            <constraint firstItem="C4I-yg-0Pt" firstAttribute="top" secondItem="LoW-mp-VKe" secondAttribute="top" id="egI-5K-b3G"/>
+                            <constraint firstItem="gJ1-xi-lrj" firstAttribute="trailing" secondItem="LoW-mp-VKe" secondAttribute="trailing" constant="-16" id="kUf-Gr-uGB"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="LoW-mp-VKe"/>
+                    </view>
+                    <connections>
+                        <outlet property="characterCountLabel" destination="xQa-Bg-Qs9" id="yml-Hl-fdn"/>
+                        <outlet property="postButton" destination="NIb-5z-Of3" id="Ff3-3Y-kKv"/>
+                        <outlet property="textView" destination="gJ1-xi-lrj" id="2ky-0b-Fvl"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="AR4-n3-EEi" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="410.14492753623193" y="394.41964285714283"/>
+        </scene>
+        <!--Profile Edit CoverVC-->
+        <scene sceneID="L0Z-X9-HlM">
+            <objects>
+                <viewController storyboardIdentifier="ProfileEditCoverVC" id="DTZ-LL-dd5" customClass="ProfileEditCoverVC" customModule="Commun" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Dkf-uD-aTJ">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hob-rx-vjU">
+                                <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                                <color key="tintColor" red="0.41568627450000001" green="0.50196078430000002" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="barTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <items>
+                                    <navigationItem title="Change position" id="Cy3-QU-YAQ">
+                                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="Hcc-pJ-Mt7">
+                                            <connections>
+                                                <action selector="cancelButtonDidTap:" destination="DTZ-LL-dd5" id="QOF-55-TLY"/>
+                                            </connections>
+                                        </barButtonItem>
+                                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="3hI-WI-Org">
+                                            <connections>
+                                                <action selector="doneButtonDidTap:" destination="DTZ-LL-dd5" id="W6Y-DH-ogJ"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                            <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ProfilePageCover" translatesAutoresizingMaskIntoConstraints="NO" id="8cF-Ek-qIg" customClass="VerticalDraggableImageView" customModule="Commun" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="88" width="414" height="160"/>
+                                <color key="backgroundColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <accessibility key="accessibilityConfiguration" identifier="ProfileEditCoverCoverImageView" label="ProfileEditCoverCoverImageView">
+                                    <bool key="isElement" value="YES"/>
+                                </accessibility>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ProfilePageUserAvatar" translatesAutoresizingMaskIntoConstraints="NO" id="jaP-Rf-dLD">
+                                <rect key="frame" x="157" y="198" width="100" height="100"/>
+                                <accessibility key="accessibilityConfiguration" identifier="ProfileEditCoverAvatarImageView" label="ProfileEditCoverAvatarImageView">
+                                    <bool key="isElement" value="YES"/>
+                                </accessibility>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="100" id="4UQ-sC-jSg"/>
+                                    <constraint firstAttribute="width" constant="100" id="K6p-m4-U0e"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                        <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                        <real key="value" value="4"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="50"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.40000000596046448" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Joined April 12, 2018" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4iA-4Y-1yt">
+                                <rect key="frame" x="135.5" y="343.5" width="143" height="18"/>
+                                <accessibility key="accessibilityConfiguration" identifier="ProfileEditCoverJoinedDateLabel" label="ProfileEditCoverJoinedDateLabel"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="sergey.marchenko" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="drm-pZ-Nvs">
+                                <rect key="frame" x="98.5" y="308" width="217.5" height="31.5"/>
+                                <accessibility key="accessibilityConfiguration" identifier="ProfileEditCoverUserNameLabel" label="ProfileEditCoverUserNameLabel"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="26"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QXx-ix-XZS">
+                                <rect key="frame" x="87.5" y="124.5" width="239" height="37"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="QXx-ix-XZS" secondAttribute="height" multiplier="103:16" id="9Kt-WB-XBJ"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="4"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ProfilePageCoverDragIcon" translatesAutoresizingMaskIntoConstraints="NO" id="zbE-KA-5Nk">
+                                <rect key="frame" x="103.5" y="132.5" width="21" height="21"/>
+                                <accessibility key="accessibilityConfiguration" identifier="ProfileEditCoverDragToMoveImageView" label="ProfileEditCoverDragToMoveImageView">
+                                    <bool key="isElement" value="YES"/>
+                                </accessibility>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="zbE-KA-5Nk" secondAttribute="height" id="yMU-Fm-Cv0"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Drag to move cover photo" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ell-cV-JLU">
+                                <rect key="frame" x="132.5" y="132.5" width="178" height="21"/>
+                                <accessibility key="accessibilityConfiguration" identifier="ProfileEditCoverDragToMoveLabel" label="ProfileEditCoverDragToMoveLabel"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="zbE-KA-5Nk" firstAttribute="leading" secondItem="QXx-ix-XZS" secondAttribute="leading" constant="16" id="2BQ-oN-SQ0" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
+                            <constraint firstItem="ell-cV-JLU" firstAttribute="trailing" secondItem="QXx-ix-XZS" secondAttribute="trailing" constant="-16" id="2Dx-b2-cT7" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
+                            <constraint firstItem="zbE-KA-5Nk" firstAttribute="bottom" secondItem="QXx-ix-XZS" secondAttribute="bottom" constant="-8" id="3EI-YQ-vJg" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
+                            <constraint firstItem="8cF-Ek-qIg" firstAttribute="height" secondItem="Dkf-uD-aTJ" secondAttribute="height" multiplier="160/896" id="3fe-dN-pj3"/>
+                            <constraint firstItem="QXx-ix-XZS" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="lkO-cg-dmd" secondAttribute="leading" constant="8" id="4Ts-Wf-4tg"/>
+                            <constraint firstItem="QXx-ix-XZS" firstAttribute="centerX" secondItem="8cF-Ek-qIg" secondAttribute="centerX" id="73X-4e-vJH"/>
+                            <constraint firstItem="jaP-Rf-dLD" firstAttribute="centerX" secondItem="lkO-cg-dmd" secondAttribute="centerX" id="7Yi-rr-eCE"/>
+                            <constraint firstItem="QXx-ix-XZS" firstAttribute="centerY" secondItem="8cF-Ek-qIg" secondAttribute="centerY" constant="-25" id="ArD-M5-cNW"/>
+                            <constraint firstItem="lkO-cg-dmd" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="QXx-ix-XZS" secondAttribute="trailing" constant="8" id="CXN-7x-5ku"/>
+                            <constraint firstItem="ell-cV-JLU" firstAttribute="leading" secondItem="zbE-KA-5Nk" secondAttribute="trailing" constant="8" id="Da6-Qd-CQU"/>
+                            <constraint firstItem="Hob-rx-vjU" firstAttribute="leading" secondItem="lkO-cg-dmd" secondAttribute="leading" id="INm-Al-wkd"/>
+                            <constraint firstItem="Hob-rx-vjU" firstAttribute="trailing" secondItem="lkO-cg-dmd" secondAttribute="trailing" id="LaB-wr-oQK"/>
+                            <constraint firstItem="drm-pZ-Nvs" firstAttribute="top" secondItem="jaP-Rf-dLD" secondAttribute="bottom" constant="10" id="R0v-h0-cDV"/>
+                            <constraint firstItem="jaP-Rf-dLD" firstAttribute="bottom" secondItem="8cF-Ek-qIg" secondAttribute="bottom" constant="50" id="Szn-uX-e0q"/>
+                            <constraint firstItem="4iA-4Y-1yt" firstAttribute="top" secondItem="drm-pZ-Nvs" secondAttribute="bottom" constant="4" id="WEW-c2-zmG"/>
+                            <constraint firstItem="4iA-4Y-1yt" firstAttribute="centerX" secondItem="lkO-cg-dmd" secondAttribute="centerX" id="go8-LK-rnn"/>
+                            <constraint firstItem="8cF-Ek-qIg" firstAttribute="trailing" secondItem="lkO-cg-dmd" secondAttribute="trailing" id="jrV-yT-ZDQ"/>
+                            <constraint firstItem="zbE-KA-5Nk" firstAttribute="top" secondItem="QXx-ix-XZS" secondAttribute="top" constant="8" id="kF8-cf-agC" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
+                            <constraint firstItem="8cF-Ek-qIg" firstAttribute="top" secondItem="Hob-rx-vjU" secondAttribute="bottom" id="pFA-Y9-K3c"/>
+                            <constraint firstItem="drm-pZ-Nvs" firstAttribute="centerX" secondItem="lkO-cg-dmd" secondAttribute="centerX" id="qC7-Ca-Eeo"/>
+                            <constraint firstItem="Hob-rx-vjU" firstAttribute="top" secondItem="lkO-cg-dmd" secondAttribute="top" id="trg-Au-ezq"/>
+                            <constraint firstItem="ell-cV-JLU" firstAttribute="top" secondItem="QXx-ix-XZS" secondAttribute="top" constant="8" id="vOi-0U-FF1" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
+                            <constraint firstItem="ell-cV-JLU" firstAttribute="bottom" secondItem="QXx-ix-XZS" secondAttribute="bottom" constant="-8" id="vc6-Wa-5u7" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
+                            <constraint firstItem="8cF-Ek-qIg" firstAttribute="leading" secondItem="lkO-cg-dmd" secondAttribute="leading" id="xot-0V-RRT"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="lkO-cg-dmd"/>
+                    </view>
+                    <connections>
+                        <outlet property="avatarImage" destination="jaP-Rf-dLD" id="WrC-Dj-csm"/>
+                        <outlet property="coverImage" destination="8cF-Ek-qIg" id="ubK-vM-XAz"/>
+                        <outlet property="joinedDateLabel" destination="4iA-4Y-1yt" id="Ar7-IT-yd4"/>
+                        <outlet property="userNameLabel" destination="drm-pZ-Nvs" id="glf-Uh-1kQ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="mW2-Qn-yPL" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="405.79710144927537" y="-263.16964285714283"/>
+        </scene>
+        <!--Profile Choose AvatarVC-->
+        <scene sceneID="s6I-xZ-46g">
+            <objects>
+                <viewController storyboardIdentifier="ProfileChooseAvatarVC" id="RCm-RG-Dsz" customClass="ProfileChooseAvatarVC" customModule="Commun" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="ElT-l7-2TL">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qve-N3-QQi">
+                                <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                                <color key="tintColor" red="0.41568627450000001" green="0.50196078430000002" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="barTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <items>
+                                    <navigationItem title="Change position" id="4WX-Gf-cxW">
+                                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="AsR-Cp-Z8E"/>
+                                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="3XE-ch-LV0"/>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="wWE-La-Qnk">
+                                <rect key="frame" x="0.0" y="504" width="414" height="392"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="NzU-aN-cc2">
+                                    <size key="itemSize" width="138" height="132"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PhotoLibraryCell" id="LZp-il-hHW" customClass="PhotoLibraryCell" customModule="Commun" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="138" height="132"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                                            <rect key="frame" x="0.0" y="0.0" width="138" height="132"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="GGa-9V-Hrf">
+                                                    <rect key="frame" x="0.0" y="0.0" width="138" height="132"/>
+                                                    <accessibility key="accessibilityConfiguration" identifier="PhotoLibraryCellImageView" label="PhotoLibraryCellImageView">
+                                                        <bool key="isElement" value="YES"/>
+                                                    </accessibility>
+                                                </imageView>
+                                            </subviews>
+                                        </view>
+                                        <constraints>
+                                            <constraint firstItem="GGa-9V-Hrf" firstAttribute="leading" secondItem="LZp-il-hHW" secondAttribute="leading" id="NDJ-qz-EG7"/>
+                                            <constraint firstAttribute="bottom" secondItem="GGa-9V-Hrf" secondAttribute="bottom" id="fqw-II-UDW"/>
+                                            <constraint firstItem="GGa-9V-Hrf" firstAttribute="top" secondItem="LZp-il-hHW" secondAttribute="top" id="kQE-lN-FQi"/>
+                                            <constraint firstAttribute="trailing" secondItem="GGa-9V-Hrf" secondAttribute="trailing" id="nzN-fG-QBx"/>
+                                        </constraints>
+                                        <connections>
+                                            <outlet property="imageView" destination="GGa-9V-Hrf" id="TNG-p6-HfZ"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nrW-xH-jrY" customClass="BlankButton" customModule="Commun" customModuleProvider="target">
+                                <rect key="frame" x="103.5" y="685" width="207" height="30"/>
+                                <accessibility key="accessibilityConfiguration" identifier="ProfileChooseAvatarRequestAccessButton" label="ProfileChooseAvatarRequestAccessButton"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
+                                <state key="normal" title="Allow access to photo library"/>
+                            </button>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" maximumZoomScale="4" translatesAutoresizingMaskIntoConstraints="NO" id="cWO-YU-pEf">
+                                <rect key="frame" x="0.0" y="88" width="414" height="414"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="G0v-Ih-Sla">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="414"/>
+                                        <accessibility key="accessibilityConfiguration" identifier="ProfileChooseAvatarAvatarImageView" label="ProfileChooseAvatarAvatarImageView">
+                                            <bool key="isElement" value="YES"/>
+                                        </accessibility>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="G0v-Ih-Sla" secondAttribute="height" multiplier="1:1" id="RKa-gf-RcY"/>
+                                        </constraints>
+                                    </imageView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="G0v-Ih-Sla" firstAttribute="leading" secondItem="cWO-YU-pEf" secondAttribute="leading" id="7Ey-OJ-0Fv"/>
+                                    <constraint firstItem="G0v-Ih-Sla" firstAttribute="top" secondItem="cWO-YU-pEf" secondAttribute="top" id="CIC-Sq-CsO"/>
+                                    <constraint firstAttribute="trailing" secondItem="G0v-Ih-Sla" secondAttribute="trailing" id="JZ9-ae-WwC"/>
+                                    <constraint firstAttribute="width" secondItem="cWO-YU-pEf" secondAttribute="height" multiplier="1:1" id="Kj5-Xm-nkl"/>
+                                    <constraint firstAttribute="bottom" secondItem="G0v-Ih-Sla" secondAttribute="bottom" id="hFB-AC-eDd"/>
+                                    <constraint firstItem="G0v-Ih-Sla" firstAttribute="width" secondItem="cWO-YU-pEf" secondAttribute="width" id="qZH-fx-Eyt"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="delegate" destination="RCm-RG-Dsz" id="Hff-fo-Rei"/>
+                                </connections>
+                            </scrollView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ProfilePageAvatarExclude" translatesAutoresizingMaskIntoConstraints="NO" id="E6j-i5-oFa">
+                                <rect key="frame" x="0.0" y="88" width="414" height="414"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="E6j-i5-oFa" secondAttribute="height" multiplier="1:1" id="8QY-Am-RZi"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="qve-N3-QQi" firstAttribute="leading" secondItem="dvz-pB-kSV" secondAttribute="leading" id="0wu-Ob-6qy"/>
+                            <constraint firstItem="cWO-YU-pEf" firstAttribute="top" secondItem="qve-N3-QQi" secondAttribute="bottom" id="27r-BL-Q2C"/>
+                            <constraint firstItem="E6j-i5-oFa" firstAttribute="trailing" secondItem="dvz-pB-kSV" secondAttribute="trailing" id="GXG-xk-6Ms"/>
+                            <constraint firstItem="wWE-La-Qnk" firstAttribute="leading" secondItem="dvz-pB-kSV" secondAttribute="leading" id="MZF-MI-q9C"/>
+                            <constraint firstItem="qve-N3-QQi" firstAttribute="top" secondItem="dvz-pB-kSV" secondAttribute="top" id="MkO-Vf-dRq"/>
+                            <constraint firstItem="wWE-La-Qnk" firstAttribute="leading" secondItem="dvz-pB-kSV" secondAttribute="leading" id="Q15-3v-Sff"/>
+                            <constraint firstAttribute="bottom" secondItem="wWE-La-Qnk" secondAttribute="bottom" id="TBw-4A-Wsf"/>
+                            <constraint firstItem="wWE-La-Qnk" firstAttribute="trailing" secondItem="dvz-pB-kSV" secondAttribute="trailing" id="atg-5u-KaP"/>
+                            <constraint firstItem="wWE-La-Qnk" firstAttribute="top" secondItem="cWO-YU-pEf" secondAttribute="bottom" constant="2" id="baE-aV-Xgk"/>
+                            <constraint firstAttribute="bottom" secondItem="wWE-La-Qnk" secondAttribute="bottom" id="dsh-Je-4JR"/>
+                            <constraint firstItem="wWE-La-Qnk" firstAttribute="trailing" secondItem="dvz-pB-kSV" secondAttribute="trailing" id="j0A-lM-oKv"/>
+                            <constraint firstItem="nrW-xH-jrY" firstAttribute="centerX" secondItem="wWE-La-Qnk" secondAttribute="centerX" id="q1V-x6-a4e"/>
+                            <constraint firstItem="cWO-YU-pEf" firstAttribute="trailing" secondItem="dvz-pB-kSV" secondAttribute="trailing" id="q3i-A6-oSV"/>
+                            <constraint firstItem="cWO-YU-pEf" firstAttribute="leading" secondItem="dvz-pB-kSV" secondAttribute="leading" id="rTP-U3-meo"/>
+                            <constraint firstItem="nrW-xH-jrY" firstAttribute="centerY" secondItem="wWE-La-Qnk" secondAttribute="centerY" id="s7Y-hH-yvq"/>
+                            <constraint firstItem="E6j-i5-oFa" firstAttribute="top" secondItem="qve-N3-QQi" secondAttribute="bottom" id="uZI-RD-QKD"/>
+                            <constraint firstItem="E6j-i5-oFa" firstAttribute="leading" secondItem="dvz-pB-kSV" secondAttribute="leading" id="z2f-ft-LSu"/>
+                            <constraint firstItem="qve-N3-QQi" firstAttribute="trailing" secondItem="dvz-pB-kSV" secondAttribute="trailing" id="ztJ-8D-qtH"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="dvz-pB-kSV"/>
+                    </view>
+                    <connections>
+                        <outlet property="avatarImageView" destination="G0v-Ih-Sla" id="gxh-ci-mtc"/>
+                        <outlet property="avatarScrollView" destination="cWO-YU-pEf" id="iCx-ZM-WET"/>
+                        <outlet property="cancelButton" destination="AsR-Cp-Z8E" id="kVB-qL-XQm"/>
+                        <outlet property="collectionView" destination="wWE-La-Qnk" id="YUY-Z3-LoB"/>
+                        <outlet property="doneButton" destination="3XE-ch-LV0" id="DTl-D7-bBO"/>
+                        <outlet property="requestAccessButton" destination="nrW-xH-jrY" id="xXP-tr-tvt"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zub-GA-37r" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1257.9710144927537" y="-263.16964285714283"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="ProfilePageAvatarExclude" width="375" height="375"/>
+        <image name="ProfilePageCover" width="375" height="145"/>
+        <image name="ProfilePageCoverDragIcon" width="15" height="15"/>
+        <image name="ProfilePageUserAvatar" width="100" height="100"/>
+    </resources>
+</document>

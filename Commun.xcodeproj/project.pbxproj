@@ -269,6 +269,7 @@
 		BC016D5A235EB88400F1319F /* PostsVC+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC016D59235EB88400F1319F /* PostsVC+Actions.swift */; };
 		BC2C94FF2366F04100C9D7FE /* UserProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2C94FE2366F04100C9D7FE /* UserProfileHeaderView.swift */; };
 		BC31BA55235EBD7C0007D89A /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC31BA54235EBD7C0007D89A /* ProfileVC.swift */; };
+		BC3694ED236979A700B2E078 /* ProfilePageVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BC3694EC236979A700B2E078 /* ProfilePageVC.storyboard */; };
 		BC3D97612350384E00421718 /* ResponseAPIContentGetPosts.json in Resources */ = {isa = PBXBuildFile; fileRef = BC3D97602350384E00421718 /* ResponseAPIContentGetPosts.json */; };
 		BC48FC40236682F90049C4F4 /* ResponseAPIContentGetLeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC48FC3F236682F90049C4F4 /* ResponseAPIContentGetLeader.swift */; };
 		BC48FC42236689DC0049C4F4 /* LeadersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC48FC41236689DC0049C4F4 /* LeadersViewModel.swift */; };
@@ -619,6 +620,7 @@
 		BC016D59235EB88400F1319F /* PostsVC+Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PostsVC+Actions.swift"; sourceTree = "<group>"; };
 		BC2C94FE2366F04100C9D7FE /* UserProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileHeaderView.swift; sourceTree = "<group>"; };
 		BC31BA54235EBD7C0007D89A /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
+		BC3694EC236979A700B2E078 /* ProfilePageVC.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ProfilePageVC.storyboard; sourceTree = "<group>"; };
 		BC3D97602350384E00421718 /* ResponseAPIContentGetPosts.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ResponseAPIContentGetPosts.json; sourceTree = "<group>"; };
 		BC48FC3F236682F90049C4F4 /* ResponseAPIContentGetLeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseAPIContentGetLeader.swift; sourceTree = "<group>"; };
 		BC48FC41236689DC0049C4F4 /* LeadersViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeadersViewModel.swift; sourceTree = "<group>"; };
@@ -886,6 +888,7 @@
 		3B51581F226E1D3700108F17 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				BC3694EC236979A700B2E078 /* ProfilePageVC.storyboard */,
 				3B0E9C5D226F02AC002AB1C2 /* ProfileEditCoverVC.swift */,
 				3B0E9C6F22706965002AB1C2 /* ProfileChooseAvatarVC */,
 				3B0E9C742270C691002AB1C2 /* ProfileEditBioVC.swift */,
@@ -1011,12 +1014,12 @@
 		3BAF69C122675ADB0055CCEB /* ProfilePageVC */ = {
 			isa = PBXGroup;
 			children = (
-				3B51581F226E1D3700108F17 /* ViewControllers */,
 				BCABF13A2366E94B006B05F5 /* Subviews */,
 				3B51581A226DE27200108F17 /* Cells */,
 				BCABF1362366DC3D006B05F5 /* UserProfilePageViewModel.swift */,
 				BCABF1382366DF2B006B05F5 /* UserProfilePageVC.swift */,
 				BCCE0AA32367E83900A183AA /* UserProfilePageVC+Binding.swift */,
+				BCCE0AB02368221700A183AA /* MyProfilePageVC */,
 			);
 			path = ProfilePageVC;
 			sourceTree = "<group>";
@@ -1212,7 +1215,6 @@
 				5725173A2243E4510033125C /* PostPageVC */,
 				BCA971192360339B00AE37E1 /* CommunityPageVC */,
 				3BAF69C122675ADB0055CCEB /* ProfilePageVC */,
-				BCCE0AB02368221700A183AA /* MyProfilePageVC */,
 				575AECAF22606F5200A7EC2D /* SelectCountryVC */,
 				57E5159A2270E5C700A6F6DB /* SettingsVC */,
 			);
@@ -1766,6 +1768,7 @@
 		BCCE0AB02368221700A183AA /* MyProfilePageVC */ = {
 			isa = PBXGroup;
 			children = (
+				3B51581F226E1D3700108F17 /* ViewControllers */,
 				BCCE0AB32368225E00A183AA /* Subviews */,
 				BCCE0AAE2368217000A183AA /* MyProfilePageVC.swift */,
 				BCCE0AB623682D1B00A183AA /* MyProfilePageVC+Actions.swift */,
@@ -1939,6 +1942,7 @@
 				B1EA02E62289882A00835244 /* SF-Pro-Display-ThinItalic.otf in Resources */,
 				B1EA02F02289882A00835244 /* SF-Pro-Text-MediumItalic.otf in Resources */,
 				57E515A12270E66900A6F6DB /* SettingsVC.storyboard in Resources */,
+				BC3694ED236979A700B2E078 /* ProfilePageVC.storyboard in Resources */,
 				3B02CD2A2289B2620078BB52 /* PostHeaderView.xib in Resources */,
 				3B8DDF5E234B122500B213F0 /* colorPalette.plist in Resources */,
 				B1EA02DE2289882A00835244 /* SF-Pro-Display-LightItalic.otf in Resources */,
