@@ -53,7 +53,10 @@ extension UIImageView {
             setGifFromURL(url)
         }
         else {
-            sd_setImage(with: url, placeholderImage: image, completed: completed)
+            showLoading(cover: false)
+            sd_setImage(with: url, placeholderImage: image) { [weak self] (image, error, _, _) in
+                self?.hideLoading()
+            }
         }
     }
     
