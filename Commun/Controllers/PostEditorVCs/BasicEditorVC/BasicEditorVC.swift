@@ -11,7 +11,7 @@ import PureLayout
 import RxCocoa
 import RxSwift
 
-class BasicEditorVC: EditorVC {
+class BasicEditorVC: PostEditorVC {
     // MARK: - Constants
     let attachmentHeight: CGFloat = 300
     let attachmentDraftKey = "BasicEditorVC.attachmentDraftKey"
@@ -54,7 +54,7 @@ class BasicEditorVC: EditorVC {
     }
     
     var _viewModel = BasicEditorViewModel()
-    override var viewModel: EditorViewModel {
+    override var viewModel: PostEditorViewModel {
         return _viewModel
     }
     
@@ -63,7 +63,7 @@ class BasicEditorVC: EditorVC {
         super.viewDidLoad()
         
         if viewModel.postForEdit == nil {
-            appendTool(EditorToolbarItem.addArticle)
+            appendTool(PostEditorToolbarItem.addArticle)
         }
         
         contentTextView.becomeFirstResponder()

@@ -9,7 +9,7 @@
 import Foundation
 import RxSwift
 
-class ArticleEditorVC: EditorVC {
+class ArticleEditorVC: PostEditorVC {
     // MARK: - Constant
     let titleMinLettersLimit = 2
     let titleBytesLimit = 240
@@ -25,8 +25,8 @@ class ArticleEditorVC: EditorVC {
     }
     
     // MARK: - Properties
-    var _viewModel = EditorViewModel()
-    override var viewModel: EditorViewModel {
+    var _viewModel = PostEditorViewModel()
+    override var viewModel: PostEditorViewModel {
         return _viewModel
     }
     

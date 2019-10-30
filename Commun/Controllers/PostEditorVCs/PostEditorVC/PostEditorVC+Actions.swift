@@ -1,5 +1,5 @@
 //
-//  EditorVC+Actions.swift
+//  PostEditorVC+Actions.swift
 //  Commun
 //
 //  Created by Chung Tran on 10/7/19.
@@ -12,7 +12,7 @@ import RxSwift
 import SafariServices
 import AppImageViewer
 
-extension EditorVC {
+extension PostEditorVC {
     // MARK: - Immutable actions
     @objc func close() {
         guard viewModel.postForEdit == nil,
@@ -297,7 +297,7 @@ extension EditorVC {
     }
 }
 
-extension EditorVC: UIPopoverPresentationControllerDelegate {
+extension PostEditorVC: UIPopoverPresentationControllerDelegate {
     func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
         return .none
     }

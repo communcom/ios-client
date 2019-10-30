@@ -1,5 +1,5 @@
 //
-//  EditorVC.swift
+//  PostEditorVC.swift
 //  Commun
 //
 //  Created by Chung Tran on 10/4/19.
@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-class EditorVC: UIViewController {
+class PostEditorVC: UIViewController {
     // MARK: - Properties
     let contentLettersLimit = 30000
     let disposeBag = DisposeBag()
@@ -41,7 +41,7 @@ class EditorVC: UIViewController {
     
     var contentTextViewCountLabel = UILabel.descriptionLabel("0/30000")
     
-    var viewModel: EditorViewModel {
+    var viewModel: PostEditorViewModel {
         fatalError("Must override")
     }
     
@@ -49,8 +49,8 @@ class EditorVC: UIViewController {
         fatalError("Must override")
     }
     
-    let tools = BehaviorRelay<[EditorToolbarItem]>(value: [
-        EditorToolbarItem.addPhoto
+    let tools = BehaviorRelay<[PostEditorToolbarItem]>(value: [
+        PostEditorToolbarItem.addPhoto
     ]) 
     
     // MARK: - Subviews

@@ -10,7 +10,7 @@ import Foundation
 import RxCocoa
 import RxSwift
 
-class BasicEditorViewModel: EditorViewModel {
+class BasicEditorViewModel: PostEditorViewModel {
     let attachments = BehaviorRelay<[TextAttachment]>(value: [])
     
     func addAttachment(_ attachment: TextAttachment) {

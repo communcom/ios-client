@@ -1,5 +1,5 @@
 //
-//  EditorVC+AttachmentViewDelegate.swift
+//  PostEditorVC+AttachmentViewDelegate.swift
 //  Commun
 //
 //  Created by Chung Tran on 10/14/19.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension EditorVC: AttachmentViewDelegate {
+extension PostEditorVC: AttachmentViewDelegate {
     @objc func attachmentViewExpandButtonDidTouch(_ attachmentView: AttachmentView) {
         guard let attachment = attachmentView.attachment else {return}
         previewAttachment(attachment)

@@ -11,12 +11,12 @@ import RxSwift
 import RxCocoa
 import CyberSwift
 
-class EditorViewModel {
+class PostEditorViewModel {
     var postForEdit: ResponseAPIContentGetPost?
     
     func sendPost(title: String?, block: ResponseAPIContentBlock) -> Single<SendPostCompletion> {
         // Prepare tags
-        var tags = block.getTags()
+        let tags = block.getTags()
         
         // Prepare content
         var string: String!

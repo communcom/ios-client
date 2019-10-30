@@ -8,8 +8,8 @@
 
 import Foundation
 
-struct EditorToolbarItem: Equatable {
-    static func == (lhs: EditorToolbarItem, rhs: EditorToolbarItem) -> Bool {
+struct PostEditorToolbarItem: Equatable {
+    static func == (lhs: PostEditorToolbarItem, rhs: PostEditorToolbarItem) -> Bool {
         return lhs.name == rhs.name
     }
     
@@ -21,56 +21,56 @@ struct EditorToolbarItem: Equatable {
     var isEnabled = true
     var other: Any? = nil // for colorPicking and other
     
-    static var hideKeyboard: EditorToolbarItem {
-        return EditorToolbarItem(
+    static var hideKeyboard: PostEditorToolbarItem {
+        return PostEditorToolbarItem(
             name: "hideKeyboard",
             icon: "keyboard_hide",
             iconSize: CGSize(width: 18, height: 18))
     }
     
-    static var addPhoto: EditorToolbarItem {
-        return EditorToolbarItem(
+    static var addPhoto: PostEditorToolbarItem {
+        return PostEditorToolbarItem(
             name: "addPhoto",
             icon: "editor-open-photo",
             iconSize: CGSize(width: 18, height: 18))
     }
     
-    static var setBold: EditorToolbarItem {
-        return EditorToolbarItem(
+    static var setBold: PostEditorToolbarItem {
+        return PostEditorToolbarItem(
             name: "setBold",
             icon: "bold",
             iconSize: CGSize(width: 18, height: 18))
     }
-    static var setItalic: EditorToolbarItem {
-        return EditorToolbarItem(
+    static var setItalic: PostEditorToolbarItem {
+        return PostEditorToolbarItem(
             name: "setItalic",
             icon: "italic",
             iconSize: CGSize(width: 18, height: 18))
     }
-    static var setColor: EditorToolbarItem {
-        return EditorToolbarItem(
+    static var setColor: PostEditorToolbarItem {
+        return PostEditorToolbarItem(
             name: "setColor",
             icon: "--missing--",
             iconSize: .zero,
             other: UIColor.black)
     }
     
-    static var addLink: EditorToolbarItem {
-        return EditorToolbarItem(
+    static var addLink: PostEditorToolbarItem {
+        return PostEditorToolbarItem(
             name: "addLink",
             icon: "add_link",
             iconSize: CGSize(width: 18, height: 18))
     }
     
-    static var clearFormatting: EditorToolbarItem {
-        return EditorToolbarItem(
+    static var clearFormatting: PostEditorToolbarItem {
+        return PostEditorToolbarItem(
             name: "clearFormatting",
             icon: "clear-formatting",
             iconSize: CGSize(width: 18, height: 18))
     }
     
-    static var addArticle: EditorToolbarItem {
-        return EditorToolbarItem(
+    static var addArticle: PostEditorToolbarItem {
+        return PostEditorToolbarItem(
             name: "addArticle",
             icon: "editor-open-article",
             iconSize: CGSize(width: 19, height: 19),

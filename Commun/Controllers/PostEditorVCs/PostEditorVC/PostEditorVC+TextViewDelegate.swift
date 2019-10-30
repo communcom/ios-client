@@ -1,5 +1,5 @@
 //
-//  EditorVC+TextViewDelegate.swift
+//  PostEditorVC+TextViewDelegate.swift
 //  Commun
 //
 //  Created by Chung Tran on 10/7/19.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension EditorVC: UITextViewDelegate {
+extension PostEditorVC: UITextViewDelegate {
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         if textView == contentTextView {
             return contentTextView.shouldChangeCharacterInRange(range, replacementText: text)

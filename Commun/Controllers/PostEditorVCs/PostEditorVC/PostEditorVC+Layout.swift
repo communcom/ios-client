@@ -1,5 +1,5 @@
 //
-//  EditorVC+Layout.swift
+//  PostEditorVC+Layout.swift
 //  Commun
 //
 //  Created by Chung Tran on 10/4/19.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension EditorVC {
+extension PostEditorVC {
     @objc func layoutTopContentTextView() {
         fatalError("Must override")
     }
@@ -56,7 +56,7 @@ extension EditorVC {
         buttonsCollectionView.autoSetDimension(.height, toSize: 45)
         
         buttonsCollectionView.contentInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 0)
-        buttonsCollectionView.register(EditorToolbarItemCell.self, forCellWithReuseIdentifier: "EditorToolbarItemCell")
+        buttonsCollectionView.register(PostEditorToolbarItemCell.self, forCellWithReuseIdentifier: "EditorToolbarItemCell")
     }
     
     func addScrollView() {

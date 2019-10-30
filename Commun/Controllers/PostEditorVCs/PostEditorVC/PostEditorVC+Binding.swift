@@ -8,18 +8,18 @@
 
 import Foundation
 
-extension EditorVC {
+extension PostEditorVC {
     @objc func bind() {
         tools
             .bind(to: buttonsCollectionView.rx.items(
-                cellIdentifier: "EditorToolbarItemCell", cellType: EditorToolbarItemCell.self))
+                cellIdentifier: "EditorToolbarItemCell", cellType: PostEditorToolbarItemCell.self))
                 { (index, item, cell) in
                     cell.setUp(item: item)
                 }
             .disposed(by: disposeBag)
         
         buttonsCollectionView.rx
-            .modelSelected(EditorToolbarItem.self)
+            .modelSelected(PostEditorToolbarItem.self)
             .subscribe(onNext: { [unowned self] item in
                 self.didSelectTool(item)
             })

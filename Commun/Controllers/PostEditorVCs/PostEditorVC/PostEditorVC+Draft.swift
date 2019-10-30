@@ -1,5 +1,5 @@
 //
-//  EditorVC+Draft.swift
+//  PostEditorVC+Draft.swift
 //  Commun
 //
 //  Created by Chung Tran on 10/15/19.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension EditorVC {
+extension PostEditorVC {
     // MARK: - draft
     @objc var hasDraft: Bool {
         return contentTextView.hasDraft
