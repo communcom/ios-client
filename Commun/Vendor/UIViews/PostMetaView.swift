@@ -81,7 +81,7 @@ class PostMetaView: UIView {
             .constraint(equalTo: avatarImageView.topAnchor)
             .isActive = true
         comunityNameLabel
-            .leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: 16)
+            .leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: 8)
             .isActive = true
         comunityNameLabel.trailingAnchor
             .constraint(equalTo: trailingAnchor)
@@ -94,7 +94,7 @@ class PostMetaView: UIView {
             .constraint(equalTo: avatarImageView.bottomAnchor)
             .isActive = true
         timeAgoLabel.leadingAnchor
-            .constraint(equalTo: avatarImageView.trailingAnchor, constant: 16)
+            .constraint(equalTo: avatarImageView.trailingAnchor, constant: 8)
             .isActive = true
         
         // byUserLabel
@@ -106,11 +106,16 @@ class PostMetaView: UIView {
             .constraint(equalTo: timeAgoLabel.trailingAnchor, constant: 0)
             .isActive = true
         byUserLabel.removeGestureRecognizers()
+        
+        comunityNameLabel.trailingAnchor.constraint(lessThanOrEqualTo: self.trailingAnchor)
+            .isActive = true
+        byUserLabel.trailingAnchor.constraint(lessThanOrEqualTo: self.trailingAnchor)
+            .isActive = true
     }
     
     func setUp(post: ResponseAPIContentGetPost) {
-        avatarImageView.setAvatar(urlString: post.community.avatarUrl, namePlaceHolder: post.community.name ?? post.community.communityId ?? "C")
-        comunityNameLabel.text = post.community.name ?? post.community.communityId
+        avatarImageView.setAvatar(urlString: post.community.avatarUrl, namePlaceHolder: post.community.name)
+        comunityNameLabel.text = post.community.name
         timeAgoLabel.text = Date.timeAgo(string: post.meta.creationTime) + " • "
         byUserLabel.text = post.author?.username ?? post.author?.userId
         
