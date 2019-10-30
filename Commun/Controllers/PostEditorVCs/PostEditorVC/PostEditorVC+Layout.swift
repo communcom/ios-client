@@ -56,7 +56,7 @@ extension PostEditorVC {
         buttonsCollectionView.autoSetDimension(.height, toSize: 45)
         
         buttonsCollectionView.contentInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 0)
-        buttonsCollectionView.register(PostEditorToolbarItemCell.self, forCellWithReuseIdentifier: "EditorToolbarItemCell")
+        buttonsCollectionView.register(EditorToolbarItemCell.self, forCellWithReuseIdentifier: "EditorToolbarItemCell")
     }
     
     func addScrollView() {

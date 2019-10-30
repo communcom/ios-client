@@ -15,11 +15,11 @@ extension PostEditorVC: UICollectionViewDelegateFlowLayout {
         var width: CGFloat = 35
         
         if let desc = item.description?.localized().uppercaseFirst {
-            width = 2.0 * PostEditorToolbarItemCell.padding +
-                PostEditorToolbarItemCell.separatorSpace +
+            width = 2.0 * EditorToolbarItemCell.padding +
+                EditorToolbarItemCell.separatorSpace +
                 item.iconSize.width +
                 desc.nsString.size(withAttributes: [
-                    .font : UIFont.systemFont(ofSize: PostEditorToolbarItemCell.fontSize, weight: PostEditorToolbarItemCell.fontWeight)
+                    .font : UIFont.systemFont(ofSize: EditorToolbarItemCell.fontSize, weight: EditorToolbarItemCell.fontWeight)
                     ]).width
         }
         return CGSize(width: width, height: height)

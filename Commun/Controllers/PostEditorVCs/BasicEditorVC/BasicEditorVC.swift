@@ -49,6 +49,22 @@ class BasicEditorVC: PostEditorVC {
         return contentTextView.rx.text.orEmpty.map {_ in ()}
     }
     
+    override var isContentValid: Bool {
+        let content = contentTextView.text ?? ""
+        
+        // both title and content are not empty
+        let contentAreNotEmpty = !content.isEmpty
+        
+        // content inside limit
+        let contentInsideLimit = (content.count <= contentLettersLimit)
+        
+        // compare content
+        let contentChanged = (self.contentTextView.attributedText != self.contentTextView.originalAttributedString)
+        
+        // reassign result
+        return contentAreNotEmpty && contentInsideLimit && contentChanged
+    }
+    
     override var postTitle: String? {
         return nil
     }
@@ -63,7 +79,7 @@ class BasicEditorVC: PostEditorVC {
         super.viewDidLoad()
         
         if viewModel.postForEdit == nil {
-            appendTool(PostEditorToolbarItem.addArticle)
+            appendTool(EditorToolbarItem.addArticle)
         }
         
         contentTextView.becomeFirstResponder()

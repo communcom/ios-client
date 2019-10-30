@@ -8,7 +8,7 @@
 
 import Foundation
 
-class PostEditorToolbarItemCell: UICollectionViewCell {
+class EditorToolbarItemCell: UICollectionViewCell {
     var itemSize: CGFloat = 35
     static let padding: CGFloat = 14
     static let separatorSpace: CGFloat = 10
@@ -40,7 +40,7 @@ class PostEditorToolbarItemCell: UICollectionViewCell {
         itemImageView.removeAllConstraints()
     }
     
-    func setUp(item: PostEditorToolbarItem) {
+    func setUp(item: EditorToolbarItem) {
         if item == .setColor {
             contentView.backgroundColor = item.other as? UIColor
             itemImageView.image = nil
@@ -65,13 +65,13 @@ class PostEditorToolbarItemCell: UICollectionViewCell {
         
         // optional description
         if let desc = item.description {
-            itemImageView.autoPinEdge(toSuperviewEdge: .leading, withInset: PostEditorToolbarItemCell.padding)
+            itemImageView.autoPinEdge(toSuperviewEdge: .leading, withInset: EditorToolbarItemCell.padding)
             
-            descriptionLabel = UILabel.with(text: desc.localized().uppercaseFirst, textSize: PostEditorToolbarItemCell.fontSize, weight: PostEditorToolbarItemCell.fontWeight, textColor: textColor)
+            descriptionLabel = UILabel.with(text: desc.localized().uppercaseFirst, textSize: EditorToolbarItemCell.fontSize, weight: EditorToolbarItemCell.fontWeight, textColor: textColor)
             contentView.addSubview(descriptionLabel!)
-            descriptionLabel!.autoPinEdge(.leading, to: .trailing, of: itemImageView, withOffset: PostEditorToolbarItemCell.separatorSpace)
+            descriptionLabel!.autoPinEdge(.leading, to: .trailing, of: itemImageView, withOffset: EditorToolbarItemCell.separatorSpace)
             descriptionLabel!.autoAlignAxis(toSuperviewAxis: .horizontal)
-            descriptionLabel!.autoPinEdge(toSuperviewEdge: .trailing, withInset: PostEditorToolbarItemCell.padding)
+            descriptionLabel!.autoPinEdge(toSuperviewEdge: .trailing, withInset: EditorToolbarItemCell.padding)
         }
         else {
             itemImageView.autoAlignAxis(toSuperviewAxis: .vertical)

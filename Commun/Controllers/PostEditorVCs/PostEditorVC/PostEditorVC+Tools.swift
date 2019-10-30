@@ -9,7 +9,7 @@
 import Foundation
 
 extension PostEditorVC {
-    func didSelectTool(_ item: PostEditorToolbarItem) {
+    func didSelectTool(_ item: EditorToolbarItem) {
         guard item.isEnabled else {return}
         
         if item == .hideKeyboard {
@@ -41,7 +41,7 @@ extension PostEditorVC {
         }
     }
     
-    func insertTool(_ tool: PostEditorToolbarItem, at index: Int) {
+    func insertTool(_ tool: EditorToolbarItem, at index: Int) {
         var tools = self.tools.value
         tools.removeAll(tool)
         if index >= 0 && index < tools.count {
@@ -50,19 +50,19 @@ extension PostEditorVC {
         }
     }
     
-    func appendTool(_ tool: PostEditorToolbarItem) {
+    func appendTool(_ tool: EditorToolbarItem) {
         var tools = self.tools.value
         tools.removeAll(tool)
         tools.append(tool)
         self.tools.accept(tools)
     }
     
-    func removeTool(_ tool: PostEditorToolbarItem) {
+    func removeTool(_ tool: EditorToolbarItem) {
         let tools = self.tools.value.filter {$0 != tool}
         self.tools.accept(tools)
     }
     
-    func toggleIsHighlightedForTool(_ tool: PostEditorToolbarItem, isHighlighted: Bool? = nil)
+    func toggleIsHighlightedForTool(_ tool: EditorToolbarItem, isHighlighted: Bool? = nil)
     {
         guard var tool = tools.value.first(where: {$0 == tool}) else {return}
         tool.isHighlighted = isHighlighted ?? !tool.isHighlighted
@@ -76,7 +76,7 @@ extension PostEditorVC {
         }
     }
     
-    func toggleIsEnabledForTool(_ tool: PostEditorToolbarItem, isEnabled: Bool? = nil)
+    func toggleIsEnabledForTool(_ tool: EditorToolbarItem, isEnabled: Bool? = nil)
     {
         guard var tool = tools.value.first(where: {$0 == tool}) else {return}
         tool.isEnabled = isEnabled ?? !tool.isEnabled
@@ -90,7 +90,7 @@ extension PostEditorVC {
         }
     }
     
-    func setOtherOptionForTool(_ tool: PostEditorToolbarItem, value: Any?)
+    func setOtherOptionForTool(_ tool: EditorToolbarItem, value: Any?)
     {
         guard var tool = tools.value.first(where: {$0 == tool}) else {return}
         tool.other = value

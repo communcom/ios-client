@@ -10,36 +10,9 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-class PostEditorVC: UIViewController {
+class PostEditorVC: EditorVC {
     // MARK: - Properties
-    let contentLettersLimit = 30000
-    let disposeBag = DisposeBag()
-    
-    var contentCombined: Observable<Void> {
-        fatalError("Must override")
-    }
-    
-    var shouldSendPost: Bool {
-        let content = contentTextView.text ?? ""
-        
-        // both title and content are not empty
-        let contentAreNotEmpty = !content.isEmpty
-        
-        // content inside limit
-        let contentInsideLimit = (content.count <= contentLettersLimit)
-        
-        // compare content
-        let contentChanged = (self.contentTextView.attributedText != self.contentTextView.originalAttributedString)
-        
-        // reassign result
-        return contentAreNotEmpty && contentInsideLimit && contentChanged
-    }
-    
-    var contentTextView: ContentTextView {
-        fatalError("Must override")
-    }
-    
-    var contentTextViewCountLabel = UILabel.descriptionLabel("0/30000")
+    override var contentLettersLimit: UInt {30000}
     
     var viewModel: PostEditorViewModel {
         fatalError("Must override")
@@ -48,10 +21,6 @@ class PostEditorVC: UIViewController {
     var postTitle: String? {
         fatalError("Must override")
     }
-    
-    let tools = BehaviorRelay<[PostEditorToolbarItem]>(value: [
-        PostEditorToolbarItem.addPhoto
-    ]) 
     
     // MARK: - Subviews
     // header
@@ -64,6 +33,7 @@ class PostEditorVC: UIViewController {
     lazy var dropdownButton = UIButton.circleGray(imageName: "drop-down")
     // Content
     var contentView: UIView!
+    lazy var contentTextViewCountLabel = UILabel.descriptionLabel("0/30000")
     
     // Toolbar
     lazy var toolbar = UIView(forAutoLayout: ())
@@ -90,6 +60,9 @@ class PostEditorVC: UIViewController {
         
         // bind
         bind()
+        
+        // add default tool
+        appendTool(EditorToolbarItem.addPhoto)
     }
     
     override func viewDidAppear(_ animated: Bool) {

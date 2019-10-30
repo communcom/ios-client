@@ -37,7 +37,7 @@ class ArticleEditorVC: PostEditorVC {
         ).map {_ in ()}
     }
     
-    override var shouldSendPost: Bool {
+    override var isContentValid: Bool {
         let title = titleTextView.text ?? ""
         let content = contentTextView.text ?? ""
         

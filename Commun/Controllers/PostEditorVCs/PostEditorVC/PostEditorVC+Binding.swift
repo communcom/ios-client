@@ -12,14 +12,14 @@ extension PostEditorVC {
     @objc func bind() {
         tools
             .bind(to: buttonsCollectionView.rx.items(
-                cellIdentifier: "EditorToolbarItemCell", cellType: PostEditorToolbarItemCell.self))
+                cellIdentifier: "EditorToolbarItemCell", cellType: EditorToolbarItemCell.self))
                 { (index, item, cell) in
                     cell.setUp(item: item)
                 }
             .disposed(by: disposeBag)
         
         buttonsCollectionView.rx
-            .modelSelected(PostEditorToolbarItem.self)
+            .modelSelected(EditorToolbarItem.self)
             .subscribe(onNext: { [unowned self] item in
                 self.didSelectTool(item)
             })
@@ -54,7 +54,7 @@ extension PostEditorVC {
         // Verification
         #warning("Verify community")
         contentCombined
-            .map {_ in self.shouldSendPost}
+            .map {_ in self.isContentValid}
             .bind(to: postButton.rx.isEnabled)
             .disposed(by: disposeBag)
     }
