@@ -105,8 +105,7 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
         joinButton.autoAlignAxis(.horizontal, toSameAxisOf: avatarImageView)
         joinButton.addTarget(self, action: #selector(joinButtonDidTouch(_:)), for: .touchUpInside)
         
-        nameLabel.trailingAnchor.constraint(lessThanOrEqualTo: joinButton.leadingAnchor, constant: -8)
-            .isActive = true
+        nameLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         joinedDateLabel.trailingAnchor.constraint(lessThanOrEqualTo: joinButton.leadingAnchor, constant: -8)
             .isActive = true
         
@@ -196,10 +195,19 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
         
         // notification button
         notificationButton.removeFromSuperview()
+        if let trailingConstraint = nameLabel.constraints.first(where: {$0.firstAttribute == .trailing}) {
+            nameLabel.removeConstraint(trailingConstraint)
+        }
         if joined {
             addSubview(notificationButton)
             notificationButton.autoPinEdge(.trailing, to: .leading, of: joinButton, withOffset: -5)
             notificationButton.autoAlignAxis(.horizontal, toSameAxisOf: avatarImageView)
+            nameLabel.trailingAnchor.constraint(lessThanOrEqualTo: notificationButton.leadingAnchor, constant: -8)
+                .isActive = true
+        }
+        else {
+            nameLabel.trailingAnchor.constraint(lessThanOrEqualTo: joinButton.leadingAnchor, constant: -8)
+                .isActive = true
         }
         
         // description

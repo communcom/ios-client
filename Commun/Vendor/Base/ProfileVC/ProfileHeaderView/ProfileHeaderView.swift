@@ -19,7 +19,7 @@ class ProfileHeaderView: MyTableHeaderView {
     lazy var avatarImageView = MyAvatarImageView(size: 50)
     
     lazy var nameLabel: UILabel = {
-        let label = UILabel.with(text: "Profile", textSize: 20, weight: .bold, numberOfLines: 0)
+        let label = UILabel.with(text: "Profile", textSize: 20, weight: .bold, numberOfLines: 2)
         return label
     }()
     
