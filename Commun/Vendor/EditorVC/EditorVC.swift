@@ -33,9 +33,6 @@ class EditorVC: BaseViewController {
     // header
     lazy var closeButton = UIButton.circleGray(imageName: "close-x")
     lazy var headerLabel = UILabel.title("create post".localized().uppercaseFirst)
-    var contentTextView: ContentTextView {
-        fatalError("Must override")
-    }
     
     // Content
     lazy var contentView = UIView(forAutoLayout: ())

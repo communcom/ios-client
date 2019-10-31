@@ -195,7 +195,7 @@ extension MyProfilePageVC {
             return
         }
         
-        let editBioVC = controllerContainer.resolve(ProfileEditBioVC.self)!
+        let editBioVC = MyProfileEditBioVC()
         if !new {
             editBioVC.bio = headerView.descriptionLabel.text
         }

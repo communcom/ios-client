@@ -122,11 +122,6 @@ let controllerContainer: Container = {
         return vc
     })
     
-    container.register(ProfileEditBioVC.self, factory: { r in
-        let vc = ProfileEditBioVC.instanceController(fromStoryboard: "ProfilePageVC", withIdentifier: "ProfileEditBioVC") as! ProfileEditBioVC
-        return vc
-    })
-    
     container.register(SettingsVC.self, factory: { r in
         let vc = SettingsVC.instanceController(fromStoryboard: "SettingsVC", withIdentifier: "SettingsVC") as! SettingsVC
         return vc

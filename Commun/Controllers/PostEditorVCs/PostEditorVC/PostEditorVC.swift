@@ -30,6 +30,10 @@ class PostEditorVC: EditorVC {
     lazy var dropdownButton = UIButton.circleGray(imageName: "drop-down")
     lazy var contentTextViewCountLabel = UILabel.descriptionLabel("0/30000")
     
+    var contentTextView: ContentTextView {
+        fatalError("Must override")
+    }
+    
     // MARK: - Methods
     override func viewDidLoad() {
         super.viewDidLoad()
