@@ -23,7 +23,7 @@ class PostsViewController: ListViewController<ResponseAPIContentGetPost> {
         dataSource = MyRxTableViewSectionedAnimatedDataSource<ListSection>(
             configureCell: { dataSource, tableView, indexPath, post in
                 let cell: PostCell
-                switch post.document.attributes?.type {
+                switch post.document?.attributes?.type {
                 case "article":
                     cell = self.tableView.dequeueReusableCell(withIdentifier: "ArticlePostCell") as! ArticlePostCell
                     cell.setUp(with: post)

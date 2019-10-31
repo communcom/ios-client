@@ -92,7 +92,7 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
     
     func createCell(for table: UITableView, index: Int, element: Any) -> UITableViewCell? {
         if let post = element as? ResponseAPIContentGetPost {
-            switch post.document.attributes?.type {
+            switch post.document?.attributes?.type {
             case "article":
                 let cell = self.tableView.dequeueReusableCell(withIdentifier: "ArticlePostCell") as! ArticlePostCell
                 cell.setUp(with: post)

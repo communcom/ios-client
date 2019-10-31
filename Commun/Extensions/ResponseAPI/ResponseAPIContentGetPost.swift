@@ -24,6 +24,6 @@ extension ResponseAPIContentGetPost: Equatable, IdentifiableType {
     }
     
     public var content: [ResponseAPIContentBlock]? {
-        return document.content.arrayValue
+        return document?.content.arrayValue
     }
 }

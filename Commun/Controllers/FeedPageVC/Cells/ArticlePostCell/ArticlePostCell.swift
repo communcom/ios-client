@@ -94,7 +94,7 @@ final class ArticlePostCell: PostCell {
         super.setUp(with: post)
         cardImageView.image = UIImage(named: "article-placeholder")
         
-        titleLabel.text = post?.document.attributes?.title
+        titleLabel.text = post?.document?.attributes?.title
         
         if let embeds = post?.attachments,
             !embeds.isEmpty,

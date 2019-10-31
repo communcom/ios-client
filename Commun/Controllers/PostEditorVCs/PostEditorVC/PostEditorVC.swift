@@ -118,7 +118,8 @@ class PostEditorVC: EditorVC {
     
     // MARK: - action for overriding
     func setUp(with post: ResponseAPIContentGetPost) {
-        contentTextView.parseContentBlock(post.document)
+        guard let document = post.document else {return}
+        contentTextView.parseContentBlock(document)
     }
     
     func getContentBlock() -> Single<ResponseAPIContentBlock> {

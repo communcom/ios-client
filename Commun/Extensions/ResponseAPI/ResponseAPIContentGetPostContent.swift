@@ -11,7 +11,7 @@ import CyberSwift
 
 extension ResponseAPIContentGetPost {
     var attachments: [ResponseAPIContentBlock] {
-        let type = document.attributes?.type
+        let type = document?.attributes?.type
         if type == "basic" {
             return content?.first(where: {$0.type == "attachments"})?.content.arrayValue ?? []
         }
@@ -24,7 +24,7 @@ extension ResponseAPIContentGetPost {
     }
     
     var firstEmbedImageURL: String? {
-        let type = document.attributes?.type
+        let type = document?.attributes?.type
         if type == "basic" {
             return content?.first(where: {$0.type == "attachments"})?.content.arrayValue?.first?.attributes?.thumbnail_url
         }
