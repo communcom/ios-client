@@ -38,7 +38,7 @@ class CommunityPageViewModel: ProfileViewModel<ResponseAPIContentGetCommunity> {
     lazy var postsVM: PostsViewModel = PostsViewModel(filter: PostsListFetcher.Filter(feedTypeMode: .community, feedType: .time, sortType: .all, communityId: communityId))
     lazy var leadsVM = LeadersViewModel(communityId: communityId ?? "")
     
-    lazy var aboutSubject = PublishSubject<String>()
+    lazy var aboutSubject = PublishSubject<String?>()
     lazy var rulesSubject = PublishSubject<[ResponseAPIContentGetCommunityRule]>()
     
     // MARK: - Initializers
@@ -73,8 +73,13 @@ class CommunityPageViewModel: ProfileViewModel<ResponseAPIContentGetCommunity> {
                 case .leads:
                     self.leadsVM.reload()
                 case .about:
-                    self.aboutSubject.onNext(self.community.value?.description ?? "")
-                    self.listLoadingState.accept(.listEnded)
+                    if let description = self.community.value?.description {
+                        self.aboutSubject.onNext(description)
+                        self.listLoadingState.accept(.listEnded)
+                        return
+                    }
+                    self.aboutSubject.onNext(nil)
+                    self.listLoadingState.accept(.listEmpty)
                 case .rules:
                     var rules = [ResponseAPIContentGetCommunityRule]()
                     
@@ -92,16 +97,20 @@ class CommunityPageViewModel: ProfileViewModel<ResponseAPIContentGetCommunity> {
                             return ResponseAPIContentGetCommunityRule(id: id, title: title, text: text)
                         }) ?? []
                     }
-                    
                     self.rulesSubject.onNext(rules)
-                    self.listLoadingState.accept(.listEnded)
+                    if rules.isEmpty {
+                        self.listLoadingState.accept(.listEmpty)
+                    }
+                    else {
+                        self.listLoadingState.accept(.listEnded)
+                    }
                 }
             })
             .disposed(by: disposeBag)
         
         let posts         = postsVM.items.map {$0 as [Any]}.skip(1)
         let leads         = leadsVM.items.map {$0 as [Any]}.skip(1)
-        let about         = aboutSubject.map {[$0] as [Any]}
+        let about         = aboutSubject.map {$0 != nil ? [$0!] as [Any]: [Any]()}
         let rules         = rulesSubject.map {$0 as [Any]}
         Observable.merge(posts, leads, about, rules)
             .filter({ items -> Bool in
@@ -111,7 +120,6 @@ class CommunityPageViewModel: ProfileViewModel<ResponseAPIContentGetCommunity> {
                 if items is [ResponseAPIContentGetLeader] && self.segmentedItem.value == .leads {
                     return true
                 }
-                #warning("fix later")
                 if items is [String] && self.segmentedItem.value == .about {
                     return true
                 }

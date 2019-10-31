@@ -61,6 +61,8 @@ extension ProfileVC {
                     break
                 case .listEnded:
                     self?.tableView.tableFooterView = UIView()
+                case .listEmpty:
+                    self?.handleListEmpty()
                 case .error(_):
                     guard let strongSelf = self else {return}
                     strongSelf.tableView.addListErrorFooterView(with: #selector(strongSelf.didTapTryAgain(gesture:)), on: strongSelf)
@@ -86,14 +88,6 @@ extension ProfileVC {
     func bindList() {
         // bind items
         _viewModel.items.skip(1)
-            .do(onNext: { [weak self] newItems in
-                // handle empty state
-                if self?._viewModel.listLoadingState.value == .listEnded,
-                    newItems.count == 0
-                {
-                    self?.handleListEmpty()
-                }
-            })
             .bind(to: tableView.rx.items) {[weak self] table, index, element in
                 if index == (self?.tableView.numberOfRows(inSection: 0) ?? 0) - 2 {
                     self?._viewModel.fetchNext()

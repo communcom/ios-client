@@ -102,8 +102,12 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>{
         case .leads:
             title = "no leaders"
             description = "leaders not found"
-        default:
-            break
+        case .rules:
+            title = "no rules"
+            description = "rules not found"
+        case .about:
+            title = "no description"
+            description = "description not found"
         }
         
         tableView.addEmptyPlaceholderFooterView(title: title.localized().uppercaseFirst, description: description.localized().uppercaseFirst)

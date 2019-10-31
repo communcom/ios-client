@@ -22,6 +22,8 @@ enum ListFetcherState: Equatable {
             return true
         case (.error(let error1), .error(let error2)):
             return error1.localizedDescription == error2.localizedDescription
+        case (.listEmpty, .listEmpty):
+            return true
         default:
             return false
         }
@@ -29,6 +31,7 @@ enum ListFetcherState: Equatable {
     
     case loading(Bool)
     case listEnded
+    case listEmpty
     case error(error: Error)
     
     var lastError: Error? {
@@ -67,7 +70,7 @@ class ListFetcher<T: ListItemType> {
         switch state.value {
         case .loading(let isLoading):
             if isLoading {return}
-        case .listEnded:
+        case .listEnded, .listEmpty:
             return
         case .error(_):
             if !forceRetry {
@@ -79,7 +82,7 @@ class ListFetcher<T: ListItemType> {
         state.accept(.loading(true))
         
         // send request
-        return request
+        request
             .do(onSuccess: { (result) in
                 // get next offset
                 self.offset += self.limit
@@ -97,6 +100,11 @@ class ListFetcher<T: ListItemType> {
             })
             .asDriver(onErrorJustReturn: [])
             .map {self.join(newItems: $0)}
+            .do(onNext: { (items) in
+                if items.count == 0 {
+                    self.state.accept(.listEmpty)
+                }
+            })
             .drive(items)
             .disposed(by: disposeBag)
     }

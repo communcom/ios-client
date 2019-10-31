@@ -35,14 +35,6 @@ class ListViewController<T: ListItemType>: BaseViewController {
     override func bind() {
         super.bind()
         viewModel.items
-            .do(onNext: { [weak self] newItems in
-                // handle empty state
-                if self?.viewModel.state.value == .listEnded,
-                    newItems.count == 0
-                {
-                    self?.handleListEmpty()
-                }
-            })
             .map {[ListSection(model: "", items: $0)]}
             .bind(to: tableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
@@ -64,6 +56,8 @@ class ListViewController<T: ListItemType>: BaseViewController {
                     break
                 case .listEnded:
                     self?.handleListEnded()
+                case .listEmpty:
+                    self?.handleListEmpty()
                 case .error(_):
                     guard let strongSelf = self else {return}
                     strongSelf.tableView.addListErrorFooterView(with: #selector(strongSelf.didTapTryAgain(gesture:)), on: strongSelf)
