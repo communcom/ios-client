@@ -8,6 +8,7 @@
 
 import Foundation
 import RxSwift
+import SDWebImage
 
 class MyAvatarImageView: MyView {
     private lazy var imageView: UIImageView = {
@@ -52,6 +53,11 @@ class MyAvatarImageView: MyView {
         imageView.setGifImage(gifImage)
     }
     
+    func setAvatarDetectGif(with urlString: String?, placeholderName: String, completed: SDExternalCompletionBlock? = nil) {
+        setNonAvatarImageWithId(placeholderName)
+        imageView.setImageDetectGif(with: urlString, completed: completed)
+    }
+    
     func setAvatar(urlString: String?, namePlaceHolder: String) {
         showLoading()
         // profile image
@@ -81,8 +87,8 @@ class MyAvatarImageView: MyView {
     }
     
     func setNonAvatarImageWithId(_ id: String) {
-        if imageView.frame.width == 0 {
-            imageView.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
+        if imageView.bounds.width == 0 {
+            imageView.bounds = CGRect(x: 0, y: 0, width: 100, height: 100)
         }
         
         var color = nonAvatarColors[id]

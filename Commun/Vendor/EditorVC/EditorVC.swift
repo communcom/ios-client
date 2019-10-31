@@ -18,17 +18,6 @@ class EditorVC: BaseViewController {
     let disposeBag = DisposeBag()
     let tools = BehaviorRelay<[EditorToolbarItem]>(value: [])
     
-    // MARK: - Computed properties
-    var contentLettersLimit: UInt {
-        fatalError("must override")
-    }
-    var contentCombined: Observable<Void> {
-        fatalError("Must override")
-    }
-    var isContentValid: Bool {
-        fatalError("Must override")
-    }
-    
     // MARK: - Subviews
     // header
     lazy var closeButton = UIButton.circleGray(imageName: "close-x")

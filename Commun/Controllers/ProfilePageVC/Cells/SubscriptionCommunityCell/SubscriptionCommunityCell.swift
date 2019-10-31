@@ -68,7 +68,8 @@ class SubscriptionCommunityCell: MyCollectionViewCell, CommunityController {
     
     func setUp(with community: ResponseAPIContentGetSubscriptionsCommunity) {
         self.community = community
-        #warning("avatar and cover missing")
+        self.avatarImageView.setAvatarDetectGif(with: community.avatarUrl, placeholderName: community.name)
+        self.coverImageView.setImageDetectGif(with: community.coverUrl)
         
         nameLabel.text = community.name
         

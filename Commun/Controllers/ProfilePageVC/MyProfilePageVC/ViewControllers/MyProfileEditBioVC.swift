@@ -37,6 +37,7 @@ class MyProfileEditBioVC: EditorVC {
         
         // actionButton
         actionButton.setTitle("save".localized().uppercaseFirst, for: .normal)
+        actionButton.backgroundColor = .black
         
         // charactersCountLabel
         let charactersCountContainerView = UIView(height: 35, backgroundColor: .black, cornerRadius: 35/2)

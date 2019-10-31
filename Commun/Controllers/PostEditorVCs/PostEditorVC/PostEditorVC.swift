@@ -12,7 +12,15 @@ import RxCocoa
 
 class PostEditorVC: EditorVC {
     // MARK: - Properties
-    override var contentLettersLimit: UInt {30000}
+    
+    // MARK: - Computed properties
+    var contentLettersLimit: UInt {30000}
+    var contentCombined: Observable<Void> {
+        fatalError("Must override")
+    }
+    var isContentValid: Bool {
+        fatalError("Must override")
+    }
     
     var viewModel: PostEditorViewModel {
         fatalError("Must override")
