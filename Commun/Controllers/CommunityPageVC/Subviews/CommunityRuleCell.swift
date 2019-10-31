@@ -8,7 +8,7 @@
 
 import Foundation
 
-class CommunityRuleCell: MyTableViewCell {
+class CommunityRuleCell: CommunityPageCell {
     // MARK: - Properties
     var rowIndex: Int?
     var expanded = false

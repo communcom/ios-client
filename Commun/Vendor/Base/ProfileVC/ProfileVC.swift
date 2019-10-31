@@ -8,6 +8,7 @@
 
 import Foundation
 import RxSwift
+import ESPullToRefresh
 
 class ProfileVC<ProfileType: Decodable>: BaseViewController {
     override var contentScrollView: UIScrollView? {tableView}
@@ -68,6 +69,13 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
         
         tableView.separatorStyle = .none
         tableView.setContentOffset(CGPoint(x: 0, y: -coverHeight), animated: true)
+        
+        // pull to refresh
+        tableView.es.addPullToRefresh { [unowned self] in
+            self.tableView.es.stopPullToRefresh()
+            self.reload()
+        }
+        tableView.subviews.first(where: {$0 is ESRefreshHeaderView})?.alpha = 0
     }
     
     override func bind() {
@@ -176,5 +184,6 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
     
     @objc func reload() {
         _viewModel.reload()
+        _viewModel.fetchNext(forceRetry: true)
     }
 }

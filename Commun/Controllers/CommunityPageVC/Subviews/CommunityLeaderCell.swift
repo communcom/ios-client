@@ -8,7 +8,7 @@
 
 import Foundation
 
-class CommunityLeaderCell: MyTableViewCell {
+class CommunityLeaderCell: CommunityPageCell {
     lazy var avatarImageView: MyAvatarImageView = {
         let imageView = MyAvatarImageView(size: 50)
         return imageView
