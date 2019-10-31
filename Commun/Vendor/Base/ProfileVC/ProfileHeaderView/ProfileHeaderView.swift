@@ -29,7 +29,7 @@ class ProfileHeaderView: MyTableHeaderView {
     }()
     
     lazy var descriptionLabel: UILabel = {
-        let label = UILabel.with(text: "Binance Exchange provides cryptocurrency trading for fintech and blockchain enthusiasts", textSize: 14, numberOfLines: 2)
+        let label = UILabel.with(text: "Binance Exchange provides cryptocurrency trading for fintech and blockchain enthusiasts", textSize: 14, numberOfLines: 0)
         return label
     }()
     

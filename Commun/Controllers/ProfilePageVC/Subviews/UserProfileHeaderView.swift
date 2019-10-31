@@ -171,7 +171,16 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
         followButton.setTitle(isFollowing ? "following".localized().uppercaseFirst : "follow".localized().uppercaseFirst, for: .normal)
         
         // bio
-        descriptionLabel.text = userProfile.personal?.biography
+        // description
+        descriptionLabel.text = nil
+        if let description = userProfile.personal?.biography {
+            if description.count <= 180 {
+                descriptionLabel.text = description
+            }
+            else {
+                descriptionLabel.text = String(description.prefix(177)) + "..."
+            }
+        }
         
         #warning("fix these number later")
         // stats

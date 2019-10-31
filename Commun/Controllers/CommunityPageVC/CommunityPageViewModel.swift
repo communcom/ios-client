@@ -10,6 +10,7 @@ import Foundation
 import RxSwift
 import RxCocoa
 import CyberSwift
+import SwiftyJSON
 
 class CommunityPageViewModel: ProfileViewModel<ResponseAPIContentGetCommunity> {
     // MARK: - Nested type
@@ -38,7 +39,7 @@ class CommunityPageViewModel: ProfileViewModel<ResponseAPIContentGetCommunity> {
     lazy var leadsVM = LeadersViewModel(communityId: communityId ?? "")
     
     lazy var aboutSubject = PublishSubject<String>()
-    lazy var rulesSubject = PublishSubject<[String]>()
+    lazy var rulesSubject = PublishSubject<[ResponseAPIContentGetCommunityRule]>()
     
     // MARK: - Initializers
     convenience init(community: ResponseAPIContentGetCommunity?) {
@@ -72,14 +73,27 @@ class CommunityPageViewModel: ProfileViewModel<ResponseAPIContentGetCommunity> {
                 case .leads:
                     self.leadsVM.reload()
                 case .about:
-                    #warning("fix about and rules")
-                    self.aboutSubject.onNext("Binance is a blockchain ecosystem comprised of Exchange, Labs, Launchpad, and Info. Binance Exchange is one of the fastest growing and most popular cryptocurrency exchanges in the world. Founded by a team of fintech and crypto experts — it is capable of processing more than 1.4 million orders per second, making it one of the fastest exchanges in the world. The platform focuses on security, robustness, and execution speed — attracting enthusiasts and professional traders alike.")
+                    self.aboutSubject.onNext(self.community.value?.description ?? "")
                     self.listLoadingState.accept(.listEnded)
                 case .rules:
-                    self.rulesSubject.onNext([
-                        "1. Content must target the Overwatch aud...",
-                        "2. Content should be Safe for Work"
-                    ])
+                    var rules = [ResponseAPIContentGetCommunityRule]()
+                    
+                    if let string = self.community.value?.rules,
+                        let data = string.data(using: .utf8)
+                    {
+                        let object = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [[String: Any]]
+                        rules = object?.compactMap({ (item) -> ResponseAPIContentGetCommunityRule? in
+                            guard let id = item["id"] as? String,
+                                let title = item["title"] as? String,
+                                let text = item["text"] as? String
+                            else {
+                                return nil
+                            }
+                            return ResponseAPIContentGetCommunityRule(id: id, title: title, text: text)
+                        }) ?? []
+                    }
+                    
+                    self.rulesSubject.onNext(rules)
                     self.listLoadingState.accept(.listEnded)
                 }
             })
@@ -101,7 +115,7 @@ class CommunityPageViewModel: ProfileViewModel<ResponseAPIContentGetCommunity> {
                 if items is [String] && self.segmentedItem.value == .about {
                     return true
                 }
-                if items is [String] && self.segmentedItem.value == .rules {
+                if items is [ResponseAPIContentGetCommunityRule] && self.segmentedItem.value == .rules {
                     return true
                 }
                 return false

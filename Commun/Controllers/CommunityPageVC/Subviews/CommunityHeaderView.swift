@@ -211,7 +211,16 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
         }
         
         // description
-        descriptionLabel.text = community.description
+        descriptionLabel.text = nil
+        if let description = community.description {
+            if description.count <= 180 {
+                descriptionLabel.text = description
+            }
+            else {
+                descriptionLabel.text = String(description.prefix(177)) + "..."
+            }
+        }
+        
         
         // membersCount
         membersCountLabel.text = Double(community.subscribersCount ?? 0).kmFormatted

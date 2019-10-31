@@ -66,6 +66,7 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>{
         // Register new cell type
         tableView.register(CommunityLeaderCell.self, forCellReuseIdentifier: "CommunityLeaderCell")
         tableView.register(CommunityAboutCell.self, forCellReuseIdentifier: "CommunityAboutCell")
+        tableView.register(CommunityRuleCell.self, forCellReuseIdentifier: "CommunityRuleCell")
     
         // title
         title = profile.name
@@ -126,6 +127,13 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>{
         if let string = element as? String {
             let cell = self.tableView.dequeueReusableCell(withIdentifier: "CommunityAboutCell") as! CommunityAboutCell
             cell.label.text = string
+            return cell
+        }
+        
+        if let rule = element as? ResponseAPIContentGetCommunityRule {
+            let cell = self.tableView.dequeueReusableCell(withIdentifier: "CommunityRuleCell") as! CommunityRuleCell
+            cell.rowIndex = index
+            cell.setUp(with: rule)
             return cell
         }
         
