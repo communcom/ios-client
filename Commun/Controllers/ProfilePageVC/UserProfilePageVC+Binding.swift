@@ -55,6 +55,9 @@ extension UserProfilePageVC: UICollectionViewDelegateFlowLayout {
             .map {$0.compactMap {$0.communityValue}}
             .bind(to: communitiesCollectionView.rx.items(cellIdentifier: "SubscriptionCommunityCell", cellType: SubscriptionCommunityCell.self)) { index, model, cell in
                 cell.setUp(with: model)
+                if index >= self.viewModel.subscriptionsVM.items.value.count - 2 {
+                    self.viewModel.subscriptionsVM.fetchNext()
+                }
             }
             .disposed(by: disposeBag)
         
