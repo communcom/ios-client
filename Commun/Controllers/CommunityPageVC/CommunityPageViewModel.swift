@@ -73,7 +73,9 @@ class CommunityPageViewModel: ProfileViewModel<ResponseAPIContentGetCommunity> {
                 case .leads:
                     self.leadsVM.reload()
                 case .about:
-                    if let description = self.community.value?.description {
+                    if let description = self.community.value?.description,
+                        !description.isEmpty
+                    {
                         self.aboutSubject.onNext(description)
                         self.listLoadingState.accept(.listEnded)
                         return
