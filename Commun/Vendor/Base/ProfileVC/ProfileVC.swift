@@ -173,4 +173,8 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
             self.backButton.tintColor = show ? .black: .white
         }
     }
+    
+    @objc func reload() {
+        _viewModel.reload()
+    }
 }

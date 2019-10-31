@@ -10,7 +10,45 @@ import Foundation
 import CyberSwift
 import ASSpinnerView
 
+let errorViewTag    = 99991
+
 extension UIView {
+    func showErrorView(target: Any?, action: Selector) {
+        // prevent dupplicated
+        if self.viewWithTag(errorViewTag) != nil {return}
+        
+        // setup new errorView
+        let errorView = UIView(frame: frame)
+        errorView.tag = errorViewTag
+        errorView.backgroundColor = .white
+        addSubview(errorView)
+        bringSubviewToFront(errorView)
+        
+        // label
+        let label = UILabel(frame: .zero)
+        label.numberOfLines = 0
+        label.textAlignment = .center
+        label.text = "there is an error occurred".localized().uppercaseFirst + "\n" + "tap to try again".localized().uppercaseFirst
+        label.textColor = .darkGray
+        label.translatesAutoresizingMaskIntoConstraints = false
+        errorView.addSubview(label)
+        
+        // constraint for label
+        label.centerXAnchor.constraint(equalTo: errorView.centerXAnchor).isActive = true
+        label.centerYAnchor.constraint(equalTo: errorView.centerYAnchor).isActive = true
+        label.leadingAnchor.constraint(equalTo: errorView.leadingAnchor, constant: 16).isActive = true
+        label.trailingAnchor.constraint(equalTo: errorView.trailingAnchor, constant: -16).isActive = true
+        
+        // action for label
+        label.isUserInteractionEnabled = true
+        let tap = UITapGestureRecognizer(target: target, action: action)
+        label.addGestureRecognizer(tap)
+    }
+    
+    func hideErrorView() {
+        viewWithTag(errorViewTag)?.removeFromSuperview()
+    }
+    
     func showLoading(cover: Bool = true) {
         // if loading view is existed
         if self.viewWithTag(9999) != nil {return}

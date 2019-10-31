@@ -29,20 +29,19 @@ extension ProfileVC {
             })
             .disposed(by: disposeBag)
         
-        #warning("retry button")
-        //        let retryButton = UIButton(forAutoLayout: ())
-        //        retryButton.setTitleColor(.gray, for: .normal)
-        // bind community loading state
         _viewModel.loadingState
             .subscribe(onNext: { [weak self] loadingState in
                 switch loadingState {
                 case .loading:
+                    self?.view.hideErrorView()
                     self?._headerView.showLoader()
                 case .finished:
+                    self?.view.hideErrorView()
                     self?._headerView.hideLoader()
-                case .error(let error):
-                    self?.showError(error)
-                    self?.back()
+                case .error(_):
+                    guard let strongSelf = self else {return}
+                    strongSelf.view.showErrorView(target: self, action: #selector(strongSelf.reload))
+                    strongSelf._headerView.hideLoader()
                 }
             })
             .disposed(by: disposeBag)

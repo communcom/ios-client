@@ -38,34 +38,7 @@ class SplashViewController: UIViewController {
     }
     
     func showErrorScreen() {
-        // reset
-        hideErrorView()
-        
-        // setup new errorView
-        errorView = UIView(frame: self.view.frame)
-        errorView.backgroundColor = .white
-        self.view.addSubview(errorView)
-        self.view.bringSubviewToFront(errorView)
-        
-        // label
-        let label = UILabel(frame: .zero)
-        label.numberOfLines = 0
-        label.textAlignment = .center
-        label.text = "there is an error occurred".localized().uppercaseFirst + "\n" + "tap to try again".localized().uppercaseFirst
-        label.textColor = .darkGray
-        label.translatesAutoresizingMaskIntoConstraints = false
-        errorView.addSubview(label)
-        
-        // constraint for label
-        label.centerXAnchor.constraint(equalTo: errorView.centerXAnchor).isActive = true
-        label.centerYAnchor.constraint(equalTo: errorView.centerYAnchor).isActive = true
-        label.leadingAnchor.constraint(equalTo: errorView.leadingAnchor, constant: 16).isActive = true
-        label.trailingAnchor.constraint(equalTo: errorView.trailingAnchor, constant: -16).isActive = true
-        
-        // action for label
-        label.isUserInteractionEnabled = true
-        let tap = UITapGestureRecognizer(target: self, action: #selector(retryDidTouch))
-        label.addGestureRecognizer(tap)
+        view.showErrorView(target: self, action: #selector(retryDidTouch(_:)))
     }
     
     @objc func retryDidTouch(_ tap: UITapGestureRecognizer) {
@@ -76,6 +49,6 @@ class SplashViewController: UIViewController {
     }
     
     func hideErrorView() {
-        errorView?.removeFromSuperview()
+        view.hideErrorView()
     }
 }
