@@ -78,4 +78,10 @@ class PostsListFetcher: ListFetcher<ResponseAPIContentGetPost> {
         return RestAPIManager.instance.getPosts(userId: filter.userId, communityId: filter.communityId, allowNsfw: false, type: filter.feedTypeMode, sortBy: filter.feedType, limit: limit, offset: offset)
         .map {$0.items ?? []}
     }
+    
+    override func join(newItems items: [ResponseAPIContentGetPost]) -> [ResponseAPIContentGetPost] {
+        var newList = items.filter {!self.items.value.contains($0) && $0.document != nil}
+        newList = self.items.value + newList
+        return newList
+    }
 }
