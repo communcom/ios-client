@@ -35,6 +35,9 @@ class MyProfileEditBioVC: EditorVC {
         headerLabel.text = (bio == nil ? "add bio" : "edit bio").localized().uppercaseFirst
         textView.rx.text.onNext(bio)
         
+        // actionButton
+        actionButton.setTitle("save".localized().uppercaseFirst, for: .normal)
+        
         // charactersCountLabel
         let charactersCountContainerView = UIView(height: 35, backgroundColor: .black, cornerRadius: 35/2)
         toolbar.addSubview(charactersCountContainerView)

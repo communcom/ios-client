@@ -18,12 +18,34 @@ class MyProfileHeaderView: UserProfileHeaderView {
         return button
     }()
     
+    lazy var addBioButton = UIButton(height: 35, label: "add bio".localized().uppercaseFirst, labelFont: .boldSystemFont(ofSize: 15), backgroundColor: .f3f5fa, textColor: .appMainColor, cornerRadius: 35/2)
+    
     override func commonInit() {
         super.commonInit()
         followButton.removeFromSuperview()
         
+        // button
         addSubview(changeAvatarButton)
         changeAvatarButton.autoPinEdge(.bottom, to: .bottom, of: avatarImageView)
         changeAvatarButton.autoPinEdge(.trailing, to: .trailing, of: avatarImageView)
+        
+        // add bio
+        addSubview(addBioButton)
+        addBioButton.autoPinEdge(.top, to: .top, of: descriptionLabel)
+        addBioButton.autoPinEdge(.leading, to: .leading, of: descriptionLabel)
+        addBioButton.autoPinEdge(.trailing, to: .trailing, of: descriptionLabel)
+        
+        addBioButton.bottomAnchor.constraint(lessThanOrEqualTo: followersCountLabel.topAnchor, constant: -23)
+            .isActive = true
+        
+        // bind
+        bind()
+    }
+    
+    func bind() {
+        descriptionLabel.rx.observe(String.self, "text")
+            .map {$0?.isEmpty == false}
+            .bind(to: addBioButton.rx.isHidden)
+            .disposed(by: disposeBag)
     }
 }

@@ -49,8 +49,6 @@ class MyProfilePageVC: UserProfilePageVC {
         changeCoverButton.autoPinEdge(.trailing, to: .trailing, of: coverImageView, withOffset: -16)
         
         changeCoverButton.addTarget(self, action: #selector(changeCoverBtnDidTouch(_:)), for: .touchUpInside)
-        
-        #warning("add bio")
     }
     
     override func bind() {
@@ -75,6 +73,12 @@ class MyProfilePageVC: UserProfilePageVC {
     
     override func setHeaderView() {
         headerView = MyProfileHeaderView(tableView: tableView)
-        (headerView as! MyProfileHeaderView).changeAvatarButton.addTarget(self, action: #selector(changeAvatarBtnDidTouch(_:)), for: .touchUpInside)
+        
+        let myHeader = headerView as! MyProfileHeaderView
+        myHeader.changeAvatarButton.addTarget(self, action: #selector(changeAvatarBtnDidTouch(_:)), for: .touchUpInside)
+        myHeader.addBioButton.addTarget(self, action: #selector(addBioButtonDidTouch(_:)), for: .touchUpInside)
+        myHeader.descriptionLabel.isUserInteractionEnabled = true
+        let tap = UITapGestureRecognizer(target: self, action: #selector(bioLabelDidTouch(_:)))
+        myHeader.descriptionLabel.addGestureRecognizer(tap)
     }
 }

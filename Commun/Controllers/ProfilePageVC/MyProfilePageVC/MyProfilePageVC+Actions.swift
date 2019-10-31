@@ -19,10 +19,6 @@ extension MyProfilePageVC {
         openActionSheet(cover: false)
     }
     
-    @objc func addBioButtonDidTouch(_ sender: Any) {
-        self.onUpdateBio(new: true)
-    }
-    
     @objc func moreActionsButtonDidTouch(_ sender: Any) {
         
     }
@@ -32,18 +28,6 @@ extension MyProfilePageVC {
         self.show(settingsVC, sender: nil)
     }
     
-    @objc func bioLabelDidTouch(_ sender: Any) {
-        self.showActionSheet(title:     String(format: "%@ %@", "change".localized().uppercaseFirst, "profile description".localized()),
-                             actions:   [
-                                UIAlertAction(title: "edit".localized().uppercaseFirst, style: .default, handler: { (_) in
-                                    self.onUpdateBio()
-                                }),
-                                UIAlertAction(title: "delete".localized().uppercaseFirst, style: .destructive, handler: { (_) in
-                                    self.onUpdateBio(delete: true)
-                                }),
-            ])
-    }
-    
     // MARK: - Covers + Avatar
     func openActionSheet(cover: Bool) {
         showCommunActionSheet(
@@ -51,13 +35,13 @@ extension MyProfilePageVC {
             actions: [
                 CommunActionSheet.Action(
                     title: "choose from gallery".localized().uppercaseFirst,
-                    icon: UIImage(named: "edit"),
+                    icon: UIImage(named: "photo_solid"),
                     handle: {[unowned self] in
                         cover ? self.onUpdateCover() : self.onUpdateAvatar()
                 }),
                 CommunActionSheet.Action(
                     title: String(format: "%@ %@", "delete current".localized().uppercaseFirst, (cover ? "cover photo" : "profile photo").localized()),
-                    icon: UIImage(named: "edit"),
+                    icon: UIImage(named: "delete"),
                     handle: {[unowned self] in
                         cover ? self.onUpdateCover(delete: true) : self.onUpdateAvatar(delete: true)
                     },
@@ -179,6 +163,31 @@ extension MyProfilePageVC {
     }
     
     // MARK: - Biography
+    @objc func addBioButtonDidTouch(_ sender: Any) {
+        self.onUpdateBio(new: true)
+    }
+    
+    @objc func bioLabelDidTouch(_ sender: Any) {
+        showCommunActionSheet(
+            title: String(format: "%@ %@", "change".localized().uppercaseFirst, "profile description".localized()),
+            actions: [
+                CommunActionSheet.Action(
+                    title: "edit".localized().uppercaseFirst,
+                    icon: UIImage(named: "edit"),
+                    handle: {[unowned self] in
+                        self.onUpdateBio()
+                }),
+                CommunActionSheet.Action(
+                    title: "delete".localized().uppercaseFirst,
+                    icon: UIImage(named: "delete"),
+                    handle: {[unowned self] in
+                        self.onUpdateBio(delete: true)
+                    },
+                    tintColor: .red
+                )
+        ])
+    }
+    
     func onUpdateBio(new: Bool = false, delete: Bool = false) {
         // Save original bio for reversing
         let originalBio = headerView.descriptionLabel.text
