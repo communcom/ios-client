@@ -51,7 +51,7 @@ extension MyProfilePageVC {
                 
             }),
             CommunActionSheet.Action(title: "settings".localized().uppercaseFirst, icon: UIImage(named: "profile_options_settings"), handle: {
-                
+                self.show(MyProfileSettingsVC(), sender: self)
             }, marginTop: 14)
         ]) {
             
