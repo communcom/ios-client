@@ -10,6 +10,10 @@ import UIKit
 
 class CommunActionSheet: SwipeDownDismissViewController {
     // MARK: - Nested types
+    enum Style {
+        case `default`
+        case settings
+    }
     struct Action {
         var title: String
         var icon: UIImage?
@@ -29,6 +33,7 @@ class CommunActionSheet: SwipeDownDismissViewController {
     let actionViewSeparatorSpace: CGFloat = 8
     
     // MARK: - Properties
+    var style: Style
     var backgroundColor = UIColor(hexString: "#F7F7F9")
     var actions: [Action]?
     
@@ -66,6 +71,17 @@ class CommunActionSheet: SwipeDownDismissViewController {
         button.addTarget(self, action: #selector(closeButtonDidTouch(_:)), for: .touchUpInside)
         return button
     }()
+    
+    // MARK: - Initializer
+    init(style: Style = .default) {
+        self.style = style
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()

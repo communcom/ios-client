@@ -41,8 +41,8 @@ extension UIViewController {
         self.present(alert, animated: true, completion: nil)
     }
     
-    func showCommunActionSheet(headerView: UIView? = nil, title: String? = nil, actions: [CommunActionSheet.Action], completion: (() -> Void)? = nil) {
-        let actionSheet = CommunActionSheet()
+    func showCommunActionSheet(style: CommunActionSheet.Style = .default, headerView: UIView? = nil, title: String? = nil, actions: [CommunActionSheet.Action], completion: (() -> Void)? = nil) {
+        let actionSheet = CommunActionSheet(style: style)
         actionSheet.title = title
         actionSheet.headerView = headerView
         actionSheet.actions = actions
