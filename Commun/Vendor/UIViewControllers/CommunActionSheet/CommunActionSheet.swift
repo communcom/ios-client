@@ -14,11 +14,13 @@ class CommunActionSheet: SwipeDownDismissViewController {
         case `default`
         case profile
     }
+    
     struct Action {
         var title: String
         var icon: UIImage?
         var handle: (() -> Void)?
         var tintColor: UIColor = .black
+        var marginTop: CGFloat = 0
     }
     class TapGesture: UITapGestureRecognizer {
         var action: Action?
@@ -150,7 +152,7 @@ class CommunActionSheet: SwipeDownDismissViewController {
             let actionView = UIView(backgroundColor: .white, cornerRadius: 10)
             
             view.addSubview(actionView)
-            actionView.autoPinEdge(toSuperviewEdge: .top, withInset: defaultMargin + headerHeight + headerToButtonsSpace + CGFloat(index) * (actionViewSeparatorSpace + actionViewHeight))
+            actionView.autoPinEdge(toSuperviewEdge: .top, withInset: defaultMargin + headerHeight + headerToButtonsSpace + CGFloat(index) * (actionViewSeparatorSpace + actionViewHeight) + action.marginTop)
             actionView.autoSetDimension(.height, toSize: actionViewHeight)
             actionView.autoPinEdge(toSuperviewEdge: .leading, withInset: defaultMargin)
             actionView.autoPinEdge(toSuperviewEdge: .trailing, withInset: defaultMargin)
