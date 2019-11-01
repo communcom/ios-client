@@ -83,22 +83,7 @@ class CommunityPageViewModel: ProfileViewModel<ResponseAPIContentGetCommunity> {
                     self.aboutSubject.onNext(nil)
                     self.listLoadingState.accept(.listEmpty)
                 case .rules:
-                    var rules = [ResponseAPIContentGetCommunityRule]()
-                    
-                    if let string = self.community.value?.rules,
-                        let data = string.data(using: .utf8)
-                    {
-                        let object = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [[String: Any]]
-                        rules = object?.compactMap({ (item) -> ResponseAPIContentGetCommunityRule? in
-                            guard let id = item["id"] as? String,
-                                let title = item["title"] as? String,
-                                let text = item["text"] as? String
-                            else {
-                                return nil
-                            }
-                            return ResponseAPIContentGetCommunityRule(id: id, title: title, text: text)
-                        }) ?? []
-                    }
+                    let rules = self.community.value?.rules ?? [ResponseAPIContentGetCommunityRule]()
                     self.rulesSubject.onNext(rules)
                     if rules.isEmpty {
                         self.listLoadingState.accept(.listEmpty)

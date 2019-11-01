@@ -281,6 +281,7 @@
 		BC6B7653236A74F000A7AF2A /* MyProfileEditBioVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC6B7652236A74F000A7AF2A /* MyProfileEditBioVC.swift */; };
 		BC6B7657236A9D4600A7AF2A /* CommunityRuleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC6B7656236A9D4600A7AF2A /* CommunityRuleCell.swift */; };
 		BC6B7659236AE14500A7AF2A /* CommunityPageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC6B7658236AE14500A7AF2A /* CommunityPageCell.swift */; };
+		BC6B765B236BC58600A7AF2A /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC6B765A236BC58600A7AF2A /* ErrorView.swift */; };
 		BC702C8E2362817700D9E88A /* CommunityLeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC702C8D2362817700D9E88A /* CommunityLeaderCell.swift */; };
 		BC702C902362825100D9E88A /* MyAvatarImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC702C8F2362825100D9E88A /* MyAvatarImageView.swift */; };
 		BC702C96236298CC00D9E88A /* CommunityAboutCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC702C95236298CC00D9E88A /* CommunityAboutCell.swift */; };
@@ -638,6 +639,7 @@
 		BC6B7652236A74F000A7AF2A /* MyProfileEditBioVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileEditBioVC.swift; sourceTree = "<group>"; };
 		BC6B7656236A9D4600A7AF2A /* CommunityRuleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityRuleCell.swift; sourceTree = "<group>"; };
 		BC6B7658236AE14500A7AF2A /* CommunityPageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityPageCell.swift; sourceTree = "<group>"; };
+		BC6B765A236BC58600A7AF2A /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
 		BC702C8D2362817700D9E88A /* CommunityLeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityLeaderCell.swift; sourceTree = "<group>"; };
 		BC702C8F2362825100D9E88A /* MyAvatarImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAvatarImageView.swift; sourceTree = "<group>"; };
 		BC702C95236298CC00D9E88A /* CommunityAboutCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityAboutCell.swift; sourceTree = "<group>"; };
@@ -1742,6 +1744,7 @@
 				BCABF1302366CDC6006B05F5 /* MyNavigationBar.swift */,
 				BCA9712723608ABD00AE37E1 /* UsersStackView.swift */,
 				BCF74A6623618D9000B91089 /* CMSegmentedControl.swift */,
+				BC6B765A236BC58600A7AF2A /* ErrorView.swift */,
 			);
 			path = UIViews;
 			sourceTree = "<group>";
@@ -2197,6 +2200,7 @@
 				3B2F226C226892C5006B589E /* NotificationsPageVC.swift in Sources */,
 				3BAD8E812318D838005A8AB3 /* UITextView+UILabel.swift in Sources */,
 				BCA97113236004F500AE37E1 /* CommentsViewModel.swift in Sources */,
+				BC6B765B236BC58600A7AF2A /* ErrorView.swift in Sources */,
 				3BAF69CF226787940055CCEB /* Date.swift in Sources */,
 				3BE68AB222EEA7C300033B81 /* LocalAuthVC.swift in Sources */,
 				3B3C8B7A23472ADA00D8BADB /* PostEditorToolbarItemCell.swift in Sources */,

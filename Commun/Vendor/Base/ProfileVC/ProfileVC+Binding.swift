@@ -42,15 +42,19 @@ extension ProfileVC {
             .subscribe(onNext: { [weak self] loadingState in
                 switch loadingState {
                 case .loading:
-                    self?.view.hideErrorView()
                     self?._headerView.showLoader()
                 case .finished:
-                    self?.view.hideErrorView()
                     self?._headerView.hideLoader()
                 case .error(_):
                     guard let strongSelf = self else {return}
-                    strongSelf.view.showErrorView(target: self, action: #selector(strongSelf.reload))
                     strongSelf._headerView.hideLoader()
+                    let backButtonOriginTintColor = strongSelf.backButton.tintColor
+                    strongSelf.backButton.tintColor = .black
+                    strongSelf.view.showErrorView {
+                        strongSelf.view.hideErrorView()
+                        strongSelf.backButton.tintColor = backButtonOriginTintColor
+                        strongSelf.reload()
+                    }
                 }
             })
             .disposed(by: disposeBag)
