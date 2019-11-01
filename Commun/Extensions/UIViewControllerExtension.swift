@@ -185,4 +185,26 @@ extension UIViewController {
             self.navigationController?.popViewController()
         }
     }
+    
+    func setLeftNavBarButton(with button: UIButton) {
+        // backButton
+        let leftButtonView = UIView(frame: CGRect(x: 0, y: 0, width: 36, height: 40))
+        
+        leftButtonView.addSubview(button)
+        button.autoPinEdgesToSuperviewEdges()
+
+        let leftBarButton = UIBarButtonItem(customView: leftButtonView)
+        navigationItem.leftBarButtonItem = leftBarButton
+    }
+    
+    func setRightNavBarButton(with button: UIButton) {
+        // backButton
+        let rightButtonView = UIView(frame: CGRect(x: 0, y: 0, width: 36, height: 40))
+        
+        rightButtonView.addSubview(button)
+        button.autoPinEdgesToSuperviewEdges()
+
+        let rightBarButton = UIBarButtonItem(customView: rightButtonView)
+        navigationItem.rightBarButtonItem = rightBarButton
+    }
 }

@@ -269,6 +269,8 @@
 		BC22BBCA236C082600F40658 /* ContentHuggingScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC22BBC9236C082600F40658 /* ContentHuggingScrollView.swift */; };
 		BC22BBCC236C0E0300F40658 /* UIStackView+PureLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC22BBCB236C0E0300F40658 /* UIStackView+PureLayout.swift */; };
 		BC22BBCF236C18BE00F40658 /* MyProfileSettingsVC+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC22BBCE236C18BE00F40658 /* MyProfileSettingsVC+Actions.swift */; };
+		BC22BBD2236C213D00F40658 /* SelectLanguageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC22BBD1236C213D00F40658 /* SelectLanguageVC.swift */; };
+		BC22BBD4236C215900F40658 /* BaseTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC22BBD3236C215900F40658 /* BaseTableViewController.swift */; };
 		BC2C94FF2366F04100C9D7FE /* UserProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2C94FE2366F04100C9D7FE /* UserProfileHeaderView.swift */; };
 		BC31BA55235EBD7C0007D89A /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC31BA54235EBD7C0007D89A /* ProfileVC.swift */; };
 		BC3694ED236979A700B2E078 /* ProfilePageVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BC3694EC236979A700B2E078 /* ProfilePageVC.storyboard */; };
@@ -631,6 +633,8 @@
 		BC22BBC9236C082600F40658 /* ContentHuggingScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentHuggingScrollView.swift; sourceTree = "<group>"; };
 		BC22BBCB236C0E0300F40658 /* UIStackView+PureLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+PureLayout.swift"; sourceTree = "<group>"; };
 		BC22BBCE236C18BE00F40658 /* MyProfileSettingsVC+Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MyProfileSettingsVC+Actions.swift"; sourceTree = "<group>"; };
+		BC22BBD1236C213D00F40658 /* SelectLanguageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectLanguageVC.swift; sourceTree = "<group>"; };
+		BC22BBD3236C215900F40658 /* BaseTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTableViewController.swift; sourceTree = "<group>"; };
 		BC2C94FE2366F04100C9D7FE /* UserProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileHeaderView.swift; sourceTree = "<group>"; };
 		BC31BA54235EBD7C0007D89A /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
 		BC3694EC236979A700B2E078 /* ProfilePageVC.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ProfilePageVC.storyboard; sourceTree = "<group>"; };
@@ -1665,6 +1669,7 @@
 				BCF74A61236180B900B91089 /* SubscribersViewModel.swift */,
 				BC48FC41236689DC0049C4F4 /* LeadersViewModel.swift */,
 				BCCE0AA12367E60A00A183AA /* SubscriptionsViewModel.swift */,
+				BC22BBD3236C215900F40658 /* BaseTableViewController.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -1672,10 +1677,19 @@
 		BC22BBCD236C18A900F40658 /* MyProfileSettingsVC */ = {
 			isa = PBXGroup;
 			children = (
+				BC22BBD0236C212100F40658 /* SelectLanguageVC */,
 				BC22BBC7236C055300F40658 /* MyProfileSettingsVC.swift */,
 				BC22BBCE236C18BE00F40658 /* MyProfileSettingsVC+Actions.swift */,
 			);
 			path = MyProfileSettingsVC;
+			sourceTree = "<group>";
+		};
+		BC22BBD0236C212100F40658 /* SelectLanguageVC */ = {
+			isa = PBXGroup;
+			children = (
+				BC22BBD1236C213D00F40658 /* SelectLanguageVC.swift */,
+			);
+			path = SelectLanguageVC;
 			sourceTree = "<group>";
 		};
 		BC31BA53235EBD6A0007D89A /* ProfileVC */ = {
@@ -2189,6 +2203,7 @@
 				5787C0C422650F9D00568CEC /* SetUserVC.swift in Sources */,
 				5721E87122650AC0003BE04B /* StringExtension.swift in Sources */,
 				3B3C8B7E23473ED900D8BADB /* EditorVC+CollectionViewFlowLayoutDelegate.swift in Sources */,
+				BC22BBD4236C215900F40658 /* BaseTableViewController.swift in Sources */,
 				3B0E9C732270785E002AB1C2 /* PhotoLibraryCell.swift in Sources */,
 				3B6CB732234331830097B2A1 /* Array.swift in Sources */,
 				3B51581E226E0D3A00108F17 /* TLPhotosPickerViewController+Rx.swift in Sources */,
@@ -2360,6 +2375,7 @@
 				3B24F86322F376FF00B7091C /* CommunitiesVC+Binding.swift in Sources */,
 				3B2538B1231E318400D0B1DA /* StateButton.swift in Sources */,
 				3B24F86D22F37B6F00B7091C /* CommunityCell.swift in Sources */,
+				BC22BBD2236C213D00F40658 /* SelectLanguageVC.swift in Sources */,
 				575AECB322606F7100A7EC2D /* SelectCountryViewModel.swift in Sources */,
 				3B24F86722F3784900B7091C /* MockupCommunity.swift in Sources */,
 				BC48FC46236690880049C4F4 /* MyEmptyPlaceHolderView.swift in Sources */,

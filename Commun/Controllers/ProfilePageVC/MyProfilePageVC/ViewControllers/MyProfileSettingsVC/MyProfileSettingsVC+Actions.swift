@@ -15,7 +15,8 @@ extension MyProfileSettingsVC {
     }
     
     @objc func selectLanguage() {
-
+        let navVC = UINavigationController(rootViewController: SelectLanguageVC())
+        present(navVC, animated: true, completion: nil)
     }
     
     @objc func logout() {
