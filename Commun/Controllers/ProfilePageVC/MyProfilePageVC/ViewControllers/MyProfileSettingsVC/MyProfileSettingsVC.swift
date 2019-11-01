@@ -85,7 +85,7 @@ class MyProfileSettingsVC: BaseViewController {
                 
             }),
             CommunActionSheet.Action(title: "interface language".localized().uppercaseFirst, icon: UIImage(named: "profile_options_interface_language"), handle: {
-                
+                self.selectLanguage()
             }),
             CommunActionSheet.Action(title: "password".localized().uppercaseFirst, icon: UIImage(named: "profile_options_password"), handle: {
                 
@@ -116,6 +116,10 @@ class MyProfileSettingsVC: BaseViewController {
         let stackView = UIStackView(axis: .vertical, spacing: 2)
         for action in actions {
             let actionView = UIView(height: 65, backgroundColor: .white)
+            actionView.isUserInteractionEnabled = true
+            let tap = CommunActionSheet.Action.TapGesture(target: self, action: #selector(actionViewDidTouch(_:)))
+            tap.action = action
+            actionView.addGestureRecognizer(tap)
             
             let imageView = UIImageView(width: 35, height: 35)
             imageView.image = action.icon

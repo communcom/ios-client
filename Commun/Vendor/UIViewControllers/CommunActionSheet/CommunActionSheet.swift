@@ -21,9 +21,9 @@ class CommunActionSheet: SwipeDownDismissViewController {
         var handle: (() -> Void)?
         var tintColor: UIColor = .black
         var marginTop: CGFloat = 0
-    }
-    class TapGesture: UITapGestureRecognizer {
-        var action: Action?
+        class TapGesture: UITapGestureRecognizer {
+            var action: Action?
+        }
     }
     
     // MARK: - Constants
@@ -159,9 +159,9 @@ class CommunActionSheet: SwipeDownDismissViewController {
             
             view.addSubview(actionView)
             
-            var topInset: CGFloat = defaultMargin + headerHeight + headerToButtonsSpace + CGFloat(index) * (actionViewSeparatorSpace + actionViewHeight) + action.marginTop
+            let topInset: CGFloat = defaultMargin + headerHeight + headerToButtonsSpace + CGFloat(index) * (actionViewSeparatorSpace + actionViewHeight) + action.marginTop
             
-            actionView.autoPinEdge(toSuperviewEdge: .top, withInset: defaultMargin + headerHeight + headerToButtonsSpace + CGFloat(index) * (actionViewSeparatorSpace + actionViewHeight) + action.marginTop)
+            actionView.autoPinEdge(toSuperviewEdge: .top, withInset: topInset)
             actionView.autoSetDimension(.height, toSize: actionViewHeight)
             actionView.autoPinEdge(toSuperviewEdge: .leading, withInset: defaultMargin)
             actionView.autoPinEdge(toSuperviewEdge: .trailing, withInset: defaultMargin)
@@ -213,7 +213,7 @@ class CommunActionSheet: SwipeDownDismissViewController {
             
             // handle action
             actionView.isUserInteractionEnabled = true
-            let tap = TapGesture(target: self, action: #selector(actionViewDidTouch(_:)))
+            let tap = Action.TapGesture(target: self, action: #selector(actionViewDidTouch(_:)))
             tap.action = action
             actionView.addGestureRecognizer(tap)
         }
@@ -224,7 +224,7 @@ class CommunActionSheet: SwipeDownDismissViewController {
         dismiss(animated: true, completion: nil)
     }
     
-    @objc func actionViewDidTouch(_ tap: TapGesture) {
+    @objc func actionViewDidTouch(_ tap: Action.TapGesture) {
         guard let action = tap.action else {return}
         dismiss(animated: true) {
             action.handle?()

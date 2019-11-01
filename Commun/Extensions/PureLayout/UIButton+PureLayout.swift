@@ -57,7 +57,7 @@ extension UIButton {
         return button
     }
     
-    static func option(tintColor: UIColor = .black, contentInsets: UIEdgeInsets = UIEdgeInsets(top: 12, left: 32, bottom: 12, right: 0)) -> UIButton {
+    static func option(tintColor: UIColor = .black, contentInsets: UIEdgeInsets = UIEdgeInsets(top: 12, left: 16, bottom: 12, right: 16)) -> UIButton {
         let button = UIButton(width: 36, height: 40, contentInsets: contentInsets)
         button.tintColor = tintColor
         button.setImage(UIImage(named: "postpage-more"), for: .normal)

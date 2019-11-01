@@ -9,6 +9,15 @@
 import Foundation
 
 extension MyProfileSettingsVC {
+    @objc func actionViewDidTouch(_ tap: CommunActionSheet.Action.TapGesture) {
+        guard let action = tap.action else {return}
+        action.handle?()
+    }
+    
+    @objc func selectLanguage() {
+
+    }
+    
     @objc func logout() {
         showAlert(title: "Logout".localized(), message: "Do you really want to logout?".localized(), buttonTitles: ["Ok".localized(), "cancel".localized().uppercaseFirst], highlightedButtonIndex: 1) { (index) in
             
