@@ -72,6 +72,5 @@ class ProfileHeaderView: MyTableHeaderView {
         
         addSubview(usersStackView)
         usersStackView.autoPinEdge(.top, to: .bottom, of: descriptionLabel, withOffset: 14)
-        
     }
 }

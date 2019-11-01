@@ -12,16 +12,20 @@ import RxSwift
 class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>{
     // MARK: - Properties
     let communityId: String
+
     lazy var viewModel: CommunityPageViewModel = CommunityPageViewModel(communityId: communityId)
+    
     override var _viewModel: ProfileViewModel<ResponseAPIContentGetCommunity> {
         return viewModel
     }
+    
     
     // MARK: - Subviews
     var headerView: CommunityHeaderView!
     override var _headerView: ProfileHeaderView! {
         return headerView
     }
+    
     
     // MARK: - Initializers
     init(communityId: String) {
@@ -33,15 +37,18 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>{
         fatalError("init(coder:) has not been implemented")
     }
     
+    
     // MARK: - Methods
     override func setUp() {
         super.setUp()
+        
         headerView = CommunityHeaderView(tableView: tableView)
         headerView.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: 25)
     }
     
     override func bind() {
         super.bind()
+       
         headerView.selectedIndex
             .map { index -> CommunityPageViewModel.SegmentioItem in
                 switch index {
@@ -63,6 +70,7 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>{
     
     override func setUp(profile: ResponseAPIContentGetCommunity) {
         super.setUp(profile: profile)
+       
         // Register new cell type
         tableView.register(CommunityLeaderCell.self, forCellReuseIdentifier: "CommunityLeaderCell")
         tableView.register(CommunityAboutCell.self, forCellReuseIdentifier: "CommunityAboutCell")
@@ -72,8 +80,7 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>{
         title = profile.name
         
         // cover
-        if let urlString = profile.coverUrl
-        {
+        if let urlString = profile.coverUrl {
             coverImageView.setImageDetectGif(with: urlString)
         }
         
@@ -95,6 +102,7 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>{
     override func handleListEmpty() {
         var title = "empty"
         var description = "not found"
+        
         switch viewModel.segmentedItem.value {
         case .posts:
             title = "no posts"

@@ -11,9 +11,9 @@ import RxSwift
 import RxCocoa
 
 class CommunityHeaderView: ProfileHeaderView, CommunityController {
-    
     // MARK: - CommunityController
     var community: ResponseAPIContentGetCommunity?
+    
     
     // MARK: - Subviews
     lazy var notificationButton: UIButton = {
@@ -22,6 +22,7 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
         button.setImage(UIImage(named: "profilepage-notification")!, for: .normal)
         return button
     }()
+    
     lazy var joinButton = CommunButton.join
     
     lazy var membersCountLabel: UILabel = {
@@ -198,25 +199,25 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
         if let trailingConstraint = nameLabel.constraints.first(where: {$0.firstAttribute == .trailing}) {
             nameLabel.removeConstraint(trailingConstraint)
         }
+        
         if joined {
             addSubview(notificationButton)
             notificationButton.autoPinEdge(.trailing, to: .leading, of: joinButton, withOffset: -5)
             notificationButton.autoAlignAxis(.horizontal, toSameAxisOf: avatarImageView)
             nameLabel.trailingAnchor.constraint(lessThanOrEqualTo: notificationButton.leadingAnchor, constant: -8)
                 .isActive = true
-        }
-        else {
+        } else {
             nameLabel.trailingAnchor.constraint(lessThanOrEqualTo: joinButton.leadingAnchor, constant: -8)
                 .isActive = true
         }
         
         // description
         descriptionLabel.text = nil
+        
         if let description = community.description {
             if description.count <= 180 {
                 descriptionLabel.text = description
-            }
-            else {
+            } else {
                 descriptionLabel.text = String(description.prefix(177)) + "..."
             }
         }
