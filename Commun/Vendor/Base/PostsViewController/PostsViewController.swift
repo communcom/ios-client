@@ -17,6 +17,7 @@ class PostsViewController: ListViewController<ResponseAPIContentGetPost> {
         setUpViewModel()
         
         // setup datasource
+        tableView.separatorStyle = .none
         tableView.register(BasicPostCell.self, forCellReuseIdentifier: "BasicPostCell")
         tableView.register(ArticlePostCell.self, forCellReuseIdentifier: "ArticlePostCell")
         

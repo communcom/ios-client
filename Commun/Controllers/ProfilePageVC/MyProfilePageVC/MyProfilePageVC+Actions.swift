@@ -42,10 +42,12 @@ extension MyProfilePageVC {
         
         showCommunActionSheet(style: .profile, headerView: headerView, actions: [
             CommunActionSheet.Action(title: "saved".localized().uppercaseFirst, icon: UIImage(named: "profile_options_saved"), handle: {
-                
+                #warning("change filter")
+                self.show(PostsViewController(), sender: self)
             }),
             CommunActionSheet.Action(title: "liked".localized().uppercaseFirst, icon: UIImage(named: "profile_options_liked"), handle: {
-                
+                #warning("change filter")
+                self.show(PostsViewController(), sender: self)
             }),
             CommunActionSheet.Action(title: "blacklist".localized().uppercaseFirst, icon: UIImage(named: "profile_options_blacklist"), handle: {
                 

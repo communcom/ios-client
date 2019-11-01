@@ -32,7 +32,6 @@ class NotificationsPageVC: ListViewController<ResponseAPIOnlineNotificationData>
         navigationController?.tabBarItem.title = nil
         
         // configure tableView
-        view = tableView
         tableView.estimatedRowHeight = 80
         tableView.tableFooterView = UIView()
         

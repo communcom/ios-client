@@ -19,6 +19,11 @@ extension MyProfileSettingsVC {
         present(navVC, animated: true, completion: nil)
     }
     
+    @objc func showNotificationSettings() {
+        let navVC = UINavigationController(rootViewController: NotificationsSettingsVC())
+        present(navVC, animated: true, completion: nil)
+    }
+    
     @objc func logout() {
         showAlert(title: "Logout".localized(), message: "Do you really want to logout?".localized(), buttonTitles: ["Ok".localized(), "cancel".localized().uppercaseFirst], highlightedButtonIndex: 1) { (index) in
             

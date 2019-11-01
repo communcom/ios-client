@@ -271,6 +271,9 @@
 		BC22BBCF236C18BE00F40658 /* MyProfileSettingsVC+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC22BBCE236C18BE00F40658 /* MyProfileSettingsVC+Actions.swift */; };
 		BC22BBD2236C213D00F40658 /* SelectLanguageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC22BBD1236C213D00F40658 /* SelectLanguageVC.swift */; };
 		BC22BBD4236C215900F40658 /* BaseTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC22BBD3236C215900F40658 /* BaseTableViewController.swift */; };
+		BC22BBD6236C26EF00F40658 /* NotificationsSettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC22BBD5236C26EF00F40658 /* NotificationsSettingsVC.swift */; };
+		BC22BBD9236C27C000F40658 /* BaseStackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC22BBD8236C27C000F40658 /* BaseStackViewController.swift */; };
+		BC22BBDB236C2A7F00F40658 /* NotificationSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC22BBDA236C2A7F00F40658 /* NotificationSettingsViewModel.swift */; };
 		BC2C94FF2366F04100C9D7FE /* UserProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2C94FE2366F04100C9D7FE /* UserProfileHeaderView.swift */; };
 		BC31BA55235EBD7C0007D89A /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC31BA54235EBD7C0007D89A /* ProfileVC.swift */; };
 		BC3694ED236979A700B2E078 /* ProfilePageVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BC3694EC236979A700B2E078 /* ProfilePageVC.storyboard */; };
@@ -635,6 +638,9 @@
 		BC22BBCE236C18BE00F40658 /* MyProfileSettingsVC+Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MyProfileSettingsVC+Actions.swift"; sourceTree = "<group>"; };
 		BC22BBD1236C213D00F40658 /* SelectLanguageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectLanguageVC.swift; sourceTree = "<group>"; };
 		BC22BBD3236C215900F40658 /* BaseTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTableViewController.swift; sourceTree = "<group>"; };
+		BC22BBD5236C26EF00F40658 /* NotificationsSettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsSettingsVC.swift; sourceTree = "<group>"; };
+		BC22BBD8236C27C000F40658 /* BaseStackViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseStackViewController.swift; sourceTree = "<group>"; };
+		BC22BBDA236C2A7F00F40658 /* NotificationSettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSettingsViewModel.swift; sourceTree = "<group>"; };
 		BC2C94FE2366F04100C9D7FE /* UserProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileHeaderView.swift; sourceTree = "<group>"; };
 		BC31BA54235EBD7C0007D89A /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
 		BC3694EC236979A700B2E078 /* ProfilePageVC.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ProfilePageVC.storyboard; sourceTree = "<group>"; };
@@ -1420,7 +1426,6 @@
 		578409EA223FAC0000338FD5 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
-				BC3694F0236987AA00B2E078 /* EditorVC */,
 				BC016D5B235EB95000F1319F /* Base */,
 				BCA971292361304800AE37E1 /* UIViews */,
 				3BB32F1723438D32006572F3 /* UIPresentationControllers */,
@@ -1657,19 +1662,17 @@
 		BC016D5B235EB95000F1319F /* Base */ = {
 			isa = PBXGroup;
 			children = (
+				BC22BBD7236C278D00F40658 /* BaseVCs */,
 				3BDD9A09228EDA5700B2A1DA /* Controllers */,
-				BC016D4D235EA1DE00F1319F /* BaseViewController.swift */,
 				BCF3914D235FEAEE00A9D1ED /* ListItemType.swift */,
 				BCF3914A235FEAA500A9D1ED /* Fetchers */,
 				BC016D51235EA25B00F1319F /* ListViewController.swift */,
 				BC016D55235EA33C00F1319F /* ListViewModel.swift */,
 				BC016D4C235EA0DB00F1319F /* PostsViewController */,
 				BCA97111236004F500AE37E1 /* CommentsViewController */,
-				BC31BA53235EBD6A0007D89A /* ProfileVC */,
 				BCF74A61236180B900B91089 /* SubscribersViewModel.swift */,
 				BC48FC41236689DC0049C4F4 /* LeadersViewModel.swift */,
 				BCCE0AA12367E60A00A183AA /* SubscriptionsViewModel.swift */,
-				BC22BBD3236C215900F40658 /* BaseTableViewController.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -1688,8 +1691,30 @@
 			isa = PBXGroup;
 			children = (
 				BC22BBD1236C213D00F40658 /* SelectLanguageVC.swift */,
+				BC22BBDC236C2A8400F40658 /* NotificationsSettingsVC */,
 			);
 			path = SelectLanguageVC;
+			sourceTree = "<group>";
+		};
+		BC22BBD7236C278D00F40658 /* BaseVCs */ = {
+			isa = PBXGroup;
+			children = (
+				BC016D4D235EA1DE00F1319F /* BaseViewController.swift */,
+				BC31BA53235EBD6A0007D89A /* ProfileVC */,
+				BC3694F0236987AA00B2E078 /* EditorVC */,
+				BC22BBD3236C215900F40658 /* BaseTableViewController.swift */,
+				BC22BBD8236C27C000F40658 /* BaseStackViewController.swift */,
+			);
+			path = BaseVCs;
+			sourceTree = "<group>";
+		};
+		BC22BBDC236C2A8400F40658 /* NotificationsSettingsVC */ = {
+			isa = PBXGroup;
+			children = (
+				BC22BBD5236C26EF00F40658 /* NotificationsSettingsVC.swift */,
+				BC22BBDA236C2A7F00F40658 /* NotificationSettingsViewModel.swift */,
+			);
+			path = NotificationsSettingsVC;
 			sourceTree = "<group>";
 		};
 		BC31BA53235EBD6A0007D89A /* ProfileVC */ = {
@@ -2184,6 +2209,7 @@
 				5787C0C622650FA500568CEC /* SetUserViewModel.swift in Sources */,
 				BCABF1352366D5DC006B05F5 /* ProfileViewModel.swift in Sources */,
 				575AECB122606F6600A7EC2D /* SelectCountryVC.swift in Sources */,
+				BC22BBDB236C2A7F00F40658 /* NotificationSettingsViewModel.swift in Sources */,
 				BC016D50235EA23C00F1319F /* PostsViewController.swift in Sources */,
 				BC016D54235EA32600F1319F /* PostsViewModel.swift in Sources */,
 				571B14FC223A935C00630C8F /* Commun.xcdatamodeld in Sources */,
@@ -2204,6 +2230,7 @@
 				5721E87122650AC0003BE04B /* StringExtension.swift in Sources */,
 				3B3C8B7E23473ED900D8BADB /* EditorVC+CollectionViewFlowLayoutDelegate.swift in Sources */,
 				BC22BBD4236C215900F40658 /* BaseTableViewController.swift in Sources */,
+				BC22BBD6236C26EF00F40658 /* NotificationsSettingsVC.swift in Sources */,
 				3B0E9C732270785E002AB1C2 /* PhotoLibraryCell.swift in Sources */,
 				3B6CB732234331830097B2A1 /* Array.swift in Sources */,
 				3B51581E226E0D3A00108F17 /* TLPhotosPickerViewController+Rx.swift in Sources */,
@@ -2218,6 +2245,7 @@
 				3B25E5C0234C2F66005BD1B8 /* BasicEditorVC+Binding.swift in Sources */,
 				3BB32F1D23445618006572F3 /* VCWithParallax.swift in Sources */,
 				3B67FC0B22C50BC400D05F01 /* SignInViewController+CollectionView.swift in Sources */,
+				BC22BBD9236C27C000F40658 /* BaseStackViewController.swift in Sources */,
 				3BF37BD622A162E000A72FFE /* ResponseAPIOnlineNotificationData.swift in Sources */,
 				BC016D5A235EB88400F1319F /* PostsVC+Actions.swift in Sources */,
 				3BE68AAE22EEA1AE00033B81 /* SettingsVC+ButtonDelegate.swift in Sources */,
