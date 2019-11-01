@@ -12,7 +12,7 @@ class CommunActionSheet: SwipeDownDismissViewController {
     // MARK: - Nested types
     enum Style {
         case `default`
-        case settings
+        case profile
     }
     struct Action {
         var title: String
@@ -25,11 +25,25 @@ class CommunActionSheet: SwipeDownDismissViewController {
     }
     
     // MARK: - Constants
-    let defaultMargin: CGFloat = 16
+    var defaultMargin: CGFloat {
+        switch style {
+        case .default:
+            return 16
+        case .profile:
+            return 10
+        }
+    }
     let buttonSize: CGFloat = 30
     var headerHeight: CGFloat = 40
     let headerToButtonsSpace: CGFloat = 30
-    let actionViewHeight: CGFloat = 50
+    var actionViewHeight: CGFloat {
+        switch style {
+        case .default:
+            return 50
+        case .profile:
+            return 65
+        }
+    }
     let actionViewSeparatorSpace: CGFloat = 8
     
     // MARK: - Properties
@@ -133,45 +147,58 @@ class CommunActionSheet: SwipeDownDismissViewController {
         guard let actions = actions else {return}
         for (index, action) in actions.enumerated() {
             // action views
-            let actionView = UIView(frame: .zero)
-            actionView.backgroundColor = .white
-            actionView.cornerRadius = 10
-            actionView.translatesAutoresizingMaskIntoConstraints = false
+            let actionView = UIView(backgroundColor: .white, cornerRadius: 10)
+            
             view.addSubview(actionView)
-            
-            
-            actionView.topAnchor.constraint(
-                equalTo: view.topAnchor,
-                constant: defaultMargin + headerHeight + headerToButtonsSpace + CGFloat(index) * (actionViewSeparatorSpace + actionViewHeight)
-            ).isActive = true
-            actionView.heightAnchor.constraint(equalToConstant: actionViewHeight).isActive = true
-            
-            actionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: defaultMargin).isActive = true
-            actionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -defaultMargin).isActive = true
+            actionView.autoPinEdge(toSuperviewEdge: .top, withInset: defaultMargin + headerHeight + headerToButtonsSpace + CGFloat(index) * (actionViewSeparatorSpace + actionViewHeight))
+            actionView.autoSetDimension(.height, toSize: actionViewHeight)
+            actionView.autoPinEdge(toSuperviewEdge: .leading, withInset: defaultMargin)
+            actionView.autoPinEdge(toSuperviewEdge: .trailing, withInset: defaultMargin)
             
             // icon
-            let iconImageView = UIImageView(frame: .zero)
-            iconImageView.tintColor = action.tintColor
+            let iconImageView = UIImageView(forAutoLayout: ())
+            if style == .default {
+                iconImageView.tintColor = action.tintColor
+            }
             iconImageView.image = action.icon
-            iconImageView.translatesAutoresizingMaskIntoConstraints = false
             actionView.addSubview(iconImageView)
             
-            iconImageView.trailingAnchor.constraint(equalTo: actionView.trailingAnchor, constant: -defaultMargin).isActive = true
-            iconImageView.centerYAnchor.constraint(equalTo: actionView.centerYAnchor).isActive = true
-            iconImageView.widthAnchor.constraint(equalToConstant: 15).isActive = true
-            iconImageView.heightAnchor.constraint(equalToConstant: 15).isActive = true
+            switch style {
+            case .default:
+                iconImageView.autoPinEdge(toSuperviewEdge: .trailing, withInset: defaultMargin)
+                iconImageView.autoAlignAxis(toSuperviewAxis: .horizontal)
+                iconImageView.autoSetDimensions(to: CGSize(width: 15, height: 15))
+            case .profile:
+                iconImageView.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
+                iconImageView.autoAlignAxis(toSuperviewAxis: .horizontal)
+                iconImageView.autoSetDimensions(to: CGSize(width: 35, height: 35))
+            }
             
             // title
-            let titleLabel = UILabel(frame: .zero)
-            titleLabel.textColor = action.tintColor
-            titleLabel.font = .systemFont(ofSize: 15, weight: .medium)
-            titleLabel.text = action.title
-            titleLabel.translatesAutoresizingMaskIntoConstraints = false
+            let titleLabel = UILabel.with(text: action.title, textSize: 15, weight: .medium, textColor: action.tintColor)
+            
             actionView.addSubview(titleLabel)
             
-            titleLabel.leadingAnchor.constraint(equalTo: actionView.leadingAnchor, constant: defaultMargin).isActive = true
-            titleLabel.centerYAnchor.constraint(equalTo: actionView.centerYAnchor).isActive = true
-            titleLabel.trailingAnchor.constraint(equalTo: iconImageView.leadingAnchor, constant: -defaultMargin).isActive = true
+            switch style {
+            case .default:
+                titleLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: defaultMargin)
+                titleLabel.autoAlignAxis(toSuperviewAxis: .horizontal)
+                titleLabel.autoPinEdge(.trailing, to: .leading, of: iconImageView, withOffset: -defaultMargin)
+            case .profile:
+                titleLabel.font = .systemFont(ofSize: 17, weight: .semibold)
+                titleLabel.autoPinEdge(.leading, to: .trailing, of: iconImageView, withOffset: 10)
+                titleLabel.autoAlignAxis(toSuperviewAxis: .horizontal)
+            }
+            
+            // arrow image for style profile
+            if style == .profile {
+                let nextButton = UIButton.circleGray(imageName: "next-arrow")
+                nextButton.isUserInteractionEnabled = false
+                actionView.addSubview(nextButton)
+                nextButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
+                nextButton.autoAlignAxis(toSuperviewAxis: .horizontal)
+                nextButton.autoPinEdge(.leading, to: .trailing, of: titleLabel, withOffset: 10)
+            }
             
             // handle action
             actionView.isUserInteractionEnabled = true
