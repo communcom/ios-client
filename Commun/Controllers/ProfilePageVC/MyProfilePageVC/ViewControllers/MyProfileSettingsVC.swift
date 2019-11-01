@@ -18,6 +18,7 @@ class MyProfileSettingsVC: BaseViewController {
     override var contentScrollView: UIScrollView? {
         return scrollView
     }
+    var stackView: UIStackView!
     
     lazy var userView: UIView = {
         let view = UIView(height: 80, backgroundColor: .white, cornerRadius: 10)
@@ -78,7 +79,7 @@ class MyProfileSettingsVC: BaseViewController {
         userView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 20, left: 10, bottom: 0, right: 10), excludingEdge: .bottom)
         
         // add actions
-        let stackView = stackViewWithActions(actions: [
+        stackView = stackViewWithActions(actions: [
             CommunActionSheet.Action(title: "notifications".localized().uppercaseFirst, icon: UIImage(named: "profile_options_notifications"), handle: {
                 
             }),
@@ -89,13 +90,23 @@ class MyProfileSettingsVC: BaseViewController {
                 
             })
         ])
-        stackView.cornerRadius = 10
         scrollView.contentView.addSubview(stackView)
         stackView.autoPinEdge(toSuperviewEdge: .leading, withInset: 10)
         stackView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 10)
         stackView.autoPinEdge(.top, to: .bottom, of: userView, withOffset: 20)
         
-        stackView.autoPinEdge(toSuperviewEdge: .bottom)
+        let logoutButton = UIButton(height: 65, label: "log out".localized().uppercaseFirst, backgroundColor: .white, textColor: UIColor(hexString: "#ED2C5B")!, cornerRadius: 10)
+        scrollView.contentView.addSubview(logoutButton)
+        logoutButton.autoPinEdge(.top, to: .bottom, of: stackView, withOffset: 20)
+        
+        
+        logoutButton.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(inset: 10), excludingEdge: .top)
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        stackView.arrangedSubviews.first?.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: 10)
+        stackView.arrangedSubviews.last?.roundCorners(UIRectCorner(arrayLiteral: .bottomLeft, .bottomRight), radius: 10)
     }
     
     func stackViewWithActions(actions: [CommunActionSheet.Action]) -> UIStackView {
@@ -104,6 +115,7 @@ class MyProfileSettingsVC: BaseViewController {
             let actionView = UIView(height: 65, backgroundColor: .white)
             
             let imageView = UIImageView(width: 35, height: 35)
+            imageView.image = action.icon
             actionView.addSubview(imageView)
             imageView.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
             imageView.autoAlignAxis(toSuperviewAxis: .horizontal)
