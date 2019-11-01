@@ -38,10 +38,16 @@ class SplashViewController: UIViewController {
     }
     
     func showErrorScreen() {
-        view.showErrorView(target: self, action: #selector(retryDidTouch(_:)))
+        view.showErrorView {[weak self] in
+            self?.reloadApp()
+        }
     }
     
     @objc func retryDidTouch(_ tap: UITapGestureRecognizer) {
+        reloadApp()
+    }
+    
+    func reloadApp() {
         hideErrorView()
         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
             AppDelegate.reloadSubject.onNext(true)
