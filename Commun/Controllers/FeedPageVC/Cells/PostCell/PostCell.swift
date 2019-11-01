@@ -29,7 +29,7 @@ class PostCell: MyTableViewCell, PostController {
     
     lazy var moreActionsButton: UIButton = {
         let button = UIButton(width: 40, height: 40)
-        button.setImage(UIImage(named: "points"), for: .normal)
+        button.setImage(UIImage(named: "icon-post-cell-more-center-default"), for: .normal)
         button.addTarget(self, action: #selector(menuButtonTapped(button:)), for: .touchUpInside)
         return button
     }()
