@@ -160,7 +160,7 @@ DEPENDENCIES:
   - Action
   - Alamofire
   - AppImageViewer
-  - ASSpinnerView (~> 0.1)
+  - ASSpinnerView
   - Crashlytics
   - CyberSwift (from `https://github.com/GolosChain/cyberSwift.git`)
   - DateToolsSwift
@@ -339,6 +339,6 @@ SPEC CHECKSUMS:
   TTTAttributedLabel: 8cffe8e127e4e82ff3af1e5386d4cd0ad000b656
   "UITextView+Placeholder": c407b27599ea23cca425946fee3cf1db5d547008
 
-PODFILE CHECKSUM: d0d38a49375ce62dc46b6c651f2ea587aba912ea
+PODFILE CHECKSUM: 23c7c745381348f98366255ab8fc442afa89025f
 
 COCOAPODS: 1.8.4

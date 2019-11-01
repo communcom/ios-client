@@ -30,6 +30,7 @@ class MyProfilePageVC: UserProfilePageVC {
     
     override func setUp() {
         super.setUp()
+        
         // hide back button
         navigationItem.leftBarButtonItem = nil
         
@@ -53,6 +54,7 @@ class MyProfilePageVC: UserProfilePageVC {
     
     override func bind() {
         super.bind()
+        
         let offSetY = tableView.rx.contentOffset
             .map {$0.y}.share()
             

@@ -45,7 +45,9 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
     
     override func setUp() {
         super.setUp()
-        view.backgroundColor = #colorLiteral(red: 0.9605136514, green: 0.9644123912, blue: 0.9850376248, alpha: 1)
+        
+        view.backgroundColor = #colorLiteral(red: 0.9607843137, green: 0.9647058824, blue: 0.9843137255, alpha: 1)
+        
         let leftButtonView = UIView(frame: CGRect(x: 0, y: 0, width: 36, height: 40))
         
         leftButtonView.addSubview(backButton)
@@ -60,7 +62,8 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
         coverImageView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .bottom)
         
         view.addSubview(tableView)
-        tableView.autoPinEdgesToSuperviewEdges()
+        tableView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 0, bottom: 40, right: 0))
+//        tableView.autoPinEdgesToSuperviewEdges()
         tableView.contentInset = UIEdgeInsets(top: coverHeight - 24, left: 0, bottom: 0, right: 0)
         
         // setup datasource

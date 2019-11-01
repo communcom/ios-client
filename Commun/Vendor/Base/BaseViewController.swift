@@ -14,6 +14,7 @@ class BaseViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+       
         setUp()
         bind()
         avoidTabBar()
@@ -44,5 +45,12 @@ class BaseViewController: UIViewController {
         contentInsets.bottom = insetsBottom
         
         scrollView.contentInset = contentInsets
+        tabBarController.view.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        
+        // Add white view in bottom safe area
+        let bottomView = UIView(width: self.view.frame.width, height: 40.0, backgroundColor: .white, cornerRadius: 0.0)
+        self.view.addSubview(bottomView)
+        bottomView.translatesAutoresizingMaskIntoConstraints = false
+        bottomView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 0.0).isActive = true
     }
 }
