@@ -46,7 +46,14 @@ class CommunActionSheet: SwipeDownDismissViewController {
             return 65
         }
     }
-    let actionViewSeparatorSpace: CGFloat = 8
+    var actionViewSeparatorSpace: CGFloat {
+        switch style {
+        case .default:
+            return 8
+        case .profile:
+            return 2
+        }
+    }
     
     // MARK: - Properties
     var style: Style
@@ -76,7 +83,7 @@ class CommunActionSheet: SwipeDownDismissViewController {
         button.cornerRadius = buttonSize / 2
         button.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(button)
-        button.topAnchor.constraint(equalTo: view.topAnchor, constant: defaultMargin)
+        button.topAnchor.constraint(equalTo: view.topAnchor, constant: 24)
             .isActive = true
         button.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -defaultMargin)
             .isActive = true
@@ -135,13 +142,12 @@ class CommunActionSheet: SwipeDownDismissViewController {
         }
         
         if let headerView = headerView {
-            headerView.translatesAutoresizingMaskIntoConstraints = false
+            headerView.configureForAutoLayout()
             view.addSubview(headerView)
-            headerView.topAnchor.constraint(equalTo: view.topAnchor, constant: defaultMargin).isActive = true
-            headerView.heightAnchor.constraint(equalToConstant: headerHeight)
-                .isActive = true
-            headerView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: defaultMargin).isActive = true
-            headerView.trailingAnchor.constraint(equalTo: closeButton.leadingAnchor, constant: -defaultMargin).isActive = true
+            headerView.autoPinEdge(toSuperviewEdge: .top, withInset: 20)
+            headerView.autoSetDimension(.height, toSize: headerHeight)
+            headerView.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
+            headerView.autoPinEdge(.trailing, to: .leading, of: closeButton, withOffset: -defaultMargin)
         }
     }
     
@@ -152,6 +158,9 @@ class CommunActionSheet: SwipeDownDismissViewController {
             let actionView = UIView(backgroundColor: .white, cornerRadius: 10)
             
             view.addSubview(actionView)
+            
+            var topInset: CGFloat = defaultMargin + headerHeight + headerToButtonsSpace + CGFloat(index) * (actionViewSeparatorSpace + actionViewHeight) + action.marginTop
+            
             actionView.autoPinEdge(toSuperviewEdge: .top, withInset: defaultMargin + headerHeight + headerToButtonsSpace + CGFloat(index) * (actionViewSeparatorSpace + actionViewHeight) + action.marginTop)
             actionView.autoSetDimension(.height, toSize: actionViewHeight)
             actionView.autoPinEdge(toSuperviewEdge: .leading, withInset: defaultMargin)

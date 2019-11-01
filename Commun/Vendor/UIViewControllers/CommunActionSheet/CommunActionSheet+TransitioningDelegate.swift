@@ -28,7 +28,7 @@ class CommunActionSheetPresentationController: DimmingPresentationController {
         
         //2
         
-        frame.origin.y = containerView!.frame.height - height
+        frame.origin.y = containerView!.frame.height - height - 16
         
         return frame
     }

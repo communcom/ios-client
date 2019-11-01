@@ -20,7 +20,42 @@ extension MyProfilePageVC {
     }
     
     @objc func moreActionsButtonDidTouch(_ sender: Any) {
+        let headerView = UIView(height: 40)
         
+        let avatarImageView = MyAvatarImageView(size: 40)
+        avatarImageView.observeCurrentUserAvatar()
+            .disposed(by: disposeBag)
+        headerView.addSubview(avatarImageView)
+        avatarImageView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .trailing)
+        
+        let userNameLabel = UILabel.with(text: viewModel.profile.value?.username, textSize: 15, weight: .semibold)
+        headerView.addSubview(userNameLabel)
+        userNameLabel.autoPinEdge(toSuperviewEdge: .top)
+        userNameLabel.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 10)
+        userNameLabel.autoPinEdge(toSuperviewEdge: .trailing)
+
+        let userIdLabel = UILabel.with(text: "@\(viewModel.profile.value?.userId ?? "")", textSize: 12, textColor: .appMainColor)
+        headerView.addSubview(userIdLabel)
+        userIdLabel.autoPinEdge(.top, to: .bottom, of: userNameLabel, withOffset: 3)
+        userIdLabel.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 10)
+        userIdLabel.autoPinEdge(toSuperviewEdge: .trailing)
+        
+        showCommunActionSheet(style: .profile, headerView: headerView, actions: [
+            CommunActionSheet.Action(title: "saved".localized().uppercaseFirst, icon: UIImage(named: "profile_options_saved"), handle: {
+                
+            }),
+            CommunActionSheet.Action(title: "liked".localized().uppercaseFirst, icon: UIImage(named: "profile_options_liked"), handle: {
+                
+            }),
+            CommunActionSheet.Action(title: "blacklist".localized().uppercaseFirst, icon: UIImage(named: "profile_options_blacklist"), handle: {
+                
+            }),
+            CommunActionSheet.Action(title: "settings".localized().uppercaseFirst, icon: UIImage(named: "profile_options_settings"), handle: {
+                
+            }, marginTop: 14)
+        ]) {
+            
+        }
     }
     
     @objc func settingsButtonDidTouch(_ sender: Any) {
