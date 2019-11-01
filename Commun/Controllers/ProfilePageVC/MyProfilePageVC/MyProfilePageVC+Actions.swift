@@ -43,14 +43,18 @@ extension MyProfilePageVC {
         showCommunActionSheet(style: .profile, headerView: headerView, actions: [
             CommunActionSheet.Action(title: "saved".localized().uppercaseFirst, icon: UIImage(named: "profile_options_saved"), handle: {
                 #warning("change filter")
-                self.show(PostsViewController(), sender: self)
+                let vc = PostsViewController()
+                vc.title = "saved posts".localized().uppercaseFirst
+                self.show(vc, sender: self)
             }),
             CommunActionSheet.Action(title: "liked".localized().uppercaseFirst, icon: UIImage(named: "profile_options_liked"), handle: {
                 #warning("change filter")
-                self.show(PostsViewController(), sender: self)
+                let vc = PostsViewController()
+                vc.title = "liked posts".localized().uppercaseFirst
+                self.show(vc, sender: self)
             }),
             CommunActionSheet.Action(title: "blacklist".localized().uppercaseFirst, icon: UIImage(named: "profile_options_blacklist"), handle: {
-                
+                #warning("black list")
             }),
             CommunActionSheet.Action(title: "settings".localized().uppercaseFirst, icon: UIImage(named: "profile_options_settings"), handle: {
                 self.show(MyProfileSettingsVC(), sender: self)
