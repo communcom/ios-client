@@ -268,6 +268,7 @@
 		BC22BBC8236C055300F40658 /* MyProfileSettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC22BBC7236C055300F40658 /* MyProfileSettingsVC.swift */; };
 		BC22BBCA236C082600F40658 /* ContentHuggingScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC22BBC9236C082600F40658 /* ContentHuggingScrollView.swift */; };
 		BC22BBCC236C0E0300F40658 /* UIStackView+PureLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC22BBCB236C0E0300F40658 /* UIStackView+PureLayout.swift */; };
+		BC22BBCF236C18BE00F40658 /* MyProfileSettingsVC+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC22BBCE236C18BE00F40658 /* MyProfileSettingsVC+Actions.swift */; };
 		BC2C94FF2366F04100C9D7FE /* UserProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2C94FE2366F04100C9D7FE /* UserProfileHeaderView.swift */; };
 		BC31BA55235EBD7C0007D89A /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC31BA54235EBD7C0007D89A /* ProfileVC.swift */; };
 		BC3694ED236979A700B2E078 /* ProfilePageVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BC3694EC236979A700B2E078 /* ProfilePageVC.storyboard */; };
@@ -629,6 +630,7 @@
 		BC22BBC7236C055300F40658 /* MyProfileSettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileSettingsVC.swift; sourceTree = "<group>"; };
 		BC22BBC9236C082600F40658 /* ContentHuggingScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentHuggingScrollView.swift; sourceTree = "<group>"; };
 		BC22BBCB236C0E0300F40658 /* UIStackView+PureLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+PureLayout.swift"; sourceTree = "<group>"; };
+		BC22BBCE236C18BE00F40658 /* MyProfileSettingsVC+Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MyProfileSettingsVC+Actions.swift"; sourceTree = "<group>"; };
 		BC2C94FE2366F04100C9D7FE /* UserProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileHeaderView.swift; sourceTree = "<group>"; };
 		BC31BA54235EBD7C0007D89A /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
 		BC3694EC236979A700B2E078 /* ProfilePageVC.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ProfilePageVC.storyboard; sourceTree = "<group>"; };
@@ -914,7 +916,7 @@
 				3B0E9C5D226F02AC002AB1C2 /* ProfileEditCoverVC.swift */,
 				3B0E9C6F22706965002AB1C2 /* ProfileChooseAvatarVC */,
 				BC6B7652236A74F000A7AF2A /* MyProfileEditBioVC.swift */,
-				BC22BBC7236C055300F40658 /* MyProfileSettingsVC.swift */,
+				BC22BBCD236C18A900F40658 /* MyProfileSettingsVC */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -1667,6 +1669,15 @@
 			path = Base;
 			sourceTree = "<group>";
 		};
+		BC22BBCD236C18A900F40658 /* MyProfileSettingsVC */ = {
+			isa = PBXGroup;
+			children = (
+				BC22BBC7236C055300F40658 /* MyProfileSettingsVC.swift */,
+				BC22BBCE236C18BE00F40658 /* MyProfileSettingsVC+Actions.swift */,
+			);
+			path = MyProfileSettingsVC;
+			sourceTree = "<group>";
+		};
 		BC31BA53235EBD6A0007D89A /* ProfileVC */ = {
 			isa = PBXGroup;
 			children = (
@@ -2219,6 +2230,7 @@
 				BC2C94FF2366F04100C9D7FE /* UserProfileHeaderView.swift in Sources */,
 				BC6B7657236A9D4600A7AF2A /* CommunityRuleCell.swift in Sources */,
 				BCF74A6723618D9000B91089 /* CMSegmentedControl.swift in Sources */,
+				BC22BBCF236C18BE00F40658 /* MyProfileSettingsVC+Actions.swift in Sources */,
 				3BB48AD022D5F84D00F11B6A /* SetPasscodeVC.swift in Sources */,
 				BCF3914E235FEAEE00A9D1ED /* ListItemType.swift in Sources */,
 				3B3C8B8223475AA100D8BADB /* EditorVC+Tools.swift in Sources */,

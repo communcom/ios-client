@@ -11,6 +11,7 @@ import RxSwift
 
 class MyProfileSettingsVC: BaseViewController {
     // MARK: - Properties
+    let disposeBag = DisposeBag()
     
     // MARK: - Subviews
     lazy var backButton = UIButton.back(tintColor: .black, contentInsets: UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 24))
@@ -96,6 +97,8 @@ class MyProfileSettingsVC: BaseViewController {
         stackView.autoPinEdge(.top, to: .bottom, of: userView, withOffset: 20)
         
         let logoutButton = UIButton(height: 65, label: "log out".localized().uppercaseFirst, backgroundColor: .white, textColor: UIColor(hexString: "#ED2C5B")!, cornerRadius: 10)
+        logoutButton.addTarget(self, action: #selector(logout), for: .touchUpInside)
+        
         scrollView.contentView.addSubview(logoutButton)
         logoutButton.autoPinEdge(.top, to: .bottom, of: stackView, withOffset: 20)
         
@@ -142,10 +145,5 @@ class MyProfileSettingsVC: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(false, animated: animated)
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        navigationController?.setNavigationBarHidden(true, animated: animated)
     }
 }
