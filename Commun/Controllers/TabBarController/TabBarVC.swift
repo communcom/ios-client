@@ -18,7 +18,7 @@ class TabBarVC: UITabBarController {
     let profileTabIndex = 3
     let selectedColor = UIColor.black
     let unselectedColor = UIColor(hexString: "#E5E7ED")
-    let tabBarHeight: CGFloat = 60
+    let tabBarHeight: CGFloat = 60.0
     
     // MARK: - Properties
     let viewModel = TabBarViewModel()
@@ -58,7 +58,6 @@ class TabBarVC: UITabBarController {
         shadowView.addSubview(tabBarContainerView)
         tabBarContainerView.autoPinEdgesToSuperviewEdges()
         
-//
         // tabBarStackView
         tabBarContainerView.addSubview(tabBarStackView)
         tabBarStackView.autoPinEdgesToSuperviewEdges(with: .zero)

@@ -40,6 +40,7 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile> {
     // MARK: - Methods
     override func setUp() {
         super.setUp()
+        
         setHeaderView()
         headerView.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: 25)
     }
@@ -57,6 +58,7 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile> {
     
     override func setUp(profile: ResponseAPIContentGetProfile) {
         super.setUp(profile: profile)
+        
         // Register new cell type
         tableView.register(UINib(nibName: "CommentCell", bundle: nil), forCellReuseIdentifier: "CommentCell")
         
@@ -64,8 +66,7 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile> {
         title = profile.username ?? profile.userId
         
         // cover
-        if let urlString = profile.personal?.coverUrl
-        {
+        if let urlString = profile.personal?.coverUrl {
             coverImageView.setImageDetectGif(with: urlString)
         }
         
@@ -85,6 +86,7 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile> {
     override func handleListEmpty() {
         var title = "empty"
         var description = "not found"
+        
         switch viewModel.segmentedItem.value {
         case .posts:
             title = "no posts"
