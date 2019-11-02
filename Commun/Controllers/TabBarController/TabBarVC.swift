@@ -26,8 +26,8 @@ class TabBarVC: UITabBarController {
     
     // MARK: - Subviews
     private lazy var tabBarContainerView = UIView(backgroundColor: .white)
-    private lazy var shadowView = UIView(forAutoLayout: ())
-    lazy var tabBarStackView = UIStackView(height: tabBarHeight)
+    private lazy var shadowView = UIView(height: tabBarHeight)
+    lazy var tabBarStackView = UIStackView(forAutoLayout: ())
     
     // MARK: - Methods
     override func viewDidLoad() {
@@ -51,24 +51,28 @@ class TabBarVC: UITabBarController {
         
         // shadow
         view.addSubview(shadowView)
-        shadowView.backgroundColor = .white
-        shadowView.autoPinEdge(toSuperviewSafeArea: .leading)
-        shadowView.autoPinEdge(toSuperviewSafeArea: .trailing)
-        shadowView.autoPinEdge(toSuperviewEdge: .bottom)
+        shadowView.autoPinEdgesToSuperviewSafeArea(with: .zero, excludingEdge: .top)
         shadowView.addShadow(ofColor: UIColor(red: 56, green: 60, blue: 71)!, radius: 4, offset: CGSize(width: 0, height: -6), opacity: 0.1)
         
         // tabBarContainerView
         shadowView.addSubview(tabBarContainerView)
-        tabBarContainerView.autoPinEdgesToSuperviewSafeArea()
+        tabBarContainerView.autoPinEdgesToSuperviewEdges()
         
 //
         // tabBarStackView
         tabBarContainerView.addSubview(tabBarStackView)
-        tabBarStackView.autoPinEdgesToSuperviewEdges()
+        tabBarStackView.autoPinEdgesToSuperviewEdges(with: .zero)
         tabBarStackView.axis = .horizontal
         tabBarStackView.alignment = .center
         tabBarStackView.distribution = .fillEqually
         tabBarStackView.spacing = 0
+        
+        // whiteView
+        let whiteView = UIView(backgroundColor: .white)
+        view.addSubview(whiteView)
+        whiteView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
+        whiteView.autoPinEdge(.top, to: .bottom, of: tabBarStackView)
+        view.bringSubviewToFront(tabBarContainerView)
     }
     
     override func viewDidLayoutSubviews() {
