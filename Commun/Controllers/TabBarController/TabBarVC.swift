@@ -26,8 +26,8 @@ class TabBarVC: UITabBarController {
     
     // MARK: - Subviews
     private lazy var tabBarContainerView = UIView(backgroundColor: .white)
-    private lazy var shadowView = UIView(height: tabBarHeight)
-    lazy var tabBarStackView = UIStackView(forAutoLayout: ())
+    private lazy var shadowView = UIView(forAutoLayout: ())
+    lazy var tabBarStackView = UIStackView(height: tabBarHeight)
     
     // MARK: - Methods
     override func viewDidLoad() {
@@ -51,17 +51,20 @@ class TabBarVC: UITabBarController {
         
         // shadow
         view.addSubview(shadowView)
-        shadowView.autoPinEdgesToSuperviewSafeArea(with: .zero, excludingEdge: .top)
+        shadowView.backgroundColor = .white
+        shadowView.autoPinEdge(toSuperviewSafeArea: .leading)
+        shadowView.autoPinEdge(toSuperviewSafeArea: .trailing)
+        shadowView.autoPinEdge(toSuperviewEdge: .bottom)
         shadowView.addShadow(ofColor: UIColor(red: 56, green: 60, blue: 71)!, radius: 4, offset: CGSize(width: 0, height: -6), opacity: 0.1)
         
         // tabBarContainerView
         shadowView.addSubview(tabBarContainerView)
-        tabBarContainerView.autoPinEdgesToSuperviewEdges()
+        tabBarContainerView.autoPinEdgesToSuperviewSafeArea()
         
 //
         // tabBarStackView
         tabBarContainerView.addSubview(tabBarStackView)
-        tabBarStackView.autoPinEdgesToSuperviewEdges(with: .zero)
+        tabBarStackView.autoPinEdgesToSuperviewEdges()
         tabBarStackView.axis = .horizontal
         tabBarStackView.alignment = .center
         tabBarStackView.distribution = .fillEqually
