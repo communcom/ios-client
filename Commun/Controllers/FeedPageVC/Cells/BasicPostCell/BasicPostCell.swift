@@ -25,7 +25,7 @@ final class BasicPostCell: PostCell {
         contentLabel.autoPinEdge(.top, to: .bottom, of: metaView, withOffset: 10)
         contentLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
         contentLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
-        
+
         contentView.addSubview(gridViewContainerView)
         gridViewContainerView.autoPinEdge(toSuperviewEdge: .leading)
         gridViewContainerView.autoPinEdge(toSuperviewEdge: .trailing)
@@ -54,18 +54,25 @@ final class BasicPostCell: PostCell {
                 mutableAS.append(NSAttributedString(string: "...", attributes: defaultAttributes))
             }
             mutableAS.insert(attributedText, at: 0)
+
+            // check last charters a space
+            let spaceSymbols = "\n"
+            let components = mutableAS.components(separatedBy: spaceSymbols)
+            if let last = components.last, last.isEqual(to: NSAttributedString(string: "")) {
+                mutableAS.deleteCharacters(in: NSRange(location: mutableAS.length - spaceSymbols.count, length: spaceSymbols.count))
+            }
+
             contentLabel.attributedText = mutableAS
         }
-        
-        if let embeds = post?.attachments,
-            !embeds.isEmpty
+
+        if let embeds = post?.attachments, !embeds.isEmpty
         {
             gridView.setUp(embeds: embeds)
+
             gridViewContainerView.heightConstraint?.constant = 31/40 * UIScreen.main.bounds.width
         }
         else {
             gridViewContainerView.heightConstraint?.constant = 0
         }
-        
     }
 }

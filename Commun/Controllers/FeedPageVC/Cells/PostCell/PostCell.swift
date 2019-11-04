@@ -114,11 +114,8 @@ class PostCell: MyTableViewCell, PostController {
         likeCountLabel.autoPinEdge(toSuperviewEdge: .bottom)
         
         // comments and shares
-        contentView.addSubview(sharesCountLabel)
-        sharesCountLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
-        sharesCountLabel.autoAlignAxis(.horizontal, toSameAxisOf: voteActionsContainerView)
         contentView.addSubview(sharesCountButton)
-        sharesCountButton.autoPinEdge(.trailing, to: .leading, of: sharesCountLabel, withOffset: -8)
+        sharesCountButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
         sharesCountButton.autoAlignAxis(.horizontal, toSameAxisOf: voteActionsContainerView)
         contentView.addSubview(commentsCountLabel)
         commentsCountLabel.autoPinEdge(.trailing, to: .leading, of: sharesCountButton, withOffset: -23)
