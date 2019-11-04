@@ -15,6 +15,7 @@ class SubscriptionsItemCell: MyTableViewCell {
     
     override func setUpViews() {
         super.setUpViews()
+        backgroundColor = .white
         selectionStyle = .none
         contentView.addSubview(avatarImageView)
         avatarImageView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(inset: 16), excludingEdge: .trailing)

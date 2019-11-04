@@ -19,10 +19,14 @@ class ListViewController<T: ListItemType>: BaseViewController {
     var viewModel: ListViewModel<T>!
     var dataSource: MyRxTableViewSectionedAnimatedDataSource<ListSection>!
     
+    var tableViewInsets: UIEdgeInsets {
+        return .zero
+    }
+    
     lazy var tableView: UITableView! = {
         let tableView = UITableView(forAutoLayout: ())
         view.addSubview(tableView)
-        tableView.autoPinEdgesToSuperviewSafeArea()
+        tableView.autoPinEdgesToSuperviewSafeArea(with: tableViewInsets)
         return tableView
     }()
     
