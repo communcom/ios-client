@@ -1680,6 +1680,7 @@
 		BC22BBCD236C18A900F40658 /* MyProfileSettingsVC */ = {
 			isa = PBXGroup;
 			children = (
+				BC22BBDC236C2A8400F40658 /* NotificationsSettingsVC */,
 				BC22BBD0236C212100F40658 /* SelectLanguageVC */,
 				BC22BBC7236C055300F40658 /* MyProfileSettingsVC.swift */,
 				BC22BBCE236C18BE00F40658 /* MyProfileSettingsVC+Actions.swift */,
@@ -1691,7 +1692,6 @@
 			isa = PBXGroup;
 			children = (
 				BC22BBD1236C213D00F40658 /* SelectLanguageVC.swift */,
-				BC22BBDC236C2A8400F40658 /* NotificationsSettingsVC */,
 			);
 			path = SelectLanguageVC;
 			sourceTree = "<group>";
