@@ -19,8 +19,10 @@ class SubscriptionsUserCell: SubscriptionsItemCell, ProfileController {
         followButton.addTarget(self, action: #selector(followButtonDidTouch), for: .touchUpInside)
         followButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
         followButton.autoAlignAxis(toSuperviewAxis: .horizontal)
-        followButton.autoPinEdge(.leading, to: .trailing, of: nameLabel, withOffset: 10)
-        followButton.autoPinEdge(.leading, to: .trailing, of: statsLabel, withOffset: 10)
+        followButton.leadingAnchor.constraint(greaterThanOrEqualTo: nameLabel.trailingAnchor, constant: 8)
+            .isActive = true
+        followButton.leadingAnchor.constraint(greaterThanOrEqualTo: statsLabel.trailingAnchor, constant: 8)
+            .isActive = true
     }
     
     override func observe() {
@@ -32,6 +34,12 @@ class SubscriptionsUserCell: SubscriptionsItemCell, ProfileController {
         self.profile = profile
         avatarImageView.setAvatar(urlString: profile.avatarUrl, namePlaceHolder: profile.username)
         nameLabel.text = profile.username
+        // followButton
+        let isFollowing = profile.isSubscribed ?? false
+        followButton.backgroundColor = isFollowing ? #colorLiteral(red: 0.9525656104, green: 0.9605062604, blue: 0.9811610579, alpha: 1): .appMainColor
+        followButton.setTitleColor(isFollowing ? .appMainColor: .white , for: .normal)
+        followButton.setTitle(isFollowing ? "following".localized().uppercaseFirst : "follow".localized().uppercaseFirst, for: .normal)
+        #warning("statsLabel")
     }
     
     @objc func followButtonDidTouch() {
