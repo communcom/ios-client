@@ -11,6 +11,17 @@ import CyberSwift
 import DZNEmptyDataSet
 
 class PostsViewController: ListViewController<ResponseAPIContentGetPost> {
+    
+    init(filter: PostsListFetcher.Filter = PostsListFetcher.Filter(feedTypeMode: .new, feedType: .popular, sortType: .all)) {
+        super.init(nibName: nil, bundle: nil)
+        viewModel = PostsViewModel(filter: filter)
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        viewModel = PostsViewModel()
+    }
+    
     override func setUp() {
         super.setUp()
         // setup datasource
@@ -39,10 +50,6 @@ class PostsViewController: ListViewController<ResponseAPIContentGetPost> {
                 return cell
             }
         )
-    }
-    
-    override func setUpViewModel() {
-        viewModel = PostsViewModel()
     }
     
     override func bind() {

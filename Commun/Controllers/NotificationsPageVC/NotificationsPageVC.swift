@@ -17,6 +17,9 @@ class NotificationsPageVC: ListViewController<ResponseAPIOnlineNotificationData>
     
     override func setUp() {
         super.setUp()
+        // initialize viewModel
+        viewModel = NotificationsViewModel()
+        
         // configure navigation bar
         title = "notifications".localized().uppercaseFirst
         let navigationBar = navigationController?.navigationBar
@@ -48,11 +51,6 @@ class NotificationsPageVC: ListViewController<ResponseAPIOnlineNotificationData>
         tableView.emptyDataSetSource = self
         
         
-    }
-    
-    override func setUpViewModel() {
-        // initialize viewModel
-        viewModel = NotificationsViewModel()
     }
     
     override func bind() {

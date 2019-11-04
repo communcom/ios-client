@@ -28,7 +28,6 @@ class ListViewController<T: ListItemType>: BaseViewController {
     
     override func setUp() {
         super.setUp()
-        setUpViewModel()
         
         // pull to refresh
         tableView.es.addPullToRefresh { [unowned self] in
@@ -37,10 +36,6 @@ class ListViewController<T: ListItemType>: BaseViewController {
         }
         
         tableView.rowHeight = UITableView.automaticDimension
-    }
-    
-    func setUpViewModel() {
-        
     }
     
     override func bind() {
