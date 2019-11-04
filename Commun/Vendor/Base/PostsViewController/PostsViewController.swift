@@ -13,9 +13,6 @@ import DZNEmptyDataSet
 class PostsViewController: ListViewController<ResponseAPIContentGetPost> {
     override func setUp() {
         super.setUp()
-        // setup viewmodel
-        setUpViewModel()
-        
         // setup datasource
         tableView.separatorStyle = .none
         tableView.register(BasicPostCell.self, forCellReuseIdentifier: "BasicPostCell")
@@ -44,7 +41,7 @@ class PostsViewController: ListViewController<ResponseAPIContentGetPost> {
         )
     }
     
-    func setUpViewModel() {
+    override func setUpViewModel() {
         viewModel = PostsViewModel()
     }
     
