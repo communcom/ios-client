@@ -32,7 +32,6 @@ class SubscriptionsVC: ListViewController<ResponseAPIContentGetSubscriptionsItem
         tableView.cornerRadius = 10
         tableView.backgroundColor = .clear
         tableView.separatorInset = .zero
-        tableView.separatorColor = #colorLiteral(red: 0.9599978328, green: 0.966491878, blue: 0.9829974771, alpha: 1)
         
         dataSource = MyRxTableViewSectionedAnimatedDataSource<ListSection>(
             configureCell: { dataSource, tableView, indexPath, subscription in
