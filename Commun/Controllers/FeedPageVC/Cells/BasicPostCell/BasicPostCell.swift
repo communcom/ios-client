@@ -24,6 +24,7 @@ final class BasicPostCell: PostCell {
         contentTextView.textContainer.lineFragmentPadding = 0
         contentTextView.font = .systemFont(ofSize: 14)
         contentTextView.dataDetectorTypes = .link
+        contentTextView.isEditable = false
     }
 
     // MARK: - Layout
