@@ -292,7 +292,7 @@
 		BC69F7D1236FD1690097F870 /* NotificationSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC69F7D0236FD1680097F870 /* NotificationSettingsView.swift */; };
 		BC69F7D5236FDFCF0097F870 /* SubscriptionsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC69F7D4236FDFCF0097F870 /* SubscriptionsVC.swift */; };
 		BC69F7D8236FF6790097F870 /* SubscriptionsCommunityCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC69F7D7236FF6790097F870 /* SubscriptionsCommunityCell.swift */; };
-		BC69F7DA236FFA190097F870 /* SubscriptionsItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC69F7D9236FFA190097F870 /* SubscriptionsItemCell.swift */; };
+		BC69F7DA236FFA190097F870 /* SubsItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC69F7D9236FFA190097F870 /* SubsItemCell.swift */; };
 		BC69F7DC236FFAC40097F870 /* SubscriptionsUserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC69F7DB236FFAC40097F870 /* SubscriptionsUserCell.swift */; };
 		BC6B7653236A74F000A7AF2A /* MyProfileEditBioVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC6B7652236A74F000A7AF2A /* MyProfileEditBioVC.swift */; };
 		BC6B7657236A9D4600A7AF2A /* CommunityRuleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC6B7656236A9D4600A7AF2A /* CommunityRuleCell.swift */; };
@@ -328,6 +328,7 @@
 		BCB2A6EC23556E7100B3582B /* ArticleEditorVC+Draft.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB2A6EB23556E7100B3582B /* ArticleEditorVC+Draft.swift */; };
 		BCB2A6EE23556EE400B3582B /* BasicEditorVC+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB2A6ED23556EE400B3582B /* BasicEditorVC+Layout.swift */; };
 		BCB2A6F023556FC100B3582B /* BasicEditorVC+Tools.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB2A6EF23556FC100B3582B /* BasicEditorVC+Tools.swift */; };
+		BCB4A4C523701441005EDAAD /* SubscribersVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB4A4C423701441005EDAAD /* SubscribersVC.swift */; };
 		BCBC51232362F3A90031C061 /* PostPageNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCBC51222362F3A90031C061 /* PostPageNavigationBar.swift */; };
 		BCCE0A9C2367D47400A183AA /* SubscriptionsListFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCE0A9B2367D47400A183AA /* SubscriptionsListFetcher.swift */; };
 		BCCE0AA02367E18200A183AA /* ResponseAPIContentGetSubscriptionsItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCE0A9F2367E18200A183AA /* ResponseAPIContentGetSubscriptionsItem.swift */; };
@@ -666,7 +667,7 @@
 		BC69F7D0236FD1680097F870 /* NotificationSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSettingsView.swift; sourceTree = "<group>"; };
 		BC69F7D4236FDFCF0097F870 /* SubscriptionsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionsVC.swift; sourceTree = "<group>"; };
 		BC69F7D7236FF6790097F870 /* SubscriptionsCommunityCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionsCommunityCell.swift; sourceTree = "<group>"; };
-		BC69F7D9236FFA190097F870 /* SubscriptionsItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionsItemCell.swift; sourceTree = "<group>"; };
+		BC69F7D9236FFA190097F870 /* SubsItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubsItemCell.swift; sourceTree = "<group>"; };
 		BC69F7DB236FFAC40097F870 /* SubscriptionsUserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionsUserCell.swift; sourceTree = "<group>"; };
 		BC6B7652236A74F000A7AF2A /* MyProfileEditBioVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileEditBioVC.swift; sourceTree = "<group>"; };
 		BC6B7656236A9D4600A7AF2A /* CommunityRuleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityRuleCell.swift; sourceTree = "<group>"; };
@@ -701,6 +702,7 @@
 		BCB2A6EB23556E7100B3582B /* ArticleEditorVC+Draft.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ArticleEditorVC+Draft.swift"; sourceTree = "<group>"; };
 		BCB2A6ED23556EE400B3582B /* BasicEditorVC+Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BasicEditorVC+Layout.swift"; sourceTree = "<group>"; };
 		BCB2A6EF23556FC100B3582B /* BasicEditorVC+Tools.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BasicEditorVC+Tools.swift"; sourceTree = "<group>"; };
+		BCB4A4C423701441005EDAAD /* SubscribersVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscribersVC.swift; sourceTree = "<group>"; };
 		BCBC51222362F3A90031C061 /* PostPageNavigationBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostPageNavigationBar.swift; sourceTree = "<group>"; };
 		BCCE0A9B2367D47400A183AA /* SubscriptionsListFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionsListFetcher.swift; sourceTree = "<group>"; };
 		BCCE0A9F2367E18200A183AA /* ResponseAPIContentGetSubscriptionsItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseAPIContentGetSubscriptionsItem.swift; sourceTree = "<group>"; };
@@ -1686,8 +1688,8 @@
 				BC016D51235EA25B00F1319F /* ListViewController.swift */,
 				BC016D4C235EA0DB00F1319F /* PostsViewController */,
 				BCA97111236004F500AE37E1 /* CommentsViewController */,
-				BCF74A61236180B900B91089 /* SubscribersViewModel.swift */,
 				BC48FC41236689DC0049C4F4 /* LeadersViewModel.swift */,
+				BCB4A4C32370141A005EDAAD /* SubscribersViewController */,
 				BC69F7D2236FDB390097F870 /* SubscriptionsViewControllers */,
 			);
 			path = Base;
@@ -1780,7 +1782,6 @@
 		BC69F7D6236FF6620097F870 /* Subviews */ = {
 			isa = PBXGroup;
 			children = (
-				BC69F7D9236FFA190097F870 /* SubscriptionsItemCell.swift */,
 				BC69F7D7236FF6790097F870 /* SubscriptionsCommunityCell.swift */,
 				BC69F7DB236FFAC40097F870 /* SubscriptionsUserCell.swift */,
 			);
@@ -1841,6 +1842,7 @@
 				BCF74A6623618D9000B91089 /* CMSegmentedControl.swift */,
 				BC6B765A236BC58600A7AF2A /* ErrorView.swift */,
 				BC22BBC9236C082600F40658 /* ContentHuggingScrollView.swift */,
+				BC69F7D9236FFA190097F870 /* SubsItemCell.swift */,
 			);
 			path = UIViews;
 			sourceTree = "<group>";
@@ -1859,6 +1861,15 @@
 				BCABF13C2366EA14006B05F5 /* ProfileHeaderView.swift */,
 			);
 			path = ProfileHeaderView;
+			sourceTree = "<group>";
+		};
+		BCB4A4C32370141A005EDAAD /* SubscribersViewController */ = {
+			isa = PBXGroup;
+			children = (
+				BCF74A61236180B900B91089 /* SubscribersViewModel.swift */,
+				BCB4A4C423701441005EDAAD /* SubscribersVC.swift */,
+			);
+			path = SubscribersViewController;
 			sourceTree = "<group>";
 		};
 		BCBC51212362F3590031C061 /* Subviews */ = {
@@ -2348,7 +2359,7 @@
 				3B67FC0622C4BB5100D05F01 /* SplashViewController.swift in Sources */,
 				3BB32F1B234436EF006572F3 /* PostMetaView.swift in Sources */,
 				3B3C8B8E2347876000D8BADB /* ContentTextView+Text.swift in Sources */,
-				BC69F7DA236FFA190097F870 /* SubscriptionsItemCell.swift in Sources */,
+				BC69F7DA236FFA190097F870 /* SubsItemCell.swift in Sources */,
 				3B25E5BE234C2A0C005BD1B8 /* BasicEditorViewModel.swift in Sources */,
 				3B9BEB3D2300EC7D003C70B3 /* EmptyView.swift in Sources */,
 				3B6229AB22BD12410053B9EF /* TTTAttributedLabel.swift in Sources */,
@@ -2477,6 +2488,7 @@
 				3B5EDE3922E07F0300897BF3 /* SettingsVC+DataSource.swift in Sources */,
 				3BE68AAA22EEA08600033B81 /* SettingsVC+SwitcherDelegate.swift in Sources */,
 				575945A122607F1F004041C9 /* CountryCell.swift in Sources */,
+				BCB4A4C523701441005EDAAD /* SubscribersVC.swift in Sources */,
 				3BF381812331D9CD00C02123 /* URL.swift in Sources */,
 				BC3694EF2369850100B2E078 /* EditorVC.swift in Sources */,
 				3B2F226E226892C5006B589E /* NotificationType.swift in Sources */,

@@ -76,6 +76,9 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
         addSubview(followingsLabel)
         followingsLabel.autoPinEdge(.leading, to: .trailing, of: followingsCountLabel, withOffset: 4)
         followingsLabel.autoAlignAxis(.horizontal, toSameAxisOf: followersCountLabel)
+        let tap = UITapGestureRecognizer(target: self, action: #selector(follwingLabelDidTouch))
+        followingsLabel.isUserInteractionEnabled = true
+        followingsLabel.addGestureRecognizer(tap)
         
         let friendLabel = UILabel.with(text: "friends".localized().uppercaseFirst, textSize: 12, weight: .bold, textColor: .gray)
         addSubview(friendLabel)
@@ -202,5 +205,10 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
     @objc func seeAllButtonDidTouch() {
         let subscriptionsCommunityVC = SubscriptionsVC(userId: profile?.userId, type: .community)
         parentViewController?.show(subscriptionsCommunityVC, sender: nil)
+    }
+    
+    @objc func follwingLabelDidTouch() {
+        let subscriptionsUserVC = SubscriptionsVC(userId: profile?.userId, type: .user)
+        parentViewController?.show(subscriptionsUserVC, sender: nil)
     }
 }

@@ -8,10 +8,12 @@
 
 import Foundation
 
-class SubscriptionsItemCell: MyTableViewCell {
+/// Reusable itemcell for subscribers/subscriptions
+class SubsItemCell: MyTableViewCell {
     lazy var avatarImageView = MyAvatarImageView(size: 50)
     lazy var nameLabel = UILabel.with(textSize: 15, weight: .bold)
     lazy var statsLabel = UILabel.descriptionLabel()
+    lazy var actionButton = CommunButton.default()
     
     override func setUpViews() {
         super.setUpViews()
@@ -29,5 +31,18 @@ class SubscriptionsItemCell: MyTableViewCell {
         statsLabel.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 10)
         statsLabel.autoPinEdge(.top, to: .bottom, of: nameLabel, withOffset: 3)
         nameLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+        
+        contentView.addSubview(actionButton)
+        actionButton.addTarget(self, action: #selector(actionButtonDidTouch), for: .touchUpInside)
+        actionButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
+        actionButton.autoAlignAxis(toSuperviewAxis: .horizontal)
+        actionButton.leadingAnchor.constraint(greaterThanOrEqualTo: nameLabel.trailingAnchor, constant: 8)
+            .isActive = true
+        actionButton.leadingAnchor.constraint(greaterThanOrEqualTo: statsLabel.trailingAnchor, constant: 8)
+            .isActive = true
+    }
+    
+    @objc func actionButtonDidTouch() {
+        
     }
 }

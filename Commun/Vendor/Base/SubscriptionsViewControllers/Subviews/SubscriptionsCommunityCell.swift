@@ -9,21 +9,16 @@
 import Foundation
 import CyberSwift
 
-class SubscriptionsCommunityCell: SubscriptionsItemCell, CommunityController {
-    lazy var joinButton = CommunButton.join
-    var community: ResponseAPIContentGetSubscriptionsCommunity?
-    
-    override func setUpViews() {
-        super.setUpViews()
-        contentView.addSubview(joinButton)
-        joinButton.addTarget(self, action: #selector(joinButtonDidTouch), for: .touchUpInside)
-        joinButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
-        joinButton.autoAlignAxis(toSuperviewAxis: .horizontal)
-        joinButton.leadingAnchor.constraint(greaterThanOrEqualTo: nameLabel.trailingAnchor, constant: 8)
-            .isActive = true
-        joinButton.leadingAnchor.constraint(greaterThanOrEqualTo: statsLabel.trailingAnchor, constant: 8)
-            .isActive = true
+class SubscriptionsCommunityCell: SubsItemCell, CommunityController {
+    var joinButton: CommunButton {
+        get {
+            return actionButton
+        }
+        set {
+            actionButton = newValue
+        }
     }
+    var community: ResponseAPIContentGetSubscriptionsCommunity?
     
     override func observe() {
         super.observe()
@@ -44,7 +39,7 @@ class SubscriptionsCommunityCell: SubscriptionsItemCell, CommunityController {
         joinButton.setTitle(joined ? "joined".localized().uppercaseFirst : "join".localized().uppercaseFirst, for: .normal)
     }
     
-    @objc func joinButtonDidTouch() {
+    override func actionButtonDidTouch() {
         toggleJoin()
     }
 }
