@@ -58,8 +58,9 @@ final class BasicPostCell: PostCell {
             var attributedText = firstSentence
                 .toAttributedString(currentAttributes: defaultAttributes)
             if attributedText.length > 150 {
+                let moreText = NSAttributedString(string: " \("more".localized())...", attributes: [.foregroundColor: UIColor.appMainColor, .font: UIFont.systemFont(ofSize: 14)])
                 attributedText = attributedText.attributedSubstring(from: NSMakeRange(0, 150))
-                mutableAS.append(NSAttributedString(string: "...", attributes: defaultAttributes))
+                mutableAS.append(moreText)
             }
             mutableAS.insert(attributedText, at: 0)
 
