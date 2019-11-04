@@ -62,6 +62,7 @@ class PostEditorVC: EditorVC {
     
     override func setUp() {
         super.setUp()
+        
         actionButton.setTitle("send post".localized().uppercaseFirst, for: .normal)
         actionButton.backgroundColor = .appMainColor
         
@@ -74,7 +75,9 @@ class PostEditorVC: EditorVC {
         contentTextView.addLinkDidTouch = {[weak self] in
             self?.addLink()
         }
+
         // add default tool
+        appendTool(EditorToolbarItem.ageLimit)
         appendTool(EditorToolbarItem.addPhoto)
     }
     

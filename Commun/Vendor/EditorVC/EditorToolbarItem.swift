@@ -24,10 +24,17 @@ struct EditorToolbarItem: Equatable {
     static var hideKeyboard: EditorToolbarItem {
         return EditorToolbarItem(
             name: "hideKeyboard",
-            icon: "keyboard_hide",
+            icon: "icon-keyboard-hide-default",
             iconSize: CGSize(width: 18, height: 18))
     }
-    
+
+    static var ageLimit: EditorToolbarItem {
+        return EditorToolbarItem(
+            name: "ageLimit",
+            icon: "icon-18-plus-default",
+            iconSize: CGSize(width: 18, height: 18))
+    }
+
     static var addPhoto: EditorToolbarItem {
         return EditorToolbarItem(
             name: "addPhoto",

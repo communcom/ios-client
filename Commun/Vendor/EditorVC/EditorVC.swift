@@ -48,6 +48,7 @@ class EditorVC: BaseViewController {
     
     override func setUp() {
         super.setUp()
+        
         view.backgroundColor = .white
         
         // navigation bar
@@ -73,6 +74,7 @@ class EditorVC: BaseViewController {
         scrollView.autoPinEdge(.top, to: .bottom, of: navigationBar)
         scrollView.autoPinEdge(toSuperviewEdge: .leading)
         scrollView.autoPinEdge(toSuperviewEdge: .trailing)
+       
         // add childview of scrollview
         scrollView.addSubview(contentView)
         contentView.autoPinEdgesToSuperviewEdges()
@@ -107,8 +109,7 @@ class EditorVC: BaseViewController {
         super.bind()
         tools
             .bind(to: buttonsCollectionView.rx.items(
-                cellIdentifier: "EditorToolbarItemCell", cellType: EditorToolbarItemCell.self))
-                { (index, item, cell) in
+                cellIdentifier: "EditorToolbarItemCell", cellType: EditorToolbarItemCell.self)) { (index, item, cell) in
                     cell.setUp(item: item)
                 }
             .disposed(by: disposeBag)
@@ -133,6 +134,7 @@ class EditorVC: BaseViewController {
         buttonsCollectionView.backgroundColor = .clear
         buttonsCollectionView.configureForAutoLayout()
         toolbar.addSubview(buttonsCollectionView)
+        
         // layout
         buttonsCollectionView.autoPinEdge(toSuperviewEdge: .top, withInset: 10)
         buttonsCollectionView.autoPinEdge(toSuperviewEdge: .left, withInset: 0)
