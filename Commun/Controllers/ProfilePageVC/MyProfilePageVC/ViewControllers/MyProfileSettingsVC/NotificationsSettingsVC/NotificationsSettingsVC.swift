@@ -7,23 +7,27 @@
 //
 
 import Foundation
+import RxSwift
 
 class NotificationsSettingsVC: BaseVerticalStackViewController {
     // MARK: - Subviews
     lazy var closeButton = UIButton.circleGray(imageName: "close-x")
-    lazy var notificationOnAction: UIView = {
+    lazy var notificationOnAction: NotificationSettingsView = {
         let view = viewForAction(
             Action(title: "notifications".localized().uppercaseFirst, icon: UIImage(named: "profile_options_mention"), handle: {
                 // TODO: Toggle notifications on/off
             })
         )
+        view.switchButton.addTarget(self, action: #selector(toggleNotificationOn(_:)), for: .valueChanged)
         view.cornerRadius = 10
         return view
     }()
     
     // MARK: - Properties
     var viewModel = NotificationSettingsViewModel()
+    let disposeBag = DisposeBag()
     
+    // MARK: - Initializers
     init() {
         super.init(actions: [
             Action(title: "upvote".localized().uppercaseFirst, icon: UIImage(named: "profile_options_upvote"), handle: {
@@ -66,6 +70,19 @@ class NotificationsSettingsVC: BaseVerticalStackViewController {
         closeButton.addTarget(self, action: #selector(back), for: .touchUpInside)
     }
     
+    override func bind() {
+        super.bind()
+        viewModel.notificationOn
+            .filter {$0 != self.notificationOnAction.switchButton.isOn}
+            .asDriver(onErrorJustReturn: true)
+            .drive(notificationOnAction.switchButton.rx.isOn)
+            .disposed(by: disposeBag)
+        
+        
+        
+        
+    }
+    
     override func layout() {
         scrollView.contentView.addSubview(notificationOnAction)
         notificationOnAction.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 20, left: 10, bottom: 10, right: 10), excludingEdge: .bottom)
@@ -83,31 +100,18 @@ class NotificationsSettingsVC: BaseVerticalStackViewController {
         }
     }
     
-    func viewForAction(_ action: Action) -> UIView {
-        let actionView = UIView(height: 65, backgroundColor: .white)
-        
-        let imageView = UIImageView(width: 35, height: 35)
-        imageView.image = action.icon
-        actionView.addSubview(imageView)
-        imageView.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
-        imageView.autoAlignAxis(toSuperviewAxis: .horizontal)
-        
-        let label = UILabel.with(text: action.title, textSize: 17)
-        actionView.addSubview(label)
-        label.autoPinEdge(.leading, to: .trailing, of: imageView, withOffset: 10)
-        label.autoAlignAxis(toSuperviewAxis: .horizontal)
-        
-        let switchButton = UISwitch()
-        switchButton.onTintColor = .appMainColor
-        actionView.addSubview(switchButton)
-        switchButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
-        switchButton.autoAlignAxis(toSuperviewAxis: .horizontal)
-        switchButton.autoPinEdge(.leading, to: .trailing, of: label, withOffset: 10)
+    func viewForAction(_ action: Action) -> NotificationSettingsView {
+        let actionView = NotificationSettingsView(height: 65, backgroundColor: .white)
+        actionView.setUp(with: action)
         return actionView
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(false, animated: animated)
+    }
+    
+    @objc func toggleNotificationOn(_ switcher: UISwitch) {
+        viewModel.togglePushNotify(on: switcher.isOn)
     }
 }
