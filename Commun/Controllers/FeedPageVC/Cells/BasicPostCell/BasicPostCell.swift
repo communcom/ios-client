@@ -15,25 +15,33 @@ final class BasicPostCell: PostCell {
     // MARK: - Properties
     
     // MARK: - Subviews
-    lazy var contentLabel   = UILabel.with(textSize: 14, numberOfLines: 0)
+    lazy var contentTextView   = UITextView(forExpandable: ())
     lazy var gridViewContainerView = UIView(height: embedViewDefaultHeight)
     lazy var gridView       = GridView(forAutoLayout: ())
-    
+
+    private func configureTextView() {
+        contentTextView.textContainerInset = UIEdgeInsets.zero
+        contentTextView.textContainer.lineFragmentPadding = 0
+        contentTextView.font = .systemFont(ofSize: 14)
+        contentTextView.dataDetectorTypes = .link
+    }
+
     // MARK: - Layout
     override func layoutContent() {
-        contentView.addSubview(contentLabel)
-        contentLabel.autoPinEdge(.top, to: .bottom, of: metaView, withOffset: 10)
-        contentLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
-        contentLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
+        configureTextView()
+
+        contentView.addSubview(contentTextView)
+        contentTextView.autoPinEdge(.top, to: .bottom, of: metaView, withOffset: 10)
+        contentTextView.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
+        contentTextView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
 
         contentView.addSubview(gridViewContainerView)
         gridViewContainerView.autoPinEdge(toSuperviewEdge: .leading)
         gridViewContainerView.autoPinEdge(toSuperviewEdge: .trailing)
-        gridViewContainerView.autoPinEdge(.top, to: .bottom, of: contentLabel, withOffset: 10)
+        gridViewContainerView.autoPinEdge(.top, to: .bottom, of: contentTextView, withOffset: 10)
         
         gridViewContainerView.addSubview(gridView)
         gridView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 0, bottom: 12, right: 0))
-        
         gridViewContainerView.autoPinEdge(.bottom, to: .top, of: voteActionsContainerView)
     }
     
@@ -62,13 +70,15 @@ final class BasicPostCell: PostCell {
                 mutableAS.deleteCharacters(in: NSRange(location: mutableAS.length - spaceSymbols.count, length: spaceSymbols.count))
             }
 
-            contentLabel.attributedText = mutableAS
+            contentTextView.attributedText = mutableAS
         }
+
+        contentTextView.resolveHashTags()
+        contentTextView.resolveMentions()
 
         if let embeds = post?.attachments, !embeds.isEmpty
         {
             gridView.setUp(embeds: embeds)
-
             gridViewContainerView.heightConstraint?.constant = 31/40 * UIScreen.main.bounds.width
         }
         else {
