@@ -82,9 +82,10 @@ class BasicEditorVC: PostEditorVC {
     
     override func setUp() {
         super.setUp()
-        if viewModel.postForEdit == nil {
-            appendTool(EditorToolbarItem.addArticle)
-        }
+        #warning("add Article later")
+//        if viewModel.postForEdit == nil {
+//            appendTool(EditorToolbarItem.addArticle)
+//        }
     }
     
     override func bind() {
