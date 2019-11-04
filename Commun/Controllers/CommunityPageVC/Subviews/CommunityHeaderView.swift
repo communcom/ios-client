@@ -118,6 +118,9 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
         addSubview(memberLabel)
         memberLabel.autoPinEdge(.leading, to: .trailing, of: membersCountLabel, withOffset: 4)
         memberLabel.autoAlignAxis(.horizontal, toSameAxisOf: membersCountLabel)
+        memberLabel.isUserInteractionEnabled = true
+        let tap = UITapGestureRecognizer(target: self, action: #selector(membersLabelDidTouch))
+        memberLabel.addGestureRecognizer(tap)
 
         let dotLabel = UILabel.with(text: "•", textSize: 15, weight: .semibold, textColor: UIColor(hexString: "#A5A7BD")!)
         addSubview(dotLabel)
@@ -237,5 +240,10 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
     
     @objc func joinButtonDidTouch(_ button: UIButton) {
         toggleJoin()
+    }
+    
+    @objc func membersLabelDidTouch() {
+        let vc = SubscribersVC(title: community?.name, communityId: community?.communityId)
+        parentViewController?.present(UINavigationController(rootViewController: vc), animated: true, completion: nil)
     }
 }

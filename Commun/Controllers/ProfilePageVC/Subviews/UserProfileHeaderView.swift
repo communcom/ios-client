@@ -62,6 +62,9 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
         addSubview(followersLabel)
         followersLabel.autoPinEdge(.leading, to: .trailing, of: followersCountLabel, withOffset: 4)
         followersLabel.autoAlignAxis(.horizontal, toSameAxisOf: followersCountLabel)
+        let tap1 = UITapGestureRecognizer(target: self, action: #selector(followersLabelDidTouch))
+        followersLabel.isUserInteractionEnabled = true
+        followersLabel.addGestureRecognizer(tap1)
         
         let dotLabel = UILabel.with(text: "•", textSize: 15, weight: .semibold, textColor: UIColor(hexString: "#A5A7BD")!)
         addSubview(dotLabel)
@@ -76,6 +79,9 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
         addSubview(followingsLabel)
         followingsLabel.autoPinEdge(.leading, to: .trailing, of: followingsCountLabel, withOffset: 4)
         followingsLabel.autoAlignAxis(.horizontal, toSameAxisOf: followersCountLabel)
+        let tap2 = UITapGestureRecognizer(target: self, action: #selector(follwingLabelDidTouch))
+        followingsLabel.isUserInteractionEnabled = true
+        followingsLabel.addGestureRecognizer(tap2)
         
         let friendLabel = UILabel.with(text: "friends".localized().uppercaseFirst, textSize: 12, weight: .bold, textColor: .gray)
         addSubview(friendLabel)
@@ -97,6 +103,7 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
         addSubview(seeAllButton)
         seeAllButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
         seeAllButton.autoAlignAxis(.horizontal, toSameAxisOf: communitiesLabel)
+        seeAllButton.addTarget(self, action: #selector(seeAllButtonDidTouch), for: .touchUpInside)
         
         addSubview(communitiesCountLabel)
         communitiesCountLabel.autoPinEdge(.top, to: .bottom, of: communitiesLabel, withOffset: 5)
@@ -153,10 +160,10 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
         self.profile = userProfile
         
         // avatar
-        avatarImageView.setAvatar(urlString: userProfile.personal?.avatarUrl, namePlaceHolder: userProfile.username ?? userProfile.userId)
+        avatarImageView.setAvatar(urlString: userProfile.personal?.avatarUrl, namePlaceHolder: userProfile.username)
         
         // name
-        nameLabel.text = userProfile.username ?? userProfile.userId
+        nameLabel.text = userProfile.username
         
         // join date
         let dateFormatter = DateFormatter()
@@ -196,5 +203,20 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
     
     @objc func followButtonDidTouch(_ sender: UIButton) {
         toggleFollow()
+    }
+    
+    @objc func seeAllButtonDidTouch() {
+        let vc = SubscriptionsVC(title: profile?.username, userId: profile?.userId, type: .community)
+        parentViewController?.present(UINavigationController(rootViewController: vc), animated: true, completion: nil)
+    }
+    
+    @objc func follwingLabelDidTouch() {
+        let vc = SubscriptionsVC(title: profile?.username, userId: profile?.userId, type: .user)
+        parentViewController?.present(UINavigationController(rootViewController: vc), animated: true, completion: nil)
+    }
+    
+    @objc func followersLabelDidTouch() {
+        let vc = SubscribersVC(title: profile?.username, userId: profile?.userId)
+        parentViewController?.present(UINavigationController(rootViewController: vc), animated: true, completion: nil)
     }
 }

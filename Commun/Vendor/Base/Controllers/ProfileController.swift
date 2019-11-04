@@ -12,18 +12,54 @@ import CyberSwift
 
 let ProfileControllerProfileDidChangeNotification = "ProfileControllerProfileDidChangeNotification"
 
+protocol ProfileType: Equatable {
+    var userId: String {get}
+    var username: String {get}
+    var isSubscribed: Bool? {get set}
+    var subscribersCount: UInt64? {get set}
+}
+
+extension ProfileType {
+    public func notifyChanged() {
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: ProfileControllerProfileDidChangeNotification), object: self)
+    }
+}
+
+extension ResponseAPIContentGetProfile: ProfileType {
+    var subscribersCount: UInt64? {
+        get {
+            return subscribers?.usersCount
+        }
+        set {
+            subscribers?.usersCount = newValue
+        }
+    }
+}
+extension ResponseAPIContentGetSubscriptionsUser: ProfileType {}
+extension ResponseAPIContentResolveProfile: ProfileType {
+    var subscribersCount: UInt64? {
+        get {
+            return nil
+        }
+        set {
+            
+        }
+    }
+}
+
 protocol ProfileController: class {
+    associatedtype Profile: ProfileType
     var disposeBag: DisposeBag {get}
     var followButton: CommunButton {get set}
-    var profile: ResponseAPIContentGetProfile? {get set}
-    func setUp(with profile: ResponseAPIContentGetProfile)
+    var profile: Profile? {get set}
+    func setUp(with profile: Profile)
 }
 
 extension ProfileController {
     func observeProfileChange() {
         NotificationCenter.default.rx.notification(.init(rawValue: ProfileControllerProfileDidChangeNotification))
             .subscribe(onNext: {notification in
-                guard let newProfile = notification.object as? ResponseAPIContentGetProfile,
+                guard let newProfile = notification.object as? Profile,
                     newProfile == self.profile
                     else {return}
                 self.setUp(with: newProfile)
@@ -74,7 +110,7 @@ extension ProfileController {
             value != profile?.isSubscribed
         else {return}
         profile!.isSubscribed = value
-        var subscribersCount: UInt64 = (profile!.subscribers?.usersCount ?? 0)
+        var subscribersCount: UInt64 = (profile!.subscribersCount ?? 0)
         if value == false && subscribersCount == 0 {subscribersCount = 0}
         else {
             if value == true {
@@ -84,7 +120,7 @@ extension ProfileController {
                 subscribersCount -= 1
             }
         }
-        profile!.subscribers?.usersCount = subscribersCount
+        profile!.subscribersCount = subscribersCount
     }
     
     func animateFollow() {

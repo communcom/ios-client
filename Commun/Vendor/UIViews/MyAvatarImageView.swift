@@ -82,8 +82,12 @@ class MyAvatarImageView: MyView {
             .observe(String.self, Config.currentUserAvatarUrlKey)
             .distinctUntilChanged()
             .subscribe(onNext: {urlString in
-                self.setAvatar(urlString: urlString, namePlaceHolder: Config.currentUser?.id ?? "U")
+                self.setAvatar(urlString: urlString, namePlaceHolder: Config.currentUser?.name ?? Config.currentUser?.id ?? "U")
             })
+    }
+    
+    func setToCurrentUserAvatar() {
+        setAvatar(urlString: UserDefaults.standard.string(forKey: Config.currentUserAvatarUrlKey), namePlaceHolder: Config.currentUser?.name ?? Config.currentUser?.id ?? "U")
     }
     
     func setNonAvatarImageWithId(_ id: String) {

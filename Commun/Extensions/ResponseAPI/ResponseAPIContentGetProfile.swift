@@ -18,8 +18,4 @@ extension ResponseAPIContentGetProfile: Equatable, IdentifiableType {
     public var identity: String {
         return userId + "/" + (username ?? "")
     }
-    
-    public func notifyChanged() {
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: ProfileControllerProfileDidChangeNotification), object: self)
-    }
 }

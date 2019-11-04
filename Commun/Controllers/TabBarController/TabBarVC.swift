@@ -66,6 +66,13 @@ class TabBarVC: UITabBarController {
         tabBarStackView.alignment = .center
         tabBarStackView.distribution = .fillEqually
         tabBarStackView.spacing = 0
+        
+        // whiteView
+        let whiteView = UIView(backgroundColor: .white)
+        view.addSubview(whiteView)
+        whiteView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
+        whiteView.autoPinEdge(.top, to: .bottom, of: tabBarStackView)
+        view.bringSubviewToFront(tabBarContainerView)
     }
     
     override func viewDidLayoutSubviews() {

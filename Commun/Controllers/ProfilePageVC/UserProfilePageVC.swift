@@ -61,7 +61,7 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile> {
         tableView.register(UINib(nibName: "CommentCell", bundle: nil), forCellReuseIdentifier: "CommentCell")
         
         // title
-        title = profile.username ?? profile.userId
+        title = profile.username
         
         // cover
         if let urlString = profile.personal?.coverUrl

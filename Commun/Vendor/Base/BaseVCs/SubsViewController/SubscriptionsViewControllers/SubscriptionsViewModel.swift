@@ -10,12 +10,18 @@ import Foundation
 import CyberSwift
 
 class SubscriptionsViewModel: ListViewModel<ResponseAPIContentGetSubscriptionsItem> {
-    convenience init(userId: String?, type: GetSubscriptionsType) {
+    let type: GetSubscriptionsType
+    init(userId: String?, type: GetSubscriptionsType) {
         var userId = userId
         if userId == nil {
             userId = Config.currentUser?.id ?? ""
         }
         let fetcher = SubscriptionsListFetcher(userId: userId!, type: type)
-        self.init(fetcher: fetcher)
+        self.type = type
+        super.init(fetcher: fetcher)
+        
+        defer {
+            fetchNext()
+        }
     }
 }

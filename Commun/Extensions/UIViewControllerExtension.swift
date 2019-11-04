@@ -41,8 +41,8 @@ extension UIViewController {
         self.present(alert, animated: true, completion: nil)
     }
     
-    func showCommunActionSheet(headerView: UIView? = nil, title: String? = nil, actions: [CommunActionSheet.Action], completion: (() -> Void)? = nil) {
-        let actionSheet = CommunActionSheet()
+    func showCommunActionSheet(style: CommunActionSheet.Style = .default, headerView: UIView? = nil, title: String? = nil, actions: [CommunActionSheet.Action], completion: (() -> Void)? = nil) {
+        let actionSheet = CommunActionSheet(style: style)
         actionSheet.title = title
         actionSheet.headerView = headerView
         actionSheet.actions = actions
@@ -184,5 +184,27 @@ extension UIViewController {
         } else {
             self.navigationController?.popViewController()
         }
+    }
+    
+    func setLeftNavBarButton(with button: UIButton) {
+        // backButton
+        let leftButtonView = UIView(frame: CGRect(x: 0, y: 0, width: 36, height: 40))
+        
+        leftButtonView.addSubview(button)
+        button.autoPinEdgesToSuperviewEdges()
+
+        let leftBarButton = UIBarButtonItem(customView: leftButtonView)
+        navigationItem.leftBarButtonItem = leftBarButton
+    }
+    
+    func setRightNavBarButton(with button: UIButton) {
+        // backButton
+        let rightButtonView = UIView(frame: CGRect(x: 0, y: 0, width: 36, height: 40))
+        
+        rightButtonView.addSubview(button)
+        button.autoPinEdgesToSuperviewEdges()
+
+        let rightBarButton = UIBarButtonItem(customView: rightButtonView)
+        navigationItem.rightBarButtonItem = rightBarButton
     }
 }

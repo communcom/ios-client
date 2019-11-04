@@ -19,10 +19,20 @@ class ListViewController<T: ListItemType>: BaseViewController {
     var viewModel: ListViewModel<T>!
     var dataSource: MyRxTableViewSectionedAnimatedDataSource<ListSection>!
     
-    lazy var tableView: UITableView! = UITableView()
+    var tableViewInsets: UIEdgeInsets {
+        return .zero
+    }
+    
+    lazy var tableView: UITableView! = {
+        let tableView = UITableView(forAutoLayout: ())
+        view.addSubview(tableView)
+        tableView.autoPinEdgesToSuperviewSafeArea(with: tableViewInsets)
+        return tableView
+    }()
     
     override func setUp() {
         super.setUp()
+        
         // pull to refresh
         tableView.es.addPullToRefresh { [unowned self] in
             self.tableView.es.stopPullToRefresh()

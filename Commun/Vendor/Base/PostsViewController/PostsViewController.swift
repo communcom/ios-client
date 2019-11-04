@@ -11,12 +11,21 @@ import CyberSwift
 import DZNEmptyDataSet
 
 class PostsViewController: ListViewController<ResponseAPIContentGetPost> {
+    
+    init(filter: PostsListFetcher.Filter = PostsListFetcher.Filter(feedTypeMode: .new, feedType: .popular, sortType: .all)) {
+        super.init(nibName: nil, bundle: nil)
+        viewModel = PostsViewModel(filter: filter)
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        viewModel = PostsViewModel()
+    }
+    
     override func setUp() {
         super.setUp()
-        // setup viewmodel
-        setUpViewModel()
-        
         // setup datasource
+        tableView.separatorStyle = .none
         tableView.register(BasicPostCell.self, forCellReuseIdentifier: "BasicPostCell")
         tableView.register(ArticlePostCell.self, forCellReuseIdentifier: "ArticlePostCell")
         
@@ -41,10 +50,6 @@ class PostsViewController: ListViewController<ResponseAPIContentGetPost> {
                 return cell
             }
         )
-    }
-    
-    func setUpViewModel() {
-        viewModel = PostsViewModel()
     }
     
     override func bind() {

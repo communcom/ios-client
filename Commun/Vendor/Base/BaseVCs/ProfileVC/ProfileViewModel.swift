@@ -10,20 +10,10 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-class ProfileViewModel<ProfileType: Decodable> {
-    // MARK: - Nested type
-    enum LoadingState {
-        case loading
-        case finished
-        case error(error: Error)
-    }
-    
+class ProfileViewModel<ProfileType: Decodable>: BaseViewModel {
     // MARK: - Input
     var profileForRequest: ProfileType?
     var profileId: String?
-    
-    // MARK: - Properties
-    let disposeBag = DisposeBag()
     
     // MARK: - Objects
     let loadingState = BehaviorRelay<LoadingState>(value: .loading)

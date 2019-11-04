@@ -17,7 +17,7 @@ class CommunActionSheetPresentationController: DimmingPresentationController {
     }
     
     override func size(forChildContentContainer container: UIContentContainer, withParentContainerSize parentSize: CGSize) -> CGSize {
-        return CGSize(width: parentSize.width, height: height)
+        return CGSize(width: parentSize.width, height: height + 16)
     }
     
     override var frameOfPresentedViewInContainerView: CGRect {
@@ -28,7 +28,7 @@ class CommunActionSheetPresentationController: DimmingPresentationController {
         
         //2
         
-        frame.origin.y = containerView!.frame.height - height
+        frame.origin.y = containerView!.frame.height - height - 16
         
         return frame
     }
