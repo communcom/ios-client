@@ -11,9 +11,10 @@ import CyberSwift
 import RxDataSources
 
 class SubscriptionsVC: SubsViewController<ResponseAPIContentGetSubscriptionsItem> {
-    init(userId: String?, type: GetSubscriptionsType) {
+    init(title: String? = nil, userId: String?, type: GetSubscriptionsType) {
         super.init(nibName: nil, bundle: nil)
         viewModel = SubscriptionsViewModel(userId: userId, type: type)
+        defer {self.title = title}
     }
     
     required init?(coder: NSCoder) {

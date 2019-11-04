@@ -10,9 +10,10 @@ import Foundation
 import CyberSwift
 
 class SubscribersVC: SubsViewController<ResponseAPIContentResolveProfile> {
-    init(userId: String? = nil, communityId: String? = nil) {
+    init(title: String? = nil, userId: String? = nil, communityId: String? = nil) {
         super.init(nibName: nil, bundle: nil)
         viewModel = SubscribersViewModel(userId: userId, communityId: communityId)
+        defer {self.title = title}
     }
     
     required init?(coder: NSCoder) {

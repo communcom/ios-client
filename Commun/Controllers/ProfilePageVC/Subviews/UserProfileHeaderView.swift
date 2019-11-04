@@ -206,17 +206,17 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
     }
     
     @objc func seeAllButtonDidTouch() {
-        let subscriptionsCommunityVC = SubscriptionsVC(userId: profile?.userId, type: .community)
-        parentViewController?.show(subscriptionsCommunityVC, sender: nil)
+        let vc = SubscriptionsVC(title: profile?.username, userId: profile?.userId, type: .community)
+        parentViewController?.present(UINavigationController(rootViewController: vc), animated: true, completion: nil)
     }
     
     @objc func follwingLabelDidTouch() {
-        let subscriptionsUserVC = SubscriptionsVC(userId: profile?.userId, type: .user)
-        parentViewController?.show(subscriptionsUserVC, sender: nil)
+        let vc = SubscriptionsVC(title: profile?.username, userId: profile?.userId, type: .user)
+        parentViewController?.present(UINavigationController(rootViewController: vc), animated: true, completion: nil)
     }
     
     @objc func followersLabelDidTouch() {
-        let subscribersVC = SubscribersVC(userId: profile?.userId)
-        parentViewController?.show(subscribersVC, sender: nil)
+        let vc = SubscribersVC(title: profile?.username, userId: profile?.userId)
+        parentViewController?.present(UINavigationController(rootViewController: vc), animated: true, completion: nil)
     }
 }
