@@ -9,16 +9,38 @@
 import Foundation
 
 class BaseVerticalStackViewController: BaseViewController {
+    // MARK: - NestedType
+    struct Action {
+        var title: String
+        var icon: UIImage?
+        var handle: (() -> Void)?
+        var tintColor: UIColor = .black
+        var marginTop: CGFloat = 0
+        var isActive: Bool = false
+        class TapGesture: UITapGestureRecognizer {
+            var action: Action?
+        }
+    }
+    
+    
     // MARK: - Subviews
     lazy var scrollView = ContentHuggingScrollView(forAutoLayout: ())
     override var contentScrollView: UIScrollView? {
         return scrollView
     }
-    var stackView: UIStackView!
+    lazy var stackView = UIStackView(axis: .vertical, spacing: 2)
     
     // MARK: - Properties
-    var actions: [CommunActionSheet.Action] {
-        return []
+    var actions: [Action]
+    
+    // MARK: - Initializers
+    init(actions: [Action]) {
+        self.actions = actions
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     override func setUp() {
@@ -30,8 +52,12 @@ class BaseVerticalStackViewController: BaseViewController {
         scrollView.autoPinEdgesToSuperviewEdges()
         
         // stackView
-        stackView = stackViewWithActions(actions: actions)
+        setUpStackView()
         scrollView.contentView.addSubview(stackView)
+        layout()
+    }
+
+    func layout() {
         stackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 20, left: 10, bottom: 10, right: 10))
     }
     
@@ -42,12 +68,11 @@ class BaseVerticalStackViewController: BaseViewController {
         stackView.arrangedSubviews.last?.roundCorners(UIRectCorner(arrayLiteral: .bottomLeft, .bottomRight), radius: 10)
     }
     
-    func stackViewWithActions(actions: [CommunActionSheet.Action]) -> UIStackView {
-        let stackView = UIStackView(axis: .vertical, spacing: 2)
+    func setUpStackView() {
         for action in actions {
             let actionView = UIView(height: 65, backgroundColor: .white)
             actionView.isUserInteractionEnabled = true
-            let tap = CommunActionSheet.Action.TapGesture(target: self, action: #selector(actionViewDidTouch(_:)))
+            let tap = Action.TapGesture(target: self, action: #selector(actionViewDidTouch(_:)))
             tap.action = action
             actionView.addGestureRecognizer(tap)
             
@@ -73,10 +98,9 @@ class BaseVerticalStackViewController: BaseViewController {
             actionView.widthAnchor.constraint(equalTo: stackView.widthAnchor)
                 .isActive = true
         }
-        return stackView
     }
     
-    @objc func actionViewDidTouch(_ tap: CommunActionSheet.Action.TapGesture) {
+    @objc func actionViewDidTouch(_ tap: Action.TapGesture) {
         guard let action = tap.action else {return}
         action.handle?()
     }

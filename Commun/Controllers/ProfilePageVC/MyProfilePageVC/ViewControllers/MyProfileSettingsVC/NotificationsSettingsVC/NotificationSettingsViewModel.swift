@@ -7,7 +7,13 @@
 //
 
 import Foundation
+import RxCocoa
 
-class NotificationSettingsViewModel {
+class NotificationSettingsViewModel: BaseViewModel {
+    // MARK: - Properties
+    let loadingState    = BehaviorRelay<LoadingState>(value: .loading)
+    let notificationOn  = BehaviorRelay<Bool>(value: UserDefaults.standard.bool(forKey: Config.currentUserPushNotificationOn))
+    let options         = BehaviorRelay<ResponseAPIGetOptionsNotifyShow?>(value: nil)
+    
     
 }

@@ -287,6 +287,8 @@
 		BC48FC42236689DC0049C4F4 /* LeadersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC48FC41236689DC0049C4F4 /* LeadersViewModel.swift */; };
 		BC48FC4423668A080049C4F4 /* LeadersListFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC48FC4323668A080049C4F4 /* LeadersListFetcher.swift */; };
 		BC48FC46236690880049C4F4 /* MyEmptyPlaceHolderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC48FC45236690880049C4F4 /* MyEmptyPlaceHolderView.swift */; };
+		BC69F7CD236FC5D00097F870 /* LoadingState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC69F7CC236FC5D00097F870 /* LoadingState.swift */; };
+		BC69F7CF236FC63F0097F870 /* BaseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC69F7CE236FC63F0097F870 /* BaseViewModel.swift */; };
 		BC6B7653236A74F000A7AF2A /* MyProfileEditBioVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC6B7652236A74F000A7AF2A /* MyProfileEditBioVC.swift */; };
 		BC6B7657236A9D4600A7AF2A /* CommunityRuleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC6B7656236A9D4600A7AF2A /* CommunityRuleCell.swift */; };
 		BC6B7659236AE14500A7AF2A /* CommunityPageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC6B7658236AE14500A7AF2A /* CommunityPageCell.swift */; };
@@ -654,6 +656,8 @@
 		BC48FC41236689DC0049C4F4 /* LeadersViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeadersViewModel.swift; sourceTree = "<group>"; };
 		BC48FC4323668A080049C4F4 /* LeadersListFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeadersListFetcher.swift; sourceTree = "<group>"; };
 		BC48FC45236690880049C4F4 /* MyEmptyPlaceHolderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyEmptyPlaceHolderView.swift; sourceTree = "<group>"; };
+		BC69F7CC236FC5D00097F870 /* LoadingState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingState.swift; sourceTree = "<group>"; };
+		BC69F7CE236FC63F0097F870 /* BaseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewModel.swift; sourceTree = "<group>"; };
 		BC6B7652236A74F000A7AF2A /* MyProfileEditBioVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileEditBioVC.swift; sourceTree = "<group>"; };
 		BC6B7656236A9D4600A7AF2A /* CommunityRuleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityRuleCell.swift; sourceTree = "<group>"; };
 		BC6B7658236AE14500A7AF2A /* CommunityPageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityPageCell.swift; sourceTree = "<group>"; };
@@ -1664,10 +1668,12 @@
 			children = (
 				BC22BBD7236C278D00F40658 /* BaseVCs */,
 				3BDD9A09228EDA5700B2A1DA /* Controllers */,
+				BC69F7CC236FC5D00097F870 /* LoadingState.swift */,
 				BCF3914D235FEAEE00A9D1ED /* ListItemType.swift */,
 				BCF3914A235FEAA500A9D1ED /* Fetchers */,
-				BC016D51235EA25B00F1319F /* ListViewController.swift */,
+				BC69F7CE236FC63F0097F870 /* BaseViewModel.swift */,
 				BC016D55235EA33C00F1319F /* ListViewModel.swift */,
+				BC016D51235EA25B00F1319F /* ListViewController.swift */,
 				BC016D4C235EA0DB00F1319F /* PostsViewController */,
 				BCA97111236004F500AE37E1 /* CommentsViewController */,
 				BCF74A61236180B900B91089 /* SubscribersViewModel.swift */,
@@ -2325,6 +2331,7 @@
 				3B02A56922F013D50043F9A4 /* ResponseAPIContentGetComment.swift in Sources */,
 				BCA9711D2360347D00AE37E1 /* CommunityPageVC.swift in Sources */,
 				BC016D43235DA0D400F1319F /* PostCell.swift in Sources */,
+				BC69F7CF236FC63F0097F870 /* BaseViewModel.swift in Sources */,
 				57E515B62270F7B200A6F6DB /* SettingsButtonCell.swift in Sources */,
 				3B8E0ED72343032B00362F26 /* SetUserVC+Styles.swift in Sources */,
 				3B5EDE3022DF92D000897BF3 /* SettingsOptionsCell.swift in Sources */,
@@ -2342,6 +2349,7 @@
 				BC3694F923699B8600B2E078 /* ArticleEditorVC+Actions.swift in Sources */,
 				3B0E9C7122706985002AB1C2 /* ProfileChooseAvatarViewModel.swift in Sources */,
 				3B5F58AD232A2ABE0036533B /* SignInSelectionCell.swift in Sources */,
+				BC69F7CD236FC5D00097F870 /* LoadingState.swift in Sources */,
 				3B3C8B902347876000D8BADB /* ArticleEditorTextView+Attachment.swift in Sources */,
 				3BB342B022CA5CA6009546B2 /* PickupAvatarVC.swift in Sources */,
 				3B02CD34228ADC100078BB52 /* UIWebView.swift in Sources */,

@@ -11,10 +11,8 @@ import RxSwift
 import RxCocoa
 import RxDataSources
 
-class ListViewModel<T: ListItemType> {
+class ListViewModel<T: ListItemType>: BaseViewModel {
     // MARK: - Properties
-    public let disposeBag   = DisposeBag()
-    
     var items: BehaviorRelay<[T]>
     public var state: BehaviorRelay<ListFetcherState> {
         return fetcher.state
