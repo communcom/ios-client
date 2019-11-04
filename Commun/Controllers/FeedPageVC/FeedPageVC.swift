@@ -45,7 +45,7 @@ class FeedPageVC: PostsViewController {
         
         tableView.emptyDataSetSource = self
         tableView.emptyDataSetDelegate = self
-
+        tableView.estimatedRowHeight = 600
         // dismiss keyboard when dragging
         tableView.keyboardDismissMode = .onDrag
 
@@ -59,12 +59,12 @@ class FeedPageVC: PostsViewController {
             var needAnimation = false
             var newConstraint: CGFloat = 0.0
             var inset: CGFloat = 0.0
-
-            if self.lastContentOffset > offset.y || offset.y <= 0  {
+            let lastOffset: CGFloat = self.lastContentOffset
+            if lastOffset > offset.y || offset.y <= 0  {
                 needAnimation = self.topFloatConstraint.constant <= 0
                 newConstraint = 0.0
                 inset = self.floatView.frame.size.height
-            } else if self.lastContentOffset < offset.y {
+            } else if lastOffset < offset.y {
                 let position = -self.floatView.frame.size.height
                 needAnimation = self.topFloatConstraint.constant >= position
                 newConstraint = position
