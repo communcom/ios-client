@@ -62,6 +62,9 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
         addSubview(followersLabel)
         followersLabel.autoPinEdge(.leading, to: .trailing, of: followersCountLabel, withOffset: 4)
         followersLabel.autoAlignAxis(.horizontal, toSameAxisOf: followersCountLabel)
+        let tap1 = UITapGestureRecognizer(target: self, action: #selector(followersLabelDidTouch))
+        followersLabel.isUserInteractionEnabled = true
+        followersLabel.addGestureRecognizer(tap1)
         
         let dotLabel = UILabel.with(text: "•", textSize: 15, weight: .semibold, textColor: UIColor(hexString: "#A5A7BD")!)
         addSubview(dotLabel)
@@ -76,9 +79,9 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
         addSubview(followingsLabel)
         followingsLabel.autoPinEdge(.leading, to: .trailing, of: followingsCountLabel, withOffset: 4)
         followingsLabel.autoAlignAxis(.horizontal, toSameAxisOf: followersCountLabel)
-        let tap = UITapGestureRecognizer(target: self, action: #selector(follwingLabelDidTouch))
+        let tap2 = UITapGestureRecognizer(target: self, action: #selector(follwingLabelDidTouch))
         followingsLabel.isUserInteractionEnabled = true
-        followingsLabel.addGestureRecognizer(tap)
+        followingsLabel.addGestureRecognizer(tap2)
         
         let friendLabel = UILabel.with(text: "friends".localized().uppercaseFirst, textSize: 12, weight: .bold, textColor: .gray)
         addSubview(friendLabel)
@@ -210,5 +213,10 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
     @objc func follwingLabelDidTouch() {
         let subscriptionsUserVC = SubscriptionsVC(userId: profile?.userId, type: .user)
         parentViewController?.show(subscriptionsUserVC, sender: nil)
+    }
+    
+    @objc func followersLabelDidTouch() {
+        let subscribersVC = SubscribersVC(userId: profile?.userId)
+        parentViewController?.show(subscribersVC, sender: nil)
     }
 }

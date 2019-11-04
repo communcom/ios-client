@@ -1,5 +1,5 @@
 //
-//  SubscribersVC.swift
+//  SubsViewController.swift
 //  Commun
 //
 //  Created by Chung Tran on 11/4/19.
@@ -7,24 +7,22 @@
 //
 
 import Foundation
-import CyberSwift
 
-class SubscribersVC: ListViewController<ResponseAPIContentResolveProfile> {
+/// Reusable viewcontroller for subscriptions/subscribers vc
+class SubsViewController<T: ListItemType>: ListViewController<T> {
     override var tableViewInsets: UIEdgeInsets {
         return UIEdgeInsets(top: 20, left: 10, bottom: 20, right: 10)
-    }
-    
-    init(userId: String?, communityId: String?) {
-        super.init(nibName: nil, bundle: nil)
-        viewModel = SubscribersViewModel(userId: userId, communityId: communityId)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
     
     override func setUp() {
         super.setUp()
         view.backgroundColor = #colorLiteral(red: 0.9599978328, green: 0.966491878, blue: 0.9829974771, alpha: 1)
+        tableView.cornerRadius = 10
+        tableView.backgroundColor = .clear
+        tableView.separatorInset = .zero
+    }
+    
+    override func handleLoading() {
+        tableView.addNotificationsLoadingFooterView()
     }
 }

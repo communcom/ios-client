@@ -10,11 +10,7 @@ import Foundation
 import CyberSwift
 import RxDataSources
 
-class SubscriptionsVC: ListViewController<ResponseAPIContentGetSubscriptionsItem> {
-    override var tableViewInsets: UIEdgeInsets {
-        return UIEdgeInsets(top: 20, left: 10, bottom: 20, right: 10)
-    }
-    
+class SubscriptionsVC: SubsViewController<ResponseAPIContentGetSubscriptionsItem> {
     init(userId: String?, type: GetSubscriptionsType) {
         super.init(nibName: nil, bundle: nil)
         viewModel = SubscriptionsViewModel(userId: userId, type: type)
@@ -26,13 +22,9 @@ class SubscriptionsVC: ListViewController<ResponseAPIContentGetSubscriptionsItem
     
     override func setUp() {
         super.setUp()
-        view.backgroundColor = #colorLiteral(red: 0.9599978328, green: 0.966491878, blue: 0.9829974771, alpha: 1)
         tableView.register(SubscriptionsUserCell.self, forCellReuseIdentifier: "SubscriptionsUserCell")
         tableView.register(SubscriptionsCommunityCell.self, forCellReuseIdentifier: "SubscriptionsCommunityCell")
-        tableView.cornerRadius = 10
-        tableView.backgroundColor = .clear
-        tableView.separatorInset = .zero
-        
+                
         dataSource = MyRxTableViewSectionedAnimatedDataSource<ListSection>(
             configureCell: { dataSource, tableView, indexPath, subscription in
                 if let community = subscription.communityValue {
@@ -68,10 +60,6 @@ class SubscriptionsVC: ListViewController<ResponseAPIContentGetSubscriptionsItem
                 }
             })
             .disposed(by: disposeBag)
-    }
-    
-    override func handleLoading() {
-        tableView.addNotificationsLoadingFooterView()
     }
     
     override func handleListEmpty() {

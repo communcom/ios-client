@@ -36,6 +36,16 @@ extension ResponseAPIContentGetProfile: ProfileType {
     }
 }
 extension ResponseAPIContentGetSubscriptionsUser: ProfileType {}
+extension ResponseAPIContentResolveProfile: ProfileType {
+    var subscribersCount: UInt64? {
+        get {
+            return nil
+        }
+        set {
+            
+        }
+    }
+}
 
 protocol ProfileController: class {
     associatedtype Profile: ProfileType
