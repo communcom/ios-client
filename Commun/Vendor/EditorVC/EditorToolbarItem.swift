@@ -32,7 +32,7 @@ struct EditorToolbarItem: Equatable {
         return EditorToolbarItem(
             name: "ageLimit",
             icon: "icon-18-plus-default",
-            iconSize: CGSize(width: 18, height: 18))
+            iconSize: CGSize(width: 20, height: 13))
     }
 
     static var addPhoto: EditorToolbarItem {
@@ -48,12 +48,14 @@ struct EditorToolbarItem: Equatable {
             icon: "bold",
             iconSize: CGSize(width: 18, height: 18))
     }
+    
     static var setItalic: EditorToolbarItem {
         return EditorToolbarItem(
             name: "setItalic",
             icon: "italic",
             iconSize: CGSize(width: 18, height: 18))
     }
+    
     static var setColor: EditorToolbarItem {
         return EditorToolbarItem(
             name: "setColor",

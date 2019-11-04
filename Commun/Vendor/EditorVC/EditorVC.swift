@@ -107,6 +107,7 @@ class EditorVC: BaseViewController {
     
     override func bind() {
         super.bind()
+        
         tools
             .bind(to: buttonsCollectionView.rx.items(
                 cellIdentifier: "EditorToolbarItemCell", cellType: EditorToolbarItemCell.self)) { (index, item, cell) in
