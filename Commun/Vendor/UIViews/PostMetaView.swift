@@ -63,7 +63,7 @@ class PostMetaView: UIView {
         // avatar
         addSubview(avatarImageView)
         avatarImageView.topAnchor
-            .constraint(equalTo: topAnchor)
+            .constraint(equalTo: topAnchor, constant: -1)
             .isActive = true
         avatarImageView.leadingAnchor
             .constraint(equalTo: leadingAnchor)
@@ -91,7 +91,7 @@ class PostMetaView: UIView {
         addSubview(timeAgoLabel)
         
         timeAgoLabel.bottomAnchor
-            .constraint(equalTo: avatarImageView.bottomAnchor)
+            .constraint(equalTo: avatarImageView.bottomAnchor, constant: -3)
             .isActive = true
         timeAgoLabel.leadingAnchor
             .constraint(equalTo: avatarImageView.trailingAnchor, constant: 8)
@@ -100,7 +100,7 @@ class PostMetaView: UIView {
         // byUserLabel
         addSubview(byUserLabel)
         byUserLabel.bottomAnchor
-            .constraint(equalTo: avatarImageView.bottomAnchor)
+            .constraint(equalTo: avatarImageView.bottomAnchor, constant: -3)
             .isActive = true
         byUserLabel.leadingAnchor
             .constraint(equalTo: timeAgoLabel.trailingAnchor, constant: 0)
