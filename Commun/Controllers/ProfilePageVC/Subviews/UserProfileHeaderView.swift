@@ -97,6 +97,7 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
         addSubview(seeAllButton)
         seeAllButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
         seeAllButton.autoAlignAxis(.horizontal, toSameAxisOf: communitiesLabel)
+        seeAllButton.addTarget(self, action: #selector(seeAllButtonDidTouch), for: .touchUpInside)
         
         addSubview(communitiesCountLabel)
         communitiesCountLabel.autoPinEdge(.top, to: .bottom, of: communitiesLabel, withOffset: 5)
@@ -153,10 +154,10 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
         self.profile = userProfile
         
         // avatar
-        avatarImageView.setAvatar(urlString: userProfile.personal?.avatarUrl, namePlaceHolder: userProfile.username ?? userProfile.userId)
+        avatarImageView.setAvatar(urlString: userProfile.personal?.avatarUrl, namePlaceHolder: userProfile.username)
         
         // name
-        nameLabel.text = userProfile.username ?? userProfile.userId
+        nameLabel.text = userProfile.username
         
         // join date
         let dateFormatter = DateFormatter()
@@ -196,5 +197,10 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
     
     @objc func followButtonDidTouch(_ sender: UIButton) {
         toggleFollow()
+    }
+    
+    @objc func seeAllButtonDidTouch() {
+        let subscriptionsCommunityVC = SubscriptionsVC(userId: profile?.userId, type: .community)
+        parentViewController?.show(subscriptionsCommunityVC, sender: nil)
     }
 }
