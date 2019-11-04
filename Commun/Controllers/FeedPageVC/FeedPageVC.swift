@@ -55,7 +55,7 @@ class FeedPageVC: PostsViewController {
 
         tableView.rx.contentOffset.subscribe {
             guard let offset = $0.element else { return }
-            
+
             var needAnimation = false
             var newConstraint: CGFloat = 0.0
             var inset: CGFloat = 0.0
@@ -103,6 +103,10 @@ class FeedPageVC: PostsViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         navigationController?.setNavigationBarHidden(false, animated: animated)
+        let tabBarHeight: CGFloat = 88.0
+        let bottomInset: CGFloat = 10.0
+        tableView.scrollIndicatorInsets.bottom = tabBarHeight + bottomInset
+        tableView.contentInset.bottom = tabBarHeight + bottomInset
     }
     
     override func viewWillAppear(_ animated: Bool) {
