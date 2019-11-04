@@ -30,46 +30,41 @@ extension EditorVC {
         self.tools.accept(tools)
     }
     
-    func toggleIsHighlightedForTool(_ tool: EditorToolbarItem, isHighlighted: Bool? = nil)
-    {
+    func toggleIsHighlightedForTool(_ tool: EditorToolbarItem, isHighlighted: Bool? = nil) {
         guard var tool = tools.value.first(where: {$0 == tool}) else {return}
         tool.isHighlighted = isHighlighted ?? !tool.isHighlighted
+        
         if let index = tools.value.firstIndex(of: tool) {
             var tools = self.tools.value
             tools[index] = tool
             self.tools.accept(tools)
-        }
-        else {
+        } else {
             appendTool(tool)
         }
     }
     
-    func toggleIsEnabledForTool(_ tool: EditorToolbarItem, isEnabled: Bool? = nil)
-    {
+    func toggleIsEnabledForTool(_ tool: EditorToolbarItem, isEnabled: Bool? = nil) {
         guard var tool = tools.value.first(where: {$0 == tool}) else {return}
         tool.isEnabled = isEnabled ?? !tool.isEnabled
+        
         if let index = tools.value.firstIndex(of: tool) {
             var tools = self.tools.value
             tools[index] = tool
             self.tools.accept(tools)
-        }
-        else {
+        } else {
             appendTool(tool)
         }
     }
     
-    func setOtherOptionForTool(_ tool: EditorToolbarItem, value: Any?)
-    {
+    func setOtherOptionForTool(_ tool: EditorToolbarItem, value: Any?) {
         guard var tool = tools.value.first(where: {$0 == tool}) else {return}
         tool.other = value
-        if tool == .setColor,
-            let index = tools.value.firstIndex(of: tool)
-        {
+        
+        if tool == .setColor, let index = tools.value.firstIndex(of: tool) {
             var tools = self.tools.value
             tools[index] = tool
             self.tools.accept(tools)
-        }
-        else {
+        } else {
             appendTool(tool)
         }
     }

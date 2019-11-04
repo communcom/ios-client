@@ -92,6 +92,7 @@ class PostEditorVC: EditorVC {
     
     override func didSelectTool(_ item: EditorToolbarItem) {
         super.didSelectTool(item)
+        
         guard item.isEnabled else {return}
         
         if item == .setBold {
@@ -116,6 +117,10 @@ class PostEditorVC: EditorVC {
         
         if item == .addLink {
             addLink()
+        }
+        
+        if item == .ageLimit {
+            addAgeLimit()
         }
     }
     
