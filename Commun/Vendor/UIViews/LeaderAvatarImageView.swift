@@ -28,7 +28,7 @@ class LeaderAvatarImageView: MyAvatarImageView {
     var percentLayers = [CAShapeLayer]()
     
     // MARK: - Methods
-    func drawRatingPercent() {
+    private func drawRatingPercent() {
         guard let percent = percent else {return}
         // clean
         for layer in percentLayers {
@@ -37,26 +37,48 @@ class LeaderAvatarImageView: MyAvatarImageView {
         percentLayers = []
         
         // get angle
-        let angle = CGFloat(percent) * CGFloat.pi
+        let angle = CGFloat(percent) * CGFloat.pi * 2 - CGFloat.pi / 2
         
-        let rect = CGRect(x: 0, y: 0, width: originSize, height: originSize)
+        
         for i in 0..<numberOfPieces {
-            let path = UIBezierPath()
             let startAngle: CGFloat = -CGFloat.pi / 2 + CGFloat(i) * (arcSpaceAngle + arcAngle) + arcSpaceAngle / 2
             let endAngle: CGFloat = startAngle + arcAngle
-            path.addArc(withCenter: CGPoint(x: originSize / 2, y: originSize / 2), radius: rect.width / 2 - arcWidth / 2, startAngle: startAngle, endAngle: endAngle, clockwise: true)
-            let percentLayer = CAShapeLayer()
-            percentLayer.strokeColor = UIColor.appMainColor.cgColor
-            percentLayer.fillColor = UIColor.clear.cgColor
-            percentLayer.lineWidth = arcWidth
-            percentLayer.lineJoin = .round
-            percentLayer.lineCap = .round
-            percentLayer.path = path.cgPath
-            percentLayers.append(percentLayer)
+            
+            if angle <= startAngle {
+                let percentLayer = arcLayer(withColor: #colorLiteral(red: 0.9137254902, green: 0.9176470588, blue: 0.937254902, alpha: 1), startAngle: startAngle, endAngle: endAngle)
+                percentLayers.append(percentLayer)
+            }
+            else if angle >= endAngle {
+                let percentLayer = arcLayer(withColor: .appMainColor, startAngle: startAngle, endAngle: endAngle)
+                percentLayers.append(percentLayer)
+            }
+            else {
+                // separate
+                let percentLayer1 = arcLayer(withColor: .appMainColor, startAngle: startAngle, endAngle: angle)
+                percentLayers.append(percentLayer1)
+                
+                let percentLayer2 = arcLayer(withColor: #colorLiteral(red: 0.9137254902, green: 0.9176470588, blue: 0.937254902, alpha: 1), startAngle: angle, endAngle: endAngle)
+                percentLayers.append(percentLayer2)
+            }
         }
         
         for percentLayer in percentLayers {
             layer.addSublayer(percentLayer)
         }
+    }
+    
+    private func arcLayer(withColor color: UIColor, startAngle: CGFloat, endAngle: CGFloat
+    ) -> CAShapeLayer {
+        let rect = CGRect(x: 0, y: 0, width: originSize, height: originSize)
+        let path = UIBezierPath()
+        path.addArc(withCenter: CGPoint(x: originSize / 2, y: originSize / 2), radius: rect.width / 2 - arcWidth / 2, startAngle: startAngle, endAngle: endAngle, clockwise: true)
+        let percentLayer = CAShapeLayer()
+        percentLayer.strokeColor = color.cgColor
+        percentLayer.fillColor = UIColor.clear.cgColor
+        percentLayer.lineWidth = arcWidth
+        percentLayer.lineJoin = .round
+        percentLayer.lineCap = .round
+        percentLayer.path = path.cgPath
+        return percentLayer
     }
 }
