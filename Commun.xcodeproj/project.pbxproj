@@ -1158,6 +1158,7 @@
 		3BDD9A09228EDA5700B2A1DA /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				BCCE0A982367D12800A183AA /* ResponseAPI */,
 				3B5D7CEE2297F3FA0077B82C /* ItemsListController.swift */,
 				57A95196224178010020F55D /* PostController.swift */,
 				BC74A18123643C6400D94EF2 /* CommunityController.swift */,
@@ -1416,7 +1417,6 @@
 		576DC91F223E42B200EDED41 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				BCCE0A982367D12800A183AA /* ResponseAPI */,
 				3B289B982346E6C300598407 /* PureLayout */,
 				3B197C522269BE0E008CF10D /* SegmentioExtension.swift */,
 				3BAF69CE226787940055CCEB /* Date.swift */,
