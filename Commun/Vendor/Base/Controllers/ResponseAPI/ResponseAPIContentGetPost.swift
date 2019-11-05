@@ -10,17 +10,13 @@ import Foundation
 import CyberSwift
 import RxDataSources
 
-extension ResponseAPIContentGetPost: Equatable, IdentifiableType {
-    public static func == (lhs: ResponseAPIContentGetPost, rhs: ResponseAPIContentGetPost) -> Bool {
-        return lhs.identity == rhs.identity
-    }
-    
+extension ResponseAPIContentGetPost: IdentifiableType {
     public var identity: String {
         return self.contentId.userId + "/" + self.contentId.permlink
     }
     
     public func notifyChanged() {
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: PostControllerPostDidChangeNotification), object: self)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "\(Self.self)DidChange"), object: self)
     }
     
     public var content: [ResponseAPIContentBlock]? {

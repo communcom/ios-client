@@ -80,7 +80,6 @@
 		3B5CB31222A588EE00757533 /* FeedPageVC+EmptyDataSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5CB31122A588EE00757533 /* FeedPageVC+EmptyDataSet.swift */; };
 		3B5D361822E820760012A991 /* PostPageVC+Header.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5D361722E820760012A991 /* PostPageVC+Header.swift */; };
 		3B5D361C22E8303C0012A991 /* HTMLStringWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5D361B22E8303C0012A991 /* HTMLStringWebView.swift */; };
-		3B5D7CEF2297F3FA0077B82C /* ItemsListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5D7CEE2297F3FA0077B82C /* ItemsListController.swift */; };
 		3B5D7CF12299D79B0077B82C /* FeedSortMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5D7CF02299D79B0077B82C /* FeedSortMode.swift */; };
 		3B5EDE2E22DF929D00897BF3 /* SettingsSwitcherCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5EDE2D22DF929D00897BF3 /* SettingsSwitcherCell.swift */; };
 		3B5EDE3022DF92D000897BF3 /* SettingsOptionsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5EDE2F22DF92D000897BF3 /* SettingsOptionsCell.swift */; };
@@ -445,7 +444,6 @@
 		3B5CB31122A588EE00757533 /* FeedPageVC+EmptyDataSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FeedPageVC+EmptyDataSet.swift"; sourceTree = "<group>"; };
 		3B5D361722E820760012A991 /* PostPageVC+Header.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PostPageVC+Header.swift"; sourceTree = "<group>"; };
 		3B5D361B22E8303C0012A991 /* HTMLStringWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTMLStringWebView.swift; sourceTree = "<group>"; };
-		3B5D7CEE2297F3FA0077B82C /* ItemsListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemsListController.swift; sourceTree = "<group>"; };
 		3B5D7CF02299D79B0077B82C /* FeedSortMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedSortMode.swift; sourceTree = "<group>"; };
 		3B5EDE2D22DF929D00897BF3 /* SettingsSwitcherCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSwitcherCell.swift; sourceTree = "<group>"; };
 		3B5EDE2F22DF92D000897BF3 /* SettingsOptionsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsOptionsCell.swift; sourceTree = "<group>"; };
@@ -1159,7 +1157,6 @@
 			isa = PBXGroup;
 			children = (
 				BCCE0A982367D12800A183AA /* ResponseAPI */,
-				3B5D7CEE2297F3FA0077B82C /* ItemsListController.swift */,
 				57A95196224178010020F55D /* PostController.swift */,
 				BC74A18123643C6400D94EF2 /* CommunityController.swift */,
 				BCCE0AAC23681B2400A183AA /* ProfileController.swift */,
@@ -2304,7 +2301,6 @@
 				3B2F227322689334006B589E /* NSMutableAttributedString.swift in Sources */,
 				BC016D42235DA0D400F1319F /* ArticlePostCell.swift in Sources */,
 				3B2F226B226892C5006B589E /* NotificationsViewModel.swift in Sources */,
-				3B5D7CEF2297F3FA0077B82C /* ItemsListController.swift in Sources */,
 				B17A970C228002440081B8E0 /* SignUpRouter.swift in Sources */,
 				5787C0C422650F9D00568CEC /* SetUserVC.swift in Sources */,
 				5721E87122650AC0003BE04B /* StringExtension.swift in Sources */,

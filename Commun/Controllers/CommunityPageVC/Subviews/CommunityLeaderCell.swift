@@ -94,11 +94,6 @@ class CommunityLeaderCell: CommunityPageCell, LeaderController {
         descriptionLabel.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(inset: 16), excludingEdge: .top)
     }
     
-    override func observe() {
-        super.observe()
-        observeLeaderChange()
-    }
-    
     func setUp(with leader: ResponseAPIContentGetLeader) {
         self.leader = leader
         // avatar

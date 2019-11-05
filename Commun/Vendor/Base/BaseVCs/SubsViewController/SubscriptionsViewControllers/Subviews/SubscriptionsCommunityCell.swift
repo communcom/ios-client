@@ -20,11 +20,6 @@ class SubscriptionsCommunityCell: SubsItemCell, CommunityController {
     }
     var community: ResponseAPIContentGetSubscriptionsCommunity?
     
-    override func observe() {
-        super.observe()
-        observerCommunityChange()
-    }
-    
     func setUp(with community: ResponseAPIContentGetSubscriptionsCommunity) {
         self.community = community
         avatarImageView.setAvatar(urlString: community.avatarUrl, namePlaceHolder: community.name)

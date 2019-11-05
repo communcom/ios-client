@@ -10,11 +10,9 @@ import Foundation
 import RxSwift
 import CyberSwift
 
-let LeaderControllerLeaderDidChangeNotification = "LeaderControllerLeaderDidChangeNotification"
-
 extension ResponseAPIContentGetLeader {
     public func notifyChanged() {
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: LeaderControllerLeaderDidChangeNotification), object: self)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "\(Self.self)DidChange"), object: self)
     }
 }
 
@@ -27,7 +25,7 @@ protocol LeaderController: class {
 
 extension LeaderController {
     func observeLeaderChange() {
-        NotificationCenter.default.rx.notification(.init(rawValue: LeaderControllerLeaderDidChangeNotification))
+        NotificationCenter.default.rx.notification(.init(rawValue: "\(Self.self)DidChange"))
             .subscribe(onNext: {notification in
                 guard let newLeader = notification.object as? ResponseAPIContentGetLeader,
                     newLeader == self.leader

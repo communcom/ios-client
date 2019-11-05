@@ -10,8 +10,6 @@ import Foundation
 import RxSwift
 import CyberSwift
 
-let ProfileControllerProfileDidChangeNotification = "ProfileControllerProfileDidChangeNotification"
-
 protocol ProfileType: Equatable {
     var userId: String {get}
     var username: String {get}
@@ -21,7 +19,7 @@ protocol ProfileType: Equatable {
 
 extension ProfileType {
     public func notifyChanged() {
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: ProfileControllerProfileDidChangeNotification), object: self)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "\(Self.self)DidChange"), object: self)
     }
 }
 
@@ -48,7 +46,7 @@ protocol ProfileController: class {
 
 extension ProfileController {
     func observeProfileChange() {
-        NotificationCenter.default.rx.notification(.init(rawValue: ProfileControllerProfileDidChangeNotification))
+        NotificationCenter.default.rx.notification(.init(rawValue: "\(Profile.self)DidChange"))
             .subscribe(onNext: {notification in
                 guard let newProfile = notification.object as? Profile,
                     newProfile == self.profile

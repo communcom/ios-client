@@ -140,10 +140,6 @@ class PostCell: MyTableViewCell, PostController {
     }
     
     // MARK: - Methods
-    override func observe() {
-        super.observe()
-        observePostChange()
-    }
     
     func setUp(with post: ResponseAPIContentGetPost?) {
         guard let post = post else {return}

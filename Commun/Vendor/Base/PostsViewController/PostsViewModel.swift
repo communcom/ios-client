@@ -10,7 +10,7 @@ import Foundation
 import CyberSwift
 import RxCocoa
 
-class PostsViewModel: ListViewModel<ResponseAPIContentGetPost>, PostsListController {
+class PostsViewModel: ListViewModel<ResponseAPIContentGetPost> {
     var filter: BehaviorRelay<PostsListFetcher.Filter>!
     
     convenience init(filter: PostsListFetcher.Filter = PostsListFetcher.Filter(feedTypeMode: .new, feedType: .popular, sortType: .all)) {
@@ -19,8 +19,6 @@ class PostsViewModel: ListViewModel<ResponseAPIContentGetPost>, PostsListControl
         self.filter = BehaviorRelay<PostsListFetcher.Filter>(value: filter)
         defer {
             bindFilter()
-            observePostDelete()
-            observePostChange()
         }
     }
     

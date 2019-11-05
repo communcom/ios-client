@@ -9,7 +9,7 @@
 import Foundation
 import RxCocoa
 
-class CommentsViewModel: ListViewModel<ResponseAPIContentGetComment>, CommentsListController {
+class CommentsViewModel: ListViewModel<ResponseAPIContentGetComment> {
     var filter: BehaviorRelay<CommentsListFetcher.Filter>!
     
     convenience init(
@@ -18,10 +18,5 @@ class CommentsViewModel: ListViewModel<ResponseAPIContentGetComment>, CommentsLi
         let fetcher = CommentsListFetcher(filter: filter)
         self.init(fetcher: fetcher)
         self.filter = BehaviorRelay<CommentsListFetcher.Filter>(value: filter)
-        
-        defer {
-            observeCommentChange()
-            observeCommentDelete()
-        }
     }
 }

@@ -10,9 +10,6 @@ import UIKit
 import RxSwift
 import CyberSwift
 
-let PostControllerPostDidChangeNotification = "PostControllerPostDidChangeNotification"
-let PostControllerPostDidDeleteNotification = "PostControllerPostDidDeleteNotification"
-
 protocol PostController: class {
     var disposeBag: DisposeBag {get}
     var upVoteButton: UIButton! {get set}
@@ -28,11 +25,11 @@ extension PostController {
     }
     
     func notifyPostDeleted(deletedPost: ResponseAPIContentGetPost) {
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: PostControllerPostDidDeleteNotification), object: deletedPost)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "\(Self.self)Deleted"), object: deletedPost)
     }
     
     func observePostChange() {
-        NotificationCenter.default.rx.notification(.init(rawValue: PostControllerPostDidChangeNotification))
+        NotificationCenter.default.rx.notification(.init(rawValue: "\(Self.self)DidChange"))
             .subscribe(onNext: {notification in
                 guard let newPost = notification.object as? ResponseAPIContentGetPost,
                     newPost == self.post

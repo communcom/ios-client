@@ -142,7 +142,7 @@ class PostPageVC: ListViewController<ResponseAPIContentGetComment>, CommentCellD
     }
     
     func observePostDeleted() {
-        NotificationCenter.default.rx.notification(.init(rawValue: PostControllerPostDidDeleteNotification))
+        NotificationCenter.default.rx.notification(.init(rawValue: "\(ResponseAPIContentGetPost.self)Deleted"))
             .subscribe(onNext: { (notification) in
                 guard let deletedPost = notification.object as? ResponseAPIContentGetPost,
                     deletedPost.identity == (self.viewModel as! PostPageViewModel).post.value?.identity

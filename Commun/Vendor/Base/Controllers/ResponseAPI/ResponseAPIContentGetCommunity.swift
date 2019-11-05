@@ -10,11 +10,7 @@ import Foundation
 import CyberSwift
 import RxDataSources
 
-extension ResponseAPIContentGetCommunity: Equatable, IdentifiableType {
-    public static func == (lhs: ResponseAPIContentGetCommunity, rhs: ResponseAPIContentGetCommunity) -> Bool {
-        return lhs.identity == rhs.identity
-    }
-    
+extension ResponseAPIContentGetCommunity: IdentifiableType {
     public var identity: String {
         return (communityId ?? "") + "/" + (name ?? "")
     }

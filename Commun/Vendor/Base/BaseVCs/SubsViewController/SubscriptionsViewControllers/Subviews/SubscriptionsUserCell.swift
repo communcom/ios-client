@@ -20,11 +20,6 @@ class SubscriptionsUserCell: SubsItemCell, ProfileController {
         }
     }
     
-    override func observe() {
-        super.observe()
-        observeProfileChange()
-    }
-    
     func setUp(with profile: ResponseAPIContentGetSubscriptionsUser) {
         self.profile = profile
         avatarImageView.setAvatar(urlString: profile.avatarUrl, namePlaceHolder: profile.username)
