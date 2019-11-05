@@ -273,6 +273,7 @@
 		BC22BBD6236C26EF00F40658 /* NotificationsSettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC22BBD5236C26EF00F40658 /* NotificationsSettingsVC.swift */; };
 		BC22BBD9236C27C000F40658 /* BaseStackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC22BBD8236C27C000F40658 /* BaseStackViewController.swift */; };
 		BC22BBDB236C2A7F00F40658 /* NotificationSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC22BBDA236C2A7F00F40658 /* NotificationSettingsViewModel.swift */; };
+		BC2B83782371BDFD00C93AD6 /* ResponseAPIContentGetCommunityRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2B83772371BDFD00C93AD6 /* ResponseAPIContentGetCommunityRule.swift */; };
 		BC2C94FF2366F04100C9D7FE /* UserProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2C94FE2366F04100C9D7FE /* UserProfileHeaderView.swift */; };
 		BC31BA55235EBD7C0007D89A /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC31BA54235EBD7C0007D89A /* ProfileVC.swift */; };
 		BC3694ED236979A700B2E078 /* ProfilePageVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BC3694EC236979A700B2E078 /* ProfilePageVC.storyboard */; };
@@ -652,6 +653,7 @@
 		BC22BBD5236C26EF00F40658 /* NotificationsSettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsSettingsVC.swift; sourceTree = "<group>"; };
 		BC22BBD8236C27C000F40658 /* BaseStackViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseStackViewController.swift; sourceTree = "<group>"; };
 		BC22BBDA236C2A7F00F40658 /* NotificationSettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSettingsViewModel.swift; sourceTree = "<group>"; };
+		BC2B83772371BDFD00C93AD6 /* ResponseAPIContentGetCommunityRule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseAPIContentGetCommunityRule.swift; sourceTree = "<group>"; };
 		BC2C94FE2366F04100C9D7FE /* UserProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileHeaderView.swift; sourceTree = "<group>"; };
 		BC31BA54235EBD7C0007D89A /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
 		BC3694EC236979A700B2E078 /* ProfilePageVC.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ProfilePageVC.storyboard; sourceTree = "<group>"; };
@@ -1925,6 +1927,7 @@
 				3B25E5C5234C6EF6005BD1B8 /* ResponseAPIFrameGetEmbed.swift */,
 				BCE9390A234DBBC300226E39 /* ResponseAPIContentBlock.swift */,
 				BCE9390E234DD28400226E39 /* ResponseAPIContentGetPostContent.swift */,
+				BC2B83772371BDFD00C93AD6 /* ResponseAPIContentGetCommunityRule.swift */,
 			);
 			path = ResponseAPI;
 			sourceTree = "<group>";
@@ -2358,6 +2361,7 @@
 				3B5D7CF12299D79B0077B82C /* FeedSortMode.swift in Sources */,
 				BCA971172360301100AE37E1 /* NotificationsListFetcher.swift in Sources */,
 				3BB48AD522D645FF00F11B6A /* BoardingVC.swift in Sources */,
+				BC2B83782371BDFD00C93AD6 /* ResponseAPIContentGetCommunityRule.swift in Sources */,
 				5797E0F8225DDA400026C4D5 /* SignUpVC.swift in Sources */,
 				3BF2E09822D3A49F003B37AE /* StepButton.swift in Sources */,
 				3B63CD9322AA7AA200DC828B /* UIScrollView.swift in Sources */,

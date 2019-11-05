@@ -8,8 +8,24 @@
 
 import Foundation
 import CyberSwift
+import RxDataSources
 
 class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile> {
+    // MARK: - Nested type
+    enum CustomElementType: IdentifiableType, Equatable {
+        case post(ResponseAPIContentGetPost)
+        case comment(ResponseAPIContentGetComment)
+        
+        var identity: String {
+            switch self {
+            case .post(let post):
+                return post.identity
+            case .comment(let comment):
+                return comment.identity
+            }
+        }
+    }
+    
     // MARK: - Properties
     let userId: String
     lazy var viewModel = UserProfilePageViewModel(profileId: userId)
@@ -97,19 +113,48 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile> {
         tableView.addEmptyPlaceholderFooterView(title: title.localized().uppercaseFirst, description: description.localized().uppercaseFirst)
     }
     
-    override func createCell(for table: UITableView, index: Int, element: Any) -> UITableViewCell? {
-        if let cell = super.createCell(for: table, index: index, element: element) {
-            return cell
-        }
+    override func bindItems() {
+        let dataSource = MyRxTableViewSectionedAnimatedDataSource<AnimatableSectionModel<String, CustomElementType>>(
+            configureCell: { (dataSource, tableView, indexPath, element) -> UITableViewCell in
+                switch element {
+                case .post(let post):
+                    switch post.document?.attributes?.type {
+                    case "article":
+                        let cell = self.tableView.dequeueReusableCell(withIdentifier: "ArticlePostCell") as! ArticlePostCell
+                        cell.setUp(with: post)
+                        return cell
+                    case "basic":
+                        let cell = self.tableView.dequeueReusableCell(withIdentifier: "BasicPostCell") as! BasicPostCell
+                        cell.setUp(with: post)
+                        return cell
+                    default:
+                        break
+                    }
+                case .comment(let comment):
+                    let cell = self.tableView.dequeueReusableCell(withIdentifier: "CommentCell") as! CommentCell
+                    //            cell.delegate = self
+                    cell.setupFromComment(comment, expanded: false)
+                    return cell
+                }
+                return UITableViewCell()
+            }
+        )
         
-       if let comment = element as? ResponseAPIContentGetComment {
-            let cell = self.tableView.dequeueReusableCell(withIdentifier: "CommentCell") as! CommentCell
-//            cell.delegate = self
-            cell.setupFromComment(comment, expanded: true)
-            return cell
-        }
-        
-        return UITableViewCell()
+        viewModel.items
+            .map { items in
+                items.compactMap {item -> CustomElementType? in
+                    if let item = item as? ResponseAPIContentGetPost {
+                        return .post(item)
+                    }
+                    if let item = item as? ResponseAPIContentGetComment {
+                        return .comment(item)
+                    }
+                    return nil
+                }
+            }
+            .map {[AnimatableSectionModel<String, CustomElementType>(model: "", items: $0)]}
+            .bind(to: tableView.rx.items(dataSource: dataSource))
+            .disposed(by: disposeBag)
     }
     
     override func cellSelected(_ indexPath: IndexPath) {

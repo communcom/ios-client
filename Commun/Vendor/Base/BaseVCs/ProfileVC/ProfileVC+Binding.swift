@@ -99,15 +99,7 @@ extension ProfileVC {
     
     func bindList() {
         // bind items
-        _viewModel.items.skip(1)
-            .bind(to: tableView.rx.items) {[weak self] table, index, element in
-                if index == (self?.tableView.numberOfRows(inSection: 0) ?? 0) - 2 {
-                    self?._viewModel.fetchNext()
-                }
-                
-                return self?.createCell(for: table, index: index, element: element) ?? UITableViewCell()
-            }
-            .disposed(by: disposeBag)
+        bindItems()
         
         // OnItemSelected
         tableView.rx.itemSelected

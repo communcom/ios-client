@@ -8,8 +8,30 @@
 
 import Foundation
 import RxSwift
+import RxDataSources
 
 class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>{
+    // MARK: - Nested type
+    enum CustomElementType: IdentifiableType, Equatable {
+        case post(ResponseAPIContentGetPost)
+        case leader(ResponseAPIContentGetLeader)
+        case about(String)
+        case rule(ResponseAPIContentGetCommunityRule)
+        
+        var identity: String {
+            switch self {
+            case .post(let post):
+                return post.identity
+            case .leader(let leader):
+                return leader.identity
+            case .about(let string):
+                return string
+            case .rule(let rule):
+                return rule.identity
+            }
+        }
+    }
+    
     // MARK: - Properties
     let communityId: String
     lazy var viewModel: CommunityPageViewModel = CommunityPageViewModel(communityId: communityId)
@@ -113,31 +135,62 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>{
         tableView.addEmptyPlaceholderFooterView(title: title.localized().uppercaseFirst, description: description.localized().uppercaseFirst)
     }
     
-    override func createCell(for table: UITableView, index: Int, element: Any) -> UITableViewCell? {
-        if let cell = super.createCell(for: table, index: index, element: element) {
-            return cell
-        }
+    override func bindItems() {
+        let dataSource = MyRxTableViewSectionedAnimatedDataSource<AnimatableSectionModel<String, CustomElementType>>(
+            configureCell: { (dataSource, tableView, indexPath, element) -> UITableViewCell in
+                switch element {
+                case .post(let post):
+                    switch post.document?.attributes?.type {
+                    case "article":
+                        let cell = self.tableView.dequeueReusableCell(withIdentifier: "ArticlePostCell") as! ArticlePostCell
+                        cell.setUp(with: post)
+                        return cell
+                    case "basic":
+                        let cell = self.tableView.dequeueReusableCell(withIdentifier: "BasicPostCell") as! BasicPostCell
+                        cell.setUp(with: post)
+                        return cell
+                    default:
+                        break
+                    }
+                case .leader(let leader):
+                    let cell = self.tableView.dequeueReusableCell(withIdentifier: "CommunityLeaderCell") as! CommunityLeaderCell
+                    cell.setUp(with: leader)
+                    return cell
+                case .about(let string):
+                    let cell = self.tableView.dequeueReusableCell(withIdentifier: "CommunityAboutCell") as! CommunityAboutCell
+                    cell.label.text = string
+                    return cell
+                case .rule(let rule):
+                    let cell = self.tableView.dequeueReusableCell(withIdentifier: "CommunityRuleCell") as! CommunityRuleCell
+                    cell.rowIndex = indexPath.row
+                    cell.setUp(with: rule)
+                    return cell
+                }
+                return UITableViewCell()
+            }
+        )
         
-        if let user = element as? ResponseAPIContentGetLeader {
-            let cell = self.tableView.dequeueReusableCell(withIdentifier: "CommunityLeaderCell") as! CommunityLeaderCell
-            cell.setUp(with: user)
-            return cell
-        }
-        
-        if let string = element as? String {
-            let cell = self.tableView.dequeueReusableCell(withIdentifier: "CommunityAboutCell") as! CommunityAboutCell
-            cell.label.text = string
-            return cell
-        }
-        
-        if let rule = element as? ResponseAPIContentGetCommunityRule {
-            let cell = self.tableView.dequeueReusableCell(withIdentifier: "CommunityRuleCell") as! CommunityRuleCell
-            cell.rowIndex = index
-            cell.setUp(with: rule)
-            return cell
-        }
-        
-        return UITableViewCell()
+        viewModel.items
+            .map { items in
+                items.compactMap {item -> CustomElementType? in
+                    if let item = item as? ResponseAPIContentGetPost {
+                        return .post(item)
+                    }
+                    if let item = item as? ResponseAPIContentGetLeader {
+                        return .leader(item)
+                    }
+                    if let item = item as? String {
+                        return .about(item)
+                    }
+                    if let item = item as? ResponseAPIContentGetCommunityRule {
+                        return .rule(item)
+                    }
+                    return nil
+                }
+            }
+            .map {[AnimatableSectionModel<String, CustomElementType>(model: "", items: $0)]}
+            .bind(to: tableView.rx.items(dataSource: dataSource))
+            .disposed(by: disposeBag)
     }
     
     override func cellSelected(_ indexPath: IndexPath) {
