@@ -92,8 +92,19 @@ class CommunityLeaderCell: CommunityPageCell {
     }
     
     func setUp(with leader: ResponseAPIContentGetLeader) {
+        // avatar
         avatarImageView.setAvatar(urlString: leader.avatarUrl, namePlaceHolder: leader.username ?? leader.userId)
-        userNameLabel.text = leader.username
         avatarImageView.percent = leader.ratingPercent
+        
+        // username label
+        userNameLabel.text = leader.username
+        
+        // point
+        pointsCountLabel.text = "\(leader.rating)"
+        percentsCountLabel.text = "\(leader.ratingPercent.rounded(numberOfDecimalPlaces: 2, rule: .up) * 100)"
+        
+        #warning("description missing")
+        
+        #warning("vote button")
     }
 }

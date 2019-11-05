@@ -22,7 +22,7 @@ class LeadersListFetcher: ListFetcher<ResponseAPIContentGetLeader> {
     }
     
     override var request: Single<[ResponseAPIContentGetLeader]> {
-//        return Single<[ResponseAPIContentGetLeader]>.just([])
+//        return ResponseAPIContentGetLeaders.singleWithMockData()
 //            .delay(0.8, scheduler: MainScheduler.instance)
         return RestAPIManager.instance.getLeaders(communityId: communityId, sequenceKey: sequenceKey, query: query)
             .map {$0.items}
