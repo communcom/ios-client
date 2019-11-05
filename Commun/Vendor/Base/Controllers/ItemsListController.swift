@@ -13,7 +13,7 @@ import RxSwift
 import RxDataSources
 
 protocol ItemsListController {
-    associatedtype T: Decodable & Equatable & IdentifiableType
+    associatedtype T: ListItemType
     var fetcher: ListFetcher<T> {get set}
     var disposeBag: DisposeBag {get}
 }
