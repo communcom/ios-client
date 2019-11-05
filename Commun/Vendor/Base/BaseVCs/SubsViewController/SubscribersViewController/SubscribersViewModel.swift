@@ -9,12 +9,15 @@
 import Foundation
 import CyberSwift
 
-class SubscribersViewModel: ListViewModel<ResponseAPIContentResolveProfile> {
+class SubscribersViewModel: ListViewModel<ResponseAPIContentResolveProfile>, ProfilesListController {
     convenience init(userId: String? = nil, communityId: String? = nil) {
         let fetcher = SubscribersListFetcher()
         fetcher.userId = userId
         fetcher.communityId = communityId
         self.init(fetcher: fetcher)
-        defer {fetchNext()}
+        defer {
+            fetchNext()
+            observeProfileChange()
+        }
     }
 }

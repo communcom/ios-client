@@ -14,24 +14,24 @@ import RxDataSources
 
 protocol ItemsListController {
     associatedtype T: Decodable & Equatable & IdentifiableType
-    var items: BehaviorRelay<[T]> {get set}
+    var fetcher: ListFetcher<T> {get set}
     var disposeBag: DisposeBag {get}
 }
 
 extension ItemsListController {
     func updateItem(_ updatedItem: T) {
-        var newItems = items.value
+        var newItems = fetcher.items.value
         guard let index = newItems.firstIndex(where: {$0.identity == updatedItem.identity}) else {return}
         newItems[index] = updatedItem
         UIView.setAnimationsEnabled(false)
-        items.accept(newItems)
+        fetcher.items.accept(newItems)
         UIView.setAnimationsEnabled(true)
     }
     
     func deleteItem(_ deletedItem: T) {
-        let newItems = items.value.filter {$0.identity != deletedItem.identity}
+        let newItems = fetcher.items.value.filter {$0.identity != deletedItem.identity}
         UIView.setAnimationsEnabled(false)
-        items.accept(newItems)
+        fetcher.items.accept(newItems)
         UIView.setAnimationsEnabled(true)
     }
 }
@@ -107,4 +107,16 @@ extension CommunitiesListController {
     }
 }
 
+protocol ProfilesListController: ItemsListController where T == ResponseAPIContentResolveProfile {}
 
+extension ProfilesListController {
+    func observeProfileChange() {
+        NotificationCenter.default.rx.notification(.init(rawValue: ProfileControllerProfileDidChangeNotification))
+            .subscribe(onNext: {notification in
+                guard let newCommunity = notification.object as? ResponseAPIContentResolveProfile
+                    else {return}
+                self.updateItem(newCommunity)
+            })
+            .disposed(by: disposeBag)
+    }
+}

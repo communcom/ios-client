@@ -13,7 +13,9 @@ import RxDataSources
 
 class ListViewModel<T: ListItemType>: BaseViewModel {
     // MARK: - Properties
-    var items: BehaviorRelay<[T]>
+    var items: BehaviorRelay<[T]> {
+        fetcher.items
+    }
     public var state: BehaviorRelay<ListFetcherState> {
         return fetcher.state
     }
@@ -24,7 +26,6 @@ class ListViewModel<T: ListItemType>: BaseViewModel {
     // MARK: - Methods
     init(fetcher: ListFetcher<T>) {
         self.fetcher = fetcher
-        self.items = self.fetcher.items
     }
     
     func fetchNext(forceRetry: Bool = false) {

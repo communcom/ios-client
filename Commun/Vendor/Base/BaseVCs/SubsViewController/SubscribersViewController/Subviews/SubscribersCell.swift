@@ -19,11 +19,6 @@ class SubscribersCell: SubsItemCell, ProfileController {
     }
     var profile: ResponseAPIContentResolveProfile?
     
-    override func observe() {
-        super.observe()
-        observeProfileChange()
-    }
-    
     func setUp(with profile: ResponseAPIContentResolveProfile) {
         self.profile = profile
         avatarImageView.setAvatar(urlString: profile.avatarUrl, namePlaceHolder: profile.username)

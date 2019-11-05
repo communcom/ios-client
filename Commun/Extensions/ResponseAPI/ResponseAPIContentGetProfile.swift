@@ -16,6 +16,6 @@ extension ResponseAPIContentGetProfile: Equatable, IdentifiableType {
     }
     
     public var identity: String {
-        return userId + "/" + (username ?? "")
+        return userId + "/" + username
     }
 }
