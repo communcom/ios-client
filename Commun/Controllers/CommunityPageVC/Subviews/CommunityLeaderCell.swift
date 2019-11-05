@@ -9,8 +9,8 @@
 import Foundation
 
 class CommunityLeaderCell: CommunityPageCell {
-    lazy var avatarImageView: MyAvatarImageView = {
-        let imageView = MyAvatarImageView(size: 50)
+    lazy var avatarImageView: LeaderAvatarImageView = {
+        let imageView = LeaderAvatarImageView(size: 54)
         return imageView
     }()
     
@@ -91,5 +91,9 @@ class CommunityLeaderCell: CommunityPageCell {
         descriptionLabel.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(inset: 16), excludingEdge: .top)
     }
     
-    
+    func setUp(with leader: ResponseAPIContentGetLeader) {
+        avatarImageView.setAvatar(urlString: leader.avatarUrl, namePlaceHolder: leader.username ?? leader.userId)
+        userNameLabel.text = leader.username
+        avatarImageView.percent = leader.ratingPercent
+    }
 }

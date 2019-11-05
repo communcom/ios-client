@@ -11,6 +11,12 @@ import RxSwift
 import SDWebImage
 
 class MyAvatarImageView: MyView {
+    var imageViewInsets: UIEdgeInsets {
+        return .zero
+    }
+    
+    var originSize: CGFloat!
+    
     private lazy var imageView: UIImageView = {
         let imageView = UIImageView(forAutoLayout: ())
         imageView.image = .placeholder
@@ -21,6 +27,7 @@ class MyAvatarImageView: MyView {
     
     convenience init(size: CGFloat) {
         self.init(width: size, height: size)
+        originSize = size
         cornerRadius = size / 2
     }
     
@@ -28,7 +35,7 @@ class MyAvatarImageView: MyView {
         super.commonInit()
         backgroundColor = .clear
         addSubview(imageView)
-        imageView.autoPinEdgesToSuperviewEdges()
+        imageView.autoPinEdgesToSuperviewEdges(with: imageViewInsets)
     }
     
     var image: UIImage? {
