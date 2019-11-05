@@ -12,10 +12,14 @@ import CyberSwift
 class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionViewDelegateFlowLayout {
     // MARK: - Properties
     var profile: ResponseAPIContentGetProfile?
-    
+
     // MARK: - Subviews
     lazy var followButton = CommunButton.default(label: "follow".localized().uppercaseFirst)
-    
+
+    lazy var separatorForCommunities: UIView = {
+        return UIView(height: 2, backgroundColor: #colorLiteral(red: 0.9599978328, green: 0.966491878, blue: 0.9829974771, alpha: 1))
+    }()
+
     lazy var followersCountLabel: UILabel = {
         let label = UILabel.with(text: Double(10000000).kmFormatted, textSize: 15, weight: .bold)
         return label
@@ -55,7 +59,7 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
         
         addSubview(followersCountLabel)
         followersCountLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
-        followersCountLabel.autoPinEdge(.top, to: .bottom, of: descriptionLabel, withOffset: 24)
+        followersCountLabel.autoPinEdge(.top, to: .bottom, of: descriptionLabel, withOffset: 22)
         followersCountLabel.autoAlignAxis(.horizontal, toSameAxisOf: usersStackView)
         
         let followersLabel = UILabel.with(text: "followers".localized().uppercaseFirst, textSize: 12, weight: .semibold, textColor: UIColor(hexString: "#A5A7BD")!)
@@ -89,7 +93,7 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
         friendLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
         friendLabel.autoPinEdge(.leading, to: .trailing, of: usersStackView, withOffset: 5)
         
-        let separator1 = UIView(height: 1, backgroundColor: #colorLiteral(red: 0.9599978328, green: 0.966491878, blue: 0.9829974771, alpha: 1))
+        let separator1 = UIView(height: 2, backgroundColor: #colorLiteral(red: 0.9599978328, green: 0.966491878, blue: 0.9829974771, alpha: 1))
         addSubview(separator1)
         separator1.autoPinEdge(toSuperviewEdge: .leading)
         separator1.autoPinEdge(toSuperviewEdge: .trailing)
@@ -117,7 +121,7 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
         addSubview(communitiesMutualCountLabel)
         communitiesMutualCountLabel.autoPinEdge(.leading, to: .trailing, of: openBraceLabel)
         communitiesMutualCountLabel.autoAlignAxis(.horizontal, toSameAxisOf: communitiesCountLabel)
-        
+
         let mutualLabel = UILabel.with(text: "mutual".localized().uppercaseFirst + ")", textSize: 15, weight: .semibold, textColor: .a5a7bd)
         addSubview(mutualLabel)
         mutualLabel.autoPinEdge(.leading, to: .trailing, of: communitiesMutualCountLabel, withOffset: 2)
@@ -125,19 +129,19 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
         
         communitiesCollectionView.register(SubscriptionCommunityCell.self, forCellWithReuseIdentifier: "SubscriptionCommunityCell")
         communitiesCollectionView.contentInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
+
         addSubview(communitiesCollectionView)
         communitiesCollectionView.autoPinEdge(.top, to: .bottom, of: communitiesCountLabel, withOffset: 16)
         communitiesCollectionView.autoPinEdge(toSuperviewEdge: .leading)
         communitiesCollectionView.autoPinEdge(toSuperviewEdge: .trailing)
-        
-        let separator2 = UIView(height: 1, backgroundColor: #colorLiteral(red: 0.9599978328, green: 0.966491878, blue: 0.9829974771, alpha: 1))
-        addSubview(separator2)
-        separator2.autoPinEdge(.top, to: .bottom, of: communitiesCollectionView, withOffset: 4)
-        separator2.autoPinEdge(toSuperviewEdge: .leading)
-        separator2.autoPinEdge(toSuperviewEdge: .trailing)
+
+        addSubview(separatorForCommunities)
+        separatorForCommunities.autoPinEdge(.top, to: .bottom, of: communitiesCollectionView, withOffset: 4)
+        separatorForCommunities.autoPinEdge(toSuperviewEdge: .leading)
+        separatorForCommunities.autoPinEdge(toSuperviewEdge: .trailing)
         
         addSubview(segmentedControl)
-        segmentedControl.autoPinEdge(.top, to: .bottom, of: separator2)
+        segmentedControl.autoPinEdge(.top, to: .bottom, of: separatorForCommunities)
         segmentedControl.autoPinEdge(toSuperviewEdge: .leading)
         segmentedControl.autoPinEdge(toSuperviewEdge: .trailing)
         
@@ -154,6 +158,31 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
         ]
         
         observeProfileChange()
+    }
+
+    private func needShowCommunites(_ show: Bool) {
+            if show && communitiesCollectionView.superview == nil {
+            addSubview(communitiesCollectionView)
+            communitiesCollectionView.autoPinEdge(.top, to: .bottom, of: communitiesCountLabel, withOffset: 16)
+            communitiesCollectionView.autoPinEdge(toSuperviewEdge: .leading)
+            communitiesCollectionView.autoPinEdge(toSuperviewEdge: .trailing)
+
+            addSubview(separatorForCommunities)
+            separatorForCommunities.autoPinEdge(.top, to: .bottom, of: communitiesCollectionView, withOffset: 4)
+            separatorForCommunities.autoPinEdge(toSuperviewEdge: .leading)
+            separatorForCommunities.autoPinEdge(toSuperviewEdge: .trailing)
+
+            addSubview(segmentedControl)
+            segmentedControl.autoPinEdge(.top, to: .bottom, of: separatorForCommunities)
+
+        } else {
+            communitiesCollectionView.removeFromSuperview()
+            communitiesCollectionView.removeAllConstraints()
+            separatorForCommunities.removeFromSuperview()
+            separatorForCommunities.removeAllConstraints()
+            segmentedControl.autoPinEdge(.top, to: .bottom, of: communitiesCountLabel, withOffset: 16)
+        }
+        layoutIfNeeded()
     }
     
     func setUp(with userProfile: ResponseAPIContentGetProfile) {
@@ -195,6 +224,8 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
         followingsCountLabel.text = "\(userProfile.subscriptions?.usersCount ?? 0)"
         communitiesCountLabel.text = "\(userProfile.subscriptions?.communitiesCount ?? 0)"
         communitiesMutualCountLabel.text = "\(userProfile.commonCommunitiesCount ?? 0)"
+
+        needShowCommunites(userProfile.commonCommunitiesCount ?? 0 > 0)
         
         // friends
         #warning("fix later")

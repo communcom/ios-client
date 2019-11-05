@@ -55,9 +55,9 @@ class SubscriptionCommunityCell: MyCollectionViewCell, CommunityController {
         
         containerView.addSubview(joinButton)
         joinButton.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 10, bottom: 10, right: 10), excludingEdge: .top)
-        
+
         containerView.addShadow(ofColor: UIColor(red: 176, green: 176, blue: 204)!, radius: 25, offset: CGSize(width: 0, height: 10), opacity: 0.25)
-        
+
         joinButton.addTarget(self, action: #selector(joinButtonDidTouch), for: .touchUpInside)
     }
     

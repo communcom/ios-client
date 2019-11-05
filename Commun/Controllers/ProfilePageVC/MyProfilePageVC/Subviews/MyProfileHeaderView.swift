@@ -31,21 +31,33 @@ class MyProfileHeaderView: UserProfileHeaderView {
         
         // add bio
         addSubview(addBioButton)
-        addBioButton.autoPinEdge(.top, to: .top, of: descriptionLabel)
-        addBioButton.autoPinEdge(.leading, to: .leading, of: descriptionLabel)
-        addBioButton.autoPinEdge(.trailing, to: .trailing, of: descriptionLabel)
-        
-        addBioButton.bottomAnchor.constraint(lessThanOrEqualTo: followersCountLabel.topAnchor, constant: -23)
-            .isActive = true
         
         // bind
         bind()
     }
+
+    private func configureAddBioButtonConstraints() {
+        addBioButton.autoPinEdge(.top, to: .top, of: descriptionLabel)
+        addBioButton.autoPinEdge(.leading, to: .leading, of: descriptionLabel)
+        addBioButton.autoPinEdge(.trailing, to: .trailing, of: descriptionLabel)
+        addBioButton.bottomAnchor.constraint(lessThanOrEqualTo: followersCountLabel.topAnchor, constant: -23)
+            .isActive = true
+    }
     
     func bind() {
-        descriptionLabel.rx.observe(String.self, "text")
-            .map {$0?.isEmpty == false}
-            .bind(to: addBioButton.rx.isHidden)
-            .disposed(by: disposeBag)
+        descriptionLabel.rx.observe(String.self, "text").subscribe { event in
+            if let text = event.element, let desc = text, !desc.isEmpty {
+                self.addBioButton.isHidden = true
+                self.addBioButton.removeAllConstraints()
+            } else {
+                self.addBioButton.isHidden = false
+                self.configureAddBioButtonConstraints()
+            }
+        }.disposed(by: disposeBag)
+
+//        descriptionLabel.rx.observe(String.self, "text")
+//            .map {$0?.isEmpty == false}
+//            .bind(to: addBioButton.rx.isHidden)
+//            .disposed(by: disposeBag)
     }
 }

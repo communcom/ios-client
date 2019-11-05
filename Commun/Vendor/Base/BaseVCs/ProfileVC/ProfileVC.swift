@@ -15,6 +15,7 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
     
     // MARK: - Constants
     let coverHeight: CGFloat = 180
+    let coverVisibleHeight: CGFloat = 150
     let disposeBag = DisposeBag()
     
     // MARK: - Properties
@@ -27,6 +28,11 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
     
     lazy var coverImageView: UIImageView = {
         let imageView = UIImageView(height: coverHeight)
+        let gradient = CAGradientLayer()
+        gradient.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: coverHeight)
+        gradient.colors = [UIColor.black.withAlphaComponent(0.3).cgColor, UIColor.clear.cgColor]
+        gradient.locations = [0.0, 1.0]
+        imageView.layer.insertSublayer(gradient, at: 0)
         imageView.image = .placeholder
         return imageView
     }()
@@ -40,6 +46,7 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
         tableView.backgroundColor = .clear
         tableView.insetsContentViewsToSafeArea = false
         tableView.contentInsetAdjustmentBehavior = .never
+        tableView.showsVerticalScrollIndicator = false
         return tableView
     }()
     
@@ -57,11 +64,13 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
         navigationItem.leftBarButtonItem = leftBarButton
         
         view.addSubview(coverImageView)
-        coverImageView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .bottom)
+        coverImageView.autoPinEdge(.top, to: .bottom, of: view)
+        coverImageView.autoCenterInSuperview()
+//        coverImageView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .bottom)
         
         view.addSubview(tableView)
         tableView.autoPinEdgesToSuperviewEdges()
-        tableView.contentInset = UIEdgeInsets(top: coverHeight - 24, left: 0, bottom: 0, right: 0)
+        tableView.contentInset = UIEdgeInsets(top: coverVisibleHeight, left: 0, bottom: 0, right: 0)
         
         // setup datasource
         tableView.register(BasicPostCell.self, forCellReuseIdentifier: "BasicPostCell")
@@ -76,6 +85,7 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
             self.reload()
         }
         tableView.subviews.first(where: {$0 is ESRefreshHeaderView})?.alpha = 0
+        navigationController?.navigationBar.barTintColor = .white
     }
     
     override func bind() {
@@ -137,16 +147,12 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+
         if tableView.contentOffset.y >= -43 {
             showTitle(true)
-        }
-        else {
+        } else {
             showTitle(false)
         }
-    }
-    
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
     }
     
     override func viewDidLayoutSubviews() {
@@ -179,6 +185,7 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
             self.navigationController?.navigationBar.tintColor =
                 show ? .appMainColor: .white
             self.backButton.tintColor = show ? .black: .white
+            self.navigationController?.navigationBar.barStyle = show ? .default : .black
         }
     }
     

@@ -62,7 +62,7 @@ class ProfileHeaderView: MyTableHeaderView {
         nameLabel.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 10)
         
         addSubview(joinedDateLabel)
-        joinedDateLabel.autoPinEdge(.top, to: .bottom, of: nameLabel)
+        joinedDateLabel.autoPinEdge(.top, to: .bottom, of: nameLabel, withOffset: 3)
         joinedDateLabel.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 10)
         
         addSubview(descriptionLabel)
