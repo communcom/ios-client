@@ -9,8 +9,8 @@
 import Foundation
 
 class CommunityLeaderCell: CommunityPageCell {
-    lazy var avatarImageView: MyAvatarImageView = {
-        let imageView = MyAvatarImageView(size: 50)
+    lazy var avatarImageView: LeaderAvatarImageView = {
+        let imageView = LeaderAvatarImageView(size: 56)
         return imageView
     }()
     
@@ -91,5 +91,20 @@ class CommunityLeaderCell: CommunityPageCell {
         descriptionLabel.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(inset: 16), excludingEdge: .top)
     }
     
-    
+    func setUp(with leader: ResponseAPIContentGetLeader) {
+        // avatar
+        avatarImageView.setAvatar(urlString: leader.avatarUrl, namePlaceHolder: leader.username ?? leader.userId)
+        avatarImageView.percent = leader.ratingPercent
+        
+        // username label
+        userNameLabel.text = leader.username
+        
+        // point
+        pointsCountLabel.text = "\(leader.rating)"
+        percentsCountLabel.text = "\(leader.ratingPercent.rounded(numberOfDecimalPlaces: 2, rule: .up) * 100)"
+        
+        #warning("description missing")
+        
+        #warning("vote button")
+    }
 }

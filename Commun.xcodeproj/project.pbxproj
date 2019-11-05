@@ -283,6 +283,7 @@
 		BC3694F923699B8600B2E078 /* ArticleEditorVC+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3694F823699B8600B2E078 /* ArticleEditorVC+Actions.swift */; };
 		BC3694FB23699C0F00B2E078 /* BasicEditorVC+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3694FA23699C0F00B2E078 /* BasicEditorVC+Actions.swift */; };
 		BC3D97612350384E00421718 /* ResponseAPIContentGetPosts.json in Resources */ = {isa = PBXBuildFile; fileRef = BC3D97602350384E00421718 /* ResponseAPIContentGetPosts.json */; };
+		BC401E3C2371143F00A53788 /* LeaderAvatarImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC401E3B2371143F00A53788 /* LeaderAvatarImageView.swift */; };
 		BC48FC40236682F90049C4F4 /* ResponseAPIContentGetLeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC48FC3F236682F90049C4F4 /* ResponseAPIContentGetLeader.swift */; };
 		BC48FC42236689DC0049C4F4 /* LeadersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC48FC41236689DC0049C4F4 /* LeadersViewModel.swift */; };
 		BC48FC4423668A080049C4F4 /* LeadersListFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC48FC4323668A080049C4F4 /* LeadersListFetcher.swift */; };
@@ -304,6 +305,7 @@
 		BC74A18223643C6400D94EF2 /* CommunityController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC74A18123643C6400D94EF2 /* CommunityController.swift */; };
 		BC757EF92356E6EC00CB4ADE /* PostHeaderTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC757EF82356E6EC00CB4ADE /* PostHeaderTextView.swift */; };
 		BC83F26B2369322400B5719D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B1EA02D52289734800835244 /* Localizable.strings */; };
+		BCA0039B23714920002A68BA /* ResponseAPIContentGetLeaders.json in Resources */ = {isa = PBXBuildFile; fileRef = BCA0039A23714920002A68BA /* ResponseAPIContentGetLeaders.json */; };
 		BCA97113236004F500AE37E1 /* CommentsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA97112236004F500AE37E1 /* CommentsViewModel.swift */; };
 		BCA971172360301100AE37E1 /* NotificationsListFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA971162360301100AE37E1 /* NotificationsListFetcher.swift */; };
 		BCA9711B236033D100AE37E1 /* ResponseAPIContentGetCommunity.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA9711A236033D100AE37E1 /* ResponseAPIContentGetCommunity.swift */; };
@@ -660,6 +662,7 @@
 		BC3694F823699B8600B2E078 /* ArticleEditorVC+Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ArticleEditorVC+Actions.swift"; sourceTree = "<group>"; };
 		BC3694FA23699C0F00B2E078 /* BasicEditorVC+Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BasicEditorVC+Actions.swift"; sourceTree = "<group>"; };
 		BC3D97602350384E00421718 /* ResponseAPIContentGetPosts.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ResponseAPIContentGetPosts.json; sourceTree = "<group>"; };
+		BC401E3B2371143F00A53788 /* LeaderAvatarImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderAvatarImageView.swift; sourceTree = "<group>"; };
 		BC48FC3F236682F90049C4F4 /* ResponseAPIContentGetLeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseAPIContentGetLeader.swift; sourceTree = "<group>"; };
 		BC48FC41236689DC0049C4F4 /* LeadersViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeadersViewModel.swift; sourceTree = "<group>"; };
 		BC48FC4323668A080049C4F4 /* LeadersListFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeadersListFetcher.swift; sourceTree = "<group>"; };
@@ -680,6 +683,7 @@
 		BC702C95236298CC00D9E88A /* CommunityAboutCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityAboutCell.swift; sourceTree = "<group>"; };
 		BC74A18123643C6400D94EF2 /* CommunityController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityController.swift; sourceTree = "<group>"; };
 		BC757EF82356E6EC00CB4ADE /* PostHeaderTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostHeaderTextView.swift; sourceTree = "<group>"; };
+		BCA0039A23714920002A68BA /* ResponseAPIContentGetLeaders.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ResponseAPIContentGetLeaders.json; sourceTree = "<group>"; };
 		BCA97112236004F500AE37E1 /* CommentsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentsViewModel.swift; sourceTree = "<group>"; };
 		BCA971162360301100AE37E1 /* NotificationsListFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsListFetcher.swift; sourceTree = "<group>"; };
 		BCA9711A236033D100AE37E1 /* ResponseAPIContentGetCommunity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseAPIContentGetCommunity.swift; sourceTree = "<group>"; };
@@ -822,6 +826,7 @@
 				BCE7F56F2359A44A0008D91B /* ResponseAPIContentGetComments.json */,
 				BCF74A5B23617D3A00B91089 /* ResponseAPIContentGetSubscribers.json */,
 				BCF74A63236182B200B91089 /* ResponseAPIContentGetCommunity.json */,
+				BCA0039A23714920002A68BA /* ResponseAPIContentGetLeaders.json */,
 			);
 			path = Mocking;
 			sourceTree = "<group>";
@@ -1845,6 +1850,7 @@
 				BCF74A6623618D9000B91089 /* CMSegmentedControl.swift */,
 				BC6B765A236BC58600A7AF2A /* ErrorView.swift */,
 				BC22BBC9236C082600F40658 /* ContentHuggingScrollView.swift */,
+				BC401E3B2371143F00A53788 /* LeaderAvatarImageView.swift */,
 			);
 			path = UIViews;
 			sourceTree = "<group>";
@@ -2133,6 +2139,7 @@
 				3B24F85F22F36A7100B7091C /* Communities.storyboard in Resources */,
 				B1EA02DA2289882A00835244 /* SF-Pro-Display-BoldItalic.otf in Resources */,
 				B1EA02E52289882A00835244 /* SF-Pro-Display-Thin.otf in Resources */,
+				BCA0039B23714920002A68BA /* ResponseAPIContentGetLeaders.json in Resources */,
 				B1EA02EB2289882A00835244 /* SF-Pro-Text-Heavy.otf in Resources */,
 				B1EA02DD2289882A00835244 /* SF-Pro-Display-Light.otf in Resources */,
 				571B14F9223A935C00630C8F /* Main.storyboard in Resources */,
@@ -2408,6 +2415,7 @@
 				57840A202240DDEB00338FD5 /* Container.swift in Sources */,
 				BC016D4E235EA1DE00F1319F /* BaseViewController.swift in Sources */,
 				3BE85D262327A50200C7E7F6 /* GridView.swift in Sources */,
+				BC401E3C2371143F00A53788 /* LeaderAvatarImageView.swift in Sources */,
 				3B289B9C2346E7FC00598407 /* UIImage+PureLayout.swift in Sources */,
 				BC31BA55235EBD7C0007D89A /* ProfileVC.swift in Sources */,
 				BC6B7659236AE14500A7AF2A /* CommunityPageCell.swift in Sources */,

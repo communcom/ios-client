@@ -32,6 +32,7 @@ extension UserProfilePageVC: UICollectionViewDelegateFlowLayout {
             .subscribe(onNext: {[weak self] (state) in
                 switch state {
                 case .loading(let isLoading):
+                    self?.communitiesCollectionView.heightConstraint?.constant = 187
                     if isLoading {
                         self?.communitiesCollectionView.showLoading()
                     }
@@ -39,6 +40,7 @@ extension UserProfilePageVC: UICollectionViewDelegateFlowLayout {
                         self?.communitiesCollectionView.hideLoading()
                     }
                 case .listEnded:
+                    self?.communitiesCollectionView.heightConstraint?.constant = 187
                     self?.communitiesCollectionView.hideLoading()
                 case .listEmpty:
                     self?.communitiesCollectionView.heightConstraint?.constant = 0

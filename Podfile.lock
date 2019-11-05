@@ -248,7 +248,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   CyberSwift:
-    :commit: 530b328a69f35f8806e562f9752280015ea5ec32
+    :commit: 83f2d8566da59f29fc381e4f6f8dd214286b6c79
     :git: https://github.com/GolosChain/cyberSwift.git
   eosswift:
     :commit: d919b66d452de46568b94745451111123af80ca9
@@ -320,4 +320,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 23c7c745381348f98366255ab8fc442afa89025f
 
-COCOAPODS: 1.8.4
+COCOAPODS: 1.8.3
