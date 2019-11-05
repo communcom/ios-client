@@ -111,7 +111,9 @@ class ListFetcher<T: ListItemType> {
     }
     
     func join(newItems items: [T]) -> [T] {
-        var newList = items.filter {!self.items.value.contains($0)}
+        var newList = items.filter { (item) -> Bool in
+            !self.items.value.contains {$0.identity == item.identity}
+        }
         newList = self.items.value + newList
         return newList
     }
