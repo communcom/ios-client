@@ -11,6 +11,7 @@ import RxSwift
 import CyberSwift
 
 let CommunityControllerCommunityDidChangeNotification = "CommunityControllerCommunityDidChangeNotification"
+let CommunityControllerCommunityDeletedNotification = "CommunityControllerCommunityDeletedNotification"
 
 protocol CommunityType: Equatable {
     var communityId: String {get}
@@ -116,7 +117,19 @@ extension CommunityController {
     }
     
     func animateJoin() {
+        CATransaction.begin()
         
+        let moveDownAnim = CABasicAnimation(keyPath: "transform.scale")
+        moveDownAnim.byValue = 1.2
+        moveDownAnim.autoreverses = true
+        joinButton.layer.add(moveDownAnim, forKey: "transform.scale")
+        
+        let fadeAnim = CABasicAnimation(keyPath: "opacity")
+        fadeAnim.byValue = -1
+        fadeAnim.autoreverses = true
+        joinButton.layer.add(fadeAnim, forKey: "Fade")
+        
+        CATransaction.commit()
     }
     
     func setIsSubscribed(_ value: Bool) {
