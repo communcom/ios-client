@@ -48,7 +48,10 @@ class FeedPageVC: PostsViewController {
         tableView.estimatedRowHeight = 600
         // dismiss keyboard when dragging
         tableView.keyboardDismissMode = .onDrag
-
+    }
+    
+    override func bind() {
+        super.bind()
         tableView.rx.willBeginDragging.subscribe({ _ in
             self.lastContentOffset = self.tableView.contentOffset.y
         }).disposed(by: disposeBag)

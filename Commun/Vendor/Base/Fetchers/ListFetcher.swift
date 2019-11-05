@@ -98,14 +98,15 @@ class ListFetcher<T: ListItemType> {
             }, onError: { (error) in
                 self.state.accept(.error(error: error))
             })
-            .asDriver(onErrorJustReturn: [])
             .map {self.join(newItems: $0)}
-            .do(onNext: { (items) in
+            .do(onSuccess: { (items) in
                 if items.count == 0 {
                     self.state.accept(.listEmpty)
                 }
             })
-            .drive(items)
+            .subscribe(onSuccess: { (items) in
+                self.items.accept(items)
+            })
             .disposed(by: disposeBag)
     }
     
