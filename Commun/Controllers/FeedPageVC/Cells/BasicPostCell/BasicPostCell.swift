@@ -9,15 +9,10 @@
 import UIKit
 
 final class BasicPostCell: PostCell {
-    // MARK: - Constants
-    let embedViewDefaultHeight: CGFloat = 216.5
-    
-    // MARK: - Properties
-    
     // MARK: - Subviews
-    lazy var contentTextView   = UITextView(forExpandable: ())
-    lazy var gridViewContainerView = UIView(height: embedViewDefaultHeight)
-    lazy var gridView       = GridView(forAutoLayout: ())
+    lazy var contentTextView        = UITextView(forExpandable: ())
+    lazy var gridViewContainerView  = UIView(forAutoLayout: ())
+    lazy var gridView               = GridView(forAutoLayout: ())
 
     private func configureTextView() {
         contentTextView.textContainerInset = UIEdgeInsets.zero
@@ -59,7 +54,7 @@ final class BasicPostCell: PostCell {
             var attributedText = firstSentence
                 .toAttributedString(currentAttributes: defaultAttributes)
             if attributedText.length > 150 {
-                let moreText = NSAttributedString(string: " \("more".localized())...", attributes: [.foregroundColor: UIColor.appMainColor, .font: UIFont.systemFont(ofSize: 14)])
+                let moreText = NSAttributedString(string: "\n\("Read more".localized())...", attributes: [.foregroundColor: UIColor.appMainColor, .font: UIFont.systemFont(ofSize: 14)])
                 attributedText = attributedText.attributedSubstring(from: NSMakeRange(0, 150))
                 mutableAS.append(moreText)
             }
