@@ -83,3 +83,28 @@ extension CommentsListController {
     }
 }
 
+protocol CommunitiesListController: ItemsListController where T == ResponseAPIContentGetCommunity {}
+
+extension CommunitiesListController {
+    func observeCommunityChange() {
+        NotificationCenter.default.rx.notification(.init(rawValue: CommunityControllerCommunityDidChangeNotification))
+            .subscribe(onNext: {notification in
+                guard let newCommunity = notification.object as? ResponseAPIContentGetCommunity
+                    else {return}
+                self.updateItem(newCommunity)
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    func observeCommunityDeleted() {
+        NotificationCenter.default.rx.notification(.init(rawValue: CommunityControllerCommunityDeletedNotification))
+            .subscribe(onNext: {notification in
+                guard let deletedCommunity = notification.object as? ResponseAPIContentGetCommunity
+                    else {return}
+                self.deleteItem(deletedCommunity)
+            })
+            .disposed(by: disposeBag)
+    }
+}
+
+
