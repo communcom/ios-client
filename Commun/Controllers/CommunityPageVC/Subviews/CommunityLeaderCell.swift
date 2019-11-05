@@ -10,7 +10,7 @@ import Foundation
 
 class CommunityLeaderCell: CommunityPageCell {
     lazy var avatarImageView: LeaderAvatarImageView = {
-        let imageView = LeaderAvatarImageView(size: 54)
+        let imageView = LeaderAvatarImageView(size: 56)
         return imageView
     }()
     
