@@ -8,7 +8,9 @@
 
 import Foundation
 
-class CommunityLeaderCell: CommunityPageCell {
+class CommunityLeaderCell: CommunityPageCell, LeaderController {
+    var leader: ResponseAPIContentGetLeader?
+    
     lazy var avatarImageView: LeaderAvatarImageView = {
         let imageView = LeaderAvatarImageView(size: 56)
         return imageView
@@ -84,6 +86,7 @@ class CommunityLeaderCell: CommunityPageCell {
         cardView.addSubview(voteButton)
         voteButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
         voteButton.autoAlignAxis(.horizontal, toSameAxisOf: namePointsContainerView)
+        voteButton.addTarget(self, action: #selector(voteButtonDidTouch), for: .touchUpInside)
         
         // descriptionLabel
         cardView.addSubview(descriptionLabel)
@@ -91,7 +94,13 @@ class CommunityLeaderCell: CommunityPageCell {
         descriptionLabel.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(inset: 16), excludingEdge: .top)
     }
     
+    override func observe() {
+        super.observe()
+        observeLeaderChange()
+    }
+    
     func setUp(with leader: ResponseAPIContentGetLeader) {
+        self.leader = leader
         // avatar
         avatarImageView.setAvatar(urlString: leader.avatarUrl, namePlaceHolder: leader.username ?? leader.userId)
         avatarImageView.percent = leader.ratingPercent
@@ -105,6 +114,14 @@ class CommunityLeaderCell: CommunityPageCell {
         
         #warning("description missing")
         
-        #warning("vote button")
+        // voteButton
+        let voted = leader.isVoted
+        voteButton.backgroundColor = voted ? #colorLiteral(red: 0.9525656104, green: 0.9605062604, blue: 0.9811610579, alpha: 1): .appMainColor
+        voteButton.setTitleColor(voted ? .appMainColor: .white , for: .normal)
+        voteButton.setTitle(voted ? "voted".localized().uppercaseFirst : "vote".localized().uppercaseFirst, for: .normal)
+    }
+    
+    @objc func voteButtonDidTouch() {
+        toggleVote()
     }
 }
