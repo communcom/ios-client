@@ -24,4 +24,20 @@ class SubscriptionsViewModel: ListViewModel<ResponseAPIContentGetSubscriptionsIt
             fetchNext()
         }
     }
+    
+    override func observeItemChange() {
+        NotificationCenter.default.rx.notification(.init(rawValue: "\(Self.self)DidChange"))
+            .subscribe(onNext: { (notification) in
+                if let newItem = notification.object as? ResponseAPIContentGetSubscriptionsUser
+                {
+                    self.updateItem(ResponseAPIContentGetSubscriptionsItem.user(newItem))
+                }
+                if let newItem = notification.object as? ResponseAPIContentGetSubscriptionsCommunity
+                {
+                    self.updateItem(ResponseAPIContentGetSubscriptionsItem.community(newItem))
+                }
+                return
+            })
+            .disposed(by: disposeBag)
+    }
 }
