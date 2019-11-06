@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SafariServices
 
 final class BasicPostCell: PostCell {
     // MARK: - Subviews
@@ -20,6 +21,7 @@ final class BasicPostCell: PostCell {
         contentTextView.font = .systemFont(ofSize: 14)
         contentTextView.dataDetectorTypes = .link
         contentTextView.isEditable = false
+        contentTextView.delegate = self
     }
 
     // MARK: - Layout
@@ -81,5 +83,13 @@ final class BasicPostCell: PostCell {
         else {
             gridViewContainerView.heightConstraint?.constant = 0
         }
+    }
+}
+
+extension BasicPostCell: UITextViewDelegate {
+    func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange) -> Bool {
+        let safariVC = SFSafariViewController(url: URL)
+        parentViewController?.present(safariVC, animated: true, completion: nil)
+        return false
     }
 }

@@ -66,7 +66,7 @@ extension UIImageView {
         addGestureRecognizer(tap)
     }
     
-    @objc func openViewer(gesture: UITapGestureRecognizer) {
+    @objc func openViewer(gesture: UITapGestureRecognizer?) {
         guard let image = image else {return}
         let appImage = ViewerImage.appImage(forImage: image)
         let viewer = AppImageViewer(originImage: image, photos: [appImage], animatedFromView: self)

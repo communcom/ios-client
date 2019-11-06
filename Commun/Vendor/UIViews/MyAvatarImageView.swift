@@ -15,7 +15,6 @@ class MyAvatarImageView: MyView {
         let imageView = UIImageView(forAutoLayout: ())
         imageView.image = .placeholder
         imageView.contentMode = .scaleAspectFill
-        imageView.addTapToViewer()
         return imageView
     }()
     

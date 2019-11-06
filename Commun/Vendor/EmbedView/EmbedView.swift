@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import WebKit
+import SafariServices
 
 class EmbedView: UIView {
     @IBOutlet weak private var contentView: UIView!
@@ -17,8 +19,28 @@ class EmbedView: UIView {
     @IBOutlet weak private var providerLabelView: UIView!
     @IBOutlet weak private var titlesView: UIView!
 
+    private lazy var webView: WKWebView = {
+        let webView = WKWebView()
+        webView.configuration.preferences.javaScriptEnabled = true
+        webView.configuration.allowsInlineMediaPlayback = true
+        webView.configuration.mediaTypesRequiringUserActionForPlayback = []
+        webView.backgroundColor = .black
+        webView.navigationDelegate = self
+        return webView
+    }()
+
+    private lazy var activityIndicator: UIActivityIndicatorView = {
+        let activity = UIActivityIndicatorView()
+        activity.hidesWhenStopped = true
+        activity.style = .white
+        return activity
+    }()
+
+    private var content: ResponseAPIContentBlock!
+
     init(content: ResponseAPIContentBlock) {
         super.init(frame: .zero)
+        self.content = content
         self.configureXib()
         self.configure(with: content)
     }
@@ -74,6 +96,8 @@ class EmbedView: UIView {
         let isNeedShowSubtitle = subtitle != nil
 
         coverImageView.isHidden = !isNeedShowImage
+        coverImageView.isUserInteractionEnabled = true
+        coverImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapAction)))
 
         if isNeedShowImage {
             if isNeedShowProvider {
@@ -89,7 +113,11 @@ class EmbedView: UIView {
         }
 
         if let url = URL(string: imageUrl ?? "") {
-            coverImageView.sd_setImageCachedError(with: url, completion: nil)
+            if url.path.lowercased().ends(with: ".gif") {
+                coverImageView.setImageDetectGif(with: imageUrl!)
+            } else {
+                coverImageView.sd_setImageCachedError(with: url, completion: nil)
+            }
         }
 
         if isNeedShowTitle {
@@ -97,6 +125,7 @@ class EmbedView: UIView {
             titlesView.autoPinEdge(toSuperviewEdge: .left)
             titlesView.autoPinEdge(toSuperviewEdge: .right)
             titlesView.autoPinEdge(toSuperviewEdge: .bottom)
+            titlesView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapAction)))
 
             titleLabel.autoPinEdge(toSuperviewEdge: .top, withInset: inset)
             titleLabel.autoPinEdge(toSuperviewEdge: .left, withInset: inset)
@@ -115,33 +144,72 @@ class EmbedView: UIView {
         }
 
         titleLabel.isHidden = !isNeedShowTitle
-//        subtitleLabel.isHidden = !isNeedShowSubtitle
         titlesView.isHidden = !isNeedShowTitle
 
         titleLabel.isHidden = content.attributes?.title == nil
         titleLabel.text = content.attributes?.title
-
-//        if content.type == "video" {
-//            providerLabelView.isHidden = content.attributes?.provider_name == nil
-//            providerNameLabel.text = content.attributes?.provider_name
-//            subtitleLabel.isHidden = content.attributes?.author == nil
-//            subtitleLabel.text = content.attributes?.author
-//        } else {
-//            providerLabelView.isHidden = true
-            subtitleLabel.isHidden = content.attributes?.url == nil
-//
-//        }
+        subtitleLabel.isHidden = content.attributes?.url == nil
     }
 
-    private func configureVideoEmbed(with content: ResponseAPIContentBlock) {
-
+    @objc private func tapAction() {
+        print(content.type)
+        if content.type == "video" {
+            if let urlString = parseEmbed(content.attributes?.html), let url = URL(string: urlString) {
+                coverImageView.isHidden = true
+                titlesView.isHidden = true
+                addSubview(webView)
+                webView.autoPinEdgesToSuperviewEdges()
+                addSubview(activityIndicator)
+                activityIndicator.autoPinEdgesToSuperviewEdges()
+                activityIndicator.startAnimating()
+                webView.load(URLRequest(url: url))
+            }
+        } else if content.type == "photo" {
+            coverImageView.openViewer(gesture: nil)
+        } else {
+            if let url = URL(string: content.attributes?.url ?? "") {
+                let safariVC = SFSafariViewController(url: url)
+                parentViewController?.present(safariVC, animated: true, completion: nil)
+            }
+        }
     }
 
-    private func configureLinkEmbed(with content: ResponseAPIContentBlock) {
+    private func parseEmbed(_ html: String?) -> String? {
+        guard let html = html else {
+            return nil
+        }
 
+        let components = html.components(separatedBy: " ")
+
+        var srcStrings: String? = components.filter { (text) -> Bool in
+            return text.contains("src")
+        }.first
+
+        srcStrings = srcStrings?.replacingOccurrences(of: "\"", with: "")
+        srcStrings = srcStrings?.replacingOccurrences(of: "src=", with: "")
+        srcStrings = srcStrings?.replacingOccurrences(of: "//", with: "")
+
+        // for twitch embed
+        if let string = srcStrings {
+            if !string.contains("http") {
+                srcStrings = "https://" + srcStrings!
+            }
+        }
+
+        return srcStrings
     }
+}
 
-    private func configureImageEmbed(with content: ResponseAPIContentBlock) {
+extension EmbedView: WKNavigationDelegate {
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+          activityIndicator.stopAnimating()
+      }
 
-    }
+      func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
+          activityIndicator.startAnimating()
+      }
+
+      func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+          activityIndicator.stopAnimating()
+      }
 }
