@@ -25,6 +25,7 @@ class SubsViewController<T: ListItemType>: ListViewController<T> {
         tableView.cornerRadius = 10
         tableView.backgroundColor = .clear
         tableView.separatorInset = .zero
+        tableView.showsVerticalScrollIndicator = false
     }
     
     override func handleLoading() {
