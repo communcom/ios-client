@@ -15,8 +15,5 @@ class SubscribersViewModel: ListViewModel<ResponseAPIContentResolveProfile> {
         fetcher.userId = userId
         fetcher.communityId = communityId
         self.init(fetcher: fetcher)
-        defer {
-            fetchNext()
-        }
     }
 }

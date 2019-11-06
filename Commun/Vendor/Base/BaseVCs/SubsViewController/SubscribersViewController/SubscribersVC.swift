@@ -13,7 +13,10 @@ class SubscribersVC: SubsViewController<ResponseAPIContentResolveProfile> {
     init(title: String? = nil, userId: String? = nil, communityId: String? = nil) {
         super.init(nibName: nil, bundle: nil)
         viewModel = SubscribersViewModel(userId: userId, communityId: communityId)
-        defer {self.title = title}
+        defer {
+            self.title = title
+            viewModel.fetchNext()
+        }
     }
     
     required init?(coder: NSCoder) {

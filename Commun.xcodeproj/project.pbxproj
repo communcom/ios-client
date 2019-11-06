@@ -285,6 +285,8 @@
 		BC619B1323726A340005BB94 /* CommunitiesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC619B1223726A340005BB94 /* CommunitiesViewModel.swift */; };
 		BC619B1523726ADF0005BB94 /* CommunitiesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC619B1423726ADF0005BB94 /* CommunitiesVC.swift */; };
 		BC619B1823726C180005BB94 /* CommunityCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC619B1723726C180005BB94 /* CommunityCell.swift */; };
+		BC619B1B2372B5760005BB94 /* CommunityMembersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC619B1A2372B5760005BB94 /* CommunityMembersViewModel.swift */; };
+		BC619B1D2372C1480005BB94 /* CMTopTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC619B1C2372C1480005BB94 /* CMTopTabBar.swift */; };
 		BC69F7CD236FC5D00097F870 /* LoadingState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC69F7CC236FC5D00097F870 /* LoadingState.swift */; };
 		BC69F7CF236FC63F0097F870 /* BaseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC69F7CE236FC63F0097F870 /* BaseViewModel.swift */; };
 		BC69F7D1236FD1690097F870 /* NotificationSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC69F7D0236FD1680097F870 /* NotificationSettingsView.swift */; };
@@ -662,6 +664,8 @@
 		BC619B1223726A340005BB94 /* CommunitiesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunitiesViewModel.swift; sourceTree = "<group>"; };
 		BC619B1423726ADF0005BB94 /* CommunitiesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunitiesVC.swift; sourceTree = "<group>"; };
 		BC619B1723726C180005BB94 /* CommunityCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityCell.swift; sourceTree = "<group>"; };
+		BC619B1A2372B5760005BB94 /* CommunityMembersViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityMembersViewModel.swift; sourceTree = "<group>"; };
+		BC619B1C2372C1480005BB94 /* CMTopTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMTopTabBar.swift; sourceTree = "<group>"; };
 		BC69F7CC236FC5D00097F870 /* LoadingState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingState.swift; sourceTree = "<group>"; };
 		BC69F7CE236FC63F0097F870 /* BaseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewModel.swift; sourceTree = "<group>"; };
 		BC69F7D0236FD1680097F870 /* NotificationSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSettingsView.swift; sourceTree = "<group>"; };
@@ -1761,6 +1765,14 @@
 			path = Subviews;
 			sourceTree = "<group>";
 		};
+		BC619B192372B5570005BB94 /* CommunityMembersVC */ = {
+			isa = PBXGroup;
+			children = (
+				BC619B1A2372B5760005BB94 /* CommunityMembersViewModel.swift */,
+			);
+			path = CommunityMembersVC;
+			sourceTree = "<group>";
+		};
 		BC69F7D2236FDB390097F870 /* SubscriptionsViewControllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -1799,6 +1811,7 @@
 		BCA971192360339B00AE37E1 /* CommunityPageVC */ = {
 			isa = PBXGroup;
 			children = (
+				BC619B192372B5570005BB94 /* CommunityMembersVC */,
 				BCA9712023603C5D00AE37E1 /* Subviews */,
 				BCA9711C2360347D00AE37E1 /* CommunityPageVC.swift */,
 				BCA9711E2360380400AE37E1 /* CommunityPageViewModel.swift */,
@@ -1831,10 +1844,11 @@
 				BC48FC45236690880049C4F4 /* MyEmptyPlaceHolderView.swift */,
 				BCABF1302366CDC6006B05F5 /* MyNavigationBar.swift */,
 				BCA9712723608ABD00AE37E1 /* UsersStackView.swift */,
-				BCF74A6623618D9000B91089 /* CMSegmentedControl.swift */,
 				BC6B765A236BC58600A7AF2A /* ErrorView.swift */,
 				BC22BBC9236C082600F40658 /* ContentHuggingScrollView.swift */,
 				BC401E3B2371143F00A53788 /* LeaderAvatarImageView.swift */,
+				BCF74A6623618D9000B91089 /* CMSegmentedControl.swift */,
+				BC619B1C2372C1480005BB94 /* CMTopTabBar.swift */,
 			);
 			path = UIViews;
 			sourceTree = "<group>";
@@ -2326,6 +2340,7 @@
 				571B150B223A94DE00630C8F /* TabBarVC.swift in Sources */,
 				3BAE5CD4233899F30055F23E /* ContentTextView.swift in Sources */,
 				3B2F226C226892C5006B589E /* NotificationsPageVC.swift in Sources */,
+				BC619B1B2372B5760005BB94 /* CommunityMembersViewModel.swift in Sources */,
 				3BAD8E812318D838005A8AB3 /* UITextView+UILabel.swift in Sources */,
 				BCA97113236004F500AE37E1 /* CommentsViewModel.swift in Sources */,
 				BC6B765B236BC58600A7AF2A /* ErrorView.swift in Sources */,
@@ -2446,6 +2461,7 @@
 				BCB2A6EE23556EE400B3582B /* BasicEditorVC+Layout.swift in Sources */,
 				3B3C8B84234779FE00D8BADB /* UIImage.swift in Sources */,
 				3B5EDE2E22DF929D00897BF3 /* SettingsSwitcherCell.swift in Sources */,
+				BC619B1D2372C1480005BB94 /* CMTopTabBar.swift in Sources */,
 				BCB2A6E423546AF500B3582B /* PostEditorVC+AttachmentViewDelegate.swift in Sources */,
 				3B197C8A226A33CF008CF10D /* Decodable+MockObjects.swift in Sources */,
 				BC016D45235DA0D400F1319F /* BasicPostCell.swift in Sources */,
