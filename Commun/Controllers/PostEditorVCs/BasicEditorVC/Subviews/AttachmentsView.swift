@@ -53,7 +53,7 @@ class AttachmentsView: UIView {
                 attachmentViews.append(attachmentView)
             }
         }
-        gridView.setUp(views: attachmentViews)
+//        gridView.setUp(views: attachmentViews) //TODO
     }
 }
 
