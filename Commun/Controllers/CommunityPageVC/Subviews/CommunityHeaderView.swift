@@ -131,10 +131,13 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
         leadsCountLabel.autoPinEdge(.leading, to: .trailing, of: dotLabel, withOffset: 2)
         leadsCountLabel.autoAlignAxis(.horizontal, toSameAxisOf: membersCountLabel)
 
-        let leadsLabel = UILabel.with(text: "leads".localized().uppercaseFirst, textSize: 12, weight: .semibold, textColor: UIColor(hexString: "#A5A7BD")!)
+        let leadsLabel = UILabel.with(text: "leaders".localized().uppercaseFirst, textSize: 12, weight: .semibold, textColor: UIColor(hexString: "#A5A7BD")!)
         addSubview(leadsLabel)
         leadsLabel.autoPinEdge(.leading, to: .trailing, of: leadsCountLabel, withOffset: 4)
         leadsLabel.autoAlignAxis(.horizontal, toSameAxisOf: membersCountLabel)
+        leadsLabel.isUserInteractionEnabled = true
+        let tap2 = UITapGestureRecognizer(target: self, action: #selector(leadsLabelDidTouch))
+        leadsLabel.addGestureRecognizer(tap2)
         
         let friendLabel = UILabel.with(text: "friends".localized().uppercaseFirst, textSize: 12, weight: .bold, textColor: .gray)
         addSubview(friendLabel)
@@ -164,7 +167,7 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
         
         segmentedControl.items = [
             CMSegmentedControl.Item(name: "posts".localized().uppercaseFirst),
-            CMSegmentedControl.Item(name: "leads".localized().uppercaseFirst),
+            CMSegmentedControl.Item(name: "leaders".localized().uppercaseFirst),
             CMSegmentedControl.Item(name: "about".localized().uppercaseFirst),
             CMSegmentedControl.Item(name: "rules".localized().uppercaseFirst)
         ]
@@ -245,5 +248,14 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
     @objc func membersLabelDidTouch() {
         let vc = SubscribersVC(title: community?.name, communityId: community?.communityId)
         parentViewController?.present(UINavigationController(rootViewController: vc), animated: true, completion: nil)
+    }
+    
+    @objc func leadsLabelDidTouch() {
+        if segmentedControl.selectedIndex.value == 1 {
+            parentViewController?.view.shake()
+        }
+        else {
+            segmentedControl.changeSelectedIndex(1)
+        }
     }
 }
