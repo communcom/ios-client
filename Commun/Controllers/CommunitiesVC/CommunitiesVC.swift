@@ -21,6 +21,7 @@ class CommunitiesVC: SubsViewController<ResponseAPIContentGetCommunity> {
     
     override func setUp() {
         super.setUp()
+        navigationItem.rightBarButtonItem = nil
         tableView.register(CommunityCell.self, forCellReuseIdentifier: "CommunityCell")
         
         dataSource = MyRxTableViewSectionedAnimatedDataSource<ListSection>(
