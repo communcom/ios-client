@@ -90,9 +90,9 @@ class TabBarVC: UITabBarController {
         feed.accessibilityLabel = "TabBarFeedTabBarItem"
 
         // Comunities Tab
-        let comunities = controllerContainer.resolve(CommunitiesVC.self)!
+        let comunities = CommunitiesVC(type: .all)
         let communitiesNC = SwipeNavigationController(rootViewController: comunities)
-        let communitiesItem = buttonTabBarItem(image: UIImage(named: "tabbar-search")!, tag: searchTabIndex)
+        let communitiesItem = buttonTabBarItem(image: UIImage(named: "tabbar-community")!, tag: searchTabIndex)
         comunities.accessibilityLabel = "TabBarComunitiesTabBarItem"
         
         // Notifications Tab

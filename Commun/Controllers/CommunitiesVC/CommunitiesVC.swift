@@ -1,79 +1,54 @@
 //
-//  CommunitiesVC.swift
+//  CommunitiesViewController.swift
 //  Commun
 //
-//  Created by Chung Tran on 8/2/19.
+//  Created by Chung Tran on 11/6/19.
 //  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
 //
 
-import UIKit
-import RxSwift
-import Segmentio
+import Foundation
 
-class CommunitiesVC: UIViewController {
-    // MARK: - Properties
-    let viewModel   = CommunitiesViewModel()
-    let bag         = DisposeBag()
-    
-    // HeaderView
-    var searchBar: UISearchBar!
-    @IBOutlet weak var segmentio: Segmentio!
-    
-    // TableView
-    @IBOutlet weak var tableView: UITableView!
-    
-    // MARK: - View lifecycle
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        setUp()
-        
-        bindUI()
+class CommunitiesVC: SubsViewController<ResponseAPIContentGetCommunity> {
+    init(type: GetCommunitiesType, userId: String? = nil) {
+        super.init(nibName: nil, bundle: nil)
+        viewModel = CommunitiesViewModel(type: type, userId: userId)
+        defer {self.title = "communities".localized().uppercaseFirst}
     }
     
-    // MARK: - Set up views
-    func setUp() {
-        setUpSearchBar()
-        setUpSegmentio()
-        setUpTableView()
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
-    func setUpSearchBar() {
-        navigationController?.navigationBar.barTintColor = .white
+    override func setUp() {
+        super.setUp()
+        navigationItem.rightBarButtonItem = nil
+        tableView.register(CommunityCell.self, forCellReuseIdentifier: "CommunityCell")
         
-        searchBar = UISearchBar(frame: .zero)
-        searchBar.placeholder = "search".localized().uppercaseFirst
-        navigationItem.titleView = searchBar
-        
-        let searchField: UITextField = searchBar.value(forKey: "searchField") as! UITextField
-        searchField.backgroundColor = #colorLiteral(red: 0.9529411765, green: 0.9607843137, blue: 0.9803921569, alpha: 1)
+        dataSource = MyRxTableViewSectionedAnimatedDataSource<ListSection>(
+            configureCell: { (dataSource, tableView, indexPath, community) -> UITableViewCell in
+                let cell = self.tableView.dequeueReusableCell(withIdentifier: "CommunityCell") as! CommunityCell
+                cell.setUp(with: community)
+                if indexPath.row >= self.viewModel.items.value.count - 5 {
+                    self.viewModel.fetchNext()
+                }
+                
+                return cell
+            }
+        )
     }
     
-    func setUpSegmentio() {
-        // Segmentio
-        segmentio.setup(
-            content: [
-                SegmentioItem(
-                    title: "my communities".localized().uppercaseFirst,
-                    image: nil),
-                SegmentioItem(
-                    title: "discover".localized().uppercaseFirst,
-                    image: nil)
-            ],
-            style: .onlyLabel,
-            options: .default)
-        
-        segmentio.valueDidChange = {_, index in
-            self.viewModel.applyFilter(joined: index == 0 ? true: false)
-        }
-        
-        // fire first filter
-        segmentio.selectedSegmentioIndex = 1
+    override func bind() {
+        super.bind()
+        tableView.rx.modelSelected(ResponseAPIContentGetCommunity.self)
+            .subscribe(onNext: { (item) in
+                self.showCommunityWithCommunityId(item.communityId)
+            })
+            .disposed(by: disposeBag)
     }
     
-    func setUpTableView() {
-        var contentInsets = tableView.contentInset
-        contentInsets.bottom = tabBarController!.tabBar.height - (UIApplication.shared.keyWindow?.safeAreaInsets.bottom ?? 0)
-        tableView.contentInset = contentInsets
+    override func handleListEmpty() {
+        let title = "no communities"
+        let description = "no communities found"
+        tableView.addEmptyPlaceholderFooterView(title: title.localized().uppercaseFirst, description: description.localized().uppercaseFirst)
     }
 }

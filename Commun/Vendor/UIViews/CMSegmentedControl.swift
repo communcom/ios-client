@@ -107,8 +107,12 @@ class CMSegmentedControl: MyView {
         
     }
     
-    @objc func changeSelection(_ sender: TapGesture) {
-        if sender.index == selectedIndex.value {return}
-        selectedIndex.accept(sender.index)
+    @objc private func changeSelection(_ sender: TapGesture) {
+        changeSelectedIndex(sender.index)
+    }
+    
+    func changeSelectedIndex(_ index: Int) {
+        if index == selectedIndex.value {return}
+        selectedIndex.accept(index)
     }
 }
