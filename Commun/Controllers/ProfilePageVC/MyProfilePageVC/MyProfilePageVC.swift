@@ -45,7 +45,7 @@ class MyProfilePageVC: UserProfilePageVC {
         
         // layout subview
         view.addSubview(changeCoverButton)
-        changeCoverButton.autoPinEdge(.bottom, to: .bottom, of: coverImageView, withOffset: -40)
+        changeCoverButton.autoPinEdge(.bottom, to: .bottom, of: coverImageView, withOffset: -60)
         changeCoverButton.autoPinEdge(.trailing, to: .trailing, of: coverImageView, withOffset: -16)
         
         changeCoverButton.addTarget(self, action: #selector(changeCoverBtnDidTouch(_:)), for: .touchUpInside)

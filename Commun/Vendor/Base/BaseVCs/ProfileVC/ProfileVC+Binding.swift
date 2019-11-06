@@ -128,12 +128,5 @@ extension ProfileVC {
 
         coverImageView.heightConstraint?.constant = coverHeight * coefficient
         coverImageView.widthConstraint?.constant = UIScreen.main.bounds.size.width * coefficient
-        if coefficient > 1 {
-//            coverImageView.transform = CGAffineTransform(scaleX: coefficient, y: coefficient)
-        } else {
-//            coverImageView.transform = CGAffineTransform(scaleX: 1, y: 1)
-        }
-//        self.coverImageView.layoutIf  Needed()
-//        self.view.layoutIfNeeded()
     }
 }
