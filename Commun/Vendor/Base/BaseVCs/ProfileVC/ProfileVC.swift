@@ -14,7 +14,7 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
     override var contentScrollView: UIScrollView? {tableView}
     
     // MARK: - Constants
-    let coverHeight: CGFloat = 180
+    let coverHeight: CGFloat = 200
     let coverVisibleHeight: CGFloat = 150
     let disposeBag = DisposeBag()
     
@@ -24,15 +24,22 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
     }
     
     // MARK: - Subviews
-    lazy var backButton = UIButton.back(tintColor: .white, contentInsets: UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 24))
     
-    lazy var coverImageView: UIImageView = {
-        let imageView = UIImageView(forAutoLayout: ())
+    lazy var shadowView: UIView = {
+        let view = UIView(forAutoLayout: ())
+        view.backgroundColor = .clear
         let gradient = CAGradientLayer()
         gradient.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: coverHeight)
         gradient.colors = [UIColor.black.withAlphaComponent(0.3).cgColor, UIColor.clear.cgColor]
         gradient.locations = [0.0, 1.0]
-        imageView.layer.insertSublayer(gradient, at: 0)
+        view.layer.insertSublayer(gradient, at: 0)
+        return view
+    }()
+    
+    lazy var backButton = UIButton.back(tintColor: .white, contentInsets: UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 24))
+    
+    lazy var coverImageView: UIImageView = {
+        let imageView = UIImageView()
         imageView.image = .placeholder
         return imageView
     }()
@@ -64,15 +71,21 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
         let leftBarButton = UIBarButtonItem(customView: leftButtonView)
         navigationItem.leftBarButtonItem = leftBarButton
 
-        coverImageView.removeAllConstraints()
         view.addSubview(coverImageView)
         coverImageView.autoPinEdge(.top, to: .top, of: view)
-        coverImageView.heightConstraint?.constant = coverHeight
-        
+        coverImageView.autoAlignAxis(.vertical, toSameAxisOf: view)
+
+        view.addSubview(shadowView)
+        shadowView.autoPinEdge(toSuperviewEdge: .left)
+        shadowView.autoPinEdge(toSuperviewEdge: .right)
+        shadowView.autoPinEdge(toSuperviewEdge: .top)
+        shadowView.autoPinEdge(toSuperviewEdge: .bottom)
+
         view.addSubview(tableView)
         tableView.autoPinEdgesToSuperviewEdges()
         tableView.contentInset.top = coverVisibleHeight
         tableView.contentInset.bottom = 60 + 10 + view.safeAreaInsets.bottom
+
         // setup datasource
         tableView.register(BasicPostCell.self, forCellReuseIdentifier: "BasicPostCell")
         tableView.register(ArticlePostCell.self, forCellReuseIdentifier: "ArticlePostCell")
@@ -86,6 +99,7 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
             self.reload()
         }
         tableView.subviews.first(where: {$0 is ESRefreshHeaderView})?.alpha = 0
+
         navigationController?.navigationBar.barTintColor = .white
     }
     
