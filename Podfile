@@ -57,6 +57,9 @@ def common_pods
   pod "ESPullToRefresh"
   pod 'PureLayout'
   pod 'SubviewAttachingTextView', :git => "https://github.com/communcom/SubviewAttachingTextView.git"
+  
+  pod "ReCaptcha"
+
 end
 
 target 'Commun' do
