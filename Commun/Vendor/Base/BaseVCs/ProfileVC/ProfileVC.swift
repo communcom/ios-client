@@ -27,7 +27,7 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
     lazy var backButton = UIButton.back(tintColor: .white, contentInsets: UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 24))
     
     lazy var coverImageView: UIImageView = {
-        let imageView = UIImageView(height: coverHeight)
+        let imageView = UIImageView(forAutoLayout: ())
         let gradient = CAGradientLayer()
         gradient.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: coverHeight)
         gradient.colors = [UIColor.black.withAlphaComponent(0.3).cgColor, UIColor.clear.cgColor]
@@ -52,6 +52,7 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
     
     override func setUp() {
         super.setUp()
+
         view.backgroundColor = #colorLiteral(red: 0.9605136514, green: 0.9644123912, blue: 0.9850376248, alpha: 1)
         let leftButtonView = UIView(frame: CGRect(x: 0, y: 0, width: 36, height: 40))
         
@@ -62,16 +63,16 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
 
         let leftBarButton = UIBarButtonItem(customView: leftButtonView)
         navigationItem.leftBarButtonItem = leftBarButton
-        
+
+        coverImageView.removeAllConstraints()
         view.addSubview(coverImageView)
-        coverImageView.autoPinEdge(.top, to: .bottom, of: view)
-        coverImageView.autoCenterInSuperview()
-//        coverImageView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .bottom)
+        coverImageView.autoPinEdge(.top, to: .top, of: view)
+        coverImageView.heightConstraint?.constant = coverHeight
         
         view.addSubview(tableView)
         tableView.autoPinEdgesToSuperviewEdges()
-        tableView.contentInset = UIEdgeInsets(top: coverVisibleHeight, left: 0, bottom: 0, right: 0)
-        
+        tableView.contentInset.top = coverVisibleHeight
+        tableView.contentInset.bottom = 60 + 10 + view.safeAreaInsets.bottom
         // setup datasource
         tableView.register(BasicPostCell.self, forCellReuseIdentifier: "BasicPostCell")
         tableView.register(ArticlePostCell.self, forCellReuseIdentifier: "ArticlePostCell")

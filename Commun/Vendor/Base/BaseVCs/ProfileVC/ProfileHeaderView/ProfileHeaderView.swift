@@ -32,7 +32,7 @@ class ProfileHeaderView: MyTableHeaderView {
         let label = UILabel.with(text: "Binance Exchange provides cryptocurrency trading for fintech and blockchain enthusiasts", textSize: 14, numberOfLines: 0)
         return label
     }()
-    
+
     lazy var usersStackView: UsersStackView = {
         let stackView = UsersStackView(height: 34)
         return stackView
@@ -69,9 +69,8 @@ class ProfileHeaderView: MyTableHeaderView {
         descriptionLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
         descriptionLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
         descriptionLabel.autoPinEdge(.top, to: .bottom, of: avatarImageView, withOffset: 10)
-        
+
         addSubview(usersStackView)
         usersStackView.autoPinEdge(.top, to: .bottom, of: descriptionLabel, withOffset: 14)
-        
     }
 }

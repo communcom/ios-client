@@ -120,16 +120,20 @@ extension ProfileVC {
     private func updateHeaderView() {
         let offset = tableView.contentOffset.y
         let y = coverHeight - (offset + coverHeight)
-        let coefficient: CGFloat = y / coverVisibleHeight
+        var coefficient: CGFloat = y / coverVisibleHeight
 
+        if coefficient < 1 {
+            coefficient = 1
+        }
+
+        coverImageView.heightConstraint?.constant = coverHeight * coefficient
+        coverImageView.widthConstraint?.constant = UIScreen.main.bounds.size.width * coefficient
         if coefficient > 1 {
-//            coverImageView.heightConstraint?.constant = coverHeight * coefficient
-//            coverImageView.widthConstraint?.constant = UIScreen.main.bounds.size.width * coefficient
 //            coverImageView.transform = CGAffineTransform(scaleX: coefficient, y: coefficient)
         } else {
 //            coverImageView.transform = CGAffineTransform(scaleX: 1, y: 1)
         }
-        view.layoutIfNeeded()
-        coverImageView.layoutIfNeeded()
+//        self.coverImageView.layoutIf  Needed()
+//        self.view.layoutIfNeeded()
     }
 }
