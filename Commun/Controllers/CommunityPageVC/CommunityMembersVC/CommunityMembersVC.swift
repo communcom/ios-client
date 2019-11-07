@@ -63,6 +63,7 @@ class CommunityMembersVC: BaseViewController {
     // MARK: - Methods
     override func setUp() {
         super.setUp()
+        title = viewModel.community.name
         setLeftNavBarButton(with: backButton)
         backButton.addTarget(self, action: #selector(back), for: .touchUpInside)
         

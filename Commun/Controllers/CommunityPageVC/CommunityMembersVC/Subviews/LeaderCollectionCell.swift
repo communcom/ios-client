@@ -14,9 +14,8 @@ class LeaderCollectionCell: MyCollectionViewCell, LeaderController {
     
     // MARK: - Subviews
     lazy var avatarImageView = LeaderAvatarImageView(size: 56)
-    lazy var nameLabel = UILabel.with(text: "bluesnake260", textSize: 15, weight: .semibold)
-    lazy var pointLabel = UILabel.with(text: "12,2k points • ", textSize: 12, weight: .semibold, textColor: .a5a7bd, textAlignment: .right)
-    lazy var percentageLabel = UILabel.with(text: "50%", textSize: 12, weight: .semibold, textColor: .appMainColor, textAlignment: .left)
+    lazy var nameLabel = UILabel.with(text: "bluesnake260", textSize: 15, weight: .semibold, textAlignment: .center)
+    lazy var statsLabel = UILabel.with(text: "12,2k points • 50%", textSize: 12, textAlignment: .center)
     lazy var voteButton = CommunButton.default(height: 30, label: "vote".localized().uppercaseFirst)
     
     // MARK: - Methods
@@ -35,14 +34,10 @@ class LeaderCollectionCell: MyCollectionViewCell, LeaderController {
         nameLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 10)
         nameLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 10)
         
-        containerView.addSubview(pointLabel)
-        pointLabel.autoPinEdge(.top, to: .bottom, of: nameLabel, withOffset: 2)
-        pointLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 10)
-        
-        containerView.addSubview(percentageLabel)
-        percentageLabel.autoPinEdge(.leading, to: .trailing, of: pointLabel)
-        percentageLabel.autoAlignAxis(.horizontal, toSameAxisOf: pointLabel)
-        percentageLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 10)
+        containerView.addSubview(statsLabel)
+        statsLabel.autoPinEdge(.top, to: .bottom, of: nameLabel, withOffset: 2)
+        statsLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 10)
+        statsLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 10)
         
         containerView.addSubview(voteButton)
         voteButton.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(inset: 10), excludingEdge: .top)
@@ -56,8 +51,21 @@ class LeaderCollectionCell: MyCollectionViewCell, LeaderController {
         
         nameLabel.text = leader.username ?? leader.userId
         
-        pointLabel.text = "\(leader.rating.kmFormatted) " + "points".localized().uppercaseFirst + " • "
-        percentageLabel.text = "\((leader.ratingPercent * 100).rounded(numberOfDecimalPlaces: 0, rule: .up))%"
+        let pointsText = NSMutableAttributedString(
+            string: "\(leader.rating.kmFormatted) " + "points".localized().uppercaseFirst + " • ",
+            attributes: [
+                .foregroundColor: UIColor.a5a7bd,
+                .font: UIFont.boldSystemFont(ofSize: 12)
+            ])
+        
+        pointsText.append(NSAttributedString(
+            string: "\((leader.ratingPercent * 100).rounded(numberOfDecimalPlaces: 0, rule: .up))%",
+            attributes: [
+                .foregroundColor: UIColor.appMainColor,
+                .font: UIFont.boldSystemFont(ofSize: 12)
+            ]))
+        
+        statsLabel.attributedText = pointsText
         
         // joinButton
         let voted = leader.isVoted
