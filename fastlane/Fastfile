@@ -24,13 +24,24 @@ lane :beta do |options|
 			update_profiles
 		end
 
+		# create auto changelog
+		changed = changelog_from_git_commits(
+			tag_match_pattern: "CI.*",
+			pretty: "∙ %B",
+			merge_commit_filtering: "exclude_merges"
+		)
+
+		if isCI && changed.to_s == ''
+  			UI.user_error!("Not changed")
+		end
+
 		# add cert
 		match(
 			generate_apple_certs: true,
 			app_identifier: application_dev_bundle_id,
 			type: "development",
 			readonly: true
-			)
+		)
 
 		build_version = get_info_plist_value(path: application_info_plist_path, key: 'CFBundleShortVersionString')
 		new_bundle_version = sh('git rev-list --all --count')
@@ -42,13 +53,6 @@ lane :beta do |options|
 		build(
 			appstore: false, 
 			build_number: new_bundle_version
-			)
-
-		# create auto changelog
-		changed = changelog_from_git_commits(
-			tag_match_pattern: "CI.*",
-			pretty: "∙ %B",
-			merge_commit_filtering: "exclude_merges"
 		)
 
 		# upload to Beta by Crashlytics
@@ -58,7 +62,12 @@ lane :beta do |options|
 			groups: fabric_testers_group,
 			notifications: "false",
 			notes: changed
-			)
+		)
+
+		if isCI 
+			sh("git tag CI.#{new_bundle_version}")
+	      	sh("git push --tags")
+      	end
 	end
 
 desc 'Update profiles and add new devices'
@@ -78,7 +87,16 @@ lane :update_profiles do
 end
 
 lane :test do 
-	
+	isCI = false
+		changed = changelog_from_git_commits(
+			tag_match_pattern: "CI.*",
+			pretty: "∙ %B",
+			merge_commit_filtering: "exclude_merges"
+		)
+
+		if isCI && changed.to_s == ''
+  			UI.user_error!("Not changed")
+		end
 	
 
 	# changed = SharedValues::FL_CHANGELOG	
