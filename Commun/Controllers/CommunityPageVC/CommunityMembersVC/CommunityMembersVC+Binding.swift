@@ -11,7 +11,7 @@ import RxDataSources
 
 extension CommunityMembersVC: UICollectionViewDelegateFlowLayout {
     func bindSegmentedControl() {
-        let segmentedItem = topTabBar.selectedIndex
+        topTabBar.selectedIndex
             .map { index -> CommunityMembersViewModel.SegmentedItem in
                 switch index {
                 case 0:
@@ -23,13 +23,11 @@ extension CommunityMembersVC: UICollectionViewDelegateFlowLayout {
                 default:
                     fatalError("not found selected index")
                 }
-            }.share()
-        
-        segmentedItem
+            }
             .bind(to: viewModel.segmentedItem)
             .disposed(by: disposeBag)
         
-        segmentedItem
+        viewModel.segmentedItem
             .map {$0 == .all}
             .subscribe(onNext: { (isAll) in
                 self.headerView.removeFromSuperview()
