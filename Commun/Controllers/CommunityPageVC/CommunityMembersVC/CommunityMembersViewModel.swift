@@ -74,7 +74,6 @@ class CommunityMembersViewModel: BaseViewModel {
         switch segmentedItem.value {
         case .all:
             leadersVM.fetchNext(forceRetry: forceRetry)
-            subscribersVM.fetchNext(forceRetry: forceRetry)
         case .leaders:
             leadersVM.fetchNext(forceRetry: forceRetry)
         case .friends:

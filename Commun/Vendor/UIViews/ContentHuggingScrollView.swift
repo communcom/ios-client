@@ -24,9 +24,14 @@ class ContentHuggingScrollView: UIScrollView {
         commonInit()
     }
     
-    convenience init(axis: NSLayoutConstraint.Axis) {
+    convenience init(axis: NSLayoutConstraint.Axis, contentInset: UIEdgeInsets = .zero) {
         self.init(forAutoLayout: ())
         self.axis = axis
+        self.contentInset = contentInset
+    }
+    
+    override func addSubview(_ view: UIView) {
+        contentView.addSubview(view)
     }
     
     func commonInit() {

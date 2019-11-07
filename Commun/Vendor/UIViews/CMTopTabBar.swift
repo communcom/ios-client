@@ -22,13 +22,15 @@ class CMTopTabBar: MyView {
     var selectedIndex: BehaviorRelay<Int>
     
     // MARK: - Subviews
-    lazy var scrollView = ContentHuggingScrollView(axis: .vertical)
+    lazy var scrollView = ContentHuggingScrollView(axis: .vertical, contentInset: UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16))
     
     // MARK: - Init
-    init(labels: [String], selectedIndex: Int = 0) {
+    init(height: CGFloat, labels: [String], selectedIndex: Int = 0) {
         self.labels = labels
         self.selectedIndex = BehaviorRelay<Int>(value: selectedIndex)
         super.init(frame: .zero)
+        configureForAutoLayout()
+        autoSetDimension(.height, toSize: height)
     }
     
     required init?(coder: NSCoder) {
@@ -59,6 +61,20 @@ class CMTopTabBar: MyView {
             let button = CommunButton.default(label: labels[i])
             button.tag = i
             button.addTarget(self, action: #selector(changeSelection(_:)), for: .touchUpInside)
+            
+            scrollView.contentView.addSubview(button)
+            button.autoAlignAxis(toSuperviewAxis: .horizontal)
+            
+            if i == 0 {
+                button.autoPinEdge(toSuperviewEdge: .leading)
+            }
+            else {
+                button.autoPinEdge(.leading, to: .trailing, of: buttons[i-1], withOffset: 10)
+                if i == buttons.count - 1 {
+                    button.autoPinEdge(toSuperviewEdge: .trailing)
+                }
+            }
+            
             buttons.append(button)
         }
     }
