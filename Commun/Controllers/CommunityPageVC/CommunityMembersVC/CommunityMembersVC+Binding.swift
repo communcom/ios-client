@@ -57,39 +57,36 @@ extension CommunityMembersVC {
             configureCell: { (dataSource, tableView, indexPath, element) -> UITableViewCell in
                 switch element {
                 case .subscriber(let subscriber):
+                    let cell = self.tableView.dequeueReusableCell(withIdentifier: "SubscribersCell") as! SubscribersCell
+                    cell.setUp(with: subscriber)
                     
+                    if indexPath.row >= self.viewModel.subscribersVM.items.value.count - 5 {
+                        self.viewModel.fetchNext()
+                    }
+                    
+                    return cell
                 case .leader(let leader):
                     let cell = self.tableView.dequeueReusableCell(withIdentifier: "CommunityLeaderCell") as! CommunityLeaderCell
                     cell.setUp(with: leader)
-                    return cell
-                case .about(let string):
-                    let cell = self.tableView.dequeueReusableCell(withIdentifier: "CommunityAboutCell") as! CommunityAboutCell
-                    cell.label.text = string
-                    return cell
-                case .rule(let rule):
-                    let cell = self.tableView.dequeueReusableCell(withIdentifier: "CommunityRuleCell") as! CommunityRuleCell
-                    cell.rowIndex = indexPath.row
-                    cell.setUp(with: rule)
+                    
+                    if indexPath.row >= self.viewModel.leadersVM.items.value.count - 5 {
+                        self.viewModel.fetchNext()
+                    }
                     return cell
                 }
-                return UITableViewCell()
             }
         )
+        
+        
         
         viewModel.items
             .map { items in
                 items.compactMap {item -> CustomElementType? in
-                    if let item = item as? ResponseAPIContentGetPost {
-                        return .post(item)
-                    }
                     if let item = item as? ResponseAPIContentGetLeader {
                         return .leader(item)
                     }
-                    if let item = item as? String {
-                        return .about(item)
-                    }
-                    if let item = item as? ResponseAPIContentGetCommunityRule {
-                        return .rule(item)
+                    if let item = item as? ResponseAPIContentResolveProfile {
+                        return .subscriber(item)
                     }
                     return nil
                 }

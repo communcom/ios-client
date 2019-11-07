@@ -9,6 +9,7 @@
 import Foundation
 import RxSwift
 import RxCocoa
+import CyberSwift
 
 class CommunityMembersViewModel: BaseViewModel {
     // MARK: - Nested item
@@ -41,8 +42,9 @@ class CommunityMembersViewModel: BaseViewModel {
     let listLoadingState    = BehaviorRelay<ListFetcherState>(value: .loading(false))
     lazy var segmentedItem  = BehaviorRelay<SegmentedItem>(value: starterSegmentedItem)
     lazy var leadersVM      = LeadersViewModel(communityId: community.communityId)
-    lazy var friendsVM      = BehaviorRelay<[ResponseAPIContentResolveProfile]>(value: community.friends ?? [])
+    lazy var friendsSubject = PublishSubject<[ResponseAPIContentResolveProfile]>()
     lazy var subscribersVM  = SubscribersViewModel(communityId: community.communityId)
+    let items = BehaviorRelay<[Any]>(value: [])
     
     // MARK: - Initialzers
     init(community: ResponseAPIContentGetCommunity, starterSegmentedItem: SegmentedItem = .all) {
@@ -81,6 +83,35 @@ class CommunityMembersViewModel: BaseViewModel {
             }
             .bind(to: listLoadingState)
             .disposed(by: disposeBag)
+        
+        let leaders     = leadersVM.items.map {$0 as [Any]}.skip(1)
+        let subscribers = subscribersVM.items.map {$0 as [Any]}.skip(1)
+        let friends     = friendsSubject.map {$0 as [Any]}
+        
+        Observable.merge(leaders, subscribers, friends)
+            .filter { (items) -> Bool in
+                if items is [ResponseAPIContentGetLeader] && self.segmentedItem.value == .leaders
+                {
+                    return true
+                }
+                
+                if items is [ResponseAPIContentResolveProfile] &&
+                    (self.segmentedItem.value == .all || self.segmentedItem.value == .friends)
+                {
+                    if self.segmentedItem.value == .all {
+                        if self.subscribersVM.items.value == (items as! [ResponseAPIContentResolveProfile]) {
+                            return true
+                        }
+                        return false
+                    }
+                    return true
+                }
+                return false
+            }
+            .skip(1)
+            .asDriver(onErrorJustReturn: [])
+            .drive(items)
+            .disposed(by: disposeBag)
     }
     
     func reload() {
@@ -91,6 +122,18 @@ class CommunityMembersViewModel: BaseViewModel {
         if segmentedItem.value == .all {
             subscribersVM.reload()
         }
+        
+        if segmentedItem.value == .friends {
+            if let friends = community.friends,
+                !friends.isEmpty
+            {
+               friendsSubject.onNext(friends)
+               listLoadingState.accept(.listEnded)
+               return
+            }
+            friendsSubject.onNext([])
+            listLoadingState.accept(.listEmpty)
+        }
     }
     
     func fetchNext(forceRetry: Bool = false) {
@@ -100,7 +143,7 @@ class CommunityMembersViewModel: BaseViewModel {
         case .leaders:
             leadersVM.fetchNext(forceRetry: forceRetry)
         case .friends:
-            break
+            return
         }
     }
 }
