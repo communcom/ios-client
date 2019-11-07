@@ -11,23 +11,29 @@ import RxSwift
 
 class CommunityMembersVC: BaseViewController {
     // MARK: - Properties
-    var selectedIndex: Int
+    var selectedSegmentedItem: CommunityMembersViewModel.SegmentedItem
     let disposeBag = DisposeBag()
+    var viewModel: CommunityMembersViewModel
     
     // MARK: - Subviews
     lazy var backButton = UIButton.back(contentInsets: UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 24))
     lazy var topTabBar = CMTopTabBar(
         height: 35,
-        labels: [
-            "all".localized().uppercaseFirst,
-            "leaders".localized().uppercaseFirst,
-            "friends".localized().uppercaseFirst
-        ],
-        selectedIndex: selectedIndex)
+        labels: CommunityMembersViewModel.SegmentedItem.allCases.map {$0.rawValue},
+        selectedIndex: selectedSegmentedItem.index)
+    
+    lazy var tableView: UITableView = {
+        let tableView = UITableView(forAutoLayout: ())
+        tableView.backgroundColor = .clear
+        tableView.insetsContentViewsToSafeArea = false
+        tableView.contentInsetAdjustmentBehavior = .never
+        return tableView
+    }()
     
     // MARK: - Initializers
-    init(selectedIndex: Int) {
-        self.selectedIndex = selectedIndex
+    init(community: ResponseAPIContentGetCommunity, selectedSegmentedItem: CommunityMembersViewModel.SegmentedItem) {
+        self.selectedSegmentedItem = selectedSegmentedItem
+        self.viewModel = CommunityMembersViewModel(community: community, starterSegmentedItem: selectedSegmentedItem)
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -52,5 +58,26 @@ class CommunityMembersVC: BaseViewController {
         topTabBar.autoPinEdge(toSuperviewEdge: .leading)
         topTabBar.autoPinEdge(toSuperviewEdge: .trailing)
         topTabBar.autoAlignAxis(toSuperviewAxis: .horizontal)
+        
+        // tableView
+        view.addSubview(tableView)
+        tableView.autoPinEdgesToSuperviewSafeArea(with: UIEdgeInsets(inset: 10), excludingEdge: .top)
+        tableView.autoPinEdge(.top, to: .bottom, of: topBarContainerView)
+        
+        tableView.backgroundColor = .f3f5fa
+        tableView.register(SubscribersCell.self, forCellReuseIdentifier: "SubscribersCell")
+        tableView.register(CommunityLeaderCell.self, forCellReuseIdentifier: "CommunityLeaderCell")
+        
+        tableView.separatorStyle = .none
+    }
+    
+    override func bind() {
+        super.bind()
+        
+    }
+    
+    @objc func reload() {
+        viewModel.reload()
+        viewModel.fetchNext(forceRetry: true)
     }
 }

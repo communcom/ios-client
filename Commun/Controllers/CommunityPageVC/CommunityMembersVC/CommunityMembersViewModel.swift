@@ -16,6 +16,21 @@ class CommunityMembersViewModel: BaseViewModel {
         case all        = "all"
         case leaders    = "leaders"
         case friends    = "friends"
+        
+        static var allCases: [SegmentedItem] {
+            return [.all, .leaders, .friends]
+        }
+        
+        var index: Int {
+            switch self {
+            case .all:
+                return 0
+            case .leaders:
+                return 1
+            case .friends:
+                return 2
+            }
+        }
     }
     
     // MARK: - Input
