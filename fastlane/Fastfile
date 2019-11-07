@@ -26,9 +26,9 @@ lane :beta do |options|
 		merge_commit_filtering: "exclude_merges"
 	)
 
-	if isCI && changed.to_s == ''
-		UI.user_error!("Not changed")
-	end
+	# if isCI && changed.to_s == ''
+	# 	UI.user_error!("Not changed")
+	# end
 
 	# add cert
 	match(
