@@ -38,7 +38,7 @@ class CommunityMembersViewModel: BaseViewModel {
     var starterSegmentedItem: SegmentedItem
     
     // MARK: - Objects
-//    let listLoadingState    = BehaviorRelay<ListFetcherState>(value: .loading(false))
+    let listLoadingState    = BehaviorRelay<ListFetcherState>(value: .loading(false))
     lazy var segmentedItem  = BehaviorRelay<SegmentedItem>(value: starterSegmentedItem)
     lazy var leadersVM      = LeadersViewModel(communityId: community.communityId)
     lazy var friendsVM      = BehaviorRelay<[ResponseAPIContentResolveProfile]>(value: community.friends ?? [])
@@ -50,30 +50,38 @@ class CommunityMembersViewModel: BaseViewModel {
         self.starterSegmentedItem = starterSegmentedItem
         super.init()
         defer {
+            bind()
             fetchNext()
         }
     }
     
     // MARK: - Methods
-//    func bind() {
-//        // Loading state
-//        Observable.merge(
-//            leadersVM.state.asObservable().filter {_ in self.segmentedItem.value == .leaders || self.segmentedItem.value == .all},
-//            subscribersVM.state.asObservable().filter {_ in self.segmentedItem.value == .all}
-//        )
-//            .distinctUntilChanged { (lhs, rhs) -> Bool in
-//                switch (lhs, rhs) {
-//                case (.loading(let isLoading1), .loading(let isLoading2)):
-//                    return isLoading1 == isLoading2
-//                case (.listEnded, .listEnded):
-//                    return true
-//                default:
-//                    return false
-//                }
-//            }
-//            .bind(to: listLoadingState)
-//            .disposed(by: disposeBag)
-//    }
+    func bind() {
+        // segmented item change
+        segmentedItem
+            .subscribe(onNext: { [weak self] (item) in
+                self?.reload()
+            })
+            .disposed(by: disposeBag)
+        
+        // Loading state
+        Observable.merge(
+            leadersVM.state.asObservable().filter {_ in self.segmentedItem.value == .leaders},
+            subscribersVM.state.asObservable().filter {_ in self.segmentedItem.value == .all}
+        )
+            .distinctUntilChanged { (lhs, rhs) -> Bool in
+                switch (lhs, rhs) {
+                case (.loading(let isLoading1), .loading(let isLoading2)):
+                    return isLoading1 == isLoading2
+                case (.listEnded, .listEnded):
+                    return true
+                default:
+                    return false
+                }
+            }
+            .bind(to: listLoadingState)
+            .disposed(by: disposeBag)
+    }
     
     func reload() {
         if segmentedItem.value == .all || segmentedItem.value == .leaders {

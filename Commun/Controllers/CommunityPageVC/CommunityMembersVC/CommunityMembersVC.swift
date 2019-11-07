@@ -8,8 +8,24 @@
 
 import Foundation
 import RxSwift
+import RxDataSources
 
 class CommunityMembersVC: BaseViewController {
+    // MARK: - Nested type
+    enum CustomElementType: IdentifiableType, Equatable {
+        case subscriber(ResponseAPIContentResolveProfile)
+        case leader(ResponseAPIContentGetLeader)
+        
+        var identity: String {
+            switch self {
+            case .subscriber(let subscriber):
+                return subscriber.identity
+            case .leader(let leader):
+                return leader.identity
+            }
+        }
+    }
+    
     // MARK: - Properties
     var selectedSegmentedItem: CommunityMembersViewModel.SegmentedItem
     let disposeBag = DisposeBag()
@@ -69,11 +85,37 @@ class CommunityMembersVC: BaseViewController {
         tableView.register(CommunityLeaderCell.self, forCellReuseIdentifier: "CommunityLeaderCell")
         
         tableView.separatorStyle = .none
+        
+        // pull to refresh
+        tableView.es.addPullToRefresh { [unowned self] in
+            self.tableView.es.stopPullToRefresh()
+            self.reload()
+        }
     }
     
     override func bind() {
         super.bind()
+        // tabBar's selection changed
+        topTabBar.selectedIndex
+            .map { index -> CommunityMembersViewModel.SegmentedItem in
+                switch index {
+                case 0:
+                    return .all
+                case 1:
+                    return .leaders
+                case 2:
+                    return .friends
+                default:
+                    fatalError("not found selected index")
+                }
+            }
+            .bind(to: viewModel.segmentedItem)
+            .disposed(by: disposeBag)
         
+        // list loading state
+        bindState()
+        
+        bindList()
     }
     
     @objc func reload() {
