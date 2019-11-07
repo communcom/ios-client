@@ -14,7 +14,8 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
     override var contentScrollView: UIScrollView? {tableView}
     
     // MARK: - Constants
-    let coverHeight: CGFloat = 180
+    let coverHeight: CGFloat = 200
+    let coverVisibleHeight: CGFloat = 150
     let disposeBag = DisposeBag()
     
     // MARK: - Properties
@@ -23,10 +24,22 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
     }
     
     // MARK: - Subviews
+    
+    lazy var shadowView: UIView = {
+        let view = UIView(forAutoLayout: ())
+        view.backgroundColor = .clear
+        let gradient = CAGradientLayer()
+        gradient.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: coverHeight)
+        gradient.colors = [UIColor.black.withAlphaComponent(0.3).cgColor, UIColor.clear.cgColor]
+        gradient.locations = [0.0, 1.0]
+        view.layer.insertSublayer(gradient, at: 0)
+        return view
+    }()
+    
     lazy var backButton = UIButton.back(tintColor: .white, contentInsets: UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 24))
     
     lazy var coverImageView: UIImageView = {
-        let imageView = UIImageView(height: coverHeight)
+        let imageView = UIImageView()
         imageView.image = .placeholder
         return imageView
     }()
@@ -40,22 +53,32 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
         tableView.backgroundColor = .clear
         tableView.insetsContentViewsToSafeArea = false
         tableView.contentInsetAdjustmentBehavior = .never
+        tableView.showsVerticalScrollIndicator = false
         return tableView
     }()
     
     override func setUp() {
         super.setUp()
+
         view.backgroundColor = #colorLiteral(red: 0.9605136514, green: 0.9644123912, blue: 0.9850376248, alpha: 1)
         setLeftNavBarButton(with: backButton)
         backButton.addTarget(self, action: #selector(back), for: .touchUpInside)
-        
+
         view.addSubview(coverImageView)
-        coverImageView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .bottom)
-        
+        coverImageView.autoPinEdge(.top, to: .top, of: view)
+        coverImageView.autoAlignAxis(.vertical, toSameAxisOf: view)
+
+        view.addSubview(shadowView)
+        shadowView.autoPinEdge(toSuperviewEdge: .left)
+        shadowView.autoPinEdge(toSuperviewEdge: .right)
+        shadowView.autoPinEdge(toSuperviewEdge: .top)
+        shadowView.autoPinEdge(toSuperviewEdge: .bottom)
+
         view.addSubview(tableView)
         tableView.autoPinEdgesToSuperviewEdges()
-        tableView.contentInset = UIEdgeInsets(top: coverHeight - 24, left: 0, bottom: 0, right: 0)
-        
+        tableView.contentInset.top = coverVisibleHeight
+        tableView.contentInset.bottom = 60 + 10 + view.safeAreaInsets.bottom
+
         // setup datasource
         tableView.register(BasicPostCell.self, forCellReuseIdentifier: "BasicPostCell")
         tableView.register(ArticlePostCell.self, forCellReuseIdentifier: "ArticlePostCell")
@@ -69,6 +92,8 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
             self.reload()
         }
         tableView.subviews.first(where: {$0 is ESRefreshHeaderView})?.alpha = 0
+
+        navigationController?.navigationBar.barTintColor = .white
     }
     
     override func bind() {
@@ -116,16 +141,12 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+
         if tableView.contentOffset.y >= -43 {
             showTitle(true)
-        }
-        else {
+        } else {
             showTitle(false)
         }
-    }
-    
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
     }
     
     override func viewDidLayoutSubviews() {
@@ -158,6 +179,7 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
             self.navigationController?.navigationBar.tintColor =
                 show ? .appMainColor: .white
             self.backButton.tintColor = show ? .black: .white
+            self.navigationController?.navigationBar.barStyle = show ? .default : .black
         }
     }
     

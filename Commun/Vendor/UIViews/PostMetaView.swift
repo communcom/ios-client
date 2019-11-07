@@ -130,6 +130,8 @@ class PostMetaView: UIView {
         if isCommunityNameTappable {
             let tap = TapGesture(target: self, action: #selector(communityNameTapped(_:)))
             tap.post = post
+            avatarImageView.isUserInteractionEnabled = true
+            avatarImageView.addGestureRecognizer(tap)
             comunityNameLabel.isUserInteractionEnabled = true
             comunityNameLabel.addGestureRecognizer(tap)
         }

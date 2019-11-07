@@ -69,6 +69,7 @@ class CommunActionSheet: SwipeDownDismissViewController {
             + headerHeight
             + headerToButtonsSpace
             + actionButtonsHeight
+            + (UIApplication.shared.keyWindow?.safeAreaInsets.bottom ?? 0)
     }
     
     // MARK: - Subviews

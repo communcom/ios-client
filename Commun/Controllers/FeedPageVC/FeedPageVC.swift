@@ -45,7 +45,7 @@ class FeedPageVC: PostsViewController {
         
         tableView.emptyDataSetSource = self
         tableView.emptyDataSetDelegate = self
-        tableView.estimatedRowHeight = 600
+        tableView.estimatedRowHeight = UITableView.automaticDimension
         // dismiss keyboard when dragging
         tableView.keyboardDismissMode = .onDrag
     }
