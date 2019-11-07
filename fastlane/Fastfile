@@ -1,0 +1,174 @@
+# -- Fabric
+fabric_token = "a31221dc945d82768ff8fba65613cdf825d49797"
+fabric_secret = "2911e05e27da2b2ebe58e753cbac383d0dda0a1e102e4bd1bc30abe7d75f94e9"
+fabric_link = "https://betas.to/sz2yqJCL"
+fabric_testers_group = "demo"
+
+# -- Application
+
+application_team_id = "5G8856SBG8"
+application_name = "Commun"
+application_dev_bundle_id = "io.commun.eos.ios"
+application_info_plist_path = "./Commun/Info.plist"
+
+# -- User
+apple_id = "shilinartem@gmail.ru"
+
+
+desc 'Build to Crashlytics Beta'
+lane :beta do |options|
+		isCI = options[:ci] ? true : false
+
+		# update new devices and create new profile
+		if isCI 
+			update_profiles
+		end
+
+		# add cert
+		match(
+			generate_apple_certs: true,
+			app_identifier: application_dev_bundle_id,
+			type: "development",
+			readonly: true
+			)
+
+		build_version = get_info_plist_value(path: application_info_plist_path, key: 'CFBundleShortVersionString')
+		new_bundle_version = sh('git rev-list --all --count')
+		
+		puts "Application version: #{build_version}"
+		puts "Bundle version: #{new_bundle_version}"
+
+		# build application
+		build(
+			appstore: false, 
+			build_number: new_bundle_version
+			)
+
+		# create auto changelog
+		changed = changelog_from_git_commits(
+			tag_match_pattern: "CI.*",
+			pretty: "∙ %B",
+			merge_commit_filtering: "exclude_merges"
+		)
+
+		# upload to Beta by Crashlytics
+		crashlytics(
+			api_token: fabric_token,
+			build_secret: fabric_secret,
+			groups: fabric_testers_group,
+			notifications: "false",
+			notes: changed
+			)
+	end
+
+desc 'Update profiles and add new devices'
+lane :update_profiles do 
+	
+	match(
+		username: apple_id,
+		app_identifier: application_dev_bundle_id,
+		generate_apple_certs: true,
+		type: "development",
+		readonly: false,
+		force_for_new_devices: true,
+		force: true,
+		force_for_new_devices: true,
+		clone_branch_directly: true
+		)
+end
+
+lane :test do 
+	
+	
+
+	# changed = SharedValues::FL_CHANGELOG	
+	puts changed
+end
+
+private_lane :build do |options|
+
+	disable_automatic_code_signing
+	new_build_version = options[:build_number] || Time.now.strftime('%Y%m%d.%H%M')
+
+	appstore = options[:appstore] || false
+
+	cocoapods
+
+	version = get_info_plist_value(path: application_info_plist_path, key: 'CFBundleShortVersionString')
+	lane_context[SharedValues::VERSION_NUMBER] = version
+
+	profile_prefix_name = "match Development"
+	preprocessor_def = "${inherited} #{"DEBUG=1"} #{"COCOAPODS=1"}"
+
+	if appstore 
+		profile_prefix_name = "match Development"
+		preprocessor_def = "${inherited} #{"DEBUG=1"} #{"COCOAPODS=1"}"
+	end
+
+    # change buid number
+    increment_build_number(
+    	xcodeproj:"#{application_name}.xcodeproj",
+    	build_number: new_build_version
+    	)
+
+    settings_to_override = {
+    	:BUNDLE_IDENTIFIER => application_dev_bundle_id,
+    	:PROVISIONING_PROFILE_SPECIFIER => "#{profile_prefix_name} #{application_dev_bundle_id}",
+    	:DEVELOPMENT_TEAM => application_team_id
+    	# :GCC_PREPROCESSOR_DEFINITIONS => preprocessor_def
+    }
+
+    gym_options = {
+    	clean: true,
+    	configuration: 'Release',
+    	scheme: "#{application_name}",
+    	workspace: "#{application_name}.xcworkspace",
+    	archive_path: "build/#{application_name}.xcarchive",
+    	output_directory: 'build',
+    	export_method: appstore ? 'app-store' : 'development',
+    	include_bitcode: false,
+    	output_name: "#{application_name}.#{new_build_version}.ipa",
+    	xcargs: settings_to_override,
+    	export_options: {
+    		teamID: application_team_id,
+    		signingStyle: "manual",
+    		provisioningProfiles: { 
+    			"#{application_dev_bundle_id}" => "match Development #{application_dev_bundle_id}"
+    		}
+    	}
+    }
+
+    gym(gym_options)
+end
+
+private_lane :end_clear do |options|
+	set_info_plist_value(
+		path: application_info_plist_path, 
+		key: 'CFBundleVersion', 
+		value:get_info_plist_value(
+			path: application_info_plist_path, 
+			key: 'CFBundleShortVersionString'
+			)
+		)
+
+	if ENV['DEV_APP_NAME']
+		set_info_plist_value(
+			path: application_info_plist_path, 
+			key: 'CFBundleDisplayName', 
+			value:ENV['DEV_APP_NAME']
+			)
+	end
+end
+
+# -- End build or error --
+
+after_all do |lane|
+	end_clear
+end
+
+error do |lane, exception|
+	end_clear
+end
+
+
+
