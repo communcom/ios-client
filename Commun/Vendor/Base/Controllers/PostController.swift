@@ -29,10 +29,10 @@ extension PostController {
     }
     
     func observePostChange() {
-        NotificationCenter.default.rx.notification(.init(rawValue: "\(Self.self)DidChange"))
+        NotificationCenter.default.rx.notification(.init(rawValue: "\(ResponseAPIContentGetPost.self)DidChange"))
             .subscribe(onNext: {notification in
                 guard let newPost = notification.object as? ResponseAPIContentGetPost,
-                    newPost == self.post
+                    newPost.identity == self.post?.identity
                     else {return}
                 self.setUp(with: newPost)
             })

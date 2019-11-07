@@ -15,6 +15,7 @@ protocol ProfileType: Equatable {
     var username: String {get}
     var isSubscribed: Bool? {get set}
     var subscribersCount: UInt64? {get set}
+    var identity: String {get}
 }
 
 extension ProfileType {
@@ -49,7 +50,7 @@ extension ProfileController {
         NotificationCenter.default.rx.notification(.init(rawValue: "\(Profile.self)DidChange"))
             .subscribe(onNext: {notification in
                 guard let newProfile = notification.object as? Profile,
-                    newProfile == self.profile
+                    newProfile.identity == self.profile?.identity
                     else {return}
                 self.setUp(with: newProfile)
             })
