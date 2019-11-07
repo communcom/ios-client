@@ -7,12 +7,15 @@
 //
 
 import Foundation
+import RxSwift
 
 class CommunityMembersVC: BaseViewController {
     // MARK: - Properties
     var selectedIndex: Int
+    let disposeBag = DisposeBag()
     
     // MARK: - Subviews
+    lazy var backButton = UIButton.back(contentInsets: UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 24))
     lazy var topTabBar = CMTopTabBar(
         height: 35,
         labels: [
@@ -35,10 +38,19 @@ class CommunityMembersVC: BaseViewController {
     // MARK: - Methods
     override func setUp() {
         super.setUp()
+        setLeftNavBarButton(with: backButton)
+        backButton.addTarget(self, action: #selector(back), for: .touchUpInside)
+        
         edgesForExtendedLayout = .all
         view.backgroundColor = .f3f5fa
-        view.addSubview(topTabBar)
-        topTabBar.backgroundColor = .white
-        topTabBar.autoPinEdgesToSuperviewSafeArea(with: UIEdgeInsets(top: 100, left: 0, bottom: 0, right: 0), excludingEdge: .bottom)
+        
+        let topBarContainerView = UIView(height: 55, backgroundColor: .white)
+        view.addSubview(topBarContainerView)
+        topBarContainerView.autoPinEdgesToSuperviewSafeArea(with: .zero, excludingEdge: .bottom)
+        
+        topBarContainerView.addSubview(topTabBar)
+        topTabBar.autoPinEdge(toSuperviewEdge: .leading)
+        topTabBar.autoPinEdge(toSuperviewEdge: .trailing)
+        topTabBar.autoAlignAxis(toSuperviewAxis: .horizontal)
     }
 }

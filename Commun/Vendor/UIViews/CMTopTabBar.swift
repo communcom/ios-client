@@ -42,6 +42,9 @@ class CMTopTabBar: MyView {
         configureForAutoLayout()
         autoSetDimension(.height, toSize: tabBarHeight)
         
+        scrollView.showsVerticalScrollIndicator = false
+        scrollView.showsHorizontalScrollIndicator = false
+        
         addSubview(scrollView)
         scrollView.autoPinEdgesToSuperviewEdges()
         didSetLabels()
