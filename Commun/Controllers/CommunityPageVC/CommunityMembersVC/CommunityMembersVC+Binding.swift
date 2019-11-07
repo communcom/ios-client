@@ -10,6 +10,39 @@ import Foundation
 import RxDataSources
 
 extension CommunityMembersVC {
+    func bindSegmentedControl() {
+        let segmentedItem = topTabBar.selectedIndex
+            .map { index -> CommunityMembersViewModel.SegmentedItem in
+                switch index {
+                case 0:
+                    return .all
+                case 1:
+                    return .leaders
+                case 2:
+                    return .friends
+                default:
+                    fatalError("not found selected index")
+                }
+            }.share()
+        
+        segmentedItem
+            .bind(to: viewModel.segmentedItem)
+            .disposed(by: disposeBag)
+        
+        segmentedItem
+            .map {$0 == .all}
+            .subscribe(onNext: { (isAll) in
+                self.headerView.removeFromSuperview()
+                if isAll {
+                    self.showHeaderView()
+                }
+                else {
+                    self.tableView.tableHeaderView = nil
+                }
+            })
+            .disposed(by: disposeBag)
+    }
+    
     func bindState() {
         viewModel.listLoadingState
             .subscribe(onNext: { [weak self] (state) in
@@ -101,5 +134,21 @@ extension CommunityMembersVC {
 //                self?.cellSelected(indexPath)
             })
             .disposed(by: disposeBag)
+    }
+    
+    func showHeaderView() {
+        let view = UIView(forAutoLayout: ())
+        view.addSubview(headerView)
+        headerView.autoPinEdgesToSuperviewEdges()
+        
+        tableView.tableHeaderView = view
+        
+        view.centerXAnchor.constraint(equalTo: tableView.centerXAnchor).isActive = true
+        view.widthAnchor.constraint(equalTo: tableView.widthAnchor).isActive = true
+        view.topAnchor.constraint(equalTo: tableView.topAnchor).isActive = true
+        
+        tableView.tableFooterView = tableView.tableFooterView
+        
+        tableView.layoutIfNeeded()
     }
 }

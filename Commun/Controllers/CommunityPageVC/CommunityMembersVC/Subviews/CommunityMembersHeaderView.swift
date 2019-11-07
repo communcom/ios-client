@@ -8,7 +8,7 @@
 
 import Foundation
 
-class CommunityMembersHeaderView: MyTableHeaderView {
+class CommunityMembersHeaderView: MyView {
     // height = 278
     lazy var leadersCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -33,12 +33,13 @@ class CommunityMembersHeaderView: MyTableHeaderView {
         leadersCollectionView.contentInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
         addSubview(leadersCollectionView)
         leadersCollectionView.autoPinEdge(.top, to: .bottom, of: label, withOffset: 16)
-        
+        leadersCollectionView.autoPinEdge(toSuperviewEdge: .leading)
+        leadersCollectionView.autoPinEdge(toSuperviewEdge: .trailing)
+
         let label2 = UILabel.with(text: "members".localized().uppercaseFirst, textSize: 20, weight: .bold)
         addSubview(label2)
-        label2.autoPinEdge(toSuperviewEdge: .top, withInset: 20)
-        label2.autoPinEdge(toSuperviewEdge: .leading, withInset: 10)
         label2.autoPinEdge(.top, to: .bottom, of: leadersCollectionView, withOffset: 20)
+        label2.autoPinEdge(toSuperviewEdge: .leading, withInset: 10)
         label2.autoPinEdge(toSuperviewEdge: .bottom, withInset: 16)
     }
 }

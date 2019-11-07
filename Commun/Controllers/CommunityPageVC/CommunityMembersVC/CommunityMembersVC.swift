@@ -35,7 +35,7 @@ class CommunityMembersVC: BaseViewController {
     lazy var backButton = UIButton.back(contentInsets: UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 24))
     lazy var topTabBar = CMTopTabBar(
         height: 35,
-        labels: CommunityMembersViewModel.SegmentedItem.allCases.map {$0.rawValue},
+        labels: CommunityMembersViewModel.SegmentedItem.allCases.map {$0.rawValue.localized().uppercaseFirst},
         selectedIndex: selectedSegmentedItem.index)
     
     lazy var tableView: UITableView = {
@@ -43,8 +43,11 @@ class CommunityMembersVC: BaseViewController {
         tableView.backgroundColor = .clear
         tableView.insetsContentViewsToSafeArea = false
         tableView.contentInsetAdjustmentBehavior = .never
+        tableView.contentInset = UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0)
         return tableView
     }()
+    
+    lazy var headerView = CommunityMembersHeaderView(height: 278)
     
     // MARK: - Initializers
     init(community: ResponseAPIContentGetCommunity, selectedSegmentedItem: CommunityMembersViewModel.SegmentedItem) {
@@ -96,21 +99,7 @@ class CommunityMembersVC: BaseViewController {
     override func bind() {
         super.bind()
         // tabBar's selection changed
-        topTabBar.selectedIndex
-            .map { index -> CommunityMembersViewModel.SegmentedItem in
-                switch index {
-                case 0:
-                    return .all
-                case 1:
-                    return .leaders
-                case 2:
-                    return .friends
-                default:
-                    fatalError("not found selected index")
-                }
-            }
-            .bind(to: viewModel.segmentedItem)
-            .disposed(by: disposeBag)
+        bindSegmentedControl()
         
         // list loading state
         bindState()
