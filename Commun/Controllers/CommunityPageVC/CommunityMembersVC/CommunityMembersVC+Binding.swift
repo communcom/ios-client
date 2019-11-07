@@ -149,9 +149,20 @@ extension CommunityMembersVC: UICollectionViewDelegateFlowLayout {
             .disposed(by: disposeBag)
         
         // OnItemSelected
-        tableView.rx.itemSelected
-            .subscribe(onNext: {[weak self] indexPath in
-//                self?.cellSelected(indexPath)
+        tableView.rx.modelSelected(CustomElementType.self)
+            .subscribe(onNext: { (element) in
+                switch element {
+                case .subscriber(let profile):
+                    self.showProfileWithUserId(profile.userId)
+                case .leader(let leader):
+                    self.showProfileWithUserId(leader.userId)
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        headerView.leadersCollectionView.rx.modelSelected(ResponseAPIContentGetLeader.self)
+            .subscribe(onNext: { (leader) in
+                self.showProfileWithUserId(leader.userId)
             })
             .disposed(by: disposeBag)
     }
