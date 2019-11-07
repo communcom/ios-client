@@ -14,8 +14,8 @@ class CommunButton: UIButton {
         return button
     }
     
-    static func `default`(label: String? = nil) -> CommunButton {
-        let button = CommunButton(height: 35, label: label, labelFont: .boldSystemFont(ofSize: 15), backgroundColor: .appMainColor, textColor: .white, cornerRadius: 35 / 2, contentInsets: UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 20))
+    static func `default`(height: CGFloat = 35, label: String? = nil) -> CommunButton {
+        let button = CommunButton(height: height, label: label, labelFont: .boldSystemFont(ofSize: 15), backgroundColor: .appMainColor, textColor: .white, cornerRadius: height / 2, contentInsets: UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 20))
         return button
     }
     

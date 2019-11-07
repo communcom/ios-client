@@ -61,15 +61,8 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
         super.setUp()
 
         view.backgroundColor = #colorLiteral(red: 0.9605136514, green: 0.9644123912, blue: 0.9850376248, alpha: 1)
-        let leftButtonView = UIView(frame: CGRect(x: 0, y: 0, width: 36, height: 40))
-        
-        leftButtonView.addSubview(backButton)
-        backButton.autoPinEdgesToSuperviewEdges()
+        setLeftNavBarButton(with: backButton)
         backButton.addTarget(self, action: #selector(back), for: .touchUpInside)
-        leftButtonView.addSubview(backButton)
-
-        let leftBarButton = UIBarButtonItem(customView: leftButtonView)
-        navigationItem.leftBarButtonItem = leftBarButton
 
         view.addSubview(coverImageView)
         coverImageView.autoPinEdge(.top, to: .top, of: view)
