@@ -19,6 +19,12 @@ class EmbedView: UIView {
     @IBOutlet weak private var providerLabelView: UIView!
     @IBOutlet weak private var titlesView: UIView!
 
+    private lazy var loadingView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .black
+        return view
+    }()
+
     private lazy var webView: WKWebView = {
         let webView = WKWebView()
         webView.configuration.preferences.javaScriptEnabled = true
@@ -31,7 +37,7 @@ class EmbedView: UIView {
 
     private lazy var activityIndicator: UIActivityIndicatorView = {
         let activity = UIActivityIndicatorView()
-        activity.hidesWhenStopped = true
+        activity.hidesWhenStopped = false
         activity.style = .white
         return activity
     }()
@@ -63,6 +69,9 @@ class EmbedView: UIView {
     }
 
     private func configure(with content: ResponseAPIContentBlock) {
+        loadingView.removeFromSuperview()
+        webView.removeFromSuperview()
+
         coverImageView.removeAllConstraints()
         titleLabel.removeAllConstraints()
         subtitleLabel.removeAllConstraints()
@@ -159,7 +168,10 @@ class EmbedView: UIView {
                 titlesView.isHidden = true
                 addSubview(webView)
                 webView.autoPinEdgesToSuperviewEdges()
-                addSubview(activityIndicator)
+                addSubview(loadingView)
+                loadingView.isHidden = false
+                loadingView.autoPinEdgesToSuperviewEdges()
+                loadingView.addSubview(activityIndicator)
                 activityIndicator.autoPinEdgesToSuperviewEdges()
                 activityIndicator.startAnimating()
                 webView.load(URLRequest(url: url))
@@ -202,14 +214,10 @@ class EmbedView: UIView {
 
 extension EmbedView: WKNavigationDelegate {
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-          activityIndicator.stopAnimating()
-      }
+        loadingView.isHidden = true
+    }
 
-      func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
-          activityIndicator.startAnimating()
-      }
-
-      func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
-          activityIndicator.stopAnimating()
-      }
+    func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+        loadingView.isHidden = true
+    }
 }
