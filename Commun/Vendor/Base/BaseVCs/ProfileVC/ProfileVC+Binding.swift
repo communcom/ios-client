@@ -118,7 +118,7 @@ extension ProfileVC {
             coefficient = 1
         }
 
-        coverImageView.heightConstraint?.constant = coverHeight * coefficient
-        coverImageView.widthConstraint?.constant = UIScreen.main.bounds.size.width * coefficient
+        coverImageWidthConstraint.constant = UIScreen.main.bounds.size.width * coefficient
+        coverImageHeightConstraint.constant = coverHeight * coefficient
     }
 }

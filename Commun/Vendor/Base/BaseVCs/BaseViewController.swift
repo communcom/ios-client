@@ -32,17 +32,10 @@ class BaseViewController: UIViewController {
         guard let scrollView = contentScrollView,
             let tabBarController = tabBarController as? TabBarVC else {return}
         var contentInsets = scrollView.contentInset
-        
-        var insetsBottom = contentInsets.bottom + tabBarController.tabBarHeight
-        
-        if let tableView = scrollView as? UITableView {
-            if tableView.insetsContentViewsToSafeArea {
-                insetsBottom -= (UIApplication.shared.keyWindow?.safeAreaInsets.bottom ?? 0)
-            }
-        }
-        
-        contentInsets.bottom = insetsBottom
-        
+        let insetsBottom = contentInsets.bottom + tabBarController.tabBarHeight
+        let defaultBottomOffset: CGFloat = 10
+        contentInsets.bottom = insetsBottom + defaultBottomOffset + view.safeAreaInsets.bottom
+        scrollView.scrollIndicatorInsets.bottom = insetsBottom + view.safeAreaInsets.bottom
         scrollView.contentInset = contentInsets
     }
 }
