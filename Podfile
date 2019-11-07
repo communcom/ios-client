@@ -6,9 +6,10 @@ use_frameworks!
 inhibit_all_warnings!
 
 def common_pods
+
   pod 'Fabric'
   pod 'Crashlytics'
-  
+  pod 'Firebase/Analytics'
   pod 'Firebase/Core'
   pod 'Firebase/Messaging'
   

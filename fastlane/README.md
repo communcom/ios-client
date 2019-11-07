@@ -15,6 +15,11 @@ Install _fastlane_ using
 or alternatively using `brew cask install fastlane`
 
 # Available Actions
+### test
+```
+fastlane test
+```
+
 ### beta
 ```
 fastlane beta
@@ -25,11 +30,6 @@ Build to Crashlytics Beta
 fastlane update_profiles
 ```
 Update profiles and add new devices
-### test
-```
-fastlane test
-```
-
 
 ----
 
