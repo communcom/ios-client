@@ -149,11 +149,11 @@ DEPENDENCIES:
   - AppImageViewer
   - ASSpinnerView
   - Crashlytics
-  - CyberSwift (from `https://github.com/GolosChain/cyberSwift.git`)
+  - "CyberSwift (from `git@github.com:communcom/cyberSwift.git`)"
   - DateToolsSwift
   - Down
   - DZNEmptyDataSet
-  - eosswift (from `https://github.com/communcom/eos-swift.git`)
+  - "eosswift (from `git@github.com:communcom/eos-swift.git`)"
   - ESPullToRefresh
   - Fabric
   - Firebase/Core
@@ -237,9 +237,9 @@ SPEC REPOS:
 
 EXTERNAL SOURCES:
   CyberSwift:
-    :git: https://github.com/GolosChain/cyberSwift.git
+    :git: "git@github.com:communcom/cyberSwift.git"
   eosswift:
-    :git: https://github.com/communcom/eos-swift.git
+    :git: "git@github.com:communcom/eos-swift.git"
   SubviewAttachingTextView:
     :git: https://github.com/communcom/SubviewAttachingTextView.git
   THPinViewController:
@@ -248,11 +248,11 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   CyberSwift:
-    :commit: 945c1e1387692895bcc137b460b91cca452b2004
-    :git: https://github.com/GolosChain/cyberSwift.git
+    :commit: 770169e5c32f2283bb566238a7db6c2e28433467
+    :git: "git@github.com:communcom/cyberSwift.git"
   eosswift:
     :commit: d919b66d452de46568b94745451111123af80ca9
-    :git: https://github.com/communcom/eos-swift.git
+    :git: "git@github.com:communcom/eos-swift.git"
   SubviewAttachingTextView:
     :commit: 141dcc300ee804e5d11f27fa9e685dc91889c262
     :git: https://github.com/communcom/SubviewAttachingTextView.git
@@ -318,6 +318,6 @@ SPEC CHECKSUMS:
   TTTAttributedLabel: 8cffe8e127e4e82ff3af1e5386d4cd0ad000b656
   "UITextView+Placeholder": c407b27599ea23cca425946fee3cf1db5d547008
 
-PODFILE CHECKSUM: 23c7c745381348f98366255ab8fc442afa89025f
+PODFILE CHECKSUM: 9306a525c0dcef2c676240879d8ea047c0281b2c
 
-COCOAPODS: 1.8.3
+COCOAPODS: 1.8.4
