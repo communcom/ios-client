@@ -30,10 +30,6 @@ class ContentHuggingScrollView: UIScrollView {
         self.contentInset = contentInset
     }
     
-    override func addSubview(_ view: UIView) {
-        contentView.addSubview(view)
-    }
-    
     func commonInit() {
         addSubview(contentView)
         contentView.autoPinEdgesToSuperviewEdges()

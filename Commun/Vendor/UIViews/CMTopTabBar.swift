@@ -12,6 +12,7 @@ import RxSwift
 
 class CMTopTabBar: MyView {
     // MARK: - Properties
+    var tabBarHeight: CGFloat
     let bag = DisposeBag()
     var labels: [String] {
         didSet {
@@ -28,9 +29,8 @@ class CMTopTabBar: MyView {
     init(height: CGFloat, labels: [String], selectedIndex: Int = 0) {
         self.labels = labels
         self.selectedIndex = BehaviorRelay<Int>(value: selectedIndex)
+        self.tabBarHeight = height
         super.init(frame: .zero)
-        configureForAutoLayout()
-        autoSetDimension(.height, toSize: height)
     }
     
     required init?(coder: NSCoder) {
@@ -39,10 +39,14 @@ class CMTopTabBar: MyView {
     
     override func commonInit() {
         super.commonInit()
+        configureForAutoLayout()
+        autoSetDimension(.height, toSize: tabBarHeight)
+        
         addSubview(scrollView)
         scrollView.autoPinEdgesToSuperviewEdges()
         didSetLabels()
         setUp()
+        bind()
     }
     
     func bind() {
@@ -67,6 +71,8 @@ class CMTopTabBar: MyView {
             
             if i == 0 {
                 button.autoPinEdge(toSuperviewEdge: .leading)
+                scrollView.contentView.heightAnchor.constraint(equalTo: button.heightAnchor)
+                    .isActive = true
             }
             else {
                 button.autoPinEdge(.leading, to: .trailing, of: buttons[i-1], withOffset: 10)
