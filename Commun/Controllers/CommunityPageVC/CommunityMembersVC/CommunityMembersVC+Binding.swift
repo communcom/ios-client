@@ -9,7 +9,7 @@
 import Foundation
 import RxDataSources
 
-extension CommunityMembersVC {
+extension CommunityMembersVC: UICollectionViewDelegateFlowLayout {
     func bindSegmentedControl() {
         let segmentedItem = topTabBar.selectedIndex
             .map { index -> CommunityMembersViewModel.SegmentedItem in
@@ -128,6 +128,28 @@ extension CommunityMembersVC {
             .bind(to: tableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
         
+        let leaderDataSource = RxCollectionViewSectionedAnimatedDataSource<AnimatableSectionModel<String, ResponseAPIContentGetLeader>>(
+            configureCell: { (dataSource, tableView, indexPath, leader) -> UICollectionViewCell in
+                
+                if indexPath.row >= self.viewModel.leadersVM.items.value.count - 2 {
+                    self.viewModel.fetchNext()
+                }
+                
+                let cell = self.headerView.leadersCollectionView.dequeueReusableCell(withReuseIdentifier: "LeaderCollectionCell", for: indexPath) as! LeaderCollectionCell
+                cell.setUp(with: leader)
+                return cell
+            }
+        )
+        
+        viewModel.leadersVM.items
+            .skip(1)
+            .map {[AnimatableSectionModel<String, ResponseAPIContentGetLeader>(model: "", items: $0)]}
+            .bind(to: headerView.leadersCollectionView.rx.items(dataSource: leaderDataSource))
+            .disposed(by: disposeBag)
+        
+        headerView.leadersCollectionView.rx.setDelegate(self)
+            .disposed(by: disposeBag)
+        
         // OnItemSelected
         tableView.rx.itemSelected
             .subscribe(onNext: {[weak self] indexPath in
@@ -150,5 +172,9 @@ extension CommunityMembersVC {
         tableView.tableFooterView = tableView.tableFooterView
         
         tableView.layoutIfNeeded()
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 130, height: 166)
     }
 }

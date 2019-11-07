@@ -9,7 +9,7 @@
 import Foundation
 
 class CommunityMembersHeaderView: MyView {
-    // height = 278
+    // height = 268
     lazy var leadersCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.sectionInset = .zero
@@ -24,9 +24,10 @@ class CommunityMembersHeaderView: MyView {
     
     override func commonInit() {
         super.commonInit()
+        backgroundColor = .f3f5fa
         let label = UILabel.with(text: "leaders".localized().uppercaseFirst, textSize: 20, weight: .bold)
         addSubview(label)
-        label.autoPinEdge(toSuperviewEdge: .top, withInset: 20)
+        label.autoPinEdge(toSuperviewEdge: .top, withInset: 10)
         label.autoPinEdge(toSuperviewEdge: .leading, withInset: 10)
         
         leadersCollectionView.register(LeaderCollectionCell.self, forCellWithReuseIdentifier: "LeaderCollectionCell")

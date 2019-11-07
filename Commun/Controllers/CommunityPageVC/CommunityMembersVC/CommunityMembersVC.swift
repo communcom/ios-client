@@ -47,7 +47,7 @@ class CommunityMembersVC: BaseViewController {
         return tableView
     }()
     
-    lazy var headerView = CommunityMembersHeaderView(height: 278)
+    lazy var headerView = CommunityMembersHeaderView(height: 268)
     
     // MARK: - Initializers
     init(community: ResponseAPIContentGetCommunity, selectedSegmentedItem: CommunityMembersViewModel.SegmentedItem) {
@@ -87,7 +87,7 @@ class CommunityMembersVC: BaseViewController {
         tableView.register(SubscribersCell.self, forCellReuseIdentifier: "SubscribersCell")
         tableView.register(CommunityLeaderCell.self, forCellReuseIdentifier: "CommunityLeaderCell")
         
-        tableView.separatorStyle = .none
+        tableView.separatorInset = .zero
         
         // pull to refresh
         tableView.es.addPullToRefresh { [unowned self] in
