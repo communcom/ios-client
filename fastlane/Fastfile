@@ -17,62 +17,57 @@ apple_id = "shilinartem@gmail.ru"
 
 desc 'Build to Crashlytics Beta'
 lane :beta do |options|
-		isCI = options[:ci] ? true : false
+	isCI = options[:ci] ? true : false
 
-		# update new devices and create new profile
-		if isCI 
-			update_profiles
-		end
+	# create auto changelog
+	changed = changelog_from_git_commits(
+		tag_match_pattern: "CI.*",
+		pretty: "∙ %B",
+		merge_commit_filtering: "exclude_merges"
+	)
 
-		# create auto changelog
-		changed = changelog_from_git_commits(
-			tag_match_pattern: "CI.*",
-			pretty: "∙ %B",
-			merge_commit_filtering: "exclude_merges"
-		)
-
-		if isCI && changed.to_s == ''
-  			UI.user_error!("Not changed")
-		end
-
-		# add cert
-		match(
-			generate_apple_certs: true,
-			app_identifier: application_dev_bundle_id,
-			type: "development",
-			readonly: true
-		)
-
-		build_version = get_info_plist_value(path: application_info_plist_path, key: 'CFBundleShortVersionString')
-		new_bundle_version = sh('git rev-list --all --count')
-		
-		puts "Application version: #{build_version}"
-		puts "Bundle version: #{new_bundle_version}"
-
-		# build application
-		build(
-			appstore: false, 
-			build_number: new_bundle_version
-		)
-
-		# upload to Beta by Crashlytics
-		crashlytics(
-			api_token: fabric_token,
-			build_secret: fabric_secret,
-			groups: fabric_testers_group,
-			notifications: "false",
-			notes: changed
-		)
-
-		if isCI 
-			sh("git tag CI.#{new_bundle_version}")
-	      	sh("git push --tags")
-      	end
+	if isCI && changed.to_s == ''
+		UI.user_error!("Not changed")
 	end
+
+	# add cert
+	match(
+		generate_apple_certs: true,
+		app_identifier: application_dev_bundle_id,
+		type: "development",
+		readonly: true
+	)
+
+	build_version = get_info_plist_value(path: application_info_plist_path, key: 'CFBundleShortVersionString')
+	new_bundle_version = sh('git rev-list --all --count')
+	
+	puts "Application version: #{build_version}"
+	puts "Bundle version: #{new_bundle_version}"
+
+	# build application
+	build(
+		appstore: false, 
+		build_number: new_bundle_version
+	)
+
+	# upload to Beta by Crashlytics
+	crashlytics(
+		api_token: fabric_token,
+		build_secret: fabric_secret,
+		groups: fabric_testers_group,
+		notifications: "false",
+		notes: changed
+	)
+
+	if isCI 
+		sh("git tag CI.#{new_bundle_version}")
+      	sh("git push --tags")
+  	end
+end
 
 desc 'Update profiles and add new devices'
 lane :update_profiles do 
-	
+
 	match(
 		username: apple_id,
 		app_identifier: application_dev_bundle_id,
@@ -84,23 +79,6 @@ lane :update_profiles do
 		force_for_new_devices: true,
 		clone_branch_directly: true
 		)
-end
-
-lane :test do 
-	isCI = false
-		changed = changelog_from_git_commits(
-			tag_match_pattern: "CI.*",
-			pretty: "∙ %B",
-			merge_commit_filtering: "exclude_merges"
-		)
-
-		if isCI && changed.to_s == ''
-  			UI.user_error!("Not changed")
-		end
-	
-
-	# changed = SharedValues::FL_CHANGELOG	
-	puts changed
 end
 
 private_lane :build do |options|
