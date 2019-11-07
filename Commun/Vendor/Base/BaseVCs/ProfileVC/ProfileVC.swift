@@ -16,6 +16,9 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
     // MARK: - Constants
     let coverHeight: CGFloat = 200
     let coverVisibleHeight: CGFloat = 150
+    var coverImageHeightConstraint: NSLayoutConstraint!
+    var coverImageWidthConstraint: NSLayoutConstraint!
+
     let disposeBag = DisposeBag()
     
     // MARK: - Properties
@@ -59,25 +62,26 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
     
     override func setUp() {
         super.setUp()
-
         view.backgroundColor = #colorLiteral(red: 0.9605136514, green: 0.9644123912, blue: 0.9850376248, alpha: 1)
         setLeftNavBarButton(with: backButton)
         backButton.addTarget(self, action: #selector(back), for: .touchUpInside)
 
+        let screenWidth = UIScreen.main.bounds.size.width
         view.addSubview(coverImageView)
         coverImageView.autoPinEdge(.top, to: .top, of: view)
         coverImageView.autoAlignAxis(.vertical, toSameAxisOf: view)
+        
+        coverImageWidthConstraint = coverImageView.widthAnchor.constraint(equalToConstant: screenWidth)
+        coverImageWidthConstraint.isActive = true
+        coverImageHeightConstraint = coverImageView.heightAnchor.constraint(equalToConstant: coverHeight)
+        coverImageHeightConstraint.isActive = true
 
         view.addSubview(shadowView)
-        shadowView.autoPinEdge(toSuperviewEdge: .left)
-        shadowView.autoPinEdge(toSuperviewEdge: .right)
-        shadowView.autoPinEdge(toSuperviewEdge: .top)
-        shadowView.autoPinEdge(toSuperviewEdge: .bottom)
+        shadowView.autoPinEdgesToSuperviewEdges()
 
         view.addSubview(tableView)
         tableView.autoPinEdgesToSuperviewEdges()
         tableView.contentInset.top = coverVisibleHeight
-        tableView.contentInset.bottom = 60 + 10 + view.safeAreaInsets.bottom
 
         // setup datasource
         tableView.register(BasicPostCell.self, forCellReuseIdentifier: "BasicPostCell")
@@ -167,6 +171,7 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
     }
     
     func showTitle(_ show: Bool, animated: Bool = false) {
+        coverImageView.isHidden = show
         UIView.animate(withDuration: animated ? 0.3: 0) {
             self.navigationController?.navigationBar.setBackgroundImage(
                 show ? nil: UIImage(), for: .default)
