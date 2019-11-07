@@ -95,8 +95,6 @@ class ListFetcher<T: ListItemType> {
                 else {
                     self.state.accept(.loading(false))
                 }
-            }, onError: { (error) in
-                self.state.accept(.error(error: error))
             })
             .map {self.join(newItems: $0)}
             .do(onSuccess: { (items) in
@@ -106,6 +104,8 @@ class ListFetcher<T: ListItemType> {
             })
             .subscribe(onSuccess: { (items) in
                 self.items.accept(items)
+            }, onError: {error in
+                self.state.accept(.error(error: error))
             })
             .disposed(by: disposeBag)
     }
