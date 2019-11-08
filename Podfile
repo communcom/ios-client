@@ -45,7 +45,6 @@ def common_pods
   
   pod 'DZNEmptyDataSet'
   
-  pod 'TTTAttributedLabel'
   pod 'QRCodeReaderViewController', '~> 4.0.2'
   
   pod 'THPinViewController', :git => "https://github.com/bigearsenal/THPinViewController.git", :branch => "commun"

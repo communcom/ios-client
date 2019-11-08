@@ -76,7 +76,6 @@
 		3B5F58AD232A2ABE0036533B /* SignInSelectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5F58AC232A2ABE0036533B /* SignInSelectionCell.swift */; };
 		3B61AC3422E1CA8A00F608AF /* LAContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B61AC3322E1CA8A00F608AF /* LAContext.swift */; };
 		3B62055A2346E4220017FEB7 /* PostEditorVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6205592346E4220017FEB7 /* PostEditorVC.swift */; };
-		3B6229AB22BD12410053B9EF /* TTTAttributedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6229AA22BD12410053B9EF /* TTTAttributedLabel.swift */; };
 		3B635F8322774A37006DAAB2 /* FeedTimeFrameMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B635F8222774A37006DAAB2 /* FeedTimeFrameMode.swift */; };
 		3B63CD9322AA7AA200DC828B /* UIScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B63CD9222AA7AA200DC828B /* UIScrollView.swift */; };
 		3B67FC0622C4BB5100D05F01 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B67FC0522C4BB5100D05F01 /* SplashViewController.swift */; };
@@ -435,7 +434,6 @@
 		3B5F58AC232A2ABE0036533B /* SignInSelectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInSelectionCell.swift; sourceTree = "<group>"; };
 		3B61AC3322E1CA8A00F608AF /* LAContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LAContext.swift; sourceTree = "<group>"; };
 		3B6205592346E4220017FEB7 /* PostEditorVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostEditorVC.swift; sourceTree = "<group>"; };
-		3B6229AA22BD12410053B9EF /* TTTAttributedLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TTTAttributedLabel.swift; sourceTree = "<group>"; };
 		3B635F8222774A37006DAAB2 /* FeedTimeFrameMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedTimeFrameMode.swift; sourceTree = "<group>"; };
 		3B63CD9222AA7AA200DC828B /* UIScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIScrollView.swift; sourceTree = "<group>"; };
 		3B67FC0522C4BB5100D05F01 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
@@ -1347,7 +1345,6 @@
 				3BF37BCB22A1297C00A72FFE /* UITableView.swift */,
 				3B5CB30222A56BD500757533 /* UITapGestureRecognizer.swift */,
 				3B63CD9222AA7AA200DC828B /* UIScrollView.swift */,
-				3B6229AA22BD12410053B9EF /* TTTAttributedLabel.swift */,
 				3BF37BC922A11FA700A72FFE /* UIView.swift */,
 				3BAF69CA226773000055CCEB /* UIView+Shadow.swift */,
 				576DC920223E42C800EDED41 /* UIViewControllerExtension.swift */,
@@ -2343,7 +2340,6 @@
 				BC69F7DA236FFA190097F870 /* SubsItemCell.swift in Sources */,
 				3B25E5BE234C2A0C005BD1B8 /* BasicEditorViewModel.swift in Sources */,
 				3B9BEB3D2300EC7D003C70B3 /* EmptyView.swift in Sources */,
-				3B6229AB22BD12410053B9EF /* TTTAttributedLabel.swift in Sources */,
 				3BDF4FA822C21B310029D616 /* ResponseAPIContentGetProfile.swift in Sources */,
 				BCA0039D23716AA1002A68BA /* LeaderController.swift in Sources */,
 				BCF74A62236180B900B91089 /* SubscribersViewModel.swift in Sources */,

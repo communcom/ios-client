@@ -34,7 +34,12 @@ class CommentCell: MyTableViewCell, CommentController {
     // MARK: - Subviews
     lazy var avatarImageView = MyAvatarImageView(size: 35)
     lazy var contentContainerView = UIView(backgroundColor: .f3f5fa, cornerRadius: 12)
-    lazy var contentLabel = UILabel.with(text: "Andrey Ivanov Welcome! 😄 Wow would love to wake", textSize: defaultContentFontSize, numberOfLines: 0)
+    lazy var contentTextView: UITextView = {
+        let textView = UITextView(forExpandable: ())
+        textView.backgroundColor = .clear
+        textView.isEditable = false
+        return textView
+    }()
     lazy var embedView = UIView(width: 192, height: 101)
     lazy var voteContainerView: VoteContainerView = VoteContainerView(height: voteActionsContainerViewHeight, cornerRadius: voteActionsContainerViewHeight / 2)
     lazy var replyButton = UIButton(label: "reply".localized().uppercaseFirst, labelFont: .boldSystemFont(ofSize: 13), textColor: .appMainColor)
@@ -54,12 +59,12 @@ class CommentCell: MyTableViewCell, CommentController {
         contentContainerView.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 10)
         contentContainerView.trailingAnchor.constraint(lessThanOrEqualTo: contentView.trailingAnchor, constant: -16).isActive = true
         
-        contentContainerView.addSubview(contentLabel)
-        contentLabel.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 8, left: 10, bottom: 0, right: 10), excludingEdge: .bottom)
+        contentContainerView.addSubview(contentTextView)
+        contentTextView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10), excludingEdge: .bottom)
         
         contentContainerView.addSubview(embedView)
-        embedView.autoPinEdge(.leading, to: .leading, of: contentLabel)
-        embedView.autoPinEdge(.top, to: .bottom, of: contentLabel)
+        embedView.autoPinEdge(.leading, to: .leading, of: contentTextView)
+        embedView.autoPinEdge(.top, to: .bottom, of: contentTextView)
         embedView.autoPinEdge(toSuperviewEdge: .bottom, withInset: 8)
         
         contentView.addSubview(voteContainerView)
@@ -146,7 +151,6 @@ class CommentCell: MyTableViewCell, CommentController {
         let userId = comment?.author?.username ?? comment?.author?.userId ?? "Unknown user"
         let mutableAS = NSMutableAttributedString(string: userId, attributes: [
             .font: UIFont.boldSystemFont(ofSize: defaultContentFontSize),
-            .foregroundColor: themeColor,
             .link: "https://commun.com/@\(comment?.author?.userId ?? comment?.author?.username ?? "unknown-user")"
         ])
         
@@ -155,7 +159,7 @@ class CommentCell: MyTableViewCell, CommentController {
         // If text is not so long or expanded
         if content.string.count < maxCharactersForReduction || expanded {
             mutableAS.append(content)
-            contentLabel.attributedText = mutableAS
+            contentTextView.attributedText = mutableAS
             return
         }
         
@@ -180,6 +184,6 @@ class CommentCell: MyTableViewCell, CommentController {
             )
 
 
-        contentLabel.attributedText = mutableAS
+        contentTextView.attributedText = mutableAS
     }
 }
