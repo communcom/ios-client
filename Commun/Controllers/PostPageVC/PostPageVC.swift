@@ -50,7 +50,8 @@ class PostPageVC: ListViewController<ResponseAPIContentGetComment> {
         dataSource = MyRxTableViewSectionedAnimatedDataSource<ListSection>(
             configureCell: { dataSource, tableView, indexPath, comment in
                 let cell = self.tableView.dequeueReusableCell(withIdentifier: "CommentCell") as! CommentCell
-                cell.setupFromComment(comment, expanded: self.expandedIndexes.contains(indexPath.row))
+                cell.expanded = self.expandedIndexes.contains(indexPath.row)
+                cell.setupFromComment(comment, expanded: )
                 cell.delegate = self
                 
                 if indexPath.row == self.viewModel.items.value.count - 2 {

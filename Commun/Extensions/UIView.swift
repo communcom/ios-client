@@ -119,6 +119,10 @@ extension UIView {
     var heightConstraint: NSLayoutConstraint? {
         return constraints.first(where: {$0.firstAttribute == .height && $0.secondItem == nil})
     }
+    
+    var leftConstraint: NSLayoutConstraint? {
+        return superview?.constraints.first(where: {$0.firstAttribute == .leading && (($0.firstItem as? UIView) == self || ($0.secondItem as? UIView) == self)})
+    }
 
     var widthConstraint: NSLayoutConstraint? {
         return constraints.first(where: {$0.firstAttribute == .width && $0.secondItem == nil})

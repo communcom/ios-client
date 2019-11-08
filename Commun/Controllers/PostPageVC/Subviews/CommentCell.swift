@@ -8,35 +8,37 @@
 
 import Foundation
 
-protocol CommentCellDelegate: class {
-    var replyingComment: ResponseAPIContentGetComment? {get set}
-    var expandedIndexes: [Int] {get set}
-    var tableView: UITableView! {get set}
-    func cell(_ cell: CommentCell, didTapUpVoteButtonForComment comment: ResponseAPIContentGetComment)
-    func cell(_ cell: CommentCell, didTapDownVoteButtonForComment comment: ResponseAPIContentGetComment)
-    func cell(_ cell: CommentCell, didTapReplyButtonForComment comment: ResponseAPIContentGetComment)
-    func cell(_ cell: CommentCell, didTapSeeMoreButtonForComment comment: ResponseAPIContentGetComment)
-    func cell(_ cell: CommentCell, didTapOnUserName userName: String)
-    func cell(_ cell: CommentCell, didTapOnTag tag: String)
-}
+//protocol CommentCellDelegate: class {
+//    var replyingComment: ResponseAPIContentGetComment? {get set}
+//    var expandedIndexes: [Int] {get set}
+//    var tableView: UITableView! {get set}
+//    func cell(_ cell: CommentCell, didTapUpVoteButtonForComment comment: ResponseAPIContentGetComment)
+//    func cell(_ cell: CommentCell, didTapDownVoteButtonForComment comment: ResponseAPIContentGetComment)
+//    func cell(_ cell: CommentCell, didTapReplyButtonForComment comment: ResponseAPIContentGetComment)
+//    func cell(_ cell: CommentCell, didTapSeeMoreButtonForComment comment: ResponseAPIContentGetComment)
+//    func cell(_ cell: CommentCell, didTapOnUserName userName: String)
+//    func cell(_ cell: CommentCell, didTapOnTag tag: String)
+//}
 
-class CommentCell: MyTableViewCell {
+class CommentCell: MyTableViewCell, CommentController {
     // MARK: - Constants
     let voteActionsContainerViewHeight: CGFloat = 35
     private let maxCharactersForReduction = 150
+    let defaultContentFontSize: CGFloat = 15
     
     // MARK: - Properties
     var comment: ResponseAPIContentGetComment?
-    var delegate: CommentCellDelegate?
     var expanded = false
     var themeColor = UIColor(hexString: "#6A80F5")!
     
     // MARK: - Subviews
     lazy var avatarImageView = MyAvatarImageView(size: 35)
     lazy var contentContainerView = UIView(backgroundColor: .f3f5fa, cornerRadius: 12)
-    lazy var contentLabel = UILabel.with(text: "Andrey Ivanov Welcome! 😄 Wow would love to wake", textSize: 15, numberOfLines: 0)
+    lazy var contentLabel = UILabel.with(text: "Andrey Ivanov Welcome! 😄 Wow would love to wake", textSize: defaultContentFontSize, numberOfLines: 0)
     lazy var embedView = UIView(width: 192, height: 101)
     lazy var voteContainerView: VoteContainerView = VoteContainerView(height: voteActionsContainerViewHeight, cornerRadius: voteActionsContainerViewHeight / 2)
+    lazy var replyButton = UIButton(label: "reply".localized().uppercaseFirst, labelFont: .boldSystemFont(ofSize: 13), textColor: .appMainColor)
+    lazy var timeLabel = UILabel.with(text: " • 3h", textSize: 13, weight: .bold, textColor: .a5a7bd)
     
     // MARK: - Methods
     override func setUpViews() {
@@ -59,19 +61,31 @@ class CommentCell: MyTableViewCell {
         embedView.autoPinEdge(toSuperviewEdge: .bottom, withInset: 8)
         
         contentView.addSubview(voteContainerView)
+        voteContainerView.autoPinEdge(.top, to: .bottom, of: contentContainerView, withOffset: 5)
+        voteContainerView.autoPinEdge(.leading, to: .leading, of: contentContainerView)
         
+        contentView.addSubview(replyButton)
+        replyButton.autoPinEdge(.leading, to: .trailing, of: voteContainerView)
+        replyButton.autoAlignAxis(.horizontal, toSameAxisOf: voteContainerView)
+        
+        contentView.addSubview(timeLabel)
+        timeLabel.autoPinEdge(.leading, to: .trailing, of: replyButton)
+        timeLabel.autoAlignAxis(.horizontal, toSameAxisOf: voteContainerView)
+        
+        #warning("answers...")
+        voteContainerView.autoPinEdge(toSuperviewEdge: .bottom, withInset: 8)
     }
     
     // MARK: - Setup
-    func setup(with comment: ResponseAPIContentGetComment, expanded: Bool = false) {
+    func setUp(with comment: ResponseAPIContentGetComment?) {
+        guard let comment = comment else {return}
         self.comment = comment
-        self.expanded = expanded
         
         // if comment is a reply
         if comment.parents.comment != nil {
-            leftPaddingConstraint.constant = 72
+            avatarImageView.leftConstraint?.constant = 72
         } else {
-            leftPaddingConstraint.constant = 16
+            avatarImageView.leftConstraint?.constant = 16
         }
 //        leftPaddingConstraint.constant = CGFloat((comment.nestedLevel - 1 > 2 ? 2 : comment.nestedLevel - 1) * 72 + 16)
         
@@ -79,7 +93,7 @@ class CommentCell: MyTableViewCell {
         avatarImageView.setAvatar(urlString: comment.author?.avatarUrl, namePlaceHolder: comment.author?.username ?? comment.author?.userId ?? "U")
         
         // setContent
-        setText(expanded: expanded)
+        setText()
         
         // Show media
         let embededResult = comment.attachments.first
@@ -88,25 +102,82 @@ class CommentCell: MyTableViewCell {
             let urlString = embededResult?.attributes?.thumbnail_url,
             let url = URL(string: urlString) {
             showPhoto(with: url)
-            embedViewHeightConstraint.constant = 101
-            embedView.trailingAnchor.constraint(equalTo: embedView.superview!.trailingAnchor, constant: -10).isActive = true
+            embedView.heightConstraint?.constant = 101
         } else {
             // TODO: Video
-            embedViewHeightConstraint.constant = 0
-            if let constraint = embedView.constraints.first(where: {$0.firstAttribute == .trailing}) {
-                embedView.removeConstraint(constraint)
-            }
+            embedView.heightConstraint?.constant = 0
         }
         
-        #warning("change this number later")
-        voteCountLabel.text = "\((comment.votes.upCount ?? 0) - (comment.votes.downCount ?? 0))"
+        voteContainerView.setUp(with: comment.votes)
+        timeLabel.text = " • " + Date.timeAgo(string: comment.meta.creationTime)
+    }
+    
+    func showPhoto(with url: URL) {
+        embedView.removeSubviews()
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.contentMode = .scaleAspectFill
+        imageView.layer.masksToBounds = true
+        imageView.addTapToViewer()
         
-        upVoteButton.tintColor = comment.votes.hasUpVote ?? false ? themeColor: .lightGray
-        downVoteButton.tintColor = comment.votes.hasDownVote ?? false ? themeColor: .lightGray
+        embedView.addSubview(imageView)
+        imageView.topAnchor.constraint(equalTo: embedView.topAnchor, constant: 8).isActive = true
+        imageView.bottomAnchor.constraint(equalTo: embedView.bottomAnchor, constant: -8).isActive = true
+        imageView.leadingAnchor.constraint(equalTo: embedView.leadingAnchor).isActive = true
+        imageView.trailingAnchor.constraint(equalTo: embedView.trailingAnchor).isActive = true
         
-        timeLabel.text = Date.timeAgo(string: comment.meta.creationTime)
+        imageView.showLoading()
         
-        // observe changge
-        observeCommentChanged()
+        imageView.sd_setImage(with: url) { [weak self] (image, _, _, _) in
+            var image = image
+            if image == nil {
+                image = UIImage(named: "image-not-found")
+                imageView.image = image
+            }
+            self?.hideLoading()
+        }
+    }
+    
+    func setText(expanded: Bool = false) {
+        guard let content = comment?.document.toAttributedString(currentAttributes: [.font: UIFont.systemFont(ofSize: defaultContentFontSize)]) else {return}
+        
+        let userId = comment?.author?.username ?? comment?.author?.userId ?? "Unknown user"
+        let mutableAS = NSMutableAttributedString(string: userId, attributes: [
+            .font: UIFont.boldSystemFont(ofSize: defaultContentFontSize),
+            .foregroundColor: themeColor,
+            .link: "https://commun.com/@\(comment?.author?.userId ?? comment?.author?.username ?? "unknown-user")"
+        ])
+        
+        mutableAS.append(NSAttributedString(string: " "))
+        
+        // If text is not so long or expanded
+        if content.string.count < maxCharactersForReduction || expanded {
+            mutableAS.append(content)
+            contentLabel.attributedText = mutableAS
+            return
+        }
+        
+        // If doesn't expanded
+        let contentAS = NSAttributedString(
+            string: String(content.string.prefix(maxCharactersForReduction - 3)),
+            attributes: [
+                .font: UIFont.systemFont(ofSize: defaultContentFontSize)
+            ])
+        mutableAS.append(contentAS)
+        
+        // add see more button
+        mutableAS
+            .normal("...")
+            .append(
+                NSAttributedString(
+                    string: "see more".localized().uppercaseFirst,
+                    attributes: [
+                        .link: "seemore://",
+                        .foregroundColor: themeColor
+                ])
+            )
+
+
+        contentLabel.attributedText = mutableAS
     }
 }
