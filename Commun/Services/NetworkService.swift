@@ -42,10 +42,6 @@ class NetworkService: NSObject {
 //        
 //    }
     
-    func getPost(withPermLink permLink: String) -> Single<ResponseAPIContentGetPost> {
-        return RestAPIManager.instance.loadPost(permlink: permLink, communityId: "GOLOS")
-    }
-    
     func deletePost(permlink: String) -> Completable {
         return RestAPIManager.instance.rx.deleteMessage(permlink: permlink)
             .observeOn(MainScheduler.instance)

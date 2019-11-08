@@ -12,40 +12,41 @@ import RxCocoa
 import CyberSwift
 
 class PostPageViewModel: CommentsViewModel {
-    
-    // MARK: - Inputs
+    // MARK: - Input
     var postForRequest: ResponseAPIContentGetPost?
-    var permlink: String?
-    var userId: String?
+    var userId: String
+    var permlink: String
+    var communityId: String
     
     // MARK: - Objects
     let post = BehaviorRelay<ResponseAPIContentGetPost?>(value: nil)
     
-    // MARK: - Methods
-    convenience init() {
-        self.init(filter: CommentsListFetcher.Filter(type: .post))
-        defer {
-            loadPost()
-            post.subscribe(onNext: { (post) in
-                guard let post = post else {return}
-                let permLink = post.contentId.permlink
-                let userId = post.contentId.userId
-                // Configure fetcher
-                (self.fetcher as! CommentsListFetcher).filter.communityId = post.community.communityId
-                (self.fetcher as! CommentsListFetcher).filter.permlink = permLink
-                (self.fetcher as! CommentsListFetcher).filter.userId = userId
+    // MARK: - Initializers
+    init(post: ResponseAPIContentGetPost) {
+        self.userId = post.contentId.userId
+        self.permlink = post.contentId.permlink
+        self.communityId = post.contentId.communityId ?? ""
+        self.postForRequest = post
+        super.init(filter: CommentsListFetcher.Filter(type: .post, userId: post.contentId.userId, permlink: post.contentId.permlink))
+        defer {setUp()}
+    }
     
-                self.reload()
-            })
-            .disposed(by: disposeBag)
-        }
+    init(userId: String, permlink: String, communityId: String) {
+        self.userId = userId
+        self.permlink = permlink
+        self.communityId = communityId
+        super.init(filter: CommentsListFetcher.Filter(type: .post, userId: userId, permlink: permlink))
+        defer {setUp()}
+    }
+    
+    func setUp() {
+        loadPost()
+        fetchNext()
+        bind()
     }
     
     func loadPost() {
-        let permLink = postForRequest?.contentId.permlink ?? permlink ?? ""
-        
-        // Bind post
-        NetworkService.shared.getPost(withPermLink: permLink)
+        RestAPIManager.instance.loadPost(permlink: permlink, communityId: communityId)
             .catchError({ (error) -> Single<ResponseAPIContentGetPost> in
                 if let post = self.postForRequest {
                     return .just(post)
@@ -55,5 +56,9 @@ class PostPageViewModel: CommentsViewModel {
             .asObservable()
             .bind(to: post)
             .disposed(by: disposeBag)
+    }
+    
+    func bind() {
+        
     }
 }

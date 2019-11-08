@@ -12,11 +12,11 @@ import RxCocoa
 class CommentsViewModel: ListViewModel<ResponseAPIContentGetComment> {
     var filter: BehaviorRelay<CommentsListFetcher.Filter>!
     
-    convenience init(
+    init(
         filter: CommentsListFetcher.Filter = CommentsListFetcher.Filter(type: .user))
     {
         let fetcher = CommentsListFetcher(filter: filter)
-        self.init(fetcher: fetcher)
+        super.init(fetcher: fetcher)
         self.filter = BehaviorRelay<CommentsListFetcher.Filter>(value: filter)
     }
 }
