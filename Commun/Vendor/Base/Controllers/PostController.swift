@@ -18,16 +18,16 @@ protocol PostController: class {
     func setUp(with post: ResponseAPIContentGetPost?)
 }
 
+extension ResponseAPIContentGetPost {
+    public func notifyChanged() {
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "\(Self.self)DidChange"), object: self)
+    }
+    public func notifyDeleted() {
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "\(Self.self)Deleted"), object: self)
+    }
+}
+
 extension PostController {
-    // MARK: - Notify observers
-    func notifyPostChange(newPost: ResponseAPIContentGetPost) {
-        newPost.notifyChanged()
-    }
-    
-    func notifyPostDeleted(deletedPost: ResponseAPIContentGetPost) {
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "\(Self.self)Deleted"), object: deletedPost)
-    }
-    
     func observePostChange() {
         NotificationCenter.default.rx.notification(.init(rawValue: "\(ResponseAPIContentGetPost.self)DidChange"))
             .subscribe(onNext: {notification in
@@ -129,7 +129,7 @@ extension PostController {
         // animate
         animateUpVote {
             // notify
-            self.notifyPostChange(newPost: self.post!)
+            self.post!.notifyChanged()
             
             // disable button until transaction is done
             self.upVoteButton.isEnabled = false
@@ -150,7 +150,7 @@ extension PostController {
                         // reset state
                         strongSelf.setHasVote(originHasUpVote, for: .upvote)
                         strongSelf.setHasVote(originHasDownVote, for: .downvote)
-                        strongSelf.notifyPostChange(newPost: strongSelf.post!)
+                        strongSelf.post!.notifyChanged()
                         
                         // re-enable buttons
                         strongSelf.upVoteButton.isEnabled = true
@@ -181,7 +181,7 @@ extension PostController {
         // animate
         animateDownVote {
             // notify
-            self.notifyPostChange(newPost: self.post!)
+            self.post!.notifyChanged()
             
             // disable button until transaction is done
             self.upVoteButton.isEnabled = false
@@ -202,7 +202,7 @@ extension PostController {
                         // reset state
                         strongSelf.setHasVote(originHasUpVote, for: .upvote)
                         strongSelf.setHasVote(originHasDownVote, for: .downvote)
-                        strongSelf.notifyPostChange(newPost: strongSelf.post!)
+                        strongSelf.post!.notifyChanged()
                         
                         // re-enable buttons
                         strongSelf.upVoteButton.isEnabled = true
@@ -257,7 +257,7 @@ extension PostController {
                 if index == 0 {
                     NetworkService.shared.deletePost(permlink: post.contentId.permlink)
                     .subscribe(onCompleted: {
-                        self.notifyPostDeleted(deletedPost: post)
+                        post.notifyDeleted()
                     }, onError: { error in
                         topController.showError(error)
                     })
@@ -272,7 +272,7 @@ extension PostController {
         
         topController.showIndetermineHudWithMessage("loading post".localized().uppercaseFirst)
         // Get full post
-        NetworkService.shared.getPost(withPermLink: post.contentId.permlink)
+        RestAPIManager.instance.loadPost(permlink: post.contentId.permlink, communityId: post.contentId.communityId ?? "")
             .subscribe(onSuccess: {post in
                 topController.hideHud()
                 if post.document?.attributes?.type == "basic" {
@@ -335,7 +335,7 @@ extension PostController {
     func postDidComment() {
         guard post != nil else {return}
         self.post!.stats?.commentsCount += 1
-        notifyPostChange(newPost: self.post!)
+        self.post!.notifyChanged()
     }
 
     // MARK: - Animation

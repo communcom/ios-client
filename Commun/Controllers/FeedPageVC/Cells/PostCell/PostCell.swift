@@ -10,6 +10,23 @@ import UIKit
 import RxSwift
 
 class PostCell: MyTableViewCell, PostController {
+    var upVoteButton: UIButton! {
+        get {
+            return voteContainerView.upVoteButton
+        }
+        set {
+            voteContainerView.upVoteButton = newValue
+        }
+    }
+    var downVoteButton: UIButton! {
+        get {
+            return voteContainerView.downVoteButton
+        }
+        set {
+            voteContainerView.downVoteButton = newValue
+        }
+    }
+    
     // MARK: - Constants
     let voteActionsContainerViewHeight: CGFloat = 35
     

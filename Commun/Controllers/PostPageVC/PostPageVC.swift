@@ -45,7 +45,21 @@ class PostPageVC: ListViewController<ResponseAPIContentGetComment> {
         
         // tableView
         tableView.keyboardDismissMode = .onDrag
+        tableView.register(CommentCell.self, forCellReuseIdentifier: "CommentCell")
         
+        dataSource = MyRxTableViewSectionedAnimatedDataSource<ListSection>(
+            configureCell: { dataSource, tableView, indexPath, comment in
+                let cell = self.tableView.dequeueReusableCell(withIdentifier: "CommentCell") as! CommentCell
+                cell.setupFromComment(comment, expanded: self.expandedIndexes.contains(indexPath.row))
+                cell.delegate = self
+                
+                if indexPath.row == self.viewModel.items.value.count - 2 {
+                    self.viewModel.fetchNext()
+                }
+                
+                return cell
+            }
+        )
     }
     
     override func bind() {
