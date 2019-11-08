@@ -43,6 +43,8 @@ class CommentCell: MyTableViewCell, CommentController {
     // MARK: - Methods
     override func setUpViews() {
         super.setUpViews()
+        selectionStyle = .none
+        
         contentView.addSubview(avatarImageView)
         avatarImageView.autoPinEdge(toSuperviewEdge: .top, withInset: 8)
         avatarImageView.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
@@ -65,7 +67,7 @@ class CommentCell: MyTableViewCell, CommentController {
         voteContainerView.autoPinEdge(.leading, to: .leading, of: contentContainerView)
         
         contentView.addSubview(replyButton)
-        replyButton.autoPinEdge(.leading, to: .trailing, of: voteContainerView)
+        replyButton.autoPinEdge(.leading, to: .trailing, of: voteContainerView, withOffset: 10)
         replyButton.autoAlignAxis(.horizontal, toSameAxisOf: voteContainerView)
         
         contentView.addSubview(timeLabel)
