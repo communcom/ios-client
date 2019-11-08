@@ -24,11 +24,11 @@ extension PostPageVC {
     
     func bindControls() {
         tableView.rx.willDragDown
-            .map {$0 ? 0: 56}
+            .map {$0 ? true: false}
             .distinctUntilChanged()
-            .subscribe(onNext: {height in
+            .subscribe(onNext: {hide in
                 UIView.animate(withDuration: 0.25, animations: {
-                    self.navigationBar.heightConstraint?.constant = CGFloat(height)
+                    self.navigationBar.isHidden = hide
                     self.view.layoutIfNeeded()
                 })
             })

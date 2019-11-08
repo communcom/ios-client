@@ -17,9 +17,6 @@ class PostPageVC: CommentsViewController {
     lazy var postView = PostHeaderView(tableView: tableView)
     
     // MARK: - Properties
-    override var tableViewInsets: UIEdgeInsets {
-        return UIEdgeInsets(top: 56, left: 0, bottom: 0, right: 0)
-    }
     
     // MARK: - Initializers
     init(post: ResponseAPIContentGetPost) {
@@ -60,6 +57,7 @@ class PostPageVC: CommentsViewController {
         navigationBar.moreButton.addTarget(self, action: #selector(openMorePostActions), for: .touchUpInside)
         
         // tableView
+        tableView.contentInset = UIEdgeInsets(top: 56, left: 0, bottom: 0, right: 0)
         tableView.keyboardDismissMode = .onDrag
     }
     
