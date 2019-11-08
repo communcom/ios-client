@@ -14,6 +14,7 @@ import RxDataSources
 class PostPageVC: CommentsViewController {
     // MARK: - Subviews
     lazy var navigationBar = PostPageNavigationBar(height: 56)
+    lazy var postView = PostHeaderView(tableView: tableView)
     
     // MARK: - Properties
     override var tableViewInsets: UIEdgeInsets {
@@ -75,8 +76,7 @@ class PostPageVC: CommentsViewController {
     }
     
     @objc func openMorePostActions() {
-//        guard let headerView = self.tableView.tableHeaderView as? PostHeaderView else {return}
-//        headerView.openMorePostActions()
+        postView.openMorePostActions()
     }
     
     override func refresh() {

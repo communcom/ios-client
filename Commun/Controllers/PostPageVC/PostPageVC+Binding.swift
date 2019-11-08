@@ -43,14 +43,12 @@ extension PostPageVC {
             .subscribe(onNext: { [weak self] loadingState in
                 switch loadingState {
                 case .loading:
-                    break
-//                    self?._headerView.showLoader()
+                    self?.postView.showLoader()
                 case .finished:
-                    break
-//                    self?._headerView.hideLoader()
+                    self?.postView.hideLoader()
                 case .error(_):
+                    self?.postView.hideLoader()
                     guard let strongSelf = self else {return}
-//                    strongSelf._headerView.hideLoader()
                     strongSelf.view.showErrorView {
                         strongSelf.view.hideErrorView()
                         strongSelf.refresh()
@@ -74,10 +72,7 @@ extension PostPageVC {
                 }
                 
                 // Create tableHeaderView
-//                if self.headerView == nil {
-//                    self.createHeaderView()
-//                }
-//                self.headerView.setUp(with: post)
+                self.postView.setUp(with: post)
             })
             .disposed(by: disposeBag)
         

@@ -67,12 +67,15 @@ class PostHeaderView: MyTableHeaderView, PostController {
         sharesCountButton.addTarget(self, action: #selector(shareButtonDidTouch(_:)), for: .touchUpInside)
         
         addSubview(commentsCountLabel)
-        commentsCountLabel.autoPinEdge(.trailing, to: .leading, of: sharesCountButton, withOffset: 23)
+        commentsCountLabel.autoPinEdge(.trailing, to: .leading, of: sharesCountButton, withOffset: -23)
         commentsCountLabel.autoAlignAxis(.horizontal, toSameAxisOf: voteContainerView)
         
         addSubview(commentsCountButton)
         commentsCountButton.autoPinEdge(.trailing, to: .leading, of: commentsCountLabel, withOffset: -8)
         commentsCountButton.autoAlignAxis(.horizontal, toSameAxisOf: voteContainerView)
+        
+        // Pin bottom
+        voteContainerView.autoPinEdge(toSuperviewEdge: .bottom, withInset: 10)
         
         // observe
         observePostChange()
