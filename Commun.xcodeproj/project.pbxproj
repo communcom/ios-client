@@ -318,6 +318,8 @@
 		BCB4A4C72370188B005EDAAD /* SubscribersCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB4A4C62370188B005EDAAD /* SubscribersCell.swift */; };
 		BCB4A4CA237019EF005EDAAD /* SubsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB4A4C9237019EF005EDAAD /* SubsViewController.swift */; };
 		BCCB99312375503A005252CF /* PostPageVC+Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCB99302375503A005252CF /* PostPageVC+Binding.swift */; };
+		BCCB993423756319005252CF /* PostHeaderTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCB993323756318005252CF /* PostHeaderTextView.swift */; };
+		BCCB993623756375005252CF /* PostHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCB993523756375005252CF /* PostHeaderView.swift */; };
 		BCCC33E823751686004E46EF /* CommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCC33E723751686004E46EF /* CommentCell.swift */; };
 		BCCC33EA23751A10004E46EF /* VoteContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCC33E923751A10004E46EF /* VoteContainerView.swift */; };
 		BCCC33EC237521FA004E46EF /* CommentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCC33EB237521FA004E46EF /* CommentController.swift */; };
@@ -690,6 +692,8 @@
 		BCB4A4C62370188B005EDAAD /* SubscribersCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscribersCell.swift; sourceTree = "<group>"; };
 		BCB4A4C9237019EF005EDAAD /* SubsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubsViewController.swift; sourceTree = "<group>"; };
 		BCCB99302375503A005252CF /* PostPageVC+Binding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PostPageVC+Binding.swift"; sourceTree = "<group>"; };
+		BCCB993323756318005252CF /* PostHeaderTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostHeaderTextView.swift; sourceTree = "<group>"; };
+		BCCB993523756375005252CF /* PostHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostHeaderView.swift; sourceTree = "<group>"; };
 		BCCC33E723751686004E46EF /* CommentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentCell.swift; sourceTree = "<group>"; };
 		BCCC33E923751A10004E46EF /* VoteContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoteContainerView.swift; sourceTree = "<group>"; };
 		BCCC33EB237521FA004E46EF /* CommentController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentController.swift; sourceTree = "<group>"; };
@@ -1841,6 +1845,14 @@
 			path = SubsViewController;
 			sourceTree = "<group>";
 		};
+		BCCB993223756318005252CF /* PostHeaderTextView */ = {
+			isa = PBXGroup;
+			children = (
+				BCCB993323756318005252CF /* PostHeaderTextView.swift */,
+			);
+			path = PostHeaderTextView;
+			sourceTree = "<group>";
+		};
 		BCCE0A982367D12800A183AA /* ResponseAPI */ = {
 			isa = PBXGroup;
 			children = (
@@ -1899,7 +1911,9 @@
 		BCD00FBB2375082C004A3952 /* Subviews */ = {
 			isa = PBXGroup;
 			children = (
+				BCCB993223756318005252CF /* PostHeaderTextView */,
 				BCD00FBC23750859004A3952 /* PostPageNavigationBar.swift */,
+				BCCB993523756375005252CF /* PostHeaderView.swift */,
 				BCCC33E723751686004E46EF /* CommentCell.swift */,
 			);
 			path = Subviews;
@@ -2230,6 +2244,7 @@
 				BCD453AD2354473F005A454C /* BasicEditorVC+MediaViewDelegate.swift in Sources */,
 				3B8DDF5A234AF04C00B213F0 /* ArticleEditorVC.swift in Sources */,
 				5787C0C622650FA500568CEC /* SetUserViewModel.swift in Sources */,
+				BCCB993623756375005252CF /* PostHeaderView.swift in Sources */,
 				BCABF1352366D5DC006B05F5 /* ProfileViewModel.swift in Sources */,
 				575AECB122606F6600A7EC2D /* SelectCountryVC.swift in Sources */,
 				BC22BBDB236C2A7F00F40658 /* NotificationSettingsViewModel.swift in Sources */,
@@ -2383,6 +2398,7 @@
 				3B197C532269BE0E008CF10D /* SegmentioExtension.swift in Sources */,
 				3BE15B24233CC47600D865F5 /* FeedPageVC+Actions.swift in Sources */,
 				BC016D44235DA0D400F1319F /* PostCell+Actions.swift in Sources */,
+				BCCB993423756319005252CF /* PostHeaderTextView.swift in Sources */,
 				57B6FC2C224A9F2800BCFDDA /* WelcomeItemVC.swift in Sources */,
 				BC69F7D5236FDFCF0097F870 /* SubscriptionsVC.swift in Sources */,
 				3BF3817F2331D17900C02123 /* NSRegularExpression.swift in Sources */,

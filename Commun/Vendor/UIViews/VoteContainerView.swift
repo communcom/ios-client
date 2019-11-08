@@ -38,4 +38,38 @@ class VoteContainerView: MyView {
         likeCountLabel.text            =   "\((votes.upCount ?? 0) - (votes.downCount ?? 0))"
         downVoteButton.tintColor       = votes.hasDownVote ?? false ? .appMainColor: .lightGray
     }
+    
+    func animateUpVote(completion: @escaping () -> Void) {
+        CATransaction.begin()
+        CATransaction.setCompletionBlock(completion)
+        
+        let moveUpAnim = CABasicAnimation(keyPath: "position.y")
+        moveUpAnim.byValue = -16
+        moveUpAnim.autoreverses = true
+        self.upVoteButton.layer.add(moveUpAnim, forKey: "moveUp")
+        
+        let fadeAnim = CABasicAnimation(keyPath: "opacity")
+        fadeAnim.byValue = -1
+        fadeAnim.autoreverses = true
+        self.upVoteButton.layer.add(fadeAnim, forKey: "Fade")
+        
+        CATransaction.commit()
+    }
+    
+    func animateDownVote(completion: @escaping () -> Void) {
+        CATransaction.begin()
+        CATransaction.setCompletionBlock(completion)
+        
+        let moveDownAnim = CABasicAnimation(keyPath: "position.y")
+        moveDownAnim.byValue = 16
+        moveDownAnim.autoreverses = true
+        self.downVoteButton.layer.add(moveDownAnim, forKey: "moveDown")
+        
+        let fadeAnim = CABasicAnimation(keyPath: "opacity")
+        fadeAnim.byValue = -1
+        fadeAnim.autoreverses = true
+        self.downVoteButton.layer.add(fadeAnim, forKey: "Fade")
+        
+        CATransaction.commit()
+    }
 }

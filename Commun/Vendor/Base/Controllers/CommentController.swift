@@ -72,7 +72,7 @@ extension CommentController {
         setHasVote(false, for: .downvote)
         
         // animate
-        animateUpVote {
+        voteContainerView.animateUpVote {
             // notify
             self.comment!.notifyChanged()
             
@@ -120,7 +120,7 @@ extension CommentController {
         setHasVote(false, for: .upvote)
         
         // animate
-        animateDownVote {
+        voteContainerView.animateDownVote {
             // notify
             self.comment!.notifyChanged()
             
@@ -212,41 +212,6 @@ extension CommentController {
 //                topController.showError(error)
 //            })
 //            .disposed(by: disposeBag)
-    }
-    
-    // MARK: - Animation
-    func animateUpVote(completion: @escaping () -> Void) {
-        CATransaction.begin()
-        CATransaction.setCompletionBlock(completion)
-        
-        let moveUpAnim = CABasicAnimation(keyPath: "position.y")
-        moveUpAnim.byValue = -16
-        moveUpAnim.autoreverses = true
-        self.voteContainerView.upVoteButton.layer.add(moveUpAnim, forKey: "moveUp")
-        
-        let fadeAnim = CABasicAnimation(keyPath: "opacity")
-        fadeAnim.byValue = -1
-        fadeAnim.autoreverses = true
-        self.voteContainerView.upVoteButton.layer.add(fadeAnim, forKey: "Fade")
-        
-        CATransaction.commit()
-    }
-    
-    func animateDownVote(completion: @escaping () -> Void) {
-        CATransaction.begin()
-        CATransaction.setCompletionBlock(completion)
-        
-        let moveDownAnim = CABasicAnimation(keyPath: "position.y")
-        moveDownAnim.byValue = 16
-        moveDownAnim.autoreverses = true
-        self.voteContainerView.downVoteButton.layer.add(moveDownAnim, forKey: "moveDown")
-        
-        let fadeAnim = CABasicAnimation(keyPath: "opacity")
-        fadeAnim.byValue = -1
-        fadeAnim.autoreverses = true
-        self.voteContainerView.downVoteButton.layer.add(fadeAnim, forKey: "Fade")
-        
-        CATransaction.commit()
     }
 }
 
