@@ -20,4 +20,8 @@ extension PostCell {
     @objc func downVoteButtonTapped(button: UIButton) {
         downVote()
     }
+
+    @objc func shareButtonTapped(button: UIButton) {
+        openShareActions()
+    }
 }
