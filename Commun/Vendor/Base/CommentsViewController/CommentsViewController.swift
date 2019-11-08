@@ -42,4 +42,25 @@ class CommentsViewController: ListViewController<ResponseAPIContentGetComment> {
             }
         )
     }
+    
+    override func bind() {
+        super.bind()
+        
+        tableView.rx.modelSelected(ResponseAPIContentGetComment.self)
+            .subscribe(onNext: {post in
+                #warning("Comment selected")
+            })
+            .disposed(by: disposeBag)
+        
+        // filter
+        (viewModel as! CommentsViewModel).filter
+            .subscribe(onNext: {[weak self] filter in
+                self?.filterChanged(filter: filter)
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    func filterChanged(filter: CommentsListFetcher.Filter) {
+        
+    }
 }
