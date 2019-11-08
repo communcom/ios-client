@@ -8,6 +8,7 @@
 
 import Foundation
 import PureLayout
+import CyberSwift
 
 extension UIButton {
     public convenience init(
@@ -61,6 +62,13 @@ extension UIButton {
         let button = UIButton(width: 36, height: 40, contentInsets: contentInsets)
         button.tintColor = tintColor
         button.setImage(UIImage(named: "postpage-more"), for: .normal)
+        return button
+    }
+    
+    static func vote(type: VoteActionType) -> UIButton {
+        let button = UIButton(width: 38)
+        button.imageEdgeInsets = UIEdgeInsets(top: 10.5, left: 10, bottom: 10.5, right: 18)
+        button.setImage(UIImage(named: type == .upvote ? "upVote" : "downVote"), for: .normal)
         return button
     }
 }

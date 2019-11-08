@@ -318,6 +318,8 @@
 		BCB4A4C523701441005EDAAD /* SubscribersVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB4A4C423701441005EDAAD /* SubscribersVC.swift */; };
 		BCB4A4C72370188B005EDAAD /* SubscribersCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB4A4C62370188B005EDAAD /* SubscribersCell.swift */; };
 		BCB4A4CA237019EF005EDAAD /* SubsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB4A4C9237019EF005EDAAD /* SubsViewController.swift */; };
+		BCCC33E823751686004E46EF /* CommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCC33E723751686004E46EF /* CommentCell.swift */; };
+		BCCC33EA23751A10004E46EF /* VoteContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCC33E923751A10004E46EF /* VoteContainerView.swift */; };
 		BCCE0A9C2367D47400A183AA /* SubscriptionsListFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCE0A9B2367D47400A183AA /* SubscriptionsListFetcher.swift */; };
 		BCCE0AA02367E18200A183AA /* ResponseAPIContentGetSubscriptionsItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCE0A9F2367E18200A183AA /* ResponseAPIContentGetSubscriptionsItem.swift */; };
 		BCCE0AA22367E60A00A183AA /* SubscriptionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCE0AA12367E60A00A183AA /* SubscriptionsViewModel.swift */; };
@@ -686,6 +688,8 @@
 		BCB4A4C423701441005EDAAD /* SubscribersVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscribersVC.swift; sourceTree = "<group>"; };
 		BCB4A4C62370188B005EDAAD /* SubscribersCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscribersCell.swift; sourceTree = "<group>"; };
 		BCB4A4C9237019EF005EDAAD /* SubsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubsViewController.swift; sourceTree = "<group>"; };
+		BCCC33E723751686004E46EF /* CommentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentCell.swift; sourceTree = "<group>"; };
+		BCCC33E923751A10004E46EF /* VoteContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoteContainerView.swift; sourceTree = "<group>"; };
 		BCCE0A9B2367D47400A183AA /* SubscriptionsListFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionsListFetcher.swift; sourceTree = "<group>"; };
 		BCCE0A9F2367E18200A183AA /* ResponseAPIContentGetSubscriptionsItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseAPIContentGetSubscriptionsItem.swift; sourceTree = "<group>"; };
 		BCCE0AA12367E60A00A183AA /* SubscriptionsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionsViewModel.swift; sourceTree = "<group>"; };
@@ -1781,6 +1785,7 @@
 				BC401E3B2371143F00A53788 /* LeaderAvatarImageView.swift */,
 				BCF74A6623618D9000B91089 /* CMSegmentedControl.swift */,
 				BC619B1C2372C1480005BB94 /* CMTopTabBar.swift */,
+				BCCC33E923751A10004E46EF /* VoteContainerView.swift */,
 			);
 			path = UIViews;
 			sourceTree = "<group>";
@@ -1889,6 +1894,7 @@
 			isa = PBXGroup;
 			children = (
 				BCD00FBC23750859004A3952 /* PostPageNavigationBar.swift */,
+				BCCC33E723751686004E46EF /* CommentCell.swift */,
 			);
 			path = Subviews;
 			sourceTree = "<group>";
@@ -2301,6 +2307,7 @@
 				3B25E5C4234C6E4E005BD1B8 /* BasicEditorVC+Link.swift in Sources */,
 				BCA9712B2361306700AE37E1 /* MyView.swift in Sources */,
 				3B8DDF5C234B121D00B213F0 /* EditorColorPicker.swift in Sources */,
+				BCCC33E823751686004E46EF /* CommentCell.swift in Sources */,
 				BC016D49235DA2AC00F1319F /* MyTableViewCell.swift in Sources */,
 				BCB2A6F023556FC100B3582B /* BasicEditorVC+Tools.swift in Sources */,
 				BC619B1F2373B5550005BB94 /* CommunityMembersVC.swift in Sources */,
@@ -2446,6 +2453,7 @@
 				3BB32F1623438C44006572F3 /* CommunActionSheet+TransitioningDelegate.swift in Sources */,
 				3B25E5C6234C6EF6005BD1B8 /* ResponseAPIFrameGetEmbed.swift in Sources */,
 				BCCE0A9C2367D47400A183AA /* SubscriptionsListFetcher.swift in Sources */,
+				BCCC33EA23751A10004E46EF /* VoteContainerView.swift in Sources */,
 				3BA4D0872292BA710022A69D /* ResponseAPIContentGetPost.swift in Sources */,
 				AC3386A12371D1B6009DB3BB /* EmbedView.swift in Sources */,
 				3B5EDE3922E07F0300897BF3 /* SettingsVC+DataSource.swift in Sources */,
