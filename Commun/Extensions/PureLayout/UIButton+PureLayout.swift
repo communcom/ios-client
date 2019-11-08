@@ -67,7 +67,7 @@ extension UIButton {
     
     static func vote(type: VoteActionType) -> UIButton {
         let button = UIButton(width: 38)
-        button.imageEdgeInsets = UIEdgeInsets(top: 10.5, left: 10, bottom: 10.5, right: 18)
+        button.imageEdgeInsets = UIEdgeInsets(top: 10.5, left: type == .upvote ? 10 : 18, bottom: 10.5, right: type == .upvote ? 18: 10)
         button.setImage(UIImage(named: type == .upvote ? "upVote" : "downVote"), for: .normal)
         return button
     }
