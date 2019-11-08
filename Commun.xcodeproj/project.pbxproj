@@ -318,6 +318,7 @@
 		BCB4A4C523701441005EDAAD /* SubscribersVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB4A4C423701441005EDAAD /* SubscribersVC.swift */; };
 		BCB4A4C72370188B005EDAAD /* SubscribersCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB4A4C62370188B005EDAAD /* SubscribersCell.swift */; };
 		BCB4A4CA237019EF005EDAAD /* SubsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB4A4C9237019EF005EDAAD /* SubsViewController.swift */; };
+		BCCB99312375503A005252CF /* PostPageVC+Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCB99302375503A005252CF /* PostPageVC+Binding.swift */; };
 		BCCC33E823751686004E46EF /* CommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCC33E723751686004E46EF /* CommentCell.swift */; };
 		BCCC33EA23751A10004E46EF /* VoteContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCC33E923751A10004E46EF /* VoteContainerView.swift */; };
 		BCCC33EC237521FA004E46EF /* CommentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCC33EB237521FA004E46EF /* CommentController.swift */; };
@@ -690,6 +691,7 @@
 		BCB4A4C423701441005EDAAD /* SubscribersVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscribersVC.swift; sourceTree = "<group>"; };
 		BCB4A4C62370188B005EDAAD /* SubscribersCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscribersCell.swift; sourceTree = "<group>"; };
 		BCB4A4C9237019EF005EDAAD /* SubsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubsViewController.swift; sourceTree = "<group>"; };
+		BCCB99302375503A005252CF /* PostPageVC+Binding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PostPageVC+Binding.swift"; sourceTree = "<group>"; };
 		BCCC33E723751686004E46EF /* CommentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentCell.swift; sourceTree = "<group>"; };
 		BCCC33E923751A10004E46EF /* VoteContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoteContainerView.swift; sourceTree = "<group>"; };
 		BCCC33EB237521FA004E46EF /* CommentController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentController.swift; sourceTree = "<group>"; };
@@ -1222,6 +1224,7 @@
 				BCD00FBB2375082C004A3952 /* Subviews */,
 				BCD00FC023750B15004A3952 /* PostPageViewModel.swift */,
 				BCD00FBE2375087C004A3952 /* PostPageVC.swift */,
+				BCCB99302375503A005252CF /* PostPageVC+Binding.swift */,
 			);
 			path = PostPageVC;
 			sourceTree = "<group>";
@@ -2447,6 +2450,7 @@
 				575AECAE22606D0800A7EC2D /* SignUpViewModel.swift in Sources */,
 				BCCE0AAD23681B2400A183AA /* ProfileController.swift in Sources */,
 				BCF39150235FEEC100A9D1ED /* PostsListFetcher.swift in Sources */,
+				BCCB99312375503A005252CF /* PostPageVC+Binding.swift in Sources */,
 				BCCE0AA42367E83900A183AA /* UserProfilePageVC+Binding.swift in Sources */,
 				BCCE0AA82367EB5900A183AA /* MyCollectionViewCell.swift in Sources */,
 				BCA9712823608ABD00AE37E1 /* UsersStackView.swift in Sources */,

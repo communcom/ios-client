@@ -135,8 +135,9 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile> {
                     }
                 case .comment(let comment):
                     let cell = self.tableView.dequeueReusableCell(withIdentifier: "CommentCell") as! CommentCell
-                    //            cell.delegate = self
-                    cell.setupFromComment(comment, expanded: false)
+//                    //            cell.delegate = self
+                    cell.expanded = false
+                    cell.setUp(with: comment)
                     return cell
                 }
                 return UITableViewCell()
@@ -164,14 +165,9 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile> {
         let cell = self.tableView.cellForRow(at: indexPath)
         switch cell {
         case is PostCell:
-            if let postPageVC = controllerContainer.resolve(PostPageVC.self)
-            {
-                let post = self.viewModel.postsVM.items.value[indexPath.row]
-                (postPageVC.viewModel as! PostPageViewModel).postForRequest = post
-                self.show(postPageVC, sender: nil)
-            } else {
-                self.showAlert(title: "error".localized().uppercaseFirst, message: "something went wrong".localized().uppercaseFirst)
-            }
+            let post = self.viewModel.postsVM.items.value[indexPath.row]
+            let postPageVC = PostPageVC(post: post)
+            self.show(postPageVC, sender: nil)
             break
         case is CommentCell:
             #warning("Tap a comment")

@@ -35,12 +35,27 @@ class PostPageVC: CommentsViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Life cycle
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: animated)
+        let tabBar = (tabBarController as? TabBarVC)?.tabBarStackView.superview
+        tabBar?.isHidden = true
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: animated)
+        let tabBar = (tabBarController as? TabBarVC)?.tabBarStackView.superview
+        tabBar?.isHidden = false
+    }
+    
     // MARK: - Methods
     override func setUp() {
         super.setUp()
         // navigationBar
         view.addSubview(navigationBar)
-        navigationBar.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .bottom)
+        navigationBar.autoPinEdgesToSuperviewSafeArea(with: .zero, excludingEdge: .bottom)
         navigationBar.moreButton.addTarget(self, action: #selector(openMorePostActions), for: .touchUpInside)
         
         // tableView
@@ -49,29 +64,19 @@ class PostPageVC: CommentsViewController {
     
     override func bind() {
         super.bind()
+        
         observePostDeleted()
         
-        // bind loading state
+        // bind controls
+        bindControls()
         
-        // bind list loading state
-    }
-    
-    func observePostDeleted() {
-        NotificationCenter.default.rx.notification(.init(rawValue: "\(ResponseAPIContentGetPost.self)Deleted"))
-            .subscribe(onNext: { (notification) in
-                guard let deletedPost = notification.object as? ResponseAPIContentGetPost,
-                    deletedPost.identity == (self.viewModel as! PostPageViewModel).post.value?.identity
-                    else {return}
-                self.showAlert(title: "deleted".localized().uppercaseFirst, message: "the post has been deleted".localized().uppercaseFirst, completion: { (_) in
-                    self.back()
-                })
-            })
-            .disposed(by: disposeBag)
+        // bind post
+        bindPost()
     }
     
     @objc func openMorePostActions() {
-        guard let headerView = self.tableView.tableHeaderView as? PostHeaderView else {return}
-        headerView.openMorePostActions()
+//        guard let headerView = self.tableView.tableHeaderView as? PostHeaderView else {return}
+//        headerView.openMorePostActions()
     }
     
     override func refresh() {

@@ -10,15 +10,18 @@ import Foundation
 import CyberSwift
 
 class CommentsViewController: ListViewController<ResponseAPIContentGetComment> {
-    // MARK: Initializers
-    init(filter: CommentsListFetcher.Filter) {
-        viewModel = CommentsViewModel(filter: filter)
-        super.init(nibName: nil, bundle: nil)
-    }
+    // MARK: - Properties
+    lazy var expandedIndexes = [Int]()
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    // MARK: Initializers
+//    init(filter: CommentsListFetcher.Filter) {
+//        viewModel = CommentsViewModel(filter: filter)
+//        super.init(nibName: nil, bundle: nil)
+//    }
+//    
+//    required init?(coder: NSCoder) {
+//        fatalError("init(coder:) has not been implemented")
+//    }
     
     override func setUp() {
         super.setUp()
@@ -31,8 +34,8 @@ class CommentsViewController: ListViewController<ResponseAPIContentGetComment> {
             configureCell: { dataSource, tableView, indexPath, comment in
                 let cell = self.tableView.dequeueReusableCell(withIdentifier: "CommentCell") as! CommentCell
                 cell.expanded = self.expandedIndexes.contains(indexPath.row)
-                cell.setupFromComment(comment, expanded: )
-                cell.delegate = self
+                cell.setUp(with: comment)
+//                cell.delegate = self
                 
                 if indexPath.row == self.viewModel.items.value.count - 2 {
                     self.viewModel.fetchNext()
@@ -45,6 +48,12 @@ class CommentsViewController: ListViewController<ResponseAPIContentGetComment> {
     
     override func bind() {
         super.bind()
+        // reset expandedIndexes
+        viewModel.items
+            .subscribe(onNext: {_ in
+                self.expandedIndexes = []
+            })
+            .disposed(by: disposeBag)
         
         tableView.rx.modelSelected(ResponseAPIContentGetComment.self)
             .subscribe(onNext: {post in
@@ -62,5 +71,20 @@ class CommentsViewController: ListViewController<ResponseAPIContentGetComment> {
     
     func filterChanged(filter: CommentsListFetcher.Filter) {
         
+    }
+    
+    override func handleLoading() {
+        tableView.addLoadingFooterView(
+            rowType:        PlaceholderNotificationCell.self,
+            tag:            notificationsLoadingFooterViewTag,
+            rowHeight:      88,
+            numberOfRows:   1
+        )
+    }
+    
+    override func handleListEmpty() {
+        let title = "no comments"
+        let description = "comments not found"
+        tableView.addEmptyPlaceholderFooterView(title: title.localized().uppercaseFirst, description: description.localized().uppercaseFirst)
     }
 }
