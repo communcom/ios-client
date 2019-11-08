@@ -321,6 +321,7 @@
 		BCCC33E823751686004E46EF /* CommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCC33E723751686004E46EF /* CommentCell.swift */; };
 		BCCC33EA23751A10004E46EF /* VoteContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCC33E923751A10004E46EF /* VoteContainerView.swift */; };
 		BCCC33EC237521FA004E46EF /* CommentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCC33EB237521FA004E46EF /* CommentController.swift */; };
+		BCCC33EE23752C22004E46EF /* CommentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCC33ED23752C22004E46EF /* CommentsViewController.swift */; };
 		BCCE0A9C2367D47400A183AA /* SubscriptionsListFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCE0A9B2367D47400A183AA /* SubscriptionsListFetcher.swift */; };
 		BCCE0AA02367E18200A183AA /* ResponseAPIContentGetSubscriptionsItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCE0A9F2367E18200A183AA /* ResponseAPIContentGetSubscriptionsItem.swift */; };
 		BCCE0AA22367E60A00A183AA /* SubscriptionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCE0AA12367E60A00A183AA /* SubscriptionsViewModel.swift */; };
@@ -692,6 +693,7 @@
 		BCCC33E723751686004E46EF /* CommentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentCell.swift; sourceTree = "<group>"; };
 		BCCC33E923751A10004E46EF /* VoteContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoteContainerView.swift; sourceTree = "<group>"; };
 		BCCC33EB237521FA004E46EF /* CommentController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentController.swift; sourceTree = "<group>"; };
+		BCCC33ED23752C22004E46EF /* CommentsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentsViewController.swift; sourceTree = "<group>"; };
 		BCCE0A9B2367D47400A183AA /* SubscriptionsListFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionsListFetcher.swift; sourceTree = "<group>"; };
 		BCCE0A9F2367E18200A183AA /* ResponseAPIContentGetSubscriptionsItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseAPIContentGetSubscriptionsItem.swift; sourceTree = "<group>"; };
 		BCCE0AA12367E60A00A183AA /* SubscriptionsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionsViewModel.swift; sourceTree = "<group>"; };
@@ -1743,6 +1745,7 @@
 			isa = PBXGroup;
 			children = (
 				BCA97112236004F500AE37E1 /* CommentsViewModel.swift */,
+				BCCC33ED23752C22004E46EF /* CommentsViewController.swift */,
 			);
 			path = CommentsViewController;
 			sourceTree = "<group>";
@@ -2358,6 +2361,7 @@
 				3B5EDE3022DF92D000897BF3 /* SettingsOptionsCell.swift in Sources */,
 				57A1CA632270FC4700E2A1E3 /* LanguageVC.swift in Sources */,
 				BCABF13D2366EA14006B05F5 /* ProfileHeaderView.swift in Sources */,
+				BCCC33EE23752C22004E46EF /* CommentsViewController.swift in Sources */,
 				BCCE0AA22367E60A00A183AA /* SubscriptionsViewModel.swift in Sources */,
 				57840A202240DDEB00338FD5 /* Container.swift in Sources */,
 				BC016D4E235EA1DE00F1319F /* BaseViewController.swift in Sources */,
