@@ -36,11 +36,31 @@ extension PostPageVC {
     }
     
     func bindPost() {
+        let viewModel = self.viewModel as! PostPageViewModel
+            
         // bind post loading state
-        #warning("post loading state")
-        
+        viewModel.loadingState
+            .subscribe(onNext: { [weak self] loadingState in
+                switch loadingState {
+                case .loading:
+                    break
+//                    self?._headerView.showLoader()
+                case .finished:
+                    break
+//                    self?._headerView.hideLoader()
+                case .error(_):
+                    guard let strongSelf = self else {return}
+//                    strongSelf._headerView.hideLoader()
+                    strongSelf.view.showErrorView {
+                        strongSelf.view.hideErrorView()
+                        strongSelf.refresh()
+                    }
+                    strongSelf.view.bringSubviewToFront(strongSelf.navigationBar)
+                }
+            })
+            .disposed(by: disposeBag)
         // bind post
-        let post = (viewModel as! PostPageViewModel).post
+        let post = viewModel.post
         post
             .subscribe(onNext: {post in
                 if let post = post {

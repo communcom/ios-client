@@ -19,6 +19,7 @@ class PostPageViewModel: CommentsViewModel {
     var communityId: String
     
     // MARK: - Objects
+    let loadingState = BehaviorRelay<LoadingState>(value: .loading)
     let post = BehaviorRelay<ResponseAPIContentGetPost?>(value: nil)
     
     // MARK: - Initializers
@@ -47,6 +48,13 @@ class PostPageViewModel: CommentsViewModel {
     
     func loadPost() {
         RestAPIManager.instance.loadPost(permlink: permlink, communityId: communityId)
+            .do(onSuccess: { (profile) in
+                self.loadingState.accept(.finished)
+            }, onError: { (error) in
+                self.loadingState.accept(.error(error: error))
+            }, onSubscribe: {
+                self.loadingState.accept(.loading)
+            })
             .catchError({ (error) -> Single<ResponseAPIContentGetPost> in
                 if let post = self.postForRequest {
                     return .just(post)
