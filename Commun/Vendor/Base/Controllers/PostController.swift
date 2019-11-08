@@ -271,7 +271,7 @@ extension PostController {
         
         topController.showIndetermineHudWithMessage("loading post".localized().uppercaseFirst)
         // Get full post
-        RestAPIManager.instance.loadPost(permlink: post.contentId.permlink, communityId: post.contentId.communityId ?? "")
+        RestAPIManager.instance.loadPost(userId: post.contentId.userId, permlink: post.contentId.permlink, communityId: post.contentId.communityId ?? "")
             .subscribe(onSuccess: {post in
                 topController.hideHud()
                 if post.document?.attributes?.type == "basic" {

@@ -47,7 +47,7 @@ class PostPageViewModel: CommentsViewModel {
     }
     
     func loadPost() {
-        RestAPIManager.instance.loadPost(permlink: permlink, communityId: communityId)
+        RestAPIManager.instance.loadPost(userId: userId, permlink: permlink, communityId: communityId)
             .do(onSuccess: { (profile) in
                 self.loadingState.accept(.finished)
             }, onError: { (error) in
