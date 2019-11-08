@@ -30,19 +30,15 @@ class GridView: UIView {
         backgroundColor = .white
     }
     
-    func setUp(embeds: [ResponseAPIContentBlock]) {
+    func setUp(embeds: [ResponseAPIContentBlock]?) {
         embedView?.removeFromSuperview()
         embedView = nil
 
-        if let embed = embeds.first {
+        if let embed = embeds?.first {
             let view = EmbedView(content: embed)
             embedView = view
             addSubview(view)
-
-            view.autoPinEdge(toSuperviewEdge: .top)
-            view.autoPinEdge(toSuperviewEdge: .left)
-            view.autoPinEdge(toSuperviewEdge: .right)
-            view.autoPinEdge(toSuperviewEdge: .bottom)
+            view.autoPinEdgesToSuperviewMargins()
         }
     }
 

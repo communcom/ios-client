@@ -161,7 +161,7 @@ class EmbedView: UIView {
     }
 
     @objc private func tapAction() {
-        print(content.type)
+        
         if content.type == "video" {
             if let urlString = parseEmbed(content.attributes?.html), let url = URL(string: urlString) {
                 coverImageView.isHidden = true
@@ -176,7 +176,7 @@ class EmbedView: UIView {
                 activityIndicator.startAnimating()
                 webView.load(URLRequest(url: url))
             }
-        } else if content.type == "photo" {
+        } else if content.type == "photo" || content.type == "image" {
             coverImageView.openViewer(gesture: nil)
         } else {
             if let url = URL(string: content.attributes?.url ?? "") {
