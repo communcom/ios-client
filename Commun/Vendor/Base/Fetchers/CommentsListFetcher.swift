@@ -19,11 +19,14 @@ class CommentsListFetcher: ListFetcher<ResponseAPIContentGetComment> {
     
     // MARK: - Enums
     struct Filter: FilterType {
-        var permlink: String?
+        var sortBy: CommentSortMode = .time
+        var type: GetCommentsType
         var userId: String?
+        var permlink: String?
         var communityId: String?
         var communityAlias: String?
-        var type: GetCommentsType
+        var parentComment: ResponseAPIContentId?
+        var resolveNestedComments: Bool = false
     }
     
     var filter: Filter
@@ -43,7 +46,7 @@ class CommentsListFetcher: ListFetcher<ResponseAPIContentGetComment> {
                 case .post:
                     // get post's comment
                     result = RestAPIManager.instance.loadPostComments(
-                        sortBy: .time,
+                        sortBy: filter.sortBy,
                         offset: offset,
                         limit: 30,
                         permlink: filter.permlink ?? "",
@@ -52,11 +55,21 @@ class CommentsListFetcher: ListFetcher<ResponseAPIContentGetComment> {
                     )
                 case .user:
                     result = RestAPIManager.instance.loadUserComments(
+                        sortBy: filter.sortBy,
                         offset: offset,
                         limit: 30,
                         userId: filter.userId)
                 case .replies:
-                    fatalError("Implementing")
+                    result = RestAPIManager.instance.loadPostComments(
+                        sortBy: filter.sortBy,
+                        offset: offset,
+                        limit: 30,
+                        permlink: filter.permlink ?? "",
+                        communityId: filter.communityId,
+                        communityAlias: filter.communityAlias,
+                        parentCommentUserId: filter.parentComment?.userId,
+                        parentCommentPermlink: filter.parentComment?.permlink
+                    )
                 }
                 
                 return result
