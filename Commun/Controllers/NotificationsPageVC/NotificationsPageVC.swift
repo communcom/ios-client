@@ -106,7 +106,7 @@ class NotificationsPageVC: ListViewController<ResponseAPIOnlineNotificationData>
             .disposed(by: disposeBag)
     }
     
-    override func handleLoading() {
+    override func showLoadingFooter() {
         tableView.addNotificationsLoadingFooterView()
     }
     

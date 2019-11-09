@@ -74,7 +74,7 @@ class CommentsViewController: ListViewController<ResponseAPIContentGetComment>, 
         
     }
     
-    override func handleLoading() {
+    override func showLoadingFooter() {
         tableView.addLoadingFooterView(
             rowType:        PlaceholderNotificationCell.self,
             tag:            notificationsLoadingFooterViewTag,

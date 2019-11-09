@@ -70,7 +70,7 @@ class PostsViewController: ListViewController<ResponseAPIContentGetPost> {
             .disposed(by: disposeBag)
     }
     
-    override func handleLoading() {
+    override func showLoadingFooter() {
         tableView.addPostLoadingFooterView()
     }
     

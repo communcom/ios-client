@@ -91,13 +91,22 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile>, CommentCellDel
         headerView.setUp(with: profile)
     }
     
-    override func handleListLoading() {
-        switch viewModel.segmentedItem.value {
-        case .posts:
-            tableView.addPostLoadingFooterView()
-        case .comments:
-            tableView.addNotificationsLoadingFooterView()
+    override func handleListLoading(isLoading: Bool) {
+        if isLoading {
+            switch viewModel.segmentedItem.value {
+            case .posts:
+                tableView.addPostLoadingFooterView()
+            case .comments:
+                tableView.addNotificationsLoadingFooterView()
+            }
         }
+        else {
+            tableView.tableFooterView = UIView()
+        }
+    }
+    
+    override func handleListEnded() {
+        tableView.tableFooterView = UIView()
     }
     
     override func handleListEmpty() {

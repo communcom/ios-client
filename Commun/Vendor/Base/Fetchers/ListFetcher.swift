@@ -59,9 +59,11 @@ class ListFetcher<T: ListItemType> {
     let items = BehaviorRelay<[T]>(value: [])
     
     // MARK: - Methods
-    func reset() {
+    func reset(clearResult: Bool = true) {
         state.accept(.loading(false))
-        items.accept([])
+        if clearResult {
+            items.accept([])
+        }
         offset = 0
     }
     
@@ -83,27 +85,28 @@ class ListFetcher<T: ListItemType> {
         
         // send request
         request
-            .do(onSuccess: { (result) in
-                // get next offset
-                self.offset += self.limit
+            .subscribe(onSuccess: { (items) in
+                if self.offset == 0 {
+                    self.items.accept(items)
+                }
+                else {
+                    self.items.accept(self.join(newItems: items))
+                }
                 
                 // resign state
-                if result.count < self.limit {
-                    // mark the end
+                if items.count == 0 && self.offset == 0 {
+                    self.state.accept(.listEmpty)
+                }
+                else if items.count < self.limit {
                     self.state.accept(.listEnded)
                 }
                 else {
                     self.state.accept(.loading(false))
                 }
-            })
-            .map {self.join(newItems: $0)}
-            .do(onSuccess: { (items) in
-                if items.count == 0 {
-                    self.state.accept(.listEmpty)
-                }
-            })
-            .subscribe(onSuccess: { (items) in
-                self.items.accept(items)
+                
+                // get next offset
+                self.offset += self.limit
+                
             }, onError: {error in
                 self.state.accept(.error(error: error))
             })

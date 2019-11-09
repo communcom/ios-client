@@ -64,13 +64,7 @@ class ListViewController<T: ListItemType>: BaseViewController {
             .subscribe(onNext: {[weak self] state in
                 switch state {
                 case .loading(let isLoading):
-                    if (isLoading) {
-                        self?.handleLoading()
-                    }
-                    else {
-                        self?.tableView.tableFooterView = UIView()
-                    }
-                    break
+                    self?.handleLoading(isLoading: isLoading)
                 case .listEnded:
                     self?.handleListEnded()
                 case .listEmpty:
@@ -84,8 +78,22 @@ class ListViewController<T: ListItemType>: BaseViewController {
             .disposed(by: disposeBag)
     }
     
-    func handleLoading() {
-        
+    func handleLoading(isLoading: Bool) {
+        if isLoading {
+            showLoadingFooter()
+        }
+        else {
+            tableView.tableFooterView = UIView()
+        }
+    }
+    
+    func showLoadingFooter() {
+        tableView.addLoadingFooterView(
+            rowType:        PlaceholderNotificationCell.self,
+            tag:            notificationsLoadingFooterViewTag,
+            rowHeight:      88,
+            numberOfRows:   1
+        )
     }
     
     func handleListEnded() {
@@ -93,7 +101,7 @@ class ListViewController<T: ListItemType>: BaseViewController {
     }
     
     func handleListEmpty() {
-        
+        tableView.tableFooterView = UIView()
     }
     
     @objc func refresh() {

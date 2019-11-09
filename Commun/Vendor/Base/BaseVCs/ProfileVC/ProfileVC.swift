@@ -112,7 +112,11 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
     func setUp(profile: ProfileType) {
     }
     
-    func handleListLoading() {
+    func handleListLoading(isLoading: Bool) {
+        
+    }
+    
+    func handleListEnded() {
         
     }
     

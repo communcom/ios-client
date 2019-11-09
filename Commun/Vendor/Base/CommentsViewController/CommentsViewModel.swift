@@ -26,7 +26,7 @@ class CommentsViewModel: ListViewModel<ResponseAPIContentGetComment> {
     func bindFilter() {
         filter.distinctUntilChanged()
             .subscribe(onNext: {filter in
-                self.fetcher.reset()
+                self.fetcher.reset(clearResult: false)
                 (self.fetcher as! CommentsListFetcher).filter = filter
                 self.fetchNext()
             })
