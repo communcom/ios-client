@@ -9,7 +9,7 @@
 import Foundation
 import CyberSwift
 
-class CommentsViewController: ListViewController<ResponseAPIContentGetComment> {
+class CommentsViewController: ListViewController<ResponseAPIContentGetComment>, CommentCellDelegate {
     // MARK: - Properties
     lazy var expandedIndexes = [Int]()
     
@@ -35,7 +35,7 @@ class CommentsViewController: ListViewController<ResponseAPIContentGetComment> {
                 let cell = self.tableView.dequeueReusableCell(withIdentifier: "CommentCell") as! CommentCell
                 cell.expanded = self.expandedIndexes.contains(indexPath.row)
                 cell.setUp(with: comment)
-//                cell.delegate = self
+                cell.delegate = self
                 
                 if indexPath.row == self.viewModel.items.value.count - 2 {
                     self.viewModel.fetchNext()

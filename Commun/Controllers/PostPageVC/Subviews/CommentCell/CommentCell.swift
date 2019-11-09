@@ -8,17 +8,14 @@
 
 import Foundation
 
-//protocol CommentCellDelegate: class {
+protocol CommentCellDelegate: class {
 //    var replyingComment: ResponseAPIContentGetComment? {get set}
-//    var expandedIndexes: [Int] {get set}
-//    var tableView: UITableView! {get set}
-//    func cell(_ cell: CommentCell, didTapUpVoteButtonForComment comment: ResponseAPIContentGetComment)
-//    func cell(_ cell: CommentCell, didTapDownVoteButtonForComment comment: ResponseAPIContentGetComment)
-//    func cell(_ cell: CommentCell, didTapReplyButtonForComment comment: ResponseAPIContentGetComment)
-//    func cell(_ cell: CommentCell, didTapSeeMoreButtonForComment comment: ResponseAPIContentGetComment)
-//    func cell(_ cell: CommentCell, didTapOnUserName userName: String)
-//    func cell(_ cell: CommentCell, didTapOnTag tag: String)
-//}
+    var expandedIndexes: [Int] {get set}
+    var tableView: UITableView! {get set}
+    func cell(_ cell: CommentCell, didTapReplyButtonForComment comment: ResponseAPIContentGetComment)
+    func cell(_ cell: CommentCell, didTapSeeMoreButtonForComment comment: ResponseAPIContentGetComment)
+    func cell(_ cell: CommentCell, didTapOnTag tag: String)
+}
 
 class CommentCell: MyTableViewCell, CommentController {
     // MARK: - Constants
@@ -30,6 +27,7 @@ class CommentCell: MyTableViewCell, CommentController {
     var comment: ResponseAPIContentGetComment?
     var expanded = false
     var themeColor = UIColor(hexString: "#6A80F5")!
+    weak var delegate: CommentCellDelegate?
     
     // MARK: - Subviews
     lazy var avatarImageView = MyAvatarImageView(size: 35)
@@ -61,6 +59,7 @@ class CommentCell: MyTableViewCell, CommentController {
         
         contentContainerView.addSubview(contentTextView)
         contentTextView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10), excludingEdge: .bottom)
+        contentTextView.delegate = self
         
         contentContainerView.addSubview(embedView)
         embedView.autoPinEdge(.leading, to: .leading, of: contentTextView)
@@ -70,6 +69,8 @@ class CommentCell: MyTableViewCell, CommentController {
         contentView.addSubview(voteContainerView)
         voteContainerView.autoPinEdge(.top, to: .bottom, of: contentContainerView, withOffset: 5)
         voteContainerView.autoPinEdge(.leading, to: .leading, of: contentContainerView)
+        voteContainerView.upVoteButton.addTarget(self, action: #selector(upVoteButtonDidTouch), for: .touchUpInside)
+        voteContainerView.downVoteButton.addTarget(self, action: #selector(downVoteButtonDidTouch), for: .touchUpInside)
         
         contentView.addSubview(replyButton)
         replyButton.autoPinEdge(.leading, to: .trailing, of: voteContainerView, withOffset: 10)
@@ -145,7 +146,7 @@ class CommentCell: MyTableViewCell, CommentController {
         }
     }
     
-    func setText(expanded: Bool = false) {
+    func setText() {
         guard let content = comment?.document.toAttributedString(currentAttributes: [.font: UIFont.systemFont(ofSize: defaultContentFontSize)]) else {return}
         
         let userId = comment?.author?.username ?? comment?.author?.userId ?? "Unknown user"
