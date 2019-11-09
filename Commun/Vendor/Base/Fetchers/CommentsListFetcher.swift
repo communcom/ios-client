@@ -87,6 +87,7 @@ class CommentsListFetcher: ListFetcher<ResponseAPIContentGetComment> {
                         sortBy: filter.sortBy,
                         offset: offset,
                         limit: 30,
+                        userId: filter.userId,
                         permlink: filter.permlink ?? "",
                         communityId: filter.communityId,
                         communityAlias: filter.communityAlias
