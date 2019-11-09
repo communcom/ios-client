@@ -13,6 +13,27 @@ class CommentsViewController: ListViewController<ResponseAPIContentGetComment>, 
     // MARK: - Properties
     lazy var expandedComments = [ResponseAPIContentGetComment]()
     
+    // MARK: - Subviews
+    override var tableView: UITableView {
+        get {
+            _tableView
+        }
+        set {
+            _tableView = newValue
+        }
+    }
+    
+    lazy var _tableView: UITableView = {
+        // Override tableView to fix problem with floating footer in section
+        // https://stackoverflow.com/a/32517926
+        let tableView = UITableView(frame: .zero, style: .grouped)
+        tableView.configureForAutoLayout()
+        view.addSubview(tableView)
+        tableView.autoPinEdgesToSuperviewSafeArea(with: tableViewInsets)
+        tableView.backgroundColor = .white
+        return tableView
+    }()
+    
     // MARK: Initializers
     convenience init(filter: CommentsListFetcher.Filter) {
         self.init(nibName: nil, bundle: nil)
