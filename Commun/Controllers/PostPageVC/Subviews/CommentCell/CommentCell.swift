@@ -11,7 +11,7 @@ import Foundation
 protocol CommentCellDelegate: class {
 //    var replyingComment: ResponseAPIContentGetComment? {get set}
     var expandedComments: [ResponseAPIContentGetComment] {get set}
-    var tableView: UITableView! {get set}
+    var tableView: UITableView {get set}
     func cell(_ cell: CommentCell, didTapReplyButtonForComment comment: ResponseAPIContentGetComment)
     func cell(_ cell: CommentCell, didTapSeeMoreButtonForComment comment: ResponseAPIContentGetComment)
     func cell(_ cell: CommentCell, didTapOnTag tag: String)

@@ -10,7 +10,8 @@ import Foundation
 import CyberSwift
 import RxDataSources
 
-class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile> {
+class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile>, CommentCellDelegate {
+    
     // MARK: - Nested type
     enum CustomElementType: IdentifiableType, Equatable {
         case post(ResponseAPIContentGetPost)
@@ -32,6 +33,7 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile> {
     override var _viewModel: ProfileViewModel<ResponseAPIContentGetProfile> {
         return viewModel
     }
+    lazy var expandedComments = [ResponseAPIContentGetComment]()
     
     // MARK: - Subviews
     var headerView: UserProfileHeaderView!
@@ -135,9 +137,9 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile> {
                     }
                 case .comment(let comment):
                     let cell = self.tableView.dequeueReusableCell(withIdentifier: "CommentCell") as! CommentCell
-//                    //            cell.delegate = self
-                    cell.expanded = false
+                    cell.expanded = self.expandedComments.contains(where: {$0.identity == comment.identity})
                     cell.setUp(with: comment)
+                    cell.delegate = self
                     return cell
                 }
                 return UITableViewCell()

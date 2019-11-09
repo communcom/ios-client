@@ -23,7 +23,7 @@ class ListViewController<T: ListItemType>: BaseViewController {
         return .zero
     }
     
-    lazy var tableView: UITableView! = {
+    lazy var tableView: UITableView = {
         let tableView = UITableView(forAutoLayout: ())
         view.addSubview(tableView)
         tableView.autoPinEdgesToSuperviewSafeArea(with: tableViewInsets)

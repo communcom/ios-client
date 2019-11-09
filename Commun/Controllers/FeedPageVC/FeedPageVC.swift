@@ -24,7 +24,7 @@ class FeedPageVC: PostsViewController {
     @IBOutlet weak var _tableView: UITableView!
     @IBOutlet weak var topFloatConstraint: NSLayoutConstraint!
 
-    override var tableView: UITableView! {
+    override var tableView: UITableView {
         get {return _tableView}
         set {_tableView = newValue}
     }
