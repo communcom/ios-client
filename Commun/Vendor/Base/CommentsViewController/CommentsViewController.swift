@@ -61,6 +61,17 @@ class CommentsViewController: ListViewController<ResponseAPIContentGetComment>, 
                 self?.filterChanged(filter: filter)
             })
             .disposed(by: disposeBag)
+        
+        // forward delegate
+        tableView.rx.setDelegate(self)
+            .disposed(by: disposeBag)
+    }
+    
+    override func bindItems() {
+        viewModel.items
+            .map {$0.map {ListSection(model: "", items: [$0])}}
+            .bind(to: tableView.rx.items(dataSource: dataSource))
+            .disposed(by: disposeBag)
     }
     
     func filterChanged(filter: CommentsListFetcher.Filter) {

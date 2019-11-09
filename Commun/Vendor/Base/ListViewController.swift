@@ -44,11 +44,18 @@ class ListViewController<T: ListItemType>: BaseViewController {
     
     override func bind() {
         super.bind()
+        bindState()
+        bindItems()
+    }
+    
+    func bindItems() {
         viewModel.items
             .map {[ListSection(model: "", items: $0)]}
             .bind(to: tableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
-        
+    }
+    
+    func bindState() {
         viewModel.state
             .do(onNext: { (state) in
                 Logger.log(message: "\(state)", event: .debug)
