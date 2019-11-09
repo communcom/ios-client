@@ -66,9 +66,16 @@ class CommentsViewController: ListViewController<ResponseAPIContentGetComment>, 
     override func bind() {
         super.bind()
         
-        tableView.rx.modelSelected(ResponseAPIContentGetComment.self)
-            .subscribe(onNext: {post in
-                #warning("Comment selected")
+        tableView.rx.itemSelected
+            .subscribe(onNext: { (indexPath) in
+                guard let cell = self.tableView.cellForRow(at: indexPath) as? CommentCell,
+                    let comment = cell.comment
+                    else {return}
+                
+                // collapse expanded comment
+                self.expandedComments.removeAll(where: {$0.identity == comment.identity})
+                self.tableView.reloadRows(at: [indexPath], with: .fade)
+                
             })
             .disposed(by: disposeBag)
         
