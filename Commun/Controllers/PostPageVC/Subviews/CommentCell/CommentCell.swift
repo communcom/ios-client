@@ -10,7 +10,7 @@ import Foundation
 
 protocol CommentCellDelegate: class {
 //    var replyingComment: ResponseAPIContentGetComment? {get set}
-    var expandedIndexes: [Int] {get set}
+    var expandedComments: [ResponseAPIContentGetComment] {get set}
     var tableView: UITableView! {get set}
     func cell(_ cell: CommentCell, didTapReplyButtonForComment comment: ResponseAPIContentGetComment)
     func cell(_ cell: CommentCell, didTapSeeMoreButtonForComment comment: ResponseAPIContentGetComment)
@@ -75,6 +75,7 @@ class CommentCell: MyTableViewCell, CommentController {
         contentView.addSubview(replyButton)
         replyButton.autoPinEdge(.leading, to: .trailing, of: voteContainerView, withOffset: 10)
         replyButton.autoAlignAxis(.horizontal, toSameAxisOf: voteContainerView)
+        replyButton.addTarget(self, action: #selector(replyButtonDidTouch), for: .touchUpInside)
         
         contentView.addSubview(timeLabel)
         timeLabel.autoPinEdge(.leading, to: .trailing, of: replyButton)

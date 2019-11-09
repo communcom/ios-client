@@ -11,6 +11,7 @@ import CyberSwift
 
 extension CommentCellDelegate where Self: UIViewController {
     func cell(_ cell: CommentCell, didTapReplyButtonForComment comment: ResponseAPIContentGetComment) {
+        #warning("replying")
 //        replyingComment = comment
     }
     
@@ -18,7 +19,9 @@ extension CommentCellDelegate where Self: UIViewController {
         guard let indexPath = tableView.indexPath(for: cell) else {
             return
         }
-        expandedIndexes.append(indexPath.row)
+        if !expandedComments.contains(where: {$0.identity == comment.identity}) {
+            expandedComments.append(comment)
+        }
         tableView.reloadRows(at: [indexPath], with: .fade)
     }
     

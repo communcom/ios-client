@@ -11,7 +11,7 @@ import CyberSwift
 
 class CommentsViewController: ListViewController<ResponseAPIContentGetComment>, CommentCellDelegate {
     // MARK: - Properties
-    lazy var expandedIndexes = [Int]()
+    lazy var expandedComments = [ResponseAPIContentGetComment]()
     
     // MARK: Initializers
 //    init(filter: CommentsListFetcher.Filter) {
@@ -33,7 +33,7 @@ class CommentsViewController: ListViewController<ResponseAPIContentGetComment>, 
         dataSource = MyRxTableViewSectionedAnimatedDataSource<ListSection>(
             configureCell: { dataSource, tableView, indexPath, comment in
                 let cell = self.tableView.dequeueReusableCell(withIdentifier: "CommentCell") as! CommentCell
-                cell.expanded = self.expandedIndexes.contains(indexPath.row)
+                cell.expanded = self.expandedComments.contains(where: {$0.identity == comment.identity})
                 cell.setUp(with: comment)
                 cell.delegate = self
                 
@@ -48,12 +48,6 @@ class CommentsViewController: ListViewController<ResponseAPIContentGetComment>, 
     
     override func bind() {
         super.bind()
-        // reset expandedIndexes
-        viewModel.items
-            .subscribe(onNext: {_ in
-                self.expandedIndexes = []
-            })
-            .disposed(by: disposeBag)
         
         tableView.rx.modelSelected(ResponseAPIContentGetComment.self)
             .subscribe(onNext: {post in
