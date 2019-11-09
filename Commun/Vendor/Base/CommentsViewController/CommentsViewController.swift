@@ -69,7 +69,7 @@ class CommentsViewController: ListViewController<ResponseAPIContentGetComment>, 
     
     override func bindItems() {
         viewModel.items
-            .map {$0.map {ListSection(model: "", items: [$0])}}
+            .map {$0.map {ListSection(model: $0.identity, items: [$0])}}
             .bind(to: tableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
     }

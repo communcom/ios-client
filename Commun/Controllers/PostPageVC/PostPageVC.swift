@@ -59,6 +59,9 @@ class PostPageVC: CommentsViewController {
         // tableView
         tableView.contentInset = UIEdgeInsets(top: 56, left: 0, bottom: 0, right: 0)
         tableView.keyboardDismissMode = .onDrag
+        
+        // postView
+        postView.sortButton.addTarget(self, action: #selector(sortButtonDidTouch), for: .touchUpInside)
     }
     
     override func bind() {
@@ -73,8 +76,49 @@ class PostPageVC: CommentsViewController {
         bindPost()
     }
     
+    override func filterChanged(filter: CommentsListFetcher.Filter) {
+        super.filterChanged(filter: filter)
+        
+        // sort button
+        var title = ""
+        switch filter.sortBy {
+        case .popularity:
+            title = "interesting first".localized().uppercaseFirst
+        case .timeDesc:
+            title = "newest first".localized().uppercaseFirst
+        case .time:
+            title = "oldest first".localized().uppercaseFirst
+        }
+        postView.sortButton.setTitle(title, for: .normal)
+    }
+    
     @objc func openMorePostActions() {
         postView.openMorePostActions()
+    }
+    
+    @objc func sortButtonDidTouch() {
+        showCommunActionSheet(
+            title: "sort by".localized().uppercaseFirst,
+            actions: [
+                CommunActionSheet.Action(
+                    title: "interesting first".localized().uppercaseFirst,
+                    handle: {
+                        let vm = self.viewModel as! CommentsViewModel
+                        vm.changeFilter(sortBy: .popularity)
+                    }),
+                CommunActionSheet.Action(
+                    title: "newest first".localized().uppercaseFirst,
+                    handle: {
+                        let vm = self.viewModel as! CommentsViewModel
+                        vm.changeFilter(sortBy: .timeDesc)
+                    }),
+                CommunActionSheet.Action(
+                    title: "oldest first".localized().uppercaseFirst,
+                    handle: {
+                        let vm = self.viewModel as! CommentsViewModel
+                        vm.changeFilter(sortBy: .time)
+                    }),
+            ])
     }
     
     override func refresh() {

@@ -26,7 +26,6 @@ class CommentsViewModel: ListViewModel<ResponseAPIContentGetComment> {
     func bindFilter() {
         filter.distinctUntilChanged()
             .subscribe(onNext: {filter in
-                self.items.accept([])
                 self.fetcher.reset()
                 (self.fetcher as! CommentsListFetcher).filter = filter
                 self.fetchNext()
@@ -45,6 +44,8 @@ class CommentsViewModel: ListViewModel<ResponseAPIContentGetComment> {
         resolveNestedComments: Bool? = nil
     ) {
         let newFilter = filter.value.newFilter(withSortBy: sortBy, type: type, userId: userId, permlink: permlink, communityId: communityId, communityAlias: communityAlias, parentComment: parentComment, resolveNestedComments: resolveNestedComments)
-        filter.accept(newFilter)
+        if newFilter != filter.value {
+            filter.accept(newFilter)
+        }
     }
 }
