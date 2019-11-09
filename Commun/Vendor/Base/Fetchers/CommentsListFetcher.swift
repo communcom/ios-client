@@ -27,6 +27,44 @@ class CommentsListFetcher: ListFetcher<ResponseAPIContentGetComment> {
         var communityAlias: String?
         var parentComment: ResponseAPIContentId?
         var resolveNestedComments: Bool = false
+        
+        func newFilter(
+            withSortBy sortBy: CommentSortMode? = nil,
+            type: GetCommentsType? = nil,
+            userId: String? = nil,
+            permlink: String? = nil,
+            communityId: String? = nil,
+            communityAlias: String? = nil,
+            parentComment: ResponseAPIContentId? = nil,
+            resolveNestedComments: Bool? = nil
+        ) -> Filter {
+            var newFilter = self
+            if let sortBy = sortBy {
+                newFilter.sortBy = sortBy
+            }
+            if let type = type {
+                newFilter.type = type
+            }
+            if let userId = userId {
+                newFilter.userId = userId
+            }
+            if let permlink = permlink {
+                newFilter.permlink = permlink
+            }
+            if let communityId = communityId {
+                newFilter.communityId = communityId
+            }
+            if let communityAlias = communityAlias {
+                newFilter.communityAlias = communityAlias
+            }
+            if let parentComment = parentComment {
+                newFilter.parentComment = parentComment
+            }
+            if let resolveNestedComments = resolveNestedComments {
+                newFilter.resolveNestedComments = resolveNestedComments
+            }
+            return newFilter
+        }
     }
     
     var filter: Filter
