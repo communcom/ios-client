@@ -34,7 +34,8 @@ class PostHeaderTextView: MySubviewAttachingTextView {
             left: PostHeaderTextView.attachmentInset.left,
             bottom: 0,
             right: PostHeaderTextView.attachmentInset.right)
-        textContainer.lineFragmentPadding = 0;
+        textContainer.lineFragmentPadding = 0
+        isEditable = false
     }
 }
 
