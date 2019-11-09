@@ -74,7 +74,7 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile> {
     override func setUp(profile: ResponseAPIContentGetProfile) {
         super.setUp(profile: profile)
         // Register new cell type
-        tableView.register(UINib(nibName: "CommentCell", bundle: nil), forCellReuseIdentifier: "CommentCell")
+        tableView.register(CommentCell.self, forCellReuseIdentifier: "CommentCell")
         
         // title
         title = profile.username
