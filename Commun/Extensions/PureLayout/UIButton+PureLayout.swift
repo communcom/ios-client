@@ -18,7 +18,7 @@ extension UIButton {
         labelFont: UIFont? = nil,
         backgroundColor: UIColor? = nil,
         textColor: UIColor? = nil,
-        cornerRadius: CGFloat = 8,
+        cornerRadius: CGFloat? = nil,
         contentInsets: UIEdgeInsets? = nil
     ) {
         self.init(width: width, height: height, backgroundColor: backgroundColor)
@@ -29,7 +29,9 @@ extension UIButton {
         if let textColor = textColor {
             setTitleColor(textColor, for: .normal)
         }
-        self.cornerRadius = cornerRadius
+        if let cornerRadius = cornerRadius {
+            self.cornerRadius = cornerRadius
+        }
         if let contentInsets = contentInsets {
             contentEdgeInsets = contentInsets
         }
