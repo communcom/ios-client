@@ -94,8 +94,10 @@ class ListFetcher<T: ListItemType> {
                 }
                 
                 // resign state
-                if items.count == 0 && self.offset == 0 {
-                    self.state.accept(.listEmpty)
+                if items.count == 0 {
+                    if self.offset == 0 {
+                        self.state.accept(.listEmpty)
+                    }
                 }
                 else if items.count < self.limit {
                     self.state.accept(.listEnded)
