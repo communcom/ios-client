@@ -15,10 +15,6 @@ extension ResponseAPIContentGetPost: IdentifiableType {
         return self.contentId.userId + "/" + self.contentId.permlink
     }
     
-    public func notifyChanged() {
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "\(Self.self)DidChange"), object: self)
-    }
-    
     public var content: [ResponseAPIContentBlock]? {
         return document?.content.arrayValue
     }

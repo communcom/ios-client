@@ -10,24 +10,19 @@ import Foundation
 import CyberSwift
 
 extension CommentCellDelegate where Self: UIViewController {
-    func cell(_ cell: CommentCell, didTapUpVoteButtonForComment comment: ResponseAPIContentGetComment) {
-    }
-    
-    func cell(_ cell: CommentCell, didTapDownVoteButtonForComment comment: ResponseAPIContentGetComment) {
-    }
-    
     func cell(_ cell: CommentCell, didTapReplyButtonForComment comment: ResponseAPIContentGetComment) {
-        replyingComment = comment
+        #warning("replying")
+//        replyingComment = comment
     }
     
     func cell(_ cell: CommentCell, didTapSeeMoreButtonForComment comment: ResponseAPIContentGetComment) {
         guard let indexPath = tableView.indexPath(for: cell) else {
             return
         }
-        expandedIndexes.append(indexPath.row)
-        UIView.setAnimationsEnabled(false)
-        tableView.reloadRows(at: [indexPath], with: .none)
-        UIView.setAnimationsEnabled(true)
+        if !expandedComments.contains(where: {$0.identity == comment.identity}) {
+            expandedComments.append(comment)
+        }
+        tableView.reloadRows(at: [indexPath], with: .fade)
     }
     
     func cell(_ cell: CommentCell, didTapOnUserName userName: String) {

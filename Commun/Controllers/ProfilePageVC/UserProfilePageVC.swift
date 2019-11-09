@@ -10,7 +10,8 @@ import Foundation
 import CyberSwift
 import RxDataSources
 
-class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile> {
+class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile>, CommentCellDelegate {
+    
     // MARK: - Nested type
     enum CustomElementType: IdentifiableType, Equatable {
         case post(ResponseAPIContentGetPost)
@@ -32,6 +33,7 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile> {
     override var _viewModel: ProfileViewModel<ResponseAPIContentGetProfile> {
         return viewModel
     }
+    lazy var expandedComments = [ResponseAPIContentGetComment]()
     
     // MARK: - Subviews
     var headerView: UserProfileHeaderView!
@@ -74,7 +76,7 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile> {
     override func setUp(profile: ResponseAPIContentGetProfile) {
         super.setUp(profile: profile)
         // Register new cell type
-        tableView.register(UINib(nibName: "CommentCell", bundle: nil), forCellReuseIdentifier: "CommentCell")
+        tableView.register(CommentCell.self, forCellReuseIdentifier: "CommentCell")
         
         // title
         title = profile.username
@@ -89,13 +91,22 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile> {
         headerView.setUp(with: profile)
     }
     
-    override func handleListLoading() {
-        switch viewModel.segmentedItem.value {
-        case .posts:
-            tableView.addPostLoadingFooterView()
-        case .comments:
-            tableView.addNotificationsLoadingFooterView()
+    override func handleListLoading(isLoading: Bool) {
+        if isLoading {
+            switch viewModel.segmentedItem.value {
+            case .posts:
+                tableView.addPostLoadingFooterView()
+            case .comments:
+                tableView.addNotificationsLoadingFooterView()
+            }
         }
+        else {
+            tableView.tableFooterView = UIView()
+        }
+    }
+    
+    override func handleListEnded() {
+        tableView.tableFooterView = UIView()
     }
     
     override func handleListEmpty() {
@@ -135,8 +146,9 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile> {
                     }
                 case .comment(let comment):
                     let cell = self.tableView.dequeueReusableCell(withIdentifier: "CommentCell") as! CommentCell
-                    //            cell.delegate = self
-                    cell.setupFromComment(comment, expanded: false)
+                    cell.expanded = self.expandedComments.contains(where: {$0.identity == comment.identity})
+                    cell.setUp(with: comment)
+                    cell.delegate = self
                     return cell
                 }
                 return UITableViewCell()
@@ -164,14 +176,9 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile> {
         let cell = self.tableView.cellForRow(at: indexPath)
         switch cell {
         case is PostCell:
-            if let postPageVC = controllerContainer.resolve(PostPageVC.self)
-            {
-                let post = self.viewModel.postsVM.items.value[indexPath.row]
-                (postPageVC.viewModel as! PostPageViewModel).postForRequest = post
-                self.show(postPageVC, sender: nil)
-            } else {
-                self.showAlert(title: "error".localized().uppercaseFirst, message: "something went wrong".localized().uppercaseFirst)
-            }
+            let post = self.viewModel.postsVM.items.value[indexPath.row]
+            let postPageVC = PostPageVC(post: post)
+            self.show(postPageVC, sender: nil)
             break
         case is CommentCell:
             #warning("Tap a comment")

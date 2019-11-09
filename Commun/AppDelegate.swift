@@ -46,7 +46,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // global tintColor
         window?.tintColor = .appMainColor
         // Logger
-//        Logger.showEvents = [.error]
+//        Logger.showEvents = [.request, .error]
         
         // Sync iCloud key-value store
         NSUbiquitousKeyValueStore.default.synchronize()

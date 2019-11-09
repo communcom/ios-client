@@ -64,15 +64,9 @@ extension ProfileVC {
             .subscribe(onNext: { [weak self] (state) in
                 switch state {
                 case .loading(let isLoading):
-                    if (isLoading) {
-                        self?.handleListLoading()
-                    }
-                    else {
-                        self?.tableView.tableFooterView = UIView()
-                    }
-                    break
+                    self?.handleListLoading(isLoading: isLoading)
                 case .listEnded:
-                    self?.tableView.tableFooterView = UIView()
+                    self?.handleListEnded()
                 case .listEmpty:
                     self?.handleListEmpty()
                 case .error(_):

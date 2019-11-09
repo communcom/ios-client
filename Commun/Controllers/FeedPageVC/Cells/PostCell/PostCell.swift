@@ -34,35 +34,7 @@ class PostCell: MyTableViewCell, PostController {
         return button
     }()
     
-    lazy var voteActionsContainerView: UIView = {
-        let view = UIView(height: voteActionsContainerViewHeight)
-        view.backgroundColor = UIColor(hexString: "#F3F5FA")
-        view.cornerRadius = voteActionsContainerViewHeight / 2
-        return view
-    }()
-    
-    private var voteButton: UIButton {
-        let button = UIButton(width: 38)
-        return button
-    }
-    
-    lazy var upVoteButton: UIButton! = {
-        let button = voteButton
-        button.imageEdgeInsets = UIEdgeInsets(top: 10.5, left: 10, bottom: 10.5, right: 18)
-        button.setImage(UIImage(named: "upVote"), for: .normal)
-        button.addTarget(self, action: #selector(upVoteButtonTapped(button:)), for: .touchUpInside)
-        return button
-    }()
-    
-    lazy var likeCountLabel = self.createDescriptionLabel()
-    
-    lazy var downVoteButton: UIButton! = {
-        let button = voteButton
-        button.imageEdgeInsets = UIEdgeInsets(top: 10.5, left: 18, bottom: 10.5, right: 10)
-        button.addTarget(self, action: #selector(downVoteButtonTapped(button:)), for: .touchUpInside)
-        button.setImage(UIImage(named: "downVote"), for: .normal)
-        return button
-    }()
+    lazy var voteContainerView: VoteContainerView = VoteContainerView(height: voteActionsContainerViewHeight, cornerRadius: voteActionsContainerViewHeight / 2)
     
     lazy var sharesCountLabel = self.createDescriptionLabel()
     lazy var sharesCountButton: UIButton = {
@@ -97,38 +69,27 @@ class PostCell: MyTableViewCell, PostController {
         metaView.autoPinEdge(.trailing, to: .leading, of: moreActionsButton, withOffset: -8)
         
         // action buttons
-        contentView.addSubview(voteActionsContainerView)
-        voteActionsContainerView.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
-        
-        voteActionsContainerView.addSubview(upVoteButton)
-        voteActionsContainerView.addSubview(likeCountLabel)
-        voteActionsContainerView.addSubview(downVoteButton)
-        
-        upVoteButton.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .trailing)
-        downVoteButton.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .leading)
-        
-        likeCountLabel.autoPinEdge(.leading, to: .trailing, of: upVoteButton)
-        likeCountLabel.autoPinEdge(.trailing, to: .leading, of: downVoteButton)
-        
-        likeCountLabel.autoPinEdge(toSuperviewEdge: .top)
-        likeCountLabel.autoPinEdge(toSuperviewEdge: .bottom)
+        contentView.addSubview(voteContainerView)
+        voteContainerView.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
+        voteContainerView.upVoteButton.addTarget(self, action: #selector(upVoteButtonTapped(button:)), for: .touchUpInside)
+        voteContainerView.upVoteButton.addTarget(self, action: #selector(downVoteButtonTapped(button:)), for: .touchUpInside)
         
         // comments and shares
         contentView.addSubview(sharesCountButton)
         sharesCountButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
-        sharesCountButton.autoAlignAxis(.horizontal, toSameAxisOf: voteActionsContainerView)
+        sharesCountButton.autoAlignAxis(.horizontal, toSameAxisOf: voteContainerView)
         contentView.addSubview(commentsCountLabel)
         commentsCountLabel.autoPinEdge(.trailing, to: .leading, of: sharesCountButton, withOffset: -23)
-        commentsCountLabel.autoAlignAxis(.horizontal, toSameAxisOf: voteActionsContainerView)
+        commentsCountLabel.autoAlignAxis(.horizontal, toSameAxisOf: voteContainerView)
         contentView.addSubview(commentsCountButton)
         commentsCountButton.autoPinEdge(.trailing, to: .leading, of: commentsCountLabel, withOffset: -8)
-        commentsCountButton.autoAlignAxis(.horizontal, toSameAxisOf: voteActionsContainerView)
+        commentsCountButton.autoAlignAxis(.horizontal, toSameAxisOf: voteContainerView)
         
         // separator
         let separatorView = UIView(height: 10)
         separatorView.backgroundColor = #colorLiteral(red: 0.9599978328, green: 0.966491878, blue: 0.9829974771, alpha: 1)
         contentView.addSubview(separatorView)
-        separatorView.autoPinEdge(.top, to: .bottom, of: voteActionsContainerView, withOffset: 16)
+        separatorView.autoPinEdge(.top, to: .bottom, of: voteContainerView, withOffset: 16)
         separatorView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
         
         // layout content
@@ -147,9 +108,7 @@ class PostCell: MyTableViewCell, PostController {
         metaView.setUp(post: post)
         
         // Handle button
-        self.upVoteButton.tintColor         = post.votes.hasUpVote ?? false ? .appMainColor: .lightGray
-        self.likeCountLabel.text            =   "\((post.votes.upCount ?? 0) - (post.votes.downCount ?? 0))"
-        self.downVoteButton.tintColor       = post.votes.hasDownVote ?? false ? .appMainColor: .lightGray
+        voteContainerView.setUp(with: post.votes)
         
         // comments // shares count
         self.commentsCountLabel.text        =   "\(post.stats?.commentsCount ?? 0)"

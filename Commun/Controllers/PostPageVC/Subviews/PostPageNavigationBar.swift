@@ -32,6 +32,7 @@ class PostPageNavigationBar: MyView {
         addSubview(backButton)
         backButton.autoPinEdge(toSuperviewEdge: .leading)
         backButton.autoAlignAxis(toSuperviewAxis: .horizontal)
+        backButton.addTarget(self, action: #selector(backButtonDidTouch), for: .touchUpInside)
         
         addSubview(postMetaView)
         postMetaView.autoPinEdge(.leading, to: .trailing, of: backButton)
@@ -53,4 +54,7 @@ class PostPageNavigationBar: MyView {
         postMetaView.setUp(post: post)
     }
     
+    @objc func backButtonDidTouch() {
+        parentViewController?.back()
+    }
 }

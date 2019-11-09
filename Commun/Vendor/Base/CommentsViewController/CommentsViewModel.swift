@@ -12,11 +12,40 @@ import RxCocoa
 class CommentsViewModel: ListViewModel<ResponseAPIContentGetComment> {
     var filter: BehaviorRelay<CommentsListFetcher.Filter>!
     
-    convenience init(
+    init(
         filter: CommentsListFetcher.Filter = CommentsListFetcher.Filter(type: .user))
     {
         let fetcher = CommentsListFetcher(filter: filter)
-        self.init(fetcher: fetcher)
+        super.init(fetcher: fetcher)
         self.filter = BehaviorRelay<CommentsListFetcher.Filter>(value: filter)
+        defer {
+            bindFilter()
+        }
+    }
+    
+    func bindFilter() {
+        filter.distinctUntilChanged()
+            .subscribe(onNext: {filter in
+                self.fetcher.reset(clearResult: false)
+                (self.fetcher as! CommentsListFetcher).filter = filter
+                self.fetchNext()
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    func changeFilter(
+        sortBy: CommentSortMode? = nil,
+        type: GetCommentsType? = nil,
+        userId: String? = nil,
+        permlink: String? = nil,
+        communityId: String? = nil,
+        communityAlias: String? = nil,
+        parentComment: ResponseAPIContentId? = nil,
+        resolveNestedComments: Bool? = nil
+    ) {
+        let newFilter = filter.value.newFilter(withSortBy: sortBy, type: type, userId: userId, permlink: permlink, communityId: communityId, communityAlias: communityAlias, parentComment: parentComment, resolveNestedComments: resolveNestedComments)
+        if newFilter != filter.value {
+            filter.accept(newFilter)
+        }
     }
 }

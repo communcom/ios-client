@@ -8,6 +8,7 @@
 
 import Foundation
 import PureLayout
+import CyberSwift
 
 extension UIButton {
     public convenience init(
@@ -17,7 +18,7 @@ extension UIButton {
         labelFont: UIFont? = nil,
         backgroundColor: UIColor? = nil,
         textColor: UIColor? = nil,
-        cornerRadius: CGFloat = 8,
+        cornerRadius: CGFloat? = nil,
         contentInsets: UIEdgeInsets? = nil
     ) {
         self.init(width: width, height: height, backgroundColor: backgroundColor)
@@ -28,7 +29,9 @@ extension UIButton {
         if let textColor = textColor {
             setTitleColor(textColor, for: .normal)
         }
-        self.cornerRadius = cornerRadius
+        if let cornerRadius = cornerRadius {
+            self.cornerRadius = cornerRadius
+        }
         if let contentInsets = contentInsets {
             contentEdgeInsets = contentInsets
         }
@@ -61,6 +64,13 @@ extension UIButton {
         let button = UIButton(width: 36, height: 40, contentInsets: contentInsets)
         button.tintColor = tintColor
         button.setImage(UIImage(named: "postpage-more"), for: .normal)
+        return button
+    }
+    
+    static func vote(type: VoteActionType) -> UIButton {
+        let button = UIButton(width: 38)
+        button.imageEdgeInsets = UIEdgeInsets(top: 10.5, left: type == .upvote ? 10 : 18, bottom: 10.5, right: type == .upvote ? 18: 10)
+        button.setImage(UIImage(named: type == .upvote ? "upVote" : "downVote"), for: .normal)
         return button
     }
 }

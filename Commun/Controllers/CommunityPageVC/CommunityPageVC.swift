@@ -103,15 +103,24 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>{
         headerView.setUp(with: profile)
     }
     
-    override func handleListLoading() {
-        switch viewModel.segmentedItem.value {
-        case .posts:
-            tableView.addPostLoadingFooterView()
-        case .leads:
-            tableView.addNotificationsLoadingFooterView()
-        default:
-            break
+    override func handleListLoading(isLoading: Bool) {
+        if isLoading {
+            switch viewModel.segmentedItem.value {
+            case .posts:
+                tableView.addPostLoadingFooterView()
+            case .leads:
+                tableView.addNotificationsLoadingFooterView()
+            default:
+                break
+            }
         }
+        else {
+            tableView.tableFooterView = UIView()
+        }
+    }
+    
+    override func handleListEnded() {
+        tableView.tableFooterView = UIView()
     }
     
     override func handleListEmpty() {
@@ -201,14 +210,9 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>{
         let cell = tableView.cellForRow(at: indexPath)
         switch cell {
         case is PostCell:
-            if let postPageVC = controllerContainer.resolve(PostPageVC.self)
-            {
-                let post = self.viewModel.postsVM.items.value[indexPath.row]
-                (postPageVC.viewModel as! PostPageViewModel).postForRequest = post
-                self.show(postPageVC, sender: nil)
-            } else {
-                self.showAlert(title: "error".localized().uppercaseFirst, message: "something went wrong".localized().uppercaseFirst)
-            }
+            let post = self.viewModel.postsVM.items.value[indexPath.row]
+            let postPageVC = PostPageVC(post: post)
+            self.show(postPageVC, sender: nil)
             break
         case is CommunityLeaderCell:
             #warning("Tap a leaderCell")

@@ -91,10 +91,8 @@ class NotificationsPageVC: ListViewController<ResponseAPIOnlineNotificationData>
                 }
                 
                 // navigate to post page
-                if let post = notification.post,
-                    let postPageVC = controllerContainer.resolve(PostPageVC.self) {
-                    (postPageVC.viewModel as! PostPageViewModel).permlink = post.contentId.permlink
-                    (postPageVC.viewModel as! PostPageViewModel).userId = post.contentId.userId
+                if let post = notification.post {
+                    let postPageVC = PostPageVC(userId: post.contentId.userId, permlink: post.contentId.permlink, communityId: post.contentId.communityId ?? "")
                     self?.show(postPageVC, sender: nil)
                     return
                 }
@@ -108,7 +106,7 @@ class NotificationsPageVC: ListViewController<ResponseAPIOnlineNotificationData>
             .disposed(by: disposeBag)
     }
     
-    override func handleLoading() {
+    override func showLoadingFooter() {
         tableView.addNotificationsLoadingFooterView()
     }
     

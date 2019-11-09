@@ -40,7 +40,7 @@ final class BasicPostCell: PostCell {
         
         gridViewContainerView.addSubview(gridView)
         gridView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 0, bottom: 12, right: 0))
-        gridViewContainerView.autoPinEdge(.bottom, to: .top, of: voteActionsContainerView)
+        gridViewContainerView.autoPinEdge(.bottom, to: .top, of: voteContainerView)
     }
     
     override func setUp(with post: ResponseAPIContentGetPost?) {

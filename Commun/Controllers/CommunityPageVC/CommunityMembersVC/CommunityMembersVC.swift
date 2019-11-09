@@ -108,6 +108,37 @@ class CommunityMembersVC: BaseViewController {
         bindList()
     }
     
+    func handleListLoading(isLoading: Bool) {
+        if isLoading {
+            tableView.addNotificationsLoadingFooterView()
+        }
+        else {
+            tableView.tableFooterView = UIView()
+        }
+    }
+    
+    func handleListEnded() {
+        tableView.tableFooterView = UIView()
+    }
+    
+    func handleListEmpty() {
+        var title = "empty"
+        var description = "not found"
+        switch viewModel.segmentedItem.value {
+        case .all:
+            title = "no members"
+            description = "members not found"
+        case .leaders:
+            title = "no leaders"
+            description = "leaders not found"
+        case .friends:
+            title = "no friends"
+            description = "friends not found"
+        }
+        
+        tableView.addEmptyPlaceholderFooterView(title: title.localized().uppercaseFirst, description: description.localized().uppercaseFirst)
+    }
+    
     @objc func reload() {
         viewModel.reload()
         viewModel.fetchNext(forceRetry: true)

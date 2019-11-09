@@ -97,12 +97,6 @@ let controllerContainer: Container = {
         return vc as! FeedPageFiltersVC
     }
     
-    container.register(PostPageVC.self, factory: { r in
-        let vc = PostPageVC.instanceController(fromStoryboard: "PostPageVC", withIdentifier: "PostPageVC") as! PostPageVC
-        vc.viewModel = PostPageViewModel()
-        return vc
-    })
-    
     // Profile scene
     
     container.register(ProfileEditCoverVC.self, factory: { r in

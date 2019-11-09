@@ -23,7 +23,7 @@ class ListViewController<T: ListItemType>: BaseViewController {
         return .zero
     }
     
-    lazy var tableView: UITableView! = {
+    lazy var tableView: UITableView = {
         let tableView = UITableView(forAutoLayout: ())
         view.addSubview(tableView)
         tableView.autoPinEdgesToSuperviewSafeArea(with: tableViewInsets)
@@ -44,11 +44,18 @@ class ListViewController<T: ListItemType>: BaseViewController {
     
     override func bind() {
         super.bind()
+        bindState()
+        bindItems()
+    }
+    
+    func bindItems() {
         viewModel.items
             .map {[ListSection(model: "", items: $0)]}
             .bind(to: tableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
-        
+    }
+    
+    func bindState() {
         viewModel.state
             .do(onNext: { (state) in
                 Logger.log(message: "\(state)", event: .debug)
@@ -57,13 +64,7 @@ class ListViewController<T: ListItemType>: BaseViewController {
             .subscribe(onNext: {[weak self] state in
                 switch state {
                 case .loading(let isLoading):
-                    if (isLoading) {
-                        self?.handleLoading()
-                    }
-                    else {
-                        self?.tableView.tableFooterView = UIView()
-                    }
-                    break
+                    self?.handleLoading(isLoading: isLoading)
                 case .listEnded:
                     self?.handleListEnded()
                 case .listEmpty:
@@ -77,8 +78,22 @@ class ListViewController<T: ListItemType>: BaseViewController {
             .disposed(by: disposeBag)
     }
     
-    func handleLoading() {
-        
+    func handleLoading(isLoading: Bool) {
+        if isLoading {
+            showLoadingFooter()
+        }
+        else {
+            tableView.tableFooterView = UIView()
+        }
+    }
+    
+    func showLoadingFooter() {
+        tableView.addLoadingFooterView(
+            rowType:        PlaceholderNotificationCell.self,
+            tag:            notificationsLoadingFooterViewTag,
+            rowHeight:      88,
+            numberOfRows:   1
+        )
     }
     
     func handleListEnded() {
@@ -86,7 +101,7 @@ class ListViewController<T: ListItemType>: BaseViewController {
     }
     
     func handleListEmpty() {
-        
+        tableView.tableFooterView = UIView()
     }
     
     @objc func refresh() {
