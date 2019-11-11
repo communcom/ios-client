@@ -269,6 +269,8 @@
 		BC52913823766F080022EC7F /* CommentCell+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC52913723766F080022EC7F /* CommentCell+Actions.swift */; };
 		BC52913A237671CE0022EC7F /* CommentCellDelegate+UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC529139237671CE0022EC7F /* CommentCellDelegate+UIViewController.swift */; };
 		BC52913C2376B1EB0022EC7F /* PostPageVC+UITableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC52913B2376B1EB0022EC7F /* PostPageVC+UITableViewDelegate.swift */; };
+		BC52914023793D330022EC7F /* CommentForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC52913F23793D330022EC7F /* CommentForm.swift */; };
+		BC529142237941920022EC7F /* CommentTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC529141237941920022EC7F /* CommentTextView.swift */; };
 		BC619B11237268910005BB94 /* CommunitiesListFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC619B10237268910005BB94 /* CommunitiesListFetcher.swift */; };
 		BC619B1323726A340005BB94 /* CommunitiesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC619B1223726A340005BB94 /* CommunitiesViewModel.swift */; };
 		BC619B1523726ADF0005BB94 /* CommunitiesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC619B1423726ADF0005BB94 /* CommunitiesVC.swift */; };
@@ -648,6 +650,8 @@
 		BC52913723766F080022EC7F /* CommentCell+Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CommentCell+Actions.swift"; sourceTree = "<group>"; };
 		BC529139237671CE0022EC7F /* CommentCellDelegate+UIViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CommentCellDelegate+UIViewController.swift"; sourceTree = "<group>"; };
 		BC52913B2376B1EB0022EC7F /* PostPageVC+UITableViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PostPageVC+UITableViewDelegate.swift"; sourceTree = "<group>"; };
+		BC52913F23793D330022EC7F /* CommentForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentForm.swift; sourceTree = "<group>"; };
+		BC529141237941920022EC7F /* CommentTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentTextView.swift; sourceTree = "<group>"; };
 		BC619B10237268910005BB94 /* CommunitiesListFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunitiesListFetcher.swift; sourceTree = "<group>"; };
 		BC619B1223726A340005BB94 /* CommunitiesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunitiesViewModel.swift; sourceTree = "<group>"; };
 		BC619B1423726ADF0005BB94 /* CommunitiesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunitiesVC.swift; sourceTree = "<group>"; };
@@ -1767,6 +1771,7 @@
 		BCA97111236004F500AE37E1 /* CommentsViewController */ = {
 			isa = PBXGroup;
 			children = (
+				BC52913623766EFA0022EC7F /* CommentCell */,
 				BCA97112236004F500AE37E1 /* CommentsViewModel.swift */,
 				BCCC33ED23752C22004E46EF /* CommentsViewController.swift */,
 			);
@@ -1865,12 +1870,13 @@
 			path = SubsViewController;
 			sourceTree = "<group>";
 		};
-		BCCB993223756318005252CF /* PostHeaderTextView */ = {
+		BCCB993223756318005252CF /* Header */ = {
 			isa = PBXGroup;
 			children = (
+				BCCB993523756375005252CF /* PostHeaderView.swift */,
 				BCCB993323756318005252CF /* PostHeaderTextView.swift */,
 			);
-			path = PostHeaderTextView;
+			path = Header;
 			sourceTree = "<group>";
 		};
 		BCCE0A982367D12800A183AA /* ResponseAPI */ = {
@@ -1931,10 +1937,10 @@
 		BCD00FBB2375082C004A3952 /* Subviews */ = {
 			isa = PBXGroup;
 			children = (
-				BCCB993223756318005252CF /* PostHeaderTextView */,
+				BCCB993223756318005252CF /* Header */,
 				BCD00FBC23750859004A3952 /* PostPageNavigationBar.swift */,
-				BCCB993523756375005252CF /* PostHeaderView.swift */,
-				BC52913623766EFA0022EC7F /* CommentCell */,
+				BC52913F23793D330022EC7F /* CommentForm.swift */,
+				BC529141237941920022EC7F /* CommentTextView.swift */,
 			);
 			path = Subviews;
 			sourceTree = "<group>";
@@ -2320,6 +2326,7 @@
 				3BC613B32342162700075570 /* SwipeDownDismissViewController.swift in Sources */,
 				BC6B7653236A74F000A7AF2A /* MyProfileEditBioVC.swift in Sources */,
 				571B150B223A94DE00630C8F /* TabBarVC.swift in Sources */,
+				BC52914023793D330022EC7F /* CommentForm.swift in Sources */,
 				3BAE5CD4233899F30055F23E /* ContentTextView.swift in Sources */,
 				3B2F226C226892C5006B589E /* NotificationsPageVC.swift in Sources */,
 				BC619B1B2372B5760005BB94 /* CommunityMembersViewModel.swift in Sources */,
@@ -2493,6 +2500,7 @@
 				BC016D46235DA0D400F1319F /* PlaceholderPostCell.swift in Sources */,
 				3B289B9A2346E6D800598407 /* UILabel+PureLayout.swift in Sources */,
 				3B2F2269226892C5006B589E /* NotificationCell.swift in Sources */,
+				BC529142237941920022EC7F /* CommentTextView.swift in Sources */,
 				BC3694F523698FEE00B2E078 /* EditorVC+Actions.swift in Sources */,
 				3B5EDE3B22E0DD5100897BF3 /* NotificationSettingType.swift in Sources */,
 				57840A1B2240DB9400338FD5 /* NetworkService.swift in Sources */,

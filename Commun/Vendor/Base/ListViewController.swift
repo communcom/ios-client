@@ -11,8 +11,6 @@ import RxSwift
 import RxDataSources
 
 class ListViewController<T: ListItemType>: BaseViewController {
-    override var contentScrollView: UIScrollView? { tableView }
-    
     public typealias ListSection = AnimatableSectionModel<String, T>
     
     var disposeBag = DisposeBag()

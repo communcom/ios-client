@@ -31,23 +31,23 @@ extension UIView {
         }
     }
     
-    func autoPinTopAndLeadingToSuperView(inset: CGFloat = 16) {
-        autoPinEdge(toSuperviewEdge: .leading, withInset: inset)
+    func autoPinTopAndLeadingToSuperView(inset: CGFloat = 16, xInset: CGFloat? = nil) {
+        autoPinEdge(toSuperviewEdge: .leading, withInset: xInset ?? inset)
         autoPinEdge(toSuperviewEdge: .top, withInset: inset)
     }
     
-    func autoPinTopAndTrailingToSuperView(inset: CGFloat = 16) {
+    func autoPinTopAndTrailingToSuperView(inset: CGFloat = 16, xInset: CGFloat? = nil) {
         autoPinEdge(toSuperviewEdge: .top, withInset: inset)
-        autoPinEdge(toSuperviewEdge: .trailing, withInset: inset)
+        autoPinEdge(toSuperviewEdge: .trailing, withInset: xInset ?? inset)
     }
     
-    func autoPinBottomAndLeadingToSuperView(inset: CGFloat = 16) {
+    func autoPinBottomAndLeadingToSuperView(inset: CGFloat = 16, xInset: CGFloat? = nil) {
         autoPinEdge(toSuperviewEdge: .bottom, withInset: inset)
-        autoPinEdge(toSuperviewEdge: .leading, withInset: inset)
+        autoPinEdge(toSuperviewEdge: .leading, withInset: xInset ?? inset)
     }
     
-    func autoPinBottomAndTrailingToSuperView(inset: CGFloat = 16) {
+    func autoPinBottomAndTrailingToSuperView(inset: CGFloat = 16, xInset: CGFloat? = nil) {
         autoPinEdge(toSuperviewEdge: .bottom, withInset: inset)
-        autoPinEdge(toSuperviewEdge: .trailing, withInset: inset)
+        autoPinEdge(toSuperviewEdge: .trailing, withInset: xInset ?? inset)
     }
 }
