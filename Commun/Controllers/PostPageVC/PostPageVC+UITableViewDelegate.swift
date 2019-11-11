@@ -70,6 +70,7 @@ extension PostPageVC: UITableViewDelegate {
                 {
                     var newChildren = comments[currentCommentIndex].children ?? []
                     newChildren.joinUnique(children ?? [])
+                    #warning("bug in backend, response comments returns all parents comment, delete filterOut after bug fixing")
                     comments[currentCommentIndex].children = newChildren.filterOut(comments)
                 }
                 strongSelf.viewModel.items.accept(comments)
