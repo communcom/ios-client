@@ -81,6 +81,32 @@ class CommentsViewModel: ListViewModel<ResponseAPIContentGetComment> {
         }
     }
     
+    override func deleteItem(_ deletedItem: ResponseAPIContentGetComment) {
+        var items = fetcher.items.value
+        
+        // if item is a first lever comment
+        if let index = items.firstIndex(where: {$0.identity == deletedItem.identity})
+        {
+            items.remove(at: index)
+            UIView.setAnimationsEnabled(false)
+            fetcher.items.accept(items)
+            UIView.setAnimationsEnabled(true)
+            return
+        }
+        
+        // if item is a reply
+        if let commentIndex = items.firstIndex(where: { (comment) -> Bool in
+            comment.children?.contains(where: {$0.identity == deletedItem.identity}) ?? false
+        }) {
+            if let replyIndex = items[commentIndex].children?.firstIndex(where: {$0.identity == deletedItem.identity}) {
+                items[commentIndex].children?.remove(at: replyIndex)
+                UIView.setAnimationsEnabled(false)
+                fetcher.items.accept(items)
+                UIView.setAnimationsEnabled(true)
+            }
+        }
+    }
+    
     // MARK: - Child comments
     /// childFetcher for each section (Int) for retrieving child comments
     var childFetchers = [Int: CommentsListFetcher]()
