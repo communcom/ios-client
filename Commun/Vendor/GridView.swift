@@ -37,8 +37,9 @@ class GridView: UIView {
         if let embed = embeds?.first {
             let view = EmbedView(content: embed)
             embedView = view
+            embedView?.layer.masksToBounds = true
             addSubview(view)
-            view.autoPinEdgesToSuperviewMargins()
+            view.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 0, bottom: 10, right: 0))
         }
     }
 

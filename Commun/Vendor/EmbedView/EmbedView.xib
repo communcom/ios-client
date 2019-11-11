@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
-        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -81,20 +80,19 @@
                     </userDefinedRuntimeAttributes>
                 </view>
             </subviews>
-            <color key="backgroundColor" systemColor="systemGrayColor" red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color key="backgroundColor" red="0.87058823529411766" green="0.88235294117647056" blue="0.9137254901960784" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="1Pz-1Z-PhI" firstAttribute="top" secondItem="j7Z-Ev-nCy" secondAttribute="top" id="1qf-iA-pj5"/>
-                <constraint firstItem="4O3-d9-RTJ" firstAttribute="bottom" secondItem="SG8-m3-LjB" secondAttribute="bottom" id="Myb-wQ-S1y"/>
+                <constraint firstItem="4O3-d9-RTJ" firstAttribute="bottom" secondItem="j7Z-Ev-nCy" secondAttribute="bottom" id="Myb-wQ-S1y"/>
                 <constraint firstItem="4O3-d9-RTJ" firstAttribute="top" secondItem="Eee-s5-8hj" secondAttribute="bottom" constant="10" id="Q5r-OR-o2j"/>
                 <constraint firstItem="4O3-d9-RTJ" firstAttribute="leading" secondItem="1Pz-1Z-PhI" secondAttribute="leading" id="aLI-kV-kVO"/>
-                <constraint firstItem="1Pz-1Z-PhI" firstAttribute="leading" secondItem="SG8-m3-LjB" secondAttribute="leading" id="aMJ-vF-IR9"/>
+                <constraint firstItem="1Pz-1Z-PhI" firstAttribute="leading" secondItem="j7Z-Ev-nCy" secondAttribute="leading" id="aMJ-vF-IR9"/>
                 <constraint firstItem="4O3-d9-RTJ" firstAttribute="trailing" secondItem="1Pz-1Z-PhI" secondAttribute="trailing" id="egD-rR-ocP"/>
-                <constraint firstItem="SG8-m3-LjB" firstAttribute="trailing" secondItem="1Pz-1Z-PhI" secondAttribute="trailing" id="ifs-s7-py5"/>
-                <constraint firstItem="SG8-m3-LjB" firstAttribute="trailing" secondItem="Eee-s5-8hj" secondAttribute="trailing" constant="10" id="jvw-1O-0tY"/>
+                <constraint firstAttribute="trailing" secondItem="1Pz-1Z-PhI" secondAttribute="trailing" id="ifs-s7-py5"/>
+                <constraint firstAttribute="trailing" secondItem="Eee-s5-8hj" secondAttribute="trailing" constant="10" id="jvw-1O-0tY"/>
                 <constraint firstItem="4O3-d9-RTJ" firstAttribute="top" secondItem="1Pz-1Z-PhI" secondAttribute="bottom" id="l1b-cf-AeB"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <viewLayoutGuide key="safeArea" id="SG8-m3-LjB"/>
             <point key="canvasLocation" x="82.608695652173921" y="-24.441964285714285"/>
         </view>
     </objects>

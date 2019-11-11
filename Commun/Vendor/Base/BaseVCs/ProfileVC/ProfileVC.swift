@@ -44,6 +44,8 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
     lazy var coverImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = .placeholder
+        imageView.contentMode = .scaleAspectFill
+        imageView.layer.masksToBounds = true
         return imageView
     }()
     

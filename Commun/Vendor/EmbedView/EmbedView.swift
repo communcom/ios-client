@@ -98,7 +98,7 @@ class EmbedView: UIView {
             imageUrl = content.content.stringValue
         }
 
-        let isNeedShowImage = imageUrl != nil
+        let isNeedShowImage = true//imageUrl != nil
 
         subtitleLabel.text = subtitle
 
@@ -130,7 +130,7 @@ class EmbedView: UIView {
         }
 
         if isNeedShowTitle {
-            titlesView.autoPinEdge(.top, to: .bottom, of: isNeedShowImage ? coverImageView : contentView)
+            titlesView.autoPinEdge(.top, to: .bottom, of: coverImageView)
             titlesView.autoPinEdge(toSuperviewEdge: .left)
             titlesView.autoPinEdge(toSuperviewEdge: .right)
             titlesView.autoPinEdge(toSuperviewEdge: .bottom)
