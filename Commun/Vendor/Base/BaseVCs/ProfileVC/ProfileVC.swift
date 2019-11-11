@@ -33,8 +33,8 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
         view.backgroundColor = .clear
         let gradient = CAGradientLayer()
         gradient.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: coverHeight)
-        gradient.colors = [UIColor.black.withAlphaComponent(0.3).cgColor, UIColor.clear.cgColor]
-        gradient.locations = [0.0, 1.0]
+        gradient.colors = [UIColor.black.withAlphaComponent(0.2).cgColor, UIColor.clear.cgColor]
+        gradient.locations = [0.0, 0.5]
         view.layer.insertSublayer(gradient, at: 0)
         return view
     }()
