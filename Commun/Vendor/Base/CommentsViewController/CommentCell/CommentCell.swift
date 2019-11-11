@@ -60,6 +60,11 @@ class CommentCell: MyTableViewCell, CommentController {
         contentContainerView.addSubview(contentTextView)
         contentTextView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10), excludingEdge: .bottom)
         contentTextView.delegate = self
+        let lpgr = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress))
+        lpgr.minimumPressDuration = 0.5
+        lpgr.delaysTouchesBegan = true
+        lpgr.delegate = self
+        contentTextView.addGestureRecognizer(lpgr)
         
         contentContainerView.addSubview(embedView)
         embedView.autoPinEdge(.leading, to: .leading, of: contentTextView)

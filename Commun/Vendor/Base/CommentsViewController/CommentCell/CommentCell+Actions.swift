@@ -53,4 +53,64 @@ extension CommentCell: UITextViewDelegate {
         guard let comment = comment else {return}
         delegate?.cell(self, didTapReplyButtonForComment: comment)
     }
+    
+    @objc func handleLongPress(gestureReconizer: UILongPressGestureRecognizer) {
+        guard let comment = comment else {return}
+        if gestureReconizer.state == UIGestureRecognizer.State.ended {
+            //When lognpress is finish
+            let headerView = UIView(frame: .zero)
+            
+            let avatarImageView = MyAvatarImageView(size: 40)
+            headerView.addSubview(avatarImageView)
+            avatarImageView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .trailing)
+            
+            let nameLabel = UILabel.with(textSize: 15, weight: .bold)
+            headerView.addSubview(nameLabel)
+            nameLabel.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 10)
+            nameLabel.autoAlignAxis(.horizontal, toSameAxisOf: avatarImageView)
+            nameLabel.autoPinEdge(toSuperviewEdge: .trailing)
+            
+            let actions: [CommunActionSheet.Action]
+            
+            if comment.author?.userId == Config.currentUser?.id {
+                // edit, delete
+                actions = [
+                    CommunActionSheet.Action(
+                        title: "edit".localized().uppercaseFirst,
+                        icon: UIImage(named: "edit"),
+                        handle: {
+                            #warning("edit comment")
+                        },
+                        tintColor: .black),
+                    CommunActionSheet.Action(
+                        title: "delete".localized().uppercaseFirst,
+                        icon: UIImage(named: "delete"),
+                        handle: {
+                            #warning("delete comment")
+                        },
+                        tintColor: UIColor(hexString: "#ED2C5B")!)
+                ]
+            }
+            else {
+                // report
+                actions = [
+                    CommunActionSheet.Action(
+                        title: "report".localized().uppercaseFirst,
+                        icon: UIImage(named: "report"),
+                        handle: {
+                            #warning("report comment")
+                        },
+                        tintColor: UIColor(hexString: "#ED2C5B")!)
+                ]
+            }
+            
+            parentViewController?.showCommunActionSheet(
+                headerView: headerView,
+                actions: actions,
+                completion: {
+                    avatarImageView.setAvatar(urlString: comment.author?.avatarUrl, namePlaceHolder: comment.author?.username ?? "U")
+                    nameLabel.text = comment.author?.username
+                })
+        }
+    }
 }
