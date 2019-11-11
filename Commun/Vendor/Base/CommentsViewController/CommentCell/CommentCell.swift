@@ -15,6 +15,8 @@ protocol CommentCellDelegate: class {
     func cell(_ cell: CommentCell, didTapReplyButtonForComment comment: ResponseAPIContentGetComment)
     func cell(_ cell: CommentCell, didTapSeeMoreButtonForComment comment: ResponseAPIContentGetComment)
     func cell(_ cell: CommentCell, didTapOnTag tag: String)
+    func cell(_ cell: CommentCell, didTapDeleteForComment comment: ResponseAPIContentGetComment)
+    func cell(_ cell: CommentCell, didTapEditForComment comment: ResponseAPIContentGetComment)
 }
 
 class CommentCell: MyTableViewCell, CommentController {
