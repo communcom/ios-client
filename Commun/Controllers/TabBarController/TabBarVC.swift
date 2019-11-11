@@ -63,7 +63,7 @@ class TabBarVC: UITabBarController {
         // shadow
         view.addSubview(shadowView)
         shadowView.autoPinEdgesToSuperviewSafeArea(with: .zero, excludingEdge: .top)
-        shadowView.addShadow(ofColor: UIColor(red: 56, green: 60, blue: 71)!, radius: 4, offset: CGSize(width: 0, height: -6), opacity: 0.1)
+        shadowView.addShadow(ofColor: .shadow, radius: 4, offset: CGSize(width: 0, height: -6), opacity: 0.1)
         
         // tabBarContainerView
         shadowView.addSubview(tabBarContainerView)

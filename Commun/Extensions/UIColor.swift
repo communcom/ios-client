@@ -24,4 +24,8 @@ extension UIColor {
     static var f3f5fa: UIColor {
         return UIColor(hexString: "#F3F5FA")!
     }
+    
+    static var shadow: UIColor {
+        UIColor(red: 56, green: 60, blue: 71)!
+    }
 }

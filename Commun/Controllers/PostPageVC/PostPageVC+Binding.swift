@@ -23,16 +23,16 @@ extension PostPageVC {
     }
     
     func bindControls() {
-        tableView.rx.willDragDown
-            .map {$0 ? true: false}
-            .distinctUntilChanged()
-            .subscribe(onNext: {hide in
-                UIView.animate(withDuration: 0.25, animations: {
-                    self.navigationBar.isHidden = hide
-                    self.view.layoutIfNeeded()
-                })
-            })
-            .disposed(by: disposeBag)
+//        tableView.rx.willDragDown
+//            .map {$0 ? true: false}
+//            .distinctUntilChanged()
+//            .subscribe(onNext: {hide in
+//                UIView.animate(withDuration: 0.25, animations: {
+//                    self.navigationBar.isHidden = hide
+//                    self.view.layoutIfNeeded()
+//                })
+//            })
+//            .disposed(by: disposeBag)
     }
     
     func bindPost() {
