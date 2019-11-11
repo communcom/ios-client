@@ -29,7 +29,7 @@ class EditorVC: BaseViewController {
     // Toolbar
     lazy var toolbar: UIView = {
         let toolbar = UIView(backgroundColor: .white, cornerRadius: 16)
-        toolbar.addShadow(ofColor: UIColor(red: 56, green: 60, blue: 71)!, radius: 16, offset: CGSize(width: 0, height: -6), opacity: 0.07)
+        toolbar.addShadow(ofColor: .shadow, radius: 16, offset: CGSize(width: 0, height: -6), opacity: 0.07)
         return toolbar
     }()
     

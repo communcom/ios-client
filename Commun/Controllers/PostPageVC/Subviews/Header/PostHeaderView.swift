@@ -40,7 +40,7 @@ class PostHeaderView: MyTableHeaderView, PostController {
     
     lazy var sharesCountLabel = UILabel.with(text: "278", textSize: 12, weight: .medium, textColor: UIColor(hexString: "#A5A7BD")!, numberOfLines: 1)
     
-    lazy var sortButton = RightAlignedIconButton(imageName: "small-down-arrow", label: "interesting first".localized().uppercaseFirst, labelFont: .boldSystemFont(ofSize: 13), textColor: .appMainColor, contentInsets: UIEdgeInsets(horizontal: 8, vertical: 0))
+//    lazy var sortButton = RightAlignedIconButton(imageName: "small-down-arrow", label: "interesting first".localized().uppercaseFirst, labelFont: .boldSystemFont(ofSize: 13), textColor: .appMainColor, contentInsets: UIEdgeInsets(horizontal: 8, vertical: 0))
     
     override func commonInit() {
         super.commonInit()
@@ -81,9 +81,9 @@ class PostHeaderView: MyTableHeaderView, PostController {
         commentsLabel.autoPinEdge(.top, to: .bottom, of: voteContainerView, withOffset: 20)
         commentsLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
         
-        addSubview(sortButton)
-        sortButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
-        sortButton.autoAlignAxis(.horizontal, toSameAxisOf: commentsLabel)
+//        addSubview(sortButton)
+//        sortButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
+//        sortButton.autoAlignAxis(.horizontal, toSameAxisOf: commentsLabel)
         
         // Pin bottom
         commentsLabel.autoPinEdge(toSuperviewEdge: .bottom, withInset: 16)

@@ -71,13 +71,13 @@ class PostPageVC: CommentsViewController {
         tableView.keyboardDismissMode = .onDrag
         
         // postView
-        postView.sortButton.addTarget(self, action: #selector(sortButtonDidTouch), for: .touchUpInside)
+//        postView.sortButton.addTarget(self, action: #selector(sortButtonDidTouch), for: .touchUpInside)
         
         // comment form
         let shadowView = UIView(forAutoLayout: ())
         view.addSubview(shadowView)
         shadowView.autoPinEdgesToSuperviewSafeArea(with: .zero, excludingEdge: .top)
-        shadowView.addShadow(ofColor: UIColor(red: 56, green: 60, blue: 71)!, radius: 4, offset: CGSize(width: 0, height: -6), opacity: 0.1)
+        shadowView.addShadow(ofColor: .shadow, radius: 4, offset: CGSize(width: 0, height: -6), opacity: 0.1)
         
         shadowView.addSubview(commentForm)
         commentForm.autoPinEdgesToSuperviewEdges()
@@ -85,6 +85,9 @@ class PostPageVC: CommentsViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+        // navigationBar
+        navigationBar.addShadow(ofColor: .shadow, offset: CGSize(width: 0, height: 2), opacity: 0.1)
+        
         commentForm.superview?.layoutIfNeeded()
         commentForm.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: 24.5)
         view.bringSubviewToFront(commentForm)
@@ -110,16 +113,16 @@ class PostPageVC: CommentsViewController {
         super.filterChanged(filter: filter)
         
         // sort button
-        var title = ""
-        switch filter.sortBy {
-        case .popularity:
-            title = "interesting first".localized().uppercaseFirst
-        case .timeDesc:
-            title = "newest first".localized().uppercaseFirst
-        case .time:
-            title = "oldest first".localized().uppercaseFirst
-        }
-        postView.sortButton.setTitle(title, for: .normal)
+//        var title = ""
+//        switch filter.sortBy {
+//        case .popularity:
+//            title = "interesting first".localized().uppercaseFirst
+//        case .timeDesc:
+//            title = "newest first".localized().uppercaseFirst
+//        case .time:
+//            title = "oldest first".localized().uppercaseFirst
+//        }
+//        postView.sortButton.setTitle(title, for: .normal)
     }
     
     @objc func openMorePostActions() {
