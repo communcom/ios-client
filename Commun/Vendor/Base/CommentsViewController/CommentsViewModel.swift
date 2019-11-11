@@ -20,6 +20,7 @@ class CommentsViewModel: ListViewModel<ResponseAPIContentGetComment> {
         self.filter = BehaviorRelay<CommentsListFetcher.Filter>(value: filter)
         defer {
             bindFilter()
+            observeChildrenChanged()
         }
     }
     
@@ -47,6 +48,25 @@ class CommentsViewModel: ListViewModel<ResponseAPIContentGetComment> {
         if newFilter != filter.value {
             filter.accept(newFilter)
         }
+    }
+    
+    func observeChildrenChanged() {
+        NotificationCenter.default.rx.notification(.init(rawValue: "\(ResponseAPIContentGetComment.self)ChildrenDidChange"))
+            .subscribe(onNext: {notification in
+                guard let newItem = notification.object as? ResponseAPIContentGetComment
+                    else {return}
+                self.updateChildren(parentComment: newItem)
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    func updateChildren(parentComment: ResponseAPIContentGetComment) {
+        var items = fetcher.items.value
+        guard let index = items.firstIndex(where: {$0.identity == parentComment.identity}) else {return}
+        items[index].children = parentComment.children
+        UIView.setAnimationsEnabled(false)
+        fetcher.items.accept(items)
+        UIView.setAnimationsEnabled(true)
     }
     
     override func updateItem(_ updatedItem: ResponseAPIContentGetComment) {

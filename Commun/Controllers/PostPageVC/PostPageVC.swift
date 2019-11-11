@@ -71,7 +71,7 @@ class PostPageVC: CommentsViewController {
         tableView.keyboardDismissMode = .onDrag
         
         // postView
-        postView.sortButton.addTarget(self, action: #selector(sortButtonDidTouch), for: .touchUpInside)
+//        postView.sortButton.addTarget(self, action: #selector(sortButtonDidTouch), for: .touchUpInside)
         
         // comment form
         let shadowView = UIView(forAutoLayout: ())
@@ -110,16 +110,16 @@ class PostPageVC: CommentsViewController {
         super.filterChanged(filter: filter)
         
         // sort button
-        var title = ""
-        switch filter.sortBy {
-        case .popularity:
-            title = "interesting first".localized().uppercaseFirst
-        case .timeDesc:
-            title = "newest first".localized().uppercaseFirst
-        case .time:
-            title = "oldest first".localized().uppercaseFirst
-        }
-        postView.sortButton.setTitle(title, for: .normal)
+//        var title = ""
+//        switch filter.sortBy {
+//        case .popularity:
+//            title = "interesting first".localized().uppercaseFirst
+//        case .timeDesc:
+//            title = "newest first".localized().uppercaseFirst
+//        case .time:
+//            title = "oldest first".localized().uppercaseFirst
+//        }
+//        postView.sortButton.setTitle(title, for: .normal)
     }
     
     @objc func openMorePostActions() {

@@ -54,9 +54,9 @@ extension CommentCell: UITextViewDelegate {
         delegate?.cell(self, didTapReplyButtonForComment: comment)
     }
     
-    @objc func handleLongPress(gestureReconizer: UILongPressGestureRecognizer) {
+    @objc func handleLongPressOnTextView(gestureRecognizer: UILongPressGestureRecognizer) {
         guard let comment = comment else {return}
-        if gestureReconizer.state == UIGestureRecognizer.State.ended {
+        if gestureRecognizer.state == UIGestureRecognizer.State.ended {
             //When lognpress is finish
             let headerView = UIView(frame: .zero)
             

@@ -10,6 +10,7 @@ import Foundation
 import CyberSwift
 
 class CommentsViewController: ListViewController<ResponseAPIContentGetComment>, CommentCellDelegate {
+    override var contentScrollView: UIScrollView? {tableView}
     // MARK: - Properties
     lazy var expandedComments = [ResponseAPIContentGetComment]()
     
@@ -69,13 +70,16 @@ class CommentsViewController: ListViewController<ResponseAPIContentGetComment>, 
         tableView.rx.itemSelected
             .subscribe(onNext: { (indexPath) in
                 guard let cell = self.tableView.cellForRow(at: indexPath) as? CommentCell,
-                    let comment = cell.comment
+                    var comment = cell.comment
                     else {return}
                 
                 // collapse expanded comment
                 self.expandedComments.removeAll(where: {$0.identity == comment.identity})
                 self.tableView.reloadRows(at: [indexPath], with: .fade)
                 
+                // collapse replies
+                comment.children = []
+                comment.notifyChildrenChanged()
             })
             .disposed(by: disposeBag)
         

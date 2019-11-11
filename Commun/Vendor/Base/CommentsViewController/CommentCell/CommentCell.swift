@@ -62,7 +62,7 @@ class CommentCell: MyTableViewCell, CommentController {
         contentContainerView.addSubview(contentTextView)
         contentTextView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10), excludingEdge: .bottom)
         contentTextView.delegate = self
-        let lpgr = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress))
+        let lpgr = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPressOnTextView))
         lpgr.minimumPressDuration = 0.5
         lpgr.delaysTouchesBegan = true
         lpgr.delegate = self

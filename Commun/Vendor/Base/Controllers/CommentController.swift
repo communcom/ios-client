@@ -18,6 +18,9 @@ protocol CommentController: class {
 }
 
 extension ResponseAPIContentGetComment {
+    public func notifyChildrenChanged() {
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "\(ResponseAPIContentGetComment.self)ChildrenDidChange"), object: self)
+    }
     public func notifyChanged() {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "\(ResponseAPIContentGetComment.self)DidChange"), object: self)
     }
