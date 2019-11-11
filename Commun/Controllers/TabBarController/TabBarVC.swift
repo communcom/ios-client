@@ -43,6 +43,17 @@ class TabBarVC: UITabBarController {
         bindViewModel()
     }
     
+    func setTabBarHiden(_ hide: Bool) {
+        if hide {
+            shadowView.isHidden = true
+            shadowView.heightConstraint?.constant = 0
+        }
+        else {
+            shadowView.isHidden = false
+            shadowView.heightConstraint?.constant = tabBarHeight
+        }
+    }
+    
     private func configStyles() {
         view.backgroundColor = .white
         

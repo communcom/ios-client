@@ -37,6 +37,24 @@ extension UIButton {
         }
     }
     
+    static func circle(
+        size: CGFloat,
+        backgroundColor: UIColor,
+        tintColor: UIColor? = nil,
+        imageName: String,
+        imageEdgeInsets: UIEdgeInsets? = nil
+    ) -> UIButton {
+        let button = UIButton(width: size, height: size, backgroundColor: backgroundColor, cornerRadius: size / 2)
+        button.setImage(UIImage(named: imageName), for: .normal)
+        if let imageEdgeInsets = imageEdgeInsets {
+            button.imageEdgeInsets = imageEdgeInsets
+        }
+        if let tintColor = tintColor {
+            button.tintColor = tintColor
+        }
+        return button
+    }
+    
     static func circleGray(size: CGFloat = 24, imageName: String) -> UIButton {
         let button = UIButton(width: size, height: size, backgroundColor: UIColor(hexString: "#F3F5FA"), cornerRadius: size / 2)
         button.setImage(UIImage(named: imageName), for: .normal)

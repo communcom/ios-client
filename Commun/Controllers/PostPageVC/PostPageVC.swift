@@ -23,6 +23,7 @@ class PostPageVC: CommentsViewController {
     // MARK: - Subviews
     lazy var navigationBar = PostPageNavigationBar(height: 56)
     lazy var postView = PostHeaderView(tableView: tableView)
+    lazy var commentForm = CommentForm(backgroundColor: .white)
     
     // MARK: - Properties
     
@@ -45,15 +46,16 @@ class PostPageVC: CommentsViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: animated)
-        let tabBar = (tabBarController as? TabBarVC)?.tabBarStackView.superview
-        tabBar?.isHidden = true
+        tabBarController?.tabBar.isHidden = true
+        let tabBarVC = (tabBarController as? TabBarVC)
+        tabBarVC?.setTabBarHiden(true)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         navigationController?.setNavigationBarHidden(false, animated: animated)
-        let tabBar = (tabBarController as? TabBarVC)?.tabBarStackView.superview
-        tabBar?.isHidden = false
+        let tabBarVC = (tabBarController as? TabBarVC)
+        tabBarVC?.setTabBarHiden(false)
     }
     
     // MARK: - Methods
@@ -70,6 +72,22 @@ class PostPageVC: CommentsViewController {
         
         // postView
         postView.sortButton.addTarget(self, action: #selector(sortButtonDidTouch), for: .touchUpInside)
+        
+        // comment form
+        let shadowView = UIView(forAutoLayout: ())
+        view.addSubview(shadowView)
+        shadowView.autoPinEdgesToSuperviewSafeArea(with: .zero, excludingEdge: .top)
+        shadowView.addShadow(ofColor: UIColor(red: 56, green: 60, blue: 71)!, radius: 4, offset: CGSize(width: 0, height: -6), opacity: 0.1)
+        
+        shadowView.addSubview(commentForm)
+        commentForm.autoPinEdgesToSuperviewEdges()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        commentForm.superview?.layoutIfNeeded()
+        commentForm.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: 24.5)
+        view.bringSubviewToFront(commentForm)
     }
     
     override func bind() {
