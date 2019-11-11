@@ -12,6 +12,14 @@ import CyberSwift
 import RxDataSources
 
 class PostPageVC: CommentsViewController {
+    // MARK: - Nested types
+    class ReplyButton: UIButton {
+        var parentComment: ResponseAPIContentGetComment?
+        var offset: UInt = 0
+        var limit: UInt = 10
+        
+    }
+    
     // MARK: - Subviews
     lazy var navigationBar = PostPageNavigationBar(height: 56)
     lazy var postView = PostHeaderView(tableView: tableView)
@@ -74,6 +82,10 @@ class PostPageVC: CommentsViewController {
         
         // bind post
         bindPost()
+        
+        // forward delegate
+        tableView.rx.setDelegate(self)
+            .disposed(by: disposeBag)
     }
     
     override func filterChanged(filter: CommentsListFetcher.Filter) {

@@ -48,4 +48,40 @@ class CommentsViewModel: ListViewModel<ResponseAPIContentGetComment> {
             filter.accept(newFilter)
         }
     }
+    
+    override func updateItem(_ updatedItem: ResponseAPIContentGetComment) {
+        var items = fetcher.items.value
+        
+        // if item is a first lever comment
+        if let index = items.firstIndex(where: {$0.identity == updatedItem.identity})
+        {
+            let oldItem = items[index]
+            var updatedItem = updatedItem
+            let newChildren = updatedItem.children?.filter({ (newComment) -> Bool in
+                !(oldItem.children ?? []).contains(where: {newComment.identity == $0.identity})
+            })
+            updatedItem.children = ((oldItem.children ?? []) + (newChildren ?? []))
+            items[index] = updatedItem
+            UIView.setAnimationsEnabled(false)
+            fetcher.items.accept(items)
+            UIView.setAnimationsEnabled(true)
+            return
+        }
+        // if item is a reply
+        if let commentIndex = items.firstIndex(where: { (comment) -> Bool in
+            comment.children?.contains(where: {$0.identity == updatedItem.identity}) ?? false
+        }) {
+            if let replyIndex = items[commentIndex].children?.firstIndex(where: {$0.identity == updatedItem.identity}) {
+                items[commentIndex].children?[replyIndex] = updatedItem
+                UIView.setAnimationsEnabled(false)
+                fetcher.items.accept(items)
+                UIView.setAnimationsEnabled(true)
+            }
+            return
+        }
+    }
+    
+    // MARK: - Child comments
+    /// childFetcher for each section (Int) for retrieving child comments
+    var childFetchers = [Int: CommentsListFetcher]()
 }
