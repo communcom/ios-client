@@ -107,10 +107,6 @@ class FeedPageVC: PostsViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         navigationController?.setNavigationBarHidden(false, animated: animated)
-        let tabBarHeight: CGFloat = 88.0
-        let bottomInset: CGFloat = 10.0
-        tableView.scrollIndicatorInsets.bottom = tabBarHeight + bottomInset
-        tableView.contentInset.bottom = tabBarHeight + bottomInset
     }
     
     override func viewWillAppear(_ animated: Bool) {

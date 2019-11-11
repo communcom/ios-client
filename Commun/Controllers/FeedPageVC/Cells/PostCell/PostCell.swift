@@ -37,9 +37,10 @@ class PostCell: MyTableViewCell, PostController {
     lazy var voteContainerView: VoteContainerView = VoteContainerView(height: voteActionsContainerViewHeight, cornerRadius: voteActionsContainerViewHeight / 2)
     
     lazy var sharesCountLabel = self.createDescriptionLabel()
-    lazy var sharesCountButton: UIButton = {
+    lazy var shareButton: UIButton = {
         let button = UIButton(width: 20, height: 18)
         button.setImage(UIImage(named: "share-count"), for: .normal)
+        button.addTarget(self, action: #selector(shareButtonTapped(button:)), for: .touchUpInside)
         return button
     }()
     
@@ -71,15 +72,13 @@ class PostCell: MyTableViewCell, PostController {
         // action buttons
         contentView.addSubview(voteContainerView)
         voteContainerView.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
-        voteContainerView.upVoteButton.addTarget(self, action: #selector(upVoteButtonTapped(button:)), for: .touchUpInside)
-        voteContainerView.downVoteButton.addTarget(self, action: #selector(downVoteButtonTapped(button:)), for: .touchUpInside)
         
         // comments and shares
-        contentView.addSubview(sharesCountButton)
-        sharesCountButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
-        sharesCountButton.autoAlignAxis(.horizontal, toSameAxisOf: voteContainerView)
+        contentView.addSubview(shareButton)
+        shareButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
+        shareButton.autoAlignAxis(.horizontal, toSameAxisOf: voteContainerView)
         contentView.addSubview(commentsCountLabel)
-        commentsCountLabel.autoPinEdge(.trailing, to: .leading, of: sharesCountButton, withOffset: -23)
+        commentsCountLabel.autoPinEdge(.trailing, to: .leading, of: shareButton, withOffset: -23)
         commentsCountLabel.autoAlignAxis(.horizontal, toSameAxisOf: voteContainerView)
         contentView.addSubview(commentsCountButton)
         commentsCountButton.autoPinEdge(.trailing, to: .leading, of: commentsCountLabel, withOffset: -8)
@@ -105,11 +104,9 @@ class PostCell: MyTableViewCell, PostController {
     func setUp(with post: ResponseAPIContentGetPost?) {
         guard let post = post else {return}
         self.post = post
+        
         metaView.setUp(post: post)
-        
-        // Handle button
         voteContainerView.setUp(with: post.votes)
-        
         // comments // shares count
         self.commentsCountLabel.text        =   "\(post.stats?.commentsCount ?? 0)"
         #warning("change this number later")

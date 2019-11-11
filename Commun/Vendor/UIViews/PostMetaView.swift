@@ -20,7 +20,7 @@ class PostMetaView: UIView {
         let avatarImageView = MyAvatarImageView(size: 40)
         return avatarImageView
     }()
-    
+
     lazy var comunityNameLabel: UILabel = {
         let comunityNameLabel = UILabel()
         comunityNameLabel.font = .systemFont(ofSize: 15, weight: .semibold)
@@ -128,12 +128,16 @@ class PostMetaView: UIView {
         }
         
         if isCommunityNameTappable {
-            let tap = TapGesture(target: self, action: #selector(communityNameTapped(_:)))
-            tap.post = post
+            let tapLabel = TapGesture(target: self, action: #selector(communityNameTapped(_:)))
+            let tapAvatar = TapGesture(target: self, action: #selector(communityNameTapped(_:)))
+            tapLabel.post = post
+            tapAvatar.post = post
+
             avatarImageView.isUserInteractionEnabled = true
-            avatarImageView.addGestureRecognizer(tap)
+            avatarImageView.addGestureRecognizer(tapAvatar)
             comunityNameLabel.isUserInteractionEnabled = true
-            comunityNameLabel.addGestureRecognizer(tap)
+            comunityNameLabel.addGestureRecognizer(tapLabel)
+
         }
     }
     

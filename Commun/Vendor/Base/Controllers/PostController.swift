@@ -92,6 +92,19 @@ extension PostController {
             headerView.setUp(post: post)
         }
     }
+
+    func openShareActions() {
+        guard let topController = UIApplication.topViewController(), let post = post else { return }
+
+        var urlString = "https:/dev.commun.com/"
+        #warning("add post url api value")
+        if let alias = post.community.alias, let username = post.author?.username  {
+            urlString = "https:/dev.commun.com/\(alias)/@\(username)/\(post.contentId.permlink)"
+        }
+        let url = URL(string: urlString)
+        let activity = UIActivityViewController(activityItems: [url!], applicationActivities: nil)
+        topController.present(activity, animated: true)
+    }
     
     // MARK: - Voting
     func setHasVote(_ value: Bool, for type: VoteActionType) {
