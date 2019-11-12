@@ -175,7 +175,7 @@ class TabBarVC: UITabBarController {
     func switchTab(index: Int) {
         // pop to first if index is selected
         if selectedIndex == index {
-            (viewControllers?[index] as? UINavigationController)?.popToRootViewController(animated: true)
+            (viewControllers?[index] as? UINavigationController)?.popViewController(animated: true)
             return
         }
         
