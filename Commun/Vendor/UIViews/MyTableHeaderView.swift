@@ -14,6 +14,7 @@ class MyTableHeaderView: MyView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
+        superview?.layoutIfNeeded()
         tableView?.tableHeaderView = tableView?.tableHeaderView
     }
     

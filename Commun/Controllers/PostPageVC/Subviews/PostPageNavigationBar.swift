@@ -45,9 +45,11 @@ class PostPageNavigationBar: MyView {
         addSubview(joinButton)
         joinButton.autoPinEdge(.trailing, to: .leading, of: moreButton)
         joinButton.autoAlignAxis(toSuperviewAxis: .horizontal)
-        joinButton.autoPinEdge(.leading, to: .trailing, of: postMetaView)
+        joinButton.autoPinEdge(.leading, to: .trailing, of: postMetaView, withOffset: 8)
         joinButton.leadingAnchor.constraint(greaterThanOrEqualTo: postMetaView.trailingAnchor, constant: 8)
             .isActive = true
+        
+        postMetaView.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
     }
     
     func setUp(with post: ResponseAPIContentGetPost) {
