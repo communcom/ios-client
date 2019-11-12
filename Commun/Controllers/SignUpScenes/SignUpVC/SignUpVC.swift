@@ -185,7 +185,7 @@ class SignUpVC: UIViewController, SignUpRouter {
         
         showIndetermineHudWithMessage("signing you up".localized().uppercaseFirst + "...")
         
-        RestAPIManager.instance.rx.firstStep(phone: self.viewModel.phone.value)
+        RestAPIManager.instance.rx.firstStep(phone: self.viewModel.phone.value, captchaCode: "XXX")
             .subscribe(onSuccess: { _ in
                 self.hideHud()
                 self.signUpNextStep()
