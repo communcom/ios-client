@@ -144,6 +144,9 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
         friendLabel.autoAlignAxis(.horizontal, toSameAxisOf: usersStackView)
         friendLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
         friendLabel.autoPinEdge(.leading, to: .trailing, of: usersStackView, withOffset: 5)
+        friendLabel.isUserInteractionEnabled = true
+        let tap3 = UITapGestureRecognizer(target: self, action: #selector(friendsLabelDidTouch))
+        friendLabel.addGestureRecognizer(tap3)
         
         addSubview(pointsContainerView)
         pointsContainerView.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
@@ -246,8 +249,15 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
     }
     
     @objc func membersLabelDidTouch() {
-        let vc = SubscribersVC(title: community?.name, communityId: community?.communityId)
-        parentViewController?.present(UINavigationController(rootViewController: vc), animated: true, completion: nil)
+        guard let community = community else {return}
+        let vc = CommunityMembersVC(community: community, selectedSegmentedItem: .all)
+        parentViewController?.show(vc, sender: nil)
+    }
+    
+    @objc func friendsLabelDidTouch() {
+        guard let community = community else {return}
+        let vc = CommunityMembersVC(community: community, selectedSegmentedItem: .friends)
+        parentViewController?.show(vc, sender: nil)
     }
     
     @objc func leadsLabelDidTouch() {

@@ -9,14 +9,10 @@
 import UIKit
 
 class BaseViewController: UIViewController {
-    // Override this property to avoid Tabbar
-    var contentScrollView: UIScrollView? { nil }
-
     override func viewDidLoad() {
         super.viewDidLoad()
         setUp()
         bind()
-        avoidTabBar()
     }
     
     func setUp() {
@@ -27,22 +23,15 @@ class BaseViewController: UIViewController {
         
     }
     
-    func avoidTabBar() {
-        // avoid tabBar
-        guard let scrollView = contentScrollView,
-            let tabBarController = tabBarController as? TabBarVC else {return}
-        var contentInsets = scrollView.contentInset
-        
-        var insetsBottom = contentInsets.bottom + tabBarController.tabBarHeight
-        
-        if let tableView = scrollView as? UITableView {
-            if tableView.insetsContentViewsToSafeArea {
-                insetsBottom -= (UIApplication.shared.keyWindow?.safeAreaInsets.bottom ?? 0)
-            }
-        }
-        
-        contentInsets.bottom = insetsBottom
-        
-        scrollView.contentInset = contentInsets
-    }
+//    func avoidTabBar() {
+//        // avoid tabBar
+//        guard let scrollView = contentScrollView,
+//            let tabBarController = tabBarController as? TabBarVC else {return}
+//        var contentInsets = scrollView.contentInset
+//        let insetsBottom = contentInsets.bottom + tabBarController.tabBarHeight
+//        let defaultBottomOffset: CGFloat = 10
+//        contentInsets.bottom = insetsBottom + defaultBottomOffset + view.safeAreaInsets.bottom
+//        scrollView.scrollIndicatorInsets.bottom = insetsBottom + view.safeAreaInsets.bottom
+//        scrollView.contentInset = contentInsets
+//    }
 }

@@ -45,19 +45,18 @@ class MyProfileHeaderView: UserProfileHeaderView {
     }
     
     func bind() {
-        descriptionLabel.rx.observe(String.self, "text").subscribe { event in
-            if let text = event.element, let desc = text, !desc.isEmpty {
-                self.addBioButton.isHidden = true
-                self.addBioButton.removeAllConstraints()
-            } else {
-                self.addBioButton.isHidden = false
-                self.configureAddBioButtonConstraints()
-            }
-        }.disposed(by: disposeBag)
-
-//        descriptionLabel.rx.observe(String.self, "text")
-//            .map {$0?.isEmpty == false}
-//            .bind(to: addBioButton.rx.isHidden)
-//            .disposed(by: disposeBag)
+        descriptionLabel.rx.observe(String.self, "text")
+            .map {$0?.isEmpty == false}
+            .subscribe(onNext: { (shouldHide) in
+                if shouldHide {
+                    self.addBioButton.isHidden = true
+                    self.addBioButton.removeAllConstraints()
+                } else {
+                    self.addBioButton.isHidden = false
+                    self.addBioButton.autoSetDimension(.height, toSize: 35)
+                    self.configureAddBioButtonConstraints()
+                }
+            })
+            .disposed(by: disposeBag)
     }
 }

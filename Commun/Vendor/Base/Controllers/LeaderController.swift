@@ -25,10 +25,10 @@ protocol LeaderController: class {
 
 extension LeaderController {
     func observeLeaderChange() {
-        NotificationCenter.default.rx.notification(.init(rawValue: "\(Self.self)DidChange"))
+        NotificationCenter.default.rx.notification(.init(rawValue: "\(ResponseAPIContentGetLeader.self)DidChange"))
             .subscribe(onNext: {notification in
                 guard let newLeader = notification.object as? ResponseAPIContentGetLeader,
-                    newLeader == self.leader
+                    newLeader.identity == self.leader?.identity
                     else {return}
                 self.setUp(with: newLeader)
             })

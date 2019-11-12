@@ -24,7 +24,7 @@ class FeedPageVC: PostsViewController {
     @IBOutlet weak var _tableView: UITableView!
     @IBOutlet weak var topFloatConstraint: NSLayoutConstraint!
 
-    override var tableView: UITableView! {
+    override var tableView: UITableView {
         get {return _tableView}
         set {_tableView = newValue}
     }
@@ -45,7 +45,7 @@ class FeedPageVC: PostsViewController {
         
         tableView.emptyDataSetSource = self
         tableView.emptyDataSetDelegate = self
-        tableView.estimatedRowHeight = 600
+        tableView.estimatedRowHeight = UITableView.automaticDimension
         // dismiss keyboard when dragging
         tableView.keyboardDismissMode = .onDrag
     }
@@ -56,6 +56,7 @@ class FeedPageVC: PostsViewController {
             self.lastContentOffset = self.tableView.contentOffset.y
         }).disposed(by: disposeBag)
 
+        // show/hide navigation view
         tableView.rx.contentOffset.subscribe {
             guard let offset = $0.element else { return }
 
@@ -78,8 +79,8 @@ class FeedPageVC: PostsViewController {
                 self.view.layoutIfNeeded()
                 self.topFloatConstraint.constant = newConstraint
                 self.tableView.contentInset.top = inset
-                self.tableView.scrollIndicatorInsets.top = self.tableView.contentInset.top
                 UIView.animate(withDuration: 0.3, animations: { [unowned self] in
+                    self.tableView.scrollIndicatorInsets.top = self.tableView.contentInset.top
                     self.view.layoutIfNeeded()
                 })
             }
@@ -101,15 +102,6 @@ class FeedPageVC: PostsViewController {
         default:
             break
         }
-    }
-
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        navigationController?.setNavigationBarHidden(false, animated: animated)
-        let tabBarHeight: CGFloat = 88.0
-        let bottomInset: CGFloat = 10.0
-        tableView.scrollIndicatorInsets.bottom = tabBarHeight + bottomInset
-        tableView.contentInset.bottom = tabBarHeight + bottomInset
     }
     
     override func viewWillAppear(_ animated: Bool) {

@@ -107,12 +107,6 @@ extension UITableView {
     }
     
     func addListErrorFooterView(with buttonHandler: Selector? = nil, on target: AnyObject) {
-        // If list is empty
-        if numberOfRowsInTotal == 0 {
-            tableFooterView = UIView()
-            return
-        }
-        
         // Prevent dupplicating
         if tableFooterView?.tag == listErrorFooterViewTag {
             return

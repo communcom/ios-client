@@ -15,6 +15,7 @@ protocol CommunityType: Equatable {
     var name: String {get}
     var isSubscribed: Bool? {get set}
     var subscribersCount: UInt64? {get set}
+    var identity: String {get}
 }
 
 extension CommunityType {
@@ -52,7 +53,7 @@ extension CommunityController {
         NotificationCenter.default.rx.notification(.init(rawValue: "\(Community.self)DidChange"))
             .subscribe(onNext: {notification in
                 guard let newCommunity = notification.object as? Community,
-                    newCommunity == self.community
+                    newCommunity.identity == self.community?.identity
                     else {return}
                 self.setUp(with: newCommunity)
             })

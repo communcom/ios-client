@@ -37,10 +37,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // MARK: - Class Functions
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        // Use Firebase library to configure APIs
+        FirebaseApp.configure()
+
+        // Config Fabric
+        Fabric.with([Crashlytics.self])
+
         // global tintColor
         window?.tintColor = .appMainColor
         // Logger
-//        Logger.showEvents = [.error]
+//        Logger.showEvents = [.request, .error]
         
         // Sync iCloud key-value store
         NSUbiquitousKeyValueStore.default.synchronize()
@@ -79,9 +85,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             })
             .disposed(by: bag)
         
-        // Use Firebase library to configure APIs
-        FirebaseApp.configure()
-        
         // Configure notification
         configureNotifications(application: application)
         
@@ -89,9 +92,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if let urlCache = SDURLCache(memoryCapacity: 0, diskCapacity: 2*1024*1024*1024, diskPath: SDURLCache.defaultCachePath(), enableForIOS5AndUp: true) {
             URLCache.shared = urlCache
         }
-        
-        // config fabric
-        Fabric.with([Crashlytics.self])
         
         return true
     }

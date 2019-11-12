@@ -23,13 +23,12 @@ class PostsViewModel: ListViewModel<ResponseAPIContentGetPost> {
     }
     
     func bindFilter() {
-        filter.distinctUntilChanged()
+        filter.skip(1).distinctUntilChanged()
             .filter {filter in
                 if filter.feedTypeMode != .new && filter.feedType == .popular {return false}
                 return true
             }
             .subscribe(onNext: {filter in
-                self.items.accept([])
                 self.fetcher.reset()
                 (self.fetcher as! PostsListFetcher).filter = filter
                 self.fetchNext()
@@ -44,6 +43,8 @@ class PostsViewModel: ListViewModel<ResponseAPIContentGetPost> {
         searchKey: String? = nil
     ) {
         let newFilter = filter.value.newFilter(withFeedTypeMode: feedTypeMode, feedType: feedType, sortType: sortType, searchKey: searchKey)
-        filter.accept(newFilter)
+        if newFilter != filter.value {
+            filter.accept(newFilter)
+        }
     }
 }

@@ -10,16 +10,10 @@ import Foundation
 import CyberSwift
 import RxDataSources
 
-let CommentControllerCommentDidChangeNotification = "CommentControllerCommentDidChangeNotification"
-let CommentControllerCommentDeletedNotification = "CommentControllerCommentDeletedNotification"
 
 extension ResponseAPIContentGetComment: IdentifiableType {
     public var identity: String {
         return self.contentId.userId + "/" + self.contentId.permlink
-    }
-    
-    public func notifyChanged() {
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: CommentControllerCommentDidChangeNotification), object: self)
     }
     
     var content: [ResponseAPIContentBlock]? {

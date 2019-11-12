@@ -64,15 +64,9 @@ extension ProfileVC {
             .subscribe(onNext: { [weak self] (state) in
                 switch state {
                 case .loading(let isLoading):
-                    if (isLoading) {
-                        self?.handleListLoading()
-                    }
-                    else {
-                        self?.tableView.tableFooterView = UIView()
-                    }
-                    break
+                    self?.handleListLoading(isLoading: isLoading)
                 case .listEnded:
-                    self?.tableView.tableFooterView = UIView()
+                    self?.handleListEnded()
                 case .listEmpty:
                     self?.handleListEmpty()
                 case .error(_):
@@ -118,14 +112,7 @@ extension ProfileVC {
             coefficient = 1
         }
 
-        coverImageView.heightConstraint?.constant = coverHeight * coefficient
-        coverImageView.widthConstraint?.constant = UIScreen.main.bounds.size.width * coefficient
-        if coefficient > 1 {
-//            coverImageView.transform = CGAffineTransform(scaleX: coefficient, y: coefficient)
-        } else {
-//            coverImageView.transform = CGAffineTransform(scaleX: 1, y: 1)
-        }
-//        self.coverImageView.layoutIf  Needed()
-//        self.view.layoutIfNeeded()
+        coverImageWidthConstraint.constant = UIScreen.main.bounds.size.width * coefficient
+        coverImageHeightConstraint.constant = coverHeight * coefficient
     }
 }

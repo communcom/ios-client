@@ -29,12 +29,7 @@ class SubsViewController<T: ListItemType>: ListViewController<T> {
         tableView.contentInset = UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0)
     }
     
-    override func handleLoading() {
+    override func showLoadingFooter() {
         tableView.addNotificationsLoadingFooterView()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(false, animated: animated)
     }
 }

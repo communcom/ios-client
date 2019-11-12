@@ -32,6 +32,7 @@ class PostPageNavigationBar: MyView {
         addSubview(backButton)
         backButton.autoPinEdge(toSuperviewEdge: .leading)
         backButton.autoAlignAxis(toSuperviewAxis: .horizontal)
+        backButton.addTarget(self, action: #selector(backButtonDidTouch), for: .touchUpInside)
         
         addSubview(postMetaView)
         postMetaView.autoPinEdge(.leading, to: .trailing, of: backButton)
@@ -44,13 +45,18 @@ class PostPageNavigationBar: MyView {
         addSubview(joinButton)
         joinButton.autoPinEdge(.trailing, to: .leading, of: moreButton)
         joinButton.autoAlignAxis(toSuperviewAxis: .horizontal)
-        joinButton.autoPinEdge(.leading, to: .trailing, of: postMetaView)
+        joinButton.autoPinEdge(.leading, to: .trailing, of: postMetaView, withOffset: 8)
         joinButton.leadingAnchor.constraint(greaterThanOrEqualTo: postMetaView.trailingAnchor, constant: 8)
             .isActive = true
+        
+        postMetaView.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
     }
     
     func setUp(with post: ResponseAPIContentGetPost) {
         postMetaView.setUp(post: post)
     }
     
+    @objc func backButtonDidTouch() {
+        parentViewController?.back()
+    }
 }

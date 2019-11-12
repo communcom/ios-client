@@ -22,7 +22,7 @@ class UserProfilePageViewModel: ProfileViewModel<ResponseAPIContentGetProfile> {
     let segmentedItem = BehaviorRelay<SegmentioItem>(value: .posts)
     
     lazy var postsVM = PostsViewModel(filter: PostsListFetcher.Filter(feedTypeMode: .byUser, feedType: .timeDesc, sortType: .all, userId: profileId))
-    lazy var commentsVM = CommentsViewModel(filter: CommentsListFetcher.Filter(userId: profileId, type: .user))
+    lazy var commentsVM = CommentsViewModel(filter: CommentsListFetcher.Filter(type: .user, userId: profileId))
     lazy var subscriptionsVM = SubscriptionsViewModel(userId: profileId, type: .community)
     
     // MARK: - Methods

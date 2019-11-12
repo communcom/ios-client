@@ -15,11 +15,17 @@ class PostsViewController: ListViewController<ResponseAPIContentGetPost> {
     init(filter: PostsListFetcher.Filter = PostsListFetcher.Filter(feedTypeMode: .new, feedType: .popular, sortType: .all)) {
         super.init(nibName: nil, bundle: nil)
         viewModel = PostsViewModel(filter: filter)
+        defer {
+            viewModel.fetchNext()
+        }
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         viewModel = PostsViewModel()
+        defer {
+            viewModel.fetchNext()
+        }
     }
     
     override func setUp() {
@@ -57,8 +63,7 @@ class PostsViewController: ListViewController<ResponseAPIContentGetPost> {
         
         tableView.rx.modelSelected(ResponseAPIContentGetPost.self)
             .subscribe(onNext: {post in
-                let postPageVC = controllerContainer.resolve(PostPageVC.self)!
-                (postPageVC.viewModel as! PostPageViewModel).postForRequest = post
+                let postPageVC = PostPageVC(post: post)
                 self.show(postPageVC, sender: nil)
             })
             .disposed(by: disposeBag)
@@ -71,7 +76,7 @@ class PostsViewController: ListViewController<ResponseAPIContentGetPost> {
             .disposed(by: disposeBag)
     }
     
-    override func handleLoading() {
+    override func showLoadingFooter() {
         tableView.addPostLoadingFooterView()
     }
     

@@ -7,17 +7,12 @@
 //
 
 import UIKit
+import SafariServices
 
 final class BasicPostCell: PostCell {
-    // MARK: - Constants
-    let embedViewDefaultHeight: CGFloat = 216.5
-    
-    // MARK: - Properties
-    
     // MARK: - Subviews
-    lazy var contentTextView   = UITextView(forExpandable: ())
-    lazy var gridViewContainerView = UIView(height: embedViewDefaultHeight)
-    lazy var gridView       = GridView(forAutoLayout: ())
+    lazy var contentTextView        = UITextView(forExpandable: ())
+    lazy var gridView               = GridView(forAutoLayout: ())
 
     private func configureTextView() {
         contentTextView.textContainerInset = UIEdgeInsets.zero
@@ -25,6 +20,7 @@ final class BasicPostCell: PostCell {
         contentTextView.font = .systemFont(ofSize: 14)
         contentTextView.dataDetectorTypes = .link
         contentTextView.isEditable = false
+        contentTextView.delegate = self
     }
 
     // MARK: - Layout
@@ -36,14 +32,11 @@ final class BasicPostCell: PostCell {
         contentTextView.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
         contentTextView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
 
-        contentView.addSubview(gridViewContainerView)
-        gridViewContainerView.autoPinEdge(toSuperviewEdge: .leading)
-        gridViewContainerView.autoPinEdge(toSuperviewEdge: .trailing)
-        gridViewContainerView.autoPinEdge(.top, to: .bottom, of: contentTextView, withOffset: 10)
-        
-        gridViewContainerView.addSubview(gridView)
-        gridView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 0, bottom: 12, right: 0))
-        gridViewContainerView.autoPinEdge(.bottom, to: .top, of: voteActionsContainerView)
+        contentView.addSubview(gridView)
+        gridView.autoPinEdge(.top, to: .bottom, of: contentTextView, withOffset: 10)
+        gridView.autoPinEdge(toSuperviewEdge: .left)
+        gridView.autoPinEdge(toSuperviewEdge: .right)
+        gridView.autoPinEdge(.bottom, to: .top, of: voteContainerView)
     }
     
     override func setUp(with post: ResponseAPIContentGetPost?) {
@@ -58,9 +51,9 @@ final class BasicPostCell: PostCell {
             let mutableAS = NSMutableAttributedString()
             var attributedText = firstSentence
                 .toAttributedString(currentAttributes: defaultAttributes)
-            if attributedText.length > 150 {
-                let moreText = NSAttributedString(string: " \("more".localized())...", attributes: [.foregroundColor: UIColor.appMainColor, .font: UIFont.systemFont(ofSize: 14)])
-                attributedText = attributedText.attributedSubstring(from: NSMakeRange(0, 150))
+            if attributedText.length > 600 {
+                let moreText = NSAttributedString(string: "... \("See More".localized())", attributes: [.foregroundColor: UIColor.appMainColor, .font: UIFont.systemFont(ofSize: 14)])
+                attributedText = attributedText.attributedSubstring(from: NSMakeRange(0, 400))
                 mutableAS.append(moreText)
             }
             mutableAS.insert(attributedText, at: 0)
@@ -78,13 +71,14 @@ final class BasicPostCell: PostCell {
         contentTextView.resolveHashTags()
         contentTextView.resolveMentions()
 
-        if let embeds = post?.attachments, !embeds.isEmpty
-        {
-            gridView.setUp(embeds: embeds)
-            gridViewContainerView.heightConstraint?.constant = 31/40 * UIScreen.main.bounds.width
-        }
-        else {
-            gridViewContainerView.heightConstraint?.constant = 0
-        }
+        gridView.setUp(embeds: post?.attachments)
+    }
+}
+
+extension BasicPostCell: UITextViewDelegate {
+    func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange) -> Bool {
+        let safariVC = SFSafariViewController(url: URL)
+        parentViewController?.present(safariVC, animated: true, completion: nil)
+        return false
     }
 }

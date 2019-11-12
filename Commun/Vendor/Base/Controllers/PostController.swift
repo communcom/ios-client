@@ -12,27 +12,26 @@ import CyberSwift
 
 protocol PostController: class {
     var disposeBag: DisposeBag {get}
-    var upVoteButton: UIButton! {get set}
-    var downVoteButton: UIButton! {get set}
+    var voteContainerView: VoteContainerView {get set}
     var post: ResponseAPIContentGetPost? {get set}
     func setUp(with post: ResponseAPIContentGetPost?)
 }
 
+extension ResponseAPIContentGetPost {
+    public func notifyChanged() {
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "\(Self.self)DidChange"), object: self)
+    }
+    public func notifyDeleted() {
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "\(Self.self)Deleted"), object: self)
+    }
+}
+
 extension PostController {
-    // MARK: - Notify observers
-    func notifyPostChange(newPost: ResponseAPIContentGetPost) {
-        newPost.notifyChanged()
-    }
-    
-    func notifyPostDeleted(deletedPost: ResponseAPIContentGetPost) {
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "\(Self.self)Deleted"), object: deletedPost)
-    }
-    
     func observePostChange() {
-        NotificationCenter.default.rx.notification(.init(rawValue: "\(Self.self)DidChange"))
+        NotificationCenter.default.rx.notification(.init(rawValue: "\(ResponseAPIContentGetPost.self)DidChange"))
             .subscribe(onNext: {notification in
                 guard let newPost = notification.object as? ResponseAPIContentGetPost,
-                    newPost == self.post
+                    newPost.identity == self.post?.identity
                     else {return}
                 self.setUp(with: newPost)
             })
@@ -93,6 +92,19 @@ extension PostController {
             headerView.setUp(post: post)
         }
     }
+
+    func openShareActions() {
+        guard let topController = UIApplication.topViewController(), let post = post else { return }
+
+        var urlString = "https:/dev.commun.com/"
+        #warning("add post url api value")
+        if let alias = post.community.alias, let username = post.author?.username  {
+            urlString = "https:/dev.commun.com/\(alias)/@\(username)/\(post.contentId.permlink)"
+        }
+        let url = URL(string: urlString)
+        let activity = UIActivityViewController(activityItems: [url!], applicationActivities: nil)
+        topController.present(activity, animated: true)
+    }
     
     // MARK: - Voting
     func setHasVote(_ value: Bool, for type: VoteActionType) {
@@ -127,13 +139,13 @@ extension PostController {
         setHasVote(false, for: .downvote)
         
         // animate
-        animateUpVote {
+        voteContainerView.animateUpVote {
             // notify
-            self.notifyPostChange(newPost: self.post!)
+            self.post!.notifyChanged()
             
             // disable button until transaction is done
-            self.upVoteButton.isEnabled = false
-            self.downVoteButton.isEnabled = false
+            self.voteContainerView.upVoteButton.isEnabled = false
+            self.voteContainerView.downVoteButton.isEnabled = false
             
             // send request
             NetworkService.shared.voteMessage(voteType:          originHasUpVote ? .unvote: .upvote,
@@ -142,19 +154,19 @@ extension PostController {
                 .subscribe(
                     onCompleted: { [weak self] in
                         // re-enable buttons
-                        self?.upVoteButton.isEnabled = true
-                        self?.downVoteButton.isEnabled = true
+                        self?.voteContainerView.upVoteButton.isEnabled = true
+                        self?.voteContainerView.downVoteButton.isEnabled = true
                     },
                     onError: {[weak self] error in
                         guard let strongSelf = self else {return}
                         // reset state
                         strongSelf.setHasVote(originHasUpVote, for: .upvote)
                         strongSelf.setHasVote(originHasDownVote, for: .downvote)
-                        strongSelf.notifyPostChange(newPost: strongSelf.post!)
+                        strongSelf.post!.notifyChanged()
                         
                         // re-enable buttons
-                        strongSelf.upVoteButton.isEnabled = true
-                        strongSelf.downVoteButton.isEnabled = true
+                        strongSelf.voteContainerView.upVoteButton.isEnabled = true
+                        strongSelf.voteContainerView.downVoteButton.isEnabled = true
                         
                         // show general error
                         UIApplication.topViewController()?.showError(error)
@@ -179,13 +191,13 @@ extension PostController {
         setHasVote(false, for: .upvote)
         
         // animate
-        animateDownVote {
+        voteContainerView.animateDownVote {
             // notify
-            self.notifyPostChange(newPost: self.post!)
+            self.post!.notifyChanged()
             
             // disable button until transaction is done
-            self.upVoteButton.isEnabled = false
-            self.downVoteButton.isEnabled = false
+            self.voteContainerView.upVoteButton.isEnabled = false
+            self.voteContainerView.downVoteButton.isEnabled = false
             
             // send request
             NetworkService.shared.voteMessage(voteType:          originHasDownVote ? .unvote: .downvote,
@@ -194,19 +206,19 @@ extension PostController {
                 .subscribe(
                     onCompleted: { [weak self] in
                         // re-enable buttons
-                        self?.upVoteButton.isEnabled = true
-                        self?.downVoteButton.isEnabled = true
+                        self?.voteContainerView.upVoteButton.isEnabled = true
+                        self?.voteContainerView.downVoteButton.isEnabled = true
                     },
                     onError: { [weak self] error in
                         guard let strongSelf = self else {return}
                         // reset state
                         strongSelf.setHasVote(originHasUpVote, for: .upvote)
                         strongSelf.setHasVote(originHasDownVote, for: .downvote)
-                        strongSelf.notifyPostChange(newPost: strongSelf.post!)
+                        strongSelf.post!.notifyChanged()
                         
                         // re-enable buttons
-                        strongSelf.upVoteButton.isEnabled = true
-                        strongSelf.downVoteButton.isEnabled = true
+                        strongSelf.voteContainerView.upVoteButton.isEnabled = true
+                        strongSelf.voteContainerView.downVoteButton.isEnabled = true
                         
                         // show general error
                         UIApplication.topViewController()?.showError(error)
@@ -257,7 +269,7 @@ extension PostController {
                 if index == 0 {
                     NetworkService.shared.deletePost(permlink: post.contentId.permlink)
                     .subscribe(onCompleted: {
-                        self.notifyPostDeleted(deletedPost: post)
+                        post.notifyDeleted()
                     }, onError: { error in
                         topController.showError(error)
                     })
@@ -272,7 +284,7 @@ extension PostController {
         
         topController.showIndetermineHudWithMessage("loading post".localized().uppercaseFirst)
         // Get full post
-        NetworkService.shared.getPost(withPermLink: post.contentId.permlink)
+        RestAPIManager.instance.loadPost(userId: post.contentId.userId, permlink: post.contentId.permlink, communityId: post.contentId.communityId ?? "")
             .subscribe(onSuccess: {post in
                 topController.hideHud()
                 if post.document?.attributes?.type == "basic" {
@@ -335,41 +347,6 @@ extension PostController {
     func postDidComment() {
         guard post != nil else {return}
         self.post!.stats?.commentsCount += 1
-        notifyPostChange(newPost: self.post!)
-    }
-
-    // MARK: - Animation
-    func animateUpVote(completion: @escaping () -> Void) {
-        CATransaction.begin()
-        CATransaction.setCompletionBlock(completion)
-        
-        let moveUpAnim = CABasicAnimation(keyPath: "position.y")
-        moveUpAnim.byValue = -16
-        moveUpAnim.autoreverses = true
-        self.upVoteButton.layer.add(moveUpAnim, forKey: "moveUp")
-        
-        let fadeAnim = CABasicAnimation(keyPath: "opacity")
-        fadeAnim.byValue = -1
-        fadeAnim.autoreverses = true
-        self.upVoteButton.layer.add(fadeAnim, forKey: "Fade")
-        
-        CATransaction.commit()
-    }
-    
-    func animateDownVote(completion: @escaping () -> Void) {
-        CATransaction.begin()
-        CATransaction.setCompletionBlock(completion)
-        
-        let moveDownAnim = CABasicAnimation(keyPath: "position.y")
-        moveDownAnim.byValue = 16
-        moveDownAnim.autoreverses = true
-        self.downVoteButton.layer.add(moveDownAnim, forKey: "moveDown")
-        
-        let fadeAnim = CABasicAnimation(keyPath: "opacity")
-        fadeAnim.byValue = -1
-        fadeAnim.autoreverses = true
-        self.downVoteButton.layer.add(fadeAnim, forKey: "Fade")
-        
-        CATransaction.commit()
+        self.post!.notifyChanged()
     }
 }

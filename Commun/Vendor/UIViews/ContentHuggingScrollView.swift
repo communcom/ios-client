@@ -11,6 +11,7 @@ import Foundation
 class ContentHuggingScrollView: UIScrollView {
     // MARK: - Subviews
     lazy var contentView = UIView(forAutoLayout: ())
+    var axis: NSLayoutConstraint.Axis = .horizontal
     
     // MARK: - Methods
     override init(frame: CGRect) {
@@ -23,9 +24,20 @@ class ContentHuggingScrollView: UIScrollView {
         commonInit()
     }
     
+    convenience init(axis: NSLayoutConstraint.Axis, contentInset: UIEdgeInsets = .zero) {
+        self.init(forAutoLayout: ())
+        self.axis = axis
+        self.contentInset = contentInset
+    }
+    
     func commonInit() {
         addSubview(contentView)
         contentView.autoPinEdgesToSuperviewEdges()
-        contentView.widthAnchor.constraint(equalTo: widthAnchor).isActive = true
+        if axis == .horizontal {
+            contentView.widthAnchor.constraint(equalTo: widthAnchor).isActive = true
+        }
+        else {
+            contentView.heightAnchor.constraint(equalTo: heightAnchor).isActive = true
+        }
     }
 }

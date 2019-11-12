@@ -43,6 +43,17 @@ class TabBarVC: UITabBarController {
         bindViewModel()
     }
     
+    func setTabBarHiden(_ hide: Bool) {
+        if hide {
+            shadowView.isHidden = true
+            shadowView.heightConstraint?.constant = 0
+        }
+        else {
+            shadowView.isHidden = false
+            shadowView.heightConstraint?.constant = tabBarHeight
+        }
+    }
+    
     private func configStyles() {
         view.backgroundColor = .white
         
@@ -52,7 +63,7 @@ class TabBarVC: UITabBarController {
         // shadow
         view.addSubview(shadowView)
         shadowView.autoPinEdgesToSuperviewSafeArea(with: .zero, excludingEdge: .top)
-        shadowView.addShadow(ofColor: UIColor(red: 56, green: 60, blue: 71)!, radius: 4, offset: CGSize(width: 0, height: -6), opacity: 0.1)
+        shadowView.addShadow(ofColor: .shadow, radius: 4, offset: CGSize(width: 0, height: -6), opacity: 0.1)
         
         // tabBarContainerView
         shadowView.addSubview(tabBarContainerView)
@@ -85,26 +96,26 @@ class TabBarVC: UITabBarController {
     private func configTabs() {
         // Feed Tab
         let feed = controllerContainer.resolve(FeedPageVC.self)!
-        let feedNC = SwipeNavigationController(rootViewController: feed)
+        let feedNC = BaseNavigationController(rootViewController: feed, tabBarVC: self)
         let feedItem = buttonTabBarItem(image: UIImage(named: "feed")!, tag: feedTabIndex)
         feed.accessibilityLabel = "TabBarFeedTabBarItem"
 
         // Comunities Tab
         let comunities = CommunitiesVC(type: .all)
-        let communitiesNC = SwipeNavigationController(rootViewController: comunities)
+        let communitiesNC = BaseNavigationController(rootViewController: comunities, tabBarVC: self)
         let communitiesItem = buttonTabBarItem(image: UIImage(named: "tabbar-community")!, tag: searchTabIndex)
         comunities.accessibilityLabel = "TabBarComunitiesTabBarItem"
         
         // Notifications Tab
         let notifications = NotificationsPageVC()
-        let notificationsNC = SwipeNavigationController(rootViewController: notifications)
+        let notificationsNC = BaseNavigationController(rootViewController: notifications, tabBarVC: self)
         let notificationsItem = buttonTabBarItem(image: UIImage(named: "notifications")!, tag: notificationTabIndex)
         notificationsNC.navigationBar.prefersLargeTitles = true
         notifications.accessibilityLabel = "TabBarNotificationsTabBarItem"
 
         // Profile Tab
         let profile = MyProfilePageVC()
-        let profileNC = SwipeNavigationController(rootViewController: profile)
+        let profileNC = BaseNavigationController(rootViewController: profile, tabBarVC: self)
         let profileItem = buttonTabBarItem(image: UIImage(named: "tabbar-profile")!, tag: profileTabIndex)
         profileNC.accessibilityLabel = "TabBarProfileTabBarItem"
         profileNC.navigationBar.tintColor = UIColor.appMainColor
@@ -164,7 +175,11 @@ class TabBarVC: UITabBarController {
     func switchTab(index: Int) {
         // pop to first if index is selected
         if selectedIndex == index {
-            (viewControllers?[index] as? UINavigationController)?.popToRootViewController(animated: true)
+            if let navController = viewControllers?[index] as? UINavigationController,
+                navController.viewControllers.count > 1
+            {
+                navController.popViewController(animated: true)
+            }
             return
         }
         

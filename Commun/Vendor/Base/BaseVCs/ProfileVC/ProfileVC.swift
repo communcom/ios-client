@@ -11,11 +11,12 @@ import RxSwift
 import ESPullToRefresh
 
 class ProfileVC<ProfileType: Decodable>: BaseViewController {
-    override var contentScrollView: UIScrollView? {tableView}
-    
     // MARK: - Constants
-    let coverHeight: CGFloat = 180
+    let coverHeight: CGFloat = 200
     let coverVisibleHeight: CGFloat = 150
+    var coverImageHeightConstraint: NSLayoutConstraint!
+    var coverImageWidthConstraint: NSLayoutConstraint!
+
     let disposeBag = DisposeBag()
     
     // MARK: - Properties
@@ -24,16 +25,25 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
     }
     
     // MARK: - Subviews
+    
+    lazy var shadowView: UIView = {
+        let view = UIView(forAutoLayout: ())
+        view.backgroundColor = .clear
+        let gradient = CAGradientLayer()
+        gradient.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: coverHeight)
+        gradient.colors = [UIColor.black.withAlphaComponent(0.2).cgColor, UIColor.clear.cgColor]
+        gradient.locations = [0.0, 0.5]
+        view.layer.insertSublayer(gradient, at: 0)
+        return view
+    }()
+    
     lazy var backButton = UIButton.back(tintColor: .white, contentInsets: UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 24))
     
     lazy var coverImageView: UIImageView = {
-        let imageView = UIImageView(forAutoLayout: ())
-        let gradient = CAGradientLayer()
-        gradient.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: coverHeight)
-        gradient.colors = [UIColor.black.withAlphaComponent(0.3).cgColor, UIColor.clear.cgColor]
-        gradient.locations = [0.0, 1.0]
-        imageView.layer.insertSublayer(gradient, at: 0)
+        let imageView = UIImageView()
         imageView.image = .placeholder
+        imageView.contentMode = .scaleAspectFill
+        imageView.layer.masksToBounds = true
         return imageView
     }()
     
@@ -52,27 +62,27 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
     
     override func setUp() {
         super.setUp()
-
         view.backgroundColor = #colorLiteral(red: 0.9605136514, green: 0.9644123912, blue: 0.9850376248, alpha: 1)
-        let leftButtonView = UIView(frame: CGRect(x: 0, y: 0, width: 36, height: 40))
-        
-        leftButtonView.addSubview(backButton)
-        backButton.autoPinEdgesToSuperviewEdges()
+        setLeftNavBarButton(with: backButton)
         backButton.addTarget(self, action: #selector(back), for: .touchUpInside)
-        leftButtonView.addSubview(backButton)
 
-        let leftBarButton = UIBarButtonItem(customView: leftButtonView)
-        navigationItem.leftBarButtonItem = leftBarButton
-
-        coverImageView.removeAllConstraints()
+        let screenWidth = UIScreen.main.bounds.size.width
         view.addSubview(coverImageView)
-        coverImageView.autoPinEdge(.top, to: .top, of: view)
-        coverImageView.heightConstraint?.constant = coverHeight
+        coverImageView.autoPinEdge(toSuperviewEdge: .top)
+        coverImageView.autoAlignAxis(.vertical, toSameAxisOf: view)
         
+        coverImageWidthConstraint = coverImageView.widthAnchor.constraint(equalToConstant: screenWidth)
+        coverImageWidthConstraint.isActive = true
+        coverImageHeightConstraint = coverImageView.heightAnchor.constraint(equalToConstant: coverHeight)
+        coverImageHeightConstraint.isActive = true
+
+        view.addSubview(shadowView)
+        shadowView.autoPinEdgesToSuperviewEdges()
+
         view.addSubview(tableView)
         tableView.autoPinEdgesToSuperviewEdges()
         tableView.contentInset.top = coverVisibleHeight
-        tableView.contentInset.bottom = 60 + 10 + view.safeAreaInsets.bottom
+
         // setup datasource
         tableView.register(BasicPostCell.self, forCellReuseIdentifier: "BasicPostCell")
         tableView.register(ArticlePostCell.self, forCellReuseIdentifier: "ArticlePostCell")
@@ -86,7 +96,6 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
             self.reload()
         }
         tableView.subviews.first(where: {$0 is ESRefreshHeaderView})?.alpha = 0
-        navigationController?.navigationBar.barTintColor = .white
     }
     
     override func bind() {
@@ -101,7 +110,11 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
     func setUp(profile: ProfileType) {
     }
     
-    func handleListLoading() {
+    func handleListLoading(isLoading: Bool) {
+        
+    }
+    
+    func handleListEnded() {
         
     }
     
@@ -127,13 +140,9 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
         }
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        showTitle(true)
-    }
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        navigationController?.navigationBar.isTranslucent = true
 
         if tableView.contentOffset.y >= -43 {
             showTitle(true)
@@ -160,19 +169,12 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
     }
     
     func showTitle(_ show: Bool, animated: Bool = false) {
+        coverImageView.isHidden = show
         UIView.animate(withDuration: animated ? 0.3: 0) {
-            self.navigationController?.navigationBar.setBackgroundImage(
-                show ? nil: UIImage(), for: .default)
-            self.navigationController?.navigationBar.shadowImage =
-                show ? nil: UIImage()
-            self.navigationController?.view.backgroundColor =
-                show ? .white: .clear
+            self.navigationController?.navigationBar.subviews.first?.backgroundColor = show ? .white: .clear
             self.navigationController?.navigationBar.setTitleFont(.boldSystemFont(ofSize: 17), color:
                 show ? .black: .clear)
-            self.navigationController?.navigationBar.tintColor =
-                show ? .appMainColor: .white
             self.backButton.tintColor = show ? .black: .white
-            self.navigationController?.navigationBar.barStyle = show ? .default : .black
         }
     }
     

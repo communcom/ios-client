@@ -8,6 +8,7 @@
 
 import Foundation
 import PureLayout
+import CyberSwift
 
 extension UIButton {
     public convenience init(
@@ -17,7 +18,7 @@ extension UIButton {
         labelFont: UIFont? = nil,
         backgroundColor: UIColor? = nil,
         textColor: UIColor? = nil,
-        cornerRadius: CGFloat = 8,
+        cornerRadius: CGFloat? = nil,
         contentInsets: UIEdgeInsets? = nil
     ) {
         self.init(width: width, height: height, backgroundColor: backgroundColor)
@@ -28,10 +29,30 @@ extension UIButton {
         if let textColor = textColor {
             setTitleColor(textColor, for: .normal)
         }
-        self.cornerRadius = cornerRadius
+        if let cornerRadius = cornerRadius {
+            self.cornerRadius = cornerRadius
+        }
         if let contentInsets = contentInsets {
             contentEdgeInsets = contentInsets
         }
+    }
+    
+    static func circle(
+        size: CGFloat,
+        backgroundColor: UIColor,
+        tintColor: UIColor? = nil,
+        imageName: String,
+        imageEdgeInsets: UIEdgeInsets? = nil
+    ) -> UIButton {
+        let button = UIButton(width: size, height: size, backgroundColor: backgroundColor, cornerRadius: size / 2)
+        button.setImage(UIImage(named: imageName), for: .normal)
+        if let imageEdgeInsets = imageEdgeInsets {
+            button.imageEdgeInsets = imageEdgeInsets
+        }
+        if let tintColor = tintColor {
+            button.tintColor = tintColor
+        }
+        return button
     }
     
     static func circleGray(size: CGFloat = 24, imageName: String) -> UIButton {
@@ -53,7 +74,7 @@ extension UIButton {
     static func back(tintColor: UIColor = .black, contentInsets: UIEdgeInsets = UIEdgeInsets(top: 10, left: 12, bottom: 10, right: 12)) -> UIButton {
         let button = UIButton(width: 36, height: 40, contentInsets: contentInsets)
         button.tintColor = tintColor
-        button.setImage(UIImage(named: "back"), for: .normal)
+        button.setImage(UIImage(named: "back-button"), for: .normal)
         return button
     }
     
@@ -61,6 +82,13 @@ extension UIButton {
         let button = UIButton(width: 36, height: 40, contentInsets: contentInsets)
         button.tintColor = tintColor
         button.setImage(UIImage(named: "postpage-more"), for: .normal)
+        return button
+    }
+    
+    static func vote(type: VoteActionType) -> UIButton {
+        let button = UIButton(width: 38)
+        button.imageEdgeInsets = UIEdgeInsets(top: 10.5, left: type == .upvote ? 10 : 18, bottom: 10.5, right: type == .upvote ? 18: 10)
+        button.setImage(UIImage(named: type == .upvote ? "upVote" : "downVote"), for: .normal)
         return button
     }
 }

@@ -170,7 +170,7 @@
                 },
                 "community": {
                     "communityId": "LLUPLO",
-                    "name": null,
+                    "name": "LLUPLO",
                     "avatarUrl": "https://i.pravatar.cc/400"
                 }
             },
@@ -268,7 +268,7 @@
                 },
                 "community": {
                     "communityId": "LLUPLO",
-                    "name": null,
+                    "name": "LLUPLO",
                     "avatarUrl": "https://i.pravatar.cc/401"
                 }
             },
@@ -323,7 +323,7 @@
                 },
                 "community": {
                     "communityId": "LLUILA",
-                    "name": null,
+                    "name": "LLUILA",
                     "avatarUrl": "https://i.pravatar.cc/402"
                 }
             },
@@ -378,7 +378,7 @@
                 },
                 "community": {
                     "communityId": "LLUILA",
-                    "name": null,
+                    "name": "LLUDL",
                     "avatarUrl": "https://i.pravatar.cc/403"
                 }
             }
