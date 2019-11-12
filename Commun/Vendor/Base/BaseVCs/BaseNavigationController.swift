@@ -71,6 +71,11 @@ final class BaseNavigationController: UINavigationController {
         super.pushViewController(viewController, animated: animated)
     }
     
+    override func popViewController(animated: Bool) -> UIViewController? {
+        resetNavigationBar()
+        return super.popViewController(animated: animated)
+    }
+    
     // MARK: - Private Properties
     
     fileprivate var duringPushAnimation = false
