@@ -9,12 +9,12 @@
 import UIKit
 
 final class BaseNavigationController: UINavigationController {
-    
+    weak var tabBarVC: TabBarVC?
     // MARK: - Lifecycle
     
-    override init(rootViewController: UIViewController) {
+    init(rootViewController: UIViewController, tabBarVC: TabBarVC? = nil) {
+        self.tabBarVC = tabBarVC
         super.init(rootViewController: rootViewController)
-        
         delegate = self
     }
     
@@ -63,11 +63,25 @@ final class BaseNavigationController: UINavigationController {
         setNavigationBarHidden(false, animated: false)
     }
     
+    func avoidTabBar(viewController: UIViewController) {
+        print(viewController.view.subviews)
+        if let tabBarController = tabBarVC,
+            let scrollView = viewController.view.subviews.first(where: {$0 is UIScrollView}) as? UIScrollView
+        {
+            let bottomOffset: CGFloat = 10
+            let bottomInset = scrollView.contentInset.bottom + bottomOffset + tabBarController.tabBarHeight
+            scrollView.contentInset.bottom = bottomInset
+        }
+    }
+    
     // MARK: - Overrides
     
     override func pushViewController(_ viewController: UIViewController, animated: Bool) {
         duringPushAnimation = true
         resetNavigationBar()
+        
+        avoidTabBar(viewController: viewController)
+        
         super.pushViewController(viewController, animated: animated)
     }
     
