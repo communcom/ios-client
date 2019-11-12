@@ -32,9 +32,4 @@ class SubsViewController<T: ListItemType>: ListViewController<T> {
     override func showLoadingFooter() {
         tableView.addNotificationsLoadingFooterView()
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(false, animated: animated)
-    }
 }

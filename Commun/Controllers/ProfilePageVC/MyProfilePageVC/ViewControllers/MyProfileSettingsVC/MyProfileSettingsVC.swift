@@ -56,13 +56,6 @@ class MyProfileSettingsVC: BaseViewController {
         setLeftNavBarButton(with: backButton)
         backButton.addTarget(self, action: #selector(back), for: .touchUpInside)
         
-        // navigationBar style
-        self.navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
-        self.navigationController?.navigationBar.shadowImage = nil
-        self.navigationController?.view.backgroundColor = .white
-        self.navigationController?.navigationBar.setTitleFont(.boldSystemFont(ofSize: 17), color:
-            .black)
-        
         // scrollView
         view.addSubview(scrollView)
         scrollView.autoPinEdgesToSuperviewEdges()
@@ -135,10 +128,5 @@ class MyProfileSettingsVC: BaseViewController {
                 .isActive = true
         }
         return stackView
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(false, animated: animated)
     }
 }

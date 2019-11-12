@@ -37,16 +37,37 @@ final class BaseNavigationController: UINavigationController {
         interactivePopGestureRecognizer?.delegate = self
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        // navigationBar
+        navigationBar.addShadow(ofColor: .shadow, offset: CGSize(width: 0, height: 2), opacity: 0.1)
+    }
+    
     deinit {
         delegate = nil
         interactivePopGestureRecognizer?.delegate = nil
+    }
+    
+    // MARK: - Methods
+    func resetNavigationBar() {
+        navigationBar.isTranslucent = false
+        
+        let img = UIImage()
+        navigationBar.shadowImage = img
+        navigationBar.setBackgroundImage(img, for: .default)
+        navigationBar.barStyle = .default
+        navigationBar.barTintColor = .white
+        navigationBar.subviews.first?.backgroundColor = .white
+        navigationBar.tintColor = .black
+        navigationBar.setTitleFont(.boldSystemFont(ofSize: 17), color: .black)
+        setNavigationBarHidden(false, animated: false)
     }
     
     // MARK: - Overrides
     
     override func pushViewController(_ viewController: UIViewController, animated: Bool) {
         duringPushAnimation = true
-        
+        resetNavigationBar()
         super.pushViewController(viewController, animated: animated)
     }
     

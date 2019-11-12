@@ -68,7 +68,7 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
 
         let screenWidth = UIScreen.main.bounds.size.width
         view.addSubview(coverImageView)
-        coverImageView.autoPinEdge(.top, to: .top, of: view)
+        coverImageView.autoPinEdge(toSuperviewEdge: .top)
         coverImageView.autoAlignAxis(.vertical, toSameAxisOf: view)
         
         coverImageWidthConstraint = coverImageView.widthAnchor.constraint(equalToConstant: screenWidth)
@@ -96,8 +96,6 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
             self.reload()
         }
         tableView.subviews.first(where: {$0 is ESRefreshHeaderView})?.alpha = 0
-
-        navigationController?.navigationBar.barTintColor = .white
     }
     
     override func bind() {
@@ -142,13 +140,9 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
         }
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        showTitle(true)
-    }
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        navigationController?.navigationBar.isTranslucent = true
 
         if tableView.contentOffset.y >= -43 {
             showTitle(true)
@@ -177,18 +171,10 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
     func showTitle(_ show: Bool, animated: Bool = false) {
         coverImageView.isHidden = show
         UIView.animate(withDuration: animated ? 0.3: 0) {
-            self.navigationController?.navigationBar.setBackgroundImage(
-                show ? nil: UIImage(), for: .default)
-            self.navigationController?.navigationBar.shadowImage =
-                show ? nil: UIImage()
-            self.navigationController?.view.backgroundColor =
-                show ? .white: .clear
+            self.navigationController?.navigationBar.subviews.first?.backgroundColor = show ? .white: .clear
             self.navigationController?.navigationBar.setTitleFont(.boldSystemFont(ofSize: 17), color:
                 show ? .black: .clear)
-            self.navigationController?.navigationBar.tintColor =
-                show ? .appMainColor: .white
             self.backButton.tintColor = show ? .black: .white
-            self.navigationController?.navigationBar.barStyle = show ? .default : .black
         }
     }
     
