@@ -8,12 +8,14 @@
 
 import UIKit
 
-final class SwipeNavigationController: UINavigationController {
+final class BaseNavigationController: UINavigationController {
     
     // MARK: - Lifecycle
     
     override init(rootViewController: UIViewController) {
         super.init(rootViewController: rootViewController)
+        
+        delegate = self
     }
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -56,10 +58,10 @@ final class SwipeNavigationController: UINavigationController {
 
 // MARK: - UINavigationControllerDelegate
 
-extension SwipeNavigationController: UINavigationControllerDelegate {
+extension BaseNavigationController: UINavigationControllerDelegate {
     
     func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
-        guard let swipeNavigationController = navigationController as? SwipeNavigationController else { return }
+        guard let swipeNavigationController = navigationController as? BaseNavigationController else { return }
         
         swipeNavigationController.duringPushAnimation = false
     }
@@ -68,7 +70,7 @@ extension SwipeNavigationController: UINavigationControllerDelegate {
 
 // MARK: - UIGestureRecognizerDelegate
 
-extension SwipeNavigationController: UIGestureRecognizerDelegate {
+extension BaseNavigationController: UIGestureRecognizerDelegate {
     
     func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         guard gestureRecognizer == interactivePopGestureRecognizer else {

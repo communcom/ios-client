@@ -20,7 +20,7 @@
 		3B0E9C6C2270634B002AB1C2 /* ProfileChooseAvatarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B0E9C6B2270634B002AB1C2 /* ProfileChooseAvatarVC.swift */; };
 		3B0E9C7122706985002AB1C2 /* ProfileChooseAvatarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B0E9C7022706985002AB1C2 /* ProfileChooseAvatarViewModel.swift */; };
 		3B0E9C732270785E002AB1C2 /* PhotoLibraryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B0E9C722270785E002AB1C2 /* PhotoLibraryCell.swift */; };
-		3B11911F2302B9B9008D0417 /* SwipeNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B11911E2302B9B9008D0417 /* SwipeNavigationController.swift */; };
+		3B11911F2302B9B9008D0417 /* BaseNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B11911E2302B9B9008D0417 /* BaseNavigationController.swift */; };
 		3B197C532269BE0E008CF10D /* SegmentioExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B197C522269BE0E008CF10D /* SegmentioExtension.swift */; };
 		3B197C8A226A33CF008CF10D /* Decodable+MockObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B197C86226A33CF008CF10D /* Decodable+MockObjects.swift */; };
 		3B2538B1231E318400D0B1DA /* StateButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B2538B0231E318400D0B1DA /* StateButton.swift */; };
@@ -388,7 +388,7 @@
 		3B0E9C6B2270634B002AB1C2 /* ProfileChooseAvatarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileChooseAvatarVC.swift; sourceTree = "<group>"; };
 		3B0E9C7022706985002AB1C2 /* ProfileChooseAvatarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileChooseAvatarViewModel.swift; sourceTree = "<group>"; };
 		3B0E9C722270785E002AB1C2 /* PhotoLibraryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibraryCell.swift; sourceTree = "<group>"; };
-		3B11911E2302B9B9008D0417 /* SwipeNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeNavigationController.swift; sourceTree = "<group>"; };
+		3B11911E2302B9B9008D0417 /* BaseNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseNavigationController.swift; sourceTree = "<group>"; };
 		3B197C522269BE0E008CF10D /* SegmentioExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentioExtension.swift; sourceTree = "<group>"; };
 		3B197C86226A33CF008CF10D /* Decodable+MockObjects.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Decodable+MockObjects.swift"; sourceTree = "<group>"; };
 		3B2538B0231E318400D0B1DA /* StateButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateButton.swift; sourceTree = "<group>"; };
@@ -1404,7 +1404,6 @@
 				3BAE92A822DE553D00E97AE8 /* ScalableLayoutConstraint.swift */,
 				3B0E9C63226F4A0C002AB1C2 /* VerticalDraggableImageView.swift */,
 				3BF53CE2230B93990082464F /* HTMLStringWebView */,
-				3B11911E2302B9B9008D0417 /* SwipeNavigationController.swift */,
 				3BEC38EB230FED2B00662374 /* TextAttachment.swift */,
 				3BE85D252327A50200C7E7F6 /* GridView.swift */,
 				3BAE5CD2233899C20055F23E /* ContentTextView */,
@@ -1662,6 +1661,7 @@
 		BC22BBD7236C278D00F40658 /* BaseVCs */ = {
 			isa = PBXGroup;
 			children = (
+				3B11911E2302B9B9008D0417 /* BaseNavigationController.swift */,
 				BC016D4D235EA1DE00F1319F /* BaseViewController.swift */,
 				BC31BA53235EBD6A0007D89A /* ProfileVC */,
 				BC3694F0236987AA00B2E078 /* EditorVC */,
@@ -2440,7 +2440,7 @@
 				BC69F7D5236FDFCF0097F870 /* SubscriptionsVC.swift in Sources */,
 				BC52913823766F080022EC7F /* CommentCell+Actions.swift in Sources */,
 				3BF3817F2331D17900C02123 /* NSRegularExpression.swift in Sources */,
-				3B11911F2302B9B9008D0417 /* SwipeNavigationController.swift in Sources */,
+				3B11911F2302B9B9008D0417 /* BaseNavigationController.swift in Sources */,
 				BCA9711F2360380400AE37E1 /* CommunityPageViewModel.swift in Sources */,
 				3B4ECA3D22A6741D00F59FC8 /* NotificationsPage+EmptyDataSet.swift in Sources */,
 				BC3694F723699A7E00B2E078 /* EditorVC+Layout.swift in Sources */,
