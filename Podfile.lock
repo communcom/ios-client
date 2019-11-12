@@ -155,7 +155,7 @@ PODS:
   - SwiftyJSON (4.3.0)
   - Swinject (2.7.1)
   - THPinViewController (1.2.6)
-  - TLPhotoPicker (2.0.6)
+  - TLPhotoPicker (2.0.7)
   - TTTAttributedLabel (2.0.0)
   - "UITextView+Placeholder (1.3.3)"
 
@@ -270,7 +270,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   CyberSwift:
-    :commit: 945c1e1387692895bcc137b460b91cca452b2004
+    :commit: c5480254bdc6515173cfa77e10a2a92176140e37
     :git: https://github.com/GolosChain/cyberSwift.git
   eosswift:
     :commit: d919b66d452de46568b94745451111123af80ca9
@@ -341,7 +341,7 @@ SPEC CHECKSUMS:
   SwiftyJSON: 6faa0040f8b59dead0ee07436cbf76b73c08fd08
   Swinject: ddf78b8486dd9b71a667b852cad919ab4484478e
   THPinViewController: e0dc717a61c8a0a0f251764da26b9ca8a4fd2ec1
-  TLPhotoPicker: ab0d60667c0aad40868e71f787f1fa9a3e8ea7ad
+  TLPhotoPicker: 04e4ef38b31ee51388058c3e1e7bbdbd79614cef
   TTTAttributedLabel: 8cffe8e127e4e82ff3af1e5386d4cd0ad000b656
   "UITextView+Placeholder": c407b27599ea23cca425946fee3cf1db5d547008
 
