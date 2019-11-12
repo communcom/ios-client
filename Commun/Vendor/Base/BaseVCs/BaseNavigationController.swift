@@ -9,12 +9,12 @@
 import UIKit
 
 final class BaseNavigationController: UINavigationController {
-    
+    weak var tabBarVC: TabBarVC?
     // MARK: - Lifecycle
     
-    override init(rootViewController: UIViewController) {
+    init(rootViewController: UIViewController, tabBarVC: TabBarVC? = nil) {
+        self.tabBarVC = tabBarVC
         super.init(rootViewController: rootViewController)
-        
         delegate = self
     }
     
@@ -37,17 +37,61 @@ final class BaseNavigationController: UINavigationController {
         interactivePopGestureRecognizer?.delegate = self
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        // navigationBar
+        navigationBar.addShadow(ofColor: .shadow, offset: CGSize(width: 0, height: 2), opacity: 0.1)
+    }
+    
     deinit {
         delegate = nil
         interactivePopGestureRecognizer?.delegate = nil
+    }
+    
+    // MARK: - Methods
+    func resetNavigationBar() {
+        navigationBar.isTranslucent = false
+        
+        let img = UIImage()
+        navigationBar.shadowImage = img
+        navigationBar.setBackgroundImage(img, for: .default)
+        navigationBar.barStyle = .default
+        navigationBar.barTintColor = .white
+        navigationBar.subviews.first?.backgroundColor = .white
+        navigationBar.tintColor = .black
+        navigationBar.setTitleFont(.boldSystemFont(ofSize: 17), color: .black)
+        setNavigationBarHidden(false, animated: false)
+    }
+    
+    func avoidTabBar(viewController: UIViewController) {
+        print(viewController.view.subviews)
+        if let tabBarController = tabBarVC,
+            let scrollView = viewController.view.subviews.first(where: {$0 is UIScrollView}) as? UIScrollView,
+            viewController.view.constraints.first(where: {constraint in
+                ((constraint.firstItem as? UIView) == scrollView || (constraint.secondItem as? UIView) == scrollView) &&
+                (constraint.firstAttribute == .bottom && constraint.secondAttribute == .bottom)
+            }) != nil
+        {
+            let bottomOffset: CGFloat = 10
+            let bottomInset = scrollView.contentInset.bottom + bottomOffset + tabBarController.tabBarHeight
+            scrollView.contentInset.bottom = bottomInset
+        }
     }
     
     // MARK: - Overrides
     
     override func pushViewController(_ viewController: UIViewController, animated: Bool) {
         duringPushAnimation = true
+        resetNavigationBar()
+        
+        avoidTabBar(viewController: viewController)
         
         super.pushViewController(viewController, animated: animated)
+    }
+    
+    override func popViewController(animated: Bool) -> UIViewController? {
+        resetNavigationBar()
+        return super.popViewController(animated: animated)
     }
     
     // MARK: - Private Properties

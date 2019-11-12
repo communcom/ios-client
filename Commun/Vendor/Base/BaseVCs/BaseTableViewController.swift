@@ -10,7 +10,4 @@ import Foundation
 
 class BaseTableViewController: BaseViewController {
     lazy var tableView = UITableView(forAutoLayout: ())
-    override var contentScrollView: UIScrollView? {
-        return tableView
-    }
 }

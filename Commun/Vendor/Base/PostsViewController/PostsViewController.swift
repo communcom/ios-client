@@ -15,11 +15,17 @@ class PostsViewController: ListViewController<ResponseAPIContentGetPost> {
     init(filter: PostsListFetcher.Filter = PostsListFetcher.Filter(feedTypeMode: .new, feedType: .popular, sortType: .all)) {
         super.init(nibName: nil, bundle: nil)
         viewModel = PostsViewModel(filter: filter)
+        defer {
+            viewModel.fetchNext()
+        }
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         viewModel = PostsViewModel()
+        defer {
+            viewModel.fetchNext()
+        }
     }
     
     override func setUp() {

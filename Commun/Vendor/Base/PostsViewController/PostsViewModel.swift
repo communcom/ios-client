@@ -23,7 +23,7 @@ class PostsViewModel: ListViewModel<ResponseAPIContentGetPost> {
     }
     
     func bindFilter() {
-        filter.distinctUntilChanged()
+        filter.skip(1).distinctUntilChanged()
             .filter {filter in
                 if filter.feedTypeMode != .new && filter.feedType == .popular {return false}
                 return true

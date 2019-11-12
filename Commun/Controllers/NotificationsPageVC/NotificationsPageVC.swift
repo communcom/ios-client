@@ -22,14 +22,6 @@ class NotificationsPageVC: ListViewController<ResponseAPIOnlineNotificationData>
         
         // configure navigation bar
         title = "notifications".localized().uppercaseFirst
-        let navigationBar = navigationController?.navigationBar
-        navigationBar?.barTintColor = UIColor.white
-        navigationBar?.isTranslucent = false
-        navigationBar?.setBackgroundImage(UIImage(), for: .default)
-        navigationBar?.shadowImage = UIImage()
-        
-        // fix bug with title in tabBarItem
-        navigationController?.tabBarItem.title = nil
         
         // configure tableView
         tableView.estimatedRowHeight = 80

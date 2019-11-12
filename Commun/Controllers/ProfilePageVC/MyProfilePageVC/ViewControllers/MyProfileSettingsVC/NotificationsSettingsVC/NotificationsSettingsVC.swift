@@ -106,11 +106,6 @@ class NotificationsSettingsVC: BaseVerticalStackViewController {
         return actionView
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(false, animated: animated)
-    }
-    
     @objc func toggleNotificationOn(_ switcher: UISwitch) {
         viewModel.togglePushNotify(on: switcher.isOn)
     }
