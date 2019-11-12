@@ -10,7 +10,6 @@ import Foundation
 import CyberSwift
 
 class CommentsViewController: ListViewController<ResponseAPIContentGetComment>, CommentCellDelegate {
-    override var contentScrollView: UIScrollView? {tableView}
     // MARK: - Properties
     lazy var expandedComments = [ResponseAPIContentGetComment]()
     

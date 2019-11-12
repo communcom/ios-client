@@ -11,8 +11,6 @@ import RxSwift
 import ESPullToRefresh
 
 class ProfileVC<ProfileType: Decodable>: BaseViewController {
-    override var contentScrollView: UIScrollView? {tableView}
-    
     // MARK: - Constants
     let coverHeight: CGFloat = 200
     let coverVisibleHeight: CGFloat = 150
