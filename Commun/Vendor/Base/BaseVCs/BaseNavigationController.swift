@@ -66,7 +66,11 @@ final class BaseNavigationController: UINavigationController {
     func avoidTabBar(viewController: UIViewController) {
         print(viewController.view.subviews)
         if let tabBarController = tabBarVC,
-            let scrollView = viewController.view.subviews.first(where: {$0 is UIScrollView}) as? UIScrollView
+            let scrollView = viewController.view.subviews.first(where: {$0 is UIScrollView}) as? UIScrollView,
+            viewController.view.constraints.first(where: {constraint in
+                ((constraint.firstItem as? UIView) == scrollView || (constraint.secondItem as? UIView) == scrollView) &&
+                (constraint.firstAttribute == .bottom && constraint.secondAttribute == .bottom)
+            }) != nil
         {
             let bottomOffset: CGFloat = 10
             let bottomInset = scrollView.contentInset.bottom + bottomOffset + tabBarController.tabBarHeight
