@@ -35,6 +35,8 @@ PODS:
     - RxSwift (~> 4.0)
   - ESPullToRefresh (2.9)
   - Fabric (1.10.2)
+  - Firebase/Analytics (6.12.0):
+    - Firebase/Core
   - Firebase/Core (6.12.0):
     - Firebase/CoreOnly
     - FirebaseAnalytics (= 6.1.5)
@@ -156,7 +158,6 @@ PODS:
   - Swinject (2.7.1)
   - THPinViewController (1.2.6)
   - TLPhotoPicker (2.0.7)
-  - TTTAttributedLabel (2.0.0)
   - "UITextView+Placeholder (1.3.3)"
 
 DEPENDENCIES:
@@ -165,13 +166,14 @@ DEPENDENCIES:
   - AppImageViewer
   - ASSpinnerView
   - Crashlytics
-  - CyberSwift (from `https://github.com/GolosChain/cyberSwift.git`)
+  - "CyberSwift (from `git@github.com:communcom/cyberSwift.git`)"
   - DateToolsSwift
   - Down
   - DZNEmptyDataSet
-  - eosswift (from `https://github.com/communcom/eos-swift.git`)
+  - "eosswift (from `git@github.com:communcom/eos-swift.git`)"
   - ESPullToRefresh
   - Fabric
+  - Firebase/Analytics
   - Firebase/Core
   - Firebase/Messaging
   - InitialsImageView
@@ -194,7 +196,6 @@ DEPENDENCIES:
   - Swinject
   - THPinViewController (from `https://github.com/bigearsenal/THPinViewController.git`, branch `commun`)
   - TLPhotoPicker
-  - TTTAttributedLabel
   - "UITextView+Placeholder"
 
 SPEC REPOS:
@@ -254,14 +255,13 @@ SPEC REPOS:
     - SwiftyJSON
     - Swinject
     - TLPhotoPicker
-    - TTTAttributedLabel
     - "UITextView+Placeholder"
 
 EXTERNAL SOURCES:
   CyberSwift:
-    :git: https://github.com/GolosChain/cyberSwift.git
+    :git: "git@github.com:communcom/cyberSwift.git"
   eosswift:
-    :git: https://github.com/communcom/eos-swift.git
+    :git: "git@github.com:communcom/eos-swift.git"
   SubviewAttachingTextView:
     :git: https://github.com/communcom/SubviewAttachingTextView.git
   THPinViewController:
@@ -271,10 +271,10 @@ EXTERNAL SOURCES:
 CHECKOUT OPTIONS:
   CyberSwift:
     :commit: c5480254bdc6515173cfa77e10a2a92176140e37
-    :git: https://github.com/GolosChain/cyberSwift.git
+    :git: "git@github.com:communcom/cyberSwift.git"
   eosswift:
     :commit: d919b66d452de46568b94745451111123af80ca9
-    :git: https://github.com/communcom/eos-swift.git
+    :git: "git@github.com:communcom/eos-swift.git"
   SubviewAttachingTextView:
     :commit: 141dcc300ee804e5d11f27fa9e685dc91889c262
     :git: https://github.com/communcom/SubviewAttachingTextView.git
@@ -342,9 +342,8 @@ SPEC CHECKSUMS:
   Swinject: ddf78b8486dd9b71a667b852cad919ab4484478e
   THPinViewController: e0dc717a61c8a0a0f251764da26b9ca8a4fd2ec1
   TLPhotoPicker: 04e4ef38b31ee51388058c3e1e7bbdbd79614cef
-  TTTAttributedLabel: 8cffe8e127e4e82ff3af1e5386d4cd0ad000b656
   "UITextView+Placeholder": c407b27599ea23cca425946fee3cf1db5d547008
 
-PODFILE CHECKSUM: cd790c146b71b5147e59fa313d9401bb9c2b17a1
+PODFILE CHECKSUM: 6b3fe5996ccadfedb2cb981d59a5ae75cbaa9fc2
 
 COCOAPODS: 1.8.4

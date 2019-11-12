@@ -6,6 +6,8 @@
 	<string>6LdCT8EUAAAAAPrNiBZTNoHIQ4_gN4PjAubLvNd0</string>
 	<key>ReCaptchaDomain</key>
 	<string>https://dev.commun.com</string>
+	<key>UIStatusBarStyle</key>
+	<string>UIStatusBarStyleLightContent</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>

@@ -6,14 +6,15 @@ use_frameworks!
 inhibit_all_warnings!
 
 def common_pods
+
   pod 'Fabric'
   pod 'Crashlytics'
-  
+  pod 'Firebase/Analytics'
   pod 'Firebase/Core'
   pod 'Firebase/Messaging'
   
-  pod 'CyberSwift', :git => "https://github.com/GolosChain/cyberSwift.git" # "https://github.com/Monserg/cyber-ios.git"
-  pod 'eosswift', :git => "https://github.com/communcom/eos-swift.git"
+  pod 'CyberSwift', :git => "git@github.com:communcom/cyberSwift.git" # "https://github.com/Monserg/cyber-ios.git"
+  pod 'eosswift', :git => "git@github.com:communcom/eos-swift.git"
   
   pod 'Alamofire'
   pod 'Swinject'
@@ -44,7 +45,6 @@ def common_pods
   
   pod 'DZNEmptyDataSet'
   
-  pod 'TTTAttributedLabel'
   pod 'QRCodeReaderViewController', '~> 4.0.2'
   
   pod 'THPinViewController', :git => "https://github.com/bigearsenal/THPinViewController.git", :branch => "commun"
