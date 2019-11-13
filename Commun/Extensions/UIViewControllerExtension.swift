@@ -186,6 +186,12 @@ extension UIViewController {
         }
     }
     
+    func setLeftNavBarButtonForGoingBack() {
+        let backButton = UIButton.back(contentInsets: UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 24))
+        setLeftNavBarButton(with: backButton)
+        backButton.addTarget(self, action: #selector(back), for: .touchUpInside)
+    }
+    
     func setLeftNavBarButton(with button: UIButton) {
         // backButton
         let leftButtonView = UIView(frame: CGRect(x: 0, y: 0, width: 36, height: 40))

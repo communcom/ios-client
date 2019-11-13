@@ -54,7 +54,7 @@ extension MyProfilePageVC {
                 self.show(vc, sender: self)
             }),
             CommunActionSheet.Action(title: "blacklist".localized().uppercaseFirst, icon: UIImage(named: "profile_options_blacklist"), handle: {
-                #warning("black list")
+                self.show(MyProfileBlacklistVC(), sender: self)
             }),
             CommunActionSheet.Action(title: "settings".localized().uppercaseFirst, icon: UIImage(named: "profile_options_settings"), handle: {
                 self.show(MyProfileSettingsVC(), sender: self)
