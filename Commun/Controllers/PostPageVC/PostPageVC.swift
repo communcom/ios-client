@@ -26,7 +26,8 @@ class PostPageVC: CommentsViewController {
     lazy var commentForm = CommentForm(backgroundColor: .white)
     
     // MARK: - Properties
-    var completion: (()->Void)?
+    var scrollToTopAfterLoadingComment = false
+    var commentThatNeedsScrollTo: ResponseAPIContentGetComment?
     
     // MARK: - Initializers
     init(post: ResponseAPIContentGetPost) {
@@ -115,12 +116,20 @@ class PostPageVC: CommentsViewController {
             .disposed(by: disposeBag)
         
         // completion
-        tableView.rx.insertedItems
-            .take(1)
-            .subscribe(onNext: { (_) in
-                self.completion?()
-            })
-            .disposed(by: disposeBag)
+        if scrollToTopAfterLoadingComment {
+            tableView.rx.insertedItems
+                .take(1)
+                .subscribe(onNext: { (_) in
+                    self.tableView.safeScrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+                })
+                .disposed(by: disposeBag)
+        }
+        else if let comment = commentThatNeedsScrollTo {
+            #warning("scroll to comment")
+//            tableView.rx.itemInserted
+//                .takeWhile(<#T##predicate: (IndexPath) throws -> Bool##(IndexPath) throws -> Bool#>)
+        }
+        
     }
     
     override func filterChanged(filter: CommentsListFetcher.Filter) {
@@ -142,6 +151,7 @@ class PostPageVC: CommentsViewController {
     override func editComment(_ comment: ResponseAPIContentGetComment) {
         commentForm.mode = .edit
         commentForm.parentComment = comment
+        commentForm.textView.parseContentBlock(comment.document)
         commentForm.textView.becomeFirstResponder()
     }
     

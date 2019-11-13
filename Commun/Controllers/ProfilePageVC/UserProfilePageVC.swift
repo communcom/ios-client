@@ -181,7 +181,15 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile>, CommentCellDel
             self.show(postPageVC, sender: nil)
             break
         case is CommentCell:
-            #warning("Tap a comment")
+            let comment = viewModel.commentsVM.items.value[indexPath.row]
+            guard let userId = comment.parents.post?.userId,
+                let permlink = comment.parents.post?.permlink,
+                let communityId = comment.parents.post?.communityId
+            else {
+                return
+            }
+            let postPageVC = PostPageVC(userId: userId, permlink: permlink, communityId: communityId)
+            self.show(postPageVC, sender: nil)
             break
         default:
             break

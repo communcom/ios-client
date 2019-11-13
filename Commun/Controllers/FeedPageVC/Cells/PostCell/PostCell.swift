@@ -118,9 +118,7 @@ class PostCell: MyTableViewCell, PostController {
     @objc func commentCountsButtonDidTouch() {
         guard let post = post else {return}
         let postPageVC = PostPageVC(post: post)
-        postPageVC.completion = {
-            postPageVC.tableView.safeScrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
-        }
+        postPageVC.scrollToTopAfterLoadingComment = true
         parentViewController?.show(postPageVC, sender: nil)
     }
 }
