@@ -293,6 +293,13 @@
 		BC74A18223643C6400D94EF2 /* CommunityController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC74A18123643C6400D94EF2 /* CommunityController.swift */; };
 		BC74F503237957790018DB8E /* CommentsVC+CommentCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC74F502237957790018DB8E /* CommentsVC+CommentCellDelegate.swift */; };
 		BC74F505237957F00018DB8E /* UserProfilePageVC+CommentCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC74F504237957F00018DB8E /* UserProfilePageVC+CommentCellDelegate.swift */; };
+		BC7D608A237BF3F1007D8C1A /* MyProfileBlacklistVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7D6089237BF3F1007D8C1A /* MyProfileBlacklistVC.swift */; };
+		BC7D608C237BF419007D8C1A /* MyProfileBlacklistViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7D608B237BF419007D8C1A /* MyProfileBlacklistViewModel.swift */; };
+		BC7D608E237BF4E7007D8C1A /* BlacklistFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7D608D237BF4E7007D8C1A /* BlacklistFetcher.swift */; };
+		BC7D6090237BF764007D8C1A /* BlacklistViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7D608F237BF764007D8C1A /* BlacklistViewModel.swift */; };
+		BC7D6092237BFA1A007D8C1A /* ResponseAPIContentGetBlacklistItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7D6091237BFA1A007D8C1A /* ResponseAPIContentGetBlacklistItem.swift */; };
+		BC7D6094237C004F007D8C1A /* MyProfileBlacklistVC+Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7D6093237C004F007D8C1A /* MyProfileBlacklistVC+Binding.swift */; };
+		BC7D6097237C01BD007D8C1A /* BlacklistCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7D6096237C01BD007D8C1A /* BlacklistCell.swift */; };
 		BC83F26B2369322400B5719D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B1EA02D52289734800835244 /* Localizable.strings */; };
 		BCA0039B23714920002A68BA /* ResponseAPIContentGetLeaders.json in Resources */ = {isa = PBXBuildFile; fileRef = BCA0039A23714920002A68BA /* ResponseAPIContentGetLeaders.json */; };
 		BCA0039D23716AA1002A68BA /* LeaderController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA0039C23716AA1002A68BA /* LeaderController.swift */; };
@@ -674,6 +681,13 @@
 		BC74A18123643C6400D94EF2 /* CommunityController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityController.swift; sourceTree = "<group>"; };
 		BC74F502237957790018DB8E /* CommentsVC+CommentCellDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CommentsVC+CommentCellDelegate.swift"; sourceTree = "<group>"; };
 		BC74F504237957F00018DB8E /* UserProfilePageVC+CommentCellDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserProfilePageVC+CommentCellDelegate.swift"; sourceTree = "<group>"; };
+		BC7D6089237BF3F1007D8C1A /* MyProfileBlacklistVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileBlacklistVC.swift; sourceTree = "<group>"; };
+		BC7D608B237BF419007D8C1A /* MyProfileBlacklistViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileBlacklistViewModel.swift; sourceTree = "<group>"; };
+		BC7D608D237BF4E7007D8C1A /* BlacklistFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlacklistFetcher.swift; sourceTree = "<group>"; };
+		BC7D608F237BF764007D8C1A /* BlacklistViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlacklistViewModel.swift; sourceTree = "<group>"; };
+		BC7D6091237BFA1A007D8C1A /* ResponseAPIContentGetBlacklistItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseAPIContentGetBlacklistItem.swift; sourceTree = "<group>"; };
+		BC7D6093237C004F007D8C1A /* MyProfileBlacklistVC+Binding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MyProfileBlacklistVC+Binding.swift"; sourceTree = "<group>"; };
+		BC7D6096237C01BD007D8C1A /* BlacklistCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlacklistCell.swift; sourceTree = "<group>"; };
 		BCA0039A23714920002A68BA /* ResponseAPIContentGetLeaders.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ResponseAPIContentGetLeaders.json; sourceTree = "<group>"; };
 		BCA0039C23716AA1002A68BA /* LeaderController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderController.swift; sourceTree = "<group>"; };
 		BCA97112236004F500AE37E1 /* CommentsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentsViewModel.swift; sourceTree = "<group>"; };
@@ -914,6 +928,7 @@
 				3B0E9C6F22706965002AB1C2 /* ProfileChooseAvatarVC */,
 				BC6B7652236A74F000A7AF2A /* MyProfileEditBioVC.swift */,
 				BC22BBCD236C18A900F40658 /* MyProfileSettingsVC */,
+				BC7D6088237BF3C8007D8C1A /* MyProfileBlacklistVC */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -1629,6 +1644,7 @@
 				BC016D4C235EA0DB00F1319F /* PostsViewController */,
 				BCA97111236004F500AE37E1 /* CommentsViewController */,
 				BC48FC41236689DC0049C4F4 /* LeadersViewModel.swift */,
+				BC7D608F237BF764007D8C1A /* BlacklistViewModel.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -1767,6 +1783,25 @@
 			path = Subviews;
 			sourceTree = "<group>";
 		};
+		BC7D6088237BF3C8007D8C1A /* MyProfileBlacklistVC */ = {
+			isa = PBXGroup;
+			children = (
+				BC7D6095237C0199007D8C1A /* Subviews */,
+				BC7D6089237BF3F1007D8C1A /* MyProfileBlacklistVC.swift */,
+				BC7D6093237C004F007D8C1A /* MyProfileBlacklistVC+Binding.swift */,
+				BC7D608B237BF419007D8C1A /* MyProfileBlacklistViewModel.swift */,
+			);
+			path = MyProfileBlacklistVC;
+			sourceTree = "<group>";
+		};
+		BC7D6095237C0199007D8C1A /* Subviews */ = {
+			isa = PBXGroup;
+			children = (
+				BC7D6096237C01BD007D8C1A /* BlacklistCell.swift */,
+			);
+			path = Subviews;
+			sourceTree = "<group>";
+		};
 		BCA97111236004F500AE37E1 /* CommentsViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -1894,6 +1929,7 @@
 				BCE9390A234DBBC300226E39 /* ResponseAPIContentBlock.swift */,
 				BCE9390E234DD28400226E39 /* ResponseAPIContentGetPostContent.swift */,
 				BC2B83772371BDFD00C93AD6 /* ResponseAPIContentGetCommunityRule.swift */,
+				BC7D6091237BFA1A007D8C1A /* ResponseAPIContentGetBlacklistItem.swift */,
 			);
 			path = ResponseAPI;
 			sourceTree = "<group>";
@@ -1956,6 +1992,7 @@
 				BC48FC4323668A080049C4F4 /* LeadersListFetcher.swift */,
 				BCCE0A9B2367D47400A183AA /* SubscriptionsListFetcher.swift */,
 				BC619B10237268910005BB94 /* CommunitiesListFetcher.swift */,
+				BC7D608D237BF4E7007D8C1A /* BlacklistFetcher.swift */,
 			);
 			path = Fetchers;
 			sourceTree = "<group>";
@@ -2273,6 +2310,7 @@
 				5787C0C622650FA500568CEC /* SetUserViewModel.swift in Sources */,
 				BCCB993623756375005252CF /* PostHeaderView.swift in Sources */,
 				BCABF1352366D5DC006B05F5 /* ProfileViewModel.swift in Sources */,
+				BC7D6090237BF764007D8C1A /* BlacklistViewModel.swift in Sources */,
 				575AECB122606F6600A7EC2D /* SelectCountryVC.swift in Sources */,
 				BC22BBDB236C2A7F00F40658 /* NotificationSettingsViewModel.swift in Sources */,
 				BC016D50235EA23C00F1319F /* PostsViewController.swift in Sources */,
@@ -2320,6 +2358,7 @@
 				3B8DDF65234B219D00B213F0 /* ArticleEditorVC+TextViewDelegate.swift in Sources */,
 				3BA3779722E9DA6C0071AF3A /* SignupVC+Location.swift in Sources */,
 				57FB179D224BFBD700563BF7 /* PillPageControl.swift in Sources */,
+				BC7D608E237BF4E7007D8C1A /* BlacklistFetcher.swift in Sources */,
 				BCB2A6E62355536D00B3582B /* UITableViewCell.swift in Sources */,
 				3B635F8322774A37006DAAB2 /* FeedTimeFrameMode.swift in Sources */,
 				BCD00FBF2375087C004A3952 /* PostPageVC.swift in Sources */,
@@ -2331,6 +2370,7 @@
 				3BAE5CD4233899F30055F23E /* ContentTextView.swift in Sources */,
 				3B2F226C226892C5006B589E /* NotificationsPageVC.swift in Sources */,
 				BC619B1B2372B5760005BB94 /* CommunityMembersViewModel.swift in Sources */,
+				BC7D6097237C01BD007D8C1A /* BlacklistCell.swift in Sources */,
 				3BAD8E812318D838005A8AB3 /* UITextView+UILabel.swift in Sources */,
 				BCA97113236004F500AE37E1 /* CommentsViewModel.swift in Sources */,
 				BC6B765B236BC58600A7AF2A /* ErrorView.swift in Sources */,
@@ -2360,6 +2400,7 @@
 				3B8DDF5C234B121D00B213F0 /* EditorColorPicker.swift in Sources */,
 				BCCC33E823751686004E46EF /* CommentCell.swift in Sources */,
 				BC016D49235DA2AC00F1319F /* MyTableViewCell.swift in Sources */,
+				BC7D6092237BFA1A007D8C1A /* ResponseAPIContentGetBlacklistItem.swift in Sources */,
 				BCB2A6F023556FC100B3582B /* BasicEditorVC+Tools.swift in Sources */,
 				BC619B1F2373B5550005BB94 /* CommunityMembersVC.swift in Sources */,
 				3B5D361C22E8303C0012A991 /* HTMLStringWebView.swift in Sources */,
@@ -2369,9 +2410,12 @@
 				3B2F227122689308006B589E /* TabBarViewModel.swift in Sources */,
 				BCF74A6023617F5700B91089 /* SubscribersListFetcher.swift in Sources */,
 				BC016D52235EA25B00F1319F /* ListViewController.swift in Sources */,
+				BC7D608C237BF419007D8C1A /* MyProfileBlacklistViewModel.swift in Sources */,
+				BC7D6094237C004F007D8C1A /* MyProfileBlacklistVC+Binding.swift in Sources */,
 				3B3C8B8F2347876000D8BADB /* ArticleEditorTextView+Utilities.swift in Sources */,
 				BC702C902362825100D9E88A /* MyAvatarImageView.swift in Sources */,
 				BC69F7D1236FD1690097F870 /* NotificationSettingsView.swift in Sources */,
+				BC7D608A237BF3F1007D8C1A /* MyProfileBlacklistVC.swift in Sources */,
 				3B3C8B932347876000D8BADB /* ArticleEditorTextView+Delegate.swift in Sources */,
 				BCABF1392366DF2B006B05F5 /* UserProfilePageVC.swift in Sources */,
 				3B8DDF56234AD5D500B213F0 /* ContentTextView+Parsing.swift in Sources */,

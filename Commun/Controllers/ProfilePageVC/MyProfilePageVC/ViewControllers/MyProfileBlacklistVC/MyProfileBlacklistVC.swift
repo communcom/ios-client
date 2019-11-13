@@ -1,42 +1,25 @@
 //
-//  CommunityMembersVC.swift
+//  MyProfileBlacklistVC.swift
 //  Commun
 //
-//  Created by Chung Tran on 11/7/19.
+//  Created by Chung Tran on 11/13/19.
 //  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
 //
 
 import Foundation
 import RxSwift
-import RxDataSources
 
-class CommunityMembersVC: BaseViewController {
-    // MARK: - Nested type
-    enum CustomElementType: IdentifiableType, Equatable {
-        case subscriber(ResponseAPIContentResolveProfile)
-        case leader(ResponseAPIContentGetLeader)
-        
-        var identity: String {
-            switch self {
-            case .subscriber(let subscriber):
-                return "subscriber/" + subscriber.identity
-            case .leader(let leader):
-                return "leader/" + leader.identity
-            }
-        }
-    }
-    
+class MyProfileBlacklistVC: BaseViewController {
     // MARK: - Properties
-    var selectedSegmentedItem: CommunityMembersViewModel.SegmentedItem
     let disposeBag = DisposeBag()
-    var viewModel: CommunityMembersViewModel
+    let viewModel: MyProfileBlacklistViewModel
     
     // MARK: - Subviews
+    
     lazy var topTabBar = CMTopTabBar(
         height: 35,
-        labels: CommunityMembersViewModel.SegmentedItem.allCases.map {$0.rawValue.localized().uppercaseFirst},
-        selectedIndex: selectedSegmentedItem.index)
-    
+        labels: MyProfileBlacklistViewModel.SegmentedItem.allCases.map {$0.rawValue.localized().uppercaseFirst},
+        selectedIndex: 0)
     lazy var tableView: UITableView = {
         let tableView = UITableView(forAutoLayout: ())
         tableView.backgroundColor = .clear
@@ -46,12 +29,9 @@ class CommunityMembersVC: BaseViewController {
         return tableView
     }()
     
-    lazy var headerView = CommunityMembersHeaderView(height: 268)
-    
     // MARK: - Initializers
-    init(community: ResponseAPIContentGetCommunity, selectedSegmentedItem: CommunityMembersViewModel.SegmentedItem) {
-        self.selectedSegmentedItem = selectedSegmentedItem
-        self.viewModel = CommunityMembersViewModel(community: community, starterSegmentedItem: selectedSegmentedItem)
+    init() {
+        self.viewModel = MyProfileBlacklistViewModel()
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -62,7 +42,7 @@ class CommunityMembersVC: BaseViewController {
     // MARK: - Methods
     override func setUp() {
         super.setUp()
-        title = viewModel.community.name
+        title = "my blacklist".localized().uppercaseFirst
         setLeftNavBarButtonForGoingBack()
         
         edgesForExtendedLayout = .all
@@ -83,8 +63,7 @@ class CommunityMembersVC: BaseViewController {
         tableView.autoPinEdge(.top, to: .bottom, of: topBarContainerView)
         
         tableView.backgroundColor = .f3f5fa
-        tableView.register(SubscribersCell.self, forCellReuseIdentifier: "SubscribersCell")
-        tableView.register(CommunityLeaderCell.self, forCellReuseIdentifier: "CommunityLeaderCell")
+        tableView.register(BlacklistCell.self, forCellReuseIdentifier: "BlacklistCell")
         
         tableView.separatorInset = .zero
         
@@ -123,15 +102,12 @@ class CommunityMembersVC: BaseViewController {
         var title = "empty"
         var description = "not found"
         switch viewModel.segmentedItem.value {
-        case .all:
-            title = "no members"
-            description = "members not found"
-        case .leaders:
-            title = "no leaders"
-            description = "leaders not found"
-        case .friends:
-            title = "no friends"
-            description = "friends not found"
+        case .users:
+            title = "no users"
+            description = "no blocked users found"
+        case .communities:
+            title = "no communities"
+            description = "no blocked communities found"
         }
         
         tableView.addEmptyPlaceholderFooterView(title: title.localized().uppercaseFirst, description: description.localized().uppercaseFirst)

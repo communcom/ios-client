@@ -52,10 +52,7 @@ extension CommunityMembersVC: UICollectionViewDelegateFlowLayout {
                 case .listEmpty:
                     self?.handleListEmpty()
                 case .error(_):
-                    guard let strongSelf = self else {return}
-                    #warning("error handling")
-//                    strongSelf.tableView.addListErrorFooterView(with: #selector(strongSelf.didTapTryAgain(gesture:)), on: strongSelf)
-//                    strongSelf.tableView.reloadData()
+                    self?.handleListError()
                 }
             })
             .disposed(by: disposeBag)
