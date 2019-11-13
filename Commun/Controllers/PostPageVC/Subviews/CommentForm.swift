@@ -55,9 +55,14 @@ class CommentForm: MyView {
             .subscribe(onNext: { (isEmpty) in
                 if isEmpty {
                     self.sendButton.isEnabled = false
+                    self.avatarImageView.widthConstraint?.constant = 35
                 } else {
                     self.sendButton.isEnabled = true
+                    self.avatarImageView.widthConstraint?.constant = 0
                 }
+                UIView.animate(withDuration: 0.3, animations: {
+                    self.layoutIfNeeded()
+                })
             })
             .disposed(by: disposeBag)
         
