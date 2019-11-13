@@ -33,8 +33,8 @@ class MyProfileBlacklistViewModel: BaseViewModel {
     // MARK: - Objects
     let listLoadingState    = BehaviorRelay<ListFetcherState>(value: .loading(false))
     lazy var segmentedItem  = BehaviorRelay<SegmentedItem>(value: .users)
-    lazy var usersVM        = BlacklistViewModel(type: .user)
-    lazy var communitiesVM  = BlacklistViewModel(type: .community)
+    lazy var usersVM        = BlacklistViewModel(type: .users)
+    lazy var communitiesVM  = BlacklistViewModel(type: .communities)
     let items = BehaviorRelay<[ResponseAPIContentGetBlacklistItem]>(value: [])
     
     // MARK: - Initializers
