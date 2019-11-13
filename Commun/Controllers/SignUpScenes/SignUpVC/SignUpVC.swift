@@ -178,7 +178,10 @@ class SignUpVC: UIViewController, SignUpRouter {
     
     private func setupReCaptcha() {
         recaptcha = try! ReCaptcha(endpoint: endpoint, locale: locale)
+
+        #if DEBUG
         recaptcha.forceVisibleChallenge = true
+        #endif
 
         recaptcha.configureWebView { [weak self] webview in
             webview.frame = self?.view.bounds ?? CGRect.zero
