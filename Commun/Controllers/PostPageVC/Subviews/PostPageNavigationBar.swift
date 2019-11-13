@@ -7,8 +7,15 @@
 //
 
 import Foundation
+import CyberSwift
+import RxSwift
 
-class PostPageNavigationBar: MyView {
+class PostPageNavigationBar: MyView, CommunityController {
+    // MARK: - Properties
+    let disposeBag = DisposeBag()
+    var community: ResponseAPIContentGetCommunity?
+    
+    // MARK: - Subviews
     lazy var backButton: UIButton = .back(tintColor: .a5a7bd)
     
     lazy var postMetaView: PostMetaView = {
@@ -48,15 +55,31 @@ class PostPageNavigationBar: MyView {
         joinButton.autoPinEdge(.leading, to: .trailing, of: postMetaView, withOffset: 8)
         joinButton.leadingAnchor.constraint(greaterThanOrEqualTo: postMetaView.trailingAnchor, constant: 8)
             .isActive = true
+        joinButton.addTarget(self, action: #selector(joinButtonDidTouch), for: .touchUpInside)
         
         postMetaView.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+        
+        observeCommunityChange()
     }
     
     func setUp(with post: ResponseAPIContentGetPost) {
         postMetaView.setUp(post: post)
+        setUp(with: post.community)
+    }
+    
+    func setUp(with community: ResponseAPIContentGetCommunity) {
+        self.community = community
+        // joinButton
+        let joined = community.isSubscribed ?? false
+        joinButton.backgroundColor = joined ? #colorLiteral(red: 0.9525656104, green: 0.9605062604, blue: 0.9811610579, alpha: 1): .appMainColor
+        joinButton.setTitleColor(joined ? .appMainColor: .white , for: .normal)
+        joinButton.setTitle(joined ? "joined".localized().uppercaseFirst : "join".localized().uppercaseFirst, for: .normal)
     }
     
     @objc func backButtonDidTouch() {
         parentViewController?.back()
+    }
+    @objc func joinButtonDidTouch() {
+        toggleJoin()
     }
 }

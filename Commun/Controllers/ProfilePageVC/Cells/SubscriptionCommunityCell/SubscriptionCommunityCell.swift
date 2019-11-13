@@ -63,7 +63,7 @@ class SubscriptionCommunityCell: MyCollectionViewCell, CommunityController {
     
     override func observe() {
         super.observe()
-        observerCommunityChange()
+        observeCommunityChange()
     }
     
     func setUp(with community: ResponseAPIContentGetSubscriptionsCommunity) {

@@ -176,7 +176,7 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
         ]
         
         // observe
-        observerCommunityChange()
+        observeCommunityChange()
     }
     
     func setUp(with community: ResponseAPIContentGetCommunity) {
