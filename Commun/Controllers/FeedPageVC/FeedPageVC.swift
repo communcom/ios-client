@@ -43,8 +43,6 @@ class FeedPageVC: PostsViewController {
         userAvatarImage.observeCurrentUserAvatar()
             .disposed(by: disposeBag)
         
-        tableView.emptyDataSetSource = self
-        tableView.emptyDataSetDelegate = self
         tableView.estimatedRowHeight = UITableView.automaticDimension
         // dismiss keyboard when dragging
         tableView.keyboardDismissMode = .onDrag

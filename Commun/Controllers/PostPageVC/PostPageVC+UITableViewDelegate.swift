@@ -56,10 +56,8 @@ extension PostPageVC: UITableViewDelegate {
         RestAPIManager.instance.getRepliesForComment(
             forPost: post.contentId,
             parentComment: comment.contentId,
-            sortBy: .time,
             offset: button.offset,
-            limit: button.limit,
-            resolveNestedComments: true
+            limit: button.limit
         )
             .map {$0.items}
             .subscribe(onSuccess: {[weak self] (children) in
@@ -70,8 +68,7 @@ extension PostPageVC: UITableViewDelegate {
                 {
                     var newChildren = comments[currentCommentIndex].children ?? []
                     newChildren.joinUnique(children ?? [])
-                    #warning("bug in backend, response comments returns all parents comment, delete filterOut after bug fixing")
-                    comments[currentCommentIndex].children = newChildren.filterOut(comments)
+                    comments[currentCommentIndex].children = newChildren
                 }
                 strongSelf.viewModel.items.accept(comments)
             }) { [weak self] (error) in

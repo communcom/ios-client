@@ -68,9 +68,7 @@ class ListViewController<T: ListItemType>: BaseViewController {
                 case .listEmpty:
                     self?.handleListEmpty()
                 case .error(_):
-                    guard let strongSelf = self else {return}
-                    strongSelf.tableView.addListErrorFooterView(with: #selector(strongSelf.didTapTryAgain(gesture:)), on: strongSelf)
-                    strongSelf.tableView.reloadData()
+                    self?.handleListError()
                 }
             })
             .disposed(by: disposeBag)
@@ -102,17 +100,16 @@ class ListViewController<T: ListItemType>: BaseViewController {
         tableView.tableFooterView = UIView()
     }
     
-    @objc func refresh() {
-        viewModel.reload()
-    }
-    
-    @objc func didTapTryAgain(gesture: UITapGestureRecognizer) {
-        guard let label = gesture.view as? UILabel,
-            let text = label.text else {return}
-        
-        let tryAgainRange = (text as NSString).range(of: "try again".localized().uppercaseFirst)
-        if gesture.didTapAttributedTextInLabel(label: label, inRange: tryAgainRange) {
+    func handleListError() {
+        let title = "error"
+        let description = "there is an error occurs"
+        tableView.addEmptyPlaceholderFooterView(title: title.localized().uppercaseFirst, description: description.localized().uppercaseFirst, buttonLabel: "retry".localized().uppercaseFirst)
+        {
             self.viewModel.fetchNext(forceRetry: true)
         }
+    }
+    
+    @objc func refresh() {
+        viewModel.reload()
     }
 }

@@ -11,7 +11,6 @@ import RxSwift
 import RxCocoa
 import CyberSwift
 import RxDataSources
-import DZNEmptyDataSet
 
 class NotificationsPageVC: ListViewController<ResponseAPIOnlineNotificationData> {
     
@@ -37,12 +36,6 @@ class NotificationsPageVC: ListViewController<ResponseAPIOnlineNotificationData>
             }
             return cell
         })
-        
-        // tableView emptyDataSet
-        tableView.emptyDataSetDelegate = self
-        tableView.emptyDataSetSource = self
-        
-        
     }
     
     override func bind() {
@@ -100,6 +93,15 @@ class NotificationsPageVC: ListViewController<ResponseAPIOnlineNotificationData>
     
     override func showLoadingFooter() {
         tableView.addNotificationsLoadingFooterView()
+    }
+    
+    override func handleListEmpty() {
+        let title = "no notification"
+        let description = "notifications not found"
+        tableView.addEmptyPlaceholderFooterView(title: title.localized().uppercaseFirst, description: description.localized().uppercaseFirst, buttonLabel: "reload".localized().uppercaseFirst)
+        {
+            self.viewModel.reload()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {

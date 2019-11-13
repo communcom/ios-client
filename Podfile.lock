@@ -27,8 +27,6 @@ PODS:
     - SwiftyJSON (~> 4.0)
   - DateToolsSwift (4.0.0)
   - Differentiator (3.1.0)
-  - Down (0.9.0)
-  - DZNEmptyDataSet (1.8.1)
   - eosswift (1.5):
     - BigInt (~> 3.1.0)
     - RxCocoa (~> 4.0)
@@ -168,8 +166,6 @@ DEPENDENCIES:
   - Crashlytics
   - "CyberSwift (from `git@github.com:communcom/cyberSwift.git`)"
   - DateToolsSwift
-  - Down
-  - DZNEmptyDataSet
   - "eosswift (from `git@github.com:communcom/eos-swift.git`)"
   - ESPullToRefresh
   - Fabric
@@ -210,8 +206,6 @@ SPEC REPOS:
     - CryptoSwift
     - DateToolsSwift
     - Differentiator
-    - Down
-    - DZNEmptyDataSet
     - ESPullToRefresh
     - Fabric
     - Firebase
@@ -270,7 +264,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   CyberSwift:
-    :commit: c5480254bdc6515173cfa77e10a2a92176140e37
+    :commit: eb05901929677671ae0e96595ce02a82ed1d6dc5
     :git: "git@github.com:communcom/cyberSwift.git"
   eosswift:
     :commit: d919b66d452de46568b94745451111123af80ca9
@@ -294,8 +288,6 @@ SPEC CHECKSUMS:
   CyberSwift: ae317b8352ca0fb63e817062628452ed40dd3fc6
   DateToolsSwift: 875d97ff9e3a5d54abdd67a269b3f51c757b71ab
   Differentiator: be49ca3408f0ecfc761e4c7763d20c62be01b9ad
-  Down: 1cdbca4963b542d0ef34ebb3e10ff48382bdf761
-  DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
   eosswift: 753a0f14eb3924707036903aa90b9e607dfb8a36
   ESPullToRefresh: ce058a36454a5032519cc9d8b45da217728cf104
   Fabric: 706c8b8098fff96c33c0db69cbf81f9c551d0d74
@@ -344,6 +336,6 @@ SPEC CHECKSUMS:
   TLPhotoPicker: 04e4ef38b31ee51388058c3e1e7bbdbd79614cef
   "UITextView+Placeholder": c407b27599ea23cca425946fee3cf1db5d547008
 
-PODFILE CHECKSUM: 6b3fe5996ccadfedb2cb981d59a5ae75cbaa9fc2
+PODFILE CHECKSUM: b674661c63f4e9964311b40e2d7c002df33fa329
 
 COCOAPODS: 1.8.4

@@ -43,14 +43,11 @@ def common_pods
   
   pod 'ListPlaceholder'
   
-  pod 'DZNEmptyDataSet'
-  
   pod 'QRCodeReaderViewController', '~> 4.0.2'
   
   pod 'THPinViewController', :git => "https://github.com/bigearsenal/THPinViewController.git", :branch => "commun"
   
   pod 'AppImageViewer'
-  pod 'Down'
   pod 'SDURLCache', '~> 1.3'
   pod 'UITextView+Placeholder'
   

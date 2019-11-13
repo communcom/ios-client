@@ -170,7 +170,7 @@ extension UITableView {
         return ControlEvent(events: source)
     }
     
-    func addEmptyPlaceholderFooterView(height: CGFloat = 150, title: String, description: String? = nil) {
+    func addEmptyPlaceholderFooterView(height: CGFloat = 150, title: String, description: String? = nil, buttonLabel: String? = nil, buttonAction: (()->Void)? = nil) {
         // Prevent dupplicating
         if tableFooterView?.tag == emptyPlaceholderViewTag {
             return
@@ -179,7 +179,7 @@ extension UITableView {
         let containerView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: height + 40))
         containerView.tag = tag
         
-        let placeholderView = MyEmptyPlaceHolderView(title: title, description: description)
+        let placeholderView = MyEmptyPlaceHolderView(title: title, description: description, buttonLabel: buttonLabel, buttonAction: buttonAction)
         containerView.addSubview(placeholderView)
         
         placeholderView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10))
