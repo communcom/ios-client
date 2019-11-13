@@ -115,4 +115,12 @@ class CommentsViewController: ListViewController<ResponseAPIContentGetComment>, 
         let description = "comments not found"
         tableView.addEmptyPlaceholderFooterView(title: title.localized().uppercaseFirst, description: description.localized().uppercaseFirst)
     }
+    
+    // MARK: - Actions
+    func editComment(_ comment: ResponseAPIContentGetComment) {
+        // for overriding
+    }
+    func replyToComment(_ comment: ResponseAPIContentGetComment) {
+        // for overriding
+    }
 }

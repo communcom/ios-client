@@ -14,6 +14,10 @@ extension CommentsViewController {
     }
     
     func cell(_ cell: CommentCell, didTapEditForComment comment: ResponseAPIContentGetComment) {
-        #warning("edit comment")
+        editComment(comment)
+    }
+    
+    func cell(_ cell: CommentCell, didTapReplyButtonForComment comment: ResponseAPIContentGetComment) {
+        replyToComment(comment)
     }
 }

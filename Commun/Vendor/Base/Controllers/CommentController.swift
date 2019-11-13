@@ -172,49 +172,18 @@ extension CommentController {
             highlightedButtonIndex: 1)
             { (index) in
                 if index == 0 {
-                    #warning("delete comment")
-//                    NetworkService.shared.deletePost(permlink: comment.contentId.permlink)
-//                    .subscribe(onCompleted: {
-//                        self.comment?.notifyChanged()
-//                    }, onError: { error in
-//                        topController.showError(error)
-//                    })
-//                    .disposed(by: self.disposeBag)
+                    topController.showIndetermineHudWithMessage("deleting".localized().uppercaseFirst)
+                    NetworkService.shared.deletePost(permlink: comment.contentId.permlink)
+                        .subscribe(onCompleted: {
+                            topController.hideHud()
+                            self.comment?.notifyDeleted()
+                        }, onError: { error in
+                            topController.hideHud()
+                            topController.showError(error)
+                        })
+                        .disposed(by: self.disposeBag)
                 }
             }
-    }
-    
-    func editPost() {
-        guard let comment = comment,
-            let topController = UIApplication.topViewController() else {return}
-        
-        topController.showIndetermineHudWithMessage("loading post".localized().uppercaseFirst)
-        #warning("delete comment")
-//        NetworkService.shared.getPost(withPermLink: post.contentId.permlink)
-//            .subscribe(onSuccess: {post in
-//                topController.hideHud()
-//                if post.document?.attributes?.type == "basic" {
-//                    let vc = BasicEditorVC()
-//                    vc.viewModel.postForEdit = post
-//                    vc.modalPresentationStyle = .fullScreen
-//                    topController.present(vc, animated: true, completion: nil)
-//                    return
-//                }
-//
-//                if post.document?.attributes?.type == "article" {
-//                    let vc = ArticleEditorVC()
-//                    vc.viewModel.postForEdit = post
-//                    vc.modalPresentationStyle = .fullScreen
-//                    topController.present(vc, animated: true, completion: nil)
-//                    return
-//                }
-//                topController.hideHud()
-//                topController.showError(ErrorAPI.invalidData(message: "Unsupported type of post"))
-//            }, onError: {error in
-//                topController.hideHud()
-//                topController.showError(error)
-//            })
-//            .disposed(by: disposeBag)
     }
 }
 

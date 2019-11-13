@@ -31,7 +31,7 @@ extension UIView {
         }
     }
     
-    func autoPinTopAndLeadingToSuperView(inset: CGFloat = 16, xInset: CGFloat? = nil) {
+    func autoPinTopAndLeadingToSuperView(inset: CGFloat = 0, xInset: CGFloat? = nil) {
         autoPinEdge(toSuperviewEdge: .leading, withInset: xInset ?? inset)
         autoPinEdge(toSuperviewEdge: .top, withInset: inset)
     }

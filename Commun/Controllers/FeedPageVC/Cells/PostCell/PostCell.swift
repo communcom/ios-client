@@ -83,6 +83,7 @@ class PostCell: MyTableViewCell, PostController {
         contentView.addSubview(commentsCountButton)
         commentsCountButton.autoPinEdge(.trailing, to: .leading, of: commentsCountLabel, withOffset: -8)
         commentsCountButton.autoAlignAxis(.horizontal, toSameAxisOf: voteContainerView)
+        commentsCountButton.addTarget(self, action: #selector(commentCountsButtonDidTouch), for: .touchUpInside)
         
         // separator
         let separatorView = UIView(height: 10)
@@ -112,5 +113,12 @@ class PostCell: MyTableViewCell, PostController {
         #warning("change this number later")
         self.sharesCountLabel.text         =   "\(post.stats?.viewCount ?? 0)"
         
+    }
+    
+    @objc func commentCountsButtonDidTouch() {
+        guard let post = post else {return}
+        let postPageVC = PostPageVC(post: post)
+        postPageVC.scrollToTopAfterLoadingComment = true
+        parentViewController?.show(postPageVC, sender: nil)
     }
 }

@@ -79,14 +79,15 @@ extension CommentCell: UITextViewDelegate {
                         title: "edit".localized().uppercaseFirst,
                         icon: UIImage(named: "edit"),
                         handle: {
-                            #warning("edit comment")
+                            guard let comment = self.comment else {return}
+                            self.delegate?.cell(self, didTapEditForComment: comment)
                         },
                         tintColor: .black),
                     CommunActionSheet.Action(
                         title: "delete".localized().uppercaseFirst,
                         icon: UIImage(named: "delete"),
                         handle: {
-                            #warning("delete comment")
+                            self.deleteComment()
                         },
                         tintColor: UIColor(hexString: "#ED2C5B")!)
                 ]

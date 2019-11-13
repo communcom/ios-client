@@ -26,6 +26,8 @@ class PostPageVC: CommentsViewController {
     lazy var commentForm = CommentForm(backgroundColor: .white)
     
     // MARK: - Properties
+    var scrollToTopAfterLoadingComment = false
+    var commentThatNeedsScrollTo: ResponseAPIContentGetComment?
     
     // MARK: - Initializers
     init(post: ResponseAPIContentGetPost) {
@@ -70,13 +72,19 @@ class PostPageVC: CommentsViewController {
         tableView.keyboardDismissMode = .onDrag
         
         // postView
+        postView.commentsCountButton.addTarget(self, action: #selector(commentsCountButtonDidTouch), for: .touchUpInside)
 //        postView.sortButton.addTarget(self, action: #selector(sortButtonDidTouch), for: .touchUpInside)
         
         // comment form
         let shadowView = UIView(forAutoLayout: ())
-        view.addSubview(shadowView)
-        shadowView.autoPinEdgesToSuperviewSafeArea(with: .zero, excludingEdge: .top)
         shadowView.addShadow(ofColor: .shadow, radius: 4, offset: CGSize(width: 0, height: -6), opacity: 0.1)
+        
+        view.addSubview(shadowView)
+        shadowView.autoPinEdge(toSuperviewSafeArea: .leading)
+        shadowView.autoPinEdge(toSuperviewSafeArea: .trailing)
+        let keyboardViewV = KeyboardLayoutConstraint(item: view!.safeAreaLayoutGuide, attribute: .bottom, relatedBy: .equal, toItem: shadowView, attribute: .bottom, multiplier: 1.0, constant: 0.0)
+        keyboardViewV.observeKeyboardHeight()
+        self.view.addConstraint(keyboardViewV)
         
         shadowView.addSubview(commentForm)
         commentForm.autoPinEdgesToSuperviewEdges()
@@ -106,6 +114,22 @@ class PostPageVC: CommentsViewController {
         // forward delegate
         tableView.rx.setDelegate(self)
             .disposed(by: disposeBag)
+        
+        // completion
+        if scrollToTopAfterLoadingComment {
+            tableView.rx.insertedItems
+                .take(1)
+                .subscribe(onNext: { (_) in
+                    self.tableView.safeScrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+                })
+                .disposed(by: disposeBag)
+        }
+        else if let comment = commentThatNeedsScrollTo {
+            #warning("scroll to comment")
+//            tableView.rx.itemInserted
+//                .takeWhile(<#T##predicate: (IndexPath) throws -> Bool##(IndexPath) throws -> Bool#>)
+        }
+        
     }
     
     override func filterChanged(filter: CommentsListFetcher.Filter) {
@@ -122,6 +146,19 @@ class PostPageVC: CommentsViewController {
 //            title = "oldest first".localized().uppercaseFirst
 //        }
 //        postView.sortButton.setTitle(title, for: .normal)
+    }
+    
+    override func editComment(_ comment: ResponseAPIContentGetComment) {
+        commentForm.mode = .edit
+        commentForm.parentComment = comment
+        commentForm.textView.parseContentBlock(comment.document)
+        commentForm.textView.becomeFirstResponder()
+    }
+    
+    override func replyToComment(_ comment: ResponseAPIContentGetComment) {
+        commentForm.mode = .reply
+        commentForm.parentComment = comment
+        commentForm.textView.becomeFirstResponder()
     }
     
     @objc func openMorePostActions() {
@@ -151,6 +188,10 @@ class PostPageVC: CommentsViewController {
                         vm.changeFilter(sortBy: .time)
                     }),
             ])
+    }
+    
+    @objc func commentsCountButtonDidTouch() {
+        tableView.safeScrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
     }
     
     override func refresh() {

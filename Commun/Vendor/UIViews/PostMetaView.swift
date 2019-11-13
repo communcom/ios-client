@@ -30,7 +30,7 @@ class PostMetaView: MyView {
         super.commonInit()
         // avatar
         addSubview(avatarImageView)
-        avatarImageView.autoPinTopAndLeadingToSuperView(inset: 0)
+        avatarImageView.autoPinTopAndLeadingToSuperView()
         
         // communityNameLabel
         addSubview(comunityNameLabel)

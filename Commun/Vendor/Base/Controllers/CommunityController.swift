@@ -49,7 +49,7 @@ protocol CommunityController: class {
 
 extension CommunityController {
     // Apply changes to view when community changed
-    func observerCommunityChange() {
+    func observeCommunityChange() {
         NotificationCenter.default.rx.notification(.init(rawValue: "\(Community.self)DidChange"))
             .subscribe(onNext: {notification in
                 guard let newCommunity = notification.object as? Community,

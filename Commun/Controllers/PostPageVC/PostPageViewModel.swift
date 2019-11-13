@@ -36,7 +36,7 @@ class PostPageViewModel: CommentsViewModel {
         self.userId = userId
         self.permlink = permlink
         self.communityId = communityId
-        super.init(filter: CommentsListFetcher.Filter(type: .post, userId: userId, permlink: permlink))
+        super.init(filter: CommentsListFetcher.Filter(type: .post, userId: userId, permlink: permlink, communityId: communityId))
         defer {setUp()}
     }
     
