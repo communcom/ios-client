@@ -26,6 +26,7 @@ class PostPageVC: CommentsViewController {
     lazy var commentForm = CommentForm(backgroundColor: .white)
     
     // MARK: - Properties
+    var completion: (()->Void)?
     
     // MARK: - Initializers
     init(post: ResponseAPIContentGetPost) {
@@ -70,6 +71,7 @@ class PostPageVC: CommentsViewController {
         tableView.keyboardDismissMode = .onDrag
         
         // postView
+        postView.commentsCountButton.addTarget(self, action: #selector(commentsCountButtonDidTouch), for: .touchUpInside)
 //        postView.sortButton.addTarget(self, action: #selector(sortButtonDidTouch), for: .touchUpInside)
         
         // comment form
@@ -110,6 +112,14 @@ class PostPageVC: CommentsViewController {
         
         // forward delegate
         tableView.rx.setDelegate(self)
+            .disposed(by: disposeBag)
+        
+        // completion
+        tableView.rx.insertedItems
+            .take(1)
+            .subscribe(onNext: { (_) in
+                self.completion?()
+            })
             .disposed(by: disposeBag)
     }
     
@@ -168,6 +178,10 @@ class PostPageVC: CommentsViewController {
                         vm.changeFilter(sortBy: .time)
                     }),
             ])
+    }
+    
+    @objc func commentsCountButtonDidTouch() {
+        tableView.safeScrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
     }
     
     override func refresh() {
