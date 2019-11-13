@@ -99,7 +99,9 @@ class ListFetcher<T: ListItemType> {
                         self.state.accept(.listEmpty)
                     }
                     else {
-                        self.state.accept(.listEnded)
+                        if self.items.value.count > 0 {
+                            self.state.accept(.listEnded)
+                        }
                     }
                 }
                 else if items.count < self.limit {

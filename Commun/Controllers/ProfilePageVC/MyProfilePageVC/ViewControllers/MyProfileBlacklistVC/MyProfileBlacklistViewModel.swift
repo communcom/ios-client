@@ -56,21 +56,26 @@ class MyProfileBlacklistViewModel: BaseViewModel {
             .disposed(by: disposeBag)
         
         // Loading state
-        Observable.merge(
-            usersVM.state.asObservable().filter {_ in self.segmentedItem.value == .users},
-            communitiesVM.state.asObservable().filter {_ in self.segmentedItem.value == .communities}
-        )
-            .distinctUntilChanged { (lhs, rhs) -> Bool in
-                switch (lhs, rhs) {
-                case (.loading(let isLoading1), .loading(let isLoading2)):
-                    return isLoading1 == isLoading2
-                case (.listEnded, .listEnded):
-                    return true
-                default:
-                    return false
-                }
-            }
+        usersVM.state
+            .do(onNext: { (state) in
+                print("usersVM state \(state)")
+            })
+            .filter {_ in self.segmentedItem.value == .users}
             .bind(to: listLoadingState)
+            .disposed(by: disposeBag)
+        
+        communitiesVM.state
+            .do(onNext: { (state) in
+                print("communitiesVM state \(state)")
+            })
+            .filter {_ in self.segmentedItem.value == .communities}
+            .bind(to: listLoadingState)
+            .disposed(by: disposeBag)
+        
+        listLoadingState
+            .subscribe(onNext: { (state) in
+                print(state)
+            })
             .disposed(by: disposeBag)
         
         // items
