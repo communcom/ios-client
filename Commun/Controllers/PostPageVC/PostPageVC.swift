@@ -74,9 +74,14 @@ class PostPageVC: CommentsViewController {
         
         // comment form
         let shadowView = UIView(forAutoLayout: ())
-        view.addSubview(shadowView)
-        shadowView.autoPinEdgesToSuperviewSafeArea(with: .zero, excludingEdge: .top)
         shadowView.addShadow(ofColor: .shadow, radius: 4, offset: CGSize(width: 0, height: -6), opacity: 0.1)
+        
+        view.addSubview(shadowView)
+        shadowView.autoPinEdge(toSuperviewSafeArea: .leading)
+        shadowView.autoPinEdge(toSuperviewSafeArea: .trailing)
+        let keyboardViewV = KeyboardLayoutConstraint(item: view!.safeAreaLayoutGuide, attribute: .bottom, relatedBy: .equal, toItem: shadowView, attribute: .bottom, multiplier: 1.0, constant: 0.0)
+        keyboardViewV.observeKeyboardHeight()
+        self.view.addConstraint(keyboardViewV)
         
         shadowView.addSubview(commentForm)
         commentForm.autoPinEdgesToSuperviewEdges()
