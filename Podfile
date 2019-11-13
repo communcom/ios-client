@@ -5,16 +5,15 @@ use_frameworks!
 # ignore all warnings from all pods
 inhibit_all_warnings!
 
-def common_pods
+project 'Commun.xcodeproj'
+project 'cyberSwift/CyberSwift.xcodeproj'
 
+def common_pods
   pod 'Fabric'
   pod 'Crashlytics'
   pod 'Firebase/Analytics'
   pod 'Firebase/Core'
   pod 'Firebase/Messaging'
-  
-  pod 'CyberSwift', :git => "git@github.com:communcom/cyberSwift.git" # "https://github.com/Monserg/cyber-ios.git"
-  pod 'eosswift', :git => "git@github.com:communcom/eos-swift.git"
   
   pod 'Alamofire'
   pod 'Swinject'
@@ -59,9 +58,38 @@ def common_pods
 
 end
 
-target 'Commun' do
-  common_pods
+def cyberswift_common_pods
+
+  # EOS framework
+  pod 'eosswift', :git => "git@github.com:communcom/eos-swift.git"
   
+  pod 'RxSwift'
+  pod 'RxCocoa'
+  
+  pod 'Checksum'
+  pod 'Locksmith'
+  pod 'SwiftTheme'
+  pod 'CryptoSwift'
+  pod 'secp256k1.swift'
+  pod 'Localize-Swift', '~> 2.0'
+  
+  # Websockets in swift for iOS and OSX
+  #  pod 'Starscream', '~> 3.0'
+  pod 'SwiftyJSON', '~> 4.0'
+  pod 'Starscream'
+  pod 'ReachabilitySwift', '~> 4.3.1'
+  
+  # GoloCrypto
+  pod 'GoloCrypto', :git => "git@github.com:communcom/GoloGrypto.git"
+end
+
+target 'Commun' do
+
+  project 'Commun.xcodeproj'
+  common_pods
+  cyberswift_common_pods
+  
+
   post_install do |installer|
     installer.pods_project.targets.each do |target|
       if ['CyberSwift'].include? target.name
@@ -75,5 +103,23 @@ target 'Commun' do
 end
 
 target 'CommunTests' do
+
+  project 'Commun.xcodeproj'
   common_pods
+  cyberswift_common_pods
+
+end
+
+target 'CyberSwift' do
+
+  workspace 'cyberSwift/CyberSwift.xcworkspace'
+  cyberswift_common_pods
+
+end
+
+target 'CyberSwiftTests' do
+
+  workspace 'cyberSwift/CyberSwift.xcworkspace'
+  cyberswift_common_pods
+
 end
