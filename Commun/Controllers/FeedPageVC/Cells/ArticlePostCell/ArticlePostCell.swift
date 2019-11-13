@@ -36,7 +36,9 @@ final class ArticlePostCell: PostCell {
         button.addSubview(imageView)
         
         imageView.autoAlignAxis(toSuperviewAxis: .horizontal)
-        imageView.autoPinEdge(toSuperviewEdge: .leading, withInset: 12)
+        imageView.autoPinEdge(toSuperviewEdge: .left, withInset: 10)
+        imageView.autoPinEdge(toSuperviewEdge: .top, withInset: 5)
+        imageView.autoPinEdge(toSuperviewEdge: .bottom, withInset: 5)
         
         let label = UILabel.with(text: "read".localized().uppercaseFirst, textSize: 15, weight: .semibold)
         button.addSubview(label)
@@ -93,7 +95,7 @@ final class ArticlePostCell: PostCell {
     override func setUp(with post: ResponseAPIContentGetPost?) {
         super.setUp(with: post)
         cardImageView.image = UIImage(named: "article-placeholder")
-        
+
         titleLabel.text = post?.document?.attributes?.title
         
         if let embeds = post?.attachments,

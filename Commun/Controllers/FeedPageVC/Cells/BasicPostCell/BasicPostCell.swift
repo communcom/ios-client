@@ -10,6 +10,8 @@ import UIKit
 import SafariServices
 
 final class BasicPostCell: PostCell {
+    // MARK: - Properties
+    private var centerConstraint: NSLayoutConstraint!
     // MARK: - Subviews
     lazy var contentTextView        = UITextView(forExpandable: ())
     lazy var gridView               = GridView(forAutoLayout: ())
@@ -19,7 +21,7 @@ final class BasicPostCell: PostCell {
         contentTextView.textContainer.lineFragmentPadding = 0
         contentTextView.font = .systemFont(ofSize: 14)
         contentTextView.dataDetectorTypes = .link
-        contentTextView.isEditable = false
+        contentTextView.isUserInteractionEnabled = false
         contentTextView.delegate = self
     }
 
@@ -33,6 +35,8 @@ final class BasicPostCell: PostCell {
         contentTextView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
 
         contentView.addSubview(gridView)
+        centerConstraint = gridView.autoPinEdge(.top, to: .bottom, of: metaView, withOffset: 10)
+        centerConstraint.isActive = false
         gridView.autoPinEdge(.top, to: .bottom, of: contentTextView, withOffset: 10)
         gridView.autoPinEdge(toSuperviewEdge: .left)
         gridView.autoPinEdge(toSuperviewEdge: .right)
@@ -42,7 +46,8 @@ final class BasicPostCell: PostCell {
     override func setUp(with post: ResponseAPIContentGetPost?) {
         super.setUp(with: post)
         self.accessibilityLabel = "PostCardCell"
-        
+        centerConstraint.isActive = false
+
         let defaultAttributes: [NSAttributedString.Key: Any] = [.font: UIFont.systemFont(ofSize: 14)]
         
         if let content = post?.content,
@@ -66,6 +71,8 @@ final class BasicPostCell: PostCell {
             }
 
             contentTextView.attributedText = mutableAS
+        } else {
+            centerConstraint.isActive = true
         }
 
         contentTextView.resolveHashTags()

@@ -17,7 +17,11 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
     // MARK: - Subviews
     lazy var followButton = CommunButton.default(label: "follow".localized().uppercaseFirst)
 
-    lazy var communitiesView = UIView(forAutoLayout: ())
+    lazy var communitiesView: UIView = {
+        let view = UIView(forAutoLayout: ())
+        view.layer.masksToBounds = false
+        return view
+    }()
 
     lazy var separatorForCommunities: UIView = UIView(height: 2, backgroundColor: #colorLiteral(red: 0.9599978328, green: 0.966491878, blue: 0.9829974771, alpha: 1))
     lazy var firstSeparator: UIView = UIView(height: 2, backgroundColor: #colorLiteral(red: 0.9599978328, green: 0.966491878, blue: 0.9829974771, alpha: 1))
@@ -47,6 +51,7 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
         collectionView.backgroundColor = .clear
         collectionView.configureForAutoLayout()
         collectionView.autoSetDimension(.height, toSize: 187)
+        collectionView.layer.masksToBounds = false
         return collectionView
     }()
     
@@ -131,12 +136,13 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
         communitiesCollectionView.register(SubscriptionCommunityCell.self, forCellWithReuseIdentifier: "SubscriptionCommunityCell")
         communitiesCollectionView.contentInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
 
+        communitiesView.addSubview(separatorForCommunities)
+
         communitiesView.addSubview(communitiesCollectionView)
         communitiesCollectionView.autoPinEdge(.top, to: .bottom, of: communitiesCountLabel, withOffset: 16)
         communitiesCollectionView.autoPinEdge(toSuperviewEdge: .leading)
         communitiesCollectionView.autoPinEdge(toSuperviewEdge: .trailing)
 
-        communitiesView.addSubview(separatorForCommunities)
         separatorForCommunities.autoPinEdge(.top, to: .bottom, of: communitiesCollectionView, withOffset: 4)
         separatorForCommunities.autoPinEdge(toSuperviewEdge: .leading)
         separatorForCommunities.autoPinEdge(toSuperviewEdge: .trailing)
@@ -208,9 +214,9 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
         followersCountLabel.text = "\(userProfile.subscribers?.usersCount ?? 0)"
         followingsCountLabel.text = "\(userProfile.subscriptions?.usersCount ?? 0)"
         communitiesCountLabel.text = "\(userProfile.subscriptions?.communitiesCount ?? 0)"
-        communitiesMutualCountLabel.text = "\(userProfile.commonCommunitiesCount ?? 0)"
+        communitiesMutualCountLabel.text = "\(userProfile.highlightCommunitiesCount ?? 0)"
 
-        needShowCommunites(userProfile.commonCommunitiesCount ?? 0 > 0)
+        needShowCommunites(userProfile.highlightCommunitiesCount ?? 0 > 0)
     }
     
     @objc func followButtonDidTouch(_ sender: UIButton) {
