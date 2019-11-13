@@ -132,11 +132,13 @@ class PostPageVC: CommentsViewController {
     override func editComment(_ comment: ResponseAPIContentGetComment) {
         commentForm.mode = .edit
         commentForm.parentComment = comment
+        commentForm.textView.becomeFirstResponder()
     }
     
     override func replyToComment(_ comment: ResponseAPIContentGetComment) {
         commentForm.mode = .reply
         commentForm.parentComment = comment
+        commentForm.textView.becomeFirstResponder()
     }
     
     @objc func openMorePostActions() {
