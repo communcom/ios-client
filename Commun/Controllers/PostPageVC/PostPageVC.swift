@@ -129,6 +129,16 @@ class PostPageVC: CommentsViewController {
 //        postView.sortButton.setTitle(title, for: .normal)
     }
     
+    override func editComment(_ comment: ResponseAPIContentGetComment) {
+        commentForm.mode = .edit
+        commentForm.parentComment = comment
+    }
+    
+    override func replyToComment(_ comment: ResponseAPIContentGetComment) {
+        commentForm.mode = .reply
+        commentForm.parentComment = comment
+    }
+    
     @objc func openMorePostActions() {
         postView.openMorePostActions()
     }

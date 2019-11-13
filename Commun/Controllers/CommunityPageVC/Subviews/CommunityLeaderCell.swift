@@ -53,7 +53,7 @@ class CommunityLeaderCell: CommunityPageCell, LeaderController {
         
         // layout card
         cardView.addSubview(avatarImageView)
-        avatarImageView.autoPinTopAndLeadingToSuperView()
+        avatarImageView.autoPinTopAndLeadingToSuperView(inset: 16)
         
         // name and points
         let namePointsContainerView = UIView(forAutoLayout: ())
