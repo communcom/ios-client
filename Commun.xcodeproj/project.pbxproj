@@ -190,6 +190,8 @@
 		57FB179D224BFBD700563BF7 /* PillPageControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FB179A224BFBD700563BF7 /* PillPageControl.swift */; };
 		57FB17A4224C15C400563BF7 /* SignInViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FB17A3224C15C400563BF7 /* SignInViewModel.swift */; };
 		7472E4613CDA904305E42A4F /* Pods_Commun.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F0772CC6D820AD11B1FF48A /* Pods_Commun.framework */; };
+		AC0F9C2F237C307300A5002C /* CyberSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC759B97237C15C20069D169 /* CyberSwift.framework */; };
+		AC0F9C30237C307300A5002C /* CyberSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = AC759B97237C15C20069D169 /* CyberSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		AC3386A12371D1B6009DB3BB /* EmbedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3386A02371D1B6009DB3BB /* EmbedView.swift */; };
 		AC3386A62371DDEA009DB3BB /* EmbedView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AC3386A52371DDEA009DB3BB /* EmbedView.xib */; };
 		B170AC15228AFBDA00C6FFBC /* SignUpVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5797E0F9225DDA490026C4D5 /* SignUpVC.storyboard */; };
@@ -371,7 +373,35 @@
 			remoteGlobalIDString = 571B14EF223A935C00630C8F;
 			remoteInfo = Commun;
 		};
+		AC759B96237C15C20069D169 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AC759B91237C15C20069D169 /* CyberSwift.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = B18EBB2D223F8F8800F52D3C;
+			remoteInfo = CyberSwift;
+		};
+		AC759B98237C15C20069D169 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AC759B91237C15C20069D169 /* CyberSwift.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 3BD1331122F850770006C70F;
+			remoteInfo = CyberSwiftTests;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		AC0F9C31237C307300A5002C /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				AC0F9C30237C307300A5002C /* CyberSwift.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		3B02A56822F013D50043F9A4 /* ResponseAPIContentGetComment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseAPIContentGetComment.swift; sourceTree = "<group>"; };
@@ -599,6 +629,7 @@
 		9CD929A7157C80FECCC31E93 /* Pods-CommunTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CommunTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-CommunTests/Pods-CommunTests.release.xcconfig"; sourceTree = "<group>"; };
 		AC3386A02371D1B6009DB3BB /* EmbedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbedView.swift; sourceTree = "<group>"; };
 		AC3386A52371DDEA009DB3BB /* EmbedView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmbedView.xib; sourceTree = "<group>"; };
+		AC759B91237C15C20069D169 /* CyberSwift.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CyberSwift.xcodeproj; path = cyberSwift/CyberSwift.xcodeproj; sourceTree = "<group>"; };
 		AE43B2305FC441D96462E0AB /* Pods-Commun.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Commun.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Commun/Pods-Commun.debug.xcconfig"; sourceTree = "<group>"; };
 		B12684EF22C1E56B0046C838 /* Commun.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Commun.entitlements; sourceTree = "<group>"; };
 		B17A970B228002440081B8E0 /* SignUpRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpRouter.swift; sourceTree = "<group>"; };
@@ -757,6 +788,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AC0F9C2F237C307300A5002C /* CyberSwift.framework in Frameworks */,
 				5721AE41226E543E00133BFF /* WebKit.framework in Frameworks */,
 				7472E4613CDA904305E42A4F /* Pods_Commun.framework in Frameworks */,
 			);
@@ -1158,6 +1190,7 @@
 		571B14E7223A935C00630C8F = {
 			isa = PBXGroup;
 			children = (
+				AC759B91237C15C20069D169 /* CyberSwift.xcodeproj */,
 				571B14F2223A935C00630C8F /* Commun */,
 				3BEA224222B3DA9C00FF42DA /* CommunTests */,
 				571B14F1223A935C00630C8F /* Products */,
@@ -1559,6 +1592,15 @@
 				AC3386A52371DDEA009DB3BB /* EmbedView.xib */,
 			);
 			path = EmbedView;
+			sourceTree = "<group>";
+		};
+		AC759B92237C15C20069D169 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AC759B97237C15C20069D169 /* CyberSwift.framework */,
+				AC759B99237C15C20069D169 /* CyberSwiftTests.xctest */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		B1A8AC1922E6FD4800032030 /* UIButton */ = {
@@ -1993,6 +2035,7 @@
 				571B14EE223A935C00630C8F /* Resources */,
 				A763FF25490FA583CA98714C /* [CP] Embed Pods Frameworks */,
 				B1A93CB922BB714F000D6A9C /* ShellScript */,
+				AC0F9C31237C307300A5002C /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -2046,6 +2089,12 @@
 			mainGroup = 571B14E7223A935C00630C8F;
 			productRefGroup = 571B14F1223A935C00630C8F /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = AC759B92237C15C20069D169 /* Products */;
+					ProjectRef = AC759B91237C15C20069D169 /* CyberSwift.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				571B14EF223A935C00630C8F /* Commun */,
@@ -2053,6 +2102,23 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		AC759B97237C15C20069D169 /* CyberSwift.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = CyberSwift.framework;
+			remoteRef = AC759B96237C15C20069D169 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AC759B99237C15C20069D169 /* CyberSwiftTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = CyberSwiftTests.xctest;
+			remoteRef = AC759B98237C15C20069D169 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		3BEA223F22B3DA9C00FF42DA /* Resources */ = {
