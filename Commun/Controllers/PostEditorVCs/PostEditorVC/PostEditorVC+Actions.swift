@@ -85,7 +85,7 @@ extension PostEditorVC {
         //                                })])
     }
     
-    func chooseFromGallery() {
+    @objc func chooseFromGallery() {
         let pickerVC = CustomTLPhotosPickerVC.singleImage
         self.present(pickerVC, animated: true, completion: nil)
         
