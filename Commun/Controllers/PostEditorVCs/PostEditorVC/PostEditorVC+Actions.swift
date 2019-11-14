@@ -62,21 +62,6 @@ extension PostEditorVC {
         }
     }
     
-    func retrieveDraft() {
-        showAlert(
-            title: "retrieve draft".localized().uppercaseFirst,
-            message: "you have a draft version on your device".localized().uppercaseFirst + ". " + "continue editing it".localized().uppercaseFirst + "?",
-            buttonTitles: ["OK".localized(), "cancel".localized().uppercaseFirst],
-            highlightedButtonIndex: 0) { (index) in
-                if index == 0 {
-                    self.getDraft()
-                }
-                else if index == 1 {
-                    self.removeDraft()
-                }
-        }
-    }
-    
     // MARK: - Add image
     func addImage() {
         view.endEditing(true)
