@@ -62,7 +62,7 @@ class BasicEditorVC: PostEditorVC {
         let contentChanged = (self.contentTextView.attributedText != self.contentTextView.originalAttributedString)
         
         // reassign result
-        return contentAreNotEmpty && contentInsideLimit && contentChanged
+        return super.isContentValid && contentAreNotEmpty && contentInsideLimit && contentChanged
     }
     
     override var postTitle: String? {

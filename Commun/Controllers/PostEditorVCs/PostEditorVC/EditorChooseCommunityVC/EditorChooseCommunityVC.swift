@@ -75,6 +75,7 @@ class EditorChooseCommunityVC: SubscriptionsVC {
         tableView.rx.modelSelected(ResponseAPIContentGetSubscriptionsItem.self)
             .filter {$0.communityValue != nil}
             .map {$0.communityValue!}
+            .filter {$0.isSubscribed == true}
             .subscribe(onNext: { (item) in
                 self.completion?(item)
                 self.dismiss(animated: true, completion: nil)

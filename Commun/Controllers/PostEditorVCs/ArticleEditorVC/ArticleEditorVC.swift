@@ -57,7 +57,7 @@ class ArticleEditorVC: PostEditorVC {
         contentChanged = contentChanged || (self.contentTextView.attributedText != self.contentTextView.originalAttributedString)
         
         // reassign result
-        return titleAndContentAreNotEmpty && titleIsInsideLimit && contentInsideLimit && contentChanged
+        return super.isContentValid && titleAndContentAreNotEmpty && titleIsInsideLimit && contentInsideLimit && contentChanged
     }
     
     override var postTitle: String? {

@@ -19,7 +19,7 @@ class PostEditorVC: EditorVC {
         fatalError("Must override")
     }
     var isContentValid: Bool {
-        fatalError("Must override")
+        return viewModel.community.value != nil && !contentTextView.text.trimmed.isEmpty
     }
     
     var viewModel: PostEditorViewModel {
