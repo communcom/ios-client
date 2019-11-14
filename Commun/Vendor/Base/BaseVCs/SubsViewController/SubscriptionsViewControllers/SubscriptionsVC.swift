@@ -51,6 +51,10 @@ class SubscriptionsVC: SubsViewController<ResponseAPIContentGetSubscriptionsItem
     
     override func bind() {
         super.bind()
+        bindModelSelected()
+    }
+    
+    func bindModelSelected() {
         tableView.rx.modelSelected(ResponseAPIContentGetSubscriptionsItem.self)
             .subscribe(onNext: { (item) in
                 if let community = item.communityValue {
