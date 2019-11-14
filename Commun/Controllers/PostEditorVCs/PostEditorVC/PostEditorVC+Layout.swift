@@ -20,7 +20,10 @@ extension PostEditorVC {
     override func layoutContentView() {
         // community
         contentView.addSubview(communityView)
-        communityView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 16, left: 0, bottom: 0, right: 0), excludingEdge: .bottom)
+        communityView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .bottom)
+        communityView.isUserInteractionEnabled = true
+        let tap = UITapGestureRecognizer(target: self, action: #selector(chooseCommunityDidTouch))
+        communityView.addGestureRecognizer(tap)
         
         communityView.addSubview(communityAvatarImage)
         communityAvatarImage.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(inset: 16), excludingEdge: .trailing)

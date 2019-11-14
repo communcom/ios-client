@@ -116,4 +116,8 @@ class MyAvatarImageView: MyView {
         isUserInteractionEnabled = true
         imageView.addTapToViewer()
     }
+    
+    func removeAvatar() {
+        imageView.image = .placeholder
+    }
 }
