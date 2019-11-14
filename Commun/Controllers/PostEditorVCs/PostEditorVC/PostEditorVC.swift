@@ -11,6 +11,9 @@ import RxSwift
 import RxCocoa
 
 class PostEditorVC: EditorVC {
+    // MARK: - Constants
+    let communityDraftKey = "PostEditorVC.communityDraftKey"
+    
     // MARK: - Properties
     
     // MARK: - Computed properties
