@@ -13,6 +13,17 @@ import SafariServices
 import AppImageViewer
 
 extension PostEditorVC {
+    // MARK: - Communities
+    @objc func chooseCommunityDidTouch() {
+        let vc = EditorChooseCommunityVC { (community) in
+            self.viewModel.community.accept(community)
+        }
+        vc.modalPresentationStyle = .custom
+        vc.transitioningDelegate = vc
+        present(vc, animated: true, completion: nil)
+    }
+    
+    // MARK: - Images
     @objc func didChooseImageFromGallery(_ image: UIImage, description: String? = nil) {
         fatalError("Must override")
     }

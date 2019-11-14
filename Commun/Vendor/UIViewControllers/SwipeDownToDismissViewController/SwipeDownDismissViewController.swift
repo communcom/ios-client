@@ -15,7 +15,7 @@ class SwipeDownDismissViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        interactor = SwipeDownInteractor()
         panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(panGestureAction(_:)))
         view.addGestureRecognizer(panGestureRecognizer!)
     }

@@ -13,6 +13,7 @@ import CyberSwift
 
 class PostEditorViewModel {
     var postForEdit: ResponseAPIContentGetPost?
+    let community = BehaviorRelay<ResponseAPIContentGetSubscriptionsCommunity?>(value: nil)
     
     func sendPost(title: String?, block: ResponseAPIContentBlock) -> Single<SendPostCompletion> {
         // Prepare tags

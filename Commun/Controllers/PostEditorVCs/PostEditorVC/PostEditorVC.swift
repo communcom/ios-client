@@ -19,7 +19,7 @@ class PostEditorVC: EditorVC {
         fatalError("Must override")
     }
     var isContentValid: Bool {
-        fatalError("Must override")
+        return viewModel.community.value != nil && !contentTextView.text.trimmed.isEmpty
     }
     
     var viewModel: PostEditorViewModel {
@@ -34,7 +34,7 @@ class PostEditorVC: EditorVC {
     // community
     lazy var communityView = UIView(forAutoLayout: ())
     lazy var communityAvatarImage = MyAvatarImageView(size: 40)
-    lazy var communityNameLabel = UILabel.with(text: "Commun", textSize: 15, weight: .semibold, numberOfLines: 0)
+    lazy var communityNameLabel = UILabel.with(text: "choose a community".localized().uppercaseFirst, textSize: 15, weight: .semibold, numberOfLines: 0)
     lazy var contentTextViewCountLabel = UILabel.descriptionLabel("0/30000")
     
     var contentTextView: ContentTextView {
@@ -54,6 +54,11 @@ class PostEditorVC: EditorVC {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                     // your code here
                     self.retrieveDraft()
+                }
+            }
+            else {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                    self.chooseCommunityDidTouch()
                 }
             }
         }
@@ -84,6 +89,8 @@ class PostEditorVC: EditorVC {
         bindSendPostButton()
         
         bindContentTextView()
+        
+        bindCommunity()
     }
     
     override func didSelectTool(_ item: EditorToolbarItem) {

@@ -57,7 +57,7 @@ class ArticleEditorVC: PostEditorVC {
         contentChanged = contentChanged || (self.contentTextView.attributedText != self.contentTextView.originalAttributedString)
         
         // reassign result
-        return titleAndContentAreNotEmpty && titleIsInsideLimit && contentInsideLimit && contentChanged
+        return super.isContentValid && titleAndContentAreNotEmpty && titleIsInsideLimit && contentInsideLimit && contentChanged
     }
     
     override var postTitle: String? {
@@ -67,8 +67,6 @@ class ArticleEditorVC: PostEditorVC {
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        titleTextView.becomeFirstResponder()
     }
     
     override func setUp() {
