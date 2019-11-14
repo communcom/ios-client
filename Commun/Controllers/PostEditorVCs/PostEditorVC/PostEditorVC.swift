@@ -32,10 +32,9 @@ class PostEditorVC: EditorVC {
     
     // MARK: - Subviews
     // community
-    lazy var communityAvatarImage = UIImageView.circle(size: 40, imageName: "tux")
-    lazy var youWillPostIn = UILabel.descriptionLabel("you will post in".localized().uppercaseFirst)
-    lazy var communityNameLabel = UILabel.with(text: "Commun", textSize: 15, weight: .semibold)
-    lazy var dropdownButton = UIButton.circleGray(imageName: "drop-down")
+    lazy var communityView = UIView(forAutoLayout: ())
+    lazy var communityAvatarImage = MyAvatarImageView(size: 40)
+    lazy var communityNameLabel = UILabel.with(text: "Commun", textSize: 15, weight: .semibold, numberOfLines: 0)
     lazy var contentTextViewCountLabel = UILabel.descriptionLabel("0/30000")
     
     var contentTextView: ContentTextView {

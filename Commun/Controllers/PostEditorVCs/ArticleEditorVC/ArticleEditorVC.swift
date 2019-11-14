@@ -96,7 +96,7 @@ class ArticleEditorVC: PostEditorVC {
         contentView.addSubview(titleTextView)
         titleTextView.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
         titleTextView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
-        titleTextView.autoPinEdge(.top, to: .bottom, of: communityAvatarImage, withOffset: 20)
+        titleTextView.autoPinEdge(.top, to: .bottom, of: communityView, withOffset: 5)
         
         // countLabel
         contentView.addSubview(titleTextViewCountLabel)

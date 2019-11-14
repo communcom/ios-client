@@ -19,22 +19,29 @@ extension PostEditorVC {
     
     override func layoutContentView() {
         // community
-        contentView.addSubview(communityAvatarImage)
-        contentView.addSubview(youWillPostIn)
-        contentView.addSubview(communityNameLabel)
-        contentView.addSubview(dropdownButton)
+        contentView.addSubview(communityView)
+        communityView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 16, left: 0, bottom: 0, right: 0), excludingEdge: .bottom)
         
-        communityAvatarImage.autoPinEdge(toSuperviewEdge: .top, withInset: 16)
-        communityAvatarImage.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
+        communityView.addSubview(communityAvatarImage)
+        communityAvatarImage.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(inset: 16), excludingEdge: .trailing)
         
-        youWillPostIn.autoPinEdge(.top, to: .top, of: communityAvatarImage, withOffset: 5)
+
+        let youWillPostIn = UILabel.descriptionLabel("you will post in".localized().uppercaseFirst)
+        communityView.addSubview(youWillPostIn)
+        youWillPostIn.autoPinEdge(toSuperviewEdge: .top, withInset: 20)
         youWillPostIn.autoPinEdge(.leading, to: .trailing, of: communityAvatarImage, withOffset: 10)
         
+        communityView.addSubview(communityNameLabel)
+        communityNameLabel.autoPinEdge(toSuperviewEdge: .bottom, withInset: 18)
         communityNameLabel.autoPinEdge(.leading, to: .trailing, of: communityAvatarImage, withOffset: 10)
-        communityNameLabel.autoPinEdge(.bottom, to: .bottom, of: communityAvatarImage, withOffset: -4)
         
-        dropdownButton.autoAlignAxis(.horizontal, toSameAxisOf: communityAvatarImage)
+        let dropdownButton = UIButton.circleGray(imageName: "drop-down")
+        communityView.addSubview(dropdownButton)
+        dropdownButton.isUserInteractionEnabled = false
         dropdownButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
+        dropdownButton.autoAlignAxis(toSuperviewAxis: .horizontal)
+        dropdownButton.leadingAnchor.constraint(greaterThanOrEqualTo: communityNameLabel.trailingAnchor, constant: 8)
+            .isActive = true
         
         // textView
         contentView.addSubview(contentTextView)

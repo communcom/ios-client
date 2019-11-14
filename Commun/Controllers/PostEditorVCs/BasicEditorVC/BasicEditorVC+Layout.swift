@@ -10,7 +10,7 @@ import Foundation
 
 extension BasicEditorVC {
     override func layoutTopContentTextView() {
-        contentTextView.autoPinEdge(.top, to: .bottom, of: communityAvatarImage, withOffset: 20)
+        contentTextView.autoPinEdge(.top, to: .bottom, of: communityView, withOffset: 5)
     }
     
     override func layoutBottomContentTextView() {
