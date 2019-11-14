@@ -77,7 +77,6 @@ class BasicEditorVC: PostEditorVC {
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        contentTextView.becomeFirstResponder()
     }
     
     override func setUp() {

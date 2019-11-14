@@ -93,7 +93,7 @@ extension PostEditorVC {
             .disposed(by: disposeBag)
     }
     
-    func bindCommunity() {
+    @objc func bindCommunity() {
         viewModel.community
             .subscribe(onNext: { (community) in
                 if let community = community {
