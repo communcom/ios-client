@@ -10,12 +10,6 @@ import Foundation
 import RxSwift
 import CyberSwift
 
-extension ResponseAPIContentGetLeader {
-    public func notifyChanged() {
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "\(Self.self)DidChange"), object: self)
-    }
-}
-
 protocol LeaderController: class {
     var disposeBag: DisposeBag {get}
     var voteButton: CommunButton {get set}
@@ -25,11 +19,8 @@ protocol LeaderController: class {
 
 extension LeaderController {
     func observeLeaderChange() {
-        NotificationCenter.default.rx.notification(.init(rawValue: "\(ResponseAPIContentGetLeader.self)DidChange"))
-            .subscribe(onNext: {notification in
-                guard let newLeader = notification.object as? ResponseAPIContentGetLeader,
-                    newLeader.identity == self.leader?.identity
-                    else {return}
+        ResponseAPIContentGetLeader.observeItemChanged()
+            .subscribe(onNext: {newLeader in
                 self.setUp(with: newLeader)
             })
             .disposed(by: disposeBag)

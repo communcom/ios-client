@@ -18,37 +18,29 @@ class BlacklistViewModel: ListViewModel<ResponseAPIContentGetBlacklistItem> {
     }
     
     override func observeItemChange() {
-        NotificationCenter.default.rx.notification(.init(rawValue: "\(ResponseAPIContentGetBlacklistUser.self)DidChange"))
-            .subscribe(onNext: {notification in
-                guard let newUser = notification.object as? ResponseAPIContentGetBlacklistUser
-                    else {return}
+        ResponseAPIContentGetBlacklistUser.observeItemChanged()
+            .subscribe(onNext: {newUser in
                 self.updateItem(.user(newUser))
             })
             .disposed(by: disposeBag)
         
-        NotificationCenter.default.rx.notification(.init(rawValue: "\(ResponseAPIContentGetBlacklistCommunity.self)DidChange"))
-            .subscribe(onNext: {notification in
-                guard let newCommunity = notification.object as? ResponseAPIContentGetBlacklistCommunity
-                    else {return}
+        ResponseAPIContentGetBlacklistCommunity.observeItemChanged()
+            .subscribe(onNext: {newCommunity in
                 self.updateItem(.community(newCommunity))
             })
             .disposed(by: disposeBag)
     }
     
     override func observeItemDeleted() {
-        NotificationCenter.default.rx.notification(.init(rawValue: "\(ResponseAPIContentGetBlacklistUser.self)Deleted"))
-            .subscribe(onNext: { (notification) in
-                guard let updatedUser = notification.object as? ResponseAPIContentGetBlacklistUser
-                    else {return}
-                self.deleteItem(.user(updatedUser))
+        ResponseAPIContentGetBlacklistUser.observeItemDeleted()
+            .subscribe(onNext: { (deletedItem) in
+                self.deleteItem(.user(deletedItem))
             })
             .disposed(by: disposeBag)
         
-        NotificationCenter.default.rx.notification(.init(rawValue: "\(ResponseAPIContentGetBlacklistCommunity.self)Deleted"))
-            .subscribe(onNext: { (notification) in
-                guard let updateCommunity = notification.object as? ResponseAPIContentGetBlacklistCommunity
-                    else {return}
-                self.deleteItem(.community(updateCommunity))
+        ResponseAPIContentGetBlacklistCommunity.observeItemDeleted()
+            .subscribe(onNext: { (updatedCommunity) in
+                self.deleteItem(.community(updatedCommunity))
             })
             .disposed(by: disposeBag)
     }

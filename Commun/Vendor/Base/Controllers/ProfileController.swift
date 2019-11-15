@@ -41,11 +41,8 @@ protocol ProfileController: class {
 
 extension ProfileController {
     func observeProfileChange() {
-        NotificationCenter.default.rx.notification(.init(rawValue: "\(Profile.self)DidChange"))
-            .subscribe(onNext: {notification in
-                guard let newProfile = notification.object as? Profile,
-                    newProfile.identity == self.profile?.identity
-                    else {return}
+        Profile.observeItemChanged()
+            .subscribe(onNext: {newProfile in
                 self.setUp(with: newProfile)
             })
             .disposed(by: disposeBag)

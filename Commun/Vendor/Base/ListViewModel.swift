@@ -59,21 +59,17 @@ class ListViewModel<T: ListItemType>: BaseViewModel {
     }
     
     func observeItemDeleted() {
-        NotificationCenter.default.rx.notification(.init(rawValue: "\(T.self)Deleted"))
-            .subscribe(onNext: { (notification) in
-                guard let deletedItem = notification.object as? T
-                    else {return}
+        T.observeItemDeleted()
+            .subscribe(onNext: { (deletedItem) in
                 self.deleteItem(deletedItem)
             })
             .disposed(by: disposeBag)
     }
     
     func observeItemChange() {
-        NotificationCenter.default.rx.notification(.init(rawValue: "\(T.self)DidChange"))
-            .subscribe(onNext: {notification in
-                guard let newItem = notification.object as? T
-                    else {return}
-                self.updateItem(newItem)
+        T.observeItemChanged()
+            .subscribe(onNext: { (changedItem) in
+                self.updateItem(changedItem)
             })
             .disposed(by: disposeBag)
     }

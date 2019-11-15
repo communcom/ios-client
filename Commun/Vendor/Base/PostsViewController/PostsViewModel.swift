@@ -38,10 +38,8 @@ class PostsViewModel: ListViewModel<ResponseAPIContentGetPost> {
     }
     
     func observeUserBlocked() {
-        NotificationCenter.default.rx.notification(.init(rawValue: "\(ResponseAPIContentGetProfile.self)Blocked"))
-            .subscribe(onNext: {notification in
-                guard let blockedUser = notification.object as? ResponseAPIContentGetProfile
-                    else {return}
+        ResponseAPIContentGetProfile.observeEvent(eventName: ResponseAPIContentGetProfile.blockedEventName)
+            .subscribe(onNext: {blockedUser in
                 let posts = self.items.value.filter {$0.author?.userId != blockedUser.userId}
                 self.items.accept(posts)
             })

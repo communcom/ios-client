@@ -18,25 +18,17 @@ protocol CommentController: class {
 }
 
 extension ResponseAPIContentGetComment {
-    public func notifyChildrenChanged() {
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "\(ResponseAPIContentGetComment.self)ChildrenDidChange"), object: self)
-    }
-    public func notifyChanged() {
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "\(ResponseAPIContentGetComment.self)DidChange"), object: self)
-    }
+    static var childrenDidChangeEventName: String {"ChildrenDidChange"}
     
-    public func notifyDeleted() {
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "\(Self.self)Deleted"), object: self)
+    public func notifyChildrenChanged() {
+        notifyEvent(eventName: Self.childrenDidChangeEventName)
     }
 }
 
 extension CommentController {
     func observeCommentChange() {
-        NotificationCenter.default.rx.notification(.init(rawValue: "\(ResponseAPIContentGetComment.self)DidChange"))
-            .subscribe(onNext: {notification in
-                guard let newComment = notification.object as? ResponseAPIContentGetComment,
-                    newComment.identity == self.comment?.identity
-                    else {return}
+        ResponseAPIContentGetComment.observeItemChanged()
+            .subscribe(onNext: {newComment in
                 self.setUp(with: newComment)
             })
             .disposed(by: disposeBag)

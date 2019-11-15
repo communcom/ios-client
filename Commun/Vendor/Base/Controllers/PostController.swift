@@ -17,22 +17,10 @@ protocol PostController: class {
     func setUp(with post: ResponseAPIContentGetPost?)
 }
 
-extension ResponseAPIContentGetPost {
-    public func notifyChanged() {
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "\(Self.self)DidChange"), object: self)
-    }
-    public func notifyDeleted() {
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "\(Self.self)Deleted"), object: self)
-    }
-}
-
 extension PostController {
     func observePostChange() {
-        NotificationCenter.default.rx.notification(.init(rawValue: "\(ResponseAPIContentGetPost.self)DidChange"))
-            .subscribe(onNext: {notification in
-                guard let newPost = notification.object as? ResponseAPIContentGetPost,
-                    newPost.identity == self.post?.identity
-                    else {return}
+        ResponseAPIContentGetPost.observeItemChanged()
+            .subscribe(onNext: {newPost in
                 self.setUp(with: newPost)
             })
             .disposed(by: disposeBag)
