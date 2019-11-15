@@ -55,7 +55,7 @@ final class BasicPostCell: PostCell {
         {
             let mutableAS = NSMutableAttributedString()
             var attributedText = firstSentence
-                .toAttributedString(currentAttributes: defaultAttributes)
+                .toAttributedString(currentAttributes: defaultAttributes, attachmentType: TextAttachment.self)
             if attributedText.length > 600 {
                 let moreText = NSAttributedString(string: "... \("See More".localized())", attributes: [.foregroundColor: UIColor.appMainColor, .font: UIFont.systemFont(ofSize: 14)])
                 attributedText = attributedText.attributedSubstring(from: NSMakeRange(0, 400))

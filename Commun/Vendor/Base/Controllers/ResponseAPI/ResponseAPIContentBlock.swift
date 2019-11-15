@@ -8,6 +8,7 @@
 
 import Foundation
 import CyberSwift
+import SubviewAttachingTextView
 
 extension ResponseAPIContentBlock {
     func jsonString() throws -> String {
@@ -101,12 +102,12 @@ extension ResponseAPIContentBlock {
         }
     }
     
-    func toAttributedString(currentAttributes: [NSAttributedString.Key: Any], attachmentSize: CGSize = .zero) -> NSAttributedString {
+    func toAttributedString<Attachment: SubviewTextAttachment & TextAttachmentType>(currentAttributes: [NSAttributedString.Key: Any], attachmentSize: CGSize = .zero, attachmentType: Attachment.Type) -> NSAttributedString {
         let child = NSMutableAttributedString()
         switch content {
         case .array(let array):
             for inner in array {
-                child.append(inner.toAttributedString(currentAttributes: currentAttributes, attachmentSize: attachmentSize))
+                child.append(inner.toAttributedString(currentAttributes: currentAttributes, attachmentSize: attachmentSize, attachmentType: attachmentType))
             }
             
         case .string(let string):
@@ -182,8 +183,7 @@ extension ResponseAPIContentBlock {
             attrs.url = url
             
             // attachment
-            let attachment = TextAttachment(block: self, size: attachmentSize)
-            attachment.attachmentView?.showCloseButton = false
+            let attachment = Attachment(block: self, size: attachmentSize)
             let attachmentAS = NSAttributedString(attachment: attachment)
             child.append(attachmentAS)
             child.append(NSAttributedString.separator)

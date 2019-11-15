@@ -11,7 +11,11 @@ import RxSwift
 import CyberSwift
 import SubviewAttachingTextView
 
-final class TextAttachment: SubviewTextAttachment {
+protocol TextAttachmentType: class {
+    init(block: ResponseAPIContentBlock, size: CGSize)
+}
+
+final class TextAttachment: SubviewTextAttachment, TextAttachmentType {
     private static var uniqueId = 0
     lazy var id: Int = {
         let id = TextAttachment.uniqueId

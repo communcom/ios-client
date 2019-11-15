@@ -155,7 +155,10 @@ class CommentCell: MyTableViewCell, CommentController {
     }
     
     func setText() {
-        guard let content = comment?.document.toAttributedString(currentAttributes: [.font: UIFont.systemFont(ofSize: defaultContentFontSize)]) else {return}
+        guard let content = comment?.document.toAttributedString(
+            currentAttributes: [.font: UIFont.systemFont(ofSize: defaultContentFontSize)],
+            attachmentType: TextAttachment.self)
+        else {return}
         
         let userId = comment?.author?.username ?? comment?.author?.userId ?? "Unknown user"
         let mutableAS = NSMutableAttributedString(string: userId, attributes: [

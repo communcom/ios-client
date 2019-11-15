@@ -13,7 +13,7 @@ class PostHeaderTextView: MySubviewAttachingTextView {
     
     lazy var attachmentSize: CGSize = {
         let width = size.width
-        return CGSize(width: width, height: 238)
+        return CGSize(width: width, height: 270)
     }()
     let defaultFont = UIFont.systemFont(ofSize: 17)
     
