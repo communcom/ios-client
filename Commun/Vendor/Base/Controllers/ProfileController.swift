@@ -22,6 +22,9 @@ extension ProfileType {
     public func notifyChanged() {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "\(Self.self)DidChange"), object: self)
     }
+    public func notifyDeleted() {
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "\(Self.self)Deleted"), object: self)
+    }
 }
 
 extension ResponseAPIContentGetProfile: ProfileType {
