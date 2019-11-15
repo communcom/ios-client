@@ -27,7 +27,7 @@ extension LeaderController {
     }
     
     func toggleVote() {
-        guard leader != nil else {return}
+        guard leader != nil, let communityId = leader?.communityId else {return}
         
         let originIsVoted = leader?.isVoted ?? false
         
@@ -41,12 +41,13 @@ extension LeaderController {
         leader?.notifyChanged()
         
         // send request
-        #warning("mock request")
-        Completable.empty()
-            .delay(0.8, scheduler: MainScheduler.instance)
+//        Completable.empty()
+//            .delay(0.8, scheduler: MainScheduler.instance)
+        RestAPIManager.instance.rx.voteLeader(communityId: communityId, leader: leader!.userId)
             .do(onSubscribe: { [weak self] in
                 self?.voteButton.isEnabled = false
             })
+            .flatMapCompletable {RestAPIManager.instance.waitForTransactionWith(id: $0)}
             .subscribe(onCompleted: { [weak self] in
                 // re-enable button state
                 self?.voteButton.isEnabled = true
