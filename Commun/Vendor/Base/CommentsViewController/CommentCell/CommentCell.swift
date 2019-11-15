@@ -34,14 +34,15 @@ class CommentCell: MyTableViewCell, CommentController {
     
     // MARK: - Subviews
     lazy var avatarImageView = MyAvatarImageView(size: 35)
-    lazy var contentContainerView = UIView(backgroundColor: .f3f5fa, cornerRadius: 12)
     lazy var contentTextView: UITextView = {
         let textView = UITextView(forExpandable: ())
         textView.backgroundColor = .clear
         textView.isEditable = false
+        textView.backgroundColor = .f3f5fa
+        textView.cornerRadius = 12
         return textView
     }()
-    lazy var gridView = GridView(width: embedSize.width, height: embedSize.height)
+    lazy var gridView = GridView(width: embedSize.width, height: embedSize.height, cornerRadius: 12)
     lazy var voteContainerView: VoteContainerView = VoteContainerView(height: voteActionsContainerViewHeight, cornerRadius: voteActionsContainerViewHeight / 2)
     lazy var replyButton = UIButton(label: "reply".localized().uppercaseFirst, labelFont: .boldSystemFont(ofSize: 13), textColor: .appMainColor)
     lazy var timeLabel = UILabel.with(text: " • 3h", textSize: 13, weight: .bold, textColor: .a5a7bd)
@@ -55,13 +56,10 @@ class CommentCell: MyTableViewCell, CommentController {
         avatarImageView.autoPinEdge(toSuperviewEdge: .top, withInset: 8)
         avatarImageView.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
         
-        contentView.addSubview(contentContainerView)
-        contentContainerView.autoPinEdge(.top, to: .top, of: avatarImageView)
-        contentContainerView.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 10)
-        contentContainerView.trailingAnchor.constraint(lessThanOrEqualTo: contentView.trailingAnchor, constant: -16).isActive = true
-        
-        contentContainerView.addSubview(contentTextView)
-        contentTextView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10), excludingEdge: .bottom)
+        contentView.addSubview(contentTextView)
+        contentTextView.autoPinEdge(.top, to: .top, of: avatarImageView)
+        contentTextView.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 10)
+        contentTextView.trailingAnchor.constraint(lessThanOrEqualTo: contentView.trailingAnchor, constant: -16).isActive = true
         contentTextView.delegate = self
         let lpgr = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPressOnTextView))
         lpgr.minimumPressDuration = 0.5
@@ -69,16 +67,15 @@ class CommentCell: MyTableViewCell, CommentController {
         lpgr.delegate = self
         contentTextView.addGestureRecognizer(lpgr)
         
-        contentContainerView.addSubview(gridView)
+        contentView.addSubview(gridView)
         gridView.autoPinEdge(.leading, to: .leading, of: contentTextView)
         gridView.autoPinEdge(.top, to: .bottom, of: contentTextView)
-        gridView.autoPinEdge(toSuperviewEdge: .bottom, withInset: 8)
-        gridView.trailingAnchor.constraint(lessThanOrEqualTo: contentContainerView.trailingAnchor, constant: -10)
+        gridView.trailingAnchor.constraint(lessThanOrEqualTo: contentView.trailingAnchor, constant: -16)
             .isActive = true
         
         contentView.addSubview(voteContainerView)
-        voteContainerView.autoPinEdge(.top, to: .bottom, of: contentContainerView, withOffset: 5)
-        voteContainerView.autoPinEdge(.leading, to: .leading, of: contentContainerView)
+        voteContainerView.autoPinEdge(.top, to: .bottom, of: gridView, withOffset: 5)
+        voteContainerView.autoPinEdge(.leading, to: .leading, of: contentTextView)
         voteContainerView.upVoteButton.addTarget(self, action: #selector(upVoteButtonDidTouch), for: .touchUpInside)
         voteContainerView.downVoteButton.addTarget(self, action: #selector(downVoteButtonDidTouch), for: .touchUpInside)
         
@@ -150,6 +147,12 @@ class CommentCell: MyTableViewCell, CommentController {
         if content.string.count < maxCharactersForReduction || expanded {
             mutableAS.append(content)
             contentTextView.attributedText = mutableAS
+            if content.string.trimmed == "" {
+                contentTextView.backgroundColor = .clear
+            }
+            else {
+                contentTextView.backgroundColor = .f3f5fa
+            }
             return
         }
         
