@@ -31,6 +31,7 @@ class CommentCell: MyTableViewCell, CommentController {
     var expanded = false
     var themeColor = UIColor(hexString: "#6A80F5")!
     weak var delegate: CommentCellDelegate?
+    var textViewToEmbedConstraint: NSLayoutConstraint?
     
     // MARK: - Subviews
     lazy var avatarImageView = MyAvatarImageView(size: 35)
@@ -39,6 +40,7 @@ class CommentCell: MyTableViewCell, CommentController {
         textView.backgroundColor = .clear
         textView.isEditable = false
         textView.backgroundColor = .f3f5fa
+        textView.textContainerInset = UIEdgeInsets(top: 7, left: 10, bottom: 7, right: 10)
         textView.cornerRadius = 12
         return textView
     }()
@@ -69,7 +71,7 @@ class CommentCell: MyTableViewCell, CommentController {
         
         contentView.addSubview(gridView)
         gridView.autoPinEdge(.leading, to: .leading, of: contentTextView)
-        gridView.autoPinEdge(.top, to: .bottom, of: contentTextView)
+        textViewToEmbedConstraint = gridView.autoPinEdge(.top, to: .bottom, of: contentTextView, withOffset: 5)
         gridView.trailingAnchor.constraint(lessThanOrEqualTo: contentView.trailingAnchor, constant: -16)
             .isActive = true
         
@@ -114,12 +116,14 @@ class CommentCell: MyTableViewCell, CommentController {
         // Show media
         let embededResult = comment.attachments
         if embededResult.count > 0 {
+            textViewToEmbedConstraint?.constant = 5
             gridView.widthConstraint?.constant = embedSize.width
             gridView.heightConstraint?.constant = embedSize.height
             layoutIfNeeded()
             gridView.setUp(embeds: embededResult)
         }
         else {
+            textViewToEmbedConstraint?.constant = 0
             gridView.widthConstraint?.constant = 0
             gridView.heightConstraint?.constant = 0
             layoutIfNeeded()
@@ -135,6 +139,13 @@ class CommentCell: MyTableViewCell, CommentController {
             attachmentType: TextAttachment.self)
         else {return}
         
+        if content.string.trimmed == "" {
+            contentTextView.backgroundColor = .clear
+        }
+        else {
+            contentTextView.backgroundColor = .f3f5fa
+        }
+        
         let userId = comment?.author?.username ?? comment?.author?.userId ?? "Unknown user"
         let mutableAS = NSMutableAttributedString(string: userId, attributes: [
             .font: UIFont.boldSystemFont(ofSize: defaultContentFontSize),
@@ -147,12 +158,6 @@ class CommentCell: MyTableViewCell, CommentController {
         if content.string.count < maxCharactersForReduction || expanded {
             mutableAS.append(content)
             contentTextView.attributedText = mutableAS
-            if content.string.trimmed == "" {
-                contentTextView.backgroundColor = .clear
-            }
-            else {
-                contentTextView.backgroundColor = .f3f5fa
-            }
             return
         }
         
