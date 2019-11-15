@@ -19,7 +19,7 @@ extension MyProfilePageVC {
         openActionSheet(cover: false)
     }
     
-    @objc func moreActionsButtonDidTouch(_ sender: Any) {
+    @objc override func moreActionsButtonDidTouch(_ sender: Any) {
         let headerView = UIView(height: 40)
         
         let avatarImageView = MyAvatarImageView(size: 40)

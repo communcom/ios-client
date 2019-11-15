@@ -21,6 +21,7 @@ class CommentsViewModel: ListViewModel<ResponseAPIContentGetComment> {
         defer {
             bindFilter()
             observeChildrenChanged()
+            observeUserBlocked()
         }
     }
     
@@ -30,6 +31,14 @@ class CommentsViewModel: ListViewModel<ResponseAPIContentGetComment> {
                 self.fetcher.reset(clearResult: false)
                 (self.fetcher as! CommentsListFetcher).filter = filter
                 self.fetchNext()
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    func observeUserBlocked() {
+        ResponseAPIContentGetProfile.observeEvent(eventName: ResponseAPIContentGetProfile.blockedEventName)
+            .subscribe(onNext: {_ in
+                self.reload()
             })
             .disposed(by: disposeBag)
     }
@@ -51,11 +60,11 @@ class CommentsViewModel: ListViewModel<ResponseAPIContentGetComment> {
     }
     
     func observeChildrenChanged() {
-        NotificationCenter.default.rx.notification(.init(rawValue: "\(ResponseAPIContentGetComment.self)ChildrenDidChange"))
-            .subscribe(onNext: {notification in
-                guard let newItem = notification.object as? ResponseAPIContentGetComment
-                    else {return}
-                self.updateChildren(parentComment: newItem)
+        ResponseAPIContentGetComment.observeEvent(
+            eventName: ResponseAPIContentGetComment.childrenDidChangeEventName
+        )
+            .subscribe(onNext: { item in
+                self.updateChildren(parentComment: item)
             })
             .disposed(by: disposeBag)
     }

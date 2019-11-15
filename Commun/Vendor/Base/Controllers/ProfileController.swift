@@ -10,18 +10,12 @@ import Foundation
 import RxSwift
 import CyberSwift
 
-protocol ProfileType: Equatable {
+protocol ProfileType: ListItemType {
     var userId: String {get}
     var username: String {get}
     var isSubscribed: Bool? {get set}
     var subscribersCount: UInt64? {get set}
     var identity: String {get}
-}
-
-extension ProfileType {
-    public func notifyChanged() {
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "\(Self.self)DidChange"), object: self)
-    }
 }
 
 extension ResponseAPIContentGetProfile: ProfileType {
@@ -47,11 +41,8 @@ protocol ProfileController: class {
 
 extension ProfileController {
     func observeProfileChange() {
-        NotificationCenter.default.rx.notification(.init(rawValue: "\(Profile.self)DidChange"))
-            .subscribe(onNext: {notification in
-                guard let newProfile = notification.object as? Profile,
-                    newProfile.identity == self.profile?.identity
-                    else {return}
+        Profile.observeItemChanged()
+            .subscribe(onNext: {newProfile in
                 self.setUp(with: newProfile)
             })
             .disposed(by: disposeBag)

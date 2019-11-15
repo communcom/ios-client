@@ -36,6 +36,7 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile>, CommentCellDel
     lazy var expandedComments = [ResponseAPIContentGetComment]()
     
     // MARK: - Subviews
+    lazy var optionsButton = UIButton.option(tintColor: .white)
     var headerView: UserProfileHeaderView!
     override var _headerView: ProfileHeaderView! {
         return headerView
@@ -60,6 +61,9 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile>, CommentCellDel
         super.setUp()
         setHeaderView()
         headerView.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: 25)
+        
+        setRightNavBarButton(with: optionsButton)
+        optionsButton.addTarget(self, action: #selector(moreActionsButtonDidTouch(_:)), for: .touchUpInside)
     }
     
     func setHeaderView() {
@@ -71,6 +75,8 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile>, CommentCellDel
         bindSegmentedControl()
         
         bindCommunities()
+        
+        bindProfileBlocked()
     }
     
     override func setUp(profile: ResponseAPIContentGetProfile) {

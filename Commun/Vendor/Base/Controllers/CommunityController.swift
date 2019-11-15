@@ -10,18 +10,12 @@ import Foundation
 import RxSwift
 import CyberSwift
 
-protocol CommunityType: Equatable {
+protocol CommunityType: ListItemType {
     var communityId: String {get}
     var name: String {get}
     var isSubscribed: Bool? {get set}
     var subscribersCount: UInt64? {get set}
     var identity: String {get}
-}
-
-extension CommunityType {
-    public func notifyChanged() {
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "\(Self.self)DidChange"), object: self)
-    }
 }
 
 extension ResponseAPIContentGetCommunity: CommunityType {}
@@ -50,11 +44,8 @@ protocol CommunityController: class {
 extension CommunityController {
     // Apply changes to view when community changed
     func observeCommunityChange() {
-        NotificationCenter.default.rx.notification(.init(rawValue: "\(Community.self)DidChange"))
-            .subscribe(onNext: {notification in
-                guard let newCommunity = notification.object as? Community,
-                    newCommunity.identity == self.community?.identity
-                    else {return}
+        Community.observeItemChanged()
+            .subscribe(onNext: {newCommunity in
                 self.setUp(with: newCommunity)
             })
             .disposed(by: disposeBag)

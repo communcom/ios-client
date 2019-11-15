@@ -19,6 +19,7 @@ class PostsViewModel: ListViewModel<ResponseAPIContentGetPost> {
         self.filter = BehaviorRelay<PostsListFetcher.Filter>(value: filter)
         defer {
             bindFilter()
+            observeUserBlocked()
         }
     }
     
@@ -32,6 +33,15 @@ class PostsViewModel: ListViewModel<ResponseAPIContentGetPost> {
                 self.fetcher.reset()
                 (self.fetcher as! PostsListFetcher).filter = filter
                 self.fetchNext()
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    func observeUserBlocked() {
+        ResponseAPIContentGetProfile.observeEvent(eventName: ResponseAPIContentGetProfile.blockedEventName)
+            .subscribe(onNext: {blockedUser in
+                let posts = self.items.value.filter {$0.author?.userId != blockedUser.userId}
+                self.items.accept(posts)
             })
             .disposed(by: disposeBag)
     }

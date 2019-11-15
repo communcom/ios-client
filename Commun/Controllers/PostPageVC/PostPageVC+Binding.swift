@@ -10,10 +10,9 @@ import Foundation
 
 extension PostPageVC {
     func observePostDeleted() {
-        NotificationCenter.default.rx.notification(.init(rawValue: "\(ResponseAPIContentGetPost.self)Deleted"))
-            .subscribe(onNext: { (notification) in
-                guard let deletedPost = notification.object as? ResponseAPIContentGetPost,
-                    deletedPost.identity == (self.viewModel as! PostPageViewModel).post.value?.identity
+        ResponseAPIContentGetPost.observeItemDeleted()
+            .subscribe(onNext: { (deletedPost) in
+                guard deletedPost.identity == (self.viewModel as! PostPageViewModel).post.value?.identity
                     else {return}
                 self.showAlert(title: "deleted".localized().uppercaseFirst, message: "the post has been deleted".localized().uppercaseFirst, completion: { (_) in
                     self.back()

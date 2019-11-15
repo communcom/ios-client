@@ -26,36 +26,28 @@ class SubscriptionsViewModel: ListViewModel<ResponseAPIContentGetSubscriptionsIt
     }
     
     override func observeItemDeleted() {
-        NotificationCenter.default.rx.notification(.init(rawValue: "\(ResponseAPIContentGetSubscriptionsUser.self)Deleted"))
-            .subscribe(onNext: { (notification) in
-                guard let deletedUser = notification.object as? ResponseAPIContentGetSubscriptionsUser
-                    else {return}
+        ResponseAPIContentGetSubscriptionsUser.observeItemDeleted()
+            .subscribe(onNext: { (deletedUser) in
                 self.deleteItem(ResponseAPIContentGetSubscriptionsItem.user(deletedUser))
             })
             .disposed(by: disposeBag)
         
-        NotificationCenter.default.rx.notification(.init(rawValue: "\(ResponseAPIContentGetSubscriptionsCommunity.self)Deleted"))
-            .subscribe(onNext: { (notification) in
-                guard let deletedCommunity = notification.object as? ResponseAPIContentGetSubscriptionsCommunity
-                    else {return}
+        ResponseAPIContentGetSubscriptionsCommunity.observeItemDeleted()
+            .subscribe(onNext: { (deletedCommunity) in
                 self.deleteItem(ResponseAPIContentGetSubscriptionsItem.community(deletedCommunity))
             })
             .disposed(by: disposeBag)
     }
     
     override func observeItemChange() {
-        NotificationCenter.default.rx.notification(.init(rawValue: "\(ResponseAPIContentGetSubscriptionsUser.self)DidChange"))
-            .subscribe(onNext: {notification in
-                guard let newUser = notification.object as? ResponseAPIContentGetSubscriptionsUser
-                    else {return}
-                self.updateItem(ResponseAPIContentGetSubscriptionsItem.user(newUser))
+        ResponseAPIContentGetSubscriptionsUser.observeItemChanged()
+            .subscribe(onNext: { (newItem) in
+                self.updateItem(ResponseAPIContentGetSubscriptionsItem.user(newItem))
             })
             .disposed(by: disposeBag)
         
-        NotificationCenter.default.rx.notification(.init(rawValue: "\(ResponseAPIContentGetSubscriptionsCommunity.self)DidChange"))
-            .subscribe(onNext: {notification in
-                guard let newCommunity = notification.object as? ResponseAPIContentGetSubscriptionsCommunity
-                    else {return}
+        ResponseAPIContentGetSubscriptionsCommunity.observeItemChanged()
+            .subscribe(onNext: {newCommunity in
                 self.updateItem(ResponseAPIContentGetSubscriptionsItem.community(newCommunity))
             })
             .disposed(by: disposeBag)
