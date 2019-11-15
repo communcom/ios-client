@@ -161,6 +161,7 @@ extension ResponseAPIContentBlock {
             attr[.link] = url
             child.addAttributes(attr, range: NSMakeRange(0, child.length))
         case "image", "video", "website":
+            if attachmentSize == .zero { break }
             // get url
             var url: String?
             if type == "image" {

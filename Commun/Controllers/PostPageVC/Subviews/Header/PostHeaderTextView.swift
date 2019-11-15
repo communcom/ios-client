@@ -29,9 +29,9 @@ class PostHeaderTextView: MySubviewAttachingTextView {
     override func commonInit() {
         super.commonInit()
         textContainerInset = UIEdgeInsets(
-            top: 0,
+            top: 10,
             left: PostHeaderTextView.attachmentInset.left,
-            bottom: 0,
+            bottom: 10,
             right: PostHeaderTextView.attachmentInset.right)
         textContainer.lineFragmentPadding = 0
         isEditable = false
