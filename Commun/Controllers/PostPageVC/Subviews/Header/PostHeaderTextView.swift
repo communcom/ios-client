@@ -29,7 +29,7 @@ class PostHeaderTextView: MySubviewAttachingTextView {
     override func commonInit() {
         super.commonInit()
         textContainerInset = UIEdgeInsets(
-            top: 0,
+            top: 20,
             left: PostHeaderTextView.attachmentInset.left,
             bottom: 0,
             right: PostHeaderTextView.attachmentInset.right)
