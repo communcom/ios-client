@@ -75,6 +75,8 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile>, CommentCellDel
         bindSegmentedControl()
         
         bindCommunities()
+        
+        bindProfileBlocked()
     }
     
     override func setUp(profile: ResponseAPIContentGetProfile) {
