@@ -24,6 +24,7 @@ class CommentCell: MyTableViewCell, CommentController {
     let voteActionsContainerViewHeight: CGFloat = 35
     private let maxCharactersForReduction = 150
     let defaultContentFontSize: CGFloat = 15
+    let embedSize = CGSize(width: 270, height: 180)
     
     // MARK: - Properties
     var comment: ResponseAPIContentGetComment?
@@ -40,7 +41,7 @@ class CommentCell: MyTableViewCell, CommentController {
         textView.isEditable = false
         return textView
     }()
-    lazy var embedView = UIView(width: 192, height: 101)
+    lazy var gridView = GridView(width: embedSize.width, height: embedSize.height)
     lazy var voteContainerView: VoteContainerView = VoteContainerView(height: voteActionsContainerViewHeight, cornerRadius: voteActionsContainerViewHeight / 2)
     lazy var replyButton = UIButton(label: "reply".localized().uppercaseFirst, labelFont: .boldSystemFont(ofSize: 13), textColor: .appMainColor)
     lazy var timeLabel = UILabel.with(text: " • 3h", textSize: 13, weight: .bold, textColor: .a5a7bd)
@@ -68,10 +69,12 @@ class CommentCell: MyTableViewCell, CommentController {
         lpgr.delegate = self
         contentTextView.addGestureRecognizer(lpgr)
         
-        contentContainerView.addSubview(embedView)
-        embedView.autoPinEdge(.leading, to: .leading, of: contentTextView)
-        embedView.autoPinEdge(.top, to: .bottom, of: contentTextView)
-        embedView.autoPinEdge(toSuperviewEdge: .bottom, withInset: 8)
+        contentContainerView.addSubview(gridView)
+        gridView.autoPinEdge(.leading, to: .leading, of: contentTextView)
+        gridView.autoPinEdge(.top, to: .bottom, of: contentTextView)
+        gridView.autoPinEdge(toSuperviewEdge: .bottom, withInset: 8)
+        gridView.trailingAnchor.constraint(lessThanOrEqualTo: contentContainerView.trailingAnchor, constant: -10)
+            .isActive = true
         
         contentView.addSubview(voteContainerView)
         voteContainerView.autoPinEdge(.top, to: .bottom, of: contentContainerView, withOffset: 5)
@@ -112,46 +115,21 @@ class CommentCell: MyTableViewCell, CommentController {
         setText()
         
         // Show media
-        let embededResult = comment.attachments.first
-        
-        if embededResult?.type == "image",
-            let urlString = embededResult?.attributes?.thumbnail_url,
-            let url = URL(string: urlString) {
-            showPhoto(with: url)
-            embedView.heightConstraint?.constant = 101
-        } else {
-            // TODO: Video
-            embedView.heightConstraint?.constant = 0
+        let embededResult = comment.attachments
+        if embededResult.count > 0 {
+            gridView.widthConstraint?.constant = embedSize.width
+            gridView.heightConstraint?.constant = embedSize.height
+            layoutIfNeeded()
+            gridView.setUp(embeds: embededResult)
+        }
+        else {
+            gridView.widthConstraint?.constant = 0
+            gridView.heightConstraint?.constant = 0
+            layoutIfNeeded()
         }
         
         voteContainerView.setUp(with: comment.votes)
         timeLabel.text = " • " + Date.timeAgo(string: comment.meta.creationTime)
-    }
-    
-    func showPhoto(with url: URL) {
-        embedView.removeSubviews()
-        let imageView = UIImageView()
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.contentMode = .scaleAspectFill
-        imageView.layer.masksToBounds = true
-        imageView.addTapToViewer()
-        
-        embedView.addSubview(imageView)
-        imageView.topAnchor.constraint(equalTo: embedView.topAnchor, constant: 8).isActive = true
-        imageView.bottomAnchor.constraint(equalTo: embedView.bottomAnchor, constant: -8).isActive = true
-        imageView.leadingAnchor.constraint(equalTo: embedView.leadingAnchor).isActive = true
-        imageView.trailingAnchor.constraint(equalTo: embedView.trailingAnchor).isActive = true
-        
-        imageView.showLoading()
-        
-        imageView.sd_setImage(with: url) { [weak self] (image, _, _, _) in
-            var image = image
-            if image == nil {
-                image = UIImage(named: "image-not-found")
-                imageView.image = image
-            }
-            self?.hideLoading()
-        }
     }
     
     func setText() {
