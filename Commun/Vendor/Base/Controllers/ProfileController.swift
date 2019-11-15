@@ -10,24 +10,12 @@ import Foundation
 import RxSwift
 import CyberSwift
 
-protocol ProfileType: Equatable {
+protocol ProfileType: ListItemType {
     var userId: String {get}
     var username: String {get}
     var isSubscribed: Bool? {get set}
     var subscribersCount: UInt64? {get set}
     var identity: String {get}
-}
-
-extension ProfileType {
-    public func notifyChanged() {
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "\(Self.self)DidChange"), object: self)
-    }
-    public func notifyBlocked() {
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "\(Self.self)Blocked"), object: self)
-    }
-    public func notifyDeleted() {
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "\(Self.self)Deleted"), object: self)
-    }
 }
 
 extension ResponseAPIContentGetProfile: ProfileType {
