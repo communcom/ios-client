@@ -117,7 +117,8 @@ class PostHeaderView: MyTableHeaderView, PostController {
         // Parse data
         let attributedString = post.document?.toAttributedString(
             currentAttributes: contentTextView.defaultAttributes,
-            attachmentSize: contentTextView.attachmentSize)
+            attachmentSize: contentTextView.attachmentSize,
+            attachmentType: PostPageTextAttachment.self)
         
         contentTextView.attributedText = attributedString
         layoutSubviews()
