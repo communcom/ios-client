@@ -21,6 +21,7 @@ class CommentsViewModel: ListViewModel<ResponseAPIContentGetComment> {
         defer {
             bindFilter()
             observeChildrenChanged()
+            observeUserBlocked()
         }
     }
     
@@ -30,6 +31,14 @@ class CommentsViewModel: ListViewModel<ResponseAPIContentGetComment> {
                 self.fetcher.reset(clearResult: false)
                 (self.fetcher as! CommentsListFetcher).filter = filter
                 self.fetchNext()
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    func observeUserBlocked() {
+        NotificationCenter.default.rx.notification(.init(rawValue: "\(ResponseAPIContentGetProfile.self)Blocked"))
+            .subscribe(onNext: {notification in
+                self.reload()
             })
             .disposed(by: disposeBag)
     }

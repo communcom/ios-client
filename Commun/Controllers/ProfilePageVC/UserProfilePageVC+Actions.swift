@@ -8,6 +8,7 @@
 
 import Foundation
 import CyberSwift
+import RxSwift
 
 extension UserProfilePageVC {
     @objc func moreActionsButtonDidTouch(_ sender: Any) {
@@ -50,15 +51,23 @@ extension UserProfilePageVC {
     
     func blockUser() {
         guard let userId = viewModel.profile.value?.userId else {return}
+        showIndetermineHudWithMessage("blocking".localized().uppercaseFirst + "...")
+        
+//        Completable.empty()
+//            .delay(0.8, scheduler: MainScheduler.instance)
         RestAPIManager.instance.rx.block(userId)
-            .subscribe(onSuccess: { _ in
+            .flatMapCompletable {RestAPIManager.instance.waitForTransactionWith(id: $0)}
+            .subscribe(onCompleted: {
+                self.hideHud()
                 self.showAlert(
-                title: "user blocked".localized().uppercaseFirst,
-                message: "You've blocked" + " \(self.viewModel.profile.value?.username ?? "this user")" + "\n" + "we're sorry that you've had this experience".localized().uppercaseFirst + ".") { _ in
-                    self.viewModel.profile.value?.notifyDeleted()
-                    self.back()
-                }
+                    title: "user blocked".localized().uppercaseFirst,
+                    message: "You've blocked" + " \(self.viewModel.profile.value?.username ?? "this user")" + ".\n" + "we're sorry that you've had this experience".localized().uppercaseFirst + ".") { _ in
+                        self.viewModel.profile.value?.notifyBlocked()
+                        self.viewModel.profile.value?.notifyDeleted()
+                        self.back()
+                    }
             }) { (error) in
+                self.hideHud()
                 self.showError(error)
             }
             .disposed(by: disposeBag)
