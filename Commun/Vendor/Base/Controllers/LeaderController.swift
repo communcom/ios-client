@@ -41,9 +41,18 @@ extension LeaderController {
         leader?.notifyChanged()
         
         // send request
-//        Completable.empty()
+        let request: Single<String>
+//        request = Single<String>.just("")
 //            .delay(0.8, scheduler: MainScheduler.instance)
-        RestAPIManager.instance.rx.voteLeader(communityId: communityId, leader: leader!.userId)
+        if originIsVoted {
+            // unvote
+            request = RestAPIManager.instance.rx.unvoteLeader(communityId: communityId, leader: leader!.userId)
+        }
+        else {
+            request = RestAPIManager.instance.rx.voteLeader(communityId: communityId, leader: leader!.userId)
+        }
+        
+        request
             .do(onSubscribe: { [weak self] in
                 self?.voteButton.isEnabled = false
             })
