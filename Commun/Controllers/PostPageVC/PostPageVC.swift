@@ -28,10 +28,11 @@ class PostPageVC: CommentsViewController {
     // MARK: - Properties
     var scrollToTopAfterLoadingComment = false
     var commentThatNeedsScrollTo: ResponseAPIContentGetComment?
-    
+
     // MARK: - Initializers
     init(post: ResponseAPIContentGetPost) {
         super.init(nibName: nil, bundle: nil)
+        self.commentForm.post = post
         self.viewModel = PostPageViewModel(post: post)
     }
     

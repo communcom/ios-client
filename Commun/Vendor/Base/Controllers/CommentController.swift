@@ -73,9 +73,10 @@ extension CommentController {
             self.comment!.notifyChanged()
             
             // send request
-            NetworkService.shared.voteMessage(voteType:          originHasUpVote ? .unvote: .upvote,
-                                              messagePermlink:   comment.contentId.permlink,
-                                              messageAuthor:     comment.author?.userId ?? "")
+            NetworkService.shared.voteMessage(voteType: originHasUpVote ? .unvote: .upvote,
+                                              communityId: comment.community?.communityId ?? "",
+                                              messagePermlink: comment.contentId.permlink,
+                                              messageAuthor: comment.author?.userId ?? "")
                 .subscribe(
                     onCompleted: { [weak self] in
                         // re-enable state
@@ -119,9 +120,10 @@ extension CommentController {
             self.voteContainerView.downVoteButton.isEnabled = false
             
             // send request
-            NetworkService.shared.voteMessage(voteType:          originHasDownVote ? .unvote: .downvote,
-                                              messagePermlink:   comment.contentId.permlink,
-                                              messageAuthor:     comment.author?.userId ?? "")
+            NetworkService.shared.voteMessage(voteType: originHasDownVote ? .unvote: .downvote,
+                                              communityId: comment.community?.communityId ?? "",
+                                              messagePermlink: comment.contentId.permlink,
+                                              messageAuthor: comment.author?.userId ?? "")
                 .subscribe(
                     onCompleted: { [weak self] in
                         // re-enable state

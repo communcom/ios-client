@@ -24,6 +24,7 @@ class CommentForm: MyView {
             setParentComment()
         }
     }
+    var post: ResponseAPIContentGetPost?
     var mode: Mode = .new {
         didSet {
             switch mode {
@@ -105,12 +106,27 @@ class CommentForm: MyView {
         addSubview(sendButton)
         sendButton.autoPinEdge(.leading, to: .trailing, of: textView, withOffset: 5)
         sendButton.autoPinBottomAndTrailingToSuperView(inset: 10, xInset: 16)
-        
+        sendButton.addTarget(self, action: #selector(sendComment), for: .touchUpInside)
         bind()
         
         parentComment = nil
     }
-    
+
+    @objc func sendComment() {
+        guard let post = post, let text = textView.text, let authorID = post.author?.userId else { return }
+        self.textView.isUserInteractionEnabled = false
+        NetworkService.shared.sendComment(communCode: post.community.communityId,
+                                          postAuthor: authorID,
+                                          postPermlink: post.contentId.permlink,
+                                          message: text).subscribe(onCompleted: {
+            self.textView.isUserInteractionEnabled = true
+            self.textView.text = ""
+        }) { error in
+            self.textView.isUserInteractionEnabled = true
+            UIApplication.topViewController()?.showError(error)
+        }.disposed(by: disposeBag)
+    }
+
     func bind() {
         // setup observer
         let isTextViewEmpty = textView.rx.text.orEmpty

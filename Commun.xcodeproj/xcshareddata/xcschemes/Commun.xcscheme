@@ -20,6 +20,20 @@
                ReferencedContainer = "container:Commun.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "B18EBB2C223F8F8800F52D3C"
+               BuildableName = "CyberSwift.framework"
+               BlueprintName = "CyberSwift"
+               ReferencedContainer = "container:cyberSwift/CyberSwift.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction

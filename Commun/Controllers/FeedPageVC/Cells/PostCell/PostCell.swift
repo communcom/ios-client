@@ -72,9 +72,10 @@ class PostCell: MyTableViewCell, PostController {
         // action buttons
         contentView.addSubview(voteContainerView)
         voteContainerView.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
-        voteContainerView.upVoteButton.addTarget(self, action: #selector(upVoteButtonDidTouch), for: .touchUpInside)
-        voteContainerView.downVoteButton.addTarget(self, action: #selector(downVoteButtonDidTouch), for: .touchUpInside)
-        
+
+        voteContainerView.upVoteButton.addTarget(self, action: #selector(upVoteButtonTapped(button:)), for: .touchUpInside)
+        voteContainerView.downVoteButton.addTarget(self, action: #selector(downVoteButtonTapped(button:)), for: .touchUpInside)
+
         // comments and shares
         contentView.addSubview(shareButton)
         shareButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)

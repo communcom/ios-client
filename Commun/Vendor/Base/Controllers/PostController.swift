@@ -133,9 +133,10 @@ extension PostController {
             self.post!.notifyChanged()
             
             // send request
-            NetworkService.shared.voteMessage(voteType:          originHasUpVote ? .unvote: .upvote,
-                                              messagePermlink:   post.contentId.permlink,
-                                              messageAuthor:     post.author?.userId ?? "")
+            NetworkService.shared.voteMessage(voteType: originHasUpVote ? .unvote: .upvote,
+                                              communityId: post.community.communityId,
+                                              messagePermlink: post.contentId.permlink,
+                                              messageAuthor: post.author?.userId ?? "")
                 .subscribe(
                     onCompleted: { [weak self] in
                         // re-enable state
@@ -179,9 +180,10 @@ extension PostController {
             self.post!.notifyChanged()
             
             // send request
-            NetworkService.shared.voteMessage(voteType:          originHasDownVote ? .unvote: .downvote,
-                                              messagePermlink:   post.contentId.permlink,
-                                              messageAuthor:     post.author?.userId ?? "")
+            NetworkService.shared.voteMessage(voteType: originHasDownVote ? .unvote: .downvote,
+                                              communityId: post.community.communityId,
+                                              messagePermlink: post.contentId.permlink,
+                                              messageAuthor: post.author?.userId ?? "")
                 .subscribe(
                     onCompleted: { [weak self] in
                         // re-enable state

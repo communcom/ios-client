@@ -47,12 +47,15 @@ class NetworkService: NSObject {
             .observeOn(MainScheduler.instance)
     }
     
-    func voteMessage(voteType: VoteActionType, messagePermlink: String, messageAuthor: String) -> Completable {
+    func voteMessage(voteType: VoteActionType,
+                     communityId: String,
+                     messagePermlink: String,
+                     messageAuthor: String) -> Completable {
         return RestAPIManager.instance.rx.vote(
-                voteType:   voteType,
-                author:     messageAuthor,
-                permlink:   messagePermlink,
-                weight:     voteType == .unvote ? 0 : 1)
+                voteType:    voteType,
+                communityId: communityId,
+                author:      messageAuthor,
+                permlink:    messagePermlink)
             .observeOn(MainScheduler.instance)
     }
     
@@ -63,12 +66,16 @@ class NetworkService: NSObject {
         body: String,
         tags: [String]? = nil
     ) -> Single<SendPostCompletion> {
-        return RestAPIManager.instance.rx.create(
-            commun_code: communCode,
-            message: body,
-            headline: title,
-            tags: tags
-        )
+        return RestAPIManager.instance.rx.create(communCode: communCode,
+                                                 header: title,
+                                                 message: body,
+                                                 tags: tags)
+//        return RestAPIManager.instance.rx.create(
+//            commun_code: communCode,
+//            message: body,
+//            headline: title,
+//            tags: tags
+//        )
             .observeOn(MainScheduler.instance)
     }
     
@@ -77,38 +84,33 @@ class NetworkService: NSObject {
         communCode: String,
         title: String?,
         text: String,
-        tags: [String]
-    ) -> Single<SendPostCompletion> {
+        tags: [String]) -> Single<SendPostCompletion> {
+
         return RestAPIManager.instance.rx.updateMessage(
             communCode:     communCode,
             permlink:       permlink,
             headline:       title,
             message:        text,
             tags:           tags
-        )
-            .observeOn(MainScheduler.instance)
+        ).observeOn(MainScheduler.instance)
     }
     
     func waitForTransactionWith(id: String) -> Completable {
         return RestAPIManager.instance.waitForTransactionWith(id: id)
     }
     
-    func sendComment(
-        communCode:             String,
-        parentAuthor:           String,
-        parentPermlink:         String,
-        message:                String,
-        tags:                   [String]? = nil
+    func sendComment(communCode: String,
+                     postAuthor: String,
+                     postPermlink: String,
+                     message: String
     ) -> Completable {
-        
+
         return RestAPIManager.instance.rx.create(
-            commun_code: communCode,
-            message: message,
-            parentPermlink: parentPermlink,
-            parentAuthor: parentAuthor,
-            tags: tags
-        )
-            .flatMapCompletable({ (msgInfo) -> Completable in
+            communCode: communCode,
+            parentAuthor: postAuthor,
+            parentPermlink: postPermlink,
+            message: message
+        ).flatMapCompletable({ (msgInfo) -> Completable in
                 #warning("Remove this chaining to use socket in production")
                 return self.waitForTransactionWith(id: msgInfo.transactionId!)
             })
