@@ -11,6 +11,11 @@ import RxSwift
 import SDWebImage
 
 class MyAvatarImageView: MyView {
+    // Nested type
+    class TapGesture: UITapGestureRecognizer {
+        var profileId: String?
+    }
+    
     var imageViewInsets: UIEdgeInsets {
         return .zero
     }
@@ -113,8 +118,31 @@ class MyAvatarImageView: MyView {
     }
     
     func addTapToViewer() {
-        isUserInteractionEnabled = true
         imageView.addTapToViewer()
+    }
+    
+    func addTapToOpenUserProfile(profileId: String) {
+        isUserInteractionEnabled = true
+        let tap = TapGesture(target: self, action: #selector(openUserProfile(gesture:)))
+        tap.profileId = profileId
+        addGestureRecognizer(tap)
+    }
+    
+    func addTapToOpenCommunity(profileId: String) {
+        isUserInteractionEnabled = true
+        let tap = TapGesture(target: self, action: #selector(openCommunity(gesture:)))
+        tap.profileId = profileId
+        addGestureRecognizer(tap)
+    }
+    
+    @objc private func openUserProfile(gesture: TapGesture) {
+        guard let profileId = gesture.profileId else {return}
+        parentViewController?.showProfileWithUserId(profileId)
+    }
+    
+    @objc private func openCommunity(gesture: TapGesture) {
+        guard let profileId = gesture.profileId else {return}
+        parentViewController?.showCommunityWithCommunityId(profileId)
     }
     
     func removeAvatar() {
