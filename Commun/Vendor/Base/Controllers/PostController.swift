@@ -125,15 +125,12 @@ extension PostController {
         // change state
         setHasVote(originHasUpVote ? false: true, for: .upvote)
         setHasVote(false, for: .downvote)
+        self.post!.votes.isBeingVoted = true
         
         // animate
         voteContainerView.animateUpVote {
             // notify
             self.post!.notifyChanged()
-            
-            // disable button until transaction is done
-            self.voteContainerView.upVoteButton.isEnabled = false
-            self.voteContainerView.downVoteButton.isEnabled = false
             
             // send request
             NetworkService.shared.voteMessage(voteType:          originHasUpVote ? .unvote: .upvote,
@@ -141,20 +138,17 @@ extension PostController {
                                               messageAuthor:     post.author?.userId ?? "")
                 .subscribe(
                     onCompleted: { [weak self] in
-                        // re-enable buttons
-                        self?.voteContainerView.upVoteButton.isEnabled = true
-                        self?.voteContainerView.downVoteButton.isEnabled = true
+                        // re-enable state
+                        self?.post?.votes.isBeingVoted = false
+                        self?.post?.notifyChanged()
                     },
                     onError: {[weak self] error in
                         guard let strongSelf = self else {return}
                         // reset state
                         strongSelf.setHasVote(originHasUpVote, for: .upvote)
                         strongSelf.setHasVote(originHasDownVote, for: .downvote)
+                        strongSelf.post?.votes.isBeingVoted = false
                         strongSelf.post!.notifyChanged()
-                        
-                        // re-enable buttons
-                        strongSelf.voteContainerView.upVoteButton.isEnabled = true
-                        strongSelf.voteContainerView.downVoteButton.isEnabled = true
                         
                         // show general error
                         UIApplication.topViewController()?.showError(error)
@@ -177,15 +171,12 @@ extension PostController {
         // change state
         setHasVote(originHasDownVote ? false: true, for: .downvote)
         setHasVote(false, for: .upvote)
+        self.post!.votes.isBeingVoted = true
         
         // animate
         voteContainerView.animateDownVote {
             // notify
             self.post!.notifyChanged()
-            
-            // disable button until transaction is done
-            self.voteContainerView.upVoteButton.isEnabled = false
-            self.voteContainerView.downVoteButton.isEnabled = false
             
             // send request
             NetworkService.shared.voteMessage(voteType:          originHasDownVote ? .unvote: .downvote,
@@ -193,20 +184,17 @@ extension PostController {
                                               messageAuthor:     post.author?.userId ?? "")
                 .subscribe(
                     onCompleted: { [weak self] in
-                        // re-enable buttons
-                        self?.voteContainerView.upVoteButton.isEnabled = true
-                        self?.voteContainerView.downVoteButton.isEnabled = true
+                        // re-enable state
+                        self?.post?.votes.isBeingVoted = false
+                        self?.post?.notifyChanged()
                     },
                     onError: { [weak self] error in
                         guard let strongSelf = self else {return}
                         // reset state
                         strongSelf.setHasVote(originHasUpVote, for: .upvote)
                         strongSelf.setHasVote(originHasDownVote, for: .downvote)
+                        strongSelf.post?.votes.isBeingVoted = false
                         strongSelf.post!.notifyChanged()
-                        
-                        // re-enable buttons
-                        strongSelf.voteContainerView.upVoteButton.isEnabled = true
-                        strongSelf.voteContainerView.downVoteButton.isEnabled = true
                         
                         // show general error
                         UIApplication.topViewController()?.showError(error)

@@ -37,6 +37,8 @@ class VoteContainerView: MyView {
         upVoteButton.tintColor         = votes.hasUpVote ?? false ? .appMainColor: .lightGray
         likeCountLabel.text            =   "\((votes.upCount ?? 0) - (votes.downCount ?? 0))"
         downVoteButton.tintColor       = votes.hasDownVote ?? false ? .appMainColor: .lightGray
+        upVoteButton.isEnabled = !(votes.isBeingVoted ?? false)
+        downVoteButton.isEnabled = !(votes.isBeingVoted ?? false)
     }
     
     func animateUpVote(completion: @escaping () -> Void) {
