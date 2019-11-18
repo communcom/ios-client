@@ -72,6 +72,8 @@ class PostCell: MyTableViewCell, PostController {
         // action buttons
         contentView.addSubview(voteContainerView)
         voteContainerView.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
+        voteContainerView.upVoteButton.addTarget(self, action: #selector(upVoteButtonDidTouch), for: .touchUpInside)
+        voteContainerView.downVoteButton.addTarget(self, action: #selector(downVoteButtonDidTouch), for: .touchUpInside)
         
         // comments and shares
         contentView.addSubview(shareButton)
@@ -120,5 +122,13 @@ class PostCell: MyTableViewCell, PostController {
         let postPageVC = PostPageVC(post: post)
         postPageVC.scrollToTopAfterLoadingComment = true
         parentViewController?.show(postPageVC, sender: nil)
+    }
+    
+    @objc func upVoteButtonDidTouch() {
+        upVote()
+    }
+    
+    @objc func downVoteButtonDidTouch() {
+        downVote()
     }
 }
