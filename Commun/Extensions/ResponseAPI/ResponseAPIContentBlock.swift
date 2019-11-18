@@ -194,7 +194,9 @@ extension ResponseAPIContentBlock {
             child.append(NSAttributedString.separator)
             child.addAttributes(currentAttributes, range: NSMakeRange(child.length - 1, 1))
         case "post":
-            child.deleteCharacters(in: NSMakeRange(child.length - 1, 1))
+            if child.string.ends(with: "\n") {
+                child.deleteCharacters(in: NSMakeRange(child.length - 1, 1))
+            }
         default:
             break
         }
