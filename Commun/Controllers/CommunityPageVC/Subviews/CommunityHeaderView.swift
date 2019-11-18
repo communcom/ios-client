@@ -105,9 +105,9 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
         joinButton.autoAlignAxis(.horizontal, toSameAxisOf: avatarImageView)
         joinButton.addTarget(self, action: #selector(joinButtonDidTouch(_:)), for: .touchUpInside)
         
-        nameLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         joinedDateLabel.trailingAnchor.constraint(lessThanOrEqualTo: joinButton.leadingAnchor, constant: -8)
             .isActive = true
+        joinButton.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         
         addSubview(membersCountLabel)
         membersCountLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)

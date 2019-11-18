@@ -196,6 +196,9 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
         followButton.backgroundColor = isFollowing ? #colorLiteral(red: 0.9525656104, green: 0.9605062604, blue: 0.9811610579, alpha: 1): .appMainColor
         followButton.setTitleColor(isFollowing ? .appMainColor: .white , for: .normal)
         followButton.setTitle(isFollowing ? "following".localized().uppercaseFirst : "follow".localized().uppercaseFirst, for: .normal)
+        followButton.leadingAnchor.constraint(greaterThanOrEqualTo: nameLabel.trailingAnchor, constant: 8)
+            .isActive = true
+        followButton.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         
         // bio
         // description

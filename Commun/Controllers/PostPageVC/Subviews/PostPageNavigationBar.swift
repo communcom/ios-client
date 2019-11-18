@@ -53,11 +53,13 @@ class PostPageNavigationBar: MyView, CommunityController {
         joinButton.autoPinEdge(.trailing, to: .leading, of: moreButton)
         joinButton.autoAlignAxis(toSuperviewAxis: .horizontal)
         joinButton.autoPinEdge(.leading, to: .trailing, of: postMetaView, withOffset: 8)
-        joinButton.leadingAnchor.constraint(greaterThanOrEqualTo: postMetaView.trailingAnchor, constant: 8)
-            .isActive = true
+        
         joinButton.addTarget(self, action: #selector(joinButtonDidTouch), for: .touchUpInside)
         
-        postMetaView.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+//        postMetaView.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+        joinButton.leadingAnchor.constraint(greaterThanOrEqualTo: postMetaView.trailingAnchor, constant: 8)
+            .isActive = true
+        joinButton.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         
         observeCommunityChange()
     }

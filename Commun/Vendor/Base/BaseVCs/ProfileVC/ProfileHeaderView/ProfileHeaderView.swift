@@ -19,7 +19,7 @@ class ProfileHeaderView: MyTableHeaderView {
     lazy var avatarImageView = MyAvatarImageView(size: 50)
     
     lazy var nameLabel: UILabel = {
-        let label = UILabel.with(text: "Profile", textSize: 20, weight: .bold, numberOfLines: 2)
+        let label = UILabel.with(text: "Profile", textSize: 20, weight: .bold, numberOfLines: 0)
         return label
     }()
     
@@ -60,6 +60,7 @@ class ProfileHeaderView: MyTableHeaderView {
         addSubview(nameLabel)
         nameLabel.autoPinEdge(toSuperviewEdge: .top, withInset: 20)
         nameLabel.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 10)
+        nameLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         
         addSubview(joinedDateLabel)
         joinedDateLabel.autoPinEdge(.top, to: .bottom, of: nameLabel, withOffset: 3)
@@ -68,7 +69,10 @@ class ProfileHeaderView: MyTableHeaderView {
         addSubview(descriptionLabel)
         descriptionLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
         descriptionLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
-        descriptionLabel.autoPinEdge(.top, to: .bottom, of: avatarImageView, withOffset: 10)
+        descriptionLabel.topAnchor.constraint(greaterThanOrEqualTo: avatarImageView.bottomAnchor, constant: 8)
+            .isActive = true
+        descriptionLabel.topAnchor.constraint(greaterThanOrEqualTo: joinedDateLabel.bottomAnchor, constant: 8)
+            .isActive = true
 
         addSubview(usersStackView)
         usersStackView.autoPinEdge(.top, to: .bottom, of: descriptionLabel, withOffset: 14)
