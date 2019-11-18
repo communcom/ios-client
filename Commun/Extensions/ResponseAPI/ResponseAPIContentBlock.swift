@@ -193,6 +193,8 @@ extension ResponseAPIContentBlock {
             child.append(attachmentAS)
             child.append(NSAttributedString.separator)
             child.addAttributes(currentAttributes, range: NSMakeRange(child.length - 1, 1))
+        case "post":
+            child.deleteCharacters(in: NSMakeRange(child.length - 1, 1))
         default:
             break
         }
