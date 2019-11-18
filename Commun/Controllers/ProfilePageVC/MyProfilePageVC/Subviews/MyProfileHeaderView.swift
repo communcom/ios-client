@@ -8,7 +8,7 @@
 
 import Foundation
 
-class MyProfileHeaderView: UserProfileHeaderView {
+final class MyProfileHeaderView: UserProfileHeaderView {
     lazy var changeAvatarButton: UIButton = {
         let button = UIButton(width: 20, height: 20, backgroundColor: .f3f5fa, cornerRadius: 10, contentInsets: UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5))
         button.tintColor = .a5a7bd
@@ -22,7 +22,6 @@ class MyProfileHeaderView: UserProfileHeaderView {
     
     override func commonInit() {
         super.commonInit()
-        followButton.removeFromSuperview()
         
         // button
         addSubview(changeAvatarButton)
@@ -34,6 +33,15 @@ class MyProfileHeaderView: UserProfileHeaderView {
         
         // bind
         bind()
+    }
+    
+    override func layoutFollowButton() {
+        // remove followButton and set nameLabel as max width
+        nameLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
+    }
+    
+    override func setUpFollowButton(isFollowing: Bool) {
+        // do nothing
     }
 
     private func configureAddBioButtonConstraints() {

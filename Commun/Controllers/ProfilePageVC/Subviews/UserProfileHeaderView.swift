@@ -59,10 +59,7 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
     override func commonInit() {
         super.commonInit()
         
-        addSubview(followButton)
-        followButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
-        followButton.autoAlignAxis(.horizontal, toSameAxisOf: avatarImageView)
-        followButton.addTarget(self, action: #selector(followButtonDidTouch(_:)), for: .touchUpInside)
+        layoutFollowButton()
         
         addSubview(followersCountLabel)
         followersCountLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
@@ -193,13 +190,7 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
         
         // followButton
         let isFollowing = userProfile.isSubscribed ?? false
-        followButton.backgroundColor = isFollowing ? #colorLiteral(red: 0.9525656104, green: 0.9605062604, blue: 0.9811610579, alpha: 1): .appMainColor
-        followButton.setTitleColor(isFollowing ? .appMainColor: .white , for: .normal)
-        followButton.setTitle(isFollowing ? "following".localized().uppercaseFirst : "follow".localized().uppercaseFirst, for: .normal)
-        followButton.leadingAnchor.constraint(greaterThanOrEqualTo: nameLabel.trailingAnchor, constant: 8)
-            .isActive = true
-        followButton.setContentHuggingPriority(.defaultHigh, for: .horizontal)
-        followButton.isEnabled = !(profile?.isBeingToggledFollow ?? false)
+        setUpFollowButton(isFollowing: isFollowing)
         
         // bio
         // description
@@ -221,6 +212,23 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
         communitiesMutualCountLabel.text = "\(userProfile.highlightCommunitiesCount ?? 0)"
 
         needShowCommunites(userProfile.highlightCommunitiesCount ?? 0 > 0)
+    }
+    
+    func layoutFollowButton() {
+        addSubview(followButton)
+        followButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
+        followButton.autoAlignAxis(.horizontal, toSameAxisOf: avatarImageView)
+        followButton.addTarget(self, action: #selector(followButtonDidTouch(_:)), for: .touchUpInside)
+        followButton.leadingAnchor.constraint(greaterThanOrEqualTo: nameLabel.trailingAnchor, constant: 8)
+            .isActive = true
+        followButton.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+    }
+    
+    func setUpFollowButton(isFollowing: Bool) {
+        followButton.backgroundColor = isFollowing ? #colorLiteral(red: 0.9525656104, green: 0.9605062604, blue: 0.9811610579, alpha: 1): .appMainColor
+        followButton.setTitleColor(isFollowing ? .appMainColor: .white , for: .normal)
+        followButton.setTitle(isFollowing ? "following".localized().uppercaseFirst : "follow".localized().uppercaseFirst, for: .normal)
+        followButton.isEnabled = !(profile?.isBeingToggledFollow ?? false)
     }
     
     @objc func followButtonDidTouch(_ sender: UIButton) {
