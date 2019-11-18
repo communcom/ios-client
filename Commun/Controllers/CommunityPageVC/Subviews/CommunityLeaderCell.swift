@@ -37,7 +37,7 @@ class CommunityLeaderCell: CommunityPageCell, LeaderController {
     }()
     
     lazy var descriptionLabel: UILabel = {
-        let label = UILabel.with(text: "Tell how you would influence the community and make it better becomi... Read", textSize: 14, numberOfLines: 0)
+        let label = UILabel.with(textSize: 14, numberOfLines: 0)
         return label
     }()
     
@@ -114,6 +114,7 @@ class CommunityLeaderCell: CommunityPageCell, LeaderController {
         voteButton.backgroundColor = voted ? #colorLiteral(red: 0.9525656104, green: 0.9605062604, blue: 0.9811610579, alpha: 1): .appMainColor
         voteButton.setTitleColor(voted ? .appMainColor: .white , for: .normal)
         voteButton.setTitle(voted ? "voted".localized().uppercaseFirst : "vote".localized().uppercaseFirst, for: .normal)
+        voteButton.isEnabled = !(leader.isBeingVoted ?? false)
     }
     
     @objc func voteButtonDidTouch() {

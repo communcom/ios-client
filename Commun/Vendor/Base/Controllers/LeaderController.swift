@@ -33,6 +33,7 @@ extension LeaderController {
         
         // set value
         setIsVoted(!originIsVoted)
+        leader?.isBeingVoted = true
         
         // animate
         animateVote()
@@ -53,21 +54,17 @@ extension LeaderController {
         }
         
         request
-            .do(onSubscribe: { [weak self] in
-                self?.voteButton.isEnabled = false
-            })
             .flatMapCompletable {RestAPIManager.instance.waitForTransactionWith(id: $0)}
             .subscribe(onCompleted: { [weak self] in
-                // re-enable button state
-                self?.voteButton.isEnabled = true
+                // re-enable state
+                self?.leader?.isBeingVoted = false
+                self?.leader?.notifyChanged()
             }) { [weak self](error) in
                 guard let strongSelf = self else {return}
                 // reverse change
                 strongSelf.setIsVoted(originIsVoted)
+                self?.leader?.isBeingVoted = false
                 strongSelf.leader?.notifyChanged()
-                
-                // re-enable button state
-                strongSelf.voteButton.isEnabled = true
                 
                 // show error
                 UIApplication.topViewController()?.showError(error)
