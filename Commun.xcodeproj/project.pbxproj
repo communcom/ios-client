@@ -250,6 +250,7 @@
 		BC22BBD6236C26EF00F40658 /* NotificationsSettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC22BBD5236C26EF00F40658 /* NotificationsSettingsVC.swift */; };
 		BC22BBD9236C27C000F40658 /* BaseStackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC22BBD8236C27C000F40658 /* BaseStackViewController.swift */; };
 		BC22BBDB236C2A7F00F40658 /* NotificationSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC22BBDA236C2A7F00F40658 /* NotificationSettingsViewModel.swift */; };
+		BC247D0523823B650062C979 /* ResponseAPIContentGetProfile.json in Resources */ = {isa = PBXBuildFile; fileRef = BC247D0423823B650062C979 /* ResponseAPIContentGetProfile.json */; };
 		BC2B83782371BDFD00C93AD6 /* ResponseAPIContentGetCommunityRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2B83772371BDFD00C93AD6 /* ResponseAPIContentGetCommunityRule.swift */; };
 		BC2C94FF2366F04100C9D7FE /* UserProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2C94FE2366F04100C9D7FE /* UserProfileHeaderView.swift */; };
 		BC31BA55235EBD7C0007D89A /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC31BA54235EBD7C0007D89A /* ProfileVC.swift */; };
@@ -671,6 +672,7 @@
 		BC22BBD5236C26EF00F40658 /* NotificationsSettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsSettingsVC.swift; sourceTree = "<group>"; };
 		BC22BBD8236C27C000F40658 /* BaseStackViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseStackViewController.swift; sourceTree = "<group>"; };
 		BC22BBDA236C2A7F00F40658 /* NotificationSettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSettingsViewModel.swift; sourceTree = "<group>"; };
+		BC247D0423823B650062C979 /* ResponseAPIContentGetProfile.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ResponseAPIContentGetProfile.json; sourceTree = "<group>"; };
 		BC2B83772371BDFD00C93AD6 /* ResponseAPIContentGetCommunityRule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseAPIContentGetCommunityRule.swift; sourceTree = "<group>"; };
 		BC2C94FE2366F04100C9D7FE /* UserProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileHeaderView.swift; sourceTree = "<group>"; };
 		BC31BA54235EBD7C0007D89A /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
@@ -874,6 +876,7 @@
 				BCF74A5B23617D3A00B91089 /* ResponseAPIContentGetSubscribers.json */,
 				BCF74A63236182B200B91089 /* ResponseAPIContentGetCommunity.json */,
 				BCA0039A23714920002A68BA /* ResponseAPIContentGetLeaders.json */,
+				BC247D0423823B650062C979 /* ResponseAPIContentGetProfile.json */,
 			);
 			path = Mocking;
 			sourceTree = "<group>";
@@ -2241,6 +2244,7 @@
 				BC3D97612350384E00421718 /* ResponseAPIContentGetPosts.json in Resources */,
 				B1EA02E82289882A00835244 /* SF-Pro-Display-UltralightItalic.otf in Resources */,
 				3BB342B222CA64EA009546B2 /* Boarding.storyboard in Resources */,
+				BC247D0523823B650062C979 /* ResponseAPIContentGetProfile.json in Resources */,
 				576DC91E223E429C00EDED41 /* FeedPageVC.storyboard in Resources */,
 				BC83F26B2369322400B5719D /* Localizable.strings in Resources */,
 				B1EA02D72289882300835244 /* SF-Pro-Display-Black.otf in Resources */,
