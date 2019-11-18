@@ -16,6 +16,7 @@ protocol ProfileType: ListItemType {
     var isSubscribed: Bool? {get set}
     var subscribersCount: UInt64? {get set}
     var identity: String {get}
+    var isBeingToggledFollow: Bool? {get set}
 }
 
 extension ResponseAPIContentGetProfile: ProfileType {
@@ -55,6 +56,7 @@ extension ProfileController {
         
         // set value
         setIsSubscribed(!originIsFollowing)
+        profile?.isBeingToggledFollow = true
         
         // animate
         animateFollow()
@@ -64,21 +66,16 @@ extension ProfileController {
         
         // send request
         NetworkService.shared.triggerFollow(userId, isUnfollow: originIsFollowing)
-            .do(onSubscribe: { [weak self] in
-                self?.followButton.isEnabled = false
-            })
             .subscribe(onCompleted: { [weak self] in
-                // re-enable button state
-                self?.followButton.isEnabled = true
-                
+                // re-enable state
+                self?.profile?.isBeingToggledFollow = false
+                self?.profile?.notifyChanged()
             }) { [weak self] (error) in
                 guard let strongSelf = self else {return}
                 // reverse change
                 strongSelf.setIsSubscribed(originIsFollowing)
+                strongSelf.profile?.isBeingToggledFollow = false
                 strongSelf.profile!.notifyChanged()
-                
-                // re-enable button state
-                strongSelf.followButton.isEnabled = true
                 
                 // show error
                 UIApplication.topViewController()?.showError(error)
