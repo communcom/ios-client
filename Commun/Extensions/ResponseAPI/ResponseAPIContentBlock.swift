@@ -143,23 +143,27 @@ extension ResponseAPIContentBlock {
                 }
             }
             child.addAttributes(attr, range: NSMakeRange(0, child.length))
+            child.append(NSAttributedString(string: " ", attributes: currentAttributes))
         case "tag":
             let link = child.string
             child.insert(NSAttributedString(string: "#"), at: 0)
             var attr = currentAttributes
             attr[.link] = "\(URL.appURL)/#\(link)"
             child.addAttributes(attr, range: NSMakeRange(0, child.length))
+            child.append(NSAttributedString(string: " ", attributes: currentAttributes))
         case "mention":
             let link = child.string
             child.insert(NSAttributedString(string: "@"), at: 0)
             var attr = currentAttributes
             attr[.link] = "\(URL.appURL)/@\(link)"
             child.addAttributes(attr, range: NSMakeRange(0, child.length))
+            child.append(NSAttributedString(string: " ", attributes: currentAttributes))
         case "link":
             let url = attributes?.url ?? ""
             var attr = currentAttributes
             attr[.link] = url
             child.addAttributes(attr, range: NSMakeRange(0, child.length))
+            child.append(NSAttributedString(string: " ", attributes: currentAttributes))
         case "image", "video", "website":
             if attachmentSize == .zero { break }
             // get url
