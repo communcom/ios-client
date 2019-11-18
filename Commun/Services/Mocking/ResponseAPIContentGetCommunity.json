@@ -11,8 +11,8 @@
         "description": "WREK comunity description",
         "language": "eng",
         "rules": [
-            {"id": "1", "title": "rule1", "content": "fasdf"},
-            {"id": "2", "title": "rule2", "content": "fasdfasdf"}
+            {"id": "1", "title": "rule1", "text": "fasdf"},
+            {"id": "2", "title": "rule2", "text": "fasdfasdf"}
         ],
         "isSubscribed": true,
         "isBlocked": false,
