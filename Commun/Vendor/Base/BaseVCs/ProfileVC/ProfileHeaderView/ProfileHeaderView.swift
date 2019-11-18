@@ -77,4 +77,9 @@ class ProfileHeaderView: MyTableHeaderView {
         addSubview(usersStackView)
         usersStackView.autoPinEdge(.top, to: .bottom, of: descriptionLabel, withOffset: 14)
     }
+    
+    override func reassignTableHeaderView() {
+        super.reassignTableHeaderView()
+        roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: 25)
+    }
 }

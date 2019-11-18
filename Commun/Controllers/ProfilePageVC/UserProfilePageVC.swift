@@ -60,7 +60,6 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile>, CommentCellDel
     override func setUp() {
         super.setUp()
         setHeaderView()
-        headerView.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: 25)
         
         setRightNavBarButton(with: optionsButton)
         optionsButton.addTarget(self, action: #selector(moreActionsButtonDidTouch(_:)), for: .touchUpInside)

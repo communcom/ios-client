@@ -59,7 +59,6 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>{
     override func setUp() {
         super.setUp()
         headerView = CommunityHeaderView(tableView: tableView)
-        headerView.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: 25)
     }
     
     override func bind() {

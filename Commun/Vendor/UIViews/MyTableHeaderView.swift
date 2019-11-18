@@ -14,8 +14,7 @@ class MyTableHeaderView: MyView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        superview?.layoutIfNeeded()
-        tableView?.tableHeaderView = tableView?.tableHeaderView
+        reassignTableHeaderView()
     }
     
     // MARK: - Initializers
@@ -25,18 +24,28 @@ class MyTableHeaderView: MyView {
         commonInit()
         
         defer {
-            let containerView = UIView(forAutoLayout: ())
-            
-            containerView.addSubview(self)
-            self.autoPinEdgesToSuperviewEdges()
-            
-            tableView.tableHeaderView = containerView
-            
-            containerView.centerXAnchor.constraint(equalTo: tableView.centerXAnchor).isActive = true
-            containerView.widthAnchor.constraint(equalTo: tableView.widthAnchor).isActive = true
-            containerView.topAnchor.constraint(equalTo: tableView.topAnchor).isActive = true
-            
-            tableView.tableHeaderView?.layoutIfNeeded()
+            setUpTableHeaderView()
         }
+    }
+    
+    func setUpTableHeaderView() {
+        guard let tableView = tableView else {return}
+        let containerView = UIView(forAutoLayout: ())
+        
+        containerView.addSubview(self)
+        self.autoPinEdgesToSuperviewEdges()
+        
+        tableView.tableHeaderView = containerView
+        
+        containerView.centerXAnchor.constraint(equalTo: tableView.centerXAnchor).isActive = true
+        containerView.widthAnchor.constraint(equalTo: tableView.widthAnchor).isActive = true
+        containerView.topAnchor.constraint(equalTo: tableView.topAnchor).isActive = true
+        
+        tableView.tableHeaderView?.layoutIfNeeded()
+    }
+    
+    func reassignTableHeaderView() {
+        superview?.layoutIfNeeded()
+        tableView?.tableHeaderView = tableView?.tableHeaderView
     }
 }

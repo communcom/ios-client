@@ -151,23 +151,6 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
         }
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-
-        if let headerView = tableView.tableHeaderView {
-
-            let height = headerView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
-            var headerFrame = headerView.frame
-
-            //Comparison necessary to avoid infinite loop
-            if height != headerFrame.size.height {
-                headerFrame.size.height = height
-                headerView.frame = headerFrame
-                tableView.tableHeaderView = headerView
-            }
-        }
-    }
-    
     func showTitle(_ show: Bool, animated: Bool = false) {
         coverImageView.isHidden = show
         UIView.animate(withDuration: animated ? 0.3: 0) {
