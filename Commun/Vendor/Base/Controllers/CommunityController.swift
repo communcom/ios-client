@@ -16,6 +16,7 @@ protocol CommunityType: ListItemType {
     var isSubscribed: Bool? {get set}
     var subscribersCount: UInt64? {get set}
     var identity: String {get}
+    var isBeingJoined: Bool? {get set}
 }
 
 extension ResponseAPIContentGetCommunity: CommunityType {}
@@ -61,6 +62,7 @@ extension CommunityController {
         
         // set value
         setIsSubscribed(!originIsSubscribed)
+        community?.isBeingJoined = true
         
         // animate
         animateJoin()
@@ -83,21 +85,17 @@ extension CommunityController {
         }
         
         request
-            .do(onSubscribe: { [weak self] in
-                self?.joinButton.isEnabled = false
-            })
             .subscribe(onCompleted: { [weak self] in
-                // re-enable button state
-                self?.joinButton.isEnabled = true
+                // re-enable state
+                self?.community?.isBeingJoined = false
+                self?.community?.notifyChanged()
                 
             }) { [weak self] (error) in
                 guard let strongSelf = self else {return}
                 // reverse change
                 strongSelf.setIsSubscribed(originIsSubscribed)
+                strongSelf.community?.isBeingJoined = false
                 strongSelf.community?.notifyChanged()
-                
-                // re-enable button state
-                strongSelf.joinButton.isEnabled = true
                 
                 // show error
                 UIApplication.topViewController()?.showError(error)

@@ -76,6 +76,7 @@ class PostPageNavigationBar: MyView, CommunityController {
         joinButton.backgroundColor = joined ? #colorLiteral(red: 0.9525656104, green: 0.9605062604, blue: 0.9811610579, alpha: 1): .appMainColor
         joinButton.setTitleColor(joined ? .appMainColor: .white , for: .normal)
         joinButton.setTitle(joined ? "joined".localized().uppercaseFirst : "join".localized().uppercaseFirst, for: .normal)
+        joinButton.isEnabled = !(community.isBeingJoined ?? false)
     }
     
     @objc func backButtonDidTouch() {
