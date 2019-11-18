@@ -252,6 +252,7 @@
 		BC22BBDB236C2A7F00F40658 /* NotificationSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC22BBDA236C2A7F00F40658 /* NotificationSettingsViewModel.swift */; };
 		BC247D0523823B650062C979 /* ResponseAPIContentGetProfile.json in Resources */ = {isa = PBXBuildFile; fileRef = BC247D0423823B650062C979 /* ResponseAPIContentGetProfile.json */; };
 		BC247D0C23827C810062C979 /* ResponseAPIContentGetPost.json in Resources */ = {isa = PBXBuildFile; fileRef = BC247D0B23827C810062C979 /* ResponseAPIContentGetPost.json */; };
+		BC247D1223827F460062C979 /* PostHeaderView+UITextViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC247D1123827F460062C979 /* PostHeaderView+UITextViewDelegate.swift */; };
 		BC2B83782371BDFD00C93AD6 /* ResponseAPIContentGetCommunityRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2B83772371BDFD00C93AD6 /* ResponseAPIContentGetCommunityRule.swift */; };
 		BC2C94FF2366F04100C9D7FE /* UserProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2C94FE2366F04100C9D7FE /* UserProfileHeaderView.swift */; };
 		BC31BA55235EBD7C0007D89A /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC31BA54235EBD7C0007D89A /* ProfileVC.swift */; };
@@ -675,6 +676,7 @@
 		BC22BBDA236C2A7F00F40658 /* NotificationSettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSettingsViewModel.swift; sourceTree = "<group>"; };
 		BC247D0423823B650062C979 /* ResponseAPIContentGetProfile.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ResponseAPIContentGetProfile.json; sourceTree = "<group>"; };
 		BC247D0B23827C810062C979 /* ResponseAPIContentGetPost.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ResponseAPIContentGetPost.json; sourceTree = "<group>"; };
+		BC247D1123827F460062C979 /* PostHeaderView+UITextViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PostHeaderView+UITextViewDelegate.swift"; sourceTree = "<group>"; };
 		BC2B83772371BDFD00C93AD6 /* ResponseAPIContentGetCommunityRule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseAPIContentGetCommunityRule.swift; sourceTree = "<group>"; };
 		BC2C94FE2366F04100C9D7FE /* UserProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileHeaderView.swift; sourceTree = "<group>"; };
 		BC31BA54235EBD7C0007D89A /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
@@ -1750,6 +1752,24 @@
 			path = NotificationsSettingsVC;
 			sourceTree = "<group>";
 		};
+		BC247D0F23827F190062C979 /* PostHeaderView */ = {
+			isa = PBXGroup;
+			children = (
+				BCCB993523756375005252CF /* PostHeaderView.swift */,
+				BC247D1123827F460062C979 /* PostHeaderView+UITextViewDelegate.swift */,
+			);
+			path = PostHeaderView;
+			sourceTree = "<group>";
+		};
+		BC247D1023827F240062C979 /* PostHeaderTextView */ = {
+			isa = PBXGroup;
+			children = (
+				BCCB993323756318005252CF /* PostHeaderTextView.swift */,
+				BC520A43237E49A900033ED0 /* PostPageTextAttachment.swift */,
+			);
+			path = PostHeaderTextView;
+			sourceTree = "<group>";
+		};
 		BC31BA53235EBD6A0007D89A /* ProfileVC */ = {
 			isa = PBXGroup;
 			children = (
@@ -1975,9 +1995,8 @@
 		BCCB993223756318005252CF /* Header */ = {
 			isa = PBXGroup;
 			children = (
-				BCCB993523756375005252CF /* PostHeaderView.swift */,
-				BCCB993323756318005252CF /* PostHeaderTextView.swift */,
-				BC520A43237E49A900033ED0 /* PostPageTextAttachment.swift */,
+				BC247D0F23827F190062C979 /* PostHeaderView */,
+				BC247D1023827F240062C979 /* PostHeaderTextView */,
 			);
 			path = Header;
 			sourceTree = "<group>";
@@ -2420,6 +2439,7 @@
 				BC016D42235DA0D400F1319F /* ArticlePostCell.swift in Sources */,
 				3B2F226B226892C5006B589E /* NotificationsViewModel.swift in Sources */,
 				B17A970C228002440081B8E0 /* SignUpRouter.swift in Sources */,
+				BC247D1223827F460062C979 /* PostHeaderView+UITextViewDelegate.swift in Sources */,
 				BC52913A237671CE0022EC7F /* CommentCellDelegate+UIViewController.swift in Sources */,
 				5787C0C422650F9D00568CEC /* SetUserVC.swift in Sources */,
 				5721E87122650AC0003BE04B /* StringExtension.swift in Sources */,

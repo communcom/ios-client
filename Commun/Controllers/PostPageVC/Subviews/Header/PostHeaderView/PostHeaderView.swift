@@ -52,6 +52,7 @@ class PostHeaderView: MyTableHeaderView, PostController {
         contentTextView.autoPinEdge(.top, to: .bottom, of: titleLabel)
         contentTextView.autoPinEdge(toSuperviewEdge: .leading)
         contentTextView.autoPinEdge(toSuperviewEdge: .trailing)
+        contentTextView.delegate = self
         
         addSubview(voteContainerView)
         voteContainerView.autoPinEdge(.top, to: .bottom, of: contentTextView, withOffset: 10)
