@@ -200,6 +200,7 @@
 		B1A8AC1B22E6FF5400032030 /* BlankButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A8AC1A22E6FF5400032030 /* BlankButton.swift */; };
 		B1C3712C2383D0F3000BAE2F /* ProfileEdit.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B1C3712A2383D0F2000BAE2F /* ProfileEdit.storyboard */; };
 		B1C3712D2383D0F3000BAE2F /* ProfileEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C3712B2383D0F2000BAE2F /* ProfileEditViewController.swift */; };
+		B1C371362383E43C000BAE2F /* ProfileEditViewController+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C371352383E43C000BAE2F /* ProfileEditViewController+Actions.swift */; };
 		B1D1CF9922F8A28A0071F1B6 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B1D1CF9B22F8A28A0071F1B6 /* InfoPlist.strings */; };
 		B1EA02D72289882300835244 /* SF-Pro-Display-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = 57F9CA9C225B3AA400AC9ACA /* SF-Pro-Display-Black.otf */; };
 		B1EA02D82289882A00835244 /* SF-Pro-Display-BlackItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 57F9CA8E225B3A9400AC9ACA /* SF-Pro-Display-BlackItalic.otf */; };
@@ -654,6 +655,7 @@
 		B1A8AC1A22E6FF5400032030 /* BlankButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlankButton.swift; sourceTree = "<group>"; };
 		B1C3712A2383D0F2000BAE2F /* ProfileEdit.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ProfileEdit.storyboard; sourceTree = "<group>"; };
 		B1C3712B2383D0F2000BAE2F /* ProfileEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileEditViewController.swift; sourceTree = "<group>"; };
+		B1C371352383E43C000BAE2F /* ProfileEditViewController+Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProfileEditViewController+Actions.swift"; sourceTree = "<group>"; };
 		B1D1CF9A22F8A28A0071F1B6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		B1D1CF9C22F8A28F0071F1B6 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		B1EA02D42289734800835244 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -1275,22 +1277,22 @@
 		571B1508223A937200630C8F /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				3B67FC0522C4BB5100D05F01 /* SplashViewController.swift */,
-				57B6FC23224A9E4900BCFDDA /* WelcomeScreenVC */,
-				57FB179E224C077300563BF7 /* SignInVC */,
-				3B986B6322CE4B8100C1E985 /* SignUpScenes */,
 				3BB48AD122D641C800F11B6A /* BoardingScenes */,
-				571B1509223A94CD00630C8F /* TabBarController */,
-				3B6205582346E40A0017FEB7 /* PostEditorVCs */,
-				576DC917223E41CA00EDED41 /* FeedPageVC */,
 				BC619B0F237268240005BB94 /* CommunitiesVC */,
+				BCA971192360339B00AE37E1 /* CommunityPageVC */,
+				576DC917223E41CA00EDED41 /* FeedPageVC */,
 				57A1CA612270FC3300E2A1E3 /* LanguageVC */,
 				3B2F225322689252006B589E /* NotificationsPageVC */,
+				3B6205582346E40A0017FEB7 /* PostEditorVCs */,
 				5725173A2243E4510033125C /* PostPageVC */,
-				BCA971192360339B00AE37E1 /* CommunityPageVC */,
 				3BAF69C122675ADB0055CCEB /* ProfilePageVC */,
 				575AECAF22606F5200A7EC2D /* SelectCountryVC */,
 				57E5159A2270E5C700A6F6DB /* SettingsVC */,
+				57FB179E224C077300563BF7 /* SignInVC */,
+				3B986B6322CE4B8100C1E985 /* SignUpScenes */,
+				3B67FC0522C4BB5100D05F01 /* SplashViewController.swift */,
+				571B1509223A94CD00630C8F /* TabBarController */,
+				57B6FC23224A9E4900BCFDDA /* WelcomeScreenVC */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -1658,6 +1660,7 @@
 			children = (
 				B1C3712A2383D0F2000BAE2F /* ProfileEdit.storyboard */,
 				B1C3712B2383D0F2000BAE2F /* ProfileEditViewController.swift */,
+				B1C371352383E43C000BAE2F /* ProfileEditViewController+Actions.swift */,
 			);
 			path = ProfileEdit;
 			sourceTree = "<group>";
@@ -2567,6 +2570,7 @@
 				BC702C8E2362817700D9E88A /* CommunityLeaderCell.swift in Sources */,
 				3B67FC0622C4BB5100D05F01 /* SplashViewController.swift in Sources */,
 				3BB32F1B234436EF006572F3 /* PostMetaView.swift in Sources */,
+				B1C371362383E43C000BAE2F /* ProfileEditViewController+Actions.swift in Sources */,
 				3B3C8B8E2347876000D8BADB /* ContentTextView+Text.swift in Sources */,
 				BC69F7DA236FFA190097F870 /* SubsItemCell.swift in Sources */,
 				3B25E5BE234C2A0C005BD1B8 /* BasicEditorViewModel.swift in Sources */,

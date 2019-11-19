@@ -13,8 +13,12 @@ class ProfileEditViewController: UIViewController {
     @IBOutlet weak var avatarView: MyAvatarImageView! {
         didSet {
             self.avatarView.setToCurrentUserAvatar()
-//            self.avatarView.addTapToViewer()
             self.avatarView.addBorder(width: 5.0, radius: 130.0 / 2, color: .white)
+            
+            let avatarViewGesture = UITapGestureRecognizer(target: self, action: #selector(changeAvatarBtnDidTouch))
+            avatarViewGesture.numberOfTapsRequired = 1
+            self.avatarView.isUserInteractionEnabled = true
+            self.avatarView.addGestureRecognizer(avatarViewGesture)
         }
     }
         
@@ -23,6 +27,11 @@ class ProfileEditViewController: UIViewController {
             self.coverImageView.contentMode = .scaleAspectFill
             self.coverImageView.setCover(urlString: UserDefaults.standard.string(forKey: Config.currentUserCoverUrlKey))
             self.coverImageView.addBorder(width: 5.0, radius: 10.0, color: .white)
+            
+            let coverViewGesture = UITapGestureRecognizer(target: self, action: #selector(changeCoverBtnDidTouch))
+            coverViewGesture.numberOfTapsRequired = 1
+            self.coverImageView.isUserInteractionEnabled = true
+            self.coverImageView.addGestureRecognizer(coverViewGesture)
         }
     }
     
