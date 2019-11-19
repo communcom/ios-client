@@ -59,63 +59,10 @@ class NetworkService: NSObject {
             .observeOn(MainScheduler.instance)
     }
     
-    // return transactionId
-    func sendPost(
-        communCode: String,
-        title: String?,
-        body: String,
-        tags: [String]? = nil
-    ) -> Single<SendPostCompletion> {
-        return RestAPIManager.instance.rx.create(communCode: communCode,
-                                                 header: title,
-                                                 message: body,
-                                                 tags: tags)
-//        return RestAPIManager.instance.rx.create(
-//            commun_code: communCode,
-//            message: body,
-//            headline: title,
-//            tags: tags
-//        )
-            .observeOn(MainScheduler.instance)
-    }
-    
-    func editPostWithPermlink(
-        _ permlink: String,
-        communCode: String,
-        title: String?,
-        text: String,
-        tags: [String]) -> Single<SendPostCompletion> {
-
-        return RestAPIManager.instance.rx.updateMessage(
-            communCode:     communCode,
-            permlink:       permlink,
-            headline:       title,
-            message:        text,
-            tags:           tags
-        ).observeOn(MainScheduler.instance)
-    }
-    
     func waitForTransactionWith(id: String) -> Completable {
         return RestAPIManager.instance.waitForTransactionWith(id: id)
     }
     
-    func sendComment(communCode: String,
-                     postAuthor: String,
-                     postPermlink: String,
-                     message: String
-    ) -> Completable {
-
-        return RestAPIManager.instance.rx.create(
-            communCode: communCode,
-            parentAuthor: postAuthor,
-            parentPermlink: postPermlink,
-            message: message
-        ).flatMapCompletable({ (msgInfo) -> Completable in
-                #warning("Remove this chaining to use socket in production")
-                return self.waitForTransactionWith(id: msgInfo.transactionId!)
-            })
-            .observeOn(MainScheduler.instance)
-    }
     
 //    func resendSmsCode(phone: String) -> Observable<String> {
 //        return Observable<String>.create({ observer -> Disposable in

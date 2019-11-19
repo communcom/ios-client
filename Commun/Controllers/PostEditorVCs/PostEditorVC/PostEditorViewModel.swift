@@ -31,21 +31,22 @@ class PostEditorViewModel {
         var request: Single<SendPostCompletion>!
         
         if let post = self.postForEdit {
-            request = NetworkService.shared.editPostWithPermlink(
-                post.contentId.permlink,
-                communCode: community.value?.communityId ?? "",
-                title: title,
-                text: string,
-                tags: tags)
+            request = RestAPIManager.instance.rx.updateMessage(
+                communCode:     community.value?.communityId ?? "",
+                permlink:       post.contentId.permlink,
+                header:         title ?? "",
+                body:           string,
+                tags:           tags
+            )
         }
             
         // If creating new post
         else {
-            request = NetworkService.shared.sendPost(
-                communCode: community.value?.communityId ?? "",
-                title: title,
-                body: string,
-                tags: tags
+            request = RestAPIManager.instance.rx.createMessage(
+                communCode:     community.value?.communityId ?? "",
+                header:         title ?? "",
+                body:           string,
+                tags:           tags
             )
         }
         

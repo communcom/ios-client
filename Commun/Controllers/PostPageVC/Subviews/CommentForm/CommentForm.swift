@@ -24,7 +24,11 @@ class CommentForm: MyView {
             setParentComment()
         }
     }
-    var post: ResponseAPIContentGetPost?
+    var post: ResponseAPIContentGetPost? {
+        didSet {
+            viewModel.post = post
+        }
+    }
     var mode: Mode = .new {
         didSet {
             switch mode {
@@ -37,6 +41,7 @@ class CommentForm: MyView {
             }
         }
     }
+    lazy var viewModel = CommentFormViewModel()
     
     // MARK: - Subviews
     lazy var parentCommentView = UIView(height: 40, backgroundColor: .white)
@@ -113,18 +118,48 @@ class CommentForm: MyView {
     }
 
     @objc func sendComment() {
-        guard let post = post, let text = textView.text, let authorID = post.author?.userId else { return }
-        self.textView.isUserInteractionEnabled = false
-        NetworkService.shared.sendComment(communCode: post.community.communityId,
-                                          postAuthor: authorID,
-                                          postPermlink: post.contentId.permlink,
-                                          message: text).subscribe(onCompleted: {
-            self.textView.isUserInteractionEnabled = true
-            self.textView.text = ""
-        }) { error in
-            self.textView.isUserInteractionEnabled = true
-            UIApplication.topViewController()?.showError(error)
-        }.disposed(by: disposeBag)
+        if mode != .new && parentComment == nil { return}
+        
+        textView.getContentBlock()
+            .observeOn(MainScheduler.instance)
+            .do(onSubscribe: {
+                self.textView.isUserInteractionEnabled = false
+                self.parentViewController?.showIndetermineHudWithMessage(
+                    "parsing content".localized().uppercaseFirst)
+            })
+            .flatMapCompletable { block in
+                //clean
+                var block = block
+                block.maxId = nil
+                
+                // send new comment
+                let request: Completable
+                switch self.mode {
+                case .new:
+                    request = self.viewModel.sendNewComment(block: block)
+                case .edit:
+                    request = self.viewModel.updateComment(self.parentComment!, block: block)
+                case .reply:
+                    request = self.viewModel.replyToComment(self.parentComment!, block: block)
+                }
+                
+                return request
+                    .do(onSubscribe: {
+                        self.parentViewController?.showIndetermineHudWithMessage(
+                            "sending comment".localized().uppercaseFirst)
+                    })
+            }
+            .subscribe(onCompleted: {
+                self.parentViewController?.hideHud()
+                self.textView.isUserInteractionEnabled = true
+                
+                #warning("reload comments")
+            }) { (error) in
+                self.parentViewController?.hideHud()
+                self.parentViewController?.showError(error)
+                self.textView.isUserInteractionEnabled = true
+            }
+            .disposed(by: disposeBag)
     }
 
     func bind() {
