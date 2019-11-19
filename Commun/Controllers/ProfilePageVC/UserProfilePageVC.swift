@@ -59,6 +59,7 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile>, CommentCellDel
     // MARK: - Methods
     override func setUp() {
         super.setUp()
+        
         setHeaderView()
         
         setRightNavBarButton(with: optionsButton)
@@ -80,6 +81,7 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile>, CommentCellDel
     
     override func setUp(profile: ResponseAPIContentGetProfile) {
         super.setUp(profile: profile)
+        
         // Register new cell type
         tableView.register(CommentCell.self, forCellReuseIdentifier: "CommentCell")
         
@@ -87,8 +89,7 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile>, CommentCellDel
         title = profile.username
         
         // cover
-        if let urlString = profile.personal?.coverUrl
-        {
+        if let urlString = profile.personal?.coverUrl {
             coverImageView.setImageDetectGif(with: urlString)
         }
         
@@ -117,6 +118,7 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile>, CommentCellDel
     override func handleListEmpty() {
         var title = "empty"
         var description = "not found"
+        
         switch viewModel.segmentedItem.value {
         case .posts:
             title = "no posts"

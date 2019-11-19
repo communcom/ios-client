@@ -297,7 +297,15 @@ extension PostEditorVC {
             break
         }
     }
+    
+    
+    // MARK: - Add link
+    func addAgeLimit() {
+        #warning("Change func")
+        showAlert(title: "info".localized().uppercaseFirst, message: "add age limit 18+ (coming soon)".localized().uppercaseFirst, buttonTitles: ["OK".localized()], highlightedButtonIndex: 0)
+    }
 }
+
 
 extension PostEditorVC: UIPopoverPresentationControllerDelegate {
     func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
