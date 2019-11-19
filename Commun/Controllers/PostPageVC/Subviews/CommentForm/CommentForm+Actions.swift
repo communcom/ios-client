@@ -9,6 +9,7 @@
 import Foundation
 import RxSwift
 import RxCocoa
+import CyberSwift
 
 extension CommentForm {
     @objc func sendComment() {
@@ -43,31 +44,45 @@ extension CommentForm {
                 self.parentViewController?.showIndetermineHudWithMessage(
                     "sending comment".localized().uppercaseFirst)
             })
-            .subscribe(onSuccess: { [weak self](arg0) in
-                let (transactionId, userId, permlink) = arg0
-                guard let strongSelf = self else {return}
-                strongSelf.setLoading(false)
+            .flatMap { [weak self] (arg) -> Single<ResponseAPIContentGetComment?> in
+                let (transactionId, userId, permlink) = arg
+                var newComment: ResponseAPIContentGetComment?
                 
+                switch self?.mode {
+                case .edit:
+                    newComment = self?.parentComment
+                    newComment?.document = block
+                case .reply:
+                    newComment = ResponseAPIContentGetComment(
+                        contentId: ResponseAPIContentId(userId: userId ?? "", permlink: permlink ?? "", communityId: self?.post?.community.communityId ?? ""),
+                        parents: ResponseAPIContentGetCommentParent(post: nil, comment: self?.parentComment?.contentId),
+                        document: block,
+                        author: ResponseAPIAuthor(userId: userId ?? "", username: Config.currentUser?.name, avatarUrl: UserDefaults.standard.string(forKey: Config.currentUserAvatarUrlKey), stats: nil, isSubscribed: nil),
+                        community: self?.post?.community)
+                case .new:
+                    newComment = ResponseAPIContentGetComment(
+                        contentId: ResponseAPIContentId(userId: userId ?? "", permlink: permlink ?? "", communityId: self?.post?.community.communityId ?? ""),
+                        parents: ResponseAPIContentGetCommentParent(post: self?.post?.contentId, comment: nil),
+                        document: block,
+                        author: ResponseAPIAuthor(userId: userId ?? "", username: Config.currentUser?.name, avatarUrl: UserDefaults.standard.string(forKey: Config.currentUserAvatarUrlKey), stats: nil, isSubscribed: nil),
+                        community: self?.post?.community)
+                case nil:
+                    break
+                }
+                
+                return RestAPIManager.instance.waitForTransactionWith(id: transactionId ?? "")
+                    .andThen(Single.just(newComment))
+            }
+            .subscribe(onSuccess: { [weak self] newComment in
+                guard let strongSelf = self, let newComment = newComment else {return}
+                strongSelf.setLoading(false)
                 switch strongSelf.mode {
                 case .edit:
-                    strongSelf.parentComment?.document = block
-                    strongSelf.parentComment?.notifyChanged()
+                    newComment.notifyChanged()
                 case .reply:
-                    let reply = ResponseAPIContentGetComment(
-                        contentId: ResponseAPIContentId(userId: userId ?? "", permlink: permlink ?? "", communityId: strongSelf.post!.community.communityId),
-                        parents: ResponseAPIContentGetCommentParent(post: nil, comment: strongSelf.parentComment!.contentId),
-                        document: block,
-                        author: ResponseAPIAuthor(userId: userId ?? "", username: Config.currentUser?.name, avatarUrl: UserDefaults.standard.string(forKey: Config.currentUserAvatarUrlKey), stats: nil, isSubscribed: nil),
-                        community: strongSelf.post!.community)
-                    strongSelf.parentComment?.children = (strongSelf.parentComment?.children ?? []) + [reply]
+                    strongSelf.parentComment?.children = (strongSelf.parentComment?.children ?? []) + [newComment]
                     strongSelf.parentComment?.notifyChildrenChanged()
                 case .new:
-                    let newComment = ResponseAPIContentGetComment(
-                        contentId: ResponseAPIContentId(userId: userId ?? "", permlink: permlink ?? "", communityId: strongSelf.post!.community.communityId),
-                        parents: ResponseAPIContentGetCommentParent(post: nil, comment: strongSelf.parentComment!.contentId),
-                        document: block,
-                        author: ResponseAPIAuthor(userId: userId ?? "", username: Config.currentUser?.name, avatarUrl: UserDefaults.standard.string(forKey: Config.currentUserAvatarUrlKey), stats: nil, isSubscribed: nil),
-                        community: strongSelf.post!.community)
                     strongSelf.post?.notifyEvent(
                         eventName: ResponseAPIContentGetPost.commentAddedEventName,
                         object: newComment
@@ -76,10 +91,11 @@ extension CommentForm {
                 
                 strongSelf.mode = .new
                 strongSelf.parentComment = nil
-            }, onError: { (error) in
+                
+            }) { (error) in
                 self.setLoading(false)
                 self.parentViewController?.showError(error)
-            })
+            }
             .disposed(by: disposeBag)
     }
     
@@ -90,6 +106,7 @@ extension CommentForm {
         parentComment?.notifyChanged()
         
         textView.isUserInteractionEnabled = !isLoading
+        sendButton.isEnabled = !isLoading
         if (isLoading) {
             parentViewController?.showIndetermineHudWithMessage(message ?? "loading".localized().uppercaseFirst)
         }
