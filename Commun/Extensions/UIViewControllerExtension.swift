@@ -243,7 +243,8 @@ extension UIViewController {
         if let count = navigationController?.viewControllers.count, let previousVC = navigationController?.viewControllers[count - 2] {
             navigationController?.popToViewController(previousVC, animated: true)
         }
-        
+    }
+    
     func setStatusBarStyle(_ style: UIStatusBarStyle) {
         /*
         if let statusBar = UIApplication.shared.value(forKey: "statusBar") as? UIView {
