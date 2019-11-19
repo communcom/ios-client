@@ -30,11 +30,10 @@ class PostEditorViewModel {
         // If editing post
         var request: Single<SendPostCompletion>!
         
-        #warning("fix communCode")
         if let post = self.postForEdit {
             request = NetworkService.shared.editPostWithPermlink(
                 post.contentId.permlink,
-                communCode: "CATS",
+                communCode: community.value?.communityId ?? "",
                 title: title,
                 text: string,
                 tags: tags)
@@ -43,7 +42,7 @@ class PostEditorViewModel {
         // If creating new post
         else {
             request = NetworkService.shared.sendPost(
-                communCode: "CATS",
+                communCode: community.value?.communityId ?? "",
                 title: title,
                 body: string,
                 tags: tags
