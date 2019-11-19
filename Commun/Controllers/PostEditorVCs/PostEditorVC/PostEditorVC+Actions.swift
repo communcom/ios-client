@@ -219,18 +219,18 @@ extension PostEditorVC {
                 var block = block
                 block.maxId = nil
                 return self.viewModel.sendPost(title: self.postTitle, block: block)
-        }
-        .do(onSubscribe: {
-            self.showIndetermineHudWithMessage(
-                "sending post".localized().uppercaseFirst)
-        })
+            }
+            .do(onSubscribe: {
+                self.showIndetermineHudWithMessage(
+                    "sending post".localized().uppercaseFirst)
+            })
             .flatMap {
-                self.viewModel.waitForTransaction($0)
-        }
-        .do(onSubscribe: {
-            self.showIndetermineHudWithMessage(
-                "wait for transaction".localized().uppercaseFirst)
-        })
+                    self.viewModel.waitForTransaction($0)
+            }
+            .do(onSubscribe: {
+                self.showIndetermineHudWithMessage(
+                    "wait for transaction".localized().uppercaseFirst)
+            })
             .subscribe(onSuccess: { (userId, permlink) in
                 self.hideHud()
                 // if editing post
@@ -261,8 +261,8 @@ extension PostEditorVC {
                     }
                 }
                 self.showError(error)
-        }
-        .disposed(by: disposeBag)
+            }
+            .disposed(by: disposeBag)
     }
     
     func previewAttachment(_ attachment: TextAttachment) {
