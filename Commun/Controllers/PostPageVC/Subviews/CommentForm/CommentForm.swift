@@ -120,6 +120,7 @@ class CommentForm: MyView {
     @objc func sendComment() {
         if mode != .new && parentComment == nil { return}
         
+        #warning("send image")
         textView.getContentBlock()
             .observeOn(MainScheduler.instance)
             .do(onSubscribe: {
@@ -152,6 +153,9 @@ class CommentForm: MyView {
             .subscribe(onCompleted: {
                 self.parentViewController?.hideHud()
                 self.textView.isUserInteractionEnabled = true
+                
+                self.mode = .new
+                self.parentComment = nil
                 
                 #warning("reload comments")
             }) { (error) in
