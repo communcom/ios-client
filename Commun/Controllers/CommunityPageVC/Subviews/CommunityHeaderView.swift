@@ -189,12 +189,10 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
         nameLabel.text = community.name
         
         // joined date
-        #warning("join date missing")
-//        let dateFormatter = DateFormatter()
-//        dateFormatter.dateStyle = .long
-//        let dateString = dateFormatter.string(from: Date.from(string: community.registration.time))
-//        profilePageVC.joinedDateLabel.text = String(format: "%@ %@", "joined".localized().uppercaseFirst, dateString)
-        joinedDateLabel.text = "joined".localized().uppercaseFirst + " " + ""
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .long
+        let dateString = dateFormatter.string(from: Date.from(string: community.registrationTime ?? ""))
+        joinedDateLabel.text = "joined".localized().uppercaseFirst + " " + "\(dateString)"
         
         // joinButton
         let joined = community.isSubscribed ?? false
@@ -236,8 +234,7 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
         membersCountLabel.text = Double(community.subscribersCount ?? 0).kmFormatted
         
         // leadsCount
-        #warning("leads count missing")
-        leadsCountLabel.text = "0"
+        leadsCountLabel.text = "\(community.leadersCount ?? 0)"
         
         // friends
         if let friends = community.friends {
