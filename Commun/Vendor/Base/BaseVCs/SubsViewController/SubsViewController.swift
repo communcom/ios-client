@@ -25,6 +25,7 @@ class SubsViewController<T: ListItemType>: ListViewController<T> {
         tableView.backgroundColor = .clear
         tableView.separatorInset = .zero
         tableView.showsVerticalScrollIndicator = false
+        tableView.separatorColor = .f3f5fa
         
         tableView.contentInset = UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0)
     }
