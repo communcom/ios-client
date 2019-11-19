@@ -182,7 +182,7 @@ class NetworkService: NSObject {
         return RestAPIManager.instance.rx.update(userProfile: params)
             .flatMapCompletable({ (transaction) -> Completable in
                 // update profile
-                if let url = params["profile_image"] {
+                if let url = params["avatar_url"] {
                     self.saveUserAvatarUrl(url)
                 }
                 
