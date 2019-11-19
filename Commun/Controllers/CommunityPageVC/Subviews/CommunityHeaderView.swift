@@ -153,13 +153,17 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
         let tap3 = UITapGestureRecognizer(target: self, action: #selector(friendsLabelDidTouch))
         friendLabel.addGestureRecognizer(tap3)
         
+        #warning("Don't use in MVP")
+        /*
         addSubview(pointsContainerView)
         pointsContainerView.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
         pointsContainerView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
         pointsContainerView.autoPinEdge(.top, to: .bottom, of: membersCountLabel, withOffset: 22)
+        */
         
         addSubview(segmentedControl)
-        segmentedControl.autoPinEdge(.top, to: .bottom, of: pointsContainerView)
+        segmentedControl.autoPinEdge(.top, to: .bottom, of: membersCountLabel)
+//        segmentedControl.autoPinEdge(.top, to: .bottom, of: pointsContainerView)
         segmentedControl.autoPinEdge(toSuperviewEdge: .leading)
         segmentedControl.autoPinEdge(toSuperviewEdge: .trailing)
         
@@ -171,7 +175,8 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
         // pin bottom
         separator.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
     
-        pointsContainerView.addShadow(ofColor: UIColor(red: 106, green: 128, blue: 245)!, radius: 19, offset: CGSize(width: 0, height: 14), opacity: 0.3)
+        #warning("Don't use in MVP")
+//        pointsContainerView.addShadow(ofColor: UIColor(red: 106, green: 128, blue: 245)!, radius: 19, offset: CGSize(width: 0, height: 14), opacity: 0.3)
         
         segmentedControl.items = [
             CMSegmentedControl.Item(name: "posts".localized().uppercaseFirst),
