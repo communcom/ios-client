@@ -16,8 +16,7 @@ extension PostEditorVC {
             .drive(onNext: { (isHidden) in
                 if isHidden {
                     self.removeTool(.hideKeyboard)
-                }
-                else {
+                } else {
                     self.insertTool(.hideKeyboard, at: 0)
                 }
             })
