@@ -17,10 +17,14 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
     
     // MARK: - Subviews
     lazy var notificationButton: UIButton = {
+        #warning("Don't use in MVP")
+        /*
         let button = UIButton(width: 35, height: 35, backgroundColor: .f3f5fa, cornerRadius: 35/2, contentInsets: UIEdgeInsets(top: 10, left: 11, bottom: 10, right: 11))
         button.tintColor = .appMainColor
         button.setImage(UIImage(named: "profilepage-notification")!, for: .normal)
         return button
+        */
+        return UIButton()
     }()
     
     lazy var joinButton = CommunButton.join
