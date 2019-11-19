@@ -24,8 +24,7 @@ extension BasicEditorVC {
         
         if contentTextView.text.isEmpty {
             showArticleVC()
-        }
-        else {
+        } else {
             showAlert(title: "add article".localized().uppercaseFirst, message: "override current work and add a new article".localized().uppercaseFirst + "?", buttonTitles: ["OK".localized(), "cancel".localized().uppercaseFirst], highlightedButtonIndex: 0) { (index) in
                 if index == 0 {
                     showArticleVC()

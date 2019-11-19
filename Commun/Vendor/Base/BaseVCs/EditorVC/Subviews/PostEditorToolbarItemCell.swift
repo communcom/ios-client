@@ -35,6 +35,7 @@ class EditorToolbarItemCell: UICollectionViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
+        
         descriptionLabel?.removeFromSuperview()
         contentView.removeAllConstraints()
         itemImageView.removeAllConstraints()
@@ -49,13 +50,14 @@ class EditorToolbarItemCell: UICollectionViewCell {
         
         // enabled state
         var textColor = UIColor(hexString: "#A5A7BD")!
+       
         if item.isHighlighted {
             contentView.backgroundColor = .appMainColor
             textColor = .white
-        }
-        else {
+        } else {
             contentView.backgroundColor = UIColor(hexString: "#F3F5FA")
         }
+        
         itemImageView.tintColor = textColor
         
         // icon
@@ -72,8 +74,7 @@ class EditorToolbarItemCell: UICollectionViewCell {
             descriptionLabel!.autoPinEdge(.leading, to: .trailing, of: itemImageView, withOffset: EditorToolbarItemCell.separatorSpace)
             descriptionLabel!.autoAlignAxis(toSuperviewAxis: .horizontal)
             descriptionLabel!.autoPinEdge(toSuperviewEdge: .trailing, withInset: EditorToolbarItemCell.padding)
-        }
-        else {
+        } else {
             itemImageView.autoAlignAxis(toSuperviewAxis: .vertical)
         }
     }

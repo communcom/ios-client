@@ -37,6 +37,7 @@ class PostMetaView: MyView {
         comunityNameLabel.autoPinEdge(.top, to: .top, of: avatarImageView)
         comunityNameLabel.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 8)
         comunityNameLabel.autoPinEdge(toSuperviewEdge: .trailing)
+        comunityNameLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         
         // timeAgoLabel
         addSubview(timeAgoLabel)

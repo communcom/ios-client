@@ -98,7 +98,6 @@ let controllerContainer: Container = {
     }
     
     // Profile scene
-    
     container.register(ProfileEditCoverVC.self, factory: { r in
         let vc = ProfileEditCoverVC.instanceController(fromStoryboard: "ProfilePageVC", withIdentifier: "ProfileEditCoverVC") as! ProfileEditCoverVC
         return vc

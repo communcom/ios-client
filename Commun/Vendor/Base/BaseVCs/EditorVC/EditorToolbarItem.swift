@@ -24,15 +24,22 @@ struct EditorToolbarItem: Equatable {
     static var hideKeyboard: EditorToolbarItem {
         return EditorToolbarItem(
             name: "hideKeyboard",
-            icon: "keyboard_hide",
-            iconSize: CGSize(width: 18, height: 18))
+            icon: "icon-keyboard-hide-default",
+            iconSize: CGSize(width: 20, height: 20))
     }
-    
+
+    static var ageLimit: EditorToolbarItem {
+        return EditorToolbarItem(
+            name: "ageLimit",
+            icon: "icon-18-plus-default",
+            iconSize: CGSize(width: 21, height: 10))
+    }
+
     static var addPhoto: EditorToolbarItem {
         return EditorToolbarItem(
             name: "addPhoto",
             icon: "editor-open-photo",
-            iconSize: CGSize(width: 18, height: 18))
+            iconSize: CGSize(width: 20, height: 20))
     }
     
     static var setBold: EditorToolbarItem {
@@ -41,12 +48,14 @@ struct EditorToolbarItem: Equatable {
             icon: "bold",
             iconSize: CGSize(width: 18, height: 18))
     }
+    
     static var setItalic: EditorToolbarItem {
         return EditorToolbarItem(
             name: "setItalic",
             icon: "italic",
             iconSize: CGSize(width: 18, height: 18))
     }
+    
     static var setColor: EditorToolbarItem {
         return EditorToolbarItem(
             name: "setColor",
