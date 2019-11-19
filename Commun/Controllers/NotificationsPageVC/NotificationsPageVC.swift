@@ -89,6 +89,19 @@ class NotificationsPageVC: ListViewController<ResponseAPIOnlineNotificationData>
                 }
             })
             .disposed(by: disposeBag)
+        
+        tableView.rx.contentOffset
+            .map {$0.y > 3}
+            .distinctUntilChanged()
+            .subscribe(onNext: { (showShadow) in
+                if showShadow {
+                    self.navigationController?.navigationBar.addShadow(ofColor: .shadow, offset: CGSize(width: 0, height: 2), opacity: 0.1)
+                }
+                else {
+                    self.navigationController?.navigationBar.shadowOpacity = 0
+                }
+            })
+            .disposed(by: disposeBag)
     }
     
     override func showLoadingFooter() {
