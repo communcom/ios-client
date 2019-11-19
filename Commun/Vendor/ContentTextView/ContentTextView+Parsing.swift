@@ -11,7 +11,9 @@ import CyberSwift
 
 extension ContentTextView {
     func parseContentBlock(_ block: ResponseAPIContentBlock) {
-        let attributedText = block.toAttributedString(currentAttributes: typingAttributes)
+        let attributedText = block.toAttributedString(
+            currentAttributes: typingAttributes,
+            attachmentType: TextAttachment.self)
         // Asign raw value first
         self.attributedText = attributedText
         

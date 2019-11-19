@@ -10,22 +10,40 @@ import Foundation
 import RxSwift
 import CyberSwift
 
-let ProfileControllerProfileDidChangeNotification = "ProfileControllerProfileDidChangeNotification"
+protocol ProfileType: ListItemType {
+    var userId: String {get}
+    var username: String {get}
+    var isSubscribed: Bool? {get set}
+    var subscribersCount: UInt64? {get set}
+    var identity: String {get}
+    var isBeingToggledFollow: Bool? {get set}
+}
+
+extension ResponseAPIContentGetProfile: ProfileType {
+    var subscribersCount: UInt64? {
+        get {
+            return subscribers?.usersCount
+        }
+        set {
+            subscribers?.usersCount = newValue
+        }
+    }
+}
+extension ResponseAPIContentGetSubscriptionsUser: ProfileType {}
+extension ResponseAPIContentResolveProfile: ProfileType {}
 
 protocol ProfileController: class {
+    associatedtype Profile: ProfileType
     var disposeBag: DisposeBag {get}
     var followButton: CommunButton {get set}
-    var profile: ResponseAPIContentGetProfile? {get set}
-    func setUp(with profile: ResponseAPIContentGetProfile)
+    var profile: Profile? {get set}
+    func setUp(with profile: Profile)
 }
 
 extension ProfileController {
     func observeProfileChange() {
-        NotificationCenter.default.rx.notification(.init(rawValue: ProfileControllerProfileDidChangeNotification))
-            .subscribe(onNext: {notification in
-                guard let newProfile = notification.object as? ResponseAPIContentGetProfile,
-                    newProfile == self.profile
-                    else {return}
+        Profile.observeItemChanged()
+            .subscribe(onNext: {newProfile in
                 self.setUp(with: newProfile)
             })
             .disposed(by: disposeBag)
@@ -38,6 +56,7 @@ extension ProfileController {
         
         // set value
         setIsSubscribed(!originIsFollowing)
+        profile?.isBeingToggledFollow = true
         
         // animate
         animateFollow()
@@ -47,21 +66,16 @@ extension ProfileController {
         
         // send request
         NetworkService.shared.triggerFollow(userId, isUnfollow: originIsFollowing)
-            .do(onSubscribe: { [weak self] in
-                self?.followButton.isEnabled = false
-            })
             .subscribe(onCompleted: { [weak self] in
-                // re-enable button state
-                self?.followButton.isEnabled = true
-                
+                // re-enable state
+                self?.profile?.isBeingToggledFollow = false
+                self?.profile?.notifyChanged()
             }) { [weak self] (error) in
                 guard let strongSelf = self else {return}
                 // reverse change
                 strongSelf.setIsSubscribed(originIsFollowing)
+                strongSelf.profile?.isBeingToggledFollow = false
                 strongSelf.profile!.notifyChanged()
-                
-                // re-enable button state
-                strongSelf.followButton.isEnabled = true
                 
                 // show error
                 UIApplication.topViewController()?.showError(error)
@@ -74,7 +88,7 @@ extension ProfileController {
             value != profile?.isSubscribed
         else {return}
         profile!.isSubscribed = value
-        var subscribersCount: UInt64 = (profile!.subscribers?.usersCount ?? 0)
+        var subscribersCount: UInt64 = (profile!.subscribersCount ?? 0)
         if value == false && subscribersCount == 0 {subscribersCount = 0}
         else {
             if value == true {
@@ -84,7 +98,7 @@ extension ProfileController {
                 subscribersCount -= 1
             }
         }
-        profile!.subscribers?.usersCount = subscribersCount
+        profile!.subscribersCount = subscribersCount
     }
     
     func animateFollow() {

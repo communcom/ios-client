@@ -59,9 +59,11 @@ class ListFetcher<T: ListItemType> {
     let items = BehaviorRelay<[T]>(value: [])
     
     // MARK: - Methods
-    func reset() {
+    func reset(clearResult: Bool = true) {
         state.accept(.loading(false))
-        items.accept([])
+        if clearResult {
+            items.accept([])
+        }
         offset = 0
     }
     
@@ -83,34 +85,45 @@ class ListFetcher<T: ListItemType> {
         
         // send request
         request
-            .do(onSuccess: { (result) in
-                // get next offset
-                self.offset += self.limit
+            .subscribe(onSuccess: { (items) in
+                if self.offset == 0 {
+                    self.items.accept(items)
+                }
+                else {
+                    self.items.accept(self.join(newItems: items))
+                }
                 
                 // resign state
-                if result.count < self.limit {
-                    // mark the end
+                if items.count == 0 {
+                    if self.offset == 0 {
+                        self.state.accept(.listEmpty)
+                    }
+                    else {
+                        if self.items.value.count > 0 {
+                            self.state.accept(.listEnded)
+                        }
+                    }
+                }
+                else if items.count < self.limit {
                     self.state.accept(.listEnded)
                 }
                 else {
                     self.state.accept(.loading(false))
                 }
-            }, onError: { (error) in
+                
+                // get next offset
+                self.offset += self.limit
+                
+            }, onError: {error in
                 self.state.accept(.error(error: error))
             })
-            .asDriver(onErrorJustReturn: [])
-            .map {self.join(newItems: $0)}
-            .do(onNext: { (items) in
-                if items.count == 0 {
-                    self.state.accept(.listEmpty)
-                }
-            })
-            .drive(items)
             .disposed(by: disposeBag)
     }
     
     func join(newItems items: [T]) -> [T] {
-        var newList = items.filter {!self.items.value.contains($0)}
+        var newList = items.filter { (item) -> Bool in
+            !self.items.value.contains {$0.identity == item.identity}
+        }
         newList = self.items.value + newList
         return newList
     }

@@ -10,11 +10,7 @@ import Foundation
 import CyberSwift
 import RxDataSources
 
-extension ResponseAPIContentGetLeader: Equatable, IdentifiableType {
-    public static func == (lhs: ResponseAPIContentGetLeader, rhs: ResponseAPIContentGetLeader) -> Bool {
-        return lhs.identity == rhs.identity
-    }
-    
+extension ResponseAPIContentGetLeader: IdentifiableType {
     public var identity: String {
         return userId
     }

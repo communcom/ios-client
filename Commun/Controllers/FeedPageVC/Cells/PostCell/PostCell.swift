@@ -34,40 +34,13 @@ class PostCell: MyTableViewCell, PostController {
         return button
     }()
     
-    lazy var voteActionsContainerView: UIView = {
-        let view = UIView(height: voteActionsContainerViewHeight)
-        view.backgroundColor = UIColor(hexString: "#F3F5FA")
-        view.cornerRadius = voteActionsContainerViewHeight / 2
-        return view
-    }()
-    
-    private var voteButton: UIButton {
-        let button = UIButton(width: 38)
-        return button
-    }
-    
-    lazy var upVoteButton: UIButton! = {
-        let button = voteButton
-        button.imageEdgeInsets = UIEdgeInsets(top: 10.5, left: 10, bottom: 10.5, right: 18)
-        button.setImage(UIImage(named: "upVote"), for: .normal)
-        button.addTarget(self, action: #selector(upVoteButtonTapped(button:)), for: .touchUpInside)
-        return button
-    }()
-    
-    lazy var likeCountLabel = self.createDescriptionLabel()
-    
-    lazy var downVoteButton: UIButton! = {
-        let button = voteButton
-        button.imageEdgeInsets = UIEdgeInsets(top: 10.5, left: 18, bottom: 10.5, right: 10)
-        button.addTarget(self, action: #selector(downVoteButtonTapped(button:)), for: .touchUpInside)
-        button.setImage(UIImage(named: "downVote"), for: .normal)
-        return button
-    }()
+    lazy var voteContainerView: VoteContainerView = VoteContainerView(height: voteActionsContainerViewHeight, cornerRadius: voteActionsContainerViewHeight / 2)
     
     lazy var sharesCountLabel = self.createDescriptionLabel()
-    lazy var sharesCountButton: UIButton = {
+    lazy var shareButton: UIButton = {
         let button = UIButton(width: 20, height: 18)
         button.setImage(UIImage(named: "share-count"), for: .normal)
+        button.addTarget(self, action: #selector(shareButtonTapped(button:)), for: .touchUpInside)
         return button
     }()
     
@@ -97,41 +70,29 @@ class PostCell: MyTableViewCell, PostController {
         metaView.autoPinEdge(.trailing, to: .leading, of: moreActionsButton, withOffset: -8)
         
         // action buttons
-        contentView.addSubview(voteActionsContainerView)
-        voteActionsContainerView.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
-        
-        voteActionsContainerView.addSubview(upVoteButton)
-        voteActionsContainerView.addSubview(likeCountLabel)
-        voteActionsContainerView.addSubview(downVoteButton)
-        
-        upVoteButton.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .trailing)
-        downVoteButton.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .leading)
-        
-        likeCountLabel.autoPinEdge(.leading, to: .trailing, of: upVoteButton)
-        likeCountLabel.autoPinEdge(.trailing, to: .leading, of: downVoteButton)
-        
-        likeCountLabel.autoPinEdge(toSuperviewEdge: .top)
-        likeCountLabel.autoPinEdge(toSuperviewEdge: .bottom)
-        
+        contentView.addSubview(voteContainerView)
+        voteContainerView.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
+
+        voteContainerView.upVoteButton.addTarget(self, action: #selector(upVoteButtonTapped(button:)), for: .touchUpInside)
+        voteContainerView.downVoteButton.addTarget(self, action: #selector(downVoteButtonTapped(button:)), for: .touchUpInside)
+
         // comments and shares
-        contentView.addSubview(sharesCountLabel)
-        sharesCountLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
-        sharesCountLabel.autoAlignAxis(.horizontal, toSameAxisOf: voteActionsContainerView)
-        contentView.addSubview(sharesCountButton)
-        sharesCountButton.autoPinEdge(.trailing, to: .leading, of: sharesCountLabel, withOffset: -8)
-        sharesCountButton.autoAlignAxis(.horizontal, toSameAxisOf: voteActionsContainerView)
+        contentView.addSubview(shareButton)
+        shareButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
+        shareButton.autoAlignAxis(.horizontal, toSameAxisOf: voteContainerView)
         contentView.addSubview(commentsCountLabel)
-        commentsCountLabel.autoPinEdge(.trailing, to: .leading, of: sharesCountButton, withOffset: -23)
-        commentsCountLabel.autoAlignAxis(.horizontal, toSameAxisOf: voteActionsContainerView)
+        commentsCountLabel.autoPinEdge(.trailing, to: .leading, of: shareButton, withOffset: -23)
+        commentsCountLabel.autoAlignAxis(.horizontal, toSameAxisOf: voteContainerView)
         contentView.addSubview(commentsCountButton)
         commentsCountButton.autoPinEdge(.trailing, to: .leading, of: commentsCountLabel, withOffset: -8)
-        commentsCountButton.autoAlignAxis(.horizontal, toSameAxisOf: voteActionsContainerView)
+        commentsCountButton.autoAlignAxis(.horizontal, toSameAxisOf: voteContainerView)
+        commentsCountButton.addTarget(self, action: #selector(commentCountsButtonDidTouch), for: .touchUpInside)
         
         // separator
         let separatorView = UIView(height: 10)
         separatorView.backgroundColor = #colorLiteral(red: 0.9599978328, green: 0.966491878, blue: 0.9829974771, alpha: 1)
         contentView.addSubview(separatorView)
-        separatorView.autoPinEdge(.top, to: .bottom, of: voteActionsContainerView, withOffset: 16)
+        separatorView.autoPinEdge(.top, to: .bottom, of: voteContainerView, withOffset: 16)
         separatorView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
         
         // layout content
@@ -143,25 +104,32 @@ class PostCell: MyTableViewCell, PostController {
     }
     
     // MARK: - Methods
-    override func observe() {
-        super.observe()
-        observePostChange()
-    }
     
     func setUp(with post: ResponseAPIContentGetPost?) {
         guard let post = post else {return}
         self.post = post
+        
         metaView.setUp(post: post)
-        
-        // Handle button
-        self.upVoteButton.tintColor         = post.votes.hasUpVote ?? false ? .appMainColor: .lightGray
-        self.likeCountLabel.text            =   "\((post.votes.upCount ?? 0) - (post.votes.downCount ?? 0))"
-        self.downVoteButton.tintColor       = post.votes.hasDownVote ?? false ? .appMainColor: .lightGray
-        
+        voteContainerView.setUp(with: post.votes)
         // comments // shares count
         self.commentsCountLabel.text        =   "\(post.stats?.commentsCount ?? 0)"
         #warning("change this number later")
         self.sharesCountLabel.text         =   "\(post.stats?.viewCount ?? 0)"
         
+    }
+    
+    @objc func commentCountsButtonDidTouch() {
+        guard let post = post else {return}
+        let postPageVC = PostPageVC(post: post)
+        postPageVC.scrollToTopAfterLoadingComment = true
+        parentViewController?.show(postPageVC, sender: nil)
+    }
+    
+    @objc func upVoteButtonDidTouch() {
+        upVote()
+    }
+    
+    @objc func downVoteButtonDidTouch() {
+        downVote()
     }
 }

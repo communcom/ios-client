@@ -5,12 +5,15 @@
         "subscribersCount": 13,
         "communityId": "WREK",
         "alias": "id2599799600",
-        "name": "WREK comunity",
+        "name": "WREK comunity sdf asdf asdf asd fasdf asdf asdfa sdfa sdf",
         "avatarUrl": "https://i.pravatar.cc/300?u=20528f91b85f0d42ca3c95019bcb2f70b0071c8a",
         "coverUrl": "https://elearning.unipd.it/cur/pluginfile.php/35531/course/overviewfiles/matrix_animated_60.gif",
         "description": "WREK comunity description",
         "language": "eng",
-        "rules": "WREK comunity rules ",
+        "rules": [
+            {"id": "1", "title": "rule1", "text": "fasdf"},
+            {"id": "2", "title": "rule2", "text": "fasdfasdf"}
+        ],
         "isSubscribed": true,
         "isBlocked": false,
         "friendsCount": 7,

@@ -8,15 +8,29 @@
 
 import UIKit
 import CyberSwift
-import DZNEmptyDataSet
 
 class PostsViewController: ListViewController<ResponseAPIContentGetPost> {
+    
+    init(filter: PostsListFetcher.Filter = PostsListFetcher.Filter(feedTypeMode: .new, feedType: .popular, sortType: .all)) {
+        super.init(nibName: nil, bundle: nil)
+        viewModel = PostsViewModel(filter: filter)
+        defer {
+            viewModel.fetchNext()
+        }
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        viewModel = PostsViewModel()
+        defer {
+            viewModel.fetchNext()
+        }
+    }
+    
     override func setUp() {
         super.setUp()
-        // setup viewmodel
-        setUpViewModel()
-        
         // setup datasource
+        tableView.separatorStyle = .none
         tableView.register(BasicPostCell.self, forCellReuseIdentifier: "BasicPostCell")
         tableView.register(ArticlePostCell.self, forCellReuseIdentifier: "ArticlePostCell")
         
@@ -43,17 +57,12 @@ class PostsViewController: ListViewController<ResponseAPIContentGetPost> {
         )
     }
     
-    func setUpViewModel() {
-        viewModel = PostsViewModel()
-    }
-    
     override func bind() {
         super.bind()
         
         tableView.rx.modelSelected(ResponseAPIContentGetPost.self)
             .subscribe(onNext: {post in
-                let postPageVC = controllerContainer.resolve(PostPageVC.self)!
-                (postPageVC.viewModel as! PostPageViewModel).postForRequest = post
+                let postPageVC = PostPageVC(post: post)
                 self.show(postPageVC, sender: nil)
             })
             .disposed(by: disposeBag)
@@ -66,8 +75,17 @@ class PostsViewController: ListViewController<ResponseAPIContentGetPost> {
             .disposed(by: disposeBag)
     }
     
-    override func handleLoading() {
+    override func showLoadingFooter() {
         tableView.addPostLoadingFooterView()
+    }
+    
+    override func handleListEmpty() {
+        let title = "no post"
+        let description = "posts not found"
+        tableView.addEmptyPlaceholderFooterView(title: title.localized().uppercaseFirst, description: description.localized().uppercaseFirst, buttonLabel: "reload".localized().uppercaseFirst + "?")
+        {
+            self.viewModel.reload()
+        }
     }
     
     func filterChanged(filter: PostsListFetcher.Filter) {

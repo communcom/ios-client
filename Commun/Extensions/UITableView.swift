@@ -107,12 +107,6 @@ extension UITableView {
     }
     
     func addListErrorFooterView(with buttonHandler: Selector? = nil, on target: AnyObject) {
-        // If list is empty
-        if numberOfRowsInTotal == 0 {
-            tableFooterView = UIView()
-            return
-        }
-        
         // Prevent dupplicating
         if tableFooterView?.tag == listErrorFooterViewTag {
             return
@@ -176,7 +170,7 @@ extension UITableView {
         return ControlEvent(events: source)
     }
     
-    func addEmptyPlaceholderFooterView(height: CGFloat = 150, title: String, description: String? = nil) {
+    func addEmptyPlaceholderFooterView(height: CGFloat = 150, title: String, description: String? = nil, buttonLabel: String? = nil, buttonAction: (()->Void)? = nil) {
         // Prevent dupplicating
         if tableFooterView?.tag == emptyPlaceholderViewTag {
             return
@@ -185,11 +179,42 @@ extension UITableView {
         let containerView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: height + 40))
         containerView.tag = tag
         
-        let placeholderView = MyEmptyPlaceHolderView(title: title, description: description)
+        let placeholderView = MyEmptyPlaceHolderView(title: title, description: description, buttonLabel: buttonLabel, buttonAction: buttonAction)
         containerView.addSubview(placeholderView)
         
         placeholderView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10))
         
         self.tableFooterView = containerView
+    }
+}
+
+extension Reactive where Base: UITableView {
+    /// Reactive wrapper for `UITableView.insertRows(at:with:)`
+    var insertRowsEvent: ControlEvent<[IndexPath]> {
+        let source = methodInvoked(#selector(UITableView.insertRows(at:with:)))
+                .map { a in
+                    return a[0] as! [IndexPath]
+                }
+        return ControlEvent(events: source)
+    }
+
+    /// Reactive wrapper for `UITableView.endUpdates()`
+    var endUpdatesEvent: ControlEvent<Bool> {
+        let source = methodInvoked(#selector(UITableView.endUpdates))
+                .map { _ in
+                    return true
+                }
+        return ControlEvent(events: source)
+    }
+    
+    /// Reactive wrapper for when the `UITableView` inserted rows and ended its updates.
+    var insertedItems: ControlEvent<[IndexPath]> {
+        let insertEnded = Observable.combineLatest(
+                insertRowsEvent.asObservable(),
+                endUpdatesEvent.asObservable(),
+                resultSelector: { (insertedRows: $0, endUpdates: $1) }
+        )
+        let source = insertEnded.map { $0.insertedRows }
+        return ControlEvent(events: source)
     }
 }

@@ -2,164 +2,192 @@
 //  CommentForm.swift
 //  Commun
 //
-//  Created by Chung Tran on 16/05/2019.
+//  Created by Chung Tran on 11/11/19.
 //  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
 //
 
-import UIKit
+import Foundation
 import RxSwift
-import RxCocoa
+import CyberSwift
 
-class CommentForm: UIView {
+class CommentForm: MyView {
+    // MARK: - Edit mode
+    enum Mode {
+        case new
+        case edit
+        case reply
+    }
+    
     // MARK: - Properties
-    var parentAuthor: String?
-    var parentPermlink: String?
+    let disposeBag = DisposeBag()
+    var parentComment: ResponseAPIContentGetComment? {
+        didSet {
+            setParentComment()
+        }
+    }
+    var post: ResponseAPIContentGetPost? {
+        didSet {
+            viewModel.post = post
+        }
+    }
+    var mode: Mode = .new {
+        didSet {
+            switch mode {
+            case .new:
+                parentCommentTitleLabel.text = nil
+            case .edit:
+                parentCommentTitleLabel.text = "edit comment".localized().uppercaseFirst
+            case .reply:
+                parentCommentTitleLabel.text = "reply to comment".localized().uppercaseFirst
+            }
+        }
+    }
+    lazy var viewModel = CommentFormViewModel()
     
-    private let bag = DisposeBag()
-    let commentDidSend = PublishSubject<(Void)>()
-    let commentDidFailedToSend = PublishSubject<Error>()
+    // MARK: - Subviews
+    lazy var parentCommentView = UIView(height: 40, backgroundColor: .white)
+    lazy var parentCommentTitleLabel = UILabel.with(text: "Edit comment", textSize: 15, weight: .bold, textColor: .appMainColor)
+    lazy var parentCommentLabel = UILabel.with(text: "Amet incididunt enim dolore fugdasd ...", textSize: 13)
+    lazy var closeParentCommentButton: UIButton = {
+        let button = UIButton(width: 24, contentInsets: UIEdgeInsets(top: 6, left: 6, bottom: 6, right: 6))
+        button.tintColor = .black
+        button.setImage(UIImage(named: "close-x"), for: .normal)
+        return button
+    }()
     
-    // MARK: - Outlets
-    @IBOutlet var contentView: UIView!
-    @IBOutlet weak var textView: CommentTextView!
-    @IBOutlet weak var sendButton: UIButton!
-    @IBOutlet weak var imageView: UIImageView!
-    
-    @IBOutlet weak var imageWrapperHeightConstraint: NSLayoutConstraint!
-    @IBOutlet weak var textFieldToSendBtnConstraint: NSLayoutConstraint!
-    @IBOutlet weak var sendBtnWidthConstraint: NSLayoutConstraint!
+    lazy var avatarImageView = MyAvatarImageView(size: 35)
+    lazy var textView: CommentTextView = {
+        let textView = CommentTextView(forExpandable: ())
+        textView.placeholder = "add a comment".localized().uppercaseFirst + "..."
+        textView.backgroundColor = .f3f5fa
+        textView.cornerRadius = 35 / 2
+        return textView
+    }()
+    lazy var sendButton = CommunButton.circle(size: 35, backgroundColor: .appMainColor, tintColor: .white, imageName: "send", imageEdgeInsets: UIEdgeInsets(inset: 10))
     
     // MARK: - Methods
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        setup()
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        setup()
-    }
-    
-    func setup() {
-        // init view
-        Bundle.main.loadNibNamed("CommentForm", owner: self, options: nil)
-        addSubview(contentView)
-        contentView.frame = self.bounds
-        contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+    override func commonInit() {
+        super.commonInit()
+        // ParentCommentView
+        addSubview(parentCommentView)
+        parentCommentView.autoPinEdge(toSuperviewEdge: .top, withInset: 10)
         
+        let indicatorView = UIView(width: 2, height: 35, backgroundColor: .appMainColor, cornerRadius: 1)
+        parentCommentView.addSubview(indicatorView)
+        indicatorView.autoPinTopAndLeadingToSuperView()
+        indicatorView.autoPinEdge(toSuperviewEdge: .bottom, withInset: 5)
+        
+        parentCommentView.addSubview(parentCommentTitleLabel)
+        parentCommentTitleLabel.autoPinEdge(toSuperviewEdge: .top, withInset: -2)
+        parentCommentTitleLabel.autoPinEdge(.leading, to: .trailing, of: indicatorView, withOffset: 10)
+        
+        parentCommentView.addSubview(parentCommentLabel)
+        parentCommentLabel.autoPinEdge(.top, to: .bottom, of: parentCommentTitleLabel)
+        parentCommentLabel.autoPinEdge(.leading, to: .trailing, of: indicatorView, withOffset: 10)
+        parentCommentLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+        
+        parentCommentView.addSubview(closeParentCommentButton)
+        closeParentCommentButton.autoPinEdge(toSuperviewEdge: .trailing)
+        closeParentCommentButton.autoPinEdge(.leading, to: .trailing, of: parentCommentLabel)
+        closeParentCommentButton.autoPinEdge(toSuperviewEdge: .top, withInset: 8)
+        closeParentCommentButton.autoPinEdge(toSuperviewEdge: .bottom, withInset: 8)
+        closeParentCommentButton.addTarget(self, action: #selector(closeButtonDidTouch), for: .touchUpInside)
+        
+        // Avatar
+        addSubview(avatarImageView)
+        avatarImageView.autoPinBottomAndLeadingToSuperView(inset: 10, xInset: 16)
+        avatarImageView.observeCurrentUserAvatar()
+            .disposed(by: disposeBag)
+        
+        // TextView
+        addSubview(textView)
+        textView.autoPinEdge(.top, to: .bottom, of: parentCommentView)
+        textView.autoPinEdge(toSuperviewEdge: .bottom, withInset: 10)
+        textView.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 5)
+        
+        parentCommentView.autoPinEdge(.leading, to: .leading, of: textView, withOffset: 10)
+        parentCommentView.autoPinEdge(.trailing, to: .trailing, of: textView, withOffset: -10)
+        
+        // Send button
+        addSubview(sendButton)
+        sendButton.autoPinEdge(.leading, to: .trailing, of: textView, withOffset: 5)
+        sendButton.autoPinBottomAndTrailingToSuperView(inset: 10, xInset: 16)
+        sendButton.addTarget(self, action: #selector(sendComment), for: .touchUpInside)
+        bind()
+        
+        parentComment = nil
+    }
+
+    func bind() {
         // setup observer
         let isTextViewEmpty = textView.rx.text.orEmpty
             .map{$0 == ""}
             .distinctUntilChanged()
         
-        Observable.combineLatest(isTextViewEmpty, imageView.rx.isEmpty)
-            .map {$0 && $1}
-            .distinctUntilChanged()
-            .subscribe(onNext: {isEmpty in
+        #warning("bind imageViewIsEmpty")
+        isTextViewEmpty
+            .subscribe(onNext: { (isEmpty) in
                 if isEmpty {
-                    self.textFieldToSendBtnConstraint.constant = 0
-                    self.sendBtnWidthConstraint.constant = 0
+                    self.sendButton.isEnabled = false
+                    self.avatarImageView.widthConstraint?.constant = 35
                 } else {
-                    self.textFieldToSendBtnConstraint.constant = 16
-                    self.sendBtnWidthConstraint.constant = 36
+                    self.sendButton.isEnabled = true
+                    self.avatarImageView.widthConstraint?.constant = 0
                 }
                 UIView.animate(withDuration: 0.3, animations: {
                     self.layoutIfNeeded()
                 })
             })
-            .disposed(by: bag)
+            .disposed(by: disposeBag)
         
-        // observe image
-        imageView.rx.isEmpty
-            .map {$0 ? 0: 85}
-            .bind(to: imageWrapperHeightConstraint.rx.constant)
-            .disposed(by: bag)
+//        Observable.combineLatest(isTextViewEmpty, imageView.rx.isEmpty)
+//            .map {$0 && $1}
+//            .distinctUntilChanged()
+//            .subscribe(onNext: {isEmpty in
+//                if isEmpty {
+//                    self.textFieldToSendBtnConstraint.constant = 0
+//                    self.sendBtnWidthConstraint.constant = 0
+//                } else {
+//                    self.textFieldToSendBtnConstraint.constant = 16
+//                    self.sendBtnWidthConstraint.constant = 36
+//                }
+//                UIView.animate(withDuration: 0.3, animations: {
+//                    self.layoutIfNeeded()
+//                })
+//            })
+//            .disposed(by: bag)
+//
+//        // observe image
+//        imageView.rx.isEmpty
+//            .map {$0 ? 0: 85}
+//            .bind(to: imageWrapperHeightConstraint.rx.constant)
+//            .disposed(by: bag)
         
-        // forward delegate
-        textView.rx.setDelegate(self)
-            .disposed(by: bag)
     }
     
-    // MARK: - Actions
-    @IBAction func removeImageDidTouch(_ sender: Any) {
-        imageView.image = nil
-    }
-    
-    @IBAction func addImageDidTouch(_ sender: Any) {
-        let pickerVC = CustomTLPhotosPickerVC.singleImage
-        self.parentViewController?.present(pickerVC, animated: true, completion: nil)
-        
-        pickerVC.rx.didSelectAnImage
-            .subscribe(onNext: {image in
-                self.imageView.image = image
-                pickerVC.dismiss(animated: true, completion: nil)
-            })
-            .disposed(by: bag)
-    }
-    
-    @IBAction func btnSendDidTouch(_ sender: Any) {
-        var block: ResponseAPIContentBlock?
-        var id: UInt64!
-        
-        textView.getContentBlock()
-            .flatMap {contentBlock -> Single<ResponseAPIContentBlock?> in
-                block = contentBlock
-                // transform attachments to contentBlock
-                id = (contentBlock.maxId ?? 100) + 1
-                var childId = id!
-                
-                if let image = self.imageView.image {
-                    childId += 1
-                    return NetworkService.shared.uploadImage(image)
-                        .map {ResponseAPIContentBlock(
-                                id: childId,
-                                type: "image",
-                                attributes: nil,
-                                content: ResponseAPIContentBlockContent.string($0))}
-                }
-                else {
-                    return .just(nil)
-                }
+    func setParentComment() {
+        guard let comment = parentComment else {
+            parentCommentView.heightConstraint?.constant = 0
+            parentCommentView.isHidden = true
+            UIView.animate(withDuration: 0.3) {
+                self.layoutIfNeeded()
             }
-            .do(onSubscribe: { [weak self] in
-                self?.sendButton.isEnabled = false
-            })
-            .map {contentBlock -> ResponseAPIContentBlock in
-                guard var childs = block?.content.arrayValue,
-                    contentBlock != nil
-                else {return block!}
-                
-                childs.append(ResponseAPIContentBlock(id: id, type: "attachments", attributes: nil, content: .array([contentBlock!])))
-                block!.content = .array(childs)
-                
-                return block!
-            }
-            .flatMapCompletable { [weak self] contentBlock in
-                guard let strongSelf = self else {return .empty()}
-                var block = contentBlock
-                block.maxId = nil
-                let string = try block.jsonString()
-                #warning("fix commun code")
-                return NetworkService.shared.sendComment(
-                    communCode: "cats",
-                    parentAuthor: strongSelf.parentAuthor ?? "",
-                    parentPermlink: strongSelf.parentPermlink ?? "",
-                    message: string,
-                    tags: strongSelf.textView.text.getTags())
-                .observeOn(MainScheduler.instance)
-            }
-            .subscribe(onCompleted: { [weak self] in
-                self?.textView.text = ""
-                self?.imageView.image = nil
-                
-                self?.sendButton.isEnabled = true
-                
-                self?.commentDidSend.onNext(())
-            }, onError: {[weak self] error in
-                self?.sendButton.isEnabled = true
-                self?.commentDidFailedToSend.onNext(error)
-            })
-            .disposed(by: bag)
+            return
+        }
+        parentCommentView.heightConstraint?.constant = 40
+        parentCommentView.isHidden = false
+        UIView.animate(withDuration: 0.3) {
+            self.layoutIfNeeded()
+        }
+        parentCommentLabel.attributedText = comment.document.toAttributedString(
+            currentAttributes: [.font: UIFont.systemFont(ofSize: 13)],
+            attachmentType: TextAttachment.self)
     }
     
+    @objc func closeButtonDidTouch() {
+        mode = .new
+        parentComment = nil
+    }
+    
+    #warning("support image posting")
 }

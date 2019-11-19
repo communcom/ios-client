@@ -1,0 +1,68 @@
+{
+  "jsonrpc": "2.0",
+  "id": 14,
+  "result": {
+    "items": [
+      {
+        "url": "",
+        "rating": 0,
+        "isActive": true,
+        "userId": "tst5anmienfv",
+        "position": 1,
+        "isVoted": false,
+        "ratingPercent": 0.5,
+        "isSubscribed": false,
+        "username": "degxxx",
+        "avatarUrl": null
+      },
+      {
+        "url": "",
+        "rating": 0,
+        "isActive": true,
+        "userId": "tst5judikaue",
+        "position": 2,
+        "isVoted": false,
+        "ratingPercent": 0.75,
+        "isSubscribed": false,
+        "username": "nickshtefan",
+        "avatarUrl": null
+      },
+      {
+        "url": "",
+        "rating": 0,
+        "isActive": true,
+        "userId": "tst5kfzxyhyq",
+        "position": 3,
+        "isVoted": false,
+        "ratingPercent": 0.33,
+        "isSubscribed": false,
+        "username": "casper-mohammed-iv",
+        "avatarUrl": null
+      },
+      {
+        "url": "",
+        "rating": 0,
+        "isActive": true,
+        "userId": "tst5rleqclob",
+        "position": 4,
+        "isVoted": false,
+        "ratingPercent": 0,
+        "isSubscribed": false,
+        "username": "devall",
+        "avatarUrl": null
+      },
+      {
+        "url": "",
+        "rating": 0,
+        "isActive": true,
+        "userId": "tst5sjqakwqm",
+        "position": 5,
+        "isVoted": false,
+        "ratingPercent": 0.9,
+        "isSubscribed": false,
+        "username": "karateman",
+        "avatarUrl": null
+      }
+    ]
+  }
+}

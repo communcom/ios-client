@@ -10,11 +10,7 @@ import Foundation
 import CyberSwift
 import RxDataSources
 
-extension ResponseAPIContentResolveProfile: Equatable, IdentifiableType {
-    public static func == (lhs: ResponseAPIContentResolveProfile, rhs: ResponseAPIContentResolveProfile) -> Bool {
-        return lhs.identity == rhs.identity
-    }
-    
+extension ResponseAPIContentResolveProfile: IdentifiableType {
     public var identity: String {
         return userId + "/" + username
     }

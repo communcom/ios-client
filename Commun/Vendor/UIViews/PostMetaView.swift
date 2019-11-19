@@ -9,102 +9,46 @@
 import Foundation
 import CyberSwift
 
-class PostMetaView: UIView {
+class PostMetaView: MyView {
     // MARK: - Enums
     class TapGesture: UITapGestureRecognizer {
         var post: ResponseAPIContentGetPost!
     }
     
     // MARK: - Subviews
-    lazy var avatarImageView: MyAvatarImageView = {
-        let avatarImageView = MyAvatarImageView(size: 40)
-        return avatarImageView
-    }()
-    
-    lazy var comunityNameLabel: UILabel = {
-        let comunityNameLabel = UILabel()
-        comunityNameLabel.font = .systemFont(ofSize: 15, weight: .semibold)
-        comunityNameLabel.translatesAutoresizingMaskIntoConstraints = false
-        return comunityNameLabel
-    }()
-    
-    lazy var timeAgoLabel: UILabel = {
-        let timeAgoLabel = UILabel()
-        timeAgoLabel.font = .systemFont(ofSize: 13)
-        timeAgoLabel.textColor = .lightGray
-        timeAgoLabel.translatesAutoresizingMaskIntoConstraints = false
-        return timeAgoLabel
-    }()
-    
-    lazy var byUserLabel: UILabel = {
-        let byUserLabel = UILabel()
-        byUserLabel.font = .systemFont(ofSize: 13, weight: .semibold)
-        byUserLabel.textColor = .appMainColor
-        byUserLabel.translatesAutoresizingMaskIntoConstraints = false
-        return byUserLabel
-    }()
+    lazy var avatarImageView = MyAvatarImageView(size: 40)
+    lazy var comunityNameLabel = UILabel.with(textSize: 15, weight: .semibold)
+    lazy var timeAgoLabel = UILabel.with(textSize: 13, textColor: .lightGray)
+    lazy var byUserLabel = UILabel.with(textSize: 13, weight: .semibold, textColor: .appMainColor)
     
     // MARK: - Properties
     var isUserNameTappable = true
     var isCommunityNameTappable = true
     
     // MARK: - Methods
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        commonInit()
-    }
-    
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        commonInit()
-    }
-    
-    func commonInit() {
+    override func commonInit() {
+        super.commonInit()
         // avatar
         addSubview(avatarImageView)
-        avatarImageView.topAnchor
-            .constraint(equalTo: topAnchor)
-            .isActive = true
-        avatarImageView.leadingAnchor
-            .constraint(equalTo: leadingAnchor)
-            .isActive = true
-        avatarImageView.heightAnchor
-            .constraint(equalTo: heightAnchor)
-            .isActive = true
-        avatarImageView.widthAnchor
-            .constraint(equalTo: avatarImageView.heightAnchor)
-            .isActive = true
+        avatarImageView.autoPinTopAndLeadingToSuperView()
         
         // communityNameLabel
         addSubview(comunityNameLabel)
-        comunityNameLabel.topAnchor
-            .constraint(equalTo: avatarImageView.topAnchor)
-            .isActive = true
-        comunityNameLabel
-            .leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: 8)
-            .isActive = true
-        comunityNameLabel.trailingAnchor
-            .constraint(equalTo: trailingAnchor)
-            .isActive = true
+        comunityNameLabel.autoPinEdge(.top, to: .top, of: avatarImageView)
+        comunityNameLabel.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 8)
+        comunityNameLabel.autoPinEdge(toSuperviewEdge: .trailing)
+        comunityNameLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         
         // timeAgoLabel
         addSubview(timeAgoLabel)
-        
-        timeAgoLabel.bottomAnchor
-            .constraint(equalTo: avatarImageView.bottomAnchor)
-            .isActive = true
-        timeAgoLabel.leadingAnchor
-            .constraint(equalTo: avatarImageView.trailingAnchor, constant: 8)
-            .isActive = true
+        timeAgoLabel.autoPinEdge(.bottom, to: .bottom, of: avatarImageView, withOffset: -3)
+        timeAgoLabel.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 8)
         
         // byUserLabel
         addSubview(byUserLabel)
-        byUserLabel.bottomAnchor
-            .constraint(equalTo: avatarImageView.bottomAnchor)
-            .isActive = true
-        byUserLabel.leadingAnchor
-            .constraint(equalTo: timeAgoLabel.trailingAnchor, constant: 0)
-            .isActive = true
+        byUserLabel.autoPinEdge(.bottom, to: .bottom, of: avatarImageView, withOffset: -3)
+        byUserLabel.autoPinEdge(.leading, to: .trailing, of: timeAgoLabel)
+        byUserLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         byUserLabel.removeGestureRecognizers()
         
         comunityNameLabel.trailingAnchor.constraint(lessThanOrEqualTo: self.trailingAnchor)
@@ -128,10 +72,16 @@ class PostMetaView: UIView {
         }
         
         if isCommunityNameTappable {
-            let tap = TapGesture(target: self, action: #selector(communityNameTapped(_:)))
-            tap.post = post
+            let tapLabel = TapGesture(target: self, action: #selector(communityNameTapped(_:)))
+            let tapAvatar = TapGesture(target: self, action: #selector(communityNameTapped(_:)))
+            tapLabel.post = post
+            tapAvatar.post = post
+
+            avatarImageView.isUserInteractionEnabled = true
+            avatarImageView.addGestureRecognizer(tapAvatar)
             comunityNameLabel.isUserInteractionEnabled = true
-            comunityNameLabel.addGestureRecognizer(tap)
+            comunityNameLabel.addGestureRecognizer(tapLabel)
+
         }
     }
     

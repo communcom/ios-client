@@ -13,6 +13,17 @@ import SafariServices
 import AppImageViewer
 
 extension PostEditorVC {
+    // MARK: - Communities
+    @objc func chooseCommunityDidTouch() {
+        let vc = EditorChooseCommunityVC { (community) in
+            self.viewModel.community.accept(community)
+        }
+        vc.modalPresentationStyle = .custom
+        vc.transitioningDelegate = vc
+        present(vc, animated: true, completion: nil)
+    }
+    
+    // MARK: - Images
     @objc func didChooseImageFromGallery(_ image: UIImage, description: String? = nil) {
         fatalError("Must override")
     }
@@ -51,21 +62,6 @@ extension PostEditorVC {
         }
     }
     
-    func retrieveDraft() {
-        showAlert(
-            title: "retrieve draft".localized().uppercaseFirst,
-            message: "you have a draft version on your device".localized().uppercaseFirst + ". " + "continue editing it".localized().uppercaseFirst + "?",
-            buttonTitles: ["OK".localized(), "cancel".localized().uppercaseFirst],
-            highlightedButtonIndex: 0) { (index) in
-                if index == 0 {
-                    self.getDraft()
-                }
-                else if index == 1 {
-                    self.removeDraft()
-                }
-        }
-    }
-    
     // MARK: - Add image
     func addImage() {
         view.endEditing(true)
@@ -85,7 +81,7 @@ extension PostEditorVC {
         //                                })])
     }
     
-    func chooseFromGallery() {
+    @objc func chooseFromGallery() {
         let pickerVC = CustomTLPhotosPickerVC.singleImage
         self.present(pickerVC, animated: true, completion: nil)
         
@@ -223,18 +219,18 @@ extension PostEditorVC {
                 var block = block
                 block.maxId = nil
                 return self.viewModel.sendPost(title: self.postTitle, block: block)
-        }
-        .do(onSubscribe: {
-            self.showIndetermineHudWithMessage(
-                "sending post".localized().uppercaseFirst)
-        })
+            }
+            .do(onSubscribe: {
+                self.showIndetermineHudWithMessage(
+                    "sending post".localized().uppercaseFirst)
+            })
             .flatMap {
-                self.viewModel.waitForTransaction($0)
-        }
-        .do(onSubscribe: {
-            self.showIndetermineHudWithMessage(
-                "wait for transaction".localized().uppercaseFirst)
-        })
+                    self.viewModel.waitForTransaction($0)
+            }
+            .do(onSubscribe: {
+                self.showIndetermineHudWithMessage(
+                    "wait for transaction".localized().uppercaseFirst)
+            })
             .subscribe(onSuccess: { (userId, permlink) in
                 self.hideHud()
                 // if editing post
@@ -244,10 +240,8 @@ extension PostEditorVC {
                     // if creating post
                 else {
                     // show post page
-                    let postPageVC = controllerContainer.resolve(PostPageVC.self)!
-                    (postPageVC.viewModel as! PostPageViewModel).permlink = permlink
-                    (postPageVC.viewModel as! PostPageViewModel).userId = userId
-                    
+                    #warning("CommunityId missing")
+                    let postPageVC = PostPageVC(userId: userId, permlink: permlink, communityId: "")
                     self.dismiss(animated: true) {
                         UIApplication.topViewController()?.show(postPageVC, sender: nil)
                     }
@@ -267,8 +261,8 @@ extension PostEditorVC {
                     }
                 }
                 self.showError(error)
-        }
-        .disposed(by: disposeBag)
+            }
+            .disposed(by: disposeBag)
     }
     
     func previewAttachment(_ attachment: TextAttachment) {

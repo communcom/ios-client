@@ -11,16 +11,27 @@ import RxSwift
 import SDWebImage
 
 class MyAvatarImageView: MyView {
+    // Nested type
+    class TapGesture: UITapGestureRecognizer {
+        var profileId: String?
+    }
+    
+    var imageViewInsets: UIEdgeInsets {
+        return .zero
+    }
+    
+    var originSize: CGFloat!
+    
     private lazy var imageView: UIImageView = {
         let imageView = UIImageView(forAutoLayout: ())
         imageView.image = .placeholder
         imageView.contentMode = .scaleAspectFill
-        imageView.addTapToViewer()
         return imageView
     }()
     
     convenience init(size: CGFloat) {
         self.init(width: size, height: size)
+        originSize = size
         cornerRadius = size / 2
     }
     
@@ -28,7 +39,7 @@ class MyAvatarImageView: MyView {
         super.commonInit()
         backgroundColor = .clear
         addSubview(imageView)
-        imageView.autoPinEdgesToSuperviewEdges()
+        imageView.autoPinEdgesToSuperviewEdges(with: imageViewInsets)
     }
     
     var image: UIImage? {
@@ -82,8 +93,12 @@ class MyAvatarImageView: MyView {
             .observe(String.self, Config.currentUserAvatarUrlKey)
             .distinctUntilChanged()
             .subscribe(onNext: {urlString in
-                self.setAvatar(urlString: urlString, namePlaceHolder: Config.currentUser?.id ?? "U")
+                self.setAvatar(urlString: urlString, namePlaceHolder: Config.currentUser?.name ?? Config.currentUser?.id ?? "U")
             })
+    }
+    
+    func setToCurrentUserAvatar() {
+        setAvatar(urlString: UserDefaults.standard.string(forKey: Config.currentUserAvatarUrlKey), namePlaceHolder: Config.currentUser?.name ?? Config.currentUser?.id ?? "U")
     }
     
     func setNonAvatarImageWithId(_ id: String) {
@@ -103,7 +118,34 @@ class MyAvatarImageView: MyView {
     }
     
     func addTapToViewer() {
-        isUserInteractionEnabled = true
         imageView.addTapToViewer()
+    }
+    
+    func addTapToOpenUserProfile(profileId: String) {
+        isUserInteractionEnabled = true
+        let tap = TapGesture(target: self, action: #selector(openUserProfile(gesture:)))
+        tap.profileId = profileId
+        addGestureRecognizer(tap)
+    }
+    
+    func addTapToOpenCommunity(profileId: String) {
+        isUserInteractionEnabled = true
+        let tap = TapGesture(target: self, action: #selector(openCommunity(gesture:)))
+        tap.profileId = profileId
+        addGestureRecognizer(tap)
+    }
+    
+    @objc private func openUserProfile(gesture: TapGesture) {
+        guard let profileId = gesture.profileId else {return}
+        parentViewController?.showProfileWithUserId(profileId)
+    }
+    
+    @objc private func openCommunity(gesture: TapGesture) {
+        guard let profileId = gesture.profileId else {return}
+        parentViewController?.showCommunityWithCommunityId(profileId)
+    }
+    
+    func removeAvatar() {
+        imageView.image = .placeholder
     }
 }

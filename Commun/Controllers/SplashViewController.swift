@@ -23,6 +23,10 @@ class SplashViewController: UIViewController {
         splashImageView.layer.add(zoomAnim, forKey: "Loading")
         // Do any additional setup after loading the view.
     }
+
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
     
     func animateSplash(_ completion: @escaping ()->Void) {
         splashImageView.layer.removeAnimation(forKey: "Loading")

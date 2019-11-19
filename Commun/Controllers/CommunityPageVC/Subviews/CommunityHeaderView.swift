@@ -106,9 +106,9 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
         joinButton.autoAlignAxis(.horizontal, toSameAxisOf: avatarImageView)
         joinButton.addTarget(self, action: #selector(joinButtonDidTouch(_:)), for: .touchUpInside)
         
-        nameLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         joinedDateLabel.trailingAnchor.constraint(lessThanOrEqualTo: joinButton.leadingAnchor, constant: -8)
             .isActive = true
+        joinButton.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         
         addSubview(membersCountLabel)
         membersCountLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
@@ -119,6 +119,9 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
         addSubview(memberLabel)
         memberLabel.autoPinEdge(.leading, to: .trailing, of: membersCountLabel, withOffset: 4)
         memberLabel.autoAlignAxis(.horizontal, toSameAxisOf: membersCountLabel)
+        memberLabel.isUserInteractionEnabled = true
+        let tap = UITapGestureRecognizer(target: self, action: #selector(membersLabelDidTouch))
+        memberLabel.addGestureRecognizer(tap)
 
         let dotLabel = UILabel.with(text: "•", textSize: 15, weight: .semibold, textColor: UIColor(hexString: "#A5A7BD")!)
         addSubview(dotLabel)
@@ -129,16 +132,22 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
         leadsCountLabel.autoPinEdge(.leading, to: .trailing, of: dotLabel, withOffset: 2)
         leadsCountLabel.autoAlignAxis(.horizontal, toSameAxisOf: membersCountLabel)
 
-        let leadsLabel = UILabel.with(text: "leads".localized().uppercaseFirst, textSize: 12, weight: .semibold, textColor: UIColor(hexString: "#A5A7BD")!)
+        let leadsLabel = UILabel.with(text: "leaders".localized().uppercaseFirst, textSize: 12, weight: .semibold, textColor: UIColor(hexString: "#A5A7BD")!)
         addSubview(leadsLabel)
         leadsLabel.autoPinEdge(.leading, to: .trailing, of: leadsCountLabel, withOffset: 4)
         leadsLabel.autoAlignAxis(.horizontal, toSameAxisOf: membersCountLabel)
+        leadsLabel.isUserInteractionEnabled = true
+        let tap2 = UITapGestureRecognizer(target: self, action: #selector(leadsLabelDidTouch))
+        leadsLabel.addGestureRecognizer(tap2)
         
         let friendLabel = UILabel.with(text: "friends".localized().uppercaseFirst, textSize: 12, weight: .bold, textColor: .gray)
         addSubview(friendLabel)
         friendLabel.autoAlignAxis(.horizontal, toSameAxisOf: usersStackView)
         friendLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
         friendLabel.autoPinEdge(.leading, to: .trailing, of: usersStackView, withOffset: 5)
+        friendLabel.isUserInteractionEnabled = true
+        let tap3 = UITapGestureRecognizer(target: self, action: #selector(friendsLabelDidTouch))
+        friendLabel.addGestureRecognizer(tap3)
         
         addSubview(pointsContainerView)
         pointsContainerView.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
@@ -162,13 +171,13 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
         
         segmentedControl.items = [
             CMSegmentedControl.Item(name: "posts".localized().uppercaseFirst),
-            CMSegmentedControl.Item(name: "leads".localized().uppercaseFirst),
+            CMSegmentedControl.Item(name: "leaders".localized().uppercaseFirst),
             CMSegmentedControl.Item(name: "about".localized().uppercaseFirst),
             CMSegmentedControl.Item(name: "rules".localized().uppercaseFirst)
         ]
         
         // observe
-        observerCommunityChange()
+        observeCommunityChange()
     }
     
     func setUp(with community: ResponseAPIContentGetCommunity) {
@@ -181,18 +190,17 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
         nameLabel.text = community.name
         
         // joined date
-        #warning("join date missing")
-//        let dateFormatter = DateFormatter()
-//        dateFormatter.dateStyle = .long
-//        let dateString = dateFormatter.string(from: Date.from(string: community.registration.time))
-//        profilePageVC.joinedDateLabel.text = String(format: "%@ %@", "joined".localized().uppercaseFirst, dateString)
-        joinedDateLabel.text = "joined".localized().uppercaseFirst + " " + ""
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .long
+        let dateString = dateFormatter.string(from: Date.from(string: community.registrationTime ?? ""))
+        joinedDateLabel.text = "joined".localized().uppercaseFirst + " " + "\(dateString)"
         
         // joinButton
         let joined = community.isSubscribed ?? false
         joinButton.backgroundColor = joined ? #colorLiteral(red: 0.9525656104, green: 0.9605062604, blue: 0.9811610579, alpha: 1): .appMainColor
         joinButton.setTitleColor(joined ? .appMainColor: .white , for: .normal)
         joinButton.setTitle(joined ? "joined".localized().uppercaseFirst : "join".localized().uppercaseFirst, for: .normal)
+        joinButton.isEnabled = !(community.isBeingJoined ?? false)
         
         // notification button
         notificationButton.removeFromSuperview()
@@ -227,8 +235,7 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
         membersCountLabel.text = Double(community.subscribersCount ?? 0).kmFormatted
         
         // leadsCount
-        #warning("leads count missing")
-        leadsCountLabel.text = "0"
+        leadsCountLabel.text = "\(community.leadersCount ?? 0)"
         
         // friends
         if let friends = community.friends {
@@ -238,5 +245,26 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
     
     @objc func joinButtonDidTouch(_ button: UIButton) {
         toggleJoin()
+    }
+    
+    @objc func membersLabelDidTouch() {
+        guard let community = community else {return}
+        let vc = CommunityMembersVC(community: community, selectedSegmentedItem: .all)
+        parentViewController?.show(vc, sender: nil)
+    }
+    
+    @objc func friendsLabelDidTouch() {
+        guard let community = community else {return}
+        let vc = CommunityMembersVC(community: community, selectedSegmentedItem: .friends)
+        parentViewController?.show(vc, sender: nil)
+    }
+    
+    @objc func leadsLabelDidTouch() {
+        if segmentedControl.selectedIndex.value == 1 {
+            parentViewController?.view.shake()
+        }
+        else {
+            segmentedControl.changeSelectedIndex(1)
+        }
     }
 }

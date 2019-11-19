@@ -10,19 +10,13 @@ import Foundation
 import RxSwift
 import CyberSwift
 
-let CommunityControllerCommunityDidChangeNotification = "CommunityControllerCommunityDidChangeNotification"
-
-protocol CommunityType: Equatable {
+protocol CommunityType: ListItemType {
     var communityId: String {get}
     var name: String {get}
     var isSubscribed: Bool? {get set}
     var subscribersCount: UInt64? {get set}
-}
-
-extension CommunityType {
-    public func notifyChanged() {
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: CommunityControllerCommunityDidChangeNotification), object: self)
-    }
+    var identity: String {get}
+    var isBeingJoined: Bool? {get set}
 }
 
 extension ResponseAPIContentGetCommunity: CommunityType {}
@@ -50,12 +44,9 @@ protocol CommunityController: class {
 
 extension CommunityController {
     // Apply changes to view when community changed
-    func observerCommunityChange() {
-        NotificationCenter.default.rx.notification(.init(rawValue: CommunityControllerCommunityDidChangeNotification))
-            .subscribe(onNext: {notification in
-                guard let newCommunity = notification.object as? Community,
-                    newCommunity == self.community
-                    else {return}
+    func observeCommunityChange() {
+        Community.observeItemChanged()
+            .subscribe(onNext: {newCommunity in
                 self.setUp(with: newCommunity)
             })
             .disposed(by: disposeBag)
@@ -71,6 +62,7 @@ extension CommunityController {
         
         // set value
         setIsSubscribed(!originIsSubscribed)
+        community?.isBeingJoined = true
         
         // animate
         animateJoin()
@@ -93,21 +85,17 @@ extension CommunityController {
         }
         
         request
-            .do(onSubscribe: { [weak self] in
-                self?.joinButton.isEnabled = false
-            })
             .subscribe(onCompleted: { [weak self] in
-                // re-enable button state
-                self?.joinButton.isEnabled = true
+                // re-enable state
+                self?.community?.isBeingJoined = false
+                self?.community?.notifyChanged()
                 
             }) { [weak self] (error) in
                 guard let strongSelf = self else {return}
                 // reverse change
                 strongSelf.setIsSubscribed(originIsSubscribed)
+                strongSelf.community?.isBeingJoined = false
                 strongSelf.community?.notifyChanged()
-                
-                // re-enable button state
-                strongSelf.joinButton.isEnabled = true
                 
                 // show error
                 UIApplication.topViewController()?.showError(error)
@@ -116,7 +104,19 @@ extension CommunityController {
     }
     
     func animateJoin() {
+        CATransaction.begin()
         
+        let moveDownAnim = CABasicAnimation(keyPath: "transform.scale")
+        moveDownAnim.byValue = 1.2
+        moveDownAnim.autoreverses = true
+        joinButton.layer.add(moveDownAnim, forKey: "transform.scale")
+        
+        let fadeAnim = CABasicAnimation(keyPath: "opacity")
+        fadeAnim.byValue = -1
+        fadeAnim.autoreverses = true
+        joinButton.layer.add(fadeAnim, forKey: "Fade")
+        
+        CATransaction.commit()
     }
     
     func setIsSubscribed(_ value: Bool) {

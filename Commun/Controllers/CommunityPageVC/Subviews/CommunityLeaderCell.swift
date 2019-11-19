@@ -8,9 +8,11 @@
 
 import Foundation
 
-class CommunityLeaderCell: CommunityPageCell {
-    lazy var avatarImageView: MyAvatarImageView = {
-        let imageView = MyAvatarImageView(size: 50)
+class CommunityLeaderCell: CommunityPageCell, LeaderController {
+    var leader: ResponseAPIContentGetLeader?
+    
+    lazy var avatarImageView: LeaderAvatarImageView = {
+        let imageView = LeaderAvatarImageView(size: 56)
         return imageView
     }()
     
@@ -35,7 +37,7 @@ class CommunityLeaderCell: CommunityPageCell {
     }()
     
     lazy var descriptionLabel: UILabel = {
-        let label = UILabel.with(text: "Tell how you would influence the community and make it better becomi... Read", textSize: 14, numberOfLines: 0)
+        let label = UILabel.with(textSize: 14, numberOfLines: 0)
         return label
     }()
     
@@ -51,7 +53,7 @@ class CommunityLeaderCell: CommunityPageCell {
         
         // layout card
         cardView.addSubview(avatarImageView)
-        avatarImageView.autoPinTopAndLeadingToSuperView()
+        avatarImageView.autoPinTopAndLeadingToSuperView(inset: 16)
         
         // name and points
         let namePointsContainerView = UIView(forAutoLayout: ())
@@ -84,6 +86,7 @@ class CommunityLeaderCell: CommunityPageCell {
         cardView.addSubview(voteButton)
         voteButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
         voteButton.autoAlignAxis(.horizontal, toSameAxisOf: namePointsContainerView)
+        voteButton.addTarget(self, action: #selector(voteButtonDidTouch), for: .touchUpInside)
         
         // descriptionLabel
         cardView.addSubview(descriptionLabel)
@@ -91,5 +94,30 @@ class CommunityLeaderCell: CommunityPageCell {
         descriptionLabel.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(inset: 16), excludingEdge: .top)
     }
     
+    func setUp(with leader: ResponseAPIContentGetLeader) {
+        self.leader = leader
+        // avatar
+        avatarImageView.setAvatar(urlString: leader.avatarUrl, namePlaceHolder: leader.username ?? leader.userId)
+        avatarImageView.percent = leader.ratingPercent
+        
+        // username label
+        userNameLabel.text = leader.username
+        
+        // point
+        pointsCountLabel.text = "\(leader.rating)"
+        percentsCountLabel.text = "\(leader.ratingPercent.rounded(numberOfDecimalPlaces: 2, rule: .up) * 100)"
+        
+        #warning("description missing")
+        
+        // voteButton
+        let voted = leader.isVoted
+        voteButton.backgroundColor = voted ? #colorLiteral(red: 0.9525656104, green: 0.9605062604, blue: 0.9811610579, alpha: 1): .appMainColor
+        voteButton.setTitleColor(voted ? .appMainColor: .white , for: .normal)
+        voteButton.setTitle(voted ? "voted".localized().uppercaseFirst : "vote".localized().uppercaseFirst, for: .normal)
+        voteButton.isEnabled = !(leader.isBeingVoted ?? false)
+    }
     
+    @objc func voteButtonDidTouch() {
+        toggleVote()
+    }
 }

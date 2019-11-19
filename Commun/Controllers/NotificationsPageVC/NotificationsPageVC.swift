@@ -11,7 +11,6 @@ import RxSwift
 import RxCocoa
 import CyberSwift
 import RxDataSources
-import DZNEmptyDataSet
 
 class NotificationsPageVC: ListViewController<ResponseAPIOnlineNotificationData> {
     
@@ -22,17 +21,8 @@ class NotificationsPageVC: ListViewController<ResponseAPIOnlineNotificationData>
         
         // configure navigation bar
         title = "notifications".localized().uppercaseFirst
-        let navigationBar = navigationController?.navigationBar
-        navigationBar?.barTintColor = UIColor.white
-        navigationBar?.isTranslucent = false
-        navigationBar?.setBackgroundImage(UIImage(), for: .default)
-        navigationBar?.shadowImage = UIImage()
-        
-        // fix bug with title in tabBarItem
-        navigationController?.tabBarItem.title = nil
         
         // configure tableView
-        view = tableView
         tableView.estimatedRowHeight = 80
         tableView.tableFooterView = UIView()
         
@@ -46,12 +36,6 @@ class NotificationsPageVC: ListViewController<ResponseAPIOnlineNotificationData>
             }
             return cell
         })
-        
-        // tableView emptyDataSet
-        tableView.emptyDataSetDelegate = self
-        tableView.emptyDataSetSource = self
-        
-        
     }
     
     override func bind() {
@@ -92,10 +76,8 @@ class NotificationsPageVC: ListViewController<ResponseAPIOnlineNotificationData>
                 }
                 
                 // navigate to post page
-                if let post = notification.post,
-                    let postPageVC = controllerContainer.resolve(PostPageVC.self) {
-                    (postPageVC.viewModel as! PostPageViewModel).permlink = post.contentId.permlink
-                    (postPageVC.viewModel as! PostPageViewModel).userId = post.contentId.userId
+                if let post = notification.post {
+                    let postPageVC = PostPageVC(userId: post.contentId.userId, permlink: post.contentId.permlink, communityId: post.contentId.communityId ?? "")
                     self?.show(postPageVC, sender: nil)
                     return
                 }
@@ -107,10 +89,32 @@ class NotificationsPageVC: ListViewController<ResponseAPIOnlineNotificationData>
                 }
             })
             .disposed(by: disposeBag)
+        
+        tableView.rx.contentOffset
+            .map {$0.y > 3}
+            .distinctUntilChanged()
+            .subscribe(onNext: { (showShadow) in
+                if showShadow {
+                    self.navigationController?.navigationBar.addShadow(ofColor: .shadow, offset: CGSize(width: 0, height: 2), opacity: 0.1)
+                }
+                else {
+                    self.navigationController?.navigationBar.shadowOpacity = 0
+                }
+            })
+            .disposed(by: disposeBag)
     }
     
-    override func handleLoading() {
+    override func showLoadingFooter() {
         tableView.addNotificationsLoadingFooterView()
+    }
+    
+    override func handleListEmpty() {
+        let title = "no notification"
+        let description = "notifications not found"
+        tableView.addEmptyPlaceholderFooterView(title: title.localized().uppercaseFirst, description: description.localized().uppercaseFirst, buttonLabel: "reload".localized().uppercaseFirst)
+        {
+            self.viewModel.reload()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -119,5 +123,6 @@ class NotificationsPageVC: ListViewController<ResponseAPIOnlineNotificationData>
         navigationController?.navigationBar.isTranslucent = false
         self.navigationController?.navigationBar.setTitleFont(.boldSystemFont(ofSize: 17), color:
             .black)
+        self.setStatusBarStyle(.default)
     }
 }

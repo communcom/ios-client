@@ -62,7 +62,7 @@ class BasicEditorVC: PostEditorVC {
         let contentChanged = (self.contentTextView.attributedText != self.contentTextView.originalAttributedString)
         
         // reassign result
-        return contentAreNotEmpty && contentInsideLimit && contentChanged
+        return super.isContentValid && contentAreNotEmpty && contentInsideLimit && contentChanged
     }
     
     override var postTitle: String? {
@@ -77,15 +77,14 @@ class BasicEditorVC: PostEditorVC {
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        contentTextView.becomeFirstResponder()
     }
     
     override func setUp() {
         super.setUp()
-        
-        if viewModel.postForEdit == nil {
-            appendTool(EditorToolbarItem.addArticle)
-        }
+        #warning("add Article later")
+//        if viewModel.postForEdit == nil {
+//            appendTool(EditorToolbarItem.addArticle)
+//        }
     }
     
     override func bind() {

@@ -2,202 +2,201 @@
 //  PostPageVC.swift
 //  Commun
 //
-//  Created by Maxim Prigozhenkov on 21/03/2019.
+//  Created by Chung Tran on 11/8/19.
 //  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
 //
 
-import UIKit
+import Foundation
 import RxSwift
 import CyberSwift
 import RxDataSources
 
-class PostPageVC: ListViewController<ResponseAPIContentGetComment>, CommentCellDelegate {
-    
-    var headerView: PostHeaderView!
-    @IBOutlet weak var _tableView: UITableView!
-    
-    override var tableView: UITableView! {
-        get {return _tableView}
-        set {_tableView = newValue}
+class PostPageVC: CommentsViewController {
+    // MARK: - Nested types
+    class ReplyButton: UIButton {
+        var parentComment: ResponseAPIContentGetComment?
+        var offset: UInt = 0
+        var limit: UInt = 10
+        
     }
     
-    @IBOutlet weak var navigationBar: PostPageNavigationBar!
-    @IBOutlet weak var commentForm: CommentForm!
-    @IBOutlet weak var replyingToLabel: UILabel!
-    @IBOutlet weak var replyingToLabelHeightConstraint: NSLayoutConstraint!
-    @IBOutlet weak var navigationBarHeightConstraint: NSLayoutConstraint!
+    // MARK: - Subviews
+    lazy var navigationBar = PostPageNavigationBar(height: 56)
+    lazy var postView = PostHeaderView(tableView: tableView)
+    lazy var commentForm = CommentForm(backgroundColor: .white)
     
-    var expandedIndexes = [Int]()
-    
-    var replyingComment: ResponseAPIContentGetComment? {
-        didSet {
-            if let comment = self.replyingComment {
-                replyingToLabelHeightConstraint.constant = 16
-                UIView.animate(withDuration: 0.3) {
-                    self.view.layoutIfNeeded()
-                }
-                commentForm.parentAuthor = comment.contentId.userId
-                commentForm.parentPermlink = comment.contentId.permlink
-                replyingToLabel.text = "replying to".localized().uppercaseFirst + " " + (comment.author?.username ?? "")
-                
-                let mention = "@" + (comment.author?.username ?? comment.contentId.userId)
-                
-                var attrs = commentForm.textView.defaultTypingAttributes
-                attrs[.link] = URL.appURL + "/" + mention
-                
-                let mentionAS = NSMutableAttributedString(string: mention, attributes: attrs)
-                commentForm.textView.textStorage.insert(mentionAS, at: 0)
-                commentForm.textView.insertTextWithDefaultAttributes(" ", at: mentionAS.length)
-                commentForm.textView.selectedRange = NSMakeRange(commentForm.textView.textStorage.length, 0)
-                commentForm.textView.becomeFirstResponder()
-            } else {
-                replyingToLabelHeightConstraint.constant = 0
-                UIView.animate(withDuration: 0.3) {
-                    self.view.layoutIfNeeded()
-                }
-                commentForm.parentAuthor = (viewModel as! PostPageViewModel).post.value?.contentId.userId
-                commentForm.parentPermlink = (viewModel as! PostPageViewModel).post.value?.contentId.permlink
-                commentForm.textView.text = nil
-            }
-        }
+    // MARK: - Properties
+    var scrollToTopAfterLoadingComment = false
+    var commentThatNeedsScrollTo: ResponseAPIContentGetComment?
+
+    // MARK: - Initializers
+    init(post: ResponseAPIContentGetPost) {
+        super.init(nibName: nil, bundle: nil)
+        self.commentForm.post = post
+        self.viewModel = PostPageViewModel(post: post)
     }
     
-    override func setUp() {
-        super.setUp()
-        // navigation bar
-        navigationBar.backButton.addTarget(self, action: #selector(back), for: .touchUpInside)
-        navigationBar.moreButton.addTarget(self, action: #selector(openMorePostActions), for: .touchUpInside)
-        
-        // setupView
-        tableView.register(UINib(nibName: "CommentCell", bundle: nil), forCellReuseIdentifier: "CommentCell")
-        
-        // dismiss keyboard when dragging
-        tableView.keyboardDismissMode = .onDrag
-        
-        // observe post deleted
-        observePostDeleted()
-        
-        // replyingto
-        replyingComment = nil
-        
-        // dataSource
-        dataSource = MyRxTableViewSectionedAnimatedDataSource<ListSection>(
-            configureCell: { dataSource, tableView, indexPath, comment in
-                let cell = self.tableView.dequeueReusableCell(withIdentifier: "CommentCell") as! CommentCell
-                cell.setupFromComment(comment, expanded: self.expandedIndexes.contains(indexPath.row))
-                cell.delegate = self
-                
-                if indexPath.row == self.viewModel.items.value.count - 2 {
-                    self.viewModel.fetchNext()
-                }
-                
-                return cell
-            }
-        )
+    init(userId: String, permlink: String, communityId: String) {
+        super.init(nibName: nil, bundle: nil)
+        self.viewModel = PostPageViewModel(userId: userId, permlink: permlink, communityId: communityId)
     }
     
-    override func bind() {
-        super.bind()
-        // Observe post
-        bindPost()
-        
-        // Observe comments
-        bindComments()
-        
-        // Observe commentForm
-        bindCommentForm()
-        
-        // forward delegate & datasource for header in section
-        tableView.rx.setDelegate(self)
-            .disposed(by: disposeBag)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
-    override func handleLoading() {
-        tableView.addLoadingFooterView(
-            rowType:        PlaceholderNotificationCell.self,
-            tag:            notificationsLoadingFooterViewTag,
-            rowHeight:      88,
-            numberOfRows:   1
-        )
-    }
-    
-    override func handleListEmpty() {
-        let title = "no comments"
-        let description = "comments not found"
-        tableView.addEmptyPlaceholderFooterView(title: title.localized().uppercaseFirst, description: description.localized().uppercaseFirst)
-    }
-    
+    // MARK: - Life cycle
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: animated)
-        let tabBar = (tabBarController as? TabBarVC)?.tabBarStackView.superview
-        tabBar?.isHidden = true
+        tabBarController?.tabBar.isHidden = true
+        let tabBarVC = (tabBarController as? TabBarVC)
+        tabBarVC?.setTabBarHiden(true)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        navigationController?.setNavigationBarHidden(false, animated: animated)
-        let tabBar = (tabBarController as? TabBarVC)?.tabBarStackView.superview
-        tabBar?.isHidden = false
+        let tabBarVC = (tabBarController as? TabBarVC)
+        tabBarVC?.setTabBarHiden(false)
     }
     
-    func observePostDeleted() {
-        NotificationCenter.default.rx.notification(.init(rawValue: PostControllerPostDidDeleteNotification))
-            .subscribe(onNext: { (notification) in
-                guard let deletedPost = notification.object as? ResponseAPIContentGetPost,
-                    deletedPost.identity == (self.viewModel as! PostPageViewModel).post.value?.identity
-                    else {return}
-                self.showAlert(title: "deleted".localized().uppercaseFirst, message: "the post has been deleted".localized().uppercaseFirst, completion: { (_) in
-                    self.back()
-                })
-            })
-            .disposed(by: disposeBag)
-    }
-    
-    @IBAction func backButtonTap(_ sender: Any) {
-        back()
-    }
-    
-    @objc func userNameTapped(_ sender: UITapGestureRecognizer) {
-        guard let userId = (viewModel as! PostPageViewModel).post.value?.author?.userId else {return}
-        showProfileWithUserId(userId)
-    }
-    @IBAction func replyingToCloseDidTouch(_ sender: Any) {
-        replyingComment = nil
-    }
-    
-    func addEmptyCell() {
-        // init emptyView
-        let emptyView = EmptyView(frame: .zero)
+    // MARK: - Methods
+    override func setUp() {
+        super.setUp()
+        // navigationBar
+        view.addSubview(navigationBar)
+        navigationBar.autoPinEdgesToSuperviewSafeArea(with: .zero, excludingEdge: .bottom)
+        navigationBar.moreButton.addTarget(self, action: #selector(openMorePostActions), for: .touchUpInside)
         
-        // Prevent dupplicating
-        if tableView.tableFooterView?.tag == commentEmptyFooterViewTag {
-            return
+        // tableView
+        tableView.contentInset = UIEdgeInsets(top: 56, left: 0, bottom: 0, right: 0)
+        tableView.keyboardDismissMode = .onDrag
+        
+        // postView
+        postView.commentsCountButton.addTarget(self, action: #selector(commentsCountButtonDidTouch), for: .touchUpInside)
+//        postView.sortButton.addTarget(self, action: #selector(sortButtonDidTouch), for: .touchUpInside)
+        
+        // comment form
+        let shadowView = UIView(forAutoLayout: ())
+        shadowView.addShadow(ofColor: .shadow, radius: 4, offset: CGSize(width: 0, height: -6), opacity: 0.1)
+        
+        view.addSubview(shadowView)
+        shadowView.autoPinEdge(toSuperviewSafeArea: .leading)
+        shadowView.autoPinEdge(toSuperviewSafeArea: .trailing)
+        let keyboardViewV = KeyboardLayoutConstraint(item: view!.safeAreaLayoutGuide, attribute: .bottom, relatedBy: .equal, toItem: shadowView, attribute: .bottom, multiplier: 1.0, constant: 0.0)
+        keyboardViewV.observeKeyboardHeight()
+        self.view.addConstraint(keyboardViewV)
+        
+        shadowView.addSubview(commentForm)
+        commentForm.autoPinEdgesToSuperviewEdges()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        // navigationBar
+        navigationBar.addShadow(ofColor: .shadow, offset: CGSize(width: 0, height: 2), opacity: 0.1)
+        
+        commentForm.superview?.layoutIfNeeded()
+        commentForm.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: 24.5)
+        view.bringSubviewToFront(commentForm)
+    }
+    
+    override func bind() {
+        super.bind()
+        // bind controls
+        bindControls()
+        
+        // bind post
+        bindPost()
+        
+        // forward delegate
+        tableView.rx.setDelegate(self)
+            .disposed(by: disposeBag)
+        
+        // completion
+        if scrollToTopAfterLoadingComment {
+            tableView.rx.insertedItems
+                .take(1)
+                .subscribe(onNext: { (_) in
+                    self.tableView.safeScrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+                })
+                .disposed(by: disposeBag)
+        }
+        else if let comment = commentThatNeedsScrollTo {
+            #warning("scroll to comment")
+//            tableView.rx.itemInserted
+//                .takeWhile(<#T##predicate: (IndexPath) throws -> Bool##(IndexPath) throws -> Bool#>)
         }
         
-        let containerView = UIView(frame: CGRect(x: 0, y: 0, width: self.tableView.size.width, height: 214))
-        containerView.tag = commentEmptyFooterViewTag
+        // observer
+        observePostDeleted()
+        observeCommentAdded()
         
-        containerView.addSubview(emptyView)
-        
-        emptyView.translatesAutoresizingMaskIntoConstraints = false
-        emptyView.topAnchor.constraint(equalTo: containerView.topAnchor).isActive = true
-        emptyView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor).isActive = true
-        emptyView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor).isActive = true
-        emptyView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor).isActive = true
-        
-        
-        tableView.tableFooterView = containerView
-        emptyView.setUpEmptyComment()
     }
     
-    override func refresh() {
-        (viewModel as! PostPageViewModel).loadPost()
+    override func filterChanged(filter: CommentsListFetcher.Filter) {
+        super.filterChanged(filter: filter)
+        
+        // sort button
+//        var title = ""
+//        switch filter.sortBy {
+//        case .popularity:
+//            title = "interesting first".localized().uppercaseFirst
+//        case .timeDesc:
+//            title = "newest first".localized().uppercaseFirst
+//        case .time:
+//            title = "oldest first".localized().uppercaseFirst
+//        }
+//        postView.sortButton.setTitle(title, for: .normal)
+    }
+    
+    override func editComment(_ comment: ResponseAPIContentGetComment) {
+        commentForm.mode = .edit
+        commentForm.parentComment = comment
+        commentForm.textView.parseContentBlock(comment.document)
+        commentForm.textView.becomeFirstResponder()
+    }
+    
+    override func replyToComment(_ comment: ResponseAPIContentGetComment) {
+        commentForm.mode = .reply
+        commentForm.parentComment = comment
+        commentForm.textView.becomeFirstResponder()
     }
     
     @objc func openMorePostActions() {
-        guard let headerView = self.tableView.tableHeaderView as? PostHeaderView else {return}
-        headerView.openMorePostActions()
+        postView.openMorePostActions()
+    }
+    
+    @objc func sortButtonDidTouch() {
+        showCommunActionSheet(
+            title: "sort by".localized().uppercaseFirst,
+            actions: [
+                CommunActionSheet.Action(
+                    title: "interesting first".localized().uppercaseFirst,
+                    handle: {
+                        let vm = self.viewModel as! CommentsViewModel
+                        vm.changeFilter(sortBy: .popularity)
+                    }),
+                CommunActionSheet.Action(
+                    title: "newest first".localized().uppercaseFirst,
+                    handle: {
+                        let vm = self.viewModel as! CommentsViewModel
+                        vm.changeFilter(sortBy: .timeDesc)
+                    }),
+                CommunActionSheet.Action(
+                    title: "oldest first".localized().uppercaseFirst,
+                    handle: {
+                        let vm = self.viewModel as! CommentsViewModel
+                        vm.changeFilter(sortBy: .time)
+                    }),
+            ])
+    }
+    
+    @objc func commentsCountButtonDidTouch() {
+        tableView.safeScrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+    }
+    
+    override func refresh() {
+        (viewModel as! PostPageViewModel).reload()
     }
 }
-

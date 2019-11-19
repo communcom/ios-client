@@ -22,8 +22,6 @@ class FeedPageFiltersVC: SwipeDownDismissViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        interactor = SwipeDownInteractor()
-        
         view.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: 20)
         
         tableView.delegate = self

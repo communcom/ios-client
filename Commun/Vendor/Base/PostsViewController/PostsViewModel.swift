@@ -10,7 +10,7 @@ import Foundation
 import CyberSwift
 import RxCocoa
 
-class PostsViewModel: ListViewModel<ResponseAPIContentGetPost>, PostsListController {
+class PostsViewModel: ListViewModel<ResponseAPIContentGetPost> {
     var filter: BehaviorRelay<PostsListFetcher.Filter>!
     
     convenience init(filter: PostsListFetcher.Filter = PostsListFetcher.Filter(feedTypeMode: .new, feedType: .popular, sortType: .all)) {
@@ -19,22 +19,29 @@ class PostsViewModel: ListViewModel<ResponseAPIContentGetPost>, PostsListControl
         self.filter = BehaviorRelay<PostsListFetcher.Filter>(value: filter)
         defer {
             bindFilter()
-            observePostDelete()
-            observePostChange()
+            observeUserBlocked()
         }
     }
     
     func bindFilter() {
-        filter.distinctUntilChanged()
+        filter.skip(1).distinctUntilChanged()
             .filter {filter in
                 if filter.feedTypeMode != .new && filter.feedType == .popular {return false}
                 return true
             }
             .subscribe(onNext: {filter in
-                self.items.accept([])
                 self.fetcher.reset()
                 (self.fetcher as! PostsListFetcher).filter = filter
                 self.fetchNext()
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    func observeUserBlocked() {
+        ResponseAPIContentGetProfile.observeEvent(eventName: ResponseAPIContentGetProfile.blockedEventName)
+            .subscribe(onNext: {blockedUser in
+                let posts = self.items.value.filter {$0.author?.userId != blockedUser.userId}
+                self.items.accept(posts)
             })
             .disposed(by: disposeBag)
     }
@@ -46,6 +53,8 @@ class PostsViewModel: ListViewModel<ResponseAPIContentGetPost>, PostsListControl
         searchKey: String? = nil
     ) {
         let newFilter = filter.value.newFilter(withFeedTypeMode: feedTypeMode, feedType: feedType, sortType: sortType, searchKey: searchKey)
-        filter.accept(newFilter)
+        if newFilter != filter.value {
+            filter.accept(newFilter)
+        }
     }
 }

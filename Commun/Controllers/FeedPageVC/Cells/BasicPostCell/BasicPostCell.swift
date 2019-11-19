@@ -7,40 +7,47 @@
 //
 
 import UIKit
+import SafariServices
 
 final class BasicPostCell: PostCell {
-    // MARK: - Constants
-    let embedViewDefaultHeight: CGFloat = 216.5
-    
     // MARK: - Properties
-    
+    private var centerConstraint: NSLayoutConstraint!
     // MARK: - Subviews
-    lazy var contentLabel   = UILabel.with(textSize: 14, numberOfLines: 0)
-    lazy var gridViewContainerView = UIView(height: embedViewDefaultHeight)
-    lazy var gridView       = GridView(forAutoLayout: ())
-    
+    lazy var contentTextView        = UITextView(forExpandable: ())
+    lazy var gridView               = GridView(forAutoLayout: ())
+
+    private func configureTextView() {
+        contentTextView.textContainerInset = UIEdgeInsets.zero
+        contentTextView.textContainer.lineFragmentPadding = 0
+        contentTextView.font = .systemFont(ofSize: 14)
+        contentTextView.dataDetectorTypes = .link
+        contentTextView.isUserInteractionEnabled = false
+        contentTextView.delegate = self
+    }
+
     // MARK: - Layout
     override func layoutContent() {
-        contentView.addSubview(contentLabel)
-        contentLabel.autoPinEdge(.top, to: .bottom, of: metaView, withOffset: 10)
-        contentLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
-        contentLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
-        
-        contentView.addSubview(gridViewContainerView)
-        gridViewContainerView.autoPinEdge(toSuperviewEdge: .leading)
-        gridViewContainerView.autoPinEdge(toSuperviewEdge: .trailing)
-        gridViewContainerView.autoPinEdge(.top, to: .bottom, of: contentLabel, withOffset: 10)
-        
-        gridViewContainerView.addSubview(gridView)
-        gridView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 0, bottom: 12, right: 0))
-        
-        gridViewContainerView.autoPinEdge(.bottom, to: .top, of: voteActionsContainerView)
+        configureTextView()
+
+        contentView.addSubview(contentTextView)
+        contentTextView.autoPinEdge(.top, to: .bottom, of: metaView, withOffset: 10)
+        contentTextView.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
+        contentTextView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
+
+        contentView.addSubview(gridView)
+        centerConstraint = gridView.autoPinEdge(.top, to: .bottom, of: metaView, withOffset: 10)
+        centerConstraint.isActive = false
+        gridView.autoPinEdge(.top, to: .bottom, of: contentTextView, withOffset: 10)
+        gridView.autoPinEdge(toSuperviewEdge: .left)
+        gridView.autoPinEdge(toSuperviewEdge: .right)
+        gridView.autoPinEdge(.bottom, to: .top, of: voteContainerView)
     }
     
     override func setUp(with post: ResponseAPIContentGetPost?) {
         super.setUp(with: post)
         self.accessibilityLabel = "PostCardCell"
-        
+        centerConstraint.isActive = false
+
         let defaultAttributes: [NSAttributedString.Key: Any] = [.font: UIFont.systemFont(ofSize: 14)]
         
         if let content = post?.content,
@@ -48,24 +55,37 @@ final class BasicPostCell: PostCell {
         {
             let mutableAS = NSMutableAttributedString()
             var attributedText = firstSentence
-                .toAttributedString(currentAttributes: defaultAttributes)
-            if attributedText.length > 150 {
-                attributedText = attributedText.attributedSubstring(from: NSMakeRange(0, 150))
-                mutableAS.append(NSAttributedString(string: "...", attributes: defaultAttributes))
+                .toAttributedString(currentAttributes: defaultAttributes, attachmentType: TextAttachment.self)
+            if attributedText.length > 600 {
+                let moreText = NSAttributedString(string: "... \("See More".localized())", attributes: [.foregroundColor: UIColor.appMainColor, .font: UIFont.systemFont(ofSize: 14)])
+                attributedText = attributedText.attributedSubstring(from: NSMakeRange(0, 400))
+                mutableAS.append(moreText)
             }
             mutableAS.insert(attributedText, at: 0)
-            contentLabel.attributedText = mutableAS
+
+            // check last charters a space
+            let spaceSymbols = "\n"
+            let components = mutableAS.components(separatedBy: spaceSymbols)
+            if let last = components.last, last.isEqual(to: NSAttributedString(string: "")) {
+                mutableAS.deleteCharacters(in: NSRange(location: mutableAS.length - spaceSymbols.count, length: spaceSymbols.count))
+            }
+
+            contentTextView.attributedText = mutableAS
+        } else {
+            centerConstraint.isActive = true
         }
-        
-        if let embeds = post?.attachments,
-            !embeds.isEmpty
-        {
-            gridView.setUp(embeds: embeds)
-            gridViewContainerView.heightConstraint?.constant = 31/40 * UIScreen.main.bounds.width
-        }
-        else {
-            gridViewContainerView.heightConstraint?.constant = 0
-        }
-        
+
+        contentTextView.resolveHashTags()
+        contentTextView.resolveMentions()
+
+        gridView.setUp(embeds: post?.attachments)
+    }
+}
+
+extension BasicPostCell: UITextViewDelegate {
+    func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange) -> Bool {
+        let safariVC = SFSafariViewController(url: URL)
+        parentViewController?.present(safariVC, animated: true, completion: nil)
+        return false
     }
 }

@@ -32,6 +32,7 @@ extension UserProfilePageVC: UICollectionViewDelegateFlowLayout {
             .subscribe(onNext: {[weak self] (state) in
                 switch state {
                 case .loading(let isLoading):
+                    self?.communitiesCollectionView.heightConstraint?.constant = 187
                     if isLoading {
                         self?.communitiesCollectionView.showLoading()
                     }
@@ -39,6 +40,7 @@ extension UserProfilePageVC: UICollectionViewDelegateFlowLayout {
                         self?.communitiesCollectionView.hideLoading()
                     }
                 case .listEnded:
+                    self?.communitiesCollectionView.heightConstraint?.constant = 187
                     self?.communitiesCollectionView.hideLoading()
                 case .listEmpty:
                     self?.communitiesCollectionView.heightConstraint?.constant = 0
@@ -55,9 +57,6 @@ extension UserProfilePageVC: UICollectionViewDelegateFlowLayout {
             .map {$0.compactMap {$0.communityValue}}
             .bind(to: communitiesCollectionView.rx.items(cellIdentifier: "SubscriptionCommunityCell", cellType: SubscriptionCommunityCell.self)) { index, model, cell in
                 cell.setUp(with: model)
-                if index >= self.viewModel.subscriptionsVM.items.value.count - 2 {
-                    self.viewModel.subscriptionsVM.fetchNext()
-                }
             }
             .disposed(by: disposeBag)
         
@@ -69,6 +68,15 @@ extension UserProfilePageVC: UICollectionViewDelegateFlowLayout {
             .modelSelected(ResponseAPIContentGetSubscriptionsCommunity.self)
             .subscribe(onNext: { (community) in
                 self.showCommunityWithCommunityId(community.communityId)
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    func bindProfileBlocked() {
+        ResponseAPIContentGetProfile.observeEvent(eventName: ResponseAPIContentGetProfile.blockedEventName)
+            .subscribe(onNext: { (blockedProfile) in
+                guard blockedProfile.userId == self.viewModel.profile.value?.userId else {return}
+                self.back()
             })
             .disposed(by: disposeBag)
     }

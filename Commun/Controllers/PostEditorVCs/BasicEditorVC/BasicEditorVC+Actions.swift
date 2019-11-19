@@ -10,6 +10,19 @@ import Foundation
 
 extension BasicEditorVC {
     // MARK: - overriding actions
+    override func chooseFromGallery() {
+        let pickerVC = CustomTLPhotosPickerVC.singleImage
+        self.present(pickerVC, animated: true, completion: nil)
+        
+        pickerVC.rx.didSelectAnImage
+            .subscribe(onNext: {[weak self] image in
+                guard let strongSelf = self else {return}
+                guard let image = image else {return}
+                strongSelf.didChooseImageFromGallery(image)
+                pickerVC.dismiss(animated: true, completion: nil)
+            })
+            .disposed(by: disposeBag)
+    }
 
     override func didChooseImageFromGallery(_ image: UIImage, description: String? = nil) {
         if link != nil {return}

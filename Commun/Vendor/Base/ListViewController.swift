@@ -11,18 +11,26 @@ import RxSwift
 import RxDataSources
 
 class ListViewController<T: ListItemType>: BaseViewController {
-    override var contentScrollView: UIScrollView? { tableView }
-    
     public typealias ListSection = AnimatableSectionModel<String, T>
     
     var disposeBag = DisposeBag()
     var viewModel: ListViewModel<T>!
     var dataSource: MyRxTableViewSectionedAnimatedDataSource<ListSection>!
     
-    lazy var tableView: UITableView! = UITableView()
+    var tableViewInsets: UIEdgeInsets {
+        return .zero
+    }
+    
+    lazy var tableView: UITableView = {
+        let tableView = UITableView(forAutoLayout: ())
+        view.addSubview(tableView)
+        tableView.autoPinEdgesToSuperviewSafeArea(with: tableViewInsets)
+        return tableView
+    }()
     
     override func setUp() {
         super.setUp()
+        
         // pull to refresh
         tableView.es.addPullToRefresh { [unowned self] in
             self.tableView.es.stopPullToRefresh()
@@ -34,11 +42,18 @@ class ListViewController<T: ListItemType>: BaseViewController {
     
     override func bind() {
         super.bind()
+        bindState()
+        bindItems()
+    }
+    
+    func bindItems() {
         viewModel.items
             .map {[ListSection(model: "", items: $0)]}
             .bind(to: tableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
-        
+    }
+    
+    func bindState() {
         viewModel.state
             .do(onNext: { (state) in
                 Logger.log(message: "\(state)", event: .debug)
@@ -47,28 +62,34 @@ class ListViewController<T: ListItemType>: BaseViewController {
             .subscribe(onNext: {[weak self] state in
                 switch state {
                 case .loading(let isLoading):
-                    if (isLoading) {
-                        self?.handleLoading()
-                    }
-                    else {
-                        self?.tableView.tableFooterView = UIView()
-                    }
-                    break
+                    self?.handleLoading(isLoading: isLoading)
                 case .listEnded:
                     self?.handleListEnded()
                 case .listEmpty:
                     self?.handleListEmpty()
                 case .error(_):
-                    guard let strongSelf = self else {return}
-                    strongSelf.tableView.addListErrorFooterView(with: #selector(strongSelf.didTapTryAgain(gesture:)), on: strongSelf)
-                    strongSelf.tableView.reloadData()
+                    self?.handleListError()
                 }
             })
             .disposed(by: disposeBag)
     }
     
-    func handleLoading() {
-        
+    func handleLoading(isLoading: Bool) {
+        if isLoading {
+            showLoadingFooter()
+        }
+        else {
+            tableView.tableFooterView = UIView()
+        }
+    }
+    
+    func showLoadingFooter() {
+        tableView.addLoadingFooterView(
+            rowType:        PlaceholderNotificationCell.self,
+            tag:            notificationsLoadingFooterViewTag,
+            rowHeight:      88,
+            numberOfRows:   1
+        )
     }
     
     func handleListEnded() {
@@ -76,20 +97,19 @@ class ListViewController<T: ListItemType>: BaseViewController {
     }
     
     func handleListEmpty() {
-        
+        tableView.tableFooterView = UIView()
+    }
+    
+    func handleListError() {
+        let title = "error"
+        let description = "there is an error occurs"
+        tableView.addEmptyPlaceholderFooterView(title: title.localized().uppercaseFirst, description: description.localized().uppercaseFirst, buttonLabel: "retry".localized().uppercaseFirst)
+        {
+            self.viewModel.fetchNext(forceRetry: true)
+        }
     }
     
     @objc func refresh() {
         viewModel.reload()
-    }
-    
-    @objc func didTapTryAgain(gesture: UITapGestureRecognizer) {
-        guard let label = gesture.view as? UILabel,
-            let text = label.text else {return}
-        
-        let tryAgainRange = (text as NSString).range(of: "try again".localized().uppercaseFirst)
-        if gesture.didTapAttributedTextInLabel(label: label, inRange: tryAgainRange) {
-            self.viewModel.fetchNext(forceRetry: true)
-        }
     }
 }

@@ -41,8 +41,8 @@ extension UIViewController {
         self.present(alert, animated: true, completion: nil)
     }
     
-    func showCommunActionSheet(headerView: UIView? = nil, title: String? = nil, actions: [CommunActionSheet.Action], completion: (() -> Void)? = nil) {
-        let actionSheet = CommunActionSheet()
+    func showCommunActionSheet(style: CommunActionSheet.Style = .default, headerView: UIView? = nil, title: String? = nil, actions: [CommunActionSheet.Action], completion: (() -> Void)? = nil) {
+        let actionSheet = CommunActionSheet(style: style)
         actionSheet.title = title
         actionSheet.headerView = headerView
         actionSheet.actions = actions
@@ -77,13 +77,13 @@ extension UIViewController {
     }
     
     func hideHud() {
-        let vc = navigationController ?? self
+        let vc = tabBarController ?? navigationController ?? self
         
         MBProgressHUD.hide(for: vc.view, animated: false)
     }
     
     func showIndetermineHudWithMessage(_ message: String) {
-        let vc = navigationController ?? self
+        let vc = tabBarController ?? navigationController ?? self
         
         // Hide all previous hud
         hideHud()
@@ -98,7 +98,7 @@ extension UIViewController {
     }
     
     func showDone(_ message: String, completion: (()->Void)? = nil) {
-        let vc = navigationController ?? self
+        let vc = tabBarController ?? navigationController ?? self
         
         // Hide all previous hud
         hideHud()
@@ -184,5 +184,40 @@ extension UIViewController {
         } else {
             self.navigationController?.popViewController()
         }
+    }
+    
+    func setLeftNavBarButtonForGoingBack() {
+        let backButton = UIButton.back(contentInsets: UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 24))
+        setLeftNavBarButton(with: backButton)
+        backButton.addTarget(self, action: #selector(back), for: .touchUpInside)
+    }
+    
+    func setLeftNavBarButton(with button: UIButton) {
+        // backButton
+        let leftButtonView = UIView(frame: CGRect(x: 0, y: 0, width: 36, height: 40))
+        
+        leftButtonView.addSubview(button)
+        button.autoPinEdgesToSuperviewEdges()
+
+        let leftBarButton = UIBarButtonItem(customView: leftButtonView)
+        navigationItem.leftBarButtonItem = leftBarButton
+    }
+    
+    func setRightNavBarButton(with button: UIButton) {
+        // backButton
+        let rightButtonView = UIView(frame: CGRect(x: 0, y: 0, width: 36, height: 40))
+        
+        rightButtonView.addSubview(button)
+        button.autoPinEdgesToSuperviewEdges()
+
+        let rightBarButton = UIBarButtonItem(customView: rightButtonView)
+        navigationItem.rightBarButtonItem = rightBarButton
+    }
+    
+    func setStatusBarStyle(_ style: UIStatusBarStyle) {
+//        if let statusBar = UIApplication.shared.value(forKey: "statusBar") as? UIView {
+////            statusBar.backgroundColor = style == .lightContent ? UIColor.black : .white
+//            statusBar.setValue(style == .lightContent ? UIColor.white : .black, forKey: "foregroundColor")
+//        }
     }
 }

@@ -42,54 +42,20 @@ class NetworkService: NSObject {
 //        
 //    }
     
-    func getPost(withPermLink permLink: String) -> Single<ResponseAPIContentGetPost> {
-        return RestAPIManager.instance.loadPost(permlink: permLink, communityId: "GOLOS")
-    }
-    
     func deletePost(permlink: String) -> Completable {
         return RestAPIManager.instance.rx.deleteMessage(permlink: permlink)
             .observeOn(MainScheduler.instance)
     }
     
-    func voteMessage(voteType: VoteActionType, messagePermlink: String, messageAuthor: String) -> Completable {
+    func voteMessage(voteType: VoteActionType,
+                     communityId: String,
+                     messagePermlink: String,
+                     messageAuthor: String) -> Completable {
         return RestAPIManager.instance.rx.vote(
-                voteType:   voteType,
-                author:     messageAuthor,
-                permlink:   messagePermlink,
-                weight:     voteType == .unvote ? 0 : 1)
-            .observeOn(MainScheduler.instance)
-    }
-    
-    // return transactionId
-    func sendPost(
-        communCode: String,
-        title: String?,
-        body: String,
-        tags: [String]? = nil
-    ) -> Single<SendPostCompletion> {
-        return RestAPIManager.instance.rx.create(
-            commun_code: communCode,
-            message: body,
-            headline: title,
-            tags: tags
-        )
-            .observeOn(MainScheduler.instance)
-    }
-    
-    func editPostWithPermlink(
-        _ permlink: String,
-        communCode: String,
-        title: String?,
-        text: String,
-        tags: [String]
-    ) -> Single<SendPostCompletion> {
-        return RestAPIManager.instance.rx.updateMessage(
-            communCode:     communCode,
-            permlink:       permlink,
-            headline:       title,
-            message:        text,
-            tags:           tags
-        )
+                voteType:    voteType,
+                communityId: communityId,
+                author:      messageAuthor,
+                permlink:    messagePermlink)
             .observeOn(MainScheduler.instance)
     }
     
@@ -97,27 +63,6 @@ class NetworkService: NSObject {
         return RestAPIManager.instance.waitForTransactionWith(id: id)
     }
     
-    func sendComment(
-        communCode:             String,
-        parentAuthor:           String,
-        parentPermlink:         String,
-        message:                String,
-        tags:                   [String]? = nil
-    ) -> Completable {
-        
-        return RestAPIManager.instance.rx.create(
-            commun_code: communCode,
-            message: message,
-            parentPermlink: parentPermlink,
-            parentAuthor: parentAuthor,
-            tags: tags
-        )
-            .flatMapCompletable({ (msgInfo) -> Completable in
-                #warning("Remove this chaining to use socket in production")
-                return self.waitForTransactionWith(id: msgInfo.transactionId!)
-            })
-            .observeOn(MainScheduler.instance)
-    }
     
 //    func resendSmsCode(phone: String) -> Observable<String> {
 //        return Observable<String>.create({ observer -> Disposable in
@@ -237,7 +182,7 @@ class NetworkService: NSObject {
         return RestAPIManager.instance.rx.update(userProfile: params)
             .flatMapCompletable({ (transaction) -> Completable in
                 // update profile
-                if let url = params["profile_image"] {
+                if let url = params["avatar_url"] {
                     self.saveUserAvatarUrl(url)
                 }
                 

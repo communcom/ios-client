@@ -91,4 +91,21 @@ extension PostEditorVC {
             })
             .disposed(by: disposeBag)
     }
+    
+    @objc func bindCommunity() {
+        viewModel.community
+            .subscribe(onNext: { (community) in
+                if let community = community {
+                    self.communityAvatarImage.setAvatar(urlString: community.avatarUrl, namePlaceHolder: community.name)
+                    self.communityNameLabel.text = community.name
+                    self.communityNameLabel.textColor = .black
+                }
+                else {
+                    self.communityAvatarImage.removeAvatar()
+                    self.communityNameLabel.text = "choose a community".localized().uppercaseFirst
+                    self.communityNameLabel.textColor = .a5a7bd
+                }
+            })
+            .disposed(by: disposeBag)
+    }
 }

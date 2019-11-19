@@ -19,8 +19,49 @@ extension MyProfilePageVC {
         openActionSheet(cover: false)
     }
     
-    @objc func moreActionsButtonDidTouch(_ sender: Any) {
+    @objc override func moreActionsButtonDidTouch(_ sender: Any) {
+        let headerView = UIView(height: 40)
         
+        let avatarImageView = MyAvatarImageView(size: 40)
+        avatarImageView.observeCurrentUserAvatar()
+            .disposed(by: disposeBag)
+        headerView.addSubview(avatarImageView)
+        avatarImageView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .trailing)
+        
+        let userNameLabel = UILabel.with(text: viewModel.profile.value?.username, textSize: 15, weight: .semibold)
+        headerView.addSubview(userNameLabel)
+        userNameLabel.autoPinEdge(toSuperviewEdge: .top)
+        userNameLabel.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 10)
+        userNameLabel.autoPinEdge(toSuperviewEdge: .trailing)
+
+        let userIdLabel = UILabel.with(text: "@\(viewModel.profile.value?.userId ?? "")", textSize: 12, textColor: .appMainColor)
+        headerView.addSubview(userIdLabel)
+        userIdLabel.autoPinEdge(.top, to: .bottom, of: userNameLabel, withOffset: 3)
+        userIdLabel.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 10)
+        userIdLabel.autoPinEdge(toSuperviewEdge: .trailing)
+        
+        showCommunActionSheet(style: .profile, headerView: headerView, actions: [
+            CommunActionSheet.Action(title: "saved".localized().uppercaseFirst, icon: UIImage(named: "profile_options_saved"), handle: {
+                #warning("change filter")
+                let vc = PostsViewController()
+                vc.title = "saved posts".localized().uppercaseFirst
+                self.show(vc, sender: self)
+            }),
+            CommunActionSheet.Action(title: "liked".localized().uppercaseFirst, icon: UIImage(named: "profile_options_liked"), handle: {
+                #warning("change filter")
+                let vc = PostsViewController()
+                vc.title = "liked posts".localized().uppercaseFirst
+                self.show(vc, sender: self)
+            }),
+            CommunActionSheet.Action(title: "blacklist".localized().uppercaseFirst, icon: UIImage(named: "profile_options_blacklist"), handle: {
+                self.show(MyProfileBlacklistVC(), sender: self)
+            }),
+            CommunActionSheet.Action(title: "settings".localized().uppercaseFirst, icon: UIImage(named: "profile_options_settings"), handle: {
+                self.show(MyProfileSettingsVC(), sender: self)
+            }, marginTop: 14)
+        ]) {
+            
+        }
     }
     
     @objc func settingsButtonDidTouch(_ sender: Any) {
@@ -104,7 +145,7 @@ extension MyProfilePageVC {
                 return NetworkService.shared.uploadImage(image)
             }
             // Save to db
-            .flatMap {NetworkService.shared.updateMeta(params: ["cover_image": $0])}
+            .flatMap {NetworkService.shared.updateMeta(params: ["avatar_url": $0])}
             // Catch error and reverse image
             .subscribe(onError: {[weak self] error in
                 self?.coverImageView.image = originalImage
@@ -123,7 +164,7 @@ extension MyProfilePageVC {
         // On deleting
         if delete {
             headerView.avatarImageView.setNonAvatarImageWithId(self.viewModel.profile.value!.username ?? self.viewModel.profile.value!.userId)
-            NetworkService.shared.updateMeta(params: ["profile_image": ""])
+            NetworkService.shared.updateMeta(params: ["cover_url": ""])
                 .subscribe(onError: {[weak self] error in
                     if let gif = originGif {
                         self?.headerView.avatarImageView.setGifImage(gif)
@@ -153,7 +194,7 @@ extension MyProfilePageVC {
                 return NetworkService.shared.uploadImage(image)
             }
             // Save to db
-            .flatMap {NetworkService.shared.updateMeta(params: ["profile_image": $0])}
+            .flatMap {NetworkService.shared.updateMeta(params: ["cover_url": $0])}
             // Catch error and reverse image
             .subscribe(onError: {[weak self] error in
                 self?.headerView.avatarImageView.image = originalImage
@@ -195,7 +236,7 @@ extension MyProfilePageVC {
         // On deleting
         if delete {
             headerView.descriptionLabel.text = nil
-            NetworkService.shared.updateMeta(params: ["about": ""])
+            NetworkService.shared.updateMeta(params: ["biography": ""])
                 .subscribe(onError: {[weak self] error in
                     self?.showError(error)
                     self?.headerView.descriptionLabel.text = originalBio
@@ -213,7 +254,7 @@ extension MyProfilePageVC {
         editBioVC.didConfirm
             .flatMap {bio -> Completable in
                 self.headerView.descriptionLabel.text = bio
-                return NetworkService.shared.updateMeta(params: ["about": bio])
+                return NetworkService.shared.updateMeta(params: ["biography": bio])
             }
             .subscribe(onError: {[weak self] error in
                 self?.headerView.descriptionLabel.text = originalBio

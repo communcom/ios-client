@@ -11,6 +11,9 @@ import RxSwift
 import RxCocoa
 
 class PostEditorVC: EditorVC {
+    // MARK: - Constants
+    let communityDraftKey = "PostEditorVC.communityDraftKey"
+    
     // MARK: - Properties
     
     // MARK: - Computed properties
@@ -19,7 +22,7 @@ class PostEditorVC: EditorVC {
         fatalError("Must override")
     }
     var isContentValid: Bool {
-        fatalError("Must override")
+        return viewModel.community.value != nil && !contentTextView.text.trimmed.isEmpty
     }
     
     var viewModel: PostEditorViewModel {
@@ -32,10 +35,9 @@ class PostEditorVC: EditorVC {
     
     // MARK: - Subviews
     // community
-    lazy var communityAvatarImage = UIImageView.circle(size: 40, imageName: "tux")
-    lazy var youWillPostIn = UILabel.descriptionLabel("you will post in".localized().uppercaseFirst)
-    lazy var communityNameLabel = UILabel.with(text: "Commun", textSize: 15, weight: .semibold)
-    lazy var dropdownButton = UIButton.circleGray(imageName: "drop-down")
+    lazy var communityView = UIView(forAutoLayout: ())
+    lazy var communityAvatarImage = MyAvatarImageView(size: 40)
+    lazy var communityNameLabel = UILabel.with(text: "choose a community".localized().uppercaseFirst, textSize: 15, weight: .semibold, numberOfLines: 0)
     lazy var contentTextViewCountLabel = UILabel.descriptionLabel("0/30000")
     
     var contentTextView: ContentTextView {
@@ -55,6 +57,11 @@ class PostEditorVC: EditorVC {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                     // your code here
                     self.retrieveDraft()
+                }
+            }
+            else {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                    self.chooseCommunityDidTouch()
                 }
             }
         }
@@ -88,6 +95,8 @@ class PostEditorVC: EditorVC {
         bindSendPostButton()
         
         bindContentTextView()
+        
+        bindCommunity()
     }
     
     override func didSelectTool(_ item: EditorToolbarItem) {

@@ -8,6 +8,7 @@
 
 import Foundation
 import CyberSwift
+import SubviewAttachingTextView
 
 extension ResponseAPIContentBlock {
     func jsonString() throws -> String {
@@ -101,12 +102,12 @@ extension ResponseAPIContentBlock {
         }
     }
     
-    func toAttributedString(currentAttributes: [NSAttributedString.Key: Any], attachmentSize: CGSize = .zero) -> NSAttributedString {
+    func toAttributedString<Attachment: SubviewTextAttachment & TextAttachmentType>(currentAttributes: [NSAttributedString.Key: Any], attachmentSize: CGSize = .zero, attachmentType: Attachment.Type) -> NSAttributedString {
         let child = NSMutableAttributedString()
         switch content {
         case .array(let array):
             for inner in array {
-                child.append(inner.toAttributedString(currentAttributes: currentAttributes, attachmentSize: attachmentSize))
+                child.append(inner.toAttributedString(currentAttributes: currentAttributes, attachmentSize: attachmentSize, attachmentType: attachmentType))
             }
             
         case .string(let string):
@@ -142,24 +143,29 @@ extension ResponseAPIContentBlock {
                 }
             }
             child.addAttributes(attr, range: NSMakeRange(0, child.length))
+            child.append(NSAttributedString(string: " ", attributes: currentAttributes))
         case "tag":
             let link = child.string
             child.insert(NSAttributedString(string: "#"), at: 0)
             var attr = currentAttributes
             attr[.link] = "\(URL.appURL)/#\(link)"
             child.addAttributes(attr, range: NSMakeRange(0, child.length))
+            child.append(NSAttributedString(string: " ", attributes: currentAttributes))
         case "mention":
             let link = child.string
             child.insert(NSAttributedString(string: "@"), at: 0)
             var attr = currentAttributes
             attr[.link] = "\(URL.appURL)/@\(link)"
             child.addAttributes(attr, range: NSMakeRange(0, child.length))
+            child.append(NSAttributedString(string: " ", attributes: currentAttributes))
         case "link":
             let url = attributes?.url ?? ""
             var attr = currentAttributes
             attr[.link] = url
             child.addAttributes(attr, range: NSMakeRange(0, child.length))
+            child.append(NSAttributedString(string: " ", attributes: currentAttributes))
         case "image", "video", "website":
+            if attachmentSize == .zero { break }
             // get url
             var url: String?
             if type == "image" {
@@ -182,12 +188,15 @@ extension ResponseAPIContentBlock {
             attrs.url = url
             
             // attachment
-            let attachment = TextAttachment(block: self, size: attachmentSize)
-            attachment.attachmentView?.showCloseButton = false
+            let attachment = Attachment(block: self, size: attachmentSize)
             let attachmentAS = NSAttributedString(attachment: attachment)
             child.append(attachmentAS)
             child.append(NSAttributedString.separator)
             child.addAttributes(currentAttributes, range: NSMakeRange(child.length - 1, 1))
+        case "post":
+            if child.string.ends(with: "\n") {
+                child.deleteCharacters(in: NSMakeRange(child.length - 1, 1))
+            }
         default:
             break
         }

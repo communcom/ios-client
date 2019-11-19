@@ -10,16 +10,8 @@ import Foundation
 import CyberSwift
 import RxDataSources
 
-extension ResponseAPIContentGetProfile: Equatable, IdentifiableType {
-    public static func == (lhs: ResponseAPIContentGetProfile, rhs: ResponseAPIContentGetProfile) -> Bool {
-        return lhs.identity == rhs.identity
-    }
-    
+extension ResponseAPIContentGetProfile: IdentifiableType {
     public var identity: String {
-        return userId + "/" + (username ?? "")
-    }
-    
-    public func notifyChanged() {
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: ProfileControllerProfileDidChangeNotification), object: self)
+        return userId + "/" + username
     }
 }

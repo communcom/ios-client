@@ -9,7 +9,7 @@
 import Foundation
 import CyberSwift
 
-class UsersStackView: UIView {
+class UsersStackView: MyView {
     // MARK: - Properties
     let maxNumberOfAvatars = 5
     
@@ -24,22 +24,14 @@ class UsersStackView: UIView {
         return stackView
     }()
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        commonInit()
-    }
-    
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        commonInit()
-    }
-    
-    func commonInit() {
+    override func commonInit() {
+        super.commonInit()
         addSubview(avatarsStackView)
         avatarsStackView.autoPinEdge(toSuperviewEdge: .leading)
         avatarsStackView.autoAlignAxis(toSuperviewAxis: .horizontal)
     }
     
+    // MARK: - Methods
     func setUp(with friends: [ResponseAPIContentResolveProfile]) {
         // remove all labels
         for subview in subviews {
@@ -56,11 +48,10 @@ class UsersStackView: UIView {
         let text: String
         if friends.count <= 5 {
             for friend in friends {
-                let imageView = UIImageView(width: 34, height: 34)
-                imageView.layer.masksToBounds = true
+                let imageView = MyAvatarImageView(size: 34)
                 imageView.layer.borderWidth = 2
                 imageView.layer.borderColor = UIColor.white.cgColor
-                imageView.layer.cornerRadius = 17
+                imageView.addTapToOpenUserProfile(profileId: friend.userId)
                 avatarsStackView.addArrangedSubview(imageView)
                 imageView.setAvatar(urlString: friend.avatarUrl, namePlaceHolder: friend.username)
             }
@@ -69,11 +60,10 @@ class UsersStackView: UIView {
         
         else {
             for i in 0..<3 {
-                let imageView = UIImageView(width: 34, height: 34)
-                imageView.layer.masksToBounds = true
+                let imageView = MyAvatarImageView(size: 34)
                 imageView.layer.borderWidth = 2
                 imageView.layer.borderColor = UIColor.white.cgColor
-                imageView.layer.cornerRadius = 17
+                imageView.addTapToOpenUserProfile(profileId: friends[i].userId)
                 avatarsStackView.addArrangedSubview(imageView)
                 imageView.setAvatar(urlString: friends[i].avatarUrl, namePlaceHolder: friends[i].username)
             }
@@ -87,7 +77,8 @@ class UsersStackView: UIView {
         label.autoPinEdge(toSuperviewEdge: .trailing)
     }
     
-    // for testing purpose
+    // MARK: - Test
+    /// Mocking method
     func setNumberOfAvatars(i: Int) {
         // remove all labels
         for subview in subviews {

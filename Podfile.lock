@@ -11,49 +11,35 @@ PODS:
   - Crashlytics (3.14.0):
     - Fabric (~> 1.10.2)
   - CryptoSwift (1.1.3)
-  - CyberSwift (1.0.9):
-    - Checksum
-    - CryptoSwift
-    - eosswift
-    - GoloCrypto
-    - Localize-Swift (~> 2.0)
-    - Locksmith
-    - ReachabilitySwift (~> 4.3.1)
-    - RxCocoa
-    - RxSwift
-    - secp256k1.swift
-    - Starscream
-    - SwiftTheme
-    - SwiftyJSON (~> 4.0)
   - DateToolsSwift (4.0.0)
   - Differentiator (3.1.0)
-  - Down (0.9.0)
-  - DZNEmptyDataSet (1.8.1)
-  - eosswift (1.5):
+  - eosswift (1.5.1):
     - BigInt (~> 3.1.0)
     - RxCocoa (~> 4.0)
     - RxSwift (~> 4.0)
   - ESPullToRefresh (2.9)
   - Fabric (1.10.2)
-  - Firebase/Core (6.11.0):
+  - Firebase/Analytics (6.12.0):
+    - Firebase/Core
+  - Firebase/Core (6.12.0):
     - Firebase/CoreOnly
-    - FirebaseAnalytics (= 6.1.3)
-  - Firebase/CoreOnly (6.11.0):
-    - FirebaseCore (= 6.3.2)
-  - Firebase/Messaging (6.11.0):
+    - FirebaseAnalytics (= 6.1.5)
+  - Firebase/CoreOnly (6.12.0):
+    - FirebaseCore (= 6.3.3)
+  - Firebase/Messaging (6.12.0):
     - Firebase/CoreOnly
-    - FirebaseMessaging (~> 4.1.7)
-  - FirebaseAnalytics (6.1.3):
+    - FirebaseMessaging (~> 4.1.8)
+  - FirebaseAnalytics (6.1.5):
     - FirebaseCore (~> 6.3)
     - FirebaseInstanceID (~> 4.2)
-    - GoogleAppMeasurement (= 6.1.3)
+    - GoogleAppMeasurement (= 6.1.5)
     - GoogleUtilities/AppDelegateSwizzler (~> 6.0)
     - GoogleUtilities/MethodSwizzler (~> 6.0)
     - GoogleUtilities/Network (~> 6.0)
     - "GoogleUtilities/NSData+zlib (~> 6.0)"
-    - nanopb (~> 0.3.901)
+    - nanopb (= 0.3.9011)
   - FirebaseAnalyticsInterop (1.4.0)
-  - FirebaseCore (6.3.2):
+  - FirebaseCore (6.3.3):
     - FirebaseCoreDiagnostics (~> 1.0)
     - FirebaseCoreDiagnosticsInterop (~> 1.0)
     - GoogleUtilities/Environment (~> 6.2)
@@ -64,12 +50,12 @@ PODS:
     - GoogleUtilities/Environment (~> 6.2)
     - GoogleUtilities/Logger (~> 6.2)
     - nanopb (~> 0.3.901)
-  - FirebaseCoreDiagnosticsInterop (1.0.0)
-  - FirebaseInstanceID (4.2.6):
+  - FirebaseCoreDiagnosticsInterop (1.1.0)
+  - FirebaseInstanceID (4.2.7):
     - FirebaseCore (~> 6.0)
     - GoogleUtilities/Environment (~> 6.0)
     - GoogleUtilities/UserDefaults (~> 6.0)
-  - FirebaseMessaging (4.1.7):
+  - FirebaseMessaging (4.1.8):
     - FirebaseAnalyticsInterop (~> 1.3)
     - FirebaseCore (~> 6.2)
     - FirebaseInstanceID (~> 4.1)
@@ -79,12 +65,12 @@ PODS:
     - GoogleUtilities/UserDefaults (~> 6.2)
     - Protobuf (>= 3.9.2, ~> 3.9)
   - GoloCrypto (1.0.6)
-  - GoogleAppMeasurement (6.1.3):
+  - GoogleAppMeasurement (6.1.5):
     - GoogleUtilities/AppDelegateSwizzler (~> 6.0)
     - GoogleUtilities/MethodSwizzler (~> 6.0)
     - GoogleUtilities/Network (~> 6.0)
     - "GoogleUtilities/NSData+zlib (~> 6.0)"
-    - nanopb (~> 0.3.901)
+    - nanopb (= 0.3.9011)
   - GoogleDataTransport (3.0.1)
   - GoogleDataTransportCCTSupport (1.2.1):
     - GoogleDataTransport (~> 3.0)
@@ -128,6 +114,9 @@ PODS:
   - PureLayout (3.1.5)
   - QRCodeReaderViewController (4.0.2)
   - ReachabilitySwift (4.3.1)
+  - ReCaptcha (1.5.0):
+    - ReCaptcha/Core (= 1.5.0)
+  - ReCaptcha/Core (1.5.0)
   - RxCocoa (4.5.0):
     - RxSwift (>= 4.4.2, ~> 4.4)
   - RxDataSources (3.1.0):
@@ -152,8 +141,7 @@ PODS:
   - SwiftyJSON (4.3.0)
   - Swinject (2.7.1)
   - THPinViewController (1.2.6)
-  - TLPhotoPicker (2.0.5)
-  - TTTAttributedLabel (2.0.0)
+  - TLPhotoPicker (2.0.7)
   - "UITextView+Placeholder (1.3.3)"
 
 DEPENDENCIES:
@@ -161,36 +149,46 @@ DEPENDENCIES:
   - Alamofire
   - AppImageViewer
   - ASSpinnerView
+  - Checksum
   - Crashlytics
-  - CyberSwift (from `https://github.com/GolosChain/cyberSwift.git`)
+  - CryptoSwift
   - DateToolsSwift
-  - Down
-  - DZNEmptyDataSet
-  - eosswift (from `https://github.com/communcom/eos-swift.git`)
+  - "eosswift (from `git@github.com:communcom/eos-swift.git`)"
   - ESPullToRefresh
   - Fabric
+  - Firebase/Analytics
   - Firebase/Core
   - Firebase/Messaging
+  - "GoloCrypto (from `git@github.com:communcom/GoloGrypto.git`)"
   - InitialsImageView
   - ListPlaceholder
+  - Localize-Swift (~> 2.0)
+  - Locksmith
   - MBProgressHUD (~> 1.1.0)
   - PhoneNumberKit (~> 2.6)
   - PinCodeInputView
   - PureLayout
   - QRCodeReaderViewController (~> 4.0.2)
+  - ReachabilitySwift (~> 4.3.1)
+  - ReCaptcha
+  - RxCocoa
   - RxDataSources (~> 3.0)
+  - RxSwift
   - SDURLCache (~> 1.3)
   - SDWebImage (~> 4.0)
+  - secp256k1.swift
   - Segmentio
+  - Starscream
   - SubviewAttachingTextView (from `https://github.com/communcom/SubviewAttachingTextView.git`)
   - SwifterSwift/Foundation
   - SwifterSwift/SwiftStdlib
   - SwifterSwift/UIKit
+  - SwiftTheme
   - SwiftyGif
+  - SwiftyJSON (~> 4.0)
   - Swinject
   - THPinViewController (from `https://github.com/bigearsenal/THPinViewController.git`, branch `commun`)
   - TLPhotoPicker
-  - TTTAttributedLabel
   - "UITextView+Placeholder"
 
 SPEC REPOS:
@@ -205,8 +203,6 @@ SPEC REPOS:
     - CryptoSwift
     - DateToolsSwift
     - Differentiator
-    - Down
-    - DZNEmptyDataSet
     - ESPullToRefresh
     - Fabric
     - Firebase
@@ -217,7 +213,6 @@ SPEC REPOS:
     - FirebaseCoreDiagnosticsInterop
     - FirebaseInstanceID
     - FirebaseMessaging
-    - GoloCrypto
     - GoogleAppMeasurement
     - GoogleDataTransport
     - GoogleDataTransportCCTSupport
@@ -234,6 +229,7 @@ SPEC REPOS:
     - PureLayout
     - QRCodeReaderViewController
     - ReachabilitySwift
+    - ReCaptcha
     - RxCocoa
     - RxDataSources
     - RxSwift
@@ -249,14 +245,13 @@ SPEC REPOS:
     - SwiftyJSON
     - Swinject
     - TLPhotoPicker
-    - TTTAttributedLabel
     - "UITextView+Placeholder"
 
 EXTERNAL SOURCES:
-  CyberSwift:
-    :git: https://github.com/GolosChain/cyberSwift.git
   eosswift:
-    :git: https://github.com/communcom/eos-swift.git
+    :git: "git@github.com:communcom/eos-swift.git"
+  GoloCrypto:
+    :git: "git@github.com:communcom/GoloGrypto.git"
   SubviewAttachingTextView:
     :git: https://github.com/communcom/SubviewAttachingTextView.git
   THPinViewController:
@@ -264,12 +259,12 @@ EXTERNAL SOURCES:
     :git: https://github.com/bigearsenal/THPinViewController.git
 
 CHECKOUT OPTIONS:
-  CyberSwift:
-    :commit: dc2b5a459064f2630e522e54a6a358bbffc5ff52
-    :git: https://github.com/GolosChain/cyberSwift.git
   eosswift:
-    :commit: d919b66d452de46568b94745451111123af80ca9
-    :git: https://github.com/communcom/eos-swift.git
+    :commit: 7398cba038e49ccc4a70fdd892a4450d33b451c3
+    :git: "git@github.com:communcom/eos-swift.git"
+  GoloCrypto:
+    :commit: 49dc0567b352fe5685f6bdd4acc6f2f268555c8f
+    :git: "git@github.com:communcom/GoloGrypto.git"
   SubviewAttachingTextView:
     :commit: 141dcc300ee804e5d11f27fa9e685dc91889c262
     :git: https://github.com/communcom/SubviewAttachingTextView.git
@@ -286,24 +281,21 @@ SPEC CHECKSUMS:
   Checksum: f1aa56a27dea5db4006c819e2e129ee6aeb1d9af
   Crashlytics: 540b7e5f5da5a042647227a5e3ac51d85eed06df
   CryptoSwift: 6b6e488df0598b3e9fa49254ed1a65e8c1b1e10b
-  CyberSwift: ae317b8352ca0fb63e817062628452ed40dd3fc6
   DateToolsSwift: 875d97ff9e3a5d54abdd67a269b3f51c757b71ab
   Differentiator: be49ca3408f0ecfc761e4c7763d20c62be01b9ad
-  Down: 1cdbca4963b542d0ef34ebb3e10ff48382bdf761
-  DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
-  eosswift: 753a0f14eb3924707036903aa90b9e607dfb8a36
+  eosswift: 5ddb9f2f94c93c0d20d951c0b52aa59a560676cf
   ESPullToRefresh: ce058a36454a5032519cc9d8b45da217728cf104
   Fabric: 706c8b8098fff96c33c0db69cbf81f9c551d0d74
-  Firebase: bc9cfc7a96c73268656d5aaab453ff1b4b530e0e
-  FirebaseAnalytics: 0e3ecff2c5d86070f7d4325e21f1edabfbd558dc
+  Firebase: da031bc7012374e3bed17a6731b89327b29863b9
+  FirebaseAnalytics: 4e53a7eb7b76bc703c4d9239bc964545e9b23361
   FirebaseAnalyticsInterop: d48b6ab67bcf016a05e55b71fc39c61c0cb6b7f3
-  FirebaseCore: beeff42c07c30ea94702471d99db2089b594fbbd
+  FirebaseCore: bcd6c112429249d7921e907d661e8955a3549e26
   FirebaseCoreDiagnostics: af29e43048607588c050889d19204f4d7b758c9f
-  FirebaseCoreDiagnosticsInterop: 6829da2b8d1fc795ff1bd99df751d3788035d2cb
-  FirebaseInstanceID: d0eafcd8bdbd3447cd694594734078c3e3e77d8b
-  FirebaseMessaging: 5ab57080c83bc98c9961412e1dab379f4193d02a
-  GoloCrypto: 3f60e824b57ca657be702fb2cf4bd1f7a379257a
-  GoogleAppMeasurement: 434cc7be25e71dc04b8d0e3079125127b330e84a
+  FirebaseCoreDiagnosticsInterop: e9b1b023157e3a2fc6418b5cb601e79b9af7b3a0
+  FirebaseInstanceID: ebd2ea79ee38db0cb5f5167b17a0d387e1cc7b6e
+  FirebaseMessaging: de30f83a372a390be6f2ba44ec43a45b7ccdb43f
+  GoloCrypto: 30495d770515d57bd7b8e8a35098a9cdefc44578
+  GoogleAppMeasurement: 037f46d1d8ae8b312720f1042585ab961a1289e3
   GoogleDataTransport: 166f9b9f82cbf60a204e8fe2daa9db3e3ec1fb15
   GoogleDataTransportCCTSupport: f6ab1962e9dc05ab1fb938b795e5b310209edeec
   GoogleUtilities: f895fde57977df4e0233edda0dbeac490e3703b6
@@ -319,6 +311,7 @@ SPEC CHECKSUMS:
   PureLayout: 9b4ad47b2f0388c84ff534af23d96e720c1b875a
   QRCodeReaderViewController: e8f27d035b3e72b1d4b1c61ff66458287e3be0ff
   ReachabilitySwift: 4032e2f59586e11e3b0ebe15b167abdd587a388b
+  ReCaptcha: 40ae1dc390fd5837267674b9a6ae0978abb5eeeb
   RxCocoa: cbf70265dc65a981d4ac982e513c10cf23df24a0
   RxDataSources: a843bad90c29817f5923ec8163f4af2de084ceb3
   RxSwift: f172070dfd1a93d70a9ab97a5a01166206e1c575
@@ -335,10 +328,9 @@ SPEC CHECKSUMS:
   SwiftyJSON: 6faa0040f8b59dead0ee07436cbf76b73c08fd08
   Swinject: ddf78b8486dd9b71a667b852cad919ab4484478e
   THPinViewController: e0dc717a61c8a0a0f251764da26b9ca8a4fd2ec1
-  TLPhotoPicker: 4d3fca1cfe550881efa38b77dc226bed0e2a1549
-  TTTAttributedLabel: 8cffe8e127e4e82ff3af1e5386d4cd0ad000b656
+  TLPhotoPicker: 04e4ef38b31ee51388058c3e1e7bbdbd79614cef
   "UITextView+Placeholder": c407b27599ea23cca425946fee3cf1db5d547008
 
-PODFILE CHECKSUM: 23c7c745381348f98366255ab8fc442afa89025f
+PODFILE CHECKSUM: a11c1d6308b4224bc98f49a80d693fc39042a391
 
 COCOAPODS: 1.8.4

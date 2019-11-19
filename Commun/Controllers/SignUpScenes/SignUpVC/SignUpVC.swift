@@ -12,6 +12,7 @@ import RxSwift
 import CyberSwift
 import PhoneNumberKit
 import CoreLocation
+import ReCaptcha
 
 class SignUpVC: UIViewController, SignUpRouter {
     // MARK: - Properties
@@ -19,6 +20,11 @@ class SignUpVC: UIViewController, SignUpRouter {
     let disposeBag  =   DisposeBag()
     var locationManager: CLLocationManager!
     var shouldDefineLocation = true
+    
+    private var recaptcha: ReCaptcha!
+    private let locale = Locale(identifier: Locale.current.languageCode ?? "en")
+    private var endpoint = ReCaptcha.Endpoint.default
+
     
     // MARK: - IBOutlets
     @IBOutlet weak var countryButton: UIButton!
@@ -89,6 +95,7 @@ class SignUpVC: UIViewController, SignUpRouter {
         self.setupActions()
         
         updateLocation()
+        setupReCaptcha()
     }
     
     
@@ -169,6 +176,19 @@ class SignUpVC: UIViewController, SignUpRouter {
             .disposed(by: disposeBag)
     }
     
+    private func setupReCaptcha() {
+        recaptcha = try! ReCaptcha(endpoint: endpoint, locale: locale)
+
+        #if DEBUG
+        recaptcha.forceVisibleChallenge = true
+        #endif
+
+        recaptcha.configureWebView { [weak self] webview in
+            webview.frame = self?.view.bounds ?? CGRect.zero
+            webview.tag = 777
+        }
+    }
+
     
     // MARK: - Gestures
     @IBAction func handlingTapGesture(_ sender: UITapGestureRecognizer) {
@@ -183,16 +203,32 @@ class SignUpVC: UIViewController, SignUpRouter {
             return
         }
         
-        showIndetermineHudWithMessage("signing you up".localized().uppercaseFirst + "...")
-        
-        RestAPIManager.instance.rx.firstStep(phone: self.viewModel.phone.value)
-            .subscribe(onSuccess: { _ in
-                self.hideHud()
-                self.signUpNextStep()
-            }) { (error) in
-                self.hideHud()
-                self.handleSignUpError(error: error, with: self.viewModel.phone.value)
-            }
-            .disposed(by: disposeBag)
+        // reCaptcha
+        recaptcha.validate(on:              view,
+                           resetOnError:    false,
+                           completion:      { [weak self] (result: ReCaptchaResult) in
+                            guard let strongSelf = self else { return }
+                            
+                            guard let captchaCode = try? result.dematerialize() else {
+                                print("XXX")
+                                return
+                            }
+                            
+                            print(captchaCode)
+                            strongSelf.view.viewWithTag(777)?.removeFromSuperview()
+                            
+                            // API `registration.firstStep`
+                            strongSelf.showIndetermineHudWithMessage("signing you up".localized().uppercaseFirst + "...")
+                            
+                            RestAPIManager.instance.rx.firstStep(phone: strongSelf.viewModel.phone.value, captchaCode: captchaCode)
+                                .subscribe(onSuccess: { _ in
+                                    strongSelf.hideHud()
+                                    strongSelf.signUpNextStep()
+                                }) { (error) in
+                                    strongSelf.hideHud()
+                                    strongSelf.handleSignUpError(error: error, with: strongSelf.viewModel.phone.value)
+                            }
+                            .disposed(by: strongSelf.disposeBag)
+        })
     }
 }

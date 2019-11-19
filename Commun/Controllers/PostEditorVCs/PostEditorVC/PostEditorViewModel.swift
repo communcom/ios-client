@@ -13,6 +13,7 @@ import CyberSwift
 
 class PostEditorViewModel {
     var postForEdit: ResponseAPIContentGetPost?
+    let community = BehaviorRelay<ResponseAPIContentGetSubscriptionsCommunity?>(value: nil)
     
     func sendPost(title: String?, block: ResponseAPIContentBlock) -> Single<SendPostCompletion> {
         // Prepare tags
@@ -29,23 +30,23 @@ class PostEditorViewModel {
         // If editing post
         var request: Single<SendPostCompletion>!
         
-        #warning("fix communCode")
         if let post = self.postForEdit {
-            request = NetworkService.shared.editPostWithPermlink(
-                post.contentId.permlink,
-                communCode: "CATS",
-                title: title,
-                text: string,
-                tags: tags)
+            request = RestAPIManager.instance.rx.updateMessage(
+                communCode:     community.value?.communityId ?? "",
+                permlink:       post.contentId.permlink,
+                header:         title ?? "",
+                body:           string,
+                tags:           tags
+            )
         }
             
         // If creating new post
         else {
-            request = NetworkService.shared.sendPost(
-                communCode: "CATS",
-                title: title,
-                body: string,
-                tags: tags
+            request = RestAPIManager.instance.rx.createMessage(
+                communCode:     community.value?.communityId ?? "",
+                header:         title ?? "",
+                body:           string,
+                tags:           tags
             )
         }
         

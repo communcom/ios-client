@@ -10,11 +10,7 @@ import Foundation
 import CyberSwift
 import RxDataSources
 
-extension ResponseAPIOnlineNotificationData: Equatable, IdentifiableType {
-    public static func == (lhs: ResponseAPIOnlineNotificationData, rhs: ResponseAPIOnlineNotificationData) -> Bool {
-        return lhs.identity == rhs.identity
-    }
-    
+extension ResponseAPIOnlineNotificationData: IdentifiableType {
     public var identity: String {
         return self._id
     }
