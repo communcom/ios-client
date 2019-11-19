@@ -20,7 +20,7 @@ class SubsItemCell: MyTableViewCell {
         backgroundColor = .white
         selectionStyle = .none
         contentView.addSubview(avatarImageView)
-        avatarImageView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(inset: 16), excludingEdge: .trailing)
+        avatarImageView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 16, left: 16, bottom: 18, right: 0), excludingEdge: .trailing)
         
         contentView.addSubview(nameLabel)
         nameLabel.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 10)
@@ -40,6 +40,10 @@ class SubsItemCell: MyTableViewCell {
             .isActive = true
         actionButton.leadingAnchor.constraint(greaterThanOrEqualTo: statsLabel.trailingAnchor, constant: 8)
             .isActive = true
+
+        let separator = UIView(height: 2, backgroundColor: .f3f5fa)
+        contentView.addSubview(separator)
+        separator.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
     }
     
     @objc func actionButtonDidTouch() {

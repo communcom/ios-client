@@ -23,9 +23,8 @@ class SubsViewController<T: ListItemType>: ListViewController<T> {
         closeButton.addTarget(self, action: #selector(back), for: .touchUpInside)
         view.backgroundColor = .f3f5fa
         tableView.backgroundColor = .clear
-        tableView.separatorInset = .zero
+        tableView.separatorStyle = .none
         tableView.showsVerticalScrollIndicator = false
-        tableView.separatorColor = .f3f5fa
         
         tableView.contentInset = UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0)
     }
