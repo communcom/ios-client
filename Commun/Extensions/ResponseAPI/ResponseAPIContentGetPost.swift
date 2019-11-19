@@ -18,4 +18,10 @@ extension ResponseAPIContentGetPost: IdentifiableType {
     public var content: [ResponseAPIContentBlock]? {
         return document?.content.arrayValue
     }
+    
+    static var commentAddedEventName: String {"CommentAdded"}
+    
+    public func notifyChildrenChanged() {
+        notifyEvent(eventName: Self.commentAddedEventName)
+    }
 }

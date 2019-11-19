@@ -8,6 +8,7 @@
 
 import Foundation
 import RxSwift
+import CyberSwift
 
 class CommentForm: MyView {
     // MARK: - Edit mode
@@ -115,55 +116,6 @@ class CommentForm: MyView {
         bind()
         
         parentComment = nil
-    }
-
-    @objc func sendComment() {
-        if mode != .new && parentComment == nil { return}
-        
-        #warning("send image")
-        textView.getContentBlock()
-            .observeOn(MainScheduler.instance)
-            .do(onSubscribe: {
-                self.textView.isUserInteractionEnabled = false
-                self.parentViewController?.showIndetermineHudWithMessage(
-                    "parsing content".localized().uppercaseFirst)
-            })
-            .flatMapCompletable { block in
-                //clean
-                var block = block
-                block.maxId = nil
-                
-                // send new comment
-                let request: Completable
-                switch self.mode {
-                case .new:
-                    request = self.viewModel.sendNewComment(block: block)
-                case .edit:
-                    request = self.viewModel.updateComment(self.parentComment!, block: block)
-                case .reply:
-                    request = self.viewModel.replyToComment(self.parentComment!, block: block)
-                }
-                
-                return request
-                    .do(onSubscribe: {
-                        self.parentViewController?.showIndetermineHudWithMessage(
-                            "sending comment".localized().uppercaseFirst)
-                    })
-            }
-            .subscribe(onCompleted: {
-                self.parentViewController?.hideHud()
-                self.textView.isUserInteractionEnabled = true
-                
-                self.mode = .new
-                self.parentComment = nil
-                
-                #warning("reload comments")
-            }) { (error) in
-                self.parentViewController?.hideHud()
-                self.parentViewController?.showError(error)
-                self.textView.isUserInteractionEnabled = true
-            }
-            .disposed(by: disposeBag)
     }
 
     func bind() {

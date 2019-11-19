@@ -17,8 +17,8 @@ extension Decodable where Self: Equatable & IdentifiableType {
     static var deletedEventName: String {"Deleted"}
     static var blockedEventName: String {"Blocked"}
     
-    public func notifyEvent(eventName: String) {
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "\(Self.self)\(eventName)"), object: self)
+    public func notifyEvent(eventName: String, object: Any? = nil) {
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "\(Self.self)\(eventName)"), object: object ?? self)
     }
     
     public func notifyChanged() {
