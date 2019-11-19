@@ -77,13 +77,13 @@ extension UIViewController {
     }
     
     func hideHud() {
-        let vc = navigationController ?? self
+        let vc = tabBarController ?? navigationController ?? self
         
         MBProgressHUD.hide(for: vc.view, animated: false)
     }
     
     func showIndetermineHudWithMessage(_ message: String) {
-        let vc = navigationController ?? self
+        let vc = tabBarController ?? navigationController ?? self
         
         // Hide all previous hud
         hideHud()
@@ -98,7 +98,7 @@ extension UIViewController {
     }
     
     func showDone(_ message: String, completion: (()->Void)? = nil) {
-        let vc = navigationController ?? self
+        let vc = tabBarController ?? navigationController ?? self
         
         // Hide all previous hud
         hideHud()
