@@ -192,13 +192,13 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .long
         let dateString = dateFormatter.string(from: Date.from(string: community.registrationTime ?? ""))
-        joinedDateLabel.text = "joined".localized().uppercaseFirst + " " + "\(dateString)"
+        joinedDateLabel.text = "following".localized().uppercaseFirst + " " + "\(dateString)"
         
         // joinButton
         let joined = community.isSubscribed ?? false
         joinButton.backgroundColor = joined ? #colorLiteral(red: 0.9525656104, green: 0.9605062604, blue: 0.9811610579, alpha: 1): .appMainColor
         joinButton.setTitleColor(joined ? .appMainColor: .white , for: .normal)
-        joinButton.setTitle(joined ? "joined".localized().uppercaseFirst : "join".localized().uppercaseFirst, for: .normal)
+        joinButton.setTitle((joined ? "following" : "follow").localized().uppercaseFirst, for: .normal)
         joinButton.isEnabled = !(community.isBeingJoined ?? false)
         
         // notification button
