@@ -125,5 +125,11 @@ let controllerContainer: Container = {
         return vc
     })
     
+    // ProfileEdit scene
+    container.register(ProfileEditViewController.self, factory: { r in
+        let vc = ProfileEditViewController.instanceController(fromStoryboard: "ProfileEdit", withIdentifier: "ProfileEditVC") as! ProfileEditViewController
+        return vc
+    })
+
     return container
 }()

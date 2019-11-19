@@ -18,16 +18,42 @@ class NetworkService: NSObject {
     static let shared = NetworkService()
     
     // MARK: - Helpers
-    private func saveUserAvatarUrl(_ url: String) {
-        if UserDefaults.standard.string(forKey: Config.currentUserAvatarUrlKey) == url {
+    private func saveUser(avatarUrl: String) {
+        if UserDefaults.standard.string(forKey: Config.currentUserAvatarUrlKey) == avatarUrl {
             return
         }
-        UserDefaults.standard.set(url, forKey: Config.currentUserAvatarUrlKey)
+        
+        UserDefaults.standard.set(avatarUrl, forKey: Config.currentUserAvatarUrlKey)
     }
-    
+
+    private func saveUser(coverUrl: String) {
+        if UserDefaults.standard.string(forKey: Config.currentUserCoverUrlKey) == coverUrl {
+            return
+        }
+        
+        UserDefaults.standard.set(coverUrl, forKey: Config.currentUserCoverUrlKey)
+    }
+
+    private func saveUser(biography: String) {
+        if UserDefaults.standard.string(forKey: Config.currentUserBiographyKey) == biography {
+            return
+        }
+        
+        UserDefaults.standard.set(biography, forKey: Config.currentUserBiographyKey)
+    }
+
     private func removeUserAvatar() {
         UserDefaults.standard.removeObject(forKey: Config.currentUserAvatarUrlKey)
     }
+
+    private func removeUserCover() {
+        UserDefaults.standard.removeObject(forKey: Config.currentUserCoverUrlKey)
+    }
+
+    private func removeUserBiography() {
+        UserDefaults.standard.removeObject(forKey: Config.currentUserBiographyKey)
+    }
+
     
     // MARK: - Methods API
 //    func loadFeed(_ paginationKey: String?, withSortType sortType: FeedTimeFrameMode = .all, withFeedType type: FeedSortMode = .popular, withFeedTypeMode typeMode: FeedTypeMode = .community, userId: String? = nil) -> Single<ResponseAPIContentGetPosts> {
@@ -95,20 +121,31 @@ class NetworkService: NSObject {
         
         return RestAPIManager.instance.getProfile(user: userNickName)
             .do(onSuccess: { (profile) in
-                if userId == Config.currentUser?.id
-                {
-//                    Config.currentUserAvatarUrlKey
-                    if let avatarUrl = profile.personal?.avatarUrl {
-                        self.saveUserAvatarUrl(avatarUrl)
-                    }
-                    else {
+                if userId == Config.currentUser?.id {
+                    // `personal.avatarUrl`
+                    if let avatarUrlValue = profile.personal?.avatarUrl {
+                        self.saveUser(avatarUrl: avatarUrlValue)
+                    } else {
                         self.removeUserAvatar()
                     }
-                    
+
+                    // `personal.coverUrl`
+                    if let coverUrlValue = profile.personal?.coverUrl {
+                        self.saveUser(coverUrl: coverUrlValue)
+                    } else {
+                        self.removeUserCover()
+                    }
+
+                    // `personal.biography`
+                    if let biographyValue = profile.personal?.biography {
+                        self.saveUser(biography: biographyValue)
+                    } else {
+                        self.removeUserBiography()
+                    }
                 }
             })
     }
-    
+
     func userVerify(phone: String, code: String) -> Observable<Bool> {
         
         return Observable<String>.create({ observer -> Disposable in
@@ -183,7 +220,7 @@ class NetworkService: NSObject {
             .flatMapCompletable({ (transaction) -> Completable in
                 // update profile
                 if let url = params["profile_image"] {
-                    self.saveUserAvatarUrl(url)
+                    self.saveUser(avatarUrl: url)
                 }
                 
                 if !waitForTransaction {return .empty()}

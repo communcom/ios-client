@@ -44,6 +44,14 @@ class MyProfileSettingsVC: BaseViewController {
         button.autoAlignAxis(toSuperviewAxis: .horizontal)
         button.autoPinEdge(.leading, to: .trailing, of: userLabel, withOffset: 10)
         
+        view.isUserInteractionEnabled = true
+        let tap = CommunActionSheet.Action.TapGesture(target: self, action: #selector(actionViewDidTouch(_:)))
+        tap.action = CommunActionSheet.Action(title: "profileEdit", icon: UIImage(named: "profile_options_notifications"), handle: {
+            self.showEditProfile()
+        })
+
+        view.addGestureRecognizer(tap)
+
         return view
     }()
     
