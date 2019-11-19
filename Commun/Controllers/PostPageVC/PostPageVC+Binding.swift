@@ -21,6 +21,19 @@ extension PostPageVC {
             .disposed(by: disposeBag)
     }
     
+    func observeCommentAdded() {
+        NotificationCenter.default.rx.notification(.init(rawValue: "\(ResponseAPIContentGetPost.self)\(ResponseAPIContentGetPost.commentAddedEventName)"))
+            .subscribe(onNext: { (notification) in
+                guard let newComment = notification.object as? ResponseAPIContentGetComment else {return}
+                
+                // add newComment to top of the list
+                var items = self.viewModel.items.value
+                items = [newComment] + items
+                self.viewModel.items.accept(items)
+            })
+            .disposed(by: disposeBag)
+    }
+    
     func bindControls() {
 //        tableView.rx.willDragDown
 //            .map {$0 ? true: false}

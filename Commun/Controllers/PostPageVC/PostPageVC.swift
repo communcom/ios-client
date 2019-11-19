@@ -103,9 +103,6 @@ class PostPageVC: CommentsViewController {
     
     override func bind() {
         super.bind()
-        
-        observePostDeleted()
-        
         // bind controls
         bindControls()
         
@@ -130,6 +127,10 @@ class PostPageVC: CommentsViewController {
 //            tableView.rx.itemInserted
 //                .takeWhile(<#T##predicate: (IndexPath) throws -> Bool##(IndexPath) throws -> Bool#>)
         }
+        
+        // observer
+        observePostDeleted()
+        observeCommentAdded()
         
     }
     
