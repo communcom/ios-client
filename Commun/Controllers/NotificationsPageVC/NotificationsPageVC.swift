@@ -123,5 +123,6 @@ class NotificationsPageVC: ListViewController<ResponseAPIOnlineNotificationData>
         navigationController?.navigationBar.isTranslucent = false
         self.navigationController?.navigationBar.setTitleFont(.boldSystemFont(ofSize: 17), color:
             .black)
+        self.setStatusBarStyle(.default)
     }
 }
