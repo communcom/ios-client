@@ -41,12 +41,13 @@ extension MyProfilePageVC {
         userIdLabel.autoPinEdge(toSuperviewEdge: .trailing)
         
         showCommunActionSheet(style: .profile, headerView: headerView, actions: [
-            CommunActionSheet.Action(title: "saved".localized().uppercaseFirst, icon: UIImage(named: "profile_options_saved"), handle: {
-                #warning("change filter")
-                let vc = PostsViewController()
-                vc.title = "saved posts".localized().uppercaseFirst
-                self.show(vc, sender: self)
-            }),
+            // remove from MVP
+//            CommunActionSheet.Action(title: "saved".localized().uppercaseFirst, icon: UIImage(named: "profile_options_saved"), handle: {
+//                #warning("change filter")
+//                let vc = PostsViewController()
+//                vc.title = "saved posts".localized().uppercaseFirst
+//                self.show(vc, sender: self)
+//            }),
             CommunActionSheet.Action(title: "liked".localized().uppercaseFirst, icon: UIImage(named: "profile_options_liked"), handle: {
                 #warning("change filter")
                 let vc = PostsViewController()

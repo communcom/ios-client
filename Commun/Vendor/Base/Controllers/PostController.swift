@@ -34,20 +34,21 @@ extension PostController {
         var actions = [CommunActionSheet.Action]()
         
         if post.author?.userId != Config.currentUser?.id {
-            if !FavouritesList.shared.list.contains(post.contentId.permlink) {
-                actions.append(
-                    CommunActionSheet.Action(title: "add to favourite".localized().uppercaseFirst, icon: UIImage(named: "favourite-add"), handle: {
-                        self.addPostToFavourite()
-                    })
-                )
-            }
-            else {
-                actions.append(
-                    CommunActionSheet.Action(title: "remove from favourite".localized().uppercaseFirst, icon: UIImage(named: "favourite-remove"), handle: {
-                        self.removeFromFavourite()
-                    })
-                )
-            }
+            // remove from MVP
+//            if !FavouritesList.shared.list.contains(post.contentId.permlink) {
+//                actions.append(
+//                    CommunActionSheet.Action(title: "add to favourite".localized().uppercaseFirst, icon: UIImage(named: "favourite-add"), handle: {
+//                        self.addPostToFavourite()
+//                    })
+//                )
+//            }
+//            else {
+//                actions.append(
+//                    CommunActionSheet.Action(title: "remove from favourite".localized().uppercaseFirst, icon: UIImage(named: "favourite-remove"), handle: {
+//                        self.removeFromFavourite()
+//                    })
+//                )
+//            }
             
             actions.append(
                 CommunActionSheet.Action(title: "send report".localized().uppercaseFirst, icon: UIImage(named: "report"), handle: {

@@ -75,9 +75,9 @@ class SettingsVC: UIViewController {
                         .switcher((key: NotificationSettingType.repost.rawValue, value: pushShow.repost, image: nil))
                     ]
                 }
-                sections.append(
-                    .secondSection(header: "Notifications", items: rows)
-                )
+//                sections.append(
+//                    .secondSection(header: "Notifications", items: rows)
+//                )
                 
                 // third section
                 rows = [Section.CustomData]()
@@ -92,7 +92,7 @@ class SettingsVC: UIViewController {
                     rows.append(.button(ButtonType.showAllPasswords.rendered))
                 }
                 
-                sections.append(.thirdSection(header: "Private keys".localized(), items: rows))
+//                sections.append(.thirdSection(header: "Private keys".localized(), items: rows))
                 
                 // forth section
                 sections.append(.forthSection(items: [

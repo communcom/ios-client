@@ -69,9 +69,6 @@ class EmbedView: UIView {
     }
 
     private func configure(with content: ResponseAPIContentBlock) {
-        loadingView.removeFromSuperview()
-        webView.removeFromSuperview()
-
         coverImageView.removeAllConstraints()
         titleLabel.removeAllConstraints()
         subtitleLabel.removeAllConstraints()
