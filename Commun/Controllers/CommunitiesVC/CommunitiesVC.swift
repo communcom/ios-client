@@ -28,6 +28,19 @@ class CommunitiesVC: SubsViewController<ResponseAPIContentGetCommunity> {
             configureCell: { (dataSource, tableView, indexPath, community) -> UITableViewCell in
                 let cell = self.tableView.dequeueReusableCell(withIdentifier: "CommunityCell") as! CommunityCell
                 cell.setUp(with: community)
+                
+                if indexPath.row == 0 {
+                    cell.roundedCorner = UIRectCorner(arrayLiteral: .topLeft, .topRight)
+                }
+                
+                else if indexPath.row == self.viewModel.items.value.count - 1 {
+                    cell.roundedCorner = UIRectCorner(arrayLiteral: .bottomLeft, .bottomRight)
+                }
+                
+                else {
+                    cell.roundedCorner = nil
+                }
+                
                 if indexPath.row >= self.viewModel.items.value.count - 5 {
                     self.viewModel.fetchNext()
                 }

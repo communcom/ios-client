@@ -14,6 +14,21 @@ class SubsItemCell: MyTableViewCell {
     lazy var nameLabel = UILabel.with(textSize: 15, weight: .bold)
     lazy var statsLabel = UILabel.descriptionLabel()
     lazy var actionButton = CommunButton.default()
+    var roundedCorner: UIRectCorner? {
+        didSet {
+            layoutIfNeeded()
+        }
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        if let corner = roundedCorner {
+            roundCorners(corner, radius: 10)
+        }
+        else {
+            roundCorners(UIRectCorner.allCorners, radius: 0)
+        }
+    }
     
     override func setUpViews() {
         super.setUpViews()
