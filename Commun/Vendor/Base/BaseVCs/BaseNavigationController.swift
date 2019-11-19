@@ -90,7 +90,7 @@ final class BaseNavigationController: UINavigationController {
     }
     
     override func popViewController(animated: Bool) -> UIViewController? {
-        resetNavigationBar()
+//        resetNavigationBar()
         return super.popViewController(animated: animated)
     }
     
