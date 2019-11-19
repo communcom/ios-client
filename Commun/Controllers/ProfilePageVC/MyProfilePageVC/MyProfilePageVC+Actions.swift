@@ -145,7 +145,7 @@ extension MyProfilePageVC {
                 return NetworkService.shared.uploadImage(image)
             }
             // Save to db
-            .flatMap {NetworkService.shared.updateMeta(params: ["cover_image": $0])}
+            .flatMap {NetworkService.shared.updateMeta(params: ["avatar_url": $0])}
             // Catch error and reverse image
             .subscribe(onError: {[weak self] error in
                 self?.coverImageView.image = originalImage
@@ -164,7 +164,7 @@ extension MyProfilePageVC {
         // On deleting
         if delete {
             headerView.avatarImageView.setNonAvatarImageWithId(self.viewModel.profile.value!.username ?? self.viewModel.profile.value!.userId)
-            NetworkService.shared.updateMeta(params: ["profile_image": ""])
+            NetworkService.shared.updateMeta(params: ["cover_url": ""])
                 .subscribe(onError: {[weak self] error in
                     if let gif = originGif {
                         self?.headerView.avatarImageView.setGifImage(gif)
@@ -194,7 +194,7 @@ extension MyProfilePageVC {
                 return NetworkService.shared.uploadImage(image)
             }
             // Save to db
-            .flatMap {NetworkService.shared.updateMeta(params: ["profile_image": $0])}
+            .flatMap {NetworkService.shared.updateMeta(params: ["cover_url": $0])}
             // Catch error and reverse image
             .subscribe(onError: {[weak self] error in
                 self?.headerView.avatarImageView.image = originalImage
@@ -236,7 +236,7 @@ extension MyProfilePageVC {
         // On deleting
         if delete {
             headerView.descriptionLabel.text = nil
-            NetworkService.shared.updateMeta(params: ["about": ""])
+            NetworkService.shared.updateMeta(params: ["biography": ""])
                 .subscribe(onError: {[weak self] error in
                     self?.showError(error)
                     self?.headerView.descriptionLabel.text = originalBio
@@ -254,7 +254,7 @@ extension MyProfilePageVC {
         editBioVC.didConfirm
             .flatMap {bio -> Completable in
                 self.headerView.descriptionLabel.text = bio
-                return NetworkService.shared.updateMeta(params: ["about": bio])
+                return NetworkService.shared.updateMeta(params: ["biography": bio])
             }
             .subscribe(onError: {[weak self] error in
                 self?.headerView.descriptionLabel.text = originalBio
