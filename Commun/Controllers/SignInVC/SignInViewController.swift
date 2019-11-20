@@ -44,7 +44,7 @@ class SignInViewController: UIViewController {
     
     @IBOutlet weak var loginTextField: UITextField! {
         didSet {
-            self.loginTextField.tune(withPlaceholder:       "login placeholder".localized().uppercaseFirst,
+            self.loginTextField.tune(withPlaceholder:       "login placeholder",
                                      textColors:            blackWhiteColorPickers,
                                      font:                  UIFont.init(name: "SFProText-Regular", size: 17.0 * Config.widthRatio),
                                      alignment:             .left)
@@ -53,7 +53,7 @@ class SignInViewController: UIViewController {
     
     @IBOutlet weak var passwordTextField: UITextField! {
         didSet {
-            self.passwordTextField.tune(withPlaceholder:    "key placeholder".localized().uppercaseFirst,
+            self.passwordTextField.tune(withPlaceholder:    "key placeholder",
                                         textColors:         blackWhiteColorPickers,
                                         font:               UIFont.init(name: "SFProText-Regular", size: 17.0 * Config.widthRatio),
                                         alignment:          .left)
