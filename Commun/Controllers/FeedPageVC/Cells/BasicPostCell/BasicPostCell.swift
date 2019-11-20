@@ -48,7 +48,13 @@ final class BasicPostCell: PostCell {
         self.accessibilityLabel = "PostCardCell"
         centerConstraint.isActive = false
 
-        let defaultAttributes: [NSAttributedString.Key: Any] = [.font: UIFont.systemFont(ofSize: 14)]
+        let paragraph = NSMutableParagraphStyle()
+        paragraph.lineSpacing = 2.1
+
+        let defaultAttributes: [NSAttributedString.Key: Any] = [
+            .font: UIFont.systemFont(ofSize: 14),
+            .paragraphStyle: paragraph
+        ]
         
         if let content = post?.content,
             let firstSentence = content.first(where: {$0.type == "paragraph"})

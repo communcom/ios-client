@@ -73,7 +73,7 @@ class EmbedView: UIView {
         titleLabel.removeAllConstraints()
         subtitleLabel.removeAllConstraints()
         titlesView.removeAllConstraints()
-
+        titleLabel.numberOfLines = 2
         providerLabelView.isHidden = true
 
         let inset: CGFloat = 10.0
@@ -81,6 +81,7 @@ class EmbedView: UIView {
         var imageUrl = content.attributes?.thumbnail_url
         let isNeedShowTitle = content.attributes?.title != nil
         var isNeedShowProvider = false
+        var title: String? = content.attributes?.title
         var subtitle: String?
 
         if content.type == "video" {
@@ -91,6 +92,10 @@ class EmbedView: UIView {
             isNeedShowProvider = content.attributes?.provider_name != nil
         } else if content.type == "website" {
             subtitle = content.attributes?.url
+        } else if content.type == "rich" {
+            // TODO: create subview
+            title = content.attributes?.description
+            titleLabel.numberOfLines = 3
         } else {
             imageUrl = content.content.stringValue
         }
@@ -153,7 +158,7 @@ class EmbedView: UIView {
         titlesView.isHidden = !isNeedShowTitle
 
         titleLabel.isHidden = content.attributes?.title == nil
-        titleLabel.text = content.attributes?.title
+        titleLabel.text = title
         subtitleLabel.isHidden = content.attributes?.url == nil
     }
 
@@ -204,10 +209,10 @@ class EmbedView: UIView {
                 srcStrings = "https://" + srcStrings!
             }
         }
-
         return srcStrings
     }
 }
+
 
 extension EmbedView: WKNavigationDelegate {
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
