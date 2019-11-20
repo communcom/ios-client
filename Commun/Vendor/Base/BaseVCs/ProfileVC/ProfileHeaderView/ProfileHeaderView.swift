@@ -24,7 +24,7 @@ class ProfileHeaderView: MyTableHeaderView {
     }()
     
     lazy var joinedDateLabel: UILabel = {
-        let label = UILabel.descriptionLabel("Joined", size: 12, numberOfLines: 0)
+        let label = UILabel.descriptionLabel("following".localized().uppercaseFirst, size: 12, numberOfLines: 0)
         return label
     }()
     

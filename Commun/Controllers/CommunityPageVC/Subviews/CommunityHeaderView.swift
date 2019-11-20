@@ -17,10 +17,14 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
     
     // MARK: - Subviews
     lazy var notificationButton: UIButton = {
+        #warning("Don't use in MVP")
+        /*
         let button = UIButton(width: 35, height: 35, backgroundColor: .f3f5fa, cornerRadius: 35/2, contentInsets: UIEdgeInsets(top: 10, left: 11, bottom: 10, right: 11))
         button.tintColor = .appMainColor
         button.setImage(UIImage(named: "profilepage-notification")!, for: .normal)
         return button
+        */
+        return UIButton()
     }()
     
     lazy var joinButton = CommunButton.join
@@ -149,13 +153,17 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
         let tap3 = UITapGestureRecognizer(target: self, action: #selector(friendsLabelDidTouch))
         friendLabel.addGestureRecognizer(tap3)
         
+        #warning("Don't use in MVP")
+        /*
         addSubview(pointsContainerView)
         pointsContainerView.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
         pointsContainerView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
         pointsContainerView.autoPinEdge(.top, to: .bottom, of: membersCountLabel, withOffset: 22)
+        */
         
         addSubview(segmentedControl)
-        segmentedControl.autoPinEdge(.top, to: .bottom, of: pointsContainerView)
+        segmentedControl.autoPinEdge(.top, to: .bottom, of: membersCountLabel)
+//        segmentedControl.autoPinEdge(.top, to: .bottom, of: pointsContainerView)
         segmentedControl.autoPinEdge(toSuperviewEdge: .leading)
         segmentedControl.autoPinEdge(toSuperviewEdge: .trailing)
         
@@ -167,7 +175,8 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
         // pin bottom
         separator.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
     
-        pointsContainerView.addShadow(ofColor: UIColor(red: 106, green: 128, blue: 245)!, radius: 19, offset: CGSize(width: 0, height: 14), opacity: 0.3)
+        #warning("Don't use in MVP")
+//        pointsContainerView.addShadow(ofColor: UIColor(red: 106, green: 128, blue: 245)!, radius: 19, offset: CGSize(width: 0, height: 14), opacity: 0.3)
         
         segmentedControl.items = [
             CMSegmentedControl.Item(name: "posts".localized().uppercaseFirst),
@@ -193,13 +202,13 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .long
         let dateString = dateFormatter.string(from: Date.from(string: community.registrationTime ?? ""))
-        joinedDateLabel.text = "joined".localized().uppercaseFirst + " " + "\(dateString)"
+        joinedDateLabel.text = "following".localized().uppercaseFirst + " " + "\(dateString)"
         
         // joinButton
         let joined = community.isSubscribed ?? false
         joinButton.backgroundColor = joined ? #colorLiteral(red: 0.9525656104, green: 0.9605062604, blue: 0.9811610579, alpha: 1): .appMainColor
         joinButton.setTitleColor(joined ? .appMainColor: .white , for: .normal)
-        joinButton.setTitle(joined ? "joined".localized().uppercaseFirst : "join".localized().uppercaseFirst, for: .normal)
+        joinButton.setTitle((joined ? "following" : "follow").localized().uppercaseFirst, for: .normal)
         joinButton.isEnabled = !(community.isBeingJoined ?? false)
         
         // notification button

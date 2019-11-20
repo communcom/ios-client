@@ -186,7 +186,7 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .long
         let dateString = dateFormatter.string(from: Date.from(string: userProfile.registration.time))
-        joinedDateLabel.text = String(format: "%@ %@", "joined".localized().uppercaseFirst, dateString)
+        joinedDateLabel.text = String(format: "%@ %@", "following".localized().uppercaseFirst, dateString)
         
         // followButton
         let isFollowing = userProfile.isSubscribed ?? false

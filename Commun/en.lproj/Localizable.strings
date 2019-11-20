@@ -97,7 +97,7 @@
 
 
 // K
-"key placeholder"                               =   "master key";
+"key placeholder"                               =   "key";
 
 
 // L
@@ -105,7 +105,7 @@
 "load more comments"                            =   "load more comments";
 "loading"                                       =   "loading";
 "login & key"                                   =   "login & master key";
-"login placeholder"                             =   "user ID or username";
+"login placeholder"                             =   "login";
 "logging out"                                   =   "logging out";
 "loading post"                                  =   "loading post";
 
