@@ -78,6 +78,19 @@ final class BaseNavigationController: UINavigationController {
         }
     }
     
+    func setStatusBarTintColor(_ color: UIColor) {
+        if #available(iOS 13.0, *) {
+            let navBarAppearance = navigationBar.standardAppearance
+            navBarAppearance.titleTextAttributes = [.foregroundColor: color]
+            navigationBar.standardAppearance = navBarAppearance
+            navigationBar.scrollEdgeAppearance = navBarAppearance
+        }
+        else if let statusBar = UIApplication.shared.value(forKey: "statusBar") as? UIView {
+//            statusBar.backgroundColor = style == .lightContent ? UIColor.black : .white
+            statusBar.setValue(color, forKey: "foregroundColor")
+        }
+    }
+    
     // MARK: - Overrides
     
     override func pushViewController(_ viewController: UIViewController, animated: Bool) {

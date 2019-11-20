@@ -47,8 +47,8 @@ class SubsViewController<T: ListItemType>: ListViewController<T> {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        (navigationController as? BaseNavigationController)?.resetNavigationBar()
-        self.setStatusBarStyle(.default)
+        baseNavigationController?.resetNavigationBar()
+        baseNavigationController?.setStatusBarTintColor(.black)
     }
     
     override func showLoadingFooter() {
