@@ -51,16 +51,14 @@ extension MyProfileBlacklistVC {
                 let cell = self.tableView.dequeueReusableCell(withIdentifier: "BlacklistCell") as! BlacklistCell
                 cell.setUp(with: element)
                 
+                cell.roundedCorner = []
+                
                 if indexPath.row == 0 {
-                    cell.roundedCorner = UIRectCorner(arrayLiteral: .topLeft, .topRight)
+                    cell.roundedCorner.insert([.topLeft, .topRight])
                 }
                 
-                else if indexPath.row == self.viewModel.items.value.count - 1 {
-                    cell.roundedCorner = UIRectCorner(arrayLiteral: .bottomLeft, .bottomRight)
-                }
-                
-                else {
-                    cell.roundedCorner = nil
+                if indexPath.row == self.viewModel.items.value.count - 1 {
+                    cell.roundedCorner.insert([.bottomLeft, .bottomRight])
                 }
                 
                 return cell
