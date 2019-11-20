@@ -28,7 +28,7 @@ extension PostPageVC {
                 
                 // add newComment to top of the list
                 var items = self.viewModel.items.value
-                items = [newComment] + items
+                items = items + [newComment]
                 self.viewModel.items.accept(items)
                 self.handleListEnded()
             })

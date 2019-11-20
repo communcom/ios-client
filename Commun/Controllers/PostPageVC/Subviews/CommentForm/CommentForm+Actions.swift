@@ -78,6 +78,7 @@ extension CommentForm {
                 case .reply:
                     strongSelf.parentComment?.children = (strongSelf.parentComment?.children ?? []) + [newComment]
                     strongSelf.parentComment?.childCommentsCount = (strongSelf.parentComment?.childCommentsCount ?? 0) + 1
+                    strongSelf.parentComment?.notifyChanged()
                     strongSelf.parentComment?.notifyChildrenChanged()
                     
                     strongSelf.post?.stats?.commentsCount = (strongSelf.post?.stats?.commentsCount ?? 0) + 1
@@ -91,6 +92,7 @@ extension CommentForm {
                     strongSelf.post?.notifyChanged()
                 }
                 
+                strongSelf.textView.text = ""
                 strongSelf.mode = .new
                 strongSelf.parentComment = nil
                 

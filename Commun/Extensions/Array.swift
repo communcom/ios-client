@@ -36,3 +36,13 @@ extension RangeReplaceableCollection where Element: IdentifiableType {
         return newElements
     }
 }
+
+extension RangeReplaceableCollection where Element == ResponseAPIContentGetComment {
+    var sortedByTimeDesc: [ResponseAPIContentGetComment] {
+        sorted { (comment1, comment2) -> Bool in
+            let date1 = Date.from(string: comment1.meta.creationTime)
+            let date2 = Date.from(string: comment2.meta.creationTime)
+            return date1.compare(date2) == .orderedAscending
+        }
+    }
+}
