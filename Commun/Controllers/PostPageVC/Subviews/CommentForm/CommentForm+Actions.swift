@@ -20,7 +20,7 @@ extension CommentForm {
         textView.getContentBlock()
             .observeOn(MainScheduler.instance)
             .do(onSubscribe: {
-                self.setLoading(true, message: "parsing content".localized().uppercaseFirst)
+                self.setLoading(true, message: "sending comment".localized().uppercaseFirst)
             })
             .flatMap { parsedBlock -> Single<SendPostCompletion> in
                 //clean
@@ -40,10 +40,6 @@ extension CommentForm {
                 
                 return request
             }
-            .do(onSubscribe: {
-                self.parentViewController?.showIndetermineHudWithMessage(
-                    "sending comment".localized().uppercaseFirst)
-            })
             .flatMap { [weak self] (arg) -> Single<ResponseAPIContentGetComment?> in
                 let (transactionId, userId, permlink) = arg
                 var newComment: ResponseAPIContentGetComment?
@@ -81,14 +77,22 @@ extension CommentForm {
                     newComment.notifyChanged()
                 case .reply:
                     strongSelf.parentComment?.children = (strongSelf.parentComment?.children ?? []) + [newComment]
+                    strongSelf.parentComment?.childCommentsCount = (strongSelf.parentComment?.childCommentsCount ?? 0) + 1
+                    strongSelf.parentComment?.notifyChanged()
                     strongSelf.parentComment?.notifyChildrenChanged()
+                    
+                    strongSelf.post?.stats?.commentsCount = (strongSelf.post?.stats?.commentsCount ?? 0) + 1
+                    strongSelf.post?.notifyChanged()
                 case .new:
                     strongSelf.post?.notifyEvent(
                         eventName: ResponseAPIContentGetPost.commentAddedEventName,
                         object: newComment
                     )
+                    strongSelf.post?.stats?.commentsCount = (strongSelf.post?.stats?.commentsCount ?? 0) + 1
+                    strongSelf.post?.notifyChanged()
                 }
                 
+                strongSelf.textView.text = ""
                 strongSelf.mode = .new
                 strongSelf.parentComment = nil
                 

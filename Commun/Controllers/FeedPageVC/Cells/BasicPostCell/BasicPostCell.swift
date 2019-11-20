@@ -48,7 +48,13 @@ final class BasicPostCell: PostCell {
         self.accessibilityLabel = "PostCardCell"
         centerConstraint.isActive = false
 
-        let defaultAttributes: [NSAttributedString.Key: Any] = [.font: UIFont.systemFont(ofSize: 14)]
+        let paragraph = NSMutableParagraphStyle()
+        paragraph.lineSpacing = 2.1
+
+        let defaultAttributes: [NSAttributedString.Key: Any] = [
+            .font: UIFont.systemFont(ofSize: 14),
+            .paragraphStyle: paragraph
+        ]
         
         if let content = post?.content,
             let firstSentence = content.first(where: {$0.type == "paragraph"})
@@ -68,6 +74,11 @@ final class BasicPostCell: PostCell {
             let components = mutableAS.components(separatedBy: spaceSymbols)
             if let last = components.last, last.isEqual(to: NSAttributedString(string: "")) {
                 mutableAS.deleteCharacters(in: NSRange(location: mutableAS.length - spaceSymbols.count, length: spaceSymbols.count))
+            }
+            
+            // remove paragraph separator
+            if mutableAS.string.starts(with: "\n\r") {
+                mutableAS.deleteCharacters(in: NSRange(location: 0, length: 2))
             }
 
             contentTextView.attributedText = mutableAS

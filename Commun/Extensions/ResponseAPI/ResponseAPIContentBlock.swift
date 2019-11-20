@@ -120,8 +120,7 @@ extension ResponseAPIContentBlock {
         
         switch type {
         case "paragraph":
-            child.append(NSAttributedString.separator)
-            child.addAttributes(currentAttributes, range: NSMakeRange(child.length - 1, 1))
+            child.insert(NSAttributedString.paragraphSeparator(attributes: currentAttributes), at: 0)
         case "text":
             var attr = currentAttributes
             if let text_color = attributes?.text_color {
@@ -191,13 +190,17 @@ extension ResponseAPIContentBlock {
             let attachment = Attachment(block: self, size: attachmentSize)
             let attachmentAS = NSAttributedString(attachment: attachment)
             child.append(attachmentAS)
-            child.append(NSAttributedString.separator)
-            child.addAttributes(currentAttributes, range: NSMakeRange(child.length - 1, 1))
-        case "post":
-            if child.string.ends(with: "\n") {
-                child.deleteCharacters(in: NSMakeRange(child.length - 1, 1))
+            child.insert(NSAttributedString.paragraphSeparator(attributes: currentAttributes), at: 0)
+        case "post", "comment":
+            if child.string.starts(with: "\n\r") {
+                child.deleteCharacters(in: NSMakeRange(0, 2))
             }
+        case "attachments":
+            #warning("attachments")
+            break
         default:
+            child.insert(NSAttributedString.paragraphSeparator(attributes: currentAttributes), at: 0)
+            child.addAttributes(currentAttributes, range: NSMakeRange(0, child.length))
             break
         }
         

@@ -68,6 +68,7 @@ extension PostPageVC: UITableViewDelegate {
                 {
                     var newChildren = comments[currentCommentIndex].children ?? []
                     newChildren.joinUnique(children ?? [])
+                    newChildren = newChildren.sortedByTimeDesc
                     comments[currentCommentIndex].children = newChildren
                 }
                 strongSelf.viewModel.items.accept(comments)
