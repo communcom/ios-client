@@ -9,6 +9,7 @@
 import UIKit
 import RxSwift
 import SwifterSwift
+import CyberSwift
 
 class TabBarVC: UITabBarController {
     // MARK: - Constants
@@ -18,11 +19,13 @@ class TabBarVC: UITabBarController {
     let profileTabIndex = 3
     let selectedColor = UIColor.black
     let unselectedColor = UIColor(hexString: "#E5E7ED")
-    let tabBarHeight: CGFloat = 60.0 //UIDevice.hasNotch ? 84.0 : 60.0
+    let tabBarHeight: CGFloat = 60.0 + UIDevice.safeAreaInsets.bottom * Config.heightRatio
+    
     
     // MARK: - Properties
     let viewModel = TabBarViewModel()
     let bag = DisposeBag()
+    
     
     // MARK: - Subviews
     private lazy var tabBarContainerView = UIView(backgroundColor: .white)
@@ -62,7 +65,7 @@ class TabBarVC: UITabBarController {
         
         // shadow
         view.addSubview(shadowView)
-        shadowView.autoPinEdgesToSuperviewSafeArea(with: .zero, excludingEdge: .top)
+        shadowView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
         shadowView.addShadow(ofColor: .shadow, radius: 4, offset: CGSize(width: 0, height: -6), opacity: 0.1)
         
         // tabBarContainerView
@@ -76,13 +79,6 @@ class TabBarVC: UITabBarController {
         tabBarStackView.alignment = .center
         tabBarStackView.distribution = .fillEqually
         tabBarStackView.spacing = 0
-        
-        // whiteView
-//        let whiteView = UIView(backgroundColor: .green)
-//        view.addSubview(whiteView)
-//        whiteView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
-//        whiteView.autoPinEdge(.top, to: .bottom, of: tabBarStackView)
-//        view.bringSubviewToFront(tabBarContainerView)
     }
     
     override func viewDidLayoutSubviews() {
@@ -162,8 +158,7 @@ class TabBarVC: UITabBarController {
         view.autoAlignAxis(toSuperviewAxis: .vertical)
         view.autoAlignAxis(toSuperviewAxis: .horizontal)
         view.isUserInteractionEnabled = false
-        view.addShadow(ofColor: .red, radius: 10, offset: CGSize(width: 0, height: 6), opacity: 1)
-//        view.addShadow(ofColor: UIColor(red: 106, green: 128, blue: 245)!, radius: 10, offset: CGSize(width: 0, height: 6), opacity: 0.35)
+        view.addShadow(ofColor: UIColor(red: 106, green: 128, blue: 245)!, radius: 10, offset: CGSize(width: 0, height: 6), opacity: 0.35)
 
         button.tag = viewControllers!.count + 1
         button.addTarget(self, action: #selector(buttonAddTapped), for: .touchUpInside)
