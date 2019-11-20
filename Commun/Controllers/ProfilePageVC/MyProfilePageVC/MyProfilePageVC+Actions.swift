@@ -53,13 +53,27 @@ extension MyProfilePageVC {
                 let vc = PostsViewController()
                 vc.title = "liked posts".localized().uppercaseFirst
                 self.show(vc, sender: self)
-            }),
+            }, style: .profile),
             CommunActionSheet.Action(title: "blacklist".localized().uppercaseFirst, icon: UIImage(named: "profile_options_blacklist"), handle: {
                 self.show(MyProfileBlacklistVC(), sender: self)
-            }),
-            CommunActionSheet.Action(title: "settings".localized().uppercaseFirst, icon: UIImage(named: "profile_options_settings"), handle: {
-                self.show(MyProfileSettingsVC(), sender: self)
-            }, marginTop: 14)
+            }, style: .profile),
+            CommunActionSheet.Action(title: "log out".localized().uppercaseFirst, icon: nil, handle: {
+                self.showAlert(title: "Logout".localized(), message: "Do you really want to logout?".localized(), buttonTitles: ["Ok".localized(), "cancel".localized().uppercaseFirst], highlightedButtonIndex: 1) { (index) in
+
+                    if index == 0 {
+                        self.navigationController?.showIndetermineHudWithMessage("logging out".localized().uppercaseFirst)
+                        RestAPIManager.instance.rx.logout()
+                            .subscribe(onCompleted: {
+                                self.navigationController?.hideHud()
+                                AppDelegate.reloadSubject.onNext(true)
+                            }, onError: { (error) in
+                                self.navigationController?.hideHud()
+                                self.navigationController?.showError(error)
+                            })
+                            .disposed(by: self.disposeBag)
+                    }
+                }
+            }, tintColor: UIColor(hexString: "#ED2C5B")!, marginTop: 14)
         ]) {
             
         }

@@ -41,12 +41,8 @@ class ProfileEditCoverVC: UIViewController {
             .subscribe(onNext: { profile in
                 // user name
                 self.userNameLabel.text = profile.username
-                
                 // join date
-                let dateFormatter = DateFormatter()
-                dateFormatter.dateStyle = .long
-                let dateString = dateFormatter.string(from: Date.from(string: profile.registration.time))
-                self.joinedDateLabel.text = String(format: "%@ %@", "following".localized().uppercaseFirst, dateString)
+                self.joinedDateLabel.text = Formatter.joinedText(with: profile.registration.time)
             })
             .disposed(by: bag)
     }

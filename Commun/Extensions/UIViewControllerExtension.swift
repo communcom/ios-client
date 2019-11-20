@@ -214,7 +214,39 @@ extension UIViewController {
         navigationItem.rightBarButtonItem = rightBarButton
     }
     
+    func setNavBarBackButton(title: String? = nil) {
+        let newBackButton = title == nil ?  UIBarButtonItem(image: UIImage(named: "icon-back-bar-button-black-default"), style: .plain, target: self, action: #selector(popToPreviousVC)) :
+                                            UIBarButtonItem(title: title!.localized().uppercaseFirst, style: .plain, target: self, action: #selector(popToPreviousVC))
+        
+        if title == nil {
+            newBackButton.tintColor = .black
+        }
+        
+        self.navigationItem.hidesBackButton = true
+        self.navigationItem.leftBarButtonItem = newBackButton
+    }
+    
+    func showBlackoutView(_ value: Bool) {
+        if value {
+            let blackoutView = UIView(frame: view.frame)
+            blackoutView.tag = 999
+            blackoutView.backgroundColor = UIColor(hexString: "#000000", transparency: 0.5)
+            self.view.addSubview(blackoutView)
+        } else {
+            self.view.viewWithTag(999)?.removeFromSuperview()
+        }
+    }
+
+    // MARK: - Actions
+    @objc func popToPreviousVC() {
+        if let count = navigationController?.viewControllers.count, let previousVC = navigationController?.viewControllers[count - 2] {
+            navigationController?.popToViewController(previousVC, animated: true)
+        }
+    }
+
     var baseNavigationController: BaseNavigationController? {
         navigationController as? BaseNavigationController
+
     }
+
 }
