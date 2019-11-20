@@ -20,7 +20,7 @@ extension CommentForm {
         textView.getContentBlock()
             .observeOn(MainScheduler.instance)
             .do(onSubscribe: {
-                self.setLoading(true, message: "parsing content".localized().uppercaseFirst)
+                self.setLoading(true, message: "sending comment".localized().uppercaseFirst)
             })
             .flatMap { parsedBlock -> Single<SendPostCompletion> in
                 //clean
@@ -40,10 +40,6 @@ extension CommentForm {
                 
                 return request
             }
-            .do(onSubscribe: {
-                self.parentViewController?.showIndetermineHudWithMessage(
-                    "sending comment".localized().uppercaseFirst)
-            })
             .flatMap { [weak self] (arg) -> Single<ResponseAPIContentGetComment?> in
                 let (transactionId, userId, permlink) = arg
                 var newComment: ResponseAPIContentGetComment?

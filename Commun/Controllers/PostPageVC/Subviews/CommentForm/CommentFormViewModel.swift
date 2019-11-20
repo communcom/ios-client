@@ -69,9 +69,7 @@ class CommentFormViewModel {
         _ comment: ResponseAPIContentGetComment,
         block: ResponseAPIContentBlock
     ) -> Single<SendPostCompletion> {
-        guard let communCode = post?.community.communityId,
-            let authorId = post?.author?.userId,
-            let postPermlink = post?.contentId.permlink
+        guard let communCode = post?.community.communityId
             else {return .error(ErrorAPI.invalidData(message: "Post info missing"))}
         
         // Prepare content
@@ -83,12 +81,14 @@ class CommentFormViewModel {
             return .error(ErrorAPI.invalidData(message: "Could not parse data"))
         }
         
+        let authorId = comment.contentId.userId
+        let parentCommentPermlink = comment.contentId.permlink
         // Send request
         return RestAPIManager.instance.rx.createMessage(
             isComment: true,
             communCode: communCode,
             parentAuthor: authorId,
-            parentPermlink: postPermlink,
+            parentPermlink: parentCommentPermlink,
             body: string,
             tags: tags
         )

@@ -30,6 +30,7 @@ extension PostPageVC {
                 var items = self.viewModel.items.value
                 items = [newComment] + items
                 self.viewModel.items.accept(items)
+                self.handleListEnded()
             })
             .disposed(by: disposeBag)
     }
