@@ -50,6 +50,17 @@ extension MyProfileBlacklistVC {
             configureCell: { (dataSource, tableView, indexPath, element) -> UITableViewCell in
                 let cell = self.tableView.dequeueReusableCell(withIdentifier: "BlacklistCell") as! BlacklistCell
                 cell.setUp(with: element)
+                
+                cell.roundedCorner = []
+                
+                if indexPath.row == 0 {
+                    cell.roundedCorner.insert([.topLeft, .topRight])
+                }
+                
+                if indexPath.row == self.viewModel.items.value.count - 1 {
+                    cell.roundedCorner.insert([.bottomLeft, .bottomRight])
+                }
+                
                 return cell
             }
         )
@@ -64,9 +75,13 @@ extension MyProfileBlacklistVC {
             .subscribe(onNext: { (element) in
                 switch element {
                 case .user(let profile):
-                    self.showProfileWithUserId(profile.userId)
+                    if profile.isBlocked == false, !(profile.isBeingUnblocked ?? false) {
+                        self.showProfileWithUserId(profile.userId)
+                    }
                 case .community(let community):
-                    self.showCommunityWithCommunityId(community.communityId)
+                    if community.isBlocked == false, !(community.isBeingUnblocked ?? false) {
+                        self.showCommunityWithCommunityId(community.communityId)
+                    }
                 }
             })
             .disposed(by: disposeBag)

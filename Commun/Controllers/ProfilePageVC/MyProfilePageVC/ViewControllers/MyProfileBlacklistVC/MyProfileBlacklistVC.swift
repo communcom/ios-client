@@ -65,7 +65,7 @@ class MyProfileBlacklistVC: BaseViewController {
         tableView.backgroundColor = .f3f5fa
         tableView.register(BlacklistCell.self, forCellReuseIdentifier: "BlacklistCell")
         
-        tableView.separatorInset = .zero
+        tableView.separatorStyle = .none
         
         // pull to refresh
         tableView.es.addPullToRefresh { [unowned self] in

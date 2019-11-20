@@ -65,7 +65,10 @@ class MySubviewAttachingTextViewBehavior: SubviewAttachingTextViewBehavior {
                 continue
             }
 
-            let integralRect = CGRect(origin: attachmentRect.origin.integral(withScaleFactor: scaleFactor),
+            var origin = attachmentRect.origin.integral(withScaleFactor: scaleFactor)
+            origin.y += textView.textContainerInset.top
+            
+            let integralRect = CGRect(origin: origin,
                                       size: attachmentRect.size)
             
             UIView.performWithoutAnimation {

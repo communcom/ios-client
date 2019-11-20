@@ -142,6 +142,7 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: animated)
         navigationController?.navigationBar.isTranslucent = true
 
         if tableView.contentOffset.y >= -43 {
@@ -154,7 +155,6 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
     func showTitle(_ show: Bool, animated: Bool = false) {
         coverImageView.isHidden = show
         UIView.animate(withDuration: animated ? 0.3: 0) {
-            self.setStatusBarStyle(show ? .default : .lightContent)
             self.navigationController?.navigationBar.subviews.first?.backgroundColor = show ? .white: .clear
             self.navigationController?.navigationBar.setTitleFont(.boldSystemFont(ofSize: 17), color:
                 show ? .black: .clear)

@@ -14,20 +14,22 @@ class SubsItemCell: MyTableViewCell {
     lazy var nameLabel = UILabel.with(textSize: 15, weight: .bold)
     lazy var statsLabel = UILabel.descriptionLabel()
     lazy var actionButton = CommunButton.default()
-    var roundedCorner: UIRectCorner? {
+    lazy var separator = UIView(height: 2, backgroundColor: .f3f5fa)
+    var roundedCorner: UIRectCorner = [] {
         didSet {
-            layoutIfNeeded()
+            if roundedCorner.contains(.bottomLeft) {
+                separator.isHidden = true
+            }
+            else {
+                separator.isHidden = false
+            }
+            layoutSubviews()
         }
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        if let corner = roundedCorner {
-            roundCorners(corner, radius: 10)
-        }
-        else {
-            roundCorners(UIRectCorner.allCorners, radius: 0)
-        }
+        roundCorners(roundedCorner, radius: 10)
     }
     
     override func setUpViews() {
@@ -56,7 +58,6 @@ class SubsItemCell: MyTableViewCell {
         actionButton.leadingAnchor.constraint(greaterThanOrEqualTo: statsLabel.trailingAnchor, constant: 8)
             .isActive = true
 
-        let separator = UIView(height: 2, backgroundColor: .f3f5fa)
         contentView.addSubview(separator)
         separator.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
     }

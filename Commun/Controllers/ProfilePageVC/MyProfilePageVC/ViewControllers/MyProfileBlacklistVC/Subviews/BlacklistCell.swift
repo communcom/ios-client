@@ -7,32 +7,11 @@
 //
 
 import Foundation
+import RxSwift
 
-class BlacklistCell: MyTableViewCell {
+class BlacklistCell: SubsItemCell {
     // MARK: - Properties
     var item: ResponseAPIContentGetBlacklistItem?
-    
-    // MARK: - Subviews
-    lazy var avatarImageView = MyAvatarImageView(size: 50)
-    lazy var nameLabel = UILabel.with(textSize: 15, weight: .semibold)
-    lazy var blockButton = CommunButton.default(label: "Unblock")
-    
-    // MARK: - Methods
-    override func setUpViews() {
-        contentView.addSubview(avatarImageView)
-        avatarImageView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(inset: 16), excludingEdge: .trailing)
-        
-        contentView.addSubview(nameLabel)
-        nameLabel.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 10)
-        nameLabel.autoAlignAxis(toSuperviewAxis: .horizontal)
-        
-        contentView.addSubview(blockButton)
-        blockButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
-        blockButton.autoAlignAxis(toSuperviewAxis: .horizontal)
-        
-        blockButton.autoPinEdge(.trailing, to: .leading, of: nameLabel, withOffset: 8)
-        nameLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
-    }
     
     func setUp(with item: ResponseAPIContentGetBlacklistItem) {
         self.item = item
@@ -40,9 +19,88 @@ class BlacklistCell: MyTableViewCell {
         case .user(let user):
             avatarImageView.setAvatar(urlString: user.avatarUrl, namePlaceHolder: user.username)
             nameLabel.text = user.username
+            actionButton.isEnabled = !(user.isBeingUnblocked ?? false)
+            actionButton.setTitle((user.isBlocked ?? true) ? "unblock".localized().uppercaseFirst : "reblock".localized().uppercaseFirst, for: .normal)
+            actionButton.backgroundColor = !(user.isBlocked ?? true) ? #colorLiteral(red: 0.9525656104, green: 0.9605062604, blue: 0.9811610579, alpha: 1) : .appMainColor
+            actionButton.setTitleColor(!(user.isBlocked ?? true) ? .appMainColor : .white , for: .normal)
         case .community(let community):
             avatarImageView.setAvatar(urlString: nil, namePlaceHolder: community.name)
             nameLabel.text = community.name
+            actionButton.isEnabled = !(community.isBeingUnblocked ?? false)
+            actionButton.setTitle((community.isBlocked ?? true) ? "unblock".localized().uppercaseFirst : "reblock".localized().uppercaseFirst, for: .normal)
+            actionButton.backgroundColor = !(community.isBlocked ?? true) ? #colorLiteral(red: 0.9525656104, green: 0.9605062604, blue: 0.9811610579, alpha: 1) : .appMainColor
+            actionButton.setTitleColor(!(community.isBlocked ?? true) ? .appMainColor : .white , for: .normal)
         }
+        statsLabel.text = nil
+    }
+    
+    override func actionButtonDidTouch() {
+        guard let id = item?.userValue?.userId ?? item?.communityValue?.communityId
+            else {return}
+        
+        // Apply changes immediately, if error occurs, reverse these changes
+        var originIsBlocked: Bool
+        switch item {
+        case .user(var user):
+            originIsBlocked = user.isBlocked ?? true
+            user.isBeingUnblocked = true
+            user.isBlocked = !originIsBlocked
+            user.notifyChanged()
+        case .community(var community):
+            originIsBlocked = community.isBlocked ?? true
+            community.isBeingUnblocked = true
+            community.isBlocked = !originIsBlocked
+            community.notifyChanged()
+        default:
+            return
+        }
+        
+        // Prepare request
+        var request: Single<String>
+        if originIsBlocked {
+            request = RestAPIManager.instance.rx.unblock(id)
+        }
+        else {
+            request = RestAPIManager.instance.rx.block(id)
+        }
+        
+        // Send request
+        request
+            .flatMapCompletable {RestAPIManager.instance.waitForTransactionWith(id: $0)}
+            .subscribe(onCompleted: {[weak self] in
+                guard let strongSelf = self else {return}
+                
+                // reset loading to false
+                switch strongSelf.item {
+                case .user(var user):
+                    user.isBlocked = !originIsBlocked
+                    user.isBeingUnblocked = false
+                    user.notifyChanged()
+                case .community(var community):
+                    community.isBlocked = !originIsBlocked
+                    community.isBeingUnblocked = false
+                    community.notifyChanged()
+                default:
+                    return
+                }
+            }) { [weak self] (error) in
+                guard let strongSelf = self else {return}
+                strongSelf.parentViewController?.showError(error)
+                
+                // reverse, reset loading to false
+                switch strongSelf.item {
+                case .user(var user):
+                    user.isBeingUnblocked = false
+                    user.isBeingUnblocked = originIsBlocked
+                    user.notifyChanged()
+                case .community(var community):
+                    community.isBeingUnblocked = false
+                    community.isBeingUnblocked = originIsBlocked
+                    community.notifyChanged()
+                default:
+                    return
+                }
+            }
+            .disposed(by: disposeBag)
     }
 }
