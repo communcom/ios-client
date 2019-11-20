@@ -23,7 +23,7 @@ class SubsItemCell: MyTableViewCell {
             else {
                 separator.isHidden = false
             }
-            layoutIfNeeded()
+            layoutSubviews()
         }
     }
     

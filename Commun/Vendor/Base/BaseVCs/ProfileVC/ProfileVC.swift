@@ -142,6 +142,7 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: animated)
         navigationController?.navigationBar.isTranslucent = true
 
         if tableView.contentOffset.y >= -43 {
