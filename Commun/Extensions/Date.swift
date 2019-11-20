@@ -38,6 +38,6 @@ extension Date {
     }
     
     static func timeAgo(string: String) -> String {
-        return Date.from(string: string).shortTimeAgoSinceNow + " " + "ago".localized()
+        return Date.from(string: string).shortTimeAgoSinceNow.replacingOccurrences(of: "_", with: "") + " " + "ago".localized()
     }
 }
