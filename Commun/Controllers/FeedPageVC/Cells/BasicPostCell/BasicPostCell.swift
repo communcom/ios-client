@@ -69,6 +69,11 @@ final class BasicPostCell: PostCell {
             if let last = components.last, last.isEqual(to: NSAttributedString(string: "")) {
                 mutableAS.deleteCharacters(in: NSRange(location: mutableAS.length - spaceSymbols.count, length: spaceSymbols.count))
             }
+            
+            // remove paragraph separator
+            if mutableAS.string.starts(with: "\n\r") {
+                mutableAS.deleteCharacters(in: NSRange(location: 0, length: 2))
+            }
 
             contentTextView.attributedText = mutableAS
         } else {
