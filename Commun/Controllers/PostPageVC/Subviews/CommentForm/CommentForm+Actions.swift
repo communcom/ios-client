@@ -77,12 +77,18 @@ extension CommentForm {
                     newComment.notifyChanged()
                 case .reply:
                     strongSelf.parentComment?.children = (strongSelf.parentComment?.children ?? []) + [newComment]
+                    strongSelf.parentComment?.childCommentsCount = (strongSelf.parentComment?.childCommentsCount ?? 0) + 1
                     strongSelf.parentComment?.notifyChildrenChanged()
+                    
+                    strongSelf.post?.stats?.commentsCount = (strongSelf.post?.stats?.commentsCount ?? 0) + 1
+                    strongSelf.post?.notifyChanged()
                 case .new:
                     strongSelf.post?.notifyEvent(
                         eventName: ResponseAPIContentGetPost.commentAddedEventName,
                         object: newComment
                     )
+                    strongSelf.post?.stats?.commentsCount = (strongSelf.post?.stats?.commentsCount ?? 0) + 1
+                    strongSelf.post?.notifyChanged()
                 }
                 
                 strongSelf.mode = .new
