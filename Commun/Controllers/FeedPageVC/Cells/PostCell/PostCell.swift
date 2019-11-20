@@ -10,11 +10,10 @@ import UIKit
 import RxSwift
 
 class PostCell: MyTableViewCell, PostController {
-    // MARK: - Constants
-    let voteActionsContainerViewHeight: CGFloat = 35
-    
     // MARK: - Properties
     var post: ResponseAPIContentGetPost?
+    let voteActionsContainerViewHeight: CGFloat = 35
+
     
     // MARK: - Subviews
     private func createDescriptionLabel() -> UILabel {
@@ -44,12 +43,22 @@ class PostCell: MyTableViewCell, PostController {
         return button
     }()
     
+    // Number of views
+    lazy var viewsCountLabel = self.createDescriptionLabel()
+    lazy var viewsCountButton: UIButton = {
+        let button = UIButton(width: 20, height: 18)
+        button.setImage(UIImage(named: "icon-views-count-gray-default"), for: .normal)
+        return button
+    }()
+
+    // Number of comments
     lazy var commentsCountLabel = self.createDescriptionLabel()
     lazy var commentsCountButton: UIButton = {
         let button = UIButton(width: 20, height: 18)
         button.setImage(UIImage(named: "comment-count"), for: .normal)
         return button
     }()
+    
     
     // MARK: - Layout
     override func setUpViews() {
@@ -76,10 +85,12 @@ class PostCell: MyTableViewCell, PostController {
         voteContainerView.upVoteButton.addTarget(self, action: #selector(upVoteButtonTapped(button:)), for: .touchUpInside)
         voteContainerView.downVoteButton.addTarget(self, action: #selector(downVoteButtonTapped(button:)), for: .touchUpInside)
 
-        // comments and shares
+        // Shares
         contentView.addSubview(shareButton)
         shareButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
         shareButton.autoAlignAxis(.horizontal, toSameAxisOf: voteContainerView)
+
+        // Comments
         contentView.addSubview(commentsCountLabel)
         commentsCountLabel.autoPinEdge(.trailing, to: .leading, of: shareButton, withOffset: -23)
         commentsCountLabel.autoAlignAxis(.horizontal, toSameAxisOf: voteContainerView)
@@ -88,6 +99,15 @@ class PostCell: MyTableViewCell, PostController {
         commentsCountButton.autoAlignAxis(.horizontal, toSameAxisOf: voteContainerView)
         commentsCountButton.addTarget(self, action: #selector(commentCountsButtonDidTouch), for: .touchUpInside)
         
+        // Views
+        contentView.addSubview(viewsCountLabel)
+        viewsCountLabel.autoPinEdge(.trailing, to: .leading, of: commentsCountButton, withOffset: -23)
+        viewsCountLabel.autoAlignAxis(.horizontal, toSameAxisOf: voteContainerView)
+        contentView.addSubview(viewsCountButton)
+        viewsCountButton.autoPinEdge(.trailing, to: .leading, of: viewsCountLabel, withOffset: -8)
+        viewsCountButton.autoAlignAxis(.horizontal, toSameAxisOf: voteContainerView)
+        viewsCountButton.addTarget(self, action: #selector(commentCountsButtonDidTouch), for: .touchUpInside)
+
         // separator
         let separatorView = UIView(height: 10)
         separatorView.backgroundColor = #colorLiteral(red: 0.9599978328, green: 0.966491878, blue: 0.9829974771, alpha: 1)
@@ -103,28 +123,35 @@ class PostCell: MyTableViewCell, PostController {
         fatalError("must override")
     }
     
-    // MARK: - Methods
     
+    // MARK: - Methods
     func setUp(with post: ResponseAPIContentGetPost?) {
         guard let post = post else {return}
         self.post = post
         
         metaView.setUp(post: post)
         voteContainerView.setUp(with: post.votes)
-        // comments // shares count
-        self.commentsCountLabel.text        =   "\(post.stats?.commentsCount ?? 0)"
+
+        // Comments count
+        self.commentsCountLabel.text = "\(post.stats?.commentsCount ?? 0)"
+
+        // Views count
+        self.viewsCountLabel.text = "\(post.stats?.viewCount ?? 0)"
+
+        // Shares count
         #warning("change this number later")
-        self.sharesCountLabel.text         =   "\(post.stats?.viewCount ?? 0)"
-        
+        self.sharesCountLabel.text = "\(post.stats?.viewCount ?? 0)"
     }
     
+    
+    // MARK: - Actions
     @objc func commentCountsButtonDidTouch() {
         guard let post = post else {return}
         let postPageVC = PostPageVC(post: post)
         postPageVC.scrollToTopAfterLoadingComment = true
         parentViewController?.show(postPageVC, sender: nil)
     }
-    
+
     @objc func upVoteButtonDidTouch() {
         upVote()
     }

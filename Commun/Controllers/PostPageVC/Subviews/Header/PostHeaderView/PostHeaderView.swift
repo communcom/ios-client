@@ -24,6 +24,14 @@ class PostHeaderView: MyTableHeaderView, PostController {
     
     lazy var voteContainerView = VoteContainerView(height: voteActionsContainerViewHeight, cornerRadius: voteActionsContainerViewHeight / 2)
     
+    lazy var viewsCountButton: UIButton = {
+        let button = UIButton(width: 20, height: 18)
+        button.setImage(UIImage(named: "icon-views-count-gray-default"), for: .normal)
+        return button
+    }()
+    
+    lazy var viewsCountLabel = UILabel.with(text: "1.2k", textSize: 12, weight: .medium, textColor: UIColor(hexString: "#A5A7BD")!, numberOfLines: 1)
+    
     lazy var commentsCountButton: UIButton = {
         let button = UIButton(width: 20, height: 18)
         button.setImage(UIImage(named: "comment-count"), for: .normal)
@@ -77,6 +85,15 @@ class PostHeaderView: MyTableHeaderView, PostController {
         commentsCountButton.autoPinEdge(.trailing, to: .leading, of: commentsCountLabel, withOffset: -8)
         commentsCountButton.autoAlignAxis(.horizontal, toSameAxisOf: voteContainerView)
         
+        // Views count
+        addSubview(viewsCountLabel)
+        viewsCountLabel.autoPinEdge(.trailing, to: .leading, of: commentsCountButton, withOffset: -23)
+        viewsCountLabel.autoAlignAxis(.horizontal, toSameAxisOf: voteContainerView)
+        
+        addSubview(viewsCountButton)
+        viewsCountButton.autoPinEdge(.trailing, to: .leading, of: viewsCountLabel, withOffset: -8)
+        viewsCountButton.autoAlignAxis(.horizontal, toSameAxisOf: voteContainerView)
+        
         let commentsLabel = UILabel.with(text: "comments".localized().uppercaseFirst, textSize: 21, weight: .bold)
         addSubview(commentsLabel)
         commentsLabel.autoPinEdge(.top, to: .bottom, of: voteContainerView, withOffset: 20)
@@ -105,9 +122,13 @@ class PostHeaderView: MyTableHeaderView, PostController {
             titleLabel.text = nil
         }
         
-        // Count labels
+        // Comments count
         commentsCountLabel.text = "\(post.stats?.commentsCount ?? 0)"
         
+        // Views count
+        viewsCountLabel.text = "\(post.stats?.viewCount ?? 0)"
+
+        // Shares
         #warning("shareCount or viewCount???")
         sharesCountLabel.text = "\(post.stats?.viewCount ?? 0)"
         
@@ -125,6 +146,8 @@ class PostHeaderView: MyTableHeaderView, PostController {
         layoutSubviews()
     }
     
+    
+    // MARK: - Actions
     @objc func upVoteButtonDidTouch(_ sender: Any) {
         upVote()
     }

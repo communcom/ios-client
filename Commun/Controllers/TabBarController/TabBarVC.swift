@@ -19,7 +19,7 @@ class TabBarVC: UITabBarController {
     let profileTabIndex = 3
     let selectedColor = UIColor.black
     let unselectedColor = UIColor(hexString: "#E5E7ED")
-    let tabBarHeight: CGFloat = 60.0 + UIDevice.safeAreaInsets.bottom * Config.heightRatio
+    let tabBarHeight: CGFloat = 60.0 + UIDevice.safeAreaInsets.bottom
     
     
     // MARK: - Properties
@@ -74,7 +74,7 @@ class TabBarVC: UITabBarController {
         
         // tabBarStackView
         tabBarContainerView.addSubview(tabBarStackView)
-        tabBarStackView.autoPinEdgesToSuperviewEdges(with: .zero)
+        tabBarStackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0.0, left: 0.0, bottom: UIDevice.safeAreaInsets.bottom, right: 0.0))
         tabBarStackView.axis = .horizontal
         tabBarStackView.alignment = .center
         tabBarStackView.distribution = .fillEqually
@@ -125,9 +125,7 @@ class TabBarVC: UITabBarController {
             notificationsItem,
             profileItem
         ])
-        
-        view.bringSubviewToFront(tabBarStackView)
-        
+                
         // highlight first
         feedItem.tintColor = selectedColor
     }
