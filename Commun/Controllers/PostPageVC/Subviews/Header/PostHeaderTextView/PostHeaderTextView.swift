@@ -22,7 +22,7 @@ class PostHeaderTextView: MySubviewAttachingTextView {
         paragraphStyle.paragraphSpacing = 20
         return [
             .font: defaultFont,
-            .paragraphStyle: paragraphStyle
+//            .paragraphStyle: paragraphStyle
         ]
     }
     

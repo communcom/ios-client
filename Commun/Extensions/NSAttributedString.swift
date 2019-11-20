@@ -132,4 +132,8 @@ extension NSAttributedString {
         let separator = NSMutableAttributedString(string: "\n")
         return separator
     }
+    
+    static func paragraphSeparator(attributes: [NSAttributedString.Key: Any] = [:]) -> NSAttributedString {
+        NSAttributedString(string: "\n\r", attributes: attributes)
+    }
 }
