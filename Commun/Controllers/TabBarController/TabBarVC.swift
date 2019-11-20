@@ -18,7 +18,7 @@ class TabBarVC: UITabBarController {
     let profileTabIndex = 3
     let selectedColor = UIColor.black
     let unselectedColor = UIColor(hexString: "#E5E7ED")
-    let tabBarHeight: CGFloat = 60.0
+    let tabBarHeight: CGFloat = UIDevice.hasNotch ? 84.0 : 60.0
     
     // MARK: - Properties
     let viewModel = TabBarViewModel()
@@ -78,11 +78,11 @@ class TabBarVC: UITabBarController {
         tabBarStackView.spacing = 0
         
         // whiteView
-        let whiteView = UIView(backgroundColor: .white)
-        view.addSubview(whiteView)
-        whiteView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
-        whiteView.autoPinEdge(.top, to: .bottom, of: tabBarStackView)
-        view.bringSubviewToFront(tabBarContainerView)
+//        let whiteView = UIView(backgroundColor: .green)
+//        view.addSubview(whiteView)
+//        whiteView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
+//        whiteView.autoPinEdge(.top, to: .bottom, of: tabBarStackView)
+//        view.bringSubviewToFront(tabBarContainerView)
     }
     
     override func viewDidLayoutSubviews() {
@@ -130,6 +130,8 @@ class TabBarVC: UITabBarController {
             profileItem
         ])
         
+        view.bringSubviewToFront(tabBarStackView)
+        
         // highlight first
         feedItem.tintColor = selectedColor
     }
@@ -160,10 +162,12 @@ class TabBarVC: UITabBarController {
         view.autoAlignAxis(toSuperviewAxis: .vertical)
         view.autoAlignAxis(toSuperviewAxis: .horizontal)
         view.isUserInteractionEnabled = false
-        view.addShadow(ofColor: UIColor(red: 106, green: 128, blue: 245)!, radius: 10, offset: CGSize(width: 0, height: 6), opacity: 0.35)
-        
+        view.addShadow(ofColor: .red, radius: 10, offset: CGSize(width: 0, height: 6), opacity: 1)
+//        view.addShadow(ofColor: UIColor(red: 106, green: 128, blue: 245)!, radius: 10, offset: CGSize(width: 0, height: 6), opacity: 0.35)
+
         button.tag = viewControllers!.count + 1
         button.addTarget(self, action: #selector(buttonAddTapped), for: .touchUpInside)
+        
         return button
     }
     
