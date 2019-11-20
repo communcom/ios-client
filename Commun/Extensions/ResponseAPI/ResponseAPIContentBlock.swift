@@ -195,6 +195,9 @@ extension ResponseAPIContentBlock {
             if child.string.starts(with: "\n\r") {
                 child.deleteCharacters(in: NSMakeRange(0, 2))
             }
+        case "attachments":
+            #warning("attachments")
+            break
         default:
             child.insert(NSAttributedString.paragraphSeparator(attributes: currentAttributes), at: 0)
             child.addAttributes(currentAttributes, range: NSMakeRange(0, child.length))
