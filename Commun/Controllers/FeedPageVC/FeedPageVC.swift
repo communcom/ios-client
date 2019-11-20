@@ -105,6 +105,9 @@ class FeedPageVC: PostsViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: animated)
-        baseNavigationController?.setStatusBarTintColor(.white)
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        .lightContent
     }
 }

@@ -64,7 +64,6 @@ final class BaseNavigationController: UINavigationController {
     }
     
     func avoidTabBar(viewController: UIViewController) {
-        print(viewController.view.subviews)
         if let tabBarController = tabBarVC,
             let scrollView = viewController.view.subviews.first(where: {$0 is UIScrollView}) as? UIScrollView,
             viewController.view.constraints.first(where: {constraint in
@@ -78,18 +77,18 @@ final class BaseNavigationController: UINavigationController {
         }
     }
     
-    func setStatusBarTintColor(_ color: UIColor) {
-        if #available(iOS 13.0, *) {
-            let navBarAppearance = navigationBar.standardAppearance
-            navBarAppearance.titleTextAttributes = [.foregroundColor: color]
-            navigationBar.standardAppearance = navBarAppearance
-            navigationBar.scrollEdgeAppearance = navBarAppearance
-        }
-        else if let statusBar = UIApplication.shared.value(forKey: "statusBar") as? UIView {
-//            statusBar.backgroundColor = style == .lightContent ? UIColor.black : .white
-            statusBar.setValue(color, forKey: "foregroundColor")
-        }
-    }
+//    func setStatusBarTintColor(_ color: UIColor) {
+//        if #available(iOS 13.0, *) {
+//            let navBarAppearance = navigationBar.standardAppearance
+//            navBarAppearance.titleTextAttributes = [.foregroundColor: color]
+//            navigationBar.standardAppearance = navBarAppearance
+//            navigationBar.scrollEdgeAppearance = navBarAppearance
+//        }
+//        else if let statusBar = UIApplication.shared.value(forKey: "statusBar") as? UIView {
+////            statusBar.backgroundColor = style == .lightContent ? UIColor.black : .white
+//            statusBar.setValue(color, forKey: "foregroundColor")
+//        }
+//    }
     
     // MARK: - Overrides
     
