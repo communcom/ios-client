@@ -18,7 +18,7 @@ class TabBarVC: UITabBarController {
     let profileTabIndex = 3
     let selectedColor = UIColor.black
     let unselectedColor = UIColor(hexString: "#E5E7ED")
-    let tabBarHeight: CGFloat = UIDevice.hasNotch ? 84.0 : 60.0
+    let tabBarHeight: CGFloat = 60.0 //UIDevice.hasNotch ? 84.0 : 60.0
     
     // MARK: - Properties
     let viewModel = TabBarViewModel()
