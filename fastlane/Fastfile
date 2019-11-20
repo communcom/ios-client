@@ -68,10 +68,10 @@ lane :beta do |options|
 	)
 
     slack_upload(
-        slack_api_token: slack_api_token
+        slack_api_token: slack_api_token,
         title: "New version #{build_version}(#{new_bundle_version})",
         channel: "#commun-ios-builds",
-        file_path: "/Users/artem/Documents/Mems/z_relax.png"
+        file_path: ENV['BUILD_PATH']
     ) 
 
 	if isCI 
