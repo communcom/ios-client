@@ -20,7 +20,7 @@ class AttachmentsView: UIView {
     func setUp(with attachments: [TextAttachment]) {
         removeSubviews()
         
-        let gridView = GridView(forAutoLayout: ())
+        let gridView = EditorGridView(forAutoLayout: ())
         addSubview(gridView)
         gridView.autoPinEdgesToSuperviewEdges()
         
@@ -53,7 +53,7 @@ class AttachmentsView: UIView {
                 attachmentViews.append(attachmentView)
             }
         }
-//        gridView.setUp(views: attachmentViews) //TODO
+        gridView.setUp(views: attachmentViews) 
     }
 }
 
