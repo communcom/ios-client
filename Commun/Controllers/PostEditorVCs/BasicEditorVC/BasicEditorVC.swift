@@ -46,7 +46,10 @@ class BasicEditorVC: PostEditorVC {
     
     // MARK: - Override
     override var contentCombined: Observable<Void> {
-        return contentTextView.rx.text.orEmpty.map {_ in ()}
+        Observable.merge(
+            super.contentCombined,
+            contentTextView.rx.text.orEmpty.map {_ in ()}
+        )
     }
     
     override var isContentValid: Bool {

@@ -18,11 +18,15 @@ class PostEditorVC: EditorVC {
     
     // MARK: - Computed properties
     var contentLettersLimit: UInt {30000}
+    
+    /// Condition that define when to start updating send button state
     var contentCombined: Observable<Void> {
-        fatalError("Must override")
+        viewModel.community.map {_ in ()}
     }
+    
+    /// Define whenever content is valid to enable send button
     var isContentValid: Bool {
-        return viewModel.community.value != nil && !contentTextView.text.trimmed.isEmpty
+        viewModel.community.value != nil && !contentTextView.text.trimmed.isEmpty
     }
     
     var viewModel: PostEditorViewModel {

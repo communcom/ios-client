@@ -31,10 +31,11 @@ class ArticleEditorVC: PostEditorVC {
     }
     
     override var contentCombined: Observable<Void> {
-        return Observable.combineLatest(
-            titleTextView.rx.text.orEmpty,
-            contentTextView.rx.text.orEmpty
-        ).map {_ in ()}
+        return Observable.merge(
+            super.contentCombined,
+            titleTextView.rx.text.orEmpty.map {_ in ()},
+            contentTextView.rx.text.orEmpty.map {_ in ()}
+        )
     }
     
     override var isContentValid: Bool {
