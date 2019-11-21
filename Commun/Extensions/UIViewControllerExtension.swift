@@ -140,16 +140,17 @@ extension UIViewController {
             return
         }
         
-        // open profile tabbar
-        if let profileNC = tabBarController?.viewControllers?.first(where: {($0 as? UINavigationController)?.viewControllers.first is MyProfilePageVC}),
-            profileNC != tabBarController?.selectedViewController,
-            let tabBarVC = tabBarController as? TabBarVC
-        {
-            tabBarVC.switchTab(index: tabBarVC.profileTabIndex)
-            tabBarVC.selectedViewController?.view.shake()
-        } else {
-            self.view.shake()
-        }
+        // my profile
+        view.shake()
+//        if let profileNC = tabBarController?.viewControllers?.first(where: {($0 as? UINavigationController)?.viewControllers.first is MyProfilePageVC}),
+//            profileNC != tabBarController?.selectedViewController,
+//            let tabBarVC = tabBarController as? TabBarVC
+//        {
+//            tabBarVC.switchTab(index: tabBarVC.profileTabIndex)
+//            tabBarVC.selectedViewController?.view.shake()
+//        } else {
+//            self.view.shake()
+//        }
     }
     
     func showCommunityWithCommunityId(_ id: String) {
