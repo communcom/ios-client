@@ -24,8 +24,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <containerView opaque="NO" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qQo-fb-NcH">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="462"/>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qQo-fb-NcH">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="542"/>
                                 <connections>
                                     <segue destination="q5V-Zu-EaX" kind="embed" id="edI-Fw-8RT"/>
                                 </connections>
@@ -44,13 +44,13 @@
                                     <action selector="signInButtonTap:" destination="5Vs-ev-2DK" eventType="touchUpInside" id="4Lt-vf-8xf"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8t8-vm-TGP" customClass="StepButton" customModule="Commun" customModuleProvider="target">
-                                <rect key="frame" x="42" y="502" width="291" height="56"/>
+                            <button clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8t8-vm-TGP" customClass="StepButton" customModule="Commun" customModuleProvider="target">
+                                <rect key="frame" x="20" y="597" width="335" height="50"/>
                                 <accessibility key="accessibilityConfiguration" identifier="WelcomeSignUpButton" label="WelcomeSignUpButton"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="56" id="Zy9-JZ-KHy" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
+                                    <constraint firstAttribute="height" constant="50" id="Zy9-JZ-KHy" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                                 </constraints>
-                                <state key="normal" title="sign up"/>
+                                <state key="normal" title="next"/>
                                 <connections>
                                     <action selector="signUpButtonTap:" destination="5Vs-ev-2DK" eventType="touchUpInside" id="Iuv-sF-KYs"/>
                                 </connections>
@@ -58,19 +58,20 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="8t8-vm-TGP" firstAttribute="top" secondItem="qQo-fb-NcH" secondAttribute="bottom" constant="40" id="DnB-Zm-gsI" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
-                            <constraint firstItem="8t8-vm-TGP" firstAttribute="leading" secondItem="bF6-IB-5mY" secondAttribute="leading" constant="42" id="JGQ-Xv-W61" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
+                            <constraint firstItem="bF6-IB-5mY" firstAttribute="bottom" secondItem="8t8-vm-TGP" secondAttribute="bottom" constant="20" id="D1k-vM-SRM" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
+                            <constraint firstItem="8t8-vm-TGP" firstAttribute="top" secondItem="qQo-fb-NcH" secondAttribute="bottom" constant="55" id="DnB-Zm-gsI" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
+                            <constraint firstItem="8t8-vm-TGP" firstAttribute="leading" secondItem="bF6-IB-5mY" secondAttribute="leading" constant="20" id="JGQ-Xv-W61" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                             <constraint firstItem="qQo-fb-NcH" firstAttribute="leading" secondItem="bF6-IB-5mY" secondAttribute="leading" id="Tjd-Cq-itW"/>
                             <constraint firstItem="qQo-fb-NcH" firstAttribute="top" secondItem="oXF-w0-ktq" secondAttribute="top" id="UWO-ih-eU6"/>
                             <constraint firstItem="bF6-IB-5mY" firstAttribute="trailing" secondItem="9u7-LT-02r" secondAttribute="trailing" constant="15" id="Vz7-oj-mvg" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
-                            <constraint firstItem="bF6-IB-5mY" firstAttribute="trailing" secondItem="8t8-vm-TGP" secondAttribute="trailing" constant="42" id="WVQ-e6-8y3" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
+                            <constraint firstItem="bF6-IB-5mY" firstAttribute="trailing" secondItem="8t8-vm-TGP" secondAttribute="trailing" constant="20" id="WVQ-e6-8y3" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                             <constraint firstItem="9u7-LT-02r" firstAttribute="top" secondItem="bF6-IB-5mY" secondAttribute="top" constant="6" id="ciL-uL-cY7" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                             <constraint firstItem="qQo-fb-NcH" firstAttribute="trailing" secondItem="bF6-IB-5mY" secondAttribute="trailing" id="mLH-q0-tby"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="bF6-IB-5mY"/>
                     </view>
                     <connections>
-                        <outlet property="signInButton" destination="9u7-LT-02r" id="ugP-zF-s1x"/>
+                        <outlet property="signInButton" destination="9u7-LT-02r" id="1ZJ-TG-iTS"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Zhj-Zk-YL3" userLabel="First Responder" sceneMemberID="firstResponder"/>

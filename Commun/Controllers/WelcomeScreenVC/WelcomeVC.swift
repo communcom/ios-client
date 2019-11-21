@@ -9,8 +9,19 @@
 import UIKit
 import RxSwift
 import CyberSwift
+import SwiftTheme
 
 class WelcomeVC: UIViewController {
+    // MARK: - IBOutlets
+    @IBOutlet weak var signInButton: BlankButton! {
+        didSet {
+            self.signInButton.commonInit(hexColors:     [blackWhiteColorPickers, grayishBluePickers, grayishBluePickers, grayishBluePickers],
+                                         font:          UIFont(name: "SFProText-Medium", size: .adaptive(width: 15.0)),
+                                         alignment:     .right)
+        }
+    }
+    
+    
     // MARK: - Class Functions
     override func viewDidLoad() {
         super.viewDidLoad()

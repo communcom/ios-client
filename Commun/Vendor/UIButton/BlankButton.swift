@@ -26,14 +26,14 @@ import SwiftTheme
 
     
     // MARK: - Custom Functions
-    func commonInit(hexColors:      [ThemeColorPicker] = [softBlueColorPickers, verySoftBlueColorPickers, verySoftBlueColorPickers, verySoftBlueColorPickers],
+    func commonInit(hexColors:      [ThemeColorPicker]? = [softBlueColorPickers, verySoftBlueColorPickers, verySoftBlueColorPickers, verySoftBlueColorPickers],
                     font:           UIFont? = UIFont(name: "SFProText-Semibold", size: 17.0 * Config.widthRatio),
                     alignment:      NSTextAlignment? = .center) {
         if let text = self.titleLabel?.text {
             self.tune(withTitle:    text.localized().uppercaseFirst,
-                      hexColors:    hexColors,
+                      hexColors:    hexColors!,
                       font:         font,
-                      alignment:    alignment ?? .center)
+                      alignment:    alignment!)
         }
     }
 }
