@@ -83,16 +83,7 @@ extension PostController {
     }
 
     func openShareActions() {
-        guard let topController = UIApplication.topViewController(), let post = post else { return }
-
-        var urlString = "https:/dev.commun.com/"
-        #warning("add post url api value")
-        if let alias = post.community.alias, let username = post.author?.username  {
-            urlString = "https:/dev.commun.com/\(alias)/@\(username)/\(post.contentId.permlink)"
-        }
-        let url = URL(string: urlString)
-        let activity = UIActivityViewController(activityItems: [url!], applicationActivities: nil)
-        topController.present(activity, animated: true)
+        ShareHelper.share(post: post)
     }
     
     // MARK: - Voting
@@ -208,25 +199,7 @@ extension PostController {
     
     // MARK: - Other actions
     func sharePost() {
-        guard let post = post,
-            let userId = post.author?.userId,
-            let controller = UIApplication.topViewController()
-            else {return}
-        // text to share
-        let title = post.document?.attributes?.title
-        var text = (title != nil) ? (title! + "\n"): ""
-        
-        text += "\(URL.appURL)/posts/\(userId)/\(post.contentId.permlink)"
-        
-        
-        // link to share
-        let textToShare = [text]
-        
-        let activityViewController = UIActivityViewController(activityItems: textToShare, applicationActivities: nil)
-        activityViewController.popoverPresentationController?.sourceView = controller.view // so that iPads won't crash
-        
-        // present the view controller
-        controller.present(activityViewController, animated: true, completion: nil)
+        ShareHelper.share(post: post)
     }
     
     func reportPost() {
@@ -246,10 +219,16 @@ extension PostController {
             highlightedButtonIndex: 1)
             { (index) in
                 if index == 0 {
-                    NetworkService.shared.deletePost(permlink: post.contentId.permlink)
+                    topController.showIndetermineHudWithMessage("deleting post".localized().uppercaseFirst)
+                    NetworkService.shared.deletePost(
+                        communCode: post.community.communityId,
+                        permlink: post.contentId.permlink
+                    )
                     .subscribe(onCompleted: {
+                        topController.hideHud()
                         post.notifyDeleted()
                     }, onError: { error in
+                        topController.hideHud()
                         topController.showError(error)
                     })
                     .disposed(by: self.disposeBag)

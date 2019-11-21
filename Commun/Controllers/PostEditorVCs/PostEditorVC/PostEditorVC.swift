@@ -53,6 +53,7 @@ class PostEditorVC: EditorVC {
         super.viewDidLoad()
         // if editing post
         if let post = viewModel.postForEdit {
+            communityView.removeGestureRecognizers()
             setUp(with: post)
         }
         else {
@@ -88,7 +89,7 @@ class PostEditorVC: EditorVC {
         }
 
         // add default tool
-        appendTool(EditorToolbarItem.ageLimit)
+//        appendTool(EditorToolbarItem.ageLimit)
         appendTool(EditorToolbarItem.addPhoto)
     }
     
@@ -140,6 +141,7 @@ class PostEditorVC: EditorVC {
     // MARK: - action for overriding
     func setUp(with post: ResponseAPIContentGetPost) {
         guard let document = post.document else {return}
+        viewModel.community.accept(ResponseAPIContentGetSubscriptionsCommunity(community: post.community))
         contentTextView.parseContentBlock(document)
     }
     

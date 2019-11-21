@@ -90,6 +90,45 @@ class BasicEditorVC: PostEditorVC {
 //        }
     }
     
+    override func setUp(with post: ResponseAPIContentGetPost) {
+        super.setUp(with: post)
+        // download image && parse attachments
+        var singles = [Single<TextAttachment>]()
+        for attachment in post.attachments {
+            // get image url or thumbnail (for website or video)
+            var imageURL = attachment.content.stringValue ?? attachment.attributes?.url
+            if attachment.attributes?.type == "video" || attachment.attributes?.type == "website" {
+                imageURL = attachment.attributes?.thumbnail_url
+            }
+            // return a downloadSingle
+            if let urlString = imageURL,
+                let url = URL(string: urlString) {
+                let downloadImage = NetworkService.shared.downloadImage(url)
+                    .catchErrorJustReturn(UIImage(named: "image-not-available")!)
+                    .map {TextAttachment(attributes: attachment.attributes, localImage: $0, size: CGSize(width: self.view.size.width, height: self.attachmentHeight))}
+                singles.append(downloadImage)
+            }
+                // return an error image if thumbnail not found
+            else {
+                singles.append(
+                    Single<UIImage>.just(UIImage(named: "image-not-available")!)
+                        .map{TextAttachment(attributes: attachment.attributes, localImage: $0, size: CGSize(width: self.view.size.width, height: self.attachmentHeight))}
+                )
+            }
+        }
+        
+        guard singles.count > 0 else {return}
+
+        showIndetermineHudWithMessage("parsing attachments".localized().uppercaseFirst)
+        
+        Single.zip(singles)
+            .subscribe(onSuccess: { [weak self] (attachments) in
+                self?._viewModel.attachments.accept(attachments)
+                self?.hideHud()
+            })
+            .disposed(by: disposeBag)
+    }
+    
     override func bind() {
         super.bind()
         
