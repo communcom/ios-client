@@ -19,66 +19,6 @@ extension MyProfilePageVC {
         openActionSheet(cover: false)
     }
     
-    @objc override func moreActionsButtonDidTouch(_ sender: Any) {
-        let headerView = UIView(height: 40)
-        
-        let avatarImageView = MyAvatarImageView(size: 40)
-        avatarImageView.observeCurrentUserAvatar()
-            .disposed(by: disposeBag)
-        headerView.addSubview(avatarImageView)
-        avatarImageView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .trailing)
-        
-        let userNameLabel = UILabel.with(text: viewModel.profile.value?.username, textSize: 15, weight: .semibold)
-        headerView.addSubview(userNameLabel)
-        userNameLabel.autoPinEdge(toSuperviewEdge: .top)
-        userNameLabel.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 10)
-        userNameLabel.autoPinEdge(toSuperviewEdge: .trailing)
-
-        let userIdLabel = UILabel.with(text: "@\(viewModel.profile.value?.userId ?? "")", textSize: 12, textColor: .appMainColor)
-        headerView.addSubview(userIdLabel)
-        userIdLabel.autoPinEdge(.top, to: .bottom, of: userNameLabel, withOffset: 3)
-        userIdLabel.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 10)
-        userIdLabel.autoPinEdge(toSuperviewEdge: .trailing)
-        
-        showCommunActionSheet(style: .profile, headerView: headerView, actions: [
-            // remove from MVP
-//            CommunActionSheet.Action(title: "saved".localized().uppercaseFirst, icon: UIImage(named: "profile_options_saved"), handle: {
-//                #warning("change filter")
-//                let vc = PostsViewController()
-//                vc.title = "saved posts".localized().uppercaseFirst
-//                self.show(vc, sender: self)
-//            }),
-            CommunActionSheet.Action(title: "liked".localized().uppercaseFirst, icon: UIImage(named: "profile_options_liked"), handle: {
-                #warning("change filter")
-                let vc = PostsViewController()
-                vc.title = "liked posts".localized().uppercaseFirst
-                self.show(vc, sender: self)
-            }, style: .profile),
-            CommunActionSheet.Action(title: "blacklist".localized().uppercaseFirst, icon: UIImage(named: "profile_options_blacklist"), handle: {
-                self.show(MyProfileBlacklistVC(), sender: self)
-            }, style: .profile),
-            CommunActionSheet.Action(title: "log out".localized().uppercaseFirst, icon: nil, handle: {
-                self.showAlert(title: "Logout".localized(), message: "Do you really want to logout?".localized(), buttonTitles: ["Ok".localized(), "cancel".localized().uppercaseFirst], highlightedButtonIndex: 1) { (index) in
-
-                    if index == 0 {
-                        self.navigationController?.showIndetermineHudWithMessage("logging out".localized().uppercaseFirst)
-                        RestAPIManager.instance.rx.logout()
-                            .subscribe(onCompleted: {
-                                self.navigationController?.hideHud()
-                                AppDelegate.reloadSubject.onNext(true)
-                            }, onError: { (error) in
-                                self.navigationController?.hideHud()
-                                self.navigationController?.showError(error)
-                            })
-                            .disposed(by: self.disposeBag)
-                    }
-                }
-            }, tintColor: UIColor(hexString: "#ED2C5B")!, marginTop: 14)
-        ]) {
-            
-        }
-    }
-    
     @objc func settingsButtonDidTouch(_ sender: Any) {
         let settingsVC = controllerContainer.resolve(SettingsVC.self)!
         self.show(settingsVC, sender: nil)

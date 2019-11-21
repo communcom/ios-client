@@ -228,4 +228,8 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>{
             break
         }
     }
+    
+    override func moreActionsButtonDidTouch(_ sender: CommunButton) {
+        
+    }
 }

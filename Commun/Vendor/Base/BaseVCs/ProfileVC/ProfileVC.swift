@@ -25,7 +25,6 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
     }
     
     // MARK: - Subviews
-    
     lazy var shadowView: UIView = {
         let view = UIView(forAutoLayout: ())
         view.backgroundColor = .clear
@@ -38,6 +37,7 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
     }()
     
     lazy var backButton = UIButton.back(tintColor: .white, contentInsets: UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 24))
+    lazy var optionsButton = UIButton.option(tintColor: .white)
     
     lazy var coverImageView: UIImageView = {
         let imageView = UIImageView()
@@ -65,6 +65,9 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
         view.backgroundColor = #colorLiteral(red: 0.9605136514, green: 0.9644123912, blue: 0.9850376248, alpha: 1)
         setLeftNavBarButton(with: backButton)
         backButton.addTarget(self, action: #selector(back), for: .touchUpInside)
+        
+        setRightNavBarButton(with: optionsButton)
+        optionsButton.addTarget(self, action: #selector(moreActionsButtonDidTouch(_:)), for: .touchUpInside)
 
         let screenWidth = UIScreen.main.bounds.size.width
         view.addSubview(coverImageView)
@@ -138,6 +141,10 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
         if gesture.didTapAttributedTextInLabel(label: label, inRange: tryAgainRange) {
             _viewModel.fetchNext(forceRetry: true)
         }
+    }
+    
+    @objc func moreActionsButtonDidTouch(_ sender: CommunButton) {
+        // for overriding
     }
     
     override func viewWillAppear(_ animated: Bool) {
