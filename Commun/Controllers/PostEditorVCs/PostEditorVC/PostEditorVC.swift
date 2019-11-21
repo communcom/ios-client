@@ -89,7 +89,7 @@ class PostEditorVC: EditorVC {
         }
 
         // add default tool
-        appendTool(EditorToolbarItem.ageLimit)
+//        appendTool(EditorToolbarItem.ageLimit)
         appendTool(EditorToolbarItem.addPhoto)
     }
     
