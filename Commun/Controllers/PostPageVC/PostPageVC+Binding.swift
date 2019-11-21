@@ -21,6 +21,28 @@ extension PostPageVC {
             .disposed(by: disposeBag)
     }
     
+    func observeUserBlocked() {
+        ResponseAPIContentGetProfile.observeEvent(eventName: ResponseAPIContentGetProfile.blockedEventName)
+            .subscribe(onNext: {blockedUser in
+                let post = (self.viewModel as! PostPageViewModel).post.value
+                if post?.author?.userId == blockedUser.userId {
+                    self.back()
+                }
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    func observeCommunityBlocked() {
+        ResponseAPIContentGetCommunity.observeEvent(eventName: ResponseAPIContentGetCommunity.blockedEventName)
+            .subscribe(onNext: { (blockedCommunity) in
+                let post = (self.viewModel as! PostPageViewModel).post.value
+                if post?.community.communityId == blockedCommunity.communityId {
+                    self.back()
+                }
+            })
+            .disposed(by: disposeBag)
+    }
+    
     func observeCommentAdded() {
         NotificationCenter.default.rx.notification(.init(rawValue: "\(ResponseAPIContentGetPost.self)\(ResponseAPIContentGetPost.commentAddedEventName)"))
             .subscribe(onNext: { (notification) in

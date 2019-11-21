@@ -131,7 +131,8 @@ class PostPageVC: CommentsViewController {
         // observer
         observePostDeleted()
         observeCommentAdded()
-        
+        observeUserBlocked()
+        observeCommunityBlocked()
     }
     
     override func filterChanged(filter: CommentsListFetcher.Filter) {

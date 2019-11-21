@@ -20,6 +20,7 @@ class PostsViewModel: ListViewModel<ResponseAPIContentGetPost> {
         defer {
             bindFilter()
             observeUserBlocked()
+            observeCommunityBlocked()
         }
     }
     
@@ -41,6 +42,15 @@ class PostsViewModel: ListViewModel<ResponseAPIContentGetPost> {
         ResponseAPIContentGetProfile.observeEvent(eventName: ResponseAPIContentGetProfile.blockedEventName)
             .subscribe(onNext: {blockedUser in
                 let posts = self.items.value.filter {$0.author?.userId != blockedUser.userId}
+                self.items.accept(posts)
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    func observeCommunityBlocked() {
+        ResponseAPIContentGetCommunity.observeEvent(eventName: ResponseAPIContentGetCommunity.blockedEventName)
+            .subscribe(onNext: { (blockedCommunity) in
+                let posts = self.items.value.filter {$0.community.communityId != blockedCommunity.communityId}
                 self.items.accept(posts)
             })
             .disposed(by: disposeBag)
