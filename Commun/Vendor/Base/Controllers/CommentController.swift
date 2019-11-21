@@ -147,6 +147,7 @@ extension CommentController {
     
     func deleteComment() {
         guard let comment = comment,
+            let communCode = comment.community?.communityId,
             let topController = UIApplication.topViewController() else {return}
         
         topController.showAlert(
@@ -159,7 +160,7 @@ extension CommentController {
             { (index) in
                 if index == 0 {
                     topController.showIndetermineHudWithMessage("deleting".localized().uppercaseFirst)
-                    NetworkService.shared.deletePost(permlink: comment.contentId.permlink)
+                    NetworkService.shared.deletePost(communCode: communCode, permlink: comment.contentId.permlink)
                         .subscribe(onCompleted: {
                             topController.hideHud()
                             self.comment?.notifyDeleted()

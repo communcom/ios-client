@@ -246,10 +246,16 @@ extension PostController {
             highlightedButtonIndex: 1)
             { (index) in
                 if index == 0 {
-                    NetworkService.shared.deletePost(permlink: post.contentId.permlink)
+                    topController.showIndetermineHudWithMessage("deleting post".localized().uppercaseFirst)
+                    NetworkService.shared.deletePost(
+                        communCode: post.community.communityId,
+                        permlink: post.contentId.permlink
+                    )
                     .subscribe(onCompleted: {
+                        topController.hideHud()
                         post.notifyDeleted()
                     }, onError: { error in
+                        topController.hideHud()
                         topController.showError(error)
                     })
                     .disposed(by: self.disposeBag)

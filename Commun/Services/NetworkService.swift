@@ -68,8 +68,8 @@ class NetworkService: NSObject {
 //        
 //    }
     
-    func deletePost(permlink: String) -> Completable {
-        return RestAPIManager.instance.rx.deleteMessage(permlink: permlink)
+    func deletePost(communCode: String, permlink: String) -> Completable {
+        return RestAPIManager.instance.rx.deleteMessage(communCode: communCode, permlink: permlink)
             .observeOn(MainScheduler.instance)
     }
     
