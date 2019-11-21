@@ -10,16 +10,16 @@ import UIKit
 
 class WelcomePageVC: UIPageViewController {
     // MARK: - Properties
+    var totalPages = 4
+    var pillPageControl: PillPageControl?
+
     var currentPage = 0 {
         didSet {
-            if currentPage > self.pages.count - 1 || currentPage < 0 {return}
+            if currentPage > self.pages.count - 1 || currentPage < 0 { return }
             setViewControllers([pages[currentPage]], direction: .forward, animated: true, completion: nil)
-            pageControl?.progress = CGFloat(currentPage)
+            pillPageControl?.progress = CGFloat(currentPage)
         }
     }
-    
-    var pageControl: PillPageControl?
-    var totalPages = 3
     
     // Timer
     let timeOut = 7
@@ -28,12 +28,16 @@ class WelcomePageVC: UIPageViewController {
     
     fileprivate lazy var pages: [UIViewController] = {
         var list = [UIViewController]()
+        
         for i in 0..<self.totalPages {
             list.append(self.pageAtIndex(i))
         }
+        
         return list
     }()
 
+    
+    // MARK: - Class Functions
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -47,16 +51,14 @@ class WelcomePageVC: UIPageViewController {
         setViewControllers([pages.first!], direction: .forward, animated: true, completion: nil)
         
         // Configure pageControl
-        pageControl = PillPageControl(frame: CGRect(x: 8, y: 35, width: UIScreen.main.bounds.size.width - 16, height: 25))
+        pillPageControl = PillPageControl(frame: CGRect(x: 8, y: 35, width: UIScreen.main.bounds.size.width - 16, height: 25))
         
         // configure pageControl
-        pageControl?.pageCount = totalPages
-        pageControl?.activeTint = #colorLiteral(red: 0.4156862745, green: 0.5019607843, blue: 0.9607843137, alpha: 1)
-        pageControl?.inactiveTint = #colorLiteral(red: 0.8980392157, green: 0.9058823529, blue: 0.9294117647, alpha: 1)
+        pillPageControl?.pageCount = totalPages
+        pillPageControl?.activeTint = #colorLiteral(red: 0.4156862745, green: 0.5019607843, blue: 0.9607843137, alpha: 1)
+        pillPageControl?.inactiveTint = #colorLiteral(red: 0.8980392157, green: 0.9058823529, blue: 0.9294117647, alpha: 1)
         
-        self.view.addSubview(pageControl!)
-        
-        
+        self.view.addSubview(pillPageControl!)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -70,8 +72,10 @@ class WelcomePageVC: UIPageViewController {
         setUpCountdown()
     }
     
+    
+    // MARK: - Custom Functions
     func setUpCountdown() {
-        // reset
+        // Timer reset
         var timeLeft = 7
         countdown?.invalidate()
         
@@ -94,6 +98,7 @@ class WelcomePageVC: UIPageViewController {
                 timeLeft = 7
             }
         })
+        
         RunLoop.current.add(countdown!, forMode: .common)
     }
     
@@ -108,6 +113,7 @@ class WelcomePageVC: UIPageViewController {
             else {newValue += 1}
             strongSelf.currentPage = newValue
         })
+        
         RunLoop.current.add(timer!, forMode: .common)
     }
     
@@ -119,41 +125,38 @@ class WelcomePageVC: UIPageViewController {
     }
 }
 
-// MARK: - Datasource, delegate
+
+// MARK: - UIPageViewControllerDelegate, UIPageViewControllerDataSource
 extension WelcomePageVC: UIPageViewControllerDelegate, UIPageViewControllerDataSource {
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
-        guard let vc = viewController as? WelcomeItemVC,
-            vc.item > 0
-        else {return pages[pages.count - 1]}
+        guard let vc = viewController as? WelcomeItemVC, vc.item > 0 else { return pages[pages.count - 1] }
         
         let previousIndex = vc.item - 1
         
         if previousIndex < 0 { return nil }
         guard previousIndex >= 0 else { return pages.last }
-        guard pages.count > previousIndex else { return nil        }
+        guard pages.count > previousIndex else { return nil }
         
         return pages[previousIndex]
-
     }
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
-        guard let vc = viewController as? WelcomeItemVC,
-            vc.item < totalPages - 1
-        else {return pages[0]}
+        guard let vc = viewController as? WelcomeItemVC, vc.item < totalPages - 1 else { return pages[0] }
         
         let nextIndex = vc.item + 1
         
         if nextIndex > 2 { return nil }
+        
         guard nextIndex < pages.count else { return pages.first }
         guard pages.count > nextIndex else { return nil         }
         
         return pages[nextIndex]
-
     }
     
     func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
         if let vc = viewControllers?.first as? WelcomeItemVC {
             let viewControllerIndex = vc.item
+            
             currentPage = viewControllerIndex
             timer?.invalidate()
             setUpCountdown()

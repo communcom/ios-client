@@ -8,9 +8,6 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
-        <array key="SF-Pro-Text-Bold.otf">
-            <string>SFProText-Bold</string>
-        </array>
         <array key="SF-Pro-Text-Regular.otf">
             <string>SFProText-Regular</string>
         </array>
@@ -24,19 +21,20 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qQo-fb-NcH">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="542"/>
+                            <containerView clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qQo-fb-NcH">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="413"/>
                                 <connections>
                                     <segue destination="q5V-Zu-EaX" kind="embed" id="edI-Fw-8RT"/>
                                 </connections>
                             </containerView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9u7-LT-02r" userLabel="Sign In Button" customClass="BlankButton" customModule="Commun" customModuleProvider="target">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9u7-LT-02r" userLabel="Top Sign In Button" customClass="BlankButton" customModule="Commun" customModuleProvider="target">
                                 <rect key="frame" x="307" y="6" width="53" height="44"/>
                                 <accessibility key="accessibilityConfiguration" identifier="WelcomeSignInButton" label="WelcomeSignInButton"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="5Uy-kO-fpi" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="17"/>
+                                <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="8"/>
                                 <state key="normal" title="sign in">
                                     <color key="titleColor" red="0.41568627450000001" green="0.50196078430000002" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
@@ -44,34 +42,65 @@
                                     <action selector="signInButtonTap:" destination="5Vs-ev-2DK" eventType="touchUpInside" id="4Lt-vf-8xf"/>
                                 </connections>
                             </button>
-                            <button clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8t8-vm-TGP" customClass="StepButton" customModule="Commun" customModuleProvider="target">
-                                <rect key="frame" x="20" y="597" width="335" height="50"/>
-                                <accessibility key="accessibilityConfiguration" identifier="WelcomeSignUpButton" label="WelcomeSignUpButton"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="Zy9-JZ-KHy" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
-                                </constraints>
-                                <state key="normal" title="next"/>
-                                <connections>
-                                    <action selector="signUpButtonTap:" destination="5Vs-ev-2DK" eventType="touchUpInside" id="Iuv-sF-KYs"/>
-                                </connections>
-                            </button>
+                            <stackView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="IfS-V6-9za">
+                                <rect key="frame" x="20" y="467" width="335" height="180"/>
+                                <subviews>
+                                    <button clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8t8-vm-TGP" userLabel="Next Button" customClass="StepButton" customModule="Commun" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="335" height="50"/>
+                                        <accessibility key="accessibilityConfiguration" identifier="WelcomeSignUpButton" label="WelcomeSignUpButton"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="Zy9-JZ-KHy" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
+                                        </constraints>
+                                        <state key="normal" title="next"/>
+                                        <connections>
+                                            <action selector="nextButtonTap:" destination="5Vs-ev-2DK" eventType="touchUpInside" id="Iuv-sF-KYs"/>
+                                        </connections>
+                                    </button>
+                                    <button clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zIG-dP-Ewi" userLabel="Sign Up Button" customClass="StepButton" customModule="Commun" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="65" width="335" height="50"/>
+                                        <accessibility key="accessibilityConfiguration" identifier="WelcomeSignUpButton" label="WelcomeSignUpButton"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="QNK-sy-znB" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
+                                        </constraints>
+                                        <state key="normal" title="sign up"/>
+                                        <connections>
+                                            <action selector="signUpButtonTap:" destination="5Vs-ev-2DK" eventType="touchUpInside" id="fBz-Vm-2c5"/>
+                                        </connections>
+                                    </button>
+                                    <button clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zCr-Mk-Clg" userLabel="Bottom Sign In Button" customClass="StepButton" customModule="Commun" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="130" width="335" height="50"/>
+                                        <accessibility key="accessibilityConfiguration" identifier="WelcomeSignUpButton" label="WelcomeSignUpButton"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="NrQ-3a-xlT" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
+                                        </constraints>
+                                        <state key="normal" title="sign in"/>
+                                        <connections>
+                                            <action selector="signInButtonTap:" destination="5Vs-ev-2DK" eventType="touchUpInside" id="xER-GZ-sVw"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="bF6-IB-5mY" firstAttribute="bottom" secondItem="8t8-vm-TGP" secondAttribute="bottom" constant="20" id="D1k-vM-SRM" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
-                            <constraint firstItem="8t8-vm-TGP" firstAttribute="top" secondItem="qQo-fb-NcH" secondAttribute="bottom" constant="55" id="DnB-Zm-gsI" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
-                            <constraint firstItem="8t8-vm-TGP" firstAttribute="leading" secondItem="bF6-IB-5mY" secondAttribute="leading" constant="20" id="JGQ-Xv-W61" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
+                            <constraint firstItem="IfS-V6-9za" firstAttribute="top" secondItem="qQo-fb-NcH" secondAttribute="bottom" constant="54" id="S5D-R6-UkA"/>
                             <constraint firstItem="qQo-fb-NcH" firstAttribute="leading" secondItem="bF6-IB-5mY" secondAttribute="leading" id="Tjd-Cq-itW"/>
-                            <constraint firstItem="qQo-fb-NcH" firstAttribute="top" secondItem="oXF-w0-ktq" secondAttribute="top" id="UWO-ih-eU6"/>
+                            <constraint firstItem="qQo-fb-NcH" firstAttribute="top" secondItem="oXF-w0-ktq" secondAttribute="top" id="UWO-ih-eU6" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                             <constraint firstItem="bF6-IB-5mY" firstAttribute="trailing" secondItem="9u7-LT-02r" secondAttribute="trailing" constant="15" id="Vz7-oj-mvg" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
-                            <constraint firstItem="bF6-IB-5mY" firstAttribute="trailing" secondItem="8t8-vm-TGP" secondAttribute="trailing" constant="20" id="WVQ-e6-8y3" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
+                            <constraint firstItem="IfS-V6-9za" firstAttribute="leading" secondItem="bF6-IB-5mY" secondAttribute="leading" constant="20" id="aJ5-L4-K3B"/>
                             <constraint firstItem="9u7-LT-02r" firstAttribute="top" secondItem="bF6-IB-5mY" secondAttribute="top" constant="6" id="ciL-uL-cY7" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
+                            <constraint firstAttribute="bottom" secondItem="IfS-V6-9za" secondAttribute="bottom" constant="20" id="kDl-Ko-m8v"/>
                             <constraint firstItem="qQo-fb-NcH" firstAttribute="trailing" secondItem="bF6-IB-5mY" secondAttribute="trailing" id="mLH-q0-tby"/>
+                            <constraint firstItem="bF6-IB-5mY" firstAttribute="trailing" secondItem="IfS-V6-9za" secondAttribute="trailing" constant="20" id="sit-PB-k0c"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="bF6-IB-5mY"/>
                     </view>
                     <connections>
-                        <outlet property="signInButton" destination="9u7-LT-02r" id="1ZJ-TG-iTS"/>
+                        <outlet property="bottomSignInButton" destination="zCr-Mk-Clg" id="9cr-Wq-QUx"/>
+                        <outlet property="nextButton" destination="8t8-vm-TGP" id="s0d-7q-sgW"/>
+                        <outlet property="signUpButton" destination="zIG-dP-Ewi" id="HE5-NS-Pah"/>
+                        <outlet property="topSignInButton" destination="9u7-LT-02r" id="1ZJ-TG-iTS"/>
+                        <outletCollection property="actionButtonsCollection" destination="8t8-vm-TGP" collectionClass="NSMutableArray" id="egc-cS-g0p"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Zhj-Zk-YL3" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -95,33 +124,78 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="dAW-BQ-tTo">
-                                <rect key="frame" x="0.0" y="-44" width="375" height="581"/>
-                            </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="Hundreds of thematic communities" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iGn-Gq-UAf">
-                                <rect key="frame" x="8" y="545" width="359" height="122"/>
+                                <rect key="frame" x="0.0" y="70" width="375" height="375"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="122" id="HCu-2f-fSQ" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
+                                    <constraint firstAttribute="width" constant="375" id="Ipg-bG-jPq"/>
+                                    <constraint firstAttribute="width" secondItem="dAW-BQ-tTo" secondAttribute="height" multiplier="1:1" id="cLq-lo-yNI"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="SFProText-Bold" family="SF Pro Text" pointSize="34"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            </imageView>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="25" translatesAutoresizingMaskIntoConstraints="NO" id="2ek-M7-IEF" userLabel="Main Stack View">
+                                <rect key="frame" x="0.0" y="491" width="375" height="176"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="k9l-0G-pXD" userLabel="Titles Stack View">
+                                        <rect key="frame" x="90" y="0.0" width="195.5" height="45"/>
+                                        <subviews>
+                                            <label clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title Label 1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uNw-3J-9UB" userLabel="Title Label 1">
+                                                <rect key="frame" x="52" y="0.0" width="91.5" height="20.5"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="LxF-FF-Dsn" userLabel="Horizontal Stack View">
+                                                <rect key="frame" x="0.0" y="24.5" width="195.5" height="20.5"/>
+                                                <subviews>
+                                                    <label clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title Label 2" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q6o-yz-maH" userLabel="Title Label 2">
+                                                        <rect key="frame" x="0.0" y="0.0" width="93.5" height="20.5"/>
+                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <label clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title Label 3" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gfU-gg-2Mn" userLabel="Title Label 3">
+                                                        <rect key="frame" x="101.5" y="0.0" width="94" height="20.5"/>
+                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                </subviews>
+                                            </stackView>
+                                        </subviews>
+                                    </stackView>
+                                    <label clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Describe Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="04E-fR-nIC" userLabel="Describe Label">
+                                        <rect key="frame" x="130.5" y="70" width="114.5" height="106"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="height" priority="750" constant="283" id="UHL-ld-SX7"/>
+                                </constraints>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="GHG-MB-YcI" firstAttribute="trailing" secondItem="dAW-BQ-tTo" secondAttribute="trailing" id="0AM-iR-CAn"/>
-                            <constraint firstItem="GHG-MB-YcI" firstAttribute="top" secondItem="dAW-BQ-tTo" secondAttribute="top" constant="44" id="3VF-Yk-wGH" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
-                            <constraint firstItem="GHG-MB-YcI" firstAttribute="bottom" secondItem="iGn-Gq-UAf" secondAttribute="bottom" id="7C5-Fs-6hc"/>
-                            <constraint firstItem="iGn-Gq-UAf" firstAttribute="leading" secondItem="GHG-MB-YcI" secondAttribute="leading" constant="8" id="7iZ-Y2-Gxp" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
-                            <constraint firstItem="iGn-Gq-UAf" firstAttribute="top" secondItem="dAW-BQ-tTo" secondAttribute="bottom" constant="8" id="MiH-hP-Pkg" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
-                            <constraint firstItem="dAW-BQ-tTo" firstAttribute="leading" secondItem="GHG-MB-YcI" secondAttribute="leading" id="b4G-hi-dil"/>
-                            <constraint firstItem="GHG-MB-YcI" firstAttribute="trailing" secondItem="iGn-Gq-UAf" secondAttribute="trailing" constant="8" id="oEd-wo-KuZ" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
+                            <constraint firstItem="GHG-MB-YcI" firstAttribute="bottom" secondItem="2ek-M7-IEF" secondAttribute="bottom" id="0wg-yX-aVj"/>
+                            <constraint firstAttribute="top" secondItem="dAW-BQ-tTo" secondAttribute="top" constant="-70" id="3VF-Yk-wGH" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
+                            <constraint firstItem="2ek-M7-IEF" firstAttribute="top" secondItem="dAW-BQ-tTo" secondAttribute="bottom" constant="46" id="83E-en-18R"/>
+                            <constraint firstItem="dAW-BQ-tTo" firstAttribute="centerX" secondItem="LzI-fj-DYP" secondAttribute="centerX" id="OYj-e8-K7v"/>
+                            <constraint firstItem="2ek-M7-IEF" firstAttribute="leading" secondItem="GHG-MB-YcI" secondAttribute="leading" id="hwh-OP-TRa"/>
+                            <constraint firstItem="GHG-MB-YcI" firstAttribute="trailing" secondItem="2ek-M7-IEF" secondAttribute="trailing" id="isL-US-xVc"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="GHG-MB-YcI"/>
                     </view>
                     <connections>
+                        <outlet property="describeLabel" destination="04E-fR-nIC" id="URD-N7-vIn"/>
                         <outlet property="imageView" destination="dAW-BQ-tTo" id="5uJ-DL-abP"/>
-                        <outlet property="textLabel" destination="iGn-Gq-UAf" id="A7S-dx-lzl"/>
+                        <outlet property="imageViewTopConstraint" destination="3VF-Yk-wGH" id="xht-1f-Kn4"/>
+                        <outlet property="imageViewWidthConstraint" destination="Ipg-bG-jPq" id="yv6-r4-6Lw"/>
+                        <outlet property="titleLabel1" destination="uNw-3J-9UB" id="XrU-H7-ycT"/>
+                        <outlet property="titleLabel2" destination="q6o-yz-maH" id="EIs-VO-21d"/>
+                        <outlet property="titleLabel3" destination="gfU-gg-2Mn" id="Q7r-63-zXa"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6E5-tT-hpe" userLabel="First Responder" sceneMemberID="firstResponder"/>

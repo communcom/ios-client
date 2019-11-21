@@ -117,7 +117,7 @@
 "mentioned you"                                 =   "mentioned you";
 "my communities"                                =   "my communities";
 "my Feed"                                       =   "my Feed";
-"monetize"                                      =   "Monetize";
+"monetize"                                      =   "monetize";
 
 
 // N
@@ -134,7 +134,7 @@
 "of all time"                                   =   "of all time";
 "of thematic"                                   =   "of thematic";
 "old"                                           =   "old";
-"owned"                                         =   "Owned";
+"owned"                                         =   "owned";
 "only alphanumeric, non-uppercased characters, \"-\" and \".\" are allowed"                                    =   "only alphanumeric, non-uppercased characters, \"-\" and \".\" are allowed";
 
 
@@ -228,6 +228,10 @@
 "welcome"                                       =   "welcome";
 "write text placeholder"                        =   "write text";
 "wrong phone number"                            =   "wrong phone number";
+"welcome-item-0"                                =   "Social platform based on blockchain\nand for the first time, it’s easy";
+"welcome-item-1"                                =   "Create, share, and evaluate content\nDecide yourself what deserves\nthe attention";
+"welcome-item-2"                                =   "Every post, share, comment\nor like is rewarded";
+"welcome-item-3"                                =   "Commun has no single owner\nand fully belongs to its members";
 
 
 // Y

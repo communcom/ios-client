@@ -8,20 +8,35 @@
 
 import UIKit
 import CyberSwift
+import SwiftTheme
 
 class WelcomeItemVC: UIViewController {
     // MARK: - Properties
     var item: Int = 0
     
     // MARK: - IBOutlets
-    @IBOutlet weak var textLabel: UILabel!
+    @IBOutlet weak var titleLabel1: UILabel!
+    @IBOutlet weak var titleLabel2: UILabel!
+    @IBOutlet weak var titleLabel3: UILabel!
     @IBOutlet weak var imageView: UIImageView!
-
+    @IBOutlet weak var imageViewWidthConstraint: NSLayoutConstraint!
+    @IBOutlet weak var imageViewTopConstraint: ScalableLayoutConstraint!
+    
+    @IBOutlet weak var describeLabel: UILabel! {
+        didSet {
+            self.describeLabel.tune(withText:       "",
+                                    hexColors:      grayishBluePickers,
+                                    font:           UIFont(name: "SFProDisplay-Medium", size: CGFloat.adaptive(width: 17.0)),
+                                    alignment:      .center,
+                                    isMultiLines:   true)
+        }
+    }
+    
     
     // MARK: - Class Functions
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         self.setupItem()
     }
     
@@ -30,31 +45,84 @@ class WelcomeItemVC: UIViewController {
     func setupItem() {
         // set images
         self.imageView.image = UIImage(named: "image-welcome-item-\(item)")
+        self.imageViewWidthConstraint.constant = CGFloat.adaptive(width: 310.0)
+        self.imageViewTopConstraint.constant = CGFloat.adaptive(height: -70.0)
         
-        // set text
-        var attributedString = NSMutableAttributedString()
-
         switch self.item {
-        case 0:
-            attributedString = attributedString
-                .bold("hundreds".localized().uppercaseFirst, font: UIFont(name: "SFProText-Semibold", size: 30.0 * Config.widthRatio)!, color: .black)
-                .normal("\n")
-                .bold("of thematic".localized(), font: UIFont(name: "SFProText-Semibold", size: 30.0 * Config.widthRatio)!, color: .appMainColor)
-                .normal("\n")
-                .bold("communities".localized(), font: UIFont(name: "SFProText-Semibold", size: 30.0 * Config.widthRatio)!, color: .appMainColor)
-            
+        // All-in-One
         case 1:
-            attributedString = attributedString
-                .bold("subscribe to your".localized().uppercaseFirst + "\n" + "favorite communities".localized(), font: UIFont(name: "SFProText-Semibold", size: 30.0 * Config.widthRatio)!, color: .black)
-
+            self.titleLabel1.tune(withText:         "all-in-one".localized(),
+                                  hexColors:        blackWhiteColorPickers,
+                                  font:             UIFont(name: "SFProDisplay-Bold", size: CGFloat.adaptive(width: 36.0)),
+                                  alignment:        .center,
+                                  isMultiLines:     false)
+            
+            self.titleLabel2.tune(withText:         "social network".localized(),
+                                  hexColors:        blackWhiteColorPickers,
+                                  font:             UIFont(name: "SFProDisplay-Regular", size: CGFloat.adaptive(width: 36.0)),
+                                  alignment:        .center,
+                                  isMultiLines:     false)
+            
+            self.titleLabel3.isHidden = true
+            self.describeLabel.text = "welcome-item-\(item)".localized()
+            
+        // Monetize
         case 2:
-            attributedString = attributedString
-                .bold("read! upvote!".localized().uppercaseFirst + "\n" + "comment!".localized(), font: UIFont(name: "SFProText-Semibold", size: 30.0 * Config.widthRatio)!, color: .black)
-
+            self.titleLabel1.tune(withText:         "monetize".localized().uppercaseFirst,
+                                  hexColors:        blackWhiteColorPickers,
+                                  font:             UIFont(name: "SFProDisplay-Bold", size: CGFloat.adaptive(width: 36.0)),
+                                  alignment:        .center,
+                                  isMultiLines:     false)
+            
+            self.titleLabel2.tune(withText:         "your socializing".localized(),
+                                  hexColors:        blackWhiteColorPickers,
+                                  font:             UIFont(name: "SFProDisplay-Regular", size: CGFloat.adaptive(width: 36.0)),
+                                  alignment:        .center,
+                                  isMultiLines:     false)
+            
+            self.titleLabel3.isHidden = true
+            self.describeLabel.text = "welcome-item-\(item)".localized()
+            
+        // Owned by users
+        case 3:
+            self.titleLabel2.tune(withText:         "owned".localized().uppercaseFirst,
+                                  hexColors:        blackWhiteColorPickers,
+                                  font:             UIFont(name: "SFProDisplay-Bold", size: CGFloat.adaptive(width: 36.0)),
+                                  alignment:        .center,
+                                  isMultiLines:     false)
+            
+            self.titleLabel3.tune(withText:         "by users".localized(),
+                                  hexColors:        blackWhiteColorPickers,
+                                  font:             UIFont(name: "SFProDisplay-Regular", size: CGFloat.adaptive(width: 36.0)),
+                                  alignment:        .center,
+                                  isMultiLines:     false)
+            
+            self.titleLabel1.isHidden = true
+            self.describeLabel.text = "welcome-item-\(item)".localized()
+            
+        // Welcome
         default:
-            break
+            self.titleLabel1.tune(withText:         "welcome".localized().uppercaseFirst,
+                                  hexColors:        blackWhiteColorPickers,
+                                  font:             UIFont(name: "SFProDisplay-Regular", size: CGFloat.adaptive(width: 36.0)),
+                                  alignment:        .center,
+                                  isMultiLines:     false)
+            
+            self.titleLabel2.tune(withText:         "to".localized(),
+                                  hexColors:        blackWhiteColorPickers,
+                                  font:             UIFont(name: "SFProDisplay-Regular", size: CGFloat.adaptive(width: 36.0)),
+                                  alignment:        .center,
+                                  isMultiLines:     false)
+            
+            self.titleLabel3.tune(withText:         "Commun /",
+                                  hexColors:        softBlueColorPickers,
+                                  font:             UIFont(name: "SFProDisplay-Bold", size: CGFloat.adaptive(width: 36.0)),
+                                  alignment:        .center,
+                                  isMultiLines:     false)
+            
+            self.describeLabel.text = "welcome-item-\(item)".localized()
+            self.imageViewWidthConstraint.constant = UIScreen.main.bounds.width
+            self.imageViewTopConstraint.constant = -20.0
         }
-        
-        self.textLabel.attributedText = attributedString
     }
 }

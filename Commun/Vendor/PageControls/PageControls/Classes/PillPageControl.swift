@@ -9,54 +9,59 @@
 import UIKit
 
 @IBDesignable open class PillPageControl: UIView {
-    
-    // MARK: - PageControl
-    
+    // MARK: - Properties
+    open var currentPage: Int {
+        return Int(round(progress))
+    }
+
     @IBInspectable open var pageCount: Int = 0 {
         didSet {
             updateNumberOfPages(pageCount)
         }
     }
+    
     @IBInspectable open var progress: CGFloat = 0 {
         didSet {
             layoutActivePageIndicator(progress)
         }
     }
-    open var currentPage: Int {
-        return Int(round(progress))
-    }
-    
-    
-    // MARK: - Appearance
     
     @IBInspectable open var pillSize: CGSize = CGSize(width: (((UIScreen.main.bounds.size.width - 24) / 3) - 2), height: 2.5) {
         didSet {
             
         }
     }
+
     @IBInspectable open var activeTint: UIColor = UIColor.white {
         didSet {
             activeLayer.backgroundColor = activeTint.cgColor
         }
     }
+
     @IBInspectable open var inactiveTint: UIColor = UIColor(white: 1, alpha: 0.3) {
         didSet {
             inactiveLayers.forEach() { $0.backgroundColor = inactiveTint.cgColor }
         }
     }
+
     @IBInspectable open var indicatorPadding: CGFloat = 7 {
         didSet {
             layoutInactivePageIndicators(inactiveLayers)
         }
     }
     
+    
+    // MARK: - Appearance
     fileprivate var inactiveLayers = [CALayer]()
+    
     fileprivate lazy var activeLayer: CALayer = { [unowned self] in
         let layer = CALayer()
         layer.frame = CGRect(origin: CGPoint.zero,
                              size: CGSize(width: self.pillSize.width, height: self.pillSize.height))
+    
         layer.backgroundColor = self.activeTint.cgColor
         layer.cornerRadius = self.pillSize.height/2
+        
         layer.actions = [
             "bounds": NSNull(),
             "frame": NSNull(),
@@ -66,7 +71,6 @@ import UIKit
     
     
     // MARK: - State Update
-    
     fileprivate func updateNumberOfPages(_ count: Int) {
         // no need to update
         guard count != inactiveLayers.count else { return }
@@ -80,6 +84,7 @@ import UIKit
             self.layer.addSublayer(layer)
             return layer
         }
+        
         layoutInactivePageIndicators(inactiveLayers)
         // ensure active page indicator is on top
         self.layer.addSublayer(activeLayer)
@@ -89,7 +94,6 @@ import UIKit
     
     
     // MARK: - Layout
-    
     fileprivate func layoutActivePageIndicator(_ progress: CGFloat) {
         // ignore if progress is outside of page indicators' bounds
         guard progress >= 0 && progress <= CGFloat(pageCount - 1) else { return }
@@ -111,8 +115,7 @@ import UIKit
     }
     
     override open func sizeThatFits(_ size: CGSize) -> CGSize {
-        return CGSize(width: CGFloat(inactiveLayers.count) * pillSize.width + CGFloat(inactiveLayers.count - 1) * indicatorPadding,
-                      height: pillSize.height)
+        return CGSize(width:    CGFloat(inactiveLayers.count) * pillSize.width + CGFloat(inactiveLayers.count - 1) * indicatorPadding,
+                      height:   pillSize.height)
     }
 }
-
