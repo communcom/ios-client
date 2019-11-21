@@ -46,8 +46,6 @@ class PostHeaderView: MyTableHeaderView, PostController {
         return button
     }()
     
-    lazy var sharesCountLabel = UILabel.with(text: "278", textSize: 12, weight: .medium, textColor: UIColor(hexString: "#A5A7BD")!, numberOfLines: 1)
-    
 //    lazy var sortButton = RightAlignedIconButton(imageName: "small-down-arrow", label: "interesting first".localized().uppercaseFirst, labelFont: .boldSystemFont(ofSize: 13), textColor: .appMainColor, contentInsets: UIEdgeInsets(horizontal: 8, vertical: 0))
     
     override func commonInit() {
@@ -67,13 +65,9 @@ class PostHeaderView: MyTableHeaderView, PostController {
         voteContainerView.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
         voteContainerView.upVoteButton.addTarget(self, action: #selector(upVoteButtonDidTouch(_:)), for: .touchUpInside)
         voteContainerView.downVoteButton.addTarget(self, action: #selector(downVoteButtonDidTouch(_:)), for: .touchUpInside)
-        
-        addSubview(sharesCountLabel)
-        sharesCountLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
-        sharesCountLabel.autoAlignAxis(.horizontal, toSameAxisOf: voteContainerView)
-        
+
         addSubview(sharesCountButton)
-        sharesCountButton.autoPinEdge(.trailing, to: .leading, of: sharesCountLabel, withOffset: -8)
+        sharesCountButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
         sharesCountButton.autoAlignAxis(.horizontal, toSameAxisOf: voteContainerView)
         sharesCountButton.addTarget(self, action: #selector(shareButtonDidTouch(_:)), for: .touchUpInside)
         
@@ -127,10 +121,6 @@ class PostHeaderView: MyTableHeaderView, PostController {
         
         // Views count
         viewsCountLabel.text = "\(post.stats?.viewCount ?? 0)"
-
-        // Shares
-        #warning("shareCount or viewCount???")
-        sharesCountLabel.text = "\(post.stats?.viewCount ?? 0)"
         
         // Votes
         voteContainerView.setUp(with: post.votes)
