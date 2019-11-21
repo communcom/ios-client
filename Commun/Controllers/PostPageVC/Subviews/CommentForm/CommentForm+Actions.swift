@@ -95,6 +95,7 @@ extension CommentForm {
                 strongSelf.textView.text = ""
                 strongSelf.mode = .new
                 strongSelf.parentComment = nil
+                strongSelf.endEditing(true)
                 
             }) { (error) in
                 self.setLoading(false)

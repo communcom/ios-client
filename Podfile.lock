@@ -94,6 +94,7 @@ PODS:
   - GoogleUtilities/UserDefaults (6.3.1):
     - GoogleUtilities/Logger
   - InitialsImageView (0.7.0)
+  - IQKeyboardManagerSwift (6.5.4)
   - ListPlaceholder (1.4)
   - Localize-Swift (2.0.0)
   - Locksmith (4.0.0)
@@ -161,6 +162,7 @@ DEPENDENCIES:
   - Firebase/Messaging
   - "GoloCrypto (from `git@github.com:communcom/GoloGrypto.git`)"
   - InitialsImageView
+  - IQKeyboardManagerSwift
   - ListPlaceholder
   - Localize-Swift (~> 2.0)
   - Locksmith
@@ -218,6 +220,7 @@ SPEC REPOS:
     - GoogleDataTransportCCTSupport
     - GoogleUtilities
     - InitialsImageView
+    - IQKeyboardManagerSwift
     - ListPlaceholder
     - Localize-Swift
     - Locksmith
@@ -300,6 +303,7 @@ SPEC CHECKSUMS:
   GoogleDataTransportCCTSupport: f6ab1962e9dc05ab1fb938b795e5b310209edeec
   GoogleUtilities: f895fde57977df4e0233edda0dbeac490e3703b6
   InitialsImageView: 7a416d36fc6df5434198664db28a3ffb0228426d
+  IQKeyboardManagerSwift: 2dde0fc70110e8eac7ccce2a46fdbec6a850b414
   ListPlaceholder: 08ddaddf67520a20fc52cf37160fb56aa64d071d
   Localize-Swift: c798ec9286494866f7068f85f7c71283ac5bdab4
   Locksmith: e9bebbaaa4cee3c511bc358a44f843c3fe00e21f
@@ -331,6 +335,6 @@ SPEC CHECKSUMS:
   TLPhotoPicker: 04e4ef38b31ee51388058c3e1e7bbdbd79614cef
   "UITextView+Placeholder": c407b27599ea23cca425946fee3cf1db5d547008
 
-PODFILE CHECKSUM: a11c1d6308b4224bc98f49a80d693fc39042a391
+PODFILE CHECKSUM: 965eefd57a07028dcadda4ff14da85b6ddaf6d92
 
 COCOAPODS: 1.8.4

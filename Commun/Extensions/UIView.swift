@@ -127,5 +127,11 @@ extension UIView {
     var widthConstraint: NSLayoutConstraint? {
         return constraints.first(where: {$0.firstAttribute == .width && $0.secondItem == nil})
     }
-
+    
+    func addBorder(width: CGFloat, radius: CGFloat, color: UIColor) {
+        self.layer.borderWidth = width
+        self.layer.cornerRadius = radius
+        self.layer.borderColor = color.cgColor
+        self.clipsToBounds = true
+    }
 }

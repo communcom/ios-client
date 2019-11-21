@@ -70,23 +70,8 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>{
     override func bind() {
         super.bind()
        
-        headerView.selectedIndex
-            .map { index -> CommunityPageViewModel.SegmentioItem in
-                switch index {
-                case 0:
-                    return .posts
-                case 1:
-                    return .leads
-                case 2:
-                    return .about
-                case 3:
-                    return .rules
-                default:
-                    fatalError("not found selected index")
-                }
-            }
-            .bind(to: viewModel.segmentedItem)
-            .disposed(by: disposeBag)
+        bindSelectedIndex()
+        bindProfileBlocked()
     }
     
     override func setUp(profile: ResponseAPIContentGetCommunity) {
@@ -226,6 +211,43 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>{
             break
         default:
             break
+        }
+    }
+    
+    override func moreActionsButtonDidTouch(_ sender: CommunButton) {
+        let headerView = UIView(height: 40)
+        
+        let avatarImageView = MyAvatarImageView(size: 40)
+        avatarImageView.setAvatar(urlString: viewModel.profile.value?.avatarUrl, namePlaceHolder: viewModel.profile.value?.name ?? "Community")
+        headerView.addSubview(avatarImageView)
+        avatarImageView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .trailing)
+        
+        let userNameLabel = UILabel.with(text: viewModel.profile.value?.name, textSize: 15, weight: .semibold)
+        headerView.addSubview(userNameLabel)
+        userNameLabel.autoPinEdge(toSuperviewEdge: .top)
+        userNameLabel.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 10)
+        userNameLabel.autoPinEdge(toSuperviewEdge: .trailing)
+
+        let userIdLabel = UILabel.with(text: "@\(viewModel.profile.value?.communityId ?? "")", textSize: 12, textColor: .appMainColor)
+        headerView.addSubview(userIdLabel)
+        userIdLabel.autoPinEdge(.top, to: .bottom, of: userNameLabel, withOffset: 3)
+        userIdLabel.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 10)
+        userIdLabel.autoPinEdge(toSuperviewEdge: .trailing)
+        
+        showCommunActionSheet(style: .profile, headerView: headerView, actions: [
+            CommunActionSheet.Action(title: "hide".localized().uppercaseFirst, icon: UIImage(named: "profile_options_blacklist"), handle: {
+                
+                self.showAlert(
+                    title: "hide community".localized().uppercaseFirst,
+                    message: "do you really want to hide all posts of".localized().uppercaseFirst + " \(self.viewModel.profile.value?.name ?? "this community")" + "?",
+                    buttonTitles: ["yes".localized().uppercaseFirst, "no".localized().uppercaseFirst],
+                    highlightedButtonIndex: 1) { (index) in
+                        if index != 0 {return}
+                        self.hideCommunity()
+                    }
+            })
+        ]) {
+            
         }
     }
 }

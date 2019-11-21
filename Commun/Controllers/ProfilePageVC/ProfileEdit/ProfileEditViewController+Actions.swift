@@ -1,8 +1,8 @@
 //
-//  MyProfilePageVC+Actions.swift
+//  ProfileEditViewController+Actions.swift
 //  Commun
 //
-//  Created by Chung Tran on 10/29/19.
+//  Created by Sergey Monastyrskiy on 19.11.2019.
 //  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
 //
 
@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 import SwiftyGif
 
-extension MyProfilePageVC {
+extension ProfileEditViewController {
     @objc func changeCoverBtnDidTouch(_ sender: Any) {
         openActionSheet(cover: true)
     }
@@ -19,11 +19,7 @@ extension MyProfilePageVC {
         openActionSheet(cover: false)
     }
     
-    @objc func settingsButtonDidTouch(_ sender: Any) {
-        let settingsVC = controllerContainer.resolve(SettingsVC.self)!
-        self.show(settingsVC, sender: nil)
-    }
-    
+
     // MARK: - Covers + Avatar
     func openActionSheet(cover: Bool) {
         showCommunActionSheet(
@@ -48,24 +44,24 @@ extension MyProfilePageVC {
     
     func onUpdateCover(delete: Bool = false) {
         // Save originalImage for reverse when update failed
-        let originalImage = coverImageView.image
-        let originGif = headerView.avatarImageView.gifImage
+        let originalImage = self.coverImageView.image
+        let originGif = self.avatarView.gifImage
         
         // If deleting
         if delete {
-            coverImageView.image = .placeholder
-            NetworkService.shared.updateMeta(params: ["cover_url": ""])
+            self.coverImageView.image = .placeholder
+           
+            NetworkService.shared.updateMeta(params: ["cover_image": ""])
                 .subscribe(onError: {[weak self] error in
                     if let gif = originGif {
                         self?.coverImageView.setGifImage(gif)
-                    }
-                    else {
+                    } else {
                         self?.coverImageView.image = originalImage
                     }
                     
                     self?.showError(error)
                 })
-                .disposed(by: disposeBag)
+                .disposed(by: DisposeBag())
             return
         }
         
@@ -75,12 +71,11 @@ extension MyProfilePageVC {
             
         pickerVC.rx.didSelectAnImage
             .flatMap { image -> Observable<UIImage> in
-                
                 let coverEditVC = controllerContainer.resolve(ProfileEditCoverVC.self)!
                 
-                self.viewModel.profile.filter {$0 != nil}.map {$0!}
-                    .bind(to: coverEditVC.profile)
-                    .disposed(by: self.disposeBag)
+//                self.viewModel.profile.filter {$0 != nil}.map {$0!}
+//                    .bind(to: coverEditVC.profile)
+//                    .disposed(by: self.disposeBag)
                 
                 pickerVC.present(coverEditVC, animated: true
                     , completion: {
@@ -100,7 +95,7 @@ extension MyProfilePageVC {
                 return NetworkService.shared.uploadImage(image)
             }
             // Save to db
-            .flatMap {NetworkService.shared.updateMeta(params: ["cover_url": $0])}
+            .flatMap {NetworkService.shared.updateMeta(params: ["cover_image": $0])}
             // Catch error and reverse image
             .subscribe(onError: {[weak self] error in
                 self?.coverImageView.image = originalImage
@@ -108,36 +103,36 @@ extension MyProfilePageVC {
                     self?.showError(error)
                 }
             })
-            .disposed(by: disposeBag)
+            .disposed(by: DisposeBag())
     }
     
     func onUpdateAvatar(delete: Bool = false) {
         // Save image for reversing when update failed
-        let originalImage = headerView.avatarImageView.image
-        let originGif = headerView.avatarImageView.gifImage
+        let originalImage = self.avatarView.image
+        let originGif = self.avatarView.gifImage
         
         // On deleting
         if delete {
-            headerView.avatarImageView.setNonAvatarImageWithId(self.viewModel.profile.value!.username ?? self.viewModel.profile.value!.userId)
-            NetworkService.shared.updateMeta(params: ["avatar_url": ""])
+            self.avatarView.setNonAvatarImageWithId(UserDefaults.standard.string(forKey: Config.currentUserNameKey) ?? UserDefaults.standard.string(forKey: Config.currentUserIDKey) ?? "XXX")
+            
+            NetworkService.shared.updateMeta(params: ["profile_image": ""])
                 .subscribe(onError: {[weak self] error in
                     if let gif = originGif {
-                        self?.headerView.avatarImageView.setGifImage(gif)
-                    }
-                    else {
-                        self?.headerView.avatarImageView.image = originalImage
+                        self?.avatarView.setGifImage(gif)
+                    } else {
+                        self?.avatarView.image = originalImage
                     }
                     
                     self?.showError(error)
                 })
-                .disposed(by: disposeBag)
+                .disposed(by: DisposeBag())
             return
         }
         
         // On updating
         let chooseAvatarVC = controllerContainer.resolve(ProfileChooseAvatarVC.self)!
         self.present(chooseAvatarVC, animated: true, completion: {
-            chooseAvatarVC.viewModel.avatar.accept(self.headerView.avatarImageView.image)
+            chooseAvatarVC.viewModel.avatar.accept(self.avatarView.image)
         })
         
         return chooseAvatarVC.viewModel.didSelectImage
@@ -145,76 +140,16 @@ extension MyProfilePageVC {
             .map {$0!}
             // Upload image
             .flatMap { image -> Single<String> in
-                self.headerView.avatarImageView.image = image
+                self.avatarView.image = image
                 return NetworkService.shared.uploadImage(image)
             }
             // Save to db
-            .flatMap {NetworkService.shared.updateMeta(params: ["avatar_url": $0])}
+            .flatMap {NetworkService.shared.updateMeta(params: ["profile_image": $0])}
             // Catch error and reverse image
             .subscribe(onError: {[weak self] error in
-                self?.headerView.avatarImageView.image = originalImage
+                self?.avatarView.image = originalImage
                 self?.showError(error)
             })
-            .disposed(by: disposeBag)
-    }
-    
-    // MARK: - Biography
-    @objc func addBioButtonDidTouch(_ sender: Any) {
-        self.onUpdateBio(new: true)
-    }
-    
-    @objc func bioLabelDidTouch(_ sender: Any) {
-        showCommunActionSheet(
-            title: String(format: "%@ %@", "change".localized().uppercaseFirst, "profile description".localized()),
-            actions: [
-                CommunActionSheet.Action(
-                    title: "edit".localized().uppercaseFirst,
-                    icon: UIImage(named: "edit"),
-                    handle: {[unowned self] in
-                        self.onUpdateBio()
-                }),
-                CommunActionSheet.Action(
-                    title: "delete".localized().uppercaseFirst,
-                    icon: UIImage(named: "delete"),
-                    handle: {[unowned self] in
-                        self.onUpdateBio(delete: true)
-                    },
-                    tintColor: .red
-                )
-        ])
-    }
-    
-    func onUpdateBio(new: Bool = false, delete: Bool = false) {
-        // Save original bio for reversing
-        let originalBio = headerView.descriptionLabel.text
-        
-        // On deleting
-        if delete {
-            headerView.descriptionLabel.text = nil
-            NetworkService.shared.updateMeta(params: ["biography": ""])
-                .subscribe(onError: {[weak self] error in
-                    self?.showError(error)
-                    self?.headerView.descriptionLabel.text = originalBio
-                })
-                .disposed(by: disposeBag)
-            return
-        }
-        
-        let editBioVC = MyProfileEditBioVC()
-        if !new {
-            editBioVC.bio = headerView.descriptionLabel.text
-        }
-        self.present(editBioVC, animated: true, completion: nil)
-        
-        editBioVC.didConfirm
-            .flatMap {bio -> Completable in
-                self.headerView.descriptionLabel.text = bio
-                return NetworkService.shared.updateMeta(params: ["biography": bio])
-            }
-            .subscribe(onError: {[weak self] error in
-                self?.headerView.descriptionLabel.text = originalBio
-                self?.showError(error)
-            })
-            .disposed(by: disposeBag)
+            .disposed(by: DisposeBag())
     }
 }

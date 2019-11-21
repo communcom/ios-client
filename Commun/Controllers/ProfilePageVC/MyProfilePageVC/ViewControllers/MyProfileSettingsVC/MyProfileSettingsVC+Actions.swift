@@ -14,6 +14,13 @@ extension MyProfileSettingsVC {
         action.handle?()
     }
     
+        @objc func showEditProfile() {
+            let profileEditVC = controllerContainer.resolve(ProfileEditViewController.self)!
+            navigationController?.pushViewController(profileEditVC)
+//            let navVC = UINavigationController(rootViewController: ProfileEditViewController())
+//            show(navVC, sender: nil)
+        }
+
     @objc func selectLanguage() {
         let navVC = BaseNavigationController(rootViewController: SelectLanguageVC())
         present(navVC, animated: true, completion: nil)

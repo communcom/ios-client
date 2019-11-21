@@ -45,6 +45,21 @@ extension UIImageView {
         }
     }
     
+    func setCover(urlString: String?, namePlaceHolder: String = "ProfilePageCover") {
+         // Cover image
+         if let coverUrlValue = urlString {
+             sd_setImage(with: URL(string: coverUrlValue), placeholderImage: UIImage(named: namePlaceHolder)) { [weak self] (_, error, _, _) in
+                 if (error != nil) {
+                     // Placeholder image
+                     self?.image = .placeholder
+                 }
+             }
+         } else {
+             // Placeholder image
+             self.image = .placeholder
+         }
+     }
+
     func setImageDetectGif(with urlString: String?, completed: SDExternalCompletionBlock? = nil) {
         guard let urlString = urlString,
             let url = URL(string: urlString)

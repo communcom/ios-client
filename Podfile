@@ -55,6 +55,7 @@ def common_pods
   pod 'SubviewAttachingTextView', :git => "https://github.com/communcom/SubviewAttachingTextView.git"
   
   pod "ReCaptcha"
+  pod 'IQKeyboardManagerSwift'
 
 end
 

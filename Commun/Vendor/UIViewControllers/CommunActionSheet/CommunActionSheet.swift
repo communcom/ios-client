@@ -21,6 +21,7 @@ class CommunActionSheet: SwipeDownDismissViewController {
         var handle: (() -> Void)?
         var tintColor: UIColor = .black
         var marginTop: CGFloat = 0
+        var style: Style = .default
         class TapGesture: UITapGestureRecognizer {
             var action: Action?
         }
@@ -203,7 +204,7 @@ class CommunActionSheet: SwipeDownDismissViewController {
             }
             
             // arrow image for style profile
-            if style == .profile {
+            if action.style == .profile {
                 let nextButton = UIButton.circleGray(imageName: "next-arrow")
                 nextButton.isUserInteractionEnabled = false
                 actionView.addSubview(nextButton)

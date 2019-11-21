@@ -27,7 +27,7 @@ class BlacklistCell: SubsItemCell {
             avatarImageView.setAvatar(urlString: nil, namePlaceHolder: community.name)
             nameLabel.text = community.name
             actionButton.isEnabled = !(community.isBeingUnblocked ?? false)
-            actionButton.setTitle((community.isBlocked ?? true) ? "unblock".localized().uppercaseFirst : "reblock".localized().uppercaseFirst, for: .normal)
+            actionButton.setTitle((community.isBlocked ?? true) ? "unhide".localized().uppercaseFirst : "hide".localized().uppercaseFirst, for: .normal)
             actionButton.backgroundColor = !(community.isBlocked ?? true) ? #colorLiteral(red: 0.9525656104, green: 0.9605062604, blue: 0.9811610579, alpha: 1) : .appMainColor
             actionButton.setTitleColor(!(community.isBlocked ?? true) ? .appMainColor : .white , for: .normal)
         }
@@ -58,10 +58,21 @@ class BlacklistCell: SubsItemCell {
         // Prepare request
         var request: Single<String>
         if originIsBlocked {
-            request = RestAPIManager.instance.rx.unblock(id)
+            switch item! {
+            case .user(_):
+                request = RestAPIManager.instance.rx.unblock(id)
+            case .community(_):
+                request = RestAPIManager.instance.rx.unhideCommunity(id)
+            }
+            
         }
         else {
-            request = RestAPIManager.instance.rx.block(id)
+            switch item! {
+            case .user(_):
+                request = RestAPIManager.instance.rx.block(id)
+            case .community(_):
+                request = RestAPIManager.instance.rx.hideCommunity(id)
+            }
         }
         
         // Send request

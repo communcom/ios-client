@@ -55,41 +55,43 @@ extension BasicEditorVC {
     
     func bindAttachments() {
         _viewModel.attachments.skip(1)
-            .subscribe(onNext: {[unowned self] (attachments) in
+            .subscribe(onNext: {[weak self] (attachments) in
+                guard let strongSelf = self else {return}
+                
                 // remove bottom constraint
-                if let bottomConstraint = self.contentView.constraints.first(where: {$0.firstAttribute == .bottom && ($0.firstItem as? BasicEditorTextView) == self.contentTextView})
+                if let bottomConstraint = strongSelf.contentView.constraints.first(where: {$0.firstAttribute == .bottom && ($0.firstItem as? BasicEditorTextView) == strongSelf.contentTextView})
                 {
-                    self.contentView.removeConstraint(bottomConstraint)
+                    strongSelf.contentView.removeConstraint(bottomConstraint)
                 }
                 
-                self.attachmentsView.removeFromSuperview()
-                self.attachmentsView.removeAllConstraints()
+                strongSelf.attachmentsView.removeFromSuperview()
+                strongSelf.attachmentsView.removeAllConstraints()
                 
                 // if no attachment is attached
                 if attachments.count == 0 {
-                    self.layoutBottomContentTextView()
+                    strongSelf.layoutBottomContentTextView()
                     return
                 }
                 
                 // construct attachmentsView
-                self.attachmentsView = AttachmentsView(forAutoLayout: ())
-                self.attachmentsView.didRemoveAttachmentAtIndex = {[weak self] index in
+                strongSelf.attachmentsView = AttachmentsView(forAutoLayout: ())
+                strongSelf.attachmentsView.didRemoveAttachmentAtIndex = {[weak self] index in
                     if self?._viewModel.attachments.value[index].attributes?.url == self?.link {
                         self?.link = nil
                     }
                     self?._viewModel.removeAttachment(at: index)
                 }
-                self.contentView.addSubview(self.attachmentsView)
-                self.attachmentsView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0), excludingEdge: .top)
-                self.attachmentsView.autoPinEdge(.top, to: .bottom, of: self.contentTextViewCountLabel, withOffset: 16)
+                strongSelf.contentView.addSubview(strongSelf.attachmentsView)
+                strongSelf.attachmentsView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0), excludingEdge: .top)
+                strongSelf.attachmentsView.autoPinEdge(.top, to: .bottom, of: strongSelf.contentTextViewCountLabel, withOffset: 16)
                 
-                var height = self.view.bounds.width / 377 * 200
+                var height = strongSelf.view.bounds.width / 377 * 200
                 if attachments.count > 2  {
                     height = height + height / 2
                 }
-                self.attachmentsView.autoSetDimension(.height, toSize: height)
+                strongSelf.attachmentsView.autoSetDimension(.height, toSize: height)
                 
-                self.attachmentsView.setUp(with: attachments)
+                strongSelf.attachmentsView.setUp(with: attachments)
             })
             .disposed(by: disposeBag)
     }

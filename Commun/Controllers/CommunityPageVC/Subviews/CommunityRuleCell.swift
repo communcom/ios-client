@@ -15,7 +15,7 @@ class CommunityRuleCell: CommunityPageCell {
     var rule: ResponseAPIContentGetCommunityRule?
     
     // MARK: - Subviews
-    lazy var titleLabel = UILabel.with(text: "2. Content should be Safe for Work", textSize: 15, weight: .bold)
+    lazy var titleLabel = UILabel.with(text: "2. Content should be Safe for Work", textSize: 15, weight: .bold, numberOfLines: 0)
     lazy var contentLabel = UILabel.with(text: "All content (title, articles, video, image, website, etc.) must be SFW: Safe For Work. Content that is NSFW: Not Safe For Work, is banned. This rule applies to all posts and comments.", textSize: 15, numberOfLines: 0)
     lazy var expandButton = UIButton.circleGray(imageName: "rule_expand")
     
@@ -37,7 +37,10 @@ class CommunityRuleCell: CommunityPageCell {
         expandButton.addTarget(self, action: #selector(expandButtonDidTouch(_:)), for: .touchUpInside)
         
         containerView.addSubview(contentLabel)
-        contentLabel.autoPinEdge(.top, to: .bottom, of: expandButton, withOffset: 0)
+        contentLabel.topAnchor.constraint(greaterThanOrEqualTo: expandButton.bottomAnchor, constant: 8)
+            .isActive = true
+        contentLabel.topAnchor.constraint(greaterThanOrEqualTo: titleLabel.bottomAnchor)
+            .isActive = true
         contentLabel.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(inset: 16), excludingEdge: .top)
     }
     

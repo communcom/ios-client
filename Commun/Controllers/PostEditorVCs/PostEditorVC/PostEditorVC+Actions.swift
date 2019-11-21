@@ -240,8 +240,8 @@ extension PostEditorVC {
                     // if creating post
                 else {
                     // show post page
-                    #warning("CommunityId missing")
-                    let postPageVC = PostPageVC(userId: userId, permlink: permlink, communityId: "")
+                    guard let communityId = self.viewModel.community.value?.communityId else {return}
+                    let postPageVC = PostPageVC(userId: userId, permlink: permlink, communityId: communityId)
                     self.dismiss(animated: true) {
                         UIApplication.topViewController()?.show(postPageVC, sender: nil)
                     }
