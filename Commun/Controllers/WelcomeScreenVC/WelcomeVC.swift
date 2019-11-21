@@ -56,6 +56,6 @@ class WelcomeVC: UIViewController {
     }
     
     @IBAction func signUpButtonTap(_ sender: Any) {
-        navigateToSignUp()
+        self.navigateToSignUp()
     }
 }
