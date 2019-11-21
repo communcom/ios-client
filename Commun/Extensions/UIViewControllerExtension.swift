@@ -146,6 +146,7 @@ extension UIViewController {
             let tabBarVC = tabBarController as? TabBarVC
         {
             tabBarVC.switchTab(index: tabBarVC.profileTabIndex)
+            tabBarVC.selectedViewController?.view.shake()
         } else {
             self.view.shake()
         }
