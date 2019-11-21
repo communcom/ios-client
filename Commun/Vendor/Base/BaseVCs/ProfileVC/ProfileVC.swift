@@ -158,8 +158,9 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
             showTitle(false)
         }
     }
-    
+
     func showTitle(_ show: Bool, animated: Bool = false) {
+        baseNavigationController?.changeStatusBarStyle(show ? .default : .lightContent)
         coverImageView.isHidden = show
         UIView.animate(withDuration: animated ? 0.3: 0) {
             self.navigationController?.navigationBar.subviews.first?.backgroundColor = show ? .white: .clear

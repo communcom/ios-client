@@ -10,8 +10,20 @@ import UIKit
 
 final class BaseNavigationController: UINavigationController {
     weak var tabBarVC: TabBarVC?
-    // MARK: - Lifecycle
-    
+    var style: UIStatusBarStyle = .default
+
+    // MARK: - Status Bar
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return self.style
+    }
+
+    func changeStatusBarStyle(_ style: UIStatusBarStyle) {
+        self.style = style
+        setNeedsStatusBarAppearanceUpdate()
+    }
+
+    // MARK: - Init
+
     init(rootViewController: UIViewController, tabBarVC: TabBarVC? = nil) {
         self.tabBarVC = tabBarVC
         super.init(rootViewController: rootViewController)
