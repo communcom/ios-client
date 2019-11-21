@@ -61,8 +61,9 @@ class PostPageViewModel: CommentsViewModel {
                 }
                 throw error
             })
-            .asObservable()
-            .bind(to: post)
+            .subscribe(onSuccess: { (post) in
+                self.post.accept(post)
+            })
             .disposed(by: disposeBag)
     }
     
