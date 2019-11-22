@@ -48,9 +48,6 @@ class ListViewController<T: ListItemType>: BaseViewController {
             searchController?.searchBar.placeholder = searchPlaceholder ?? "search".localized().uppercaseFirst
             navigationItem.searchController = searchController
             definesPresentationContext = true
-            
-            // config viewModel
-            viewModel.searchResult = BehaviorRelay<[T]>(value: [])
         }
         
         // pull to refresh
@@ -74,16 +71,7 @@ class ListViewController<T: ListItemType>: BaseViewController {
     }
     
     func bindItems() {
-        var observable: Observable<[T]>
-        
-        if let searchResult = viewModel.searchResult {
-            observable = Observable.merge(viewModel!.items.asObservable(), searchResult.asObservable())
-        }
-        else {
-            observable = viewModel.items.asObservable()
-        }
-        
-        observable
+        viewModel.items
             .map {[ListSection(model: "", items: $0)]}
             .bind(to: tableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
@@ -113,10 +101,18 @@ class ListViewController<T: ListItemType>: BaseViewController {
     func bindSearchController() {
         searchController?.searchBar.rx.text.orEmpty
             .skip(1)
-            .debounce(0.3, scheduler: MainScheduler.instance)
-            .map {$0.lowercased()}
-            .subscribe(onNext: { (keyword) in
-                self.search(keyword: keyword)
+            .throttle(0.5, scheduler: MainScheduler.instance)
+            .distinctUntilChanged()
+            .flatMapLatest {Observable<String>.just($0.lowercased())}
+            .subscribe(onNext: { (query) in
+                if query.isEmpty {
+                    self.viewModel.fetcher.search = nil
+                    self.viewModel.reload()
+                    return
+                }
+                
+                self.viewModel.fetcher.search = query
+                self.viewModel.reload()
             })
             .disposed(by: disposeBag)
     }
@@ -161,13 +157,4 @@ class ListViewController<T: ListItemType>: BaseViewController {
         viewModel.reload()
     }
     
-    func search(keyword: String) {
-        if keyword.isEmpty {
-            viewModel.items.accept(viewModel.items.value)
-            return
-        }
-        print("Performing search with keyword: \(keyword)")
-        // test
-        viewModel.searchResult?.accept([])
-    }
 }

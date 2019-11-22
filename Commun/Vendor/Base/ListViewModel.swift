@@ -20,8 +20,6 @@ class ListViewModel<T: ListItemType>: BaseViewModel {
         return fetcher.state
     }
     
-    var searchResult: BehaviorRelay<[T]>?
-    
     // MARK: - Filter & Fetcher
     public var fetcher: ListFetcher<T>
     
