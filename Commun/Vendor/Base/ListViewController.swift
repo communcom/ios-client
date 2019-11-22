@@ -9,6 +9,7 @@
 import UIKit
 import RxSwift
 import RxDataSources
+import RxCocoa
 
 class ListViewController<T: ListItemType>: BaseViewController {
     // MARK: - Nested type
@@ -99,10 +100,19 @@ class ListViewController<T: ListItemType>: BaseViewController {
     
     func bindSearchController() {
         searchController?.searchBar.rx.text.orEmpty
-            .debounce(0.3, scheduler: MainScheduler.instance)
-            .map {$0.lowercased()}
-            .subscribe(onNext: { (keyword) in
-                self.search(keyword: keyword)
+            .skip(1)
+            .throttle(0.5, scheduler: MainScheduler.instance)
+            .distinctUntilChanged()
+            .flatMapLatest {Observable<String>.just($0.lowercased())}
+            .subscribe(onNext: { (query) in
+                if query.isEmpty {
+                    self.viewModel.fetcher.search = nil
+                    self.viewModel.reload()
+                    return
+                }
+                
+                self.viewModel.fetcher.search = query
+                self.viewModel.reload()
             })
             .disposed(by: disposeBag)
     }
@@ -147,7 +157,4 @@ class ListViewController<T: ListItemType>: BaseViewController {
         viewModel.reload()
     }
     
-    func search(keyword: String) {
-        print("Performing search with keyword: \(keyword)")
-    }
 }

@@ -8,6 +8,7 @@
 
 import Foundation
 import CyberSwift
+import RxSwift
 
 class CommentsViewController: ListViewController<ResponseAPIContentGetComment>, CommentCellDelegate {
     // MARK: - Properties

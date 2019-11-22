@@ -20,6 +20,10 @@ class CommunitiesListFetcher: ListFetcher<ResponseAPIContentGetCommunity> {
     }
     
     override var request: Single<[ResponseAPIContentGetCommunity]> {
+        if let search = search {
+            return RestAPIManager.instance.getCommunities(type: nil, userId: userId, offset: nil, limit: nil, search: search)
+                .map {$0.items}
+        }
         return RestAPIManager.instance.getCommunities(type: .all, userId: userId, offset: Int(offset), limit: Int(limit))
             .map {$0.items}
     }
