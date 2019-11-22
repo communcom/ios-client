@@ -12,7 +12,7 @@ import Foundation
 class SubsViewController<T: ListItemType>: ListViewController<T> {
     lazy var closeButton = UIButton.circleGray(imageName: "close-x")
     
-    override var tableViewInsets: UIEdgeInsets {
+    override var tableViewMargin: UIEdgeInsets {
         return UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
     }
     

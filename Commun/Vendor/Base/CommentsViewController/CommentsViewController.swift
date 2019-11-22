@@ -29,7 +29,7 @@ class CommentsViewController: ListViewController<ResponseAPIContentGetComment>, 
         let tableView = UITableView(frame: .zero, style: .grouped)
         tableView.configureForAutoLayout()
         view.addSubview(tableView)
-        tableView.autoPinEdgesToSuperviewSafeArea(with: tableViewInsets)
+        tableView.autoPinEdgesToSuperviewSafeArea(with: tableViewMargin)
         tableView.backgroundColor = .white
         return tableView
     }()

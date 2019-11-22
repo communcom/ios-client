@@ -15,8 +15,8 @@ class EditorChooseCommunityVC: SubscriptionsVC {
     var panGestureRecognizer: UIPanGestureRecognizer?
     var interactor: SwipeDownInteractor?
     
-    override var tableViewInsets: UIEdgeInsets {
-        return super.tableViewInsets.insetBy(top: 44)
+    override var tableViewMargin: UIEdgeInsets {
+        return super.tableViewMargin.insetBy(top: 44)
     }
     
     // MARK: - Initializers
