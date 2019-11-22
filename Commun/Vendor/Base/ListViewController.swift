@@ -9,6 +9,7 @@
 import UIKit
 import RxSwift
 import RxDataSources
+import RxCocoa
 
 class ListViewController<T: ListItemType>: BaseViewController {
     // MARK: - Nested type
@@ -47,6 +48,9 @@ class ListViewController<T: ListItemType>: BaseViewController {
             searchController?.searchBar.placeholder = searchPlaceholder ?? "search".localized().uppercaseFirst
             navigationItem.searchController = searchController
             definesPresentationContext = true
+            
+            // config viewModel
+            viewModel.searchResult = BehaviorRelay<[T]>(value: [])
         }
         
         // pull to refresh
@@ -70,7 +74,16 @@ class ListViewController<T: ListItemType>: BaseViewController {
     }
     
     func bindItems() {
-        viewModel.items
+        var observable: Observable<[T]>
+        
+        if let searchResult = viewModel.searchResult {
+            observable = Observable.merge(viewModel!.items.asObservable(), searchResult.asObservable())
+        }
+        else {
+            observable = viewModel.items.asObservable()
+        }
+        
+        observable
             .map {[ListSection(model: "", items: $0)]}
             .bind(to: tableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
@@ -99,6 +112,7 @@ class ListViewController<T: ListItemType>: BaseViewController {
     
     func bindSearchController() {
         searchController?.searchBar.rx.text.orEmpty
+            .skip(1)
             .debounce(0.3, scheduler: MainScheduler.instance)
             .map {$0.lowercased()}
             .subscribe(onNext: { (keyword) in
@@ -148,6 +162,12 @@ class ListViewController<T: ListItemType>: BaseViewController {
     }
     
     func search(keyword: String) {
+        if keyword.isEmpty {
+            viewModel.items.accept(viewModel.items.value)
+            return
+        }
         print("Performing search with keyword: \(keyword)")
+        // test
+        viewModel.searchResult?.accept([])
     }
 }

@@ -8,6 +8,7 @@
 
 import Foundation
 import CyberSwift
+import RxSwift
 
 class CommentsViewController: ListViewController<ResponseAPIContentGetComment>, CommentCellDelegate {
     // MARK: - Properties
@@ -91,7 +92,16 @@ class CommentsViewController: ListViewController<ResponseAPIContentGetComment>, 
     }
     
     override func bindItems() {
-        viewModel.items
+        var observable: Observable<[ResponseAPIContentGetComment]>
+        
+        if let searchResult = viewModel.searchResult {
+            observable = Observable.merge(viewModel!.items.asObservable(), searchResult.asObservable())
+        }
+        else {
+            observable = viewModel.items.asObservable()
+        }
+        
+        observable
             .map {$0.map {ListSection(model: $0.identity, items: [$0] + ($0.children ?? []))}}
             .bind(to: tableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
