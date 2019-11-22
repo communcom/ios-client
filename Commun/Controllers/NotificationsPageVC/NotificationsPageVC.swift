@@ -12,15 +12,15 @@ import RxCocoa
 import CyberSwift
 import RxDataSources
 
-class NotificationsPageVC: ListViewController<ResponseAPIOnlineNotificationData> {
-    
+class NotificationsPageVC: SubsViewController<ResponseAPIOnlineNotificationData> {
     override func setUp() {
         super.setUp()
+        navigationItem.rightBarButtonItem = nil
         // initialize viewModel
         viewModel = NotificationsViewModel()
         
         // configure navigation bar
-        title = "notifications".localized().uppercaseFirst
+        title = "notification".localized().uppercaseFirst
         
         // configure tableView
         tableView.estimatedRowHeight = 80
@@ -104,24 +104,30 @@ class NotificationsPageVC: ListViewController<ResponseAPIOnlineNotificationData>
             .disposed(by: disposeBag)
     }
     
-    override func showLoadingFooter() {
-        tableView.addNotificationsLoadingFooterView()
-    }
-    
-    override func handleListEmpty() {
-        let title = "no notification"
-        let description = "notifications not found"
-        tableView.addEmptyPlaceholderFooterView(title: title.localized().uppercaseFirst, description: description.localized().uppercaseFirst, buttonLabel: "reload".localized().uppercaseFirst)
-        {
-            self.viewModel.reload()
-        }
+//    override func showLoadingFooter() {
+//        tableView.addNotificationsLoadingFooterView()
+//    }
+//
+//    override func handleListEmpty() {
+//        let title = "coming Soon".localized().uppercaseFirst
+//        let description = "notifications not found"
+//        tableView.addEmptyPlaceholderFooterView(title: title.localized().uppercaseFirst, description: description.localized().uppercaseFirst, buttonLabel: nil)
+//        {
+//            self.viewModel.reload()
+//        }
+//    }
+
+    override func handleListError() {
+        let title = "coming Soon"
+        let description = "available in the future"
+        tableView.addEmptyPlaceholderFooterView(title: title.localized().uppercaseFirst, description: description.localized().uppercaseFirst, buttonLabel:nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController?.navigationBar.prefersLargeTitles = true
+        self.navigationController?.navigationBar.prefersLargeTitles = false
         navigationController?.navigationBar.isTranslucent = false
-        self.navigationController?.navigationBar.setTitleFont(.boldSystemFont(ofSize: 17), color:
+        self.navigationController?.navigationBar.setTitleFont(.boldSystemFont(ofSize: 15), color:
             .black)
     }
     
