@@ -31,12 +31,34 @@ class SubscriptionsVC: SubsViewController<ResponseAPIContentGetSubscriptionsItem
                 if let community = subscription.communityValue {
                     let cell = self.tableView.dequeueReusableCell(withIdentifier: "SubscriptionsCommunityCell") as! SubscriptionsCommunityCell
                     cell.setUp(with: community)
+                    
+                    cell.roundedCorner = []
+                    
+                    if indexPath.row == 0 {
+                        cell.roundedCorner.insert([.topLeft, .topRight])
+                    }
+                    
+                    if indexPath.row == self.viewModel.items.value.count - 1 {
+                        cell.roundedCorner.insert([.bottomLeft, .bottomRight])
+                    }
+                    
                     return cell
                 }
                 
                 if let profile = subscription.userValue {
                     let cell = self.tableView.dequeueReusableCell(withIdentifier: "SubscriptionsUserCell") as! SubscriptionsUserCell
                     cell.setUp(with: profile)
+                    
+                    cell.roundedCorner = []
+                    
+                    if indexPath.row == 0 {
+                        cell.roundedCorner.insert([.topLeft, .topRight])
+                    }
+                    
+                    if indexPath.row == self.viewModel.items.value.count - 1 {
+                        cell.roundedCorner.insert([.bottomLeft, .bottomRight])
+                    }
+                    
                     return cell
                 }
                 
