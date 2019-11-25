@@ -12,7 +12,7 @@ class WelcomePageVC: UIPageViewController {
     // MARK: - Properties
     var totalPages = 4
     var pillPageControl: PillPageControl?
-
+        
     var currentPage = 0 {
         didSet {
             if currentPage > self.pages.count - 1 || currentPage < 0 { return }
@@ -40,7 +40,7 @@ class WelcomePageVC: UIPageViewController {
     // MARK: - Class Functions
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Configure views
         self.view.backgroundColor = .white
 
@@ -71,7 +71,7 @@ class WelcomePageVC: UIPageViewController {
         super.viewWillAppear(animated)
         setUpCountdown()
     }
-    
+        
     
     // MARK: - Custom Functions
     func setUpCountdown() {
@@ -112,6 +112,13 @@ class WelcomePageVC: UIPageViewController {
             if newValue == strongSelf.pages.count - 1 {newValue = 0}
             else {newValue += 1}
             strongSelf.currentPage = newValue
+            
+            if let welcomeVC = strongSelf.parent as? WelcomeVC {
+                welcomeVC.nextButton.isHidden           =   newValue == 3   // true
+                welcomeVC.signUpButton.isHidden         =   newValue != 3   // false
+                welcomeVC.topSignInButton.isHidden      =   newValue == 3   // true
+                welcomeVC.bottomSignInButton.isHidden   =   newValue != 3   // false
+            }
         })
         
         RunLoop.current.add(timer!, forMode: .common)

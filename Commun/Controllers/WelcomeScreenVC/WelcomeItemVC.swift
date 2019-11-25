@@ -14,6 +14,7 @@ class WelcomeItemVC: UIViewController {
     // MARK: - Properties
     var item: Int = 0
     
+    
     // MARK: - IBOutlets
     @IBOutlet weak var titleLabel1: UILabel!
     @IBOutlet weak var titleLabel2: UILabel!
@@ -42,12 +43,13 @@ class WelcomeItemVC: UIViewController {
     
     
     // MARK: - Custom Functions
-    func setupItem() {
+    func setupItem() {        
         // set images
         self.imageView.image = UIImage(named: "image-welcome-item-\(item)")
         self.imageViewWidthConstraint.constant = CGFloat.adaptive(width: 310.0)
         self.imageViewTopConstraint.constant = CGFloat.adaptive(height: -70.0)
-        
+        self.describeLabel.text = "welcome-item-\(item)".localized()
+
         switch self.item {
         // All-in-One
         case 1:
@@ -64,7 +66,6 @@ class WelcomeItemVC: UIViewController {
                                   isMultiLines:     false)
             
             self.titleLabel3.isHidden = true
-            self.describeLabel.text = "welcome-item-\(item)".localized()
             
         // Monetize
         case 2:
@@ -81,7 +82,6 @@ class WelcomeItemVC: UIViewController {
                                   isMultiLines:     false)
             
             self.titleLabel3.isHidden = true
-            self.describeLabel.text = "welcome-item-\(item)".localized()
             
         // Owned by users
         case 3:
@@ -98,7 +98,6 @@ class WelcomeItemVC: UIViewController {
                                   isMultiLines:     false)
             
             self.titleLabel1.isHidden = true
-            self.describeLabel.text = "welcome-item-\(item)".localized()
             
         // Welcome
         default:
@@ -120,7 +119,6 @@ class WelcomeItemVC: UIViewController {
                                   alignment:        .center,
                                   isMultiLines:     false)
             
-            self.describeLabel.text = "welcome-item-\(item)".localized()
             self.imageViewWidthConstraint.constant = UIScreen.main.bounds.width
             self.imageViewTopConstraint.constant = -20.0
         }
