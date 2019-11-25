@@ -292,6 +292,7 @@
 		BC597A6B238BBDAC00103F4F /* FittingSizePresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC597A6A238BBDAC00103F4F /* FittingSizePresentationController.swift */; };
 		BC597A6E238BC7C200103F4F /* PostsFilterVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC597A6D238BC7C200103F4F /* PostsFilterVC.swift */; };
 		BC597A70238BD03C00103F4F /* FilterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC597A6F238BD03C00103F4F /* FilterCell.swift */; };
+		BC597A77238BEC2700103F4F /* FTUEVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC597A76238BEC2700103F4F /* FTUEVC.swift */; };
 		BC619B11237268910005BB94 /* CommunitiesListFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC619B10237268910005BB94 /* CommunitiesListFetcher.swift */; };
 		BC619B1323726A340005BB94 /* CommunitiesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC619B1223726A340005BB94 /* CommunitiesViewModel.swift */; };
 		BC619B1523726ADF0005BB94 /* CommunitiesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC619B1423726ADF0005BB94 /* CommunitiesVC.swift */; };
@@ -732,6 +733,7 @@
 		BC597A6A238BBDAC00103F4F /* FittingSizePresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FittingSizePresentationController.swift; sourceTree = "<group>"; };
 		BC597A6D238BC7C200103F4F /* PostsFilterVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostsFilterVC.swift; sourceTree = "<group>"; };
 		BC597A6F238BD03C00103F4F /* FilterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterCell.swift; sourceTree = "<group>"; };
+		BC597A76238BEC2700103F4F /* FTUEVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTUEVC.swift; sourceTree = "<group>"; };
 		BC619B10237268910005BB94 /* CommunitiesListFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunitiesListFetcher.swift; sourceTree = "<group>"; };
 		BC619B1223726A340005BB94 /* CommunitiesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunitiesViewModel.swift; sourceTree = "<group>"; };
 		BC619B1423726ADF0005BB94 /* CommunitiesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunitiesVC.swift; sourceTree = "<group>"; };
@@ -1163,6 +1165,7 @@
 				3BB48AD422D645FF00F11B6A /* BoardingVC.swift */,
 				3BB48ACF22D5F84D00F11B6A /* SetPasscodeVC.swift */,
 				3B82D0F622D8D56A004EE848 /* EnableBiometricsVC.swift */,
+				BC597A76238BEC2700103F4F /* FTUEVC.swift */,
 				3B0506ED22D7309900B4E4A3 /* KeysVC.swift */,
 				3BB342AF22CA5CA6009546B2 /* PickupAvatarVC.swift */,
 				3BB342B322CA7412009546B2 /* CreateBioVC.swift */,
@@ -2748,6 +2751,7 @@
 				3B289B972346E51600598407 /* UIButton+PureLayout.swift in Sources */,
 				571B14F4223A935C00630C8F /* AppDelegate.swift in Sources */,
 				3B3C8B9C2347928D00D8BADB /* PostEditorVC+Layout.swift in Sources */,
+				BC597A77238BEC2700103F4F /* FTUEVC.swift in Sources */,
 				3B0E9C6C2270634B002AB1C2 /* ProfileChooseAvatarVC.swift in Sources */,
 				3B61AC3422E1CA8A00F608AF /* LAContext.swift in Sources */,
 				3B2538B1231E318400D0B1DA /* StateButton.swift in Sources */,
