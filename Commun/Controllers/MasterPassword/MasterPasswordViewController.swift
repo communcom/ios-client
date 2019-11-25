@@ -63,6 +63,12 @@ class MasterPasswordViewController: UIViewController {
         }
     }
     
+    @IBOutlet weak var masterPasswordTextField: UITextField! {
+        didSet {
+            
+        }
+    }
+    
     @IBOutlet weak var backupiCloudButton: UIButton! {
         didSet {
             self.backupiCloudButton.backgroundColor = #colorLiteral(red: 0.4156862745, green: 0.5019607843, blue: 0.9607843137, alpha: 1)
@@ -104,7 +110,13 @@ class MasterPasswordViewController: UIViewController {
     
     // MARK: - Actions
     @IBAction func copyButtonTapped(_ sender: Any) {
-    
+        self.view.endEditing(true)
+        self.showIndetermineHudWithMessage("copy master password to clipboard".localized().uppercaseFirst)
+        UIPasteboard.general.string = self.masterPasswordTextField.text?.trimmingCharacters(in: .whitespaces)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            self.hideHud()
+        }
     }
     
     @IBAction func backupButtonTapped(_ sender: Any) {

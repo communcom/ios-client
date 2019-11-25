@@ -112,4 +112,6 @@ class MasterPasswordAttention: UIView {
         display(false)
         handlerHide!()
     }
+    
+    
 }
