@@ -45,14 +45,14 @@ extension SignUpRouter where Self: UIViewController {
     func resetSignUpProcess() {
         try? KeychainManager.deleteUser()
         // Dismiss all screen
-        popToSignUpVC()
+        popToPreviousVC()
     }
 }
 
 extension SignUpRouter where Self: UIViewController {
     // MARK: - Back button
     func setBackButtonToSignUpVC() {
-        let newBackButton = UIBarButtonItem(image: UIImage(named: "icon-back-bar-button-black-default"), style: .plain, target: self, action: #selector(popToSignUpVC))
+        let newBackButton = UIBarButtonItem(image: UIImage(named: "icon-back-bar-button-black-default"), style: .plain, target: self, action: #selector(popToPreviousVC))
         newBackButton.tintColor = .black
         
         self.navigationItem.hidesBackButton = true

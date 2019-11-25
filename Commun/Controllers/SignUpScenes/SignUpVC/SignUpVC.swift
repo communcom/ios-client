@@ -91,7 +91,7 @@ class SignUpVC: UIViewController, SignUpRouter {
         self.title = "sign up".localized().uppercaseFirst
         self.navigationController?.navigationBar.prefersLargeTitles = true
 
-        self.setBackButtonToSignUpVC()
+        self.setNavBarBackButton()
         self.setupBindings()
         self.setupActions()
         
