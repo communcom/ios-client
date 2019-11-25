@@ -13,7 +13,7 @@ import RxCocoa
 class PostsViewModel: ListViewModel<ResponseAPIContentGetPost> {
     var filter: BehaviorRelay<PostsListFetcher.Filter>!
     
-    convenience init(filter: PostsListFetcher.Filter = PostsListFetcher.Filter(feedTypeMode: .new, feedType: .popular, sortType: .all)) {
+    convenience init(filter: PostsListFetcher.Filter = PostsListFetcher.Filter(feedTypeMode: .new, feedType: .time)) {
         let fetcher = PostsListFetcher(filter: filter)
         self.init(fetcher: fetcher)
         self.filter = BehaviorRelay<PostsListFetcher.Filter>(value: filter)
@@ -26,10 +26,6 @@ class PostsViewModel: ListViewModel<ResponseAPIContentGetPost> {
     
     func bindFilter() {
         filter.skip(1).distinctUntilChanged()
-            .filter {filter in
-                if filter.feedTypeMode != .new && filter.feedType == .popular {return false}
-                return true
-            }
             .subscribe(onNext: {filter in
                 self.fetcher.reset()
                 (self.fetcher as! PostsListFetcher).filter = filter
