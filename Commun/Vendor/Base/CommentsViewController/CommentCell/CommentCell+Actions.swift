@@ -99,7 +99,7 @@ extension CommentCell: UITextViewDelegate {
                         title: "report".localized().uppercaseFirst,
                         icon: UIImage(named: "report"),
                         handle: {
-                            #warning("report comment")
+                            self.report()
                         },
                         tintColor: UIColor(hexString: "#ED2C5B")!)
                 ]

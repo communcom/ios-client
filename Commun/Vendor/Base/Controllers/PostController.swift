@@ -204,7 +204,7 @@ extension PostController {
     
     func reportPost() {
         guard let post = post else {return}
-        let vc = PostReportVC(post: post)
+        let vc = ContentReportVC(content: post)
         let nc = BaseNavigationController(rootViewController: vc)
         
         nc.modalPresentationStyle = .custom

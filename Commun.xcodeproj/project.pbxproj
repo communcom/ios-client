@@ -288,7 +288,7 @@
 		BC529142237941920022EC7F /* CommentTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC529141237941920022EC7F /* CommentTextView.swift */; };
 		BC561E7B238B76A8004C53EB /* ReportVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC561E7A238B76A8004C53EB /* ReportVC.swift */; };
 		BC561E80238B836D004C53EB /* ReportOptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC561E7F238B836D004C53EB /* ReportOptionView.swift */; };
-		BC561E82238B8BCE004C53EB /* PostReportVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC561E81238B8BCE004C53EB /* PostReportVC.swift */; };
+		BC561E82238B8BCE004C53EB /* ContentReportVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC561E81238B8BCE004C53EB /* ContentReportVC.swift */; };
 		BC561E85238B9989004C53EB /* ReportVC+Presentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC561E84238B9989004C53EB /* ReportVC+Presentation.swift */; };
 		BC597A67238B9C2600103F4F /* CustomHeightPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC597A66238B9C2600103F4F /* CustomHeightPresentationController.swift */; };
 		BC619B11237268910005BB94 /* CommunitiesListFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC619B10237268910005BB94 /* CommunitiesListFetcher.swift */; };
@@ -727,7 +727,7 @@
 		BC529141237941920022EC7F /* CommentTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentTextView.swift; sourceTree = "<group>"; };
 		BC561E7A238B76A8004C53EB /* ReportVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportVC.swift; sourceTree = "<group>"; };
 		BC561E7F238B836D004C53EB /* ReportOptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportOptionView.swift; sourceTree = "<group>"; };
-		BC561E81238B8BCE004C53EB /* PostReportVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostReportVC.swift; sourceTree = "<group>"; };
+		BC561E81238B8BCE004C53EB /* ContentReportVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentReportVC.swift; sourceTree = "<group>"; };
 		BC561E84238B9989004C53EB /* ReportVC+Presentation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ReportVC+Presentation.swift"; sourceTree = "<group>"; };
 		BC597A66238B9C2600103F4F /* CustomHeightPresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomHeightPresentationController.swift; sourceTree = "<group>"; };
 		BC619B10237268910005BB94 /* CommunitiesListFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunitiesListFetcher.swift; sourceTree = "<group>"; };
@@ -1881,7 +1881,7 @@
 			isa = PBXGroup;
 			children = (
 				BC561E83238B8F6B004C53EB /* Base */,
-				BC561E81238B8BCE004C53EB /* PostReportVC.swift */,
+				BC561E81238B8BCE004C53EB /* ContentReportVC.swift */,
 			);
 			path = ReportVCs;
 			sourceTree = "<group>";
@@ -2687,7 +2687,7 @@
 				BC016D44235DA0D400F1319F /* PostCell+Actions.swift in Sources */,
 				BCCB993423756319005252CF /* PostHeaderTextView.swift in Sources */,
 				57B6FC2C224A9F2800BCFDDA /* WelcomeItemVC.swift in Sources */,
-				BC561E82238B8BCE004C53EB /* PostReportVC.swift in Sources */,
+				BC561E82238B8BCE004C53EB /* ContentReportVC.swift in Sources */,
 				BC69F7D5236FDFCF0097F870 /* SubscriptionsVC.swift in Sources */,
 				BC52913823766F080022EC7F /* CommentCell+Actions.swift in Sources */,
 				3BF3817F2331D17900C02123 /* NSRegularExpression.swift in Sources */,
