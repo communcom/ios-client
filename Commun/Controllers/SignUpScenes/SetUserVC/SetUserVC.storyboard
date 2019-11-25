@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15509"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -25,7 +25,7 @@
                                 <rect key="frame" x="0.0" y="44" width="414" height="706"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1Bs-tU-cvl">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="297"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="682"/>
                                         <subviews>
                                             <label clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Create your username" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kdi-h6-fMh" userLabel="Create your username Label">
                                                 <rect key="frame" x="16" y="19" width="177.5" height="20.5"/>
@@ -50,46 +50,25 @@
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                             </textField>
-                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="CwC-cE-JqC">
-                                                <rect key="frame" x="16" y="163.5" width="382" height="125.5"/>
-                                                <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="username must be between 5-32 characters" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YgN-ib-SVj">
-                                                        <rect key="frame" x="0.0" y="0.0" width="382" height="16"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="only alphanumeric, non-uppercased characters, &quot;-&quot; and &quot;.&quot; are allowed" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g0n-yF-who">
-                                                        <rect key="frame" x="0.0" y="21" width="382" height="31.5"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                                        <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="the presence of non-alphanumeric characters side by side is not allowed" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="keP-No-vf5">
-                                                        <rect key="frame" x="0.0" y="57.5" width="382" height="31.5"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                                        <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="non-alphanumeric character cannot be at the beginning or end of a username" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="btT-1y-R1h">
-                                                        <rect key="frame" x="0.0" y="94" width="382" height="31.5"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                                        <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
-                                                </subviews>
-                                            </stackView>
+                                            <button clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b1X-gS-X7L" userLabel="Info Button">
+                                                <rect key="frame" x="330.5" y="106.5" width="26.5" height="26.5"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" secondItem="b1X-gS-X7L" secondAttribute="height" multiplier="1:1" id="YAD-Kt-iib"/>
+                                                </constraints>
+                                                <state key="normal" image="icon-info-button-default"/>
+                                                <connections>
+                                                    <action selector="infoButtonTapped:" destination="IVB-kA-cp0" eventType="touchUpInside" id="SL8-24-FzD"/>
+                                                </connections>
+                                            </button>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                         <constraints>
-                                            <constraint firstItem="CwC-cE-JqC" firstAttribute="top" secondItem="Zrb-vq-uwO" secondAttribute="bottom" constant="16" id="8NO-PI-xwT"/>
-                                            <constraint firstAttribute="bottom" secondItem="CwC-cE-JqC" secondAttribute="bottom" constant="8" id="8oz-k2-uyi"/>
                                             <constraint firstAttribute="trailing" secondItem="Zrb-vq-uwO" secondAttribute="trailing" constant="42" id="C93-uM-Abs"/>
+                                            <constraint firstItem="b1X-gS-X7L" firstAttribute="centerY" secondItem="Zrb-vq-uwO" secondAttribute="centerY" id="CSy-jZ-P4a"/>
                                             <constraint firstItem="Kdi-h6-fMh" firstAttribute="top" secondItem="1Bs-tU-cvl" secondAttribute="top" constant="19" id="KZZ-qD-Eg9"/>
                                             <constraint firstItem="Zrb-vq-uwO" firstAttribute="leading" secondItem="1Bs-tU-cvl" secondAttribute="leading" constant="42" id="RSF-Vy-4oX"/>
                                             <constraint firstItem="Kdi-h6-fMh" firstAttribute="leading" secondItem="1Bs-tU-cvl" secondAttribute="leading" constant="16" id="biq-nY-VFB"/>
-                                            <constraint firstItem="CwC-cE-JqC" firstAttribute="leading" secondItem="1Bs-tU-cvl" secondAttribute="leading" constant="16" id="klw-J4-BsR"/>
-                                            <constraint firstAttribute="trailing" secondItem="CwC-cE-JqC" secondAttribute="trailing" constant="16" id="kuQ-ug-2vo"/>
+                                            <constraint firstItem="b1X-gS-X7L" firstAttribute="trailing" secondItem="Zrb-vq-uwO" secondAttribute="trailing" constant="-15" id="gpo-1P-Qvf" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                                             <constraint firstItem="Zrb-vq-uwO" firstAttribute="top" secondItem="Kdi-h6-fMh" secondAttribute="bottom" constant="52" id="nhl-BW-piQ"/>
                                         </constraints>
                                     </view>
@@ -98,6 +77,7 @@
                                     <constraint firstAttribute="bottom" secondItem="1Bs-tU-cvl" secondAttribute="bottom" id="3uH-NU-qM1"/>
                                     <constraint firstItem="1Bs-tU-cvl" firstAttribute="leading" secondItem="XTl-Sh-F4Y" secondAttribute="leading" id="8zL-2t-8fa"/>
                                     <constraint firstItem="1Bs-tU-cvl" firstAttribute="top" secondItem="XTl-Sh-F4Y" secondAttribute="top" id="UML-Vs-LKR"/>
+                                    <constraint firstItem="TTw-bP-xFD" firstAttribute="bottom" secondItem="1Bs-tU-cvl" secondAttribute="bottom" constant="24" id="blt-fu-fKH" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                                     <constraint firstAttribute="trailing" secondItem="1Bs-tU-cvl" secondAttribute="trailing" id="qBA-h4-m3K"/>
                                     <constraint firstItem="1Bs-tU-cvl" firstAttribute="top" secondItem="TTw-bP-xFD" secondAttribute="top" id="zUJ-u7-umr"/>
                                 </constraints>
@@ -123,6 +103,7 @@
                             <constraint firstItem="XTl-Sh-F4Y" firstAttribute="leading" secondItem="j0s-Hr-oj6" secondAttribute="leading" id="l8d-Mv-mZP"/>
                             <constraint firstItem="XTl-Sh-F4Y" firstAttribute="trailing" secondItem="j0s-Hr-oj6" secondAttribute="trailing" id="rSG-97-jSp"/>
                             <constraint firstItem="596-PJ-wLC" firstAttribute="centerX" secondItem="x7M-Uk-FDw" secondAttribute="centerX" id="t73-Se-8ey"/>
+                            <constraint firstItem="b1X-gS-X7L" firstAttribute="width" secondItem="x7M-Uk-FDw" secondAttribute="width" multiplier="24:375" id="uUI-ij-AUn"/>
                             <constraint firstItem="XTl-Sh-F4Y" firstAttribute="top" secondItem="j0s-Hr-oj6" secondAttribute="top" id="wad-uS-qQE"/>
                             <constraint firstItem="596-PJ-wLC" firstAttribute="top" secondItem="XTl-Sh-F4Y" secondAttribute="bottom" constant="10" id="zWV-sM-v3n"/>
                         </constraints>
@@ -144,13 +125,9 @@
                         </connections>
                     </view>
                     <connections>
-                        <outlet property="creatUsernameLabel" destination="Kdi-h6-fMh" id="k8w-Rw-VW2"/>
+                        <outlet property="createUsernameLabel" destination="Kdi-h6-fMh" id="k8w-Rw-VW2"/>
                         <outlet property="nextButton" destination="596-PJ-wLC" id="CqU-Ch-Lhn"/>
                         <outlet property="userNameTextField" destination="Zrb-vq-uwO" id="q1i-ss-1WT"/>
-                        <outletCollection property="traitLabels" destination="YgN-ib-SVj" collectionClass="NSMutableArray" id="nLh-TI-ilX"/>
-                        <outletCollection property="traitLabels" destination="g0n-yF-who" collectionClass="NSMutableArray" id="utY-cJ-MXq"/>
-                        <outletCollection property="traitLabels" destination="keP-No-vf5" collectionClass="NSMutableArray" id="liV-TK-jhJ"/>
-                        <outletCollection property="traitLabels" destination="btT-1y-R1h" collectionClass="NSMutableArray" id="Pwj-QT-36w"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8wN-X2-GYM" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -163,4 +140,7 @@
             <point key="canvasLocation" x="37.681159420289859" y="319.41964285714283"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="icon-info-button-default" width="24" height="24"/>
+    </resources>
 </document>

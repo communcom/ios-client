@@ -9,13 +9,14 @@
 import UIKit
 import RxSwift
 import RxCocoa
-import CyberSwift
 
 class SetUserVC: UIViewController, SignUpRouter {
     // MARK: - Properties
     var viewModel: SetUserViewModel!
     let disposeBag = DisposeBag()
 
+    var userNameRulesView: UserNameRulesView = UserNameRulesView(frame: CGRect(x: 10.0 * Config.widthRatio, y: 0.0, width: 355.0 * Config.widthRatio, height: 386.0 * Config.heightRatio))
+    
     
     // MARK: - IBOutlets
     @IBOutlet weak var creatUsernameLabel: UILabel! {
@@ -37,6 +38,7 @@ class SetUserVC: UIViewController, SignUpRouter {
     
     @IBOutlet weak var nextButton: StepButton!
     
+    
     // MARK: - Class Functions
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,11 +50,19 @@ class SetUserVC: UIViewController, SignUpRouter {
         self.title = "sign up".localized().uppercaseFirst
         self.navigationController?.navigationBar.prefersLargeTitles = true
         
+        self.view.addSubview(self.userNameRulesView)
+        self.userNameRulesView.display(false)
+        
+        self.userNameRulesView.handlerHide = {
+            self.showBlackoutView(false)
+        }
+
         setBackButtonToSignUpVC()
         
         self.bind()
     }
 
+    
     // MARK: - Custom Functions
     func bind() {
         userNameTextField.rx.text.orEmpty
@@ -72,5 +82,13 @@ class SetUserVC: UIViewController, SignUpRouter {
                 }
             })
             .disposed(by: disposeBag)
+    }
+    
+    
+    // MARK: - Actions
+    @IBAction func infoButtonTapped(_ sender: UIButton) {
+        self.showBlackoutView(true)
+        self.view.bringSubviewToFront(self.userNameRulesView)
+        self.userNameRulesView.display(true)
     }
 }
