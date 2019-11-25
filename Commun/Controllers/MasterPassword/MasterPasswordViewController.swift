@@ -10,7 +10,8 @@ import UIKit
 
 class MasterPasswordViewController: UIViewController {
     // MARK: - Properties
-    
+    var masterPasswordAttentionView: MasterPasswordAttention = MasterPasswordAttention(frame: CGRect(x: CGFloat.adaptive(width: 10.0), y: 0.0, width: CGFloat.adaptive(width: 355.0), height: CGFloat.adaptive(height: 581.0)))
+
     
     // MARK: - IBOutlets
     @IBOutlet weak var titleLabel1: UILabel! {
@@ -83,6 +84,12 @@ class MasterPasswordViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.view.addSubview(self.masterPasswordAttentionView)
+        self.masterPasswordAttentionView.display(false)
+        
+        self.masterPasswordAttentionView.handlerHide = {
+            self.showBlackoutView(false)
+        }
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -105,6 +112,8 @@ class MasterPasswordViewController: UIViewController {
     }
     
     @IBAction func iSavedButtonTapped(_ sender: Any) {
-    
+        self.showBlackoutView(true)
+        self.view.bringSubviewToFront(self.masterPasswordAttentionView)
+        self.masterPasswordAttentionView.display(true)
     }
 }

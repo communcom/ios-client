@@ -12,6 +12,7 @@
 "add short PIN code"                            =   "add short PIN code";
 "ago"                                           =   "ago";
 "add to favourite"                              =   "add to favourite";
+"attention"                                     =   "attention";
 
 
 // B
@@ -38,6 +39,7 @@
 "create post"                                   =   "create post";
 "create your passcode"                          =   "create your passcode";
 "create your username"                          =   "create your username";
+"continue without backup"                       =   "continue without backup";
 
 
 // D
@@ -118,6 +120,9 @@
 "my communities"                                =   "my communities";
 "my Feed"                                       =   "my Feed";
 "master password"                               =   "master password";
+"master password attention note"                =   "We do not keep master passwords and\nhave no opportunity to restore them.";
+"master password attention describe"            =   "Unfortunately for our comfort, blockchain\ndoesn’t allow us to restore passwords. It means\nthat it’s every user’s responsibility to keep the\npassword in a safe place and be able to access it\nanytime.\nWe strongly recommend you to save your\npassword and make a copy of it.";
+
 
 // N
 "new"                                           =   "new";

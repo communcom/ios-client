@@ -233,6 +233,8 @@
 		B1FA77C9238BBFE3006E57D1 /* SetUserVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B1FA77C8238BBFE2006E57D1 /* SetUserVC.storyboard */; };
 		B1FA77E3238C0B9A006E57D1 /* MasterPassword.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B1FA77E2238C0B9A006E57D1 /* MasterPassword.storyboard */; };
 		B1FA77E5238C0BA7006E57D1 /* MasterPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1FA77E4238C0BA7006E57D1 /* MasterPasswordViewController.swift */; };
+		B1FA77EC238C205F006E57D1 /* MasterPasswordAttention.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1FA77EB238C205F006E57D1 /* MasterPasswordAttention.swift */; };
+		B1FA77EE238C206B006E57D1 /* MasterPasswordAttention.xib in Resources */ = {isa = PBXBuildFile; fileRef = B1FA77ED238C206B006E57D1 /* MasterPasswordAttention.xib */; };
 		BC016D42235DA0D400F1319F /* ArticlePostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC016D39235DA0D400F1319F /* ArticlePostCell.swift */; };
 		BC016D43235DA0D400F1319F /* PostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC016D3B235DA0D400F1319F /* PostCell.swift */; };
 		BC016D44235DA0D400F1319F /* PostCell+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC016D3C235DA0D400F1319F /* PostCell+Actions.swift */; };
@@ -675,6 +677,8 @@
 		B1FA77C8238BBFE2006E57D1 /* SetUserVC.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SetUserVC.storyboard; sourceTree = "<group>"; };
 		B1FA77E2238C0B9A006E57D1 /* MasterPassword.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MasterPassword.storyboard; sourceTree = "<group>"; };
 		B1FA77E4238C0BA7006E57D1 /* MasterPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterPasswordViewController.swift; sourceTree = "<group>"; };
+		B1FA77EB238C205F006E57D1 /* MasterPasswordAttention.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterPasswordAttention.swift; sourceTree = "<group>"; };
+		B1FA77ED238C206B006E57D1 /* MasterPasswordAttention.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MasterPasswordAttention.xib; sourceTree = "<group>"; };
 		BC016D39235DA0D400F1319F /* ArticlePostCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticlePostCell.swift; sourceTree = "<group>"; };
 		BC016D3B235DA0D400F1319F /* PostCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostCell.swift; sourceTree = "<group>"; };
 		BC016D3C235DA0D400F1319F /* PostCell+Actions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PostCell+Actions.swift"; sourceTree = "<group>"; };
@@ -1709,10 +1713,20 @@
 		B1FA77E1238C0B79006E57D1 /* MasterPassword */ = {
 			isa = PBXGroup;
 			children = (
+				B1FA77EA238C200F006E57D1 /* Subviews */,
 				B1FA77E2238C0B9A006E57D1 /* MasterPassword.storyboard */,
 				B1FA77E4238C0BA7006E57D1 /* MasterPasswordViewController.swift */,
 			);
 			path = MasterPassword;
+			sourceTree = "<group>";
+		};
+		B1FA77EA238C200F006E57D1 /* Subviews */ = {
+			isa = PBXGroup;
+			children = (
+				B1FA77EB238C205F006E57D1 /* MasterPasswordAttention.swift */,
+				B1FA77ED238C206B006E57D1 /* MasterPasswordAttention.xib */,
+			);
+			path = Subviews;
 			sourceTree = "<group>";
 		};
 		BC016D38235DA0D400F1319F /* ArticlePostCell */ = {
@@ -2351,6 +2365,7 @@
 				B1EA02ED2289882A00835244 /* SF-Pro-Text-Light.otf in Resources */,
 				B1EA02D82289882A00835244 /* SF-Pro-Display-BlackItalic.otf in Resources */,
 				B1EA02F42289882A00835244 /* SF-Pro-Text-SemiboldItalic.otf in Resources */,
+				B1FA77EE238C206B006E57D1 /* MasterPasswordAttention.xib in Resources */,
 				3B2F226A226892C5006B589E /* NotificationCell.xib in Resources */,
 				571B1501223A935D00630C8F /* LaunchScreen.storyboard in Resources */,
 				57A1CA652270FCF000E2A1E3 /* LanguageVC.storyboard in Resources */,
@@ -2689,6 +2704,7 @@
 				BCCC33EE23752C22004E46EF /* CommentsViewController.swift in Sources */,
 				BCCE0AA22367E60A00A183AA /* SubscriptionsViewModel.swift in Sources */,
 				57840A202240DDEB00338FD5 /* Container.swift in Sources */,
+				B1FA77EC238C205F006E57D1 /* MasterPasswordAttention.swift in Sources */,
 				BC016D4E235EA1DE00F1319F /* BaseViewController.swift in Sources */,
 				3BE85D262327A50200C7E7F6 /* GridView.swift in Sources */,
 				BC401E3C2371143F00A53788 /* LeaderAvatarImageView.swift in Sources */,
