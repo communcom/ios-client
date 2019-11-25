@@ -291,6 +291,7 @@
 		BC561E82238B8BCE004C53EB /* ContentReportVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC561E81238B8BCE004C53EB /* ContentReportVC.swift */; };
 		BC561E85238B9989004C53EB /* ReportVC+Presentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC561E84238B9989004C53EB /* ReportVC+Presentation.swift */; };
 		BC597A67238B9C2600103F4F /* CustomHeightPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC597A66238B9C2600103F4F /* CustomHeightPresentationController.swift */; };
+		BC597A6B238BBDAC00103F4F /* FittingSizePresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC597A6A238BBDAC00103F4F /* FittingSizePresentationController.swift */; };
 		BC619B11237268910005BB94 /* CommunitiesListFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC619B10237268910005BB94 /* CommunitiesListFetcher.swift */; };
 		BC619B1323726A340005BB94 /* CommunitiesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC619B1223726A340005BB94 /* CommunitiesViewModel.swift */; };
 		BC619B1523726ADF0005BB94 /* CommunitiesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC619B1423726ADF0005BB94 /* CommunitiesVC.swift */; };
@@ -730,6 +731,7 @@
 		BC561E81238B8BCE004C53EB /* ContentReportVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentReportVC.swift; sourceTree = "<group>"; };
 		BC561E84238B9989004C53EB /* ReportVC+Presentation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ReportVC+Presentation.swift"; sourceTree = "<group>"; };
 		BC597A66238B9C2600103F4F /* CustomHeightPresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomHeightPresentationController.swift; sourceTree = "<group>"; };
+		BC597A6A238BBDAC00103F4F /* FittingSizePresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FittingSizePresentationController.swift; sourceTree = "<group>"; };
 		BC619B10237268910005BB94 /* CommunitiesListFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunitiesListFetcher.swift; sourceTree = "<group>"; };
 		BC619B1223726A340005BB94 /* CommunitiesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunitiesViewModel.swift; sourceTree = "<group>"; };
 		BC619B1423726ADF0005BB94 /* CommunitiesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunitiesVC.swift; sourceTree = "<group>"; };
@@ -1148,6 +1150,7 @@
 				3BB32F1823438D4F006572F3 /* DimmingPresentationController.swift */,
 				BC597A66238B9C2600103F4F /* CustomHeightPresentationController.swift */,
 				3BC6139D23419EFC00075570 /* HalfSizePresentationController.swift */,
+				BC597A6A238BBDAC00103F4F /* FittingSizePresentationController.swift */,
 			);
 			path = UIPresentationControllers;
 			sourceTree = "<group>";
@@ -2786,6 +2789,7 @@
 				3BAE92A922DE553D00E97AE8 /* ScalableLayoutConstraint.swift in Sources */,
 				BCB2A6EC23556E7100B3582B /* ArticleEditorVC+Draft.swift in Sources */,
 				BC016D56235EA33C00F1319F /* ListViewModel.swift in Sources */,
+				BC597A6B238BBDAC00103F4F /* FittingSizePresentationController.swift in Sources */,
 				3B0686302346FFA6008953C5 /* CommunButton.swift in Sources */,
 				3BB342B422CA7412009546B2 /* CreateBioVC.swift in Sources */,
 				3BB32F1923438D4F006572F3 /* DimmingPresentationController.swift in Sources */,
