@@ -87,7 +87,9 @@ class SignInViewController: UIViewController {
         title = "welcome".localized().uppercaseFirst
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.largeTitleDisplayMode = .always
-        
+
+        self.setNavBarBackButton()
+
         // collection View
         collectionView.contentInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
         collectionView.scrollToItem(at: IndexPath(row: 1, section: 0), at: .centeredHorizontally, animated: true)
@@ -177,8 +179,8 @@ class SignInViewController: UIViewController {
         
         // send request
         viewModel.signIn(
-            login: loginTextField.text!,
-            masterKey: passwordTextField.text!
+            login:      loginTextField.text!.trimmingCharacters(in: .whitespaces),
+            masterKey:  passwordTextField.text!.trimmingCharacters(in: .whitespaces)
             )
             .subscribe(onCompleted: {
                 AppDelegate.reloadSubject.onNext(true)

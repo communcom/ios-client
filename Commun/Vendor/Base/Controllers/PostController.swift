@@ -203,7 +203,14 @@ extension PostController {
     }
     
     func reportPost() {
-        #warning("Report post")
+        guard let post = post else {return}
+        let vc = ContentReportVC(content: post)
+        let nc = BaseNavigationController(rootViewController: vc)
+        
+        nc.modalPresentationStyle = .custom
+        nc.transitioningDelegate = vc
+        UIApplication.topViewController()?
+            .present(nc, animated: true, completion: nil)
     }
     
     func deletePost() {

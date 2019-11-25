@@ -34,6 +34,18 @@ extension CommentController {
             .disposed(by: disposeBag)
     }
     
+    // MARK: - Reporting
+    func report() {
+        guard let comment = comment else {return}
+        let vc = ContentReportVC(content: comment)
+        let nc = BaseNavigationController(rootViewController: vc)
+        
+        nc.modalPresentationStyle = .custom
+        nc.transitioningDelegate = vc
+        UIApplication.topViewController()?
+            .present(nc, animated: true, completion: nil)
+    }
+    
     // MARK: - Voting
     func setHasVote(_ value: Bool, for type: VoteActionType) {
         guard let comment = comment else {return}

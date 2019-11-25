@@ -9,24 +9,28 @@
 import RxSwift
 import RxCocoa
 import Foundation
-import CyberSwift
 
 class SetUserViewModel {
     // MARK: - Class Functions
     func checkUserName(_ userName: String) -> [Bool] {
+        // Rule 1
+        // • The number of characters must not exceed 32
         // username must be between 5-32 characters
-        let isBetween5To32Characters =
-            (userName.count >= 5 && userName.count <= 32)
+        let isBetween5To32Characters = (userName.count >= 5 && userName.count <= 32)
         
-        // only alphanumeric, non-uppercased characters, "-" and "." are allowed
+        // Rule 2, 3, 5
+        // • Uppercase letters in the username are not allowed
+        // • Valid characters: letters, numbers, hyphen
+        // • The user name may contain a "dot" character
         let containsOnlyAllowedCharacters = userName.matches("^[a-z0-9-.]+$")
         
-        // the presence of two dots side by side is not allowed
+        // Rule 4
+        // • The hyphen character cannot be at the beginning or at the end of the username
+        let nonAlphanumericCharacterIsNotAtBeginOrEnd = !userName.starts(with: "-") && !userName.ends(with: "-") && !userName.starts(with: ".") && !userName.ends(with: ".")
+
+        // Rule 6
+        // • The presence of two characters "dot" in a row is not valid
         let twoNonAlphanumericCharacterNotSideBySide = !userName.contains("..") && !userName.contains(".-") && !userName.contains("-.") && !userName.contains("--")
-        
-        // the hyphen character "-" cannot be at the beginning or end of a username.
-        let nonAlphanumericCharacterIsNotAtBeginOrEnd = !userName.starts(with: "-") && !userName.ends(with: "-") &&
-            !userName.starts(with: ".") && !userName.ends(with: ".")
         
         return [
             isBetween5To32Characters,

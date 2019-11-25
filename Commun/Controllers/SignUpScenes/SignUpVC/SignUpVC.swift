@@ -91,6 +91,7 @@ class SignUpVC: UIViewController, SignUpRouter {
         self.title = "sign up".localized().uppercaseFirst
         self.navigationController?.navigationBar.prefersLargeTitles = true
 
+        self.setNavBarBackButton()
         self.setupBindings()
         self.setupActions()
         
@@ -152,8 +153,12 @@ class SignUpVC: UIViewController, SignUpRouter {
                 return newText
             }
             .subscribe(onNext: { (text) in
-                self.phoneNumberTextField.text = text
-                self.viewModel.phone.accept(text)
+                if self.phoneNumberTextField.isFirstResponder && text.isEmpty {
+                    self.showContriesList()
+                } else {
+                    self.phoneNumberTextField.text = text
+                    self.viewModel.phone.accept(text)
+                }
             })
             .disposed(by: disposeBag)
         
@@ -167,11 +172,7 @@ class SignUpVC: UIViewController, SignUpRouter {
     func setupActions() {
         self.countryButton.rx.tap
             .subscribe(onNext: { [weak self] _ in
-                if let countryVC = controllerContainer.resolve(SelectCountryVC.self) {
-                    countryVC.bindViewModel(SelectCountryViewModel(withModel: self!.viewModel))
-                    let nav = UINavigationController(rootViewController: countryVC)
-                    self?.present(nav, animated: true, completion: nil)
-                }
+                self?.showContriesList()
             })
             .disposed(by: disposeBag)
     }
@@ -189,6 +190,15 @@ class SignUpVC: UIViewController, SignUpRouter {
         }
     }
 
+    private func showContriesList() {
+         if let countryVC = controllerContainer.resolve(SelectCountryVC.self) {
+             self.view.endEditing(true)
+             countryVC.bindViewModel(SelectCountryViewModel(withModel: self.viewModel))
+             let nav = UINavigationController(rootViewController: countryVC)
+             self.present(nav, animated: true, completion: nil)
+         }
+     }
+
     
     // MARK: - Gestures
     @IBAction func handlingTapGesture(_ sender: UITapGestureRecognizer) {
@@ -202,6 +212,8 @@ class SignUpVC: UIViewController, SignUpRouter {
             self.showAlert(title: "error".localized().uppercaseFirst, message: "wrong phone number".localized().uppercaseFirst)
             return
         }
+        
+        self.view.endEditing(true)
         
         // reCaptcha
         recaptcha.validate(on:              view,

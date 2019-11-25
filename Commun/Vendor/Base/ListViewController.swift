@@ -9,27 +9,46 @@
 import UIKit
 import RxSwift
 import RxDataSources
+import RxCocoa
 
 class ListViewController<T: ListItemType>: BaseViewController {
+    // MARK: - Nested type
     public typealias ListSection = AnimatableSectionModel<String, T>
     
+    // MARK: - Properties
     var disposeBag = DisposeBag()
     var viewModel: ListViewModel<T>!
     var dataSource: MyRxTableViewSectionedAnimatedDataSource<ListSection>!
+    var tableViewMargin: UIEdgeInsets {.zero}
     
-    var tableViewInsets: UIEdgeInsets {
-        return .zero
-    }
+    // Search manager
+    var isSearchEnabled: Bool {false}
+    var searchPlaceholder: String? {nil}
+    lazy var searchController: UISearchController? = {
+        if !isSearchEnabled {return nil}
+        return UISearchController(searchResultsController: nil)
+    }()
     
+    
+    // MARK: - Subviews
     lazy var tableView: UITableView = {
         let tableView = UITableView(forAutoLayout: ())
         view.addSubview(tableView)
-        tableView.autoPinEdgesToSuperviewSafeArea(with: tableViewInsets)
+        tableView.autoPinEdgesToSuperviewSafeArea(with: tableViewMargin)
         return tableView
     }()
     
+    // MARK: - Methods
     override func setUp() {
         super.setUp()
+        // searchController
+        if isSearchEnabled {
+            // searchController
+            searchController?.obscuresBackgroundDuringPresentation = false
+            searchController?.searchBar.placeholder = searchPlaceholder ?? "search".localized().uppercaseFirst
+            navigationItem.searchController = searchController
+            definesPresentationContext = true
+        }
         
         // pull to refresh
         tableView.es.addPullToRefresh { [unowned self] in
@@ -40,10 +59,15 @@ class ListViewController<T: ListItemType>: BaseViewController {
         tableView.rowHeight = UITableView.automaticDimension
     }
     
+    // MARK: - Binding
     override func bind() {
         super.bind()
         bindState()
         bindItems()
+        
+        if isSearchEnabled {
+            bindSearchController()
+        }
     }
     
     func bindItems() {
@@ -74,6 +98,26 @@ class ListViewController<T: ListItemType>: BaseViewController {
             .disposed(by: disposeBag)
     }
     
+    func bindSearchController() {
+        searchController?.searchBar.rx.text.orEmpty
+            .skip(1)
+            .throttle(0.5, scheduler: MainScheduler.instance)
+            .distinctUntilChanged()
+            .flatMapLatest {Observable<String>.just($0)}
+            .subscribe(onNext: { (query) in
+                if query.isEmpty {
+                    self.viewModel.fetcher.search = nil
+                    self.viewModel.reload()
+                    return
+                }
+                
+                self.viewModel.fetcher.search = query
+                self.viewModel.reload()
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    // MARK: - State handling
     func handleLoading(isLoading: Bool) {
         if isLoading {
             showLoadingFooter()
@@ -112,4 +156,5 @@ class ListViewController<T: ListItemType>: BaseViewController {
     @objc func refresh() {
         viewModel.reload()
     }
+    
 }

@@ -9,6 +9,10 @@
 import Foundation
 
 class CommunitiesVC: SubsViewController<ResponseAPIContentGetCommunity> {
+    // MARK: - Properties
+    override var isSearchEnabled: Bool {true}
+    
+    // MARK: - Initializers
     init(type: GetCommunitiesType, userId: String? = nil) {
         super.init(nibName: nil, bundle: nil)
         viewModel = CommunitiesViewModel(type: type, userId: userId)
@@ -19,9 +23,12 @@ class CommunitiesVC: SubsViewController<ResponseAPIContentGetCommunity> {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Methods
     override func setUp() {
         super.setUp()
         navigationItem.rightBarButtonItem = nil
+        
+        // tableview
         tableView.register(CommunityCell.self, forCellReuseIdentifier: "CommunityCell")
         
         dataSource = MyRxTableViewSectionedAnimatedDataSource<ListSection>(

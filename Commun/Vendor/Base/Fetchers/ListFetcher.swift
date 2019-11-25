@@ -49,6 +49,7 @@ class ListFetcher<T: ListItemType> {
     // MARK: - Parammeters
     let limit = UInt(Config.paginationLimit)
     var offset: UInt = 0
+    var search: String?
     
     // MARK: - Properties
     let disposeBag = DisposeBag()

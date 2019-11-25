@@ -62,6 +62,7 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
     
     override func setUp() {
         super.setUp()
+
         view.backgroundColor = #colorLiteral(red: 0.9605136514, green: 0.9644123912, blue: 0.9850376248, alpha: 1)
         setLeftNavBarButton(with: backButton)
         backButton.addTarget(self, action: #selector(back), for: .touchUpInside)
@@ -152,16 +153,14 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
         navigationController?.setNavigationBarHidden(false, animated: animated)
         navigationController?.navigationBar.isTranslucent = true
 
-        if tableView.contentOffset.y >= -43 {
-            showTitle(true)
-        } else {
-            showTitle(false)
-        }
+        showTitle(tableView.contentOffset.y >= -43)
     }
-    
+
     func showTitle(_ show: Bool, animated: Bool = false) {
+        navigationController?.navigationBar.addShadow(ofColor: .shadow, offset: CGSize(width: 0, height: 2), opacity: 0.1)
+        baseNavigationController?.changeStatusBarStyle(show ? .default : .lightContent)
         coverImageView.isHidden = show
-        UIView.animate(withDuration: animated ? 0.3: 0) {
+        UIView.animate(withDuration: animated ? 0.3 : 0) {
             self.navigationController?.navigationBar.subviews.first?.backgroundColor = show ? .white: .clear
             self.navigationController?.navigationBar.setTitleFont(.boldSystemFont(ofSize: 17), color:
                 show ? .black: .clear)

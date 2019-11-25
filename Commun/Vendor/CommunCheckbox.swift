@@ -36,7 +36,7 @@ class CommunCheckbox: UIButton {
                 let image = UIImage(named: "checkmark")!.withRenderingMode(.alwaysOriginal)
                 setImage(image, for: .selected)
                 tintColor = .clear
-                imageEdgeInsets = UIEdgeInsets(top: 8, left: 6, bottom: 8, right: 6)
+                imageEdgeInsets = UIEdgeInsets(top: 8, left: 6, bottom: 7, right: 5)
             }
             else {
                 backgroundColor = .white
