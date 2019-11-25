@@ -13,10 +13,10 @@ class BaseVerticalStackViewController: BaseViewController {
     struct Action {
         var title: String
         var icon: UIImage?
-        var handle: (() -> Void)?
         var tintColor: UIColor = .black
         var marginTop: CGFloat = 0
         var isActive: Bool = false
+        var isSelected: Bool = false
         class TapGesture: UITapGestureRecognizer {
             var action: Action?
         }
@@ -71,16 +71,15 @@ class BaseVerticalStackViewController: BaseViewController {
             stackView.addArrangedSubview(actionView)
             actionView.widthAnchor.constraint(equalTo: stackView.widthAnchor)
                 .isActive = true
+            actionView.isUserInteractionEnabled = true
+            let tap = Action.TapGesture(target: self, action: #selector(actionViewDidTouch(_:)))
+            tap.action = action
+            actionView.addGestureRecognizer(tap)
         }
     }
     
     func viewForAction(_ action: Action) -> UIView {
         let actionView = UIView(height: 65, backgroundColor: .white)
-        actionView.isUserInteractionEnabled = true
-        let tap = Action.TapGesture(target: self, action: #selector(actionViewDidTouch(_:)))
-        tap.action = action
-        actionView.addGestureRecognizer(tap)
-        
         let imageView = UIImageView(width: 35, height: 35)
         imageView.image = action.icon
         actionView.addSubview(imageView)
@@ -102,9 +101,16 @@ class BaseVerticalStackViewController: BaseViewController {
         return actionView
     }
     
-    @objc func actionViewDidTouch(_ tap: Action.TapGesture) {
-        guard let action = tap.action else {return}
-        action.handle?()
+    func viewForActionAtIndex(_ index: Int) -> UIView? {
+        return stackView.arrangedSubviews[safe: index]
     }
     
+    @objc private func actionViewDidTouch(_ tap: Action.TapGesture) {
+        guard let action = tap.action else {return}
+        didSelectAction(action)
+    }
+    
+    func didSelectAction(_ action: Action) {
+        // for overriding
+    }
 }

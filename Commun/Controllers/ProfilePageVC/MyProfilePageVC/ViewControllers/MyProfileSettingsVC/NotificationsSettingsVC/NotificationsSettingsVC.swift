@@ -14,9 +14,7 @@ class NotificationsSettingsVC: BaseVerticalStackViewController {
     lazy var closeButton = UIButton.circleGray(imageName: "close-x")
     lazy var notificationOnAction: NotificationSettingsView = {
         let view = viewForAction(
-            Action(title: "notifications".localized().uppercaseFirst, icon: UIImage(named: "profile_options_mention"), handle: {
-                // TODO: Toggle notifications on/off
-            })
+            Action(title: "notifications".localized().uppercaseFirst, icon: UIImage(named: "profile_options_mention"))
         ) as! NotificationSettingsView
         view.switchButton.addTarget(self, action: #selector(toggleNotificationOn(_:)), for: .valueChanged)
         view.cornerRadius = 10
@@ -30,30 +28,14 @@ class NotificationsSettingsVC: BaseVerticalStackViewController {
     // MARK: - Initializers
     init() {
         super.init(actions: [
-            Action(title: "upvote".localized().uppercaseFirst, icon: UIImage(named: "profile_options_upvote"), handle: {
-                
-            }),
-            Action(title: "downvote".localized().uppercaseFirst, icon: UIImage(named: "profile_options_downvote"), handle: {
-                
-            }),
-            Action(title: "points transfer".localized().uppercaseFirst, icon: UIImage(named: "profile_options_points_transfer"), handle: {
-                
-            }),
-            Action(title: "comment and reply".localized().uppercaseFirst, icon: UIImage(named: "profile_options_comment_and_reply"), handle: {
-                
-            }),
-            Action(title: "mention".localized().uppercaseFirst, icon: UIImage(named: "profile_options_mention"), handle: {
-                
-            }),
-            Action(title: "rewards for post".localized().uppercaseFirst, icon: UIImage(named: "profile_options_rewards_for_post"), handle: {
-                
-            }),
-            Action(title: "rewards for vote".localized().uppercaseFirst, icon: UIImage(named: "profile_options_rewards_for_vote"), handle: {
-                
-            }),
-            Action(title: "following".localized().uppercaseFirst, icon: UIImage(named: "profile_options_following"), handle: {
-                
-            })
+            Action(title: "upvote".localized().uppercaseFirst, icon: UIImage(named: "profile_options_upvote")),
+            Action(title: "downvote".localized().uppercaseFirst, icon: UIImage(named: "profile_options_downvote")),
+            Action(title: "points transfer".localized().uppercaseFirst, icon: UIImage(named: "profile_options_points_transfer")),
+            Action(title: "comment and reply".localized().uppercaseFirst, icon: UIImage(named: "profile_options_comment_and_reply")),
+            Action(title: "mention".localized().uppercaseFirst, icon: UIImage(named: "profile_options_mention")),
+            Action(title: "rewards for post".localized().uppercaseFirst, icon: UIImage(named: "profile_options_rewards_for_post")),
+            Action(title: "rewards for vote".localized().uppercaseFirst, icon: UIImage(named: "profile_options_rewards_for_vote")),
+            Action(title: "following".localized().uppercaseFirst, icon: UIImage(named: "profile_options_following"))
         ])
     }
     
