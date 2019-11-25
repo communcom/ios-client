@@ -11,11 +11,14 @@ import THPinViewController
 import CyberSwift
 
 class SetPasscodeVC: THPinViewController, BoardingRouter {
+    // MARK: - Properties
     var currentPin: String?
     var completion: (()->Void)?
     var onBoarding = true
     var isVerifyVC = false
     
+    
+    // MARK: - Class Initialization
     init() {
         super.init(delegate: nil)
         self.delegate = self
@@ -25,16 +28,27 @@ class SetPasscodeVC: THPinViewController, BoardingRouter {
         fatalError("init(coder:) has not been implemented")
     }
     
+    
+    // MARK: - Class Functions
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
         if (currentPin == nil && onBoarding) {
             navigationController?.setNavigationBarHidden(true, animated: animated)
+        } else {
+            title = "passcode".localized().uppercaseFirst
+            navigationController?.navigationBar.barTintColor = .white
+            navigationController?.navigationBar.setBackgroundImage(UIImage(), for:.default)
+            navigationController?.navigationBar.shadowImage = UIImage()
+            navigationController?.navigationBar.layoutIfNeeded()
         }
+        
         clear()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        
         if (currentPin == nil && onBoarding) {
             navigationController?.setNavigationBarHidden(false, animated: animated)
         }
@@ -65,6 +79,8 @@ class SetPasscodeVC: THPinViewController, BoardingRouter {
     }
 }
 
+
+// NARK: - THPinViewControllerDelegate
 extension SetPasscodeVC: THPinViewControllerDelegate {
     func pinLength(for pinViewController: THPinViewController) -> UInt {
         return 4
