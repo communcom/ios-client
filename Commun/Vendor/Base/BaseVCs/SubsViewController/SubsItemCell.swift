@@ -15,7 +15,8 @@ class SubsItemCell: MyTableViewCell {
     lazy var statsLabel = UILabel.descriptionLabel()
     lazy var actionButton = CommunButton.default()
     lazy var separator = UIView(height: 2, backgroundColor: .f3f5fa)
-    var roundedCorner: UIRectCorner = [] {
+    
+    override var roundedCorner: UIRectCorner {
         didSet {
             if roundedCorner.contains(.bottomLeft) {
                 separator.isHidden = true
@@ -25,11 +26,6 @@ class SubsItemCell: MyTableViewCell {
             }
             layoutSubviews()
         }
-    }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        roundCorners(roundedCorner, radius: 10)
     }
     
     override func setUpViews() {

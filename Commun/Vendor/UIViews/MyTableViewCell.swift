@@ -14,6 +14,11 @@ class MyTableViewCell: UITableViewCell {
     var disposeBag = DisposeBag()
     
     // MARK: - Properties
+    var roundedCorner: UIRectCorner = [] {
+        didSet {
+            layoutSubviews()
+        }
+    }
     
     // MARK: - Initializer
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -46,5 +51,10 @@ class MyTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        roundCorners(roundedCorner, radius: 10)
     }
 }

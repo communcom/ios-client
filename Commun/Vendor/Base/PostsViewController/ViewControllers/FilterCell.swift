@@ -11,6 +11,19 @@ import Foundation
 class FilterCell: MyTableViewCell {
     lazy var titleLabel = UILabel.with(textSize: 15, weight: .semibold)
     lazy var checkBox = CommunCheckbox(width: 24, height: 24, cornerRadius: 6)
+    lazy var separator = UIView(height: 2, backgroundColor: .f7f7f9)
+    
+    override var roundedCorner: UIRectCorner {
+        didSet {
+            if roundedCorner.contains(.bottomLeft) {
+                separator.isHidden = true
+            }
+            else {
+                separator.isHidden = false
+            }
+            layoutSubviews()
+        }
+    }
     
     override func setUpViews() {
         super.setUpViews()
@@ -23,8 +36,7 @@ class FilterCell: MyTableViewCell {
         checkBox.autoAlignAxis(toSuperviewAxis: .horizontal)
         checkBox.isUserInteractionEnabled = false
         
-        let separatorView = UIView(height: 2, backgroundColor: .f7f7f9)
-        contentView.addSubview(separatorView)
-        separatorView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
+        contentView.addSubview(separator)
+        separator.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
     }
 }

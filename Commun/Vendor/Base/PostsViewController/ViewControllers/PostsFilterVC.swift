@@ -83,6 +83,17 @@ class PostsFilterVC: SwipeDownDismissViewController {
                 ]
             }
             .bind(to: self.tableView.rx.items(cellIdentifier: "FilterCell", cellType: FilterCell.self)){ (index,model,cell) in
+                var roundedCorner: UIRectCorner = []
+                
+                if index == 0 {
+                    roundedCorner.insert([.topLeft, .topRight])
+                }
+                
+                if index == (self.isTimeFrameMode ? 3: 2) {
+                    roundedCorner.insert([.bottomLeft, .bottomRight])
+                }
+                cell.roundedCorner = roundedCorner
+                
                 cell.titleLabel.text = model.label
                 cell.checkBox.isSelected = model.isSelected
             }
