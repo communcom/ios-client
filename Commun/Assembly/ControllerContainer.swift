@@ -125,5 +125,11 @@ let controllerContainer: Container = {
         return vc
     })
 
+    // MasterPassword scene
+    container.register(MasterPasswordViewController.self, factory: { r in
+        let vc = MasterPasswordViewController.instanceController(fromStoryboard: "MasterPassword", withIdentifier: "MasterPasswordVC") as! MasterPasswordViewController
+        return vc
+    })
+
     return container
 }()

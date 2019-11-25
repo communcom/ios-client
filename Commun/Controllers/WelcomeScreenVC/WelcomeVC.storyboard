@@ -55,10 +55,22 @@
                                     <action selector="signUpButtonTap:" destination="5Vs-ev-2DK" eventType="touchUpInside" id="Iuv-sF-KYs"/>
                                 </connections>
                             </button>
+                            <button clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lV1-5q-0ax" userLabel="Test Button">
+                                <rect key="frame" x="0.0" y="0.0" width="44" height="44"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="Jbn-RV-MfD"/>
+                                    <constraint firstAttribute="width" constant="44" id="hxk-Rg-B6Z"/>
+                                </constraints>
+                                <connections>
+                                    <action selector="testButtonTapped:" destination="5Vs-ev-2DK" eventType="touchUpInside" id="fPU-0i-ycg"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="9u7-LT-02r" firstAttribute="top" secondItem="8t8-vm-TGP" secondAttribute="bottom" constant="16" id="4O4-PT-fRo" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
+                            <constraint firstItem="lV1-5q-0ax" firstAttribute="top" secondItem="bF6-IB-5mY" secondAttribute="top" id="91a-gu-Wnj"/>
                             <constraint firstItem="8t8-vm-TGP" firstAttribute="top" secondItem="qQo-fb-NcH" secondAttribute="bottom" constant="40" id="DnB-Zm-gsI" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                             <constraint firstItem="9u7-LT-02r" firstAttribute="leading" secondItem="bF6-IB-5mY" secondAttribute="leading" constant="42" id="H9C-oC-CLN" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                             <constraint firstItem="8t8-vm-TGP" firstAttribute="leading" secondItem="bF6-IB-5mY" secondAttribute="leading" constant="42" id="JGQ-Xv-W61" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
@@ -68,6 +80,7 @@
                             <constraint firstItem="bF6-IB-5mY" firstAttribute="bottom" secondItem="9u7-LT-02r" secondAttribute="bottom" constant="37" id="brU-h4-UnN" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                             <constraint firstItem="bF6-IB-5mY" firstAttribute="trailing" secondItem="9u7-LT-02r" secondAttribute="trailing" constant="42" id="gfF-cR-X2p" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                             <constraint firstItem="qQo-fb-NcH" firstAttribute="trailing" secondItem="bF6-IB-5mY" secondAttribute="trailing" id="mLH-q0-tby"/>
+                            <constraint firstItem="lV1-5q-0ax" firstAttribute="leading" secondItem="bF6-IB-5mY" secondAttribute="leading" id="pPN-fN-rKu"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="bF6-IB-5mY"/>
                     </view>

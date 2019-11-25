@@ -231,6 +231,8 @@
 		B1FA77C5238BBF0D006E57D1 /* UserNameRulesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1FA77C3238BBF0D006E57D1 /* UserNameRulesView.swift */; };
 		B1FA77C7238BBF64006E57D1 /* Bool+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1FA77C6238BBF64006E57D1 /* Bool+Extensions.swift */; };
 		B1FA77C9238BBFE3006E57D1 /* SetUserVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B1FA77C8238BBFE2006E57D1 /* SetUserVC.storyboard */; };
+		B1FA77E3238C0B9A006E57D1 /* MasterPassword.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B1FA77E2238C0B9A006E57D1 /* MasterPassword.storyboard */; };
+		B1FA77E5238C0BA7006E57D1 /* MasterPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1FA77E4238C0BA7006E57D1 /* MasterPasswordViewController.swift */; };
 		BC016D42235DA0D400F1319F /* ArticlePostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC016D39235DA0D400F1319F /* ArticlePostCell.swift */; };
 		BC016D43235DA0D400F1319F /* PostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC016D3B235DA0D400F1319F /* PostCell.swift */; };
 		BC016D44235DA0D400F1319F /* PostCell+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC016D3C235DA0D400F1319F /* PostCell+Actions.swift */; };
@@ -671,6 +673,8 @@
 		B1FA77C3238BBF0D006E57D1 /* UserNameRulesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserNameRulesView.swift; sourceTree = "<group>"; };
 		B1FA77C6238BBF64006E57D1 /* Bool+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Bool+Extensions.swift"; sourceTree = "<group>"; };
 		B1FA77C8238BBFE2006E57D1 /* SetUserVC.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SetUserVC.storyboard; sourceTree = "<group>"; };
+		B1FA77E2238C0B9A006E57D1 /* MasterPassword.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MasterPassword.storyboard; sourceTree = "<group>"; };
+		B1FA77E4238C0BA7006E57D1 /* MasterPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterPasswordViewController.swift; sourceTree = "<group>"; };
 		BC016D39235DA0D400F1319F /* ArticlePostCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticlePostCell.swift; sourceTree = "<group>"; };
 		BC016D3B235DA0D400F1319F /* PostCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostCell.swift; sourceTree = "<group>"; };
 		BC016D3C235DA0D400F1319F /* PostCell+Actions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PostCell+Actions.swift"; sourceTree = "<group>"; };
@@ -1300,10 +1304,12 @@
 				BCA971192360339B00AE37E1 /* CommunityPageVC */,
 				576DC917223E41CA00EDED41 /* FeedPageVC */,
 				57A1CA612270FC3300E2A1E3 /* LanguageVC */,
+				B1FA77E1238C0B79006E57D1 /* MasterPassword */,
 				3B2F225322689252006B589E /* NotificationsPageVC */,
 				3B6205582346E40A0017FEB7 /* PostEditorVCs */,
 				5725173A2243E4510033125C /* PostPageVC */,
 				3BAF69C122675ADB0055CCEB /* ProfilePageVC */,
+				BC561E7E238B76AD004C53EB /* ReportVCs */,
 				575AECAF22606F5200A7EC2D /* SelectCountryVC */,
 				57E5159A2270E5C700A6F6DB /* SettingsVC */,
 				57FB179E224C077300563BF7 /* SignInVC */,
@@ -1311,7 +1317,6 @@
 				3B67FC0522C4BB5100D05F01 /* SplashViewController.swift */,
 				571B1509223A94CD00630C8F /* TabBarController */,
 				57B6FC23224A9E4900BCFDDA /* WelcomeScreenVC */,
-				BC561E7E238B76AD004C53EB /* ReportVCs */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -1699,6 +1704,15 @@
 				B1FA77C2238BBF0D006E57D1 /* UserNameRulesView.xib */,
 			);
 			path = Subviews;
+			sourceTree = "<group>";
+		};
+		B1FA77E1238C0B79006E57D1 /* MasterPassword */ = {
+			isa = PBXGroup;
+			children = (
+				B1FA77E2238C0B9A006E57D1 /* MasterPassword.storyboard */,
+				B1FA77E4238C0BA7006E57D1 /* MasterPasswordViewController.swift */,
+			);
+			path = MasterPassword;
 			sourceTree = "<group>";
 		};
 		BC016D38235DA0D400F1319F /* ArticlePostCell */ = {
@@ -2328,6 +2342,7 @@
 				AC3386A62371DDEA009DB3BB /* EmbedView.xib in Resources */,
 				B1EA02E72289882A00835244 /* SF-Pro-Display-Ultralight.otf in Resources */,
 				B1D1CF9922F8A28A0071F1B6 /* InfoPlist.strings in Resources */,
+				B1FA77E3238C0B9A006E57D1 /* MasterPassword.storyboard in Resources */,
 				572F81AB223C164C0007F2F9 /* SF-Pro-Text-Regular.otf in Resources */,
 				3BF53CE4230B93E10082464F /* HTMLStringWebView.css in Resources */,
 				BC247D0C23827C810062C979 /* ResponseAPIContentGetPost.json in Resources */,
@@ -2639,6 +2654,7 @@
 				57A95197224178010020F55D /* PostController.swift in Sources */,
 				BC48FC4423668A080049C4F4 /* LeadersListFetcher.swift in Sources */,
 				3B3C8B9E234796D900D8BADB /* PostEditorVC+Binding.swift in Sources */,
+				B1FA77E5238C0BA7006E57D1 /* MasterPasswordViewController.swift in Sources */,
 				BC702C8E2362817700D9E88A /* CommunityLeaderCell.swift in Sources */,
 				3B67FC0622C4BB5100D05F01 /* SplashViewController.swift in Sources */,
 				3BB32F1B234436EF006572F3 /* PostMetaView.swift in Sources */,

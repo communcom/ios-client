@@ -52,6 +52,7 @@
 "done"                                          =   "done";
 "download"                                      =   "download";
 "downvoted you in a post"                       =   "downvoted you in a post";
+"describe master password"                      =   "You need the master password to Log in\nWe don’t keep and can’t restore passwords\nSave it!";
 
 
 // E
@@ -83,6 +84,7 @@
 // H
 "has removed your voice from your..."           =   "has removed your voice from your delegate node";
 "hundreds"                                      =   "hundreds";
+"has been generated"                            =   "has been generated";
 
 
 // I
@@ -115,7 +117,7 @@
 "mentioned you"                                 =   "mentioned you";
 "my communities"                                =   "my communities";
 "my Feed"                                       =   "my Feed";
-
+"master password"                               =   "master password";
 
 // N
 "new"                                           =   "new";
@@ -178,6 +180,7 @@
 "successfully resend code"                      =   "successfully resend code";
 "send post"                                     =   "post";
 "send report"                                   =   "report";
+
 
 // T
 "tap to try again"                              =   "tap to try again";
