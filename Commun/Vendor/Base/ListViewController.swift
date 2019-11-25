@@ -103,7 +103,7 @@ class ListViewController<T: ListItemType>: BaseViewController {
             .skip(1)
             .throttle(0.5, scheduler: MainScheduler.instance)
             .distinctUntilChanged()
-            .flatMapLatest {Observable<String>.just($0.lowercased())}
+            .flatMapLatest {Observable<String>.just($0)}
             .subscribe(onNext: { (query) in
                 if query.isEmpty {
                     self.viewModel.fetcher.search = nil
