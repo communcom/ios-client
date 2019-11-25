@@ -52,9 +52,11 @@ extension SignUpRouter where Self: UIViewController {
 extension SignUpRouter where Self: UIViewController {
     // MARK: - Back button
     func setBackButtonToSignUpVC() {
-        navigationItem.hidesBackButton = true
-        let newBackButton = UIBarButtonItem(title: "back".localized().uppercaseFirst, style: .plain, target: self, action: #selector(popToSignUpVC))
-        navigationItem.leftBarButtonItem = newBackButton
+        let newBackButton = UIBarButtonItem(image: UIImage(named: "icon-back-bar-button-black-default"), style: .plain, target: self, action: #selector(popToSignUpVC))
+        newBackButton.tintColor = .black
+        
+        self.navigationItem.hidesBackButton = true
+        self.navigationItem.leftBarButtonItem = newBackButton
     }
 }
 
