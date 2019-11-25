@@ -18,7 +18,8 @@ class PostsFilterVC: SwipeDownDismissViewController {
     var completion: ((PostsListFetcher.Filter) -> Void)?
     
     // MARK: - Subview
-    lazy var closeButton = UIButton.circle(size: 30, backgroundColor: .f7f7f9, tintColor: .a5a7bd, imageName: "close-x", imageEdgeInsets: UIEdgeInsets(inset: 6))
+    lazy var closeButton = UIButton.circle(size: 30, backgroundColor: .f7f7f9, tintColor: .a5a7bd, imageName: "close-x", imageEdgeInsets: UIEdgeInsets(inset: 8))
+    lazy var backButton = UIButton.circle(size: 30, backgroundColor: .f7f7f9, tintColor: .a5a7bd, imageName: "back-button", imageEdgeInsets: UIEdgeInsets(top: 10, left: 12, bottom: 10, right: 12))
     
     lazy var tableView = UITableView(forAutoLayout: ())
     lazy var saveButton = CommunButton.default(height: 50, label: "save".localized().uppercaseFirst)
@@ -42,6 +43,11 @@ class PostsFilterVC: SwipeDownDismissViewController {
         title = "sort by".localized().uppercaseFirst
         setRightNavBarButton(with: closeButton)
         closeButton.addTarget(self, action: #selector(closeButtonDidTouch), for: .touchUpInside)
+        
+        if isTimeFrameMode {
+            setLeftNavBarButton(with: backButton)
+            backButton.addTarget(self, action: #selector(backButtonDidTouch), for: .touchUpInside)
+        }
         
         view.addSubview(tableView)
         tableView.backgroundColor = .clear
@@ -144,6 +150,10 @@ class PostsFilterVC: SwipeDownDismissViewController {
         self.dismiss(animated: true) {
             self.completion?(self.filter.value)
         }
+    }
+    
+    @objc func backButtonDidTouch() {
+        navigationController?.popViewController()
     }
 }
 
