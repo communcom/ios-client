@@ -80,7 +80,8 @@ class ConfirmUserVC: UIViewController, SignUpRouter {
 
         self.title = "verification".localized().uppercaseFirst
         self.navigationController?.navigationBar.prefersLargeTitles = true
-        
+        self.setNavBarBackButton(title: "close")
+
         nextButton.isEnabled = false
 
         self.pinCodeInputView.set(changeTextHandler: { text in

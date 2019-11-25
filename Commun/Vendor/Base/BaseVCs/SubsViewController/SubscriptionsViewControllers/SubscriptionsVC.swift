@@ -11,6 +11,8 @@ import CyberSwift
 import RxDataSources
 
 class SubscriptionsVC: SubsViewController<ResponseAPIContentGetSubscriptionsItem> {
+    private var isNeedHideCloseButton = false
+
     init(title: String? = nil, userId: String?, type: GetSubscriptionsType) {
         super.init(nibName: nil, bundle: nil)
         viewModel = SubscriptionsViewModel(userId: userId, type: type)
@@ -20,12 +22,23 @@ class SubscriptionsVC: SubsViewController<ResponseAPIContentGetSubscriptionsItem
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    init() {
+        super.init(nibName: nil, bundle: nil)
+        self.isNeedHideCloseButton = true
+        viewModel = SubscriptionsViewModel(userId: nil, type: .user)
+        defer {self.title = "followings".localized().uppercaseFirst}
+    }
     
     override func setUp() {
         super.setUp()
         tableView.register(SubscriptionsUserCell.self, forCellReuseIdentifier: "SubscriptionsUserCell")
         tableView.register(SubscriptionsCommunityCell.self, forCellReuseIdentifier: "SubscriptionsCommunityCell")
-                
+
+        if isNeedHideCloseButton {
+            self.navigationItem.rightBarButtonItem = nil
+        }
+
         dataSource = MyRxTableViewSectionedAnimatedDataSource<ListSection>(
             configureCell: { dataSource, tableView, indexPath, subscription in
                 if let community = subscription.communityValue {
