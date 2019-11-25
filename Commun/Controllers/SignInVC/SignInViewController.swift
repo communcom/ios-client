@@ -179,8 +179,8 @@ class SignInViewController: UIViewController {
         
         // send request
         viewModel.signIn(
-            login: loginTextField.text!,
-            masterKey: passwordTextField.text!
+            login:      loginTextField.text!.trimmingCharacters(in: .whitespaces),
+            masterKey:  passwordTextField.text!.trimmingCharacters(in: .whitespaces)
             )
             .subscribe(onCompleted: {
                 AppDelegate.reloadSubject.onNext(true)
