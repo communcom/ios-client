@@ -62,6 +62,22 @@ class MasterPasswordViewController: UIViewController {
         }
     }
     
+    @IBOutlet weak var backupiCloudButton: UIButton! {
+        didSet {
+            self.backupiCloudButton.backgroundColor = #colorLiteral(red: 0.4156862745, green: 0.5019607843, blue: 0.9607843137, alpha: 1)
+            self.backupiCloudButton.setTitleColor(.white, for: .normal)
+            self.backupiCloudButton.titleLabel?.font = .boldSystemFont(ofSize: 15)
+            self.backupiCloudButton.layer.cornerRadius = self.backupiCloudButton.frame.height / 2
+            self.backupiCloudButton.clipsToBounds = true
+            self.backupiCloudButton.setTitle("backup iCloud".localized().uppercaseFirst, for: .normal)
+        }
+    }
+
+    @IBOutlet weak var iSavedButton: BlankButton! {
+        didSet {
+            self.iSavedButton.titleLabel?.font = UIFont(name: "SFProDisplay-Bold", size: CGFloat.adaptive(width: 15.0))
+        }
+    }
     
     // MARK: - Class Functions
     override func viewDidLoad() {
