@@ -17,7 +17,7 @@ protocol NextButtonBottomConstraint {
 
 extension UIViewController {
     @objc func popToSignUpVC() {
-        if let vc = navigationController?.viewControllers.filter({ $0 is SignUpVC }).first {
+        if let vc = navigationController?.viewControllers.filter({ $0 is WelcomeVC }).first {
             navigationController?.popToViewController(vc, animated: true)
         }
     }
@@ -250,5 +250,4 @@ extension UIViewController {
         navigationController as? BaseNavigationController
 
     }
-
 }

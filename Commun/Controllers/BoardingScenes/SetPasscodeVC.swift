@@ -54,6 +54,10 @@ class SetPasscodeVC: THPinViewController, BoardingRouter {
             promptTitle = "enter your current passcode".localized().uppercaseFirst
         } else {
             promptTitle = (currentPin == nil ? "create your passcode" : "verify your new passcode").localized().uppercaseFirst
+            
+            if currentPin != nil {
+                self.setNavBarBackButton()
+            }
         }
         
         promptColor = .black

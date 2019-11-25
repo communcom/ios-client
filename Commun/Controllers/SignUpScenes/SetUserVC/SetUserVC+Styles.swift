@@ -11,11 +11,11 @@ import Foundation
 extension SetUserVC {
     func tuneCreateUserNameLabel() {
         self.creatUsernameLabel.tune(
-            withText:          "create your username".localized().uppercaseFirst,
-            hexColors:         blackWhiteColorPickers,
-            font:              UIFont(
-                name: "SFProText-Regular",
-                size: 17.0 * Config.widthRatio
+            withText:           "create your username".localized().uppercaseFirst,
+            hexColors:           blackWhiteColorPickers,
+            font:               UIFont(
+                name:           "SFProText-Regular",
+                size:           CGFloat.adaptive(width: 17.0)
             ),
             alignment:         .left,
             isMultiLines:      false)
@@ -24,18 +24,12 @@ extension SetUserVC {
     func tuneUserNameTextField() {
         self.userNameTextField.tune(withPlaceholder:    "username placeholder".localized().uppercaseFirst,
                                     textColors:         blackWhiteColorPickers,
-                                    font:               UIFont.init(name: "SFProText-Regular", size: 17.0 * Config.widthRatio),
+                                    font:               UIFont.init(name: "SFProText-Regular", size: CGFloat.adaptive(width: 17.0)),
                                     alignment:          .left)
         
-        self.userNameTextField.inset = 16.0 * Config.widthRatio
-        self.userNameTextField.layer.cornerRadius = 12.0 * Config.heightRatio
+        self.userNameTextField.inset = CGFloat.adaptive(width: 16.0)
+        self.userNameTextField.layer.cornerRadius = CGFloat.adaptive(height: 12.0)
         self.userNameTextField.clipsToBounds = true
         self.userNameTextField.keyboardType = .alphabet
-    }
-    
-    func tuneTraitLabels() {
-        for i in 0..<traitLabels.count {
-            traitLabels[i].text = traitLabels[i].text?.localized().uppercaseFirst
-        }
-    }
+    }    
 }
