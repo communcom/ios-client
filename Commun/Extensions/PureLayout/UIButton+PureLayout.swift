@@ -56,7 +56,7 @@ extension UIButton {
     }
     
     static func circleGray(size: CGFloat = 24, imageName: String) -> UIButton {
-        let button = UIButton(width: size, height: size, backgroundColor: UIColor(hexString: "#F3F5FA"), cornerRadius: size / 2)
+        let button = UIButton(width: size, height: size, backgroundColor: UIColor(hexString: "#F7F7F9"), cornerRadius: size / 2)
         button.setImage(UIImage(named: imageName), for: .normal)
         button.imageEdgeInsets = UIEdgeInsets(top: 6, left: 6, bottom: 6, right: 6)
         button.tintColor = UIColor(hexString: "#A5A7BD")

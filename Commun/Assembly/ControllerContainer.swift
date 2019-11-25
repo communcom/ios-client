@@ -92,11 +92,6 @@ let controllerContainer: Container = {
         return vc as! FeedPageVC
     })
     
-    container.register(FeedPageFiltersVC.self) { r in
-        let vc = FeedPageFiltersVC.instanceController(fromStoryboard: "FeedPageFiltersVC", withIdentifier: "FeedPageFiltersVC")
-        return vc as! FeedPageFiltersVC
-    }
-    
     // Profile scene
     container.register(ProfileEditCoverVC.self, factory: { r in
         let vc = ProfileEditCoverVC.instanceController(fromStoryboard: "ProfilePageVC", withIdentifier: "ProfileEditCoverVC") as! ProfileEditCoverVC

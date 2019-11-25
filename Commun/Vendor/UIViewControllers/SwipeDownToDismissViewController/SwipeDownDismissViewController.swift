@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class SwipeDownDismissViewController: UIViewController {
+class SwipeDownDismissViewController: BaseViewController {
     var panGestureRecognizer: UIPanGestureRecognizer?
     var interactor: SwipeDownInteractor?
     

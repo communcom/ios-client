@@ -23,14 +23,16 @@ extension PostsViewController {
     func openFilterVC() {
         guard let viewModel = viewModel as? PostsViewModel else {return}
         // Create FiltersVC
-        let vc = controllerContainer.resolve(FeedPageFiltersVC.self)!
-        vc.filter.accept(viewModel.filter.value)
+        let vc = PostsFilterVC(filter: viewModel.filter.value)
+        
         vc.completion = { filter in
             viewModel.filter.accept(filter)
         }
-        vc.modalPresentationStyle = .custom
-        vc.transitioningDelegate = vc
         
-        present(vc, animated: true, completion: nil)
+        let nc = BaseNavigationController(rootViewController: vc)
+        nc.transitioningDelegate = vc
+        nc.modalPresentationStyle = .custom
+        
+        present(nc, animated: true, completion: nil)
     }
 }
