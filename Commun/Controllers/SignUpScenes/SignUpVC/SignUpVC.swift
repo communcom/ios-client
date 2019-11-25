@@ -212,6 +212,8 @@ class SignUpVC: UIViewController, SignUpRouter {
             return
         }
         
+        self.view.endEditing(true)
+        
         // reCaptcha
         recaptcha.validate(on:              view,
                            resetOnError:    false,
