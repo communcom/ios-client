@@ -16,7 +16,7 @@ extension PostsViewController {
         }
         
         else {
-            viewModel.changeFilter(feedTypeMode: .subscriptions, feedType: .timeDesc)
+            viewModel.changeFilter(feedTypeMode: .subscriptions, feedType: .time)
         }
     }
     

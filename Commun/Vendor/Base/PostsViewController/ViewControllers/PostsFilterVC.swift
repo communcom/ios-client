@@ -109,10 +109,10 @@ class PostsFilterVC: SwipeDownDismissViewController {
             .subscribe(onNext: { (indexPath) in
                 if !self.isTimeFrameMode {
                     if indexPath.row == 0 {
-                        self.filter.accept(self.filter.value.newFilter(withFeedTypeMode: .hot, feedType: .timeDesc))
+                        self.filter.accept(self.filter.value.newFilter(withFeedTypeMode: .hot, feedType: .time))
                     }
                     if indexPath.row == 1 {
-                        self.filter.accept(self.filter.value.newFilter(withFeedTypeMode: .new, feedType: .timeDesc))
+                        self.filter.accept(self.filter.value.newFilter(withFeedTypeMode: .new, feedType: .time))
                     }
                     if indexPath.row == 2 {
                         self.filter.accept(self.filter.value.newFilter(withFeedTypeMode: .topLikes))
