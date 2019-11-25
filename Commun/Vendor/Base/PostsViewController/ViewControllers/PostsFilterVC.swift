@@ -12,7 +12,7 @@ import RxSwift
 
 class PostsFilterVC: SwipeDownDismissViewController {
     // MARK: - Properties
-    var initFilter: PostsListFetcher.Filter
+    var isTimeFrameMode: Bool
     var filter: BehaviorRelay<PostsListFetcher.Filter>
     let disposeBag = DisposeBag()
     var completion: ((PostsListFetcher.Filter) -> Void)?
@@ -24,8 +24,8 @@ class PostsFilterVC: SwipeDownDismissViewController {
     lazy var saveButton = CommunButton.default(height: 50, label: "save".localized().uppercaseFirst)
     
     // MARK: - Initializers
-    init(filter: PostsListFetcher.Filter) {
-        self.initFilter = filter
+    init(filter: PostsListFetcher.Filter, isTimeFrameMode: Bool = false) {
+        self.isTimeFrameMode = isTimeFrameMode
         self.filter = BehaviorRelay<PostsListFetcher.Filter>(value: filter)
         super.init(nibName: nil, bundle: nil)
     }
@@ -67,7 +67,7 @@ class PostsFilterVC: SwipeDownDismissViewController {
         
         filter
             .map { (filter) -> [(label: String, isSelected: Bool)] in
-                if self.initFilter.feedTypeMode != .topLikes {
+                if !self.isTimeFrameMode {
                     return [
                         (label: "hot".localized().uppercaseFirst, isSelected: filter.feedTypeMode == .hot),
                         (label: "new".localized().uppercaseFirst, isSelected: filter.feedTypeMode == .new),
@@ -90,7 +90,7 @@ class PostsFilterVC: SwipeDownDismissViewController {
         
         tableView.rx.itemSelected
             .subscribe(onNext: { (indexPath) in
-                if self.initFilter.feedTypeMode != .topLikes {
+                if !self.isTimeFrameMode {
                     if indexPath.row == 0 {
                         self.filter.accept(self.filter.value.newFilter(withFeedTypeMode: .hot, feedType: .timeDesc))
                     }
@@ -99,7 +99,7 @@ class PostsFilterVC: SwipeDownDismissViewController {
                     }
                     if indexPath.row == 2 {
                         self.filter.accept(self.filter.value.newFilter(withFeedTypeMode: .topLikes))
-                        let vc = PostsFilterVC(filter: self.filter.value.newFilter(sortType: self.filter.value.sortType ?? .all))
+                        let vc = PostsFilterVC(filter: self.filter.value.newFilter(sortType: self.filter.value.sortType ?? .all), isTimeFrameMode: true)
                         vc.completion = self.completion
                         self.show(vc, sender: nil)
                     }
@@ -138,7 +138,7 @@ class PostsFilterVC: SwipeDownDismissViewController {
 
 extension PostsFilterVC: UIViewControllerTransitioningDelegate {
     func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
-        return HalfSizePresentationController(presentedViewController: presented, presenting: presenting)
+        return CustomHeightPresentationController(height: 380, presentedViewController: presented, presenting: presenting)
     }
 }
 
