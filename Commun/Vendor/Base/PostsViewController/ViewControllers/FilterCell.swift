@@ -22,5 +22,9 @@ class FilterCell: MyTableViewCell {
         checkBox.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
         checkBox.autoAlignAxis(toSuperviewAxis: .horizontal)
         checkBox.isUserInteractionEnabled = false
+        
+        let separatorView = UIView(height: 2, backgroundColor: .f7f7f9)
+        contentView.addSubview(separatorView)
+        separatorView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
     }
 }

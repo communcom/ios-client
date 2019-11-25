@@ -46,13 +46,19 @@ class PostsFilterVC: SwipeDownDismissViewController {
         view.addSubview(tableView)
         tableView.backgroundColor = .clear
         tableView.tableFooterView = UIView()
+        tableView.separatorStyle = .none
         tableView.autoPinEdgesToSuperviewSafeArea(with: UIEdgeInsets(top: 20, left: 16, bottom: 0, right: 16), excludingEdge: .bottom)
         
         view.addSubview(saveButton)
         saveButton.autoPinEdge(.top, to: .bottom, of: tableView, withOffset: 20)
         saveButton.autoPinEdgesToSuperviewSafeArea(with: UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16), excludingEdge: .top)
+        saveButton.addTarget(self, action: #selector(saveButtonDidTouch), for: .touchUpInside)
         
-        
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        navigationController?.view.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: 20)
     }
     
     override func bind() {
@@ -94,6 +100,7 @@ class PostsFilterVC: SwipeDownDismissViewController {
                     if indexPath.row == 2 {
                         self.filter.accept(self.filter.value.newFilter(withFeedTypeMode: .topLikes))
                         let vc = PostsFilterVC(filter: self.filter.value.newFilter(sortType: self.filter.value.sortType ?? .all))
+                        vc.completion = self.completion
                         self.show(vc, sender: nil)
                     }
                 }
@@ -113,16 +120,31 @@ class PostsFilterVC: SwipeDownDismissViewController {
                 }
             })
             .disposed(by: disposeBag)
+        
+        tableView.rx.setDelegate(self)
+            .disposed(by: disposeBag)
     }
     
     @objc func closeButtonDidTouch() {
         self.dismiss(animated: true, completion: nil)
+    }
+    
+    @objc func saveButtonDidTouch() {
+        self.dismiss(animated: true) {
+            self.completion?(self.filter.value)
+        }
     }
 }
 
 extension PostsFilterVC: UIViewControllerTransitioningDelegate {
     func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
         return HalfSizePresentationController(presentedViewController: presented, presenting: presenting)
+    }
+}
+
+extension PostsFilterVC: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 58
     }
 }
 
