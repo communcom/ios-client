@@ -206,6 +206,9 @@ extension PostController {
         guard let post = post else {return}
         let vc = PostReportVC(post: post)
         let nc = BaseNavigationController(rootViewController: vc)
+        
+        nc.modalPresentationStyle = .custom
+        nc.transitioningDelegate = vc
         UIApplication.topViewController()?
             .present(nc, animated: true, completion: nil)
     }

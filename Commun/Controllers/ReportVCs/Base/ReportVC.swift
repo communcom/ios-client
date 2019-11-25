@@ -26,6 +26,11 @@ class ReportVC: BaseVerticalStackViewController {
     }
     
     // MARK: - Methods
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        navigationController?.view.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: 20)
+    }
+    
     override func setUp() {
         super.setUp()
         
