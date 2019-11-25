@@ -98,15 +98,22 @@ class TabBarVC: UITabBarController {
         // Comunities Tab
         let comunities = CommunitiesVC(type: .all)
         let communitiesNC = BaseNavigationController(rootViewController: comunities, tabBarVC: self)
-        let communitiesItem = buttonTabBarItem(image: UIImage(named: "tabbar-community")!, tag: searchTabIndex)
+        let communitiesItem = buttonTabBarItem(image: UIImage(named: "tabbar-discovery-icon")!, tag: searchTabIndex)
         comunities.accessibilityLabel = "TabBarComunitiesTabBarItem"
         
         // Notifications Tab
         let notifications = NotificationsPageVC()
-        let notificationsNC = BaseNavigationController(rootViewController: notifications, tabBarVC: self)
-        let notificationsItem = buttonTabBarItem(image: UIImage(named: "notifications")!, tag: notificationTabIndex)
-        notificationsNC.navigationBar.prefersLargeTitles = true
-        notifications.accessibilityLabel = "TabBarNotificationsTabBarItem"
+//        let notificationsNC = BaseNavigationController(rootViewController: notifications, tabBarVC: self)
+//        let notificationsItem = buttonTabBarItem(image: UIImage(named: "notifications")!, tag: notificationTabIndex)
+//        notificationsNC.navigationBar.prefersLargeTitles = true
+//        notifications.accessibilityLabel = "TabBarNotificationsTabBarItem"
+
+        // Following Tab
+        let followings = SubscriptionsVC()
+        let followingsNC = BaseNavigationController(rootViewController: followings, tabBarVC: self)
+        let followingsItem = buttonTabBarItem(image: UIImage(named: "tabbar-community")!, tag: notificationTabIndex)
+        followingsNC.navigationBar.prefersLargeTitles = false
+        followings.accessibilityLabel = "TabBarNotificationsTabBarItem"
 
         // Profile Tab
         let profile = MyProfilePageVC()
@@ -116,13 +123,13 @@ class TabBarVC: UITabBarController {
         profileNC.navigationBar.tintColor = UIColor.appMainColor
 
         // Set up controllers
-        viewControllers = [feedNC, communitiesNC,/* wallet,*/ notificationsNC, profileNC]
+        viewControllers = [feedNC, communitiesNC,/* wallet,*/ followingsNC, profileNC]
         
         tabBarStackView.addArrangedSubviews([
             feedItem,
             communitiesItem,
             tabBarItemAdd,
-            notificationsItem,
+            followingsItem,
             profileItem
         ])
                 
