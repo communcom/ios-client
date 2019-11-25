@@ -7,7 +7,6 @@
 //
 
 import UIKit
-//import CyberSwift
 
 class UserNameRulesView: UIView {
     // MARK: - Properties
@@ -21,7 +20,7 @@ class UserNameRulesView: UIView {
         didSet {
             self.titleLabel.tune(withText:          "username must be".localized().uppercaseFirst,
                                  hexColors:         blackWhiteColorPickers,
-                                 font:              UIFont(name: "SFProDisplay-Semibold", size: 17.0 * Config.widthRatio),
+                                 font:              UIFont(name: "SFProDisplay-Semibold", size: CGFloat.adaptive(width: 17.0)),
                                  alignment:         .left,
                                  isMultiLines:      false)
         }
@@ -32,7 +31,7 @@ class UserNameRulesView: UIView {
             self.rulesCollection.forEach { label in
                 label.tune(withText:          "•  " + label.text!.localized().uppercaseFirst,
                            hexColors:         grayishBluePickers,
-                           font:              UIFont(name: "SFProDisplay-Medium", size: 15.0 * Config.widthRatio),
+                           font:              UIFont(name: "SFProDisplay-Medium", size: CGFloat.adaptive(width: 15.0)),
                            alignment:         .left,
                            isMultiLines:      true)
             }
@@ -67,7 +66,7 @@ class UserNameRulesView: UIView {
         addSubview(contentView)
         contentView.frame = self.bounds
         contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
-        contentView.layer.cornerRadius = 25.0 * Config.widthRatio
+        contentView.layer.cornerRadius = CGFloat.adaptive(width: 25.0)
         contentView.clipsToBounds = true
     }
     

@@ -3,7 +3,7 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15509"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -38,7 +38,7 @@
                 <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xfp-U6-Jja" userLabel="Understood Button">
                     <rect key="frame" x="20" y="316" width="315" height="50"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="50" id="rqf-KE-I7J"/>
+                        <constraint firstAttribute="height" constant="50" id="rqf-KE-I7J" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                     </constraints>
                     <state key="normal" title="Understood"/>
                     <connections>
