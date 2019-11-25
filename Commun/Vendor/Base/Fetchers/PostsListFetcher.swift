@@ -15,7 +15,7 @@ class PostsListFetcher: ListFetcher<ResponseAPIContentGetPost> {
     struct Filter: FilterType {
         var feedTypeMode: FeedTypeMode
         var feedType: FeedSortMode
-        var sortType: FeedTimeFrameMode
+        var sortType: FeedTimeFrameMode?
         var searchKey: String?
         var userId: String?
         var communityId: String?

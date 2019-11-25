@@ -103,8 +103,7 @@ class MyProfilePageVC: UserProfilePageVC {
 //                self.show(vc, sender: self)
 //            }),
             CommunActionSheet.Action(title: "liked".localized().uppercaseFirst, icon: UIImage(named: "profile_options_liked"), handle: {
-                #warning("change filter")
-                let vc = PostsViewController()
+                let vc = PostsViewController(filter: PostsListFetcher.Filter(feedTypeMode: .voted, feedType: .time))
                 vc.title = "liked posts".localized().uppercaseFirst
                 self.show(vc, sender: self)
             }, style: .profile),
