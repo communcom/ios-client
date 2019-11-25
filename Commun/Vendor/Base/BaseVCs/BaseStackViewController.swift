@@ -67,34 +67,39 @@ class BaseVerticalStackViewController: BaseViewController {
     
     func setUpStackView() {
         for action in actions {
-            let actionView = UIView(height: 65, backgroundColor: .white)
-            actionView.isUserInteractionEnabled = true
-            let tap = Action.TapGesture(target: self, action: #selector(actionViewDidTouch(_:)))
-            tap.action = action
-            actionView.addGestureRecognizer(tap)
-            
-            let imageView = UIImageView(width: 35, height: 35)
-            imageView.image = action.icon
-            actionView.addSubview(imageView)
-            imageView.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
-            imageView.autoAlignAxis(toSuperviewAxis: .horizontal)
-            
-            let label = UILabel.with(text: action.title, textSize: 17)
-            actionView.addSubview(label)
-            label.autoPinEdge(.leading, to: .trailing, of: imageView, withOffset: 10)
-            label.autoAlignAxis(toSuperviewAxis: .horizontal)
-            
-            let button = UIButton.circleGray(imageName: "next-arrow")
-            button.isUserInteractionEnabled = false
-            actionView.addSubview(button)
-            button.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
-            button.autoAlignAxis(toSuperviewAxis: .horizontal)
-            button.autoPinEdge(.leading, to: .trailing, of: label, withOffset: 10)
-            
+            let actionView = viewForAction(action)
             stackView.addArrangedSubview(actionView)
             actionView.widthAnchor.constraint(equalTo: stackView.widthAnchor)
                 .isActive = true
         }
+    }
+    
+    func viewForAction(_ action: Action) -> UIView {
+        let actionView = UIView(height: 65, backgroundColor: .white)
+        actionView.isUserInteractionEnabled = true
+        let tap = Action.TapGesture(target: self, action: #selector(actionViewDidTouch(_:)))
+        tap.action = action
+        actionView.addGestureRecognizer(tap)
+        
+        let imageView = UIImageView(width: 35, height: 35)
+        imageView.image = action.icon
+        actionView.addSubview(imageView)
+        imageView.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
+        imageView.autoAlignAxis(toSuperviewAxis: .horizontal)
+        
+        let label = UILabel.with(text: action.title, textSize: 17)
+        actionView.addSubview(label)
+        label.autoPinEdge(.leading, to: .trailing, of: imageView, withOffset: 10)
+        label.autoAlignAxis(toSuperviewAxis: .horizontal)
+        
+        let button = UIButton.circleGray(imageName: "next-arrow")
+        button.isUserInteractionEnabled = false
+        actionView.addSubview(button)
+        button.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
+        button.autoAlignAxis(toSuperviewAxis: .horizontal)
+        button.autoPinEdge(.leading, to: .trailing, of: label, withOffset: 10)
+        
+        return actionView
     }
     
     @objc func actionViewDidTouch(_ tap: Action.TapGesture) {

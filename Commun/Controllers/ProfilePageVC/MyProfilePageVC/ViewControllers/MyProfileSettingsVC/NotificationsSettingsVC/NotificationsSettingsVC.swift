@@ -17,7 +17,7 @@ class NotificationsSettingsVC: BaseVerticalStackViewController {
             Action(title: "notifications".localized().uppercaseFirst, icon: UIImage(named: "profile_options_mention"), handle: {
                 // TODO: Toggle notifications on/off
             })
-        )
+        ) as! NotificationSettingsView
         view.switchButton.addTarget(self, action: #selector(toggleNotificationOn(_:)), for: .valueChanged)
         view.cornerRadius = 10
         return view
@@ -77,10 +77,6 @@ class NotificationsSettingsVC: BaseVerticalStackViewController {
             .asDriver(onErrorJustReturn: true)
             .drive(notificationOnAction.switchButton.rx.isOn)
             .disposed(by: disposeBag)
-        
-        
-        
-        
     }
     
     override func layout() {
@@ -91,16 +87,7 @@ class NotificationsSettingsVC: BaseVerticalStackViewController {
         stackView.autoPinEdge(.top, to: .bottom, of: notificationOnAction, withOffset: 20)
     }
     
-    override func setUpStackView() {
-        for action in actions {
-            let actionView = viewForAction(action)
-            stackView.addArrangedSubview(actionView)
-            actionView.widthAnchor.constraint(equalTo: stackView.widthAnchor)
-                .isActive = true
-        }
-    }
-    
-    func viewForAction(_ action: Action) -> NotificationSettingsView {
+    override func viewForAction(_ action: Action) -> UIView {
         let actionView = NotificationSettingsView(height: 65, backgroundColor: .white)
         actionView.setUp(with: action)
         return actionView
