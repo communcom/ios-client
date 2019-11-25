@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ReportsVC: BaseVerticalStackViewController {
+class ReportVC: BaseVerticalStackViewController {
     // MARK: - Subviews
     lazy var closeButton = UIButton.circleGray(imageName: "close-x")
     
@@ -29,7 +29,7 @@ class ReportsVC: BaseVerticalStackViewController {
     override func setUp() {
         super.setUp()
         
-        title = "please select some reasons".localized().uppercaseFirst
+        title = "please select a reason".localized().uppercaseFirst
         setRightNavBarButton(with: closeButton)
         closeButton.addTarget(self, action: #selector(back), for: .touchUpInside)
     }
@@ -61,6 +61,8 @@ class ReportsVC: BaseVerticalStackViewController {
         sendButton.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
         sendButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
         sendButton.autoPinEdge(toSuperviewEdge: .bottom, withInset: 10)
+        
+        sendButton.addTarget(self, action: #selector(sendButtonDidTouch), for: .touchUpInside)
     }
     
     override func viewForAction(_ action: BaseVerticalStackViewController.Action) -> UIView {
@@ -74,7 +76,11 @@ class ReportsVC: BaseVerticalStackViewController {
     override func didSelectAction(_ action: Action) {
         guard let index = actions.firstIndex(where: {$0.title == action.title})
             else {return}
+        
         actions[index].isSelected = !actions[index].isSelected
         (viewForActionAtIndex(index) as! ReportOptionView).checkBox.isSelected = actions[index].isSelected
+    }
+    
+    @objc func sendButtonDidTouch() {
     }
 }

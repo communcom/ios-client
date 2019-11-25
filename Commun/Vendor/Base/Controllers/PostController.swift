@@ -203,7 +203,8 @@ extension PostController {
     }
     
     func reportPost() {
-        let vc = ReportsVC()
+        guard let post = post else {return}
+        let vc = PostReportVC(post: post)
         let nc = BaseNavigationController(rootViewController: vc)
         UIApplication.topViewController()?
             .present(nc, animated: true, completion: nil)

@@ -286,8 +286,9 @@
 		BC52913C2376B1EB0022EC7F /* PostPageVC+UITableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC52913B2376B1EB0022EC7F /* PostPageVC+UITableViewDelegate.swift */; };
 		BC52914023793D330022EC7F /* CommentForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC52913F23793D330022EC7F /* CommentForm.swift */; };
 		BC529142237941920022EC7F /* CommentTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC529141237941920022EC7F /* CommentTextView.swift */; };
-		BC561E7B238B76A8004C53EB /* ReportsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC561E7A238B76A8004C53EB /* ReportsVC.swift */; };
+		BC561E7B238B76A8004C53EB /* ReportVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC561E7A238B76A8004C53EB /* ReportVC.swift */; };
 		BC561E80238B836D004C53EB /* ReportOptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC561E7F238B836D004C53EB /* ReportOptionView.swift */; };
+		BC561E82238B8BCE004C53EB /* PostReportVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC561E81238B8BCE004C53EB /* PostReportVC.swift */; };
 		BC619B11237268910005BB94 /* CommunitiesListFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC619B10237268910005BB94 /* CommunitiesListFetcher.swift */; };
 		BC619B1323726A340005BB94 /* CommunitiesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC619B1223726A340005BB94 /* CommunitiesViewModel.swift */; };
 		BC619B1523726ADF0005BB94 /* CommunitiesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC619B1423726ADF0005BB94 /* CommunitiesVC.swift */; };
@@ -722,8 +723,9 @@
 		BC52913B2376B1EB0022EC7F /* PostPageVC+UITableViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PostPageVC+UITableViewDelegate.swift"; sourceTree = "<group>"; };
 		BC52913F23793D330022EC7F /* CommentForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentForm.swift; sourceTree = "<group>"; };
 		BC529141237941920022EC7F /* CommentTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentTextView.swift; sourceTree = "<group>"; };
-		BC561E7A238B76A8004C53EB /* ReportsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportsVC.swift; sourceTree = "<group>"; };
+		BC561E7A238B76A8004C53EB /* ReportVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportVC.swift; sourceTree = "<group>"; };
 		BC561E7F238B836D004C53EB /* ReportOptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportOptionView.swift; sourceTree = "<group>"; };
+		BC561E81238B8BCE004C53EB /* PostReportVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostReportVC.swift; sourceTree = "<group>"; };
 		BC619B10237268910005BB94 /* CommunitiesListFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunitiesListFetcher.swift; sourceTree = "<group>"; };
 		BC619B1223726A340005BB94 /* CommunitiesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunitiesViewModel.swift; sourceTree = "<group>"; };
 		BC619B1423726ADF0005BB94 /* CommunitiesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunitiesVC.swift; sourceTree = "<group>"; };
@@ -1311,7 +1313,7 @@
 				3B67FC0522C4BB5100D05F01 /* SplashViewController.swift */,
 				571B1509223A94CD00630C8F /* TabBarController */,
 				57B6FC23224A9E4900BCFDDA /* WelcomeScreenVC */,
-				BC561E7E238B76AD004C53EB /* ReportsVC */,
+				BC561E7E238B76AD004C53EB /* ReportVCs */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -1870,13 +1872,22 @@
 			path = CommentCell;
 			sourceTree = "<group>";
 		};
-		BC561E7E238B76AD004C53EB /* ReportsVC */ = {
+		BC561E7E238B76AD004C53EB /* ReportVCs */ = {
 			isa = PBXGroup;
 			children = (
-				BC561E7A238B76A8004C53EB /* ReportsVC.swift */,
-				BC561E7F238B836D004C53EB /* ReportOptionView.swift */,
+				BC561E83238B8F6B004C53EB /* Base */,
+				BC561E81238B8BCE004C53EB /* PostReportVC.swift */,
 			);
-			path = ReportsVC;
+			path = ReportVCs;
+			sourceTree = "<group>";
+		};
+		BC561E83238B8F6B004C53EB /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				BC561E7F238B836D004C53EB /* ReportOptionView.swift */,
+				BC561E7A238B76A8004C53EB /* ReportVC.swift */,
+			);
+			path = Base;
 			sourceTree = "<group>";
 		};
 		BC619B0F237268240005BB94 /* CommunitiesVC */ = {
@@ -2668,6 +2679,7 @@
 				BC016D44235DA0D400F1319F /* PostCell+Actions.swift in Sources */,
 				BCCB993423756319005252CF /* PostHeaderTextView.swift in Sources */,
 				57B6FC2C224A9F2800BCFDDA /* WelcomeItemVC.swift in Sources */,
+				BC561E82238B8BCE004C53EB /* PostReportVC.swift in Sources */,
 				BC69F7D5236FDFCF0097F870 /* SubscriptionsVC.swift in Sources */,
 				BC52913823766F080022EC7F /* CommentCell+Actions.swift in Sources */,
 				3BF3817F2331D17900C02123 /* NSRegularExpression.swift in Sources */,
@@ -2759,7 +2771,7 @@
 				BCB4A4C523701441005EDAAD /* SubscribersVC.swift in Sources */,
 				3BF381812331D9CD00C02123 /* URL.swift in Sources */,
 				BC3694EF2369850100B2E078 /* EditorVC.swift in Sources */,
-				BC561E7B238B76A8004C53EB /* ReportsVC.swift in Sources */,
+				BC561E7B238B76A8004C53EB /* ReportVC.swift in Sources */,
 				3B2F226E226892C5006B589E /* NotificationType.swift in Sources */,
 				3BC3CA3322CA297900A893DC /* WelcomeVC.swift in Sources */,
 				BC69F7D8236FF6790097F870 /* SubscriptionsCommunityCell.swift in Sources */,
