@@ -152,8 +152,12 @@ class SignUpVC: UIViewController, SignUpRouter {
                 return newText
             }
             .subscribe(onNext: { (text) in
-                self.phoneNumberTextField.text = text
-                self.viewModel.phone.accept(text)
+                if self.phoneNumberTextField.isFirstResponder && text.isEmpty {
+                    self.showContriesList()
+                } else {
+                    self.phoneNumberTextField.text = text
+                    self.viewModel.phone.accept(text)
+                }
             })
             .disposed(by: disposeBag)
         
@@ -167,11 +171,7 @@ class SignUpVC: UIViewController, SignUpRouter {
     func setupActions() {
         self.countryButton.rx.tap
             .subscribe(onNext: { [weak self] _ in
-                if let countryVC = controllerContainer.resolve(SelectCountryVC.self) {
-                    countryVC.bindViewModel(SelectCountryViewModel(withModel: self!.viewModel))
-                    let nav = UINavigationController(rootViewController: countryVC)
-                    self?.present(nav, animated: true, completion: nil)
-                }
+                self?.showContriesList()
             })
             .disposed(by: disposeBag)
     }
@@ -188,6 +188,15 @@ class SignUpVC: UIViewController, SignUpRouter {
             webview.tag = 777
         }
     }
+
+    private func showContriesList() {
+         if let countryVC = controllerContainer.resolve(SelectCountryVC.self) {
+             self.view.endEditing(true)
+             countryVC.bindViewModel(SelectCountryViewModel(withModel: self.viewModel))
+             let nav = UINavigationController(rootViewController: countryVC)
+             self.present(nav, animated: true, completion: nil)
+         }
+     }
 
     
     // MARK: - Gestures
