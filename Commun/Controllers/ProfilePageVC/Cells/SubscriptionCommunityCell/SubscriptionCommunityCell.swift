@@ -26,7 +26,7 @@ class SubscriptionCommunityCell: MyCollectionViewCell, CommunityController {
     }()
     
     lazy var nameLabel = UILabel.with(text: "Behance", textSize: 15, weight: .semibold, textAlignment: .center)
-    lazy var membersCountLabel = UILabel.with(text: "12,2k members", textSize: 12, weight: .semibold, textColor: .a5a7bd, textAlignment: .center)
+    lazy var descriptionLabel = UILabel.with(text: "12,2k members", textSize: 12, weight: .semibold, textColor: .a5a7bd, numberOfLines: 0, textAlignment: .center)
     lazy var joinButton = CommunButton.join
     
     // MARK: - Methods
@@ -48,10 +48,10 @@ class SubscriptionCommunityCell: MyCollectionViewCell, CommunityController {
         nameLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
         nameLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
         
-        containerView.addSubview(membersCountLabel)
-        membersCountLabel.autoPinEdge(.top, to: .bottom, of: nameLabel, withOffset: 5)
-        membersCountLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
-        membersCountLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
+        containerView.addSubview(descriptionLabel)
+        descriptionLabel.autoPinEdge(.top, to: .bottom, of: nameLabel, withOffset: 5)
+        descriptionLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
+        descriptionLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
         
         containerView.addSubview(joinButton)
         joinButton.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 10, bottom: 10, right: 10), excludingEdge: .top)
@@ -73,7 +73,7 @@ class SubscriptionCommunityCell: MyCollectionViewCell, CommunityController {
         
         nameLabel.text = community.name
         
-        #warning("subscribersCount missing")
+        descriptionLabel.text = "\(Double(community.subscribersCount ?? 0).kmFormatted) " + "members".localized().uppercaseFirst
         
         // joinButton
         let joined = community.isSubscribed ?? false
