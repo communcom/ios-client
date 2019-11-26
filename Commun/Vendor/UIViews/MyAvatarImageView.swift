@@ -33,6 +33,7 @@ class MyAvatarImageView: MyView {
         self.init(width: size, height: size)
         originSize = size
         cornerRadius = size / 2
+        imageView.cornerRadius = (size - imageViewInsets.top - imageViewInsets.bottom) / 2
     }
     
     override func commonInit() {

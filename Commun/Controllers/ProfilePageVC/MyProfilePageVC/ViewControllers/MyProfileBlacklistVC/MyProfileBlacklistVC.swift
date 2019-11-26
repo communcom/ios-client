@@ -11,7 +11,6 @@ import RxSwift
 
 class MyProfileBlacklistVC: BaseViewController {
     // MARK: - Properties
-    let disposeBag = DisposeBag()
     let viewModel: MyProfileBlacklistViewModel
     
     // MARK: - Subviews

@@ -16,7 +16,6 @@ class ListViewController<T: ListItemType>: BaseViewController {
     public typealias ListSection = AnimatableSectionModel<String, T>
     
     // MARK: - Properties
-    var disposeBag = DisposeBag()
     var viewModel: ListViewModel<T>!
     var dataSource: MyRxTableViewSectionedAnimatedDataSource<ListSection>!
     var tableViewMargin: UIEdgeInsets {.zero}

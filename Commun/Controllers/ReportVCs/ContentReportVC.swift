@@ -13,7 +13,6 @@ import RxSwift
 class ContentReportVC<T: ListItemType>: ReportVC {
     // MARK: - Properties
     let content: T
-    let disposeBag = DisposeBag()
     
     // MARK: - Initializers
     init(content: T) {

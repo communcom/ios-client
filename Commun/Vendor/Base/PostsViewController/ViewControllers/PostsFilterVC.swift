@@ -14,7 +14,6 @@ class PostsFilterVC: SwipeDownDismissViewController {
     // MARK: - Properties
     var isTimeFrameMode: Bool
     var filter: BehaviorRelay<PostsListFetcher.Filter>
-    let disposeBag = DisposeBag()
     var completion: ((PostsListFetcher.Filter) -> Void)?
     
     // MARK: - Subview
