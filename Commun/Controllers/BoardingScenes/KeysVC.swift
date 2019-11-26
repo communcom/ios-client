@@ -88,7 +88,6 @@ class KeysVC: UIViewController, BoardingRouter {
         } catch {
             showError(error)
         }
-        
     }
     
     @IBAction func shareButtonDidTouch(_ sender: Any) {

@@ -12,7 +12,6 @@ class MasterPasswordAttention: UIView {
     // MARK: - Properties
     var closeButtonTapHandler: (() -> Void)?
     var continueButtonTapHandler: (() -> Void)?
-    var saveBackupButtonTapHandler: (() -> Void)?
 
     
     // MARK: - IBOutlets

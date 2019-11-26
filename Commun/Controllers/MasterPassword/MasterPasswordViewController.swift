@@ -104,12 +104,6 @@ class MasterPasswordViewController: UIViewController {
             self.showBlackoutView(false)
         }
 
-        // Attention view save backup
-        self.masterPasswordAttentionView.saveBackupButtonTapHandler = {
-            self.showBlackoutView(false)
-            self.saveCurrentUser(settingStep: .setPasscode)
-        }
-
         // Attention view continue
         self.masterPasswordAttentionView.continueButtonTapHandler = {
             self.showBlackoutView(false)
@@ -144,7 +138,6 @@ class MasterPasswordViewController: UIViewController {
     @IBAction func copyButtonTapped(_ sender: Any) {
         guard let masterPassword = self.masterPasswordTextField.text?.trimmingCharacters(in: .whitespaces), !masterPassword.isEmpty else { return }
         
-        self.view.endEditing(true)
         self.showIndetermineHudWithMessage("copy master password to clipboard".localized().uppercaseFirst)
         UIPasteboard.general.string = masterPassword
         
@@ -154,7 +147,19 @@ class MasterPasswordViewController: UIViewController {
     }
     
     @IBAction func backupButtonTapped(_ sender: Any) {
-    
+        self.showIndetermineHudWithMessage("saving to blockchain...".localized().uppercaseFirst)
+                       
+        do {
+            try RestAPIManager.instance.rx.backUpICloud(onBoarding: true)
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                self.hideHud()
+                self.saveCurrentUser(settingStep: .setPasscode)
+            }
+        } catch {
+            showError(error)
+            self.hideHud()
+        }
     }
     
     @IBAction func iSavedButtonTapped(_ sender: Any) {
