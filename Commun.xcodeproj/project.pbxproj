@@ -297,6 +297,7 @@
 		BC597A7E238CC53D00103F4F /* FTUECommunitiesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC597A7D238CC53D00103F4F /* FTUECommunitiesVC.swift */; };
 		BC597A83238CD42200103F4F /* FTUECommunitesVC+Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC597A82238CD42200103F4F /* FTUECommunitesVC+Binding.swift */; };
 		BC597A85238CE37800103F4F /* FTUECommunitiesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC597A84238CE37800103F4F /* FTUECommunitiesViewModel.swift */; };
+		BC597A87238CE8FD00103F4F /* CommunityCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC597A86238CE8FD00103F4F /* CommunityCollectionCell.swift */; };
 		BC619B11237268910005BB94 /* CommunitiesListFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC619B10237268910005BB94 /* CommunitiesListFetcher.swift */; };
 		BC619B1323726A340005BB94 /* CommunitiesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC619B1223726A340005BB94 /* CommunitiesViewModel.swift */; };
 		BC619B1523726ADF0005BB94 /* CommunitiesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC619B1423726ADF0005BB94 /* CommunitiesVC.swift */; };
@@ -742,6 +743,7 @@
 		BC597A7D238CC53D00103F4F /* FTUECommunitiesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTUECommunitiesVC.swift; sourceTree = "<group>"; };
 		BC597A82238CD42200103F4F /* FTUECommunitesVC+Binding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FTUECommunitesVC+Binding.swift"; sourceTree = "<group>"; };
 		BC597A84238CE37800103F4F /* FTUECommunitiesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTUECommunitiesViewModel.swift; sourceTree = "<group>"; };
+		BC597A86238CE8FD00103F4F /* CommunityCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityCollectionCell.swift; sourceTree = "<group>"; };
 		BC619B10237268910005BB94 /* CommunitiesListFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunitiesListFetcher.swift; sourceTree = "<group>"; };
 		BC619B1223726A340005BB94 /* CommunitiesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunitiesViewModel.swift; sourceTree = "<group>"; };
 		BC619B1423726ADF0005BB94 /* CommunitiesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunitiesVC.swift; sourceTree = "<group>"; };
@@ -2151,6 +2153,7 @@
 		BCCE0AA92368192000A183AA /* SubscriptionCommunityCell */ = {
 			isa = PBXGroup;
 			children = (
+				BC597A86238CE8FD00103F4F /* CommunityCollectionCell.swift */,
 				BCCE0AA52367EB1100A183AA /* SubscriptionCommunityCell.swift */,
 			);
 			path = SubscriptionCommunityCell;
@@ -2774,6 +2777,7 @@
 				BCABF1372366DC3D006B05F5 /* UserProfilePageViewModel.swift in Sources */,
 				3B6CB734234335130097B2A1 /* CommunActionSheet.swift in Sources */,
 				BC48FC42236689DC0049C4F4 /* LeadersViewModel.swift in Sources */,
+				BC597A87238CE8FD00103F4F /* CommunityCollectionCell.swift in Sources */,
 				3BC6139E23419EFC00075570 /* HalfSizePresentationController.swift in Sources */,
 				BCD00FB42373C8BD004A3952 /* LeaderCollectionCell.swift in Sources */,
 				BC597A83238CD42200103F4F /* FTUECommunitesVC+Binding.swift in Sources */,

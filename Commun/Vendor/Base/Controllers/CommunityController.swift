@@ -16,6 +16,8 @@ protocol CommunityType: ListItemType {
     var isSubscribed: Bool? {get set}
     var subscribersCount: UInt64? {get set}
     var identity: String {get}
+    var avatarUrl: String? {get}
+    var coverUrl: String? {get}
     var isBeingJoined: Bool? {get set}
 }
 
