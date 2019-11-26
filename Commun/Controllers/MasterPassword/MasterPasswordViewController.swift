@@ -93,8 +93,20 @@ class MasterPasswordViewController: UIViewController {
         self.view.addSubview(self.masterPasswordAttentionView)
         self.masterPasswordAttentionView.display(false)
         
-        self.masterPasswordAttentionView.handlerHide = {
+        // Attention view cancel
+        self.masterPasswordAttentionView.closeButtonTapHandler = {
             self.showBlackoutView(false)
+        }
+
+        // Attention view save backup
+        self.masterPasswordAttentionView.saveBackupButtonTapHandler = {
+            self.showBlackoutView(false)
+        }
+
+        // Attention view continue
+        self.masterPasswordAttentionView.continueButtonTapHandler = {
+            self.showBlackoutView(false)
+            self.navigationController?.pushViewController(SetPasscodeVC(), animated: true)
         }
     }
 
@@ -110,9 +122,11 @@ class MasterPasswordViewController: UIViewController {
     
     // MARK: - Actions
     @IBAction func copyButtonTapped(_ sender: Any) {
+        guard let masterPassword = self.masterPasswordTextField.text?.trimmingCharacters(in: .whitespaces), !masterPassword.isEmpty else { return }
+        
         self.view.endEditing(true)
         self.showIndetermineHudWithMessage("copy master password to clipboard".localized().uppercaseFirst)
-        UIPasteboard.general.string = self.masterPasswordTextField.text?.trimmingCharacters(in: .whitespaces)
+        UIPasteboard.general.string = masterPassword
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
             self.hideHud()

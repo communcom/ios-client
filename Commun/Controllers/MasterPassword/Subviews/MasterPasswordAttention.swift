@@ -10,9 +10,11 @@ import UIKit
 
 class MasterPasswordAttention: UIView {
     // MARK: - Properties
-    var handlerHide: (() -> Void)?
+    var closeButtonTapHandler: (() -> Void)?
+    var continueButtonTapHandler: (() -> Void)?
+    var saveBackupButtonTapHandler: (() -> Void)?
 
-
+    
     // MARK: - IBOutlets
     @IBOutlet var contentView: UIView!
 
@@ -104,14 +106,12 @@ class MasterPasswordAttention: UIView {
     
     // MARK: - Actions
     @IBAction func closeButtonTapped(_ sender: UIButton) {
-        display(false)
-        handlerHide!()
+        self.display(false)
+        self.closeButtonTapHandler!()
     }
     
     @IBAction func continueButtonTapped(_ sender: UIButton) {
-        display(false)
-        handlerHide!()
+        self.display(false)
+        self.continueButtonTapHandler!()
     }
-    
-    
 }
