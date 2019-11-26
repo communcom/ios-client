@@ -2072,6 +2072,7 @@
 				BCCC33E923751A10004E46EF /* VoteContainerView.swift */,
 				BC52913423765EAB0022EC7F /* RightAlignedIconButton.swift */,
 				BC520A3F237E476100033ED0 /* MySubviewAttachingTextView.swift */,
+				BC597A86238CE8FD00103F4F /* CommunityCollectionCell.swift */,
 			);
 			path = UIViews;
 			sourceTree = "<group>";
@@ -2153,7 +2154,6 @@
 		BCCE0AA92368192000A183AA /* SubscriptionCommunityCell */ = {
 			isa = PBXGroup;
 			children = (
-				BC597A86238CE8FD00103F4F /* CommunityCollectionCell.swift */,
 				BCCE0AA52367EB1100A183AA /* SubscriptionCommunityCell.swift */,
 			);
 			path = SubscriptionCommunityCell;

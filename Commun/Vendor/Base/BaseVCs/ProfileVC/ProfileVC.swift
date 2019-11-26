@@ -16,8 +16,6 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
     let coverVisibleHeight: CGFloat = 150
     var coverImageHeightConstraint: NSLayoutConstraint!
     var coverImageWidthConstraint: NSLayoutConstraint!
-
-    let disposeBag = DisposeBag()
     
     // MARK: - Properties
     var _viewModel: ProfileViewModel<ProfileType> {

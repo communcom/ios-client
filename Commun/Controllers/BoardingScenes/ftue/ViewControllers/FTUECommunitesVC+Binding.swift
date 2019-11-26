@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension FTUECommunitiesVC: UICollectionViewDelegateFlowLayout {
+extension FTUECommunitiesVC: UICollectionViewDelegateFlowLayout, CommunityCollectionCellDelegate {
     func bindControl() {
         communitiesCollectionView.rx
             .contentOffset
@@ -51,6 +51,7 @@ extension FTUECommunitiesVC: UICollectionViewDelegateFlowLayout {
             .skip(1)
             .bind(to: communitiesCollectionView.rx.items(cellIdentifier: "CommunityCollectionCell", cellType: FTUECommunityCell.self)) { index, model, cell in
                 cell.setUp(with: model)
+                cell.delegate = self
                 
                 if index >= self.viewModel.items.value.count - 3 {
                     self.viewModel.fetchNext()

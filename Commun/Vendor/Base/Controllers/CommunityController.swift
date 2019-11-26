@@ -21,6 +21,25 @@ protocol CommunityType: ListItemType {
     var isBeingJoined: Bool? {get set}
 }
 
+extension CommunityType {
+    mutating func setIsSubscribed(_ value: Bool) {
+        guard value != isSubscribed
+        else {return}
+        isSubscribed = value
+        var subscribersCount: UInt64 = (self.subscribersCount ?? 0)
+        if value == false && subscribersCount == 0 {subscribersCount = 0}
+        else {
+            if value == true {
+                subscribersCount += 1
+            }
+            else {
+                subscribersCount -= 1
+            }
+        }
+        self.subscribersCount = subscribersCount
+    }
+}
+
 extension ResponseAPIContentGetCommunity: CommunityType {}
 extension ResponseAPIContentGetSubscriptionsCommunity: CommunityType {
     var subscribersCount: UInt64? {

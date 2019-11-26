@@ -7,10 +7,16 @@
 //
 
 import Foundation
+import RxSwift
 
-class CommunityCollectionCell<T: CommunityType>: MyCollectionViewCell, CommunityController {
+protocol CommunityCollectionCellDelegate: class {
+    func buttonFollowDidTouch<T: CommunityType>(community: T)
+}
+
+class CommunityCollectionCell<T: CommunityType>: MyCollectionViewCell {
     // MARK: - Properties
     var community: T?
+    weak var delegate: CommunityCollectionCellDelegate?
     
     // MARK: - Subviews
     lazy var coverImageView: UIImageView = {
@@ -80,6 +86,51 @@ class CommunityCollectionCell<T: CommunityType>: MyCollectionViewCell, Community
     }
     
     @objc func joinButtonDidTouch() {
-        toggleJoin()
+        guard let community = community else {return}
+        delegate?.buttonFollowDidTouch(community: community)
     }
+}
+
+extension CommunityCollectionCellDelegate where Self: BaseViewController {
+    func buttonFollowDidTouch<T: CommunityType>(community: T) {
+        var community = community
+        // for reverse
+        let originIsSubscribed = community.isSubscribed ?? false
+        
+        // set value
+        community.setIsSubscribed(!originIsSubscribed)
+        community.isBeingJoined = true
+        
+        // notify changes
+        community.notifyChanged()
+        
+        let request: Completable
+        
+        if originIsSubscribed {
+            request = RestAPIManager.instance.rx.unfollowCommunity(community.communityId)
+                .flatMapToCompletable()
+        }
+        else {
+            request = RestAPIManager.instance.rx.followCommunity(community.communityId)
+                .flatMapToCompletable()
+        }
+        
+        request
+            .subscribe(onCompleted: {
+                // re-enable state
+                community.isBeingJoined = false
+                community.notifyChanged()
+                
+            }) { [weak self] (error) in
+                // reverse change
+                community.setIsSubscribed(originIsSubscribed)
+                community.isBeingJoined = false
+                community.notifyChanged()
+                
+                // show error
+                self?.showError(error)
+            }
+            .disposed(by: disposeBag)
+    }
+    
 }

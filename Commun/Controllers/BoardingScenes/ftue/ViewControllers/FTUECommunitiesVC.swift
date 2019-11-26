@@ -12,7 +12,6 @@ import RxSwift
 class FTUECommunitiesVC: BaseViewController {
     // MARK: - Constants
     let bottomBarHeight: CGFloat = 114
-    let disposeBag = DisposeBag()
     
     // MARK: - Properties
     lazy var headerView = UIView(forAutoLayout: ())

@@ -7,8 +7,11 @@
 //
 
 import Foundation
+import RxSwift
 
 class LeaderCollectionCell: MyCollectionViewCell, LeaderController {
+    var disposeBag = DisposeBag()
+    
     // MARK: - Properties
     var leader: ResponseAPIContentGetLeader?
     
