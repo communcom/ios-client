@@ -16,10 +16,20 @@ extension BoardingRouter where Self: UIViewController {
     func boardingNextStep() {
         let step = KeychainManager.currentUser()?.settingStep ?? .setPasscode
         
-        if KeychainManager.currentUser()?.registrationStep == .relogined,
-            step == .setAvatar {
-            endBoarding()
-            return
+        if KeychainManager.currentUser()?.registrationStep == .relogined
+        {
+            if step == .setAvatar {
+                endBoarding()
+                return
+            }
+            if step == .ftue {
+                // skip ftue
+                try! KeychainManager.save([
+                    Config.settingStepKey: CurrentUserSettingStep.backUpICloud.rawValue
+                ])
+                boardingNextStep()
+                return
+            }
         }
         
         var vc: UIViewController
