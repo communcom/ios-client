@@ -190,6 +190,8 @@
 		AC3386A62371DDEA009DB3BB /* EmbedView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AC3386A52371DDEA009DB3BB /* EmbedView.xib */; };
 		AC5D7D8B2385A1C400EEC5ED /* Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC5D7D8A2385A1C400EEC5ED /* Formatter.swift */; };
 		AC88ADD02386B12A00D72374 /* ShareHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC88ADCF2386B12A00D72374 /* ShareHelper.swift */; };
+		AC8C57BD238C408A00B0D260 /* InstagramView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8C57BC238C408A00B0D260 /* InstagramView.swift */; };
+		AC8C57C1238D494D00B0D260 /* InstagramView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AC8C57C0238D494D00B0D260 /* InstagramView.xib */; };
 		B170AC15228AFBDA00C6FFBC /* SignUpVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5797E0F9225DDA490026C4D5 /* SignUpVC.storyboard */; };
 		B17A970C228002440081B8E0 /* SignUpRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17A970B228002440081B8E0 /* SignUpRouter.swift */; };
 		B1A6EE5122D5C8E300A5D6F0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B1A6EE5022D5C8E100A5D6F0 /* GoogleService-Info.plist */; };
@@ -665,6 +667,8 @@
 		AC5D7D8A2385A1C400EEC5ED /* Formatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatter.swift; sourceTree = "<group>"; };
 		AC759B91237C15C20069D169 /* CyberSwift.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CyberSwift.xcodeproj; path = cyberSwift/CyberSwift.xcodeproj; sourceTree = "<group>"; };
 		AC88ADCF2386B12A00D72374 /* ShareHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareHelper.swift; sourceTree = "<group>"; };
+		AC8C57BC238C408A00B0D260 /* InstagramView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstagramView.swift; sourceTree = "<group>"; };
+		AC8C57C0238D494D00B0D260 /* InstagramView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InstagramView.xib; sourceTree = "<group>"; };
 		AE43B2305FC441D96462E0AB /* Pods-Commun.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Commun.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Commun/Pods-Commun.debug.xcconfig"; sourceTree = "<group>"; };
 		B12684EF22C1E56B0046C838 /* Commun.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Commun.entitlements; sourceTree = "<group>"; };
 		B17A970B228002440081B8E0 /* SignUpRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpRouter.swift; sourceTree = "<group>"; };
@@ -1669,6 +1673,8 @@
 			children = (
 				AC3386A02371D1B6009DB3BB /* EmbedView.swift */,
 				AC3386A52371DDEA009DB3BB /* EmbedView.xib */,
+				AC8C57BC238C408A00B0D260 /* InstagramView.swift */,
+				AC8C57C0238D494D00B0D260 /* InstagramView.xib */,
 			);
 			path = EmbedView;
 			sourceTree = "<group>";
@@ -2287,11 +2293,13 @@
 				TargetAttributes = {
 					3BEA224022B3DA9C00FF42DA = {
 						CreatedOnToolsVersion = 10.2.1;
+						ProvisioningStyle = Manual;
 						TestTargetID = 571B14EF223A935C00630C8F;
 					};
 					571B14EF223A935C00630C8F = {
 						CreatedOnToolsVersion = 10.1;
 						LastSwiftMigration = 1020;
+						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -2379,6 +2387,7 @@
 				AC3386A62371DDEA009DB3BB /* EmbedView.xib in Resources */,
 				B1EA02E72289882A00835244 /* SF-Pro-Display-Ultralight.otf in Resources */,
 				B1D1CF9922F8A28A0071F1B6 /* InfoPlist.strings in Resources */,
+				AC8C57C1238D494D00B0D260 /* InstagramView.xib in Resources */,
 				572F81AB223C164C0007F2F9 /* SF-Pro-Text-Regular.otf in Resources */,
 				3BF53CE4230B93E10082464F /* HTMLStringWebView.css in Resources */,
 				BC247D0C23827C810062C979 /* ResponseAPIContentGetPost.json in Resources */,
@@ -2668,6 +2677,7 @@
 				BCA9712B2361306700AE37E1 /* MyView.swift in Sources */,
 				3B8DDF5C234B121D00B213F0 /* EditorColorPicker.swift in Sources */,
 				BCCC33E823751686004E46EF /* CommentCell.swift in Sources */,
+				AC8C57BD238C408A00B0D260 /* InstagramView.swift in Sources */,
 				BC016D49235DA2AC00F1319F /* MyTableViewCell.swift in Sources */,
 				BC7D6092237BFA1A007D8C1A /* ResponseAPIContentGetBlacklistItem.swift in Sources */,
 				BCB2A6F023556FC100B3582B /* BasicEditorVC+Tools.swift in Sources */,
@@ -2924,7 +2934,7 @@
 			baseConfigurationReference = C1D6A6DAA916F8782899DFE5 /* Pods-CommunTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = 5G8856SBG8;
 				INFOPLIST_FILE = CommunTests/Info.plist;
@@ -2947,7 +2957,7 @@
 			baseConfigurationReference = 9CD929A7157C80FECCC31E93 /* Pods-CommunTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = 5G8856SBG8;
 				INFOPLIST_FILE = CommunTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -3093,7 +3103,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Commun/Commun.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 5G8856SBG8;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -3124,7 +3134,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Commun/Commun.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 5G8856SBG8;
 				FRAMEWORK_SEARCH_PATHS = (

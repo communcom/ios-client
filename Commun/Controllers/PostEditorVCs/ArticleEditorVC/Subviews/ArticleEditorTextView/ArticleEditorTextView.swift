@@ -78,7 +78,7 @@ class ArticleEditorTextView: ContentTextView {
             // get image url or thumbnail (for website or video)
             var imageURL = attributes.url
             if attributes.type == "video" || attributes.type == "website" {
-                imageURL = attributes.thumbnail_url
+                imageURL = attributes.thumbnailUrl
             }
 
             // don't know why, but has to add dummy text, length = 1

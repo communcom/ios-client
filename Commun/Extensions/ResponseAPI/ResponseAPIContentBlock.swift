@@ -52,8 +52,8 @@ extension ResponseAPIContentBlock {
         
         // get styles
         var style = ""
-        if let text_color = attributes?.text_color {
-            style += "color: \(text_color);"
+        if let textColor = attributes?.textColor {
+            style += "color: \(textColor);"
         }
         
         if attributes?.style?.contains("bold") == true {
@@ -88,7 +88,7 @@ extension ResponseAPIContentBlock {
             if let html = attributes?.html {
                 component = html
             } else {
-                component = "<a href=\"\(attributes?.url ?? "")\"><img style=\"display: block; width: 100%; height: auto;\" src=\"\(attributes?.thumbnail_url ?? "")\" /></a>"
+                component = "<a href=\"\(attributes?.url ?? "")\"><img style=\"display: block; width: 100%; height: auto;\" src=\"\(attributes?.thumbnailUrl ?? "")\" /></a>"
             }
             
             let description = attributes?.title ?? attributes?.description
@@ -96,7 +96,7 @@ extension ResponseAPIContentBlock {
         case "website":
             
             let description = attributes?.description ?? attributes?.title
-            return "<div class=\"embeded\"><a href=\"\(attributes?.url ?? "")\"><img style=\"display: block; width: 100%; height: auto;\" src=\"\(attributes?.thumbnail_url ?? "")\" onerror=\"this.src='\(Bundle.main.url(forResource: "image-not-available", withExtension: "jpg")?.absoluteString ?? "")';\" /></a>\(attributes?.url != nil ? "<p class=\"url\">\(attributes?.url ?? "")</p>": "")\(description != nil ? "<p class=\"description\">\(description!)</p>": "")</div>"
+            return "<div class=\"embeded\"><a href=\"\(attributes?.url ?? "")\"><img style=\"display: block; width: 100%; height: auto;\" src=\"\(attributes?.thumbnailUrl ?? "")\" onerror=\"this.src='\(Bundle.main.url(forResource: "image-not-available", withExtension: "jpg")?.absoluteString ?? "")';\" /></a>\(attributes?.url != nil ? "<p class=\"url\">\(attributes?.url ?? "")</p>": "")\(description != nil ? "<p class=\"description\">\(description!)</p>": "")</div>"
         default:
             return innerHTML
         }
@@ -123,8 +123,8 @@ extension ResponseAPIContentBlock {
             child.insert(NSAttributedString.paragraphSeparator(attributes: currentAttributes), at: 0)
         case "text":
             var attr = currentAttributes
-            if let text_color = attributes?.text_color {
-                attr[.foregroundColor] = UIColor(hexString: text_color)
+            if let textColor = attributes?.textColor {
+                attr[.foregroundColor] = UIColor(hexString: textColor)
             }
     
             var symbolicTraits: UIFontDescriptor.SymbolicTraits = []
@@ -171,7 +171,7 @@ extension ResponseAPIContentBlock {
                 url = content.stringValue ?? attributes?.url
             }
             else {
-                url = content.stringValue ?? attributes?.thumbnail_url
+                url = content.stringValue ?? attributes?.thumbnailUrl
             }
             
             guard url != nil else {

@@ -101,13 +101,13 @@ extension UIImageView {
     func sd_setImageCachedError(with url: URL?, completion: ((Error?, UIImage?) -> Void)?) {
 //        showLoading()
         guard let url = url else {
-            image = UIImage(named: "image-not-found")
+//            image = UIImage(named: "image-not-found")
             return
         }
-        sd_setImage(with: url, placeholderImage: UIImage(named: "image-loading")) { [weak self] (image, error, _, _) in
+        sd_setImage(with: url, placeholderImage: nil) { [weak self] (image, error, _, _) in
 //            self?.hideLoading()
             if error != nil {
-                self?.image = UIImage(named: "image-not-found")
+//                self?.image = UIImage(named: "image-not-found")
             }
             completion?(error, image)
         }

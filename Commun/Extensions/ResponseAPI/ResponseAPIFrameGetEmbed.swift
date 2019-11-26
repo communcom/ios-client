@@ -30,7 +30,7 @@ extension ResponseAPIFrameGetEmbed {
         
         // thumbnail for website and video
         if attributes.type == "website" || attributes.type == "video" {
-            urlString = thumbnail_url
+            urlString = thumbnailUrl
         }
         
         // request

@@ -21,7 +21,7 @@ extension ResponseAPIContentGetComment: IdentifiableType {
     }
     
     var firstEmbedImageURL: String? {
-        return content?.first(where: {$0.type == "attachments"})?.content.arrayValue?.first?.attributes?.thumbnail_url
+        return content?.first(where: {$0.type == "attachments"})?.content.arrayValue?.first?.attributes?.thumbnailUrl
     }
     
     var attachments: [ResponseAPIContentBlock] {

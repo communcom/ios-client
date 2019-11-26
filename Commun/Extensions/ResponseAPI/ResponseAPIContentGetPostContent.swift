@@ -26,11 +26,11 @@ extension ResponseAPIContentGetPost {
     var firstEmbedImageURL: String? {
         let type = document?.attributes?.type
         if type == "basic" {
-            return content?.first(where: {$0.type == "attachments"})?.content.arrayValue?.first?.attributes?.thumbnail_url
+            return content?.first(where: {$0.type == "attachments"})?.content.arrayValue?.first?.attributes?.thumbnailUrl
         }
         
         if type == "article" {
-            return content?.first(where: {$0.type == "image" || $0.type == "video" || $0.type == "website"})?.attributes?.thumbnail_url
+            return content?.first(where: {$0.type == "image" || $0.type == "video" || $0.type == "website"})?.attributes?.thumbnailUrl
         }
         
         return nil

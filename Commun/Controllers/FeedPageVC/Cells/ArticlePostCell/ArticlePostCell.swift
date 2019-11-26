@@ -16,7 +16,14 @@ final class ArticlePostCell: PostCell {
     // MARK: - Subviews
     lazy var cardImageView: UIImageView = {
         let imageView = UIImageView(forAutoLayout: ())
+
+        let blackoutView = UIView()
+        imageView.addSubview(blackoutView)
+        blackoutView.backgroundColor = UIColor.black.withAlphaComponent(0.2)
+        blackoutView.autoPinEdgesToSuperviewEdges()
+
         imageView.cornerRadius = 10
+        imageView.contentMode = .scaleAspectFill
         return imageView
     }()
     
@@ -97,14 +104,10 @@ final class ArticlePostCell: PostCell {
         cardImageView.image = UIImage(named: "article-placeholder")
 
         titleLabel.text = post?.document?.attributes?.title
-        
-        if let embeds = post?.attachments,
-            !embeds.isEmpty,
-            let firstEmbed = embeds.first,
-            let urlString = firstEmbed.attributes?.thumbnail_url ?? firstEmbed.attributes?.url,
-            let url = URL(string: urlString)
-        {
-            cardImageView.sd_setImageCachedError(with: url, completion: nil)
+
+        if let coverString = post?.document?.attributes?.coverUrl,
+            let coverURL = URL(string: coverString) {
+            cardImageView.sd_setImageCachedError(with: coverURL, completion: nil)
         }
     }
 }

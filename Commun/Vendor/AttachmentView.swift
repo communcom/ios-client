@@ -126,7 +126,7 @@ class AttachmentView: UIView {
         }
         
         if block.type == "website" {
-            setUp(image: nil, url: block.attributes?.thumbnail_url ?? block.attributes?.url, urlDescription: block.content.stringValue, description: block.attributes?.title ?? block.attributes?.description, absoluteHeight: absoluteHeight)
+            setUp(image: nil, url: block.attributes?.thumbnailUrl ?? block.attributes?.url, urlDescription: block.content.stringValue, description: block.attributes?.title ?? block.attributes?.description, absoluteHeight: absoluteHeight)
             return
         }
         

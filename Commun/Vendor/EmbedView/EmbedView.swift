@@ -76,31 +76,35 @@ class EmbedView: UIView {
         titleLabel.numberOfLines = 2
         providerLabelView.isHidden = true
 
+        if content.type == "rich" || content.type == "embed" {
+            let view = InstagramView(content: content)
+            addSubview(view)
+            view.autoPinEdgesToSuperviewEdges()
+            return
+        }
+
+        backgroundColor = UIColor(hexString: "#F3F5FA")
         let inset: CGFloat = 10.0
 
-        var imageUrl = content.attributes?.thumbnail_url
+        var imageUrl = content.attributes?.thumbnailUrl
         let isNeedShowTitle = content.attributes?.title != nil
         var isNeedShowProvider = false
-        var title: String? = content.attributes?.title
+        let title: String? = content.attributes?.title
         var subtitle: String?
 
         if content.type == "video" {
             subtitle = content.attributes?.author
-            providerLabelView.isHidden = content.attributes?.provider_name == nil
-            providerNameLabel.text = content.attributes?.provider_name
-            providerLabelView.isHidden = content.attributes?.provider_name == nil
-            isNeedShowProvider = content.attributes?.provider_name != nil
+            providerLabelView.isHidden = content.attributes?.providerName == nil
+            providerNameLabel.text = content.attributes?.providerName?.uppercaseFirst
+            providerLabelView.isHidden = content.attributes?.providerName == nil
+            isNeedShowProvider = content.attributes?.providerName != nil
         } else if content.type == "website" {
             subtitle = content.attributes?.url
-        } else if content.type == "rich" {
-            // TODO: create subview
-            title = content.attributes?.description
-            titleLabel.numberOfLines = 3
         } else {
             imageUrl = content.content.stringValue
         }
 
-        let isNeedShowImage = true//imageUrl != nil
+        let isNeedShowImage = imageUrl != nil
 
         subtitleLabel.text = subtitle
 
@@ -120,7 +124,7 @@ class EmbedView: UIView {
             coverImageView.autoPinEdge(toSuperviewEdge: .left)
             coverImageView.autoPinEdge(toSuperviewEdge: .right)
 
-            NSLayoutConstraint(item: coverImageView!, attribute: .width, relatedBy: .equal, toItem: coverImageView!, attribute: .height, multiplier: 16.0/9.0, constant: 0).isActive = true
+            NSLayoutConstraint(item: coverImageView!, attribute: .width, relatedBy: .equal, toItem: coverImageView!, attribute: .height, multiplier: 16/9, constant: 0).isActive = true
         }
 
         if let url = URL(string: imageUrl ?? "") {
@@ -132,7 +136,11 @@ class EmbedView: UIView {
         }
 
         if isNeedShowTitle {
-            titlesView.autoPinEdge(.top, to: .bottom, of: coverImageView)
+            if isNeedShowImage {
+                titlesView.autoPinEdge(.top, to: .bottom, of: coverImageView)
+            } else {
+                titlesView.autoPinEdge(toSuperviewEdge: .top)
+            }
             titlesView.autoPinEdge(toSuperviewEdge: .left)
             titlesView.autoPinEdge(toSuperviewEdge: .right)
             titlesView.autoPinEdge(toSuperviewEdge: .bottom)

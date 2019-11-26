@@ -82,11 +82,11 @@ extension NSAttributedString {
                 return
             }
             
-            var text_color: String?
+            var textColor: String?
             if let color = attrs[.foregroundColor] as? UIColor {
                 let hexString = color.hexString
                 if hexString != "#000000" {
-                    text_color = hexString
+                    textColor = hexString
                 }
             }
             
@@ -107,8 +107,8 @@ extension NSAttributedString {
             
             var attributes: ResponseAPIContentBlockAttributes?
             
-            if style != nil || text_color != nil {
-                attributes = ResponseAPIContentBlockAttributes(style: style, text_color: text_color)
+            if style != nil || textColor != nil {
+                attributes = ResponseAPIContentBlockAttributes(style: style, textColor: textColor)
             }
             
             let block = ResponseAPIContentBlock(

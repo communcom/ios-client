@@ -98,7 +98,7 @@ class BasicEditorVC: PostEditorVC {
             // get image url or thumbnail (for website or video)
             var imageURL = attachment.content.stringValue ?? attachment.attributes?.url
             if attachment.attributes?.type == "video" || attachment.attributes?.type == "website" {
-                imageURL = attachment.attributes?.thumbnail_url
+                imageURL = attachment.attributes?.thumbnailUrl
             }
             // return a downloadSingle
             if let urlString = imageURL,

@@ -149,7 +149,7 @@ class EditorGridView: UIView {
     
     func setUp(embeds: [ResponseAPIContentBlock]) {
         let imageViews = embeds.compactMap { (embed) -> UIImageView? in
-            let urlString = embed.attributes?.thumbnail_url ?? embed.content.stringValue ?? ""
+            let urlString = embed.attributes?.thumbnailUrl ?? embed.content.stringValue ?? ""
             guard let url = URL(string: urlString) else {return nil}
             let imageView = UIImageView(frame: .zero)
             imageView.sd_setImageCachedError(with: url, completion: nil)
