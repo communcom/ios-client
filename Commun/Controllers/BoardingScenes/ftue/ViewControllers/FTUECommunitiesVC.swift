@@ -36,7 +36,19 @@ class FTUECommunitiesVC: BaseViewController {
         return collectionView
     }()
     
-    let viewModel = CommunitiesViewModel(type: .all)
+    lazy var chosenCommunitiesCollectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.sectionInset = .zero
+        layout.scrollDirection = .horizontal
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.backgroundColor = .clear
+        collectionView.configureForAutoLayout()
+        collectionView.autoSetDimension(.height, toSize: 50)
+        collectionView.showsHorizontalScrollIndicator = false
+        return collectionView
+    }()
+    
+    let viewModel = FTUECommunitiesViewModel(type: .all)
 
     // bottomBar
     private lazy var shadowView = UIView(height: bottomBarHeight)
@@ -87,6 +99,12 @@ class FTUECommunitiesVC: BaseViewController {
         
         bottomBar.addSubview(nextButton)
         nextButton.autoPinTopAndTrailingToSuperView(inset: 20, xInset: 16)
+        
+        bottomBar.addSubview(chosenCommunitiesCollectionView)
+        chosenCommunitiesCollectionView.autoPinTopAndLeadingToSuperView(inset: 20, xInset: 0)
+        chosenCommunitiesCollectionView.autoPinEdge(.trailing, to: .leading, of: nextButton, withOffset: -10)
+        chosenCommunitiesCollectionView.register(FTUEChosenCommunityCell.self, forCellWithReuseIdentifier: "FTUEChosenCommunityCell")
+        chosenCommunitiesCollectionView.contentInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 0)
     }
     
     override func bind() {
@@ -99,20 +117,10 @@ class FTUECommunitiesVC: BaseViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         var contentInset = communitiesCollectionView.contentInset
-        contentInset.top = headerView.height +  20
+        contentInset.top = headerView.height + 20
         communitiesCollectionView.contentInset = contentInset
         
         shadowView.layoutIfNeeded()
         bottomBar.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: 24.5)
-    }
-    
-    func observeCommunityFollowed() {
-        ResponseAPIContentGetCommunity.observeItemChanged()
-            .filter {$0.isSubscribed == true && $0.isBeingJoined == false}
-            .distinctUntilChanged {$0.identity == $1.identity}
-            .subscribe(onNext: { (community) in
-                print(community.communityId)
-            })
-            .disposed(by: disposeBag)
     }
 }

@@ -61,6 +61,37 @@ extension FTUECommunitiesVC: UICollectionViewDelegateFlowLayout, CommunityCollec
         
         communitiesCollectionView.rx.setDelegate(self)
             .disposed(by: disposeBag)
+        
+        // chosenCommunity
+        viewModel.chosenCommunities
+            .skip(1)
+            .bind(to: chosenCommunitiesCollectionView.rx.items(cellIdentifier: "FTUEChosenCommunityCell", cellType: FTUEChosenCommunityCell.self)) { index, model, cell in
+                cell.setUp(with: model)
+                cell.delegate = self
+            }
+            .disposed(by: disposeBag)
+    }
+    
+    func observeCommunityFollowed() {
+        ResponseAPIContentGetCommunity.observeItemChanged()
+            .filter {$0.isSubscribed == true && $0.isBeingJoined == false}
+            .distinctUntilChanged {$0.identity == $1.identity}
+            .subscribe(onNext: { [weak self] (community) in
+                guard var chosenCommunities = self?.viewModel.chosenCommunities.value else {return}
+                chosenCommunities.joinUnique([community])
+                self?.viewModel.chosenCommunities.accept(chosenCommunities)
+            })
+            .disposed(by: disposeBag)
+        
+        ResponseAPIContentGetCommunity.observeItemChanged()
+            .filter {$0.isSubscribed == false}
+            .distinctUntilChanged {$0.identity == $1.identity}
+            .subscribe(onNext: { [weak self] (community) in
+                guard var chosenCommunities = self?.viewModel.chosenCommunities.value else {return}
+                chosenCommunities.removeAll(where: {$0.identity == community.identity})
+                self?.viewModel.chosenCommunities.accept(chosenCommunities)
+            })
+            .disposed(by: disposeBag)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

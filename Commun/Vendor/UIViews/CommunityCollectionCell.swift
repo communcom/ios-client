@@ -11,6 +11,7 @@ import RxSwift
 
 protocol CommunityCollectionCellDelegate: class {
     func buttonFollowDidTouch<T: CommunityType>(community: T)
+    func forceFollow<T: CommunityType>(_ value: Bool, community: T)
 }
 
 class CommunityCollectionCell<T: CommunityType>: MyCollectionViewCell {
@@ -133,4 +134,11 @@ extension CommunityCollectionCellDelegate where Self: BaseViewController {
             .disposed(by: disposeBag)
     }
     
+    func forceFollow<T: CommunityType>(_ value: Bool, community: T) {
+        var community = community
+        
+        community.isSubscribed = !value
+        
+        buttonFollowDidTouch(community: community)
+    }
 }
