@@ -16,9 +16,8 @@ class FTUEVC: BaseViewController {
     // MARK: - SubViewControllers
     private lazy var communitiesVC = FTUECommunitiesVC()
     
-    private lazy var authorizeOnWebVC: UIViewController = {
-        let vc = UIViewController()
-        vc.view.backgroundColor = .blue
+    private lazy var authorizeOnWebVC: AuthorizeOnWebVC = {
+        let vc = AuthorizeOnWebVC()
         return vc
     }()
     
@@ -58,10 +57,25 @@ class FTUEVC: BaseViewController {
         add(childVC: communitiesVC)
     }
     
+    override func bind() {
+        super.bind()
+        UserDefaults.standard.rx
+            .observe(Bool.self, Config.currentUserDidSubscribeToMoreThan3Communities)
+            .filter {$0 == true}
+            .take(1)
+            .subscribe(onNext: { (_) in
+                self.showAuthorizeOnWebVC()
+            })
+            .disposed(by: disposeBag)
+    }
+    
     private func showAuthorizeOnWebVC() {
         pageControl.selectedIndex = 1
-        remove(childVC: communitiesVC)
-        add(childVC: authorizeOnWebVC)
+        UIView.animate(withDuration: 0.3) {
+            self.remove(childVC: self.communitiesVC)
+            self.add(childVC: self.authorizeOnWebVC)
+        }
+        
     }
     
     private func add(childVC: UIViewController) {

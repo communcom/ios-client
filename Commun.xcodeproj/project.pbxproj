@@ -300,6 +300,7 @@
 		BC597A89238CF20500103F4F /* FTUECommunityCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC597A88238CF20500103F4F /* FTUECommunityCell.swift */; };
 		BC597A8C238D09C400103F4F /* FTUECommunitiesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC597A8B238D09C400103F4F /* FTUECommunitiesViewModel.swift */; };
 		BC597A8E238D0CEC00103F4F /* FTUEChosenCommunityCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC597A8D238D0CEC00103F4F /* FTUEChosenCommunityCell.swift */; };
+		BC597A94238D1C6100103F4F /* AuthorizeOnWebVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC597A93238D1C6100103F4F /* AuthorizeOnWebVC.swift */; };
 		BC619B11237268910005BB94 /* CommunitiesListFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC619B10237268910005BB94 /* CommunitiesListFetcher.swift */; };
 		BC619B1323726A340005BB94 /* CommunitiesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC619B1223726A340005BB94 /* CommunitiesViewModel.swift */; };
 		BC619B1523726ADF0005BB94 /* CommunitiesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC619B1423726ADF0005BB94 /* CommunitiesVC.swift */; };
@@ -748,6 +749,7 @@
 		BC597A88238CF20500103F4F /* FTUECommunityCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTUECommunityCell.swift; sourceTree = "<group>"; };
 		BC597A8B238D09C400103F4F /* FTUECommunitiesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTUECommunitiesViewModel.swift; sourceTree = "<group>"; };
 		BC597A8D238D0CEC00103F4F /* FTUEChosenCommunityCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTUEChosenCommunityCell.swift; sourceTree = "<group>"; };
+		BC597A93238D1C6100103F4F /* AuthorizeOnWebVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizeOnWebVC.swift; sourceTree = "<group>"; };
 		BC619B10237268910005BB94 /* CommunitiesListFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunitiesListFetcher.swift; sourceTree = "<group>"; };
 		BC619B1223726A340005BB94 /* CommunitiesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunitiesViewModel.swift; sourceTree = "<group>"; };
 		BC619B1423726ADF0005BB94 /* CommunitiesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunitiesVC.swift; sourceTree = "<group>"; };
@@ -1937,13 +1939,22 @@
 		BC597A7F238CD2DE00103F4F /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				BC597A92238D1C4A00103F4F /* ChooseCommunities */,
+				BC597A93238D1C6100103F4F /* AuthorizeOnWebVC.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		BC597A92238D1C4A00103F4F /* ChooseCommunities */ = {
+			isa = PBXGroup;
+			children = (
 				BC597A88238CF20500103F4F /* FTUECommunityCell.swift */,
 				BC597A8D238D0CEC00103F4F /* FTUEChosenCommunityCell.swift */,
 				BC597A7D238CC53D00103F4F /* FTUECommunitiesVC.swift */,
 				BC597A82238CD42200103F4F /* FTUECommunitesVC+Binding.swift */,
 				BC597A8B238D09C400103F4F /* FTUECommunitiesViewModel.swift */,
 			);
-			path = ViewControllers;
+			path = ChooseCommunities;
 			sourceTree = "<group>";
 		};
 		BC619B0F237268240005BB94 /* CommunitiesVC */ = {
@@ -2824,6 +2835,7 @@
 				3B5EDE3B22E0DD5100897BF3 /* NotificationSettingType.swift in Sources */,
 				57840A1B2240DB9400338FD5 /* NetworkService.swift in Sources */,
 				572517322243935C0033125C /* ControllerContainer.swift in Sources */,
+				BC597A94238D1C6100103F4F /* AuthorizeOnWebVC.swift in Sources */,
 				3B3C8B982347911D00D8BADB /* PostEditorViewModel.swift in Sources */,
 				3BB32F1623438C44006572F3 /* CommunActionSheet+TransitioningDelegate.swift in Sources */,
 				3B25E5C6234C6EF6005BD1B8 /* ResponseAPIFrameGetEmbed.swift in Sources */,

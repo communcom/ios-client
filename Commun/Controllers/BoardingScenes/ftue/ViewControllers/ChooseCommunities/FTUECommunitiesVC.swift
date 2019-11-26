@@ -9,7 +9,7 @@
 import Foundation
 import RxSwift
 
-class FTUECommunitiesVC: BaseViewController {
+class FTUECommunitiesVC: BaseViewController, BoardingRouter {
     // MARK: - Constants
     let bottomBarHeight: CGFloat = 114
     
@@ -99,6 +99,7 @@ class FTUECommunitiesVC: BaseViewController {
         
         bottomBar.addSubview(nextButton)
         nextButton.autoPinTopAndTrailingToSuperView(inset: 20, xInset: 16)
+        nextButton.addTarget(self, action: #selector(nextButtonDidTouch), for: .touchUpInside)
         
         bottomBar.addSubview(chosenCommunitiesCollectionView)
         chosenCommunitiesCollectionView.autoPinTopAndLeadingToSuperView(inset: 20, xInset: 0)
@@ -122,5 +123,9 @@ class FTUECommunitiesVC: BaseViewController {
         
         shadowView.layoutIfNeeded()
         bottomBar.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: 24.5)
+    }
+    
+    @objc func nextButtonDidTouch() {
+        UserDefaults.standard.set(true, forKey: Config.currentUserDidSubscribeToMoreThan3Communities)
     }
 }
