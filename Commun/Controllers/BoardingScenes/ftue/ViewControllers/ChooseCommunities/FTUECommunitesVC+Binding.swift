@@ -98,7 +98,7 @@ extension FTUECommunitiesVC: UICollectionViewDelegateFlowLayout, CommunityCollec
     
     func observeCommunityFollowed() {
         ResponseAPIContentGetCommunity.observeItemChanged()
-            .filter {$0.isSubscribed == true && $0.isBeingJoined == false}
+            .filter {$0.isSubscribed == true}
             .distinctUntilChanged {$0.identity == $1.identity}
             .subscribe(onNext: { [weak self] (community) in
                 guard var chosenCommunities = self?.viewModel.chosenCommunities.value else {return}

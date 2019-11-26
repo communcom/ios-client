@@ -1931,7 +1931,6 @@
 			children = (
 				BC597A7F238CD2DE00103F4F /* ViewControllers */,
 				BC597A76238BEC2700103F4F /* FTUEVC.swift */,
-				BC597A7B238CBFE700103F4F /* CMPageControll.swift */,
 			);
 			path = ftue;
 			sourceTree = "<group>";
@@ -2086,6 +2085,7 @@
 				BC401E3B2371143F00A53788 /* LeaderAvatarImageView.swift */,
 				BCF74A6623618D9000B91089 /* CMSegmentedControl.swift */,
 				BC619B1C2372C1480005BB94 /* CMTopTabBar.swift */,
+				BC597A7B238CBFE700103F4F /* CMPageControll.swift */,
 				BCCC33E923751A10004E46EF /* VoteContainerView.swift */,
 				BC52913423765EAB0022EC7F /* RightAlignedIconButton.swift */,
 				BC520A3F237E476100033ED0 /* MySubviewAttachingTextView.swift */,
