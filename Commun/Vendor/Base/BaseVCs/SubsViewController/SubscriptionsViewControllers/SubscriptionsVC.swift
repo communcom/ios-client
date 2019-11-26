@@ -11,6 +11,7 @@ import CyberSwift
 import RxDataSources
 
 class SubscriptionsVC: SubsViewController<ResponseAPIContentGetSubscriptionsItem> {
+    var hideFollowButton = false
     private var isNeedHideCloseButton = false
 
     init(title: String? = nil, userId: String?, type: GetSubscriptionsType) {
@@ -54,7 +55,9 @@ class SubscriptionsVC: SubsViewController<ResponseAPIContentGetSubscriptionsItem
                     if indexPath.row == self.viewModel.items.value.count - 1 {
                         cell.roundedCorner.insert([.bottomLeft, .bottomRight])
                     }
-                    
+
+                    cell.joinButton.isHidden = self.hideFollowButton
+
                     return cell
                 }
                 

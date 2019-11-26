@@ -32,6 +32,7 @@ class EditorChooseCommunityVC: SubscriptionsVC {
     // MARK: - Methods
     override func setUp() {
         super.setUp()
+        hideFollowButton = true
         view.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: 20)
         
         interactor = SwipeDownInteractor()
