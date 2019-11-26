@@ -33,10 +33,11 @@ class FTUECommunitiesVC: BaseViewController {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .clear
         collectionView.configureForAutoLayout()
+        collectionView.showsVerticalScrollIndicator = false
         return collectionView
     }()
     
-    let viewModel = CommunitiesViewModel(type: .all)
+    let viewModel = FTUECommunitiesViewModel(type: .all)
 
     // bottomBar
     private lazy var shadowView = UIView(height: bottomBarHeight)
@@ -74,7 +75,7 @@ class FTUECommunitiesVC: BaseViewController {
         communitiesCollectionView.register(SubscriptionCommunityCell.self, forCellWithReuseIdentifier: "SubscriptionCommunityCell")
         communitiesCollectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: bottomBarHeight, right: 0)
         view.addSubview(communitiesCollectionView)
-        communitiesCollectionView.autoPinEdge(.top, to: .bottom, of: headerView, withOffset: 20)
+        communitiesCollectionView.autoPinEdge(.top, to: .top, of: headerView)
         communitiesCollectionView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16), excludingEdge: .top)
         
         // bottomBar
@@ -91,11 +92,16 @@ class FTUECommunitiesVC: BaseViewController {
     
     override func bind() {
         super.bind()
+        bindControl()
         bindCommunities()
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+        var contentInset = communitiesCollectionView.contentInset
+        contentInset.top = headerView.height +  20
+        communitiesCollectionView.contentInset = contentInset
+        
         shadowView.layoutIfNeeded()
         bottomBar.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: 24.5)
     }

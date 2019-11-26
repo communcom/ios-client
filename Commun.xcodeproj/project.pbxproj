@@ -296,6 +296,7 @@
 		BC597A7C238CBFE700103F4F /* CMPageControll.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC597A7B238CBFE700103F4F /* CMPageControll.swift */; };
 		BC597A7E238CC53D00103F4F /* FTUECommunitiesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC597A7D238CC53D00103F4F /* FTUECommunitiesVC.swift */; };
 		BC597A83238CD42200103F4F /* FTUECommunitesVC+Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC597A82238CD42200103F4F /* FTUECommunitesVC+Binding.swift */; };
+		BC597A85238CE37800103F4F /* FTUECommunitiesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC597A84238CE37800103F4F /* FTUECommunitiesViewModel.swift */; };
 		BC619B11237268910005BB94 /* CommunitiesListFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC619B10237268910005BB94 /* CommunitiesListFetcher.swift */; };
 		BC619B1323726A340005BB94 /* CommunitiesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC619B1223726A340005BB94 /* CommunitiesViewModel.swift */; };
 		BC619B1523726ADF0005BB94 /* CommunitiesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC619B1423726ADF0005BB94 /* CommunitiesVC.swift */; };
@@ -740,6 +741,7 @@
 		BC597A7B238CBFE700103F4F /* CMPageControll.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMPageControll.swift; sourceTree = "<group>"; };
 		BC597A7D238CC53D00103F4F /* FTUECommunitiesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTUECommunitiesVC.swift; sourceTree = "<group>"; };
 		BC597A82238CD42200103F4F /* FTUECommunitesVC+Binding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FTUECommunitesVC+Binding.swift"; sourceTree = "<group>"; };
+		BC597A84238CE37800103F4F /* FTUECommunitiesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTUECommunitiesViewModel.swift; sourceTree = "<group>"; };
 		BC619B10237268910005BB94 /* CommunitiesListFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunitiesListFetcher.swift; sourceTree = "<group>"; };
 		BC619B1223726A340005BB94 /* CommunitiesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunitiesViewModel.swift; sourceTree = "<group>"; };
 		BC619B1423726ADF0005BB94 /* CommunitiesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunitiesVC.swift; sourceTree = "<group>"; };
@@ -1931,6 +1933,7 @@
 			children = (
 				BC597A7D238CC53D00103F4F /* FTUECommunitiesVC.swift */,
 				BC597A82238CD42200103F4F /* FTUECommunitesVC+Binding.swift */,
+				BC597A84238CE37800103F4F /* FTUECommunitiesViewModel.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -2542,6 +2545,7 @@
 				3BAD8E832318FB1C005A8AB3 /* NSAttributedString.swift in Sources */,
 				3B6CB73023432D6F0097B2A1 /* FavouritesList.swift in Sources */,
 				3BC613B12342140000075570 /* SwipeDownInteractor.swift in Sources */,
+				BC597A85238CE37800103F4F /* FTUECommunitiesViewModel.swift in Sources */,
 				BCD453AD2354473F005A454C /* BasicEditorVC+MediaViewDelegate.swift in Sources */,
 				3B8DDF5A234AF04C00B213F0 /* ArticleEditorVC.swift in Sources */,
 				BC597A6E238BC7C200103F4F /* PostsFilterVC.swift in Sources */,

@@ -9,6 +9,19 @@
 import Foundation
 
 extension FTUECommunitiesVC: UICollectionViewDelegateFlowLayout {
+    func bindControl() {
+        communitiesCollectionView.rx
+            .contentOffset
+            .map {$0.y}
+            .map { (offsetY) in
+                let offsetY = offsetY + self.communitiesCollectionView.contentInset.top
+                return offsetY > 30
+            }
+            .distinctUntilChanged()
+            .bind(to: headerView.rx.isHidden)
+            .disposed(by: disposeBag)
+    }
+    
     func bindCommunities() {
         // state
         viewModel.state

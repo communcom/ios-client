@@ -61,11 +61,6 @@ class SubscriptionCommunityCell: MyCollectionViewCell, CommunityController {
         joinButton.addTarget(self, action: #selector(joinButtonDidTouch), for: .touchUpInside)
     }
     
-    override func observe() {
-        super.observe()
-        observeCommunityChange()
-    }
-    
     func setUp(with community: ResponseAPIContentGetSubscriptionsCommunity) {
         self.community = community
         self.avatarImageView.setAvatarDetectGif(with: community.avatarUrl, placeholderName: community.name)
