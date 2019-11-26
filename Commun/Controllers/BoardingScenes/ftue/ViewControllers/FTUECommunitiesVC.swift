@@ -7,10 +7,12 @@
 //
 
 import Foundation
+import RxSwift
 
 class FTUECommunitiesVC: BaseViewController {
     // MARK: - Constants
     let bottomBarHeight: CGFloat = 114
+    let disposeBag = DisposeBag()
     
     // MARK: - Properties
     lazy var headerView = UIView(forAutoLayout: ())
@@ -22,6 +24,19 @@ class FTUECommunitiesVC: BaseViewController {
     }()
     
     lazy var nextButton = CommunButton.circle(size: 50, backgroundColor: .appMainColor, tintColor: .white, imageName: "next-arrow", imageEdgeInsets: UIEdgeInsets(top: 8, left: 12, bottom: 8, right: 12))
+    
+    lazy var communitiesCollectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.minimumLineSpacing = 0
+        layout.sectionInset = .zero
+        layout.scrollDirection = .vertical
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.backgroundColor = .clear
+        collectionView.configureForAutoLayout()
+        return collectionView
+    }()
+    
+    let viewModel = CommunitiesViewModel(type: .all)
 
     // bottomBar
     private lazy var shadowView = UIView(height: bottomBarHeight)
@@ -56,6 +71,11 @@ class FTUECommunitiesVC: BaseViewController {
         searchBar.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(inset: 10), excludingEdge: .top)
         
         // collection view
+        communitiesCollectionView.register(SubscriptionCommunityCell.self, forCellWithReuseIdentifier: "SubscriptionCommunityCell")
+        communitiesCollectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: bottomBarHeight, right: 0)
+        view.addSubview(communitiesCollectionView)
+        communitiesCollectionView.autoPinEdge(.top, to: .bottom, of: headerView, withOffset: 20)
+        communitiesCollectionView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16), excludingEdge: .top)
         
         // bottomBar
         view.addSubview(shadowView)
@@ -67,6 +87,11 @@ class FTUECommunitiesVC: BaseViewController {
         
         bottomBar.addSubview(nextButton)
         nextButton.autoPinTopAndTrailingToSuperView(inset: 20, xInset: 16)
+    }
+    
+    override func bind() {
+        super.bind()
+        bindCommunities()
     }
     
     override func viewDidLayoutSubviews() {

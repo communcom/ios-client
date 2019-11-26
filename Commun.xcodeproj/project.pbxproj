@@ -295,6 +295,7 @@
 		BC597A77238BEC2700103F4F /* FTUEVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC597A76238BEC2700103F4F /* FTUEVC.swift */; };
 		BC597A7C238CBFE700103F4F /* CMPageControll.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC597A7B238CBFE700103F4F /* CMPageControll.swift */; };
 		BC597A7E238CC53D00103F4F /* FTUECommunitiesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC597A7D238CC53D00103F4F /* FTUECommunitiesVC.swift */; };
+		BC597A83238CD42200103F4F /* FTUECommunitesVC+Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC597A82238CD42200103F4F /* FTUECommunitesVC+Binding.swift */; };
 		BC619B11237268910005BB94 /* CommunitiesListFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC619B10237268910005BB94 /* CommunitiesListFetcher.swift */; };
 		BC619B1323726A340005BB94 /* CommunitiesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC619B1223726A340005BB94 /* CommunitiesViewModel.swift */; };
 		BC619B1523726ADF0005BB94 /* CommunitiesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC619B1423726ADF0005BB94 /* CommunitiesVC.swift */; };
@@ -738,6 +739,7 @@
 		BC597A76238BEC2700103F4F /* FTUEVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTUEVC.swift; sourceTree = "<group>"; };
 		BC597A7B238CBFE700103F4F /* CMPageControll.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMPageControll.swift; sourceTree = "<group>"; };
 		BC597A7D238CC53D00103F4F /* FTUECommunitiesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTUECommunitiesVC.swift; sourceTree = "<group>"; };
+		BC597A82238CD42200103F4F /* FTUECommunitesVC+Binding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FTUECommunitesVC+Binding.swift"; sourceTree = "<group>"; };
 		BC619B10237268910005BB94 /* CommunitiesListFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunitiesListFetcher.swift; sourceTree = "<group>"; };
 		BC619B1223726A340005BB94 /* CommunitiesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunitiesViewModel.swift; sourceTree = "<group>"; };
 		BC619B1423726ADF0005BB94 /* CommunitiesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunitiesVC.swift; sourceTree = "<group>"; };
@@ -1917,11 +1919,20 @@
 		BC597A7A238CBFD400103F4F /* ftue */ = {
 			isa = PBXGroup;
 			children = (
+				BC597A7F238CD2DE00103F4F /* ViewControllers */,
 				BC597A76238BEC2700103F4F /* FTUEVC.swift */,
-				BC597A7D238CC53D00103F4F /* FTUECommunitiesVC.swift */,
 				BC597A7B238CBFE700103F4F /* CMPageControll.swift */,
 			);
 			path = ftue;
+			sourceTree = "<group>";
+		};
+		BC597A7F238CD2DE00103F4F /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				BC597A7D238CC53D00103F4F /* FTUECommunitiesVC.swift */,
+				BC597A82238CD42200103F4F /* FTUECommunitesVC+Binding.swift */,
+			);
+			path = ViewControllers;
 			sourceTree = "<group>";
 		};
 		BC619B0F237268240005BB94 /* CommunitiesVC */ = {
@@ -2761,6 +2772,7 @@
 				BC48FC42236689DC0049C4F4 /* LeadersViewModel.swift in Sources */,
 				3BC6139E23419EFC00075570 /* HalfSizePresentationController.swift in Sources */,
 				BCD00FB42373C8BD004A3952 /* LeaderCollectionCell.swift in Sources */,
+				BC597A83238CD42200103F4F /* FTUECommunitesVC+Binding.swift in Sources */,
 				BC69F7DC236FFAC40097F870 /* SubscriptionsUserCell.swift in Sources */,
 				BC520A40237E476100033ED0 /* MySubviewAttachingTextView.swift in Sources */,
 				BCB2A6E823556DFA00B3582B /* PostEditorVC+Draft.swift in Sources */,

@@ -43,6 +43,7 @@ extension UserProfilePageVC: UICollectionViewDelegateFlowLayout {
                     self?.communitiesCollectionView.heightConstraint?.constant = 187
                     self?.communitiesCollectionView.hideLoading()
                 case .listEmpty:
+                    self?.communitiesCollectionView.hideLoading()
                     self?.communitiesCollectionView.heightConstraint?.constant = 0
                 case .error(let error):
                     #warning("error state")
