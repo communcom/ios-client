@@ -29,5 +29,24 @@ class MyCollectionViewCell: UICollectionViewCell {
     // MARK: - Methods
     
     func setUpViews() {
+        observe()
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        // http://adamborek.com/top-7-rxswift-mistakes/
+        // have to reset disposeBag when reusing cell
+        disposeBag = DisposeBag()
+        observe()
+    }
+    
+    func observe() {
+        
+    }
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        // Initialization code
+        setUpViews()
     }
 }

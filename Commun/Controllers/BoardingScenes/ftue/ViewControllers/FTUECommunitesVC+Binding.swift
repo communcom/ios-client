@@ -28,7 +28,7 @@ extension FTUECommunitiesVC: UICollectionViewDelegateFlowLayout {
             .subscribe(onNext: { [weak self] state in
                 switch state {
                 case .loading(let isLoading):
-                    if isLoading {
+                    if isLoading && self?.viewModel.items.value.count == 0 {
                         self?.view.showLoading()
                     }
                     else {
@@ -51,6 +51,10 @@ extension FTUECommunitiesVC: UICollectionViewDelegateFlowLayout {
             .skip(1)
             .bind(to: communitiesCollectionView.rx.items(cellIdentifier: "CommunityCollectionCell", cellType: FTUECommunityCell.self)) { index, model, cell in
                 cell.setUp(with: model)
+                
+                if index >= self.viewModel.items.value.count - 3 {
+                    self.viewModel.fetchNext()
+                }
             }
             .disposed(by: disposeBag)
         
