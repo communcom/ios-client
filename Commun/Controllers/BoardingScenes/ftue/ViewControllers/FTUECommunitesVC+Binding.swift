@@ -64,11 +64,35 @@ extension FTUECommunitiesVC: UICollectionViewDelegateFlowLayout, CommunityCollec
         
         // chosenCommunity
         viewModel.chosenCommunities
-            .skip(1)
+            .map {communities -> [ResponseAPIContentGetCommunity?] in
+                var communities = communities as [ResponseAPIContentGetCommunity?]
+                if communities.count < 3 {
+                    var placeholders = [ResponseAPIContentGetCommunity?]()
+                    for _ in 0..<(3-communities.count) {
+                        placeholders.append(nil)
+                    }
+                    communities += placeholders
+                }
+                return communities
+            }
             .bind(to: chosenCommunitiesCollectionView.rx.items(cellIdentifier: "FTUEChosenCommunityCell", cellType: FTUEChosenCommunityCell.self)) { index, model, cell in
-                cell.setUp(with: model)
+                if let model = model {
+                    cell.deleteButton.isHidden = false
+                    cell.setUp(with: model)
+                }
+                else {
+                    cell.avatarImageView.image = nil
+                    cell.avatarImageView.percent = 0
+                    cell.deleteButton.isHidden = true
+                }
                 cell.delegate = self
             }
+            .disposed(by: disposeBag)
+        
+        viewModel.chosenCommunities
+            .map {$0.count >= 3}
+            .distinctUntilChanged()
+            .bind(to: nextButton.rx.isEnabled)
             .disposed(by: disposeBag)
     }
     
