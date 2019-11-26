@@ -65,7 +65,12 @@ class MasterPasswordViewController: UIViewController {
     
     @IBOutlet weak var masterPasswordTextField: UITextField! {
         didSet {
+            self.masterPasswordTextField.tune(withPlaceholder:  "",
+                                              textColors:       blackWhiteColorPickers,
+                                              font:             UIFont(name: "SFProDisplay-Semibold", size: CGFloat.adaptive(width: 17.0)),
+                                              alignment:        .left)
             
+            self.masterPasswordTextField.text = Config.currentUser?.masterKey ?? "master password placeholder".localized().uppercaseFirst
         }
     }
     
