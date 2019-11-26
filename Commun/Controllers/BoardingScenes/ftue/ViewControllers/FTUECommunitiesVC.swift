@@ -94,6 +94,7 @@ class FTUECommunitiesVC: BaseViewController {
         super.bind()
         bindControl()
         bindCommunities()
+        observeCommunityFollowed()
     }
     
     override func viewDidLayoutSubviews() {
