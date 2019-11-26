@@ -20,6 +20,8 @@ class FTUECommunitiesVC: BaseViewController {
         searchBar.placeholder = "search".localized().uppercaseFirst
         return searchBar
     }()
+    
+    lazy var nextButton = CommunButton.circle(size: 50, backgroundColor: .appMainColor, tintColor: .white, imageName: "next-arrow", imageEdgeInsets: UIEdgeInsets(top: 8, left: 12, bottom: 8, right: 12))
 
     // bottomBar
     private lazy var shadowView = UIView(height: bottomBarHeight)
@@ -62,6 +64,9 @@ class FTUECommunitiesVC: BaseViewController {
         
         shadowView.addSubview(bottomBar)
         bottomBar.autoPinEdgesToSuperviewEdges()
+        
+        bottomBar.addSubview(nextButton)
+        nextButton.autoPinTopAndTrailingToSuperView(inset: 20, xInset: 16)
     }
     
     override func viewDidLayoutSubviews() {
