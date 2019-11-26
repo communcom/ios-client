@@ -15,7 +15,6 @@ class EditorVC: BaseViewController {
     
     
     // MARK: - Properties
-    let disposeBag = DisposeBag()
     let tools = BehaviorRelay<[EditorToolbarItem]>(value: [])
     
     // MARK: - Subviews

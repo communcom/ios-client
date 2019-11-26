@@ -28,7 +28,6 @@ class CommunityMembersVC: BaseViewController {
     
     // MARK: - Properties
     var selectedSegmentedItem: CommunityMembersViewModel.SegmentedItem
-    let disposeBag = DisposeBag()
     var viewModel: CommunityMembersViewModel
     
     // MARK: - Subviews

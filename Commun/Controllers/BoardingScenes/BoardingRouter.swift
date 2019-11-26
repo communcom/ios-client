@@ -29,6 +29,8 @@ extension BoardingRouter where Self: UIViewController {
             vc = SetPasscodeVC()
         case .setFaceId:
             vc = controllerContainer.resolve(EnableBiometricsVC.self)!
+        case .ftue:
+            vc = FTUEVC()
         case .backUpICloud:
             vc = controllerContainer.resolve(KeysVC.self)!
         case .setAvatar:

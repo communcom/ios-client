@@ -52,7 +52,7 @@ class EnableBiometricsVC: UIViewController, BoardingRouter {
     @IBAction func enableButtonDidTouch(_ sender: Any) {
         do {
             try KeychainManager.save([
-                Config.settingStepKey: CurrentUserSettingStep.backUpICloud.rawValue
+                Config.settingStepKey: CurrentUserSettingStep.ftue.rawValue
             ])
             
             UserDefaults.standard.set(true, forKey: Config.currentUserBiometryAuthEnabled)
@@ -65,7 +65,7 @@ class EnableBiometricsVC: UIViewController, BoardingRouter {
     @IBAction func skipButtonDidTouch(_ sender: Any) {
         do {
             try KeychainManager.save([
-                Config.settingStepKey: CurrentUserSettingStep.backUpICloud.rawValue
+                Config.settingStepKey: CurrentUserSettingStep.ftue.rawValue
             ])
             boardingNextStep()
         } catch {

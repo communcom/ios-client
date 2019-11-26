@@ -292,6 +292,15 @@
 		BC597A6B238BBDAC00103F4F /* FittingSizePresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC597A6A238BBDAC00103F4F /* FittingSizePresentationController.swift */; };
 		BC597A6E238BC7C200103F4F /* PostsFilterVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC597A6D238BC7C200103F4F /* PostsFilterVC.swift */; };
 		BC597A70238BD03C00103F4F /* FilterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC597A6F238BD03C00103F4F /* FilterCell.swift */; };
+		BC597A77238BEC2700103F4F /* FTUEVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC597A76238BEC2700103F4F /* FTUEVC.swift */; };
+		BC597A7C238CBFE700103F4F /* CMPageControll.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC597A7B238CBFE700103F4F /* CMPageControll.swift */; };
+		BC597A7E238CC53D00103F4F /* FTUECommunitiesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC597A7D238CC53D00103F4F /* FTUECommunitiesVC.swift */; };
+		BC597A83238CD42200103F4F /* FTUECommunitesVC+Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC597A82238CD42200103F4F /* FTUECommunitesVC+Binding.swift */; };
+		BC597A87238CE8FD00103F4F /* CommunityCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC597A86238CE8FD00103F4F /* CommunityCollectionCell.swift */; };
+		BC597A89238CF20500103F4F /* FTUECommunityCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC597A88238CF20500103F4F /* FTUECommunityCell.swift */; };
+		BC597A8C238D09C400103F4F /* FTUECommunitiesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC597A8B238D09C400103F4F /* FTUECommunitiesViewModel.swift */; };
+		BC597A8E238D0CEC00103F4F /* FTUEChosenCommunityCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC597A8D238D0CEC00103F4F /* FTUEChosenCommunityCell.swift */; };
+		BC597A94238D1C6100103F4F /* AuthorizeOnWebVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC597A93238D1C6100103F4F /* AuthorizeOnWebVC.swift */; };
 		BC619B11237268910005BB94 /* CommunitiesListFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC619B10237268910005BB94 /* CommunitiesListFetcher.swift */; };
 		BC619B1323726A340005BB94 /* CommunitiesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC619B1223726A340005BB94 /* CommunitiesViewModel.swift */; };
 		BC619B1523726ADF0005BB94 /* CommunitiesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC619B1423726ADF0005BB94 /* CommunitiesVC.swift */; };
@@ -732,6 +741,15 @@
 		BC597A6A238BBDAC00103F4F /* FittingSizePresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FittingSizePresentationController.swift; sourceTree = "<group>"; };
 		BC597A6D238BC7C200103F4F /* PostsFilterVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostsFilterVC.swift; sourceTree = "<group>"; };
 		BC597A6F238BD03C00103F4F /* FilterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterCell.swift; sourceTree = "<group>"; };
+		BC597A76238BEC2700103F4F /* FTUEVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTUEVC.swift; sourceTree = "<group>"; };
+		BC597A7B238CBFE700103F4F /* CMPageControll.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMPageControll.swift; sourceTree = "<group>"; };
+		BC597A7D238CC53D00103F4F /* FTUECommunitiesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTUECommunitiesVC.swift; sourceTree = "<group>"; };
+		BC597A82238CD42200103F4F /* FTUECommunitesVC+Binding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FTUECommunitesVC+Binding.swift"; sourceTree = "<group>"; };
+		BC597A86238CE8FD00103F4F /* CommunityCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityCollectionCell.swift; sourceTree = "<group>"; };
+		BC597A88238CF20500103F4F /* FTUECommunityCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTUECommunityCell.swift; sourceTree = "<group>"; };
+		BC597A8B238D09C400103F4F /* FTUECommunitiesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTUECommunitiesViewModel.swift; sourceTree = "<group>"; };
+		BC597A8D238D0CEC00103F4F /* FTUEChosenCommunityCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTUEChosenCommunityCell.swift; sourceTree = "<group>"; };
+		BC597A93238D1C6100103F4F /* AuthorizeOnWebVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizeOnWebVC.swift; sourceTree = "<group>"; };
 		BC619B10237268910005BB94 /* CommunitiesListFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunitiesListFetcher.swift; sourceTree = "<group>"; };
 		BC619B1223726A340005BB94 /* CommunitiesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunitiesViewModel.swift; sourceTree = "<group>"; };
 		BC619B1423726ADF0005BB94 /* CommunitiesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunitiesVC.swift; sourceTree = "<group>"; };
@@ -1163,6 +1181,7 @@
 				3BB48AD422D645FF00F11B6A /* BoardingVC.swift */,
 				3BB48ACF22D5F84D00F11B6A /* SetPasscodeVC.swift */,
 				3B82D0F622D8D56A004EE848 /* EnableBiometricsVC.swift */,
+				BC597A7A238CBFD400103F4F /* ftue */,
 				3B0506ED22D7309900B4E4A3 /* KeysVC.swift */,
 				3BB342AF22CA5CA6009546B2 /* PickupAvatarVC.swift */,
 				3BB342B322CA7412009546B2 /* CreateBioVC.swift */,
@@ -1907,6 +1926,37 @@
 			path = ViewControllers;
 			sourceTree = "<group>";
 		};
+		BC597A7A238CBFD400103F4F /* ftue */ = {
+			isa = PBXGroup;
+			children = (
+				BC597A7F238CD2DE00103F4F /* ViewControllers */,
+				BC597A76238BEC2700103F4F /* FTUEVC.swift */,
+				BC597A7B238CBFE700103F4F /* CMPageControll.swift */,
+			);
+			path = ftue;
+			sourceTree = "<group>";
+		};
+		BC597A7F238CD2DE00103F4F /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				BC597A92238D1C4A00103F4F /* ChooseCommunities */,
+				BC597A93238D1C6100103F4F /* AuthorizeOnWebVC.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		BC597A92238D1C4A00103F4F /* ChooseCommunities */ = {
+			isa = PBXGroup;
+			children = (
+				BC597A88238CF20500103F4F /* FTUECommunityCell.swift */,
+				BC597A8D238D0CEC00103F4F /* FTUEChosenCommunityCell.swift */,
+				BC597A7D238CC53D00103F4F /* FTUECommunitiesVC.swift */,
+				BC597A82238CD42200103F4F /* FTUECommunitesVC+Binding.swift */,
+				BC597A8B238D09C400103F4F /* FTUECommunitiesViewModel.swift */,
+			);
+			path = ChooseCommunities;
+			sourceTree = "<group>";
+		};
 		BC619B0F237268240005BB94 /* CommunitiesVC */ = {
 			isa = PBXGroup;
 			children = (
@@ -2039,6 +2089,7 @@
 				BCCC33E923751A10004E46EF /* VoteContainerView.swift */,
 				BC52913423765EAB0022EC7F /* RightAlignedIconButton.swift */,
 				BC520A3F237E476100033ED0 /* MySubviewAttachingTextView.swift */,
+				BC597A86238CE8FD00103F4F /* CommunityCollectionCell.swift */,
 			);
 			path = UIViews;
 			sourceTree = "<group>";
@@ -2575,6 +2626,7 @@
 				BC7D608E237BF4E7007D8C1A /* BlacklistFetcher.swift in Sources */,
 				BCB2A6E62355536D00B3582B /* UITableViewCell.swift in Sources */,
 				BCD00FBF2375087C004A3952 /* PostPageVC.swift in Sources */,
+				BC597A89238CF20500103F4F /* FTUECommunityCell.swift in Sources */,
 				57E515B12270F4EA00A6F6DB /* SettingsKeyCell.swift in Sources */,
 				BC3AD9DE2383CF3C0026EAB4 /* CommentForm+Actions.swift in Sources */,
 				3BC613B32342162700075570 /* SwipeDownDismissViewController.swift in Sources */,
@@ -2582,6 +2634,7 @@
 				571B150B223A94DE00630C8F /* TabBarVC.swift in Sources */,
 				BC52914023793D330022EC7F /* CommentForm.swift in Sources */,
 				3BAE5CD4233899F30055F23E /* ContentTextView.swift in Sources */,
+				BC597A7C238CBFE700103F4F /* CMPageControll.swift in Sources */,
 				3B2F226C226892C5006B589E /* NotificationsPageVC.swift in Sources */,
 				BC619B1B2372B5760005BB94 /* CommunityMembersViewModel.swift in Sources */,
 				AC5D7D8B2385A1C400EEC5ED /* Formatter.swift in Sources */,
@@ -2640,6 +2693,7 @@
 				BC48FC4423668A080049C4F4 /* LeadersListFetcher.swift in Sources */,
 				3B3C8B9E234796D900D8BADB /* PostEditorVC+Binding.swift in Sources */,
 				BC702C8E2362817700D9E88A /* CommunityLeaderCell.swift in Sources */,
+				BC597A8C238D09C400103F4F /* FTUECommunitiesViewModel.swift in Sources */,
 				3B67FC0622C4BB5100D05F01 /* SplashViewController.swift in Sources */,
 				3BB32F1B234436EF006572F3 /* PostMetaView.swift in Sources */,
 				B1C371362383E43C000BAE2F /* ProfileEditViewController+Actions.swift in Sources */,
@@ -2665,6 +2719,7 @@
 				BC016D43235DA0D400F1319F /* PostCell.swift in Sources */,
 				BC69F7CF236FC63F0097F870 /* BaseViewModel.swift in Sources */,
 				BC619B11237268910005BB94 /* CommunitiesListFetcher.swift in Sources */,
+				BC597A8E238D0CEC00103F4F /* FTUEChosenCommunityCell.swift in Sources */,
 				57E515B62270F7B200A6F6DB /* SettingsButtonCell.swift in Sources */,
 				3B8E0ED72343032B00362F26 /* SetUserVC+Styles.swift in Sources */,
 				3B5EDE3022DF92D000897BF3 /* SettingsOptionsCell.swift in Sources */,
@@ -2679,6 +2734,7 @@
 				3B289B9C2346E7FC00598407 /* UIImage+PureLayout.swift in Sources */,
 				BC31BA55235EBD7C0007D89A /* ProfileVC.swift in Sources */,
 				BC6B7659236AE14500A7AF2A /* CommunityPageCell.swift in Sources */,
+				BC597A7E238CC53D00103F4F /* FTUECommunitiesVC.swift in Sources */,
 				BCE9390B234DBBC300226E39 /* ResponseAPIContentBlock.swift in Sources */,
 				BC3694F923699B8600B2E078 /* ArticleEditorVC+Actions.swift in Sources */,
 				BCC545E32386710D004DFF2A /* EditorGridView.swift in Sources */,
@@ -2740,14 +2796,17 @@
 				BCABF1372366DC3D006B05F5 /* UserProfilePageViewModel.swift in Sources */,
 				3B6CB734234335130097B2A1 /* CommunActionSheet.swift in Sources */,
 				BC48FC42236689DC0049C4F4 /* LeadersViewModel.swift in Sources */,
+				BC597A87238CE8FD00103F4F /* CommunityCollectionCell.swift in Sources */,
 				3BC6139E23419EFC00075570 /* HalfSizePresentationController.swift in Sources */,
 				BCD00FB42373C8BD004A3952 /* LeaderCollectionCell.swift in Sources */,
+				BC597A83238CD42200103F4F /* FTUECommunitesVC+Binding.swift in Sources */,
 				BC69F7DC236FFAC40097F870 /* SubscriptionsUserCell.swift in Sources */,
 				BC520A40237E476100033ED0 /* MySubviewAttachingTextView.swift in Sources */,
 				BCB2A6E823556DFA00B3582B /* PostEditorVC+Draft.swift in Sources */,
 				3B289B972346E51600598407 /* UIButton+PureLayout.swift in Sources */,
 				571B14F4223A935C00630C8F /* AppDelegate.swift in Sources */,
 				3B3C8B9C2347928D00D8BADB /* PostEditorVC+Layout.swift in Sources */,
+				BC597A77238BEC2700103F4F /* FTUEVC.swift in Sources */,
 				3B0E9C6C2270634B002AB1C2 /* ProfileChooseAvatarVC.swift in Sources */,
 				3B61AC3422E1CA8A00F608AF /* LAContext.swift in Sources */,
 				3B2538B1231E318400D0B1DA /* StateButton.swift in Sources */,
@@ -2776,6 +2835,7 @@
 				3B5EDE3B22E0DD5100897BF3 /* NotificationSettingType.swift in Sources */,
 				57840A1B2240DB9400338FD5 /* NetworkService.swift in Sources */,
 				572517322243935C0033125C /* ControllerContainer.swift in Sources */,
+				BC597A94238D1C6100103F4F /* AuthorizeOnWebVC.swift in Sources */,
 				3B3C8B982347911D00D8BADB /* PostEditorViewModel.swift in Sources */,
 				3BB32F1623438C44006572F3 /* CommunActionSheet+TransitioningDelegate.swift in Sources */,
 				3B25E5C6234C6EF6005BD1B8 /* ResponseAPIFrameGetEmbed.swift in Sources */,

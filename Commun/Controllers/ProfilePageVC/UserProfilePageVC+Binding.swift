@@ -9,7 +9,7 @@
 import Foundation
 import CyberSwift
 
-extension UserProfilePageVC: UICollectionViewDelegateFlowLayout {
+extension UserProfilePageVC: UICollectionViewDelegateFlowLayout, CommunityCollectionCellDelegate {
     func bindSegmentedControl() {
         headerView.selectedIndex
             .map { index -> UserProfilePageViewModel.SegmentioItem in
@@ -33,7 +33,7 @@ extension UserProfilePageVC: UICollectionViewDelegateFlowLayout {
                 switch state {
                 case .loading(let isLoading):
                     self?.communitiesCollectionView.heightConstraint?.constant = 187
-                    if isLoading {
+                    if isLoading && self?.viewModel.subscriptionsVM.items.value.count == 0 {
                         self?.communitiesCollectionView.showLoading()
                     }
                     else {
@@ -43,6 +43,7 @@ extension UserProfilePageVC: UICollectionViewDelegateFlowLayout {
                     self?.communitiesCollectionView.heightConstraint?.constant = 187
                     self?.communitiesCollectionView.hideLoading()
                 case .listEmpty:
+                    self?.communitiesCollectionView.hideLoading()
                     self?.communitiesCollectionView.heightConstraint?.constant = 0
                 case .error(let error):
                     #warning("error state")
@@ -57,6 +58,11 @@ extension UserProfilePageVC: UICollectionViewDelegateFlowLayout {
             .map {$0.compactMap {$0.communityValue}}
             .bind(to: communitiesCollectionView.rx.items(cellIdentifier: "SubscriptionCommunityCell", cellType: SubscriptionCommunityCell.self)) { index, model, cell in
                 cell.setUp(with: model)
+                cell.delegate = self
+                
+                if index >= self.viewModel.subscriptionsVM.items.value.count - 3 {
+                    self.viewModel.subscriptionsVM.fetchNext()
+                }
             }
             .disposed(by: disposeBag)
         

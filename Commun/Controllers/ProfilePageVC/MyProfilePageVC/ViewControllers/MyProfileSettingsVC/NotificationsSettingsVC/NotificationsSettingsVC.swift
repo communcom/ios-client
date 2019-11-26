@@ -23,7 +23,6 @@ class NotificationsSettingsVC: BaseVerticalStackViewController {
     
     // MARK: - Properties
     var viewModel = NotificationSettingsViewModel()
-    let disposeBag = DisposeBag()
     
     // MARK: - Initializers
     init() {
