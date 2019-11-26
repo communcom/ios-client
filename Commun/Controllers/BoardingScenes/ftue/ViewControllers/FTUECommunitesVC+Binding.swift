@@ -49,8 +49,7 @@ extension FTUECommunitiesVC: UICollectionViewDelegateFlowLayout {
         // items
         viewModel.items
             .skip(1)
-            .map {$0.map {ResponseAPIContentGetSubscriptionsCommunity(community: $0)}}
-            .bind(to: communitiesCollectionView.rx.items(cellIdentifier: "SubscriptionCommunityCell", cellType: SubscriptionCommunityCell.self)) { index, model, cell in
+            .bind(to: communitiesCollectionView.rx.items(cellIdentifier: "CommunityCollectionCell", cellType: FTUECommunityCell.self)) { index, model, cell in
                 cell.setUp(with: model)
             }
             .disposed(by: disposeBag)

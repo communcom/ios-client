@@ -37,7 +37,7 @@ class FTUECommunitiesVC: BaseViewController {
         return collectionView
     }()
     
-    let viewModel = FTUECommunitiesViewModel(type: .all)
+    let viewModel = CommunitiesViewModel(type: .all)
 
     // bottomBar
     private lazy var shadowView = UIView(height: bottomBarHeight)
@@ -72,7 +72,7 @@ class FTUECommunitiesVC: BaseViewController {
         searchBar.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(inset: 10), excludingEdge: .top)
         
         // collection view
-        communitiesCollectionView.register(SubscriptionCommunityCell.self, forCellWithReuseIdentifier: "SubscriptionCommunityCell")
+        communitiesCollectionView.register(FTUECommunityCell.self, forCellWithReuseIdentifier: "CommunityCollectionCell")
         communitiesCollectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: bottomBarHeight, right: 0)
         view.addSubview(communitiesCollectionView)
         communitiesCollectionView.autoPinEdge(.top, to: .top, of: headerView)
