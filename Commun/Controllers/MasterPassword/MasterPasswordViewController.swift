@@ -106,7 +106,8 @@ class MasterPasswordViewController: UIViewController {
         // Attention view continue
         self.masterPasswordAttentionView.continueButtonTapHandler = {
             self.showBlackoutView(false)
-            self.navigationController?.pushViewController(SetPasscodeVC(), animated: true)
+            AppDelegate.reloadSubject.onNext(true)
+//            self.navigationController?.pushViewController(SetPasscodeVC(), animated: true)
         }
     }
 

@@ -102,10 +102,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func navigateWithRegistrationStep(force: Bool = false) {
         let completion = {
             let step = KeychainManager.currentUser()?.registrationStep ?? .firstStep
+            
             // Registered user
             if step == .registered || step == .relogined {
                 // If first setting is uncompleted
                 let settingStep = KeychainManager.currentUser()?.settingStep ?? .setPasscode
+                
                 if settingStep != .completed {
                     if !force,
                         let nc = self.window?.rootViewController as? UINavigationController,

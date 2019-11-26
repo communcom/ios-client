@@ -62,7 +62,7 @@ class WelcomeVC: UIViewController {
     
     // MARK: - TESTED
     @IBAction func testButtonTapped(_ sender: Any) {
-        let masterPassvordVC = controllerContainer.resolve(MasterPasswordViewController.self)!
-        navigationController?.pushViewController(masterPassvordVC)
+//        let masterPassvordVC = controllerContainer.resolve(MasterPasswordViewController.self)!
+//        navigationController?.pushViewController(masterPassvordVC)
     }
 }

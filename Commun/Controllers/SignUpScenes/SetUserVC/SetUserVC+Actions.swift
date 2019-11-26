@@ -40,7 +40,9 @@ extension SetUserVC {
                 return RestAPIManager.instance.rx.toBlockChain()
             })
             .subscribe(onCompleted: {
-                AppDelegate.reloadSubject.onNext(true)
+                self.hideHud()
+                self.navigationController?.pushViewController(controllerContainer.resolve(MasterPasswordViewController.self)!)
+//                AppDelegate.reloadSubject.onNext(true)
             }, onError: {error in
                 self.hideHud()
                 self.showError(error)
