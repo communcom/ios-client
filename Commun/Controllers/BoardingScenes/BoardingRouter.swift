@@ -27,6 +27,8 @@ extension BoardingRouter where Self: UIViewController {
                 try! KeychainManager.save([
                     Config.settingStepKey: CurrentUserSettingStep.backUpICloud.rawValue
                 ])
+                boardingNextStep()
+                return
             }
         }
         
