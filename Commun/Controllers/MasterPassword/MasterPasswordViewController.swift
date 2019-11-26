@@ -86,6 +86,7 @@ class MasterPasswordViewController: UIViewController {
         }
     }
     
+    
     // MARK: - Class Functions
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -101,14 +102,16 @@ class MasterPasswordViewController: UIViewController {
         // Attention view save backup
         self.masterPasswordAttentionView.saveBackupButtonTapHandler = {
             self.showBlackoutView(false)
+            self.saveCurrentUser(settingStep: .setPasscode)
         }
 
         // Attention view continue
         self.masterPasswordAttentionView.continueButtonTapHandler = {
             self.showBlackoutView(false)
-            AppDelegate.reloadSubject.onNext(true)
-//            self.navigationController?.pushViewController(SetPasscodeVC(), animated: true)
+            self.saveCurrentUser(settingStep: .setPasscode)
         }
+        
+        self.saveCurrentUser(settingStep: .masterPassword)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -119,6 +122,17 @@ class MasterPasswordViewController: UIViewController {
 
     
     // MARK: - Custom Functions
+    private func saveCurrentUser(settingStep: CurrentUserSettingStep) {
+        do {
+            try KeychainManager.save([ Config.settingStepKey: settingStep.rawValue ])
+            
+            if settingStep == .setPasscode {
+                AppDelegate.reloadSubject.onNext(true)
+            }
+        } catch {
+            self.showError(error)
+        }
+    }
     
     
     // MARK: - Actions

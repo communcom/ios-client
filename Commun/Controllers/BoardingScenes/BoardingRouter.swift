@@ -35,6 +35,8 @@ extension BoardingRouter where Self: UIViewController {
             vc = controllerContainer.resolve(PickupAvatarVC.self)!
         case .setBio:
             vc = controllerContainer.resolve(CreateBioVC.self)!
+        case .masterPassword:
+            vc = controllerContainer.resolve(MasterPasswordViewController.self)!
         default:
             return
         }

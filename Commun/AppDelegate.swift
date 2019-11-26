@@ -187,8 +187,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         } else {
             completion()
         }
-        
-        
     }
     
     func changeRootVC(_ rootVC: UIViewController) {
@@ -205,7 +203,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UIView.animate(withDuration: 0.5, animations: {
             rootVC.view.alpha = 1
         })
-        
     }
 
     func applicationWillResignActive(_ application: UIApplication) {

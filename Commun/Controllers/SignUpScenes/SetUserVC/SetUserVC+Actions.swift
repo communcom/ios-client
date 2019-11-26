@@ -42,13 +42,13 @@ extension SetUserVC {
             .subscribe(onCompleted: {
                 self.hideHud()
                 self.navigationController?.pushViewController(controllerContainer.resolve(MasterPasswordViewController.self)!)
-//                AppDelegate.reloadSubject.onNext(true)
             }, onError: {error in
                 self.hideHud()
                 self.showError(error)
             })
             .disposed(by: disposeBag)
     }
+    
     
     // MARK: - Gestures
     @IBAction func handlerTapGestureRecognizer(_ sender: UITapGestureRecognizer) {
