@@ -293,6 +293,7 @@
 		BC597A6E238BC7C200103F4F /* PostsFilterVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC597A6D238BC7C200103F4F /* PostsFilterVC.swift */; };
 		BC597A70238BD03C00103F4F /* FilterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC597A6F238BD03C00103F4F /* FilterCell.swift */; };
 		BC597A77238BEC2700103F4F /* FTUEVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC597A76238BEC2700103F4F /* FTUEVC.swift */; };
+		BC597A7C238CBFE700103F4F /* CMPageControll.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC597A7B238CBFE700103F4F /* CMPageControll.swift */; };
 		BC619B11237268910005BB94 /* CommunitiesListFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC619B10237268910005BB94 /* CommunitiesListFetcher.swift */; };
 		BC619B1323726A340005BB94 /* CommunitiesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC619B1223726A340005BB94 /* CommunitiesViewModel.swift */; };
 		BC619B1523726ADF0005BB94 /* CommunitiesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC619B1423726ADF0005BB94 /* CommunitiesVC.swift */; };
@@ -734,6 +735,7 @@
 		BC597A6D238BC7C200103F4F /* PostsFilterVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostsFilterVC.swift; sourceTree = "<group>"; };
 		BC597A6F238BD03C00103F4F /* FilterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterCell.swift; sourceTree = "<group>"; };
 		BC597A76238BEC2700103F4F /* FTUEVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTUEVC.swift; sourceTree = "<group>"; };
+		BC597A7B238CBFE700103F4F /* CMPageControll.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMPageControll.swift; sourceTree = "<group>"; };
 		BC619B10237268910005BB94 /* CommunitiesListFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunitiesListFetcher.swift; sourceTree = "<group>"; };
 		BC619B1223726A340005BB94 /* CommunitiesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunitiesViewModel.swift; sourceTree = "<group>"; };
 		BC619B1423726ADF0005BB94 /* CommunitiesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunitiesVC.swift; sourceTree = "<group>"; };
@@ -1165,7 +1167,7 @@
 				3BB48AD422D645FF00F11B6A /* BoardingVC.swift */,
 				3BB48ACF22D5F84D00F11B6A /* SetPasscodeVC.swift */,
 				3B82D0F622D8D56A004EE848 /* EnableBiometricsVC.swift */,
-				BC597A76238BEC2700103F4F /* FTUEVC.swift */,
+				BC597A7A238CBFD400103F4F /* ftue */,
 				3B0506ED22D7309900B4E4A3 /* KeysVC.swift */,
 				3BB342AF22CA5CA6009546B2 /* PickupAvatarVC.swift */,
 				3BB342B322CA7412009546B2 /* CreateBioVC.swift */,
@@ -1910,6 +1912,15 @@
 			path = ViewControllers;
 			sourceTree = "<group>";
 		};
+		BC597A7A238CBFD400103F4F /* ftue */ = {
+			isa = PBXGroup;
+			children = (
+				BC597A76238BEC2700103F4F /* FTUEVC.swift */,
+				BC597A7B238CBFE700103F4F /* CMPageControll.swift */,
+			);
+			path = ftue;
+			sourceTree = "<group>";
+		};
 		BC619B0F237268240005BB94 /* CommunitiesVC */ = {
 			isa = PBXGroup;
 			children = (
@@ -2585,6 +2596,7 @@
 				571B150B223A94DE00630C8F /* TabBarVC.swift in Sources */,
 				BC52914023793D330022EC7F /* CommentForm.swift in Sources */,
 				3BAE5CD4233899F30055F23E /* ContentTextView.swift in Sources */,
+				BC597A7C238CBFE700103F4F /* CMPageControll.swift in Sources */,
 				3B2F226C226892C5006B589E /* NotificationsPageVC.swift in Sources */,
 				BC619B1B2372B5760005BB94 /* CommunityMembersViewModel.swift in Sources */,
 				AC5D7D8B2385A1C400EEC5ED /* Formatter.swift in Sources */,

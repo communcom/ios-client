@@ -8,9 +8,10 @@
 
 import Foundation
 
-class FTUEVC: BaseViewController, BoardingRouter {
+class FTUEVC: BaseViewController {
     // MARK: - Subviews
     lazy var containerView = UIView(forAutoLayout: ())
+    lazy var pageControl = CMPageControll(numberOfPages: 2)
     
     // MARK: - SubViewControllers
     private lazy var communitiesVC: UIViewController = {
@@ -53,6 +54,17 @@ class FTUEVC: BaseViewController, BoardingRouter {
         view.addSubview(containerView)
         containerView.autoPinEdge(.top, to: .bottom, of: communLabel, withOffset: 20)
         containerView.autoPinEdgesToSuperviewSafeArea(with: .zero, excludingEdge: .top)
+        
+        view.addSubview(pageControl)
+        pageControl.autoAlignAxis(.horizontal, toSameAxisOf: communLabel)
+        pageControl.autoAlignAxis(toSuperviewAxis: .vertical)
+        
+        add(childVC: communitiesVC)
+    }
+    
+    private func showAuthorizeOnWebVC() {
+        remove(childVC: communitiesVC)
+        add(childVC: authorizeOnWebVC)
     }
     
     private func add(childVC: UIViewController) {
