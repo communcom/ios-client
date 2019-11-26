@@ -105,4 +105,14 @@ class FTUECommunitiesVC: BaseViewController {
         shadowView.layoutIfNeeded()
         bottomBar.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: 24.5)
     }
+    
+    func observeCommunityFollowed() {
+        ResponseAPIContentGetCommunity.observeItemChanged()
+            .filter {$0.isSubscribed == true && $0.isBeingJoined == false}
+            .distinctUntilChanged {$0.identity == $1.identity}
+            .subscribe(onNext: { (community) in
+                print(community.communityId)
+            })
+            .disposed(by: disposeBag)
+    }
 }
