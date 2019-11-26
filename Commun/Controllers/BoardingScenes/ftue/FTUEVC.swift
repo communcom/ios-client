@@ -14,11 +14,7 @@ class FTUEVC: BaseViewController {
     lazy var pageControl = CMPageControll(numberOfPages: 2)
     
     // MARK: - SubViewControllers
-    private lazy var communitiesVC: UIViewController = {
-        let vc = UIViewController()
-        vc.view.backgroundColor = .red
-        return vc
-    }()
+    private lazy var communitiesVC = FTUECommunitiesVC()
     
     private lazy var authorizeOnWebVC: UIViewController = {
         let vc = UIViewController()
@@ -63,12 +59,16 @@ class FTUEVC: BaseViewController {
     }
     
     private func showAuthorizeOnWebVC() {
+        pageControl.selectedIndex = 1
         remove(childVC: communitiesVC)
         add(childVC: authorizeOnWebVC)
     }
     
     private func add(childVC: UIViewController) {
         addChildViewController(childVC, toContainerView: containerView)
+        
+        childVC.view.frame = containerView.bounds
+        childVC.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
     }
     
     private func remove(childVC: UIViewController) {
