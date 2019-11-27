@@ -11,13 +11,11 @@ import UIKit
 class WelcomePageVC: UIPageViewController {
     // MARK: - Properties
     var totalPages = 4
-    var pillPageControl: PillPageControl?
         
     var currentPage = 0 {
         didSet {
             if currentPage > self.pages.count - 1 || currentPage < 0 { return }
             setViewControllers([pages[currentPage]], direction: .forward, animated: true, completion: nil)
-            pillPageControl?.progress = CGFloat(currentPage)
         }
     }
     
@@ -49,28 +47,19 @@ class WelcomePageVC: UIPageViewController {
         
         // kick off pageController
         setViewControllers([pages.first!], direction: .forward, animated: true, completion: nil)
-        
-        // Configure pageControl
-        pillPageControl = PillPageControl(frame: CGRect(x: 8, y: 35, width: UIScreen.main.bounds.size.width - 16, height: 25))
-        
-        // configure pageControl
-        pillPageControl?.pageCount = totalPages
-        pillPageControl?.activeTint = #colorLiteral(red: 0.4156862745, green: 0.5019607843, blue: 0.9607843137, alpha: 1)
-        pillPageControl?.inactiveTint = #colorLiteral(red: 0.8980392157, green: 0.9058823529, blue: 0.9294117647, alpha: 1)
-        
-        self.view.addSubview(pillPageControl!)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        countDown?.invalidate()
-        timer?.invalidate()
+        
+        self.countDown?.invalidate()
+        self.timer?.invalidate()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
        
-        self.setUpCountDown()
+//        self.setUpCountDown()
     }
         
     
@@ -79,12 +68,12 @@ class WelcomePageVC: UIPageViewController {
         // Timer reset
         var timeLeft = 7
 
-        timer?.invalidate()
-        countDown?.invalidate()
+        self.countDown?.invalidate()
         
         // Count down
-        countDown = Timer(timeInterval: TimeInterval(1), repeats: true, block: { [weak self] (_) in
+        self.countDown = Timer(timeInterval: TimeInterval(1), repeats: true, block: { [weak self] (_) in
             guard let strongSelf = self else {return}
+            
             timeLeft -= 1
             print(timeLeft)
             
@@ -107,10 +96,10 @@ class WelcomePageVC: UIPageViewController {
     }
     
     func schedule() {
-        timer?.invalidate()
-        
+        self.timer?.invalidate()
+
         // Re-schedule
-        timer = Timer(timeInterval: TimeInterval(3), repeats: true, block: { [weak self] (_) in
+        self.timer = Timer(timeInterval: TimeInterval(3), repeats: true, block: { [weak self] (_) in
             guard let strongSelf = self else { return }
             var newValue = strongSelf.currentPage
             if newValue == strongSelf.pages.count - 1 { newValue = 0 }
@@ -136,6 +125,7 @@ class WelcomePageVC: UIPageViewController {
             welcomeVC.signUpButton.isHidden         =   index != 3   // false
             welcomeVC.topSignInButton.isHidden      =   index == 3   // true
             welcomeVC.bottomSignInButton.isHidden   =   index != 3   // false
+            welcomeVC.pageControl.selectedIndex     =   index
         }
     }
 }
@@ -156,11 +146,15 @@ extension WelcomePageVC: UIPageViewControllerDelegate, UIPageViewControllerDataS
     }
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
-        guard let vc = viewController as? WelcomeItemVC, vc.item < totalPages - 1 else { return pages[0] }
+        guard let vc = viewController as? WelcomeItemVC, vc.item < totalPages - 1 else {
+            return pages[0]
+        }
         
         let nextIndex = vc.item + 1
         
-        if nextIndex > 2 { return nil }
+        if nextIndex > 3 {
+            return nil
+        }
         
         guard nextIndex < pages.count else { return pages.first }
         guard pages.count > nextIndex else { return nil }
@@ -174,8 +168,8 @@ extension WelcomePageVC: UIPageViewControllerDelegate, UIPageViewControllerDataS
             
             self.showActionButtons(viewControllerIndex)
             self.currentPage = viewControllerIndex
-//            timer?.invalidate()
-            self.setUpCountDown()
+//            self.timer?.invalidate()
+//            self.setUpCountDown()
         }
     }
 }

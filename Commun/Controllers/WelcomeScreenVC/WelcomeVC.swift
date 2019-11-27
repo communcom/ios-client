@@ -14,7 +14,8 @@ import SwiftTheme
 class WelcomeVC: UIViewController {
     // MARK: - Properties
     var welcomePageVC: WelcomePageVC!
-    
+    lazy var pageControl = CMPageControll(numberOfPages: 4)
+
     
     // MARK: - IBOutlets
     @IBOutlet weak var nextButton: StepButton!
@@ -62,6 +63,11 @@ class WelcomeVC: UIViewController {
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.isTranslucent = true
+        
+        view.addSubview(pageControl)
+        pageControl.autoAlignAxis(.horizontal, toSameAxisOf: topSignInButton)
+        pageControl.autoAlignAxis(toSuperviewAxis: .vertical)
+        pageControl.selectedIndex = 0
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -110,9 +116,11 @@ class WelcomeVC: UIViewController {
     }
     
     @IBAction func nextButtonTap(_ sender: Any) {
-        let nextIndex = self.welcomePageVC.currentPage + 1
-        self.welcomePageVC.currentPage = nextIndex
-        self.welcomePageVC.showActionButtons(nextIndex)
-        self.welcomePageVC.setUpCountDown()
+        let indexNext = self.welcomePageVC.currentPage + 1
+        self.welcomePageVC.currentPage = indexNext
+        self.welcomePageVC.showActionButtons(indexNext)
+        self.welcomePageVC.timer?.invalidate()
+//        self.welcomePageVC.setUpCountDown()
+        self.pageControl.selectedIndex = indexNext
     }
 }
