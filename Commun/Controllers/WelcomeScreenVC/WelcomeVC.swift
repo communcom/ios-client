@@ -58,4 +58,11 @@ class WelcomeVC: UIViewController {
     @IBAction func signUpButtonTap(_ sender: Any) {
         navigateToSignUp()
     }
+    
+    
+    // MARK: - TESTED
+    @IBAction func testButtonTapped(_ sender: Any) {
+//        let masterPassvordVC = controllerContainer.resolve(MasterPasswordViewController.self)!
+//        navigationController?.pushViewController(masterPassvordVC)
+    }
 }

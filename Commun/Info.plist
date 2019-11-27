@@ -56,6 +56,8 @@
 		<string>SF-Pro-Text-Semibold.otf</string>
 		<string>SF-Pro-Display-Regular.otf</string>
 		<string>SF-Pro-Display-Bold.otf</string>
+		<string>SF-Pro-Display-Medium.otf</string>
+		<string>SF-Pro-Display-Semibold.otf</string>
 	</array>
 	<key>UIBackgroundModes</key>
 	<array>

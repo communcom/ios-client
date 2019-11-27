@@ -12,6 +12,7 @@
 "add short PIN code"                            =   "add short PIN code";
 "ago"                                           =   "ago";
 "add to favourite"                              =   "add to favourite";
+"attention"                                     =   "attention";
 
 
 // B
@@ -38,6 +39,8 @@
 "create post"                                   =   "create post";
 "create your passcode"                          =   "create your passcode";
 "create your username"                          =   "create your username";
+"continue without backup"                       =   "continue without backup";
+"copy master password to clipboard"             =   "copy to clipboard";
 
 
 // D
@@ -52,6 +55,7 @@
 "done"                                          =   "done";
 "download"                                      =   "download";
 "downvoted you in a post"                       =   "downvoted you in a post";
+"describe master password"                      =   "You need the master password to Log in\nWe don’t keep and can’t restore passwords\nSave it!";
 
 
 // E
@@ -83,6 +87,7 @@
 // H
 "has removed your voice from your..."           =   "has removed your voice from your delegate node";
 "hundreds"                                      =   "hundreds";
+"has been generated"                            =   "has been generated";
 
 
 // I
@@ -115,6 +120,10 @@
 "mentioned you"                                 =   "mentioned you";
 "my communities"                                =   "my communities";
 "my Feed"                                       =   "my Feed";
+"master password"                               =   "master password";
+"master password attention note"                =   "We do not keep master passwords and\nhave no opportunity to restore them.";
+"master password attention describe"            =   "Unfortunately for our comfort, blockchain\ndoesn’t allow us to restore passwords. It means\nthat it’s every user’s responsibility to keep the\npassword in a safe place and be able to access it\nanytime.\nWe strongly recommend you to save your\npassword and make a copy of it.";
+"master password placeholder"                   =   "enter master password";
 
 
 // N
@@ -178,6 +187,7 @@
 "successfully resend code"                      =   "successfully resend code";
 "send post"                                     =   "post";
 "send report"                                   =   "report";
+
 
 // T
 "tap to try again"                              =   "tap to try again";

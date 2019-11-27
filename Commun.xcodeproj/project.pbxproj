@@ -232,6 +232,8 @@
 		B1FA77C5238BBF0D006E57D1 /* UserNameRulesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1FA77C3238BBF0D006E57D1 /* UserNameRulesView.swift */; };
 		B1FA77C7238BBF64006E57D1 /* Bool+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1FA77C6238BBF64006E57D1 /* Bool+Extensions.swift */; };
 		B1FA77C9238BBFE3006E57D1 /* SetUserVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B1FA77C8238BBFE2006E57D1 /* SetUserVC.storyboard */; };
+		B1FA77EC238C205F006E57D1 /* MasterPasswordAttention.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1FA77EB238C205F006E57D1 /* MasterPasswordAttention.swift */; };
+		B1FA77EE238C206B006E57D1 /* MasterPasswordAttention.xib in Resources */ = {isa = PBXBuildFile; fileRef = B1FA77ED238C206B006E57D1 /* MasterPasswordAttention.xib */; };
 		BC016D42235DA0D400F1319F /* ArticlePostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC016D39235DA0D400F1319F /* ArticlePostCell.swift */; };
 		BC016D43235DA0D400F1319F /* PostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC016D3B235DA0D400F1319F /* PostCell.swift */; };
 		BC016D44235DA0D400F1319F /* PostCell+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC016D3C235DA0D400F1319F /* PostCell+Actions.swift */; };
@@ -685,6 +687,8 @@
 		B1FA77C3238BBF0D006E57D1 /* UserNameRulesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserNameRulesView.swift; sourceTree = "<group>"; };
 		B1FA77C6238BBF64006E57D1 /* Bool+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Bool+Extensions.swift"; sourceTree = "<group>"; };
 		B1FA77C8238BBFE2006E57D1 /* SetUserVC.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SetUserVC.storyboard; sourceTree = "<group>"; };
+		B1FA77EB238C205F006E57D1 /* MasterPasswordAttention.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterPasswordAttention.swift; sourceTree = "<group>"; };
+		B1FA77ED238C206B006E57D1 /* MasterPasswordAttention.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MasterPasswordAttention.xib; sourceTree = "<group>"; };
 		BC016D39235DA0D400F1319F /* ArticlePostCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticlePostCell.swift; sourceTree = "<group>"; };
 		BC016D3B235DA0D400F1319F /* PostCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostCell.swift; sourceTree = "<group>"; };
 		BC016D3C235DA0D400F1319F /* PostCell+Actions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PostCell+Actions.swift"; sourceTree = "<group>"; };
@@ -1185,7 +1189,7 @@
 			isa = PBXGroup;
 			children = (
 				BC46592A238E633C00AF9C29 /* BoardingVC.swift */,
-				BC465926238E563F00AF9C29 /* BackUpKeysVC.swift */,
+				BC465931238E7AC100AF9C29 /* BackUpKeysVC */,
 				BC46592C238E681500AF9C29 /* BoardingSetPasscodeVC.swift */,
 				3B82D0F622D8D56A004EE848 /* EnableBiometricsVC.swift */,
 				BC597A7A238CBFD400103F4F /* ftue */,
@@ -1297,10 +1301,10 @@
 				B12684EF22C1E56B0046C838 /* Commun.entitlements */,
 				571B14F3223A935C00630C8F /* AppDelegate.swift */,
 				57840A182240DAFF00338FD5 /* Assembly */,
-				57840A192240DB1200338FD5 /* Services */,
 				AC5D7D872385A1AC00EEC5ED /* Helpers */,
 				578409EA223FAC0000338FD5 /* Vendor */,
 				3B6CB72E23432D510097B2A1 /* Managers */,
+				57840A192240DB1200338FD5 /* Services */,
 				576DC91F223E42B200EDED41 /* Extensions */,
 				572F81A5223C164C0007F2F9 /* Fonts */,
 				571B1508223A937200630C8F /* Controllers */,
@@ -1329,6 +1333,7 @@
 				3B6205582346E40A0017FEB7 /* PostEditorVCs */,
 				5725173A2243E4510033125C /* PostPageVC */,
 				3BAF69C122675ADB0055CCEB /* ProfilePageVC */,
+				BC561E7E238B76AD004C53EB /* ReportVCs */,
 				575AECAF22606F5200A7EC2D /* SelectCountryVC */,
 				57E5159A2270E5C700A6F6DB /* SettingsVC */,
 				57FB179E224C077300563BF7 /* SignInVC */,
@@ -1336,7 +1341,6 @@
 				3B67FC0522C4BB5100D05F01 /* SplashViewController.swift */,
 				571B1509223A94CD00630C8F /* TabBarController */,
 				57B6FC23224A9E4900BCFDDA /* WelcomeScreenVC */,
-				BC561E7E238B76AD004C53EB /* ReportVCs */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -1729,6 +1733,15 @@
 			path = Subviews;
 			sourceTree = "<group>";
 		};
+		B1FA77EA238C200F006E57D1 /* Subviews */ = {
+			isa = PBXGroup;
+			children = (
+				B1FA77EB238C205F006E57D1 /* MasterPasswordAttention.swift */,
+				B1FA77ED238C206B006E57D1 /* MasterPasswordAttention.xib */,
+			);
+			path = Subviews;
+			sourceTree = "<group>";
+		};
 		BC016D38235DA0D400F1319F /* ArticlePostCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -1906,6 +1919,15 @@
 				3BB342B322CA7412009546B2 /* CreateBioVC.swift */,
 			);
 			path = Unused;
+			sourceTree = "<group>";
+		};
+		BC465931238E7AC100AF9C29 /* BackUpKeysVC */ = {
+			isa = PBXGroup;
+			children = (
+				B1FA77EA238C200F006E57D1 /* Subviews */,
+				BC465926238E563F00AF9C29 /* BackUpKeysVC.swift */,
+			);
+			path = BackUpKeysVC;
 			sourceTree = "<group>";
 		};
 		BC52913623766EFA0022EC7F /* CommentCell */ = {
@@ -2410,6 +2432,7 @@
 				B1EA02ED2289882A00835244 /* SF-Pro-Text-Light.otf in Resources */,
 				B1EA02D82289882A00835244 /* SF-Pro-Display-BlackItalic.otf in Resources */,
 				B1EA02F42289882A00835244 /* SF-Pro-Text-SemiboldItalic.otf in Resources */,
+				B1FA77EE238C206B006E57D1 /* MasterPasswordAttention.xib in Resources */,
 				3B2F226A226892C5006B589E /* NotificationCell.xib in Resources */,
 				571B1501223A935D00630C8F /* LaunchScreen.storyboard in Resources */,
 				57A1CA652270FCF000E2A1E3 /* LanguageVC.storyboard in Resources */,
@@ -2754,6 +2777,7 @@
 				BCCC33EE23752C22004E46EF /* CommentsViewController.swift in Sources */,
 				BCCE0AA22367E60A00A183AA /* SubscriptionsViewModel.swift in Sources */,
 				57840A202240DDEB00338FD5 /* Container.swift in Sources */,
+				B1FA77EC238C205F006E57D1 /* MasterPasswordAttention.swift in Sources */,
 				BC016D4E235EA1DE00F1319F /* BaseViewController.swift in Sources */,
 				3BE85D262327A50200C7E7F6 /* GridView.swift in Sources */,
 				BC401E3C2371143F00A53788 /* LeaderAvatarImageView.swift in Sources */,
