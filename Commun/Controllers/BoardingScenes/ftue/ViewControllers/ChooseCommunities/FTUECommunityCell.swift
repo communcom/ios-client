@@ -9,5 +9,48 @@
 import Foundation
 
 class FTUECommunityCell: CommunityCollectionCell<ResponseAPIContentGetCommunity> {
-    
+    override func joinButtonDidTouch() {
+        // points
+        if (community?.isSubscribed ?? false) == false {
+            let pointsView = UIView(height: 30, backgroundColor: .white, cornerRadius: 15)
+            contentView.addSubview(pointsView)
+            pointsView.autoAlignAxis(toSuperviewAxis: .vertical)
+            pointsView.autoPinEdge(.bottom, to: .top, of: joinButton, withOffset: 16)
+            
+            let imageView = UIImageView(width: 24, height: 24)
+            imageView.image = UIImage(named: "ftue-point")
+            pointsView.addSubview(imageView)
+            imageView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 3, left: 5, bottom: 3, right: 0), excludingEdge: .trailing)
+
+            #warning("mocking 3 points")
+            let pointsLabel = UILabel.with(text: "+3 pts", textSize: 15, weight: .semibold, textColor: .appMainColor)
+            pointsView.addSubview(pointsLabel)
+            pointsLabel.autoPinEdge(.leading, to: .trailing, of: imageView, withOffset: 5)
+            pointsLabel.autoAlignAxis(toSuperviewAxis: .horizontal)
+            pointsLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 10)
+
+            // animation
+            CATransaction.begin()
+            let fadeAnim = CABasicAnimation(keyPath: "opacity")
+            fadeAnim.fromValue = 0
+            fadeAnim.toValue = 1
+
+            let moveUpAnim = CABasicAnimation(keyPath: "position.y")
+            moveUpAnim.byValue = -16
+
+            let groupAnim = CAAnimationGroup()
+            groupAnim.duration = 0.5
+            groupAnim.animations = [fadeAnim, moveUpAnim]
+
+            CATransaction.setCompletionBlock {
+                pointsView.removeFromSuperview()
+            }
+
+            pointsView.layer.add(groupAnim, forKey: nil)
+
+            CATransaction.commit()
+        }
+        
+        super.joinButtonDidTouch()
+    }
 }
