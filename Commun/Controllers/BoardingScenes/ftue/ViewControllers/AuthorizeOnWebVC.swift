@@ -16,7 +16,7 @@ class AuthorizeOnWebVC: BaseViewController, BoardingRouter {
         return imageView
     }()
     
-    lazy var buttonDone = CommunButton.default(height: 50, label: "done".localized().uppercaseFirst)
+    lazy var buttonDone = CommunButton.default(height: 50 * Config.heightRatio, label: "done".localized().uppercaseFirst)
     
     override func setUp() {
         super.setUp()

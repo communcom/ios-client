@@ -29,6 +29,10 @@ extension UIColor {
         return UIColor(hexString: "#F7F7F9")!
     }
     
+    static var e2e6e8: UIColor {
+        return UIColor(hexString: "#E2E6E8")!
+    }
+    
     static var shadow: UIColor {
         UIColor(red: 56, green: 60, blue: 71)!
     }

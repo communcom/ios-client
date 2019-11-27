@@ -273,6 +273,7 @@
 		BC3AD9DE2383CF3C0026EAB4 /* CommentForm+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3AD9DD2383CF3C0026EAB4 /* CommentForm+Actions.swift */; };
 		BC3D97612350384E00421718 /* ResponseAPIContentGetPosts.json in Resources */ = {isa = PBXBuildFile; fileRef = BC3D97602350384E00421718 /* ResponseAPIContentGetPosts.json */; };
 		BC401E3C2371143F00A53788 /* LeaderAvatarImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC401E3B2371143F00A53788 /* LeaderAvatarImageView.swift */; };
+		BC465927238E563F00AF9C29 /* BackUpKeysVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC465926238E563F00AF9C29 /* BackUpKeysVC.swift */; };
 		BC48FC40236682F90049C4F4 /* ResponseAPIContentGetLeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC48FC3F236682F90049C4F4 /* ResponseAPIContentGetLeader.swift */; };
 		BC48FC42236689DC0049C4F4 /* LeadersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC48FC41236689DC0049C4F4 /* LeadersViewModel.swift */; };
 		BC48FC4423668A080049C4F4 /* LeadersListFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC48FC4323668A080049C4F4 /* LeadersListFetcher.swift */; };
@@ -724,6 +725,7 @@
 		BC3AD9DD2383CF3C0026EAB4 /* CommentForm+Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CommentForm+Actions.swift"; sourceTree = "<group>"; };
 		BC3D97602350384E00421718 /* ResponseAPIContentGetPosts.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ResponseAPIContentGetPosts.json; sourceTree = "<group>"; };
 		BC401E3B2371143F00A53788 /* LeaderAvatarImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderAvatarImageView.swift; sourceTree = "<group>"; };
+		BC465926238E563F00AF9C29 /* BackUpKeysVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackUpKeysVC.swift; sourceTree = "<group>"; };
 		BC48FC3F236682F90049C4F4 /* ResponseAPIContentGetLeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseAPIContentGetLeader.swift; sourceTree = "<group>"; };
 		BC48FC41236689DC0049C4F4 /* LeadersViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeadersViewModel.swift; sourceTree = "<group>"; };
 		BC48FC4323668A080049C4F4 /* LeadersListFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeadersListFetcher.swift; sourceTree = "<group>"; };
@@ -1187,6 +1189,7 @@
 				3B82D0F622D8D56A004EE848 /* EnableBiometricsVC.swift */,
 				BC597A7A238CBFD400103F4F /* ftue */,
 				3B0506ED22D7309900B4E4A3 /* KeysVC.swift */,
+				BC465926238E563F00AF9C29 /* BackUpKeysVC.swift */,
 				3BB342AF22CA5CA6009546B2 /* PickupAvatarVC.swift */,
 				3BB342B322CA7412009546B2 /* CreateBioVC.swift */,
 			);
@@ -2726,6 +2729,7 @@
 				BCD00FBD23750859004A3952 /* PostPageNavigationBar.swift in Sources */,
 				3B02A56922F013D50043F9A4 /* ResponseAPIContentGetComment.swift in Sources */,
 				BCA9711D2360347D00AE37E1 /* CommunityPageVC.swift in Sources */,
+				BC465927238E563F00AF9C29 /* BackUpKeysVC.swift in Sources */,
 				BC016D43235DA0D400F1319F /* PostCell.swift in Sources */,
 				BC69F7CF236FC63F0097F870 /* BaseViewModel.swift in Sources */,
 				BC619B11237268910005BB94 /* CommunitiesListFetcher.swift in Sources */,
