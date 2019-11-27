@@ -9,8 +9,46 @@
 import UIKit
 import RxSwift
 import CyberSwift
+import SwiftTheme
 
 class WelcomeVC: UIViewController {
+    // MARK: - IBOutlets
+    @IBOutlet weak var nextButton: StepButton!
+    
+    @IBOutlet weak var bottomSignInButton: StepButton! {
+        didSet {
+            self.bottomSignInButton.isHidden = true
+        }
+    }
+
+    @IBOutlet weak var topSignInButton: BlankButton! {
+        didSet {
+            self.topSignInButton.commonInit(hexColors:     [blackWhiteColorPickers, grayishBluePickers, grayishBluePickers, grayishBluePickers],
+                                         font:          UIFont(name: "SFProText-Medium", size: .adaptive(width: 15.0)),
+                                         alignment:     .right)
+        }
+    }
+    
+    @IBOutlet var actionButtonsCollection: [StepButton]! {
+        didSet {
+            self.actionButtonsCollection.forEach {
+                $0.commonInit(backgroundColor: UIColor(hexString: "#6A80F5"),
+                              font:            .boldSystemFont(ofSize: CGFloat.adaptive(width: 15.0)),
+                              cornerRadius:    $0.height / CGFloat.adaptive(height: 2.0))
+            }
+        }
+    }
+    
+    @IBOutlet weak var signUpButton: StepButton! {
+        didSet {
+            self.signUpButton.commonInit(backgroundColor: UIColor(hexString: "#F3F5FA"),
+                                       font:            .boldSystemFont(ofSize: CGFloat.adaptive(width: 15.0)),
+                                       cornerRadius:    self.signUpButton.height / CGFloat.adaptive(height: 2.0))
+            self.signUpButton.isHidden = true
+        }
+    }
+    
+    
     // MARK: - Class Functions
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,6 +94,9 @@ class WelcomeVC: UIViewController {
     }
     
     @IBAction func signUpButtonTap(_ sender: Any) {
-        navigateToSignUp()
+        self.navigateToSignUp()
+    }
+    
+    @IBAction func nextButtonTap(_ sender: Any) {
     }
 }

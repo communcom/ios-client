@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftTheme
 
 @IBDesignable class BlankButton: UIButton {
     // MARK: - Class Initialization
@@ -25,12 +26,14 @@ import UIKit
 
     
     // MARK: - Custom Functions
-    func commonInit() {
+    func commonInit(hexColors:      [ThemeColorPicker]? = [softBlueColorPickers, verySoftBlueColorPickers, verySoftBlueColorPickers, verySoftBlueColorPickers],
+                    font:           UIFont? = UIFont(name: "SFProText-Semibold", size: 17.0 * Config.widthRatio),
+                    alignment:      NSTextAlignment? = .center) {
         if let text = self.titleLabel?.text {
-            self.tune(withTitle:        text.localized().uppercaseFirst,
-                      hexColors:        [softBlueColorPickers, verySoftBlueColorPickers, verySoftBlueColorPickers, verySoftBlueColorPickers],
-                      font:             UIFont(name: "SFProText-Semibold", size: 17.0 * Config.widthRatio),
-                      alignment:        .center)
+            self.tune(withTitle:    text.localized().uppercaseFirst,
+                      hexColors:    hexColors!,
+                      font:         font,
+                      alignment:    alignment!)
         }
     }
 }
