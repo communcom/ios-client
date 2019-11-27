@@ -39,18 +39,22 @@ class FTUECommunityCell: CommunityCollectionCell<ResponseAPIContentGetCommunity>
             moveUpAnim.byValue = -16
 
             let groupAnim = CAAnimationGroup()
-            groupAnim.duration = 0.5
+            groupAnim.duration = 0.3
             groupAnim.animations = [fadeAnim, moveUpAnim]
+            groupAnim.fillMode = .forwards
+            groupAnim.isRemovedOnCompletion = false
 
             CATransaction.setCompletionBlock {
                 pointsView.removeFromSuperview()
+                super.joinButtonDidTouch()
             }
 
             pointsView.layer.add(groupAnim, forKey: nil)
 
             CATransaction.commit()
         }
-        
-        super.joinButtonDidTouch()
+        else {
+            super.joinButtonDidTouch()
+        }
     }
 }
