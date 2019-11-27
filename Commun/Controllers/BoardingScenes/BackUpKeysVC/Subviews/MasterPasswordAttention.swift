@@ -42,7 +42,7 @@ class MasterPasswordAttention: UIView {
         didSet {
             self.titleLabel.tune(withText:          "attention".localized().uppercaseFirst,
                                  hexColors:         blackWhiteColorPickers,
-                                 font:              UIFont(name: "SFProDisplay-Bold", size: CGFloat.adaptive(width: 30.0)),
+                                 font:              UIFont.systemFont(ofSize: CGFloat.adaptive(width: 30.0), weight: .bold),
                                  alignment:         .center,
                                  isMultiLines:      false)
         }
@@ -52,7 +52,7 @@ class MasterPasswordAttention: UIView {
         didSet {
             self.noteLabel.tune(withAttributedText:         "master password attention note",
                                 hexColors:                  blackWhiteColorPickers,
-                                font:                       UIFont(name: "SFProDisplay-Medium", size: CGFloat.adaptive(width: 17.0)),
+                                font:                       UIFont.systemFont(ofSize: CGFloat.adaptive(width: 17.0), weight: .medium),
                                 alignment:                  .center,
                                 isMultiLines:               true)
         }
@@ -62,7 +62,7 @@ class MasterPasswordAttention: UIView {
         didSet {
             self.describeLabel.tune(withAttributedText:     "master password attention describe",
                                     hexColors:              grayishBluePickers,
-                                    font:                   UIFont(name: "SFProDisplay-Medium", size: CGFloat.adaptive(width: 15.0)),
+                                    font:                   UIFont.systemFont(ofSize: CGFloat.adaptive(width: 15.0), weight: .medium),
                                     alignment:              .center,
                                     isMultiLines:           true)
         }

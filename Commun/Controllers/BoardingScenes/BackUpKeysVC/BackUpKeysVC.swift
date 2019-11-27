@@ -60,7 +60,7 @@ class BackUpKeysVC: BoardingVC {
         descriptionLabel.autoPinEdge(.top, to: .bottom, of: titleLabel)
         descriptionLabel.autoAlignAxis(toSuperviewAxis: .vertical)
         
-        let infoLabel = UILabel.with(text: "you need the master password to Log in\nWe don’t keep and can’t restore passwords\nSave it!".localized().uppercaseFirst, textSize: 17 * Config.heightRatio, weight: .semibold, textColor: .a5a7bd, numberOfLines: 0, textAlignment: .center)
+        let infoLabel = UILabel.with(text: "you need the master password to Log in\nWe don’t keep and can’t restore passwords\nSave it!".localized().uppercaseFirst, textSize: 17 * Config.heightRatio, weight: .regular, textColor: .a5a7bd, numberOfLines: 0, textAlignment: .center)
         view.addSubview(infoLabel)
         infoLabel.autoPinEdge(.top, to: .bottom, of: descriptionLabel, withOffset: 6)
         infoLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
