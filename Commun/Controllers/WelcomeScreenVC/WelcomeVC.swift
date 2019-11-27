@@ -123,4 +123,11 @@ class WelcomeVC: UIViewController {
 //        self.welcomePageVC.setUpCountDown()
         self.pageControl.selectedIndex = indexNext
     }
+    
+    
+    // MARK: - TESTED
+    @IBAction func testButtonTapped(_ sender: Any) {
+//        let masterPassvordVC = controllerContainer.resolve(MasterPasswordViewController.self)!
+//        navigationController?.pushViewController(masterPassvordVC)
+    }
 }

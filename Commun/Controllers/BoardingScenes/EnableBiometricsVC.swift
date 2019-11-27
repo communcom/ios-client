@@ -9,7 +9,10 @@
 import UIKit
 import LocalAuthentication
 
-class EnableBiometricsVC: UIViewController, BoardingRouter {
+class EnableBiometricsVC: BoardingVC {
+    override var step: CurrentUserSettingStep {.setFaceId}
+    override var nextStep: CurrentUserSettingStep? {.ftue}
+    
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var headerLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
@@ -23,10 +26,7 @@ class EnableBiometricsVC: UIViewController, BoardingRouter {
         
         if #available(iOS 11.2, *) {
             if biometryType == .none {
-                try! KeychainManager.save([
-                    Config.settingStepKey: CurrentUserSettingStep.backUpICloud.rawValue
-                    ])
-                boardingNextStep()
+                next()
                 return
             }
         }
@@ -50,26 +50,11 @@ class EnableBiometricsVC: UIViewController, BoardingRouter {
     
     // MARK: - Actions
     @IBAction func enableButtonDidTouch(_ sender: Any) {
-        do {
-            try KeychainManager.save([
-                Config.settingStepKey: CurrentUserSettingStep.ftue.rawValue
-            ])
-            
-            UserDefaults.standard.set(true, forKey: Config.currentUserBiometryAuthEnabled)
-            boardingNextStep()
-        } catch {
-            showError(error)
-        }
+        UserDefaults.standard.set(true, forKey: Config.currentUserBiometryAuthEnabled)
+        next()
     }
     
     @IBAction func skipButtonDidTouch(_ sender: Any) {
-        do {
-            try KeychainManager.save([
-                Config.settingStepKey: CurrentUserSettingStep.ftue.rawValue
-            ])
-            boardingNextStep()
-        } catch {
-            showError(error)
-        }
+        next()
     }
 }

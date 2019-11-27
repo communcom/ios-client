@@ -93,6 +93,8 @@ class FTUECommunitiesVC: BaseViewController, BoardingRouter {
         communitiesCollectionView.autoPinEdge(.top, to: .top, of: headerView)
         communitiesCollectionView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16), excludingEdge: .top)
         
+        view.bringSubviewToFront(headerView)
+        
         // bottomBar
         view.addSubview(shadowView)
         shadowView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)

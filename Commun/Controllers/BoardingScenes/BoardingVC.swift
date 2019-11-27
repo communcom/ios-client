@@ -2,59 +2,84 @@
 //  BoardingVC.swift
 //  Commun
 //
-//  Created by Chung Tran on 10/07/2019.
+//  Created by Chung Tran on 11/27/19.
 //  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
 //
 
-import UIKit
-import CyberSwift
+import Foundation
 
-class BoardingVC: UIViewController, BoardingRouter {
-    // MARK: - IBOutlets
-    @IBOutlet weak var passcodeLabel: UILabel! {
-        didSet {
-            self.passcodeLabel.tune(withText:           "set up passcode".localized().uppercaseFirst,
-                                    hexColors:          blackWhiteColorPickers,
-                                    font:               UIFont.init(name: "SFProText-Semibold", size: 17.0 * Config.widthRatio),
-                                    alignment:          .left,
-                                    isMultiLines:       false)
-        }
-    }
+class BoardingVC: BaseViewController {
+    var step: CurrentUserSettingStep {fatalError("must override")}
+    var nextStep: CurrentUserSettingStep? {fatalError("must override")}
     
-    @IBOutlet weak var pincodeLabel: UILabel! {
-        didSet {
-            self.pincodeLabel.tune(withText:            "add short PIN code".localized().uppercaseFirst,
-                                   hexColors:            grayWhiteColorPickers,
-                                   font:                 UIFont.init(name: "SFProText-Regular", size: 17.0 * Config.widthRatio),
-                                   alignment:            .left,
-                                   isMultiLines:         true)
-        }
-    }
-    
-    
-    // MARK: - Class Functions
+    // MARK: - Methods
     override func viewDidLoad() {
         super.viewDidLoad()
-
         if let step = KeychainManager.currentUser()?.settingStep,
-            step != .setPasscode {
+            step != self.step
+        {
             boardingNextStep()
         }
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(true, animated: animated)
+    // MARK: - Flow
+    func next() {
+        if nextStep == nil {
+            endBoarding()
+            return
+        }
+        do {
+            try KeychainManager.save([
+                Config.settingStepKey: nextStep!.rawValue
+            ])
+            boardingNextStep()
+        } catch {
+            showError(error)
+        }
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        navigationController?.setNavigationBarHidden(false, animated: animated)
+    private func boardingNextStep() {
+        let step = KeychainManager.currentUser()?.settingStep ?? .setPasscode
+        
+        if KeychainManager.currentUser()?.registrationStep == .relogined
+        {
+//            if step == .setAvatar {
+//                endBoarding()
+//                return
+//            }
+            if step == .ftue {
+                endBoarding()
+                return
+            }
+        }
+        
+        var vc: UIViewController
+        
+        switch step {
+        case .backUpICloud:
+            vc = BackUpKeysVC()
+        case .setPasscode:
+            vc = BoardingSetPasscodeVC()
+        case .setFaceId:
+            vc = controllerContainer.resolve(EnableBiometricsVC.self)!
+        case .ftue:
+            vc = FTUEVC()
+//        case .setAvatar:
+//            vc = controllerContainer.resolve(PickupAvatarVC.self)!
+//        case .setBio:
+//            vc = controllerContainer.resolve(CreateBioVC.self)!
+        default:
+            return
+        }
+        
+        navigationController?.pushViewController(vc)
     }
-
     
-    // MARK: - Actions
-    @IBAction func setupPasscodeDidTouch(_ sender: Any) {
-        boardingNextStep()
+    private func endBoarding() {
+        try? KeychainManager.save([
+            Config.settingStepKey: CurrentUserSettingStep.completed.rawValue
+        ])
+        AppDelegate.reloadSubject.onNext(true)
     }
+    
 }

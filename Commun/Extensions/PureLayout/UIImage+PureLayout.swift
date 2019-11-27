@@ -19,4 +19,30 @@ extension UIImageView {
         }
         return imageView
     }
+    
+    public convenience init(
+        width: CGFloat? = nil,
+        height: CGFloat? = nil,
+        backgroundColor: UIColor? = nil,
+        cornerRadius: CGFloat? = nil,
+        imageNamed: String? = nil
+    ){
+        self.init(forAutoLayout: ())
+        if let width = width {
+            autoSetDimension(.width, toSize: width)
+        }
+        if let height = height {
+            autoSetDimension(.height, toSize: height)
+        }
+        if let backgroundColor = backgroundColor {
+            self.backgroundColor = backgroundColor
+        }
+        if let cornerRadius = cornerRadius {
+            self.cornerRadius = cornerRadius
+        }
+        
+        if let imageNamed = imageNamed {
+            image = UIImage(named: imageNamed)
+        }
+    }
 }

@@ -76,19 +76,14 @@ class KeysVC: UIViewController, BoardingRouter {
     
     // MARK: - Actions
     @IBAction func backupIcloudDidTouch(_ sender: Any) {
-        do {
-            try RestAPIManager.instance.rx.backUpICloud(onBoarding: onBoarding)
-            if completion == nil {
-                self.boardingNextStep()
-            } else {
-                showDone("Backed up") {
-                    self.completion?()
-                }
+        RestAPIManager.instance.rx.backUpICloud()
+        if completion == nil {
+            self.boardingNextStep()
+        } else {
+            showDone("Backed up") {
+                self.completion?()
             }
-        } catch {
-            showError(error)
         }
-        
     }
     
     @IBAction func shareButtonDidTouch(_ sender: Any) {

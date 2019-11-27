@@ -8,7 +8,10 @@
 
 import Foundation
 
-class FTUEVC: BaseViewController {
+class FTUEVC: BoardingVC {
+    override var step: CurrentUserSettingStep {.ftue}
+    override var nextStep: CurrentUserSettingStep? {nil}
+    
     // MARK: - Subviews
     lazy var containerView = UIView(forAutoLayout: ())
     lazy var pageControl = CMPageControll(numberOfPages: 2)
@@ -18,6 +21,9 @@ class FTUEVC: BaseViewController {
     
     private lazy var authorizeOnWebVC: AuthorizeOnWebVC = {
         let vc = AuthorizeOnWebVC()
+        vc.completion = {
+            self.next()
+        }
         return vc
     }()
     
