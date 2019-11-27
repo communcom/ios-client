@@ -11,7 +11,10 @@ import Foundation
 class CustomHeightPresentationController: DimmingPresentationController {
     var height: CGFloat
     
-    init(height: CGFloat, presentedViewController: UIViewController, presenting presentingViewController: UIViewController?) {
+    init?(height: CGFloat, presentedViewController: UIViewController, presenting presentingViewController: UIViewController?) {
+        if UIScreen.main.bounds.height <= height {
+            return nil
+        }
         self.height = height
         super.init(presentedViewController: presentedViewController, presenting: presentingViewController)
     }
