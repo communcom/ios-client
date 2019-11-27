@@ -85,6 +85,10 @@ class FTUECommunitiesVC: BaseViewController, BoardingRouter {
         // collection view
         communitiesCollectionView.register(FTUECommunityCell.self, forCellWithReuseIdentifier: "CommunityCollectionCell")
         communitiesCollectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: bottomBarHeight, right: 0)
+        communitiesCollectionView.es.addPullToRefresh {
+            self.communitiesCollectionView.es.stopPullToRefresh()
+            self.viewModel.reload()
+        }
         view.addSubview(communitiesCollectionView)
         communitiesCollectionView.autoPinEdge(.top, to: .top, of: headerView)
         communitiesCollectionView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16), excludingEdge: .top)

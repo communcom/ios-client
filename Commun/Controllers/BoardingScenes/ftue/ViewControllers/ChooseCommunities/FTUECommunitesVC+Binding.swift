@@ -7,18 +7,27 @@
 //
 
 import Foundation
+import ESPullToRefresh
 
 extension FTUECommunitiesVC: UICollectionViewDelegateFlowLayout, CommunityCollectionCellDelegate {
     func bindControl() {
-        communitiesCollectionView.rx
+        let offsetY = communitiesCollectionView.rx
             .contentOffset
-            .map {$0.y}
-            .map { (offsetY) in
-                let offsetY = offsetY + self.communitiesCollectionView.contentInset.top
-                return offsetY > 30
-            }
+            .map {$0.y + self.communitiesCollectionView.contentInset.top}
+            .share()
+        
+        offsetY
+            .map { $0 > 30 }
             .distinctUntilChanged()
             .bind(to: headerView.rx.isHidden)
+            .disposed(by: disposeBag)
+        
+        offsetY
+            .map {$0 < -20}
+            .distinctUntilChanged()
+            .subscribe(onNext: { (show) in
+                self.communitiesCollectionView.subviews.first(where: {$0 is ESRefreshHeaderView})?.alpha = show ? 1 : 0
+            })
             .disposed(by: disposeBag)
     }
     
@@ -38,9 +47,14 @@ extension FTUECommunitiesVC: UICollectionViewDelegateFlowLayout, CommunityCollec
                     self?.view.hideLoading()
                 case .listEmpty:
                     self?.view.hideLoading()
-                case .error(let error):
-                    #warning("error state")
+                case .error(_):
                     self?.view.hideLoading()
+                    if self?.viewModel.items.value.count == 0 {
+                        self?.view.showErrorView {
+                            self?.view.hideErrorView()
+                            self?.viewModel.reload()
+                        }
+                    }
                 }
                 
             })
