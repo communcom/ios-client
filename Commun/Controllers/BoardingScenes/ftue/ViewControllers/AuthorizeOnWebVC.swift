@@ -25,7 +25,7 @@ class AuthorizeOnWebVC: BaseViewController, BoardingRouter {
         view.addSubview(imageView)
         imageView.autoPinEdge(toSuperviewEdge: .top, withInset: 10)
         imageView.autoAlignAxis(toSuperviewAxis: .vertical)
-        imageView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 1/2)
+        imageView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 1/2 * Config.heightRatio)
             .isActive = true
         imageView.widthAnchor.constraint(equalTo: imageView.heightAnchor)
             .isActive = true
