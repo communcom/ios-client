@@ -180,7 +180,7 @@ class SignUpVC: UIViewController, SignUpRouter {
         recaptcha = try! ReCaptcha(endpoint: endpoint, locale: locale)
 
         #if DEBUG
-        recaptcha.forceVisibleChallenge = true
+        recaptcha.forceVisibleChallenge = false
         #endif
 
         recaptcha.configureWebView { [weak self] webview in
