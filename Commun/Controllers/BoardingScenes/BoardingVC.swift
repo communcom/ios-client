@@ -30,7 +30,7 @@ class BoardingVC: BaseViewController {
         }
         do {
             try KeychainManager.save([
-                Config.settingStepKey: nextStep!
+                Config.settingStepKey: nextStep!.rawValue
             ])
             boardingNextStep()
         } catch {
