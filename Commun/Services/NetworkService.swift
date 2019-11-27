@@ -237,7 +237,7 @@ class NetworkService: NSObject {
     
     // MARK: - meta
     // meta.recordPostView
-    func markPostAsRead(permlink: String) -> Single<ResponseAPIMetaRecordPostView> {
+    func markPostAsRead(permlink: String) -> Single<ResponseAPIStatus> {
         return RestAPIManager.instance.recordPostView(permlink: permlink)
     }
     
@@ -250,7 +250,7 @@ class NetworkService: NSObject {
         return RestAPIManager.instance.getOnlineNotifyHistoryFresh()
     }
     
-    func markAllAsViewed() -> Single<ResponseAPINotifyMarkAllAsViewed> {
+    func markAllAsViewed() -> Single<ResponseAPIStatus> {
         return RestAPIManager.instance.notifyMarkAllAsViewed()
     }
     

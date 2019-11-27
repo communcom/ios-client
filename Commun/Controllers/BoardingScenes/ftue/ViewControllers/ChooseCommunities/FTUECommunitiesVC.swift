@@ -126,6 +126,25 @@ class FTUECommunitiesVC: BaseViewController, BoardingRouter {
     }
     
     @objc func nextButtonDidTouch() {
-        UserDefaults.standard.set(true, forKey: Config.currentUserDidSubscribeToMoreThan3Communities)
+        showIndetermineHudWithMessage("just a moment".localized().uppercaseFirst + "...")
+        RestAPIManager.instance.rx.onboardingCommunitySubscriptions(
+            communityIds: viewModel.chosenCommunities.value.map {$0.communityId}
+        )
+            .catchError({ (error) -> Completable in
+                #warning("Remove this method when onboardingCommunitySubscriptions is available")
+                if (error as? ErrorAPI)?.caseInfo.message == "Method not found" {
+                    return Completable.empty()
+                        .delay(0.8, scheduler: MainScheduler.instance)
+                }
+                throw error
+            })
+            .subscribe(onCompleted: {
+                self.hideHud()
+                UserDefaults.standard.set(true, forKey: Config.currentUserDidSubscribeToMoreThan3Communities)
+            }) { (error) in
+                self.hideHud()
+                self.showError(error)
+            }
+            .disposed(by: disposeBag)
     }
 }
