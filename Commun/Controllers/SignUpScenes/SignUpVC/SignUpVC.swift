@@ -16,8 +16,8 @@ import ReCaptcha
 
 class SignUpVC: UIViewController, SignUpRouter {
     // MARK: - Properties
-    let viewModel   =   SignUpViewModel()
-    let disposeBag  =   DisposeBag()
+    let viewModel = SignUpViewModel()
+    let disposeBag = DisposeBag()
     var locationManager: CLLocationManager!
     var shouldDefineLocation = true
     
@@ -96,9 +96,8 @@ class SignUpVC: UIViewController, SignUpRouter {
         self.setupActions()
         
         updateLocation()
-        setupReCaptcha()
     }
-    
+        
     
     // MARK: - Custom Functions
     func setupBindings() {
@@ -186,10 +185,10 @@ class SignUpVC: UIViewController, SignUpRouter {
 
         recaptcha.configureWebView { [weak self] webview in
             webview.frame = self?.view.bounds ?? CGRect.zero
-            webview.tag = 777
+            webview.tag = reCaptchaTag
         }
     }
-
+    
     private func showContriesList() {
          if let countryVC = controllerContainer.resolve(SelectCountryVC.self) {
              self.view.endEditing(true)
@@ -214,33 +213,34 @@ class SignUpVC: UIViewController, SignUpRouter {
         }
         
         self.view.endEditing(true)
+        self.setupReCaptcha()
         
         // reCaptcha
-        recaptcha.validate(on:              view,
-                           resetOnError:    false,
-                           completion:      { [weak self] (result: ReCaptchaResult) in
-                            guard let strongSelf = self else { return }
-                            
-                            guard let captchaCode = try? result.dematerialize() else {
-                                print("XXX")
-                                return
-                            }
-                            
-                            print(captchaCode)
-                            strongSelf.view.viewWithTag(777)?.removeFromSuperview()
-                            
-                            // API `registration.firstStep`
-                            strongSelf.showIndetermineHudWithMessage("signing you up".localized().uppercaseFirst + "...")
-                            
-                            RestAPIManager.instance.rx.firstStep(phone: strongSelf.viewModel.phone.value, captchaCode: captchaCode)
-                                .subscribe(onSuccess: { _ in
-                                    strongSelf.hideHud()
-                                    strongSelf.signUpNextStep()
-                                }) { (error) in
-                                    strongSelf.hideHud()
-                                    strongSelf.handleSignUpError(error: error, with: strongSelf.viewModel.phone.value)
-                            }
-                            .disposed(by: strongSelf.disposeBag)
+        self.recaptcha.validate(on:             view,
+                                resetOnError:   false,
+                                completion:     { [weak self] (result: ReCaptchaResult) in
+                                    guard let strongSelf = self else { return }
+                                    
+                                    guard let captchaCode = try? result.dematerialize() else {
+                                        print("XXX")
+                                        return
+                                    }
+                                    
+                                    print(captchaCode)                                    
+                                    strongSelf.view.viewWithTag(reCaptchaTag)?.removeFromSuperview()
+                                    
+                                    // API `registration.firstStep`
+                                    strongSelf.showIndetermineHudWithMessage("signing you up".localized().uppercaseFirst + "...")
+                                    
+                                    RestAPIManager.instance.rx.firstStep(phone: strongSelf.viewModel.phone.value, captchaCode: captchaCode)
+                                        .subscribe(onSuccess: { _ in
+                                            strongSelf.hideHud()
+                                            strongSelf.signUpNextStep()
+                                        }) { (error) in
+                                            strongSelf.hideHud()
+                                            strongSelf.handleSignUpError(error: error, with: strongSelf.viewModel.phone.value)
+                                    }
+                                    .disposed(by: strongSelf.disposeBag)
         })
     }
 }

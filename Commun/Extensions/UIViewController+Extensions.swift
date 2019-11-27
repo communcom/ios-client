@@ -10,12 +10,22 @@ import UIKit
 import RxSwift
 import CyberSwift
 import MBProgressHUD
+import ReCaptcha
+
+public let reCaptchaTag: Int = 777
 
 protocol NextButtonBottomConstraint {
     var nextButtonBottomConstraint: NSLayoutConstraint! { get set }
 }
 
 extension UIViewController {
+    // MARK: - Properties
+    var baseNavigationController: BaseNavigationController? {
+        navigationController as? BaseNavigationController
+    }
+
+    
+    // MARK: - Custom Functions
     @objc func popToSignUpVC() {
         if let vc = navigationController?.viewControllers.filter({ $0 is WelcomeVC }).first {
             navigationController?.popToViewController(vc, animated: true)
@@ -238,16 +248,17 @@ extension UIViewController {
             self.view.viewWithTag(999)?.removeFromSuperview()
         }
     }
+    
 
     // MARK: - Actions
     @objc func popToPreviousVC() {
-        if let count = navigationController?.viewControllers.count, let previousVC = navigationController?.viewControllers[count - 2] {
-            navigationController?.popToViewController(previousVC, animated: true)
+        if let count = navigationController?.viewControllers.count, count > 0 {
+            let viewWithTag = self.view.viewWithTag(reCaptchaTag)
+            
+            if let previousVC = navigationController?.viewControllers[count - (viewWithTag == nil ? 2 : 1)] {
+                navigationController?.popToViewController(previousVC, animated: true)
+                viewWithTag?.removeFromSuperview()
+            }
         }
-    }
-
-    var baseNavigationController: BaseNavigationController? {
-        navigationController as? BaseNavigationController
-
     }
 }
