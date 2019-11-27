@@ -12,20 +12,29 @@ import CyberSwift
 import SwiftTheme
 
 class WelcomeVC: UIViewController {
+    // MARK: - Properties
+    var welcomePageVC: WelcomePageVC!
+    
+    
     // MARK: - IBOutlets
     @IBOutlet weak var nextButton: StepButton!
     
     @IBOutlet weak var bottomSignInButton: StepButton! {
         didSet {
+            self.bottomSignInButton.commonInit(backgroundColor:     UIColor(hexString: "#F3F5FA"),
+                                               font:                .boldSystemFont(ofSize: CGFloat.adaptive(width: 15.0)),
+                                               cornerRadius:        self.bottomSignInButton.height / CGFloat.adaptive(height: 2.0))
+            
+            self.bottomSignInButton.setTitleColor(UIColor(hexString: "#6A80F5"), for: .normal)
             self.bottomSignInButton.isHidden = true
         }
     }
 
     @IBOutlet weak var topSignInButton: BlankButton! {
         didSet {
-            self.topSignInButton.commonInit(hexColors:     [blackWhiteColorPickers, grayishBluePickers, grayishBluePickers, grayishBluePickers],
-                                         font:          UIFont(name: "SFProText-Medium", size: .adaptive(width: 15.0)),
-                                         alignment:     .right)
+            self.topSignInButton.commonInit(hexColors:      [blackWhiteColorPickers, grayishBluePickers, grayishBluePickers, grayishBluePickers],
+                                            font:           UIFont(name: "SFProText-Medium", size: .adaptive(width: 15.0)),
+                                            alignment:      .right)
         }
     }
     
@@ -41,9 +50,6 @@ class WelcomeVC: UIViewController {
     
     @IBOutlet weak var signUpButton: StepButton! {
         didSet {
-            self.signUpButton.commonInit(backgroundColor: UIColor(hexString: "#F3F5FA"),
-                                       font:            .boldSystemFont(ofSize: CGFloat.adaptive(width: 15.0)),
-                                       cornerRadius:    self.signUpButton.height / CGFloat.adaptive(height: 2.0))
             self.signUpButton.isHidden = true
         }
     }
@@ -68,6 +74,12 @@ class WelcomeVC: UIViewController {
         super.viewWillDisappear(animated)
         
         navigationController?.setNavigationBarHidden(false, animated: animated)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let destination = segue.destination as? WelcomePageVC, segue.identifier == "WelcomePageSegue" {
+            self.welcomePageVC = destination
+        }
     }
     
     
@@ -98,5 +110,9 @@ class WelcomeVC: UIViewController {
     }
     
     @IBAction func nextButtonTap(_ sender: Any) {
+        let nextIndex = self.welcomePageVC.currentPage + 1
+        self.welcomePageVC.currentPage = nextIndex
+        self.welcomePageVC.showActionButtons(nextIndex)
+        self.welcomePageVC.setUpCountDown()
     }
 }

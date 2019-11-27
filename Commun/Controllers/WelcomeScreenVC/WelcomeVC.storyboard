@@ -24,7 +24,7 @@
                             <containerView clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qQo-fb-NcH">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="413"/>
                                 <connections>
-                                    <segue destination="q5V-Zu-EaX" kind="embed" id="edI-Fw-8RT"/>
+                                    <segue destination="q5V-Zu-EaX" kind="embed" identifier="WelcomePageSegue" id="edI-Fw-8RT"/>
                                 </connections>
                             </containerView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9u7-LT-02r" userLabel="Top Sign In Button" customClass="BlankButton" customModule="Commun" customModuleProvider="target">
@@ -101,6 +101,7 @@
                         <outlet property="signUpButton" destination="zIG-dP-Ewi" id="HE5-NS-Pah"/>
                         <outlet property="topSignInButton" destination="9u7-LT-02r" id="1ZJ-TG-iTS"/>
                         <outletCollection property="actionButtonsCollection" destination="8t8-vm-TGP" collectionClass="NSMutableArray" id="egc-cS-g0p"/>
+                        <outletCollection property="actionButtonsCollection" destination="zIG-dP-Ewi" collectionClass="NSMutableArray" id="0tw-II-bU8"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Zhj-Zk-YL3" userLabel="First Responder" sceneMemberID="firstResponder"/>

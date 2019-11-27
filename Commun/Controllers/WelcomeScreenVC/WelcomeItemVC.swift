@@ -47,7 +47,7 @@ class WelcomeItemVC: UIViewController {
         // set images
         self.imageView.image = UIImage(named: "image-welcome-item-\(item)")
         self.imageViewWidthConstraint.constant = CGFloat.adaptive(width: 310.0)
-        self.imageViewTopConstraint.constant = CGFloat.adaptive(height: -70.0)
+        self.imageViewTopConstraint.constant = CGFloat.adaptive(height: -(70.0 + 39.0))
         self.describeLabel.text = "welcome-item-\(item)".localized()
 
         switch self.item {
@@ -120,7 +120,7 @@ class WelcomeItemVC: UIViewController {
                                   isMultiLines:     false)
             
             self.imageViewWidthConstraint.constant = UIScreen.main.bounds.width
-            self.imageViewTopConstraint.constant = -20.0
+            self.imageViewTopConstraint.constant = CGFloat.adaptive(height: -(70.0 + 0.0))
         }
     }
 }

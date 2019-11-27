@@ -24,7 +24,7 @@ class WelcomePageVC: UIPageViewController {
     // Timer
     let timeOut = 7
     var timer: Timer?
-    var countdown: Timer?
+    var countDown: Timer?
     
     fileprivate lazy var pages: [UIViewController] = {
         var list = [UIViewController]()
@@ -63,27 +63,31 @@ class WelcomePageVC: UIPageViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        countdown?.invalidate()
+        countDown?.invalidate()
         timer?.invalidate()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        setUpCountdown()
+       
+        self.setUpCountDown()
     }
         
     
     // MARK: - Custom Functions
-    func setUpCountdown() {
+    func setUpCountDown() {
         // Timer reset
         var timeLeft = 7
-        countdown?.invalidate()
+
+        timer?.invalidate()
+        countDown?.invalidate()
         
         // Count down
-        countdown = Timer(timeInterval: TimeInterval(1), repeats: true, block: { [weak self] (_) in
+        countDown = Timer(timeInterval: TimeInterval(1), repeats: true, block: { [weak self] (_) in
             guard let strongSelf = self else {return}
             timeLeft -= 1
             print(timeLeft)
+            
             if timeLeft == 3 {
                 if let timer = strongSelf.timer {
                     if !timer.isValid {
@@ -99,7 +103,7 @@ class WelcomePageVC: UIPageViewController {
             }
         })
         
-        RunLoop.current.add(countdown!, forMode: .common)
+        RunLoop.current.add(countDown!, forMode: .common)
     }
     
     func schedule() {
@@ -107,18 +111,13 @@ class WelcomePageVC: UIPageViewController {
         
         // Re-schedule
         timer = Timer(timeInterval: TimeInterval(3), repeats: true, block: { [weak self] (_) in
-            guard let strongSelf = self else {return}
+            guard let strongSelf = self else { return }
             var newValue = strongSelf.currentPage
-            if newValue == strongSelf.pages.count - 1 {newValue = 0}
-            else {newValue += 1}
-            strongSelf.currentPage = newValue
+            if newValue == strongSelf.pages.count - 1 { newValue = 0 }
+            else { newValue += 1 }
             
-            if let welcomeVC = strongSelf.parent as? WelcomeVC {
-                welcomeVC.nextButton.isHidden           =   newValue == 3   // true
-                welcomeVC.signUpButton.isHidden         =   newValue != 3   // false
-                welcomeVC.topSignInButton.isHidden      =   newValue == 3   // true
-                welcomeVC.bottomSignInButton.isHidden   =   newValue != 3   // false
-            }
+            strongSelf.currentPage = newValue
+            strongSelf.showActionButtons(newValue)
         })
         
         RunLoop.current.add(timer!, forMode: .common)
@@ -129,6 +128,15 @@ class WelcomePageVC: UIPageViewController {
         
         vc.item = index
         return vc
+    }
+    
+    func showActionButtons(_ index: Int) {
+        if let welcomeVC = self.parent as? WelcomeVC {
+            welcomeVC.nextButton.isHidden           =   index == 3   // true
+            welcomeVC.signUpButton.isHidden         =   index != 3   // false
+            welcomeVC.topSignInButton.isHidden      =   index == 3   // true
+            welcomeVC.bottomSignInButton.isHidden   =   index != 3   // false
+        }
     }
 }
 
@@ -155,8 +163,8 @@ extension WelcomePageVC: UIPageViewControllerDelegate, UIPageViewControllerDataS
         if nextIndex > 2 { return nil }
         
         guard nextIndex < pages.count else { return pages.first }
-        guard pages.count > nextIndex else { return nil         }
-        
+        guard pages.count > nextIndex else { return nil }
+                
         return pages[nextIndex]
     }
     
@@ -164,9 +172,10 @@ extension WelcomePageVC: UIPageViewControllerDelegate, UIPageViewControllerDataS
         if let vc = viewControllers?.first as? WelcomeItemVC {
             let viewControllerIndex = vc.item
             
-            currentPage = viewControllerIndex
-            timer?.invalidate()
-            setUpCountdown()
+            self.showActionButtons(viewControllerIndex)
+            self.currentPage = viewControllerIndex
+//            timer?.invalidate()
+            self.setUpCountDown()
         }
     }
 }
