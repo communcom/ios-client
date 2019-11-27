@@ -39,7 +39,7 @@ class FTUECommunityCell: CommunityCollectionCell<ResponseAPIContentGetCommunity>
             moveUpAnim.byValue = -16
 
             let groupAnim = CAAnimationGroup()
-            groupAnim.duration = 0.3
+            groupAnim.duration = 0.5
             groupAnim.animations = [fadeAnim, moveUpAnim]
             groupAnim.fillMode = .forwards
             groupAnim.isRemovedOnCompletion = false
