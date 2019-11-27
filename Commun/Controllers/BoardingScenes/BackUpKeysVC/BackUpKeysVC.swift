@@ -14,6 +14,8 @@ class BackUpKeysVC: BoardingVC {
     override var nextStep: CurrentUserSettingStep? {.setPasscode}
     
     // MARK: - Subviews
+    lazy var masterPasswordAttentionView: MasterPasswordAttention = MasterPasswordAttention(frame: CGRect(x: CGFloat.adaptive(width: 10.0), y: 0.0, width: CGFloat.adaptive(width: 355.0), height: CGFloat.adaptive(height: 581.0)))
+    
     lazy var copyButton = UIButton.circle(size: 24, backgroundColor: .a5a7bd, tintColor: .white, imageName: "copy", imageEdgeInsets: UIEdgeInsets(inset: 6))
     lazy var backUpICloudButton = CommunButton.default(height: 50 * Config.heightRatio, label: "backup iCloud".localized().uppercaseFirst)
     lazy var iSavedItButton = UIButton(label: "i saved it".localized().uppercaseFirst, textColor: .appMainColor, contentInsets: UIEdgeInsets(top: 10, left: 100, bottom: 10, right: 100))
@@ -91,6 +93,24 @@ class BackUpKeysVC: BoardingVC {
         backUpICloudButton.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
         backUpICloudButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
         backUpICloudButton.addTarget(self, action: #selector(backupIcloudDidTouch), for: .touchUpInside)
+        
+        setUpAttentionView()
+    }
+    
+    func setUpAttentionView() {
+        view.addSubview(masterPasswordAttentionView)
+        masterPasswordAttentionView.display(false)
+        
+        // Attention view cancel
+        masterPasswordAttentionView.closeButtonTapHandler = {
+            self.showBlackoutView(false)
+        }
+
+        // Attention view continue
+        self.masterPasswordAttentionView.continueButtonTapHandler = {
+            self.showBlackoutView(false)
+            self.save()
+        }
     }
     
     @objc func copyButtonDidTouch() {
@@ -100,11 +120,16 @@ class BackUpKeysVC: BoardingVC {
     }
     
     @objc func iSavedItButtonDidTouch() {
-        #warning("I saved it button")
-        next()
+        self.showBlackoutView(true)
+        self.view.bringSubviewToFront(self.masterPasswordAttentionView)
+        self.masterPasswordAttentionView.display(true)
     }
     
     @objc func backupIcloudDidTouch() {
+        save()
+    }
+    
+    func save() {
         RestAPIManager.instance.rx.backUpICloud()
         next()
     }
