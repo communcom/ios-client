@@ -62,24 +62,24 @@ class FTUECommunitiesVC: BaseViewController, BoardingRouter {
         headerView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .bottom)
         
         // titleLabel
-        let titleLabel = UILabel.with(text: "get you first points".localized().uppercaseFirst, textSize: 33, weight: .bold, numberOfLines: 0)
+        let titleLabel = UILabel.with(text: "get you first points".localized().uppercaseFirst, textSize: 33 * Config.heightRatio, weight: .bold, numberOfLines: 0)
         headerView.addSubview(titleLabel)
         titleLabel.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 10, left: 16, bottom: 0, right: 16), excludingEdge: .bottom)
         
         // descriptionLabel
-        let descriptionLabel = UILabel.with(textSize: 17, textColor: .a5a7bd, numberOfLines: 0)
+        let descriptionLabel = UILabel.with(textSize: 17 * Config.heightRatio, textColor: .a5a7bd, numberOfLines: 0)
         let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.lineSpacing = 10
+        paragraphStyle.lineSpacing = 10 * Config.heightRatio
         let attrString = NSAttributedString(string: "subscribe to at least 3 communities and get your first Community Points".localized().uppercaseFirst, attributes: [.paragraphStyle: paragraphStyle])
         descriptionLabel.attributedText = attrString
         headerView.addSubview(descriptionLabel)
-        descriptionLabel.autoPinEdge(.top, to: .bottom, of: titleLabel, withOffset: 16)
+        descriptionLabel.autoPinEdge(.top, to: .bottom, of: titleLabel, withOffset: 16 * Config.heightRatio)
         descriptionLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
         descriptionLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
         
         // searchBar
         headerView.addSubview(searchBar)
-        searchBar.autoPinEdge(.top, to: .bottom, of: descriptionLabel, withOffset: 25)
+        searchBar.autoPinEdge(.top, to: .bottom, of: descriptionLabel, withOffset: 25 * Config.heightRatio)
         searchBar.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(inset: 10), excludingEdge: .top)
         
         // collection view

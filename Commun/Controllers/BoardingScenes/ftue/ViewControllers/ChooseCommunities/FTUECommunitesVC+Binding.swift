@@ -134,9 +134,8 @@ extension FTUECommunitiesVC: UICollectionViewDelegateFlowLayout, CommunityCollec
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = collectionView.width - collectionView.contentInset.left - collectionView.contentInset.right
-        let horizontalSpacing: CGFloat = 16
+        let horizontalSpacing: CGFloat = 16 * Config.heightRatio
         let itemWidth = (width - horizontalSpacing) / 2
-        let height = itemWidth * 171 / 165
-        return CGSize(width: itemWidth, height: height + 10)
+        return CGSize(width: itemWidth, height: 190)
     }
 }
