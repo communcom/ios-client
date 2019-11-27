@@ -54,7 +54,10 @@ class FTUEVC: BaseViewController {
         pageControl.autoAlignAxis(.horizontal, toSameAxisOf: communLabel)
         pageControl.autoAlignAxis(toSuperviewAxis: .vertical)
         
-        add(childVC: communitiesVC)
+        if UserDefaults.standard.bool(forKey: Config.currentUserDidSubscribeToMoreThan3Communities) == false
+        {
+            add(childVC: communitiesVC)
+        }
     }
     
     override func bind() {
@@ -71,9 +74,13 @@ class FTUEVC: BaseViewController {
     
     private func showAuthorizeOnWebVC() {
         pageControl.selectedIndex = 1
-        UIView.animate(withDuration: 0.3) {
-            self.remove(childVC: self.communitiesVC)
-            self.add(childVC: self.authorizeOnWebVC)
+        communitiesVC.willMove(toParent: nil)
+        add(childVC: authorizeOnWebVC)
+        
+        containerView.bringSubviewToFront(communitiesVC.view)
+        
+        UIView.transition(from: communitiesVC.view, to: authorizeOnWebVC.view, duration: 0.5, options: .transitionFlipFromLeft) { (finished) in
+            self.communitiesVC.removeViewAndControllerFromParentViewController()
         }
         
     }
@@ -83,9 +90,5 @@ class FTUEVC: BaseViewController {
         
         childVC.view.frame = containerView.bounds
         childVC.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-    }
-    
-    private func remove(childVC: UIViewController) {
-        childVC.removeViewAndControllerFromParentViewController()
     }
 }
