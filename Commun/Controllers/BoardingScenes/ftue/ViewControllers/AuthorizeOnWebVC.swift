@@ -8,7 +8,10 @@
 
 import Foundation
 
-class AuthorizeOnWebVC: BaseViewController, BoardingRouter {
+class AuthorizeOnWebVC: BaseViewController {
+    // MARK: - Properties
+    var completion: (()->Void)?
+    
     // MARK: - Subviews
     lazy var imageView: UIImageView = {
         let imageView = UIImageView(forAutoLayout: ())
@@ -54,14 +57,6 @@ class AuthorizeOnWebVC: BaseViewController, BoardingRouter {
     }
     
     @objc func buttonDoneDidTouch() {
-        do {
-            try KeychainManager.save([
-                Config.settingStepKey: CurrentUserSettingStep.backUpICloud.rawValue
-            ])
-            
-            boardingNextStep()
-        } catch {
-            showError(error)
-        }
+        completion?()
     }
 }

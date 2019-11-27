@@ -8,7 +8,11 @@
 
 import Foundation
 
-class BackUpKeysVC: BaseViewController {
+class BackUpKeysVC: BoardingVC {
+    // MARK: - Properties
+    override var step: CurrentUserSettingStep {.backUpICloud}
+    override var nextStep: CurrentUserSettingStep? {.setPasscode}
+    
     // MARK: - Subviews
     lazy var copyButton = UIButton.circle(size: 24, backgroundColor: .a5a7bd, tintColor: .white, imageName: "copy", imageEdgeInsets: UIEdgeInsets(inset: 6))
     lazy var backUpICloudButton = CommunButton.default(height: 50 * Config.heightRatio, label: "backup iCloud".localized().uppercaseFirst)
@@ -76,13 +80,32 @@ class BackUpKeysVC: BaseViewController {
         copyButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
         copyButton.autoPinEdge(.leading, to: .trailing, of: masterPasswordContentLabel, withOffset: 16)
         copyButton.autoAlignAxis(toSuperviewAxis: .horizontal)
+        copyButton.addTarget(self, action: #selector(copyButtonDidTouch), for: .touchUpInside)
         
         view.addSubview(iSavedItButton)
         iSavedItButton.autoPinEdgesToSuperviewSafeArea(with: UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16), excludingEdge: .top)
+        iSavedItButton.addTarget(self, action: #selector(iSavedItButtonDidTouch), for: .touchUpInside)
         
         view.addSubview(backUpICloudButton)
         backUpICloudButton.autoPinEdge(.bottom, to: .top, of: iSavedItButton, withOffset: -10)
         backUpICloudButton.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
         backUpICloudButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
+        backUpICloudButton.addTarget(self, action: #selector(backupIcloudDidTouch), for: .touchUpInside)
+    }
+    
+    @objc func copyButtonDidTouch() {
+        guard let key = Config.currentUser?.masterKey else {return}
+        UIPasteboard.general.string = key
+        showDone("copied to clipboard".localized().uppercaseFirst)
+    }
+    
+    @objc func iSavedItButtonDidTouch() {
+        #warning("I saved it button")
+        next()
+    }
+    
+    @objc func backupIcloudDidTouch() {
+        RestAPIManager.instance.rx.backUpICloud()
+        next()
     }
 }

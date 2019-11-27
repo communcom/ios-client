@@ -10,7 +10,7 @@ import UIKit
 import THPinViewController
 import CyberSwift
 
-class SetPasscodeVC: THPinViewController, BoardingRouter {
+class SetPasscodeVC: THPinViewController {
     // MARK: - Properties
     var currentPin: String?
     var completion: (()->Void)?
@@ -102,8 +102,6 @@ extension SetPasscodeVC: THPinViewControllerDelegate {
                 }
                 if let completion = completion {
                     completion()
-                } else {
-                    self.boardingNextStep()
                 }
             } catch {
                 self.showError(error)

@@ -106,15 +106,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             // Registered user
             if step == .registered || step == .relogined {
                 // If first setting is uncompleted
-                let settingStep = KeychainManager.currentUser()?.settingStep ?? .setPasscode
+                let settingStep = KeychainManager.currentUser()?.settingStep ?? .backUpICloud
                 if settingStep != .completed {
                     if !force,
                         let nc = self.window?.rootViewController as? UINavigationController,
-                        nc.viewControllers.first is BoardingVC {
+                        nc.viewControllers.first is BackUpKeysVC {
                         return
                     }
                     
-                    let boardingVC = controllerContainer.resolve(BoardingVC.self)!
+                    let boardingVC = BackUpKeysVC()
                     let nc = UINavigationController(rootViewController: boardingVC)
                     
                     self.changeRootVC(nc)
