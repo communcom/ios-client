@@ -18,7 +18,12 @@ class BackUpKeysVC: BoardingVC {
     
     lazy var copyButton = UIButton.circle(size: 24, backgroundColor: .a5a7bd, tintColor: .white, imageName: "copy", imageEdgeInsets: UIEdgeInsets(inset: 6))
     lazy var backUpICloudButton = CommunButton.default(height: 50 * Config.heightRatio, label: "backup iCloud".localized().uppercaseFirst)
-    lazy var iSavedItButton = UIButton(label: "i saved it".localized().uppercaseFirst, textColor: .appMainColor, contentInsets: UIEdgeInsets(top: 10, left: 100, bottom: 10, right: 100))
+
+    lazy var iSavedItButton: UIButton = {
+        let button = UIButton(label: "i saved it".localized().uppercaseFirst, textColor: .appMainColor, contentInsets: UIEdgeInsets(top: 10, left: 100, bottom: 10, right: 100))
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 15)
+        return button
+    }()
     
     // MARK: - Methods
     override func viewWillAppear(_ animated: Bool) {
