@@ -63,15 +63,15 @@ class BackUpKeysVC: BoardingVC {
         masterPasswordContainer.borderWidth = 1
         masterPasswordContainer.borderColor = .e2e6e8
         view.addSubview(masterPasswordContainer)
-        masterPasswordContainer.autoPinEdge(.top, to: .bottom, of: infoLabel, withOffset: 6)
+        masterPasswordContainer.autoPinEdge(.top, to: .bottom, of: infoLabel, withOffset: 16)
         masterPasswordContainer.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
         masterPasswordContainer.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
         
-        let masterPasswordLabel = UILabel.with(text: "master password".localized().uppercaseFirst, textSize: 12, weight: .semibold, textColor: .a5a7bd)
+        let masterPasswordLabel = UILabel.with(text: "master password".localized().uppercaseFirst, textSize: 12 * Config.heightRatio, weight: .semibold, textColor: .a5a7bd)
         masterPasswordContainer.addSubview(masterPasswordLabel)
         masterPasswordLabel.autoPinTopAndLeadingToSuperView(inset: 10, xInset: 16)
         
-        let masterPasswordContentLabel = UILabel.with(text: Config.currentUser?.masterKey, textSize: 17, weight: .bold)
+        let masterPasswordContentLabel = UILabel.with(text: Config.currentUser?.masterKey, textSize: 17 * Config.heightRatio, weight: .bold)
         masterPasswordContainer.addSubview(masterPasswordContentLabel)
         masterPasswordContentLabel.autoPinEdge(.top, to: .bottom, of: masterPasswordLabel, withOffset: 8)
         masterPasswordContentLabel.autoPinBottomAndLeadingToSuperView(inset: 10, xInset: 16)
