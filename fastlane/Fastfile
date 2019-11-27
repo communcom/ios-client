@@ -69,8 +69,8 @@ lane :beta do |options|
 
     slack_upload(
         slack_api_token: slack_api_token,
-        title: "New version #{build_version}(#{new_bundle_version})",
-        channel: "#commun-ios-builds",
+        title: "commun-ios.#{build_version}(#{new_bundle_version})",
+        channel: "#commun-mobile-builds",
         file_path: ENV['BUILD_PATH']
     ) 
 
