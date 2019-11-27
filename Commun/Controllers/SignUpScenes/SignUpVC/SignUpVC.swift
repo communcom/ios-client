@@ -98,7 +98,7 @@ class SignUpVC: UIViewController, SignUpRouter {
         updateLocation()
         setupReCaptcha()
     }
-    
+        
     
     // MARK: - Custom Functions
     func setupBindings() {
@@ -186,7 +186,7 @@ class SignUpVC: UIViewController, SignUpRouter {
 
         recaptcha.configureWebView { [weak self] webview in
             webview.frame = self?.view.bounds ?? CGRect.zero
-            webview.tag = 777
+            webview.tag = reCaptchaTag
         }
     }
 
@@ -215,6 +215,10 @@ class SignUpVC: UIViewController, SignUpRouter {
         
         self.view.endEditing(true)
         
+        if self.view.viewWithTag(reCaptchaTag) == nil {
+            setupReCaptcha()
+        }
+
         // reCaptcha
         recaptcha.validate(on:              view,
                            resetOnError:    false,
@@ -227,7 +231,7 @@ class SignUpVC: UIViewController, SignUpRouter {
                             }
                             
                             print(captchaCode)
-                            strongSelf.view.viewWithTag(777)?.removeFromSuperview()
+                            strongSelf.view.viewWithTag(reCaptchaTag)?.removeFromSuperview()
                             
                             // API `registration.firstStep`
                             strongSelf.showIndetermineHudWithMessage("signing you up".localized().uppercaseFirst + "...")

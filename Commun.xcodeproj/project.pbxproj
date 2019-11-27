@@ -161,7 +161,7 @@
 		575AECB522606FA600A7EC2D /* SelectCountryVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 575AECB422606FA600A7EC2D /* SelectCountryVC.storyboard */; };
 		576DC919223E41E800EDED41 /* FeedPageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576DC918223E41E800EDED41 /* FeedPageVC.swift */; };
 		576DC91E223E429C00EDED41 /* FeedPageVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 576DC91D223E429C00EDED41 /* FeedPageVC.storyboard */; };
-		576DC921223E42C800EDED41 /* UIViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576DC920223E42C800EDED41 /* UIViewControllerExtension.swift */; };
+		576DC921223E42C800EDED41 /* UIViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576DC920223E42C800EDED41 /* UIViewController+Extensions.swift */; };
 		57840A1B2240DB9400338FD5 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57840A1A2240DB9400338FD5 /* NetworkService.swift */; };
 		57840A202240DDEB00338FD5 /* Container.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57840A1F2240DDEB00338FD5 /* Container.swift */; };
 		5787C0C422650F9D00568CEC /* SetUserVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5787C0C322650F9D00568CEC /* SetUserVC.swift */; };
@@ -609,7 +609,7 @@
 		576DC916223E406F00EDED41 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		576DC918223E41E800EDED41 /* FeedPageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedPageVC.swift; sourceTree = "<group>"; };
 		576DC91D223E429C00EDED41 /* FeedPageVC.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = FeedPageVC.storyboard; sourceTree = "<group>"; };
-		576DC920223E42C800EDED41 /* UIViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtension.swift; sourceTree = "<group>"; };
+		576DC920223E42C800EDED41 /* UIViewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extensions.swift"; sourceTree = "<group>"; };
 		57840A1A2240DB9400338FD5 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		57840A1F2240DDEB00338FD5 /* Container.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Container.swift; sourceTree = "<group>"; };
 		5787C0C322650F9D00568CEC /* SetUserVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetUserVC.swift; sourceTree = "<group>"; };
@@ -1118,10 +1118,10 @@
 		3B986B6322CE4B8100C1E985 /* SignUpScenes */ = {
 			isa = PBXGroup;
 			children = (
-				B17A970B228002440081B8E0 /* SignUpRouter.swift */,
-				5797E0F6225DDA260026C4D5 /* SignUpVC */,
 				578B94D82263CBC300FB5BC6 /* ConfirmUserVC */,
 				5787C0C222650F8A00568CEC /* SetUserVC */,
+				5797E0F6225DDA260026C4D5 /* SignUpVC */,
+				B17A970B228002440081B8E0 /* SignUpRouter.swift */,
 			);
 			path = SignUpScenes;
 			sourceTree = "<group>";
@@ -1484,7 +1484,7 @@
 				3B63CD9222AA7AA200DC828B /* UIScrollView.swift */,
 				3BF37BC922A11FA700A72FFE /* UIView.swift */,
 				3BAF69CA226773000055CCEB /* UIView+Shadow.swift */,
-				576DC920223E42C800EDED41 /* UIViewControllerExtension.swift */,
+				576DC920223E42C800EDED41 /* UIViewController+Extensions.swift */,
 				3B02CD33228ADC100078BB52 /* UIWebView.swift */,
 				3B61AC3322E1CA8A00F608AF /* LAContext.swift */,
 				3BEC38E2230F801600662374 /* UITextView.swift */,
@@ -1573,10 +1573,10 @@
 		5797E0F6225DDA260026C4D5 /* SignUpVC */ = {
 			isa = PBXGroup;
 			children = (
-				575AECAD22606D0800A7EC2D /* SignUpViewModel.swift */,
-				5797E0F7225DDA400026C4D5 /* SignUpVC.swift */,
 				5797E0F9225DDA490026C4D5 /* SignUpVC.storyboard */,
+				5797E0F7225DDA400026C4D5 /* SignUpVC.swift */,
 				3BA3779622E9DA6C0071AF3A /* SignupVC+Location.swift */,
+				575AECAD22606D0800A7EC2D /* SignUpViewModel.swift */,
 			);
 			path = SignUpVC;
 			sourceTree = "<group>";
@@ -2625,7 +2625,7 @@
 				571B14FC223A935C00630C8F /* Commun.xcdatamodeld in Sources */,
 				BCB2A6E22354512D00B3582B /* AttachmentView.swift in Sources */,
 				BCD453AF2354476B005A454C /* ArticleEditorVC+MediaViewDelegate.swift in Sources */,
-				576DC921223E42C800EDED41 /* UIViewControllerExtension.swift in Sources */,
+				576DC921223E42C800EDED41 /* UIViewController+Extensions.swift in Sources */,
 				BCA971242360400200AE37E1 /* MyTableHeaderView.swift in Sources */,
 				BC22BBCA236C082600F40658 /* ContentHuggingScrollView.swift in Sources */,
 				BCABF1332366D4E2006B05F5 /* ProfileVC+Binding.swift in Sources */,
