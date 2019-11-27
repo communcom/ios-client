@@ -253,11 +253,11 @@ extension UIViewController {
     // MARK: - Actions
     @objc func popToPreviousVC() {
         if let count = navigationController?.viewControllers.count, count > 0 {
-            let reCaptchaView = self.view.viewWithTag(reCaptchaTag)
-            reCaptchaView?.removeFromSuperview()
-
-            if let previousVC = navigationController?.viewControllers[count - (reCaptchaView == nil ? 2 : 1)] {
+            let viewWithTag = self.view.viewWithTag(reCaptchaTag)
+            
+            if let previousVC = navigationController?.viewControllers[count - (viewWithTag == nil ? 2 : 1)] {
                 navigationController?.popToViewController(previousVC, animated: true)
+                viewWithTag?.removeFromSuperview()
             }
         }
     }
