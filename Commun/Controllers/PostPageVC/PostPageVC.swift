@@ -118,7 +118,10 @@ class PostPageVC: CommentsViewController {
             tableView.rx.insertedItems
                 .take(1)
                 .subscribe(onNext: { (_) in
-                    self.tableView.safeScrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+                    DispatchQueue.main.async {
+                        // https://stackoverflow.com/a/16071589
+                        self.tableView.safeScrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+                    }
                 })
                 .disposed(by: disposeBag)
         }
