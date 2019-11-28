@@ -10,7 +10,7 @@ import UIKit
 import CyberSwift
 
 class PostsViewController: ListViewController<ResponseAPIContentGetPost> {
-    
+    // MARK: - Class Initialization
     init(filter: PostsListFetcher.Filter = PostsListFetcher.Filter(feedTypeMode: .new, feedType: .time)) {
         super.init(nibName: nil, bundle: nil)
         viewModel = PostsViewModel(filter: filter)
@@ -26,9 +26,12 @@ class PostsViewController: ListViewController<ResponseAPIContentGetPost> {
             viewModel.fetchNext()
         }
     }
+           
     
+    // MARK: - Custom Functions
     override func setUp() {
         super.setUp()
+                
         // setup datasource
         tableView.separatorStyle = .none
         tableView.register(BasicPostCell.self, forCellReuseIdentifier: "BasicPostCell")
@@ -89,6 +92,6 @@ class PostsViewController: ListViewController<ResponseAPIContentGetPost> {
     }
     
     func filterChanged(filter: PostsListFetcher.Filter) {
-        
+
     }
 }
