@@ -19,9 +19,9 @@ extension CommentForm {
         var block: ResponseAPIContentBlock!
         textView.getContentBlock()
             .observeOn(MainScheduler.instance)
-            .do(onSubscribe: {
-                self.setLoading(true, message: "sending comment".localized().uppercaseFirst)
-            })
+//            .do(onSubscribe: {
+//                self.setLoading(true, message: "sending comment".localized().uppercaseFirst)
+//            })
             .flatMap { parsedBlock -> Single<SendPostCompletion> in
                 //clean
                 block = parsedBlock
@@ -46,22 +46,11 @@ extension CommentForm {
                 
                 switch self?.mode {
                 case .edit:
-                    newComment = self?.parentComment
-                    newComment?.document = block
+                    break
                 case .reply:
-                    newComment = ResponseAPIContentGetComment(
-                        contentId: ResponseAPIContentId(userId: userId ?? "", permlink: permlink ?? "", communityId: self?.post?.community.communityId ?? ""),
-                        parents: ResponseAPIContentGetCommentParent(post: nil, comment: self?.parentComment?.contentId),
-                        document: block,
-                        author: ResponseAPIAuthor(userId: userId ?? "", username: Config.currentUser?.name, avatarUrl: UserDefaults.standard.string(forKey: Config.currentUserAvatarUrlKey), stats: nil, isSubscribed: nil),
-                        community: self?.post?.community)
+                    break
                 case .new:
-                    newComment = ResponseAPIContentGetComment(
-                        contentId: ResponseAPIContentId(userId: userId ?? "", permlink: permlink ?? "", communityId: self?.post?.community.communityId ?? ""),
-                        parents: ResponseAPIContentGetCommentParent(post: self?.post?.contentId, comment: nil),
-                        document: block,
-                        author: ResponseAPIAuthor(userId: userId ?? "", username: Config.currentUser?.name, avatarUrl: UserDefaults.standard.string(forKey: Config.currentUserAvatarUrlKey), stats: nil, isSubscribed: nil),
-                        community: self?.post?.community)
+                    break
                 case nil:
                     break
                 }
@@ -71,22 +60,14 @@ extension CommentForm {
             }
             .subscribe(onSuccess: { [weak self] newComment in
                 guard let strongSelf = self, let newComment = newComment else {return}
-                strongSelf.setLoading(false)
+//                strongSelf.setLoading(false)
                 switch strongSelf.mode {
                 case .edit:
                     newComment.notifyChanged()
                 case .reply:
-                    strongSelf.parentComment?.addChildComment(newComment)
-                    
-                    strongSelf.post?.stats?.commentsCount = (strongSelf.post?.stats?.commentsCount ?? 0) + 1
-                    strongSelf.post?.notifyChanged()
+                    break
                 case .new:
-                    strongSelf.post?.notifyEvent(
-                        eventName: ResponseAPIContentGetPost.commentAddedEventName,
-                        object: newComment
-                    )
-                    strongSelf.post?.stats?.commentsCount = (strongSelf.post?.stats?.commentsCount ?? 0) + 1
-                    strongSelf.post?.notifyChanged()
+                    break
                 }
                 
                 strongSelf.textView.text = ""
@@ -95,25 +76,25 @@ extension CommentForm {
                 strongSelf.endEditing(true)
                 
             }) { (error) in
-                self.setLoading(false)
+//                self.setLoading(false)
                 self.parentViewController?.showError(error)
             }
             .disposed(by: disposeBag)
     }
     
-    func setLoading(_ isLoading: Bool, message: String? = nil) {
-        post?.isAddingComment = isLoading
-        post?.notifyChanged()
-        parentComment?.isReplying = isLoading
-        parentComment?.notifyChanged()
-        
-        textView.isUserInteractionEnabled = !isLoading
-        sendButton.isEnabled = !isLoading
-        if (isLoading) {
-            parentViewController?.showIndetermineHudWithMessage(message ?? "loading".localized().uppercaseFirst)
-        }
-        else {
-            parentViewController?.hideHud()
-        }
-    }
+//    func setLoading(_ isLoading: Bool, message: String? = nil) {
+//        post?.isAddingComment = isLoading
+//        post?.notifyChanged()
+//        parentComment?.isReplying = isLoading
+//        parentComment?.notifyChanged()
+//
+//        textView.isUserInteractionEnabled = !isLoading
+//        sendButton.isEnabled = !isLoading
+//        if (isLoading) {
+//            parentViewController?.showIndetermineHudWithMessage(message ?? "loading".localized().uppercaseFirst)
+//        }
+//        else {
+//            parentViewController?.hideHud()
+//        }
+//    }
 }

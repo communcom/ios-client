@@ -11,31 +11,6 @@ import CyberSwift
 import SubviewAttachingTextView
 
 extension ResponseAPIContentBlock {
-    func jsonString() throws -> String {
-        let data = try JSONEncoder().encode(self)
-        guard let string = String(data: data, encoding: .utf8) else {
-            throw ErrorAPI.invalidData(message: "Could not parse string from block")
-        }
-        return string
-    }
-    
-    func getTags() -> [String] {
-        var tags = [String]()
-        switch content {
-        case .array(let childBlocks):
-            for block in childBlocks {
-                tags += block.getTags()
-            }
-        case .string(let string):
-            if type == "tag" {
-                return [string]
-            }
-        case .unsupported:
-            break
-        }
-        return tags
-    }
-    
     func toHTML() -> String {
         
         var innerHTML = ""
