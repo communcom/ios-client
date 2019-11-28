@@ -18,8 +18,8 @@ class PostMetaView: MyView {
     // MARK: - Subviews
     lazy var avatarImageView = MyAvatarImageView(size: 40)
     lazy var comunityNameLabel = UILabel.with(textSize: 15, weight: .semibold)
-    lazy var timeAgoLabel = UILabel.with(textSize: 13, textColor: .lightGray)
-    lazy var byUserLabel = UILabel.with(textSize: 13, weight: .semibold, textColor: .appMainColor)
+    lazy var timeAgoLabel = UILabel.with(textSize: 12, weight: .semibold, textColor: .a5a7bd)
+    lazy var byUserLabel = UILabel.with(textSize: 12, weight: .semibold, textColor: .appMainColor)
     
     // MARK: - Properties
     var isUserNameTappable = true

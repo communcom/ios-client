@@ -17,7 +17,7 @@ class CountryCell: UITableViewCell {
     @IBOutlet weak var countryImage: UIImageView! {
         didSet {
             self.countryImage.layer.cornerRadius = 42.0 * Config.heightRatio / 2.0
-            self.countryImage.layer.borderColor = UIColor.init(hexString: "#808080")!.cgColor
+            self.countryImage.layer.borderColor = UIColor.init(hexString: "#E2E6E8")!.cgColor
             self.countryImage.layer.borderWidth = 1.0
             self.countryImage.clipsToBounds = true
         }

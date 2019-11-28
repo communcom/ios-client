@@ -30,7 +30,7 @@ extension ArticleEditorVC {
             .disposed(by: disposeBag)
         
         titleTextView.rx.text.orEmpty
-            .map {$0.utf8.count > self.titleBytesLimit ? UIColor.red : UIColor.lightGray}
+            .map {$0.utf8.count > self.titleBytesLimit ? UIColor.red : UIColor.e2e6e8}
             .distinctUntilChanged()
             .subscribe(onNext: {color in
                 self.titleTextViewCountLabel.textColor = color

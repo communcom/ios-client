@@ -11,7 +11,7 @@ import Foundation
 /// Reusable itemcell for subscribers/subscriptions
 class SubsItemCell: MyTableViewCell {
     lazy var avatarImageView = MyAvatarImageView(size: 50)
-    lazy var nameLabel = UILabel.with(textSize: 15, weight: .bold)
+    lazy var nameLabel = UILabel.with(textSize: 15, weight: .semibold)
     lazy var statsLabel = UILabel.descriptionLabel(numberOfLines: 0)
     lazy var actionButton = CommunButton.default()
     lazy var separator = UIView(height: 2, backgroundColor: .f3f5fa)
@@ -33,7 +33,7 @@ class SubsItemCell: MyTableViewCell {
         backgroundColor = .white
         selectionStyle = .none
         contentView.addSubview(avatarImageView)
-        avatarImageView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 16, left: 16, bottom: 18, right: 0), excludingEdge: .trailing)
+        avatarImageView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 15, left: 15, bottom: 17, right: 0), excludingEdge: .trailing)
         
         contentView.addSubview(nameLabel)
         nameLabel.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 10)

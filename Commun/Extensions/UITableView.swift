@@ -170,7 +170,7 @@ extension UITableView {
         return ControlEvent(events: source)
     }
     
-    func addEmptyPlaceholderFooterView(height: CGFloat = 150, title: String, description: String? = nil, buttonLabel: String? = nil, buttonAction: (()->Void)? = nil) {
+    func addEmptyPlaceholderFooterView(height: CGFloat = 133, title: String, description: String? = nil, buttonLabel: String? = nil, buttonAction: (()->Void)? = nil) {
         // Prevent dupplicating
         if tableFooterView?.tag == emptyPlaceholderViewTag {
             return

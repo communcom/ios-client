@@ -11,7 +11,7 @@ import UIKit
 class StateButton: UIButton {
     override var isSelected: Bool {
         didSet {
-            tintColor = self.isSelected ? .appMainColor: .lightGray
+            tintColor = self.isSelected ? .appMainColor: .e2e6e8
         }
     }
     

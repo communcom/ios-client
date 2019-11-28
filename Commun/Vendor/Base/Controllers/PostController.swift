@@ -34,37 +34,17 @@ extension PostController {
         var actions = [CommunActionSheet.Action]()
         
         if post.author?.userId != Config.currentUser?.id {
-            // remove from MVP
-//            if !FavouritesList.shared.list.contains(post.contentId.permlink) {
-//                actions.append(
-//                    CommunActionSheet.Action(title: "add to favourite".localized().uppercaseFirst, icon: UIImage(named: "favourite-add"), handle: {
-//                        self.addPostToFavourite()
-//                    })
-//                )
-//            }
-//            else {
-//                actions.append(
-//                    CommunActionSheet.Action(title: "remove from favourite".localized().uppercaseFirst, icon: UIImage(named: "favourite-remove"), handle: {
-//                        self.removeFromFavourite()
-//                    })
-//                )
-//            }
-            
             actions.append(
                 CommunActionSheet.Action(title: "send report".localized().uppercaseFirst, icon: UIImage(named: "report"), handle: {
                     self.reportPost()
                 }, tintColor: UIColor(hexString: "#ED2C5B")!)
             )
-        }
-        else {
-            actions += [
+        } else {
+            actions.append(
                 CommunActionSheet.Action(title: "edit".localized().uppercaseFirst, icon: UIImage(named: "edit"), handle: {
                     self.editPost()
-                }),
-                CommunActionSheet.Action(title: "delete".localized().uppercaseFirst, icon: UIImage(named: "delete"), handle: {
-                    self.deletePost()
-                }, tintColor: UIColor(hexString: "#ED2C5B")!)
-            ]
+                })
+            )
         }
         
         actions.append(
@@ -72,7 +52,15 @@ extension PostController {
                 self.sharePost()
             })
         )
-        
+
+        if post.author?.userId == Config.currentUser?.id {
+            actions.append(
+                CommunActionSheet.Action(title: "delete".localized().uppercaseFirst, icon: UIImage(named: "delete"), handle: {
+                    self.deletePost()
+                }, tintColor: UIColor(hexString: "#ED2C5B")!)
+            )
+        }
+
         // headerView for actionSheet
         let headerView = PostMetaView(frame: .zero)
         headerView.isUserNameTappable = false
