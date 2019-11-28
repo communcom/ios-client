@@ -98,7 +98,7 @@ extension SetPasscodeVC: THPinViewControllerDelegate {
         if pin == currentPin {
             do {
                 if !isVerifyVC {
-                    try RestAPIManager.instance.rx.setPasscode(pin, onBoarding: onBoarding)
+                    try RestAPIManager.instance.setPasscode(pin, onBoarding: onBoarding)
                 }
                 if let completion = completion {
                     completion()

@@ -48,7 +48,7 @@ class NotificationSettingsViewModel: BaseViewModel {
     
     func getOptionsPushShow() {
         guard notificationOn.value else {return}
-        RestAPIManager.instance.rx.getPushNotify()
+        RestAPIManager.instance.getPushNotify()
             .map {$0.notify.show}
             .subscribe(onSuccess: { [weak self] (show) in
                 self?.options.accept(show)
@@ -57,8 +57,8 @@ class NotificationSettingsViewModel: BaseViewModel {
     }
     
     func togglePushNotify(on: Bool) {
-        let operation = on ? RestAPIManager.instance.rx.pushNotifyOn() :
-            RestAPIManager.instance.rx.pushNotifyOff()
+        let operation = on ? RestAPIManager.instance.pushNotifyOn() :
+            RestAPIManager.instance.pushNotifyOff()
                 
         operation
             .subscribe(onCompleted: {

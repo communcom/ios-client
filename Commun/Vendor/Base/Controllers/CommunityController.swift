@@ -97,11 +97,11 @@ extension CommunityController {
         let request: Completable
         
         if originIsSubscribed {
-            request = RestAPIManager.instance.rx.unfollowCommunity(id)
+            request = RestAPIManager.instance.unfollowCommunity(id)
                 .flatMapToCompletable()
         }
         else {
-            request = RestAPIManager.instance.rx.followCommunity(id)
+            request = RestAPIManager.instance.followCommunity(id)
                 .flatMapToCompletable()
         }
         

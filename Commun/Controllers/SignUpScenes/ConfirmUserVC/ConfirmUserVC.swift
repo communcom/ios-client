@@ -161,7 +161,7 @@ class ConfirmUserVC: UIViewController, SignUpRouter {
                 return
         }
         
-        RestAPIManager.instance.rx.resendSmsCode()
+        RestAPIManager.instance.resendSmsCode()
             .subscribe(onSuccess: { [weak self] (_) in
                 guard let strongSelf = self else { return }
                 strongSelf.showAlert(title:         "info".localized().uppercaseFirst,
@@ -190,7 +190,7 @@ class ConfirmUserVC: UIViewController, SignUpRouter {
         
         showIndetermineHudWithMessage("verifying...".localized().uppercaseFirst)
         
-        RestAPIManager.instance.rx.verify(code: code)
+        RestAPIManager.instance.verify(code: code)
             .subscribe(onSuccess: { [weak self] (_) in
                 self?.hideHud()
                 self?.signUpNextStep()

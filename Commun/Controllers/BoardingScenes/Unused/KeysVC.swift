@@ -76,7 +76,7 @@ class KeysVC: UIViewController, BoardingRouter {
     
     // MARK: - Actions
     @IBAction func backupIcloudDidTouch(_ sender: Any) {
-        RestAPIManager.instance.rx.backUpICloud()
+        RestAPIManager.instance.backUpICloud()
         if completion == nil {
             self.boardingNextStep()
         } else {

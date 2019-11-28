@@ -47,10 +47,10 @@ extension LeaderController {
 //            .delay(0.8, scheduler: MainScheduler.instance)
         if originIsVoted {
             // unvote
-            request = RestAPIManager.instance.rx.unvoteLeader(communityId: communityId, leader: leader!.userId)
+            request = RestAPIManager.instance.unvoteLeader(communityId: communityId, leader: leader!.userId)
         }
         else {
-            request = RestAPIManager.instance.rx.voteLeader(communityId: communityId, leader: leader!.userId)
+            request = RestAPIManager.instance.voteLeader(communityId: communityId, leader: leader!.userId)
         }
         
         request

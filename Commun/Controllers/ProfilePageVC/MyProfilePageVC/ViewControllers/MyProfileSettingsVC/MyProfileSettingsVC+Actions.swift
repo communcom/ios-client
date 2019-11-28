@@ -36,7 +36,7 @@ extension MyProfileSettingsVC {
             
             if index == 0 {
                 self.navigationController?.showIndetermineHudWithMessage("logging out".localized().uppercaseFirst)
-                RestAPIManager.instance.rx.logout()
+                RestAPIManager.instance.logout()
                     .subscribe(onCompleted: {
                         self.navigationController?.hideHud()
                         AppDelegate.reloadSubject.onNext(true)

@@ -31,7 +31,7 @@ class PostEditorViewModel {
         var request: Single<SendPostCompletion>!
         
         if let post = self.postForEdit {
-            request = RestAPIManager.instance.rx.updateMessage(
+            request = RestAPIManager.instance.updateMessage(
                 communCode:     community.value?.communityId ?? "",
                 permlink:       post.contentId.permlink,
                 header:         title ?? "",
@@ -42,7 +42,7 @@ class PostEditorViewModel {
             
         // If creating new post
         else {
-            request = RestAPIManager.instance.rx.createMessage(
+            request = RestAPIManager.instance.createMessage(
                 communCode:     community.value?.communityId ?? "",
                 header:         title ?? "",
                 body:           string,

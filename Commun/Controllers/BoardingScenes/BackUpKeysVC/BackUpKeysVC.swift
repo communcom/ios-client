@@ -135,7 +135,7 @@ class BackUpKeysVC: BoardingVC {
     }
     
     func save() {
-        RestAPIManager.instance.rx.backUpICloud()
+        RestAPIManager.instance.backUpICloud()
         next()
     }
 }

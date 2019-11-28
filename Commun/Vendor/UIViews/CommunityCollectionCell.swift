@@ -108,11 +108,11 @@ extension CommunityCollectionCellDelegate where Self: BaseViewController {
         let request: Completable
         
         if originIsSubscribed {
-            request = RestAPIManager.instance.rx.unfollowCommunity(community.communityId)
+            request = RestAPIManager.instance.unfollowCommunity(community.communityId)
                 .flatMapToCompletable()
         }
         else {
-            request = RestAPIManager.instance.rx.followCommunity(community.communityId)
+            request = RestAPIManager.instance.followCommunity(community.communityId)
                 .flatMapToCompletable()
         }
         

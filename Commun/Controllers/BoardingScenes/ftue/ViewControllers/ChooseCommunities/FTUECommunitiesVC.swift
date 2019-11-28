@@ -133,7 +133,7 @@ class FTUECommunitiesVC: BaseViewController, BoardingRouter {
     
     @objc func nextButtonDidTouch() {
         showIndetermineHudWithMessage("just a moment".localized().uppercaseFirst + "...")
-        RestAPIManager.instance.rx.onboardingCommunitySubscriptions(
+        RestAPIManager.instance.onboardingCommunitySubscriptions(
             communityIds: viewModel.chosenCommunities.value.map {$0.communityId}
         )
             .subscribe(onCompleted: {

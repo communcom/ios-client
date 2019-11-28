@@ -16,7 +16,7 @@ class ReportVC: BaseVerticalStackViewController {
     
     // MARK: - Initializers
     init() {
-        super.init(actions: RestAPIManager.rx.ReportReason.allCases.map({ (reason) -> Action in
+        super.init(actions: RestAPIManager.ReportReason.allCases.map({ (reason) -> Action in
             Action(title: reason.rawValue, icon: nil)
         }))
     }

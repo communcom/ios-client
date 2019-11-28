@@ -69,7 +69,7 @@ class NetworkService: NSObject {
 //    }
     
     func deletePost(communCode: String, permlink: String) -> Completable {
-        return RestAPIManager.instance.rx.deleteMessage(communCode: communCode, permlink: permlink)
+        return RestAPIManager.instance.deleteMessage(communCode: communCode, permlink: permlink)
             .observeOn(MainScheduler.instance)
     }
     
@@ -77,7 +77,7 @@ class NetworkService: NSObject {
                      communityId: String,
                      messagePermlink: String,
                      messageAuthor: String) -> Completable {
-        return RestAPIManager.instance.rx.vote(
+        return RestAPIManager.instance.vote(
                 voteType:    voteType,
                 communityId: communityId,
                 author:      messageAuthor,
@@ -216,7 +216,7 @@ class NetworkService: NSObject {
     
     //  Update updatemeta
     func updateMeta(params: [String: String], waitForTransaction: Bool = true) -> Completable {
-        return RestAPIManager.instance.rx.update(userProfile: params)
+        return RestAPIManager.instance.update(userProfile: params)
             .flatMapCompletable({ (transaction) -> Completable in
                 // update profile
                 if let url = params["profile_image"] {
@@ -231,7 +231,7 @@ class NetworkService: NSObject {
     }
     
     func triggerFollow(_ userToFollow: String, isUnfollow: Bool = false) -> Completable {
-        return RestAPIManager.instance.rx.follow(userToFollow, isUnfollow: isUnfollow)
+        return RestAPIManager.instance.follow(userToFollow, isUnfollow: isUnfollow)
             .flatMapCompletable { self.waitForTransactionWith(id: $0) }
     }
     

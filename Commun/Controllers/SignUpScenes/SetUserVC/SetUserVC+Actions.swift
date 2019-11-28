@@ -37,7 +37,7 @@ extension SetUserVC {
             })
             .flatMapCompletable({ (id) -> Completable in
                 self.showIndetermineHudWithMessage("saving to blockchain...".localized().uppercaseFirst)
-                return RestAPIManager.instance.rx.toBlockChain()
+                return RestAPIManager.instance.toBlockChain()
             })
             .subscribe(onCompleted: {
                 AppDelegate.reloadSubject.onNext(true)

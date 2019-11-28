@@ -232,7 +232,7 @@ class SignUpVC: UIViewController, SignUpRouter {
                                     // API `registration.firstStep`
                                     strongSelf.showIndetermineHudWithMessage("signing you up".localized().uppercaseFirst + "...")
                                     
-                                    RestAPIManager.instance.rx.firstStep(phone: strongSelf.viewModel.phone.value, captchaCode: captchaCode)
+                                    RestAPIManager.instance.firstStep(phone: strongSelf.viewModel.phone.value, captchaCode: captchaCode)
                                         .subscribe(onSuccess: { _ in
                                             strongSelf.hideHud()
                                             strongSelf.signUpNextStep()

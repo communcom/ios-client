@@ -60,18 +60,18 @@ class BlacklistCell: SubsItemCell {
         if originIsBlocked {
             switch item! {
             case .user(_):
-                request = RestAPIManager.instance.rx.unblock(id)
+                request = RestAPIManager.instance.unblock(id)
             case .community(_):
-                request = RestAPIManager.instance.rx.unhideCommunity(id)
+                request = RestAPIManager.instance.unhideCommunity(id)
             }
             
         }
         else {
             switch item! {
             case .user(_):
-                request = RestAPIManager.instance.rx.block(id)
+                request = RestAPIManager.instance.block(id)
             case .community(_):
-                request = RestAPIManager.instance.rx.hideCommunity(id)
+                request = RestAPIManager.instance.hideCommunity(id)
             }
         }
         

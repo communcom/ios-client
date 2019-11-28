@@ -30,7 +30,7 @@ class CommentFormViewModel {
         }
         
         // Send request
-        return RestAPIManager.instance.rx.createMessage(
+        return RestAPIManager.instance.createMessage(
             isComment:      true,
             communCode:     communCode,
             parentAuthor:   authorId,
@@ -57,7 +57,7 @@ class CommentFormViewModel {
         }
         
         // Send request
-        return RestAPIManager.instance.rx.updateMessage(
+        return RestAPIManager.instance.updateMessage(
             communCode:     communCode,
             permlink:       comment.contentId.permlink,
             body:           string,
@@ -84,7 +84,7 @@ class CommentFormViewModel {
         let authorId = comment.contentId.userId
         let parentCommentPermlink = comment.contentId.permlink
         // Send request
-        return RestAPIManager.instance.rx.createMessage(
+        return RestAPIManager.instance.createMessage(
             isComment: true,
             communCode: communCode,
             parentAuthor: authorId,

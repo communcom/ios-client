@@ -15,7 +15,7 @@ extension CommunityPageVC {
         
 //        Completable.empty()
 //            .delay(0.8, scheduler: MainScheduler.instance)
-        RestAPIManager.instance.rx.hideCommunity(id)
+        RestAPIManager.instance.hideCommunity(id)
             .flatMapCompletable {RestAPIManager.instance.waitForTransactionWith(id: $0)}
             .subscribe(onCompleted: {
                 self.hideHud()

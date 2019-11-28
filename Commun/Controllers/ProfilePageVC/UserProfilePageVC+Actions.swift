@@ -17,7 +17,7 @@ extension UserProfilePageVC {
         
 //        Completable.empty()
 //            .delay(0.8, scheduler: MainScheduler.instance)
-        RestAPIManager.instance.rx.block(userId)
+        RestAPIManager.instance.block(userId)
             .flatMapCompletable {RestAPIManager.instance.waitForTransactionWith(id: $0)}
             .subscribe(onCompleted: {
                 self.hideHud()

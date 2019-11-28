@@ -76,7 +76,7 @@ extension SignUpRouter where Self: UIViewController {
     /// handle Invalid step taken
     func handleInvalidStepTakenWithPhone(_ phone: String) {
         // Get state
-        RestAPIManager.instance.rx.getState(phone: phone)
+        RestAPIManager.instance.getState(phone: phone)
             .subscribe(onSuccess: { (result) in
                 if result.currentState == "registered" {
                     self.showErrorWithLocalizedMessage("This number is already taken!")

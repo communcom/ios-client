@@ -39,7 +39,7 @@ extension SettingsVC: SettingsSwitcherCellDelegate {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.55) {
                 self.viewModel.optionsPushShow.accept(newValue)
             }
-            RestAPIManager.instance.rx.setPushNotify(options: newValue.toParam())
+            RestAPIManager.instance.setPushNotify(options: newValue.toParam())
                 .subscribe(onError: {[weak self] error in
                     self?.showError(error)
                     self?.viewModel.optionsPushShow.accept(original)

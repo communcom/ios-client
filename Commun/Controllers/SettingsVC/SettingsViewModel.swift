@@ -46,7 +46,7 @@ class SettingsViewModel {
     }
     
     func getOptionsPushShow() {
-        RestAPIManager.instance.rx.getPushNotify()
+        RestAPIManager.instance.getPushNotify()
             .map {$0.notify.show}
             .subscribe(onSuccess: { [weak self] (show) in
                 self?.optionsPushShow.accept(show)
@@ -83,7 +83,7 @@ class SettingsViewModel {
     }
     
     func togglePushNotify(on: Bool) -> Completable {
-        return on ? RestAPIManager.instance.rx.pushNotifyOn() :
-            RestAPIManager.instance.rx.pushNotifyOff()
+        return on ? RestAPIManager.instance.pushNotifyOn() :
+            RestAPIManager.instance.pushNotifyOff()
     }
 }

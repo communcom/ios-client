@@ -122,7 +122,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 }
                 
                 // if all set
-                RestAPIManager.instance.rx.authorize()
+                RestAPIManager.instance.authorize()
                     .subscribe(onSuccess: { (response) in
                         // Retrieve favourites
                         FavouritesList.shared.retrieve()
@@ -287,7 +287,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func pushNotifyOn() {
         if UserDefaults.standard.value(forKey: Config.currentUserPushNotificationOn) == nil {
-            RestAPIManager.instance.rx.pushNotifyOn()
+            RestAPIManager.instance.pushNotifyOn()
                 .subscribe(onCompleted: {
                     Logger.log(message: "Successfully turn pushNotificationOn", event: .severe)
                 }) { (error) in
