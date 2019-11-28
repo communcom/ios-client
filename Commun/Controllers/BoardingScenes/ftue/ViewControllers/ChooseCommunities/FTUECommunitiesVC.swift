@@ -136,14 +136,6 @@ class FTUECommunitiesVC: BaseViewController, BoardingRouter {
         RestAPIManager.instance.rx.onboardingCommunitySubscriptions(
             communityIds: viewModel.chosenCommunities.value.map {$0.communityId}
         )
-            .catchError({ (error) -> Completable in
-                #warning("Remove this method when onboardingCommunitySubscriptions is available")
-                if (error as? ErrorAPI)?.caseInfo.message == "Method not found" {
-                    return Completable.empty()
-                        .delay(0.8, scheduler: MainScheduler.instance)
-                }
-                throw error
-            })
             .subscribe(onCompleted: {
                 self.hideHud()
                 UserDefaults.standard.set(true, forKey: Config.currentUserDidSubscribeToMoreThan3Communities)
