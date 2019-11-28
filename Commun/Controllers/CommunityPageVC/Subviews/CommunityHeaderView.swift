@@ -27,7 +27,7 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
         return UIButton()
     }()
     
-    lazy var joinButton = CommunButton.join
+    lazy var joinButton = CommunButton.default(label: "follow".localized().uppercaseFirst)
     
     lazy var membersCountLabel: UILabel = {
         let label = UILabel.with(text: Double(10000000).kmFormatted, textSize: 15, weight: .bold)
@@ -203,9 +203,7 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
 
         // joinButton
         let joined = community.isSubscribed ?? false
-        joinButton.backgroundColor = joined ? #colorLiteral(red: 0.9525656104, green: 0.9605062604, blue: 0.9811610579, alpha: 1): .appMainColor
-        joinButton.setTitleColor(joined ? .appMainColor: .white , for: .normal)
-        joinButton.setTitle((joined ? "following" : "follow").localized().uppercaseFirst, for: .normal)
+        joinButton.setHightLight(joined, highlightedLabel: "following", unHighlightedLabel: "follow")
         joinButton.isEnabled = !(community.isBeingJoined ?? false)
         
         // notification button

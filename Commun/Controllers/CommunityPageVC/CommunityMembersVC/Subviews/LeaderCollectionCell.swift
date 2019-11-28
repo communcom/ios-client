@@ -72,9 +72,7 @@ class LeaderCollectionCell: MyCollectionViewCell, LeaderController {
         
         // joinButton
         let voted = leader.isVoted
-        voteButton.backgroundColor = voted ? #colorLiteral(red: 0.9525656104, green: 0.9605062604, blue: 0.9811610579, alpha: 1): .appMainColor
-        voteButton.setTitleColor(voted ? .appMainColor: .white , for: .normal)
-        voteButton.setTitle(voted ? "voted".localized().uppercaseFirst : "vote".localized().uppercaseFirst, for: .normal)
+        voteButton.setHightLight(voted, highlightedLabel: "voted", unHighlightedLabel: "vote")
         voteButton.isEnabled = !(leader.isBeingVoted ?? false)
     }
     

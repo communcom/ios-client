@@ -9,14 +9,15 @@
 import Foundation
 
 class CommunButton: UIButton {
-    static var join: CommunButton {
-        let button = CommunButton(height: 35, label: "follow".localized().uppercaseFirst, labelFont: .boldSystemFont(ofSize: 15), backgroundColor: .appMainColor, textColor: .white, cornerRadius: 35 / 2, contentInsets: UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 20))
+    static func `default`(height: CGFloat = 35, label: String? = nil) -> CommunButton {
+        let button = CommunButton(height: height * Config.widthRatio, label: label, labelFont: .boldSystemFont(ofSize: 15 * Config.widthRatio), backgroundColor: .appMainColor, textColor: .white, cornerRadius: height * Config.widthRatio / 2, contentInsets: UIEdgeInsets(top: 10 * Config.widthRatio, left: 16 * Config.widthRatio, bottom: 10 * Config.widthRatio, right: 14 * Config.widthRatio))
         return button
     }
     
-    static func `default`(height: CGFloat = 35, label: String? = nil) -> CommunButton {
-        let button = CommunButton(height: height, label: label, labelFont: .boldSystemFont(ofSize: 15), backgroundColor: .appMainColor, textColor: .white, cornerRadius: height / 2, contentInsets: UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 20))
-        return button
+    func setHightLight(_ isHighlighted: Bool, highlightedLabel: String, unHighlightedLabel: String) {
+        backgroundColor = isHighlighted ? #colorLiteral(red: 0.9525656104, green: 0.9605062604, blue: 0.9811610579, alpha: 1): .appMainColor
+        setTitleColor(isHighlighted ? .appMainColor: .white , for: .normal)
+        setTitle((isHighlighted ? highlightedLabel : unHighlightedLabel).localized().uppercaseFirst, for: .normal)
     }
     
     override var isEnabled: Bool {

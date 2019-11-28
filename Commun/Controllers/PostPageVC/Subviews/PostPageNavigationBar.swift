@@ -23,7 +23,7 @@ class PostPageNavigationBar: MyView, CommunityController {
         return view
     }()
     
-    lazy var joinButton = CommunButton.join
+    lazy var joinButton = CommunButton.default(label: "follow".localized().uppercaseFirst)
     
     lazy var moreButton: UIButton = {
         let button = UIButton(width: 36, height: 40, contentInsets: UIEdgeInsets(top: 12, left: 16, bottom: 12, right: 16))
@@ -73,9 +73,7 @@ class PostPageNavigationBar: MyView, CommunityController {
         self.community = community
         // joinButton
         let joined = community.isSubscribed ?? false
-        joinButton.backgroundColor = joined ? #colorLiteral(red: 0.9525656104, green: 0.9605062604, blue: 0.9811610579, alpha: 1): .appMainColor
-        joinButton.setTitleColor(joined ? .appMainColor: .white , for: .normal)
-        joinButton.setTitle((joined ? "following" : "follow").localized().uppercaseFirst, for: .normal)
+        joinButton.setHightLight(joined, highlightedLabel: "following", unHighlightedLabel: "follow")
         joinButton.isEnabled = !(community.isBeingJoined ?? false)
     }
     

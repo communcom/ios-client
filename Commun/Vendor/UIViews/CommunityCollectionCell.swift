@@ -34,7 +34,7 @@ class CommunityCollectionCell<T: CommunityType>: MyCollectionViewCell {
     
     lazy var nameLabel = UILabel.with(text: "Behance", textSize: 15, weight: .semibold, textAlignment: .center)
     lazy var descriptionLabel = UILabel.with(text: "12,2k members", textSize: 12, weight: .semibold, textColor: .a5a7bd, numberOfLines: 0, textAlignment: .center)
-    lazy var joinButton = CommunButton.join
+    lazy var joinButton = CommunButton.default(label: "follow".localized().uppercaseFirst)
     
     // MARK: - Methods
     override func setUpViews() {
@@ -80,9 +80,7 @@ class CommunityCollectionCell<T: CommunityType>: MyCollectionViewCell {
         
         // joinButton
         let joined = community.isSubscribed ?? false
-        joinButton.backgroundColor = joined ? #colorLiteral(red: 0.9525656104, green: 0.9605062604, blue: 0.9811610579, alpha: 1): .appMainColor
-        joinButton.setTitleColor(joined ? .appMainColor: .white , for: .normal)
-        joinButton.setTitle((joined ? "following" : "follow").localized().uppercaseFirst, for: .normal)
+        joinButton.setHightLight(joined, highlightedLabel: "following", unHighlightedLabel: "follow")
         joinButton.isEnabled = !(community.isBeingJoined ?? false)
     }
     
