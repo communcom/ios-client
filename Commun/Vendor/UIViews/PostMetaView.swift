@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import CyberSwift
+import SwiftTheme
 
 class PostMetaView: MyView {
     // MARK: - Enums
@@ -15,12 +15,14 @@ class PostMetaView: MyView {
         var post: ResponseAPIContentGetPost!
     }
     
+    
     // MARK: - Subviews
     lazy var avatarImageView = MyAvatarImageView(size: 40)
     lazy var comunityNameLabel = UILabel.with(textSize: 15, weight: .semibold)
-    lazy var timeAgoLabel = UILabel.with(textSize: 13, textColor: .lightGray)
     lazy var byUserLabel = UILabel.with(textSize: 13, weight: .semibold, textColor: .appMainColor)
+    lazy var timeAgoLabel = UILabel()
     
+
     // MARK: - Properties
     var isUserNameTappable = true
     var isCommunityNameTappable = true
@@ -40,6 +42,12 @@ class PostMetaView: MyView {
         comunityNameLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         
         // timeAgoLabel
+        timeAgoLabel.tune(withText:         "",
+                          hexColors:        grayishBluePickers,
+                          font:             UIFont(name: "SFProText-Semibold", size: CGFloat.adaptive(width: 12.0)),
+                          alignment:        .left,
+                          isMultiLines:     false)
+        
         addSubview(timeAgoLabel)
         timeAgoLabel.autoPinEdge(.bottom, to: .bottom, of: avatarImageView, withOffset: -3)
         timeAgoLabel.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 8)
