@@ -123,7 +123,7 @@ class PostHeaderView: MyTableHeaderView, PostController {
         viewsCountLabel.text = "\(post.stats?.viewCount ?? 0)"
         
         // Votes
-        voteContainerView.setUp(with: post.votes)
+        voteContainerView.setUp(with: post.votes, userID: post.author?.userId)
         
         // Show content
         // Parse data

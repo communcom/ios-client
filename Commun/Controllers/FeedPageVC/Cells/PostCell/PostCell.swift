@@ -128,9 +128,9 @@ class PostCell: MyTableViewCell, PostController {
     func setUp(with post: ResponseAPIContentGetPost?) {
         guard let post = post else {return}
         self.post = post
-        
+
         metaView.setUp(post: post)
-        voteContainerView.setUp(with: post.votes)
+        voteContainerView.setUp(with: post.votes, userID: post.author?.userId)
 
         // Comments count
         self.commentsCountLabel.text = "\(post.stats?.commentsCount ?? 0)"

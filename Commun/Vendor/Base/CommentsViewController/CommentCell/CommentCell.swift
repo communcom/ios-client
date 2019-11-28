@@ -165,7 +165,7 @@ class CommentCell: MyTableViewCell, CommentController {
             layoutIfNeeded()
         }
         
-        voteContainerView.setUp(with: comment.votes)
+        voteContainerView.setUp(with: comment.votes, userID: comment.author?.userId)
         timeLabel.text = " • " + Date.timeAgo(string: comment.meta.creationTime)
     }
     

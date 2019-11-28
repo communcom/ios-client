@@ -19,7 +19,6 @@ import CyberSwift
 @_exported import CyberSwift
 import RxSwift
 import SDURLCache
-import IQKeyboardManagerSwift
 
 let isDebugMode: Bool = true
 let smsCodeDebug: UInt64 = isDebugMode ? 9999 : 0
@@ -38,8 +37,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // MARK: - Class Functions
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        IQKeyboardManager.shared.enable = true
-        IQKeyboardManager.shared.toolbarDoneBarButtonItemText = " "
 
         // Use Firebase library to configure APIs
         FirebaseApp.configure()
