@@ -18,9 +18,12 @@ extension PostEditorVC {
         let vc = EditorChooseCommunityVC { (community) in
             self.viewModel.community.accept(community)
         }
-        vc.modalPresentationStyle = .custom
-        vc.transitioningDelegate = vc
-        present(vc, animated: true, completion: nil)
+
+        let navigation = BaseNavigationController(rootViewController: vc)
+        navigation.view.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: 20)
+        navigation.modalPresentationStyle = .custom
+        navigation.transitioningDelegate = vc
+        present(navigation, animated: true, completion: nil)
     }
     
     // MARK: - Images

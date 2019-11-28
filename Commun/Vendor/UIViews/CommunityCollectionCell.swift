@@ -21,7 +21,7 @@ class CommunityCollectionCell<T: CommunityType>: MyCollectionViewCell {
     
     // MARK: - Subviews
     lazy var coverImageView: UIImageView = {
-        let imageView = UIImageView(cornerRadius: 10)
+        let imageView = UIImageView(cornerRadius: 15)
         imageView.image = .placeholder
         return imageView
     }()
@@ -39,10 +39,12 @@ class CommunityCollectionCell<T: CommunityType>: MyCollectionViewCell {
     // MARK: - Methods
     override func setUpViews() {
         super.setUpViews()
+
         contentView.addSubview(coverImageView)
         coverImageView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 0, bottom: 16, right: 0))
         
         let containerView = UIView(backgroundColor: .white, cornerRadius: 10)
+
         contentView.addSubview(containerView)
         containerView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 46, left: 5, bottom: 16, right: 5))
         
@@ -56,10 +58,10 @@ class CommunityCollectionCell<T: CommunityType>: MyCollectionViewCell {
         nameLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
         
         containerView.addSubview(descriptionLabel)
-        descriptionLabel.autoPinEdge(.top, to: .bottom, of: nameLabel, withOffset: 5)
+        descriptionLabel.autoPinEdge(.top, to: .bottom, of: nameLabel, withOffset: 3)
         descriptionLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
         descriptionLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
-        
+
         containerView.addSubview(joinButton)
         joinButton.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 10, bottom: 10, right: 10), excludingEdge: .top)
 

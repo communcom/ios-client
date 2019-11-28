@@ -48,12 +48,12 @@ class VoteContainerView: MyView {
             likeCountLabel.autoPinEdge(toSuperviewEdge: .bottom)
         }
 
-        upVoteButton.tintColor         = votes.hasUpVote ?? false ? .appMainColor: .lightGray
+        upVoteButton.tintColor         = votes.hasUpVote ?? false ? .appMainColor : .a5a7bd
         likeCountLabel.text            = "\((votes.upCount ?? 0) - (votes.downCount ?? 0))"
-        downVoteButton.tintColor       = votes.hasDownVote ?? false ? .appMainColor: .lightGray
+        downVoteButton.tintColor       = votes.hasDownVote ?? false ? .appMainColor : .a5a7bd
         upVoteButton.isEnabled         = !(votes.isBeingVoted ?? false)
         downVoteButton.isEnabled       = !(votes.isBeingVoted ?? false)
-        likeCountLabel.textColor = votes.hasUpVote ?? false || votes.hasDownVote ?? false ? UIColor(hexString: "##6A80F5") : UIColor(hexString: "#A5A7BD")
+        likeCountLabel.textColor = votes.hasUpVote ?? false || votes.hasDownVote ?? false ? .appMainColor : .a5a7bd
     }
     
     func animateUpVote(completion: @escaping () -> Void) {

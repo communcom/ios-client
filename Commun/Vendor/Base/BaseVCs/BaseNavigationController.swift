@@ -71,7 +71,7 @@ final class BaseNavigationController: UINavigationController {
         navigationBar.barTintColor = .white
         navigationBar.subviews.first?.backgroundColor = .white
         navigationBar.tintColor = .black
-        navigationBar.setTitleFont(.boldSystemFont(ofSize: 17), color: .black)
+        navigationBar.setTitleFont(.boldSystemFont(ofSize: 15), color: .black)
         setNavigationBarHidden(false, animated: false)
     }
     
