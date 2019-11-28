@@ -22,7 +22,7 @@ class FTUECommunityCell: CommunityCollectionCell<ResponseAPIContentGetCommunity>
             pointsView.addSubview(imageView)
             imageView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 3, left: 5, bottom: 3, right: 0), excludingEdge: .trailing)
 
-            let pointsLabel = UILabel.with(text: "\(Config.appConfig.ftueCommunityBonus ?? 10)" + " pts", textSize: 15, weight: .semibold, textColor: .appMainColor)
+            let pointsLabel = UILabel.with(text: "\(Config.appConfig?.ftueCommunityBonus ?? 10)" + " pts", textSize: 15, weight: .semibold, textColor: .appMainColor)
             pointsView.addSubview(pointsLabel)
             pointsLabel.autoPinEdge(.leading, to: .trailing, of: imageView, withOffset: 5)
             pointsLabel.autoAlignAxis(toSuperviewAxis: .horizontal)
