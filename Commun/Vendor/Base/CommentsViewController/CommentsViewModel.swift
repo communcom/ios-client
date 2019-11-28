@@ -135,8 +135,4 @@ class CommentsViewModel: ListViewModel<ResponseAPIContentGetComment> {
             }
         }
     }
-    
-    // MARK: - Child comments
-    /// childFetcher for each section (Int) for retrieving child comments
-    var childFetchers = [Int: CommentsListFetcher]()
 }

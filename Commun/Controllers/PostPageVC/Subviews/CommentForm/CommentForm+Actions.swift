@@ -35,18 +35,17 @@ extension CommentForm {
                     request = self.viewModel.replyToComment(self.parentComment!, block: block)
                 }
                 
+                self.textView.text = ""
+                self.mode = .new
+                self.parentComment = nil
+                self.endEditing(true)
+                
                 return request
             }
-            .subscribe(onSuccess: { [weak self] _ in
-                self?.textView.text = ""
-                self?.mode = .new
-                self?.parentComment = nil
-                self?.endEditing(true)
-                
-            }) { (error) in
+            .subscribe(onError: { [weak self] error in
 //                self.setLoading(false)
-                self.parentViewController?.showError(error)
-            }
+                self?.parentViewController?.showError(error)
+            })
             .disposed(by: disposeBag)
     }
 }
