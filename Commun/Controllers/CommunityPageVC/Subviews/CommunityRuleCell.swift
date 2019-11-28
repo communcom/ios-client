@@ -29,18 +29,20 @@ class CommunityRuleCell: CommunityPageCell {
         containerView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 10, bottom: 10, right: 10))
         
         containerView.addSubview(titleLabel)
-        titleLabel.autoPinTopAndLeadingToSuperView(inset: 16)
+        titleLabel.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(inset: 16), excludingEdge: .trailing)
+        titleLabel.autoAlignAxis(.horizontal, toSameAxisOf: containerView)
         
         containerView.addSubview(expandButton)
-        expandButton.autoPinTopAndTrailingToSuperView(inset: 16)
+        expandButton.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(inset: 16), excludingEdge: .leading)
+        expandButton.autoAlignAxis(.horizontal, toSameAxisOf: containerView)
         expandButton.autoPinEdge(.leading, to: .trailing, of: titleLabel, withOffset: 8)
         expandButton.addTarget(self, action: #selector(expandButtonDidTouch(_:)), for: .touchUpInside)
         
         containerView.addSubview(contentLabel)
         contentLabel.topAnchor.constraint(greaterThanOrEqualTo: expandButton.bottomAnchor, constant: 8)
             .isActive = true
-        contentLabel.topAnchor.constraint(greaterThanOrEqualTo: titleLabel.bottomAnchor)
-            .isActive = true
+//        contentLabel.topAnchor.constraint(greaterThanOrEqualTo: titleLabel.bottomAnchor)
+//            .isActive = true
         contentLabel.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(inset: 16), excludingEdge: .top)
     }
     
@@ -52,11 +54,11 @@ class CommunityRuleCell: CommunityPageCell {
     
     func setExpanded() {
         guard let rule = rule else {return}
+        
         if expanded {
             contentLabel.text = rule.text
             expandButton.setImage(UIImage(named: "rule_collapse"), for: .normal)
-        }
-        else {
+        } else {
             contentLabel.text = nil
             expandButton.setImage(UIImage(named: "rule_expand"), for: .normal)
         }
