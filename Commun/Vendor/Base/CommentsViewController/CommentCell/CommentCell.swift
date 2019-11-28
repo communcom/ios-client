@@ -122,10 +122,8 @@ class CommentCell: MyTableViewCell, CommentController {
         setText()
         
         // loading handler
-        let isEditing = comment.isEditing ?? false
-        let hasError = comment.hasError ?? false
-        
-        if isEditing {
+        switch comment.status {
+        case .editing:
             statusImageView.widthConstraint?.constant = 16
             statusImageView.backgroundColor = .clear
             statusImageView.isHidden = false
@@ -137,16 +135,14 @@ class CommentCell: MyTableViewCell, CommentController {
             spinnerView.spinnerStrokeColor = #colorLiteral(red: 0.4784313725, green: 0.6470588235, blue: 0.8980392157, alpha: 1)
             statusImageView.addSubview(spinnerView)
             spinnerView.autoPinEdgesToSuperviewEdges()
-        }
-        else if hasError  {
+        case .error:
             statusImageView.widthConstraint?.constant = 16
             statusImageView.isHidden = false
             statusImageView.image = UIImage(named: "!")
             statusImageView.tintColor = .white
             statusImageView.backgroundColor = .a5a7bd
             statusImageView.removeSubviews()
-        }
-        else {
+        default:
             statusImageView.widthConstraint?.constant = 0
             statusImageView.backgroundColor = .a5a7bd
             statusImageView.isHidden = true

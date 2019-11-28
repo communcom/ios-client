@@ -48,11 +48,16 @@ extension PostPageVC {
             .subscribe(onNext: { (notification) in
                 guard let newComment = notification.object as? ResponseAPIContentGetComment else {return}
                 
-                // add newComment to top of the list
+                // add newComment to bottom of the list
                 var items = self.viewModel.items.value
                 items = items + [newComment]
                 self.viewModel.items.accept(items)
                 self.handleListEnded()
+                
+                DispatchQueue.main.async {
+                    self.tableView.safeScrollToRow(at: IndexPath(row: 0, section: self.tableView.numberOfSections - 1), at: .bottom, animated: true)
+                }
+                
             })
             .disposed(by: disposeBag)
     }
