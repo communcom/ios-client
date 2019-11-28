@@ -34,6 +34,6 @@ extension UIColor {
     }
     
     static var shadow: UIColor {
-        UIColor(red: 56, green: 60, blue: 71)!
+        return UIColor(hexString: "#383C47")!
     }
 }

@@ -14,8 +14,8 @@ class BackUpKeysVC: BoardingVC {
     override var nextStep: CurrentUserSettingStep? {.setPasscode}
     
     // MARK: - Subviews
-    lazy var masterPasswordAttentionView: MasterPasswordAttention = MasterPasswordAttention(frame: CGRect(x: CGFloat.adaptive(width: 10.0), y: 0.0, width: CGFloat.adaptive(width: 355.0), height: CGFloat.adaptive(height: 581.0)))
-    
+    lazy var masterPasswordAttentionView: MasterPasswordAttention = MasterPasswordAttention(frame: CGRect(x: UIDevice.safeAreaInsets.bottom == 0 ? CGFloat.adaptive(width: 10.0) : UIDevice.safeAreaInsets.bottom, y: 0.0, width: CGFloat.adaptive(width: 355.0), height: CGFloat.adaptive(height: 581.0)))
+
     lazy var copyButton = UIButton.circle(size: 24, backgroundColor: .a5a7bd, tintColor: .white, imageName: "copy", imageEdgeInsets: UIEdgeInsets(inset: 6))
     lazy var backUpICloudButton = CommunButton.default(height: 50 * Config.heightRatio, label: "backup iCloud".localized().uppercaseFirst)
 
