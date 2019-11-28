@@ -17,14 +17,6 @@ protocol CommentController: class {
     func setUp(with comment: ResponseAPIContentGetComment?)
 }
 
-extension ResponseAPIContentGetComment {
-    static var childrenDidChangeEventName: String {"ChildrenDidChange"}
-    
-    public func notifyChildrenChanged() {
-        notifyEvent(eventName: Self.childrenDidChangeEventName)
-    }
-}
-
 extension CommentController {
     func observeCommentChange() {
         ResponseAPIContentGetComment.observeItemChanged()

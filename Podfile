@@ -9,6 +9,11 @@ project 'Commun.xcodeproj'
 project 'cyberSwift/CyberSwift.xcodeproj'
 
 def common_pods
+  pod 'RxDataSources', '~> 3.0'
+end
+
+def common_pods_commun
+  common_pods
   pod 'Fabric'
   pod 'Crashlytics'
   pod 'Firebase/Analytics'
@@ -36,8 +41,6 @@ def common_pods
   pod 'PinCodeInputView'
   pod 'PhoneNumberKit', '~> 2.6'
   
-  pod 'RxDataSources', '~> 3.0'
-  
   pod 'ASSpinnerView'
   
   pod 'ListPlaceholder'
@@ -60,7 +63,7 @@ def common_pods
 end
 
 def cyberswift_common_pods
-
+  common_pods
   # EOS framework
   pod 'eosswift', :git => "git@github.com:communcom/eos-swift.git"
   
@@ -87,7 +90,7 @@ end
 target 'Commun' do
 
   project 'Commun.xcodeproj'
-  common_pods
+  common_pods_commun
   cyberswift_common_pods
   
 
@@ -106,7 +109,7 @@ end
 target 'CommunTests' do
 
   project 'Commun.xcodeproj'
-  common_pods
+  common_pods_commun
   cyberswift_common_pods
 
 end
