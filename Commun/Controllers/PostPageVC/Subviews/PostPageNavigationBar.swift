@@ -59,7 +59,6 @@ class PostPageNavigationBar: MyView, CommunityController {
 //        postMetaView.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         joinButton.leadingAnchor.constraint(greaterThanOrEqualTo: postMetaView.trailingAnchor, constant: 8)
             .isActive = true
-        joinButton.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         
         observeCommunityChange()
     }

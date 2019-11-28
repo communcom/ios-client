@@ -38,8 +38,6 @@ class CommunityCell: SubsItemCell, CommunityController {
         joinButton.leadingAnchor.constraint(greaterThanOrEqualTo: statsLabel.trailingAnchor, constant: 8)
             .isActive = true
         joinButton.isEnabled = !(community.isBeingJoined ?? false)
-        
-        nameLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
     }
     
     override func actionButtonDidTouch() {

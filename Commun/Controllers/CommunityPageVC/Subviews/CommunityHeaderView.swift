@@ -112,7 +112,6 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
         
         joinedDateLabel.trailingAnchor.constraint(lessThanOrEqualTo: joinButton.leadingAnchor, constant: -8)
             .isActive = true
-        joinButton.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         
         addSubview(membersCountLabel)
         membersCountLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)

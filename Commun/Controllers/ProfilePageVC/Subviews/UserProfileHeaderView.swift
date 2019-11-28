@@ -218,7 +218,6 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
         followButton.addTarget(self, action: #selector(followButtonDidTouch(_:)), for: .touchUpInside)
         followButton.leadingAnchor.constraint(greaterThanOrEqualTo: nameLabel.trailingAnchor, constant: 8)
             .isActive = true
-        followButton.setContentHuggingPriority(.defaultHigh, for: .horizontal)
     }
     
     func setUpFollowButton(isFollowing: Bool) {

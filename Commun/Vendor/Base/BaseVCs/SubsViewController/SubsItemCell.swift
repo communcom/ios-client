@@ -12,7 +12,7 @@ import Foundation
 class SubsItemCell: MyTableViewCell {
     lazy var avatarImageView = MyAvatarImageView(size: 50)
     lazy var nameLabel = UILabel.with(textSize: 15, weight: .bold)
-    lazy var statsLabel = UILabel.descriptionLabel()
+    lazy var statsLabel = UILabel.descriptionLabel(numberOfLines: 0)
     lazy var actionButton = CommunButton.default()
     lazy var separator = UIView(height: 2, backgroundColor: .f3f5fa)
     
@@ -43,7 +43,7 @@ class SubsItemCell: MyTableViewCell {
         contentView.addSubview(statsLabel)
         statsLabel.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 10)
         statsLabel.autoPinEdge(.top, to: .bottom, of: nameLabel, withOffset: 3)
-        nameLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+        statsLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         
         contentView.addSubview(actionButton)
         actionButton.addTarget(self, action: #selector(actionButtonDidTouch), for: .touchUpInside)
