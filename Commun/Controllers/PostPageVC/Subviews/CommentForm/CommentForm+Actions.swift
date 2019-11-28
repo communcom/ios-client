@@ -19,9 +19,6 @@ extension CommentForm {
         var block: ResponseAPIContentBlock!
         textView.getContentBlock()
             .observeOn(MainScheduler.instance)
-//            .do(onSubscribe: {
-//                self.setLoading(true, message: "sending comment".localized().uppercaseFirst)
-//            })
             .flatMap { parsedBlock -> Single<SendPostCompletion> in
                 //clean
                 block = parsedBlock
@@ -40,40 +37,11 @@ extension CommentForm {
                 
                 return request
             }
-            .flatMap { [weak self] (arg) -> Single<ResponseAPIContentGetComment?> in
-                let (transactionId, userId, permlink) = arg
-                var newComment: ResponseAPIContentGetComment?
-                
-                switch self?.mode {
-                case .edit:
-                    break
-                case .reply:
-                    break
-                case .new:
-                    break
-                case nil:
-                    break
-                }
-                
-                return RestAPIManager.instance.waitForTransactionWith(id: transactionId ?? "")
-                    .andThen(Single.just(newComment))
-            }
-            .subscribe(onSuccess: { [weak self] newComment in
-                guard let strongSelf = self, let newComment = newComment else {return}
-//                strongSelf.setLoading(false)
-                switch strongSelf.mode {
-                case .edit:
-                    newComment.notifyChanged()
-                case .reply:
-                    break
-                case .new:
-                    break
-                }
-                
-                strongSelf.textView.text = ""
-                strongSelf.mode = .new
-                strongSelf.parentComment = nil
-                strongSelf.endEditing(true)
+            .subscribe(onSuccess: { [weak self] _ in
+                self?.textView.text = ""
+                self?.mode = .new
+                self?.parentComment = nil
+                self?.endEditing(true)
                 
             }) { (error) in
 //                self.setLoading(false)
@@ -81,20 +49,4 @@ extension CommentForm {
             }
             .disposed(by: disposeBag)
     }
-    
-//    func setLoading(_ isLoading: Bool, message: String? = nil) {
-//        post?.isAddingComment = isLoading
-//        post?.notifyChanged()
-//        parentComment?.isReplying = isLoading
-//        parentComment?.notifyChanged()
-//
-//        textView.isUserInteractionEnabled = !isLoading
-//        sendButton.isEnabled = !isLoading
-//        if (isLoading) {
-//            parentViewController?.showIndetermineHudWithMessage(message ?? "loading".localized().uppercaseFirst)
-//        }
-//        else {
-//            parentViewController?.hideHud()
-//        }
-//    }
 }
