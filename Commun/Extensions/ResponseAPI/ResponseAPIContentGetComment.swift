@@ -27,4 +27,11 @@ extension ResponseAPIContentGetComment: IdentifiableType {
     var attachments: [ResponseAPIContentBlock] {
         return content?.first(where: {$0.type == "attachments"})?.content.arrayValue ?? []
     }
+    
+    mutating func addChildComment(_ comment: ResponseAPIContentGetComment) {
+        children = (children ?? []) + [comment]
+        childCommentsCount = childCommentsCount + 1
+        notifyChanged()
+        notifyChildrenChanged()
+    }
 }

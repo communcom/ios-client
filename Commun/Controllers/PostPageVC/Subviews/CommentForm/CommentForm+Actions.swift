@@ -76,10 +76,7 @@ extension CommentForm {
                 case .edit:
                     newComment.notifyChanged()
                 case .reply:
-                    strongSelf.parentComment?.children = (strongSelf.parentComment?.children ?? []) + [newComment]
-                    strongSelf.parentComment?.childCommentsCount = (strongSelf.parentComment?.childCommentsCount ?? 0) + 1
-                    strongSelf.parentComment?.notifyChanged()
-                    strongSelf.parentComment?.notifyChildrenChanged()
+                    strongSelf.parentComment?.addChildComment(newComment)
                     
                     strongSelf.post?.stats?.commentsCount = (strongSelf.post?.stats?.commentsCount ?? 0) + 1
                     strongSelf.post?.notifyChanged()
