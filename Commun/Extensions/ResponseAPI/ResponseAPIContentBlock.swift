@@ -111,7 +111,7 @@ extension ResponseAPIContentBlock {
             }
             
         case .string(let string):
-            if type != "website" && type != "image" && type != "video" {
+            if type != "website" && type != "image" && type != "video" && type != "embed" {
                 child.append(NSAttributedString(string: string))
             }
         case .unsupported:
@@ -163,7 +163,7 @@ extension ResponseAPIContentBlock {
             attr[.link] = url
             child.addAttributes(attr, range: NSMakeRange(0, child.length))
             child.append(NSAttributedString(string: " ", attributes: currentAttributes))
-        case "image", "video", "website":
+        case "image", "video", "website", "embed":
             if attachmentSize == .zero { break }
             // get url
             var url: String?
