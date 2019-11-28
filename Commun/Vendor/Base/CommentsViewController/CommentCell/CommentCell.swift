@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import ASSpinnerView
 
 protocol CommentCellDelegate: class {
 //    var replyingComment: ResponseAPIContentGetComment? {get set}
@@ -48,6 +49,7 @@ class CommentCell: MyTableViewCell, CommentController {
     lazy var voteContainerView: VoteContainerView = VoteContainerView(height: voteActionsContainerViewHeight, cornerRadius: voteActionsContainerViewHeight / 2)
     lazy var replyButton = UIButton(label: "reply".localized().uppercaseFirst, labelFont: .boldSystemFont(ofSize: 13), textColor: .appMainColor)
     lazy var timeLabel = UILabel.with(text: " • 3h", textSize: 13, weight: .bold, textColor: .a5a7bd)
+    lazy var statusImageView = UIImageView(width: 16, height: 16, cornerRadius: 8)
     
     // MARK: - Methods
     override func setUpViews() {
@@ -90,6 +92,12 @@ class CommentCell: MyTableViewCell, CommentController {
         timeLabel.autoPinEdge(.leading, to: .trailing, of: replyButton)
         timeLabel.autoAlignAxis(.horizontal, toSameAxisOf: voteContainerView)
         
+        contentView.addSubview(statusImageView)
+        statusImageView.autoPinEdge(.leading, to: .trailing, of: timeLabel, withOffset: 10)
+        statusImageView.autoAlignAxis(.horizontal, toSameAxisOf: voteContainerView)
+        statusImageView.trailingAnchor.constraint(lessThanOrEqualTo: contentView.trailingAnchor, constant: -4)
+            .isActive = true
+        
         #warning("answers...")
         voteContainerView.autoPinEdge(toSuperviewEdge: .bottom, withInset: 8)
     }
@@ -112,6 +120,38 @@ class CommentCell: MyTableViewCell, CommentController {
         
         // setContent
         setText()
+        
+        // loading handler
+        let isEditing = comment.isEditing ?? false
+        let hasError = comment.hasError ?? false
+        
+        if isEditing {
+            statusImageView.widthConstraint?.constant = 16
+            statusImageView.backgroundColor = .clear
+            statusImageView.isHidden = false
+            statusImageView.image = nil
+            let spinnerView = ASSpinnerView()
+            spinnerView.translatesAutoresizingMaskIntoConstraints = false
+            spinnerView.spinnerLineWidth = 2
+            spinnerView.spinnerDuration = 0.3
+            spinnerView.spinnerStrokeColor = #colorLiteral(red: 0.4784313725, green: 0.6470588235, blue: 0.8980392157, alpha: 1)
+            statusImageView.addSubview(spinnerView)
+            spinnerView.autoPinEdgesToSuperviewEdges()
+        }
+        else if hasError  {
+            statusImageView.widthConstraint?.constant = 16
+            statusImageView.isHidden = false
+            statusImageView.image = UIImage(named: "!")
+            statusImageView.tintColor = .white
+            statusImageView.backgroundColor = .a5a7bd
+            statusImageView.removeSubviews()
+        }
+        else {
+            statusImageView.widthConstraint?.constant = 0
+            statusImageView.backgroundColor = .a5a7bd
+            statusImageView.isHidden = true
+            statusImageView.removeSubviews()
+        }
         
         // Show media
         let embededResult = comment.attachments
