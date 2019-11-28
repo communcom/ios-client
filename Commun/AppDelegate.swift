@@ -71,6 +71,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             .take(1)
             .asSingle()
             .timeout(5, scheduler: MainScheduler.instance)
+            .flatMap({ (_) -> Single<Bool> in
+                // get config
+                return RestAPIManager.instance.getConfig(version: UIApplication.appVersion)
+                    .do(onError: { (error) in
+                        UIApplication.topViewController()?.showError(error)
+                    })
+                    .map {_ in true}
+                    .catchErrorJustReturn(true)
+            })
             .subscribe(onSuccess: { (connected) in
                 AppDelegate.reloadSubject.onNext(false)
                 self.window?.makeKeyAndVisible()
