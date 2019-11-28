@@ -31,10 +31,7 @@ class CommunityLeaderCell: CommunityPageCell, LeaderController {
         return label
     }()
     
-    lazy var voteButton: CommunButton = {
-        let button = CommunButton(height: 35, label: "vote".localized().uppercaseFirst, labelFont: .boldSystemFont(ofSize: 15), backgroundColor: .appMainColor, textColor: .white, cornerRadius: 35 / 2, contentInsets: UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 20))
-        return button
-    }()
+    lazy var voteButton: CommunButton = CommunButton.default(label: "vote".localized().uppercaseFirst)
     
     lazy var descriptionLabel: UILabel = {
         let label = UILabel.with(textSize: 14, numberOfLines: 0)
