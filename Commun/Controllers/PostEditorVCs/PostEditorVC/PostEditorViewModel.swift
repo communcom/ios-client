@@ -16,27 +16,16 @@ class PostEditorViewModel {
     let community = BehaviorRelay<ResponseAPIContentGetSubscriptionsCommunity?>(value: nil)
     
     func sendPost(title: String?, block: ResponseAPIContentBlock) -> Single<SendPostCompletion> {
-        // Prepare tags
-        let tags = block.getTags()
-        
-        // Prepare content
-        var string: String!
-        do {
-            string = try block.jsonString()
-        } catch {
-            return .error(ErrorAPI.invalidData(message: "Could not parse data"))
-        }
-        
         // If editing post
         var request: Single<SendPostCompletion>!
         
         if let post = self.postForEdit {
             request = RestAPIManager.instance.updateMessage(
+                originMessage:  post,
                 communCode:     community.value?.communityId ?? "",
                 permlink:       post.contentId.permlink,
                 header:         title ?? "",
-                body:           string,
-                tags:           tags
+                block:          block
             )
         }
             
@@ -45,8 +34,7 @@ class PostEditorViewModel {
             request = RestAPIManager.instance.createMessage(
                 communCode:     community.value?.communityId ?? "",
                 header:         title ?? "",
-                body:           string,
-                tags:           tags
+                block:          block
             )
         }
         

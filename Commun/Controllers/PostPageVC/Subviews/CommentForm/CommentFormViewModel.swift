@@ -20,23 +20,14 @@ class CommentFormViewModel {
             let authorId = post?.author?.userId,
             let postPermlink = post?.contentId.permlink
             else {return .error(ErrorAPI.invalidData(message: "Post info missing"))}
-        // Prepare content
-        let tags = block.getTags()
-        var string: String!
-        do {
-            string = try block.jsonString()
-        } catch {
-            return .error(ErrorAPI.invalidData(message: "Could not parse data"))
-        }
-        
         // Send request
         return RestAPIManager.instance.createMessage(
             isComment:      true,
+            parentPost:     post,
             communCode:     communCode,
             parentAuthor:   authorId,
             parentPermlink: postPermlink,
-            body:           string,
-            tags:           tags
+            block:          block
         )
     }
     
@@ -47,21 +38,13 @@ class CommentFormViewModel {
         guard let communCode = post?.community.communityId
         else {return .error(ErrorAPI.invalidData(message: "Post info missing"))}
         
-        // Prepare content
-        let tags = block.getTags()
-        var string: String!
-        do {
-            string = try block.jsonString()
-        } catch {
-            return .error(ErrorAPI.invalidData(message: "Could not parse data"))
-        }
         
         // Send request
         return RestAPIManager.instance.updateMessage(
+            originMessage:  comment,
             communCode:     communCode,
             permlink:       comment.contentId.permlink,
-            body:           string,
-            tags:           tags
+            block:          block
         )
     }
     
@@ -72,25 +55,18 @@ class CommentFormViewModel {
         guard let communCode = post?.community.communityId
             else {return .error(ErrorAPI.invalidData(message: "Post info missing"))}
         
-        // Prepare content
-        let tags = block.getTags()
-        var string: String!
-        do {
-            string = try block.jsonString()
-        } catch {
-            return .error(ErrorAPI.invalidData(message: "Could not parse data"))
-        }
-        
         let authorId = comment.contentId.userId
         let parentCommentPermlink = comment.contentId.permlink
         // Send request
         return RestAPIManager.instance.createMessage(
-            isComment: true,
-            communCode: communCode,
-            parentAuthor: authorId,
+            isComment:      true,
+            parentPost:     post,
+            isReplying:     true,
+            parentComment:  comment,
+            communCode:     communCode,
+            parentAuthor:   authorId,
             parentPermlink: parentCommentPermlink,
-            body: string,
-            tags: tags
+            block:          block
         )
     }
 }
