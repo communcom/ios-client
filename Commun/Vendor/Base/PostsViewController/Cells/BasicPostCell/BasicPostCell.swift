@@ -43,7 +43,7 @@ final class BasicPostCell: PostCell {
         gridView.autoPinEdge(.bottom, to: .top, of: voteContainerView)
     }
     
-    override func setUp(with post: ResponseAPIContentGetPost?) {
+    override func setUp(with post: ResponseAPIContentGetPost) {
         super.setUp(with: post)
         self.accessibilityLabel = "PostCardCell"
         centerConstraint.isActive = false
@@ -56,7 +56,7 @@ final class BasicPostCell: PostCell {
             .paragraphStyle: paragraph
         ]
         
-        if let content = post?.content,
+        if let content = post.content,
             let firstSentence = content.first(where: {$0.type == "paragraph"})
         {
             let mutableAS = NSMutableAttributedString()
@@ -89,7 +89,7 @@ final class BasicPostCell: PostCell {
         contentTextView.resolveHashTags()
         contentTextView.resolveMentions()
 
-        gridView.setUp(embeds: post?.attachments)
+        gridView.setUp(embeds: post.attachments)
     }
 }
 

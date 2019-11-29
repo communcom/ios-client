@@ -67,7 +67,7 @@ class EditorChooseCommunityVC: SubscriptionsVC {
         }
     }
     
-    override func bindModelSelected() {
+    override func bindItemSelected() {
         tableView.rx.modelSelected(ResponseAPIContentGetSubscriptionsItem.self)
             .filter {$0.communityValue != nil}
             .map {$0.communityValue!}

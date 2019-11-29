@@ -8,7 +8,7 @@
 
 import Foundation
 
-class SubscribersCell: SubsItemCell, ProfileController {
+class SubscribersCell: SubsItemCell, ListItemCellType, ProfileController {
     var followButton: CommunButton {
         get {
             return actionButton

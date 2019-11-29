@@ -112,7 +112,9 @@ extension PostPageVC {
                 }
                 
                 // Create tableHeaderView
-                self.postView.setUp(with: post)
+                if let post = post {
+                    self.postView.setUp(with: post)
+                }
             })
             .disposed(by: disposeBag)
         

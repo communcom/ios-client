@@ -11,7 +11,7 @@ import RxSwift
 import RxDataSources
 import RxCocoa
 
-class ListViewController<T: ListItemType>: BaseViewController {
+class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewController {
     // MARK: - Nested type
     public typealias ListSection = AnimatableSectionModel<String, T>
     
@@ -56,6 +56,31 @@ class ListViewController<T: ListItemType>: BaseViewController {
         }
         
         tableView.rowHeight = UITableView.automaticDimension
+        
+        // registerCell
+        registerCell()
+        
+        // set up datasource
+        dataSource = MyRxTableViewSectionedAnimatedDataSource<ListSection>(
+            configureCell: { dataSource, tableView, indexPath, item in
+                return self.configureCell(with: item, indexPath: indexPath)
+            }
+        )
+    }
+    
+    func registerCell() {
+        tableView.register(CellType.self, forCellReuseIdentifier: String(describing: CellType.self))
+    }
+    
+    func configureCell(with item: T, indexPath: IndexPath) -> UITableViewCell {
+        let cell = self.tableView.dequeueReusableCell(withIdentifier: String(describing: CellType.self)) as! CellType
+        cell.setUp(with: item as! CellType.T)
+        
+        if indexPath.row >= self.viewModel.items.value.count - 5 {
+            self.viewModel.fetchNext()
+        }
+        
+        return cell
     }
     
     // MARK: - Binding
@@ -63,6 +88,7 @@ class ListViewController<T: ListItemType>: BaseViewController {
         super.bind()
         bindState()
         bindItems()
+        bindItemSelected()
         
         if isSearchEnabled {
             bindSearchController()
@@ -114,6 +140,42 @@ class ListViewController<T: ListItemType>: BaseViewController {
                 self.viewModel.reload()
             })
             .disposed(by: disposeBag)
+    }
+    
+    func bindItemSelected() {
+        tableView.rx.modelSelected(T.self)
+            .subscribe(onNext: { (item) in
+                self.modelSelected(item)
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    func modelSelected(_ item: T) {
+        if let post = item as? ResponseAPIContentGetPost {
+            let postPageVC = PostPageVC(post: post)
+            show(postPageVC, sender: nil)
+            return
+        }
+        
+        if let item = item as? ResponseAPIContentGetSubscriptionsItem {
+            if let community = item.communityValue {
+                showCommunityWithCommunityId(community.communityId)
+            }
+            if let user = item.userValue {
+                showProfileWithUserId(user.userId)
+            }
+            return
+        }
+        
+        if let community = item as? ResponseAPIContentGetCommunity {
+            showCommunityWithCommunityId(community.communityId)
+            return
+        }
+        
+        if let profile = item as? ResponseAPIContentResolveProfile {
+            showProfileWithUserId(profile.userId)
+        }
+        
     }
     
     // MARK: - State handling

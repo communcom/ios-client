@@ -270,6 +270,7 @@
 		BC46592D238E681500AF9C29 /* BoardingSetPasscodeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC46592C238E681500AF9C29 /* BoardingSetPasscodeVC.swift */; };
 		BC4692BD2390C3B20064A38B /* FeedPageFloatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4692BC2390C3B20064A38B /* FeedPageFloatView.swift */; };
 		BC4692BF2390D1E10064A38B /* FeedPageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4692BE2390D1E10064A38B /* FeedPageVC.swift */; };
+		BC4692C82390E7120064A38B /* ListItemCellType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4692C72390E7120064A38B /* ListItemCellType.swift */; };
 		BC48FC42236689DC0049C4F4 /* LeadersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC48FC41236689DC0049C4F4 /* LeadersViewModel.swift */; };
 		BC48FC4423668A080049C4F4 /* LeadersListFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC48FC4323668A080049C4F4 /* LeadersListFetcher.swift */; };
 		BC48FC46236690880049C4F4 /* MyEmptyPlaceHolderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC48FC45236690880049C4F4 /* MyEmptyPlaceHolderView.swift */; };
@@ -708,6 +709,7 @@
 		BC46592C238E681500AF9C29 /* BoardingSetPasscodeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardingSetPasscodeVC.swift; sourceTree = "<group>"; };
 		BC4692BC2390C3B20064A38B /* FeedPageFloatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedPageFloatView.swift; sourceTree = "<group>"; };
 		BC4692BE2390D1E10064A38B /* FeedPageVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedPageVC.swift; sourceTree = "<group>"; };
+		BC4692C72390E7120064A38B /* ListItemCellType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListItemCellType.swift; sourceTree = "<group>"; };
 		BC48FC41236689DC0049C4F4 /* LeadersViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeadersViewModel.swift; sourceTree = "<group>"; };
 		BC48FC4323668A080049C4F4 /* LeadersListFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeadersListFetcher.swift; sourceTree = "<group>"; };
 		BC48FC45236690880049C4F4 /* MyEmptyPlaceHolderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyEmptyPlaceHolderView.swift; sourceTree = "<group>"; };
@@ -824,7 +826,6 @@
 		BCE7F56F2359A44A0008D91B /* ResponseAPIContentGetComments.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ResponseAPIContentGetComments.json; sourceTree = "<group>"; };
 		BCE9390A234DBBC300226E39 /* ResponseAPIContentBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseAPIContentBlock.swift; sourceTree = "<group>"; };
 		BCF3914B235FEAB300A9D1ED /* ListFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListFetcher.swift; sourceTree = "<group>"; };
-		BCF3914D235FEAEE00A9D1ED /* ListItemType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListItemType.swift; sourceTree = "<group>"; };
 		BCF3914F235FEEC100A9D1ED /* PostsListFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostsListFetcher.swift; sourceTree = "<group>"; };
 		BCF39151235FF7F900A9D1ED /* CommentsListFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentsListFetcher.swift; sourceTree = "<group>"; };
 		BCF74A5B23617D3A00B91089 /* ResponseAPIContentGetSubscribers.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ResponseAPIContentGetSubscribers.json; sourceTree = "<group>"; };
@@ -1753,11 +1754,9 @@
 				BC22BBD7236C278D00F40658 /* BaseVCs */,
 				3BDD9A09228EDA5700B2A1DA /* Controllers */,
 				BC69F7CC236FC5D00097F870 /* LoadingState.swift */,
-				BCF3914D235FEAEE00A9D1ED /* ListItemType.swift */,
 				BCF3914A235FEAA500A9D1ED /* Fetchers */,
 				BC69F7CE236FC63F0097F870 /* BaseViewModel.swift */,
-				BC016D55235EA33C00F1319F /* ListViewModel.swift */,
-				BC016D51235EA25B00F1319F /* ListViewController.swift */,
+				BC4692C42390E6F70064A38B /* ListViewController */,
 				BC016D4C235EA0DB00F1319F /* PostsViewController */,
 				BCA97111236004F500AE37E1 /* CommentsViewController */,
 				BC48FC41236689DC0049C4F4 /* LeadersViewModel.swift */,
@@ -1896,6 +1895,16 @@
 				BC4692BC2390C3B20064A38B /* FeedPageFloatView.swift */,
 			);
 			path = Subviews;
+			sourceTree = "<group>";
+		};
+		BC4692C42390E6F70064A38B /* ListViewController */ = {
+			isa = PBXGroup;
+			children = (
+				BC016D55235EA33C00F1319F /* ListViewModel.swift */,
+				BC016D51235EA25B00F1319F /* ListViewController.swift */,
+				BC4692C72390E7120064A38B /* ListItemCellType.swift */,
+			);
+			path = ListViewController;
 			sourceTree = "<group>";
 		};
 		BC52913623766EFA0022EC7F /* CommentCell */ = {
@@ -2580,6 +2589,7 @@
 				BCA971242360400200AE37E1 /* MyTableHeaderView.swift in Sources */,
 				BC22BBCA236C082600F40658 /* ContentHuggingScrollView.swift in Sources */,
 				BCABF1332366D4E2006B05F5 /* ProfileVC+Binding.swift in Sources */,
+				BC4692C82390E7120064A38B /* ListItemCellType.swift in Sources */,
 				3B2F227322689334006B589E /* NSMutableAttributedString.swift in Sources */,
 				BC016D42235DA0D400F1319F /* ArticlePostCell.swift in Sources */,
 				3B2F226B226892C5006B589E /* NotificationsViewModel.swift in Sources */,

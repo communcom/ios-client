@@ -9,7 +9,7 @@
 import Foundation
 import CyberSwift
 
-class SubscriptionsUserCell: SubsItemCell, ProfileController {
+class SubscriptionsUserCell: SubsItemCell, ListItemCellType, ProfileController {
     var profile: ResponseAPIContentGetSubscriptionsUser?
     var followButton: CommunButton {
         get {

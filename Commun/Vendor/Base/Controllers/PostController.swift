@@ -14,7 +14,7 @@ protocol PostController: class {
     var disposeBag: DisposeBag {get}
     var voteContainerView: VoteContainerView {get set}
     var post: ResponseAPIContentGetPost? {get set}
-    func setUp(with post: ResponseAPIContentGetPost?)
+    func setUp(with post: ResponseAPIContentGetPost)
 }
 
 extension PostController {
