@@ -81,10 +81,6 @@ class SubscriptionsVC: SubsViewController<ResponseAPIContentGetSubscriptionsItem
             return cell
         }
         
-        if indexPath.row >= self.viewModel.items.value.count - 5 {
-            self.viewModel.fetchNext()
-        }
-        
         return UITableViewCell()
     }
     

@@ -44,10 +44,6 @@ class CommunitiesVC: SubsViewController<ResponseAPIContentGetCommunity, Communit
             cell.roundedCorner.insert([.bottomLeft, .bottomRight])
         }
         
-        if indexPath.row >= self.viewModel.items.value.count - 5 {
-            self.viewModel.fetchNext()
-        }
-        
         return cell
     }
     

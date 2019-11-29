@@ -76,6 +76,20 @@ extension ProfileVC {
                 }
             })
             .disposed(by: disposeBag)
+        
+        // load more
+        tableView.rx.willEndDragging
+            .subscribe(onNext: { (velocity, targetContentOffset) in
+                let currentOffset = self.tableView.contentOffset.y
+                let maximumOffset = self.tableView.contentSize.height - self.tableView.frame.size.height
+                
+                // Change 10.0 to adjust the distance from bottom
+                if maximumOffset - currentOffset <= 100 {
+                    self._viewModel.fetchNext()
+                }
+            })
+            .disposed(by: disposeBag)
+
     }
     
     func bindProfile() {
