@@ -29,7 +29,7 @@ extension LeaderController {
     func toggleVote() {
         guard leader != nil, let communityId = leader?.communityId else {return}
         
-        let originIsVoted = leader!.votesCount > 0 //?? false
+        let originIsVoted = leader!.votesCount > 0
         
         // set value
         setIsVoted(!originIsVoted)
@@ -74,7 +74,7 @@ extension LeaderController {
     
     func setIsVoted(_ value: Bool) {
         guard var leaderValue = leader, leaderValue.votesCount > 0 else { return }
-        leaderValue.votesCount += value.int * 1
+        leaderValue.votesCount += value.int
     }
     
     func animateVote() {

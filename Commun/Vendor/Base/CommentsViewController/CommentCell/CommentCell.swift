@@ -20,7 +20,7 @@ protocol CommentCellDelegate: class {
     func cell(_ cell: CommentCell, didTapEditForComment comment: ResponseAPIContentGetComment)
 }
 
-class CommentCell: MyTableViewCell, CommentController {
+class CommentCell: MyTableViewCell, ListItemCellType, CommentController {
     // MARK: - Constants
     let voteActionsContainerViewHeight: CGFloat = 35
     private let maxCharactersForReduction = 150
@@ -87,10 +87,12 @@ class CommentCell: MyTableViewCell, CommentController {
         replyButton.autoPinEdge(.leading, to: .trailing, of: voteContainerView, withOffset: 10)
         replyButton.autoAlignAxis(.horizontal, toSameAxisOf: voteContainerView)
         replyButton.addTarget(self, action: #selector(replyButtonDidTouch), for: .touchUpInside)
+        replyButton.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         
         contentView.addSubview(timeLabel)
         timeLabel.autoPinEdge(.leading, to: .trailing, of: replyButton)
         timeLabel.autoAlignAxis(.horizontal, toSameAxisOf: voteContainerView)
+        timeLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         
         contentView.addSubview(statusImageView)
         statusImageView.autoPinEdge(.leading, to: .trailing, of: timeLabel, withOffset: 10)
@@ -103,8 +105,7 @@ class CommentCell: MyTableViewCell, CommentController {
     }
     
     // MARK: - Setup
-    func setUp(with comment: ResponseAPIContentGetComment?) {
-        guard let comment = comment else {return}
+    func setUp(with comment: ResponseAPIContentGetComment) {
         self.comment = comment
         
         // if comment is a reply

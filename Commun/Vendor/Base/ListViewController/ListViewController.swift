@@ -11,12 +11,12 @@ import RxSwift
 import RxDataSources
 import RxCocoa
 
-class ListViewController<T: ListItemType>: BaseViewController {
+class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewController {
     // MARK: - Nested type
     public typealias ListSection = AnimatableSectionModel<String, T>
     
     // MARK: - Properties
-    var viewModel: ListViewModel<T>!
+    var viewModel: ListViewModel<T>
     var dataSource: MyRxTableViewSectionedAnimatedDataSource<ListSection>!
     var tableViewMargin: UIEdgeInsets {.zero}
     
@@ -37,6 +37,16 @@ class ListViewController<T: ListItemType>: BaseViewController {
         return tableView
     }()
     
+    // MARK: - Initializers
+    init(viewModel: ListViewModel<T>) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     // MARK: - Methods
     override func setUp() {
         super.setUp()
@@ -56,6 +66,27 @@ class ListViewController<T: ListItemType>: BaseViewController {
         }
         
         tableView.rowHeight = UITableView.automaticDimension
+        
+        // registerCell
+        registerCell()
+        
+        // set up datasource
+        dataSource = MyRxTableViewSectionedAnimatedDataSource<ListSection>(
+            configureCell: { dataSource, tableView, indexPath, item in
+                return self.configureCell(with: item, indexPath: indexPath)
+            }
+        )
+    }
+    
+    func registerCell() {
+        tableView.register(CellType.self, forCellReuseIdentifier: String(describing: CellType.self))
+    }
+    
+    func configureCell(with item: T, indexPath: IndexPath) -> UITableViewCell {
+        let cell = self.tableView.dequeueReusableCell(withIdentifier: String(describing: CellType.self)) as! CellType
+        cell.setUp(with: item as! CellType.T)
+        
+        return cell
     }
     
     // MARK: - Binding
@@ -63,6 +94,8 @@ class ListViewController<T: ListItemType>: BaseViewController {
         super.bind()
         bindState()
         bindItems()
+        bindItemSelected()
+        bindScrollView()
         
         if isSearchEnabled {
             bindSearchController()
@@ -112,6 +145,56 @@ class ListViewController<T: ListItemType>: BaseViewController {
                 
                 self.viewModel.fetcher.search = query
                 self.viewModel.reload()
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    func bindItemSelected() {
+        tableView.rx.modelSelected(T.self)
+            .subscribe(onNext: { (item) in
+                self.modelSelected(item)
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    func modelSelected(_ item: T) {
+        if let post = item as? ResponseAPIContentGetPost {
+            let postPageVC = PostPageVC(post: post)
+            show(postPageVC, sender: nil)
+            return
+        }
+        
+        if let item = item as? ResponseAPIContentGetSubscriptionsItem {
+            if let community = item.communityValue {
+                showCommunityWithCommunityId(community.communityId)
+            }
+            if let user = item.userValue {
+                showProfileWithUserId(user.userId)
+            }
+            return
+        }
+        
+        if let community = item as? ResponseAPIContentGetCommunity {
+            showCommunityWithCommunityId(community.communityId)
+            return
+        }
+        
+        if let profile = item as? ResponseAPIContentResolveProfile {
+            showProfileWithUserId(profile.userId)
+        }
+        
+    }
+    
+    func bindScrollView() {
+        tableView.rx.willEndDragging
+            .subscribe(onNext: { (velocity, targetContentOffset) in
+                let currentOffset = self.tableView.contentOffset.y
+                let maximumOffset = self.tableView.contentSize.height - self.tableView.frame.size.height
+                
+                // Change 10.0 to adjust the distance from bottom
+                if maximumOffset - currentOffset <= 100 {
+                    self.viewModel.fetchNext()
+                }
             })
             .disposed(by: disposeBag)
     }

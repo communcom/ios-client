@@ -10,7 +10,7 @@ import UIKit
 import RxSwift
 import ListPlaceholder
 
-class NotificationCell: UITableViewCell {
+class NotificationCell: UITableViewCell, ListItemCellType {
     
     @IBOutlet weak var avatarImage: UIImageView!
     @IBOutlet weak var notificationTypeImage: UIImageView!
@@ -23,7 +23,7 @@ class NotificationCell: UITableViewCell {
     @IBOutlet var nTILeadingConstraint: NSLayoutConstraint!
     
     // Methods
-    func configure(with notification: ResponseAPIOnlineNotificationData) {
+    func setUp(with notification: ResponseAPIOnlineNotificationData) {
         // For placeholder cell
         self.contentView.hideLoader()
         if notification._id.starts(with: "___mock___") {

@@ -9,7 +9,7 @@
 import Foundation
 
 /// Reusable viewcontroller for subscriptions/subscribers vc
-class SubsViewController<T: ListItemType>: ListViewController<T> {
+class SubsViewController<T: ListItemType, CellType: ListItemCellType>: ListViewController<T, CellType> {
     lazy var closeButton = UIButton.circleGray(imageName: "close-x")
     
     override var tableViewMargin: UIEdgeInsets {
