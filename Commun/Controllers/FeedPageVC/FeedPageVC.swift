@@ -2,58 +2,44 @@
 //  FeedPageVC.swift
 //  Commun
 //
-//  Created by Maxim Prigozhenkov on 15/03/2019.
+//  Created by Chung Tran on 11/29/19.
 //  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
 //
 
-import UIKit
-import CyberSwift
-import RxSwift
-import RxDataSources
-import ESPullToRefresh
+import Foundation
 
-class FeedPageVC: PostsViewController {
-    
+final class FeedPageVC: PostsViewController {
     // MARK: - Properties
-    var headerView: UIView! // for parallax
-    var lastContentOffset: CGFloat = 0.0
-    // MARK: - Outlets
-    @IBOutlet weak var floatView: UIView!
-    @IBOutlet weak var headerLabel: UILabel!
-    @IBOutlet weak var changeFeedTypeButton: UIButton!
-    @IBOutlet weak var _tableView: UITableView!
-    @IBOutlet weak var topFloatConstraint: NSLayoutConstraint!
-
-    override var tableView: UITableView {
-        get {return _tableView}
-        set {_tableView = newValue}
-    }
+    lazy var floatView = FeedPageFloatView(forAutoLayout: ())
+    lazy var lastContentOffset: CGFloat = 0.0
     
-    @IBOutlet weak var userAvatarImage: UIImageView!
-    
+    // MARK: - Methods
     override func setUp() {
         super.setUp()
-
-        // avatarImage
-        userAvatarImage
-            .observeCurrentUserAvatar()
-            .disposed(by: disposeBag)
+        view.backgroundColor = #colorLiteral(red: 0.9591314197, green: 0.9661319852, blue: 0.9840201735, alpha: 1)
         
-        userAvatarImage.addTapToViewer()
-        userAvatarImage.observeCurrentUserAvatar()
-            .disposed(by: disposeBag)
-        
-        tableView.estimatedRowHeight = UITableView.automaticDimension
-        // dismiss keyboard when dragging
+        // tableView
+        tableView.backgroundColor = #colorLiteral(red: 0.9591314197, green: 0.9661319852, blue: 0.9840201735, alpha: 1)
         tableView.keyboardDismissMode = .onDrag
+        
+        let statusBarView = UIView(backgroundColor: .appMainColor)
+        view.addSubview(statusBarView)
+        statusBarView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .bottom)
+        
+        view.addSubview(floatView)
+        floatView.autoPinEdgesToSuperviewSafeArea(with: .zero, excludingEdge: .bottom)
+        floatView.autoPinEdge(.top, to: .bottom, of: statusBarView)
+        
+        view.bringSubviewToFront(statusBarView)
     }
     
     override func bind() {
         super.bind()
+        
         tableView.rx.willBeginDragging.subscribe({ _ in
             self.lastContentOffset = self.tableView.contentOffset.y
         }).disposed(by: disposeBag)
-
+        
         // show/hide navigation view
         tableView.rx.contentOffset.subscribe {
             guard let offset = $0.element else { return }
@@ -63,19 +49,19 @@ class FeedPageVC: PostsViewController {
             var inset: CGFloat = 0.0
             let lastOffset: CGFloat = self.lastContentOffset
             if lastOffset > offset.y || offset.y <= 0  {
-                needAnimation = self.topFloatConstraint.constant <= 0
+                needAnimation = self.floatView.topConstraint!.constant <= 0
                 newConstraint = 0.0
                 inset = self.floatView.frame.size.height
             } else if lastOffset < offset.y {
                 let position = -self.floatView.frame.size.height
-                needAnimation = self.topFloatConstraint.constant >= position
+                needAnimation = self.floatView.topConstraint!.constant >= position
                 newConstraint = position
                 inset = 0.0
             }
 
             if needAnimation {
                 self.view.layoutIfNeeded()
-                self.topFloatConstraint.constant = newConstraint
+                self.floatView.topConstraint!.constant = newConstraint
                 self.tableView.contentInset.top = inset
                 UIView.animate(withDuration: 0.3, animations: { [unowned self] in
                     self.tableView.scrollIndicatorInsets.top = self.tableView.contentInset.top
@@ -89,17 +75,7 @@ class FeedPageVC: PostsViewController {
     override func filterChanged(filter: PostsListFetcher.Filter) {
         super.filterChanged(filter: filter)
         // feedTypeMode
-        switch filter.feedTypeMode {
-        case .subscriptions:
-            self.headerLabel.text = "my Feed".localized().uppercaseFirst
-            self.changeFeedTypeButton.setTitle("trending".localized().uppercaseFirst, for: .normal)
-        case .new:
-            self.headerLabel.text = "trending".localized().uppercaseFirst
-            
-            self.changeFeedTypeButton.setTitle("my Feed".localized().uppercaseFirst, for: .normal)
-        default:
-            break
-        }
+        floatView.setUp(with: filter)
     }
     
     override func viewWillAppear(_ animated: Bool) {

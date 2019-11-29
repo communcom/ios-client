@@ -20,11 +20,7 @@ class PostsViewController: ListViewController<ResponseAPIContentGetPost> {
     }
     
     required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        viewModel = PostsViewModel()
-        defer {
-            viewModel.fetchNext()
-        }
+        fatalError("init(coder:) has not been implemented")
     }
     
     override func setUp() {
