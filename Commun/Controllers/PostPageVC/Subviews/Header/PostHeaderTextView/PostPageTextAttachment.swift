@@ -14,7 +14,10 @@ final class PostPageTextAttachment: SubviewTextAttachment, TextAttachmentType {
     
     convenience init(block: ResponseAPIContentBlock, size: CGSize) {
         let view = EmbedView(content: block)
-        self.init(view: view, size: size)
+        view.frame.size.width = size.width
+        view.layoutIfNeeded()
+        let rightSize = view.systemLayoutSizeFitting(size, withHorizontalFittingPriority: .required, verticalFittingPriority: .defaultLow)
+        self.init(view: view, size: rightSize)
         self.view = view
     }
 }
