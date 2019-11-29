@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 import RxDataSources
 
-class CommunityMembersVC: BaseViewController {
+class CommunityMembersVC: BaseViewController, LeaderCellDelegate {
     // MARK: - Nested type
     enum CustomElementType: IdentifiableType, Equatable {
         case subscriber(ResponseAPIContentResolveProfile)

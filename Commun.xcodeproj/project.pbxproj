@@ -272,6 +272,7 @@
 		BC4692BF2390D1E10064A38B /* FeedPageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4692BE2390D1E10064A38B /* FeedPageVC.swift */; };
 		BC4692C82390E7120064A38B /* ListItemCellType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4692C72390E7120064A38B /* ListItemCellType.swift */; };
 		BC4692CF239114AB0064A38B /* CommunityCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4692CE239114AB0064A38B /* CommunityCellDelegate.swift */; };
+		BC4692D22391160E0064A38B /* LeaderCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4692D12391160E0064A38B /* LeaderCellDelegate.swift */; };
 		BC48FC42236689DC0049C4F4 /* LeadersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC48FC41236689DC0049C4F4 /* LeadersViewModel.swift */; };
 		BC48FC4423668A080049C4F4 /* LeadersListFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC48FC4323668A080049C4F4 /* LeadersListFetcher.swift */; };
 		BC48FC46236690880049C4F4 /* MyEmptyPlaceHolderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC48FC45236690880049C4F4 /* MyEmptyPlaceHolderView.swift */; };
@@ -712,6 +713,7 @@
 		BC4692BE2390D1E10064A38B /* FeedPageVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedPageVC.swift; sourceTree = "<group>"; };
 		BC4692C72390E7120064A38B /* ListItemCellType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListItemCellType.swift; sourceTree = "<group>"; };
 		BC4692CE239114AB0064A38B /* CommunityCellDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityCellDelegate.swift; sourceTree = "<group>"; };
+		BC4692D12391160E0064A38B /* LeaderCellDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderCellDelegate.swift; sourceTree = "<group>"; };
 		BC48FC41236689DC0049C4F4 /* LeadersViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeadersViewModel.swift; sourceTree = "<group>"; };
 		BC48FC4323668A080049C4F4 /* LeadersListFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeadersListFetcher.swift; sourceTree = "<group>"; };
 		BC48FC45236690880049C4F4 /* MyEmptyPlaceHolderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyEmptyPlaceHolderView.swift; sourceTree = "<group>"; };
@@ -1197,7 +1199,7 @@
 				BCCC33EB237521FA004E46EF /* CommentController.swift */,
 				BC4692CD239114990064A38B /* CommunityController */,
 				BCCE0AAC23681B2400A183AA /* ProfileController.swift */,
-				BCA0039C23716AA1002A68BA /* LeaderController.swift */,
+				BC4692D0239115FC0064A38B /* LeaderController */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -1916,6 +1918,15 @@
 				BC4692CE239114AB0064A38B /* CommunityCellDelegate.swift */,
 			);
 			path = CommunityController;
+			sourceTree = "<group>";
+		};
+		BC4692D0239115FC0064A38B /* LeaderController */ = {
+			isa = PBXGroup;
+			children = (
+				BCA0039C23716AA1002A68BA /* LeaderController.swift */,
+				BC4692D12391160E0064A38B /* LeaderCellDelegate.swift */,
+			);
+			path = LeaderController;
 			sourceTree = "<group>";
 		};
 		BC52913623766EFA0022EC7F /* CommentCell */ = {
@@ -2767,6 +2778,7 @@
 				3B0E9C5E226F02AC002AB1C2 /* ProfileEditCoverVC.swift in Sources */,
 				3B5EDE3722E07DCC00897BF3 /* SettingsVC+SectionHeader.swift in Sources */,
 				BC4692BF2390D1E10064A38B /* FeedPageVC.swift in Sources */,
+				BC4692D22391160E0064A38B /* LeaderCellDelegate.swift in Sources */,
 				3B197C532269BE0E008CF10D /* SegmentioExtension.swift in Sources */,
 				BC016D44235DA0D400F1319F /* PostCell+Actions.swift in Sources */,
 				BCCB993423756319005252CF /* PostHeaderTextView.swift in Sources */,

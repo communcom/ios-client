@@ -231,20 +231,66 @@ class NetworkService: NSObject {
     }
     
     func triggerFollow<T: ProfileType>(user: T) -> Completable {
-        let originIsFollowing = !(user.isSubscribed ?? false)
+        let originIsFollowing = user.isSubscribed ?? false
+        
+        // set value
+        var user = user
+        user.setIsSubscribed(!originIsFollowing)
+        user.isBeingToggledFollow = true
+        
+        // notify changes
+        user.notifyChanged()
+        
+        // send request
         return RestAPIManager.instance.follow(user.userId, isUnfollow: originIsFollowing)
             .flatMapCompletable { self.waitForTransactionWith(id: $0) }
             .do(onError: { (error) in
                 // reverse change
-                var user = user
                 user.setIsSubscribed(originIsFollowing)
                 user.isBeingToggledFollow = false
                 user.notifyChanged()
             }, onCompleted: {
                 // re-enable state
-                var user = user
                 user.isBeingToggledFollow = false
                 user.notifyChanged()
+            })
+    }
+    
+    func toggleVoteLeader(leader: ResponseAPIContentGetLeader) -> Completable {
+        let originIsVoted = leader.isVoted
+        
+        // set value
+        var leader = leader
+        leader.setIsVoted(!originIsVoted)
+        leader.isBeingVoted = true
+        
+        // notify change
+        leader.notifyChanged()
+        
+        // send request
+        let request: Single<String>
+//        request = Single<String>.just("")
+//            .delay(0.8, scheduler: MainScheduler.instance)
+        if originIsVoted {
+            // unvote
+            request = RestAPIManager.instance.unvoteLeader(communityId: leader.communityId ?? "", leader: leader.userId)
+        }
+        else {
+            request = RestAPIManager.instance.voteLeader(communityId: leader.communityId ?? "", leader: leader.userId)
+        }
+        
+        return request
+            .flatMapCompletable { self.waitForTransactionWith(id: $0) }
+            .do(onError: { (error) in
+                // reverse change
+                // re-enable state
+                leader.setIsVoted(originIsVoted)
+                leader.isBeingVoted = false
+                leader.notifyChanged()
+            }, onCompleted: {
+                // re-enable state
+                leader.isBeingVoted = false
+                leader.notifyChanged()
             })
     }
     

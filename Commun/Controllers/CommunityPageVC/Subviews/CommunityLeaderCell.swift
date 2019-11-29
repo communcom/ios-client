@@ -8,8 +8,9 @@
 
 import Foundation
 
-class CommunityLeaderCell: CommunityPageCell, LeaderController {
+class CommunityLeaderCell: CommunityPageCell {
     var leader: ResponseAPIContentGetLeader?
+    weak var delegate: LeaderCellDelegate?
     
     lazy var avatarImageView: LeaderAvatarImageView = {
         let imageView = LeaderAvatarImageView(size: 56)
@@ -115,6 +116,9 @@ class CommunityLeaderCell: CommunityPageCell, LeaderController {
     }
     
     @objc func voteButtonDidTouch() {
-        toggleVote()
+        guard let leader = leader else {return}
+        voteButton.animate {
+            self.delegate?.buttonVoteDidTouch(leader: leader)
+        }
     }
 }

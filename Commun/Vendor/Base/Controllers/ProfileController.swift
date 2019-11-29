@@ -20,20 +20,6 @@ protocol ProfileType: ListItemType {
 }
 
 extension ProfileType {
-    mutating func toggleFollow() -> Completable {
-        let originIsFollowing = isSubscribed ?? false
-        
-        // set value
-        setIsSubscribed(!originIsFollowing)
-        isBeingToggledFollow = true
-        
-        // notify changes
-        notifyChanged()
-        
-        // send request
-        return NetworkService.shared.triggerFollow(user: self)
-    }
-    
     mutating func setIsSubscribed(_ value: Bool) {
         guard value != isSubscribed
         else {return}
@@ -83,10 +69,10 @@ extension ProfileController {
     }
     
     func toggleFollow() {
-        guard profile != nil else {return}
+        guard let profile = profile else {return}
         
         followButton.animate {
-            self.profile?.toggleFollow()
+            NetworkService.shared.triggerFollow(user: profile)
                 .subscribe(onError: { (error) in
                     UIApplication.topViewController()?.showError(error)
                 })
