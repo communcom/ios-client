@@ -28,6 +28,8 @@ extension MyProfilePageVC {
     func openActionSheet(cover: Bool) {
         showCommunActionSheet(
             title: String(format: "%@ %@", "change".localized().uppercaseFirst, (cover ? "cover photo" : "profile photo").localized()),
+            titleFont: .systemFont(ofSize: 15, weight: .semibold),
+            titleAlignment: .left,
             actions: [
                 CommunActionSheet.Action(
                     title: "choose from gallery".localized().uppercaseFirst,

@@ -46,7 +46,7 @@ class PostCell: MyTableViewCell, PostController {
     // Number of views
     lazy var viewsCountLabel = self.createDescriptionLabel()
     lazy var viewsCountButton: UIButton = {
-        let button = UIButton(width: 20, height: 18)
+        let button = UIButton(width: 24, height: 16)
         button.setImage(UIImage(named: "icon-views-count-gray-default"), for: .normal)
         return button
     }()
@@ -128,9 +128,9 @@ class PostCell: MyTableViewCell, PostController {
     func setUp(with post: ResponseAPIContentGetPost?) {
         guard let post = post else {return}
         self.post = post
-        
+
         metaView.setUp(post: post)
-        voteContainerView.setUp(with: post.votes)
+        voteContainerView.setUp(with: post.votes, userID: post.author?.userId)
 
         // Comments count
         self.commentsCountLabel.text = "\(post.stats?.commentsCount ?? 0)"

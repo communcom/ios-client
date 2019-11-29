@@ -41,7 +41,7 @@ class CommunCheckbox: UIButton {
             else {
                 backgroundColor = .white
                 borderWidth = 1
-                borderColor = .lightGray
+                borderColor = .e2e6e8
                 setImage(nil, for: .normal)
                 imageEdgeInsets = UIEdgeInsets.zero
             }

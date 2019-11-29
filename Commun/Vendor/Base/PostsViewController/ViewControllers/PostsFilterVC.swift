@@ -17,8 +17,8 @@ class PostsFilterVC: SwipeDownDismissViewController {
     var completion: ((PostsListFetcher.Filter) -> Void)?
     
     // MARK: - Subview
-    lazy var closeButton = UIButton.circle(size: 30, backgroundColor: .f7f7f9, tintColor: .a5a7bd, imageName: "close-x", imageEdgeInsets: UIEdgeInsets(inset: 8))
-    lazy var backButton = UIButton.circle(size: 30, backgroundColor: .f7f7f9, tintColor: .a5a7bd, imageName: "back-button", imageEdgeInsets: UIEdgeInsets(top: 10, left: 12, bottom: 10, right: 12))
+    lazy var closeButton = UIButton.circle(size: 30, backgroundColor: .f7f7f9, tintColor: .a5a7bd, imageName: "close-x", imageEdgeInsets: UIEdgeInsets(inset: 3))
+    lazy var backButton = UIButton.circle(size: 30, backgroundColor: .f7f7f9, tintColor: .a5a7bd, imageName: "back-button", imageEdgeInsets: UIEdgeInsets(inset: 6))
     
     lazy var tableView = UITableView(forAutoLayout: ())
     lazy var saveButton = CommunButton.default(height: 50, label: "save".localized().uppercaseFirst)
@@ -38,8 +38,8 @@ class PostsFilterVC: SwipeDownDismissViewController {
     override func setUp() {
         super.setUp()
         view.backgroundColor = .f7f7f9
-        
         title = "sort by".localized().uppercaseFirst
+
         setRightNavBarButton(with: closeButton)
         closeButton.addTarget(self, action: #selector(closeButtonDidTouch), for: .touchUpInside)
         
@@ -56,7 +56,7 @@ class PostsFilterVC: SwipeDownDismissViewController {
         
         view.addSubview(saveButton)
         saveButton.autoPinEdge(.top, to: .bottom, of: tableView, withOffset: 20)
-        saveButton.autoPinEdgesToSuperviewSafeArea(with: UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16), excludingEdge: .top)
+        saveButton.autoPinEdgesToSuperviewSafeArea(with: UIEdgeInsets(top: 0, left: 16, bottom: 16, right: 16), excludingEdge: .top)
         saveButton.addTarget(self, action: #selector(saveButtonDidTouch), for: .touchUpInside)
         
     }
@@ -64,6 +64,7 @@ class PostsFilterVC: SwipeDownDismissViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         navigationController?.view.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: 20)
+        navigationController?.navigationBar.frame.size.height = 58
     }
     
     override func bind() {
@@ -94,7 +95,7 @@ class PostsFilterVC: SwipeDownDismissViewController {
                     roundedCorner.insert([.topLeft, .topRight])
                 }
                 
-                if index == (self.isTimeFrameMode ? 3: 2) {
+                if index == (self.isTimeFrameMode ? 3 : 2) {
                     roundedCorner.insert([.bottomLeft, .bottomRight])
                 }
                 cell.roundedCorner = roundedCorner
@@ -158,7 +159,7 @@ class PostsFilterVC: SwipeDownDismissViewController {
 
 extension PostsFilterVC: UIViewControllerTransitioningDelegate {
     func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
-        return CustomHeightPresentationController(height: 380, presentedViewController: presented, presenting: presenting)
+        return CustomHeightPresentationController(height: 443, presentedViewController: presented, presenting: presenting)
     }
 }
 

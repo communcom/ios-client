@@ -51,11 +51,20 @@ extension UIViewController {
         self.present(alert, animated: true, completion: nil)
     }
     
-    func showCommunActionSheet(style: CommunActionSheet.Style = .default, headerView: UIView? = nil, title: String? = nil, actions: [CommunActionSheet.Action], completion: (() -> Void)? = nil) {
+    func showCommunActionSheet(style: CommunActionSheet.Style = .default,
+                               headerView: UIView? = nil,
+                               title: String? = nil,
+                               titleFont: UIFont = .systemFont(ofSize: 15, weight: .semibold),
+                               titleAlignment: NSTextAlignment = .left,
+                               actions: [CommunActionSheet.Action],
+                               completion: (() -> Void)? = nil) {
+
         let actionSheet = CommunActionSheet(style: style)
         actionSheet.title = title
         actionSheet.headerView = headerView
         actionSheet.actions = actions
+        actionSheet.titleFont = titleFont
+        actionSheet.textAlignment = titleAlignment
         
         actionSheet.modalPresentationStyle = .custom
         actionSheet.transitioningDelegate = actionSheet

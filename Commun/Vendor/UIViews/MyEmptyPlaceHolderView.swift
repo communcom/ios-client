@@ -34,13 +34,13 @@ class MyEmptyPlaceHolderView: MyView {
     var buttonAction: (()->Void)?
     
     // MARK: - Subviews
-    lazy var emojiLabel = UILabel.with(text: "🙈", textSize: 32)
+    lazy var emojiLabel = UILabel.with(text: "😿", textSize: 32)
     lazy var titleLabel = UILabel.with(text: "Nothing", textSize: 15, weight: .bold)
     lazy var descriptionLabel = UILabel.descriptionLabel("Nothing's here", size: 15)
     lazy var button = CommunButton.default(label: "retry")
     
     // MARK: - Initializers
-    init(emoji: String = "🙈", title: String, description: String?, buttonLabel: String? = nil, buttonAction: (()->Void)? = nil) {
+    init(emoji: String = "😿", title: String, description: String?, buttonLabel: String? = nil, buttonAction: (()->Void)? = nil) {
         self.emoji = emoji
         self.title = title
         self.descriptionText = description
@@ -61,6 +61,7 @@ class MyEmptyPlaceHolderView: MyView {
         
         let containerView = UIView(forAutoLayout: ())
         addSubview(containerView)
+
         containerView.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
         containerView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
         containerView.autoAlignAxis(toSuperviewAxis: .horizontal)

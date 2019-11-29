@@ -63,9 +63,9 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
         
         addSubview(followersCountLabel)
         followersCountLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
-        followersCountLabel.autoPinEdge(.top, to: .bottom, of: descriptionLabel, withOffset: 22)
+        followersCountLabel.autoPinEdge(.top, to: .bottom, of: descriptionLabel, withOffset: 18)
 
-        let followersLabel = UILabel.with(text: "followers".localized().uppercaseFirst, textSize: 12, weight: .semibold, textColor: UIColor(hexString: "#A5A7BD")!)
+        let followersLabel = UILabel.with(text: "followers".localized().uppercaseFirst, textSize: 12, weight: .bold, textColor: UIColor(hexString: "#A5A7BD")!)
         addSubview(followersLabel)
         followersLabel.autoPinEdge(.leading, to: .trailing, of: followersCountLabel, withOffset: 4)
         followersLabel.autoAlignAxis(.horizontal, toSameAxisOf: followersCountLabel)
@@ -73,7 +73,7 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
         followersLabel.isUserInteractionEnabled = true
         followersLabel.addGestureRecognizer(tap1)
         
-        let dotLabel = UILabel.with(text: "•", textSize: 15, weight: .semibold, textColor: UIColor(hexString: "#A5A7BD")!)
+        let dotLabel = UILabel.with(text: "•", textSize: 15, weight: .regular, textColor: UIColor(hexString: "#A5A7BD")!)
         addSubview(dotLabel)
         dotLabel.autoPinEdge(.leading, to: .trailing, of: followersLabel, withOffset: 2)
         dotLabel.autoPinEdge(.bottom, to: .bottom, of: followersLabel)
@@ -82,7 +82,7 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
         followingsCountLabel.autoPinEdge(.leading, to: .trailing, of: dotLabel, withOffset: 2)
         followingsCountLabel.autoAlignAxis(.horizontal, toSameAxisOf: followersCountLabel)
         
-        let followingsLabel = UILabel.with(text: "followings".localized().uppercaseFirst, textSize: 12, weight: .semibold, textColor: UIColor(hexString: "#A5A7BD")!)
+        let followingsLabel = UILabel.with(text: "followings".localized().uppercaseFirst, textSize: 12, weight: .bold, textColor: UIColor(hexString: "#A5A7BD")!)
         addSubview(followingsLabel)
         followingsLabel.autoPinEdge(.leading, to: .trailing, of: followingsCountLabel, withOffset: 4)
         followingsLabel.autoAlignAxis(.horizontal, toSameAxisOf: followersCountLabel)
@@ -94,7 +94,7 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
         addSubview(firstSeparator)
         firstSeparator.autoPinEdge(toSuperviewEdge: .leading)
         firstSeparator.autoPinEdge(toSuperviewEdge: .trailing)
-        firstSeparator.autoPinEdge(.top, to: .bottom, of: followersCountLabel, withOffset: 16)
+        firstSeparator.autoPinEdge(.top, to: .bottom, of: followersCountLabel, withOffset: 28)
 
         // communities
         addSubview(communitiesView)
@@ -231,16 +231,22 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
     
     @objc func seeAllButtonDidTouch() {
         let vc = SubscriptionsVC(title: profile?.username, userId: profile?.userId, type: .community)
-        parentViewController?.present(BaseNavigationController(rootViewController: vc), animated: true, completion: nil)
+        let navigation = BaseNavigationController(rootViewController: vc)
+        navigation.view.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: 20)
+        parentViewController?.present(navigation, animated: true, completion: nil)
     }
     
     @objc func follwingLabelDidTouch() {
         let vc = SubscriptionsVC(title: profile?.username, userId: profile?.userId, type: .user)
-        parentViewController?.present(BaseNavigationController(rootViewController: vc), animated: true, completion: nil)
+        let navigation = BaseNavigationController(rootViewController: vc)
+        navigation.view.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: 20)
+        parentViewController?.present(navigation, animated: true, completion: nil)
     }
     
     @objc func followersLabelDidTouch() {
         let vc = SubscribersVC(title: profile?.username, userId: profile?.userId)
-        parentViewController?.present(BaseNavigationController(rootViewController: vc), animated: true, completion: nil)
+        let navigation = BaseNavigationController(rootViewController: vc)
+        navigation.view.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: 20)
+        parentViewController?.present(navigation, animated: true, completion: nil)
     }
 }

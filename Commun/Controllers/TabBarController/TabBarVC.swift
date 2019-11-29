@@ -18,7 +18,7 @@ class TabBarVC: UITabBarController {
     let notificationTabIndex = 2
     let profileTabIndex = 3
     let selectedColor = UIColor.black
-    let unselectedColor = UIColor(hexString: "#E5E7ED")
+    let unselectedColor = UIColor(hexString: "#A5A7BD")
     let tabBarHeight: CGFloat = 60.0 + UIDevice.safeAreaInsets.bottom
     
     
@@ -66,7 +66,7 @@ class TabBarVC: UITabBarController {
         // shadow
         view.addSubview(shadowView)
         shadowView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
-        shadowView.addShadow(ofColor: .shadow, radius: 4, offset: CGSize(width: 0, height: -6), opacity: 0.1)
+        shadowView.addShadow(ofColor: .shadow, radius: 16, offset: CGSize(width: 0, height: -6), opacity: 0.08)
         
         // tabBarContainerView
         shadowView.addSubview(tabBarContainerView)
@@ -79,18 +79,19 @@ class TabBarVC: UITabBarController {
         tabBarStackView.alignment = .center
         tabBarStackView.distribution = .fillEqually
         tabBarStackView.spacing = 0
+        
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         // https://stackoverflow.com/questions/39578530/since-xcode-8-and-ios10-views-are-not-sized-properly-on-viewdidlayoutsubviews
         shadowView.layoutIfNeeded()
-        tabBarContainerView.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: 24.5)
+        tabBarContainerView.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: 20)
     }
     
     private func configTabs() {
         // Feed Tab
-        let feed = controllerContainer.resolve(FeedPageVC.self)!
+        let feed = FeedPageVC()
         let feedNC = BaseNavigationController(rootViewController: feed, tabBarVC: self)
         let feedItem = buttonTabBarItem(image: UIImage(named: "feed")!, tag: feedTabIndex)
         feed.accessibilityLabel = "TabBarFeedTabBarItem"
@@ -102,7 +103,7 @@ class TabBarVC: UITabBarController {
         comunities.accessibilityLabel = "TabBarComunitiesTabBarItem"
         
         // Notifications Tab
-        let notifications = NotificationsPageVC()
+//        let notifications = NotificationsPageVC()
 //        let notificationsNC = BaseNavigationController(rootViewController: notifications, tabBarVC: self)
 //        let notificationsItem = buttonTabBarItem(image: UIImage(named: "notifications")!, tag: notificationTabIndex)
 //        notificationsNC.navigationBar.prefersLargeTitles = true

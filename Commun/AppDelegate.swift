@@ -19,7 +19,6 @@ import CyberSwift
 @_exported import CyberSwift
 import RxSwift
 import SDURLCache
-import IQKeyboardManagerSwift
 
 let isDebugMode: Bool = true
 let smsCodeDebug: UInt64 = isDebugMode ? 9999 : 0
@@ -38,8 +37,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // MARK: - Class Functions
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        IQKeyboardManager.shared.enable = true
-        IQKeyboardManager.shared.toolbarDoneBarButtonItemText = " "
 
         // Use Firebase library to configure APIs
         FirebaseApp.configure()
@@ -71,15 +68,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             .take(1)
             .asSingle()
             .timeout(5, scheduler: MainScheduler.instance)
-            .flatMap({ (_) -> Single<Bool> in
-                // get config
-                return RestAPIManager.instance.getConfig(version: UIApplication.appVersion)
-                    .do(onError: { (error) in
-                        UIApplication.topViewController()?.showError(error)
-                    })
-                    .map {_ in true}
-                    .catchErrorJustReturn(true)
-            })
             .subscribe(onSuccess: { (connected) in
                 AppDelegate.reloadSubject.onNext(false)
                 self.window?.makeKeyAndVisible()
@@ -211,6 +199,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UIView.animate(withDuration: 0.5, animations: {
             rootVC.view.alpha = 1
         })
+        
+        // Config
+        DispatchQueue.main.async {
+            RestAPIManager.instance.getConfig()
+                .subscribe { (error) in
+                    rootVC.showError(error)
+                }
+                .disposed(by: self.bag)
+        }
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
