@@ -51,15 +51,6 @@ class CommunitiesVC: SubsViewController<ResponseAPIContentGetCommunity, Communit
         return cell
     }
     
-    override func bind() {
-        super.bind()
-        tableView.rx.modelSelected(ResponseAPIContentGetCommunity.self)
-            .subscribe(onNext: { (item) in
-                self.showCommunityWithCommunityId(item.communityId)
-            })
-            .disposed(by: disposeBag)
-    }
-    
     override func handleListEmpty() {
         let title = "no communities"
         let description = "no communities found"

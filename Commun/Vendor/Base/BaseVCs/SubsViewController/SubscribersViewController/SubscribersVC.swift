@@ -23,15 +23,6 @@ class SubscribersVC: SubsViewController<ResponseAPIContentResolveProfile, Subscr
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func bind() {
-        super.bind()
-        tableView.rx.modelSelected(ResponseAPIContentResolveProfile.self)
-            .subscribe(onNext: { (item) in
-                self.showProfileWithUserId(item.userId)
-            })
-            .disposed(by: disposeBag)
-    }
-    
     override func handleListEmpty() {
         let title = "no subscribers"
         let description = "no subscribers found"

@@ -88,6 +88,7 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
         super.bind()
         bindState()
         bindItems()
+        bindItemSelected()
         
         if isSearchEnabled {
             bindSearchController()
@@ -139,6 +140,42 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
                 self.viewModel.reload()
             })
             .disposed(by: disposeBag)
+    }
+    
+    func bindItemSelected() {
+        tableView.rx.modelSelected(T.self)
+            .subscribe(onNext: { (item) in
+                self.modelSelected(item)
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    func modelSelected(_ item: T) {
+        if let post = item as? ResponseAPIContentGetPost {
+            let postPageVC = PostPageVC(post: post)
+            show(postPageVC, sender: nil)
+            return
+        }
+        
+        if let item = item as? ResponseAPIContentGetSubscriptionsItem {
+            if let community = item.communityValue {
+                showCommunityWithCommunityId(community.communityId)
+            }
+            if let user = item.userValue {
+                showProfileWithUserId(user.userId)
+            }
+            return
+        }
+        
+        if let community = item as? ResponseAPIContentGetCommunity {
+            showCommunityWithCommunityId(community.communityId)
+            return
+        }
+        
+        if let profile = item as? ResponseAPIContentResolveProfile {
+            showProfileWithUserId(profile.userId)
+        }
+        
     }
     
     // MARK: - State handling

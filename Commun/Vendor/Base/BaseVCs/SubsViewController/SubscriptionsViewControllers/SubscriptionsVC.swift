@@ -88,24 +88,6 @@ class SubscriptionsVC: SubsViewController<ResponseAPIContentGetSubscriptionsItem
         return UITableViewCell()
     }
     
-    override func bind() {
-        super.bind()
-        bindModelSelected()
-    }
-    
-    func bindModelSelected() {
-        tableView.rx.modelSelected(ResponseAPIContentGetSubscriptionsItem.self)
-            .subscribe(onNext: { (item) in
-                if let community = item.communityValue {
-                    self.showCommunityWithCommunityId(community.communityId)
-                }
-                if let user = item.userValue {
-                    self.showProfileWithUserId(user.userId)
-                }
-            })
-            .disposed(by: disposeBag)
-    }
-    
     override func handleListEmpty() {
         var title = "no subscriptions"
         var description = "no subscriptions found"

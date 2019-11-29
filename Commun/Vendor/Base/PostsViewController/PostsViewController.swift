@@ -56,14 +56,6 @@ class PostsViewController: ListViewController<ResponseAPIContentGetPost, PostCel
     
     override func bind() {
         super.bind()
-        
-        tableView.rx.modelSelected(ResponseAPIContentGetPost.self)
-            .subscribe(onNext: {post in
-                let postPageVC = PostPageVC(post: post)
-                self.show(postPageVC, sender: nil)
-            })
-            .disposed(by: disposeBag)
-        
         // filter
         (viewModel as! PostsViewModel).filter
             .subscribe(onNext: {[weak self] filter in
