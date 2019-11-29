@@ -19,6 +19,7 @@ class VoteContainerView: MyView {
     override func commonInit() {
         super.commonInit()
         backgroundColor = .f3f5fa
+        setContentHuggingPriority(.defaultHigh, for: .horizontal)
 
 //        upVoteButton.setTitleColor(.appMainColor, for: .disabled)
 //        downVoteButton.setTitleColor(.appMainColor, for: .disabled)

@@ -120,7 +120,8 @@ class MyAvatarImageView: MyView {
         imageView.addTapToViewer()
     }
     
-    func addTapToOpenUserProfile(profileId: String) {
+    func addTapToOpenUserProfile(profileId: String?) {
+        guard let profileId = profileId else {return}
         isUserInteractionEnabled = true
         let tap = TapGesture(target: self, action: #selector(openUserProfile(gesture:)))
         tap.profileId = profileId

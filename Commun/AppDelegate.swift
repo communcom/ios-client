@@ -68,15 +68,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             .take(1)
             .asSingle()
             .timeout(5, scheduler: MainScheduler.instance)
-            .flatMap({ (_) -> Single<Bool> in
-                // get config
-                return RestAPIManager.instance.getConfig(version: UIApplication.appVersion)
-                    .do(onError: { (error) in
-                        UIApplication.topViewController()?.showError(error)
-                    })
-                    .map {_ in true}
-                    .catchErrorJustReturn(true)
-            })
             .subscribe(onSuccess: { (connected) in
                 AppDelegate.reloadSubject.onNext(false)
                 self.window?.makeKeyAndVisible()
@@ -208,6 +199,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UIView.animate(withDuration: 0.5, animations: {
             rootVC.view.alpha = 1
         })
+        
+        // Config
+        DispatchQueue.main.async {
+            RestAPIManager.instance.getConfig()
+                .subscribe { (error) in
+                    rootVC.showError(error)
+                }
+                .disposed(by: self.bag)
+        }
     }
 
     func applicationWillResignActive(_ application: UIApplication) {

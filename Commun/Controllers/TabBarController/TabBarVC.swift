@@ -91,7 +91,7 @@ class TabBarVC: UITabBarController {
     
     private func configTabs() {
         // Feed Tab
-        let feed = controllerContainer.resolve(FeedPageVC.self)!
+        let feed = FeedPageVC()
         let feedNC = BaseNavigationController(rootViewController: feed, tabBarVC: self)
         let feedItem = buttonTabBarItem(image: UIImage(named: "feed")!, tag: feedTabIndex)
         feed.accessibilityLabel = "TabBarFeedTabBarItem"
