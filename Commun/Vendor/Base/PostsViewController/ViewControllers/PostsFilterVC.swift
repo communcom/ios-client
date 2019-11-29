@@ -56,7 +56,7 @@ class PostsFilterVC: SwipeDownDismissViewController {
         
         view.addSubview(saveButton)
         saveButton.autoPinEdge(.top, to: .bottom, of: tableView, withOffset: 20)
-        saveButton.autoPinEdgesToSuperviewSafeArea(with: UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16), excludingEdge: .top)
+        saveButton.autoPinEdgesToSuperviewSafeArea(with: UIEdgeInsets(top: 0, left: 16, bottom: 16, right: 16), excludingEdge: .top)
         saveButton.addTarget(self, action: #selector(saveButtonDidTouch), for: .touchUpInside)
         
     }

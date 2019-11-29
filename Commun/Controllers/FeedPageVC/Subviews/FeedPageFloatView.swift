@@ -23,8 +23,7 @@ final class FeedPageFloatView: MyView {
         return button
     }()
     lazy var sortButton: UIButton = {
-        let button = UIButton.circle(size: 35 * Config.heightRatio, backgroundColor: .f3f5fa, tintColor: .white, imageName: "feed-icon-settings", imageEdgeInsets: UIEdgeInsets(top: 8 * Config.heightRatio, left: 9 * Config.heightRatio, bottom: 8 * Config.heightRatio, right: 9 * Config.heightRatio))
-        button.alpha = 0.1
+        let button = UIButton.circle(size: 35 * Config.heightRatio, backgroundColor: .clear, imageName: "feed-icon-settings", imageEdgeInsets: .zero)
         return button
     }()
     
