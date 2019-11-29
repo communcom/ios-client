@@ -273,6 +273,7 @@
 		BC4692C82390E7120064A38B /* ListItemCellType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4692C72390E7120064A38B /* ListItemCellType.swift */; };
 		BC4692CF239114AB0064A38B /* CommunityCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4692CE239114AB0064A38B /* CommunityCellDelegate.swift */; };
 		BC4692D22391160E0064A38B /* LeaderCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4692D12391160E0064A38B /* LeaderCellDelegate.swift */; };
+		BC4692D5239130A50064A38B /* PostCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4692D4239130A50064A38B /* PostCellDelegate.swift */; };
 		BC48FC42236689DC0049C4F4 /* LeadersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC48FC41236689DC0049C4F4 /* LeadersViewModel.swift */; };
 		BC48FC4423668A080049C4F4 /* LeadersListFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC48FC4323668A080049C4F4 /* LeadersListFetcher.swift */; };
 		BC48FC46236690880049C4F4 /* MyEmptyPlaceHolderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC48FC45236690880049C4F4 /* MyEmptyPlaceHolderView.swift */; };
@@ -714,6 +715,7 @@
 		BC4692C72390E7120064A38B /* ListItemCellType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListItemCellType.swift; sourceTree = "<group>"; };
 		BC4692CE239114AB0064A38B /* CommunityCellDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityCellDelegate.swift; sourceTree = "<group>"; };
 		BC4692D12391160E0064A38B /* LeaderCellDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderCellDelegate.swift; sourceTree = "<group>"; };
+		BC4692D4239130A50064A38B /* PostCellDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCellDelegate.swift; sourceTree = "<group>"; };
 		BC48FC41236689DC0049C4F4 /* LeadersViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeadersViewModel.swift; sourceTree = "<group>"; };
 		BC48FC4323668A080049C4F4 /* LeadersListFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeadersListFetcher.swift; sourceTree = "<group>"; };
 		BC48FC45236690880049C4F4 /* MyEmptyPlaceHolderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyEmptyPlaceHolderView.swift; sourceTree = "<group>"; };
@@ -1195,7 +1197,7 @@
 		3BDD9A09228EDA5700B2A1DA /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				57A95196224178010020F55D /* PostController.swift */,
+				BC4692D32391308E0064A38B /* PostController */,
 				BCCC33EB237521FA004E46EF /* CommentController.swift */,
 				BC4692CD239114990064A38B /* CommunityController */,
 				BCCE0AAC23681B2400A183AA /* ProfileController.swift */,
@@ -1927,6 +1929,15 @@
 				BC4692D12391160E0064A38B /* LeaderCellDelegate.swift */,
 			);
 			path = LeaderController;
+			sourceTree = "<group>";
+		};
+		BC4692D32391308E0064A38B /* PostController */ = {
+			isa = PBXGroup;
+			children = (
+				57A95196224178010020F55D /* PostController.swift */,
+				BC4692D4239130A50064A38B /* PostCellDelegate.swift */,
+			);
+			path = PostController;
 			sourceTree = "<group>";
 		};
 		BC52913623766EFA0022EC7F /* CommentCell */ = {
@@ -2695,6 +2706,7 @@
 				BCA9712B2361306700AE37E1 /* MyView.swift in Sources */,
 				3B8DDF5C234B121D00B213F0 /* EditorColorPicker.swift in Sources */,
 				BCCC33E823751686004E46EF /* CommentCell.swift in Sources */,
+				BC4692D5239130A50064A38B /* PostCellDelegate.swift in Sources */,
 				AC8C57BD238C408A00B0D260 /* InstagramView.swift in Sources */,
 				BC016D49235DA2AC00F1319F /* MyTableViewCell.swift in Sources */,
 				BCB2A6F023556FC100B3582B /* BasicEditorVC+Tools.swift in Sources */,

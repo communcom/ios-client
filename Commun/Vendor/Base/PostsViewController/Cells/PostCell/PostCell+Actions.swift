@@ -24,4 +24,11 @@ extension PostCell {
     @objc func shareButtonTapped(button: UIButton) {
         openShareActions()
     }
+    
+    @objc func commentCountsButtonDidTouch() {
+        guard let post = post else {return}
+        let postPageVC = PostPageVC(post: post)
+        postPageVC.scrollToTopAfterLoadingComment = true
+        parentViewController?.show(postPageVC, sender: nil)
+    }
 }

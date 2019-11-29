@@ -73,16 +73,72 @@ class NetworkService: NSObject {
             .observeOn(MainScheduler.instance)
     }
     
-    func voteMessage(voteType: VoteActionType,
-                     communityId: String,
-                     messagePermlink: String,
-                     messageAuthor: String) -> Completable {
+    func upvoteMessage<T: ResponseAPIContentMessageType>(
+        message: T
+    ) -> Completable {
+        // save original state
+        let originHasUpVote = message.votes.hasUpVote ?? false
+        let originHasDownVote = message.votes.hasDownVote ?? false
+        
+        // change state
+        var message = message
+        message.setHasVote(originHasUpVote ? false: true, for: .upvote)
+        message.setHasVote(false, for: .downvote)
+        message.votes.isBeingVoted = true
+        message.notifyChanged()
+        
+        // send request
         return RestAPIManager.instance.vote(
-                voteType:    voteType,
-                communityId: communityId,
-                author:      messageAuthor,
-                permlink:    messagePermlink)
+            voteType:    originHasUpVote ? .unvote: .upvote,
+            communityId: message.community?.communityId ?? "",
+            author:      message.contentId.userId,
+            permlink:    message.contentId.permlink
+        )
             .observeOn(MainScheduler.instance)
+            .do(onError: { (error) in
+                message.setHasVote(originHasUpVote, for: .upvote)
+                message.setHasVote(originHasDownVote, for: .downvote)
+                message.votes.isBeingVoted = false
+                message.notifyChanged()
+            }, onCompleted: {
+                // re-enable state
+                message.votes.isBeingVoted = false
+                message.notifyChanged()
+            })
+    }
+    
+    func downvoteMessage<T: ResponseAPIContentMessageType>(
+        message: T
+    ) -> Completable {
+        // save original state
+        let originHasUpVote = message.votes.hasUpVote ?? false
+        let originHasDownVote = message.votes.hasDownVote ?? false
+        
+        // change state
+        var message = message
+        message.setHasVote(originHasDownVote ? false: true, for: .downvote)
+        message.setHasVote(false, for: .upvote)
+        message.votes.isBeingVoted = true
+        message.notifyChanged()
+        
+        // send request
+        return RestAPIManager.instance.vote(
+            voteType:    originHasDownVote ? .unvote: .upvote,
+            communityId: message.community?.communityId ?? "",
+            author:      message.contentId.userId,
+            permlink:    message.contentId.permlink
+        )
+            .observeOn(MainScheduler.instance)
+            .do(onError: { (error) in
+                message.setHasVote(originHasUpVote, for: .upvote)
+                message.setHasVote(originHasDownVote, for: .downvote)
+                message.votes.isBeingVoted = false
+                message.notifyChanged()
+            }, onCompleted: {
+                // re-enable state
+                message.votes.isBeingVoted = false
+                message.notifyChanged()
+            })
     }
     
     func waitForTransactionWith(id: String) -> Completable {
