@@ -38,6 +38,8 @@ final class FeedPageFloatView: MyView {
     // MARK: - Methods
     override func commonInit() {
         super.commonInit()
+        backgroundColor = #colorLiteral(red: 0.9591314197, green: 0.9661319852, blue: 0.9840201735, alpha: 1)
+        
         let headerView = UIView(backgroundColor: .appMainColor)
         addSubview(headerView)
         headerView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .bottom)
