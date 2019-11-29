@@ -230,9 +230,22 @@ class NetworkService: NSObject {
             .observeOn(MainScheduler.instance)
     }
     
-    func triggerFollow(_ userToFollow: String, isUnfollow: Bool = false) -> Completable {
-        return RestAPIManager.instance.follow(userToFollow, isUnfollow: isUnfollow)
+    func triggerFollow<T: ProfileType>(user: T) -> Completable {
+        let originIsFollowing = !(user.isSubscribed ?? false)
+        return RestAPIManager.instance.follow(user.userId, isUnfollow: originIsFollowing)
             .flatMapCompletable { self.waitForTransactionWith(id: $0) }
+            .do(onError: { (error) in
+                // reverse change
+                var user = user
+                user.setIsSubscribed(originIsFollowing)
+                user.isBeingToggledFollow = false
+                user.notifyChanged()
+            }, onCompleted: {
+                // re-enable state
+                var user = user
+                user.isBeingToggledFollow = false
+                user.notifyChanged()
+            })
     }
     
     // MARK: - meta

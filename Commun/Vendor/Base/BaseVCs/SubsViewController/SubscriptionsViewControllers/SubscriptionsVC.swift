@@ -10,7 +10,8 @@ import Foundation
 import CyberSwift
 import RxDataSources
 
-class SubscriptionsVC: SubsViewController<ResponseAPIContentGetSubscriptionsItem, SubscriptionsUserCell> {
+class SubscriptionsVC: SubsViewController<ResponseAPIContentGetSubscriptionsItem, SubscriptionsUserCell>, CommunityCellDelegate
+{
     var hideFollowButton = false
     private var isNeedHideCloseButton = false
 
@@ -48,6 +49,7 @@ class SubscriptionsVC: SubsViewController<ResponseAPIContentGetSubscriptionsItem
         if let community = subscription.communityValue {
             let cell = self.tableView.dequeueReusableCell(withIdentifier: "SubscriptionsCommunityCell") as! SubscriptionsCommunityCell
             cell.setUp(with: community)
+            cell.delegate = self
             
             cell.roundedCorner = []
             

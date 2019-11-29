@@ -19,6 +19,39 @@ protocol ProfileType: ListItemType {
     var isBeingToggledFollow: Bool? {get set}
 }
 
+extension ProfileType {
+    mutating func toggleFollow() -> Completable {
+        let originIsFollowing = isSubscribed ?? false
+        
+        // set value
+        setIsSubscribed(!originIsFollowing)
+        isBeingToggledFollow = true
+        
+        // notify changes
+        notifyChanged()
+        
+        // send request
+        return NetworkService.shared.triggerFollow(user: self)
+    }
+    
+    mutating func setIsSubscribed(_ value: Bool) {
+        guard value != isSubscribed
+        else {return}
+        isSubscribed = value
+        var subscribersCount: UInt64 = (self.subscribersCount ?? 0)
+        if value == false && subscribersCount == 0 {subscribersCount = 0}
+        else {
+            if value == true {
+                subscribersCount += 1
+            }
+            else {
+                subscribersCount -= 1
+            }
+        }
+        self.subscribersCount = subscribersCount
+    }
+}
+
 extension ResponseAPIContentGetProfile: ProfileType {
     var subscribersCount: UInt64? {
         get {
@@ -50,70 +83,14 @@ extension ProfileController {
     }
     
     func toggleFollow() {
-        guard profile != nil, let userId = profile?.userId else {return}
+        guard profile != nil else {return}
         
-        let originIsFollowing = profile?.isSubscribed ?? false
-        
-        // set value
-        setIsSubscribed(!originIsFollowing)
-        profile?.isBeingToggledFollow = true
-        
-        // animate
-        animateFollow()
-        
-        // notify changes
-        profile!.notifyChanged()
-        
-        // send request
-        NetworkService.shared.triggerFollow(userId, isUnfollow: originIsFollowing)
-            .subscribe(onCompleted: { [weak self] in
-                // re-enable state
-                self?.profile?.isBeingToggledFollow = false
-                self?.profile?.notifyChanged()
-            }) { [weak self] (error) in
-                guard let strongSelf = self else {return}
-                // reverse change
-                strongSelf.setIsSubscribed(originIsFollowing)
-                strongSelf.profile?.isBeingToggledFollow = false
-                strongSelf.profile!.notifyChanged()
-                
-                // show error
-                UIApplication.topViewController()?.showError(error)
-            }
-            .disposed(by: disposeBag)
-    }
-    
-    func setIsSubscribed(_ value: Bool) {
-        guard profile != nil,
-            value != profile?.isSubscribed
-        else {return}
-        profile!.isSubscribed = value
-        var subscribersCount: UInt64 = (profile!.subscribersCount ?? 0)
-        if value == false && subscribersCount == 0 {subscribersCount = 0}
-        else {
-            if value == true {
-                subscribersCount += 1
-            }
-            else {
-                subscribersCount -= 1
-            }
+        followButton.animate {
+            self.profile?.toggleFollow()
+                .subscribe(onError: { (error) in
+                    UIApplication.topViewController()?.showError(error)
+                })
+                .disposed(by: self.disposeBag)
         }
-        profile!.subscribersCount = subscribersCount
-    }
-    
-    func animateFollow() {
-        CATransaction.begin()
-        
-        let moveDownAnim = CABasicAnimation(keyPath: "transform.scale")
-        moveDownAnim.byValue = 1.2
-        moveDownAnim.autoreverses = true
-        followButton.layer.add(moveDownAnim, forKey: "transform.scale")
-        
-        let fadeAnim = CABasicAnimation(keyPath: "opacity")
-        fadeAnim.byValue = -1
-        fadeAnim.autoreverses = true
-        followButton.layer.add(fadeAnim, forKey: "Fade")
-        
-        CATransaction.commit()
     }
 }
