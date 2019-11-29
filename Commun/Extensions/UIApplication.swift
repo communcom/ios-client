@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CyberSwift
 
 extension UIApplication {
     class func topViewController(controller: UIViewController? = UIApplication.shared.keyWindow?.rootViewController) -> UIViewController? {
@@ -22,10 +23,6 @@ extension UIApplication {
             return topViewController(controller: presented)
         }
         return controller
-    }
-    
-    class var appVersion: String {
-        return Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String
     }
     
     class var appBuild: String {
