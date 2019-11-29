@@ -78,7 +78,7 @@ class PostPageVC: CommentsViewController {
         
         // comment form
         let shadowView = UIView(forAutoLayout: ())
-        shadowView.addShadow(ofColor: .shadow, radius: 4, offset: CGSize(width: 0, height: -6), opacity: 0.1)
+        shadowView.addShadow(ofColor: .shadow, radius: 20.0, offset: CGSize(width: 0.0, height: -3.0), opacity: 1)
         
         view.addSubview(shadowView)
         shadowView.autoPinEdge(toSuperviewSafeArea: .leading)

@@ -76,11 +76,11 @@ class CommentForm: MyView {
         return textView
     }()
     
-    lazy var sendButton = CommunButton.circle(size:             35.0,
-                                              backgroundColor:  .white,
-                                              tintColor:        UIColor(hexString: "#A5A7BD"),
-                                              imageName:        "icon-send-comment-gray-defaul",
-                                              imageEdgeInsets:  .zero)
+    lazy var sendButton = CommunButton.circle(size:                 44.0,
+                                              backgroundColor:      .white,
+                                              tintColor:            UIColor(hexString: "#A5A7BD"),
+                                              imageName:            "icon-send-comment-gray-defaul",
+                                              imageEdgeInsets:      .zero)
     
     
     // MARK: - Methods
@@ -131,7 +131,9 @@ class CommentForm: MyView {
         // Send button
         addSubview(sendButton)
         sendButton.autoPinEdge(.leading, to: .trailing, of: textView, withOffset: 5.0)
-        sendButton.autoPinBottomAndTrailingToSuperView(inset: 10, xInset: 16)
+        sendButton.autoAlignAxis(toSuperviewAxis: .horizontal)
+        sendButton.autoPinEdge(toSuperviewEdge: .right, withInset: 10.0)
+//        sendButton.autoPinBottomAndTrailingToSuperView(inset: 10, xInset: 16)
         sendButton.addTarget(self, action: #selector(sendComment), for: .touchUpInside)
         bind()
         
