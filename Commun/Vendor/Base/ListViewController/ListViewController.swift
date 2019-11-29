@@ -11,7 +11,7 @@ import RxSwift
 import RxDataSources
 import RxCocoa
 
-class ListViewController<T: ListItemType>: BaseViewController {
+class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewController {
     // MARK: - Nested type
     public typealias ListSection = AnimatableSectionModel<String, T>
     
@@ -56,6 +56,31 @@ class ListViewController<T: ListItemType>: BaseViewController {
         }
         
         tableView.rowHeight = UITableView.automaticDimension
+        
+        // registerCell
+        registerCell()
+        
+        // set up datasource
+        dataSource = MyRxTableViewSectionedAnimatedDataSource<ListSection>(
+            configureCell: { dataSource, tableView, indexPath, item in
+                return self.configureCell(with: item, indexPath: indexPath)
+            }
+        )
+    }
+    
+    func registerCell() {
+        tableView.register(CellType.self, forCellReuseIdentifier: String(describing: CellType.self))
+    }
+    
+    func configureCell(with item: T, indexPath: IndexPath) -> UITableViewCell {
+        let cell = self.tableView.dequeueReusableCell(withIdentifier: String(describing: CellType.self)) as! CellType
+        cell.setUp(with: item as! CellType.T)
+        
+        if indexPath.row >= self.viewModel.items.value.count - 5 {
+            self.viewModel.fetchNext()
+        }
+        
+        return cell
     }
     
     // MARK: - Binding

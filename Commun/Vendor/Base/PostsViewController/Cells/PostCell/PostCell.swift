@@ -9,7 +9,7 @@
 import UIKit
 import RxSwift
 
-class PostCell: MyTableViewCell, PostController {
+class PostCell: MyTableViewCell, ListItemCellType , PostController {
     // MARK: - Properties
     var post: ResponseAPIContentGetPost?
     let voteActionsContainerViewHeight: CGFloat = 35
@@ -125,8 +125,7 @@ class PostCell: MyTableViewCell, PostController {
     
     
     // MARK: - Methods
-    func setUp(with post: ResponseAPIContentGetPost?) {
-        guard let post = post else {return}
+    func setUp(with post: ResponseAPIContentGetPost) {
         self.post = post
 
         metaView.setUp(post: post)

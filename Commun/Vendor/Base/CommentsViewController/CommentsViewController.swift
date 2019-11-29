@@ -10,7 +10,7 @@ import Foundation
 import CyberSwift
 import RxSwift
 
-class CommentsViewController: ListViewController<ResponseAPIContentGetComment>, CommentCellDelegate {
+class CommentsViewController: ListViewController<ResponseAPIContentGetComment, CommentCell>, CommentCellDelegate {
     // MARK: - Properties
     lazy var expandedComments = [ResponseAPIContentGetComment]()
     
@@ -45,23 +45,19 @@ class CommentsViewController: ListViewController<ResponseAPIContentGetComment>, 
         super.setUp()
         // setup datasource
         tableView.separatorStyle = .none
+    }
+    
+    override func configureCell(with comment: ResponseAPIContentGetComment, indexPath: IndexPath) -> UITableViewCell {
+        let cell = self.tableView.dequeueReusableCell(withIdentifier: "CommentCell") as! CommentCell
+        cell.expanded = self.expandedComments.contains(where: {$0.identity == comment.identity})
+        cell.setUp(with: comment)
+        cell.delegate = self
         
-        tableView.register(CommentCell.self, forCellReuseIdentifier: "CommentCell")
+        if indexPath.row == self.viewModel.items.value.count - 2 {
+            self.viewModel.fetchNext()
+        }
         
-        dataSource = MyRxTableViewSectionedAnimatedDataSource<ListSection>(
-            configureCell: { dataSource, tableView, indexPath, comment in
-                let cell = self.tableView.dequeueReusableCell(withIdentifier: "CommentCell") as! CommentCell
-                cell.expanded = self.expandedComments.contains(where: {$0.identity == comment.identity})
-                cell.setUp(with: comment)
-                cell.delegate = self
-                
-                if indexPath.row == self.viewModel.items.value.count - 2 {
-                    self.viewModel.fetchNext()
-                }
-                
-                return cell
-            }
-        )
+        return cell
     }
     
     override func bind() {

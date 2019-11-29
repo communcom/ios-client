@@ -104,8 +104,7 @@ class PostHeaderView: MyTableHeaderView, PostController {
         observePostChange()
     }
     
-    func setUp(with post: ResponseAPIContentGetPost?) {
-        guard let post = post else {return}
+    func setUp(with post: ResponseAPIContentGetPost) {
         self.post = post
         
         if post.document?.attributes?.type == "article" {

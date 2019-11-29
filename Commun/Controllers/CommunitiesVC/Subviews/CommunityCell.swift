@@ -9,7 +9,7 @@
 import Foundation
 import CyberSwift
 
-class CommunityCell: SubsItemCell, CommunityController {
+class CommunityCell: SubsItemCell, ListItemCellType, CommunityController {
     var joinButton: CommunButton {
         get {
             return actionButton

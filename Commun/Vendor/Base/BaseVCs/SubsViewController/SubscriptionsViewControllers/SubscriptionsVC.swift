@@ -10,7 +10,7 @@ import Foundation
 import CyberSwift
 import RxDataSources
 
-class SubscriptionsVC: SubsViewController<ResponseAPIContentGetSubscriptionsItem> {
+class SubscriptionsVC: SubsViewController<ResponseAPIContentGetSubscriptionsItem, SubscriptionsUserCell> {
     var hideFollowButton = false
     private var isNeedHideCloseButton = false
 
@@ -33,58 +33,59 @@ class SubscriptionsVC: SubsViewController<ResponseAPIContentGetSubscriptionsItem
     
     override func setUp() {
         super.setUp()
-        tableView.register(SubscriptionsUserCell.self, forCellReuseIdentifier: "SubscriptionsUserCell")
-        tableView.register(SubscriptionsCommunityCell.self, forCellReuseIdentifier: "SubscriptionsCommunityCell")
-
+        
         if isNeedHideCloseButton {
             self.navigationItem.rightBarButtonItem = nil
         }
-
-        dataSource = MyRxTableViewSectionedAnimatedDataSource<ListSection>(
-            configureCell: { dataSource, tableView, indexPath, subscription in
-                if let community = subscription.communityValue {
-                    let cell = self.tableView.dequeueReusableCell(withIdentifier: "SubscriptionsCommunityCell") as! SubscriptionsCommunityCell
-                    cell.setUp(with: community)
-                    
-                    cell.roundedCorner = []
-                    
-                    if indexPath.row == 0 {
-                        cell.roundedCorner.insert([.topLeft, .topRight])
-                    }
-                    
-                    if indexPath.row == self.viewModel.items.value.count - 1 {
-                        cell.roundedCorner.insert([.bottomLeft, .bottomRight])
-                    }
-
-                    cell.joinButton.isHidden = self.hideFollowButton
-
-                    return cell
-                }
-                
-                if let profile = subscription.userValue {
-                    let cell = self.tableView.dequeueReusableCell(withIdentifier: "SubscriptionsUserCell") as! SubscriptionsUserCell
-                    cell.setUp(with: profile)
-                    
-                    cell.roundedCorner = []
-                    
-                    if indexPath.row == 0 {
-                        cell.roundedCorner.insert([.topLeft, .topRight])
-                    }
-                    
-                    if indexPath.row == self.viewModel.items.value.count - 1 {
-                        cell.roundedCorner.insert([.bottomLeft, .bottomRight])
-                    }
-                    
-                    return cell
-                }
-                
-                if indexPath.row >= self.viewModel.items.value.count - 5 {
-                    self.viewModel.fetchNext()
-                }
-                
-                return UITableViewCell()
+    }
+    
+    override func registerCell() {
+        tableView.register(SubscriptionsUserCell.self, forCellReuseIdentifier: "SubscriptionsUserCell")
+        tableView.register(SubscriptionsCommunityCell.self, forCellReuseIdentifier: "SubscriptionsCommunityCell")
+    }
+    
+    override func configureCell(with subscription: ResponseAPIContentGetSubscriptionsItem, indexPath: IndexPath) -> UITableViewCell {
+        if let community = subscription.communityValue {
+            let cell = self.tableView.dequeueReusableCell(withIdentifier: "SubscriptionsCommunityCell") as! SubscriptionsCommunityCell
+            cell.setUp(with: community)
+            
+            cell.roundedCorner = []
+            
+            if indexPath.row == 0 {
+                cell.roundedCorner.insert([.topLeft, .topRight])
             }
-        )
+            
+            if indexPath.row == self.viewModel.items.value.count - 1 {
+                cell.roundedCorner.insert([.bottomLeft, .bottomRight])
+            }
+
+            cell.joinButton.isHidden = self.hideFollowButton
+
+            return cell
+        }
+        
+        if let profile = subscription.userValue {
+            let cell = self.tableView.dequeueReusableCell(withIdentifier: "SubscriptionsUserCell") as! SubscriptionsUserCell
+            cell.setUp(with: profile)
+            
+            cell.roundedCorner = []
+            
+            if indexPath.row == 0 {
+                cell.roundedCorner.insert([.topLeft, .topRight])
+            }
+            
+            if indexPath.row == self.viewModel.items.value.count - 1 {
+                cell.roundedCorner.insert([.bottomLeft, .bottomRight])
+            }
+            
+            return cell
+        }
+        
+        if indexPath.row >= self.viewModel.items.value.count - 5 {
+            self.viewModel.fetchNext()
+        }
+        
+        return UITableViewCell()
     }
     
     override func bind() {

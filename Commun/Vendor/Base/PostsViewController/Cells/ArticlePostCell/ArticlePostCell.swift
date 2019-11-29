@@ -99,13 +99,13 @@ final class ArticlePostCell: PostCell {
         cardImageView.autoPinEdge(.bottom, to: .top, of: voteContainerView, withOffset: -10)
     }
     
-    override func setUp(with post: ResponseAPIContentGetPost?) {
+    override func setUp(with post: ResponseAPIContentGetPost) {
         super.setUp(with: post)
         cardImageView.image = UIImage(named: "article-placeholder")
 
-        titleLabel.text = post?.document?.attributes?.title
+        titleLabel.text = post.document?.attributes?.title
 
-        if let coverString = post?.document?.attributes?.coverUrl,
+        if let coverString = post.document?.attributes?.coverUrl,
             let coverURL = URL(string: coverString) {
             cardImageView.sd_setImageCachedError(with: coverURL, completion: nil)
         }

@@ -12,7 +12,7 @@ import RxCocoa
 import CyberSwift
 import RxDataSources
 
-class NotificationsPageVC: SubsViewController<ResponseAPIOnlineNotificationData> {
+class NotificationsPageVC: SubsViewController<ResponseAPIOnlineNotificationData, NotificationCell> {
     override func setUp() {
         super.setUp()
         navigationItem.rightBarButtonItem = nil
@@ -25,17 +25,6 @@ class NotificationsPageVC: SubsViewController<ResponseAPIOnlineNotificationData>
         // configure tableView
         tableView.estimatedRowHeight = 80
         tableView.tableFooterView = UIView()
-        
-        tableView.register(UINib(nibName: "NotificationCell", bundle: nil), forCellReuseIdentifier: "NotificationCell")
-        
-        dataSource = MyRxTableViewSectionedAnimatedDataSource<ListSection>(configureCell: {_, _, indexPath, item in
-            let cell = self.tableView.dequeueReusableCell(withIdentifier: "NotificationCell") as! NotificationCell
-            cell.configure(with: item)
-            if indexPath.row >= self.viewModel.items.value.count - 5 {
-                self.viewModel.fetchNext()
-            }
-            return cell
-        })
     }
     
     override func bind() {

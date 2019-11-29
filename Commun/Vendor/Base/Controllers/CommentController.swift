@@ -14,7 +14,7 @@ protocol CommentController: class {
     var disposeBag: DisposeBag {get}
     var voteContainerView: VoteContainerView {get set}
     var comment: ResponseAPIContentGetComment? {get set}
-    func setUp(with comment: ResponseAPIContentGetComment?)
+    func setUp(with comment: ResponseAPIContentGetComment)
 }
 
 extension CommentController {

@@ -20,7 +20,7 @@ protocol CommentCellDelegate: class {
     func cell(_ cell: CommentCell, didTapEditForComment comment: ResponseAPIContentGetComment)
 }
 
-class CommentCell: MyTableViewCell, CommentController {
+class CommentCell: MyTableViewCell, ListItemCellType, CommentController {
     // MARK: - Constants
     let voteActionsContainerViewHeight: CGFloat = 35
     private let maxCharactersForReduction = 150
@@ -103,8 +103,7 @@ class CommentCell: MyTableViewCell, CommentController {
     }
     
     // MARK: - Setup
-    func setUp(with comment: ResponseAPIContentGetComment?) {
-        guard let comment = comment else {return}
+    func setUp(with comment: ResponseAPIContentGetComment) {
         self.comment = comment
         
         // if comment is a reply
