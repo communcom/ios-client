@@ -25,9 +25,9 @@ class WelcomeItemVC: UIViewController {
     
     @IBOutlet weak var describeLabel: UILabel! {
         didSet {
-            self.describeLabel.tune(withText:       "",
+            self.describeLabel.tune(withAttributedText:       "",
                                     hexColors:      grayishBluePickers,
-                                    font:           UIFont(name: "SFProDisplay-Medium", size: CGFloat.adaptive(width: 17.0)),
+                                    font:           UIFont.systemFont(ofSize: 17, weight: .medium),
                                     alignment:      .center,
                                     isMultiLines:   true)
         }
@@ -48,20 +48,24 @@ class WelcomeItemVC: UIViewController {
         self.imageView.image = UIImage(named: "image-welcome-item-\(item)")
         self.imageViewWidthConstraint.constant = CGFloat.adaptive(width: 310.0)
         self.imageViewTopConstraint.constant = CGFloat.adaptive(height: -(70.0 + 39.0))
-        self.describeLabel.text = "welcome-item-\(item)".localized()
+        self.describeLabel.tune(withAttributedText: "welcome-item-\(item)".localized(),
+                                hexColors: grayishBluePickers,
+                                font: UIFont.systemFont(ofSize: 17, weight: .medium),
+                                alignment: .center,
+                                isMultiLines: true)
 
         switch self.item {
         // All-in-One
         case 1:
             self.titleLabel1.tune(withText:         "all-in-one".localized(),
                                   hexColors:        blackWhiteColorPickers,
-                                  font:             UIFont(name: "SFProDisplay-Bold", size: CGFloat.adaptive(width: 36.0)),
+                                  font:             UIFont.systemFont(ofSize: CGFloat.adaptive(width: 36.0), weight: .bold),
                                   alignment:        .center,
                                   isMultiLines:     false)
             
             self.titleLabel2.tune(withText:         "social network".localized(),
                                   hexColors:        blackWhiteColorPickers,
-                                  font:             UIFont(name: "SFProDisplay-Regular", size: CGFloat.adaptive(width: 36.0)),
+                                  font:             UIFont.systemFont(ofSize: CGFloat.adaptive(width: 36.0), weight: .regular),
                                   alignment:        .center,
                                   isMultiLines:     false)
             
@@ -71,13 +75,13 @@ class WelcomeItemVC: UIViewController {
         case 2:
             self.titleLabel1.tune(withText:         "monetize".localized().uppercaseFirst,
                                   hexColors:        blackWhiteColorPickers,
-                                  font:             UIFont(name: "SFProDisplay-Bold", size: CGFloat.adaptive(width: 36.0)),
+                                  font:             UIFont.systemFont(ofSize: CGFloat.adaptive(width: 36.0), weight: .bold),
                                   alignment:        .center,
                                   isMultiLines:     false)
             
             self.titleLabel2.tune(withText:         "your socializing".localized(),
                                   hexColors:        blackWhiteColorPickers,
-                                  font:             UIFont(name: "SFProDisplay-Regular", size: CGFloat.adaptive(width: 36.0)),
+                                  font:             UIFont.systemFont(ofSize: CGFloat.adaptive(width: 36.0), weight: .regular),
                                   alignment:        .center,
                                   isMultiLines:     false)
             
@@ -87,13 +91,13 @@ class WelcomeItemVC: UIViewController {
         case 3:
             self.titleLabel2.tune(withText:         "owned".localized().uppercaseFirst,
                                   hexColors:        blackWhiteColorPickers,
-                                  font:             UIFont(name: "SFProDisplay-Bold", size: CGFloat.adaptive(width: 36.0)),
+                                  font:             UIFont.systemFont(ofSize: CGFloat.adaptive(width: 36.0), weight: .bold),
                                   alignment:        .center,
                                   isMultiLines:     false)
             
             self.titleLabel3.tune(withText:         "by users".localized(),
                                   hexColors:        blackWhiteColorPickers,
-                                  font:             UIFont(name: "SFProDisplay-Regular", size: CGFloat.adaptive(width: 36.0)),
+                                  font:             UIFont.systemFont(ofSize: CGFloat.adaptive(width: 36.0), weight: .regular),
                                   alignment:        .center,
                                   isMultiLines:     false)
             
@@ -103,24 +107,24 @@ class WelcomeItemVC: UIViewController {
         default:
             self.titleLabel1.tune(withText:         "welcome".localized().uppercaseFirst,
                                   hexColors:        blackWhiteColorPickers,
-                                  font:             UIFont(name: "SFProDisplay-Regular", size: CGFloat.adaptive(width: 36.0)),
+                                  font:             UIFont.systemFont(ofSize: CGFloat.adaptive(width: 36.0), weight: .regular),
                                   alignment:        .center,
                                   isMultiLines:     false)
             
             self.titleLabel2.tune(withText:         "to".localized(),
                                   hexColors:        blackWhiteColorPickers,
-                                  font:             UIFont(name: "SFProDisplay-Regular", size: CGFloat.adaptive(width: 36.0)),
+                                  font:             UIFont.systemFont(ofSize: CGFloat.adaptive(width: 36.0), weight: .regular),
                                   alignment:        .center,
                                   isMultiLines:     false)
             
             self.titleLabel3.tune(withText:         "Commun /",
                                   hexColors:        softBlueColorPickers,
-                                  font:             UIFont(name: "SFProDisplay-Bold", size: CGFloat.adaptive(width: 36.0)),
+                                  font:             UIFont.systemFont(ofSize: CGFloat.adaptive(width: 36.0), weight: .bold),
                                   alignment:        .center,
                                   isMultiLines:     false)
             
             self.imageViewWidthConstraint.constant = UIScreen.main.bounds.width
-            self.imageViewTopConstraint.constant = CGFloat.adaptive(height: -(70.0 + 0.0))
+            self.imageViewTopConstraint.constant = CGFloat.adaptive(height: -(70.0 - 19.0))
         }
     }
 }

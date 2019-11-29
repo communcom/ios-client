@@ -34,7 +34,7 @@ class WelcomeVC: UIViewController {
     @IBOutlet weak var topSignInButton: BlankButton! {
         didSet {
             self.topSignInButton.commonInit(hexColors:      [blackWhiteColorPickers, grayishBluePickers, grayishBluePickers, grayishBluePickers],
-                                            font:           UIFont(name: "SFProText-Medium", size: .adaptive(width: 15.0)),
+                                            font:           UIFont.systemFont(ofSize: CGFloat.adaptive(width: 15.0), weight: .medium),
                                             alignment:      .right)
         }
     }
@@ -42,7 +42,7 @@ class WelcomeVC: UIViewController {
     @IBOutlet var actionButtonsCollection: [StepButton]! {
         didSet {
             self.actionButtonsCollection.forEach {
-                $0.commonInit(backgroundColor: UIColor(hexString: "#6A80F5"),
+                $0.commonInit(backgroundColor: .appMainColor,
                               font:            .boldSystemFont(ofSize: CGFloat.adaptive(width: 15.0)),
                               cornerRadius:    $0.height / CGFloat.adaptive(height: 2.0))
             }
