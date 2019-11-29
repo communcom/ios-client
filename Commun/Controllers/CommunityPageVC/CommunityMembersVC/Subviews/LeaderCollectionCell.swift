@@ -71,7 +71,7 @@ class LeaderCollectionCell: MyCollectionViewCell, LeaderController {
         statsLabel.attributedText = pointsText
         
         // joinButton
-        let voted = leader.isVoted
+        let voted = leader.votesCount > 0
         voteButton.setHightLight(voted, highlightedLabel: "voted", unHighlightedLabel: "vote")
         voteButton.isEnabled = !(leader.isBeingVoted ?? false)
     }
