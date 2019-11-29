@@ -119,15 +119,6 @@ class WelcomeVC: UIViewController {
         let indexNext = self.welcomePageVC.currentPage + 1
         self.welcomePageVC.currentPage = indexNext
         self.welcomePageVC.showActionButtons(indexNext)
-        self.welcomePageVC.timer?.invalidate()
-//        self.welcomePageVC.setUpCountDown()
         self.pageControl.selectedIndex = indexNext
-    }
-    
-    
-    // MARK: - TESTED
-    @IBAction func testButtonTapped(_ sender: Any) {
-//        let masterPassvordVC = controllerContainer.resolve(MasterPasswordViewController.self)!
-//        navigationController?.pushViewController(masterPassvordVC)
     }
 }
