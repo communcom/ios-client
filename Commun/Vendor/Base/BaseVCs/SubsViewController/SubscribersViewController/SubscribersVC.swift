@@ -11,8 +11,8 @@ import CyberSwift
 
 class SubscribersVC: SubsViewController<ResponseAPIContentResolveProfile, SubscribersCell> {
     init(title: String? = nil, userId: String? = nil, communityId: String? = nil) {
-        super.init(nibName: nil, bundle: nil)
-        viewModel = SubscribersViewModel(userId: userId, communityId: communityId)
+        let viewModel = SubscribersViewModel(userId: userId, communityId: communityId)
+        super.init(viewModel: viewModel)
         defer {
             self.title = title
             viewModel.fetchNext()

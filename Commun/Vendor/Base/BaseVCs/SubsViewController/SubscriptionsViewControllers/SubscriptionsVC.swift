@@ -15,8 +15,8 @@ class SubscriptionsVC: SubsViewController<ResponseAPIContentGetSubscriptionsItem
     private var isNeedHideCloseButton = false
 
     init(title: String? = nil, userId: String?, type: GetSubscriptionsType) {
-        super.init(nibName: nil, bundle: nil)
-        viewModel = SubscriptionsViewModel(userId: userId, type: type)
+        let viewModel = SubscriptionsViewModel(userId: userId, type: type)
+        super.init(viewModel: viewModel)
         defer {self.title = title}
     }
     
@@ -25,9 +25,9 @@ class SubscriptionsVC: SubsViewController<ResponseAPIContentGetSubscriptionsItem
     }
 
     init() {
-        super.init(nibName: nil, bundle: nil)
         self.isNeedHideCloseButton = true
-        viewModel = SubscriptionsViewModel(userId: nil, type: .user)
+        let viewModel = SubscriptionsViewModel(userId: nil, type: .user)
+        super.init(viewModel: viewModel)
         defer {self.title = "followings".localized().uppercaseFirst}
     }
     
