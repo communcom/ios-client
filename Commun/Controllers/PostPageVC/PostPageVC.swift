@@ -31,14 +31,16 @@ class PostPageVC: CommentsViewController {
 
     // MARK: - Initializers
     init(post: ResponseAPIContentGetPost) {
-        super.init(nibName: nil, bundle: nil)
-        self.commentForm.post = post
-        self.viewModel = PostPageViewModel(post: post)
+        let viewModel = PostPageViewModel(post: post)
+        super.init(viewModel: viewModel)
+        defer {
+            self.commentForm.post = post
+        }
     }
     
     init(userId: String, permlink: String, communityId: String) {
-        super.init(nibName: nil, bundle: nil)
-        self.viewModel = PostPageViewModel(userId: userId, permlink: permlink, communityId: communityId)
+        let viewModel = PostPageViewModel(userId: userId, permlink: permlink, communityId: communityId)
+        super.init(viewModel: viewModel)
     }
     
     required init?(coder: NSCoder) {

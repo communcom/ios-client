@@ -14,8 +14,8 @@ class CommunitiesVC: SubsViewController<ResponseAPIContentGetCommunity, Communit
     
     // MARK: - Initializers
     init(type: GetCommunitiesType, userId: String? = nil) {
-        super.init(nibName: nil, bundle: nil)
-        viewModel = CommunitiesViewModel(type: type, userId: userId)
+        let viewModel = CommunitiesViewModel(type: type, userId: userId)
+        super.init(viewModel: viewModel)
         defer {self.title = "communities".localized().uppercaseFirst}
     }
     

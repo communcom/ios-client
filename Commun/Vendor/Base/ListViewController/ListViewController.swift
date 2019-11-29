@@ -16,7 +16,7 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
     public typealias ListSection = AnimatableSectionModel<String, T>
     
     // MARK: - Properties
-    var viewModel: ListViewModel<T>!
+    var viewModel: ListViewModel<T>
     var dataSource: MyRxTableViewSectionedAnimatedDataSource<ListSection>!
     var tableViewMargin: UIEdgeInsets {.zero}
     
@@ -36,6 +36,16 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
         tableView.autoPinEdgesToSuperviewSafeArea(with: tableViewMargin)
         return tableView
     }()
+    
+    // MARK: - Initializers
+    init(viewModel: ListViewModel<T>) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     // MARK: - Methods
     override func setUp() {

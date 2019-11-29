@@ -36,9 +36,17 @@ class CommentsViewController: ListViewController<ResponseAPIContentGetComment, C
     }()
     
     // MARK: Initializers
-    convenience init(filter: CommentsListFetcher.Filter) {
-        self.init(nibName: nil, bundle: nil)
-        viewModel = CommentsViewModel(filter: filter)
+    init(filter: CommentsListFetcher.Filter) {
+        let viewModel = CommentsViewModel(filter: filter)
+        super.init(viewModel: viewModel)
+    }
+    
+    init(viewModel: CommentsViewModel) {
+        super.init(viewModel: viewModel)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     override func setUp() {

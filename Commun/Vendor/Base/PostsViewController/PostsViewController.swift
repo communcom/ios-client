@@ -12,8 +12,8 @@ import CyberSwift
 class PostsViewController: ListViewController<ResponseAPIContentGetPost, PostCell> {
     
     init(filter: PostsListFetcher.Filter = PostsListFetcher.Filter(feedTypeMode: .new, feedType: .time)) {
-        super.init(nibName: nil, bundle: nil)
-        viewModel = PostsViewModel(filter: filter)
+        let viewModel = PostsViewModel(filter: filter)
+        super.init(viewModel: viewModel)
         defer {
             viewModel.fetchNext()
         }
