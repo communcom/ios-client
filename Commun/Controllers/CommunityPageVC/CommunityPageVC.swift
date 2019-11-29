@@ -139,10 +139,6 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>{
     override func bindItems() {
         let dataSource = MyRxTableViewSectionedAnimatedDataSource<AnimatableSectionModel<String, CustomElementType>>(
             configureCell: { (dataSource, tableView, indexPath, element) -> UITableViewCell in
-                if indexPath.row >= self.viewModel.items.value.count - 5 {
-                    self.viewModel.fetchNext()
-                }
-                
                 switch element {
                 case .post(let post):
                     switch post.document?.attributes?.type {

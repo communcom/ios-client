@@ -86,10 +86,6 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
         let cell = self.tableView.dequeueReusableCell(withIdentifier: String(describing: CellType.self)) as! CellType
         cell.setUp(with: item as! CellType.T)
         
-        if indexPath.row >= self.viewModel.items.value.count - 5 {
-            self.viewModel.fetchNext()
-        }
-        
         return cell
     }
     
@@ -99,6 +95,7 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
         bindState()
         bindItems()
         bindItemSelected()
+        bindScrollView()
         
         if isSearchEnabled {
             bindSearchController()
@@ -186,6 +183,20 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
             showProfileWithUserId(profile.userId)
         }
         
+    }
+    
+    func bindScrollView() {
+        tableView.rx.willEndDragging
+            .subscribe(onNext: { (velocity, targetContentOffset) in
+                let currentOffset = self.tableView.contentOffset.y
+                let maximumOffset = self.tableView.contentSize.height - self.tableView.frame.size.height
+                
+                // Change 10.0 to adjust the distance from bottom
+                if maximumOffset - currentOffset <= 100 {
+                    self.viewModel.fetchNext()
+                }
+            })
+            .disposed(by: disposeBag)
     }
     
     // MARK: - State handling

@@ -46,11 +46,6 @@ class PostsViewController: ListViewController<ResponseAPIContentGetPost, PostCel
         default:
             return UITableViewCell()
         }
-        
-        if indexPath.row >= self.viewModel.items.value.count - 5 {
-            self.viewModel.fetchNext()
-        }
-        
         return cell
     }
     
