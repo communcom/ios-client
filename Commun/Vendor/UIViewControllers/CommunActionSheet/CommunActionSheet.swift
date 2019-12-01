@@ -38,7 +38,7 @@ class CommunActionSheet: SwipeDownDismissViewController {
     }
     let buttonSize: CGFloat = 30
     var headerHeight: CGFloat = 40
-    let headerToButtonsSpace: CGFloat = 30
+    let headerToButtonsSpace: CGFloat = 23
     var actionViewHeight: CGFloat {
         switch style {
         case .default:
@@ -82,14 +82,14 @@ class CommunActionSheet: SwipeDownDismissViewController {
         
         var button = UIButton(frame: .zero)
         button.setImage(UIImage(named: "close-x"), for: .normal)
-        button.imageEdgeInsets = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
+        button.imageEdgeInsets = UIEdgeInsets(top: 6, left: 6, bottom: 6, right: 6)
         button.backgroundColor = .white
         button.tintColor = .a5a7bd
         button.cornerRadius = buttonSize / 2
         button.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(button)
 
-        button.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -defaultMargin)
+        button.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -15)
             .isActive = true
         button.widthAnchor.constraint(equalToConstant: buttonSize)
             .isActive = true

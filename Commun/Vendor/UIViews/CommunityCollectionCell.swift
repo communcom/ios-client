@@ -21,7 +21,7 @@ class CommunityCollectionCell<T: CommunityType>: MyCollectionViewCell {
     
     // MARK: - Subviews
     lazy var coverImageView: UIImageView = {
-        let imageView = UIImageView(cornerRadius: 15)
+        let imageView = UIImageView(cornerRadius: 10)
         imageView.image = .placeholder
         return imageView
     }()
