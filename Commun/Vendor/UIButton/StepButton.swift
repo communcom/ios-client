@@ -27,13 +27,14 @@ import UIKit
     // MARK: - Class Functions
     override var isEnabled: Bool {
         didSet {
-            self.backgroundColor = self.isEnabled ? #colorLiteral(red: 0.4235294118, green: 0.5137254902, blue: 0.9294117647, alpha: 1) : #colorLiteral(red: 0.4156862745, green: 0.5019607843, blue: 0.9607843137, alpha: 0.3834813784)
+            self.alpha = 1.0
+            self.backgroundColor = self.isEnabled ? .appMainColor : .appGrayColor
         }
     }
 
     
     // MARK: - Custom Functions
-    func commonInit(backgroundColor:    UIColor? = #colorLiteral(red: 0.4235294118, green: 0.5137254902, blue: 0.9294117647, alpha: 1),
+    func commonInit(backgroundColor:    UIColor? = .appMainColor,
                     font:               UIFont? = .boldSystemFont(ofSize: CGFloat.adaptive(width: 17.0)),
                     cornerRadius:       CGFloat? = CGFloat.adaptive(width: 8.0)) {
         self.backgroundColor        =   backgroundColor!
