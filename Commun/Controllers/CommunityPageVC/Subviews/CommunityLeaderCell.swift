@@ -8,8 +8,9 @@
 
 import Foundation
 
-class CommunityLeaderCell: CommunityPageCell, LeaderController {
+class CommunityLeaderCell: CommunityPageCell {
     var leader: ResponseAPIContentGetLeader?
+    weak var delegate: LeaderCellDelegate?
     
     lazy var avatarImageView: LeaderAvatarImageView = {
         let imageView = LeaderAvatarImageView(size: 56)
@@ -107,7 +108,7 @@ class CommunityLeaderCell: CommunityPageCell, LeaderController {
         #warning("description missing")
         
         // voteButton
-        let voted = leader.votesCount > 0
+        let voted = leader.isVoted ?? false
         voteButton.backgroundColor = voted ? #colorLiteral(red: 0.9525656104, green: 0.9605062604, blue: 0.9811610579, alpha: 1): .appMainColor
         voteButton.setTitleColor(voted ? .appMainColor: .white , for: .normal)
         voteButton.setTitle(voted ? "voted".localized().uppercaseFirst : "vote".localized().uppercaseFirst, for: .normal)
@@ -115,6 +116,9 @@ class CommunityLeaderCell: CommunityPageCell, LeaderController {
     }
     
     @objc func voteButtonDidTouch() {
-        toggleVote()
+        guard let leader = leader else {return}
+        voteButton.animate {
+            self.delegate?.buttonVoteDidTouch(leader: leader)
+        }
     }
 }

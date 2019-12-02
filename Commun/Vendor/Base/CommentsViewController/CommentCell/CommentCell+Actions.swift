@@ -42,11 +42,17 @@ extension CommentCell: UITextViewDelegate {
     }
     
     @objc func upVoteButtonDidTouch() {
-        upVote()
+        guard let comment = comment else {return}
+        voteContainerView.animateUpVote {
+            self.delegate?.cell(self, didTapUpVoteForComment: comment)
+        }
     }
     
     @objc func downVoteButtonDidTouch() {
-        downVote()
+        guard let comment = comment else {return}
+        voteContainerView.animateDownVote {
+            self.delegate?.cell(self, didTapDownVoteForComment: comment)
+        }
     }
     
     @objc func replyButtonDidTouch() {
@@ -58,60 +64,7 @@ extension CommentCell: UITextViewDelegate {
         guard let comment = comment else {return}
         if gestureRecognizer.state == UIGestureRecognizer.State.ended {
             //When lognpress is finish
-            let headerView = UIView(frame: .zero)
-            
-            let avatarImageView = MyAvatarImageView(size: 40)
-            headerView.addSubview(avatarImageView)
-            avatarImageView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .trailing)
-            
-            let nameLabel = UILabel.with(textSize: 15, weight: .bold)
-            headerView.addSubview(nameLabel)
-            nameLabel.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 10)
-            nameLabel.autoAlignAxis(.horizontal, toSameAxisOf: avatarImageView)
-            nameLabel.autoPinEdge(toSuperviewEdge: .trailing)
-            
-            let actions: [CommunActionSheet.Action]
-            
-            if comment.author?.userId == Config.currentUser?.id {
-                // edit, delete
-                actions = [
-                    CommunActionSheet.Action(
-                        title: "edit".localized().uppercaseFirst,
-                        icon: UIImage(named: "edit"),
-                        handle: {
-                            guard let comment = self.comment else {return}
-                            self.delegate?.cell(self, didTapEditForComment: comment)
-                        },
-                        tintColor: .black),
-                    CommunActionSheet.Action(
-                        title: "delete".localized().uppercaseFirst,
-                        icon: UIImage(named: "delete"),
-                        handle: {
-                            self.deleteComment()
-                        },
-                        tintColor: UIColor(hexString: "#ED2C5B")!)
-                ]
-            }
-            else {
-                // report
-                actions = [
-                    CommunActionSheet.Action(
-                        title: "report".localized().uppercaseFirst,
-                        icon: UIImage(named: "report"),
-                        handle: {
-                            self.report()
-                        },
-                        tintColor: UIColor(hexString: "#ED2C5B")!)
-                ]
-            }
-            
-            parentViewController?.showCommunActionSheet(
-                headerView: headerView,
-                actions: actions,
-                completion: {
-                    avatarImageView.setAvatar(urlString: comment.author?.avatarUrl, namePlaceHolder: comment.author?.username ?? "U")
-                    nameLabel.text = comment.author?.username
-                })
+            self.delegate?.cell(self, didTapMoreActionFor: comment)
         }
     }
 }

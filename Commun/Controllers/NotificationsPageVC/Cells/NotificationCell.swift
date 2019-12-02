@@ -10,6 +10,10 @@ import UIKit
 import RxSwift
 import ListPlaceholder
 
+protocol NotificationCellDelegate: class {
+    
+}
+
 class NotificationCell: UITableViewCell, ListItemCellType {
     
     @IBOutlet weak var avatarImage: UIImageView!
@@ -22,8 +26,13 @@ class NotificationCell: UITableViewCell, ListItemCellType {
     @IBOutlet var nTIBottomConstraint: NSLayoutConstraint!
     @IBOutlet var nTILeadingConstraint: NSLayoutConstraint!
     
+    // MARK: - Properties
+    var notification: ResponseAPIOnlineNotificationData?
+    weak var delegate: NotificationCellDelegate?
+    
     // Methods
     func setUp(with notification: ResponseAPIOnlineNotificationData) {
+        self.notification = notification
         // For placeholder cell
         self.contentView.hideLoader()
         if notification._id.starts(with: "___mock___") {

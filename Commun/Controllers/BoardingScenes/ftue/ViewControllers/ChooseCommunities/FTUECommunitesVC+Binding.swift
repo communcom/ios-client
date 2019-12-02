@@ -9,7 +9,7 @@
 import Foundation
 import ESPullToRefresh
 
-extension FTUECommunitiesVC: UICollectionViewDelegateFlowLayout, CommunityCollectionCellDelegate {
+extension FTUECommunitiesVC: UICollectionViewDelegateFlowLayout, CommunityCellDelegate {
     func bindControl() {
         let offsetY = communitiesCollectionView.rx
             .contentOffset

@@ -58,8 +58,8 @@ class PostMetaView: MyView {
     }
     
     func setUp(post: ResponseAPIContentGetPost) {
-        avatarImageView.setAvatar(urlString: post.community.avatarUrl, namePlaceHolder: post.community.name)
-        comunityNameLabel.text = post.community.name
+        avatarImageView.setAvatar(urlString: post.community?.avatarUrl, namePlaceHolder: post.community?.name ?? "C")
+        comunityNameLabel.text = post.community?.name
         timeAgoLabel.text = Date.timeAgo(string: post.meta.creationTime) + " • "
         byUserLabel.text = post.author?.username ?? post.author?.userId
         
@@ -91,7 +91,7 @@ class PostMetaView: MyView {
     }
     
     @objc func communityNameTapped(_ sender: TapGesture) {
-        let communityId = sender.post.community.communityId
+        guard let communityId = sender.post.community?.communityId else {return}
         parentViewController?.showCommunityWithCommunityId(communityId)
     }
 }

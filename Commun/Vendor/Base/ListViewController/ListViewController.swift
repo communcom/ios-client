@@ -73,7 +73,9 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
         // set up datasource
         dataSource = MyRxTableViewSectionedAnimatedDataSource<ListSection>(
             configureCell: { dataSource, tableView, indexPath, item in
-                return self.configureCell(with: item, indexPath: indexPath)
+                var cell = self.configureCell(with: item, indexPath: indexPath)
+                (cell as? CellType)?.delegate = self as? CellType.Delegate
+                return cell
             }
         )
     }
@@ -86,7 +88,7 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
         let cell = self.tableView.dequeueReusableCell(withIdentifier: String(describing: CellType.self)) as! CellType
         cell.setUp(with: item as! CellType.T)
         
-        return cell
+        return cell as! UITableViewCell
     }
     
     // MARK: - Binding

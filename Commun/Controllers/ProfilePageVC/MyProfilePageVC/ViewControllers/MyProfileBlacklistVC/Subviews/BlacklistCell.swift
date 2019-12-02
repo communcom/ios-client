@@ -9,9 +9,89 @@
 import Foundation
 import RxSwift
 
-class BlacklistCell: SubsItemCell {
+protocol BlacklistCellDelegate: class {
+    func blockButtonDidTouch(item: ResponseAPIContentGetBlacklistItem)
+}
+
+extension BlacklistCellDelegate where Self: BaseViewController {
+    func blockButtonDidTouch(item: ResponseAPIContentGetBlacklistItem) {
+        guard let id = item.userValue?.userId ?? item.communityValue?.communityId
+            else {return}
+        
+        // Apply changes immediately, if error occurs, reverse these changes
+        var originIsBlocked: Bool
+        switch item {
+        case .user(var user):
+            originIsBlocked = user.isBlocked ?? true
+            user.isBeingUnblocked = true
+            user.isBlocked = !originIsBlocked
+            user.notifyChanged()
+        case .community(var community):
+            originIsBlocked = community.isBlocked ?? true
+            community.isBeingUnblocked = true
+            community.isBlocked = !originIsBlocked
+            community.notifyChanged()
+        }
+        
+        // Prepare request
+        var request: Single<String>
+        if originIsBlocked {
+            switch item {
+            case .user(_):
+                request = RestAPIManager.instance.unblock(id)
+            case .community(_):
+                request = RestAPIManager.instance.unhideCommunity(id)
+            }
+            
+        }
+        else {
+            switch item {
+            case .user(_):
+                request = RestAPIManager.instance.block(id)
+            case .community(_):
+                request = RestAPIManager.instance.hideCommunity(id)
+            }
+        }
+        
+        // Send request
+        request
+            .flatMapCompletable {RestAPIManager.instance.waitForTransactionWith(id: $0)}
+            .subscribe(onCompleted: {
+                // reset loading to false
+                switch item {
+                case .user(var user):
+                    user.isBlocked = !originIsBlocked
+                    user.isBeingUnblocked = false
+                    user.notifyChanged()
+                case .community(var community):
+                    community.isBlocked = !originIsBlocked
+                    community.isBeingUnblocked = false
+                    community.notifyChanged()
+                }
+            }) { [weak self] (error) in
+                guard let strongSelf = self else {return}
+                strongSelf.showError(error)
+                
+                // reverse, reset loading to false
+                switch item {
+                case .user(var user):
+                    user.isBeingUnblocked = false
+                    user.isBeingUnblocked = originIsBlocked
+                    user.notifyChanged()
+                case .community(var community):
+                    community.isBeingUnblocked = false
+                    community.isBeingUnblocked = originIsBlocked
+                    community.notifyChanged()
+                }
+            }
+            .disposed(by: disposeBag)
+    }
+}
+
+class BlacklistCell: SubsItemCell, ListItemCellType {
     // MARK: - Properties
     var item: ResponseAPIContentGetBlacklistItem?
+    weak var delegate: BlacklistCellDelegate?
     
     func setUp(with item: ResponseAPIContentGetBlacklistItem) {
         self.item = item
@@ -35,83 +115,7 @@ class BlacklistCell: SubsItemCell {
     }
     
     override func actionButtonDidTouch() {
-        guard let id = item?.userValue?.userId ?? item?.communityValue?.communityId
-            else {return}
-        
-        // Apply changes immediately, if error occurs, reverse these changes
-        var originIsBlocked: Bool
-        switch item {
-        case .user(var user):
-            originIsBlocked = user.isBlocked ?? true
-            user.isBeingUnblocked = true
-            user.isBlocked = !originIsBlocked
-            user.notifyChanged()
-        case .community(var community):
-            originIsBlocked = community.isBlocked ?? true
-            community.isBeingUnblocked = true
-            community.isBlocked = !originIsBlocked
-            community.notifyChanged()
-        default:
-            return
-        }
-        
-        // Prepare request
-        var request: Single<String>
-        if originIsBlocked {
-            switch item! {
-            case .user(_):
-                request = RestAPIManager.instance.unblock(id)
-            case .community(_):
-                request = RestAPIManager.instance.unhideCommunity(id)
-            }
-            
-        }
-        else {
-            switch item! {
-            case .user(_):
-                request = RestAPIManager.instance.block(id)
-            case .community(_):
-                request = RestAPIManager.instance.hideCommunity(id)
-            }
-        }
-        
-        // Send request
-        request
-            .flatMapCompletable {RestAPIManager.instance.waitForTransactionWith(id: $0)}
-            .subscribe(onCompleted: {[weak self] in
-                guard let strongSelf = self else {return}
-                
-                // reset loading to false
-                switch strongSelf.item {
-                case .user(var user):
-                    user.isBlocked = !originIsBlocked
-                    user.isBeingUnblocked = false
-                    user.notifyChanged()
-                case .community(var community):
-                    community.isBlocked = !originIsBlocked
-                    community.isBeingUnblocked = false
-                    community.notifyChanged()
-                default:
-                    return
-                }
-            }) { [weak self] (error) in
-                guard let strongSelf = self else {return}
-                strongSelf.parentViewController?.showError(error)
-                
-                // reverse, reset loading to false
-                switch strongSelf.item {
-                case .user(var user):
-                    user.isBeingUnblocked = false
-                    user.isBeingUnblocked = originIsBlocked
-                    user.notifyChanged()
-                case .community(var community):
-                    community.isBeingUnblocked = false
-                    community.isBeingUnblocked = originIsBlocked
-                    community.notifyChanged()
-                default:
-                    return
-                }
-            }
-            .disposed(by: disposeBag)
+        guard let item = item else {return}
+        delegate?.blockButtonDidTouch(item: item)
     }
 }

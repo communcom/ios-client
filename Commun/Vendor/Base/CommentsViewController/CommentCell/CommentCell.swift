@@ -9,18 +9,7 @@
 import Foundation
 import ASSpinnerView
 
-protocol CommentCellDelegate: class {
-//    var replyingComment: ResponseAPIContentGetComment? {get set}
-    var expandedComments: [ResponseAPIContentGetComment] {get set}
-    var tableView: UITableView {get set}
-    func cell(_ cell: CommentCell, didTapReplyButtonForComment comment: ResponseAPIContentGetComment)
-    func cell(_ cell: CommentCell, didTapSeeMoreButtonForComment comment: ResponseAPIContentGetComment)
-    func cell(_ cell: CommentCell, didTapOnTag tag: String)
-    func cell(_ cell: CommentCell, didTapDeleteForComment comment: ResponseAPIContentGetComment)
-    func cell(_ cell: CommentCell, didTapEditForComment comment: ResponseAPIContentGetComment)
-}
-
-class CommentCell: MyTableViewCell, ListItemCellType, CommentController {
+class CommentCell: MyTableViewCell, ListItemCellType {
     // MARK: - Constants
     let voteActionsContainerViewHeight: CGFloat = 35
     private let maxCharactersForReduction = 150
@@ -171,7 +160,7 @@ class CommentCell: MyTableViewCell, ListItemCellType, CommentController {
     }
     
     func setText() {
-        guard let content = comment?.document.toAttributedString(
+        guard let content = comment?.document?.toAttributedString(
             currentAttributes: [.font: UIFont.systemFont(ofSize: defaultContentFontSize)],
             attachmentType: TextAttachment.self)
         else {return}

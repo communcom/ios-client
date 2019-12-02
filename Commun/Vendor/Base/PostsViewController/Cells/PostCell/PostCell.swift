@@ -9,10 +9,11 @@
 import UIKit
 import RxSwift
 
-class PostCell: MyTableViewCell, ListItemCellType , PostController {
+class PostCell: MyTableViewCell, ListItemCellType {
     // MARK: - Properties
     var post: ResponseAPIContentGetPost?
     let voteActionsContainerViewHeight: CGFloat = 35
+    weak var delegate: PostCellDelegate?
 
     
     // MARK: - Subviews
@@ -140,22 +141,5 @@ class PostCell: MyTableViewCell, ListItemCellType , PostController {
         // Shares count
         #warning("change this number later")
         self.sharesCountLabel.text = "\(post.stats?.viewCount ?? 0)"
-    }
-    
-    
-    // MARK: - Actions
-    @objc func commentCountsButtonDidTouch() {
-        guard let post = post else {return}
-        let postPageVC = PostPageVC(post: post)
-        postPageVC.scrollToTopAfterLoadingComment = true
-        parentViewController?.show(postPageVC, sender: nil)
-    }
-
-    @objc func upVoteButtonDidTouch() {
-        upVote()
-    }
-    
-    @objc func downVoteButtonDidTouch() {
-        downVote()
     }
 }

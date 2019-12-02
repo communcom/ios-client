@@ -64,8 +64,9 @@ class PostPageNavigationBar: MyView, CommunityController {
     }
     
     func setUp(with post: ResponseAPIContentGetPost) {
+        guard let community = post.community else {return}
         postMetaView.setUp(post: post)
-        setUp(with: post.community)
+        setUp(with: community)
     }
     
     func setUp(with community: ResponseAPIContentGetCommunity) {

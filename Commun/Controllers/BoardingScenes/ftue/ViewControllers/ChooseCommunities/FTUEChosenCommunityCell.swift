@@ -18,7 +18,7 @@ class FTUEChosenCommunityCell: MyCollectionViewCell {
     }()
     
     var community: ResponseAPIContentGetCommunity?
-    weak var delegate: CommunityCollectionCellDelegate?
+    weak var delegate: CommunityCellDelegate?
     
     override func setUpViews() {
         contentView.addSubview(avatarImageView)

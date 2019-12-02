@@ -73,16 +73,85 @@ class NetworkService: NSObject {
             .observeOn(MainScheduler.instance)
     }
     
-    func voteMessage(voteType: VoteActionType,
-                     communityId: String,
-                     messagePermlink: String,
-                     messageAuthor: String) -> Completable {
-        return RestAPIManager.instance.vote(
-                voteType:    voteType,
-                communityId: communityId,
-                author:      messageAuthor,
-                permlink:    messagePermlink)
+    func deleteMessage<T: ResponseAPIContentMessageType>(
+        message: T
+    ) -> Completable {
+        return RestAPIManager.instance.deleteMessage(
+            communCode: message.community?.communityId ?? "",
+            permlink: message.contentId.permlink
+        )
             .observeOn(MainScheduler.instance)
+            .do(onCompleted: {
+                message.notifyDeleted()
+            })
+    }
+    
+    func upvoteMessage<T: ResponseAPIContentMessageType>(
+        message: T
+    ) -> Completable {
+        // save original state
+        let originHasUpVote = message.votes.hasUpVote ?? false
+        let originHasDownVote = message.votes.hasDownVote ?? false
+        
+        // change state
+        var message = message
+        message.setHasVote(originHasUpVote ? false: true, for: .upvote)
+        message.setHasVote(false, for: .downvote)
+        message.votes.isBeingVoted = true
+        message.notifyChanged()
+        
+        // send request
+        return RestAPIManager.instance.vote(
+            voteType:    originHasUpVote ? .unvote: .upvote,
+            communityId: message.community?.communityId ?? "",
+            author:      message.contentId.userId,
+            permlink:    message.contentId.permlink
+        )
+            .observeOn(MainScheduler.instance)
+            .do(onError: { (error) in
+                message.setHasVote(originHasUpVote, for: .upvote)
+                message.setHasVote(originHasDownVote, for: .downvote)
+                message.votes.isBeingVoted = false
+                message.notifyChanged()
+            }, onCompleted: {
+                // re-enable state
+                message.votes.isBeingVoted = false
+                message.notifyChanged()
+            })
+    }
+    
+    func downvoteMessage<T: ResponseAPIContentMessageType>(
+        message: T
+    ) -> Completable {
+        // save original state
+        let originHasUpVote = message.votes.hasUpVote ?? false
+        let originHasDownVote = message.votes.hasDownVote ?? false
+        
+        // change state
+        var message = message
+        message.setHasVote(originHasDownVote ? false: true, for: .downvote)
+        message.setHasVote(false, for: .upvote)
+        message.votes.isBeingVoted = true
+        message.notifyChanged()
+        
+        // send request
+        return RestAPIManager.instance.vote(
+            voteType:    originHasDownVote ? .unvote: .downvote,
+            communityId: message.community?.communityId ?? "",
+            author:      message.contentId.userId,
+            permlink:    message.contentId.permlink
+        )
+            .observeOn(MainScheduler.instance)
+            .do(onError: { (error) in
+                message.setHasVote(originHasUpVote, for: .upvote)
+                message.setHasVote(originHasDownVote, for: .downvote)
+                message.votes.isBeingVoted = false
+                message.notifyChanged()
+            }, onCompleted: {
+                // re-enable state
+                message.votes.isBeingVoted = false
+                message.notifyChanged()
+            })
     }
     
     func waitForTransactionWith(id: String) -> Completable {
@@ -230,9 +299,68 @@ class NetworkService: NSObject {
             .observeOn(MainScheduler.instance)
     }
     
-    func triggerFollow(_ userToFollow: String, isUnfollow: Bool = false) -> Completable {
-        return RestAPIManager.instance.follow(userToFollow, isUnfollow: isUnfollow)
+    func triggerFollow<T: ProfileType>(user: T) -> Completable {
+        let originIsFollowing = user.isSubscribed ?? false
+        
+        // set value
+        var user = user
+        user.setIsSubscribed(!originIsFollowing)
+        user.isBeingToggledFollow = true
+        
+        // notify changes
+        user.notifyChanged()
+        
+        // send request
+        return RestAPIManager.instance.follow(user.userId, isUnfollow: originIsFollowing)
             .flatMapCompletable { self.waitForTransactionWith(id: $0) }
+            .do(onError: { (error) in
+                // reverse change
+                user.setIsSubscribed(originIsFollowing)
+                user.isBeingToggledFollow = false
+                user.notifyChanged()
+            }, onCompleted: {
+                // re-enable state
+                user.isBeingToggledFollow = false
+                user.notifyChanged()
+            })
+    }
+    
+    func toggleVoteLeader(leader: ResponseAPIContentGetLeader) -> Completable {
+        let originIsVoted = leader.isVoted ?? false
+        
+        // set value
+        var leader = leader
+        leader.setIsVoted(!originIsVoted)
+        leader.isBeingVoted = true
+        
+        // notify change
+        leader.notifyChanged()
+        
+        // send request
+        let request: Single<String>
+//        request = Single<String>.just("")
+//            .delay(0.8, scheduler: MainScheduler.instance)
+        if originIsVoted {
+            // unvote
+            request = RestAPIManager.instance.unvoteLeader(communityId: leader.communityId ?? "", leader: leader.userId)
+        }
+        else {
+            request = RestAPIManager.instance.voteLeader(communityId: leader.communityId ?? "", leader: leader.userId)
+        }
+        
+        return request
+            .flatMapCompletable { self.waitForTransactionWith(id: $0) }
+            .do(onError: { (error) in
+                // reverse change
+                // re-enable state
+                leader.setIsVoted(originIsVoted)
+                leader.isBeingVoted = false
+                leader.notifyChanged()
+            }, onCompleted: {
+                // re-enable state
+                leader.isBeingVoted = false
+                leader.notifyChanged()
+            })
     }
     
     // MARK: - meta

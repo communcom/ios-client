@@ -8,7 +8,7 @@
 
 import Foundation
 
-class CommunitiesVC: SubsViewController<ResponseAPIContentGetCommunity, CommunityCell> {
+class CommunitiesVC: SubsViewController<ResponseAPIContentGetCommunity, CommunityCell>, CommunityCellDelegate {
     // MARK: - Properties
     override var isSearchEnabled: Bool {true}
     
