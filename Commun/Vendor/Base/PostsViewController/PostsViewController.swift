@@ -22,9 +22,12 @@ class PostsViewController: ListViewController<ResponseAPIContentGetPost, PostCel
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+           
     
+    // MARK: - Custom Functions
     override func setUp() {
         super.setUp()
+                
         // setup datasource
         tableView.separatorStyle = .none
     }
@@ -73,6 +76,6 @@ class PostsViewController: ListViewController<ResponseAPIContentGetPost, PostCel
     }
     
     func filterChanged(filter: PostsListFetcher.Filter) {
-        
+
     }
 }

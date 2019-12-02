@@ -21,15 +21,15 @@ class WelcomeItemVC: UIViewController {
     @IBOutlet weak var titleLabel3: UILabel!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var imageViewWidthConstraint: NSLayoutConstraint!
-    @IBOutlet weak var imageViewTopConstraint: ScalableLayoutConstraint!
+    @IBOutlet weak var imageViewTopConstraint: NSLayoutConstraint!
     
     @IBOutlet weak var describeLabel: UILabel! {
         didSet {
-            self.describeLabel.tune(withAttributedText:       "",
-                                    hexColors:      grayishBluePickers,
-                                    font:           UIFont.systemFont(ofSize: 17, weight: .medium),
-                                    alignment:      .center,
-                                    isMultiLines:   true)
+            self.describeLabel.tune(withAttributedText:     "",
+                                    hexColors:              grayishBluePickers,
+                                    font:                   UIFont.systemFont(ofSize: CGFloat.adaptive(width: 17.0), weight: .medium),
+                                    alignment:              .center,
+                                    isMultiLines:           true)
         }
     }
     
@@ -47,12 +47,13 @@ class WelcomeItemVC: UIViewController {
         // set images
         self.imageView.image = UIImage(named: "image-welcome-item-\(item)")
         self.imageViewWidthConstraint.constant = CGFloat.adaptive(width: 310.0)
-        self.imageViewTopConstraint.constant = CGFloat.adaptive(height: -(70.0 + 39.0))
-        self.describeLabel.tune(withAttributedText: "welcome-item-\(item)".localized(),
-                                hexColors: grayishBluePickers,
-                                font: UIFont.systemFont(ofSize: 17, weight: .medium),
-                                alignment: .center,
-                                isMultiLines: true)
+        self.imageViewTopConstraint.constant = CGFloat.adaptive(height: -(70.0 + 36.0))
+        
+        self.describeLabel.tune(withAttributedText:     "welcome-item-\(item)".localized(),
+                                hexColors:              grayishBluePickers,
+                                font:                   UIFont.systemFont(ofSize: CGFloat.adaptive(width: 17.0), weight: .medium),
+                                alignment:              .center,
+                                isMultiLines:           true)
 
         switch self.item {
         // All-in-One
@@ -102,7 +103,9 @@ class WelcomeItemVC: UIViewController {
                                   isMultiLines:     false)
             
             self.titleLabel1.isHidden = true
-            
+            self.imageViewTopConstraint.constant    =   CGFloat.adaptive(height: -73.0)
+            self.imageViewWidthConstraint.constant  =   CGFloat.adaptive(width: 340.0)
+
         // Welcome
         default:
             self.titleLabel1.tune(withText:         "welcome".localized().uppercaseFirst,
@@ -123,8 +126,8 @@ class WelcomeItemVC: UIViewController {
                                   alignment:        .center,
                                   isMultiLines:     false)
             
-            self.imageViewWidthConstraint.constant = UIScreen.main.bounds.width
-            self.imageViewTopConstraint.constant = CGFloat.adaptive(height: -(70.0 - 19.0))
+            self.imageViewTopConstraint.constant    =   CGFloat.adaptive(height: -(70.0 - 19.0))
+            self.imageViewWidthConstraint.constant  =   CGFloat.adaptive(width: 360.0)
         }
     }
 }
