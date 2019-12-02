@@ -105,7 +105,8 @@ class CommunityLeaderCell: CommunityPageCell {
         pointsCountLabel.text = "\(leader.rating)"
         percentsCountLabel.text = "\(leader.ratingPercent.rounded(numberOfDecimalPlaces: 2, rule: .up) * 100)"
         
-        #warning("description missing")
+        // description
+        descriptionLabel.text = leader.url
         
         // voteButton
         let voted = leader.isVoted ?? false
