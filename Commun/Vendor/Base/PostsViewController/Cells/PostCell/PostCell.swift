@@ -13,6 +13,7 @@ class PostCell: MyTableViewCell, ListItemCellType {
     // MARK: - Properties
     var post: ResponseAPIContentGetPost?
     let voteActionsContainerViewHeight: CGFloat = 35
+    weak var delegate: PostCellDelegate?
 
     
     // MARK: - Subviews

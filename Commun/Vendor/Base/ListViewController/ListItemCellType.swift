@@ -11,5 +11,7 @@ import CyberSwift
 
 protocol ListItemCellType: UITableViewCell {
     associatedtype T: ListItemType
+    associatedtype Delegate
     func setUp(with item: T)
+    var delegate: Delegate? {get set}
 }

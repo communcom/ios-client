@@ -10,19 +10,27 @@ import Foundation
 
 extension PostCell {
     @objc func menuButtonTapped(button: UIButton) {
-        openMorePostActions()
+        guard let post = post else {return}
+        self.delegate?.menuButtonDidTouch(post: post)
     }
     
     @objc func upVoteButtonTapped(button: UIButton) {
-        upVote()
+        guard let post = post else {return}
+        voteContainerView.animateUpVote {
+            self.delegate?.upvoteButtonDidTouch(post: post)
+        }
     }
     
     @objc func downVoteButtonTapped(button: UIButton) {
-        downVote()
+        guard let post = post else {return}
+        voteContainerView.animateDownVote {
+            self.delegate?.downvoteButtonDidTouch(post: post)
+        }
     }
 
     @objc func shareButtonTapped(button: UIButton) {
-        openShareActions()
+        guard let post = post else {return}
+        self.delegate?.menuButtonDidTouch(post: post)
     }
     
     @objc func commentCountsButtonDidTouch() {

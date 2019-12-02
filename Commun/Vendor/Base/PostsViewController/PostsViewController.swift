@@ -9,7 +9,7 @@
 import UIKit
 import CyberSwift
 
-class PostsViewController: ListViewController<ResponseAPIContentGetPost, PostCell> {
+class PostsViewController: ListViewController<ResponseAPIContentGetPost, PostCell>, PostCellDelegate {
     
     init(filter: PostsListFetcher.Filter = PostsListFetcher.Filter(feedTypeMode: .new, feedType: .time)) {
         let viewModel = PostsViewModel(filter: filter)

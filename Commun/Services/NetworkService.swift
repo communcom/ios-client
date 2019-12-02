@@ -73,6 +73,19 @@ class NetworkService: NSObject {
             .observeOn(MainScheduler.instance)
     }
     
+    func deleteMessage<T: ResponseAPIContentMessageType>(
+        message: T
+    ) -> Completable {
+        return RestAPIManager.instance.deleteMessage(
+            communCode: message.community?.communityId ?? "",
+            permlink: message.contentId.permlink
+        )
+            .observeOn(MainScheduler.instance)
+            .do(onCompleted: {
+                message.notifyDeleted()
+            })
+    }
+    
     func upvoteMessage<T: ResponseAPIContentMessageType>(
         message: T
     ) -> Completable {

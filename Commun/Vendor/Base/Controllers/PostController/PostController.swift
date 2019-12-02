@@ -138,7 +138,8 @@ extension PostController {
     
     func deletePost() {
         guard let post = post,
-            let topController = UIApplication.topViewController() else {return}
+            let topController = UIApplication.topViewController()
+        else {return}
         
         topController.showAlert(
             title: "delete".localized().uppercaseFirst,
@@ -150,18 +151,14 @@ extension PostController {
             { (index) in
                 if index == 0 {
                     topController.showIndetermineHudWithMessage("deleting post".localized().uppercaseFirst)
-                    NetworkService.shared.deletePost(
-                        communCode: post.community?.communityId ?? "",
-                        permlink: post.contentId.permlink
-                    )
-                    .subscribe(onCompleted: {
-                        topController.hideHud()
-                        post.notifyDeleted()
-                    }, onError: { error in
-                        topController.hideHud()
-                        topController.showError(error)
-                    })
-                    .disposed(by: self.disposeBag)
+                    NetworkService.shared.deleteMessage(message: post)
+                        .subscribe(onCompleted: {
+                            topController.hideHud()
+                        }, onError: { error in
+                            topController.hideHud()
+                            topController.showError(error)
+                        })
+                        .disposed(by: self.disposeBag)
                 }
             }
     }
