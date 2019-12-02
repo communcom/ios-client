@@ -16,7 +16,7 @@ class CommentFormViewModel {
     func sendNewComment(
         block: ResponseAPIContentBlock
     ) -> Single<SendPostCompletion> {
-        guard let communCode = post?.community.communityId,
+        guard let communCode = post?.community?.communityId,
             let authorId = post?.author?.userId,
             let postPermlink = post?.contentId.permlink
             else {return .error(ErrorAPI.invalidData(message: "Post info missing"))}
@@ -35,7 +35,7 @@ class CommentFormViewModel {
         _ comment: ResponseAPIContentGetComment,
         block: ResponseAPIContentBlock
     ) -> Single<SendPostCompletion> {
-        guard let communCode = post?.community.communityId
+        guard let communCode = post?.community?.communityId
         else {return .error(ErrorAPI.invalidData(message: "Post info missing"))}
         
         
@@ -52,7 +52,7 @@ class CommentFormViewModel {
         _ comment: ResponseAPIContentGetComment,
         block: ResponseAPIContentBlock
     ) -> Single<SendPostCompletion> {
-        guard let communCode = post?.community.communityId
+        guard let communCode = post?.community?.communityId
             else {return .error(ErrorAPI.invalidData(message: "Post info missing"))}
         
         let authorId = comment.contentId.userId
