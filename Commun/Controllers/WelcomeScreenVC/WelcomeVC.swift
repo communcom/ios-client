@@ -20,11 +20,17 @@ class WelcomeVC: UIViewController {
     // MARK: - IBOutlets
     @IBOutlet weak var nextButton: StepButton!
     
+    @IBOutlet weak var buttonsStackView: UIStackView! {
+        didSet {
+            self.buttonsStackView.spacing = CGFloat.adaptive(height: 15.0)
+        }
+    }
+    
     @IBOutlet weak var bottomSignInButton: StepButton! {
         didSet {
             self.bottomSignInButton.commonInit(backgroundColor:     UIColor(hexString: "#F3F5FA"),
                                                font:                .boldSystemFont(ofSize: CGFloat.adaptive(width: 15.0)),
-                                               cornerRadius:        self.bottomSignInButton.height / CGFloat.adaptive(height: 2.0))
+                                               cornerRadius:        self.bottomSignInButton.height / 2)
             
             self.bottomSignInButton.setTitleColor(UIColor(hexString: "#6A80F5"), for: .normal)
             self.bottomSignInButton.isHidden = true
@@ -44,7 +50,7 @@ class WelcomeVC: UIViewController {
             self.actionButtonsCollection.forEach {
                 $0.commonInit(backgroundColor: .appMainColor,
                               font:            .boldSystemFont(ofSize: CGFloat.adaptive(width: 15.0)),
-                              cornerRadius:    $0.height / CGFloat.adaptive(height: 2.0))
+                              cornerRadius:    $0.height / 2)
             }
         }
     }

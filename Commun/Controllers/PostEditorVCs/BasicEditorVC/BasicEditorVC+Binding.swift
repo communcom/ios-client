@@ -16,7 +16,7 @@ extension BasicEditorVC {
         contentTextView.rx.text
             .subscribe(onNext: { (text) in
                 // ignore if one or more attachment existed
-                if self._viewModel.attachments.value.count > 0 ||
+                if self._viewModel.attachment.value != nil ||
                     self.link != nil
                 {return}
                 
@@ -54,44 +54,42 @@ extension BasicEditorVC {
     }
     
     func bindAttachments() {
-        _viewModel.attachments.skip(1)
-            .subscribe(onNext: {[weak self] (attachments) in
-                guard let strongSelf = self else {return}
-                
-                // remove bottom constraint
-                if let bottomConstraint = strongSelf.contentView.constraints.first(where: {$0.firstAttribute == .bottom && ($0.firstItem as? BasicEditorTextView) == strongSelf.contentTextView})
-                {
-                    strongSelf.contentView.removeConstraint(bottomConstraint)
-                }
-                
-                strongSelf.attachmentsView.removeFromSuperview()
-                strongSelf.attachmentsView.removeAllConstraints()
-                
-                // if no attachment is attached
-                if attachments.count == 0 {
-                    strongSelf.layoutBottomContentTextView()
+        _viewModel.attachment
+            .subscribe(onNext: { [weak self] (attachment) in
+                guard let attachment = attachment,
+                    let attributes = attachment.attributes,
+                    let type = attributes.type
+                else {
+                    self?.attachmentView.removeSubviews()
+                    self?.attachmentView.autoSetDimension(.height, toSize: 300)
+                    self?.attachmentView.isHidden = true
                     return
                 }
+                self?.attachmentView.removeSubviews()
+                self?.attachmentView.heightConstraint?.isActive = false
+                self?.attachmentView.isHidden = false
                 
-                // construct attachmentsView
-                strongSelf.attachmentsView = AttachmentsView(forAutoLayout: ())
-                strongSelf.attachmentsView.didRemoveAttachmentAtIndex = {[weak self] index in
-                    if self?._viewModel.attachments.value[index].attributes?.url == self?.link {
-                        self?.link = nil
-                    }
-                    self?._viewModel.removeAttachment(at: index)
+                let attachmentView = AttachmentView(forAutoLayout: ())
+                attachmentView.attachment = attachment
+                attachmentView.isUserInteractionEnabled = true
+                attachmentView.tag = 0
+                attachmentView.delegate = self
+                self?.attachmentView.addSubview(attachmentView)
+                attachmentView.autoPinEdgesToSuperviewEdges()
+                
+                if let url = attributes.url {
+                    let embedView = EmbedView(content: ResponseAPIContentBlock(id: 0, type: type, attributes: attributes, content: ResponseAPIContentBlockContent.string(url)))
+                    attachmentView.addSubview(embedView)
+                    embedView.autoPinEdgesToSuperviewEdges()
+                    attachmentView.bringSubviewToFront(attachmentView.closeButton)
+                    attachmentView.expandButton.isHidden = true
                 }
-                strongSelf.contentView.addSubview(strongSelf.attachmentsView)
-                strongSelf.attachmentsView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0), excludingEdge: .top)
-                strongSelf.attachmentsView.autoPinEdge(.top, to: .bottom, of: strongSelf.contentTextViewCountLabel, withOffset: 16)
-                
-                var height = strongSelf.view.bounds.width / 377 * 200
-                if attachments.count > 2  {
-                    height = height + height / 2
+                else {
+                    attachmentView.setUp(image: attachment.localImage, url: attachment.attributes?.url, description: attachment.attributes?.title ?? attachment.attributes?.description)
+                    attachmentView.autoSetDimension(.height, toSize: 200)
+                    attachmentView.expandButton.isHidden = false
                 }
-                strongSelf.attachmentsView.autoSetDimension(.height, toSize: height)
                 
-                strongSelf.attachmentsView.setUp(with: attachments)
             })
             .disposed(by: disposeBag)
     }

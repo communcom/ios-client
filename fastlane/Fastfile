@@ -16,7 +16,6 @@ apple_id = "shilinartem@gmail.ru"
 slack_webhook = "https://hooks.slack.com/services/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"
 slack_api_token = "xoxp-131522248727-816480031911-825767630514-3dc514ecb1a5e8985cc0a8d55066e67e"
 
-
 desc 'Build to Crashlytics Beta'
 lane :beta do |options|
 	isCI = options[:ci] ? true : false
@@ -39,7 +38,7 @@ lane :beta do |options|
 		readonly: true
 	)
 
-	build_version = get_info_plist_value(path: application_info_plist_path, key: 'CFBundleShortVersionString')
+	build_version = get_version_number(xcodeproj: "#{application_name}.xcodeproj")
 	new_bundle_version = number_of_commits(all: true)
 	
 	puts "Application version: #{build_version}"

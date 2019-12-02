@@ -10,6 +10,7 @@ import Foundation
 
 extension BasicEditorVC {
     override func attachmentViewCloseButtonDidTouch(_ attachmentView: AttachmentView) {
-        print("close")
+        self._viewModel.attachment.accept(nil)
+        self.link = nil
     }
 }
