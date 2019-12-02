@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 import RxDataSources
 
-class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDelegate {
+class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDelegate, PostCellDelegate {
     // MARK: - Nested type
     enum CustomElementType: IdentifiableType, Equatable {
         case post(ResponseAPIContentGetPost)
@@ -145,10 +145,12 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
                     case "article":
                         let cell = self.tableView.dequeueReusableCell(withIdentifier: "ArticlePostCell") as! ArticlePostCell
                         cell.setUp(with: post)
+                        cell.delegate = self
                         return cell
                     case "basic":
                         let cell = self.tableView.dequeueReusableCell(withIdentifier: "BasicPostCell") as! BasicPostCell
                         cell.setUp(with: post)
+                        cell.delegate = self
                         return cell
                     default:
                         break
