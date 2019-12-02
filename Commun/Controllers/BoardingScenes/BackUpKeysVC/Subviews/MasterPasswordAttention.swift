@@ -97,7 +97,8 @@ class MasterPasswordAttention: UIView {
                                 delay:          0.0,
                                 options:        UIView.KeyframeAnimationOptions(rawValue: 7),
                                 animations: {
-                                    self.frame.origin.y = value ? UIScreen.main.bounds.height - (581.0 + 54.0) * Config.heightRatio : 2000.0
+                                    let bottomOffset = CGFloat.adaptive(width: (20.0 + (UIDevice.hasNotch ? UIDevice.safeAreaInsets.bottom : 0.0)))
+                                    self.frame.origin.y = value ? UIScreen.main.bounds.height - (581.0 + bottomOffset) * Config.heightRatio : 2000.0
             },
                                 completion:     nil)
     }
