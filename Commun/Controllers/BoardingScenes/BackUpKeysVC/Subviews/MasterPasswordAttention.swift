@@ -24,7 +24,8 @@ class MasterPasswordAttention: UIView {
                                  font:                      UIFont.systemFont(ofSize: CGFloat.adaptive(width: 30.0), weight: .bold),
                                  alignment:                 .center,
                                  isMultiLines:              false,
-                                 lineHeight:                CGFloat.adaptive(height: 0.84))
+                                 lineSpacing:               CGFloat.adaptive(height: 0.84),
+                                 lineHeight:                CGFloat.adaptive(height: 30.0))
         }
     }
     
@@ -35,7 +36,8 @@ class MasterPasswordAttention: UIView {
                                 font:                       UIFont.systemFont(ofSize: CGFloat.adaptive(width: 17.0), weight: .medium),
                                 alignment:                  .center,
                                 isMultiLines:               true,
-                                lineHeight:                 1.18)
+                                lineSpacing:                CGFloat.adaptive(height: 1.18),
+                                lineHeight:                 CGFloat.adaptive(height: 24.0))
         }
     }
     
@@ -46,8 +48,9 @@ class MasterPasswordAttention: UIView {
                                     font:                   UIFont.systemFont(ofSize: CGFloat.adaptive(width: 15.0), weight: .medium),
                                     alignment:              .center,
                                     isMultiLines:           true,
-                                    lineHeight:             1.34)
-        }
+                                    lineSpacing:            CGFloat.adaptive(height: 1.34),
+                                    lineHeight:             CGFloat.adaptive(height: 24.0))
+         }
     }
     
     @IBOutlet weak var backButton: UIButton! {
