@@ -73,7 +73,7 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
         // set up datasource
         dataSource = MyRxTableViewSectionedAnimatedDataSource<ListSection>(
             configureCell: { dataSource, tableView, indexPath, item in
-                var cell = self.configureCell(with: item, indexPath: indexPath)
+                let cell = self.configureCell(with: item, indexPath: indexPath)
                 (cell as? CellType)?.delegate = self as? CellType.Delegate
                 return cell
             }
@@ -113,6 +113,7 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
     
     func bindState() {
         viewModel.state
+            .debounce(0.3, scheduler: MainScheduler.instance)
             .do(onNext: { (state) in
                 Logger.log(message: "\(state)", event: .debug)
                 return
