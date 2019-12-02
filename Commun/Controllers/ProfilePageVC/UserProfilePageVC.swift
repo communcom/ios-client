@@ -10,7 +10,7 @@ import Foundation
 import CyberSwift
 import RxDataSources
 
-class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile>, CommentCellDelegate {
+class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile>, PostCellDelegate, CommentCellDelegate {
     
     // MARK: - Nested type
     enum CustomElementType: IdentifiableType, Equatable {
@@ -130,19 +130,18 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile>, CommentCellDel
     override func bindItems() {
         let dataSource = MyRxTableViewSectionedAnimatedDataSource<AnimatableSectionModel<String, CustomElementType>>(
             configureCell: { (dataSource, tableView, indexPath, element) -> UITableViewCell in
-                if indexPath.row >= self.viewModel.items.value.count - 5 {
-                    self.viewModel.fetchNext()
-                }
                 switch element {
                 case .post(let post):
                     switch post.document?.attributes?.type {
                     case "article":
                         let cell = self.tableView.dequeueReusableCell(withIdentifier: "ArticlePostCell") as! ArticlePostCell
                         cell.setUp(with: post)
+                        cell.delegate = self
                         return cell
                     case "basic":
                         let cell = self.tableView.dequeueReusableCell(withIdentifier: "BasicPostCell") as! BasicPostCell
                         cell.setUp(with: post)
+                        cell.delegate = self
                         return cell
                     default:
                         break

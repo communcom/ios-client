@@ -9,7 +9,7 @@
 import Foundation
 import CyberSwift
 
-class SubscriptionsUserCell: SubsItemCell, ProfileController {
+class SubscriptionsUserCell: SubsItemCell, ListItemCellType {
     var profile: ResponseAPIContentGetSubscriptionsUser?
     var followButton: CommunButton {
         get {
@@ -19,6 +19,7 @@ class SubscriptionsUserCell: SubsItemCell, ProfileController {
             actionButton = newValue
         }
     }
+    weak var delegate: ProfileCellDelegate?
     
     func setUp(with profile: ResponseAPIContentGetSubscriptionsUser) {
         self.profile = profile
@@ -36,6 +37,9 @@ class SubscriptionsUserCell: SubsItemCell, ProfileController {
     }
     
     override func actionButtonDidTouch() {
-        toggleFollow()
+        guard let profile = profile else {return}
+        followButton.animate {
+            self.delegate?.buttonFollowDidTouch(profile: profile)
+        }
     }
 }

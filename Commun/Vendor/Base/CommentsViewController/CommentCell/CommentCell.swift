@@ -9,18 +9,7 @@
 import Foundation
 import ASSpinnerView
 
-protocol CommentCellDelegate: class {
-//    var replyingComment: ResponseAPIContentGetComment? {get set}
-    var expandedComments: [ResponseAPIContentGetComment] {get set}
-    var tableView: UITableView {get set}
-    func cell(_ cell: CommentCell, didTapReplyButtonForComment comment: ResponseAPIContentGetComment)
-    func cell(_ cell: CommentCell, didTapSeeMoreButtonForComment comment: ResponseAPIContentGetComment)
-    func cell(_ cell: CommentCell, didTapOnTag tag: String)
-    func cell(_ cell: CommentCell, didTapDeleteForComment comment: ResponseAPIContentGetComment)
-    func cell(_ cell: CommentCell, didTapEditForComment comment: ResponseAPIContentGetComment)
-}
-
-class CommentCell: MyTableViewCell, CommentController {
+class CommentCell: MyTableViewCell, ListItemCellType {
     // MARK: - Constants
     let voteActionsContainerViewHeight: CGFloat = 35
     private let maxCharactersForReduction = 150
@@ -87,10 +76,12 @@ class CommentCell: MyTableViewCell, CommentController {
         replyButton.autoPinEdge(.leading, to: .trailing, of: voteContainerView, withOffset: 10)
         replyButton.autoAlignAxis(.horizontal, toSameAxisOf: voteContainerView)
         replyButton.addTarget(self, action: #selector(replyButtonDidTouch), for: .touchUpInside)
+        replyButton.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         
         contentView.addSubview(timeLabel)
         timeLabel.autoPinEdge(.leading, to: .trailing, of: replyButton)
         timeLabel.autoAlignAxis(.horizontal, toSameAxisOf: voteContainerView)
+        timeLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         
         contentView.addSubview(statusImageView)
         statusImageView.autoPinEdge(.leading, to: .trailing, of: timeLabel, withOffset: 10)
@@ -103,8 +94,7 @@ class CommentCell: MyTableViewCell, CommentController {
     }
     
     // MARK: - Setup
-    func setUp(with comment: ResponseAPIContentGetComment?) {
-        guard let comment = comment else {return}
+    func setUp(with comment: ResponseAPIContentGetComment) {
         self.comment = comment
         
         // if comment is a reply
@@ -165,12 +155,12 @@ class CommentCell: MyTableViewCell, CommentController {
             layoutIfNeeded()
         }
         
-        voteContainerView.setUp(with: comment.votes)
+        voteContainerView.setUp(with: comment.votes, userID: comment.author?.userId)
         timeLabel.text = " • " + Date.timeAgo(string: comment.meta.creationTime)
     }
     
     func setText() {
-        guard let content = comment?.document.toAttributedString(
+        guard let content = comment?.document?.toAttributedString(
             currentAttributes: [.font: UIFont.systemFont(ofSize: defaultContentFontSize)],
             attachmentType: TextAttachment.self)
         else {return}

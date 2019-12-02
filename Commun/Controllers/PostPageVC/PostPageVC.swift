@@ -31,14 +31,16 @@ class PostPageVC: CommentsViewController {
 
     // MARK: - Initializers
     init(post: ResponseAPIContentGetPost) {
-        super.init(nibName: nil, bundle: nil)
-        self.commentForm.post = post
-        self.viewModel = PostPageViewModel(post: post)
+        let viewModel = PostPageViewModel(post: post)
+        super.init(viewModel: viewModel)
+        defer {
+            self.commentForm.post = post
+        }
     }
     
     init(userId: String, permlink: String, communityId: String) {
-        super.init(nibName: nil, bundle: nil)
-        self.viewModel = PostPageViewModel(userId: userId, permlink: permlink, communityId: communityId)
+        let viewModel = PostPageViewModel(userId: userId, permlink: permlink, communityId: communityId)
+        super.init(viewModel: viewModel)
     }
     
     required init?(coder: NSCoder) {
@@ -155,9 +157,10 @@ class PostPageVC: CommentsViewController {
     }
     
     override func editComment(_ comment: ResponseAPIContentGetComment) {
+        guard let document = comment.document else {return}
         commentForm.mode = .edit
         commentForm.parentComment = comment
-        commentForm.textView.parseContentBlock(comment.document)
+        commentForm.textView.parseContentBlock(document)
         commentForm.textView.becomeFirstResponder()
     }
     

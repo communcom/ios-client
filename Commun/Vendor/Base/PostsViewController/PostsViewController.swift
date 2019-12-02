@@ -9,22 +9,18 @@
 import UIKit
 import CyberSwift
 
-class PostsViewController: ListViewController<ResponseAPIContentGetPost> {
-    // MARK: - Class Initialization
+class PostsViewController: ListViewController<ResponseAPIContentGetPost, PostCell>, PostCellDelegate {
+    
     init(filter: PostsListFetcher.Filter = PostsListFetcher.Filter(feedTypeMode: .new, feedType: .time)) {
-        super.init(nibName: nil, bundle: nil)
-        viewModel = PostsViewModel(filter: filter)
+        let viewModel = PostsViewModel(filter: filter)
+        super.init(viewModel: viewModel)
         defer {
             viewModel.fetchNext()
         }
     }
     
     required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        viewModel = PostsViewModel()
-        defer {
-            viewModel.fetchNext()
-        }
+        fatalError("init(coder:) has not been implemented")
     }
            
     
@@ -34,42 +30,30 @@ class PostsViewController: ListViewController<ResponseAPIContentGetPost> {
                 
         // setup datasource
         tableView.separatorStyle = .none
+    }
+    
+    override func registerCell() {
         tableView.register(BasicPostCell.self, forCellReuseIdentifier: "BasicPostCell")
         tableView.register(ArticlePostCell.self, forCellReuseIdentifier: "ArticlePostCell")
-        
-        dataSource = MyRxTableViewSectionedAnimatedDataSource<ListSection>(
-            configureCell: { dataSource, tableView, indexPath, post in
-                let cell: PostCell
-                switch post.document?.attributes?.type {
-                case "article":
-                    cell = self.tableView.dequeueReusableCell(withIdentifier: "ArticlePostCell") as! ArticlePostCell
-                    cell.setUp(with: post)
-                case "basic":
-                    cell = self.tableView.dequeueReusableCell(withIdentifier: "BasicPostCell") as! BasicPostCell
-                    cell.setUp(with: post)
-                default:
-                    return UITableViewCell()
-                }
-                
-                if indexPath.row >= self.viewModel.items.value.count - 5 {
-                    self.viewModel.fetchNext()
-                }
-                
-                return cell
-            }
-        )
+    }
+    
+    override func configureCell(with post: ResponseAPIContentGetPost, indexPath: IndexPath) -> UITableViewCell {
+        let cell: PostCell
+        switch post.document?.attributes?.type {
+        case "article":
+            cell = self.tableView.dequeueReusableCell(withIdentifier: "ArticlePostCell") as! ArticlePostCell
+            cell.setUp(with: post)
+        case "basic":
+            cell = self.tableView.dequeueReusableCell(withIdentifier: "BasicPostCell") as! BasicPostCell
+            cell.setUp(with: post)
+        default:
+            return UITableViewCell()
+        }
+        return cell
     }
     
     override func bind() {
         super.bind()
-        
-        tableView.rx.modelSelected(ResponseAPIContentGetPost.self)
-            .subscribe(onNext: {post in
-                let postPageVC = PostPageVC(post: post)
-                self.show(postPageVC, sender: nil)
-            })
-            .disposed(by: disposeBag)
-        
         // filter
         (viewModel as! PostsViewModel).filter
             .subscribe(onNext: {[weak self] filter in
@@ -78,7 +62,7 @@ class PostsViewController: ListViewController<ResponseAPIContentGetPost> {
             .disposed(by: disposeBag)
     }
     
-    override func showLoadingFooter() {
+    override func handleLoading() {
         tableView.addPostLoadingFooterView()
     }
     

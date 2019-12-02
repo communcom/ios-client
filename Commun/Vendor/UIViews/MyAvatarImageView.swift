@@ -25,6 +25,7 @@ class MyAvatarImageView: MyView {
     private lazy var imageView: UIImageView = {
         let imageView = UIImageView(forAutoLayout: ())
         imageView.image = .placeholder
+        imageView.backgroundColor = UIColor(hexString: "#F3F5FA")
         imageView.contentMode = .scaleAspectFill
         return imageView
     }()
@@ -71,11 +72,9 @@ class MyAvatarImageView: MyView {
     }
     
     func setAvatar(urlString: String?, namePlaceHolder: String) {
-        showLoading()
         // profile image
         if let avatarUrl = urlString {
             imageView.sd_setImage(with: URL(string: avatarUrl), placeholderImage: UIImage(named: "ProfilePageUserAvatar")) { [weak self] (_, error, _, _) in
-                self?.hideLoading()
                 if (error != nil) {
                     // Placeholder image
                     self?.setNonAvatarImageWithId(namePlaceHolder)
@@ -83,7 +82,6 @@ class MyAvatarImageView: MyView {
             }
         } else {
             // Placeholder image
-            hideLoading()
             setNonAvatarImageWithId(namePlaceHolder)
         }
     }
@@ -122,7 +120,8 @@ class MyAvatarImageView: MyView {
         imageView.addTapToViewer()
     }
     
-    func addTapToOpenUserProfile(profileId: String) {
+    func addTapToOpenUserProfile(profileId: String?) {
+        guard let profileId = profileId else {return}
         isUserInteractionEnabled = true
         let tap = TapGesture(target: self, action: #selector(openUserProfile(gesture:)))
         tap.profileId = profileId

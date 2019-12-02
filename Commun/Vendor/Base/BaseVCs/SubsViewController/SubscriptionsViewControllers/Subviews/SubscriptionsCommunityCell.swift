@@ -9,7 +9,7 @@
 import Foundation
 import CyberSwift
 
-class SubscriptionsCommunityCell: SubsItemCell, CommunityController {
+class SubscriptionsCommunityCell: SubsItemCell {
     var joinButton: CommunButton {
         get {
             return actionButton
@@ -19,14 +19,15 @@ class SubscriptionsCommunityCell: SubsItemCell, CommunityController {
         }
     }
     var community: ResponseAPIContentGetSubscriptionsCommunity?
+    weak var delegate: CommunityCellDelegate?
     
     func setUp(with community: ResponseAPIContentGetSubscriptionsCommunity) {
         self.community = community
         avatarImageView.setAvatar(urlString: community.avatarUrl, namePlaceHolder: community.name)
         
         nameLabel.text = community.name
-        #warning("stats label")
-        
+        statsLabel.text = "\(Double(community.subscribersCount ?? 0).kmFormatted) " + "followers".localized().uppercaseFirst + " • " + "\(Double(community.postsCount ?? 0).kmFormatted) " + "posts".localized().uppercaseFirst
+
         // joinButton
         let joined = community.isSubscribed ?? false
         joinButton.backgroundColor = joined ? #colorLiteral(red: 0.9525656104, green: 0.9605062604, blue: 0.9811610579, alpha: 1): .appMainColor
@@ -36,6 +37,9 @@ class SubscriptionsCommunityCell: SubsItemCell, CommunityController {
     }
     
     override func actionButtonDidTouch() {
-        toggleJoin()
+        guard let community = community else {return}
+        actionButton.animate {
+            self.delegate?.buttonFollowDidTouch(community: community)
+        }
     }
 }

@@ -42,7 +42,7 @@ class BasicEditorVC: PostEditorVC {
     override var contentTextView: ContentTextView {
         return _contentTextView
     }
-    var attachmentsView = AttachmentsView(forAutoLayout: ())
+    var attachmentView = UIView(forAutoLayout: ())
     
     // MARK: - Override
     override var contentCombined: Observable<Void> {
@@ -123,7 +123,9 @@ class BasicEditorVC: PostEditorVC {
         
         Single.zip(singles)
             .subscribe(onSuccess: { [weak self] (attachments) in
-                self?._viewModel.attachments.accept(attachments)
+                if let attachment = attachments.first {
+                    self?._viewModel.attachment.accept(attachment)
+                }
                 self?.hideHud()
             })
             .disposed(by: disposeBag)
@@ -147,9 +149,13 @@ class BasicEditorVC: PostEditorVC {
                 id = (contentBlock.maxId ?? 100) + 1
                 var childId = id!
                 
-                return Single.zip(self._viewModel.attachments.value.compactMap { (attachment) -> Single<ResponseAPIContentBlock>? in
-                    return attachment.toSingleContentBlock(id: &childId)
-                })
+                guard let attachment = self._viewModel.attachment.value,
+                    let single = attachment.toSingleContentBlock(id: &childId)
+                else {
+                    return .just([])
+                }
+                
+                return Single.zip([single])
             }
             .map {contentBlocks -> ResponseAPIContentBlock in
                 guard var childs = block?.content.arrayValue,

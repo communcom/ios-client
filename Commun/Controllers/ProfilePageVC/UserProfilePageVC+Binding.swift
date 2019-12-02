@@ -9,7 +9,7 @@
 import Foundation
 import CyberSwift
 
-extension UserProfilePageVC: UICollectionViewDelegateFlowLayout, CommunityCollectionCellDelegate {
+extension UserProfilePageVC: UICollectionViewDelegateFlowLayout, CommunityCellDelegate {
     func bindSegmentedControl() {
         headerView.selectedIndex
             .map { index -> UserProfilePageViewModel.SegmentioItem in

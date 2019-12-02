@@ -10,7 +10,7 @@ import Foundation
 import CyberSwift
 import RxSwift
 
-class CommentsViewController: ListViewController<ResponseAPIContentGetComment>, CommentCellDelegate {
+class CommentsViewController: ListViewController<ResponseAPIContentGetComment, CommentCell>, CommentCellDelegate {
     // MARK: - Properties
     lazy var expandedComments = [ResponseAPIContentGetComment]()
     
@@ -36,52 +36,39 @@ class CommentsViewController: ListViewController<ResponseAPIContentGetComment>, 
     }()
     
     // MARK: Initializers
-    convenience init(filter: CommentsListFetcher.Filter) {
-        self.init(nibName: nil, bundle: nil)
-        viewModel = CommentsViewModel(filter: filter)
+    init(filter: CommentsListFetcher.Filter) {
+        let viewModel = CommentsViewModel(filter: filter)
+        super.init(viewModel: viewModel)
+    }
+    
+    init(viewModel: CommentsViewModel) {
+        super.init(viewModel: viewModel)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     override func setUp() {
         super.setUp()
         // setup datasource
         tableView.separatorStyle = .none
+    }
+    
+    override func configureCell(with comment: ResponseAPIContentGetComment, indexPath: IndexPath) -> UITableViewCell {
+        let cell = self.tableView.dequeueReusableCell(withIdentifier: "CommentCell") as! CommentCell
+        cell.expanded = self.expandedComments.contains(where: {$0.identity == comment.identity})
+        cell.setUp(with: comment)
         
-        tableView.register(CommentCell.self, forCellReuseIdentifier: "CommentCell")
+        if indexPath.row == self.viewModel.items.value.count - 2 {
+            self.viewModel.fetchNext()
+        }
         
-        dataSource = MyRxTableViewSectionedAnimatedDataSource<ListSection>(
-            configureCell: { dataSource, tableView, indexPath, comment in
-                let cell = self.tableView.dequeueReusableCell(withIdentifier: "CommentCell") as! CommentCell
-                cell.expanded = self.expandedComments.contains(where: {$0.identity == comment.identity})
-                cell.setUp(with: comment)
-                cell.delegate = self
-                
-                if indexPath.row == self.viewModel.items.value.count - 2 {
-                    self.viewModel.fetchNext()
-                }
-                
-                return cell
-            }
-        )
+        return cell
     }
     
     override func bind() {
         super.bind()
-        
-        tableView.rx.itemSelected
-            .subscribe(onNext: { (indexPath) in
-                guard let cell = self.tableView.cellForRow(at: indexPath) as? CommentCell,
-                    var comment = cell.comment
-                    else {return}
-                
-                // collapse expanded comment
-                self.expandedComments.removeAll(where: {$0.identity == comment.identity})
-                self.tableView.reloadRows(at: [indexPath], with: .fade)
-                
-                // collapse replies
-                comment.children = []
-                comment.notifyChildrenChanged()
-            })
-            .disposed(by: disposeBag)
         
         // filter
         (viewModel as! CommentsViewModel).filter
@@ -98,11 +85,29 @@ class CommentsViewController: ListViewController<ResponseAPIContentGetComment>, 
             .disposed(by: disposeBag)
     }
     
+    override func bindItemSelected() {
+        tableView.rx.itemSelected
+            .subscribe(onNext: { (indexPath) in
+                guard let cell = self.tableView.cellForRow(at: indexPath) as? CommentCell,
+                    var comment = cell.comment
+                    else {return}
+                
+                // collapse expanded comment
+                self.expandedComments.removeAll(where: {$0.identity == comment.identity})
+                self.tableView.reloadRows(at: [indexPath], with: .fade)
+                
+                // collapse replies
+                comment.children = []
+                comment.notifyChildrenChanged()
+            })
+            .disposed(by: disposeBag)
+    }
+    
     func filterChanged(filter: CommentsListFetcher.Filter) {
         
     }
     
-    override func showLoadingFooter() {
+    override func handleLoading() {
         tableView.addLoadingFooterView(
             rowType:        PlaceholderNotificationCell.self,
             tag:            notificationsLoadingFooterViewTag,

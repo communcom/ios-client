@@ -20,11 +20,17 @@ class WelcomeVC: UIViewController {
     // MARK: - IBOutlets
     @IBOutlet weak var nextButton: StepButton!
     
+    @IBOutlet weak var buttonsStackView: UIStackView! {
+        didSet {
+            self.buttonsStackView.spacing = CGFloat.adaptive(height: 15.0)
+        }
+    }
+    
     @IBOutlet weak var bottomSignInButton: StepButton! {
         didSet {
             self.bottomSignInButton.commonInit(backgroundColor:     UIColor(hexString: "#F3F5FA"),
                                                font:                .boldSystemFont(ofSize: CGFloat.adaptive(width: 15.0)),
-                                               cornerRadius:        self.bottomSignInButton.height / CGFloat.adaptive(height: 2.0))
+                                               cornerRadius:        self.bottomSignInButton.height / 2)
             
             self.bottomSignInButton.setTitleColor(UIColor(hexString: "#6A80F5"), for: .normal)
             self.bottomSignInButton.isHidden = true
@@ -34,7 +40,7 @@ class WelcomeVC: UIViewController {
     @IBOutlet weak var topSignInButton: BlankButton! {
         didSet {
             self.topSignInButton.commonInit(hexColors:      [blackWhiteColorPickers, grayishBluePickers, grayishBluePickers, grayishBluePickers],
-                                            font:           UIFont(name: "SFProText-Medium", size: .adaptive(width: 15.0)),
+                                            font:           UIFont.systemFont(ofSize: CGFloat.adaptive(width: 15.0), weight: .medium),
                                             alignment:      .right)
         }
     }
@@ -42,9 +48,9 @@ class WelcomeVC: UIViewController {
     @IBOutlet var actionButtonsCollection: [StepButton]! {
         didSet {
             self.actionButtonsCollection.forEach {
-                $0.commonInit(backgroundColor: UIColor(hexString: "#6A80F5"),
+                $0.commonInit(backgroundColor: .appMainColor,
                               font:            .boldSystemFont(ofSize: CGFloat.adaptive(width: 15.0)),
-                              cornerRadius:    $0.height / CGFloat.adaptive(height: 2.0))
+                              cornerRadius:    $0.height / 2)
             }
         }
     }
@@ -119,15 +125,6 @@ class WelcomeVC: UIViewController {
         let indexNext = self.welcomePageVC.currentPage + 1
         self.welcomePageVC.currentPage = indexNext
         self.welcomePageVC.showActionButtons(indexNext)
-        self.welcomePageVC.timer?.invalidate()
-//        self.welcomePageVC.setUpCountDown()
         self.pageControl.selectedIndex = indexNext
-    }
-    
-    
-    // MARK: - TESTED
-    @IBAction func testButtonTapped(_ sender: Any) {
-//        let masterPassvordVC = controllerContainer.resolve(MasterPasswordViewController.self)!
-//        navigationController?.pushViewController(masterPassvordVC)
     }
 }

@@ -8,14 +8,14 @@
 
 import Foundation
 
-class CommunitiesVC: SubsViewController<ResponseAPIContentGetCommunity> {
+class CommunitiesVC: SubsViewController<ResponseAPIContentGetCommunity, CommunityCell>, CommunityCellDelegate {
     // MARK: - Properties
     override var isSearchEnabled: Bool {true}
     
     // MARK: - Initializers
     init(type: GetCommunitiesType, userId: String? = nil) {
-        super.init(nibName: nil, bundle: nil)
-        viewModel = CommunitiesViewModel(type: type, userId: userId)
+        let viewModel = CommunitiesViewModel(type: type, userId: userId)
+        super.init(viewModel: viewModel)
         defer {self.title = "communities".localized().uppercaseFirst}
     }
     
@@ -28,40 +28,23 @@ class CommunitiesVC: SubsViewController<ResponseAPIContentGetCommunity> {
         super.setUp()
         navigationItem.rightBarButtonItem = nil
         
-        // tableview
-        tableView.register(CommunityCell.self, forCellReuseIdentifier: "CommunityCell")
-        
-        dataSource = MyRxTableViewSectionedAnimatedDataSource<ListSection>(
-            configureCell: { (dataSource, tableView, indexPath, community) -> UITableViewCell in
-                let cell = self.tableView.dequeueReusableCell(withIdentifier: "CommunityCell") as! CommunityCell
-                cell.setUp(with: community)
-                
-                cell.roundedCorner = []
-                
-                if indexPath.row == 0 {
-                    cell.roundedCorner.insert([.topLeft, .topRight])
-                }
-                
-                if indexPath.row == self.viewModel.items.value.count - 1 {
-                    cell.roundedCorner.insert([.bottomLeft, .bottomRight])
-                }
-                
-                if indexPath.row >= self.viewModel.items.value.count - 5 {
-                    self.viewModel.fetchNext()
-                }
-                
-                return cell
-            }
-        )
     }
     
-    override func bind() {
-        super.bind()
-        tableView.rx.modelSelected(ResponseAPIContentGetCommunity.self)
-            .subscribe(onNext: { (item) in
-                self.showCommunityWithCommunityId(item.communityId)
-            })
-            .disposed(by: disposeBag)
+    override func configureCell(with community: ResponseAPIContentGetCommunity, indexPath: IndexPath) -> UITableViewCell {
+        let cell = self.tableView.dequeueReusableCell(withIdentifier: "CommunityCell") as! CommunityCell
+        cell.setUp(with: community)
+        
+        cell.roundedCorner = []
+        
+        if indexPath.row == 0 {
+            cell.roundedCorner.insert([.topLeft, .topRight])
+        }
+        
+        if indexPath.row == self.viewModel.items.value.count - 1 {
+            cell.roundedCorner.insert([.bottomLeft, .bottomRight])
+        }
+        
+        return cell
     }
     
     override func handleListEmpty() {

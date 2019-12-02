@@ -35,7 +35,7 @@ extension BasicEditorVC {
         attachment.delegate = self
         
         // Add embeds
-        _viewModel.addAttachment(attachment)
+        _viewModel.attachment.accept(attachment)
     }
 
     //    override func didAddImageFromURLString(_ urlString: String, description: String? = nil) {

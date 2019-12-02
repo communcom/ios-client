@@ -76,6 +76,21 @@ extension ProfileVC {
                 }
             })
             .disposed(by: disposeBag)
+        
+        // load more
+        tableView.rx.didEndDecelerating
+            .subscribe(onNext: { [weak self] _ in
+                guard let lastCell = self?.tableView.visibleCells.last,
+                    let indexPath = self?.tableView.indexPath(for: lastCell)
+                else {
+                    return
+                }
+                if indexPath.row >= self!._viewModel.items.value.count - 3 {
+                    self!._viewModel.fetchNext()
+                }
+                
+            })
+            .disposed(by: disposeBag)
     }
     
     func bindProfile() {

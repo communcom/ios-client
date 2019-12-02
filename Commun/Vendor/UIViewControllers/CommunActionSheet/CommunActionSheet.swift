@@ -38,7 +38,7 @@ class CommunActionSheet: SwipeDownDismissViewController {
     }
     let buttonSize: CGFloat = 30
     var headerHeight: CGFloat = 40
-    let headerToButtonsSpace: CGFloat = 30
+    let headerToButtonsSpace: CGFloat = 23
     var actionViewHeight: CGFloat {
         switch style {
         case .default:
@@ -60,7 +60,10 @@ class CommunActionSheet: SwipeDownDismissViewController {
     var style: Style
     var backgroundColor = UIColor(hexString: "#F7F7F9")
     var actions: [Action]?
-    
+
+    var titleFont: UIFont = .boldSystemFont(ofSize: 20)
+    var textAlignment: NSTextAlignment = .center
+
     var height: CGFloat {
         let actionsCount = actions?.count ?? 0
         
@@ -79,21 +82,21 @@ class CommunActionSheet: SwipeDownDismissViewController {
         
         var button = UIButton(frame: .zero)
         button.setImage(UIImage(named: "close-x"), for: .normal)
-        button.imageEdgeInsets = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
+        button.imageEdgeInsets = UIEdgeInsets(top: 6, left: 6, bottom: 6, right: 6)
         button.backgroundColor = .white
-        button.tintColor = .lightGray
+        button.tintColor = .a5a7bd
         button.cornerRadius = buttonSize / 2
         button.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(button)
-        button.topAnchor.constraint(equalTo: view.topAnchor, constant: 24)
-            .isActive = true
-        button.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -defaultMargin)
+
+        button.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -15)
             .isActive = true
         button.widthAnchor.constraint(equalToConstant: buttonSize)
             .isActive = true
         button.heightAnchor.constraint(equalToConstant: buttonSize)
             .isActive = true
         button.addTarget(self, action: #selector(closeButtonDidTouch(_:)), for: .touchUpInside)
+
         return button
     }()
     
@@ -129,16 +132,16 @@ class CommunActionSheet: SwipeDownDismissViewController {
         if headerView == nil {
             headerView = UIView(frame: .zero)
             let titleLabel = UILabel(text: title ?? "options".localized().uppercaseFirst, style: .caption1)
-            titleLabel.textAlignment = .center
-            titleLabel.font = .boldSystemFont(ofSize: 20)
+            titleLabel.textAlignment = textAlignment
+            titleLabel.font = titleFont
             
             titleLabel.translatesAutoresizingMaskIntoConstraints = false
             headerView!.addSubview(titleLabel)
-            
+
+            titleLabel.autoPinEdge(toSuperviewEdge: .left)
+            titleLabel.autoPinEdge(toSuperviewEdge: .right)
             titleLabel.topAnchor.constraint(equalTo: headerView!.topAnchor).isActive = true
             titleLabel.bottomAnchor.constraint(equalTo: headerView!.bottomAnchor).isActive = true
-            titleLabel.trailingAnchor.constraint(equalTo: headerView!.trailingAnchor, constant: defaultMargin + buttonSize).isActive = true
-            titleLabel.leadingAnchor.constraint(equalTo: headerView!.leadingAnchor).isActive = true
             
             headerHeight = 30
         }
@@ -149,7 +152,8 @@ class CommunActionSheet: SwipeDownDismissViewController {
             headerView.autoPinEdge(toSuperviewEdge: .top, withInset: 20)
             headerView.autoSetDimension(.height, toSize: headerHeight)
             headerView.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
-            headerView.autoPinEdge(.trailing, to: .leading, of: closeButton, withOffset: -defaultMargin)
+            headerView.autoPinEdge(.trailing, to: .leading, of: closeButton)
+            headerView.autoAlignAxis(.horizontal, toSameAxisOf: closeButton)
         }
     }
     
@@ -180,7 +184,7 @@ class CommunActionSheet: SwipeDownDismissViewController {
             case .default:
                 iconImageView.autoPinEdge(toSuperviewEdge: .trailing, withInset: defaultMargin)
                 iconImageView.autoAlignAxis(toSuperviewAxis: .horizontal)
-                iconImageView.autoSetDimensions(to: CGSize(width: 15, height: 15))
+                iconImageView.autoSetDimensions(to: CGSize(width: 24, height: 24))
             case .profile:
                 iconImageView.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
                 iconImageView.autoAlignAxis(toSuperviewAxis: .horizontal)

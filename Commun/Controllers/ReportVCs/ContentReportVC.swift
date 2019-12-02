@@ -37,7 +37,7 @@ class ContentReportVC<T: ListItemType>: ReportVC {
         var authorId: String?
         var permlink: String?
         if let post = content as? ResponseAPIContentGetPost {
-            communityId = post.community.communityId
+            communityId = post.community?.communityId
             authorId = post.author?.userId
             permlink = post.contentId.permlink
         }

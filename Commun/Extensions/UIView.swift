@@ -115,6 +115,9 @@ extension UIView {
         self.removeConstraints(self.constraints)
     }
     
+    var topConstraint: NSLayoutConstraint? {
+        return constraints.first(where: {$0.firstAttribute == .top})
+    }
         
     var heightConstraint: NSLayoutConstraint? {
         return constraints.first(where: {$0.firstAttribute == .height && $0.secondItem == nil})

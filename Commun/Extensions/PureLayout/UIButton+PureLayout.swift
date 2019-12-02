@@ -71,8 +71,8 @@ extension UIButton {
         return button
     }
     
-    static func back(tintColor: UIColor = .black, contentInsets: UIEdgeInsets = UIEdgeInsets(top: 10, left: 12, bottom: 10, right: 12)) -> UIButton {
-        let button = UIButton(width: 36, height: 40, contentInsets: contentInsets)
+    static func back(tintColor: UIColor = .black, contentInsets: UIEdgeInsets = UIEdgeInsets(top: 11, left: 15, bottom: 11, right: 14)) -> UIButton {
+        let button = UIButton(width: 40, height: 40)
         button.tintColor = tintColor
         button.setImage(UIImage(named: "back-button"), for: .normal)
         return button

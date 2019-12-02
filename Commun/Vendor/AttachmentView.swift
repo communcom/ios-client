@@ -35,7 +35,7 @@ class AttachmentView: UIView {
         return bottomView
     }()
     lazy var titleLabel = UILabel.with(textSize: 15, weight: .bold, numberOfLines: 1)
-    lazy var urlLabel = UILabel.with(textSize: 12, textColor: .lightGray, numberOfLines: 1)
+    lazy var urlLabel = UILabel.with(textSize: 12, textColor: .e2e6e8, numberOfLines: 1)
     
     // MARK: - Initializers
     required init?(coder aDecoder: NSCoder) {

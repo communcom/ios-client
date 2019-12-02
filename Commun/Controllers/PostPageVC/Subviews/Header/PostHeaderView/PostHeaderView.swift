@@ -104,8 +104,7 @@ class PostHeaderView: MyTableHeaderView, PostController {
         observePostChange()
     }
     
-    func setUp(with post: ResponseAPIContentGetPost?) {
-        guard let post = post else {return}
+    func setUp(with post: ResponseAPIContentGetPost) {
         self.post = post
         
         if post.document?.attributes?.type == "article" {
@@ -123,7 +122,7 @@ class PostHeaderView: MyTableHeaderView, PostController {
         viewsCountLabel.text = "\(post.stats?.viewCount ?? 0)"
         
         // Votes
-        voteContainerView.setUp(with: post.votes)
+        voteContainerView.setUp(with: post.votes, userID: post.author?.userId)
         
         // Show content
         // Parse data

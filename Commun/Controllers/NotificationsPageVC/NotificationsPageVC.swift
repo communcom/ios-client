@@ -12,7 +12,7 @@ import RxCocoa
 import CyberSwift
 import RxDataSources
 
-class NotificationsPageVC: SubsViewController<ResponseAPIOnlineNotificationData> {
+class NotificationsPageVC: SubsViewController<ResponseAPIOnlineNotificationData, NotificationCell>, NotificationCellDelegate {
     override func setUp() {
         super.setUp()
         navigationItem.rightBarButtonItem = nil
@@ -25,17 +25,6 @@ class NotificationsPageVC: SubsViewController<ResponseAPIOnlineNotificationData>
         // configure tableView
         tableView.estimatedRowHeight = 80
         tableView.tableFooterView = UIView()
-        
-        tableView.register(UINib(nibName: "NotificationCell", bundle: nil), forCellReuseIdentifier: "NotificationCell")
-        
-        dataSource = MyRxTableViewSectionedAnimatedDataSource<ListSection>(configureCell: {_, _, indexPath, item in
-            let cell = self.tableView.dequeueReusableCell(withIdentifier: "NotificationCell") as! NotificationCell
-            cell.configure(with: item)
-            if indexPath.row >= self.viewModel.items.value.count - 5 {
-                self.viewModel.fetchNext()
-            }
-            return cell
-        })
     }
     
     override func bind() {
@@ -52,11 +41,25 @@ class NotificationsPageVC: SubsViewController<ResponseAPIOnlineNotificationData>
             .bind(to: tabBarItem!.rx.badgeValue)
             .disposed(by: disposeBag)
         
-        // tableView
+        tableView.rx.contentOffset
+            .map {$0.y > 3}
+            .distinctUntilChanged()
+            .subscribe(onNext: { (showShadow) in
+                if showShadow {
+                    self.navigationController?.navigationBar.addShadow(ofColor: .shadow, offset: CGSize(width: 0, height: 2), opacity: 0.1)
+                }
+                else {
+                    self.navigationController?.navigationBar.shadowOpacity = 0
+                }
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    override func bindItemSelected() {
         Observable.zip(
             tableView.rx.itemSelected,
             tableView.rx.modelSelected(ResponseAPIOnlineNotificationData.self)
-            )
+        )
             .do(onNext: {[weak self] indexPath, _ in
                 self?.tableView.deselectRow(at: indexPath, animated: false)
             })
@@ -86,19 +89,6 @@ class NotificationsPageVC: SubsViewController<ResponseAPIOnlineNotificationData>
                 if let userId = notification.actor?.userId {
                     self?.showProfileWithUserId(userId)
                     return
-                }
-            })
-            .disposed(by: disposeBag)
-        
-        tableView.rx.contentOffset
-            .map {$0.y > 3}
-            .distinctUntilChanged()
-            .subscribe(onNext: { (showShadow) in
-                if showShadow {
-                    self.navigationController?.navigationBar.addShadow(ofColor: .shadow, offset: CGSize(width: 0, height: 2), opacity: 0.1)
-                }
-                else {
-                    self.navigationController?.navigationBar.shadowOpacity = 0
                 }
             })
             .disposed(by: disposeBag)

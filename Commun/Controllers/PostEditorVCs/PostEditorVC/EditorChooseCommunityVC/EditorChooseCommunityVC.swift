@@ -14,11 +14,7 @@ class EditorChooseCommunityVC: SubscriptionsVC {
     
     var panGestureRecognizer: UIPanGestureRecognizer?
     var interactor: SwipeDownInteractor?
-    
-    override var tableViewMargin: UIEdgeInsets {
-        return super.tableViewMargin.insetBy(top: 44)
-    }
-    
+
     // MARK: - Initializers
     init(completion: ((ResponseAPIContentGetSubscriptionsCommunity)->Void)?) {
         self.completion = completion
@@ -33,8 +29,7 @@ class EditorChooseCommunityVC: SubscriptionsVC {
     override func setUp() {
         super.setUp()
         hideFollowButton = true
-        view.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: 20)
-        
+
         interactor = SwipeDownInteractor()
         panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(panGestureAction(_:)))
         view.addGestureRecognizer(panGestureRecognizer!)
@@ -72,11 +67,10 @@ class EditorChooseCommunityVC: SubscriptionsVC {
         }
     }
     
-    override func bindModelSelected() {
+    override func bindItemSelected() {
         tableView.rx.modelSelected(ResponseAPIContentGetSubscriptionsItem.self)
             .filter {$0.communityValue != nil}
             .map {$0.communityValue!}
-            .filter {$0.isSubscribed == true}
             .subscribe(onNext: { (item) in
                 self.completion?(item)
                 self.dismiss(animated: true, completion: nil)
