@@ -66,6 +66,7 @@ extension FTUECommunitiesVC: UICollectionViewDelegateFlowLayout, CommunityCellDe
             .bind(to: communitiesCollectionView.rx.items(cellIdentifier: "CommunityCollectionCell", cellType: FTUECommunityCell.self)) { index, model, cell in
                 cell.setUp(with: model)
                 cell.delegate = self
+                cell.shouldShowBonus = (self.viewModel.chosenCommunities.value.count < 3)
                 
                 if index >= self.viewModel.items.value.count - 3 {
                     self.viewModel.fetchNext()
@@ -87,7 +88,7 @@ extension FTUECommunitiesVC: UICollectionViewDelegateFlowLayout, CommunityCellDe
                     }
                     communities += placeholders
                 }
-                return communities
+                return Array(communities.prefix(3))
             }
             .bind(to: chosenCommunitiesCollectionView.rx.items(cellIdentifier: "FTUEChosenCommunityCell", cellType: FTUEChosenCommunityCell.self)) { index, model, cell in
                 if let model = model {

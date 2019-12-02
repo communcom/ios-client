@@ -72,7 +72,8 @@ final class FeedPageFloatView: MyView {
         let whatsNewLabel = UILabel.with(text: "what's new".localized().uppercaseFirst + "?", textSize: 15, textColor: .a5a7bd)
         postingView.addSubview(whatsNewLabel)
         whatsNewLabel.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 10)
-        whatsNewLabel.autoAlignAxis(toSuperviewAxis: .horizontal)
+        whatsNewLabel.autoPinEdge(toSuperviewEdge: .top)
+        whatsNewLabel.autoPinEdge(toSuperviewEdge: .bottom)
         
         whatsNewLabel.isUserInteractionEnabled = true
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(postButtonDidTouch(_:)))
@@ -81,6 +82,7 @@ final class FeedPageFloatView: MyView {
         postingView.addSubview(openEditorWithPhotoImageView)
         openEditorWithPhotoImageView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
         openEditorWithPhotoImageView.autoAlignAxis(toSuperviewMarginAxis: .horizontal)
+        openEditorWithPhotoImageView.autoPinEdge(.leading, to: .trailing, of: whatsNewLabel, withOffset: 8)
         
         openEditorWithPhotoImageView.isUserInteractionEnabled = true
         let tapGesture2 = UITapGestureRecognizer(target: self, action: #selector(photoButtonDidTouch(_:)))

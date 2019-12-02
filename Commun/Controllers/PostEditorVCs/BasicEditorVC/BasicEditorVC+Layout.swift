@@ -14,6 +14,9 @@ extension BasicEditorVC {
     }
     
     override func layoutBottomContentTextView() {
-        contentTextView.autoPinEdge(toSuperviewEdge: .bottom)
+        contentView.addSubview(attachmentView)
+        attachmentView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
+        attachmentView.autoPinEdge(.top, to: .bottom, of: contentTextViewCountLabel, withOffset: 16)
+        attachmentView.autoPinEdge(toSuperviewEdge: .bottom)
     }
 }
