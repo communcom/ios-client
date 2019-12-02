@@ -140,8 +140,10 @@ class PostEditorVC: EditorVC {
     
     // MARK: - action for overriding
     func setUp(with post: ResponseAPIContentGetPost) {
-        guard let document = post.document else {return}
-        viewModel.community.accept(ResponseAPIContentGetSubscriptionsCommunity(community: post.community))
+        guard let document = post.document,
+            let community = post.community
+        else {return}
+        viewModel.community.accept(ResponseAPIContentGetSubscriptionsCommunity(community: community))
         contentTextView.parseContentBlock(document)
     }
     

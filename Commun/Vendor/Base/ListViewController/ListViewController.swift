@@ -88,7 +88,7 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
         let cell = self.tableView.dequeueReusableCell(withIdentifier: String(describing: CellType.self)) as! CellType
         cell.setUp(with: item as! CellType.T)
         
-        return cell
+        return cell as! UITableViewCell
     }
     
     // MARK: - Binding
