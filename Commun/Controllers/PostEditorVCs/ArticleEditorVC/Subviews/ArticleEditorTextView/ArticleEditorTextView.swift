@@ -180,7 +180,7 @@ class ArticleEditorTextView: ContentTextView {
             .map {contentBlocks -> ResponseAPIContentBlock in
                 var block = ResponseAPIContentBlock(
                     id: 1,
-                    type: "post",
+                    type: "document",
                     attributes: ResponseAPIContentBlockAttributes(
                         type: self.acceptedPostType,
                         version: "1.0"

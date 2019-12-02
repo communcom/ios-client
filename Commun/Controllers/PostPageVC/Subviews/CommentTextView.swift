@@ -63,7 +63,7 @@ class CommentTextView: ContentTextView {
             .map {contentBlocks -> ResponseAPIContentBlock in
                 var block = ResponseAPIContentBlock(
                     id: 1,
-                    type: "comment",
+                    type: "document",
                     attributes: ResponseAPIContentBlockAttributes(
                         type: "comment",
                         version: "1.0"

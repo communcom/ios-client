@@ -166,7 +166,7 @@ extension ResponseAPIContentBlock {
             let attachmentAS = NSAttributedString(attachment: attachment)
             child.append(attachmentAS)
             child.insert(NSAttributedString.paragraphSeparator(attributes: currentAttributes), at: 0)
-        case "post", "comment":
+        case "post", "comment", "document":
             if child.string.starts(with: "\n\r") {
                 child.deleteCharacters(in: NSMakeRange(0, 2))
             }
