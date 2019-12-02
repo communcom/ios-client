@@ -121,9 +121,10 @@ class CommentForm: MyView {
         // TextView
         addSubview(textView)
         textView.autoPinEdge(.top, to: .bottom, of: parentCommentView)
-        textView.autoPinEdge(toSuperviewEdge: .bottom, withInset: 10.0)
+//        textView.autoPinEdge(toSuperviewEdge: .bottom, withInset: 10.0)
+        textView.bottomAnchor.constraint(greaterThanOrEqualTo: parentCommentView.bottomAnchor, constant: 10.0).isActive = true
+        textView.heightAnchor.constraint(equalToConstant: CGFloat.adaptive(height: 36.0)).isActive = true
         textView.autoPinEdge(toSuperviewEdge: .left, withInset: 15.0)
-//        textView.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 5)
         
         parentCommentView.autoPinEdge(.leading, to: .leading, of: textView, withOffset: 10)
         parentCommentView.autoPinEdge(.trailing, to: .trailing, of: textView, withOffset: -10)
@@ -131,7 +132,8 @@ class CommentForm: MyView {
         // Send button
         addSubview(sendButton)
         sendButton.autoPinEdge(.leading, to: .trailing, of: textView, withOffset: 5.0)
-        sendButton.autoAlignAxis(toSuperviewAxis: .horizontal)
+//        sendButton.autoAlignAxis(toSuperviewAxis: .horizontal)
+        sendButton.autoAlignAxis(.horizontal, toSameAxisOf: textView, withOffset: 0.0)
         sendButton.autoPinEdge(toSuperviewEdge: .right, withInset: 10.0)
 //        sendButton.autoPinBottomAndTrailingToSuperView(inset: 10, xInset: 16)
         sendButton.addTarget(self, action: #selector(sendComment), for: .touchUpInside)
