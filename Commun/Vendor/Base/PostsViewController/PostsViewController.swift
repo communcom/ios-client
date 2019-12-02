@@ -14,6 +14,9 @@ class PostsViewController: ListViewController<ResponseAPIContentGetPost, PostCel
     init(filter: PostsListFetcher.Filter = PostsListFetcher.Filter(feedTypeMode: .new, feedType: .time)) {
         let viewModel = PostsViewModel(filter: filter)
         super.init(viewModel: viewModel)
+        defer {
+            viewModel.fetchNext()
+        }
     }
     
     required init?(coder: NSCoder) {
