@@ -80,16 +80,6 @@
                                     </button>
                                 </subviews>
                             </stackView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZTt-Vv-0l7" userLabel="Test Button">
-                                <rect key="frame" x="0.0" y="0.0" width="44" height="44"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="44" id="3R9-N9-thb"/>
-                                    <constraint firstAttribute="height" constant="44" id="WWq-Gj-7jx"/>
-                                </constraints>
-                                <connections>
-                                    <action selector="testButtonTapped:" destination="5Vs-ev-2DK" eventType="touchUpInside" id="zqV-VB-pwE"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -99,11 +89,9 @@
                             <constraint firstItem="bF6-IB-5mY" firstAttribute="trailing" secondItem="9u7-LT-02r" secondAttribute="trailing" constant="15" id="Vz7-oj-mvg" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                             <constraint firstItem="IfS-V6-9za" firstAttribute="leading" secondItem="bF6-IB-5mY" secondAttribute="leading" constant="20" id="aJ5-L4-K3B"/>
                             <constraint firstItem="9u7-LT-02r" firstAttribute="top" secondItem="bF6-IB-5mY" secondAttribute="top" constant="6" id="ciL-uL-cY7" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
-                            <constraint firstItem="ZTt-Vv-0l7" firstAttribute="top" secondItem="bF6-IB-5mY" secondAttribute="top" id="gNa-nn-SZF"/>
                             <constraint firstItem="bF6-IB-5mY" firstAttribute="bottom" secondItem="IfS-V6-9za" secondAttribute="bottom" constant="20" id="kDl-Ko-m8v"/>
                             <constraint firstItem="qQo-fb-NcH" firstAttribute="trailing" secondItem="bF6-IB-5mY" secondAttribute="trailing" id="mLH-q0-tby"/>
                             <constraint firstItem="bF6-IB-5mY" firstAttribute="trailing" secondItem="IfS-V6-9za" secondAttribute="trailing" constant="20" id="sit-PB-k0c"/>
-                            <constraint firstItem="ZTt-Vv-0l7" firstAttribute="leading" secondItem="bF6-IB-5mY" secondAttribute="leading" id="vXG-X6-Lvm"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="bF6-IB-5mY"/>
                     </view>
