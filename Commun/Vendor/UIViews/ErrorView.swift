@@ -11,14 +11,14 @@ import Foundation
 class ErrorView: MyView {
 
     lazy var imageView: UIImageView = {
-        var imageView = UIImageView(forAutoLayout: ())
+        var imageView = UIImageView()
         imageView.image = UIImage(named: "no-connection-image")
         return imageView
     }()
 
     lazy var title: UILabel = {
         var label = UILabel(text: "no connection".localized().uppercaseFirst)
-        label.font = UIFont.systemFont(ofSize: 30, weight: .semibold)
+        label.font = UIFont.systemFont(ofSize: CGFloat.adaptive(width: 30), weight: .semibold)
         label.textColor = .black
         label.textAlignment = .center
         return label
@@ -26,7 +26,7 @@ class ErrorView: MyView {
 
     lazy var subtitle: UILabel = {
         var label = UILabel(text: "check your Internet connection\n and try again".localized().uppercaseFirst)
-        label.font = UIFont.systemFont(ofSize: 17, weight: .medium)
+        label.font = UIFont.systemFont(ofSize: CGFloat.adaptive(width: 17), weight: .medium)
         label.textColor = UIColor(hexString: "A5A7BD")
         label.numberOfLines = 2
         label.textAlignment = .center
@@ -54,22 +54,27 @@ class ErrorView: MyView {
 
         addSubview(imageView)
         imageView.autoPinEdge(toSuperviewEdge: .top, withInset: 100)
-        imageView.autoPinEdge(toSuperviewEdge: .left, withInset: 45)
-        imageView.autoPinEdge(toSuperviewEdge: .right, withInset: 45)
+        imageView.autoPinEdge(toSuperviewEdge: .left, withInset: 45, relation: .greaterThanOrEqual)
+        imageView.autoPinEdge(toSuperviewEdge: .right, withInset: 45, relation: .greaterThanOrEqual)
+        imageView.autoAlignAxis(toSuperviewAxis: .vertical)
         NSLayoutConstraint(item: imageView, attribute: .width, relatedBy: .equal, toItem: imageView, attribute: .height, multiplier: 285/350, constant: 0).isActive = true
 
         addSubview(title)
         title.autoPinEdge(.top, to: .bottom, of: imageView, withOffset: 20)
-        title.autoPinEdge(toSuperviewEdge: .left)
-        title.autoPinEdge(toSuperviewEdge: .right)
+        title.autoPinEdge(toSuperviewEdge: .leading)
+        title.autoPinEdge(toSuperviewEdge: .trailing)
+        title.autoAlignAxis(toSuperviewAxis: .vertical)
+        title.heightAnchor.constraint(equalToConstant: 36).isActive = true
 
         addSubview(subtitle)
         subtitle.autoPinEdge(.top, to: .bottom, of: title, withOffset: 10)
-        subtitle.autoPinEdge(toSuperviewEdge: .left)
-        subtitle.autoPinEdge(toSuperviewEdge: .right)
+        subtitle.autoPinEdge(toSuperviewEdge: .leading)
+        subtitle.autoPinEdge(toSuperviewEdge: .trailing)
+        subtitle.autoAlignAxis(toSuperviewAxis: .vertical)
+        subtitle.heightAnchor.constraint(equalToConstant: 52).isActive = true
 
         addSubview(retryButton)
-        retryButton.autoPinEdge(.top, to: .bottom, of: subtitle, withOffset: 56, relation: .greaterThanOrEqual)
+        retryButton.autoPinEdge(.top, to: .bottom, of: subtitle, withOffset: 56)
         retryButton.autoAlignAxis(toSuperviewAxis: .vertical)
         retryButton.autoPinEdge(toSuperviewSafeArea: .bottom, withInset: 110)
         retryButton.addTarget(self, action: #selector(retryDidTouch(_:)), for: .touchUpInside)
