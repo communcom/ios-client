@@ -9,7 +9,7 @@
 import Foundation
 import CyberSwift
 
-protocol ListItemCellType: UITableViewCell {
+protocol ListItemCellType: class {
     associatedtype T: ListItemType
     associatedtype Delegate
     func setUp(with item: T)

@@ -326,7 +326,7 @@ class NetworkService: NSObject {
     }
     
     func toggleVoteLeader(leader: ResponseAPIContentGetLeader) -> Completable {
-        let originIsVoted = leader.isVoted
+        let originIsVoted = leader.isVoted ?? false
         
         // set value
         var leader = leader

@@ -274,6 +274,7 @@
 		BC4692CF239114AB0064A38B /* CommunityCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4692CE239114AB0064A38B /* CommunityCellDelegate.swift */; };
 		BC4692D22391160E0064A38B /* LeaderCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4692D12391160E0064A38B /* LeaderCellDelegate.swift */; };
 		BC4692D5239130A50064A38B /* PostCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4692D4239130A50064A38B /* PostCellDelegate.swift */; };
+		BC4692DB2394B0540064A38B /* ProfileCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4692DA2394B0540064A38B /* ProfileCellDelegate.swift */; };
 		BC48FC42236689DC0049C4F4 /* LeadersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC48FC41236689DC0049C4F4 /* LeadersViewModel.swift */; };
 		BC48FC4423668A080049C4F4 /* LeadersListFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC48FC4323668A080049C4F4 /* LeadersListFetcher.swift */; };
 		BC48FC46236690880049C4F4 /* MyEmptyPlaceHolderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC48FC45236690880049C4F4 /* MyEmptyPlaceHolderView.swift */; };
@@ -716,6 +717,7 @@
 		BC4692CE239114AB0064A38B /* CommunityCellDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityCellDelegate.swift; sourceTree = "<group>"; };
 		BC4692D12391160E0064A38B /* LeaderCellDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderCellDelegate.swift; sourceTree = "<group>"; };
 		BC4692D4239130A50064A38B /* PostCellDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCellDelegate.swift; sourceTree = "<group>"; };
+		BC4692DA2394B0540064A38B /* ProfileCellDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCellDelegate.swift; sourceTree = "<group>"; };
 		BC48FC41236689DC0049C4F4 /* LeadersViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeadersViewModel.swift; sourceTree = "<group>"; };
 		BC48FC4323668A080049C4F4 /* LeadersListFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeadersListFetcher.swift; sourceTree = "<group>"; };
 		BC48FC45236690880049C4F4 /* MyEmptyPlaceHolderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyEmptyPlaceHolderView.swift; sourceTree = "<group>"; };
@@ -1200,7 +1202,7 @@
 				BC4692D32391308E0064A38B /* PostController */,
 				BCCC33EB237521FA004E46EF /* CommentController.swift */,
 				BC4692CD239114990064A38B /* CommunityController */,
-				BCCE0AAC23681B2400A183AA /* ProfileController.swift */,
+				BC4692D72394B0410064A38B /* ProfileController */,
 				BC4692D0239115FC0064A38B /* LeaderController */,
 			);
 			path = Controllers;
@@ -1940,6 +1942,15 @@
 			path = PostController;
 			sourceTree = "<group>";
 		};
+		BC4692D72394B0410064A38B /* ProfileController */ = {
+			isa = PBXGroup;
+			children = (
+				BCCE0AAC23681B2400A183AA /* ProfileController.swift */,
+				BC4692DA2394B0540064A38B /* ProfileCellDelegate.swift */,
+			);
+			path = ProfileController;
+			sourceTree = "<group>";
+		};
 		BC52913623766EFA0022EC7F /* CommentCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -2334,7 +2345,6 @@
 					571B14EF223A935C00630C8F = {
 						CreatedOnToolsVersion = 10.1;
 						LastSwiftMigration = 1020;
-						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -2790,6 +2800,7 @@
 				3B0E9C5E226F02AC002AB1C2 /* ProfileEditCoverVC.swift in Sources */,
 				3B5EDE3722E07DCC00897BF3 /* SettingsVC+SectionHeader.swift in Sources */,
 				BC4692BF2390D1E10064A38B /* FeedPageVC.swift in Sources */,
+				BC4692DB2394B0540064A38B /* ProfileCellDelegate.swift in Sources */,
 				BC4692D22391160E0064A38B /* LeaderCellDelegate.swift in Sources */,
 				3B197C532269BE0E008CF10D /* SegmentioExtension.swift in Sources */,
 				BC016D44235DA0D400F1319F /* PostCell+Actions.swift in Sources */,
@@ -3127,8 +3138,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Commun/Commun.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 5G8856SBG8;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -3159,8 +3170,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Commun/Commun.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 5G8856SBG8;
 				FRAMEWORK_SEARCH_PATHS = (

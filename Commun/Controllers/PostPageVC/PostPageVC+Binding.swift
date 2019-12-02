@@ -36,7 +36,7 @@ extension PostPageVC {
         ResponseAPIContentGetCommunity.observeEvent(eventName: ResponseAPIContentGetCommunity.blockedEventName)
             .subscribe(onNext: { (blockedCommunity) in
                 let post = (self.viewModel as! PostPageViewModel).post.value
-                if post?.community.communityId == blockedCommunity.communityId {
+                if post?.community?.communityId == blockedCommunity.communityId {
                     self.back()
                 }
             })

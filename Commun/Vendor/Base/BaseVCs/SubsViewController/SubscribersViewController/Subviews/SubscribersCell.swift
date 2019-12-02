@@ -8,7 +8,7 @@
 
 import Foundation
 
-class SubscribersCell: SubsItemCell, ListItemCellType, ProfileController {
+class SubscribersCell: SubsItemCell, ListItemCellType {
     var followButton: CommunButton {
         get {
             return actionButton
@@ -18,6 +18,7 @@ class SubscribersCell: SubsItemCell, ListItemCellType, ProfileController {
         }
     }
     var profile: ResponseAPIContentResolveProfile?
+    weak var delegate: ProfileCellDelegate?
     
     func setUp(with profile: ResponseAPIContentResolveProfile) {
         self.profile = profile
@@ -36,6 +37,9 @@ class SubscribersCell: SubsItemCell, ListItemCellType, ProfileController {
     }
     
     override func actionButtonDidTouch() {
-        toggleFollow()
+        guard let profile = profile else {return}
+        followButton.animate {
+            self.delegate?.buttonFollowDidTouch(profile: profile)
+        }
     }
 }
