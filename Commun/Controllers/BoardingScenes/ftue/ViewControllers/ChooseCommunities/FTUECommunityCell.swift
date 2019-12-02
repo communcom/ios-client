@@ -9,9 +9,11 @@
 import Foundation
 
 class FTUECommunityCell: CommunityCollectionCell<ResponseAPIContentGetCommunity> {
+    var shouldShowBonus = true
+    
     override func joinButtonDidTouch() {
         // points
-        if (community?.isSubscribed ?? false) == false {
+        if (community?.isSubscribed ?? false) == false && shouldShowBonus {
             let pointsView = UIView(height: 30, backgroundColor: .white, cornerRadius: 15)
             contentView.addSubview(pointsView)
             pointsView.autoAlignAxis(toSuperviewAxis: .vertical)
