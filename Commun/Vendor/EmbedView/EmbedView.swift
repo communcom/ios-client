@@ -50,6 +50,13 @@ class EmbedView: UIView {
         self.configureXib()
         self.configure(with: content)
     }
+    
+    init(localImage: UIImage) {
+        super.init(frame: .zero)
+        self.content = ResponseAPIContentBlock(id: 0, type: "image", attributes: nil, content: ResponseAPIContentBlockContent.string(""))
+        self.configureXib()
+        self.configure(with: localImage)
+    }
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -66,6 +73,20 @@ class EmbedView: UIView {
         addSubview(contentView)
         contentView.frame = frame
         contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+    }
+    
+    private func configure(with localImage: UIImage) {
+        coverImageView.isHidden = false
+        coverImageView.isUserInteractionEnabled = true
+        coverImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapAction)))
+        
+        coverImageView.autoPinEdge(toSuperviewEdge: .top)
+        coverImageView.autoPinEdge(toSuperviewEdge: .left)
+        coverImageView.autoPinEdge(toSuperviewEdge: .right)
+
+        NSLayoutConstraint(item: coverImageView!, attribute: .width, relatedBy: .equal, toItem: coverImageView!, attribute: .height, multiplier: 16/9, constant: 0).isActive = true
+        
+        coverImageView.image = localImage
     }
 
     private func configure(with content: ResponseAPIContentBlock) {

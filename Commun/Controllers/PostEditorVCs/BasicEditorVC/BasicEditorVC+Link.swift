@@ -13,15 +13,14 @@ extension BasicEditorVC {
         // detect link type
         NetworkService.shared.getEmbed(url: link)
             .do(onSubscribe: {
-                self.showIndetermineHudWithMessage(
-                        "loading".localized().uppercaseFirst)
+                self.attachmentView.showLoading()
             })
             .subscribe(onSuccess: {[weak self] embed in
-                self?.hideHud()
+                self?.attachmentView.hideLoading()
                 self?.addEmbed(embed)
-            }, onError: {error in
-                self.hideHud()
-                self.showError(error)
+            }, onError: {[weak self] error in
+                self?.attachmentView.hideLoading()
+                self?.showError(error)
             })
             .disposed(by: disposeBag)
     }
@@ -31,17 +30,15 @@ extension BasicEditorVC {
         
         single
             .do(onSubscribe: {
-                self.showIndetermineHudWithMessage(
-                    "loading".localized().uppercaseFirst)
+                self.attachmentView.showLoading()
             })
             .subscribe(
                 onSuccess: { [weak self] (attachment) in
-                    guard let strongSelf = self else {return}
-                    strongSelf.hideHud()
-                    strongSelf._viewModel.addAttachment(attachment)
+                    self?.attachmentView.hideLoading()
+                    self?._viewModel.attachment.accept(attachment)
                 },
                 onError: {[weak self] error in
-                    self?.hideHud()
+                    self?.attachmentView.hideLoading()
                     self?.showError(error)
                 }
             )

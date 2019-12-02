@@ -20,7 +20,7 @@ extension BasicEditorVC {
         
         DispatchQueue(label: "archiving").async {
             var draft = [Data]()
-            for attachment in self._viewModel.attachments.value {
+            if let attachment = self._viewModel.attachment.value {
                 if let data = try? JSONEncoder().encode(attachment) {
                     draft.append(data)
                 }
@@ -54,7 +54,7 @@ extension BasicEditorVC {
                 DispatchQueue.main.sync {
                     if let attachment = try? JSONDecoder().decode(TextAttachment.self, from: data)
                     {
-                        self._viewModel.addAttachment(attachment)
+                        self._viewModel.attachment.accept(attachment)
                     }
                 }
             }
