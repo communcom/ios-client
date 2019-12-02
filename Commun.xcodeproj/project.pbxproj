@@ -275,6 +275,7 @@
 		BC4692D22391160E0064A38B /* LeaderCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4692D12391160E0064A38B /* LeaderCellDelegate.swift */; };
 		BC4692D5239130A50064A38B /* PostCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4692D4239130A50064A38B /* PostCellDelegate.swift */; };
 		BC4692DB2394B0540064A38B /* ProfileCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4692DA2394B0540064A38B /* ProfileCellDelegate.swift */; };
+		BC4692DF2394B4130064A38B /* CommentCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4692DE2394B4130064A38B /* CommentCellDelegate.swift */; };
 		BC48FC42236689DC0049C4F4 /* LeadersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC48FC41236689DC0049C4F4 /* LeadersViewModel.swift */; };
 		BC48FC4423668A080049C4F4 /* LeadersListFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC48FC4323668A080049C4F4 /* LeadersListFetcher.swift */; };
 		BC48FC46236690880049C4F4 /* MyEmptyPlaceHolderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC48FC45236690880049C4F4 /* MyEmptyPlaceHolderView.swift */; };
@@ -283,7 +284,6 @@
 		BC520A48237E7F3000033ED0 /* UserProfilePageVC+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC520A47237E7F3000033ED0 /* UserProfilePageVC+Actions.swift */; };
 		BC52913523765EAB0022EC7F /* RightAlignedIconButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC52913423765EAB0022EC7F /* RightAlignedIconButton.swift */; };
 		BC52913823766F080022EC7F /* CommentCell+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC52913723766F080022EC7F /* CommentCell+Actions.swift */; };
-		BC52913A237671CE0022EC7F /* CommentCellDelegate+UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC529139237671CE0022EC7F /* CommentCellDelegate+UIViewController.swift */; };
 		BC52913C2376B1EB0022EC7F /* PostPageVC+UITableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC52913B2376B1EB0022EC7F /* PostPageVC+UITableViewDelegate.swift */; };
 		BC52914023793D330022EC7F /* CommentForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC52913F23793D330022EC7F /* CommentForm.swift */; };
 		BC529142237941920022EC7F /* CommentTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC529141237941920022EC7F /* CommentTextView.swift */; };
@@ -718,6 +718,7 @@
 		BC4692D12391160E0064A38B /* LeaderCellDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderCellDelegate.swift; sourceTree = "<group>"; };
 		BC4692D4239130A50064A38B /* PostCellDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCellDelegate.swift; sourceTree = "<group>"; };
 		BC4692DA2394B0540064A38B /* ProfileCellDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCellDelegate.swift; sourceTree = "<group>"; };
+		BC4692DE2394B4130064A38B /* CommentCellDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentCellDelegate.swift; sourceTree = "<group>"; };
 		BC48FC41236689DC0049C4F4 /* LeadersViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeadersViewModel.swift; sourceTree = "<group>"; };
 		BC48FC4323668A080049C4F4 /* LeadersListFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeadersListFetcher.swift; sourceTree = "<group>"; };
 		BC48FC45236690880049C4F4 /* MyEmptyPlaceHolderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyEmptyPlaceHolderView.swift; sourceTree = "<group>"; };
@@ -726,7 +727,6 @@
 		BC520A47237E7F3000033ED0 /* UserProfilePageVC+Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserProfilePageVC+Actions.swift"; sourceTree = "<group>"; };
 		BC52913423765EAB0022EC7F /* RightAlignedIconButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RightAlignedIconButton.swift; sourceTree = "<group>"; };
 		BC52913723766F080022EC7F /* CommentCell+Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CommentCell+Actions.swift"; sourceTree = "<group>"; };
-		BC529139237671CE0022EC7F /* CommentCellDelegate+UIViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CommentCellDelegate+UIViewController.swift"; sourceTree = "<group>"; };
 		BC52913B2376B1EB0022EC7F /* PostPageVC+UITableViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PostPageVC+UITableViewDelegate.swift"; sourceTree = "<group>"; };
 		BC52913F23793D330022EC7F /* CommentForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentForm.swift; sourceTree = "<group>"; };
 		BC529141237941920022EC7F /* CommentTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentTextView.swift; sourceTree = "<group>"; };
@@ -1200,7 +1200,7 @@
 			isa = PBXGroup;
 			children = (
 				BC4692D32391308E0064A38B /* PostController */,
-				BCCC33EB237521FA004E46EF /* CommentController.swift */,
+				BC4692DC2394B3A90064A38B /* CommentController */,
 				BC4692CD239114990064A38B /* CommunityController */,
 				BC4692D72394B0410064A38B /* ProfileController */,
 				BC4692D0239115FC0064A38B /* LeaderController */,
@@ -1951,12 +1951,20 @@
 			path = ProfileController;
 			sourceTree = "<group>";
 		};
+		BC4692DC2394B3A90064A38B /* CommentController */ = {
+			isa = PBXGroup;
+			children = (
+				BCCC33EB237521FA004E46EF /* CommentController.swift */,
+				BC4692DE2394B4130064A38B /* CommentCellDelegate.swift */,
+			);
+			path = CommentController;
+			sourceTree = "<group>";
+		};
 		BC52913623766EFA0022EC7F /* CommentCell */ = {
 			isa = PBXGroup;
 			children = (
 				BCCC33E723751686004E46EF /* CommentCell.swift */,
 				BC52913723766F080022EC7F /* CommentCell+Actions.swift */,
-				BC529139237671CE0022EC7F /* CommentCellDelegate+UIViewController.swift */,
 			);
 			path = CommentCell;
 			sourceTree = "<group>";
@@ -2345,6 +2353,7 @@
 					571B14EF223A935C00630C8F = {
 						CreatedOnToolsVersion = 10.1;
 						LastSwiftMigration = 1020;
+						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -2639,7 +2648,6 @@
 				BC561E80238B836D004C53EB /* ReportOptionView.swift in Sources */,
 				B17A970C228002440081B8E0 /* SignUpRouter.swift in Sources */,
 				BC247D1223827F460062C979 /* PostHeaderView+UITextViewDelegate.swift in Sources */,
-				BC52913A237671CE0022EC7F /* CommentCellDelegate+UIViewController.swift in Sources */,
 				5787C0C422650F9D00568CEC /* SetUserVC.swift in Sources */,
 				5721E87122650AC0003BE04B /* StringExtension.swift in Sources */,
 				3B3C8B7E23473ED900D8BADB /* EditorVC+CollectionViewFlowLayoutDelegate.swift in Sources */,
@@ -2792,6 +2800,7 @@
 				3B0E9C7122706985002AB1C2 /* ProfileChooseAvatarViewModel.swift in Sources */,
 				3B5F58AD232A2ABE0036533B /* SignInSelectionCell.swift in Sources */,
 				BC69F7CD236FC5D00097F870 /* LoadingState.swift in Sources */,
+				BC4692DF2394B4130064A38B /* CommentCellDelegate.swift in Sources */,
 				3B3C8B902347876000D8BADB /* ArticleEditorTextView+Attachment.swift in Sources */,
 				BCB4A4CA237019EF005EDAAD /* SubsViewController.swift in Sources */,
 				3BB342B022CA5CA6009546B2 /* PickupAvatarVC.swift in Sources */,
@@ -3138,8 +3147,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Commun/Commun.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 5G8856SBG8;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -3170,8 +3179,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Commun/Commun.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 5G8856SBG8;
 				FRAMEWORK_SEARCH_PATHS = (

@@ -136,7 +136,7 @@ class NetworkService: NSObject {
         
         // send request
         return RestAPIManager.instance.vote(
-            voteType:    originHasDownVote ? .unvote: .upvote,
+            voteType:    originHasDownVote ? .unvote: .downvote,
             communityId: message.community?.communityId ?? "",
             author:      message.contentId.userId,
             permlink:    message.contentId.permlink
