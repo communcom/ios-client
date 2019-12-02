@@ -113,6 +113,7 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
     
     func bindState() {
         viewModel.state
+            .distinctUntilChanged()
             .debounce(0.3, scheduler: MainScheduler.instance)
             .do(onNext: { (state) in
                 Logger.log(message: "\(state)", event: .debug)
