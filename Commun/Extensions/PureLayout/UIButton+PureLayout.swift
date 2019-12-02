@@ -60,6 +60,9 @@ extension UIButton {
         button.setImage(UIImage(named: imageName), for: .normal)
         button.imageEdgeInsets = UIEdgeInsets(top: 6, left: 6, bottom: 6, right: 6)
         button.tintColor = UIColor(hexString: "#A5A7BD")
+        if size < 44 {
+            button.touchAreaEdgeInsets = UIEdgeInsets(inset: size - 44)
+        }
         return button
     }
     
@@ -68,6 +71,9 @@ extension UIButton {
         button.setImage(UIImage(named: imageName), for: .normal)
         button.imageEdgeInsets = UIEdgeInsets(top: 6, left: 6, bottom: 6, right: 6)
         button.tintColor = .white
+        if size < 44 {
+            button.touchAreaEdgeInsets = UIEdgeInsets(inset: size - 44)
+        }
         return button
     }
     
