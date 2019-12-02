@@ -48,12 +48,7 @@ class CommentForm: MyView {
     lazy var parentCommentView = UIView(height: 40, backgroundColor: .white)
     lazy var parentCommentTitleLabel = UILabel.with(text: "Edit comment", textSize: 15, weight: .bold, textColor: .appMainColor)
     lazy var parentCommentLabel = UILabel.with(text: "Amet incididunt enim dolore fugdasd ...", textSize: 13)
-    lazy var closeParentCommentButton: UIButton = {
-        let button = UIButton(width: 24, contentInsets: UIEdgeInsets(top: 6, left: 6, bottom: 6, right: 6))
-        button.tintColor = .black
-        button.setImage(UIImage(named: "close-x"), for: .normal)
-        return button
-    }()
+    lazy var closeParentCommentButton = UIButton.close()
     
     lazy var avatarImageView = MyAvatarImageView(size: 35)
     lazy var textView: CommentTextView = {

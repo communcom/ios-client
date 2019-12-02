@@ -10,7 +10,7 @@ import Foundation
 
 class ReportVC: BaseVerticalStackViewController {
     // MARK: - Subviews
-    lazy var closeButton = UIButton.circleGray(imageName: "close-x")
+    lazy var closeButton = UIButton.close()
     
     // MARK: - Properties
     

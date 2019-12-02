@@ -15,9 +15,10 @@ final class MyProfileHeaderView: UserProfileHeaderView {
         button.setImage(UIImage(named: "photo_solid")!, for: .normal)
         button.borderColor = .white
         button.borderWidth = 2
+        button.touchAreaEdgeInsets = UIEdgeInsets(top: -24, left: -24, bottom: 0, right: 0)
         return button
     }()
-    
+
     lazy var addBioButton = UIButton(height: 35, label: "add bio".localized().uppercaseFirst, labelFont: .boldSystemFont(ofSize: 15), backgroundColor: .f3f5fa, textColor: .appMainColor, cornerRadius: 35/2)
     
     override func commonInit() {

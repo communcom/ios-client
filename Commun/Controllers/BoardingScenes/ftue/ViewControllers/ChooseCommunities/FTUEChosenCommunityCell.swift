@@ -11,7 +11,7 @@ import Foundation
 class FTUEChosenCommunityCell: MyCollectionViewCell {
     lazy var avatarImageView = LeaderAvatarImageView(size: 50)
     lazy var deleteButton: UIButton = {
-        let button = UIButton.circle(size: 20, backgroundColor: .appMainColor, tintColor: .white, imageName: "close-x", imageEdgeInsets: UIEdgeInsets(inset: 6))
+        let button = UIButton.close()
         button.borderWidth = 2
         button.borderColor = .white
         return button
