@@ -121,7 +121,9 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
             .subscribe(onNext: {[weak self] state in
                 switch state {
                 case .loading(let isLoading):
-                    self?.handleLoading(isLoading: isLoading)
+                    if isLoading {
+                        self?.handleLoading()
+                    }
                 case .listEnded:
                     self?.handleListEnded()
                 case .listEmpty:
@@ -189,30 +191,34 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
     }
     
     func bindScrollView() {
-        tableView.rx.willEndDragging
-            .subscribe(onNext: { (velocity, targetContentOffset) in
-                let currentOffset = self.tableView.contentOffset.y
-                let maximumOffset = self.tableView.contentSize.height - self.tableView.frame.size.height
-                
-                // Change 10.0 to adjust the distance from bottom
-                if maximumOffset - currentOffset <= 100 {
-                    self.viewModel.fetchNext()
+        tableView.rx.didEndDecelerating
+            .subscribe(onNext: { [weak self] _ in
+                guard let lastCell = self?.tableView.visibleCells.last,
+                    let indexPath = self?.tableView.indexPath(for: lastCell)
+                else {
+                    return
                 }
+                if indexPath.row >= self!.viewModel.items.value.count - 3 {
+                    self!.viewModel.fetchNext()
+                }
+                
             })
             .disposed(by: disposeBag)
+//        tableView.rx.willEndDragging
+//            .subscribe(onNext: { (velocity, targetContentOffset) in
+//                let currentOffset = self.tableView.contentOffset.y
+//                let maximumOffset = self.tableView.contentSize.height - self.tableView.frame.size.height
+//
+//                // Change 10.0 to adjust the distance from bottom
+//                if maximumOffset - currentOffset <= 100 {
+//                    self.viewModel.fetchNext()
+//                }
+//            })
+//            .disposed(by: disposeBag)
     }
     
     // MARK: - State handling
-    func handleLoading(isLoading: Bool) {
-        if isLoading {
-            showLoadingFooter()
-        }
-        else {
-            tableView.tableFooterView = UIView()
-        }
-    }
-    
-    func showLoadingFooter() {
+    func handleLoading() {
         tableView.addLoadingFooterView(
             rowType:        PlaceholderNotificationCell.self,
             tag:            notificationsLoadingFooterViewTag,
