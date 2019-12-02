@@ -45,8 +45,6 @@ class SetUserVC: UIViewController, SignUpRouter {
         self.title = "sign up".localized().uppercaseFirst
         self.navigationController?.navigationBar.prefersLargeTitles = true
         
-        self.setNavBarBackButton()
-
         self.view.addSubview(self.userNameRulesView)
         self.userNameRulesView.display(false)
         
@@ -54,8 +52,8 @@ class SetUserVC: UIViewController, SignUpRouter {
             self.showBlackoutView(false)
         }
 
-        setBackButtonToSignUpVC()
-        
+        self.navigationItem.hidesBackButton = true
+
         self.bind()
     }
 
