@@ -73,7 +73,9 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
         // set up datasource
         dataSource = MyRxTableViewSectionedAnimatedDataSource<ListSection>(
             configureCell: { dataSource, tableView, indexPath, item in
-                return self.configureCell(with: item, indexPath: indexPath)
+                let cell = self.configureCell(with: item, indexPath: indexPath)
+                (cell as? CellType)?.delegate = self as? CellType.Delegate
+                return cell
             }
         )
     }
@@ -86,7 +88,7 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
         let cell = self.tableView.dequeueReusableCell(withIdentifier: String(describing: CellType.self)) as! CellType
         cell.setUp(with: item as! CellType.T)
         
-        return cell
+        return cell as! UITableViewCell
     }
     
     // MARK: - Binding
@@ -111,6 +113,7 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
     
     func bindState() {
         viewModel.state
+            .debounce(0.3, scheduler: MainScheduler.instance)
             .do(onNext: { (state) in
                 Logger.log(message: "\(state)", event: .debug)
                 return
@@ -118,7 +121,9 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
             .subscribe(onNext: {[weak self] state in
                 switch state {
                 case .loading(let isLoading):
-                    self?.handleLoading(isLoading: isLoading)
+                    if isLoading {
+                        self?.handleLoading()
+                    }
                 case .listEnded:
                     self?.handleListEnded()
                 case .listEmpty:
@@ -186,30 +191,23 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
     }
     
     func bindScrollView() {
-        tableView.rx.willEndDragging
-            .subscribe(onNext: { (velocity, targetContentOffset) in
-                let currentOffset = self.tableView.contentOffset.y
-                let maximumOffset = self.tableView.contentSize.height - self.tableView.frame.size.height
-                
-                // Change 10.0 to adjust the distance from bottom
-                if maximumOffset - currentOffset <= 100 {
-                    self.viewModel.fetchNext()
+        tableView.rx.didEndDecelerating
+            .subscribe(onNext: { [weak self] _ in
+                guard let lastCell = self?.tableView.visibleCells.last,
+                    let indexPath = self?.tableView.indexPath(for: lastCell)
+                else {
+                    return
                 }
+                if indexPath.row >= self!.viewModel.items.value.count - 3 {
+                    self!.viewModel.fetchNext()
+                }
+                
             })
             .disposed(by: disposeBag)
     }
     
     // MARK: - State handling
-    func handleLoading(isLoading: Bool) {
-        if isLoading {
-            showLoadingFooter()
-        }
-        else {
-            tableView.tableFooterView = UIView()
-        }
-    }
-    
-    func showLoadingFooter() {
+    func handleLoading() {
         tableView.addLoadingFooterView(
             rowType:        PlaceholderNotificationCell.self,
             tag:            notificationsLoadingFooterViewTag,

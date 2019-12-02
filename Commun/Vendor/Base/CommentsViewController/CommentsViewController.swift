@@ -59,7 +59,6 @@ class CommentsViewController: ListViewController<ResponseAPIContentGetComment, C
         let cell = self.tableView.dequeueReusableCell(withIdentifier: "CommentCell") as! CommentCell
         cell.expanded = self.expandedComments.contains(where: {$0.identity == comment.identity})
         cell.setUp(with: comment)
-        cell.delegate = self
         
         if indexPath.row == self.viewModel.items.value.count - 2 {
             self.viewModel.fetchNext()
@@ -108,7 +107,7 @@ class CommentsViewController: ListViewController<ResponseAPIContentGetComment, C
         
     }
     
-    override func showLoadingFooter() {
+    override func handleLoading() {
         tableView.addLoadingFooterView(
             rowType:        PlaceholderNotificationCell.self,
             tag:            notificationsLoadingFooterViewTag,

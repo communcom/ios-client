@@ -66,6 +66,7 @@ extension CommunityMembersVC: UICollectionViewDelegateFlowLayout {
                 case .subscriber(let subscriber):
                     let cell = self.tableView.dequeueReusableCell(withIdentifier: "SubscribersCell") as! SubscribersCell
                     cell.setUp(with: subscriber)
+                    cell.delegate = self
                     
                     if indexPath.row >= self.viewModel.subscribersVM.items.value.count - 5 {
                         self.viewModel.fetchNext()
@@ -75,6 +76,7 @@ extension CommunityMembersVC: UICollectionViewDelegateFlowLayout {
                 case .leader(let leader):
                     let cell = self.tableView.dequeueReusableCell(withIdentifier: "CommunityLeaderCell") as! CommunityLeaderCell
                     cell.setUp(with: leader)
+                    cell.delegate = self
                     
                     if indexPath.row >= self.viewModel.leadersVM.items.value.count - 5 {
                         self.viewModel.fetchNext()

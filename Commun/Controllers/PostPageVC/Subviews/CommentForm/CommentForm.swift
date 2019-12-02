@@ -203,7 +203,7 @@ class CommentForm: MyView {
         UIView.animate(withDuration: 0.3) {
             self.layoutIfNeeded()
         }
-        parentCommentLabel.attributedText = comment.document.toAttributedString(
+        parentCommentLabel.attributedText = comment.document?.toAttributedString(
             currentAttributes: [.font: UIFont.systemFont(ofSize: 13)],
             attachmentType: TextAttachment.self)
     }

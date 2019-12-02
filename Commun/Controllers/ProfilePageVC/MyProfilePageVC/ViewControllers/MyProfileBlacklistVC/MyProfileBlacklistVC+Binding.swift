@@ -10,7 +10,7 @@ import Foundation
 import RxDataSources
 import CyberSwift
 
-extension MyProfileBlacklistVC {
+extension MyProfileBlacklistVC: BlacklistCellDelegate {
     func bindSegmentedControl() {
         topTabBar.selectedIndex
             .map { index -> MyProfileBlacklistViewModel.SegmentedItem in
@@ -50,7 +50,7 @@ extension MyProfileBlacklistVC {
             configureCell: { (dataSource, tableView, indexPath, element) -> UITableViewCell in
                 let cell = self.tableView.dequeueReusableCell(withIdentifier: "BlacklistCell") as! BlacklistCell
                 cell.setUp(with: element)
-                
+                cell.delegate = self
                 cell.roundedCorner = []
                 
                 if indexPath.row == 0 {

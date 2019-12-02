@@ -169,9 +169,10 @@ class PostPageVC: CommentsViewController {
     }
     
     override func editComment(_ comment: ResponseAPIContentGetComment) {
+        guard let document = comment.document else {return}
         commentForm.mode = .edit
         commentForm.parentComment = comment
-        commentForm.textView.parseContentBlock(comment.document)
+        commentForm.textView.parseContentBlock(document)
         commentForm.textView.becomeFirstResponder()
     }
     

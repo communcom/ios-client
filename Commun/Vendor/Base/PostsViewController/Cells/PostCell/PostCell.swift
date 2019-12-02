@@ -9,10 +9,11 @@
 import UIKit
 import RxSwift
 
-class PostCell: MyTableViewCell, ListItemCellType , PostController {
+class PostCell: MyTableViewCell, ListItemCellType {
     // MARK: - Properties
     var post: ResponseAPIContentGetPost?
     let voteActionsContainerViewHeight: CGFloat = 35
+    weak var delegate: PostCellDelegate?
 
     
     // MARK: - Subviews
@@ -112,7 +113,7 @@ class PostCell: MyTableViewCell, ListItemCellType , PostController {
         let separatorView = UIView(height: 10)
         separatorView.backgroundColor = #colorLiteral(red: 0.9599978328, green: 0.966491878, blue: 0.9829974771, alpha: 1)
         contentView.addSubview(separatorView)
-        separatorView.autoPinEdge(.top, to: .bottom, of: voteContainerView, withOffset: 16)
+        separatorView.autoPinEdge(.top, to: .bottom, of: voteContainerView, withOffset: 9)
         separatorView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
         
         // layout content
@@ -140,22 +141,5 @@ class PostCell: MyTableViewCell, ListItemCellType , PostController {
         // Shares count
         #warning("change this number later")
         self.sharesCountLabel.text = "\(post.stats?.viewCount ?? 0)"
-    }
-    
-    
-    // MARK: - Actions
-    @objc func commentCountsButtonDidTouch() {
-        guard let post = post else {return}
-        let postPageVC = PostPageVC(post: post)
-        postPageVC.scrollToTopAfterLoadingComment = true
-        parentViewController?.show(postPageVC, sender: nil)
-    }
-
-    @objc func upVoteButtonDidTouch() {
-        upVote()
-    }
-    
-    @objc func downVoteButtonDidTouch() {
-        downVote()
     }
 }

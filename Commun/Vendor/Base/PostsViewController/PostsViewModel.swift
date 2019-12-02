@@ -46,7 +46,7 @@ class PostsViewModel: ListViewModel<ResponseAPIContentGetPost> {
     func observeCommunityBlocked() {
         ResponseAPIContentGetCommunity.observeEvent(eventName: ResponseAPIContentGetCommunity.blockedEventName)
             .subscribe(onNext: { (blockedCommunity) in
-                let posts = self.items.value.filter {$0.community.communityId != blockedCommunity.communityId}
+                let posts = self.items.value.filter {$0.community?.communityId != blockedCommunity.communityId}
                 self.items.accept(posts)
             })
             .disposed(by: disposeBag)

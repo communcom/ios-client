@@ -9,7 +9,7 @@
 import Foundation
 import CyberSwift
 
-class CommunityCell: SubsItemCell, ListItemCellType, CommunityController {
+class CommunityCell: SubsItemCell, ListItemCellType {
     var joinButton: CommunButton {
         get {
             return actionButton
@@ -20,6 +20,7 @@ class CommunityCell: SubsItemCell, ListItemCellType, CommunityController {
     }
     
     var community: ResponseAPIContentGetCommunity?
+    weak var delegate: CommunityCellDelegate?
     
     func setUp(with community: ResponseAPIContentGetCommunity) {
         self.community = community
@@ -41,6 +42,9 @@ class CommunityCell: SubsItemCell, ListItemCellType, CommunityController {
     }
     
     override func actionButtonDidTouch() {
-        toggleJoin()
+        guard let community = community else {return}
+        joinButton.animate {
+            self.delegate?.buttonFollowDidTouch(community: community)
+        }
     }
 }

@@ -19,8 +19,8 @@ class PostMetaView: MyView {
     // MARK: - Subviews
     lazy var avatarImageView = MyAvatarImageView(size: 40)
     lazy var comunityNameLabel = UILabel.with(textSize: 15, weight: .semibold)
-    lazy var byUserLabel = UILabel.with(textSize: 13, weight: .semibold, textColor: .appMainColor)
-    lazy var timeAgoLabel = UILabel()
+    lazy var timeAgoLabel = UILabel.with(textSize: 12, weight: .semibold, textColor: .appGrayColor)
+    lazy var byUserLabel = UILabel.with(textSize: 12, weight: .semibold, textColor: .appMainColor)
     
 
     // MARK: - Properties
@@ -37,7 +37,7 @@ class PostMetaView: MyView {
         // communityNameLabel
         addSubview(comunityNameLabel)
         comunityNameLabel.autoPinEdge(.top, to: .top, of: avatarImageView)
-        comunityNameLabel.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 8)
+        comunityNameLabel.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 10)
         comunityNameLabel.autoPinEdge(toSuperviewEdge: .trailing)
         comunityNameLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         
@@ -49,12 +49,12 @@ class PostMetaView: MyView {
                           isMultiLines:     false)
         
         addSubview(timeAgoLabel)
-        timeAgoLabel.autoPinEdge(.bottom, to: .bottom, of: avatarImageView, withOffset: -3)
-        timeAgoLabel.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 8)
+        timeAgoLabel.autoPinEdge(.top, to: .bottom, of: comunityNameLabel, withOffset: 3)
+        timeAgoLabel.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 10)
         
         // byUserLabel
         addSubview(byUserLabel)
-        byUserLabel.autoPinEdge(.bottom, to: .bottom, of: avatarImageView, withOffset: -3)
+        byUserLabel.autoPinEdge(.top, to: .bottom, of: comunityNameLabel, withOffset: 3)
         byUserLabel.autoPinEdge(.leading, to: .trailing, of: timeAgoLabel)
         byUserLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         byUserLabel.removeGestureRecognizers()
@@ -66,8 +66,8 @@ class PostMetaView: MyView {
     }
     
     func setUp(post: ResponseAPIContentGetPost) {
-        avatarImageView.setAvatar(urlString: post.community.avatarUrl, namePlaceHolder: post.community.name)
-        comunityNameLabel.text = post.community.name
+        avatarImageView.setAvatar(urlString: post.community?.avatarUrl, namePlaceHolder: post.community?.name ?? "C")
+        comunityNameLabel.text = post.community?.name
         timeAgoLabel.text = Date.timeAgo(string: post.meta.creationTime) + " • "
         byUserLabel.text = post.author?.username ?? post.author?.userId
         
@@ -99,7 +99,7 @@ class PostMetaView: MyView {
     }
     
     @objc func communityNameTapped(_ sender: TapGesture) {
-        let communityId = sender.post.community.communityId
+        guard let communityId = sender.post.community?.communityId else {return}
         parentViewController?.showCommunityWithCommunityId(communityId)
     }
 }

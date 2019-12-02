@@ -35,7 +35,7 @@ final class BasicPostCell: PostCell {
         contentTextView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
 
         contentView.addSubview(gridView)
-        centerConstraint = gridView.autoPinEdge(.top, to: .bottom, of: metaView, withOffset: 10)
+        centerConstraint = gridView.autoPinEdge(.top, to: .bottom, of: metaView, withOffset: 5)
         centerConstraint.isActive = false
         gridView.autoPinEdge(.top, to: .bottom, of: contentTextView, withOffset: 10)
         gridView.autoPinEdge(toSuperviewEdge: .left)

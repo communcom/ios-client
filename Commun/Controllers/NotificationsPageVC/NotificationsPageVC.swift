@@ -12,7 +12,7 @@ import RxCocoa
 import CyberSwift
 import RxDataSources
 
-class NotificationsPageVC: SubsViewController<ResponseAPIOnlineNotificationData, NotificationCell> {
+class NotificationsPageVC: SubsViewController<ResponseAPIOnlineNotificationData, NotificationCell>, NotificationCellDelegate {
     override func setUp() {
         super.setUp()
         navigationItem.rightBarButtonItem = nil

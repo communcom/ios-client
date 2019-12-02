@@ -50,7 +50,7 @@ class SubsViewController<T: ListItemType, CellType: ListItemCellType>: ListViewC
         baseNavigationController?.resetNavigationBar()
     }
     
-    override func showLoadingFooter() {
+    override func handleLoading() {
         tableView.addNotificationsLoadingFooterView()
     }
     

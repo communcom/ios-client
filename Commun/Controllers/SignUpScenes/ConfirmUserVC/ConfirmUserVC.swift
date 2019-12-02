@@ -6,6 +6,8 @@
 //  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
 //
 
+// FIXME: Need Refactoring
+
 import UIKit
 import RxSwift
 import RxCocoa
@@ -51,7 +53,7 @@ class ConfirmUserVC: UIViewController, SignUpRouter {
     }
     @IBOutlet weak var nextButton: StepButton!
     
-    @IBOutlet weak var resendButton: UIButton! {
+    @IBOutlet weak var resendButton: ResendButton! {
         didSet {
             self.resendButton.isEnabled = true
             
@@ -123,16 +125,10 @@ class ConfirmUserVC: UIViewController, SignUpRouter {
         self.resendTimerLabel.isHidden = false
         
         let dateNextSmsRetry    =   date.convert(toDateFormat: .nextSmsDateType)
-        self.resendSeconds      =   Date().seconds(date: dateNextSmsRetry) - 2
-        let deadlineTime        =   DispatchTime.now() + .seconds(resendSeconds) + 2
+        self.resendSeconds      =   Date().seconds(date: dateNextSmsRetry)
         
         // Run timer
         self.resendTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(onTimerFires), userInfo: nil, repeats: true)
-        
-        DispatchQueue.main.asyncAfter(deadline: deadlineTime) {
-            self.resendButton.isEnabled = true
-            self.resendTimerLabel.isHidden = true
-        }
     }
     
     
@@ -148,6 +144,8 @@ class ConfirmUserVC: UIViewController, SignUpRouter {
             self.resendTimer?.invalidate()
             self.resendTimer = nil
             self.resendTimerLabel.text = nil
+            self.resendButton.isEnabled = true
+            self.resendTimerLabel.isHidden = true
             return
         }
         
@@ -209,6 +207,37 @@ class ConfirmUserVC: UIViewController, SignUpRouter {
     func deleteCode() {
         for _ in 0..<ConfirmUserVC.numberOfDigits {
             pinCodeInputView.deleteBackward()
+        }
+    }
+}
+
+class ResendButton: UIButton {
+     override var isEnabled: Bool {
+         didSet {
+            self.backgroundColor = self.isEnabled ? #colorLiteral(red: 0.4235294118, green: 0.5137254902, blue: 0.9294117647, alpha: 1) : #colorLiteral(red: 0.4156862745, green: 0.5019607843, blue: 0.9607843137, alpha: 0.3834813784)
+            self.alpha = 1.0
+            self.backgroundColor = self.isEnabled ? .appMainColor : .appGrayColor
+         }
+     }
+
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        commonInit()
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        commonInit()
+    }
+
+    func commonInit() {
+        self.backgroundColor = .clear
+        self.titleLabel?.font       =   UIFont.systemFont(ofSize: 15, weight: .semibold)
+
+        // Localize label
+        if let text = titleLabel?.text {
+            setTitle(text.localized().uppercaseFirst, for: .normal)
+            setTitleColor(.white, for: .normal)
         }
     }
 }

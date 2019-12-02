@@ -11,7 +11,6 @@ import RxSwift
 
 class MyTableViewCell: UITableViewCell {
     // MARK: - Constants
-    var disposeBag = DisposeBag()
     
     // MARK: - Properties
     var roundedCorner: UIRectCorner = [] {
@@ -33,21 +32,10 @@ class MyTableViewCell: UITableViewCell {
     // MARK: - Methods
     
     func setUpViews() {
-        observe()
-    }
-    
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        // http://adamborek.com/top-7-rxswift-mistakes/
-        // have to reset disposeBag when reusing cell
-        disposeBag = DisposeBag()
-        observe()
-    }
-    
-    func observe() {
         
     }
-
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

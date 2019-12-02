@@ -26,8 +26,8 @@ import SwiftTheme
 
     
     // MARK: - Custom Functions
-    func commonInit(hexColors:      [ThemeColorPicker]? = [softBlueColorPickers, verySoftBlueColorPickers, verySoftBlueColorPickers, verySoftBlueColorPickers],
-                    font:           UIFont? = UIFont(name: "SFProText-Semibold", size: 17.0 * Config.widthRatio),
+    func commonInit(hexColors:      [ThemeColorPicker]? = [softBlueColorPickers, softBlueColorPickers, softBlueColorPickers, communGrayColorPickers],
+                    font:           UIFont? = UIFont.systemFont(ofSize: CGFloat.adaptive(width: 15.0), weight: .semibold),
                     alignment:      NSTextAlignment? = .center) {
         if let text = self.titleLabel?.text {
             self.tune(withTitle:    text.localized().uppercaseFirst,

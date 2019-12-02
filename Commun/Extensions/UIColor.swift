@@ -9,6 +9,10 @@
 import Foundation
 
 extension UIColor {
+    static var appGrayColor: UIColor {
+        return UIColor(hexString: "#A5A7BD")!
+    }
+
     static var appMainColor: UIColor {
         return UIColor(hexString: "#6A80F5")!
     }

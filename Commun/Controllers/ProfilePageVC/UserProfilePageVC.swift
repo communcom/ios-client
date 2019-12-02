@@ -10,7 +10,7 @@ import Foundation
 import CyberSwift
 import RxDataSources
 
-class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile>, CommentCellDelegate {
+class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile>, PostCellDelegate, CommentCellDelegate {
     
     // MARK: - Nested type
     enum CustomElementType: IdentifiableType, Equatable {
@@ -136,10 +136,12 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile>, CommentCellDel
                     case "article":
                         let cell = self.tableView.dequeueReusableCell(withIdentifier: "ArticlePostCell") as! ArticlePostCell
                         cell.setUp(with: post)
+                        cell.delegate = self
                         return cell
                     case "basic":
                         let cell = self.tableView.dequeueReusableCell(withIdentifier: "BasicPostCell") as! BasicPostCell
                         cell.setUp(with: post)
+                        cell.delegate = self
                         return cell
                     default:
                         break

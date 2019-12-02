@@ -10,7 +10,8 @@ import Foundation
 import CyberSwift
 import RxDataSources
 
-class SubscriptionsVC: SubsViewController<ResponseAPIContentGetSubscriptionsItem, SubscriptionsUserCell> {
+class SubscriptionsVC: SubsViewController<ResponseAPIContentGetSubscriptionsItem, SubscriptionsUserCell>, CommunityCellDelegate, ProfileCellDelegate
+{
     var hideFollowButton = false
     private var isNeedHideCloseButton = false
 

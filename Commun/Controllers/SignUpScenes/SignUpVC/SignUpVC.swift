@@ -74,7 +74,7 @@ class SignUpVC: UIViewController, SignUpRouter {
             let paddingView: UIView = UIView(frame: CGRect(x: 0, y: 0, width: 16 * Config.widthRatio, height: 20))
             phoneNumberTextField.leftView = paddingView
             phoneNumberTextField.leftViewMode = .always
-            
+
             self.phoneNumberTextField.layer.cornerRadius = 8.0 * Config.heightRatio
             self.phoneNumberTextField.clipsToBounds = true
             self.phoneNumberTextField.keyboardType = .numberPad
@@ -94,7 +94,7 @@ class SignUpVC: UIViewController, SignUpRouter {
         self.setNavBarBackButton()
         self.setupBindings()
         self.setupActions()
-        
+
         updateLocation()
     }
         
