@@ -115,7 +115,8 @@
 "login placeholder"                             =   "login";
 "logging out"                                   =   "logging out";
 "loading post"                                  =   "loading post";
-
+"liked"                                         =   "liked";
+                                
 
 // M
 "master key has been generated"                 =   "master key has been generated";
