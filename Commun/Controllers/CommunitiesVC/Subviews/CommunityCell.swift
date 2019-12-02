@@ -43,8 +43,6 @@ class CommunityCell: SubsItemCell, ListItemCellType {
     
     override func actionButtonDidTouch() {
         guard let community = community else {return}
-        joinButton.animate {
-            self.delegate?.buttonFollowDidTouch(community: community)
-        }
+        self.delegate?.buttonFollowDidTouch(community: community)
     }
 }

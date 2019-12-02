@@ -38,8 +38,6 @@ class SubscriptionsCommunityCell: SubsItemCell {
     
     override func actionButtonDidTouch() {
         guard let community = community else {return}
-        actionButton.animate {
-            self.delegate?.buttonFollowDidTouch(community: community)
-        }
+        self.delegate?.buttonFollowDidTouch(community: community)
     }
 }
