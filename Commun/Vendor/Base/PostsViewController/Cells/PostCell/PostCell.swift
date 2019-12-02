@@ -113,7 +113,7 @@ class PostCell: MyTableViewCell, ListItemCellType {
         let separatorView = UIView(height: 10)
         separatorView.backgroundColor = #colorLiteral(red: 0.9599978328, green: 0.966491878, blue: 0.9829974771, alpha: 1)
         contentView.addSubview(separatorView)
-        separatorView.autoPinEdge(.top, to: .bottom, of: voteContainerView, withOffset: 16)
+        separatorView.autoPinEdge(.top, to: .bottom, of: voteContainerView, withOffset: 9)
         separatorView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
         
         // layout content

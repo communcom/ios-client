@@ -52,7 +52,13 @@ extension PostController {
         else {return}
         
         var actions = [CommunActionSheet.Action]()
-        
+
+        actions.append(
+            CommunActionSheet.Action(title: "share".localized().uppercaseFirst, icon: UIImage(named: "share"), handle: {
+                self.sharePost()
+            })
+        )
+
         if post.author?.userId != Config.currentUser?.id {
             actions.append(
                 CommunActionSheet.Action(title: "send report".localized().uppercaseFirst, icon: UIImage(named: "report"), handle: {
@@ -65,15 +71,6 @@ extension PostController {
                     self.editPost()
                 })
             )
-        }
-        
-        actions.append(
-            CommunActionSheet.Action(title: "share".localized().uppercaseFirst, icon: UIImage(named: "share"), handle: {
-                self.sharePost()
-            })
-        )
-
-        if post.author?.userId == Config.currentUser?.id {
             actions.append(
                 CommunActionSheet.Action(title: "delete".localized().uppercaseFirst, icon: UIImage(named: "delete"), handle: {
                     self.deletePost()

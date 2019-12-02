@@ -76,10 +76,12 @@ class CommentCell: MyTableViewCell, ListItemCellType {
         replyButton.autoPinEdge(.leading, to: .trailing, of: voteContainerView, withOffset: 10)
         replyButton.autoAlignAxis(.horizontal, toSameAxisOf: voteContainerView)
         replyButton.addTarget(self, action: #selector(replyButtonDidTouch), for: .touchUpInside)
+        replyButton.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         
         contentView.addSubview(timeLabel)
         timeLabel.autoPinEdge(.leading, to: .trailing, of: replyButton)
         timeLabel.autoAlignAxis(.horizontal, toSameAxisOf: voteContainerView)
+        timeLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         
         contentView.addSubview(statusImageView)
         statusImageView.autoPinEdge(.leading, to: .trailing, of: timeLabel, withOffset: 10)

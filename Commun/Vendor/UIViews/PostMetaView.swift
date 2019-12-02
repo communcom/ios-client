@@ -18,7 +18,7 @@ class PostMetaView: MyView {
     // MARK: - Subviews
     lazy var avatarImageView = MyAvatarImageView(size: 40)
     lazy var comunityNameLabel = UILabel.with(textSize: 15, weight: .semibold)
-    lazy var timeAgoLabel = UILabel.with(textSize: 12, weight: .semibold, textColor: .a5a7bd)
+    lazy var timeAgoLabel = UILabel.with(textSize: 12, weight: .semibold, textColor: .appGrayColor)
     lazy var byUserLabel = UILabel.with(textSize: 12, weight: .semibold, textColor: .appMainColor)
     
     // MARK: - Properties
@@ -35,18 +35,18 @@ class PostMetaView: MyView {
         // communityNameLabel
         addSubview(comunityNameLabel)
         comunityNameLabel.autoPinEdge(.top, to: .top, of: avatarImageView)
-        comunityNameLabel.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 8)
+        comunityNameLabel.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 10)
         comunityNameLabel.autoPinEdge(toSuperviewEdge: .trailing)
         comunityNameLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         
         // timeAgoLabel
         addSubview(timeAgoLabel)
-        timeAgoLabel.autoPinEdge(.bottom, to: .bottom, of: avatarImageView, withOffset: -3)
-        timeAgoLabel.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 8)
+        timeAgoLabel.autoPinEdge(.top, to: .bottom, of: comunityNameLabel, withOffset: 3)
+        timeAgoLabel.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 10)
         
         // byUserLabel
         addSubview(byUserLabel)
-        byUserLabel.autoPinEdge(.bottom, to: .bottom, of: avatarImageView, withOffset: -3)
+        byUserLabel.autoPinEdge(.top, to: .bottom, of: comunityNameLabel, withOffset: 3)
         byUserLabel.autoPinEdge(.leading, to: .trailing, of: timeAgoLabel)
         byUserLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         byUserLabel.removeGestureRecognizers()

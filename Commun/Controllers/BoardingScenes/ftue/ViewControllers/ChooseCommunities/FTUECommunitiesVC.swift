@@ -60,7 +60,7 @@ class FTUECommunitiesVC: BaseViewController, BoardingRouter {
         // headerView
         view.addSubview(headerView)
         headerView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .bottom)
-        
+
         // titleLabel
         let titleLabel = UILabel.with(text: "get you first points".localized().uppercaseFirst, textSize: 33 * Config.heightRatio, weight: .bold, numberOfLines: 0)
         headerView.addSubview(titleLabel)
@@ -83,6 +83,7 @@ class FTUECommunitiesVC: BaseViewController, BoardingRouter {
         searchBar.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(inset: 10), excludingEdge: .top)
         
         // collection view
+        communitiesCollectionView.keyboardDismissMode = .onDrag
         communitiesCollectionView.register(FTUECommunityCell.self, forCellWithReuseIdentifier: "CommunityCollectionCell")
         communitiesCollectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: bottomBarHeight, right: 0)
         communitiesCollectionView.es.addPullToRefresh {
