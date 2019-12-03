@@ -62,6 +62,7 @@ protocol ProfileController: class {
 extension ProfileController {
     func observeProfileChange() {
         Profile.observeItemChanged()
+            .filter {$0.identity == self.profile?.identity}
             .subscribe(onNext: {newProfile in
                 self.setUp(with: newProfile)
             })

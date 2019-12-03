@@ -20,6 +20,7 @@ protocol CommentController: class {
 extension CommentController {
     func observeCommentChange() {
         ResponseAPIContentGetComment.observeItemChanged()
+            .filter {$0.identity == self.comment?.identity}
             .subscribe(onNext: {newComment in
                 self.setUp(with: newComment)
             })

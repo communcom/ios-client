@@ -27,6 +27,7 @@ extension ResponseAPIContentGetLeader {
 extension LeaderController {
     func observeLeaderChange() {
         ResponseAPIContentGetLeader.observeItemChanged()
+            .filter {$0.identity == self.leader?.identity}
             .subscribe(onNext: {newLeader in
                 self.setUp(with: newLeader)
             })
