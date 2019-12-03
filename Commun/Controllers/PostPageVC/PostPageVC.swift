@@ -76,29 +76,50 @@ class PostPageVC: CommentsViewController {
 //        postView.sortButton.addTarget(self, action: #selector(sortButtonDidTouch), for: .touchUpInside)
         
         // comment form
+        /*
         let shadowView = UIView(forAutoLayout: ())
-        shadowView.addShadow(location: .top, height: 3.0, color: .shadow, opacity: 1.0, radius: 20.0)
+//        shadowView.addShadow(ofColor: #colorLiteral(red: 0.221, green: 0.234, blue: 0.279, alpha: 0.07), radius: CGFloat.adaptive(width: 20.0), offset: CGSize(width: 0, height: CGFloat.adaptive(height: -3.0)), opacity: 1.0)
+              shadowView.addShadow(ofColor: .shadow, radius: 4, offset: CGSize(width: 0, height: -6), opacity: 0.1)
         
         view.addSubview(shadowView)
         shadowView.autoPinEdge(toSuperviewSafeArea: .leading)
         shadowView.autoPinEdge(toSuperviewSafeArea: .trailing)
         
-        let keyboardViewV = KeyboardLayoutConstraint(item:          view!.safeAreaLayoutGuide,
-                                                     attribute:     .bottom,
-                                                     relatedBy:     .equal,
-                                                     toItem:        shadowView,
-                                                     attribute:     .bottom,
-                                                     multiplier:    1.0,
-                                                     constant:      0.0)
+        let keyboardViewV = KeyboardLayoutConstraint(item: view!.safeAreaLayoutGuide, attribute: .bottom, relatedBy: .equal, toItem: shadowView, attribute: .bottom, multiplier: 1.0, constant: 0.0)
         keyboardViewV.observeKeyboardHeight()
         self.view.addConstraint(keyboardViewV)
         
         shadowView.addSubview(commentForm)
+        commentForm.autoPinEdgesToSuperviewEdges()
+ */
+
+        // comment form
+//        let shadowView = UIView(forAutoLayout: ())
+//        let shadowView = UIView(frame: CGRect(origin: .zero, size: CGSize(width: view.width, height: 100)))
+//        shadowView.addShadow(location: .top, height: 3.0, color: #colorLiteral(red: 0.221, green: 0.234, blue: 0.279, alpha: 0.07), opacity: 1.0, radius: 20.0)
+//        shadowView.tag = 999
+//
+//        view.addSubview(shadowView)
+//        shadowView.autoPinEdge(toSuperviewSafeArea: .leading)
+//        shadowView.autoPinEdge(toSuperviewSafeArea: .trailing)
+        
+        view.addSubview(commentForm)
         commentForm.autoPinEdge(toSuperviewSafeArea: .leading)
         commentForm.autoPinEdge(toSuperviewSafeArea: .trailing)
         // Equal Tabbar height
-        commentForm.heightAnchor.constraint(equalToConstant: tabBarHeight).isActive = true
+        commentForm.heightAnchor.constraint(equalToConstant: 60.0).isActive = true
         commentForm.autoPinEdge(.bottom, to: .bottom, of: view, withOffset: 0.0)
+        commentForm.addShadow(ofColor: .shadow, radius: 20, offset: CGSize(width: 0, height: -3), opacity: 1)
+        
+        let keyboardViewV = KeyboardLayoutConstraint(item:          view!.safeAreaLayoutGuide,
+                                                     attribute:     .bottom,
+                                                     relatedBy:     .equal,
+                                                     toItem:        commentForm,
+                                                     attribute:     .bottom,
+                                                     multiplier:    1.0,
+                                                     constant:      0.0)
+        keyboardViewV.observeKeyboardHeight()
+        self.view.addConstraint(keyboardViewV)        
     }
     
     override func viewDidLayoutSubviews() {
@@ -110,6 +131,7 @@ class PostPageVC: CommentsViewController {
         commentForm.superview?.layoutIfNeeded()
         commentForm.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: 24.5)
         view.bringSubviewToFront(commentForm)
+//        commentForm.addShadow(location: .top, height: 3.0, color: .black, opacity: 1.0, radius: 20.0)
     }
     
     override func bind() {
