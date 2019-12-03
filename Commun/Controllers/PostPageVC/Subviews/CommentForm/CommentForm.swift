@@ -21,7 +21,6 @@ class CommentForm: MyView {
     // MARK: - Properties
     let disposeBag = DisposeBag()
     
-    
     var parentComment: ResponseAPIContentGetComment? {
         didSet {
             setParentComment()
@@ -57,7 +56,6 @@ class CommentForm: MyView {
     lazy var closeParentCommentButton = UIButton.close()
     
     lazy var avatarImageView = MyAvatarImageView(size: 35)
-    
     lazy var textView: CommentTextView = {
         let textView = CommentTextView(forExpandable: ())
         textView.placeholder = "write a comment".localized().uppercaseFirst + "..."
@@ -66,21 +64,20 @@ class CommentForm: MyView {
         textView.tune(withTextColors:   grayishBluePickers,
                       font:             UIFont(name: "SFProText-Medium", size: CGFloat.adaptive(width: 13.0)),
                       alignment:        .left)
-        
+
         return textView
     }()
-    
+
     lazy var sendButton = CommunButton.circle(size:                 44.0,
                                               backgroundColor:      .white,
                                               tintColor:            UIColor(hexString: "#A5A7BD"),
                                               imageName:            "icon-send-comment-gray-defaul",
                                               imageEdgeInsets:      .zero)
-    
+
     
     // MARK: - Methods
     override func commonInit() {
         super.commonInit()
-        
         // ParentCommentView
         addSubview(parentCommentView)
         parentCommentView.autoPinEdge(toSuperviewEdge: .top, withInset: 10)
@@ -115,22 +112,19 @@ class CommentForm: MyView {
         // TextView
         addSubview(textView)
         textView.autoPinEdge(.top, to: .bottom, of: parentCommentView)
-//        textView.autoPinEdge(toSuperviewEdge: .bottom, withInset: 10.0)
-        textView.bottomAnchor.constraint(greaterThanOrEqualTo: parentCommentView.bottomAnchor, constant: 10.0).isActive = true
-        textView.heightAnchor.constraint(equalToConstant: CGFloat.adaptive(height: 36.0)).isActive = true
-        textView.autoPinEdge(toSuperviewEdge: .left, withInset: 15.0)
+        textView.autoPinEdge(toSuperviewEdge: .bottom, withInset: CGFloat.adaptive(height: 10.0))
+        textView.autoPinEdge(toSuperviewEdge: .leading, withInset: CGFloat.adaptive(width: 15.0))
         
         parentCommentView.autoPinEdge(.leading, to: .leading, of: textView, withOffset: 10)
         parentCommentView.autoPinEdge(.trailing, to: .trailing, of: textView, withOffset: -10)
         
         // Send button
         addSubview(sendButton)
-        sendButton.autoPinEdge(.leading, to: .trailing, of: textView, withOffset: 5.0)
-//        sendButton.autoAlignAxis(toSuperviewAxis: .horizontal)
+        sendButton.autoPinEdge(.leading, to: .trailing, of: textView, withOffset: CGFloat.adaptive(width: 8.0))
         sendButton.autoAlignAxis(.horizontal, toSameAxisOf: textView, withOffset: 0.0)
-        sendButton.autoPinEdge(toSuperviewEdge: .right, withInset: 10.0)
-//        sendButton.autoPinBottomAndTrailingToSuperView(inset: 10, xInset: 16)
+        sendButton.autoPinEdge(toSuperviewEdge: .right, withInset: CGFloat.adaptive(width: 18.0))
         sendButton.addTarget(self, action: #selector(sendComment), for: .touchUpInside)
+
         bind()
         
         parentComment = nil
