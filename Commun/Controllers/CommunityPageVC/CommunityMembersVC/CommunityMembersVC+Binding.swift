@@ -42,18 +42,9 @@ extension CommunityMembersVC: UICollectionViewDelegateFlowLayout {
     }
     
     func bindScrollView() {
-        tableView.rx.didEndDecelerating
-            .subscribe(onNext: { [weak self] _ in
-                guard let lastCell = self?.tableView.visibleCells.last,
-                    let indexPath = self?.tableView.indexPath(for: lastCell)
-                else {
-                    return
-                }
-                if indexPath.row >= self!.viewModel.items.value.count - 3 {
-                    self!.viewModel.fetchNext()
-                }
-                
-            })
+        tableView.addLoadMoreAction { [weak self] in
+            self?.viewModel.fetchNext()
+        }
             .disposed(by: disposeBag)
     }
     
