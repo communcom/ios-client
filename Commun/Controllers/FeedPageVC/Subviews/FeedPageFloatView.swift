@@ -75,7 +75,7 @@ final class FeedPageFloatView: MyView {
         whatsNewLabel.autoPinEdge(toSuperviewEdge: .top)
         whatsNewLabel.autoPinEdge(toSuperviewEdge: .bottom)
         
-        whatsNewLabel.isUserInteractionEnabled = false
+        whatsNewLabel.isUserInteractionEnabled = true
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(postButtonDidTouch(_:)))
         whatsNewLabel.addGestureRecognizer(tapGesture)
         
