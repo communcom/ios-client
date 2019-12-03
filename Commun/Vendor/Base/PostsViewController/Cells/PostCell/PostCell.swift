@@ -41,6 +41,7 @@ class PostCell: MyTableViewCell, ListItemCellType {
         let button = UIButton(width: 20, height: 18)
         button.setImage(UIImage(named: "share-count"), for: .normal)
         button.addTarget(self, action: #selector(shareButtonTapped(button:)), for: .touchUpInside)
+        button.touchAreaEdgeInsets = UIEdgeInsets(top: -11, left: -13, bottom: -11, right: -13)
         return button
     }()
     
@@ -49,6 +50,7 @@ class PostCell: MyTableViewCell, ListItemCellType {
     lazy var viewsCountButton: UIButton = {
         let button = UIButton(width: 24, height: 16)
         button.setImage(UIImage(named: "icon-views-count-gray-default"), for: .normal)
+        button.touchAreaEdgeInsets = UIEdgeInsets(top: -14, left: -10, bottom: -14, right: -10)
         return button
     }()
 
@@ -57,6 +59,7 @@ class PostCell: MyTableViewCell, ListItemCellType {
     lazy var commentsCountButton: UIButton = {
         let button = UIButton(width: 20, height: 18)
         button.setImage(UIImage(named: "comment-count"), for: .normal)
+        button.touchAreaEdgeInsets = UIEdgeInsets(top: -11, left: -13, bottom: -11, right: -13)
         return button
     }()
     

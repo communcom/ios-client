@@ -13,6 +13,7 @@ import CyberSwift
 import PhoneNumberKit
 import CoreLocation
 import ReCaptcha
+import SafariServices
 
 class SignUpVC: UIViewController, SignUpRouter {
     // MARK: - Properties
@@ -83,6 +84,9 @@ class SignUpVC: UIViewController, SignUpRouter {
     
     @IBOutlet weak var nextButton: StepButton!
     
+    lazy var termOfUseLabel = UILabel.with(textSize: 10, numberOfLines: 0, textAlignment: .center)
+    lazy var signInLabel = UILabel.with(textSize: 15, textAlignment: .center)
+    
     
     // MARK: - Class Functions
     override func viewDidLoad() {
@@ -90,6 +94,47 @@ class SignUpVC: UIViewController, SignUpRouter {
 
         self.title = "sign up".localized().uppercaseFirst
         self.navigationController?.navigationBar.prefersLargeTitles = true
+        
+        // term of use
+        view.addSubview(termOfUseLabel)
+        termOfUseLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
+        termOfUseLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
+        termOfUseLabel.autoPinEdge(.bottom, to: .top, of: nextButton, withOffset: -16)
+        termOfUseLabel.isUserInteractionEnabled = true
+        
+        let tap1 = UITapGestureRecognizer(target: self, action: #selector(tapTermOfUseLabel(gesture:)))
+        termOfUseLabel.addGestureRecognizer(tap1)
+        
+        let style = NSMutableParagraphStyle()
+        style.lineSpacing = 5
+        style.alignment = .center
+        let aStr = NSAttributedString(
+            string: "By clicking the “Sign up” button, you agree to the\nTerms of use, Privacy Policy and Blockchain Disclaimer".localized().uppercaseFirst,
+            attributes: [
+                .foregroundColor: UIColor.a5a7bd,
+                .font: UIFont.systemFont(ofSize: 10),
+                .paragraphStyle: style
+            ]
+        )
+            .applying(attributes: [.foregroundColor: UIColor.appMainColor], toOccurrencesOf: "terms of use, Privacy Policy".localized().uppercaseFirst)
+            .applying(attributes: [.foregroundColor: UIColor.appMainColor], toOccurrencesOf: "blockchain Disclaimer".localized().uppercaseFirst)
+        termOfUseLabel.attributedString = aStr
+        
+        // sign in
+        view.addSubview(signInLabel)
+        signInLabel.autoPinEdge(.top, to: .bottom, of: nextButton, withOffset: 16)
+        signInLabel.autoAlignAxis(toSuperviewAxis: .vertical)
+        signInLabel.isUserInteractionEnabled = true
+        
+        let tap2 = UITapGestureRecognizer(target: self, action: #selector(tapSignInLabel(gesture:)))
+        signInLabel.addGestureRecognizer(tap2)
+        
+        let aStr2 = NSAttributedString(
+            string: "do you have account? Sign in".localized().uppercaseFirst,
+            attributes: [.foregroundColor: UIColor.a5a7bd, .font: UIFont.systemFont(ofSize: 15)]
+        )
+            .applying(attributes: [.foregroundColor: UIColor.appMainColor], toOccurrencesOf: "sign in".localized().uppercaseFirst)
+        signInLabel.attributedString = aStr2
 
         self.setNavBarBackButton()
         self.setupBindings()
@@ -242,5 +287,38 @@ class SignUpVC: UIViewController, SignUpRouter {
                                     }
                                     .disposed(by: strongSelf.disposeBag)
         })
+    }
+    
+    @objc func tapSignInLabel(gesture: UITapGestureRecognizer) {
+        guard let text = signInLabel.text else {return}
+        let signInRange = (text as NSString).range(of: "sign in".localized().uppercaseFirst)
+        
+        let nc = navigationController
+        if gesture.didTapAttributedTextInLabel(label: signInLabel, inRange: signInRange) {
+            navigationController?.popViewController(animated: true, {
+                let signInVC = controllerContainer.resolve(SignInViewController.self)!
+                nc?.pushViewController(signInVC)
+            })
+        }
+    }
+    
+    @objc func tapTermOfUseLabel(gesture: UITapGestureRecognizer) {
+        guard let text = termOfUseLabel.text else {return}
+        
+        let termsOfUseRange = (text as NSString).range(of: "terms of use, Privacy Policy".localized().uppercaseFirst)
+        let blockChainDisclaimerRange = (text as NSString).range(of: "blockchain Disclaimer".localized().uppercaseFirst)
+        
+        if gesture.didTapAttributedTextInLabel(label: termOfUseLabel, inRange: termsOfUseRange) {
+            showURL(string: "https://commun.com/privacy")
+        }
+        else if gesture.didTapAttributedTextInLabel(label: termOfUseLabel, inRange: blockChainDisclaimerRange) {
+            showURL(string: "https://commun.com/agreement")
+        }
+    }
+    
+    func showURL(string: String) {
+        guard let url = URL(string: string) else {return}
+        let safariVC = SFSafariViewController(url: url)
+        present(safariVC, animated: true, completion: nil)
     }
 }

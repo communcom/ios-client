@@ -17,7 +17,7 @@ class PostsFilterVC: SwipeDownDismissViewController {
     var completion: ((PostsListFetcher.Filter) -> Void)?
     
     // MARK: - Subview
-    lazy var closeButton = UIButton.circle(size: 30, backgroundColor: .f7f7f9, tintColor: .a5a7bd, imageName: "close-x", imageEdgeInsets: UIEdgeInsets(inset: 3))
+    lazy var closeButton = UIButton.close()
     lazy var backButton = UIButton.circle(size: 30, backgroundColor: .f7f7f9, tintColor: .a5a7bd, imageName: "back-button", imageEdgeInsets: UIEdgeInsets(inset: 6))
     
     lazy var tableView = UITableView(forAutoLayout: ())

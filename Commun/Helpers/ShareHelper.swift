@@ -11,8 +11,7 @@ import Foundation
 struct ShareHelper {
     static func share(post: ResponseAPIContentGetPost?) {
         guard let topController = UIApplication.topViewController(), let post = post else { return }
-
-        var urlString = URL.appURL
+        var urlString = Config.appConfig?.domain ?? "https://commun.com"
 
         if let shareLink = post.url  {
             urlString += shareLink

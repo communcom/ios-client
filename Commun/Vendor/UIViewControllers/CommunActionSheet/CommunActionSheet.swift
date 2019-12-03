@@ -82,7 +82,7 @@ class CommunActionSheet: SwipeDownDismissViewController {
         
         var button = UIButton(frame: .zero)
         button.setImage(UIImage(named: "close-x"), for: .normal)
-        button.imageEdgeInsets = UIEdgeInsets(top: 6, left: 6, bottom: 6, right: 6)
+        button.imageEdgeInsets = UIEdgeInsets(inset: 3)
         button.backgroundColor = .white
         button.tintColor = .a5a7bd
         button.cornerRadius = buttonSize / 2
@@ -95,6 +95,8 @@ class CommunActionSheet: SwipeDownDismissViewController {
             .isActive = true
         button.heightAnchor.constraint(equalToConstant: buttonSize)
             .isActive = true
+
+        button.touchAreaEdgeInsets = UIEdgeInsets(inset: -7)
         button.addTarget(self, action: #selector(closeButtonDidTouch(_:)), for: .touchUpInside)
 
         return button

@@ -23,14 +23,14 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Phone number" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="HNR-uY-C2j" customClass="PhoneNumberTextField" customModule="PhoneNumberKit">
-                                <rect key="frame" x="47" y="116.66666666666669" width="320" height="51"/>
+                                <rect key="frame" x="47" y="82.666666666666671" width="320" height="51.000000000000014"/>
                                 <color key="backgroundColor" red="0.95294117649999999" green="0.96078431369999995" blue="0.98039215690000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <accessibility key="accessibilityConfiguration" identifier="SignUpPhoneTextField" label="SignUpPhoneTextField"/>
                                 <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="17"/>
                                 <textInputTraits key="textInputTraits" enablesReturnKeyAutomatically="YES" textContentType="tel"/>
                             </textField>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KUr-0W-HC7" userLabel="Country View">
-                                <rect key="frame" x="47" y="50" width="320" height="50.666666666666657"/>
+                                <rect key="frame" x="47" y="15.999999999999996" width="320" height="50.666666666666657"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Select country" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lVN-OB-r0Y" userLabel="Placeholder Select Country Label">
                                         <rect key="frame" x="16" y="0.0" width="304" height="50.666666666666664"/>
@@ -40,7 +40,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="8i1-t5-vyl">
-                                        <rect key="frame" x="16" y="14.666666666666673" width="21.666666666666671" height="21.666666666666671"/>
+                                        <rect key="frame" x="16" y="14.666666666666666" width="21.666666666666671" height="21.666666666666671"/>
                                         <accessibility key="accessibilityConfiguration" identifier="SignUpViewCountryImageView" label="SignUpViewCountryImageView">
                                             <bool key="isElement" value="YES"/>
                                         </accessibility>
@@ -49,7 +49,7 @@
                                         </constraints>
                                     </imageView>
                                     <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5wh-Kc-wNq">
-                                        <rect key="frame" x="53.666666666666657" y="15.333333333333329" width="266.33333333333337" height="20"/>
+                                        <rect key="frame" x="53.666666666666657" y="15.333333333333332" width="266.33333333333337" height="19.999999999999996"/>
                                         <accessibility key="accessibilityConfiguration" identifier="SignUpViewCountryLabel" label="SignUpViewCountryLabel"/>
                                         <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="17"/>
                                         <nil key="textColor"/>
@@ -81,7 +81,7 @@
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RMd-69-gyH" customClass="StepButton" customModule="Commun" customModuleProvider="target">
-                                <rect key="frame" x="47" y="645.33333333333337" width="320" height="50.666666666666629"/>
+                                <rect key="frame" x="47" y="625.33333333333337" width="320" height="50.666666666666629"/>
                                 <color key="backgroundColor" red="0.6470588235294118" green="0.65490196078431373" blue="0.74117647058823533" alpha="1" colorSpace="calibratedRGB"/>
                                 <accessibility key="accessibilityConfiguration" identifier="SignUpNextButton" label="SignUpNextButton"/>
                                 <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="17"/>
@@ -100,13 +100,13 @@
                         <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="RMd-69-gyH" firstAttribute="top" relation="greaterThanOrEqual" secondItem="HNR-uY-C2j" secondAttribute="bottom" constant="32" id="2Cs-xc-mJc" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
-                            <constraint firstItem="KUr-0W-HC7" firstAttribute="top" secondItem="IXi-8R-Udd" secondAttribute="top" constant="50" identifier="SignUpCountryViewTopConstraint" id="D2b-rJ-gga" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
+                            <constraint firstItem="KUr-0W-HC7" firstAttribute="top" secondItem="IXi-8R-Udd" secondAttribute="top" constant="16" identifier="SignUpCountryViewTopConstraint" id="D2b-rJ-gga" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                             <constraint firstItem="HNR-uY-C2j" firstAttribute="centerX" secondItem="18N-xE-ytB" secondAttribute="centerX" id="H5T-KF-6tk"/>
                             <constraint firstItem="HNR-uY-C2j" firstAttribute="width" secondItem="RMd-69-gyH" secondAttribute="width" id="Qwc-Ut-aaD"/>
                             <constraint firstItem="KUr-0W-HC7" firstAttribute="centerX" secondItem="18N-xE-ytB" secondAttribute="centerX" id="Tfm-HM-h70"/>
                             <constraint firstItem="8i1-t5-vyl" firstAttribute="height" secondItem="18N-xE-ytB" secondAttribute="height" multiplier="24:812" identifier="SignUpCountryImageViewHeightConstraint" id="WLx-9l-C21"/>
                             <constraint firstItem="RMd-69-gyH" firstAttribute="height" secondItem="18N-xE-ytB" secondAttribute="height" multiplier="56:812" identifier="SignUpNextButtonHeightConstraint" id="YYS-DR-w7x"/>
-                            <constraint firstItem="IXi-8R-Udd" firstAttribute="bottom" secondItem="RMd-69-gyH" secondAttribute="bottom" priority="999" constant="40" identifier="SignUpNextButtonBottomConstraint" id="ZDm-RO-fZ2" customClass="KeyboardLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
+                            <constraint firstItem="IXi-8R-Udd" firstAttribute="bottom" secondItem="RMd-69-gyH" secondAttribute="bottom" priority="999" constant="60" identifier="SignUpNextButtonBottomConstraint" id="ZDm-RO-fZ2" customClass="KeyboardLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                             <constraint firstItem="KUr-0W-HC7" firstAttribute="width" secondItem="RMd-69-gyH" secondAttribute="width" id="aeh-MV-p8X"/>
                             <constraint firstItem="HNR-uY-C2j" firstAttribute="top" secondItem="KUr-0W-HC7" secondAttribute="bottom" constant="16" identifier="SignUpCountryViewPhoneNumberTextFieldTopConstraint" id="gGB-Hj-kBf" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                             <constraint firstItem="RMd-69-gyH" firstAttribute="width" secondItem="18N-xE-ytB" secondAttribute="width" multiplier="290:375" identifier="SignUpNextButtonWidthConstraint" id="l4a-ar-QEG"/>
@@ -155,7 +155,7 @@
     </scenes>
     <resources>
         <namedColor name="appGrayColor">
-            <color red="0.6470588235294118" green="0.65490196078431373" blue="0.74117647058823533" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.6470000147819519" green="0.65499997138977051" blue="0.74099999666213989" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
 </document>

@@ -33,9 +33,6 @@ class PostPageVC: CommentsViewController {
     init(post: ResponseAPIContentGetPost) {
         let viewModel = PostPageViewModel(post: post)
         super.init(viewModel: viewModel)
-        defer {
-            self.commentForm.post = post
-        }
     }
     
     init(userId: String, permlink: String, communityId: String) {

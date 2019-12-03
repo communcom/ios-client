@@ -10,7 +10,7 @@ import Foundation
 
 class SelectLanguageVC: BaseTableViewController {
     // MARK: - Subviews
-    let closeButton = UIButton.circleGray(imageName: "close-x")
+    let closeButton = UIButton.close()
     
     // MARK: - Methods
     override func setUp() {

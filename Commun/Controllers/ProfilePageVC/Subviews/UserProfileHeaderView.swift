@@ -23,8 +23,8 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
         return view
     }()
 
-    lazy var separatorForCommunities: UIView = UIView(height: 2, backgroundColor: #colorLiteral(red: 0.9599978328, green: 0.966491878, blue: 0.9829974771, alpha: 1))
-    lazy var firstSeparator: UIView = UIView(height: 2, backgroundColor: #colorLiteral(red: 0.9599978328, green: 0.966491878, blue: 0.9829974771, alpha: 1))
+    lazy var separatorForCommunities: UIView = UIView(height: 2, backgroundColor: .appLightGrayColor)
+    lazy var firstSeparator: UIView = UIView(height: 2, backgroundColor: .appLightGrayColor)
 
     lazy var followersCountLabel: UILabel = {
         let label = UILabel.with(text: Double(10000000).kmFormatted, textSize: 15, weight: .bold)
@@ -65,15 +65,15 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
         followersCountLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
         followersCountLabel.autoPinEdge(.top, to: .bottom, of: descriptionLabel, withOffset: 18)
 
-        let followersLabel = UILabel.with(text: "followers".localized().uppercaseFirst, textSize: 12, weight: .bold, textColor: UIColor(hexString: "#A5A7BD")!)
+        let followersLabel = UILabel.with(text: "followers".localized().uppercaseFirst, textSize: 12, weight: .bold, textColor: .appGrayColor)
         addSubview(followersLabel)
         followersLabel.autoPinEdge(.leading, to: .trailing, of: followersCountLabel, withOffset: 4)
-        followersLabel.autoAlignAxis(.horizontal, toSameAxisOf: followersCountLabel)
+        followersLabel.autoPinEdge(.bottom, to: .bottom, of: followersCountLabel)
         let tap1 = UITapGestureRecognizer(target: self, action: #selector(followersLabelDidTouch))
         followersLabel.isUserInteractionEnabled = true
         followersLabel.addGestureRecognizer(tap1)
         
-        let dotLabel = UILabel.with(text: "•", textSize: 15, weight: .regular, textColor: UIColor(hexString: "#A5A7BD")!)
+        let dotLabel = UILabel.with(text: "•", textSize: 15, weight: .regular, textColor: .appGrayColor)
         addSubview(dotLabel)
         dotLabel.autoPinEdge(.leading, to: .trailing, of: followersLabel, withOffset: 2)
         dotLabel.autoPinEdge(.bottom, to: .bottom, of: followersLabel)
@@ -82,15 +82,15 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
         followingsCountLabel.autoPinEdge(.leading, to: .trailing, of: dotLabel, withOffset: 2)
         followingsCountLabel.autoAlignAxis(.horizontal, toSameAxisOf: followersCountLabel)
         
-        let followingsLabel = UILabel.with(text: "followings".localized().uppercaseFirst, textSize: 12, weight: .bold, textColor: UIColor(hexString: "#A5A7BD")!)
+        let followingsLabel = UILabel.with(text: "followings".localized().uppercaseFirst, textSize: 12, weight: .bold, textColor: .appGrayColor)
         addSubview(followingsLabel)
         followingsLabel.autoPinEdge(.leading, to: .trailing, of: followingsCountLabel, withOffset: 4)
-        followingsLabel.autoAlignAxis(.horizontal, toSameAxisOf: followersCountLabel)
+        followingsLabel.autoPinEdge(.bottom, to: .bottom, of: followingsCountLabel)
         let tap2 = UITapGestureRecognizer(target: self, action: #selector(follwingLabelDidTouch))
         followingsLabel.isUserInteractionEnabled = true
         followingsLabel.addGestureRecognizer(tap2)
         
-        firstSeparator = UIView(height: 2, backgroundColor: #colorLiteral(red: 0.9599978328, green: 0.966491878, blue: 0.9829974771, alpha: 1))
+        firstSeparator = UIView(height: 2, backgroundColor: .appLightGrayColor)
         addSubview(firstSeparator)
         firstSeparator.autoPinEdge(toSuperviewEdge: .leading)
         firstSeparator.autoPinEdge(toSuperviewEdge: .trailing)
@@ -116,7 +116,7 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
         communitiesCountLabel.autoPinEdge(.top, to: .bottom, of: communitiesLabel, withOffset: 5)
         communitiesCountLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
         
-        let openBraceLabel = UILabel.with(text: "(", textSize: 15, weight: .semibold, textColor: .a5a7bd)
+        let openBraceLabel = UILabel.with(text: "(", textSize: 15, weight: .semibold, textColor: .appGrayColor)
         communitiesView.addSubview(openBraceLabel)
         openBraceLabel.autoPinEdge(.leading, to: .trailing, of: communitiesCountLabel, withOffset: 2)
         openBraceLabel.autoAlignAxis(.horizontal, toSameAxisOf: communitiesCountLabel)
@@ -125,7 +125,7 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
         communitiesMutualCountLabel.autoPinEdge(.leading, to: .trailing, of: openBraceLabel)
         communitiesMutualCountLabel.autoAlignAxis(.horizontal, toSameAxisOf: communitiesCountLabel)
 
-        let mutualLabel = UILabel.with(text: "mutual".localized().uppercaseFirst + ")", textSize: 15, weight: .semibold, textColor: .a5a7bd)
+        let mutualLabel = UILabel.with(text: "mutual".localized().uppercaseFirst + ")", textSize: 15, weight: .semibold, textColor: .appGrayColor)
         communitiesView.addSubview(mutualLabel)
         mutualLabel.autoPinEdge(.leading, to: .trailing, of: communitiesMutualCountLabel, withOffset: 2)
         mutualLabel.autoAlignAxis(.horizontal, toSameAxisOf: communitiesCountLabel)
@@ -150,7 +150,7 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
         segmentedControl.autoPinEdge(toSuperviewEdge: .leading)
         segmentedControl.autoPinEdge(toSuperviewEdge: .trailing)
         
-        let separator = UIView(height: 10, backgroundColor: #colorLiteral(red: 0.9599978328, green: 0.966491878, blue: 0.9829974771, alpha: 1))
+        let separator = UIView(height: 10, backgroundColor: .appLightGrayColor)
         addSubview(separator)
         separator.autoPinEdge(.top, to: .bottom, of: segmentedControl)
         

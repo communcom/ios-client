@@ -27,10 +27,6 @@ class SignInViewController: UIViewController {
     // Properties
     let viewModel = SignInViewModel()
     let disposeBag = DisposeBag()
-    
-    // Handlers
-    var handlerSignUp: ((Bool) -> Void)?
-    
 
     // MARK: - IBOutlets
     @IBOutlet var collectionView: UICollectionView!
@@ -132,8 +128,10 @@ class SignInViewController: UIViewController {
             .subscribe(onNext: { [weak self] _ in
                 guard let strongSelf = self else { return }
                 
+                let nc = self?.navigationController
                 strongSelf.navigationController?.popViewController(animated: true, {
-                    strongSelf.handlerSignUp!(true)
+                    let signUpVC = controllerContainer.resolve(SignUpVC.self)!
+                    nc?.pushViewController(signUpVC)
                 })
             })
             .disposed(by: disposeBag)

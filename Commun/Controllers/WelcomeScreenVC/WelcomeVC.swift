@@ -105,15 +105,6 @@ class WelcomeVC: UIViewController {
     // MARK: - Actions
     @IBAction func signInButtonTap(_ sender: Any) {
         let signInVC = controllerContainer.resolve(SignInViewController.self)!
-        
-        signInVC.handlerSignUp = { [weak self] success in
-            guard let strongSelf = self else { return }
-            
-            if success {
-                strongSelf.navigateToSignUp()
-            }
-        }
-        
         navigationController?.pushViewController(signInVC)
     }
     

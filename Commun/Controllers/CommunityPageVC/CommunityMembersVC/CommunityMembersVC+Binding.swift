@@ -41,6 +41,22 @@ extension CommunityMembersVC: UICollectionViewDelegateFlowLayout {
             .disposed(by: disposeBag)
     }
     
+    func bindScrollView() {
+        tableView.rx.didEndDecelerating
+            .subscribe(onNext: { [weak self] _ in
+                guard let lastCell = self?.tableView.visibleCells.last,
+                    let indexPath = self?.tableView.indexPath(for: lastCell)
+                else {
+                    return
+                }
+                if indexPath.row >= self!.viewModel.items.value.count - 3 {
+                    self!.viewModel.fetchNext()
+                }
+                
+            })
+            .disposed(by: disposeBag)
+    }
+    
     func bindState() {
         viewModel.listLoadingState
             .subscribe(onNext: { [weak self] (state) in
@@ -68,19 +84,12 @@ extension CommunityMembersVC: UICollectionViewDelegateFlowLayout {
                     cell.setUp(with: subscriber)
                     cell.delegate = self
                     
-                    if indexPath.row >= self.viewModel.subscribersVM.items.value.count - 5 {
-                        self.viewModel.fetchNext()
-                    }
-                    
                     return cell
                 case .leader(let leader):
                     let cell = self.tableView.dequeueReusableCell(withIdentifier: "CommunityLeaderCell") as! CommunityLeaderCell
                     cell.setUp(with: leader)
                     cell.delegate = self
                     
-                    if indexPath.row >= self.viewModel.leadersVM.items.value.count - 5 {
-                        self.viewModel.fetchNext()
-                    }
                     return cell
                 }
             }
