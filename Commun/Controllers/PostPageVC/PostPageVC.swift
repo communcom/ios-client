@@ -75,6 +75,25 @@ class PostPageVC: CommentsViewController {
         postView.commentsCountButton.addTarget(self, action: #selector(commentsCountButtonDidTouch), for: .touchUpInside)
 //        postView.sortButton.addTarget(self, action: #selector(sortButtonDidTouch), for: .touchUpInside)
         
+        
+        // comment form
+        let shadowView = UIView(forAutoLayout: ())
+        shadowView.addShadow(ofColor: .shadow, radius: 4, offset: CGSize(width: 0, height: -6), opacity: 0.1)
+        
+        view.addSubview(shadowView)
+        shadowView.autoPinEdge(toSuperviewSafeArea: .leading)
+        shadowView.autoPinEdge(toSuperviewSafeArea: .trailing)
+        let keyboardViewV = KeyboardLayoutConstraint(item: view!.safeAreaLayoutGuide, attribute: .bottom, relatedBy: .equal, toItem: shadowView, attribute: .bottom, multiplier: 1.0, constant: 0.0)
+        keyboardViewV.observeKeyboardHeight()
+        self.view.addConstraint(keyboardViewV)
+        
+        shadowView.addSubview(commentForm)
+        commentForm.autoPinEdgesToSuperviewEdges()
+
+        
+        
+        
+        
         // comment form
         /*
         let shadowView = UIView(forAutoLayout: ())
@@ -91,7 +110,7 @@ class PostPageVC: CommentsViewController {
         
         shadowView.addSubview(commentForm)
         commentForm.autoPinEdgesToSuperviewEdges()
- */
+ 
 
         // comment form
 //        let shadowView = UIView(forAutoLayout: ())
@@ -119,7 +138,8 @@ class PostPageVC: CommentsViewController {
                                                      multiplier:    1.0,
                                                      constant:      0.0)
         keyboardViewV.observeKeyboardHeight()
-        self.view.addConstraint(keyboardViewV)        
+        self.view.addConstraint(keyboardViewV)
+ */
     }
     
     override func viewDidLayoutSubviews() {
@@ -131,7 +151,6 @@ class PostPageVC: CommentsViewController {
         commentForm.superview?.layoutIfNeeded()
         commentForm.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: 24.5)
         view.bringSubviewToFront(commentForm)
-//        commentForm.addShadow(location: .top, height: 3.0, color: .black, opacity: 1.0, radius: 20.0)
     }
     
     override func bind() {
