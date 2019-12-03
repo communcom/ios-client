@@ -123,7 +123,7 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
         let memberLabel = UILabel.with(text: "members".localized().uppercaseFirst, textSize: 12, weight: .semibold, textColor: .a5a7bd)
         addSubview(memberLabel)
         memberLabel.autoPinEdge(.leading, to: .trailing, of: membersCountLabel, withOffset: 4)
-        memberLabel.autoAlignAxis(.horizontal, toSameAxisOf: membersCountLabel)
+        memberLabel.autoPinEdge(.bottom, to: .bottom, of: membersCountLabel)
         memberLabel.isUserInteractionEnabled = true
         let tap = UITapGestureRecognizer(target: self, action: #selector(membersLabelDidTouch))
         memberLabel.addGestureRecognizer(tap)
@@ -140,7 +140,7 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
         let leadsLabel = UILabel.with(text: "leaders".localized().uppercaseFirst, textSize: 12, weight: .semibold, textColor: .a5a7bd)
         addSubview(leadsLabel)
         leadsLabel.autoPinEdge(.leading, to: .trailing, of: leadsCountLabel, withOffset: 4)
-        leadsLabel.autoAlignAxis(.horizontal, toSameAxisOf: membersCountLabel)
+        leadsLabel.autoPinEdge(.bottom, to: .bottom, of: membersCountLabel)
         leadsLabel.isUserInteractionEnabled = true
         let tap2 = UITapGestureRecognizer(target: self, action: #selector(leadsLabelDidTouch))
         leadsLabel.addGestureRecognizer(tap2)
@@ -167,7 +167,7 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
         segmentedControl.autoPinEdge(toSuperviewEdge: .leading)
         segmentedControl.autoPinEdge(toSuperviewEdge: .trailing)
         
-        let separator = UIView(height: 10, backgroundColor: #colorLiteral(red: 0.9599978328, green: 0.966491878, blue: 0.9829974771, alpha: 1))
+        let separator = UIView(height: 10, backgroundColor: .appLightGrayColor)
         addSubview(separator)
         
         separator.autoPinEdge(.top, to: .bottom, of: segmentedControl)
