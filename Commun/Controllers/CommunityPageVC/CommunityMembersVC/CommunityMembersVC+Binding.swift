@@ -98,6 +98,16 @@ extension CommunityMembersVC: UICollectionViewDelegateFlowLayout {
         
         
         viewModel.items
+            .filter { items in
+                // disable binding to tableview when data is LeaderType
+                // as leaders have already been binded to collectionView
+                if items is [ResponseAPIContentGetLeader] &&
+                    self.viewModel.segmentedItem.value == .all
+                {
+                    return false
+                }
+                return true
+            }
             .map { items in
                 items.compactMap {item -> CustomElementType? in
                     if let item = item as? ResponseAPIContentGetLeader {

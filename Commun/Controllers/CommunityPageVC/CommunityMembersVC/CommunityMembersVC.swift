@@ -85,7 +85,7 @@ class CommunityMembersVC: BaseViewController, LeaderCellDelegate, ProfileCellDel
         tableView.register(SubscribersCell.self, forCellReuseIdentifier: "SubscribersCell")
         tableView.register(CommunityLeaderCell.self, forCellReuseIdentifier: "CommunityLeaderCell")
         
-        tableView.separatorInset = .zero
+        tableView.separatorStyle = .none
         
         // pull to refresh
         tableView.es.addPullToRefresh { [unowned self] in
