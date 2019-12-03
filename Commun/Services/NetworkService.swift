@@ -325,6 +325,41 @@ class NetworkService: NSObject {
             })
     }
     
+    func triggerFollow<T: CommunityType>(community: T) -> Completable {
+        // for reverse
+        let originIsSubscribed = community.isSubscribed ?? false
+        
+        // set value
+        var community = community
+        community.setIsSubscribed(!originIsSubscribed)
+        community.isBeingJoined = true
+        
+        // notify changes
+        community.notifyChanged()
+        
+        let request: Single<String>
+        
+        if originIsSubscribed {
+            request = RestAPIManager.instance.unfollowCommunity(community.communityId)
+        }
+        else {
+            request = RestAPIManager.instance.followCommunity(community.communityId)
+        }
+        
+        return request
+            .flatMapCompletable {self.waitForTransactionWith(id: $0)}
+            .do(onError: { (error) in
+                // reverse change
+                community.setIsSubscribed(originIsSubscribed)
+                community.isBeingJoined = false
+                community.notifyChanged()
+            }, onCompleted: {
+                // re-enable state
+                community.isBeingJoined = false
+                community.notifyChanged()
+            })
+    }
+    
     func toggleVoteLeader(leader: ResponseAPIContentGetLeader) -> Completable {
         let originIsVoted = leader.isVoted ?? false
         

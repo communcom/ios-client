@@ -16,4 +16,15 @@ class SubscribersViewModel: ListViewModel<ResponseAPIContentResolveProfile> {
         fetcher.communityId = communityId
         self.init(fetcher: fetcher)
     }
+    
+    override func observeItemChange() {
+        super.observeItemChange()
+        
+        ResponseAPIContentGetLeader.observeItemChanged()
+            .map {ResponseAPIContentResolveProfile(leader: $0)}
+            .subscribe(onNext: { (profile) in
+                self.updateItem(profile)
+            })
+            .disposed(by: disposeBag)
+    }
 }

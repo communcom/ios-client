@@ -32,7 +32,7 @@ class CommunityMembersVC: BaseViewController, LeaderCellDelegate, ProfileCellDel
     
     // MARK: - Subviews
     lazy var topTabBar = CMTopTabBar(
-        height: 35,
+        height: 35 * Config.heightRatio,
         labels: CommunityMembersViewModel.SegmentedItem.allCases.map {$0.rawValue.localized().uppercaseFirst},
         selectedIndex: selectedSegmentedItem.index)
     
@@ -83,9 +83,9 @@ class CommunityMembersVC: BaseViewController, LeaderCellDelegate, ProfileCellDel
         
         tableView.backgroundColor = .f3f5fa
         tableView.register(SubscribersCell.self, forCellReuseIdentifier: "SubscribersCell")
-        tableView.register(CommunityLeaderCell.self, forCellReuseIdentifier: "CommunityLeaderCell")
+        tableView.register(CommunityLeaderFollowCell.self, forCellReuseIdentifier: "CommunityLeaderFollowCell")
         
-        tableView.separatorInset = .zero
+        tableView.separatorStyle = .none
         
         // pull to refresh
         tableView.es.addPullToRefresh { [unowned self] in
