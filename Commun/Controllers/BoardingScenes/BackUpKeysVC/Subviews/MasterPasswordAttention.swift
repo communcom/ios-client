@@ -19,13 +19,12 @@ class MasterPasswordAttention: UIView {
 
     @IBOutlet weak var titleLabel: UILabel! {
         didSet {
-            self.titleLabel.tune(withAttributedText:        "attention".localized().uppercaseFirst,
+            self.titleLabel.tune(withAttributedText:        "attention",
                                  hexColors:                 blackWhiteColorPickers,
                                  font:                      UIFont.systemFont(ofSize: CGFloat.adaptive(width: 30.0), weight: .bold),
                                  alignment:                 .center,
                                  isMultiLines:              false,
-                                 lineSpacing:               CGFloat.adaptive(height: 0.84),
-                                 lineHeight:                CGFloat.adaptive(height: 30.0))
+                                 lineHeight:                30.0)
         }
     }
     
@@ -36,8 +35,8 @@ class MasterPasswordAttention: UIView {
                                 font:                       UIFont.systemFont(ofSize: CGFloat.adaptive(width: 17.0), weight: .medium),
                                 alignment:                  .center,
                                 isMultiLines:               true,
-                                lineSpacing:                CGFloat.adaptive(height: 1.18),
-                                lineHeight:                 CGFloat.adaptive(height: 24.0))
+                                lineHeight:                 24.0,
+                                lineHeightMultiple:         1.18)
         }
     }
     
@@ -48,8 +47,8 @@ class MasterPasswordAttention: UIView {
                                     font:                   UIFont.systemFont(ofSize: CGFloat.adaptive(width: 15.0), weight: .medium),
                                     alignment:              .center,
                                     isMultiLines:           true,
-                                    lineSpacing:            CGFloat.adaptive(height: 1.34),
-                                    lineHeight:             CGFloat.adaptive(height: 24.0))
+                                    lineHeight:             24.0,
+                                    lineHeightMultiple:     1.34)
          }
     }
     
@@ -75,11 +74,13 @@ class MasterPasswordAttention: UIView {
     // MARK: - Initialization
     override init(frame: CGRect) {
         super.init(frame: frame)
+        
         commonInit()
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
+        
         commonInit()
     }
     
