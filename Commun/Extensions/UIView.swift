@@ -24,6 +24,18 @@ extension UIView {
         
     }
     
+    func showForceUpdate() {
+        // prevent dupplicated
+        if let _ = subviews.first(where: {$0 is ErrorView}) {return}
+        
+        // setup new errorView
+        let errorView = ForceUpdateView()
+        
+        // add subview
+        addSubview(errorView)
+        errorView.autoPinEdgesToSuperviewEdges()
+    }
+    
     func hideErrorView() {
         subviews.forEach { (view) in
             if view is ErrorView {

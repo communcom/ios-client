@@ -194,20 +194,33 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             self.window?.rootViewController = rootVC
         }
         
-        // Animation
-        rootVC.view.alpha = 0
-        UIView.animate(withDuration: 0.5, animations: {
-            rootVC.view.alpha = 1
-        })
-        
-        // Config
-        DispatchQueue.main.async {
-            RestAPIManager.instance.getConfig()
-                .subscribe { (error) in
-                    rootVC.showError(error)
+        getConfig { (error) in
+            // Animation
+            rootVC.view.alpha = 0
+            UIView.animate(withDuration: 0.5, animations: {
+                rootVC.view.alpha = 1
+                if error != nil {
+                    if error?.toErrorAPI().caseInfo.message == "Need update application version" {
+                        rootVC.view.showForceUpdate()
+                        return
+                    }
+                    rootVC.view.showErrorView {
+                        AppDelegate.reloadSubject.onNext(true)
+                    }
                 }
-                .disposed(by: self.bag)
+            })
         }
+        
+    }
+    
+    func getConfig(completion: @escaping ((Error?)->Void)) {
+        RestAPIManager.instance.getConfig()
+            .subscribe(onSuccess: { _ in
+                completion(nil)
+            }) { (error) in
+                completion(error)
+            }
+            .disposed(by: bag)
     }
 
     func applicationWillResignActive(_ application: UIApplication) {

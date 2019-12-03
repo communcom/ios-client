@@ -9,7 +9,6 @@
 import Foundation
 
 class ErrorView: MyView {
-
     lazy var imageView: UIImageView = {
         var imageView = UIImageView()
         imageView.image = UIImage(named: "no-connection-image")
@@ -53,31 +52,47 @@ class ErrorView: MyView {
         backgroundColor = .white
 
         addSubview(imageView)
+        layoutImageView()
+        
+        addSubview(title)
+        layoutTitle()
+
+        addSubview(subtitle)
+        layoutSubtitle()
+
+        addSubview(retryButton)
+        layoutButton()
+        retryButton.addTarget(self, action: #selector(retryDidTouch(_:)), for: .touchUpInside)
+    }
+    
+    func layoutImageView() {
         imageView.autoPinEdge(toSuperviewEdge: .top, withInset: 100)
         imageView.autoPinEdge(toSuperviewEdge: .left, withInset: 45, relation: .greaterThanOrEqual)
         imageView.autoPinEdge(toSuperviewEdge: .right, withInset: 45, relation: .greaterThanOrEqual)
         imageView.autoAlignAxis(toSuperviewAxis: .vertical)
         NSLayoutConstraint(item: imageView, attribute: .width, relatedBy: .equal, toItem: imageView, attribute: .height, multiplier: 285/350, constant: 0).isActive = true
-
-        addSubview(title)
+    }
+    
+    func layoutTitle() {
         title.autoPinEdge(.top, to: .bottom, of: imageView, withOffset: 20)
         title.autoPinEdge(toSuperviewEdge: .leading)
         title.autoPinEdge(toSuperviewEdge: .trailing)
         title.autoAlignAxis(toSuperviewAxis: .vertical)
         title.heightAnchor.constraint(equalToConstant: 36).isActive = true
-
-        addSubview(subtitle)
+    }
+    
+    func layoutSubtitle() {
         subtitle.autoPinEdge(.top, to: .bottom, of: title, withOffset: 10)
         subtitle.autoPinEdge(toSuperviewEdge: .leading)
         subtitle.autoPinEdge(toSuperviewEdge: .trailing)
         subtitle.autoAlignAxis(toSuperviewAxis: .vertical)
         subtitle.heightAnchor.constraint(equalToConstant: 52).isActive = true
-
-        addSubview(retryButton)
+    }
+    
+    func layoutButton() {
         retryButton.autoPinEdge(.top, to: .bottom, of: subtitle, withOffset: 56)
         retryButton.autoAlignAxis(toSuperviewAxis: .vertical)
         retryButton.autoPinEdge(toSuperviewSafeArea: .bottom, withInset: 110)
-        retryButton.addTarget(self, action: #selector(retryDidTouch(_:)), for: .touchUpInside)
     }
     
     @objc func retryDidTouch(_ sender: UIButton) {
