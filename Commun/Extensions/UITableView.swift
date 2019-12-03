@@ -186,6 +186,23 @@ extension UITableView {
         
         self.tableFooterView = containerView
     }
+    
+    func addLoadMoreAction(_ loadMoreAction: @escaping (()->Void)) -> Disposable {
+        rx.didEndDecelerating
+            .filter {_ in self.contentOffset.y > 0}
+            .subscribe(onNext: { [weak self] _ in
+                guard let strongSelf = self,
+                    let lastCell = strongSelf.visibleCells.last,
+                    let indexPath = strongSelf.indexPath(for: lastCell)
+                else {
+                    return
+                }
+                if strongSelf.numberOfSections == 0 {return}
+                if indexPath.row >= strongSelf.numberOfRows(inSection: strongSelf.numberOfSections - 1) - 3 {
+                    loadMoreAction()
+                }
+            })
+    }
 }
 
 extension Reactive where Base: UITableView {

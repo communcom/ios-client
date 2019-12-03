@@ -72,7 +72,7 @@ class PostPageViewModel: CommentsViewModel {
     }
     
     override func reload() {
-        super.reload()
         loadPost()
+        super.reload()
     }
 }

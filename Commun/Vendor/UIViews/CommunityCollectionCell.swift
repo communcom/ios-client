@@ -83,8 +83,6 @@ class CommunityCollectionCell<T: CommunityType>: MyCollectionViewCell, ListItemC
     
     @objc func joinButtonDidTouch() {
         guard let community = community else {return}
-        joinButton.animate {
-            self.delegate?.buttonFollowDidTouch(community: community)
-        }
+        self.delegate?.buttonFollowDidTouch(community: community)
     }
 }

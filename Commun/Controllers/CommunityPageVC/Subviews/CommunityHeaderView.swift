@@ -28,7 +28,9 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
     }()
     
     lazy var joinButton = CommunButton.default(label: "follow".localized().uppercaseFirst)
-    
+
+    lazy var friendLabel = UILabel.with(text: "friends".localized().uppercaseFirst, textSize: 12, weight: .bold, textColor: .a5a7bd)
+
     lazy var membersCountLabel: UILabel = {
         let label = UILabel.with(text: Double(10000000).kmFormatted, textSize: 15, weight: .bold)
         return label
@@ -121,7 +123,7 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
         let memberLabel = UILabel.with(text: "members".localized().uppercaseFirst, textSize: 12, weight: .semibold, textColor: .a5a7bd)
         addSubview(memberLabel)
         memberLabel.autoPinEdge(.leading, to: .trailing, of: membersCountLabel, withOffset: 4)
-        memberLabel.autoAlignAxis(.horizontal, toSameAxisOf: membersCountLabel)
+        memberLabel.autoPinEdge(.bottom, to: .bottom, of: membersCountLabel)
         memberLabel.isUserInteractionEnabled = true
         let tap = UITapGestureRecognizer(target: self, action: #selector(membersLabelDidTouch))
         memberLabel.addGestureRecognizer(tap)
@@ -138,12 +140,11 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
         let leadsLabel = UILabel.with(text: "leaders".localized().uppercaseFirst, textSize: 12, weight: .semibold, textColor: .a5a7bd)
         addSubview(leadsLabel)
         leadsLabel.autoPinEdge(.leading, to: .trailing, of: leadsCountLabel, withOffset: 4)
-        leadsLabel.autoAlignAxis(.horizontal, toSameAxisOf: membersCountLabel)
+        leadsLabel.autoPinEdge(.bottom, to: .bottom, of: membersCountLabel)
         leadsLabel.isUserInteractionEnabled = true
         let tap2 = UITapGestureRecognizer(target: self, action: #selector(leadsLabelDidTouch))
         leadsLabel.addGestureRecognizer(tap2)
-        
-        let friendLabel = UILabel.with(text: "friends".localized().uppercaseFirst, textSize: 12, weight: .bold, textColor: .a5a7bd)
+
         addSubview(friendLabel)
         friendLabel.autoAlignAxis(.horizontal, toSameAxisOf: usersStackView)
         friendLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
@@ -166,7 +167,7 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
         segmentedControl.autoPinEdge(toSuperviewEdge: .leading)
         segmentedControl.autoPinEdge(toSuperviewEdge: .trailing)
         
-        let separator = UIView(height: 10, backgroundColor: #colorLiteral(red: 0.9599978328, green: 0.966491878, blue: 0.9829974771, alpha: 1))
+        let separator = UIView(height: 10, backgroundColor: .appLightGrayColor)
         addSubview(separator)
         
         separator.autoPinEdge(.top, to: .bottom, of: segmentedControl)
@@ -241,8 +242,11 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
         leadsCountLabel.text = "\(community.leadersCount ?? 0)"
         
         // friends
-        if let friends = community.friends {
+        if let friends = community.friends, friends.count > 0 {
             usersStackView.setUp(with: friends)
+            friendLabel.isHidden = false
+        } else {
+            friendLabel.isHidden = true
         }
     }
     
