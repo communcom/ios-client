@@ -17,34 +17,14 @@ class MasterPasswordAttention: UIView {
     // MARK: - IBOutlets
     @IBOutlet var contentView: UIView!
 
-    
-    // MARK: - Initialization
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        commonInit()
-    }
-    
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        commonInit()
-    }
-    
-    private func commonInit() {
-        Bundle.main.loadNibNamed("MasterPasswordAttention", owner: self, options: nil)
-        addSubview(contentView)
-        contentView.frame = self.bounds
-        contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
-        contentView.layer.cornerRadius = CGFloat.adaptive(width: 25.0)
-        contentView.clipsToBounds = true
-    }
-    
     @IBOutlet weak var titleLabel: UILabel! {
         didSet {
-            self.titleLabel.tune(withText:          "attention".localized().uppercaseFirst,
-                                 hexColors:         blackWhiteColorPickers,
-                                 font:              UIFont.systemFont(ofSize: CGFloat.adaptive(width: 30.0), weight: .bold),
-                                 alignment:         .center,
-                                 isMultiLines:      false)
+            self.titleLabel.tune(withAttributedText:        "attention",
+                                 hexColors:                 blackWhiteColorPickers,
+                                 font:                      UIFont.systemFont(ofSize: CGFloat.adaptive(width: 30.0), weight: .bold),
+                                 alignment:                 .center,
+                                 isMultiLines:              false,
+                                 lineHeight:                30.0)
         }
     }
     
@@ -54,7 +34,9 @@ class MasterPasswordAttention: UIView {
                                 hexColors:                  blackWhiteColorPickers,
                                 font:                       UIFont.systemFont(ofSize: CGFloat.adaptive(width: 17.0), weight: .medium),
                                 alignment:                  .center,
-                                isMultiLines:               true)
+                                isMultiLines:               true,
+                                lineHeight:                 24.0,
+                                lineHeightMultiple:         1.18)
         }
     }
     
@@ -64,18 +46,18 @@ class MasterPasswordAttention: UIView {
                                     hexColors:              grayishBluePickers,
                                     font:                   UIFont.systemFont(ofSize: CGFloat.adaptive(width: 15.0), weight: .medium),
                                     alignment:              .center,
-                                    isMultiLines:           true)
-        }
+                                    isMultiLines:           true,
+                                    lineHeight:             24.0,
+                                    lineHeightMultiple:     1.34)
+         }
     }
     
     @IBOutlet weak var backButton: UIButton! {
         didSet {
             self.backButton.backgroundColor = #colorLiteral(red: 0.4156862745, green: 0.5019607843, blue: 0.9607843137, alpha: 1)
             self.backButton.setTitleColor(.white, for: .normal)
-            self.backButton.titleLabel?.font = .boldSystemFont(ofSize: 15)
-            self.backButton.layer.cornerRadius = self.backButton.frame.height / 2
+            self.backButton.titleLabel?.font = .boldSystemFont(ofSize: CGFloat.adaptive(width: 15.0))
             self.backButton.setTitle("back".localized().uppercaseFirst, for: .normal)
-            self.backButton.clipsToBounds = true
         }
     }
     
@@ -83,13 +65,42 @@ class MasterPasswordAttention: UIView {
         didSet {
             self.continueButton.backgroundColor = UIColor(hexString: "#F3F5FA")
             self.continueButton.setTitleColor(UIColor(hexString: "#6A80F5"), for: .normal)
-            self.continueButton.titleLabel?.font = .boldSystemFont(ofSize: 15)
-            self.continueButton.layer.cornerRadius = self.continueButton.frame.height / 2
+            self.continueButton.titleLabel?.font = .boldSystemFont(ofSize: CGFloat.adaptive(width: 15.0))
             self.continueButton.setTitle("continue without backup".localized().uppercaseFirst, for: .normal)
-            self.continueButton.clipsToBounds = true
         }
     }
+
     
+    // MARK: - Initialization
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        
+        commonInit()
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        
+        commonInit()
+    }
+    
+    
+    // MARK: - Custom Functions
+    private func commonInit() {
+        Bundle.main.loadNibNamed("MasterPasswordAttention", owner: self, options: nil)
+        addSubview(contentView)
+        contentView.frame = self.bounds
+        contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+        contentView.layer.cornerRadius = CGFloat.adaptive(width: 25.0)
+        contentView.clipsToBounds = true
+        
+        self.backButton.layer.cornerRadius = CGFloat.adaptive(height: 50.0) / 2
+        self.backButton.clipsToBounds = true
+        
+        self.continueButton.layer.cornerRadius = CGFloat.adaptive(height: 50.0) / 2
+        self.continueButton.clipsToBounds = true
+    }
+        
     
     // MARK: - Custom Functions
     func display(_ value: Bool) {
@@ -97,7 +108,8 @@ class MasterPasswordAttention: UIView {
                                 delay:          0.0,
                                 options:        UIView.KeyframeAnimationOptions(rawValue: 7),
                                 animations: {
-                                    self.frame.origin.y = value ? UIScreen.main.bounds.height - (581.0 + 54.0) * Config.heightRatio : 2000.0
+                                    let bottomOffset = CGFloat.adaptive(width: (20.0 + (UIDevice.hasNotch ? UIDevice.safeAreaInsets.bottom : 0.0)))
+                                    self.frame.origin.y = value ? UIScreen.main.bounds.height - (581.0 + bottomOffset) * Config.heightRatio : 2000.0
             },
                                 completion:     nil)
     }

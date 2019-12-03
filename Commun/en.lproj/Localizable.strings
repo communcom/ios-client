@@ -124,8 +124,8 @@
 "my communities"                                =   "my communities";
 "my Feed"                                       =   "my Feed";
 "master password"                               =   "master password";
-"master password attention note"                =   "We do not keep master passwords and\nhave no opportunity to restore them.";
-"master password attention describe"            =   "Unfortunately for our comfort, blockchain doesn’t allow us to restore passwords. It means that it’s every user’s responsibility to keep the password in a safe place and be able to access it anytime.\n\nWe strongly recommend you to save your password and make a copy of it.";
+"master password attention note"                =   "we do not keep master passwords and have no opportunity to restore them.";
+"master password attention describe"            =   "unfortunately for our comfort, blockchain doesn’t allow us to restore passwords. It means that it’s every user’s responsibility to keep the password in a safe place and be able to access it anytime.\n We strongly recommend you to save your password and make a copy of it.";
 "master password placeholder"                   =   "enter master password";
 "monetize"                                      =   "monetize";
 
