@@ -85,9 +85,6 @@ extension CommunityController {
         setIsSubscribed(!originIsSubscribed)
         community?.isBeingJoined = true
         
-        // animate
-        animateJoin()
-        
         // notify changes
         community!.notifyChanged()
         
@@ -122,22 +119,6 @@ extension CommunityController {
                 UIApplication.topViewController()?.showError(error)
             }
             .disposed(by: disposeBag)
-    }
-    
-    func animateJoin() {
-        CATransaction.begin()
-        
-        let moveDownAnim = CABasicAnimation(keyPath: "transform.scale")
-        moveDownAnim.byValue = 1.2
-        moveDownAnim.autoreverses = true
-        joinButton.layer.add(moveDownAnim, forKey: "transform.scale")
-        
-        let fadeAnim = CABasicAnimation(keyPath: "opacity")
-        fadeAnim.byValue = -1
-        fadeAnim.autoreverses = true
-        joinButton.layer.add(fadeAnim, forKey: "Fade")
-        
-        CATransaction.commit()
     }
     
     func setIsSubscribed(_ value: Bool) {

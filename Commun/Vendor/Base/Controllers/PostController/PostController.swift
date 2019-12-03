@@ -86,10 +86,6 @@ extension PostController {
             headerView.setUp(post: post)
         }
     }
-
-    func openShareActions() {
-        ShareHelper.share(post: post)
-    }
     
     // MARK: - Voting
     

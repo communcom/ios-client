@@ -19,7 +19,7 @@ class EditorVC: BaseViewController {
     
     // MARK: - Subviews
     // header
-    lazy var closeButton = UIButton.circleGray(imageName: "close-x")
+    lazy var closeButton = UIButton.close()
     lazy var headerLabel = UILabel.title("create post".localized().uppercaseFirst)
     
     // Content

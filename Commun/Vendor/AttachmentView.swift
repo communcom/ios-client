@@ -26,7 +26,7 @@ class AttachmentView: UIView {
     weak var attachment: TextAttachment?
     
     // MARK: - Subviews
-    lazy var closeButton = UIButton.circleBlack(imageName: "close-x")
+    lazy var closeButton = UIButton.close()
     lazy var expandButton = UIButton.circleBlack(imageName: "expand")
     lazy var contentView: UIView = UIView(forAutoLayout: ())
     lazy var descriptionView: UIView = {

@@ -13,6 +13,10 @@ extension UIColor {
         return UIColor(hexString: "#A5A7BD")!
     }
 
+    static var appLightGrayColor: UIColor {
+        return UIColor(hexString: "#F3F5FA")!
+    }
+
     static var appMainColor: UIColor {
         return UIColor(hexString: "#6A80F5")!
     }

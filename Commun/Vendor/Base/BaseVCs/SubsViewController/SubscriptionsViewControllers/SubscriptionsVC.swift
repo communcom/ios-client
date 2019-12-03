@@ -31,6 +31,11 @@ class SubscriptionsVC: SubsViewController<ResponseAPIContentGetSubscriptionsItem
         super.init(viewModel: viewModel)
         defer {self.title = "followings".localized().uppercaseFirst}
     }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        baseNavigationController?.changeStatusBarStyle(.default)
+    }
     
     override func setUp() {
         super.setUp()

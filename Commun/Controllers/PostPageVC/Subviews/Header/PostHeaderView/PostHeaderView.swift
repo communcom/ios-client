@@ -27,6 +27,7 @@ class PostHeaderView: MyTableHeaderView, PostController {
     lazy var viewsCountButton: UIButton = {
         let button = UIButton(width: 20, height: 18)
         button.setImage(UIImage(named: "icon-views-count-gray-default"), for: .normal)
+        button.touchAreaEdgeInsets = UIEdgeInsets(top: -13, left: -12, bottom: -13, right: -12)
         return button
     }()
     
@@ -35,6 +36,7 @@ class PostHeaderView: MyTableHeaderView, PostController {
     lazy var commentsCountButton: UIButton = {
         let button = UIButton(width: 20, height: 18)
         button.setImage(UIImage(named: "comment-count"), for: .normal)
+        button.touchAreaEdgeInsets = UIEdgeInsets(top: -13, left: -12, bottom: -13, right: -12)
         return button
     }()
     
@@ -43,6 +45,7 @@ class PostHeaderView: MyTableHeaderView, PostController {
     lazy var sharesCountButton: UIButton = {
         let button = UIButton(width: 20, height: 18)
         button.setImage(UIImage(named: "share-count"), for: .normal)
+        button.touchAreaEdgeInsets = UIEdgeInsets(top: -13, left: -12, bottom: -13, right: -12)
         return button
     }()
     

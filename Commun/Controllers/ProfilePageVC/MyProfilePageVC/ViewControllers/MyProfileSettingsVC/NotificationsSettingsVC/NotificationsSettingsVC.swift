@@ -11,7 +11,7 @@ import RxSwift
 
 class NotificationsSettingsVC: BaseVerticalStackViewController {
     // MARK: - Subviews
-    lazy var closeButton = UIButton.circleGray(imageName: "close-x")
+    lazy var closeButton = UIButton.close()
     lazy var notificationOnAction: NotificationSettingsView = {
         let view = viewForAction(
             Action(title: "notifications".localized().uppercaseFirst, icon: UIImage(named: "profile_options_mention"))

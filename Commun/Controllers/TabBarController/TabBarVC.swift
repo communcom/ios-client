@@ -176,14 +176,16 @@ class TabBarVC: UITabBarController {
     @objc func switchTab(button: UIButton) {
         switchTab(index: button.tag)
     }
-    
+
     func switchTab(index: Int) {
         // pop to first if index is selected
         if selectedIndex == index {
-            if let navController = viewControllers?[index] as? UINavigationController,
-                navController.viewControllers.count > 1
-            {
-                navController.popViewController(animated: true)
+            if let navController = viewControllers?[index] as? UINavigationController {
+                if navController.viewControllers.count > 1 {
+                    navController.popViewController(animated: true)
+                } else {
+                    navController.topViewController?.scrollToTop()
+                }
             }
             return
         }

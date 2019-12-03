@@ -18,7 +18,12 @@ class CommunitiesVC: SubsViewController<ResponseAPIContentGetCommunity, Communit
         super.init(viewModel: viewModel)
         defer {self.title = "communities".localized().uppercaseFirst}
     }
-    
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        baseNavigationController?.changeStatusBarStyle(.default)
+    }
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -27,7 +32,6 @@ class CommunitiesVC: SubsViewController<ResponseAPIContentGetCommunity, Communit
     override func setUp() {
         super.setUp()
         navigationItem.rightBarButtonItem = nil
-        
     }
     
     override func configureCell(with community: ResponseAPIContentGetCommunity, indexPath: IndexPath) -> UITableViewCell {

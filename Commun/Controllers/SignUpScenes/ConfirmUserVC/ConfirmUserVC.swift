@@ -90,14 +90,14 @@ class ConfirmUserVC: UIViewController, SignUpRouter {
             self.verify()
         })
         
-        self.pinCodeInputView.set(appearance: .init(itemSize:         CGSize(width: 48.0 * Config.widthRatio, height: 56.0 * Config.heightRatio),
+        self.pinCodeInputView.set(appearance: .init(itemSize:         CGSize(width: CGFloat.adaptive(width: 48.0), height: CGFloat.adaptive(height: 56.0)),
                                                     font:             .init(descriptor:     UIFontDescriptor(name:  "SFProText-Regular",
-                                                                                                             size:  26.0 * Config.widthRatio),
-                                                                            size:           26.0 * Config.heightRatio),
+                                                                                                             size:  CGFloat.adaptive(width: 26.0)),
+                                                                            size:           CGFloat.adaptive(height: 26.0)),
                                                     textColor:        .black,
                                                     backgroundColor:  UIColor(hexString: "F3F5FA")!,
                                                     cursorColor:      UIColor(red: 69/255, green: 108/255, blue: 1, alpha: 1),
-                                                    cornerRadius:     8.0 * Config.heightRatio
+                                                    cornerRadius:     CGFloat.adaptive(height: 8.0)
             )
         )
         
@@ -107,6 +107,19 @@ class ConfirmUserVC: UIViewController, SignUpRouter {
     
     override func viewWillLayoutSubviews() {
         self.pinCodeInputView.frame = CGRect(origin: .zero, size: CGSize(width: 228.0 * Config.widthRatio, height: 56.0 * Config.heightRatio))
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        self.pinCodeInputView.becomeFirstResponder()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+                
+        self.deleteCode()
+        self.pinCodeInputView.resignFirstResponder()
     }
     
     

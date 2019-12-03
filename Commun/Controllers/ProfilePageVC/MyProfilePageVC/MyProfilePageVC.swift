@@ -15,6 +15,7 @@ class MyProfilePageVC: UserProfilePageVC {
         let button = UIButton(width: 24, height: 24, backgroundColor: UIColor.black.withAlphaComponent(0.3), cornerRadius: 12, contentInsets: UIEdgeInsets(top: 6, left: 6, bottom: 6, right: 6))
         button.tintColor = .white
         button.setImage(UIImage(named: "photo_solid")!, for: .normal)
+        button.touchAreaEdgeInsets = UIEdgeInsets(inset: -10)
         return button
     }()
     

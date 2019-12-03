@@ -41,6 +41,22 @@ extension CommunityMembersVC: UICollectionViewDelegateFlowLayout {
             .disposed(by: disposeBag)
     }
     
+    func bindScrollView() {
+        tableView.rx.didEndDecelerating
+            .subscribe(onNext: { [weak self] _ in
+                guard let lastCell = self?.tableView.visibleCells.last,
+                    let indexPath = self?.tableView.indexPath(for: lastCell)
+                else {
+                    return
+                }
+                if indexPath.row >= self!.viewModel.items.value.count - 3 {
+                    self!.viewModel.fetchNext()
+                }
+                
+            })
+            .disposed(by: disposeBag)
+    }
+    
     func bindState() {
         viewModel.listLoadingState
             .subscribe(onNext: { [weak self] (state) in
@@ -68,19 +84,32 @@ extension CommunityMembersVC: UICollectionViewDelegateFlowLayout {
                     cell.setUp(with: subscriber)
                     cell.delegate = self
                     
-                    if indexPath.row >= self.viewModel.subscribersVM.items.value.count - 5 {
-                        self.viewModel.fetchNext()
+                    cell.roundedCorner = []
+                    
+                    if indexPath.row == 0 {
+                        cell.roundedCorner.insert([.topLeft, .topRight])
+                    }
+                    
+                    if indexPath.row == self.viewModel.items.value.count - 1 {
+                        cell.roundedCorner.insert([.bottomLeft, .bottomRight])
                     }
                     
                     return cell
                 case .leader(let leader):
-                    let cell = self.tableView.dequeueReusableCell(withIdentifier: "CommunityLeaderCell") as! CommunityLeaderCell
+                    let cell = self.tableView.dequeueReusableCell(withIdentifier: "CommunityLeaderFollowCell") as! CommunityLeaderFollowCell
                     cell.setUp(with: leader)
                     cell.delegate = self
                     
-                    if indexPath.row >= self.viewModel.leadersVM.items.value.count - 5 {
-                        self.viewModel.fetchNext()
+                    cell.roundedCorner = []
+                    
+                    if indexPath.row == 0 {
+                        cell.roundedCorner.insert([.topLeft, .topRight])
                     }
+                    
+                    if indexPath.row == self.viewModel.items.value.count - 1 {
+                        cell.roundedCorner.insert([.bottomLeft, .bottomRight])
+                    }
+                    
                     return cell
                 }
             }
@@ -89,6 +118,16 @@ extension CommunityMembersVC: UICollectionViewDelegateFlowLayout {
         
         
         viewModel.items
+            .filter { items in
+                // disable binding to tableview when data is LeaderType
+                // as leaders have already been binded to collectionView
+                if items is [ResponseAPIContentGetLeader] &&
+                    self.viewModel.segmentedItem.value == .all
+                {
+                    return false
+                }
+                return true
+            }
             .map { items in
                 items.compactMap {item -> CustomElementType? in
                     if let item = item as? ResponseAPIContentGetLeader {
@@ -111,8 +150,9 @@ extension CommunityMembersVC: UICollectionViewDelegateFlowLayout {
                     self.viewModel.fetchNext()
                 }
                 
-                let cell = self.headerView.leadersCollectionView.dequeueReusableCell(withReuseIdentifier: "LeaderCollectionCell", for: indexPath) as! LeaderCollectionCell
+                let cell = self.headerView.leadersCollectionView.dequeueReusableCell(withReuseIdentifier: "LeaderFollowCollectionCell", for: indexPath) as! LeaderFollowCollectionCell
                 cell.setUp(with: leader)
+                cell.delegate = self
                 return cell
             }
         )

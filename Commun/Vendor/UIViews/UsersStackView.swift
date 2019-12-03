@@ -11,7 +11,7 @@ import CyberSwift
 
 class UsersStackView: MyView {
     // MARK: - Properties
-    let maxNumberOfAvatars = 5
+    let maxNumberOfAvatars = 3
     
     // MARK: - Subviews
     lazy var avatarsStackView: UIStackView = {
@@ -46,7 +46,7 @@ class UsersStackView: MyView {
         
         // add avatars
         let text: String
-        if friends.count <= 5 {
+        if friends.count <= maxNumberOfAvatars {
             for friend in friends {
                 let imageView = MyAvatarImageView(size: 34)
                 imageView.layer.borderWidth = 2
@@ -59,7 +59,7 @@ class UsersStackView: MyView {
         }
         
         else {
-            for i in 0..<3 {
+            for i in 0..<maxNumberOfAvatars {
                 let imageView = MyAvatarImageView(size: 34)
                 imageView.layer.borderWidth = 2
                 imageView.layer.borderColor = UIColor.white.cgColor

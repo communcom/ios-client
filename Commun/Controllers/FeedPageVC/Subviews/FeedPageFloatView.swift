@@ -22,6 +22,7 @@ final class FeedPageFloatView: MyView {
         button.alpha = 0.5
         return button
     }()
+
     lazy var sortButton: UIButton = {
         let button = UIButton.circle(size: 35, backgroundColor: .clear, imageName: "feed-icon-settings", imageEdgeInsets: .zero)
         return button
@@ -38,7 +39,7 @@ final class FeedPageFloatView: MyView {
     override func commonInit() {
         super.commonInit()
         backgroundColor = #colorLiteral(red: 0.9591314197, green: 0.9661319852, blue: 0.9840201735, alpha: 1)
-        
+
         let headerView = UIView(backgroundColor: .appMainColor)
         addSubview(headerView)
         headerView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .bottom)
@@ -67,7 +68,6 @@ final class FeedPageFloatView: MyView {
         avatarImageView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 10, left: 16, bottom: 10, right: 0), excludingEdge: .trailing)
         
         avatarImageView.observeCurrentUserAvatar().disposed(by: disposeBag)
-        avatarImageView.addTapToOpenUserProfile(profileId: Config.currentUser?.id)
         
         let whatsNewLabel = UILabel.with(text: "what's new".localized().uppercaseFirst + "?", textSize: 15, textColor: .a5a7bd)
         postingView.addSubview(whatsNewLabel)

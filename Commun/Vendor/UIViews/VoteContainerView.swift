@@ -21,9 +21,6 @@ class VoteContainerView: MyView {
         backgroundColor = .f3f5fa
         setContentHuggingPriority(.defaultHigh, for: .horizontal)
 
-//        upVoteButton.setTitleColor(.appMainColor, for: .disabled)
-//        downVoteButton.setTitleColor(.appMainColor, for: .disabled)
-
         addSubview(upVoteButton)
         upVoteButton.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .trailing)
         
@@ -36,18 +33,11 @@ class VoteContainerView: MyView {
     
     func setUp(with votes: ResponseAPIContentVotes, userID: String?) {
         likeCountLabel.removeAllConstraints()
-        let isCurrentUser = Config.currentUser?.id == userID
 
-        upVoteButton.isHidden = isCurrentUser
-        downVoteButton.isHidden = isCurrentUser
-        if isCurrentUser {
-            likeCountLabel.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 20))
-        } else {
-            likeCountLabel.autoPinEdge(.leading, to: .trailing, of: upVoteButton)
-            likeCountLabel.autoPinEdge(.trailing, to: .leading, of: downVoteButton)
-            likeCountLabel.autoPinEdge(toSuperviewEdge: .top)
-            likeCountLabel.autoPinEdge(toSuperviewEdge: .bottom)
-        }
+        likeCountLabel.autoPinEdge(.leading, to: .trailing, of: upVoteButton)
+        likeCountLabel.autoPinEdge(.trailing, to: .leading, of: downVoteButton)
+        likeCountLabel.autoPinEdge(toSuperviewEdge: .top)
+        likeCountLabel.autoPinEdge(toSuperviewEdge: .bottom)
 
         upVoteButton.tintColor         = votes.hasUpVote ?? false ? .appMainColor : .a5a7bd
         likeCountLabel.text            = "\((votes.upCount ?? 0) - (votes.downCount ?? 0))"

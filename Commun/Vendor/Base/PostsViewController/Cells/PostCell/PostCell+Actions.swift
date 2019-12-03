@@ -30,7 +30,7 @@ extension PostCell {
 
     @objc func shareButtonTapped(button: UIButton) {
         guard let post = post else {return}
-        self.delegate?.menuButtonDidTouch(post: post)
+        ShareHelper.share(post: post)
     }
     
     @objc func commentCountsButtonDidTouch() {
