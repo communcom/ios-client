@@ -99,6 +99,8 @@ class CommunityMembersVC: BaseViewController, LeaderCellDelegate, ProfileCellDel
         // tabBar's selection changed
         bindSegmentedControl()
         
+        bindScrollView()
+        
         // list loading state
         bindState()
         

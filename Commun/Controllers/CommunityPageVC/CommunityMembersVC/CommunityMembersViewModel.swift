@@ -42,7 +42,7 @@ class CommunityMembersViewModel: BaseViewModel {
     let listLoadingState    = BehaviorRelay<ListFetcherState>(value: .loading(false))
     lazy var segmentedItem  = BehaviorRelay<SegmentedItem>(value: starterSegmentedItem)
     lazy var leadersVM      = LeadersViewModel(communityId: community.communityId)
-    lazy var friendsSubject = PublishSubject<[ResponseAPIContentResolveProfile]>()
+    lazy var friendsVM      = FriendsViewModel(friends: community.friends ?? [])
     lazy var subscribersVM  = SubscribersViewModel(communityId: community.communityId)
     let items = BehaviorRelay<[Any]>(value: [])
     
@@ -85,29 +85,19 @@ class CommunityMembersViewModel: BaseViewModel {
             .disposed(by: disposeBag)
         
         let leaders     = leadersVM.items.map {$0 as [Any]}.skip(1)
+            .filter { _ in
+                self.segmentedItem.value == .leaders || self.segmentedItem.value == .all
+            }
         let subscribers = subscribersVM.items.map {$0 as [Any]}.skip(1)
-        let friends     = friendsSubject.map {$0 as [Any]}
+            .filter { _ in
+                self.segmentedItem.value == .all
+            }
+        let friends     = friendsVM.items.map {$0 as [Any]}
+            .filter {_ in
+                self.segmentedItem.value == .friends
+            }
         
         Observable.merge(leaders, subscribers, friends)
-            .filter { (items) -> Bool in
-                if items is [ResponseAPIContentGetLeader] && self.segmentedItem.value == .leaders
-                {
-                    return true
-                }
-                
-                if items is [ResponseAPIContentResolveProfile] &&
-                    (self.segmentedItem.value == .all || self.segmentedItem.value == .friends)
-                {
-                    if self.segmentedItem.value == .all {
-                        if self.subscribersVM.items.value == (items as! [ResponseAPIContentResolveProfile]) {
-                            return true
-                        }
-                        return false
-                    }
-                    return true
-                }
-                return false
-            }
             .skip(1)
             .asDriver(onErrorJustReturn: [])
             .drive(items)
@@ -124,14 +114,13 @@ class CommunityMembersViewModel: BaseViewModel {
         }
         
         if segmentedItem.value == .friends {
-            if let friends = community.friends,
-                !friends.isEmpty
-            {
-               friendsSubject.onNext(friends)
+            let friends = friendsVM.items.value
+            if !friends.isEmpty {
+               friendsVM.accept(friends)
                listLoadingState.accept(.listEnded)
                return
             }
-            friendsSubject.onNext([])
+            friendsVM.accept([])
             listLoadingState.accept(.listEmpty)
         }
     }

@@ -101,20 +101,10 @@ extension PostPageVC {
         let post = viewModel.post
         post
             .subscribe(onNext: {post in
-                if let post = post {
-                    self.navigationBar.setUp(with: post)
-                    
-                    // commentForm
-    //                if self.replyingComment == nil {
-    //                    self.commentForm.parentAuthor = post.contentId.userId
-    //                    self.commentForm.parentPermlink = post.contentId.permlink
-    //                }
-                }
-                
-                // Create tableHeaderView
-                if let post = post {
-                    self.postView.setUp(with: post)
-                }
+                guard let post = post else {return}
+                self.navigationBar.setUp(with: post)
+                self.commentForm.post = post
+                self.postView.setUp(with: post)
             })
             .disposed(by: disposeBag)
         
