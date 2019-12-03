@@ -9,11 +9,10 @@
 import Foundation
 import RxSwift
 
-class LeaderCollectionCell: MyCollectionViewCell, LeaderController {
-    var disposeBag = DisposeBag()
-    
+class LeaderCollectionCell: MyCollectionViewCell, ListItemCellType {
     // MARK: - Properties
     var leader: ResponseAPIContentGetLeader?
+    weak var delegate: LeaderCellDelegate?
     
     // MARK: - Subviews
     lazy var avatarImageView = LeaderAvatarImageView(size: 56)
@@ -77,6 +76,9 @@ class LeaderCollectionCell: MyCollectionViewCell, LeaderController {
     }
     
     @objc func voteButtonDidTouch() {
-        toggleVote()
+        guard let leader = leader else {return}
+        voteButton.animate {
+            self.delegate?.buttonVoteDidTouch(leader: leader)
+        }
     }
 }

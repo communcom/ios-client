@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import RxSwift
 
 class FriendsViewModel: ListViewModel<ResponseAPIContentResolveProfile> {
     init(friends: [ResponseAPIContentResolveProfile]) {
@@ -15,8 +16,6 @@ class FriendsViewModel: ListViewModel<ResponseAPIContentResolveProfile> {
         super.init(fetcher: fetcher)
         defer {
             accept(friends)
-            observeFriendAdded()
-            observeFriendRemoved()
         }
     }
     
@@ -28,29 +27,35 @@ class FriendsViewModel: ListViewModel<ResponseAPIContentResolveProfile> {
         items.accept(friends)
     }
     
-    func observeFriendAdded() {
-        ResponseAPIContentResolveProfile.observeItemChanged()
-            .filter {profile in
-                !self.items.value.contains(where: {$0.identity == profile.identity}) &&
-                profile.isSubscribed == true
-            }
-            .subscribe(onNext: { (profile) in
-                let items = [profile] + self.items.value
+    override func updateItem(_ updatedItem: ResponseAPIContentResolveProfile) {
+        var newItems = fetcher.items.value
+        guard let index = newItems.firstIndex(where: {$0.identity == updatedItem.identity}) else {
+            if updatedItem.isSubscribed == true {
+                let items = [updatedItem] + self.items.value
                 self.items.accept(items)
-            })
-            .disposed(by: disposeBag)
+            }
+            return
+        }
+        
+        if updatedItem.isSubscribed == false {
+            var items = self.items.value
+            items.removeAll(where: {updatedItem.identity == $0.identity})
+            self.items.accept(items)
+            return
+        }
+        newItems[index] = updatedItem
+        UIView.setAnimationsEnabled(false)
+        fetcher.items.accept(newItems)
+        UIView.setAnimationsEnabled(true)
     }
     
-    func observeFriendRemoved() {
-        ResponseAPIContentResolveProfile.observeItemChanged()
-            .filter {profile in
-                self.items.value.contains(where: {$0.identity == profile.identity}) &&
-                profile.isSubscribed == false
-            }
+    override func observeItemChange() {
+        super.observeItemChange()
+        
+        ResponseAPIContentGetLeader.observeItemChanged()
+            .map {ResponseAPIContentResolveProfile(leader: $0)}
             .subscribe(onNext: { (profile) in
-                var items = self.items.value
-                items.removeAll(profile)
-                self.items.accept(items)
+                self.updateItem(profile)
             })
             .disposed(by: disposeBag)
     }
