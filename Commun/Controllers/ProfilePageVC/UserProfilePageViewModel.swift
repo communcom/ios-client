@@ -23,7 +23,6 @@ class UserProfilePageViewModel: ProfileViewModel<ResponseAPIContentGetProfile> {
     
     lazy var postsVM = PostsViewModel(filter: PostsListFetcher.Filter(feedTypeMode: .byUser, feedType: .timeDesc, sortType: .all, userId: profileId))
     lazy var commentsVM = CommentsViewModel(filter: CommentsListFetcher.Filter(type: .user, userId: profileId))
-    lazy var subscriptionsVM = SubscriptionsViewModel(userId: profileId, type: .community)
     
     // MARK: - Methods
     override var loadProfileRequest: Single<ResponseAPIContentGetProfile> {
@@ -35,10 +34,7 @@ class UserProfilePageViewModel: ProfileViewModel<ResponseAPIContentGetProfile> {
     }
     
     override func bind() {
-        super.bind()
-        
-        subscriptionsVM.fetchNext()
-        
+        super.bind()        
         segmentedItem
             .filter {_ in self.profile.value != nil}
             .subscribe(onNext: { (item) in

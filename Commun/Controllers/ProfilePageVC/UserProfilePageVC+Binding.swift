@@ -8,6 +8,7 @@
 
 import Foundation
 import CyberSwift
+import RxSwift
 
 extension UserProfilePageVC: UICollectionViewDelegateFlowLayout, CommunityCellDelegate {
     func bindSegmentedControl() {
@@ -22,50 +23,23 @@ extension UserProfilePageVC: UICollectionViewDelegateFlowLayout, CommunityCellDe
                     fatalError("not found selected index")
                 }
             }
-            .bind(to: viewModel.segmentedItem)
+            .bind(to: (viewModel as! UserProfilePageViewModel).segmentedItem)
             .disposed(by: disposeBag)
     }
     
-    func bindCommunities() {
-        // communities loading state
-        viewModel.subscriptionsVM.state
-            .subscribe(onNext: {[weak self] (state) in
-                switch state {
-                case .loading(let isLoading):
-                    self?.communitiesCollectionView.heightConstraint?.constant = 187
-                    if isLoading && self?.viewModel.subscriptionsVM.items.value.count == 0 {
-                        self?.communitiesCollectionView.showLoading()
-                    }
-                    else {
-                        self?.communitiesCollectionView.hideLoading()
-                    }
-                case .listEnded:
-                    self?.communitiesCollectionView.heightConstraint?.constant = 187
-                    self?.communitiesCollectionView.hideLoading()
-                case .listEmpty:
-                    self?.communitiesCollectionView.hideLoading()
-                    self?.communitiesCollectionView.heightConstraint?.constant = 0
-                case .error(let error):
-                    #warning("error state")
-                    self?.communitiesCollectionView.hideLoading()
-                }
-            })
-            .disposed(by: disposeBag)
-        
-        // communities
-        viewModel.subscriptionsVM.items
-            .skip(1)
-            .map {$0.compactMap {$0.communityValue}}
+    @objc func bindCommunities() {
+        (viewModel as! UserProfilePageViewModel).profile
+            .filter {$0?.highlightCommunities != nil}
+            .map {$0!.highlightCommunities}
+            .map {$0.map {ResponseAPIContentGetSubscriptionsCommunity(community: $0)}}
             .bind(to: communitiesCollectionView.rx.items(cellIdentifier: "SubscriptionCommunityCell", cellType: SubscriptionCommunityCell.self)) { index, model, cell in
                 cell.setUp(with: model)
                 cell.delegate = self
-                
-                if index >= self.viewModel.subscriptionsVM.items.value.count - 3 {
-                    self.viewModel.subscriptionsVM.fetchNext()
-                }
             }
             .disposed(by: disposeBag)
-        
+    }
+    
+    func forwardDelegate() {
         communitiesCollectionView.rx.setDelegate(self)
             .disposed(by: disposeBag)
         

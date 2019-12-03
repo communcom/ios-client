@@ -280,6 +280,8 @@
 		BC4692F9239640AE0064A38B /* LeaderFollowCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4692F8239640AE0064A38B /* LeaderFollowCollectionCell.swift */; };
 		BC4692FB239645C70064A38B /* CommunityLeaderFollowCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4692FA239645C70064A38B /* CommunityLeaderFollowCell.swift */; };
 		BC469300239663980064A38B /* ForceUpdateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4692FF239663980064A38B /* ForceUpdateView.swift */; };
+		BC469304239673CB0064A38B /* MyProfilePageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC469303239673CB0064A38B /* MyProfilePageViewModel.swift */; };
+		BC469306239677E00064A38B /* MyProfilePageVC+Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC469305239677E00064A38B /* MyProfilePageVC+Binding.swift */; };
 		BC48FC42236689DC0049C4F4 /* LeadersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC48FC41236689DC0049C4F4 /* LeadersViewModel.swift */; };
 		BC48FC4423668A080049C4F4 /* LeadersListFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC48FC4323668A080049C4F4 /* LeadersListFetcher.swift */; };
 		BC48FC46236690880049C4F4 /* MyEmptyPlaceHolderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC48FC45236690880049C4F4 /* MyEmptyPlaceHolderView.swift */; };
@@ -727,6 +729,8 @@
 		BC4692F8239640AE0064A38B /* LeaderFollowCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderFollowCollectionCell.swift; sourceTree = "<group>"; };
 		BC4692FA239645C70064A38B /* CommunityLeaderFollowCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityLeaderFollowCell.swift; sourceTree = "<group>"; };
 		BC4692FF239663980064A38B /* ForceUpdateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForceUpdateView.swift; sourceTree = "<group>"; };
+		BC469303239673CB0064A38B /* MyProfilePageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfilePageViewModel.swift; sourceTree = "<group>"; };
+		BC469305239677E00064A38B /* MyProfilePageVC+Binding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MyProfilePageVC+Binding.swift"; sourceTree = "<group>"; };
 		BC48FC41236689DC0049C4F4 /* LeadersViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeadersViewModel.swift; sourceTree = "<group>"; };
 		BC48FC4323668A080049C4F4 /* LeadersListFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeadersListFetcher.swift; sourceTree = "<group>"; };
 		BC48FC45236690880049C4F4 /* MyEmptyPlaceHolderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyEmptyPlaceHolderView.swift; sourceTree = "<group>"; };
@@ -2253,6 +2257,8 @@
 				3B51581F226E1D3700108F17 /* ViewControllers */,
 				BCCE0AB32368225E00A183AA /* Subviews */,
 				BCCE0AAE2368217000A183AA /* MyProfilePageVC.swift */,
+				BC469305239677E00064A38B /* MyProfilePageVC+Binding.swift */,
+				BC469303239673CB0064A38B /* MyProfilePageViewModel.swift */,
 				BCCE0AB623682D1B00A183AA /* MyProfilePageVC+Actions.swift */,
 			);
 			path = MyProfilePageVC;
@@ -2655,6 +2661,7 @@
 				BC22BBCA236C082600F40658 /* ContentHuggingScrollView.swift in Sources */,
 				BCABF1332366D4E2006B05F5 /* ProfileVC+Binding.swift in Sources */,
 				BC4692C82390E7120064A38B /* ListItemCellType.swift in Sources */,
+				BC469304239673CB0064A38B /* MyProfilePageViewModel.swift in Sources */,
 				3B2F227322689334006B589E /* NSMutableAttributedString.swift in Sources */,
 				BC016D42235DA0D400F1319F /* ArticlePostCell.swift in Sources */,
 				3B2F226B226892C5006B589E /* NotificationsViewModel.swift in Sources */,
@@ -2771,6 +2778,7 @@
 				B1C371362383E43C000BAE2F /* ProfileEditViewController+Actions.swift in Sources */,
 				3B3C8B8E2347876000D8BADB /* ContentTextView+Text.swift in Sources */,
 				BC69F7DA236FFA190097F870 /* SubsItemCell.swift in Sources */,
+				BC469306239677E00064A38B /* MyProfilePageVC+Binding.swift in Sources */,
 				BC561E85238B9989004C53EB /* ReportVC+Presentation.swift in Sources */,
 				3B25E5BE234C2A0C005BD1B8 /* BasicEditorViewModel.swift in Sources */,
 				BC74F505237957F00018DB8E /* UserProfilePageVC+CommentCellDelegate.swift in Sources */,
