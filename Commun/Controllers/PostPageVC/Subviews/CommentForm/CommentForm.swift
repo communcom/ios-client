@@ -63,7 +63,7 @@ class CommentForm: MyView {
         textView.placeholder = "write a comment".localized().uppercaseFirst + "..."
         textView.backgroundColor = .f3f5fa
         textView.cornerRadius = 35 / 2
-        textView.tune(withTextColors:   darkGrayishBluePickers,
+        textView.tune(withTextColors:   grayishBluePickers,
                       font:             UIFont(name: "SFProText-Medium", size: CGFloat.adaptive(width: 13.0)),
                       alignment:        .left)
         
