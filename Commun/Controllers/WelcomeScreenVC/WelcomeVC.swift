@@ -127,4 +127,9 @@ class WelcomeVC: UIViewController {
         self.welcomePageVC.showActionButtons(indexNext)
         self.pageControl.selectedIndex = indexNext
     }
+    
+    @IBAction func tapped(_ sender: Any) {
+        show(BackUpKeysVC(), sender: nil)
+    }
+
 }
