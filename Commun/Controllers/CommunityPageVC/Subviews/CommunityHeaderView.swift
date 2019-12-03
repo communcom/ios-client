@@ -28,7 +28,9 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
     }()
     
     lazy var joinButton = CommunButton.default(label: "follow".localized().uppercaseFirst)
-    
+
+    lazy var friendLabel = UILabel.with(text: "friends".localized().uppercaseFirst, textSize: 12, weight: .bold, textColor: .a5a7bd)
+
     lazy var membersCountLabel: UILabel = {
         let label = UILabel.with(text: Double(10000000).kmFormatted, textSize: 15, weight: .bold)
         return label
@@ -142,8 +144,7 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
         leadsLabel.isUserInteractionEnabled = true
         let tap2 = UITapGestureRecognizer(target: self, action: #selector(leadsLabelDidTouch))
         leadsLabel.addGestureRecognizer(tap2)
-        
-        let friendLabel = UILabel.with(text: "friends".localized().uppercaseFirst, textSize: 12, weight: .bold, textColor: .a5a7bd)
+
         addSubview(friendLabel)
         friendLabel.autoAlignAxis(.horizontal, toSameAxisOf: usersStackView)
         friendLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
@@ -241,8 +242,11 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
         leadsCountLabel.text = "\(community.leadersCount ?? 0)"
         
         // friends
-        if let friends = community.friends {
+        if let friends = community.friends, friends.count > 0 {
             usersStackView.setUp(with: friends)
+            friendLabel.isHidden = false
+        } else {
+            friendLabel.isHidden = true
         }
     }
     
