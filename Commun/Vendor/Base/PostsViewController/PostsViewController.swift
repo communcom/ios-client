@@ -10,7 +10,8 @@ import UIKit
 import CyberSwift
 
 class PostsViewController: ListViewController<ResponseAPIContentGetPost, PostCell>, PostCellDelegate {
-    
+    private var cellHeights: [IndexPath: CGFloat] = [:]
+
     init(filter: PostsListFetcher.Filter = PostsListFetcher.Filter(feedTypeMode: .new, feedType: .time)) {
         let viewModel = PostsViewModel(filter: filter)
         super.init(viewModel: viewModel)
@@ -22,7 +23,6 @@ class PostsViewController: ListViewController<ResponseAPIContentGetPost, PostCel
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-           
     
     // MARK: - Custom Functions
     override func setUp() {
@@ -30,6 +30,7 @@ class PostsViewController: ListViewController<ResponseAPIContentGetPost, PostCel
                 
         // setup datasource
         tableView.separatorStyle = .none
+        tableView.delegate = self
     }
     
     override func registerCell() {
@@ -49,6 +50,7 @@ class PostsViewController: ListViewController<ResponseAPIContentGetPost, PostCel
         default:
             return UITableViewCell()
         }
+
         return cell
     }
     
@@ -77,5 +79,24 @@ class PostsViewController: ListViewController<ResponseAPIContentGetPost, PostCel
     
     func filterChanged(filter: PostsListFetcher.Filter) {
 
+    }
+
+    override func refresh() {
+        cellHeights.removeAll()
+        super.refresh()
+    }
+}
+
+extension PostsViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return cellHeights[indexPath] ?? UITableView.automaticDimension
+    }
+
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        return cellHeights[indexPath] ?? 200
+    }
+
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        cellHeights[indexPath] = cell.bounds.height
     }
 }
