@@ -9,7 +9,7 @@
 import Foundation
 import RxSwift
 
-class CommunityCollectionCell<T: CommunityType>: MyCollectionViewCell {
+class CommunityCollectionCell<T: CommunityType>: MyCollectionViewCell, ListItemCellType {
     // MARK: - Properties
     var community: T?
     weak var delegate: CommunityCellDelegate?
@@ -83,6 +83,8 @@ class CommunityCollectionCell<T: CommunityType>: MyCollectionViewCell {
     
     @objc func joinButtonDidTouch() {
         guard let community = community else {return}
-        delegate?.buttonFollowDidTouch(community: community)
+        joinButton.animate {
+            self.delegate?.buttonFollowDidTouch(community: community)
+        }
     }
 }

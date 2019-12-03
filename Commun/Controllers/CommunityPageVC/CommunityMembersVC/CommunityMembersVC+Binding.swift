@@ -84,11 +84,31 @@ extension CommunityMembersVC: UICollectionViewDelegateFlowLayout {
                     cell.setUp(with: subscriber)
                     cell.delegate = self
                     
+                    cell.roundedCorner = []
+                    
+                    if indexPath.row == 0 {
+                        cell.roundedCorner.insert([.topLeft, .topRight])
+                    }
+                    
+                    if indexPath.row == self.viewModel.items.value.count - 1 {
+                        cell.roundedCorner.insert([.bottomLeft, .bottomRight])
+                    }
+                    
                     return cell
                 case .leader(let leader):
-                    let cell = self.tableView.dequeueReusableCell(withIdentifier: "CommunityLeaderCell") as! CommunityLeaderCell
+                    let cell = self.tableView.dequeueReusableCell(withIdentifier: "CommunityLeaderFollowCell") as! CommunityLeaderFollowCell
                     cell.setUp(with: leader)
                     cell.delegate = self
+                    
+                    cell.roundedCorner = []
+                    
+                    if indexPath.row == 0 {
+                        cell.roundedCorner.insert([.topLeft, .topRight])
+                    }
+                    
+                    if indexPath.row == self.viewModel.items.value.count - 1 {
+                        cell.roundedCorner.insert([.bottomLeft, .bottomRight])
+                    }
                     
                     return cell
                 }
@@ -130,8 +150,9 @@ extension CommunityMembersVC: UICollectionViewDelegateFlowLayout {
                     self.viewModel.fetchNext()
                 }
                 
-                let cell = self.headerView.leadersCollectionView.dequeueReusableCell(withReuseIdentifier: "LeaderCollectionCell", for: indexPath) as! LeaderCollectionCell
+                let cell = self.headerView.leadersCollectionView.dequeueReusableCell(withReuseIdentifier: "LeaderFollowCollectionCell", for: indexPath) as! LeaderFollowCollectionCell
                 cell.setUp(with: leader)
+                cell.delegate = self
                 return cell
             }
         )

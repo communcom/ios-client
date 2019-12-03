@@ -71,6 +71,7 @@ class CMTopTabBar: MyView {
             
             scrollView.contentView.addSubview(button)
             button.autoAlignAxis(toSuperviewAxis: .horizontal)
+            button.autoSetDimension(.height, toSize: tabBarHeight)
             
             if i == 0 {
                 button.autoPinEdge(toSuperviewEdge: .leading)
