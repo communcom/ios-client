@@ -182,7 +182,7 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
         self.profile = userProfile
         
         // avatar
-        avatarImageView.setAvatar(urlString: userProfile.personal?.avatarUrl, namePlaceHolder: userProfile.username)
+        avatarImageView.setAvatar(urlString: userProfile.avatarUrl, namePlaceHolder: userProfile.username)
         
         // name
         nameLabel.text = userProfile.username
