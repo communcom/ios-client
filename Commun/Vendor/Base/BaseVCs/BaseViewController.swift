@@ -8,16 +8,26 @@
 
 import UIKit
 import RxSwift
+import SwiftTheme
 
 class BaseViewController: UIViewController {
+    // MARK: - Properties
     let disposeBag = DisposeBag()
     
+    
+    // MARK: - Class Functions
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        view.backgroundColor = .white
+        
         setUp()
+        
         bind()
     }
     
+    
+    // MARK: - Custom Functions
     func setUp() {
         
     }
