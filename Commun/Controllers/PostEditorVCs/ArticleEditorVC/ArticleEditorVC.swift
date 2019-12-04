@@ -39,8 +39,8 @@ class ArticleEditorVC: PostEditorVC {
     }
     
     override var isContentValid: Bool {
-        let title = titleTextView.text ?? ""
-        let content = contentTextView.text ?? ""
+        let title = titleTextView.text.trimmed
+        let content = contentTextView.text.trimmed
         
         // both title and content are not empty
         let titleAndContentAreNotEmpty = !title.isEmpty && !content.isEmpty
