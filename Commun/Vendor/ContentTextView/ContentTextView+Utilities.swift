@@ -14,6 +14,7 @@ extension ContentTextView {
         
         // Get attributes from typingAttributes
         let attrs = typingAttributes
+        
         if let font = attrs[.font] as? UIFont {
             if font.fontDescriptor.symbolicTraits.contains(.traitBold) {
                 textStyle = textStyle.setting(isBool: true)
@@ -23,9 +24,10 @@ extension ContentTextView {
                 textStyle = textStyle.setting(isItalic: true)
             }
         }
+
+//        textStyle = textStyle.setting(textColor: text.isEmpty ? #colorLiteral(red: 0.647, green: 0.655, blue: 0.741, alpha: 1) : #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1))
         
-        if let color = attrs[.foregroundColor] as? UIColor,
-            color != .black {
+        if let color = attrs[.foregroundColor] as? UIColor, color != .black {
             textStyle = textStyle.setting(textColor: color)
         }
         
@@ -42,7 +44,7 @@ extension ContentTextView {
     
     /// if text in selectedRange has different style
     var selectedRangeHasDifferentTextStyle: Bool {
-        if selectedRange.length == 0 {return false}
+        if selectedRange.length == 0 { return false }
         var isMixed = false
         textStorage.enumerateAttributes(in: selectedRange, options: []) { (attrs, range, stop) in
             if range != selectedRange {

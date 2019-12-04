@@ -20,7 +20,7 @@ class CommentTextView: ContentTextView {
     }
     
     override func clearFormatting() {
-        if selectedRange.length == 0 {
+        if selectedRange.length <= 1 {
             typingAttributes = defaultTypingAttributes
         }
         else {
