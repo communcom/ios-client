@@ -131,6 +131,7 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
         mutualLabel.autoAlignAxis(.horizontal, toSameAxisOf: communitiesCountLabel)
         
         communitiesCollectionView.register(SubscriptionCommunityCell.self, forCellWithReuseIdentifier: "SubscriptionCommunityCell")
+        communitiesCollectionView.register(HighlightCommunityCell.self, forCellWithReuseIdentifier: "HighlightCommunityCell")
         communitiesCollectionView.contentInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
 
         communitiesView.addSubview(separatorForCommunities)

@@ -18,6 +18,7 @@ class CommunityCollectionCell<T: CommunityType>: MyCollectionViewCell, ListItemC
     lazy var coverImageView: UIImageView = {
         let imageView = UIImageView(cornerRadius: 10)
         imageView.image = .placeholder
+        imageView.contentMode = .scaleAspectFill
         return imageView
     }()
     lazy var avatarImageView: MyAvatarImageView = {
@@ -83,6 +84,8 @@ class CommunityCollectionCell<T: CommunityType>: MyCollectionViewCell, ListItemC
     
     @objc func joinButtonDidTouch() {
         guard let community = community else {return}
-        self.delegate?.buttonFollowDidTouch(community: community)
+        joinButton.animate {
+            self.delegate?.buttonFollowDidTouch(community: community)
+        }
     }
 }

@@ -23,6 +23,7 @@ class UserProfilePageViewModel: ProfileViewModel<ResponseAPIContentGetProfile> {
     
     lazy var postsVM = PostsViewModel(filter: PostsListFetcher.Filter(feedTypeMode: .byUser, feedType: .timeDesc, sortType: .all, userId: profileId))
     lazy var commentsVM = CommentsViewModel(filter: CommentsListFetcher.Filter(type: .user, userId: profileId))
+    lazy var highlightCommunities = BehaviorRelay<[ResponseAPIContentGetProfileCommonCommunity]>(value: [])
     
     // MARK: - Methods
     override var loadProfileRequest: Single<ResponseAPIContentGetProfile> {
@@ -63,6 +64,17 @@ class UserProfilePageViewModel: ProfileViewModel<ResponseAPIContentGetProfile> {
             .skip(1)
             .asDriver(onErrorJustReturn: [])
             .drive(items)
+            .disposed(by: disposeBag)
+        
+        bindHighlightCommunities()
+    }
+    
+    func bindHighlightCommunities() {
+        profile
+            .filter {$0?.highlightCommunities != nil}
+            .map {$0!.highlightCommunities}
+            .take(1)
+            .bind(to: highlightCommunities)
             .disposed(by: disposeBag)
     }
     

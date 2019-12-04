@@ -28,14 +28,25 @@ extension UserProfilePageVC: UICollectionViewDelegateFlowLayout, CommunityCellDe
     }
     
     @objc func bindCommunities() {
-        (viewModel as! UserProfilePageViewModel).profile
-            .filter {$0?.highlightCommunities != nil}
-            .map {$0!.highlightCommunities}
-            .map {$0.map {ResponseAPIContentGetSubscriptionsCommunity(community: $0)}}
-            .bind(to: communitiesCollectionView.rx.items(cellIdentifier: "SubscriptionCommunityCell", cellType: SubscriptionCommunityCell.self)) { index, model, cell in
+        let highlightCommunities = (viewModel as! UserProfilePageViewModel).highlightCommunities
+        
+        highlightCommunities
+            .skip(1)
+            .bind(to: communitiesCollectionView.rx.items(cellIdentifier: "HighlightCommunityCell", cellType: HighlightCommunityCell.self)) { index, model, cell in
                 cell.setUp(with: model)
                 cell.delegate = self
             }
+            .disposed(by: disposeBag)
+        
+        ResponseAPIContentGetProfileCommonCommunity.observeItemChanged()
+            .subscribe(onNext: { (community) in
+                var newItems = highlightCommunities.value
+                guard let index = newItems.firstIndex(where: {$0.identity == community.identity}) else {return}
+                newItems[index] = community
+                UIView.setAnimationsEnabled(false)
+                highlightCommunities.accept(newItems)
+                UIView.setAnimationsEnabled(true)
+            })
             .disposed(by: disposeBag)
     }
     
