@@ -13,7 +13,7 @@ import CyberSwift
 
 class PostEditorViewModel {
     var postForEdit: ResponseAPIContentGetPost?
-    let community = BehaviorRelay<ResponseAPIContentGetSubscriptionsCommunity?>(value: nil)
+    let community = BehaviorRelay<ResponseAPIContentGetCommunity?>(value: nil)
     
     func sendPost(title: String?, block: ResponseAPIContentBlock) -> Single<SendPostCompletion> {
         // If editing post

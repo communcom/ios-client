@@ -32,13 +32,13 @@ extension UserProfilePageVC: UICollectionViewDelegateFlowLayout, CommunityCellDe
         
         highlightCommunities
             .skip(1)
-            .bind(to: communitiesCollectionView.rx.items(cellIdentifier: "HighlightCommunityCell", cellType: HighlightCommunityCell.self)) { index, model, cell in
+            .bind(to: communitiesCollectionView.rx.items(cellIdentifier: "CommunityCollectionCell", cellType: CommunityCollectionCell.self)) { index, model, cell in
                 cell.setUp(with: model)
                 cell.delegate = self
             }
             .disposed(by: disposeBag)
         
-        ResponseAPIContentGetProfileCommonCommunity.observeItemChanged()
+        ResponseAPIContentGetCommunity.observeItemChanged()
             .subscribe(onNext: { (community) in
                 var newItems = highlightCommunities.value
                 guard let index = newItems.firstIndex(where: {$0.identity == community.identity}) else {return}
@@ -56,7 +56,7 @@ extension UserProfilePageVC: UICollectionViewDelegateFlowLayout, CommunityCellDe
         
         // select
         communitiesCollectionView.rx
-            .modelSelected(ResponseAPIContentGetSubscriptionsCommunity.self)
+            .modelSelected(ResponseAPIContentGetCommunity.self)
             .subscribe(onNext: { (community) in
                 self.showCommunityWithCommunityId(community.communityId)
             })

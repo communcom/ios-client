@@ -10,12 +10,12 @@ import Foundation
 import RxSwift
 
 protocol CommunityCellDelegate: class {
-    func buttonFollowDidTouch<T: CommunityType>(community: T)
-    func forceFollow<T: CommunityType>(_ value: Bool, community: T)
+    func buttonFollowDidTouch(community: ResponseAPIContentGetCommunity)
+    func forceFollow(_ value: Bool, community: ResponseAPIContentGetCommunity)
 }
 
 extension CommunityCellDelegate where Self: BaseViewController {
-    func buttonFollowDidTouch<T: CommunityType>(community: T) {
+    func buttonFollowDidTouch(community: ResponseAPIContentGetCommunity) {
         NetworkService.shared.triggerFollow(community: community)
             .subscribe { [weak self] (error) in
                 self?.showError(error)
@@ -23,7 +23,7 @@ extension CommunityCellDelegate where Self: BaseViewController {
             .disposed(by: disposeBag)
     }
     
-    func forceFollow<T: CommunityType>(_ value: Bool, community: T) {
+    func forceFollow(_ value: Bool, community: ResponseAPIContentGetCommunity) {
         var community = community
         
         community.isSubscribed = !value

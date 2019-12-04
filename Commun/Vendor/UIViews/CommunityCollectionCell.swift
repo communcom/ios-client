@@ -9,9 +9,9 @@
 import Foundation
 import RxSwift
 
-class CommunityCollectionCell<T: CommunityType>: MyCollectionViewCell, ListItemCellType {
+class CommunityCollectionCell: MyCollectionViewCell, ListItemCellType {
     // MARK: - Properties
-    var community: T?
+    var community: ResponseAPIContentGetCommunity?
     weak var delegate: CommunityCellDelegate?
     
     // MARK: - Subviews
@@ -67,7 +67,7 @@ class CommunityCollectionCell<T: CommunityType>: MyCollectionViewCell, ListItemC
     }
     
     // MARK: - Methods
-    func setUp(with community: T) {
+    func setUp(with community: ResponseAPIContentGetCommunity) {
         self.community = community
         self.avatarImageView.setAvatarDetectGif(with: community.avatarUrl, placeholderName: community.name)
         self.coverImageView.setImageDetectGif(with: community.coverUrl)

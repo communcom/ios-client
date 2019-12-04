@@ -23,7 +23,7 @@ class UserProfilePageViewModel: ProfileViewModel<ResponseAPIContentGetProfile> {
     
     lazy var postsVM = PostsViewModel(filter: PostsListFetcher.Filter(feedTypeMode: .byUser, feedType: .timeDesc, sortType: .all, userId: profileId))
     lazy var commentsVM = CommentsViewModel(filter: CommentsListFetcher.Filter(type: .user, userId: profileId))
-    lazy var highlightCommunities = BehaviorRelay<[ResponseAPIContentGetProfileCommonCommunity]>(value: [])
+    lazy var highlightCommunities = BehaviorRelay<[ResponseAPIContentGetCommunity]>(value: [])
     
     // MARK: - Methods
     override var loadProfileRequest: Single<ResponseAPIContentGetProfile> {

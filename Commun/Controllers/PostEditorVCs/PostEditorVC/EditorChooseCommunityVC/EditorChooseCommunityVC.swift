@@ -10,13 +10,13 @@ import Foundation
 
 class EditorChooseCommunityVC: SubscriptionsVC {
     // MARK: - Properties
-    var completion: ((ResponseAPIContentGetSubscriptionsCommunity)->Void)?
+    var completion: ((ResponseAPIContentGetCommunity)->Void)?
     
     var panGestureRecognizer: UIPanGestureRecognizer?
     var interactor: SwipeDownInteractor?
 
     // MARK: - Initializers
-    init(completion: ((ResponseAPIContentGetSubscriptionsCommunity)->Void)?) {
+    init(completion: ((ResponseAPIContentGetCommunity)->Void)?) {
         self.completion = completion
         super.init(title: "choose a community".localized().uppercaseFirst, userId: Config.currentUser?.id, type: .community)
     }

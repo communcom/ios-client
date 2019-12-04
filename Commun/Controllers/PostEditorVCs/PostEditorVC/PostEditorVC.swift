@@ -143,7 +143,7 @@ class PostEditorVC: EditorVC {
         guard let document = post.document,
             let community = post.community
         else {return}
-        viewModel.community.accept(ResponseAPIContentGetSubscriptionsCommunity(community: community))
+        viewModel.community.accept(community)
         contentTextView.parseContentBlock(document)
     }
     
