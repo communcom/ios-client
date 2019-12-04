@@ -15,7 +15,7 @@ extension MyProfilePageVC {
            .subscribe(onNext: {[weak self] (state) in
                switch state {
                case .loading(let isLoading):
-                   self?.communitiesCollectionView.heightConstraint?.constant = 187
+                   self?.headerView.isCommunitiesHidden = false
                    if isLoading && (self?.viewModel as? MyProfilePageViewModel)?.subscriptionsVM.items.value.count == 0 {
                        self?.communitiesCollectionView.showLoading()
                    }
@@ -23,14 +23,15 @@ extension MyProfilePageVC {
                        self?.communitiesCollectionView.hideLoading()
                    }
                case .listEnded:
-                   self?.communitiesCollectionView.heightConstraint?.constant = 187
+                   self?.headerView.isCommunitiesHidden = false
                    self?.communitiesCollectionView.hideLoading()
                case .listEmpty:
                    self?.communitiesCollectionView.hideLoading()
-                   self?.communitiesCollectionView.heightConstraint?.constant = 0
+                   self?.headerView.isCommunitiesHidden = true
                case .error(let error):
                    #warning("error state")
                    self?.communitiesCollectionView.hideLoading()
+                   self?.headerView.isCommunitiesHidden = true
                }
            })
            .disposed(by: disposeBag)
