@@ -17,7 +17,6 @@ class PostPageVC: CommentsViewController {
         var parentComment: ResponseAPIContentGetComment?
         var offset: UInt = 0
         var limit: UInt = 10
-        
     }
     
     // MARK: - Subviews
@@ -28,7 +27,9 @@ class PostPageVC: CommentsViewController {
     // MARK: - Properties
     var scrollToTopAfterLoadingComment = false
     var commentThatNeedsScrollTo: ResponseAPIContentGetComment?
-
+    var startContentOffsetY: CGFloat = 0.0
+    
+    
     // MARK: - Initializers
     init(post: ResponseAPIContentGetPost) {
         let viewModel = PostPageViewModel(post: post)
@@ -93,12 +94,12 @@ class PostPageVC: CommentsViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        // navigationBar
-//        navigationBar.addShadow(ofColor: .shadow, offset: CGSize(width: 0, height: 2), opacity: 0.1)
         
         commentForm.superview?.layoutIfNeeded()
         commentForm.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: 24.5)
         view.bringSubviewToFront(commentForm)
+        startContentOffsetY = tableView.contentOffset.y
+        navigationBar.addShadow(ofColor: .clear, offset: CGSize(width: 0, height: 2), opacity: 0.1)
     }
     
     override func bind() {
@@ -203,5 +204,14 @@ class PostPageVC: CommentsViewController {
     
     override func refresh() {
         (viewModel as! PostPageViewModel).reload()
+    }
+}
+
+
+// MARK: - UIScrollViewDelegate
+extension PostPageVC: UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        Logger.log(message: "scrollViewDidScroll: \(scrollView.contentOffset.y)", event: .debug)
+        navigationBar.addShadow(ofColor: scrollView.contentOffset.y == startContentOffsetY ? .clear : .shadow, offset: CGSize(width: 0, height: 2), opacity: 0.1)
     }
 }
