@@ -48,24 +48,32 @@ class BasicEditorVC: PostEditorVC {
     override var contentCombined: Observable<Void> {
         Observable.merge(
             super.contentCombined,
-            contentTextView.rx.text.orEmpty.map {_ in ()}
+            contentTextView.rx.text.orEmpty.map {_ in ()},
+            (viewModel as! BasicEditorViewModel).attachment.map {_ in ()}
         )
     }
     
     override var isContentValid: Bool {
-        let content = contentTextView.text ?? ""
+        let content = contentTextView.text.trimmed 
         
-        // both title and content are not empty
-        let contentAreNotEmpty = !content.isEmpty
+        // content are not empty
+        let textIsNotEmpty = !content.isEmpty
         
         // content inside limit
-        let contentInsideLimit = (content.count <= contentLettersLimit)
+        let textInsideLimit = (content.count <= contentLettersLimit)
         
         // compare content
-        let contentChanged = (self.contentTextView.attributedText != self.contentTextView.originalAttributedString)
+        let textChanged = (self.contentTextView.attributedText != self.contentTextView.originalAttributedString)
         
-        // reassign result
-        return super.isContentValid && contentAreNotEmpty && contentInsideLimit && contentChanged
+        // content valid
+        let isTextValid = textIsNotEmpty && textInsideLimit && textChanged
+        
+        // text empty, but attachment exists
+        let attachmentWithEmptyText = !textIsNotEmpty && ((viewModel as! BasicEditorViewModel).attachment.value != nil)
+        
+        print(super.isContentValid && (isTextValid || attachmentWithEmptyText))
+        // accept attachment without text or valid text
+        return super.isContentValid && (isTextValid || attachmentWithEmptyText)
     }
     
     override var postTitle: String? {
