@@ -13,6 +13,11 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
     // MARK: - Properties
     var profile: ResponseAPIContentGetProfile?
     var firstSeparatorBottomConstraint: NSLayoutConstraint?
+    var isCommunitiesHidden: Bool = false {
+        didSet {
+            showCommunities()
+        }
+    }
 
     // MARK: - Subviews
     lazy var followButton = CommunButton.default(label: "follow".localized().uppercaseFirst)
@@ -130,7 +135,7 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
         mutualLabel.autoPinEdge(.leading, to: .trailing, of: communitiesMutualCountLabel, withOffset: 2)
         mutualLabel.autoAlignAxis(.horizontal, toSameAxisOf: communitiesCountLabel)
         
-        communitiesCollectionView.register(SubscriptionCommunityCell.self, forCellWithReuseIdentifier: "SubscriptionCommunityCell")
+        communitiesCollectionView.register(CommunityCollectionCell.self, forCellWithReuseIdentifier: "CommunityCollectionCell")
         communitiesCollectionView.contentInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
 
         communitiesView.addSubview(separatorForCommunities)
@@ -165,19 +170,19 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
         observeProfileChange()
     }
 
-    private func needShowCommunites(_ show: Bool) {
+    private func showCommunities() {
         if firstSeparatorBottomConstraint == nil {
             firstSeparatorBottomConstraint = firstSeparator.autoPinEdge(.bottom, to: .top, of: segmentedControl)
         }
-        communitiesView.isHidden = !show
-        firstSeparatorBottomConstraint?.isActive = !show
+        communitiesView.isHidden = isCommunitiesHidden
+        firstSeparatorBottomConstraint?.isActive = isCommunitiesHidden
     }
     
     func setUp(with userProfile: ResponseAPIContentGetProfile) {
         self.profile = userProfile
         
         // avatar
-        avatarImageView.setAvatar(urlString: userProfile.personal?.avatarUrl, namePlaceHolder: userProfile.username)
+        avatarImageView.setAvatar(urlString: userProfile.avatarUrl, namePlaceHolder: userProfile.username)
         
         // name
         nameLabel.text = userProfile.username
@@ -208,7 +213,9 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
         communitiesCountLabel.text = "\(userProfile.subscriptions?.communitiesCount ?? 0)"
         communitiesMutualCountLabel.text = "\(userProfile.highlightCommunitiesCount ?? 0)"
 
-        needShowCommunites(userProfile.highlightCommunitiesCount ?? 0 > 0)
+        if userProfile.userId != Config.currentUser?.id {
+            isCommunitiesHidden = !(userProfile.highlightCommunitiesCount ?? 0 > 0)
+        }
     }
     
     func layoutFollowButton() {

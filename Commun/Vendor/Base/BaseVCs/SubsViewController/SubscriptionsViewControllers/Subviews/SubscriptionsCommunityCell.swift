@@ -18,10 +18,10 @@ class SubscriptionsCommunityCell: SubsItemCell {
             actionButton = newValue
         }
     }
-    var community: ResponseAPIContentGetSubscriptionsCommunity?
+    var community: ResponseAPIContentGetCommunity?
     weak var delegate: CommunityCellDelegate?
     
-    func setUp(with community: ResponseAPIContentGetSubscriptionsCommunity) {
+    func setUp(with community: ResponseAPIContentGetCommunity) {
         self.community = community
         avatarImageView.setAvatar(urlString: community.avatarUrl, namePlaceHolder: community.name)
         
@@ -38,6 +38,8 @@ class SubscriptionsCommunityCell: SubsItemCell {
     
     override func actionButtonDidTouch() {
         guard let community = community else {return}
-        self.delegate?.buttonFollowDidTouch(community: community)
+        joinButton.animate {
+            self.delegate?.buttonFollowDidTouch(community: community)
+        }
     }
 }

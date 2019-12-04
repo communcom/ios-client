@@ -32,7 +32,7 @@ extension PostEditorVC {
     @objc func getDraft() {
         // retrieve community
         if let savedCommunity = UserDefaults.standard.object(forKey: communityDraftKey) as? Data,
-            let loadedCommunity = try? JSONDecoder().decode(ResponseAPIContentGetSubscriptionsCommunity.self, from: savedCommunity)
+            let loadedCommunity = try? JSONDecoder().decode(ResponseAPIContentGetCommunity.self, from: savedCommunity)
         {
             viewModel.community.accept(loadedCommunity)
         }

@@ -29,11 +29,10 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile>, PostCellDelega
     
     // MARK: - Properties
     let userId: String
-    lazy var viewModel = UserProfilePageViewModel(profileId: userId)
-    override var _viewModel: ProfileViewModel<ResponseAPIContentGetProfile> {
-        return viewModel
-    }
     lazy var expandedComments = [ResponseAPIContentGetComment]()
+    override func createViewModel() -> ProfileViewModel<ResponseAPIContentGetProfile> {
+        UserProfilePageViewModel(profileId: userId)
+    }
     
     // MARK: - Subviews
     var headerView: UserProfileHeaderView!
@@ -72,6 +71,8 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile>, PostCellDelega
         
         bindCommunities()
         
+        forwardDelegate()
+        
         bindProfileBlocked()
     }
     
@@ -85,7 +86,7 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile>, PostCellDelega
         title = profile.username
         
         // cover
-        if let urlString = profile.personal?.coverUrl {
+        if let urlString = profile.coverUrl {
             coverImageView.setImageDetectGif(with: urlString)
         }
         
@@ -95,7 +96,7 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile>, PostCellDelega
     
     override func handleListLoading(isLoading: Bool) {
         if isLoading {
-            switch viewModel.segmentedItem.value {
+            switch (viewModel as! UserProfilePageViewModel).segmentedItem.value {
             case .posts:
                 tableView.addPostLoadingFooterView()
             case .comments:
@@ -115,7 +116,7 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile>, PostCellDelega
         var title = "empty"
         var description = "not found"
         
-        switch viewModel.segmentedItem.value {
+        switch (viewModel as! UserProfilePageViewModel).segmentedItem.value {
         case .posts:
             title = "no posts"
             description = "posts not found"
@@ -178,12 +179,12 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile>, PostCellDelega
         let cell = self.tableView.cellForRow(at: indexPath)
         switch cell {
         case is PostCell:
-            let post = self.viewModel.postsVM.items.value[indexPath.row]
+            let post = (viewModel as! UserProfilePageViewModel).postsVM.items.value[indexPath.row]
             let postPageVC = PostPageVC(post: post)
             self.show(postPageVC, sender: nil)
             break
         case is CommentCell:
-            let comment = viewModel.commentsVM.items.value[indexPath.row]
+            let comment = (viewModel as! UserProfilePageViewModel).commentsVM.items.value[indexPath.row]
             guard let userId = comment.parents.post?.userId,
                 let permlink = comment.parents.post?.permlink,
                 let communityId = comment.parents.post?.communityId

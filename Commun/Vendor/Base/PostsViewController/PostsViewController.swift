@@ -50,7 +50,8 @@ class PostsViewController: ListViewController<ResponseAPIContentGetPost, PostCel
         default:
             return UITableViewCell()
         }
-
+        
+        cell.delegate = self
         return cell
     }
     

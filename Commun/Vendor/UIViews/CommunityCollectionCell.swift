@@ -9,15 +9,16 @@
 import Foundation
 import RxSwift
 
-class CommunityCollectionCell<T: CommunityType>: MyCollectionViewCell, ListItemCellType {
+class CommunityCollectionCell: MyCollectionViewCell, ListItemCellType {
     // MARK: - Properties
-    var community: T?
+    var community: ResponseAPIContentGetCommunity?
     weak var delegate: CommunityCellDelegate?
     
     // MARK: - Subviews
     lazy var coverImageView: UIImageView = {
         let imageView = UIImageView(cornerRadius: 10)
         imageView.image = .placeholder
+        imageView.contentMode = .scaleAspectFill
         return imageView
     }()
     lazy var avatarImageView: MyAvatarImageView = {
@@ -66,7 +67,7 @@ class CommunityCollectionCell<T: CommunityType>: MyCollectionViewCell, ListItemC
     }
     
     // MARK: - Methods
-    func setUp(with community: T) {
+    func setUp(with community: ResponseAPIContentGetCommunity) {
         self.community = community
         self.avatarImageView.setAvatarDetectGif(with: community.avatarUrl, placeholderName: community.name)
         self.coverImageView.setImageDetectGif(with: community.coverUrl)
@@ -83,6 +84,8 @@ class CommunityCollectionCell<T: CommunityType>: MyCollectionViewCell, ListItemC
     
     @objc func joinButtonDidTouch() {
         guard let community = community else {return}
-        self.delegate?.buttonFollowDidTouch(community: community)
+        joinButton.animate {
+            self.delegate?.buttonFollowDidTouch(community: community)
+        }
     }
 }

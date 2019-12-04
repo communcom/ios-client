@@ -192,14 +192,14 @@ class NetworkService: NSObject {
             .do(onSuccess: { (profile) in
                 if userId == Config.currentUser?.id {
                     // `personal.avatarUrl`
-                    if let avatarUrlValue = profile.personal?.avatarUrl {
+                    if let avatarUrlValue = profile.avatarUrl {
                         self.saveUser(avatarUrl: avatarUrlValue)
                     } else {
                         self.removeUserAvatar()
                     }
 
                     // `personal.coverUrl`
-                    if let coverUrlValue = profile.personal?.coverUrl {
+                    if let coverUrlValue = profile.coverUrl {
                         self.saveUser(coverUrl: coverUrlValue)
                     } else {
                         self.removeUserCover()
@@ -325,7 +325,7 @@ class NetworkService: NSObject {
             })
     }
     
-    func triggerFollow<T: CommunityType>(community: T) -> Completable {
+    func triggerFollow(community: ResponseAPIContentGetCommunity) -> Completable {
         // for reverse
         let originIsSubscribed = community.isSubscribed ?? false
         

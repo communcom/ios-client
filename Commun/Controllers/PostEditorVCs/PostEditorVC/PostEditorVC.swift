@@ -26,7 +26,7 @@ class PostEditorVC: EditorVC {
     
     /// Define whenever content is valid to enable send button
     var isContentValid: Bool {
-        viewModel.community.value != nil && !contentTextView.text.trimmed.isEmpty
+        viewModel.community.value != nil
     }
     
     var viewModel: PostEditorViewModel {
@@ -143,7 +143,7 @@ class PostEditorVC: EditorVC {
         guard let document = post.document,
             let community = post.community
         else {return}
-        viewModel.community.accept(ResponseAPIContentGetSubscriptionsCommunity(community: community))
+        viewModel.community.accept(community)
         contentTextView.parseContentBlock(document)
     }
     

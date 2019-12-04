@@ -105,7 +105,8 @@ class EmbedView: UIView {
         }
 
         backgroundColor = UIColor(hexString: "#F3F5FA")
-        let inset: CGFloat = 10.0
+        let insetX: CGFloat = 16
+        let insetY: CGFloat = 10.0
 
         var imageUrl = content.attributes?.thumbnailUrl
         let isNeedShowTitle = content.attributes?.title != nil
@@ -137,8 +138,8 @@ class EmbedView: UIView {
 
         if isNeedShowImage {
             if isNeedShowProvider {
-                providerLabelView.autoPinEdge(toSuperviewEdge: .right, withInset: inset)
-                providerLabelView.autoPinEdge(.bottom, to: .bottom, of: coverImageView, withOffset: -inset)
+                providerLabelView.autoPinEdge(toSuperviewEdge: .right, withInset: insetX)
+                providerLabelView.autoPinEdge(.bottom, to: .bottom, of: coverImageView, withOffset: -insetY)
             }
 
             coverImageView.autoPinEdge(toSuperviewEdge: .top)
@@ -167,17 +168,17 @@ class EmbedView: UIView {
             titlesView.autoPinEdge(toSuperviewEdge: .bottom)
             titlesView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapAction)))
 
-            titleLabel.autoPinEdge(toSuperviewEdge: .top, withInset: inset)
-            titleLabel.autoPinEdge(toSuperviewEdge: .left, withInset: inset)
-            titleLabel.autoPinEdge(toSuperviewEdge: .right, withInset: inset)
+            titleLabel.autoPinEdge(toSuperviewEdge: .top, withInset: insetY)
+            titleLabel.autoPinEdge(toSuperviewEdge: .left, withInset: insetX)
+            titleLabel.autoPinEdge(toSuperviewEdge: .right, withInset: insetX)
 
             if isNeedShowSubtitle {
                 subtitleLabel.autoPinEdge(.top, to: .bottom, of: titleLabel, withOffset: 3)
-                subtitleLabel.autoPinEdge(toSuperviewEdge: .left, withInset: inset)
-                subtitleLabel.autoPinEdge(toSuperviewEdge: .right, withInset: inset)
-                subtitleLabel.autoPinEdge(.bottom, to: .bottom, of: titlesView, withOffset: -inset)
+                subtitleLabel.autoPinEdge(toSuperviewEdge: .left, withInset: insetX)
+                subtitleLabel.autoPinEdge(toSuperviewEdge: .right, withInset: insetX)
+                subtitleLabel.autoPinEdge(.bottom, to: .bottom, of: titlesView, withOffset: -insetY)
             } else {
-                titleLabel.autoPinEdge(.bottom, to: .bottom, of: titlesView, withOffset: -inset)
+                titleLabel.autoPinEdge(.bottom, to: .bottom, of: titlesView, withOffset: -insetY)
             }
         } else {
             coverImageView.autoPinEdge(toSuperviewEdge: .bottom)

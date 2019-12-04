@@ -74,7 +74,6 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
         dataSource = MyRxTableViewSectionedAnimatedDataSource<ListSection>(
             configureCell: { dataSource, tableView, indexPath, item in
                 let cell = self.configureCell(with: item, indexPath: indexPath)
-                (cell as? CellType)?.delegate = self as? CellType.Delegate
                 return cell
             }
         )
@@ -87,7 +86,7 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
     func configureCell(with item: T, indexPath: IndexPath) -> UITableViewCell {
         let cell = self.tableView.dequeueReusableCell(withIdentifier: String(describing: CellType.self)) as! CellType
         cell.setUp(with: item as! CellType.T)
-        
+        cell.delegate = self as? CellType.Delegate
         return cell as! UITableViewCell
     }
     
