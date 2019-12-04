@@ -45,7 +45,8 @@ class ListViewModel<T: ListItemType>: BaseViewModel {
     func updateItem(_ updatedItem: T) {
         var newItems = fetcher.items.value
         guard let index = newItems.firstIndex(where: {$0.identity == updatedItem.identity}) else {return}
-        newItems[index] = updatedItem
+        guard let newUpdatedItem = newItems[index].newUpdatedItem(from: updatedItem) else {return}
+        newItems[index] = newUpdatedItem
         UIView.setAnimationsEnabled(false)
         fetcher.items.accept(newItems)
         UIView.setAnimationsEnabled(true)

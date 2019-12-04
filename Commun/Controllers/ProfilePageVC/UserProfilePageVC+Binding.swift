@@ -42,7 +42,8 @@ extension UserProfilePageVC: UICollectionViewDelegateFlowLayout, CommunityCellDe
             .subscribe(onNext: { (community) in
                 var newItems = highlightCommunities.value
                 guard let index = newItems.firstIndex(where: {$0.identity == community.identity}) else {return}
-                newItems[index] = community
+                guard let newUpdatedItem = newItems[index].newUpdatedItem(from: community) else {return}
+                newItems[index] = newUpdatedItem
                 UIView.setAnimationsEnabled(false)
                 highlightCommunities.accept(newItems)
                 UIView.setAnimationsEnabled(true)
