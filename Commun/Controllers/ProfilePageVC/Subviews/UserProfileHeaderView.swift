@@ -130,7 +130,7 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
         mutualLabel.autoPinEdge(.leading, to: .trailing, of: communitiesMutualCountLabel, withOffset: 2)
         mutualLabel.autoAlignAxis(.horizontal, toSameAxisOf: communitiesCountLabel)
         
-        communitiesCollectionView.register(SubscriptionCommunityCell.self, forCellWithReuseIdentifier: "SubscriptionCommunityCell")
+        communitiesCollectionView.register(CommunityCollectionCell.self, forCellWithReuseIdentifier: "CommunityCollectionCell")
         communitiesCollectionView.contentInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
 
         communitiesView.addSubview(separatorForCommunities)
@@ -165,7 +165,7 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
         observeProfileChange()
     }
 
-    private func needShowCommunites(_ show: Bool) {
+    func needShowCommunites(_ show: Bool) {
         if firstSeparatorBottomConstraint == nil {
             firstSeparatorBottomConstraint = firstSeparator.autoPinEdge(.bottom, to: .top, of: segmentedControl)
         }

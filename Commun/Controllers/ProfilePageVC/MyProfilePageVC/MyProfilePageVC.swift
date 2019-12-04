@@ -20,6 +20,10 @@ class MyProfilePageVC: UserProfilePageVC {
     }()
     
     // MARK: - Initializers
+    override func createViewModel() -> ProfileViewModel<ResponseAPIContentGetProfile> {
+        MyProfilePageViewModel(profileId: userId)
+    }
+    
     init() {
         super.init(userId: Config.currentUser?.id ?? "")
     }

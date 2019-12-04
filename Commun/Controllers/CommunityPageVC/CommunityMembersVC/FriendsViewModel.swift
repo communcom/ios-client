@@ -43,7 +43,8 @@ class FriendsViewModel: ListViewModel<ResponseAPIContentResolveProfile> {
             self.items.accept(items)
             return
         }
-        newItems[index] = updatedItem
+        guard let newUpdatedItem = newItems[index].newUpdatedItem(from: updatedItem) else {return}
+        newItems[index] = newUpdatedItem
         UIView.setAnimationsEnabled(false)
         fetcher.items.accept(newItems)
         UIView.setAnimationsEnabled(true)

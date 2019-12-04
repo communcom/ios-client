@@ -25,7 +25,7 @@ extension CommunityPageVC {
                     fatalError("not found selected index")
                 }
             }
-            .bind(to: viewModel.segmentedItem)
+            .bind(to: (viewModel as! CommunityPageViewModel).segmentedItem)
             .disposed(by: disposeBag)
     }
     

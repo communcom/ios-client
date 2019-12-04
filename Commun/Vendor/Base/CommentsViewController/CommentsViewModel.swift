@@ -90,7 +90,8 @@ class CommentsViewModel: ListViewModel<ResponseAPIContentGetComment> {
                 !(oldItem.children ?? []).contains(where: {newComment.identity == $0.identity})
             })
             updatedItem.children = ((oldItem.children ?? []) + (newChildren ?? []))
-            items[index] = updatedItem
+            guard let newUpdatedItem = items[index].newUpdatedItem(from: updatedItem) else {return}
+            items[index] = newUpdatedItem
             UIView.setAnimationsEnabled(false)
             fetcher.items.accept(items)
             UIView.setAnimationsEnabled(true)
@@ -101,7 +102,8 @@ class CommentsViewModel: ListViewModel<ResponseAPIContentGetComment> {
             comment.children?.contains(where: {$0.identity == updatedItem.identity}) ?? false
         }) {
             if let replyIndex = items[commentIndex].children?.firstIndex(where: {$0.identity == updatedItem.identity}) {
-                items[commentIndex].children?[replyIndex] = updatedItem
+                guard let newUpdatedItem = items[commentIndex].children?[replyIndex].newUpdatedItem(from: updatedItem) else {return}
+                items[commentIndex].children?[replyIndex] = newUpdatedItem
                 UIView.setAnimationsEnabled(false)
                 fetcher.items.accept(items)
                 UIView.setAnimationsEnabled(true)

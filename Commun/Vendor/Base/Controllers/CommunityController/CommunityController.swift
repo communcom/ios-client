@@ -10,18 +10,7 @@ import Foundation
 import RxSwift
 import CyberSwift
 
-protocol CommunityType: ListItemType {
-    var communityId: String {get}
-    var name: String {get}
-    var isSubscribed: Bool? {get set}
-    var subscribersCount: UInt64? {get set}
-    var identity: String {get}
-    var avatarUrl: String? {get}
-    var coverUrl: String? {get}
-    var isBeingJoined: Bool? {get set}
-}
-
-extension CommunityType {
+extension ResponseAPIContentGetCommunity {
     mutating func setIsSubscribed(_ value: Bool) {
         guard value != isSubscribed
         else {return}
@@ -40,33 +29,20 @@ extension CommunityType {
     }
 }
 
-extension ResponseAPIContentGetCommunity: CommunityType {}
-extension ResponseAPIContentGetSubscriptionsCommunity: CommunityType {
-    var subscribersCount: UInt64? {
-        get {
-            return nil
-        }
-        set {
-            
-        }
-    }
-}
-
 protocol CommunityController: class {
-    associatedtype Community: CommunityType
     // Required views
     var joinButton: CommunButton {get set}
     
     // Required properties
     var disposeBag: DisposeBag {get}
-    var community: Community? {get set}
-    func setUp(with community: Community)
+    var community: ResponseAPIContentGetCommunity? {get set}
+    func setUp(with community: ResponseAPIContentGetCommunity)
 }
 
 extension CommunityController {
     // Apply changes to view when community changed
     func observeCommunityChange() {
-        Community.observeItemChanged()
+        ResponseAPIContentGetCommunity.observeItemChanged()
             .filter {$0.identity == self.community?.identity}
             .subscribe(onNext: {newCommunity in
                 self.setUp(with: newCommunity)

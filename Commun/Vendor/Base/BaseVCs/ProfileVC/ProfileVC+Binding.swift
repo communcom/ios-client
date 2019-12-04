@@ -38,7 +38,7 @@ extension ProfileVC {
             })
             .disposed(by: disposeBag)
         
-        _viewModel.loadingState
+        viewModel.loadingState
             .subscribe(onNext: { [weak self] loadingState in
                 switch loadingState {
                 case .loading:
@@ -60,7 +60,7 @@ extension ProfileVC {
             .disposed(by: disposeBag)
         
         // list loading state
-        _viewModel.listLoadingState
+        viewModel.listLoadingState
             .subscribe(onNext: { [weak self] (state) in
                 switch state {
                 case .loading(let isLoading):
@@ -79,13 +79,13 @@ extension ProfileVC {
         
         // load more
         tableView.addLoadMoreAction { [weak self] in
-            self?._viewModel.fetchNext()
+            self?.viewModel.fetchNext()
         }
             .disposed(by: disposeBag)
     }
     
     func bindProfile() {
-        _viewModel.profile
+        viewModel.profile
             .filter {$0 != nil}
             .map {$0!}
             .do(onNext: { (_) in

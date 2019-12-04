@@ -34,11 +34,9 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
     
     // MARK: - Properties
     let communityId: String
-
-    lazy var viewModel: CommunityPageViewModel = CommunityPageViewModel(communityId: communityId)
     
-    override var _viewModel: ProfileViewModel<ResponseAPIContentGetCommunity> {
-        return viewModel
+    override func createViewModel() -> ProfileViewModel<ResponseAPIContentGetCommunity> {
+        CommunityPageViewModel(communityId: communityId)
     }
     
     
@@ -96,7 +94,7 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
     
     override func handleListLoading(isLoading: Bool) {
         if isLoading {
-            switch viewModel.segmentedItem.value {
+            switch (viewModel as! CommunityPageViewModel).segmentedItem.value {
             case .posts:
                 tableView.addPostLoadingFooterView()
             case .leads:
@@ -118,7 +116,7 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
         var title = "empty"
         var description = "not found"
         
-        switch viewModel.segmentedItem.value {
+        switch (viewModel as! CommunityPageViewModel).segmentedItem.value {
         case .posts:
             title = "no posts"
             description = "posts not found"
@@ -201,7 +199,7 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
         let cell = tableView.cellForRow(at: indexPath)
         switch cell {
         case is PostCell:
-            let post = self.viewModel.postsVM.items.value[indexPath.row]
+            let post = (viewModel as! CommunityPageViewModel).postsVM.items.value[indexPath.row]
             let postPageVC = PostPageVC(post: post)
             self.show(postPageVC, sender: nil)
             break

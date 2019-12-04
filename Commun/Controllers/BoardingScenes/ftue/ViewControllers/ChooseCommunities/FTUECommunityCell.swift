@@ -8,7 +8,7 @@
 
 import Foundation
 
-class FTUECommunityCell: CommunityCollectionCell<ResponseAPIContentGetCommunity> {
+class FTUECommunityCell: CommunityCollectionCell {
     var shouldShowBonus = true
     
     override func joinButtonDidTouch() {

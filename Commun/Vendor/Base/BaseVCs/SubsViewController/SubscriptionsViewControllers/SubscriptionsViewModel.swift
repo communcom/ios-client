@@ -32,7 +32,7 @@ class SubscriptionsViewModel: ListViewModel<ResponseAPIContentGetSubscriptionsIt
             })
             .disposed(by: disposeBag)
         
-        ResponseAPIContentGetSubscriptionsCommunity.observeItemDeleted()
+        ResponseAPIContentGetCommunity.observeItemDeleted()
             .subscribe(onNext: { (deletedCommunity) in
                 self.deleteItem(ResponseAPIContentGetSubscriptionsItem.community(deletedCommunity))
             })
@@ -46,7 +46,7 @@ class SubscriptionsViewModel: ListViewModel<ResponseAPIContentGetSubscriptionsIt
             })
             .disposed(by: disposeBag)
         
-        ResponseAPIContentGetSubscriptionsCommunity.observeItemChanged()
+        ResponseAPIContentGetCommunity.observeItemChanged()
             .subscribe(onNext: {newCommunity in
                 self.updateItem(ResponseAPIContentGetSubscriptionsItem.community(newCommunity))
             })

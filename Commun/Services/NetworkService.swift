@@ -325,7 +325,7 @@ class NetworkService: NSObject {
             })
     }
     
-    func triggerFollow<T: CommunityType>(community: T) -> Completable {
+    func triggerFollow(community: ResponseAPIContentGetCommunity) -> Completable {
         // for reverse
         let originIsSubscribed = community.isSubscribed ?? false
         

@@ -37,6 +37,7 @@ class CommunitiesVC: SubsViewController<ResponseAPIContentGetCommunity, Communit
     override func configureCell(with community: ResponseAPIContentGetCommunity, indexPath: IndexPath) -> UITableViewCell {
         let cell = self.tableView.dequeueReusableCell(withIdentifier: "CommunityCell") as! CommunityCell
         cell.setUp(with: community)
+        cell.delegate = self
         
         cell.roundedCorner = []
         

@@ -18,8 +18,10 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
     var coverImageWidthConstraint: NSLayoutConstraint!
     
     // MARK: - Properties
-    var _viewModel: ProfileViewModel<ProfileType> {
-        fatalError("Must override")
+    lazy var viewModel: ProfileViewModel<ProfileType> = self.createViewModel()
+    
+    func createViewModel() -> ProfileViewModel<ProfileType> {
+        fatalError("must override")
     }
     
     // MARK: - Subviews
@@ -138,7 +140,7 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
         
         let tryAgainRange = (text as NSString).range(of: "try again".localized().uppercaseFirst)
         if gesture.didTapAttributedTextInLabel(label: label, inRange: tryAgainRange) {
-            _viewModel.fetchNext(forceRetry: true)
+            viewModel.fetchNext(forceRetry: true)
         }
     }
     
@@ -167,7 +169,7 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
     }
     
     @objc func reload() {
-        _viewModel.reload()
-        _viewModel.fetchNext(forceRetry: true)
+        viewModel.reload()
+        viewModel.fetchNext(forceRetry: true)
     }
 }
