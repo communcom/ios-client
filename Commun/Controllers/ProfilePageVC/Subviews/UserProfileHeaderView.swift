@@ -165,7 +165,7 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
         observeProfileChange()
     }
 
-    private func needShowCommunites(_ show: Bool) {
+    func needShowCommunites(_ show: Bool) {
         if firstSeparatorBottomConstraint == nil {
             firstSeparatorBottomConstraint = firstSeparator.autoPinEdge(.bottom, to: .top, of: segmentedControl)
         }

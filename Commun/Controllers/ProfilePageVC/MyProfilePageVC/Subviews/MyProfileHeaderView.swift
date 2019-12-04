@@ -68,4 +68,8 @@ final class MyProfileHeaderView: UserProfileHeaderView {
             })
             .disposed(by: disposeBag)
     }
+    
+    override func needShowCommunites(_ show: Bool) {
+        // do nothing
+    }
 }
