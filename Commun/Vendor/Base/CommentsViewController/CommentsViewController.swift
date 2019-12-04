@@ -59,11 +59,7 @@ class CommentsViewController: ListViewController<ResponseAPIContentGetComment, C
         let cell = self.tableView.dequeueReusableCell(withIdentifier: "CommentCell") as! CommentCell
         cell.expanded = self.expandedComments.contains(where: {$0.identity == comment.identity})
         cell.setUp(with: comment)
-        
-        if indexPath.row == self.viewModel.items.value.count - 2 {
-            self.viewModel.fetchNext()
-        }
-        
+        cell.delegate = self
         return cell
     }
     

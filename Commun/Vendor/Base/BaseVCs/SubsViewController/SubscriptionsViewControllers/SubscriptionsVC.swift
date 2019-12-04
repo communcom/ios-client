@@ -54,6 +54,7 @@ class SubscriptionsVC: SubsViewController<ResponseAPIContentGetSubscriptionsItem
         if let community = subscription.communityValue {
             let cell = self.tableView.dequeueReusableCell(withIdentifier: "SubscriptionsCommunityCell") as! SubscriptionsCommunityCell
             cell.setUp(with: community)
+            cell.delegate = self
             
             cell.roundedCorner = []
             
@@ -73,6 +74,7 @@ class SubscriptionsVC: SubsViewController<ResponseAPIContentGetSubscriptionsItem
         if let profile = subscription.userValue {
             let cell = self.tableView.dequeueReusableCell(withIdentifier: "SubscriptionsUserCell") as! SubscriptionsUserCell
             cell.setUp(with: profile)
+            cell.delegate = self
             
             cell.roundedCorner = []
             
