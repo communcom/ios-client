@@ -40,6 +40,7 @@ extension ResponseAPIContentMessageType {
 extension PostController {
     func observePostChange() {
         ResponseAPIContentGetPost.observeItemChanged()
+            .filter {$0.identity == self.post?.identity}
             .subscribe(onNext: {newPost in
                 self.setUp(with: newPost)
             })

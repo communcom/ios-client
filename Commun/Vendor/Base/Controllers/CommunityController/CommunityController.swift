@@ -67,6 +67,7 @@ extension CommunityController {
     // Apply changes to view when community changed
     func observeCommunityChange() {
         Community.observeItemChanged()
+            .filter {$0.identity == self.community?.identity}
             .subscribe(onNext: {newCommunity in
                 self.setUp(with: newCommunity)
             })
