@@ -161,8 +161,14 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
         pointsContainerView.autoPinEdge(.top, to: .bottom, of: membersCountLabel, withOffset: 22)
         */
         
+        let firstSeparator = UIView(height: 2, backgroundColor: .appLightGrayColor)
+        addSubview(firstSeparator)
+        firstSeparator.autoPinEdge(.top, to: .bottom, of: membersCountLabel, withOffset: 20)
+        firstSeparator.autoPinEdge(toSuperviewEdge: .leading)
+        firstSeparator.autoPinEdge(toSuperviewEdge: .trailing)
+        
         addSubview(segmentedControl)
-        segmentedControl.autoPinEdge(.top, to: .bottom, of: membersCountLabel, withOffset: 10)
+        segmentedControl.autoPinEdge(.top, to: .bottom, of: firstSeparator)
 //        segmentedControl.autoPinEdge(.top, to: .bottom, of: pointsContainerView)
         segmentedControl.autoPinEdge(toSuperviewEdge: .leading)
         segmentedControl.autoPinEdge(toSuperviewEdge: .trailing)

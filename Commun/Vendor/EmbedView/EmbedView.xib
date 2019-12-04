@@ -33,13 +33,13 @@
                     <rect key="frame" x="0.0" y="233" width="414" height="214"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="253" verticalHuggingPriority="254" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LgC-nO-6pk">
-                            <rect key="frame" x="10" y="10" width="394" height="18"/>
+                            <rect key="frame" x="16" y="10" width="382" height="18"/>
                             <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eEo-uI-kop">
-                            <rect key="frame" x="10" y="31" width="394" height="173"/>
+                            <rect key="frame" x="16" y="31" width="382" height="173"/>
                             <fontDescription key="fontDescription" type="system" weight="medium" pointSize="12"/>
                             <color key="textColor" red="0.6470588235294118" green="0.65490196078431373" blue="0.74117647058823533" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
@@ -47,11 +47,11 @@
                     </subviews>
                     <color key="backgroundColor" red="0.95294117647058818" green="0.96078431372549022" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
-                        <constraint firstAttribute="trailing" secondItem="eEo-uI-kop" secondAttribute="trailing" constant="10" placeholder="YES" id="DWu-Ec-7Y0"/>
+                        <constraint firstAttribute="trailing" secondItem="eEo-uI-kop" secondAttribute="trailing" constant="16" placeholder="YES" id="DWu-Ec-7Y0"/>
                         <constraint firstItem="eEo-uI-kop" firstAttribute="top" secondItem="LgC-nO-6pk" secondAttribute="bottom" constant="3" placeholder="YES" id="LNP-mc-BH8"/>
-                        <constraint firstAttribute="trailing" secondItem="LgC-nO-6pk" secondAttribute="trailing" constant="10" placeholder="YES" id="M3q-za-kJG"/>
-                        <constraint firstItem="eEo-uI-kop" firstAttribute="leading" secondItem="4O3-d9-RTJ" secondAttribute="leading" constant="10" placeholder="YES" id="jhF-QV-ff0"/>
-                        <constraint firstItem="LgC-nO-6pk" firstAttribute="leading" secondItem="4O3-d9-RTJ" secondAttribute="leading" constant="10" placeholder="YES" id="lXC-Ge-4kQ"/>
+                        <constraint firstAttribute="trailing" secondItem="LgC-nO-6pk" secondAttribute="trailing" constant="16" placeholder="YES" id="M3q-za-kJG"/>
+                        <constraint firstItem="eEo-uI-kop" firstAttribute="leading" secondItem="4O3-d9-RTJ" secondAttribute="leading" constant="16" placeholder="YES" id="jhF-QV-ff0"/>
+                        <constraint firstItem="LgC-nO-6pk" firstAttribute="leading" secondItem="4O3-d9-RTJ" secondAttribute="leading" constant="16" placeholder="YES" id="lXC-Ge-4kQ"/>
                         <constraint firstItem="LgC-nO-6pk" firstAttribute="top" secondItem="4O3-d9-RTJ" secondAttribute="top" constant="10" placeholder="YES" id="oCP-Rc-Bjj"/>
                         <constraint firstAttribute="bottom" secondItem="eEo-uI-kop" secondAttribute="bottom" constant="10" placeholder="YES" id="xeO-yL-n5o"/>
                     </constraints>
