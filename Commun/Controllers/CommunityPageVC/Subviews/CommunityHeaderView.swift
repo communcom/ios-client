@@ -36,7 +36,7 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
         return label
     }()
     
-    lazy var leadsCountLabel: UILabel = {
+    lazy var leadersCountLabel: UILabel = {
         let label = UILabel.with(text: "7", textSize: 15, weight: .bold)
         return label
     }()
@@ -119,31 +119,21 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
         membersCountLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
         membersCountLabel.autoPinEdge(.top, to: .bottom, of: descriptionLabel, withOffset: 24)
         membersCountLabel.autoAlignAxis(.horizontal, toSameAxisOf: usersStackView)
-        
-        let memberLabel = UILabel.with(text: "members".localized().uppercaseFirst, textSize: 12, weight: .semibold, textColor: .a5a7bd)
-        addSubview(memberLabel)
-        memberLabel.autoPinEdge(.leading, to: .trailing, of: membersCountLabel, withOffset: 4)
-        memberLabel.autoPinEdge(.bottom, to: .bottom, of: membersCountLabel)
-        memberLabel.isUserInteractionEnabled = true
+        membersCountLabel.isUserInteractionEnabled = true
         let tap = UITapGestureRecognizer(target: self, action: #selector(membersLabelDidTouch))
-        memberLabel.addGestureRecognizer(tap)
+        membersCountLabel.addGestureRecognizer(tap)
 
         let dotLabel = UILabel.with(text: "•", textSize: 15, weight: .semibold, textColor: .a5a7bd)
         addSubview(dotLabel)
-        dotLabel.autoPinEdge(.leading, to: .trailing, of: memberLabel, withOffset: 2)
-        dotLabel.autoPinEdge(.bottom, to: .bottom, of: memberLabel)
+        dotLabel.autoPinEdge(.leading, to: .trailing, of: membersCountLabel, withOffset: 2)
+        dotLabel.autoPinEdge(.bottom, to: .bottom, of: membersCountLabel, withOffset: 2)
 
-        addSubview(leadsCountLabel)
-        leadsCountLabel.autoPinEdge(.leading, to: .trailing, of: dotLabel, withOffset: 2)
-        leadsCountLabel.autoAlignAxis(.horizontal, toSameAxisOf: membersCountLabel)
-
-        let leadsLabel = UILabel.with(text: "leaders".localized().uppercaseFirst, textSize: 12, weight: .semibold, textColor: .a5a7bd)
-        addSubview(leadsLabel)
-        leadsLabel.autoPinEdge(.leading, to: .trailing, of: leadsCountLabel, withOffset: 4)
-        leadsLabel.autoPinEdge(.bottom, to: .bottom, of: membersCountLabel)
-        leadsLabel.isUserInteractionEnabled = true
+        addSubview(leadersCountLabel)
+        leadersCountLabel.autoPinEdge(.leading, to: .trailing, of: dotLabel, withOffset: 2)
+        leadersCountLabel.autoAlignAxis(.horizontal, toSameAxisOf: membersCountLabel)
+        leadersCountLabel.isUserInteractionEnabled = true
         let tap2 = UITapGestureRecognizer(target: self, action: #selector(leadsLabelDidTouch))
-        leadsLabel.addGestureRecognizer(tap2)
+        leadersCountLabel.addGestureRecognizer(tap2)
 
         addSubview(friendLabel)
         friendLabel.autoAlignAxis(.horizontal, toSameAxisOf: usersStackView)
@@ -242,10 +232,19 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
         
         
         // membersCount
-        membersCountLabel.text = Double(community.subscribersCount ?? 0).kmFormatted
+        let aStr = NSMutableAttributedString()
+            .bold(Double(community.subscribersCount ?? 0).kmFormatted, font: .boldSystemFont(ofSize: 15))
+            .bold(" ")
+            .bold("members".localized().uppercaseFirst, font: .boldSystemFont(ofSize: 12), color: .a5a7bd)
+        
+        membersCountLabel.attributedText = aStr
         
         // leadsCount
-        leadsCountLabel.text = "\(community.leadersCount ?? 0)"
+        let aStr2 = NSMutableAttributedString()
+            .bold("\(community.leadersCount ?? 0)", font: .boldSystemFont(ofSize: 15))
+            .bold(" ")
+            .bold("leaders".localized().uppercaseFirst, font: .boldSystemFont(ofSize: 12), color: .a5a7bd)
+        leadersCountLabel.attributedText = aStr2
         
         // friends
         if let friends = community.friends, friends.count > 0 {
