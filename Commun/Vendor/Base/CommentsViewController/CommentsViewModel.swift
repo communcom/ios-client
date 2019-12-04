@@ -73,9 +73,7 @@ class CommentsViewModel: ListViewModel<ResponseAPIContentGetComment> {
         var items = fetcher.items.value
         guard let index = items.firstIndex(where: {$0.identity == parentComment.identity}) else {return}
         items[index].children = parentComment.children
-        UIView.setAnimationsEnabled(false)
         fetcher.items.accept(items)
-        UIView.setAnimationsEnabled(true)
     }
     
     override func updateItem(_ updatedItem: ResponseAPIContentGetComment) {
@@ -92,9 +90,7 @@ class CommentsViewModel: ListViewModel<ResponseAPIContentGetComment> {
             updatedItem.children = ((oldItem.children ?? []) + (newChildren ?? []))
             guard let newUpdatedItem = items[index].newUpdatedItem(from: updatedItem) else {return}
             items[index] = newUpdatedItem
-            UIView.setAnimationsEnabled(false)
             fetcher.items.accept(items)
-            UIView.setAnimationsEnabled(true)
             return
         }
         // if item is a reply
@@ -104,9 +100,7 @@ class CommentsViewModel: ListViewModel<ResponseAPIContentGetComment> {
             if let replyIndex = items[commentIndex].children?.firstIndex(where: {$0.identity == updatedItem.identity}) {
                 guard let newUpdatedItem = items[commentIndex].children?[replyIndex].newUpdatedItem(from: updatedItem) else {return}
                 items[commentIndex].children?[replyIndex] = newUpdatedItem
-                UIView.setAnimationsEnabled(false)
                 fetcher.items.accept(items)
-                UIView.setAnimationsEnabled(true)
             }
             return
         }
@@ -119,9 +113,7 @@ class CommentsViewModel: ListViewModel<ResponseAPIContentGetComment> {
         if let index = items.firstIndex(where: {$0.identity == deletedItem.identity})
         {
             items.remove(at: index)
-            UIView.setAnimationsEnabled(false)
             fetcher.items.accept(items)
-            UIView.setAnimationsEnabled(true)
             return
         }
         
@@ -131,9 +123,7 @@ class CommentsViewModel: ListViewModel<ResponseAPIContentGetComment> {
         }) {
             if let replyIndex = items[commentIndex].children?.firstIndex(where: {$0.identity == deletedItem.identity}) {
                 items[commentIndex].children?.remove(at: replyIndex)
-                UIView.setAnimationsEnabled(false)
                 fetcher.items.accept(items)
-                UIView.setAnimationsEnabled(true)
             }
         }
     }
