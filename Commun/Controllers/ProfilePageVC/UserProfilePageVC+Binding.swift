@@ -44,9 +44,7 @@ extension UserProfilePageVC: UICollectionViewDelegateFlowLayout, CommunityCellDe
                 guard let index = newItems.firstIndex(where: {$0.identity == community.identity}) else {return}
                 guard let newUpdatedItem = newItems[index].newUpdatedItem(from: community) else {return}
                 newItems[index] = newUpdatedItem
-                UIView.setAnimationsEnabled(false)
                 highlightCommunities.accept(newItems)
-                UIView.setAnimationsEnabled(true)
             })
             .disposed(by: disposeBag)
     }

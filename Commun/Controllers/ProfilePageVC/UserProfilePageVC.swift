@@ -158,6 +158,8 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile>, PostCellDelega
             }
         )
         
+        dataSource.animationConfiguration = AnimationConfiguration(reloadAnimation: .none)
+        
         viewModel.items
             .map { items in
                 items.compactMap {item -> CustomElementType? in
