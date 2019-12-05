@@ -26,7 +26,7 @@ class PostEditorVC: EditorVC {
     
     /// Define whenever content is valid to enable send button
     var isContentValid: Bool {
-        viewModel.community.value != nil && !contentTextView.text.trimmed.isEmpty
+        viewModel.community.value != nil
     }
     
     var viewModel: PostEditorViewModel {

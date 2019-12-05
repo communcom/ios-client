@@ -172,6 +172,8 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
             }
         )
         
+        dataSource.animationConfiguration = AnimationConfiguration(reloadAnimation: .none)
+        
         viewModel.items
             .map { items in
                 items.compactMap {item -> CustomElementType? in

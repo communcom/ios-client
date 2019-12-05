@@ -72,6 +72,10 @@ class CommentsViewController: ListViewController<ResponseAPIContentGetComment, C
                 self?.filterChanged(filter: filter)
             })
             .disposed(by: disposeBag)
+        
+        // forward delegate
+        tableView.rx.setDelegate(self)
+            .disposed(by: disposeBag)
     }
     
     override func bindItems() {
@@ -124,5 +128,26 @@ class CommentsViewController: ListViewController<ResponseAPIContentGetComment, C
     }
     func replyToComment(_ comment: ResponseAPIContentGetComment) {
         // for overriding
+    }
+}
+
+extension CommentsViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        guard let comment = viewModel.items.value[safe: indexPath.row],
+            let height = comment.tableViewCellHeight
+        else {return UITableView.automaticDimension}
+        return height
+    }
+
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        guard let comment = viewModel.items.value[safe: indexPath.row]
+        else {return 200}
+        return comment.tableViewCellHeight ?? comment.estimatedTableViewCellHeight!
+    }
+
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        guard var comment = viewModel.items.value[safe: indexPath.row]
+        else {return}
+        comment.tableViewCellHeight = cell.bounds.height
     }
 }

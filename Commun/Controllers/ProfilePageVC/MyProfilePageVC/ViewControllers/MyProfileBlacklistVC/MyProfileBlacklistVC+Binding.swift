@@ -65,6 +65,8 @@ extension MyProfileBlacklistVC: BlacklistCellDelegate {
             }
         )
         
+        dataSource.animationConfiguration = AnimationConfiguration(reloadAnimation: .none)
+        
         viewModel.items
             .map {[AnimatableSectionModel<String, ResponseAPIContentGetBlacklistItem>(model: "", items: $0)]}
             .bind(to: tableView.rx.items(dataSource: dataSource))

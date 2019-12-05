@@ -77,6 +77,8 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
                 return cell
             }
         )
+        
+        dataSource.animationConfiguration = AnimationConfiguration(reloadAnimation: .none)
     }
     
     func registerCell() {

@@ -106,7 +106,7 @@ extension CommunityMembersVC: UICollectionViewDelegateFlowLayout {
             }
         )
         
-        
+        dataSource.animationConfiguration = AnimationConfiguration(reloadAnimation: .none)
         
         viewModel.items
             .filter { items in

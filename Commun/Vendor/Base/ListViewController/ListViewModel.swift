@@ -47,16 +47,12 @@ class ListViewModel<T: ListItemType>: BaseViewModel {
         guard let index = newItems.firstIndex(where: {$0.identity == updatedItem.identity}) else {return}
         guard let newUpdatedItem = newItems[index].newUpdatedItem(from: updatedItem) else {return}
         newItems[index] = newUpdatedItem
-        UIView.setAnimationsEnabled(false)
         fetcher.items.accept(newItems)
-        UIView.setAnimationsEnabled(true)
     }
     
     func deleteItem(_ deletedItem: T) {
         let newItems = fetcher.items.value.filter {$0.identity != deletedItem.identity}
-        UIView.setAnimationsEnabled(false)
         fetcher.items.accept(newItems)
-        UIView.setAnimationsEnabled(true)
     }
     
     func observeItemDeleted() {
