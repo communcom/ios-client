@@ -97,19 +97,14 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
         headerView.setUp(with: profile)
     }
     
-    override func handleListLoading(isLoading: Bool) {
-        if isLoading {
-            switch (viewModel as! CommunityPageViewModel).segmentedItem.value {
-            case .posts:
-                tableView.addPostLoadingFooterView()
-            case .leads:
-                tableView.addNotificationsLoadingFooterView()
-            default:
-                break
-            }
-        }
-        else {
-            tableView.tableFooterView = UIView()
+    override func handleListLoading() {
+        switch (viewModel as! CommunityPageViewModel).segmentedItem.value {
+        case .posts:
+            tableView.addPostLoadingFooterView()
+        case .leads:
+            tableView.addNotificationsLoadingFooterView()
+        default:
+            break
         }
     }
     

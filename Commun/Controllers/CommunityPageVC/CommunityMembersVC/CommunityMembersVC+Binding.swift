@@ -53,7 +53,9 @@ extension CommunityMembersVC: UICollectionViewDelegateFlowLayout {
             .subscribe(onNext: { [weak self] (state) in
                 switch state {
                 case .loading(let isLoading):
-                    self?.handleListLoading(isLoading: isLoading)
+                    if isLoading {
+                        self?.handleListLoading()
+                    }
                 case .listEnded:
                     self?.handleListEnded()
                 case .listEmpty:

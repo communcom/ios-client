@@ -84,13 +84,8 @@ class MyProfileBlacklistVC: BaseViewController {
         bindList()
     }
     
-    func handleListLoading(isLoading: Bool) {
-        if isLoading {
-            tableView.addNotificationsLoadingFooterView()
-        }
-        else {
-            tableView.tableFooterView = UIView()
-        }
+    func handleListLoading() {
+        tableView.addNotificationsLoadingFooterView()
     }
     
     func handleListEnded() {

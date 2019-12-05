@@ -94,17 +94,12 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile>, PostCellDelega
         headerView.setUp(with: profile)
     }
     
-    override func handleListLoading(isLoading: Bool) {
-        if isLoading {
-            switch (viewModel as! UserProfilePageViewModel).segmentedItem.value {
-            case .posts:
-                tableView.addPostLoadingFooterView()
-            case .comments:
-                tableView.addNotificationsLoadingFooterView()
-            }
-        }
-        else {
-            tableView.tableFooterView = UIView()
+    override func handleListLoading() {
+        switch (viewModel as! UserProfilePageViewModel).segmentedItem.value {
+        case .posts:
+            tableView.addPostLoadingFooterView()
+        case .comments:
+            tableView.addNotificationsLoadingFooterView()
         }
     }
     
