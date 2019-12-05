@@ -11,7 +11,7 @@ import CyberSwift
 
 extension PostPageVC {
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        let parentComment = viewModel.items.value[section]
+        guard let parentComment = viewModel.items.value[safe: section] else {return nil}
         
         // if all comments was fetched
         if parentComment.childCommentsCount + 1 == tableView.numberOfRows(inSection: section) {

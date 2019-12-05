@@ -106,5 +106,6 @@ extension PostsViewController: UITableViewDelegate {
         guard var post = viewModel.items.value[safe: indexPath.row]
         else {return}
         post.tableViewCellHeight = cell.bounds.height
+        viewModel.updateItem(post)
     }
 }
