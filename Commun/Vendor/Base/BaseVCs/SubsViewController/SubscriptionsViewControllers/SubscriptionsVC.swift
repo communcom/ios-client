@@ -10,11 +10,13 @@ import Foundation
 import CyberSwift
 import RxDataSources
 
-class SubscriptionsVC: SubsViewController<ResponseAPIContentGetSubscriptionsItem, SubscriptionsUserCell>, CommunityCellDelegate, ProfileCellDelegate
-{
+class SubscriptionsVC: SubsViewController<ResponseAPIContentGetSubscriptionsItem, SubscriptionsUserCell>, CommunityCellDelegate, ProfileCellDelegate {
+    // MARK: - Properties
     var hideFollowButton = false
     private var isNeedHideCloseButton = false
 
+    
+    // MARK: - Class Initialization
     init(title: String? = nil, userId: String?, type: GetSubscriptionsType) {
         let viewModel = SubscriptionsViewModel(userId: userId, type: type)
         super.init(viewModel: viewModel)
@@ -32,11 +34,19 @@ class SubscriptionsVC: SubsViewController<ResponseAPIContentGetSubscriptionsItem
         defer {self.title = "followings".localized().uppercaseFirst}
     }
 
+    deinit {
+        Logger.log(message: "Success", event: .severe)
+    }
+    
+
+    // MARK: - Class Functions
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         baseNavigationController?.changeStatusBarStyle(.default)
     }
     
+    
+    // MARK: - Custom Functions
     override func setUp() {
         super.setUp()
         
