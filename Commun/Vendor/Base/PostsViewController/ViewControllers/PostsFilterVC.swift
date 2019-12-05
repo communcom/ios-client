@@ -157,12 +157,16 @@ class PostsFilterVC: SwipeDownDismissViewController {
     }
 }
 
+
+// MARK: - UIViewControllerTransitioningDelegate
 extension PostsFilterVC: UIViewControllerTransitioningDelegate {
     func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
         return CustomHeightPresentationController(height: 443, presentedViewController: presented, presenting: presenting)
     }
 }
 
+
+// MARK: - UITableViewDelegate
 extension PostsFilterVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 58

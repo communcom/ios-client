@@ -74,6 +74,9 @@
 "enter your current passcode"                   =   "enter your current passcode";
 "enter text"                                    =   "enter text";
 "error"                                         =   "error";
+"empty subscriptions title"                     =   "no Subscriptions";
+"empty subscriptions description"               =   "you haven’t subscribed to any community yet";
+"empty subscriptions button title"              =   "find Communities";
 
 
 // F
