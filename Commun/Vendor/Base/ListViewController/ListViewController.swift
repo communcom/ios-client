@@ -25,7 +25,27 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
     var searchPlaceholder: String? {nil}
     lazy var searchController: UISearchController? = {
         if !isSearchEnabled {return nil}
-        return UISearchController(searchResultsController: nil)
+        let sc = UISearchController(searchResultsController: nil)
+        
+        if let textfield = sc.searchBar.value(forKey: "searchField") as? UITextField {
+            //textfield.textColor = // Set text color
+            if let backgroundview = textfield.subviews.first {
+
+                // Background color
+                backgroundview.backgroundColor = .f3f5fa
+
+                // Rounded corner
+                backgroundview.cornerRadius = sc.searchBar.height
+            }
+            
+            textfield.attributedPlaceholder = NSAttributedString(string: "search".localized().uppercaseFirst, attributes: [.font: UIFont.systemFont(ofSize: 17), .foregroundColor: UIColor.a7a9bf])
+            
+            if let iconView = textfield.leftView as? UIImageView {
+                iconView.tintColor = .a7a9bf
+            }
+        }
+        
+        return sc
     }()
     
     
@@ -53,8 +73,8 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
         // searchController
         if isSearchEnabled {
             // searchController
+            extendedLayoutIncludesOpaqueBars = true
             searchController?.obscuresBackgroundDuringPresentation = false
-            searchController?.searchBar.placeholder = searchPlaceholder ?? "search".localized().uppercaseFirst
             navigationItem.searchController = searchController
             definesPresentationContext = true
         }
