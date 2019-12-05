@@ -65,13 +65,13 @@ class CMTopTabBar: MyView {
         buttons = [CommunButton]()
         
         for i in 0..<labels.count {
-            let button = CommunButton.default(label: labels[i])
+            let button = CommunButton.default(height: tabBarHeight, label: labels[i])
             button.tag = i
             button.addTarget(self, action: #selector(changeSelection(_:)), for: .touchUpInside)
             
             scrollView.contentView.addSubview(button)
-            button.autoAlignAxis(toSuperviewAxis: .horizontal)
-            button.autoSetDimension(.height, toSize: tabBarHeight)
+            button.autoPinEdge(toSuperviewEdge: .top)
+            button.autoPinEdge(toSuperviewEdge: .bottom)
             
             if i == 0 {
                 button.autoPinEdge(toSuperviewEdge: .leading)

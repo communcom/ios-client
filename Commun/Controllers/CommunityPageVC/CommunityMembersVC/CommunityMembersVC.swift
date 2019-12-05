@@ -32,7 +32,7 @@ class CommunityMembersVC: BaseViewController, LeaderCellDelegate, ProfileCellDel
     
     // MARK: - Subviews
     lazy var topTabBar = CMTopTabBar(
-        height: 35 * Config.heightRatio,
+        height: 35,
         labels: CommunityMembersViewModel.SegmentedItem.allCases.map {$0.rawValue.localized().uppercaseFirst},
         selectedIndex: selectedSegmentedItem.index)
     
