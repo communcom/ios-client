@@ -132,22 +132,32 @@ class CommentsViewController: ListViewController<ResponseAPIContentGetComment, C
 }
 
 extension CommentsViewController: UITableViewDelegate {
+    func commentAtIndexPath(_ indexPath: IndexPath) -> ResponseAPIContentGetComment? {
+        // root comment
+        if indexPath.row == 0 {
+            return viewModel.items.value[safe: indexPath.section]
+        }
+        
+        return viewModel.items.value[safe: indexPath.section]?.children?[safe: indexPath.row]
+    }
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        guard let comment = viewModel.items.value[safe: indexPath.row],
+        guard let comment = commentAtIndexPath(indexPath),
             let height = comment.tableViewCellHeight
         else {return UITableView.automaticDimension}
         return height
     }
 
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        guard let comment = viewModel.items.value[safe: indexPath.row]
+        guard let comment = commentAtIndexPath(indexPath)
         else {return 200}
         return comment.tableViewCellHeight ?? comment.estimatedTableViewCellHeight!
     }
 
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        guard var comment = viewModel.items.value[safe: indexPath.row]
+        guard var comment = commentAtIndexPath(indexPath)
         else {return}
         comment.tableViewCellHeight = cell.bounds.height
+        viewModel.updateItem(comment)
     }
 }

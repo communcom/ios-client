@@ -89,7 +89,6 @@ class CommentCell: MyTableViewCell, ListItemCellType {
         statusImageView.trailingAnchor.constraint(lessThanOrEqualTo: contentView.trailingAnchor, constant: -4)
             .isActive = true
         
-        #warning("answers...")
         voteContainerView.autoPinEdge(toSuperviewEdge: .bottom, withInset: 8)
     }
     
@@ -160,10 +159,19 @@ class CommentCell: MyTableViewCell, ListItemCellType {
     }
     
     func setText() {
+        let userId = comment?.author?.username ?? comment?.author?.userId ?? "Unknown user"
+        let mutableAS = NSMutableAttributedString(string: userId, attributes: [
+            .font: UIFont.boldSystemFont(ofSize: defaultContentFontSize),
+            .link: "https://commun.com/@\(comment?.author?.userId ?? comment?.author?.username ?? "unknown-user")"
+        ])
+        
         guard let content = comment?.document?.toAttributedString(
             currentAttributes: [.font: UIFont.systemFont(ofSize: defaultContentFontSize)],
             attachmentType: TextAttachment.self)
-        else {return}
+        else {
+            contentTextView.attributedText = mutableAS
+            return
+        }
         
         if content.string.trimmed == "" {
             contentTextView.backgroundColor = .clear
@@ -171,12 +179,6 @@ class CommentCell: MyTableViewCell, ListItemCellType {
         else {
             contentTextView.backgroundColor = .f3f5fa
         }
-        
-        let userId = comment?.author?.username ?? comment?.author?.userId ?? "Unknown user"
-        let mutableAS = NSMutableAttributedString(string: userId, attributes: [
-            .font: UIFont.boldSystemFont(ofSize: defaultContentFontSize),
-            .link: "https://commun.com/@\(comment?.author?.userId ?? comment?.author?.username ?? "unknown-user")"
-        ])
         
         mutableAS.append(NSAttributedString(string: " "))
         

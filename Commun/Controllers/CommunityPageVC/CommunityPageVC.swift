@@ -9,6 +9,7 @@
 import Foundation
 import RxSwift
 import RxDataSources
+import CyberSwift
 
 class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDelegate, PostCellDelegate {
     // MARK: - Nested type
@@ -70,6 +71,10 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
        
         bindSelectedIndex()
         bindProfileBlocked()
+        
+        // forward delegate
+        tableView.rx.setDelegate(self)
+            .disposed(by: disposeBag)
     }
     
     override func setUp(profile: ResponseAPIContentGetCommunity) {
@@ -247,6 +252,55 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
             })
         ]) {
             
+        }
+    }
+}
+
+extension CommunityPageVC: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        guard let item = viewModel.items.value[safe: indexPath.row] else {
+            return UITableView.automaticDimension
+        }
+        
+        switch item {
+        case let post as ResponseAPIContentGetPost:
+            return post.tableViewCellHeight ?? UITableView.automaticDimension
+        case let leader as ResponseAPIContentGetLeader:
+            return leader.tableViewCellHeight ?? UITableView.automaticDimension
+        default:
+            return UITableView.automaticDimension
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        guard let item = viewModel.items.value[safe: indexPath.row] else {
+            return UITableView.automaticDimension
+        }
+        
+        switch item {
+        case let post as ResponseAPIContentGetPost:
+            return post.tableViewCellHeight ?? post.estimatedTableViewCellHeight!
+        case let leader as ResponseAPIContentGetLeader:
+            return leader.tableViewCellHeight ?? leader.estimatedTableViewCellHeight!
+        default:
+            return UITableView.automaticDimension
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        guard let item = viewModel.items.value[safe: indexPath.row] else {
+            return
+        }
+        
+        switch item {
+        case var post as ResponseAPIContentGetPost:
+            post.tableViewCellHeight = cell.bounds.height
+            (viewModel as! CommunityPageViewModel).postsVM.updateItem(post)
+        case var leader as ResponseAPIContentGetLeader:
+            leader.tableViewCellHeight = cell.bounds.height
+            (viewModel as! CommunityPageViewModel).leadsVM.updateItem(leader)
+        default:
+            break
         }
     }
 }
