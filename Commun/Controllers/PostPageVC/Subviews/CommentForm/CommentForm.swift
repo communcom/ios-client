@@ -20,16 +20,19 @@ class CommentForm: MyView {
     
     // MARK: - Properties
     let disposeBag = DisposeBag()
+    
     var parentComment: ResponseAPIContentGetComment? {
         didSet {
             setParentComment()
         }
     }
+    
     var post: ResponseAPIContentGetPost? {
         didSet {
             viewModel.post = post
         }
     }
+    
     var mode: Mode = .new {
         didSet {
             switch mode {
@@ -42,23 +45,37 @@ class CommentForm: MyView {
             }
         }
     }
+    
     lazy var viewModel = CommentFormViewModel()
+    
     
     // MARK: - Subviews
     lazy var parentCommentView = UIView(height: 40, backgroundColor: .white)
     lazy var parentCommentTitleLabel = UILabel.with(text: "Edit comment", textSize: 15, weight: .bold, textColor: .appMainColor)
     lazy var parentCommentLabel = UILabel.with(text: "Amet incididunt enim dolore fugdasd ...", textSize: 13)
     lazy var closeParentCommentButton = UIButton.close()
-    
-    lazy var avatarImageView = MyAvatarImageView(size: 35)
+        
     lazy var textView: CommentTextView = {
         let textView = CommentTextView(forExpandable: ())
-        textView.placeholder = "add a comment".localized().uppercaseFirst + "..."
+        textView.placeholder = "write a comment".localized().uppercaseFirst + "..."
         textView.backgroundColor = .f3f5fa
         textView.cornerRadius = 35 / 2
+
         return textView
     }()
-    lazy var sendButton = CommunButton.circle(size: 35, backgroundColor: .appMainColor, tintColor: .white, imageName: "send", imageEdgeInsets: UIEdgeInsets(inset: 10))
+
+    lazy var imageButton = CommunButton.circle(size:                 CGFloat.adaptive(width: 35.0),
+                                               backgroundColor:      .white,
+                                               tintColor:            UIColor(hexString: "#A5A7BD"),
+                                               imageName:            "icon-send-comment-gray-default",
+                                               imageEdgeInsets:      .zero)
+
+    lazy var sendButton = CommunButton.circle(size:                 CGFloat.adaptive(width: 35.0),
+                                              backgroundColor:      UIColor(hexString: "#6A80F5")!,
+                                              tintColor:            .white,
+                                              imageName:            "send",
+                                              imageEdgeInsets:      .zero)
+
     
     // MARK: - Methods
     override func commonInit() {
@@ -88,26 +105,24 @@ class CommentForm: MyView {
         closeParentCommentButton.autoPinEdge(toSuperviewEdge: .bottom, withInset: 8)
         closeParentCommentButton.addTarget(self, action: #selector(closeButtonDidTouch), for: .touchUpInside)
         
-        // Avatar
-        addSubview(avatarImageView)
-        avatarImageView.autoPinBottomAndLeadingToSuperView(inset: 10, xInset: 16)
-        avatarImageView.observeCurrentUserAvatar()
-            .disposed(by: disposeBag)
+        let stackView = UIStackView(axis: .horizontal, spacing: CGFloat.adaptive(width: 5.0))
+        addSubview(stackView)
+        stackView.alignment = .leading
+        stackView.distribution = .fillProportionally
+        stackView.autoPinEdge(.top, to: .bottom, of: parentCommentView)
+        stackView.autoPinBottomAndLeadingToSuperView(inset: CGFloat.adaptive(height: 10.0), xInset: CGFloat.adaptive(width: 10.0))
+        stackView.autoPinEdge(toSuperviewEdge: .right, withInset: CGFloat.adaptive(width: 10.0))
         
-        // TextView
-        addSubview(textView)
-        textView.autoPinEdge(.top, to: .bottom, of: parentCommentView)
-        textView.autoPinEdge(toSuperviewEdge: .bottom, withInset: 10)
-        textView.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 5)
+        // Add subviews
+        stackView.addArrangedSubview(imageButton)
+        imageButton.addTarget(self, action: #selector(commentAddImage), for: .touchUpInside)
         
-        parentCommentView.autoPinEdge(.leading, to: .leading, of: textView, withOffset: 10)
-        parentCommentView.autoPinEdge(.trailing, to: .trailing, of: textView, withOffset: -10)
-        
-        // Send button
-        addSubview(sendButton)
-        sendButton.autoPinEdge(.leading, to: .trailing, of: textView, withOffset: 5)
-        sendButton.autoPinBottomAndTrailingToSuperView(inset: 10, xInset: 16)
-        sendButton.addTarget(self, action: #selector(sendComment), for: .touchUpInside)
+        stackView.addArrangedSubview(textView)
+
+        stackView.addArrangedSubview(sendButton)
+        sendButton.addTarget(self, action: #selector(commentSend), for: .touchUpInside)
+        sendButton.isHidden = true
+
         bind()
         
         parentComment = nil
@@ -122,13 +137,9 @@ class CommentForm: MyView {
         #warning("bind imageViewIsEmpty")
         isTextViewEmpty
             .subscribe(onNext: { (isEmpty) in
-                if isEmpty {
-                    self.sendButton.isEnabled = false
-                    self.avatarImageView.widthConstraint?.constant = 35
-                } else {
-                    self.sendButton.isEnabled = true
-                    self.avatarImageView.widthConstraint?.constant = 0
-                }
+                self.sendButton.isEnabled = !isEmpty
+                self.sendButton.isHidden = isEmpty
+                
                 UIView.animate(withDuration: 0.3, animations: {
                     self.layoutIfNeeded()
                 })
@@ -179,6 +190,8 @@ class CommentForm: MyView {
             attachmentType: TextAttachment.self)
     }
     
+    
+    // MARK: - Actions
     @objc func closeButtonDidTouch() {
         mode = .new
         parentComment = nil

@@ -176,10 +176,8 @@ class ContentTextView: UITextView {
         if selectedRange.length == 0 {
             typingAttributes = defaultTypingAttributes
             setCurrentTextStyle()
-        }
-        else {
-            textStorage.enumerateAttributes(in: selectedRange, options: []) {
-                (attrs, range, stop) in
+        } else {
+            textStorage.enumerateAttributes(in: selectedRange, options: []) { (attrs, range, stop) in
                 if let link = attrs[.link] as? String {
                     if link.isLinkToTag || link.isLinkToMention {
                         return
@@ -191,21 +189,24 @@ class ContentTextView: UITextView {
         }
     }
     
-    func shouldChangeCharacterInRange(_ range: NSRange, replacementText text: String) -> Bool
-    {
+    func shouldChangeCharacterInRange(_ range: NSRange, replacementText text: String) -> Bool {
         // Disable link effect after non-allowed-in-name character
         // Check if text is not a part of tag or mention
         let regex = "^" + String(NSRegularExpression.nameRegexPattern.dropLast()) + "$"
+        
         if !text.matches(regex) {
             // if appended
             if range.length == 0 {
                 // get range of last character
                 let lastLocation = range.location - 1
+                
                 if lastLocation < 0 {
                     return true
                 }
+                
                 // get last link attribute
                 let attr = textStorage.attributes(at: lastLocation, effectiveRange: nil)
+                
                 if attr.has(key: .link) {
                     typingAttributes = defaultTypingAttributes
                 }
@@ -214,8 +215,7 @@ class ContentTextView: UITextView {
         }
         
         // Remove link
-        if text == "", range.length > 0, range.location > 0
-        {
+        if text == "", range.length > 0, range.location > 0 {
             removeLink()
         }
         
@@ -225,9 +225,7 @@ class ContentTextView: UITextView {
     func removeLink() {
         if selectedRange.length > 0 {
             textStorage.removeAttribute(.link, range: selectedRange)
-        }
-            
-        else if selectedRange.length == 0 {
+        } else if selectedRange.length == 0 {
             let attr = typingAttributes
             if let link = attr[.link] as? String,
                 link.isLink
@@ -247,13 +245,13 @@ class ContentTextView: UITextView {
         textStorage.insert(NSAttributedString(string: text, attributes: defaultTypingAttributes), at: index)
     }
     
+    
     // MARK: - Draft
-    
-    
     /// For parsing attachments only, if attachments are not allowed, leave an empty Completable
     func parseAttachments() -> Completable {
         return .empty()
     }
+    
     
     // MARK: - ContentBlock
     func getContentBlock() -> Single<ResponseAPIContentBlock> {
@@ -261,6 +259,8 @@ class ContentTextView: UITextView {
     }
 }
  
+
+// MARK: - UIPopoverPresentationControllerDelegate
 extension ContentTextView: UIPopoverPresentationControllerDelegate {
     func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
         return .none

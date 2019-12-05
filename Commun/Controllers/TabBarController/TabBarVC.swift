@@ -11,6 +11,8 @@ import RxSwift
 import SwifterSwift
 import CyberSwift
 
+public let tabBarHeight: CGFloat = CGFloat.adaptive(height: 60.0) + (UIDevice.hasNotch ? UIDevice.safeAreaInsets.bottom : 0.0)
+
 class TabBarVC: UITabBarController {
     // MARK: - Constants
     let feedTabIndex = 0
@@ -19,7 +21,6 @@ class TabBarVC: UITabBarController {
     let profileTabIndex = 3
     let selectedColor = UIColor.black
     let unselectedColor = UIColor(hexString: "#A5A7BD")
-    let tabBarHeight: CGFloat = 60.0 + UIDevice.safeAreaInsets.bottom
     
     
     // MARK: - Properties
