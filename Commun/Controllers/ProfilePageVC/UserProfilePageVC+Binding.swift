@@ -60,6 +60,10 @@ extension UserProfilePageVC: UICollectionViewDelegateFlowLayout, CommunityCellDe
                 self.showCommunityWithCommunityId(community.communityId)
             })
             .disposed(by: disposeBag)
+        
+        // tableView
+        tableView.rx.setDelegate(self)
+            .disposed(by: disposeBag)
     }
     
     func bindProfileBlocked() {
@@ -73,6 +77,55 @@ extension UserProfilePageVC: UICollectionViewDelegateFlowLayout, CommunityCellDe
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: 140, height: 187)
+    }
+}
+
+extension UserProfilePageVC: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        guard let item = viewModel.items.value[safe: indexPath.row] else {
+            return UITableView.automaticDimension
+        }
+        
+        switch item {
+        case let post as ResponseAPIContentGetPost:
+            return post.tableViewCellHeight ?? UITableView.automaticDimension
+        case let comment as ResponseAPIContentGetComment:
+            return comment.tableViewCellHeight ?? UITableView.automaticDimension
+        default:
+            return UITableView.automaticDimension
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        guard let item = viewModel.items.value[safe: indexPath.row] else {
+            return UITableView.automaticDimension
+        }
+        
+        switch item {
+        case let post as ResponseAPIContentGetPost:
+            return post.tableViewCellHeight ?? post.estimatedTableViewCellHeight!
+        case let comment as ResponseAPIContentGetComment:
+            return comment.tableViewCellHeight ?? comment.estimatedTableViewCellHeight!
+        default:
+            return UITableView.automaticDimension
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        guard let item = viewModel.items.value[safe: indexPath.row] else {
+            return
+        }
+        
+        switch item {
+        case var post as ResponseAPIContentGetPost:
+            post.tableViewCellHeight = cell.bounds.height
+            (viewModel as! UserProfilePageViewModel).postsVM.updateItem(post)
+        case var comment as ResponseAPIContentGetComment:
+            comment.tableViewCellHeight = cell.bounds.height
+            (viewModel as! UserProfilePageViewModel).commentsVM.updateItem(comment)
+        default:
+            break
+        }
     }
 }
 
