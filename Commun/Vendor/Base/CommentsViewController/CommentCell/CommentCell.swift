@@ -114,6 +114,7 @@ class CommentCell: MyTableViewCell, ListItemCellType {
         statusImageView.removeSubviews()
         statusImageView.removeGestureRecognizers()
         statusImageView.isUserInteractionEnabled = false
+        statusImageView.isHidden = true
         
         switch comment.status {
         case .editing:
@@ -134,9 +135,7 @@ class CommentCell: MyTableViewCell, ListItemCellType {
         case .error:
             statusImageView.widthConstraint?.constant = 16
             statusImageView.isHidden = false
-            statusImageView.image = UIImage(named: "!")
-            statusImageView.tintColor = .white
-            statusImageView.backgroundColor = .a5a7bd
+            statusImageView.image = UIImage(named: "comment-posting-error")
             
             // handle error
             statusImageView.isUserInteractionEnabled = true
@@ -146,8 +145,6 @@ class CommentCell: MyTableViewCell, ListItemCellType {
             replyButton.isEnabled = false
         default:
             statusImageView.widthConstraint?.constant = 0
-            statusImageView.backgroundColor = .a5a7bd
-            statusImageView.isHidden = true
             
             replyButton.isEnabled = true
         }
