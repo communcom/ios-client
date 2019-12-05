@@ -10,8 +10,6 @@ import UIKit
 import CyberSwift
 
 class PostsViewController: ListViewController<ResponseAPIContentGetPost, PostCell>, PostCellDelegate {
-    private var cellHeights: [IndexPath: CGFloat] = [:]
-
     init(filter: PostsListFetcher.Filter = PostsListFetcher.Filter(feedTypeMode: .new, feedType: .time)) {
         let viewModel = PostsViewModel(filter: filter)
         super.init(viewModel: viewModel)
@@ -30,7 +28,6 @@ class PostsViewController: ListViewController<ResponseAPIContentGetPost, PostCel
                 
         // setup datasource
         tableView.separatorStyle = .none
-        tableView.delegate = self
     }
     
     override func registerCell() {
@@ -63,6 +60,10 @@ class PostsViewController: ListViewController<ResponseAPIContentGetPost, PostCel
                 self?.filterChanged(filter: filter)
             })
             .disposed(by: disposeBag)
+        
+        // forward delegate
+        tableView.rx.setDelegate(self)
+            .disposed(by: disposeBag)
     }
     
     override func handleLoading() {
@@ -83,21 +84,27 @@ class PostsViewController: ListViewController<ResponseAPIContentGetPost, PostCel
     }
 
     override func refresh() {
-        cellHeights.removeAll()
         super.refresh()
     }
 }
 
 extension PostsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return cellHeights[indexPath] ?? UITableView.automaticDimension
+        guard let post = viewModel.items.value[safe: indexPath.row],
+            let height = post.tableViewCellHeight
+        else {return UITableView.automaticDimension}
+        return height
     }
 
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        return cellHeights[indexPath] ?? 200
+        guard let post = viewModel.items.value[safe: indexPath.row]
+        else {return 200}
+        return post.tableViewCellHeight ?? post.estimatedTableViewCellHeight!
     }
 
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        cellHeights[indexPath] = cell.bounds.height
+        guard var post = viewModel.items.value[safe: indexPath.row]
+        else {return}
+        post.tableViewCellHeight = cell.bounds.height
     }
 }

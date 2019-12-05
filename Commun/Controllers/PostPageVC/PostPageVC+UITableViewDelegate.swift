@@ -9,7 +9,7 @@
 import Foundation
 import CyberSwift
 
-extension PostPageVC: UITableViewDelegate {
+extension PostPageVC {
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         let parentComment = viewModel.items.value[section]
         

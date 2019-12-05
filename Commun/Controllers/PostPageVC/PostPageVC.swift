@@ -108,10 +108,6 @@ class PostPageVC: CommentsViewController {
         // bind post
         bindPost()
         
-        // forward delegate
-        tableView.rx.setDelegate(self)
-            .disposed(by: disposeBag)
-        
         // completion
         if scrollToTopAfterLoadingComment {
             tableView.rx.insertedItems

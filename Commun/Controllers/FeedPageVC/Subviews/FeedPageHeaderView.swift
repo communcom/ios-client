@@ -9,7 +9,7 @@
 import Foundation
 import RxSwift
 
-final class FeedPageFloatView: MyView {
+final class FeedPageHeaderView: MyTableHeaderView {
     // MARK: - Constants
     
     // MARK: - Properties
