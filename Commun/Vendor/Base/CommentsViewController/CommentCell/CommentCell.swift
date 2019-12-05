@@ -111,12 +111,15 @@ class CommentCell: MyTableViewCell, ListItemCellType {
         setText()
         
         // loading handler
+        statusImageView.removeSubviews()
+        
         switch comment.status {
         case .editing:
             statusImageView.widthConstraint?.constant = 16
             statusImageView.backgroundColor = .clear
             statusImageView.isHidden = false
             statusImageView.image = nil
+            
             let spinnerView = ASSpinnerView()
             spinnerView.translatesAutoresizingMaskIntoConstraints = false
             spinnerView.spinnerLineWidth = 2
@@ -124,18 +127,22 @@ class CommentCell: MyTableViewCell, ListItemCellType {
             spinnerView.spinnerStrokeColor = #colorLiteral(red: 0.4784313725, green: 0.6470588235, blue: 0.8980392157, alpha: 1)
             statusImageView.addSubview(spinnerView)
             spinnerView.autoPinEdgesToSuperviewEdges()
+            
+            replyButton.isEnabled = false
         case .error:
             statusImageView.widthConstraint?.constant = 16
             statusImageView.isHidden = false
             statusImageView.image = UIImage(named: "!")
             statusImageView.tintColor = .white
             statusImageView.backgroundColor = .a5a7bd
-            statusImageView.removeSubviews()
+            
+            replyButton.isEnabled = false
         default:
             statusImageView.widthConstraint?.constant = 0
             statusImageView.backgroundColor = .a5a7bd
             statusImageView.isHidden = true
-            statusImageView.removeSubviews()
+            
+            replyButton.isEnabled = true
         }
         
         // Show media
@@ -154,7 +161,10 @@ class CommentCell: MyTableViewCell, ListItemCellType {
             layoutIfNeeded()
         }
         
-        voteContainerView.setUp(with: comment.votes, userID: comment.author?.userId)
+        if self.comment!.status == .editing {
+            self.comment!.votes.isBeingVoted = true
+        }
+        voteContainerView.setUp(with: self.comment!.votes, userID: comment.author?.userId)
         timeLabel.text = " • " + Date.timeAgo(string: comment.meta.creationTime)
     }
     
