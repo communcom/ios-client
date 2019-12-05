@@ -12,6 +12,8 @@ import RxCocoa
 import RxDataSources
 
 class ListViewModel<T: ListItemType>: BaseViewModel {
+    public typealias ItemIdentifier = String
+    
     // MARK: - Properties
     var items: BehaviorRelay<[T]> {
         fetcher.items
@@ -19,6 +21,8 @@ class ListViewModel<T: ListItemType>: BaseViewModel {
     public var state: BehaviorRelay<ListFetcherState> {
         return fetcher.state
     }
+    
+    public lazy var rowHeights = [ItemIdentifier: CGFloat]()
     
     // MARK: - Filter & Fetcher
     public var fetcher: ListFetcher<T>
@@ -47,11 +51,13 @@ class ListViewModel<T: ListItemType>: BaseViewModel {
         guard let index = newItems.firstIndex(where: {$0.identity == updatedItem.identity}) else {return}
         guard let newUpdatedItem = newItems[index].newUpdatedItem(from: updatedItem) else {return}
         newItems[index] = newUpdatedItem
+        rowHeights.removeValue(forKey: updatedItem.identity as! String)
         fetcher.items.accept(newItems)
     }
     
     func deleteItem(_ deletedItem: T) {
         let newItems = fetcher.items.value.filter {$0.identity != deletedItem.identity}
+        rowHeights.removeValue(forKey: deletedItem.identity as! String)
         fetcher.items.accept(newItems)
     }
     

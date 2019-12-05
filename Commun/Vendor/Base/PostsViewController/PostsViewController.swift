@@ -91,7 +91,7 @@ class PostsViewController: ListViewController<ResponseAPIContentGetPost, PostCel
 extension PostsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         guard let post = viewModel.items.value[safe: indexPath.row],
-            let height = post.tableViewCellHeight
+            let height = viewModel.rowHeights[post.identity]
         else {return UITableView.automaticDimension}
         return height
     }
@@ -99,13 +99,12 @@ extension PostsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         guard let post = viewModel.items.value[safe: indexPath.row]
         else {return 200}
-        return post.tableViewCellHeight ?? post.estimatedTableViewCellHeight!
+        return viewModel.rowHeights[post.identity] ?? 200
     }
 
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        guard var post = viewModel.items.value[safe: indexPath.row]
+        guard let post = viewModel.items.value[safe: indexPath.row]
         else {return}
-        post.tableViewCellHeight = cell.bounds.height
-        viewModel.updateItem(post)
+        viewModel.rowHeights[post.identity] = cell.bounds.height
     }
 }

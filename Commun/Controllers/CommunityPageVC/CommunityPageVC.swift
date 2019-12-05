@@ -264,9 +264,9 @@ extension CommunityPageVC: UITableViewDelegate {
         
         switch item {
         case let post as ResponseAPIContentGetPost:
-            return post.tableViewCellHeight ?? UITableView.automaticDimension
+            return (viewModel as! CommunityPageViewModel).postsVM.rowHeights[post.identity] ?? UITableView.automaticDimension
         case let leader as ResponseAPIContentGetLeader:
-            return leader.tableViewCellHeight ?? UITableView.automaticDimension
+            return (viewModel as! CommunityPageViewModel).leadsVM.rowHeights[leader.identity] ?? UITableView.automaticDimension
         default:
             return UITableView.automaticDimension
         }
@@ -279,9 +279,9 @@ extension CommunityPageVC: UITableViewDelegate {
         
         switch item {
         case let post as ResponseAPIContentGetPost:
-            return post.tableViewCellHeight ?? post.estimatedTableViewCellHeight!
+            return (viewModel as! CommunityPageViewModel).postsVM.rowHeights[post.identity] ?? 200
         case let leader as ResponseAPIContentGetLeader:
-            return leader.tableViewCellHeight ?? leader.estimatedTableViewCellHeight!
+            return (viewModel as! CommunityPageViewModel).leadsVM.rowHeights[leader.identity] ?? 121
         default:
             return UITableView.automaticDimension
         }
@@ -293,12 +293,10 @@ extension CommunityPageVC: UITableViewDelegate {
         }
         
         switch item {
-        case var post as ResponseAPIContentGetPost:
-            post.tableViewCellHeight = cell.bounds.height
-            (viewModel as! CommunityPageViewModel).postsVM.updateItem(post)
-        case var leader as ResponseAPIContentGetLeader:
-            leader.tableViewCellHeight = cell.bounds.height
-            (viewModel as! CommunityPageViewModel).leadsVM.updateItem(leader)
+        case let post as ResponseAPIContentGetPost:
+            (viewModel as! CommunityPageViewModel).postsVM.rowHeights[post.identity] = cell.bounds.height
+        case let leader as ResponseAPIContentGetLeader:
+            (viewModel as! CommunityPageViewModel).leadsVM.rowHeights[leader.identity] = cell.bounds.height
         default:
             break
         }

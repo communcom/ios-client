@@ -88,9 +88,9 @@ extension UserProfilePageVC: UITableViewDelegate {
         
         switch item {
         case let post as ResponseAPIContentGetPost:
-            return post.tableViewCellHeight ?? UITableView.automaticDimension
+            return (viewModel as! UserProfilePageViewModel).postsVM.rowHeights[post.identity] ?? UITableView.automaticDimension
         case let comment as ResponseAPIContentGetComment:
-            return comment.tableViewCellHeight ?? UITableView.automaticDimension
+            return (viewModel as! UserProfilePageViewModel).commentsVM.rowHeights[comment.identity] ?? UITableView.automaticDimension
         default:
             return UITableView.automaticDimension
         }
@@ -103,9 +103,9 @@ extension UserProfilePageVC: UITableViewDelegate {
         
         switch item {
         case let post as ResponseAPIContentGetPost:
-            return post.tableViewCellHeight ?? post.estimatedTableViewCellHeight!
+            return (viewModel as! UserProfilePageViewModel).postsVM.rowHeights[post.identity] ?? 200
         case let comment as ResponseAPIContentGetComment:
-            return comment.tableViewCellHeight ?? comment.estimatedTableViewCellHeight!
+            return (viewModel as! UserProfilePageViewModel).commentsVM.rowHeights[comment.identity] ?? 88
         default:
             return UITableView.automaticDimension
         }
@@ -117,12 +117,10 @@ extension UserProfilePageVC: UITableViewDelegate {
         }
         
         switch item {
-        case var post as ResponseAPIContentGetPost:
-            post.tableViewCellHeight = cell.bounds.height
-            (viewModel as! UserProfilePageViewModel).postsVM.updateItem(post)
-        case var comment as ResponseAPIContentGetComment:
-            comment.tableViewCellHeight = cell.bounds.height
-            (viewModel as! UserProfilePageViewModel).commentsVM.updateItem(comment)
+        case let post as ResponseAPIContentGetPost:
+            (viewModel as! UserProfilePageViewModel).postsVM.rowHeights[post.identity] = cell.bounds.height
+        case let comment as ResponseAPIContentGetComment:
+            (viewModel as! UserProfilePageViewModel).commentsVM.rowHeights[comment.identity] = cell.bounds.height
         default:
             break
         }
