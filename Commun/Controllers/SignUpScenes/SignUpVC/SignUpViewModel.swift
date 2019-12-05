@@ -20,8 +20,10 @@ class SignUpViewModel {
     let errorSubject = PublishSubject<String>()
     let disposeBag = DisposeBag()
     
+    
+    // MARK: - Custom Functions4
     func validatePhoneNumber() -> Bool {
-        guard let selectedContry = selectedCountry.value else {
+        guard let selectedCountry = selectedCountry.value else {
             return false
         }
         
@@ -30,7 +32,12 @@ class SignUpViewModel {
         let phoneNumberKit = PhoneNumberKit()
         
         do {
-            let _ = try phoneNumberKit.parse(phone, withRegion: selectedContry.shortCode , ignoreType: true)
+            let phoneNumberEntered = try phoneNumberKit.parse(phone, withRegion: selectedCountry.shortCode, ignoreType: true)
+            
+            if let nsnValue = selectedCountry.nsn {
+                return String(phoneNumberEntered.nationalNumber).count == nsnValue
+            }
+            
             return true
         } catch {
             return false
