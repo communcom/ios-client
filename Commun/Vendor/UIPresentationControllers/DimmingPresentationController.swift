@@ -9,16 +9,22 @@
 import UIKit
 
 class DimmingPresentationController: UIPresentationController {
+    // MARK: - Properties
     var dimmingView: UIView!
+    
+    
+    // MARK: - Class Initialization
     override init(presentedViewController: UIViewController, presenting presentingViewController: UIViewController?) {
         super.init(presentedViewController: presentedViewController, presenting: presentingViewController)
-        setupDimmingView()
+        
+        self.setupDimmingView()
     }
     
     override func presentationTransitionWillBegin() {
         guard let dimmingView = dimmingView else {
             return
         }
+        
         // 1
         containerView?.insertSubview(dimmingView, at: 0)
         
@@ -41,6 +47,8 @@ class DimmingPresentationController: UIPresentationController {
         })
     }
     
+    
+    // MARK: - Class Functions
     override func containerViewWillLayoutSubviews() {
         presentedView?.frame = frameOfPresentedViewInContainerView
     }
@@ -56,17 +64,20 @@ class DimmingPresentationController: UIPresentationController {
         })
     }
     
+    
+    // MARK: - Custom Functions
     func setupDimmingView() {
         dimmingView = UIView()
         dimmingView.translatesAutoresizingMaskIntoConstraints = false
         dimmingView.backgroundColor = UIColor(white: 0.0, alpha: 0.5)
         dimmingView.alpha = 0.0
-        let recognizer = UITapGestureRecognizer(
-            target: self,
-            action: #selector(handleTap(recognizer:)))
+        
+        let recognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap(recognizer:)))
         dimmingView.addGestureRecognizer(recognizer)
     }
     
+    
+    // MARK: - Actions
     @objc func handleTap(recognizer: UITapGestureRecognizer) {
         presentingViewController.dismiss(animated: true)
     }

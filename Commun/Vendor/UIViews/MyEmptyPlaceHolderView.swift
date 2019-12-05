@@ -39,19 +39,22 @@ class MyEmptyPlaceHolderView: MyView {
     
   
     // MARK: - Subviews
-    lazy var emojiLabel = UILabel.with(text: "😿", textSize: 32)
+    lazy var emojiLabel = UILabel.with(text: "😿", textSize: CGFloat.adaptive(width: 32.0))
     lazy var titleLabel = UILabel.with(text: "Nothing", textSize: CGFloat.adaptive(width: 15.0), weight: .semibold)
-    lazy var descriptionLabel = UILabel.with(text: "Nothing's here", textSize: CGFloat.adaptive(width: 15.0), weight: .medium)
+    lazy var descriptionLabel = UILabel.with(text: "Nothing's here", textSize: CGFloat.adaptive(width: 15.0), weight: .medium, textColor: #colorLiteral(red: 0.647, green: 0.655, blue: 0.741, alpha: 1))
     lazy var button = CommunButton.default(label: "retry")
+    
     
     // MARK: - Initializers
     init(emoji: String = "😿", title: String, description: String?, buttonLabel: String? = nil, buttonAction: (()->Void)? = nil) {
-        self.emoji = emoji
-        self.title = title
-        self.descriptionText = description
-        self.buttonLabel = buttonLabel
-        self.buttonAction = buttonAction
+        self.emoji              =   emoji
+        self.title              =   title
+        self.buttonLabel        =   buttonLabel
+        self.buttonAction       =   buttonAction
+        self.descriptionText    =   description
+
         super.init(frame: .zero)
+        
         configureForAutoLayout()
     }
     
@@ -59,16 +62,19 @@ class MyEmptyPlaceHolderView: MyView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    
+    // MARK: - Custom Functions
     override func commonInit() {
         super.commonInit()
+        
         backgroundColor = .white
         cornerRadius = 10
         
         let containerView = UIView(forAutoLayout: ())
         addSubview(containerView)
 
-        containerView.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
-        containerView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
+        containerView.autoPinEdge(toSuperviewEdge: .leading, withInset: CGFloat.adaptive(width: 16.0))
+        containerView.autoPinEdge(toSuperviewEdge: .trailing, withInset: CGFloat.adaptive(width: 16.0))
         containerView.autoAlignAxis(toSuperviewAxis: .horizontal)
         
         containerView.addSubview(emojiLabel)
@@ -76,7 +82,7 @@ class MyEmptyPlaceHolderView: MyView {
         emojiLabel.autoAlignAxis(toSuperviewAxis: .vertical)
         
         containerView.addSubview(titleLabel)
-        titleLabel.autoPinEdge(.top, to: .bottom, of: emojiLabel, withOffset: CGFloat.adaptive(height: 7.0))
+        titleLabel.autoPinEdge(.top, to: .bottom, of: emojiLabel, withOffset: CGFloat.adaptive(height: 10.0))
         titleLabel.autoAlignAxis(toSuperviewAxis: .vertical)
         
         containerView.addSubview(descriptionLabel)
@@ -84,12 +90,12 @@ class MyEmptyPlaceHolderView: MyView {
         descriptionLabel.autoAlignAxis(toSuperviewAxis: .vertical)
         
         if let buttonLabel = buttonLabel {
-            button.setTitle(buttonLabel, for: .normal)
             containerView.addSubview(button)
-            button.autoPinEdge(.top, to: .bottom, of: descriptionLabel, withOffset: 16)
+            button.autoPinEdge(.top, to: .bottom, of: descriptionLabel, withOffset: CGFloat.adaptive(height: 15.0))
             button.autoAlignAxis(toSuperviewAxis: .vertical)
-            button.addTarget(self, action: #selector(buttonDidTouch), for: .touchUpInside)
             button.autoPinEdge(toSuperviewEdge: .bottom)
+            button.setTitle(buttonLabel, for: .normal)
+            button.addTarget(self, action: #selector(buttonDidTouch), for: .touchUpInside)
         } else {
             descriptionLabel.autoPinEdge(toSuperviewEdge: .bottom)
         }
