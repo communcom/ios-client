@@ -71,7 +71,6 @@ class BasicEditorVC: PostEditorVC {
         // text empty, but attachment exists
         let attachmentWithEmptyText = !textIsNotEmpty && ((viewModel as! BasicEditorViewModel).attachment.value != nil)
         
-        print(super.isContentValid && (isTextValid || attachmentWithEmptyText))
         // accept attachment without text or valid text
         return super.isContentValid && (isTextValid || attachmentWithEmptyText)
     }
@@ -110,10 +109,12 @@ class BasicEditorVC: PostEditorVC {
             }
             // return a downloadSingle
             if let urlString = imageURL,
-                let url = URL(string: urlString) {
+                let url = URL(string: urlString)
+            {
+                let attributes = attachment.attributes ?? ResponseAPIContentBlockAttributes(type: attachment.type, url: imageURL)
                 let downloadImage = NetworkService.shared.downloadImage(url)
                     .catchErrorJustReturn(UIImage(named: "image-not-available")!)
-                    .map {TextAttachment(attributes: attachment.attributes, localImage: $0, size: CGSize(width: self.view.size.width, height: self.attachmentHeight))}
+                    .map {TextAttachment(attributes: attributes, localImage: $0, size: CGSize(width: self.view.size.width, height: self.attachmentHeight))}
                 singles.append(downloadImage)
             }
                 // return an error image if thumbnail not found
