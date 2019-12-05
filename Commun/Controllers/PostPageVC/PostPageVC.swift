@@ -63,6 +63,7 @@ class PostPageVC: CommentsViewController {
     // MARK: - Methods
     override func setUp() {
         super.setUp()
+        
         // navigationBar
         view.addSubview(navigationBar)
         navigationBar.autoPinEdgesToSuperviewSafeArea(with: .zero, excludingEdge: .bottom)
@@ -127,6 +128,14 @@ class PostPageVC: CommentsViewController {
 //            tableView.rx.itemInserted
 //                .takeWhile(<#T##predicate: (IndexPath) throws -> Bool##(IndexPath) throws -> Bool#>)
         }
+
+        tableView.rx.contentOffset
+        .map { $0.y <= self.startContentOffsetY }
+        .distinctUntilChanged()
+        .subscribe(onNext: { (showShadow) in
+            self.navigationBar.addShadow(ofColor: showShadow ? .clear : .shadow, offset: CGSize(width: 0, height: 2), opacity: 0.1)
+        })
+        .disposed(by: disposeBag)
         
         // observer
         observePostDeleted()
@@ -200,14 +209,5 @@ class PostPageVC: CommentsViewController {
     
     override func refresh() {
         (viewModel as! PostPageViewModel).reload()
-    }
-}
-
-
-// MARK: - UIScrollViewDelegate
-extension PostPageVC: UIScrollViewDelegate {
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        Logger.log(message: "scrollViewDidScroll: \(scrollView.contentOffset.y)", event: .debug)
-        navigationBar.addShadow(ofColor: scrollView.contentOffset.y == startContentOffsetY ? .clear : .shadow, offset: CGSize(width: 0, height: 2), opacity: 0.1)
     }
 }
