@@ -112,6 +112,8 @@ class CommentCell: MyTableViewCell, ListItemCellType {
         
         // loading handler
         statusImageView.removeSubviews()
+        statusImageView.removeGestureRecognizers()
+        statusImageView.isUserInteractionEnabled = false
         
         switch comment.status {
         case .editing:
@@ -135,6 +137,11 @@ class CommentCell: MyTableViewCell, ListItemCellType {
             statusImageView.image = UIImage(named: "!")
             statusImageView.tintColor = .white
             statusImageView.backgroundColor = .a5a7bd
+            
+            // handle error
+            statusImageView.isUserInteractionEnabled = true
+            let tap = UITapGestureRecognizer(target: self, action: #selector(retrySendingCommentDidTouch(gestureRecognizer:)))
+            statusImageView.addGestureRecognizer(tap)
             
             replyButton.isEnabled = false
         default:
