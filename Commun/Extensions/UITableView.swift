@@ -170,20 +170,18 @@ extension UITableView {
         return ControlEvent(events: source)
     }
     
-    func addEmptyPlaceholderFooterView(height: CGFloat = 133, title: String, description: String? = nil, buttonLabel: String? = nil, buttonAction: (()->Void)? = nil) {
+    func addEmptyPlaceholderFooterView(height: CGFloat = CGFloat.adaptive(height: 133.0), title: String, description: String? = nil, buttonLabel: String? = nil, buttonAction: (()->Void)? = nil) {
         // Prevent dupplicating
         if tableFooterView?.tag == emptyPlaceholderViewTag {
             return
         }
         
-        let containerView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: height + 40))
-        containerView.tag = tag
-        
+        let containerView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: CGFloat.adaptive(height: height)))
         let placeholderView = MyEmptyPlaceHolderView(title: title, description: description, buttonLabel: buttonLabel, buttonAction: buttonAction)
         containerView.addSubview(placeholderView)
-        
-        placeholderView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10))
-        
+        containerView.tag = tag
+        placeholderView.autoPinEdgesToSuperviewEdges(with: .zero)
+
         self.tableFooterView = containerView
     }
     
@@ -191,19 +189,17 @@ extension UITableView {
         rx.didEndDecelerating
             .filter {_ in self.contentOffset.y > 0}
             .subscribe(onNext: { [weak self] _ in
-                guard let strongSelf = self,
-                    let lastCell = strongSelf.visibleCells.last,
-                    let indexPath = strongSelf.indexPath(for: lastCell)
-                else {
-                    return
-                }
-                if strongSelf.numberOfSections == 0 {return}
+                guard let strongSelf = self, let lastCell = strongSelf.visibleCells.last, let indexPath = strongSelf.indexPath(for: lastCell) else { return }
+                
+                if strongSelf.numberOfSections == 0 { return }
+                
                 if indexPath.row >= strongSelf.numberOfRows(inSection: strongSelf.numberOfSections - 1) - 3 {
                     loadMoreAction()
                 }
             })
     }
 }
+
 
 extension Reactive where Base: UITableView {
     /// Reactive wrapper for `UITableView.insertRows(at:with:)`
@@ -231,7 +227,9 @@ extension Reactive where Base: UITableView {
                 endUpdatesEvent.asObservable(),
                 resultSelector: { (insertedRows: $0, endUpdates: $1) }
         )
+        
         let source = insertEnded.map { $0.insertedRows }
+        
         return ControlEvent(events: source)
     }
 }

@@ -74,6 +74,9 @@
 "enter your current passcode"                   =   "enter your current passcode";
 "enter text"                                    =   "enter text";
 "error"                                         =   "error";
+"empty subscriptions title"                     =   "no Subscriptions";
+"empty subscriptions description"               =   "you haven’t subscribed to any community yet";
+"empty subscriptions button title"              =   "find Communities";
 
 
 // F
@@ -244,6 +247,7 @@
 "welcome-item-1"                                =   "Create, share, and evaluate content\nDecide yourself what deserves\nthe attention";
 "welcome-item-2"                                =   "Every post, share, comment\nor like is rewarded";
 "welcome-item-3"                                =   "Commun has no single owner\nand fully belongs to its members";
+"write a comment"                               =   "write a comment";
 
 
 // Y

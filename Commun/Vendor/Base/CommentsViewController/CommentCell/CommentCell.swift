@@ -86,8 +86,9 @@ class CommentCell: MyTableViewCell, ListItemCellType {
         contentView.addSubview(statusImageView)
         statusImageView.autoPinEdge(.leading, to: .trailing, of: timeLabel, withOffset: 10)
         statusImageView.autoAlignAxis(.horizontal, toSameAxisOf: voteContainerView)
-        statusImageView.trailingAnchor.constraint(lessThanOrEqualTo: contentView.trailingAnchor, constant: -4)
-            .isActive = true
+        var constraint = statusImageView.trailingAnchor.constraint(lessThanOrEqualTo: contentView.trailingAnchor, constant: -4)
+        constraint.priority = .defaultLow
+        constraint.isActive = true
         
         voteContainerView.autoPinEdge(toSuperviewEdge: .bottom, withInset: 8)
     }
@@ -111,12 +112,18 @@ class CommentCell: MyTableViewCell, ListItemCellType {
         setText()
         
         // loading handler
-        switch comment.status {
-        case .editing:
+        statusImageView.removeSubviews()
+        statusImageView.removeGestureRecognizers()
+        statusImageView.isUserInteractionEnabled = false
+        statusImageView.isHidden = true
+        
+        switch comment.sendingState {
+        case .editing, .adding, .replying:
             statusImageView.widthConstraint?.constant = 16
             statusImageView.backgroundColor = .clear
             statusImageView.isHidden = false
             statusImageView.image = nil
+            
             let spinnerView = ASSpinnerView()
             spinnerView.translatesAutoresizingMaskIntoConstraints = false
             spinnerView.spinnerLineWidth = 2
@@ -124,18 +131,28 @@ class CommentCell: MyTableViewCell, ListItemCellType {
             spinnerView.spinnerStrokeColor = #colorLiteral(red: 0.4784313725, green: 0.6470588235, blue: 0.8980392157, alpha: 1)
             statusImageView.addSubview(spinnerView)
             spinnerView.autoPinEdgesToSuperviewEdges()
+            
+            replyButton.isEnabled = false
         case .error:
             statusImageView.widthConstraint?.constant = 16
             statusImageView.isHidden = false
-            statusImageView.image = UIImage(named: "!")
-            statusImageView.tintColor = .white
-            statusImageView.backgroundColor = .a5a7bd
-            statusImageView.removeSubviews()
+            statusImageView.image = UIImage(named: "comment-posting-error")
+            
+            // handle error
+            statusImageView.isUserInteractionEnabled = true
+            let tap = UITapGestureRecognizer(target: self, action: #selector(retrySendingCommentDidTouch(gestureRecognizer:)))
+            statusImageView.addGestureRecognizer(tap)
+            
+            replyButton.isEnabled = false
         default:
             statusImageView.widthConstraint?.constant = 0
-            statusImageView.backgroundColor = .a5a7bd
-            statusImageView.isHidden = true
-            statusImageView.removeSubviews()
+            
+            replyButton.isEnabled = true
+        }
+        
+        // if comment was deleted
+        if comment.document == nil {
+            replyButton.isEnabled = false
         }
         
         // Show media
@@ -154,7 +171,13 @@ class CommentCell: MyTableViewCell, ListItemCellType {
             layoutIfNeeded()
         }
         
-        voteContainerView.setUp(with: comment.votes, userID: comment.author?.userId)
+        if (self.comment!.sendingState ?? MessageSendingState.none) != MessageSendingState.none ||
+            comment.document == nil
+        {
+            // disable voting
+            self.comment!.votes.isBeingVoted = true
+        }
+        voteContainerView.setUp(with: self.comment!.votes, userID: comment.author?.userId)
         timeLabel.text = " • " + Date.timeAgo(string: comment.meta.creationTime)
     }
     
@@ -169,6 +192,7 @@ class CommentCell: MyTableViewCell, ListItemCellType {
             currentAttributes: [.font: UIFont.systemFont(ofSize: defaultContentFontSize)],
             attachmentType: TextAttachment.self)
         else {
+            mutableAS.append(NSAttributedString(string: " " + "this comment was deleted".localized().uppercaseFirst, attributes: [.font: UIFont.systemFont(ofSize: defaultContentFontSize), .foregroundColor: UIColor.lightGray]))
             contentTextView.attributedText = mutableAS
             return
         }

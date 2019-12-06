@@ -10,11 +10,13 @@ import Foundation
 import CyberSwift
 import RxDataSources
 
-class SubscriptionsVC: SubsViewController<ResponseAPIContentGetSubscriptionsItem, SubscriptionsUserCell>, CommunityCellDelegate, ProfileCellDelegate
-{
+class SubscriptionsVC: SubsViewController<ResponseAPIContentGetSubscriptionsItem, SubscriptionsUserCell>, CommunityCellDelegate, ProfileCellDelegate {
+    // MARK: - Properties
     var hideFollowButton = false
     private var isNeedHideCloseButton = false
 
+    
+    // MARK: - Class Initialization
     init(title: String? = nil, userId: String?, type: GetSubscriptionsType) {
         let viewModel = SubscriptionsViewModel(userId: userId, type: type)
         super.init(viewModel: viewModel)
@@ -32,11 +34,19 @@ class SubscriptionsVC: SubsViewController<ResponseAPIContentGetSubscriptionsItem
         defer {self.title = "followings".localized().uppercaseFirst}
     }
 
+    deinit {
+        Logger.log(message: "Success", event: .severe)
+    }
+    
+
+    // MARK: - Class Functions
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         baseNavigationController?.changeStatusBarStyle(.default)
     }
     
+    
+    // MARK: - Custom Functions
     override func setUp() {
         super.setUp()
         
@@ -93,17 +103,29 @@ class SubscriptionsVC: SubsViewController<ResponseAPIContentGetSubscriptionsItem
     }
     
     override func handleListEmpty() {
-        var title = "no subscriptions"
-        var description = "no subscriptions found"
+        var titleValue = "empty subscriptions title"
+        var descriptionValue = "empty subscriptions description"
+        var heightValue: CGFloat = 133.0
+        var buttonTitleValue: String?
+        
         switch (viewModel as! SubscriptionsViewModel).type {
         case .community:
-            title = "no subscriptions"
-            description = "user have not subscribed to any community"
+            titleValue          =   "empty subscriptions title".localized().uppercaseFirst
+            heightValue         =   183.0
+            descriptionValue    =   "empty subscriptions description".localized().uppercaseFirst
+            buttonTitleValue    =   "empty subscriptions button title".localized().uppercaseFirst
+            
         case .user:
-            title = "no subscribers"
-            description = "no subscribers found"
+            titleValue          =   "no subscribers".localized().uppercaseFirst
+            descriptionValue    =   "no subscribers found".localized().uppercaseFirst
         }
         
-        tableView.addEmptyPlaceholderFooterView(title: title.localized().uppercaseFirst, description: description.localized().uppercaseFirst)
+        tableView.addEmptyPlaceholderFooterView(height:         heightValue,
+                                                title:          titleValue,
+                                                description:    descriptionValue,
+                                                buttonLabel:    buttonTitleValue,
+                                                buttonAction:   {
+                                                    Logger.log(message: "Action button tapped...", event: .debug)
+        })
     }
 }

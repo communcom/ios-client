@@ -34,7 +34,6 @@ class FittingSizePresentationController: DimmingPresentationController {
         frame.size.width = targetWidth
         frame.size.height = targetHeight
         
-        print(frame)
         return frame
     }
     

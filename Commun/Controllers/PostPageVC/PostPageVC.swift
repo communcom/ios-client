@@ -17,7 +17,6 @@ class PostPageVC: CommentsViewController {
         var parentComment: ResponseAPIContentGetComment?
         var offset: UInt = 0
         var limit: UInt = 10
-        
     }
     
     // MARK: - Subviews
@@ -28,7 +27,9 @@ class PostPageVC: CommentsViewController {
     // MARK: - Properties
     var scrollToTopAfterLoadingComment = false
     var commentThatNeedsScrollTo: ResponseAPIContentGetComment?
-
+    var startContentOffsetY: CGFloat = 0.0
+    
+    
     // MARK: - Initializers
     init(post: ResponseAPIContentGetPost) {
         let viewModel = PostPageViewModel(post: post)
@@ -62,6 +63,7 @@ class PostPageVC: CommentsViewController {
     // MARK: - Methods
     override func setUp() {
         super.setUp()
+        
         // navigationBar
         view.addSubview(navigationBar)
         navigationBar.autoPinEdgesToSuperviewSafeArea(with: .zero, excludingEdge: .bottom)
@@ -77,8 +79,9 @@ class PostPageVC: CommentsViewController {
         
         // comment form
         let shadowView = UIView(forAutoLayout: ())
-        shadowView.addShadow(ofColor: .shadow, radius: 4, offset: CGSize(width: 0, height: -6), opacity: 0.1)
-        
+        shadowView.addShadow(ofColor: #colorLiteral(red: 0.221, green: 0.234, blue: 0.279, alpha: 0.07), radius: CGFloat.adaptive(width: 4.0), offset: CGSize(width: 0, height: CGFloat.adaptive(height: -3.0)), opacity:  1.0)
+//        shadowView.addShadow(ofColor: .shadow, radius: 4, offset: CGSize(width: 0, height: -6), opacity: 0.1)
+
         view.addSubview(shadowView)
         shadowView.autoPinEdge(toSuperviewSafeArea: .leading)
         shadowView.autoPinEdge(toSuperviewSafeArea: .trailing)
@@ -92,12 +95,12 @@ class PostPageVC: CommentsViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        // navigationBar
-        navigationBar.addShadow(ofColor: .shadow, offset: CGSize(width: 0, height: 2), opacity: 0.1)
         
         commentForm.superview?.layoutIfNeeded()
         commentForm.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: 24.5)
         view.bringSubviewToFront(commentForm)
+        startContentOffsetY = tableView.contentOffset.y
+        navigationBar.addShadow(ofColor: .clear, offset: CGSize(width: 0, height: 2), opacity: 0.1)
     }
     
     override func bind() {
@@ -125,6 +128,14 @@ class PostPageVC: CommentsViewController {
 //            tableView.rx.itemInserted
 //                .takeWhile(<#T##predicate: (IndexPath) throws -> Bool##(IndexPath) throws -> Bool#>)
         }
+
+        tableView.rx.contentOffset
+        .map { $0.y <= self.startContentOffsetY }
+        .distinctUntilChanged()
+        .subscribe(onNext: { (showShadow) in
+            self.navigationBar.addShadow(ofColor: showShadow ? .clear : .shadow, offset: CGSize(width: 0, height: 2), opacity: 0.1)
+        })
+        .disposed(by: disposeBag)
         
         // observer
         observePostDeleted()
@@ -161,6 +172,93 @@ class PostPageVC: CommentsViewController {
         commentForm.mode = .reply
         commentForm.parentComment = comment
         commentForm.textView.becomeFirstResponder()
+    }
+    
+    override func retrySendingComment(_ comment: ResponseAPIContentGetComment) {
+        guard let block = comment.document,
+            let post = (self.viewModel as! PostPageViewModel).post.value
+        else {return}
+        
+        showAlert(title: "an error has occured".localized().uppercaseFirst, message: "Do you want to retry".localized().uppercaseFirst + "?", buttonTitles: ["yes".localized().uppercaseFirst, "no".localized().uppercaseFirst], highlightedButtonIndex: 0, completion: { (index) in
+            // retry
+            if index == 0 {
+                // retry
+                switch comment.sendingState {
+                case .error(let state):
+                    switch state {
+                    case .editing:
+                        guard let communCode = post.community?.communityId
+                        else {return}
+                        
+                        
+                        // Send request
+                        RestAPIManager.instance.updateMessage(
+                            originMessage:  comment,
+                            communCode:     communCode,
+                            permlink:       comment.contentId.permlink,
+                            block:          block
+                        )
+                        .subscribe(onError: { [weak self] error in
+                            self?.showError(error)
+                        })
+                        .disposed(by: self.disposeBag)
+                        
+                    case .adding:
+                        // deleted falling comment
+                        comment.notifyDeleted()
+                        
+                        guard let communCode = post.community?.communityId,
+                            let parentAuthorId = post.author?.userId
+                            else {return}
+                        
+                        let parentPermlink = post.contentId.permlink
+                        // Send request
+                        RestAPIManager.instance.createMessage(
+                            isComment:      true,
+                            parentPost:     post,
+                            communCode:     communCode,
+                            parentAuthor:   parentAuthorId,
+                            parentPermlink: parentPermlink,
+                            block:          block
+                        )
+                        .subscribe(onError: { [weak self] error in
+                            self?.showError(error)
+                        })
+                        .disposed(by: self.disposeBag)
+                        
+                    case .replying:
+                        // deleted falling comment
+                        comment.notifyDeleted()
+                        
+                        guard let communCode = post.community?.communityId,
+                            let parentCommentAuthorId = comment.parents.comment?.userId,
+                            let parentCommentPermlink = comment.parents.comment?.permlink,
+                            let parentComment = (self.viewModel as! PostPageViewModel).items.value.first(where: {$0.contentId.userId == parentCommentAuthorId && $0.contentId.permlink == parentCommentPermlink})
+                        else {return}
+                        
+                        // Send request
+                        RestAPIManager.instance.createMessage(
+                            isComment:      true,
+                            parentPost:     post,
+                            isReplying:     true,
+                            parentComment:  parentComment,
+                            communCode:     communCode,
+                            parentAuthor:   parentCommentAuthorId,
+                            parentPermlink: parentCommentPermlink,
+                            block:          block
+                        )
+                        .subscribe(onError: { [weak self] error in
+                            self?.showError(error)
+                        })
+                        .disposed(by: self.disposeBag)
+                    default:
+                        break
+                    }
+                default:
+                    break
+                }
+            }
+        })
     }
     
     @objc func openMorePostActions() {

@@ -8,8 +8,8 @@
   https://developer.apple.com/library/content/documentation/General/Reference/InfoPlistKeyReference/Articles/AboutInformationPropertyListFiles.html
 */
 
-NSCameraUsageDescription                =   "We need access to your device's camera to scan the QR code";
-NSFaceIDUsageDescription                =   "FaceID needed to identify user";
-NSLocationWhenInUseUsageDescription     =   "Location needed to define content and settings that is suitable for you";
-NSPhotoLibraryUsageDescription          =   "We need access to your device's album to show photos";
-NSPhotoLibraryAddUsageDescription       =   "We need access to your device's album to show photos";
+NSCameraUsageDescription                =   "Could you please allow Commun to access your camera to scan this QR code?";
+NSFaceIDUsageDescription                =   "Commun needs access to FaceID to identify you as our user";
+NSLocationWhenInUseUsageDescription     =   "We kindly ask your allowance to identify your location Commun needs it to add your country to the picker and then personalize settings according to your preferences";
+NSPhotoLibraryUsageDescription          =   "Commun needs access to your device's album to be able to share photos";
+NSPhotoLibraryAddUsageDescription       =   "Commun needs access to your device's album to be able to share photos";

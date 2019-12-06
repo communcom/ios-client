@@ -21,4 +21,8 @@ extension UserProfilePageVC {
         #warning("replying")
 //        replyingComment = comment
     }
+    
+    func cell(_ cell: CommentCell, didTapRetryForComment comment: ResponseAPIContentGetComment) {
+        // do nothing
+    }
 }

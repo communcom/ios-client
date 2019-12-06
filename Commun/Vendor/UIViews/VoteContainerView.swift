@@ -28,19 +28,16 @@ class VoteContainerView: MyView {
         downVoteButton.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .leading)
         
         addSubview(likeCountLabel)
-        NSLayoutConstraint(item: self, attribute: .width, relatedBy: .greaterThanOrEqual, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 100).isActive = true
-    }
-    
-    func setUp(with votes: ResponseAPIContentVotes, userID: String?) {
-        likeCountLabel.removeAllConstraints()
-
         likeCountLabel.autoPinEdge(.leading, to: .trailing, of: upVoteButton)
         likeCountLabel.autoPinEdge(.trailing, to: .leading, of: downVoteButton)
         likeCountLabel.autoPinEdge(toSuperviewEdge: .top)
         likeCountLabel.autoPinEdge(toSuperviewEdge: .bottom)
-
+        likeCountLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+    }
+    
+    func setUp(with votes: ResponseAPIContentVotes, userID: String?) {
         upVoteButton.tintColor         = votes.hasUpVote ?? false ? .appMainColor : .a5a7bd
-        likeCountLabel.text            = "\((votes.upCount ?? 0) - (votes.downCount ?? 0))"
+        likeCountLabel.text            = "\(Double((votes.upCount ?? 0) - (votes.downCount ?? 0)).kmFormatted)"
         downVoteButton.tintColor       = votes.hasDownVote ?? false ? .appMainColor : .a5a7bd
         upVoteButton.isEnabled         = !(votes.isBeingVoted ?? false)
         downVoteButton.isEnabled       = !(votes.isBeingVoted ?? false)

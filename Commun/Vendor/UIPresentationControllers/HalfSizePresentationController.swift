@@ -10,13 +10,13 @@ import UIKit
 
 class HalfSizePresentationController: DimmingPresentationController {
     override var frameOfPresentedViewInContainerView: CGRect {
-        //1
+        // 1        
         var frame: CGRect = .zero
+        
         frame.size = size(forChildContentContainer: presentedViewController,
                           withParentContainerSize: containerView!.bounds.size)
         
-        //2
-        
+        // 2
         frame.origin.y = containerView!.frame.height*(1.0/3.0)
         
         return frame

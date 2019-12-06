@@ -12,7 +12,12 @@ import RxCocoa
 import CyberSwift
 
 extension CommentForm {
-    @objc func sendComment() {
+    // MARK: - Actions
+    @objc func commentAddImage() {
+        Logger.log(message: "Add image to comment...", event: .debug)
+    }
+    
+    @objc func commentSend() {
         if mode != .new && parentComment == nil { return}
         
         #warning("send image")

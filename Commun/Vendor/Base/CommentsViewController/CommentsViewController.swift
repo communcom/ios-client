@@ -129,6 +129,10 @@ class CommentsViewController: ListViewController<ResponseAPIContentGetComment, C
     func replyToComment(_ comment: ResponseAPIContentGetComment) {
         // for overriding
     }
+    
+    func retrySendingComment(_ comment: ResponseAPIContentGetComment) {
+        // for overriding
+    }
 }
 
 extension CommentsViewController: UITableViewDelegate {
@@ -143,21 +147,20 @@ extension CommentsViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         guard let comment = commentAtIndexPath(indexPath),
-            let height = comment.tableViewCellHeight
+            let height = viewModel.rowHeights[comment.identity]
         else {return UITableView.automaticDimension}
         return height
     }
 
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         guard let comment = commentAtIndexPath(indexPath)
-        else {return 200}
-        return comment.tableViewCellHeight ?? comment.estimatedTableViewCellHeight!
+        else {return 88}
+        return viewModel.rowHeights[comment.identity] ?? 88
     }
 
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        guard var comment = commentAtIndexPath(indexPath)
+        guard let comment = commentAtIndexPath(indexPath)
         else {return}
-        comment.tableViewCellHeight = cell.bounds.height
-        viewModel.updateItem(comment)
+        viewModel.rowHeights[comment.identity] = cell.bounds.height
     }
 }

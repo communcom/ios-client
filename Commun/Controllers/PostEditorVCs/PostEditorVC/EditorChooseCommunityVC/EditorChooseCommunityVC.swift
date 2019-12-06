@@ -15,6 +15,7 @@ class EditorChooseCommunityVC: SubscriptionsVC {
     var panGestureRecognizer: UIPanGestureRecognizer?
     var interactor: SwipeDownInteractor?
 
+    
     // MARK: - Initializers
     init(completion: ((ResponseAPIContentGetCommunity)->Void)?) {
         self.completion = completion
@@ -25,16 +26,30 @@ class EditorChooseCommunityVC: SubscriptionsVC {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - Methods
+    
+    // MARK: - Custom Functions
     override func setUp() {
         super.setUp()
+        
         hideFollowButton = true
-
         interactor = SwipeDownInteractor()
         panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(panGestureAction(_:)))
         view.addGestureRecognizer(panGestureRecognizer!)
     }
     
+    override func bindItemSelected() {
+        tableView.rx.modelSelected(ResponseAPIContentGetSubscriptionsItem.self)
+            .filter {$0.communityValue != nil}
+            .map {$0.communityValue!}
+            .subscribe(onNext: { (item) in
+                self.completion?(item)
+                self.dismiss(animated: true, completion: nil)
+            })
+            .disposed(by: disposeBag)
+    }
+
+    
+    // MARK: - Actions
     @objc func panGestureAction(_ sender: UIPanGestureRecognizer) {
         let percentThreshold:CGFloat = 0.3
 
@@ -66,19 +81,10 @@ class EditorChooseCommunityVC: SubscriptionsVC {
             break
         }
     }
-    
-    override func bindItemSelected() {
-        tableView.rx.modelSelected(ResponseAPIContentGetSubscriptionsItem.self)
-            .filter {$0.communityValue != nil}
-            .map {$0.communityValue!}
-            .subscribe(onNext: { (item) in
-                self.completion?(item)
-                self.dismiss(animated: true, completion: nil)
-            })
-            .disposed(by: disposeBag)
-    }
 }
 
+
+// MARK: - UIViewControllerTransitioningDelegate
 extension EditorChooseCommunityVC: UIViewControllerTransitioningDelegate {
     func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
         return HalfSizePresentationController(presentedViewController: presented, presenting: presenting)
