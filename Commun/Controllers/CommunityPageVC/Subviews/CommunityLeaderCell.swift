@@ -93,7 +93,8 @@ class CommunityLeaderCell: CommunityPageCell {
         userNameLabel.text = leader.username
         
         // point
-        pointsCountLabel.text = String(format: "%.0f%@ %@ •", leader.rating, (leader.rating / 1000 > 1 ? "k" : ""), "points".localized()).replacingOccurrences(of: ".", with: ",")
+        let rating = leader.rating / 1000
+        pointsCountLabel.text = (rating > 1 ? String(format: "%.1fk ", rating) : String(format: "%.0f ", leader.rating)).replacingOccurrences(of: ".", with: ",") + "points".localized() + " •"
         percentsCountLabel.text = String(format: "%.0f%%", leader.ratingPercent * 100)
         
         // description
