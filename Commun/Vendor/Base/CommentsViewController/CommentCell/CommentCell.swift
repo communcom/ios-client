@@ -86,8 +86,9 @@ class CommentCell: MyTableViewCell, ListItemCellType {
         contentView.addSubview(statusImageView)
         statusImageView.autoPinEdge(.leading, to: .trailing, of: timeLabel, withOffset: 10)
         statusImageView.autoAlignAxis(.horizontal, toSameAxisOf: voteContainerView)
-        statusImageView.trailingAnchor.constraint(lessThanOrEqualTo: contentView.trailingAnchor, constant: -4)
-            .isActive = true
+        var constraint = statusImageView.trailingAnchor.constraint(lessThanOrEqualTo: contentView.trailingAnchor, constant: -4)
+        constraint.priority = .defaultLow
+        constraint.isActive = true
         
         voteContainerView.autoPinEdge(toSuperviewEdge: .bottom, withInset: 8)
     }

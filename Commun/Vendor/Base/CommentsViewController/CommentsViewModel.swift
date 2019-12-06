@@ -71,9 +71,25 @@ class CommentsViewModel: ListViewModel<ResponseAPIContentGetComment> {
     
     func updateChildren(parentComment: ResponseAPIContentGetComment) {
         var items = fetcher.items.value
-        guard let index = items.firstIndex(where: {$0.identity == parentComment.identity}) else {return}
-        items[index].children = parentComment.children
-        fetcher.items.accept(items)
+        
+        // if item is a first lever comment
+        if let index = items.firstIndex(where: {$0.identity == parentComment.identity}) {
+            items[index].children = parentComment.children
+            fetcher.items.accept(items)
+            return
+        }
+        
+        // if item is a reply
+        if let commentIndex = items.firstIndex(where: { (comment) -> Bool in
+            comment.children?.contains(where: {$0.identity == parentComment.identity}) ?? false
+        }),
+            let newChildren = parentComment.children,
+            !newChildren.isEmpty
+        {
+            items[commentIndex].children?.joinUnique(newChildren)
+            fetcher.items.accept(items)
+            return
+        }
     }
     
     override func updateItem(_ updatedItem: ResponseAPIContentGetComment) {
