@@ -41,59 +41,50 @@ class CommunityLeaderCell: CommunityPageCell {
     
     override func setUpViews() {
         super.setUpViews()
+        
         // background color
         contentView.backgroundColor = #colorLiteral(red: 0.9599978328, green: 0.966491878, blue: 0.9829974771, alpha: 1)
         
         // card
-        let cardView = UIView(backgroundColor: .white, cornerRadius: 10)
+        let cardView = UIView(backgroundColor: .white, cornerRadius: CGFloat.adaptive(width: 10.0))
         contentView.addSubview(cardView)
-        cardView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 10, bottom: 10, right: 10))
+        cardView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top:     0.0,
+                                                                 left:    CGFloat.adaptive(width: 10.0),
+                                                                 bottom:  CGFloat.adaptive(height: 10.0),
+                                                                 right:   CGFloat.adaptive(width: 10.0)))
+
+        let mainVerticalStackView = UIStackView(axis: .vertical, spacing: CGFloat.adaptive(height: 14.0))
+        mainVerticalStackView.alignment = .leading
+        mainVerticalStackView.distribution = .fillProportionally
         
-        // layout card
-        cardView.addSubview(avatarImageView)
-        avatarImageView.autoPinTopAndLeadingToSuperView(inset: 16)
+        cardView.addSubview(mainVerticalStackView)
+        mainVerticalStackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(horizontal: CGFloat.adaptive(width: 15.0), vertical: CGFloat.adaptive(height: 15.0)))
         
-        // name and points
-        let namePointsContainerView = UIView(forAutoLayout: ())
-        cardView.addSubview(namePointsContainerView)
-        namePointsContainerView.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 10)
-        namePointsContainerView.autoAlignAxis(.horizontal, toSameAxisOf: avatarImageView)
+        let topHorizontalStackView = UIStackView(axis: .horizontal, spacing: CGFloat.adaptive(width: 10.0))
+        topHorizontalStackView.alignment = .center
+        topHorizontalStackView.distribution = .fillProportionally
+
+        let middleVerticalStackView = UIStackView(axis: .vertical, spacing: CGFloat.adaptive(height: 3.0))
+        middleVerticalStackView.alignment = .leading
+        middleVerticalStackView.distribution = .fillProportionally
+        middleVerticalStackView.setContentHuggingPriority(251.0, for: .horizontal)
         
-        namePointsContainerView.addSubview(userNameLabel)
-        userNameLabel.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .bottom)
+        let pointsHorizontalStackView = UIStackView(axis: .horizontal, spacing: CGFloat.adaptive(width: 4.0))
+        pointsHorizontalStackView.alignment = .leading
+        pointsHorizontalStackView.distribution = .fillProportionally
         
-        namePointsContainerView.addSubview(pointsCountLabel)
-        pointsCountLabel.autoPinBottomAndLeadingToSuperView(inset: 0)
-        pointsCountLabel.autoPinEdge(.top, to: .bottom, of: userNameLabel)
+        pointsHorizontalStackView.addArrangedSubviews([ pointsCountLabel, percentsCountLabel, percentsCountLabel ])
+        middleVerticalStackView.addArrangedSubviews([ userNameLabel, pointsHorizontalStackView ])
         
-        let pointsLabel = UILabel.with(text: "points".localized().uppercaseFirst + " • ", textSize: 12, weight: .semibold, textColor: .a5a7bd)
-        namePointsContainerView.addSubview(pointsLabel)
-        pointsLabel.autoPinEdge(.leading, to: .trailing, of: pointsCountLabel, withOffset: 5)
-        pointsLabel.autoPinEdge(.bottom, to: .bottom, of: pointsCountLabel)
-        
-        namePointsContainerView.addSubview(percentsCountLabel)
-        percentsCountLabel.autoPinEdge(.leading, to: .trailing, of: pointsLabel)
-        percentsCountLabel.autoPinEdge(.bottom, to: .bottom, of: pointsCountLabel)
-        
-        let percentLabel = UILabel.with(text: "%", textSize: 12, weight: .semibold, textColor: .appMainColor)
-        namePointsContainerView.addSubview(percentLabel)
-        percentLabel.autoPinEdge(.leading, to: .trailing, of: percentsCountLabel)
-        percentLabel.autoPinEdge(.bottom, to: .bottom, of: pointsCountLabel)
-        
-        // vote button
-        cardView.addSubview(voteButton)
-        voteButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
-        voteButton.autoAlignAxis(.horizontal, toSameAxisOf: namePointsContainerView)
-        voteButton.addTarget(self, action: #selector(voteButtonDidTouch), for: .touchUpInside)
-        
-        // descriptionLabel
-        cardView.addSubview(descriptionLabel)
-        descriptionLabel.autoPinEdge(.top, to: .bottom, of: avatarImageView, withOffset: 16)
-        descriptionLabel.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(inset: 16), excludingEdge: .top)
-    }
+        voteButton.widthAnchor.constraint(equalToConstant: CGFloat.adaptive(width: 65.0)).isActive = true
+        topHorizontalStackView.addArrangedSubviews([ avatarImageView, middleVerticalStackView, voteButton ])
+        mainVerticalStackView.addArrangedSubviews([ topHorizontalStackView, descriptionLabel ])
+        topHorizontalStackView.autoPinEdge(.trailing, to: .trailing, of: mainVerticalStackView, withOffset: 0.0)
+   }
     
     func setUp(with leader: ResponseAPIContentGetLeader) {
         self.leader = leader
+        
         // avatar
         avatarImageView.setAvatar(urlString: leader.avatarUrl, namePlaceHolder: leader.username)
         avatarImageView.percent = leader.ratingPercent
@@ -102,20 +93,23 @@ class CommunityLeaderCell: CommunityPageCell {
         userNameLabel.text = leader.username
         
         // point
-        pointsCountLabel.text = "\(leader.rating)"
-        percentsCountLabel.text = "\(leader.ratingPercent.rounded(numberOfDecimalPlaces: 2, rule: .up) * 100)"
+        pointsCountLabel.text = String(format: "%.1f%@ %@ •", leader.rating, (leader.rating / 1000 > 1 ? "k" : ""), "points".localized()).replacingOccurrences(of: ".", with: ",")
+        percentsCountLabel.text = String(format: "%.0f%%", leader.ratingPercent.rounded(numberOfDecimalPlaces: 0, rule: .up) * 100)
         
         // description
         descriptionLabel.text = leader.url
-        
+        descriptionLabel.isHidden = leader.url.isEmpty
+
         // voteButton
         let voted = leader.isVoted ?? false
-        voteButton.backgroundColor = voted ? #colorLiteral(red: 0.9525656104, green: 0.9605062604, blue: 0.9811610579, alpha: 1): .appMainColor
+        voteButton.backgroundColor = voted ? #colorLiteral(red: 0.9525656104, green: 0.9605062604, blue: 0.9811610579, alpha: 1) : .appMainColor
         voteButton.setTitleColor(voted ? .appMainColor: .white , for: .normal)
         voteButton.setTitle(voted ? "voted".localized().uppercaseFirst : "vote".localized().uppercaseFirst, for: .normal)
         voteButton.isEnabled = !(leader.isBeingVoted ?? false)
     }
     
+    
+    // MARK: - Actions
     @objc func voteButtonDidTouch() {
         guard let leader = leader else {return}
         voteButton.animate {
