@@ -108,7 +108,7 @@ final class TextAttachment: SubviewTextAttachment, TextAttachmentType {
             ResponseAPIContentBlock(
                 id: id,
                 type: type,
-                attributes: nil,
+                attributes: attributes,
                 content: .string(url!))
         )
     }
