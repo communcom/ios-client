@@ -149,6 +149,11 @@ class CommentCell: MyTableViewCell, ListItemCellType {
             replyButton.isEnabled = true
         }
         
+        // if comment was deleted
+        if comment.document == nil {
+            replyButton.isEnabled = false
+        }
+        
         // Show media
         let embededResult = comment.attachments
         if embededResult.count > 0 {
@@ -165,7 +170,10 @@ class CommentCell: MyTableViewCell, ListItemCellType {
             layoutIfNeeded()
         }
         
-        if (self.comment!.sendingState ?? MessageSendingState.none) != MessageSendingState.none {
+        if (self.comment!.sendingState ?? MessageSendingState.none) != MessageSendingState.none ||
+            comment.document == nil
+        {
+            // disable voting
             self.comment!.votes.isBeingVoted = true
         }
         voteContainerView.setUp(with: self.comment!.votes, userID: comment.author?.userId)

@@ -64,6 +64,11 @@ extension CommentCell: UITextViewDelegate {
         guard let comment = comment else {return}
         if gestureRecognizer.state == UIGestureRecognizer.State.ended {
             //When lognpress is finish
+            if (comment.sendingState ?? MessageSendingState.none) != MessageSendingState.none ||
+                comment.document == nil
+            {
+                return
+            }
             self.delegate?.cell(self, didTapMoreActionFor: comment)
         }
     }
