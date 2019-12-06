@@ -23,9 +23,9 @@ class CommunButton: UIButton {
                                   textColor:        .white,
                                   cornerRadius:     CGFloat.adaptive(height: height) / 2,
                                   contentInsets:    UIEdgeInsets(top:       CGFloat.adaptive(height: 10.0),
-                                                                 left:      CGFloat.adaptive(width: 15.0),
+                                                                 left:      CGFloat.adaptive(width: 10.0),
                                                                  bottom:    CGFloat.adaptive(height: 10.0),
-                                                                 right:     CGFloat.adaptive(width: 15.0)))
+                                                                 right:     CGFloat.adaptive(width: 10.0)))
         
         button.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         

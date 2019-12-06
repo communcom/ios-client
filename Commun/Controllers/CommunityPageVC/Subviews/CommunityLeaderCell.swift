@@ -32,7 +32,7 @@ class CommunityLeaderCell: CommunityPageCell {
         return label
     }()
     
-    lazy var voteButton: CommunButton = CommunButton.default(label: "vote".localized().uppercaseFirst)
+    lazy var voteButton: CommunButton = CommunButton.default(label: "voted".localized().uppercaseFirst)
     
     lazy var descriptionLabel: UILabel = {
         let label = UILabel.with(textSize: 14, numberOfLines: 0)
@@ -93,8 +93,8 @@ class CommunityLeaderCell: CommunityPageCell {
         userNameLabel.text = leader.username
         
         // point
-        pointsCountLabel.text = String(format: "%.1f%@ %@ •", leader.rating, (leader.rating / 1000 > 1 ? "k" : ""), "points".localized()).replacingOccurrences(of: ".", with: ",")
-        percentsCountLabel.text = String(format: "%.0f%%", leader.ratingPercent.rounded(numberOfDecimalPlaces: 0, rule: .up) * 100)
+        pointsCountLabel.text = String(format: "%.0f%@ %@ •", leader.rating, (leader.rating / 1000 > 1 ? "k" : ""), "points".localized()).replacingOccurrences(of: ".", with: ",")
+        percentsCountLabel.text = String(format: "%.0f%%", leader.ratingPercent * 100)
         
         // description
         descriptionLabel.text = leader.url
@@ -106,6 +106,7 @@ class CommunityLeaderCell: CommunityPageCell {
         voteButton.setTitleColor(voted ? .appMainColor: .white , for: .normal)
         voteButton.setTitle(voted ? "voted".localized().uppercaseFirst : "vote".localized().uppercaseFirst, for: .normal)
         voteButton.isEnabled = !(leader.isBeingVoted ?? false)
+        voteButton.addTarget(self, action: #selector(voteButtonDidTouch), for: .touchUpInside)
     }
     
     
