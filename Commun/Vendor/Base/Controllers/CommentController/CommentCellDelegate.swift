@@ -136,7 +136,7 @@ extension CommentCellDelegate where Self: BaseViewController {
             highlightedButtonIndex: 1)
             { (index) in
                 if index == 0 {
-                    topController.showIndetermineHudWithMessage("deleting post".localized().uppercaseFirst)
+                    topController.showIndetermineHudWithMessage("deleting comment".localized().uppercaseFirst)
                     NetworkService.shared.deleteMessage(message: comment)
                         .subscribe(onCompleted: {
                             topController.hideHud()
