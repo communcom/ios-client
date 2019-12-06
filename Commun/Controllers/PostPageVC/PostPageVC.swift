@@ -204,12 +204,12 @@ class PostPageVC: CommentsViewController {
                         .disposed(by: self.disposeBag)
                         
                     case .adding:
+                        // deleted falling comment
+                        comment.notifyDeleted()
+                        
                         guard let communCode = post.community?.communityId,
                             let parentAuthorId = post.author?.userId
                             else {return}
-                        
-                        // deleted falling comment
-                        comment.notifyDeleted()
                         
                         let parentPermlink = post.contentId.permlink
                         // Send request
@@ -227,14 +227,14 @@ class PostPageVC: CommentsViewController {
                         .disposed(by: self.disposeBag)
                         
                     case .replying:
+                        // deleted falling comment
+                        comment.notifyDeleted()
+                        
                         guard let communCode = post.community?.communityId,
                             let parentCommentAuthorId = comment.parents.comment?.userId,
                             let parentCommentPermlink = comment.parents.comment?.permlink,
                             let parentComment = (self.viewModel as! PostPageViewModel).items.value.first(where: {$0.contentId.userId == parentCommentAuthorId && $0.contentId.permlink == parentCommentPermlink})
                         else {return}
-                        
-                        // deleted falling comment
-                        comment.notifyDeleted()
                         
                         // Send request
                         RestAPIManager.instance.createMessage(
