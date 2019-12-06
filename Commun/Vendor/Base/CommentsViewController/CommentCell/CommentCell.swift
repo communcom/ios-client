@@ -183,6 +183,7 @@ class CommentCell: MyTableViewCell, ListItemCellType {
             currentAttributes: [.font: UIFont.systemFont(ofSize: defaultContentFontSize)],
             attachmentType: TextAttachment.self)
         else {
+            mutableAS.append(NSAttributedString(string: " " + "this comment was deleted".localized().uppercaseFirst, attributes: [.font: UIFont.boldSystemFont(ofSize: defaultContentFontSize), .foregroundColor: UIColor.lightGray]))
             contentTextView.attributedText = mutableAS
             return
         }
