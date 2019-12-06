@@ -20,6 +20,7 @@ protocol CommentCellDelegate: class {
     func cell(_ cell: CommentCell, didTapOnTag tag: String)
     func cell(_ cell: CommentCell, didTapDeleteForComment comment: ResponseAPIContentGetComment)
     func cell(_ cell: CommentCell, didTapEditForComment comment: ResponseAPIContentGetComment)
+    func cell(_ cell: CommentCell, didTapRetryForComment comment: ResponseAPIContentGetComment)
 }
 
 extension CommentCellDelegate where Self: BaseViewController {

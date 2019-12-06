@@ -70,6 +70,6 @@ extension CommentCell: UITextViewDelegate {
     
     @objc func retrySendingCommentDidTouch(gestureRecognizer: UITapGestureRecognizer) {
         guard let comment = comment else {return}
-        
+        delegate?.cell(self, didTapRetryForComment: comment)
     }
 }

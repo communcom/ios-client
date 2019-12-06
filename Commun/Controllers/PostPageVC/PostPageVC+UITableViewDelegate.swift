@@ -21,6 +21,8 @@ extension PostPageVC {
         // count comments left
         let commentsLeft = Int(parentComment.childCommentsCount) - tableView.numberOfRows(inSection: section) + 1
         
+        if commentsLeft <= 0 {return nil}
+        
         // show number of comments left
         let button = ReplyButton(label: "• \(commentsLeft) " + "replies".localized().uppercaseFirst, labelFont: .boldSystemFont(ofSize: 13), textColor: .appMainColor)
         button.parentComment = parentComment

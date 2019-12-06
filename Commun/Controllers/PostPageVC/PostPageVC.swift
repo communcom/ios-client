@@ -174,6 +174,93 @@ class PostPageVC: CommentsViewController {
         commentForm.textView.becomeFirstResponder()
     }
     
+    override func retrySendingComment(_ comment: ResponseAPIContentGetComment) {
+        guard let block = comment.document,
+            let post = (self.viewModel as! PostPageViewModel).post.value
+        else {return}
+        
+        showAlert(title: "an error has occured".localized().uppercaseFirst, message: "Do you want to retry".localized().uppercaseFirst + "?", buttonTitles: ["yes".localized().uppercaseFirst, "no".localized().uppercaseFirst], highlightedButtonIndex: 0, completion: { (index) in
+            // retry
+            if index == 0 {
+                // retry
+                switch comment.sendingState {
+                case .error(let state):
+                    switch state {
+                    case .editing:
+                        guard let communCode = post.community?.communityId
+                        else {return}
+                        
+                        
+                        // Send request
+                        RestAPIManager.instance.updateMessage(
+                            originMessage:  comment,
+                            communCode:     communCode,
+                            permlink:       comment.contentId.permlink,
+                            block:          block
+                        )
+                        .subscribe(onError: { [weak self] error in
+                            self?.showError(error)
+                        })
+                        .disposed(by: self.disposeBag)
+                        
+                    case .adding:
+                        guard let communCode = post.community?.communityId,
+                            let parentAuthorId = post.author?.userId
+                            else {return}
+                        
+                        // deleted falling comment
+                        comment.notifyDeleted()
+                        
+                        let parentPermlink = post.contentId.permlink
+                        // Send request
+                        RestAPIManager.instance.createMessage(
+                            isComment:      true,
+                            parentPost:     post,
+                            communCode:     communCode,
+                            parentAuthor:   parentAuthorId,
+                            parentPermlink: parentPermlink,
+                            block:          block
+                        )
+                        .subscribe(onError: { [weak self] error in
+                            self?.showError(error)
+                        })
+                        .disposed(by: self.disposeBag)
+                        
+                    case .replying:
+                        guard let communCode = post.community?.communityId,
+                            let parentCommentAuthorId = comment.parents.comment?.userId,
+                            let parentCommentPermlink = comment.parents.comment?.permlink,
+                            let parentComment = (self.viewModel as! PostPageViewModel).items.value.first(where: {$0.contentId.userId == parentCommentAuthorId && $0.contentId.permlink == parentCommentPermlink})
+                        else {return}
+                        
+                        // deleted falling comment
+                        comment.notifyDeleted()
+                        
+                        // Send request
+                        RestAPIManager.instance.createMessage(
+                            isComment:      true,
+                            parentPost:     post,
+                            isReplying:     true,
+                            parentComment:  parentComment,
+                            communCode:     communCode,
+                            parentAuthor:   parentCommentAuthorId,
+                            parentPermlink: parentCommentPermlink,
+                            block:          block
+                        )
+                        .subscribe(onError: { [weak self] error in
+                            self?.showError(error)
+                        })
+                        .disposed(by: self.disposeBag)
+                    default:
+                        break
+                    }
+                default:
+                    break
+                }
+            }
+        })
+    }
+    
     @objc func openMorePostActions() {
         postView.openMorePostActions()
     }

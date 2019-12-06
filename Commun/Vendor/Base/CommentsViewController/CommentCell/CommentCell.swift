@@ -116,8 +116,8 @@ class CommentCell: MyTableViewCell, ListItemCellType {
         statusImageView.isUserInteractionEnabled = false
         statusImageView.isHidden = true
         
-        switch comment.status {
-        case .editing:
+        switch comment.sendingState {
+        case .editing, .adding, .replying:
             statusImageView.widthConstraint?.constant = 16
             statusImageView.backgroundColor = .clear
             statusImageView.isHidden = false
@@ -165,7 +165,7 @@ class CommentCell: MyTableViewCell, ListItemCellType {
             layoutIfNeeded()
         }
         
-        if self.comment!.status == .editing {
+        if (self.comment!.sendingState ?? MessageSendingState.none) != MessageSendingState.none {
             self.comment!.votes.isBeingVoted = true
         }
         voteContainerView.setUp(with: self.comment!.votes, userID: comment.author?.userId)

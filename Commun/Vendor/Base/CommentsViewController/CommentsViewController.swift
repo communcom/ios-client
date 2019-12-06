@@ -129,6 +129,10 @@ class CommentsViewController: ListViewController<ResponseAPIContentGetComment, C
     func replyToComment(_ comment: ResponseAPIContentGetComment) {
         // for overriding
     }
+    
+    func retrySendingComment(_ comment: ResponseAPIContentGetComment) {
+        // for overriding
+    }
 }
 
 extension CommentsViewController: UITableViewDelegate {

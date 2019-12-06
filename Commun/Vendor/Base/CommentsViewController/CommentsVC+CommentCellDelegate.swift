@@ -20,4 +20,8 @@ extension CommentsViewController {
     func cell(_ cell: CommentCell, didTapReplyButtonForComment comment: ResponseAPIContentGetComment) {
         replyToComment(comment)
     }
+    
+    func cell(_ cell: CommentCell, didTapRetryForComment comment: ResponseAPIContentGetComment) {
+        retrySendingComment(comment)
+    }
 }
