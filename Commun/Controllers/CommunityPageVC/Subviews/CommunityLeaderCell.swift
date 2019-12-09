@@ -18,24 +18,24 @@ class CommunityLeaderCell: CommunityPageCell {
     }()
     
     lazy var userNameLabel: UILabel = {
-        let label = UILabel.with(text: "Sergey Marchenko", textSize: 15, weight: .semibold)
+        let label = UILabel.with(text: "Sergey Marchenko", textSize: CGFloat.adaptive(width: 15.0), weight: .semibold)
         return label
     }()
     
     lazy var pointsCountLabel: UILabel = {
-        let label = UILabel.with(text: "12,2k", textSize: 12, weight: .semibold, textColor: .a5a7bd)
+        let label = UILabel.with(text: "12,2k", textSize: CGFloat.adaptive(width: 12.0), weight: .semibold, textColor: .a5a7bd)
         return label
     }()
     
     lazy var percentsCountLabel: UILabel = {
-        let label = UILabel.with(text: "50", textSize: 12, weight: .semibold, textColor: .appMainColor)
+        let label = UILabel.with(text: "50", textSize: CGFloat.adaptive(width: 12.0), weight: .semibold, textColor: .appMainColor)
         return label
     }()
     
     lazy var voteButton: CommunButton = CommunButton.default(label: "voted".localized().uppercaseFirst)
     
     lazy var descriptionLabel: UILabel = {
-        let label = UILabel.with(textSize: 14, numberOfLines: 0)
+        let label = UILabel.with(textSize: CGFloat.adaptive(width: 14.0), numberOfLines: 0)
         return label
     }()
     
@@ -50,7 +50,7 @@ class CommunityLeaderCell: CommunityPageCell {
         contentView.addSubview(cardView)
         cardView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top:     0.0,
                                                                  left:    CGFloat.adaptive(width: 10.0),
-                                                                 bottom:  CGFloat.adaptive(height: 10.0),
+                                                                 bottom:  CGFloat.adaptive(height: 20.0),
                                                                  right:   CGFloat.adaptive(width: 10.0)))
 
         let mainVerticalStackView = UIStackView(axis: .vertical, spacing: CGFloat.adaptive(height: 14.0))
@@ -58,13 +58,13 @@ class CommunityLeaderCell: CommunityPageCell {
         mainVerticalStackView.distribution = .fillProportionally
         
         cardView.addSubview(mainVerticalStackView)
-        mainVerticalStackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(horizontal: CGFloat.adaptive(width: 15.0), vertical: CGFloat.adaptive(height: 15.0)))
+        mainVerticalStackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(horizontal: CGFloat.adaptive(width: 30.0), vertical: CGFloat.adaptive(height: 30.0)))
         
         let topHorizontalStackView = UIStackView(axis: .horizontal, spacing: CGFloat.adaptive(width: 10.0))
         topHorizontalStackView.alignment = .center
         topHorizontalStackView.distribution = .fillProportionally
 
-        let middleVerticalStackView = UIStackView(axis: .vertical, spacing: CGFloat.adaptive(height: 3.0))
+        let middleVerticalStackView = UIStackView(axis: .vertical, spacing: CGFloat.adaptive(height: 5.0))
         middleVerticalStackView.alignment = .leading
         middleVerticalStackView.distribution = .fillProportionally
         middleVerticalStackView.setContentHuggingPriority(251.0, for: .horizontal)
