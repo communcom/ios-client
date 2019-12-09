@@ -296,7 +296,7 @@ class SignUpVC: UIViewController, SignUpRouter {
         let nc = navigationController
         if gesture.didTapAttributedTextInLabel(label: signInLabel, inRange: signInRange) {
             navigationController?.popViewController(animated: true, {
-                let signInVC = controllerContainer.resolve(SignInViewController.self)!
+                let signInVC = SignInVC()
                 nc?.pushViewController(signInVC)
             })
         }

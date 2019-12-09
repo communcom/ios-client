@@ -30,11 +30,6 @@ let controllerContainer: Container = {
     })
     
     // Authorization scene
-    container.register(SignInViewController.self, factory: { r in
-        let vc = SignInViewController.instanceController(fromStoryboard: "SignInViewController", withIdentifier: "SignInViewController") as! SignInViewController
-        return vc
-    })
-
     container.register(SignUpVC.self, factory: { r in
         let vc = SignUpVC.instanceController(fromStoryboard: "SignUpVC", withIdentifier: "SignUpVC") as! SignUpVC
         return vc
