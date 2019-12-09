@@ -95,6 +95,7 @@ extension UIButton {
         button.tintColor = tintColor
         button.setImage(UIImage(named: "back-button"), for: .normal)
         button.touchAreaEdgeInsets = UIEdgeInsets(inset: -2)
+        button.contentEdgeInsets = contentInsets
         return button
     }
     
@@ -103,6 +104,7 @@ extension UIButton {
         button.tintColor = tintColor
         button.setImage(UIImage(named: "postpage-more"), for: .normal)
         button.touchAreaEdgeInsets = UIEdgeInsets(inset: -2)
+        button.contentEdgeInsets = contentInsets
         return button
     }
     

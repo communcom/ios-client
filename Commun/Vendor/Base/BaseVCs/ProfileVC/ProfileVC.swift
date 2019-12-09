@@ -37,7 +37,7 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
     }()
     
     lazy var backButton = UIButton.back(tintColor: .white, contentInsets: UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 24))
-    lazy var optionsButton = UIButton.option(tintColor: .white)
+    lazy var optionsButton = UIButton.option(tintColor: .white, contentInsets: UIEdgeInsets(top: 12, left: 32, bottom: 12, right: 0))
     
     lazy var coverImageView: UIImageView = {
         let imageView = UIImageView()
