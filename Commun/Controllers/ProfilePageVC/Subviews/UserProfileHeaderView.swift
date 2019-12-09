@@ -43,9 +43,9 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
     
     lazy var seeAllButton: UIButton = UIButton(label: "see all".localized(), labelFont: .systemFont(ofSize: 15, weight: .semibold), textColor: .appMainColor)
     
-    lazy var communitiesCountLabel = UILabel.with(text: "1,2 k", textSize: 15, weight: .semibold, textColor: .a5a7bd)
+    lazy var communitiesLabel = UILabel.with(text: "communities".localized().uppercaseFirst, textSize: 20, weight: .bold)
     
-    lazy var communitiesMutualCountLabel = UILabel.with(text: "300", textSize: 15, weight: .semibold, textColor: .a5a7bd)
+    lazy var communitiesCountLabel = UILabel.with(text: "1,2 k", textSize: 15, weight: .semibold, textColor: .a5a7bd)
     
     lazy var communitiesCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -107,7 +107,6 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
         communitiesView.autoPinEdge(toSuperviewEdge: .left)
         communitiesView.autoPinEdge(toSuperviewEdge: .right)
 
-        let communitiesLabel = UILabel.with(text: "communities".localized().uppercaseFirst, textSize: 20, weight: .bold)
         communitiesView.addSubview(communitiesLabel)
         communitiesLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
         communitiesLabel.autoPinEdge(.top, to: .top, of: communitiesView, withOffset: 16)
@@ -120,20 +119,6 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
         communitiesView.addSubview(communitiesCountLabel)
         communitiesCountLabel.autoPinEdge(.top, to: .bottom, of: communitiesLabel, withOffset: 5)
         communitiesCountLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
-        
-        let openBraceLabel = UILabel.with(text: "(", textSize: 15, weight: .semibold, textColor: .appGrayColor)
-        communitiesView.addSubview(openBraceLabel)
-        openBraceLabel.autoPinEdge(.leading, to: .trailing, of: communitiesCountLabel, withOffset: 2)
-        openBraceLabel.autoAlignAxis(.horizontal, toSameAxisOf: communitiesCountLabel)
-        
-        communitiesView.addSubview(communitiesMutualCountLabel)
-        communitiesMutualCountLabel.autoPinEdge(.leading, to: .trailing, of: openBraceLabel)
-        communitiesMutualCountLabel.autoAlignAxis(.horizontal, toSameAxisOf: communitiesCountLabel)
-
-        let mutualLabel = UILabel.with(text: "mutual".localized().uppercaseFirst + ")", textSize: 15, weight: .semibold, textColor: .appGrayColor)
-        communitiesView.addSubview(mutualLabel)
-        mutualLabel.autoPinEdge(.leading, to: .trailing, of: communitiesMutualCountLabel, withOffset: 2)
-        mutualLabel.autoAlignAxis(.horizontal, toSameAxisOf: communitiesCountLabel)
         
         communitiesCollectionView.register(CommunityCollectionCell.self, forCellWithReuseIdentifier: "CommunityCollectionCell")
         communitiesCollectionView.contentInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
@@ -210,8 +195,7 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
         // stats
         followersCountLabel.text = "\(userProfile.subscribers?.usersCount ?? 0)"
         followingsCountLabel.text = "\(userProfile.subscriptions?.usersCount ?? 0)"
-        communitiesCountLabel.text = "\(userProfile.subscriptions?.communitiesCount ?? 0)"
-        communitiesMutualCountLabel.text = "\(userProfile.highlightCommunitiesCount ?? 0)"
+        communitiesCountLabel.text = "\(userProfile.subscriptions?.communitiesCount ?? 0) (\(userProfile.highlightCommunitiesCount ?? 0) " + "mutual".localized().uppercaseFirst + ")"
 
         if userProfile.userId != Config.currentUser?.id {
             isCommunitiesHidden = !(userProfile.highlightCommunitiesCount ?? 0 > 0)
