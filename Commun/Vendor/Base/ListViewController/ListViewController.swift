@@ -249,8 +249,10 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
     func handleListError() {
         let title = "error"
         let description = "there is an error occurs"
-        tableView.addEmptyPlaceholderFooterView(title: title.localized().uppercaseFirst, description: description.localized().uppercaseFirst, buttonLabel: "retry".localized().uppercaseFirst)
-        {
+        
+        tableView.addEmptyPlaceholderFooterView(title:          title.localized().uppercaseFirst,
+                                                description:    description.localized().uppercaseFirst,
+                                                buttonLabel:    "retry".localized().uppercaseFirst) {
             self.viewModel.fetchNext(forceRetry: true)
         }
     }
@@ -258,5 +260,4 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
     @objc func refresh() {
         viewModel.reload()
     }
-    
 }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
@@ -18,17 +18,17 @@
             <objects>
                 <viewController storyboardIdentifier="SignInViewController" id="jR8-kO-b4x" customClass="SignInViewController" customModule="Commun" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="noh-Tx-RFb">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" keyboardDismissMode="onDrag" translatesAutoresizingMaskIntoConstraints="NO" id="XB9-x9-3Dr">
-                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <rect key="frame" x="0.0" y="44" width="375" height="734"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cvh-LY-9dy">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="515"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="476"/>
                                         <subviews>
                                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="G0H-z0-2F9">
-                                                <rect key="frame" x="0.0" y="8" width="414" height="69"/>
+                                                <rect key="frame" x="0.0" y="8" width="375" height="69"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="69" id="Gvz-RO-d1J" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
@@ -78,16 +78,16 @@
                                                 </connections>
                                             </collectionView>
                                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gJG-3i-Ca7">
-                                                <rect key="frame" x="0.0" y="93" width="414" height="414"/>
+                                                <rect key="frame" x="0.0" y="93" width="375" height="375"/>
                                                 <subviews>
                                                     <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ph5-py-HbL">
-                                                        <rect key="frame" x="0.0" y="0.0" width="414" height="414"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="375" height="375"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" secondItem="ph5-py-HbL" secondAttribute="height" multiplier="1:1" id="Tee-TE-lsU"/>
                                                         </constraints>
                                                     </containerView>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Go to commun and scan QRasdfasdfasdf a asdf asdf asdf asdf" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AEd-90-k92">
-                                                        <rect key="frame" x="0.0" y="358" width="414" height="56"/>
+                                                        <rect key="frame" x="0.0" y="319" width="375" height="56"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <accessibility key="accessibilityConfiguration" identifier="SignInViewQRContainerViewGotoLabel" label="SignInViewQRContainerViewGotoLabel"/>
                                                         <constraints>
@@ -113,10 +113,10 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="btM-xQ-6hP">
-                                                <rect key="frame" x="0.0" y="93" width="414" height="301"/>
+                                                <rect key="frame" x="0.0" y="93" width="375" height="301"/>
                                                 <subviews>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="MzH-Fh-ifk">
-                                                        <rect key="frame" x="16" y="16" width="382" height="56"/>
+                                                        <rect key="frame" x="16" y="16" width="343" height="56"/>
                                                         <color key="backgroundColor" red="0.95212393999099731" green="0.95958274602890015" blue="0.97945135831832886" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <accessibility key="accessibilityConfiguration" identifier="SignInViewLoginTextField" label="SignInViewLoginTextField"/>
                                                         <constraints>
@@ -131,7 +131,7 @@
                                                         </userDefinedRuntimeAttributes>
                                                     </textField>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="siR-es-fG8">
-                                                        <rect key="frame" x="16" y="80" width="382" height="56"/>
+                                                        <rect key="frame" x="16" y="80" width="343" height="56"/>
                                                         <color key="backgroundColor" red="0.95212393999099731" green="0.95958274602890015" blue="0.97945135831832886" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <accessibility key="accessibilityConfiguration" identifier="SignInViewPasswordTextField" label="SignInViewPasswordTextField"/>
                                                         <constraints>
@@ -146,7 +146,7 @@
                                                         </userDefinedRuntimeAttributes>
                                                     </textField>
                                                     <button clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yxv-l2-Yad" customClass="BlankButton" customModule="Commun" customModuleProvider="target">
-                                                        <rect key="frame" x="125" y="255" width="164" height="30"/>
+                                                        <rect key="frame" x="105.66666666666669" y="255" width="164" height="30"/>
                                                         <accessibility key="accessibilityConfiguration" identifier="SignInSignUpButton" label="SignInSignUpButton"/>
                                                         <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
                                                         <state key="normal" title="don't have an account?">
@@ -154,7 +154,7 @@
                                                         </state>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2i2-iK-Xdn" customClass="StepButton" customModule="Commun" customModuleProvider="target">
-                                                        <rect key="frame" x="16" y="176" width="382" height="56"/>
+                                                        <rect key="frame" x="16" y="176" width="343" height="56"/>
                                                         <accessibility key="accessibilityConfiguration" identifier="SignInSignInButton" label="SignInSignInButton"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="56" id="Idr-z6-cLI" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
