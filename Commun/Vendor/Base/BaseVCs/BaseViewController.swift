@@ -12,7 +12,7 @@ import SwiftTheme
 
 class BaseViewController: UIViewController {
     // MARK: - Properties
-    let disposeBag = DisposeBag()
+    lazy var disposeBag = DisposeBag()
     
     
     // MARK: - Class Functions
