@@ -38,7 +38,7 @@ final class MyProfileHeaderView: UserProfileHeaderView {
     
     override func setUp(with profile: ResponseAPIContentGetProfile) {
         super.setUp(with: profile)
-        communitiesCountLabel.isHidden = true
+        communitiesCountLabel.text = nil
         communitiesLabel.text = "communities".localized().uppercaseFirst + " " + "(\(profile.subscriptions?.communitiesCount ?? 0))"
     }
     
