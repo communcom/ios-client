@@ -36,6 +36,12 @@ final class MyProfileHeaderView: UserProfileHeaderView {
         bind()
     }
     
+    override func setUp(with profile: ResponseAPIContentGetProfile) {
+        super.setUp(with: profile)
+        communitiesCountLabel.text = nil
+        communitiesLabel.text = "communities".localized().uppercaseFirst + " " + "(\(profile.subscriptions?.communitiesCount ?? 0))"
+    }
+    
     override func layoutFollowButton() {
         // remove followButton and set nameLabel as max width
         nameLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)

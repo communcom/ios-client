@@ -19,6 +19,7 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
     var viewModel: ListViewModel<T>
     var dataSource: MyRxTableViewSectionedAnimatedDataSource<ListSection>!
     var tableViewMargin: UIEdgeInsets {.zero}
+    var pullToRefreshAdded = false
     
     // Search manager
     var isSearchEnabled: Bool {false}
@@ -79,11 +80,7 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
             definesPresentationContext = true
         }
         
-        // pull to refresh
-        tableView.es.addPullToRefresh { [unowned self] in
-            self.tableView.es.stopPullToRefresh()
-            self.refresh()
-        }
+        
         
         tableView.rowHeight = UITableView.automaticDimension
         
@@ -99,6 +96,18 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
         )
         
         dataSource.animationConfiguration = AnimationConfiguration(reloadAnimation: .none)
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        // pull to refresh
+        if !pullToRefreshAdded {
+            tableView.es.addPullToRefresh { [unowned self] in
+                self.tableView.es.stopPullToRefresh()
+                self.refresh()
+            }
+            pullToRefreshAdded = true
+        }
     }
     
     func registerCell() {

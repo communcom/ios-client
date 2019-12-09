@@ -104,13 +104,14 @@ class PostCell: MyTableViewCell, ListItemCellType {
         commentsCountButton.addTarget(self, action: #selector(commentCountsButtonDidTouch), for: .touchUpInside)
         
         // Views
-        contentView.addSubview(viewsCountLabel)
-        viewsCountLabel.autoPinEdge(.trailing, to: .leading, of: commentsCountButton, withOffset: -23)
-        viewsCountLabel.autoAlignAxis(.horizontal, toSameAxisOf: voteContainerView)
-        contentView.addSubview(viewsCountButton)
-        viewsCountButton.autoPinEdge(.trailing, to: .leading, of: viewsCountLabel, withOffset: -8)
-        viewsCountButton.autoAlignAxis(.horizontal, toSameAxisOf: voteContainerView)
-        viewsCountButton.addTarget(self, action: #selector(commentCountsButtonDidTouch), for: .touchUpInside)
+        // temp hide
+//        contentView.addSubview(viewsCountLabel)
+//        viewsCountLabel.autoPinEdge(.trailing, to: .leading, of: commentsCountButton, withOffset: -23)
+//        viewsCountLabel.autoAlignAxis(.horizontal, toSameAxisOf: voteContainerView)
+//        contentView.addSubview(viewsCountButton)
+//        viewsCountButton.autoPinEdge(.trailing, to: .leading, of: viewsCountLabel, withOffset: -8)
+//        viewsCountButton.autoAlignAxis(.horizontal, toSameAxisOf: voteContainerView)
+//        viewsCountButton.addTarget(self, action: #selector(commentCountsButtonDidTouch), for: .touchUpInside)
 
         // separator
         let separatorView = UIView(height: 10)
