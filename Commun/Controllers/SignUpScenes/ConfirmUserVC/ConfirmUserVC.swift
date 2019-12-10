@@ -23,7 +23,7 @@ class ConfirmUserVC: UIViewController, SignUpRouter {
     var resendTimer: Timer?
     var resendSeconds: Int = 0
     static var counter: Int = 0
-    
+
     let pinCodeInputView: PinCodeInputView<ItemView> = .init(digit:         numberOfDigits,
                                                              itemSpacing:   12,
                                                              itemFactory:   {
@@ -41,6 +41,16 @@ class ConfirmUserVC: UIViewController, SignUpRouter {
     
     // MARK: - IBOutlets
     @IBOutlet weak var pinCodeView: UIView!
+   
+    @IBOutlet weak var securityCodeTextField: UITextField! {
+        didSet {
+            if #available(iOS 12.0, *) {
+                self.securityCodeTextField.textContentType = .oneTimeCode
+                self.securityCodeTextField.delegate = self
+                self.securityCodeTextField.tag = 777
+            }
+        }
+    }
     
     @IBOutlet weak var smsCodeLabel: UILabel! {
         didSet {
@@ -51,6 +61,7 @@ class ConfirmUserVC: UIViewController, SignUpRouter {
                                    isMultiLines:  false)
         }
     }
+    
     @IBOutlet weak var nextButton: StepButton!
     
     @IBOutlet weak var resendButton: ResendButton! {
@@ -75,6 +86,7 @@ class ConfirmUserVC: UIViewController, SignUpRouter {
             self.checkResendSmsCodeTime()
         }
     }
+    
     
     // MARK: - Class Functions
     override func viewDidLoad() {
@@ -112,7 +124,8 @@ class ConfirmUserVC: UIViewController, SignUpRouter {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        self.pinCodeInputView.becomeFirstResponder()
+        self.securityCodeTextField.becomeFirstResponder()
+//        self.pinCodeInputView.becomeFirstResponder()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -198,8 +211,7 @@ class ConfirmUserVC: UIViewController, SignUpRouter {
         }
         
         nextButton.isEnabled = true
-        
-        showIndetermineHudWithMessage("verifying...".localized().uppercaseFirst)
+                showIndetermineHudWithMessage("verifying...".localized().uppercaseFirst)
         
         RestAPIManager.instance.verify(code: code)
             .subscribe(onSuccess: { [weak self] (_) in
@@ -223,6 +235,7 @@ class ConfirmUserVC: UIViewController, SignUpRouter {
         }
     }
 }
+
 
 class ResendButton: UIButton {
      override var isEnabled: Bool {
@@ -254,3 +267,46 @@ class ResendButton: UIButton {
         }
     }
 }
+
+
+// MARK: - UITextFieldDelegate
+extension ConfirmUserVC: UITextFieldDelegate {
+    // TextField become first responder
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+    }
+    
+    // // TextField resign first responder
+    func textFieldDidEndEditing(_ textField: UITextField) {
+    }
+    
+    // Add validation to TextField
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        return true;
+    }
+    
+    // Clear button tap
+    func textFieldShouldClear(_ textField: UITextField) -> Bool {
+        return true;
+    }
+    
+    // Hide keyboard
+    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
+        return true;
+    }
+    
+    // TextField editing
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if textField.tag == 777 {
+            self.pinCodeInputView.insertText(string)
+        }
+        
+        return true;
+    }
+    
+    // Return button tap
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder();
+        return true;
+    }
+}
+

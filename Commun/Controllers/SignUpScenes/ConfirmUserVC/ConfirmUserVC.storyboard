@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina5_9" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -30,6 +28,12 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <textField hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="eJC-k9-eE2">
+                                <rect key="frame" x="73.666666666666686" y="133.33333333333334" width="228" height="56"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="numberPad" enablesReturnKeyAutomatically="YES" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no" textContentType="one-time-code"/>
+                            </textField>
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bYW-xi-lTa">
                                 <rect key="frame" x="73.666666666666686" y="133.33333333333334" width="228" height="56"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -87,9 +91,13 @@
                             <constraint firstItem="zEB-iN-I0i" firstAttribute="bottom" secondItem="waw-lP-Yrt" secondAttribute="bottom" priority="999" constant="40" identifier="ConfirmUserNextButtonBottomConstraint" id="7gQ-Nt-x3O" customClass="KeyboardLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                             <constraint firstItem="Y5D-RY-auL" firstAttribute="top" secondItem="bYW-xi-lTa" secondAttribute="bottom" constant="35" identifier="resendstackViewTopConstraint" id="7xS-jK-c01" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                             <constraint firstItem="waw-lP-Yrt" firstAttribute="width" secondItem="ML7-X3-dGA" secondAttribute="width" multiplier="290:375" identifier="ConfirmUserNextButtonWidthConstraint" id="K5F-pz-4KL"/>
+                            <constraint firstItem="eJC-k9-eE2" firstAttribute="height" secondItem="bYW-xi-lTa" secondAttribute="height" id="O2a-Cs-6S3"/>
+                            <constraint firstItem="eJC-k9-eE2" firstAttribute="width" secondItem="bYW-xi-lTa" secondAttribute="width" id="QhA-s5-b1Z"/>
                             <constraint firstItem="bYW-xi-lTa" firstAttribute="height" secondItem="ML7-X3-dGA" secondAttribute="height" multiplier="56:812" identifier="ConfirmUserPinCodeViewHeightConstraint" id="RZe-Nj-cWO"/>
                             <constraint firstItem="bYW-xi-lTa" firstAttribute="centerX" secondItem="ML7-X3-dGA" secondAttribute="centerX" id="TxS-xO-Dhs"/>
                             <constraint firstItem="Y5D-RY-auL" firstAttribute="centerX" secondItem="ML7-X3-dGA" secondAttribute="centerX" id="XxK-up-xT5"/>
+                            <constraint firstItem="eJC-k9-eE2" firstAttribute="centerY" secondItem="bYW-xi-lTa" secondAttribute="centerY" id="c6r-zS-ta4"/>
+                            <constraint firstItem="eJC-k9-eE2" firstAttribute="centerX" secondItem="bYW-xi-lTa" secondAttribute="centerX" id="eoj-3O-vUa"/>
                             <constraint firstItem="bYW-xi-lTa" firstAttribute="top" secondItem="5dt-9p-v3W" secondAttribute="bottom" constant="50" identifier="ConfirmUserPicCodeViewTopConstraint" id="kPy-LG-FWb" userLabel="ConfirmUserPinCodeViewTopConstraint" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                             <constraint firstItem="waw-lP-Yrt" firstAttribute="height" secondItem="ML7-X3-dGA" secondAttribute="height" multiplier="56:812" identifier="ConfirmUserNextButtonHeightConstraint" id="nFo-HL-5dh"/>
                             <constraint firstItem="waw-lP-Yrt" firstAttribute="centerX" secondItem="ML7-X3-dGA" secondAttribute="centerX" id="nu3-Pe-3jZ"/>
@@ -121,6 +129,7 @@
                         <outlet property="pinCodeView" destination="bYW-xi-lTa" id="mgP-Ro-2Kc"/>
                         <outlet property="resendButton" destination="6zJ-W6-fmM" id="gtL-Fu-R5f"/>
                         <outlet property="resendTimerLabel" destination="A7l-2z-CKz" id="3xh-WD-cvi"/>
+                        <outlet property="securityCodeTextField" destination="eJC-k9-eE2" id="AeA-Ok-QuC"/>
                         <outlet property="smsCodeLabel" destination="5dt-9p-v3W" id="AES-zC-Jyb"/>
                     </connections>
                 </viewController>
