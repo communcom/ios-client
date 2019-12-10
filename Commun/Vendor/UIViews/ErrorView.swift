@@ -9,6 +9,8 @@
 import Foundation
 
 class ErrorView: MyView {
+    var imageRatio: CGFloat
+    
     lazy var imageView: UIImageView = {
         var imageView = UIImageView()
         imageView.image = UIImage(named: "no-connection-image")
@@ -33,12 +35,13 @@ class ErrorView: MyView {
     }()
 
     lazy var retryButton: UIButton = {
-        var button = UIButton(width: 240, height: 50, label: "try again".localized().uppercaseFirst, labelFont: UIFont.systemFont(ofSize: 15, weight: .bold), backgroundColor: UIColor.appMainColor, textColor: .white, cornerRadius: 25, contentInsets: nil)
+        var button = UIButton(height: 50 * Config.heightRatio, label: "try again".localized().uppercaseFirst, labelFont: UIFont.systemFont(ofSize: 15, weight: .bold), backgroundColor: UIColor.appMainColor, textColor: .white, cornerRadius: 25 * Config.heightRatio)
         return button
     }()
 
     var retryAction: (()->Void)?
-    init(retryAction: (()->Void)?) {
+    init(imageRatio: CGFloat = 285/350, retryAction: (()->Void)?) {
+        self.imageRatio = imageRatio
         super.init(frame: .zero)
         self.retryAction = retryAction
     }
@@ -66,33 +69,38 @@ class ErrorView: MyView {
     }
     
     func layoutImageView() {
-        imageView.autoPinEdge(toSuperviewEdge: .top, withInset: 100)
-        imageView.autoPinEdge(toSuperviewEdge: .left, withInset: 45, relation: .greaterThanOrEqual)
-        imageView.autoPinEdge(toSuperviewEdge: .right, withInset: 45, relation: .greaterThanOrEqual)
+        imageView.autoPinEdge(toSuperviewSafeArea: .top, withInset: 10 * Config.heightRatio)
         imageView.autoAlignAxis(toSuperviewAxis: .vertical)
-        NSLayoutConstraint(item: imageView, attribute: .width, relatedBy: .equal, toItem: imageView, attribute: .height, multiplier: 285/350, constant: 0).isActive = true
+        imageView.widthAnchor.constraint(equalTo: imageView.heightAnchor, multiplier: imageRatio)
+            .isActive = true
     }
     
     func layoutTitle() {
-        title.autoPinEdge(.top, to: .bottom, of: imageView, withOffset: 20)
-        title.autoPinEdge(toSuperviewEdge: .leading)
-        title.autoPinEdge(toSuperviewEdge: .trailing)
-        title.autoAlignAxis(toSuperviewAxis: .vertical)
-        title.heightAnchor.constraint(equalToConstant: 36).isActive = true
+        title.textAlignment = .center
+        title.autoPinEdge(.top, to: .bottom, of: imageView, withOffset: 10 * Config.heightRatio)
+        title.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
+        title.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
     }
     
     func layoutSubtitle() {
-        subtitle.autoPinEdge(.top, to: .bottom, of: title, withOffset: 10)
-        subtitle.autoPinEdge(toSuperviewEdge: .leading)
-        subtitle.autoPinEdge(toSuperviewEdge: .trailing)
-        subtitle.autoAlignAxis(toSuperviewAxis: .vertical)
-        subtitle.heightAnchor.constraint(equalToConstant: 52).isActive = true
+        subtitle.autoPinEdge(.top, to: .bottom, of: title, withOffset: 16 * Config.heightRatio)
+        subtitle.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
+        subtitle.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
     }
     
     func layoutButton() {
-        retryButton.autoPinEdge(.top, to: .bottom, of: subtitle, withOffset: 56)
-        retryButton.autoAlignAxis(toSuperviewAxis: .vertical)
-        retryButton.autoPinEdge(toSuperviewSafeArea: .bottom, withInset: 110)
+        retryButton.autoPinEdge(.top, to: .bottom, of: subtitle, withOffset: 40 * Config.heightRatio)
+        retryButton.autoPinEdge(toSuperviewEdge: .leading, withInset: 30 * Config.heightRatio)
+        retryButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 30 * Config.heightRatio)
+        retryButton.autoPinEdge(toSuperviewSafeArea: .bottom, withInset: 16 * Config.heightRatio)
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        let titleHeight = title.intrinsicContentSize.height
+        title.autoSetDimension(.height, toSize: titleHeight)
+        let subtitleHeight = subtitle.intrinsicContentSize.height
+        subtitle.autoSetDimension(.height, toSize: subtitleHeight)
     }
     
     @objc func retryDidTouch(_ sender: UIButton) {
