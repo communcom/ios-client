@@ -17,7 +17,7 @@ class QRScannerViewController: BaseViewController, AVCaptureMetadataOutputObject
     
     override func setUp() {
         super.setUp()
-        setNavBarBackButton()
+        setLeftNavBarButtonForGoingBack(tintColor: .white)
         scan()
     }
     
@@ -74,7 +74,10 @@ class QRScannerViewController: BaseViewController, AVCaptureMetadataOutputObject
         view.backgroundColor = UIColor.black
         captureSession = AVCaptureSession()
 
-        guard let videoCaptureDevice = AVCaptureDevice.default(for: .video) else { return }
+        guard let videoCaptureDevice = AVCaptureDevice.default(for: .video) else {
+            failed()
+            return
+        }
         let videoInput: AVCaptureDeviceInput
 
         do {
