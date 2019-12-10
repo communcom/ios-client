@@ -90,12 +90,11 @@ extension UIButton {
         return button
     }
     
-    static func back(tintColor: UIColor = .black, contentInsets: UIEdgeInsets = UIEdgeInsets(top: 11, left: 15, bottom: 11, right: 14)) -> UIButton {
+    static func back(tintColor: UIColor = .black, contentInsets: UIEdgeInsets = UIEdgeInsets(top: 11, left: 0, bottom: 11, right: 30)) -> UIButton {
         let button = UIButton(width: 40, height: 40)
         button.tintColor = tintColor
         button.setImage(UIImage(named: "back-button"), for: .normal)
         button.touchAreaEdgeInsets = UIEdgeInsets(inset: -2)
-        button.contentEdgeInsets = contentInsets
         return button
     }
     
