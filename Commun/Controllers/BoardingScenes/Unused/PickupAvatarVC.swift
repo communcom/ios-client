@@ -98,7 +98,7 @@ class PickupAvatarVC: UIViewController, BoardingRouter {
             .flatMap{ url -> Single<String> in
                 // UpdateProfile without waiting for transaction
                 return NetworkService.shared.updateMeta(
-                    params: ["profile_image": url],
+                    params: ["avatar_url": url],
                     waitForTransaction: false
                 )
                 .andThen(Single<String>.just(url))
