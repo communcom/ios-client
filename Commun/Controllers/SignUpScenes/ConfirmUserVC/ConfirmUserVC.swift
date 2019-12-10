@@ -115,6 +115,10 @@ class ConfirmUserVC: UIViewController, SignUpRouter {
         
         self.pinCodeView.addSubview(pinCodeInputView)
         self.pinCodeInputView.center = pinCodeView.center
+        
+        if let smsCode = KeychainManager.currentUser()?.smsCode {
+            addAccessoryView(withSmsCode: String(smsCode))
+        }
     }
     
     override func viewWillLayoutSubviews() {
@@ -125,7 +129,6 @@ class ConfirmUserVC: UIViewController, SignUpRouter {
         super.viewDidAppear(animated)
         
         self.securityCodeTextField.becomeFirstResponder()
-//        self.pinCodeInputView.becomeFirstResponder()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -157,6 +160,18 @@ class ConfirmUserVC: UIViewController, SignUpRouter {
         self.resendTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(onTimerFires), userInfo: nil, repeats: true)
     }
     
+    func addAccessoryView(withSmsCode smsCode: String) -> Void {
+        let toolBar = UIToolbar(frame: CGRect(x: 0.0, y: 0.0, width: self.view.frame.size.width, height: CGFloat.adaptive(height: 44.0)))
+        let smsCodeButton = UIBarButtonItem(title: smsCode, style: .plain, target: self, action: #selector(smsCodeButtonTapped(button:)))
+        let spacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        toolBar.items = [spacer ,smsCodeButton, spacer]
+        toolBar.tintColor = UIColor(hexString: "#6A80F5")
+        self.securityCodeTextField.inputAccessoryView = toolBar
+    }
+
+    func removeAccessoryView() -> Void {
+        self.securityCodeTextField.inputAccessoryView = nil
+    }
     
     // MARK: - Gestures
     @IBAction func handlerTapGestureRecognizer(_ sender: UITapGestureRecognizer) {
@@ -165,6 +180,11 @@ class ConfirmUserVC: UIViewController, SignUpRouter {
 
     
     // MARK: - Actions
+    @objc func smsCodeButtonTapped(button: UIBarButtonItem) -> Void {
+        self.pinCodeInputView.insertText(button.title!)
+        removeAccessoryView()
+    }
+
     @objc func onTimerFires() {
         guard self.resendSeconds > 1 else {
             self.resendTimer?.invalidate()
@@ -258,7 +278,7 @@ class ResendButton: UIButton {
 
     func commonInit() {
         self.backgroundColor = .clear
-        self.titleLabel?.font       =   UIFont.systemFont(ofSize: 15, weight: .semibold)
+        self.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .semibold)
 
         // Localize label
         if let text = titleLabel?.text {
@@ -309,4 +329,3 @@ extension ConfirmUserVC: UITextFieldDelegate {
         return true;
     }
 }
-
