@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SafariServices
 
 class InstagramView: UIView {
     @IBOutlet weak private var contentView: UIView!
@@ -18,6 +19,10 @@ class InstagramView: UIView {
     @IBOutlet weak private var providerLabel: UILabel!
     @IBOutlet weak private var providerImageView: UIImageView!
 
+    private var isPostDetail = false
+
+    private var content: ResponseAPIContentBlock!
+
     private func configureXib() {
         Bundle.main.loadNibNamed("InstagramView", owner: self, options: nil)
         addSubview(contentView)
@@ -25,8 +30,10 @@ class InstagramView: UIView {
         contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
     }
 
-    init(content: ResponseAPIContentBlock) {
+    init(content: ResponseAPIContentBlock, isPostDetail: Bool = false) {
         super.init(frame: .zero)
+        self.isPostDetail = isPostDetail
+        self.content = content
         self.configureXib()
         self.backgroundColor = .white
         self.configure(content: content)
@@ -77,7 +84,7 @@ class InstagramView: UIView {
         }
 
         if let providerUrlString = content.attributes?.url, let url = URL(string: providerUrlString) {
-            providerLabel.text = url.host?.replacingOccurrences(of: "www.", with: "").uppercaseFirst
+            providerLabel.text = InstagramView.getRightHostName(url: url)
         }
 
         autorLabel.text = content.attributes?.author
@@ -89,6 +96,30 @@ class InstagramView: UIView {
         } else {
             providerImageView.image = UIImage(named: "provider-other")
         }
+
+        if isPostDetail {
+            autorView.isUserInteractionEnabled = true
+            autorView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(openUrlAction)))
+
+            imageView.isUserInteractionEnabled = true
+            imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(openImage)))
+        }
+
+    }
+
+    @objc private func openUrlAction() {
+        if let url = URL(string: content.attributes?.url ?? "") {
+            let safariVC = SFSafariViewController(url: url)
+            parentViewController?.present(safariVC, animated: true, completion: nil)
+        }
+    }
+
+    @objc private func openImage() {
+        imageView.openViewer(gesture: nil)
+    }
+
+    static func getRightHostName(url: URL) -> String {
+        return url.host?.replacingOccurrences(of: "www.", with: "").uppercaseFirst ?? ""
     }
 
 }

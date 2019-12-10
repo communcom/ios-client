@@ -19,6 +19,8 @@ class EmbedView: UIView {
     @IBOutlet weak private var providerLabelView: UIView!
     @IBOutlet weak private var titlesView: UIView!
 
+    private var isPostDetail = false
+
     private lazy var loadingView: UIView = {
         let view = UIView()
         view.backgroundColor = .black
@@ -44,8 +46,9 @@ class EmbedView: UIView {
 
     private var content: ResponseAPIContentBlock!
 
-    init(content: ResponseAPIContentBlock) {
+    init(content: ResponseAPIContentBlock, isPostDetail: Bool = false) {
         super.init(frame: .zero)
+        self.isPostDetail = isPostDetail
         self.content = content
         self.configureXib()
         self.configure(with: content)
@@ -98,7 +101,7 @@ class EmbedView: UIView {
         providerLabelView.isHidden = true
 
         if content.type == "rich" || content.type == "embed" {
-            let view = InstagramView(content: content)
+            let view = InstagramView(content: content, isPostDetail: isPostDetail)
             addSubview(view)
             view.autoPinEdgesToSuperviewEdges()
             return
@@ -115,13 +118,14 @@ class EmbedView: UIView {
         var subtitle: String?
 
         if content.type == "video" {
+            coverImageView.isUserInteractionEnabled = false
             subtitle = content.attributes?.author
             providerLabelView.isHidden = content.attributes?.providerName == nil
             providerNameLabel.text = content.attributes?.providerName?.uppercaseFirst
             providerLabelView.isHidden = content.attributes?.providerName == nil
             isNeedShowProvider = content.attributes?.providerName != nil
-        } else if content.type == "website" {
-            subtitle = content.attributes?.url
+        } else if content.type == "website", let url = URL(string: content.attributes?.url ?? "") {
+            subtitle = InstagramView.getRightHostName(url: url)
         } else {
             imageUrl = content.content.stringValue
         }
@@ -133,7 +137,6 @@ class EmbedView: UIView {
         let isNeedShowSubtitle = subtitle != nil
 
         coverImageView.isHidden = !isNeedShowImage
-        coverImageView.isUserInteractionEnabled = true
         coverImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapAction)))
 
         if isNeedShowImage {
@@ -149,12 +152,8 @@ class EmbedView: UIView {
             NSLayoutConstraint(item: coverImageView!, attribute: .width, relatedBy: .equal, toItem: coverImageView!, attribute: .height, multiplier: 16/9, constant: 0).isActive = true
         }
 
-        if let url = URL(string: imageUrl ?? "") {
-            if url.path.lowercased().ends(with: ".gif") {
-                coverImageView.setImageDetectGif(with: imageUrl!)
-            } else {
-                coverImageView.sd_setImageCachedError(with: url, completion: nil)
-            }
+        if let imageUrl = imageUrl {
+            coverImageView.setImageDetectGif(with: imageUrl)
         }
 
         if isNeedShowTitle {
@@ -190,6 +189,23 @@ class EmbedView: UIView {
         titleLabel.isHidden = content.attributes?.title == nil
         titleLabel.text = title
         subtitleLabel.isHidden = content.attributes?.url == nil
+
+        self.isUserInteractionEnabled = false
+        coverImageView.isUserInteractionEnabled = false
+
+        if isPostDetail {
+            self.isUserInteractionEnabled = true
+            coverImageView.isUserInteractionEnabled = true
+
+            if content.type == "video" {
+                NSLayoutConstraint(item: self, attribute: .width, relatedBy: .equal, toItem: self, attribute: .height, multiplier: 16/9, constant: 0).isActive = true
+                coverImageView.isHidden = true
+                tapAction()
+            }
+
+            return
+        }
+
     }
 
     @objc private func tapAction() {
