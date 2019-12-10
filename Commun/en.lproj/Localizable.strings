@@ -64,6 +64,7 @@
 "edit bio"                                      =   "edit bio";
 "edit post"                                     =   "edit post";
 "edit"                                          =   "edit";
+"edit comment"                                  =   "edit comment";
 "enable Touch ID description"                   =   "enable Touch ID to secure your\ntransactions";
 "enable Touch ID title"                         =   "enable Touch ID";
 "enable"                                        =   "enable";
@@ -173,6 +174,7 @@
 "reward for post"                               =   "reward for post";
 "reward for votes"                              =   "reward for votes";
 "remove from favourite"                         =   "remove from favourite";
+"reply to comment"                              =   "reply to comment";
 
 
 // S
