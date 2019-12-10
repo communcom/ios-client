@@ -104,7 +104,7 @@ class WelcomeVC: UIViewController {
     
     // MARK: - Actions
     @IBAction func signInButtonTap(_ sender: Any) {
-        let signInVC = controllerContainer.resolve(SignInViewController.self)!
+        let signInVC = SignInVC()
         navigationController?.pushViewController(signInVC)
     }
     
