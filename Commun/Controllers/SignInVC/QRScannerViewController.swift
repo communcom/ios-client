@@ -27,7 +27,7 @@ class QRScannerViewController: BaseViewController, AVCaptureMetadataOutputObject
         scanQrArea.autoAlignAxis(toSuperviewAxis: .horizontal)
         scanQrArea.autoAlignAxis(toSuperviewAxis: .vertical)
         
-        let scanQrTitle = UILabel.with(text: "scan qr".localized().uppercaseFirst, textSize: 30, weight: .bold, textColor: .white, textAlignment: .center)
+        let scanQrTitle = UILabel.with(text: "scan QR".localized().uppercaseFirst, textSize: 30, weight: .bold, textColor: .white, textAlignment: .center)
         view.addSubview(scanQrTitle)
         scanQrTitle.autoAlignAxis(toSuperviewAxis: .vertical)
         scanQrTitle.autoPinEdge(.top, to: .bottom, of: scanQrArea, withOffset: 65 * Config.heightRatio)
