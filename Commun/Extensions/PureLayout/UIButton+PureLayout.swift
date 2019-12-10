@@ -37,6 +37,28 @@ extension UIButton {
         }
     }
     
+    static func roundedCorner(
+        _ cornerRadius: CGFloat,
+        size: CGFloat,
+        backgroundColor: UIColor,
+        tintColor: UIColor? = nil,
+        imageName: String,
+        imageEdgeInsets: UIEdgeInsets? = nil
+    ) -> UIButton {
+        let button = UIButton(width: size, height: size, backgroundColor: backgroundColor, cornerRadius: cornerRadius)
+        button.setImage(UIImage(named: imageName), for: .normal)
+        if let imageEdgeInsets = imageEdgeInsets {
+            button.imageEdgeInsets = imageEdgeInsets
+        }
+        if let tintColor = tintColor {
+            button.tintColor = tintColor
+        }
+        if size < 44 {
+            button.touchAreaEdgeInsets = UIEdgeInsets(inset: (size - 44) / 2)
+        }
+        return button
+    }
+    
     static func circle(
         size: CGFloat,
         backgroundColor: UIColor,
