@@ -279,6 +279,7 @@
 		BC469306239677E00064A38B /* MyProfilePageVC+Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC469305239677E00064A38B /* MyProfilePageVC+Binding.swift */; };
 		BC46933E239E314E0064A38B /* SignInVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC46933D239E314E0064A38B /* SignInVC.swift */; };
 		BC469340239E42E30064A38B /* SignInViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC46933F239E42E20064A38B /* SignInViewModel.swift */; };
+		BC469347239F3A2C0064A38B /* ScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC469346239F3A2C0064A38B /* ScannerViewController.swift */; };
 		BC48FC42236689DC0049C4F4 /* LeadersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC48FC41236689DC0049C4F4 /* LeadersViewModel.swift */; };
 		BC48FC4423668A080049C4F4 /* LeadersListFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC48FC4323668A080049C4F4 /* LeadersListFetcher.swift */; };
 		BC48FC46236690880049C4F4 /* MyEmptyPlaceHolderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC48FC45236690880049C4F4 /* MyEmptyPlaceHolderView.swift */; };
@@ -724,6 +725,7 @@
 		BC469305239677E00064A38B /* MyProfilePageVC+Binding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MyProfilePageVC+Binding.swift"; sourceTree = "<group>"; };
 		BC46933D239E314E0064A38B /* SignInVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInVC.swift; sourceTree = "<group>"; };
 		BC46933F239E42E20064A38B /* SignInViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInViewModel.swift; sourceTree = "<group>"; };
+		BC469346239F3A2C0064A38B /* ScannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerViewController.swift; sourceTree = "<group>"; };
 		BC48FC41236689DC0049C4F4 /* LeadersViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeadersViewModel.swift; sourceTree = "<group>"; };
 		BC48FC4323668A080049C4F4 /* LeadersListFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeadersListFetcher.swift; sourceTree = "<group>"; };
 		BC48FC45236690880049C4F4 /* MyEmptyPlaceHolderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyEmptyPlaceHolderView.swift; sourceTree = "<group>"; };
@@ -1621,6 +1623,7 @@
 			children = (
 				BC46933D239E314E0064A38B /* SignInVC.swift */,
 				BC46933F239E42E20064A38B /* SignInViewModel.swift */,
+				BC469346239F3A2C0064A38B /* ScannerViewController.swift */,
 			);
 			path = SignInVC;
 			sourceTree = "<group>";
@@ -2911,6 +2914,7 @@
 				3BB342B422CA7412009546B2 /* CreateBioVC.swift in Sources */,
 				3BB32F1923438D4F006572F3 /* DimmingPresentationController.swift in Sources */,
 				3B5CB30522A5752100757533 /* ListViewModelType.swift in Sources */,
+				BC469347239F3A2C0064A38B /* ScannerViewController.swift in Sources */,
 				BC22BBC8236C055300F40658 /* MyProfileSettingsVC.swift in Sources */,
 				3B8DDF54234AD15A00B213F0 /* PostEditorVC+Actions.swift in Sources */,
 				BCA9712223603C6C00AE37E1 /* CommunityHeaderView.swift in Sources */,

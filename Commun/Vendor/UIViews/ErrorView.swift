@@ -38,8 +38,16 @@ class ErrorView: MyView {
     }()
 
     var retryAction: (()->Void)?
-    init(retryAction: (()->Void)?) {
+    init(
+        title: String = "no connection".localized().uppercaseFirst,
+        subtitle: String = "check your Internet connection\n and try again".localized().uppercaseFirst,
+        retryButtonTitle: String = "try again".localized().uppercaseFirst,
+        retryAction: (()->Void)?
+    ) {
         super.init(frame: .zero)
+        self.title.text = title
+        self.subtitle.text = subtitle
+        self.retryButton.setTitle(retryButtonTitle, for: .normal)
         self.retryAction = retryAction
     }
     

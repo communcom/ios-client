@@ -98,6 +98,7 @@ class SignInVC: BaseViewController {
         scanQrCodeButton.autoAlignAxis(.horizontal, toSameAxisOf: signInButton)
         scanQrCodeButton.autoPinEdge(.leading, to: .trailing, of: signInButton, withOffset: 5)
         scanQrCodeButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: paddingX)
+        scanQrCodeButton.addTarget(self, action: #selector(scanQrButtonDidTouch), for: .touchUpInside)
         
         // sign up button
         scrollView.contentView.addSubview(signUpButton)
@@ -178,5 +179,10 @@ class SignInVC: BaseViewController {
                 self?.showError(error)
             })
             .disposed(by: disposeBag)
+    }
+    
+    @objc func scanQrButtonDidTouch() {
+        let vc = ScannerViewController()
+        show(vc, sender: nil)
     }
 }
