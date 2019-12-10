@@ -1,10 +1,11 @@
 import AVFoundation
 import UIKit
 
-class ScannerViewController: BaseViewController, AVCaptureMetadataOutputObjectsDelegate {
+class QRScannerViewController: BaseViewController, AVCaptureMetadataOutputObjectsDelegate {
     // MARK: - Properties
     var captureSession: AVCaptureSession!
     var previewLayer: AVCaptureVideoPreviewLayer!
+    var completion: ((LoginCredential) -> Void)?
     
     // MARK: - Subviews
     lazy var errorView = ErrorView(
@@ -18,6 +19,23 @@ class ScannerViewController: BaseViewController, AVCaptureMetadataOutputObjectsD
         super.setUp()
         setNavBarBackButton()
         scan()
+    }
+    
+    func setUpViews() {
+        let scanQrArea = UIImageView(width: 260 * Config.heightRatio, height: 260 * Config.heightRatio, imageNamed: "scan-qr-area")
+        view.addSubview(scanQrArea)
+        scanQrArea.autoAlignAxis(toSuperviewAxis: .horizontal)
+        scanQrArea.autoAlignAxis(toSuperviewAxis: .vertical)
+        
+        let scanQrTitle = UILabel.with(text: "scan qr".localized().uppercaseFirst, textSize: 30, weight: .bold, textColor: .white, textAlignment: .center)
+        view.addSubview(scanQrTitle)
+        scanQrTitle.autoAlignAxis(toSuperviewAxis: .vertical)
+        scanQrTitle.autoPinEdge(.top, to: .bottom, of: scanQrArea, withOffset: 65 * Config.heightRatio)
+        
+        let gotoCommunTitle = UILabel.with(text: "go to commun.com and scan QR".localized().uppercaseFirst, textSize: 17, weight: .semibold, textColor: .white, textAlignment: .center)
+        view.addSubview(gotoCommunTitle)
+        gotoCommunTitle.autoAlignAxis(toSuperviewAxis: .vertical)
+        gotoCommunTitle.autoPinEdge(.top, to: .bottom, of: scanQrTitle, withOffset: 16)
     }
     
     // MARK: - Methods
@@ -96,6 +114,7 @@ class ScannerViewController: BaseViewController, AVCaptureMetadataOutputObjectsD
         view.layer.addSublayer(previewLayer)
 
         captureSession.startRunning()
+        setUpViews()
     }
     
     func retryGrantingPermission() {
@@ -128,20 +147,25 @@ class ScannerViewController: BaseViewController, AVCaptureMetadataOutputObjectsD
     }
 
     func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
-        captureSession.stopRunning()
-
         if let metadataObject = metadataObjects.first {
             guard let readableObject = metadataObject as? AVMetadataMachineReadableCodeObject else { return }
             guard let stringValue = readableObject.stringValue else { return }
-            AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
             found(code: stringValue)
         }
-
-        dismiss(animated: true)
     }
 
     func found(code: String) {
         print(code)
+        // check
+        if true {return}
+        // vibrate
+        AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
+        // completion
+        captureSession.stopRunning()
+//        completion?()
+        DispatchQueue.main.async {
+            self.back()
+        }
     }
 
     override var prefersStatusBarHidden: Bool {

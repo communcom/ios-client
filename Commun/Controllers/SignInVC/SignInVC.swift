@@ -182,7 +182,7 @@ class SignInVC: BaseViewController {
     }
     
     @objc func scanQrButtonDidTouch() {
-        let vc = ScannerViewController()
+        let vc = QRScannerViewController()
         show(vc, sender: nil)
     }
 }
