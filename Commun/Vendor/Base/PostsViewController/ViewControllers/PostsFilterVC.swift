@@ -75,17 +75,17 @@ class PostsFilterVC: SwipeDownDismissViewController {
             .map { (filter) -> [(label: String, isSelected: Bool)] in
                 if !self.isTimeFrameMode {
                     return [
-                        (label: "hot".localized().uppercaseFirst, isSelected: filter.feedTypeMode == .hot),
-                        (label: "new".localized().uppercaseFirst, isSelected: filter.feedTypeMode == .new),
-                        (label: "popular".localized().uppercaseFirst, isSelected: filter.feedTypeMode == .topLikes)
+                        (label: FeedTypeMode.hot.localizedLabel!.uppercaseFirst, isSelected: filter.feedTypeMode == .hot),
+                        (label: FeedTypeMode.new.localizedLabel!.uppercaseFirst, isSelected: filter.feedTypeMode == .new),
+                        (label: FeedTypeMode.topLikes.localizedLabel!.uppercaseFirst, isSelected: filter.feedTypeMode == .topLikes)
                     ]
                 }
                 
                 return [
-                    (label: "past 24 hours".localized().uppercaseFirst, isSelected: filter.sortType == .day),
-                    (label: "past week".localized().uppercaseFirst, isSelected: filter.sortType == .week),
-                    (label: "past month".localized().uppercaseFirst, isSelected: filter.sortType == .month),
-                    (label: "all time".localized().uppercaseFirst, isSelected: filter.sortType == .all)
+                    (label: FeedTimeFrameMode.day.localizedLabel.uppercaseFirst, isSelected: filter.sortType == .day),
+                    (label: FeedTimeFrameMode.week.localizedLabel.uppercaseFirst, isSelected: filter.sortType == .week),
+                    (label: FeedTimeFrameMode.month.localizedLabel.uppercaseFirst, isSelected: filter.sortType == .month),
+                    (label: FeedTimeFrameMode.all.localizedLabel.uppercaseFirst, isSelected: filter.sortType == .all)
                 ]
             }
             .bind(to: self.tableView.rx.items(cellIdentifier: "FilterCell", cellType: FilterCell.self)){ (index,model,cell) in
