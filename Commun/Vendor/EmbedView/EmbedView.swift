@@ -9,6 +9,7 @@
 import UIKit
 import WebKit
 import SafariServices
+import AVKit
 
 class EmbedView: UIView {
     @IBOutlet weak private var contentView: UIView!
@@ -18,6 +19,9 @@ class EmbedView: UIView {
     @IBOutlet weak private var subtitleLabel: UILabel!
     @IBOutlet weak private var providerLabelView: UIView!
     @IBOutlet weak private var titlesView: UIView!
+
+    private var videoLayer: AVPlayerLayer?
+    private var player: AVPlayer?
 
     private var isPostDetail = false
 
@@ -77,6 +81,11 @@ class EmbedView: UIView {
         contentView.frame = frame
         contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
     }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        videoLayer?.frame = bounds
+    }
     
     private func configure(with localImage: UIImage) {
         coverImageView.isHidden = false
@@ -99,6 +108,7 @@ class EmbedView: UIView {
         titlesView.removeAllConstraints()
         titleLabel.numberOfLines = 2
         providerLabelView.isHidden = true
+        titlesView.isHidden = false
 
         if content.type == "rich" || content.type == "embed" {
             let view = InstagramView(content: content, isPostDetail: isPostDetail)
@@ -118,6 +128,21 @@ class EmbedView: UIView {
         var subtitle: String?
 
         if content.type == "video" {
+            if let videoUrl = content.attributes?.url, videoUrl.lowercased().ends(with: ".mp4"),
+                let videoURL = URL(string: videoUrl) {
+                titlesView.isHidden = true
+
+                backgroundColor = .black
+                NSLayoutConstraint(item: self, attribute: .width, relatedBy: .equal, toItem: self, attribute: .height, multiplier: 16/9, constant: 0).isActive = true
+
+                player = AVPlayer(url: videoURL)
+                videoLayer = AVPlayerLayer(player: player)
+                videoLayer!.frame = bounds
+                layer.addSublayer(videoLayer!)
+                player?.play()
+                return
+            }
+
             coverImageView.isUserInteractionEnabled = false
             subtitle = content.attributes?.author
             providerLabelView.isHidden = content.attributes?.providerName == nil
@@ -205,7 +230,6 @@ class EmbedView: UIView {
 
             return
         }
-
     }
 
     @objc private func tapAction() {

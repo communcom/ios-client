@@ -19,6 +19,7 @@ import CyberSwift
 @_exported import CyberSwift
 import RxSwift
 import SDURLCache
+import SDWebImageWebPCoder
 
 let isDebugMode: Bool = true
 let smsCodeDebug: UInt64 = isDebugMode ? 9999 : 0
@@ -48,16 +49,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.tintColor = .appMainColor
         // Logger
 //        Logger.showEvents = [.request, .error]
+
+        // support webp image
+        SDImageCodersManager.shared.addCoder(SDImageWebPCoder.shared)
         
         // Sync iCloud key-value store
         NSUbiquitousKeyValueStore.default.synchronize()
-        
-        #warning("Reset keychain for testing only. Remove in production")
-        // reset keychain
-        if !UserDefaults.standard.bool(forKey: UIApplication.versionBuild) {
-            try? KeychainManager.deleteUser()
-            UserDefaults.standard.set(true, forKey: UIApplication.versionBuild)
-        }
+
+        #if !APPSTORE
+            // reset keychain
+            if !UserDefaults.standard.bool(forKey: UIApplication.versionBuild) {
+                try? KeychainManager.deleteUser()
+                UserDefaults.standard.set(true, forKey: UIApplication.versionBuild)
+            }
+        #endif
         
         // Hide constraint warning
         UserDefaults.standard.setValue(false, forKey: "_UIConstraintBasedLayoutLogUnsatisfiable")
