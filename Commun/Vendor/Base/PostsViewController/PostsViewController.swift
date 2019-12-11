@@ -73,8 +73,7 @@ class PostsViewController: ListViewController<ResponseAPIContentGetPost, PostCel
     override func handleListEmpty() {
         let title = "no post"
         let description = "posts not found"
-        tableView.addEmptyPlaceholderFooterView(title: title.localized().uppercaseFirst, description: description.localized().uppercaseFirst, buttonLabel: "reload".localized().uppercaseFirst + "?")
-        {
+        tableView.addEmptyPlaceholderFooterView(title: title.localized().uppercaseFirst, description: description.localized().uppercaseFirst, buttonLabel: "reload".localized().uppercaseFirst + "?") {
             self.viewModel.reload()
         }
     }
