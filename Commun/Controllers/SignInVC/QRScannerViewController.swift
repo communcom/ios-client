@@ -157,17 +157,27 @@ class QRScannerViewController: BaseViewController, AVCaptureMetadataOutputObject
         }
     }
 
+    var isBlocking = false
     func found(code: String) {
-        print(code)
+        guard isBlocking == false else {return}
         // check
-        if true {return}
+        guard let decodedData = Data(base64Encoded: code),
+            let user = try? JSONDecoder().decode(QrCodeDecodedProfile.self, from: decodedData)
+        else {
+            isBlocking = false
+            return
+        }
+
+        isBlocking = true
+        
         // vibrate
         AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
+        
         // completion
         captureSession.stopRunning()
-//        completion?()
-        DispatchQueue.main.async {
-            self.back()
+        
+        self.back {
+            self.completion?(LoginCredential(login: user.username, key: user.password))
         }
     }
 
