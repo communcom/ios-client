@@ -10,7 +10,9 @@ import Foundation
 
 final class FeedPageVC: PostsViewController {
     // MARK: - Properties
-    lazy var floatView = FeedPageHeaderView(forAutoLayout: ())
+    lazy var floatView = FeedPageFloatView(forAutoLayout: ())
+    var floatViewTopConstraint: NSLayoutConstraint!
+    var headerView: FeedPageHeaderView!
     var floatViewHeight: CGFloat = 0
     
     // MARK: - Methods
@@ -28,20 +30,22 @@ final class FeedPageVC: PostsViewController {
         
         statusBarView.autoPinEdge(.bottom, to: .top, of: tableView)
         view.addSubview(floatView)
-        floatView.autoPinEdgesToSuperviewSafeArea(with: .zero, excludingEdge: .bottom)
-        floatView.autoPinEdge(.top, to: .bottom, of: statusBarView)
+        floatViewTopConstraint = floatView.autoPinEdge(toSuperviewSafeArea: .top)
+        floatView.autoPinEdge(toSuperviewSafeArea: .leading)
+        floatView.autoPinEdge(toSuperviewSafeArea: .trailing)
+        
+        statusBarView.autoPinEdge(.bottom, to: .top, of: floatView)
         view.bringSubviewToFront(statusBarView)
+        
+        headerView = FeedPageHeaderView(tableView: tableView)
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        let height = floatView.bounds.height
+        let height = floatView.height
         if floatViewHeight == 0 {
             tableView.contentInset.top = height
             floatViewHeight = height
-            DispatchQueue.main.async {
-                self.tableView.safeScrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
-            }
         }
     }
     
@@ -50,9 +54,10 @@ final class FeedPageVC: PostsViewController {
         
         tableView.rx.didScrollToTop
             .subscribe(onNext: { _ in
-                self.floatView.topConstraint?.constant = 0
+                self.floatViewTopConstraint.constant = 0
                 UIView.animate(withDuration: 0.3) {
                     self.view.layoutIfNeeded()
+                    self.floatView.layoutIfNeeded()
                 }
             })
             .disposed(by: disposeBag)
@@ -62,7 +67,7 @@ final class FeedPageVC: PostsViewController {
             .distinctUntilChanged()
             .subscribe(onNext: { (y) in
                 if y == 0 {return}
-                self.floatView.topConstraint?.constant = (y < 0) ? 0 : -self.floatViewHeight
+                self.floatViewTopConstraint.constant = (y < 0) ? 0 : -self.floatViewHeight
                 UIView.animate(withDuration: 0.3) {
                     self.view.layoutIfNeeded()
                 }
