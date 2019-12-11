@@ -47,6 +47,36 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
         return headerView
     }
     
+    lazy var postSortingView: UIView = {
+        let feedTypeLabel = UILabel(forAutoLayout: ())
+        feedTypeLabel.tag = 1
+        
+        let view = UIView(forAutoLayout: ())
+        view.addSubview(feedTypeLabel)
+        feedTypeLabel.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(inset: 16), excludingEdge: .trailing)
+        
+        let arrow = UIImageView(width: 10, height: 6, imageNamed: "drop-down")
+        view.addSubview(arrow)
+        arrow.autoPinEdge(.leading, to: .trailing, of: feedTypeLabel, withOffset: 6)
+        arrow.autoAlignAxis(toSuperviewAxis: .horizontal)
+        arrow.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
+        
+        view.isUserInteractionEnabled = true
+        let tap = UITapGestureRecognizer(target: self, action: #selector(openFilterVC))
+        view.addGestureRecognizer(tap)
+        
+        let containerView = UIView(frame: .zero)
+        containerView.backgroundColor = .white
+        containerView.addSubview(view)
+        view.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 0, bottom: 2, right: 0), excludingEdge: .trailing)
+        
+        let separator = UIView(height: 2, backgroundColor: .appLightGrayColor)
+        containerView.addSubview(separator)
+        separator.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
+        
+        return containerView
+    }()
+    
     
     // MARK: - Initializers
     init(communityId: String) {
@@ -60,6 +90,16 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
     
     
     // MARK: - Methods
+    override func setUpTableView() -> UITableView {
+        let tableView = UITableView(frame: .zero, style: .grouped)
+        tableView.configureForAutoLayout()
+        tableView.backgroundColor = .clear
+        tableView.insetsContentViewsToSafeArea = false
+        tableView.contentInsetAdjustmentBehavior = .never
+        tableView.showsVerticalScrollIndicator = false
+        return tableView
+    }
+    
     override func setUp() {
         super.setUp()
         
@@ -252,6 +292,71 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
 }
 
 extension CommunityPageVC: UITableViewDelegate {
+    // MARK: - Sorting
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        let viewModel = self.viewModel as! CommunityPageViewModel
+        if viewModel.segmentedItem.value != .posts {
+            return 0
+        }
+        return 48
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        updatePostSortingView()
+        return postSortingView
+    }
+    
+    func updatePostSortingView() {
+        let viewModel = self.viewModel as! CommunityPageViewModel
+        if viewModel.segmentedItem.value != .posts {
+            return
+        }
+        
+        let filter = viewModel.postsVM.filter.value
+        
+        var feedTypeMode = filter.feedTypeMode
+        
+        if feedTypeMode == .community || feedTypeMode.localizedLabel == nil {
+            feedTypeMode = .new
+        }
+        
+        let aStr = NSMutableAttributedString()
+            .semibold("sort".localized().uppercaseFirst + ":", color: .a5a7bd)
+            .semibold(" ")
+            .semibold(feedTypeMode.localizedLabel!.uppercaseFirst)
+        
+        if filter.feedTypeMode == .topLikes {
+            aStr
+                .semibold(", \(filter.sortType?.localizedLabel.uppercaseFirst ?? "")")
+        }
+        
+        (postSortingView.viewWithTag(1) as! UILabel).attributedText = aStr
+    }
+    
+    @objc func openFilterVC() {
+        let viewModel = (self.viewModel as! CommunityPageViewModel).postsVM
+        // Create FiltersVC
+        var filter = viewModel.filter.value
+        if filter.feedTypeMode == .community {filter.feedTypeMode = .new}
+        let vc = PostsFilterVC(filter: filter)
+        
+        vc.completion = { filter in
+            var filter = filter
+            if filter.feedTypeMode == .new {
+                filter.feedTypeMode = .community
+            }
+            viewModel.filter.accept(filter)
+            self.updatePostSortingView()
+        }
+        
+        let nc = BaseNavigationController(rootViewController: vc)
+        nc.transitioningDelegate = vc
+        nc.modalPresentationStyle = .custom
+        
+        present(nc, animated: true, completion: nil)
+    }
+    
+    // MARK: - rowHeight caching
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         guard let item = viewModel.items.value[safe: indexPath.row] else {
             return UITableView.automaticDimension
