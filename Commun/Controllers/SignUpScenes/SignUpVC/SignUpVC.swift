@@ -296,7 +296,7 @@ class SignUpVC: UIViewController, SignUpRouter {
         let nc = navigationController
         if gesture.didTapAttributedTextInLabel(label: signInLabel, inRange: signInRange) {
             navigationController?.popViewController(animated: true, {
-                let signInVC = controllerContainer.resolve(SignInViewController.self)!
+                let signInVC = SignInVC()
                 nc?.pushViewController(signInVC)
             })
         }
@@ -309,10 +309,10 @@ class SignUpVC: UIViewController, SignUpRouter {
         let blockChainDisclaimerRange = (text as NSString).range(of: "blockchain Disclaimer".localized().uppercaseFirst)
         
         if gesture.didTapAttributedTextInLabel(label: termOfUseLabel, inRange: termsOfUseRange) {
-            showURL(string: "https://commun.com/privacy")
+            showURL(string: "https://commun.com/doc/privacy")
         }
         else if gesture.didTapAttributedTextInLabel(label: termOfUseLabel, inRange: blockChainDisclaimerRange) {
-            showURL(string: "https://commun.com/agreement")
+            showURL(string: "https://commun.com/doc/disclaimer")
         }
     }
     

@@ -206,11 +206,20 @@ extension UIViewController {
             self.navigationController?.popViewController()
         }
     }
+
     
-    func setLeftNavBarButtonForGoingBack() {
-        let backButton = UIButton.back(contentInsets: UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 24))
-        setLeftNavBarButton(with: backButton)
-        backButton.addTarget(self, action: #selector(back), for: .touchUpInside)
+    func backCompletion(_ completion: @escaping (()->Void)) {
+        if (self.isModal) {
+            self.dismiss(animated: true, completion: completion)
+        } else {
+            self.navigationController?.popViewController(animated: true, completion)
+        }
+    }
+    
+    func setLeftNavBarButtonForGoingBack(tintColor: UIColor = .black) {
+        let backButton = UIBarButtonItem(image: UIImage(named: "icon-back-bar-button-black-default"), style: .plain, target: self, action: #selector(back))
+        backButton.tintColor = tintColor
+        navigationItem.leftBarButtonItem = backButton
     }
     
     func setLeftNavBarButton(with button: UIButton) {

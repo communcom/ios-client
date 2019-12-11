@@ -15,13 +15,13 @@ class CommunButton: UIButton {
         case downVote
     }
     
-    static func `default`(height: CGFloat = 35.0, label: String? = nil) -> CommunButton {
+    static func `default`(height: CGFloat = 35.0, label: String? = nil, cornerRadius: CGFloat? = nil) -> CommunButton {
         let button = CommunButton(height:           CGFloat.adaptive(height: height),
                                   label:            label,
                                   labelFont:        .boldSystemFont(ofSize: CGFloat.adaptive(width: 15.0)),
                                   backgroundColor:  .appMainColor,
                                   textColor:        .white,
-                                  cornerRadius:     CGFloat.adaptive(height: height) / 2,
+                                  cornerRadius:     cornerRadius ?? CGFloat.adaptive(height: height) / 2,
                                   contentInsets:    UIEdgeInsets(top:       CGFloat.adaptive(height: 10.0),
                                                                  left:      CGFloat.adaptive(width: 15.0),
                                                                  bottom:    CGFloat.adaptive(height: 10.0),
