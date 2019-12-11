@@ -13,7 +13,8 @@ class GridView: UIView {
     // MARK: - Properties
     var padding: CGFloat = 0.5
     var views = [UIView]()
-    var embedView: UIView?
+    var embedView: EmbedView?
+    var isPostDetail = false
     
     // MARK: - Initializers
     override init(frame: CGRect) {
@@ -35,7 +36,7 @@ class GridView: UIView {
         embedView = nil
 
         if let embed = embeds?.first {
-            let view = EmbedView(content: embed)
+            let view = EmbedView(content: embed, isPostDetail: isPostDetail)
             embedView = view
             embedView?.layer.masksToBounds = true
             addSubview(view)

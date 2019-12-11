@@ -157,6 +157,7 @@ class CommentCell: MyTableViewCell, ListItemCellType {
         
         // Show media
         let embededResult = comment.attachments
+        gridView.isPostDetail = true
         if embededResult.count > 0 {
             textViewToEmbedConstraint?.constant = 5
             gridView.widthConstraint?.constant = embedSize.width

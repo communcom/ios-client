@@ -97,8 +97,7 @@ class BasicEditorVC: PostEditorVC {
 //        }
     }
     
-    override func setUp(with post: ResponseAPIContentGetPost) {
-        super.setUp(with: post)
+    override func setUp(with post: ResponseAPIContentGetPost) -> Completable {
         // download image && parse attachments
         var singles = [Single<TextAttachment>]()
         for attachment in post.attachments {
@@ -126,18 +125,18 @@ class BasicEditorVC: PostEditorVC {
             }
         }
         
-        guard singles.count > 0 else {return}
-
-        showIndetermineHudWithMessage("parsing attachments".localized().uppercaseFirst)
+        guard singles.count > 0 else {return super.setUp(with: post)}
         
-        Single.zip(singles)
-            .subscribe(onSuccess: { [weak self] (attachments) in
-                if let attachment = attachments.first {
-                    self?._viewModel.attachment.accept(attachment)
-                }
-                self?.hideHud()
-            })
-            .disposed(by: disposeBag)
+        return super.setUp(with: post)
+            .andThen(
+                Single.zip(singles)
+                    .do(onSuccess: {[weak self] (attachments) in
+                        if let attachment = attachments.first {
+                            self?._viewModel.attachment.accept(attachment)
+                        }
+                    })
+                    .flatMapToCompletable()
+            )
     }
     
     override func bind() {

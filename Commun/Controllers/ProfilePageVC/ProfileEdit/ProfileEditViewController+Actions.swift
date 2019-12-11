@@ -51,7 +51,7 @@ extension ProfileEditViewController {
         if delete {
             self.coverImageView.image = .placeholder
            
-            NetworkService.shared.updateMeta(params: ["cover_image": ""])
+            NetworkService.shared.updateMeta(params: ["cover_url": ""])
                 .subscribe(onError: {[weak self] error in
                     if let gif = originGif {
                         self?.coverImageView.setGifImage(gif)
@@ -95,7 +95,7 @@ extension ProfileEditViewController {
                 return NetworkService.shared.uploadImage(image)
             }
             // Save to db
-            .flatMap {NetworkService.shared.updateMeta(params: ["cover_image": $0])}
+            .flatMap {NetworkService.shared.updateMeta(params: ["cover_url": $0])}
             // Catch error and reverse image
             .subscribe(onError: {[weak self] error in
                 self?.coverImageView.image = originalImage
@@ -115,7 +115,7 @@ extension ProfileEditViewController {
         if delete {
             self.avatarView.setNonAvatarImageWithId(UserDefaults.standard.string(forKey: Config.currentUserNameKey) ?? UserDefaults.standard.string(forKey: Config.currentUserIDKey) ?? "XXX")
             
-            NetworkService.shared.updateMeta(params: ["profile_image": ""])
+            NetworkService.shared.updateMeta(params: ["avatar_url": ""])
                 .subscribe(onError: {[weak self] error in
                     if let gif = originGif {
                         self?.avatarView.setGifImage(gif)
@@ -144,7 +144,7 @@ extension ProfileEditViewController {
                 return NetworkService.shared.uploadImage(image)
             }
             // Save to db
-            .flatMap {NetworkService.shared.updateMeta(params: ["profile_image": $0])}
+            .flatMap {NetworkService.shared.updateMeta(params: ["avatar_url": $0])}
             // Catch error and reverse image
             .subscribe(onError: {[weak self] error in
                 self?.avatarView.image = originalImage

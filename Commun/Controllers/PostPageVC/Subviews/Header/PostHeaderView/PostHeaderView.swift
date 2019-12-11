@@ -83,13 +83,14 @@ class PostHeaderView: MyTableHeaderView, PostController {
         commentsCountButton.autoAlignAxis(.horizontal, toSameAxisOf: voteContainerView)
         
         // Views count
-        addSubview(viewsCountLabel)
-        viewsCountLabel.autoPinEdge(.trailing, to: .leading, of: commentsCountButton, withOffset: -23)
-        viewsCountLabel.autoAlignAxis(.horizontal, toSameAxisOf: voteContainerView)
-        
-        addSubview(viewsCountButton)
-        viewsCountButton.autoPinEdge(.trailing, to: .leading, of: viewsCountLabel, withOffset: -8)
-        viewsCountButton.autoAlignAxis(.horizontal, toSameAxisOf: voteContainerView)
+        // temp hide
+//        addSubview(viewsCountLabel)
+//        viewsCountLabel.autoPinEdge(.trailing, to: .leading, of: commentsCountButton, withOffset: -23)
+//        viewsCountLabel.autoAlignAxis(.horizontal, toSameAxisOf: voteContainerView)
+//
+//        addSubview(viewsCountButton)
+//        viewsCountButton.autoPinEdge(.trailing, to: .leading, of: viewsCountLabel, withOffset: -8)
+//        viewsCountButton.autoAlignAxis(.horizontal, toSameAxisOf: voteContainerView)
         
         let commentsLabel = UILabel.with(text: "comments".localized().uppercaseFirst, textSize: 21, weight: .bold)
         addSubview(commentsLabel)

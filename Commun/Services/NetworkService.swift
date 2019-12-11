@@ -262,33 +262,28 @@ class NetworkService: NSObject {
     
     func downloadImage(_ url: URL) -> Single<UIImage> {
         Logger.log(message: "Downloading image for \(url.absoluteString)", event: .debug)
-        guard let imageDownloader = SDWebImageManager.shared().imageDownloader else {
-            return .error(ErrorAPI.unknown)
-        }
         return Single<UIImage>.create {single in
-            imageDownloader.downloadImage(with: url) { (image, _, error, _) in
+            SDWebImageManager.shared.loadImage(with: url, options: .highPriority, progress: nil) { (image, _, error, _, _, _) in
                 if let image = image {
-                    single(.success(image))
-                    return
-                }
-                if let error = error {
-                    single(.error(error))
-                    return
-                }
-                single(.error(ErrorAPI.unknown))
+                   single(.success(image))
+                   return
+               }
+               if let error = error {
+                   single(.error(error))
+                   return
+               }
+               single(.error(ErrorAPI.unknown))
             }
             return Disposables.create()
         }
     }
-    
-    
     
     //  Update updatemeta
     func updateMeta(params: [String: String], waitForTransaction: Bool = true) -> Completable {
         return RestAPIManager.instance.update(userProfile: params)
             .flatMapCompletable({ (transaction) -> Completable in
                 // update profile
-                if let url = params["profile_image"] {
+                if let url = params["avatar_url"] {
                     self.saveUser(avatarUrl: url)
                 }
                 

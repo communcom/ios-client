@@ -36,7 +36,6 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
         return view
     }()
     
-    lazy var backButton = UIButton.back(tintColor: .white, contentInsets: UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 24))
     lazy var optionsButton = UIButton.option(tintColor: .white, contentInsets: UIEdgeInsets(top: 12, left: 32, bottom: 12, right: 0))
     
     lazy var coverImageView: UIImageView = {
@@ -51,21 +50,22 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
         fatalError("Must override")
     }
     
-    lazy var tableView: UITableView = {
+    lazy var tableView: UITableView = setUpTableView()
+    
+    func setUpTableView() -> UITableView {
         let tableView = UITableView(forAutoLayout: ())
         tableView.backgroundColor = .clear
         tableView.insetsContentViewsToSafeArea = false
         tableView.contentInsetAdjustmentBehavior = .never
         tableView.showsVerticalScrollIndicator = false
         return tableView
-    }()
+    }
     
     override func setUp() {
         super.setUp()
 
         view.backgroundColor = #colorLiteral(red: 0.9605136514, green: 0.9644123912, blue: 0.9850376248, alpha: 1)
-        setLeftNavBarButton(with: backButton)
-        backButton.addTarget(self, action: #selector(back), for: .touchUpInside)
+        setLeftNavBarButtonForGoingBack(tintColor: .white)
         
         setRightNavBarButton(with: optionsButton)
         optionsButton.addTarget(self, action: #selector(moreActionsButtonDidTouch(_:)), for: .touchUpInside)
@@ -164,7 +164,8 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
             self.navigationController?.navigationBar.subviews.first?.backgroundColor = show ? .white: .clear
             self.navigationController?.navigationBar.setTitleFont(.boldSystemFont(ofSize: 17), color:
                 show ? .black: .clear)
-            self.backButton.tintColor = show ? .black: .white
+            self.navigationItem.leftBarButtonItem?.tintColor = show ? .black: .white
+            self.optionsButton.tintColor = show ? .black: .white
         }
     }
     

@@ -50,10 +50,10 @@ class CommentForm: MyView {
     
     
     // MARK: - Subviews
-    lazy var parentCommentView = UIView(height: 40, backgroundColor: .white)
-    lazy var parentCommentTitleLabel = UILabel.with(text: "Edit comment", textSize: 15, weight: .bold, textColor: .appMainColor)
-    lazy var parentCommentLabel = UILabel.with(text: "Amet incididunt enim dolore fugdasd ...", textSize: 13)
-    lazy var closeParentCommentButton = UIButton.close()
+    lazy var parentCommentView = UIView(height: CGFloat.adaptive(height: 40.0), backgroundColor: .white)
+    lazy var parentCommentTitleLabel = UILabel.with(text: "edit comment".localized().uppercaseFirst, textSize: CGFloat.adaptive(width: 15.0), weight: .semibold, textColor: .appMainColor)
+    lazy var parentCommentLabel = UILabel.with(text: "Amet incididunt enim dolore fugdasd ...", textSize: CGFloat.adaptive(width: 13.0))
+    lazy var closeParentCommentButton = UIButton.circle(size: CGFloat.adaptive(width: 20.0), backgroundColor: .white, imageName: "icon-close-black-default")
         
     lazy var textView: CommentTextView = {
         let textView = CommentTextView(forExpandable: ())
@@ -82,29 +82,30 @@ class CommentForm: MyView {
         super.commonInit()
         // ParentCommentView
         addSubview(parentCommentView)
-        parentCommentView.autoPinEdge(toSuperviewEdge: .top, withInset: 10)
+        parentCommentView.autoPinEdge(toSuperviewEdge: .top, withInset: CGFloat.adaptive(height: 11.0))
         
-        let indicatorView = UIView(width: 2, height: 35, backgroundColor: .appMainColor, cornerRadius: 1)
+        let indicatorView = UIView(width: CGFloat.adaptive(width: 2.0), height: CGFloat.adaptive(height: 35.0), backgroundColor: .appMainColor, cornerRadius: CGFloat.adaptive(width: 1.0))
         parentCommentView.addSubview(indicatorView)
         indicatorView.autoPinTopAndLeadingToSuperView()
-        indicatorView.autoPinEdge(toSuperviewEdge: .bottom, withInset: 5)
+        indicatorView.autoPinEdge(toSuperviewEdge: .bottom, withInset: CGFloat.adaptive(height: 5.0))
         
         parentCommentView.addSubview(parentCommentTitleLabel)
-        parentCommentTitleLabel.autoPinEdge(toSuperviewEdge: .top, withInset: -2)
-        parentCommentTitleLabel.autoPinEdge(.leading, to: .trailing, of: indicatorView, withOffset: 10)
+        parentCommentTitleLabel.autoPinEdge(toSuperviewEdge: .top, withInset: CGFloat.adaptive(height: -2.0))
+        parentCommentTitleLabel.autoPinEdge(.leading, to: .trailing, of: indicatorView, withOffset: CGFloat.adaptive(width: 10.0))
         
         parentCommentView.addSubview(parentCommentLabel)
         parentCommentLabel.autoPinEdge(.top, to: .bottom, of: parentCommentTitleLabel)
-        parentCommentLabel.autoPinEdge(.leading, to: .trailing, of: indicatorView, withOffset: 10)
-        parentCommentLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+        parentCommentLabel.autoPinEdge(.leading, to: .trailing, of: indicatorView, withOffset: CGFloat.adaptive(width: 10.0))
         
         parentCommentView.addSubview(closeParentCommentButton)
         closeParentCommentButton.autoPinEdge(toSuperviewEdge: .trailing)
-        closeParentCommentButton.autoPinEdge(.leading, to: .trailing, of: parentCommentLabel)
-        closeParentCommentButton.autoPinEdge(toSuperviewEdge: .top, withInset: 8)
-        closeParentCommentButton.autoPinEdge(toSuperviewEdge: .bottom, withInset: 8)
+        closeParentCommentButton.autoPinEdge(.leading, to: .trailing, of: parentCommentLabel, withOffset: CGFloat.adaptive(width: 21.0))
+        closeParentCommentButton.autoAlignAxis(toSuperviewAxis: .horizontal)
         closeParentCommentButton.addTarget(self, action: #selector(closeButtonDidTouch), for: .touchUpInside)
         
+        parentCommentView.autoPinEdge(toSuperviewEdge: .leading, withInset: CGFloat.adaptive(width: 26.0))
+        parentCommentView.autoPinEdge(toSuperviewEdge: .trailing, withInset: CGFloat.adaptive(width: 55.0))
+
         let stackView = UIStackView(axis: .horizontal, spacing: CGFloat.adaptive(width: 5.0))
         addSubview(stackView)
         stackView.alignment = .leading

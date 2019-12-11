@@ -110,8 +110,8 @@ class ArticleEditorVC: PostEditorVC {
         contentTextView.autoPinEdge(toSuperviewEdge: .bottom)
     }
     
-    override func setUp(with post: ResponseAPIContentGetPost) {
+    override func setUp(with post: ResponseAPIContentGetPost) -> Completable {
         self.titleTextView.rx.text.onNext(post.document?.attributes?.title)
-        super.setUp(with: post)
+        return super.setUp(with: post)
     }
 }
