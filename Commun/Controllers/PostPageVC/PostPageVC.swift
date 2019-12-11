@@ -165,6 +165,15 @@ class PostPageVC: CommentsViewController {
         commentForm.mode = .edit
         commentForm.parentComment = comment
         commentForm.textView.parseContentBlock(document)
+            .do(onSubscribe: {
+                self.showIndetermineHudWithMessage("loading".localized().uppercaseFirst)
+            })
+            .subscribe(onCompleted: { [weak self] in
+                self?.hideHud()
+            }) { [weak self] (error) in
+                self?.showError(error)
+            }
+            .disposed(by: disposeBag)
         commentForm.textView.becomeFirstResponder()
     }
     
