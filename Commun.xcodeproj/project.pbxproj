@@ -281,9 +281,6 @@
 		BC469300239663980064A38B /* ForceUpdateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4692FF239663980064A38B /* ForceUpdateView.swift */; };
 		BC469304239673CB0064A38B /* MyProfilePageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC469303239673CB0064A38B /* MyProfilePageViewModel.swift */; };
 		BC469306239677E00064A38B /* MyProfilePageVC+Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC469305239677E00064A38B /* MyProfilePageVC+Binding.swift */; };
-		BC46933E239E314E0064A38B /* SignInVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC46933D239E314E0064A38B /* SignInVC.swift */; };
-		BC469340239E42E30064A38B /* SignInViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC46933F239E42E20064A38B /* SignInViewModel.swift */; };
-		BC469347239F3A2C0064A38B /* QRScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC469346239F3A2C0064A38B /* QRScannerViewController.swift */; };
 		BC48FC42236689DC0049C4F4 /* LeadersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC48FC41236689DC0049C4F4 /* LeadersViewModel.swift */; };
 		BC48FC4423668A080049C4F4 /* LeadersListFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC48FC4323668A080049C4F4 /* LeadersListFetcher.swift */; };
 		BC48FC46236690880049C4F4 /* MyEmptyPlaceHolderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC48FC45236690880049C4F4 /* MyEmptyPlaceHolderView.swift */; };
@@ -2347,7 +2344,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1020;
-				LastUpgradeCheck = 1010;
+				LastUpgradeCheck = 1130;
 				ORGANIZATIONNAME = "Maxim Prigozhenkov";
 				TargetAttributes = {
 					3BEA224022B3DA9C00FF42DA = {
@@ -2635,7 +2632,6 @@
 				BCCB993623756375005252CF /* PostHeaderView.swift in Sources */,
 				B1D7AD5823A10650007D1A13 /* SignInVC.swift in Sources */,
 				BCABF1352366D5DC006B05F5 /* ProfileViewModel.swift in Sources */,
-				BC46933E239E314E0064A38B /* SignInVC.swift in Sources */,
 				BC7D6090237BF764007D8C1A /* BlacklistViewModel.swift in Sources */,
 				575AECB122606F6600A7EC2D /* SelectCountryVC.swift in Sources */,
 				BC22BBDB236C2A7F00F40658 /* NotificationSettingsViewModel.swift in Sources */,
@@ -2757,7 +2753,6 @@
 				3B8DDF56234AD5D500B213F0 /* ContentTextView+Parsing.swift in Sources */,
 				57A95197224178010020F55D /* PostController.swift in Sources */,
 				B1D7AD5A23A1065A007D1A13 /* SignInViewModel.swift in Sources */,
-				BC469340239E42E30064A38B /* SignInViewModel.swift in Sources */,
 				BC48FC4423668A080049C4F4 /* LeadersListFetcher.swift in Sources */,
 				3B3C8B9E234796D900D8BADB /* PostEditorVC+Binding.swift in Sources */,
 				BC702C8E2362817700D9E88A /* CommunityLeaderCell.swift in Sources */,
@@ -2930,7 +2925,6 @@
 				3BB342B422CA7412009546B2 /* CreateBioVC.swift in Sources */,
 				3BB32F1923438D4F006572F3 /* DimmingPresentationController.swift in Sources */,
 				3B5CB30522A5752100757533 /* ListViewModelType.swift in Sources */,
-				BC469347239F3A2C0064A38B /* QRScannerViewController.swift in Sources */,
 				BC22BBC8236C055300F40658 /* MyProfileSettingsVC.swift in Sources */,
 				3B8DDF54234AD15A00B213F0 /* PostEditorVC+Actions.swift in Sources */,
 				BCA9712223603C6C00AE37E1 /* CommunityHeaderView.swift in Sources */,
