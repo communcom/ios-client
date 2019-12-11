@@ -176,7 +176,7 @@ extension UITableView {
             return
         }
         
-        let height = CGFloat.adaptive(height: buttonLabel == nil ? 133.0 : 183.0)
+        let height = CGFloat.adaptive(height: buttonLabel == nil ? 153.0 : 203.0)
         let containerView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: 0.0, height: height))
         let placeholderView = MyEmptyPlaceHolderView(title: title, description: description, buttonLabel: buttonLabel, buttonAction: buttonAction)
         containerView.addSubview(placeholderView)
