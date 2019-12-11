@@ -199,11 +199,11 @@ extension UIViewController {
         removeFromParent()
     }
     
-    @objc func back() {
+    @objc func back(completion: (()->Void)? = nil) {
         if (self.isModal) {
-            self.dismiss(animated: true, completion: nil)
+            self.dismiss(animated: true, completion: completion)
         } else {
-            self.navigationController?.popViewController()
+            self.navigationController?.popViewController(animated: true, completion)
         }
     }
     
