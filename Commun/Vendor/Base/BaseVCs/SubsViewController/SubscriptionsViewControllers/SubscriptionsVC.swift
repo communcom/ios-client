@@ -105,13 +105,11 @@ class SubscriptionsVC: SubsViewController<ResponseAPIContentGetSubscriptionsItem
     override func handleListEmpty() {
         var titleValue = "empty subscriptions title"
         var descriptionValue = "empty subscriptions description"
-        var heightValue: CGFloat = 133.0
         var buttonTitleValue: String?
         
         switch (viewModel as! SubscriptionsViewModel).type {
         case .community:
             titleValue          =   "empty subscriptions title".localized().uppercaseFirst
-            heightValue         =   183.0
             descriptionValue    =   "empty subscriptions description".localized().uppercaseFirst
             buttonTitleValue    =   "empty subscriptions button title".localized().uppercaseFirst
             
@@ -120,8 +118,7 @@ class SubscriptionsVC: SubsViewController<ResponseAPIContentGetSubscriptionsItem
             descriptionValue    =   "no subscribers found".localized().uppercaseFirst
         }
         
-        tableView.addEmptyPlaceholderFooterView(height:         heightValue,
-                                                title:          titleValue,
+        tableView.addEmptyPlaceholderFooterView(title:          titleValue,
                                                 description:    descriptionValue,
                                                 buttonLabel:    buttonTitleValue,
                                                 buttonAction:   {
