@@ -46,6 +46,7 @@ final class FeedPageVC: PostsViewController {
         if floatViewHeight == 0 {
             tableView.contentInset.top = height
             floatViewHeight = height
+            scrollToTop()
         }
     }
     
