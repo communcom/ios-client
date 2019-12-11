@@ -309,10 +309,10 @@ class SignUpVC: UIViewController, SignUpRouter {
         let blockChainDisclaimerRange = (text as NSString).range(of: "blockchain Disclaimer".localized().uppercaseFirst)
         
         if gesture.didTapAttributedTextInLabel(label: termOfUseLabel, inRange: termsOfUseRange) {
-            showURL(string: "https://commun.com/privacy")
+            showURL(string: "https://commun.com/doc/privacy")
         }
         else if gesture.didTapAttributedTextInLabel(label: termOfUseLabel, inRange: blockChainDisclaimerRange) {
-            showURL(string: "https://commun.com/agreement")
+            showURL(string: "https://commun.com/doc/disclaimer")
         }
     }
     

@@ -22,7 +22,8 @@ def common_pods_commun
   
   pod 'Alamofire'
   pod 'Swinject'
-  pod 'SDWebImage', '~> 4.0'
+  pod 'SDWebImage'
+  pod 'SDWebImageWebPCoder'
   pod 'Action'
   pod 'DateToolsSwift'
   pod 'SwiftyGif'

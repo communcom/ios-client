@@ -183,6 +183,10 @@ class SignInVC: BaseViewController {
     
     @objc func scanQrButtonDidTouch() {
         let vc = QRScannerViewController()
+        vc.completion = { credential in
+            self.setTextfieldWithLogin(credential.login, key: credential.key)
+            self.signInButtonDidTouch()
+        }
         show(vc, sender: nil)
     }
 }

@@ -70,10 +70,6 @@ class QRScannerViewController: BaseViewController, AVCaptureMetadataOutputObject
     }
     
     func scan() {
-        view.removeSubviews()
-        view.backgroundColor = UIColor.black
-        captureSession = AVCaptureSession()
-
         guard let videoCaptureDevice = AVCaptureDevice.default(for: .video) else {
             failed()
             return
@@ -91,6 +87,11 @@ class QRScannerViewController: BaseViewController, AVCaptureMetadataOutputObject
             }
             return
         }
+        
+        self.navigationItem.leftBarButtonItem?.tintColor = .white
+        view.removeSubviews()
+        view.backgroundColor = UIColor.black
+        captureSession = AVCaptureSession()
 
         if (captureSession.canAddInput(videoInput)) {
             captureSession.addInput(videoInput)
@@ -121,12 +122,15 @@ class QRScannerViewController: BaseViewController, AVCaptureMetadataOutputObject
     }
     
     func retryGrantingPermission() {
-        captureSession = nil
+        self.navigationItem.leftBarButtonItem?.tintColor = .black
         view.addSubview(errorView)
         errorView.autoPinEdgesToSuperviewEdges()
+        captureSession = nil
     }
 
     func failed() {
+        self.navigationItem.leftBarButtonItem?.tintColor = .black
+        view.backgroundColor = .white
         let ac = UIAlertController(title: "Scanning not supported", message: "Your device does not support scanning a code from an item. Please use a device with a camera.", preferredStyle: .alert)
         ac.addAction(UIAlertAction(title: "OK", style: .default))
         present(ac, animated: true)
@@ -157,22 +161,28 @@ class QRScannerViewController: BaseViewController, AVCaptureMetadataOutputObject
         }
     }
 
+    var isBlocking = false
     func found(code: String) {
-        print(code)
+        guard isBlocking == false else {return}
         // check
-        if true {return}
+        guard let decodedData = Data(base64Encoded: code),
+            let user = try? JSONDecoder().decode(QrCodeDecodedProfile.self, from: decodedData)
+        else {
+            isBlocking = false
+            return
+        }
+
+        isBlocking = true
+        
         // vibrate
         AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
+        
         // completion
         captureSession.stopRunning()
-//        completion?()
-        DispatchQueue.main.async {
-            self.back()
+        
+        self.backCompletion {
+            self.completion?(LoginCredential(login: user.username, key: user.password))
         }
-    }
-
-    override var prefersStatusBarHidden: Bool {
-        return true
     }
 
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {

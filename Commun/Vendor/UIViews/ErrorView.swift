@@ -11,35 +11,16 @@ import Foundation
 class ErrorView: MyView {
     var imageRatio: CGFloat
     
-    lazy var imageView: UIImageView = {
-        var imageView = UIImageView()
-        imageView.image = UIImage(named: "no-connection-image")
-        return imageView
-    }()
+    lazy var imageView = UIImageView(forAutoLayout: ())
+    
+    lazy var title = UILabel.with(textSize: CGFloat.adaptive(height: 30), weight: .semibold, textColor: .black, numberOfLines: 0, textAlignment: .center)
 
-    lazy var title: UILabel = {
-        var label = UILabel(text: "no connection".localized().uppercaseFirst)
-        label.font = UIFont.systemFont(ofSize: CGFloat.adaptive(width: 30), weight: .semibold)
-        label.textColor = .black
-        label.textAlignment = .center
-        return label
-    }()
-
-    lazy var subtitle: UILabel = {
-        var label = UILabel(text: "check your Internet connection\n and try again".localized().uppercaseFirst)
-        label.font = UIFont.systemFont(ofSize: CGFloat.adaptive(width: 17), weight: .medium)
-        label.textColor = UIColor(hexString: "A5A7BD")
-        label.numberOfLines = 2
-        label.textAlignment = .center
-        return label
-    }()
-
-    lazy var retryButton: UIButton = {
-        var button = UIButton(height: 50 * Config.heightRatio, label: "try again".localized().uppercaseFirst, labelFont: UIFont.systemFont(ofSize: 15, weight: .bold), backgroundColor: UIColor.appMainColor, textColor: .white, cornerRadius: 25 * Config.heightRatio)
-        return button
-    }()
+    lazy var subtitle = UILabel.with(textSize: CGFloat.adaptive(height: 17), weight: .medium, textColor: .a5a7bd, numberOfLines: 0, textAlignment: .center)
+    
+    lazy var retryButton = UIButton(height: CGFloat.adaptive(height: 50), labelFont: UIFont.systemFont(ofSize: 15, weight: .bold), backgroundColor: .appMainColor, textColor: .white, cornerRadius: CGFloat.adaptive(height: 25))
 
     var retryAction: (()->Void)?
+    
     init(
         imageRatio: CGFloat = 285/350,
         imageNamed: String = "no-connection-image",

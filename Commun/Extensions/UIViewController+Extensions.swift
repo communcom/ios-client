@@ -206,6 +206,15 @@ extension UIViewController {
             self.navigationController?.popViewController()
         }
     }
+
+    
+    func backCompletion(_ completion: @escaping (()->Void)) {
+        if (self.isModal) {
+            self.dismiss(animated: true, completion: completion)
+        } else {
+            self.navigationController?.popViewController(animated: true, completion)
+        }
+    }
     
     func setLeftNavBarButtonForGoingBack(tintColor: UIColor = .black) {
         let backButton = UIBarButtonItem(image: UIImage(named: "icon-back-bar-button-black-default"), style: .plain, target: self, action: #selector(back))

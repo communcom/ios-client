@@ -50,14 +50,16 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
         fatalError("Must override")
     }
     
-    lazy var tableView: UITableView = {
+    lazy var tableView: UITableView = setUpTableView()
+    
+    func setUpTableView() -> UITableView {
         let tableView = UITableView(forAutoLayout: ())
         tableView.backgroundColor = .clear
         tableView.insetsContentViewsToSafeArea = false
         tableView.contentInsetAdjustmentBehavior = .never
         tableView.showsVerticalScrollIndicator = false
         return tableView
-    }()
+    }
     
     override func setUp() {
         super.setUp()

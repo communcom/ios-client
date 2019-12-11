@@ -13,7 +13,7 @@ class GridView: UIView {
     // MARK: - Properties
     var padding: CGFloat = 0.5
     var views = [UIView]()
-    var embedView: UIView?
+    var embedView: EmbedView?
     var isPostDetail = false
     
     // MARK: - Initializers
