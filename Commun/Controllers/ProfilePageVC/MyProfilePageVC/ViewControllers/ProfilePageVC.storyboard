@@ -3,7 +3,7 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15509"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -36,49 +36,79 @@
                                 </items>
                             </navigationBar>
                             <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ProfilePageCover" translatesAutoresizingMaskIntoConstraints="NO" id="8cF-Ek-qIg" customClass="VerticalDraggableImageView" customModule="Commun" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="88" width="414" height="160"/>
+                                <rect key="frame" x="0.0" y="88" width="414" height="180"/>
                                 <color key="backgroundColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <accessibility key="accessibilityConfiguration" identifier="ProfileEditCoverCoverImageView" label="ProfileEditCoverCoverImageView">
                                     <bool key="isElement" value="YES"/>
                                 </accessibility>
-                            </imageView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ProfilePageUserAvatar" translatesAutoresizingMaskIntoConstraints="NO" id="jaP-Rf-dLD">
-                                <rect key="frame" x="157" y="198" width="100" height="100"/>
-                                <accessibility key="accessibilityConfiguration" identifier="ProfileEditCoverAvatarImageView" label="ProfileEditCoverAvatarImageView">
-                                    <bool key="isElement" value="YES"/>
-                                </accessibility>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="100" id="4UQ-sC-jSg"/>
-                                    <constraint firstAttribute="width" constant="100" id="K6p-m4-U0e"/>
+                                    <constraint firstAttribute="height" constant="180" id="Q93-8q-84p"/>
+                                </constraints>
+                            </imageView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="V2h-S0-6S9">
+                                <rect key="frame" x="0.0" y="246" width="414" height="650"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ProfilePageUserAvatar" translatesAutoresizingMaskIntoConstraints="NO" id="jaP-Rf-dLD">
+                                        <rect key="frame" x="15" y="15" width="50" height="50"/>
+                                        <accessibility key="accessibilityConfiguration" identifier="ProfileEditCoverAvatarImageView" label="ProfileEditCoverAvatarImageView">
+                                            <bool key="isElement" value="YES"/>
+                                        </accessibility>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="4UQ-sC-jSg"/>
+                                            <constraint firstAttribute="width" constant="50" id="K6p-m4-U0e"/>
+                                        </constraints>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <integer key="value" value="25"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </imageView>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2fG-2d-gzs">
+                                        <rect key="frame" x="75" y="19.5" width="324" height="41"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="sergey.marchenko" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="drm-pZ-Nvs">
+                                                <rect key="frame" x="0.0" y="0.0" width="324" height="23"/>
+                                                <accessibility key="accessibilityConfiguration" identifier="ProfileEditCoverUserNameLabel" label="ProfileEditCoverUserNameLabel"/>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Joined April 12, 2018" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4iA-4Y-1yt">
+                                                <rect key="frame" x="0.0" y="26" width="324" height="15"/>
+                                                <accessibility key="accessibilityConfiguration" identifier="ProfileEditCoverJoinedDateLabel" label="ProfileEditCoverJoinedDateLabel"/>
+                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="12"/>
+                                                <color key="textColor" red="0.64705882349999999" green="0.65490196079999996" blue="0.74117647060000003" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="bottom" secondItem="4iA-4Y-1yt" secondAttribute="bottom" id="5qw-y0-xtN"/>
+                                            <constraint firstItem="drm-pZ-Nvs" firstAttribute="leading" secondItem="2fG-2d-gzs" secondAttribute="leading" id="9gG-kf-Sfi"/>
+                                            <constraint firstItem="drm-pZ-Nvs" firstAttribute="top" secondItem="2fG-2d-gzs" secondAttribute="top" id="A32-Oc-Qnj"/>
+                                            <constraint firstItem="4iA-4Y-1yt" firstAttribute="top" secondItem="drm-pZ-Nvs" secondAttribute="bottom" constant="3" id="WG4-5O-iqe"/>
+                                            <constraint firstAttribute="trailing" secondItem="4iA-4Y-1yt" secondAttribute="trailing" id="f2w-k9-iXL"/>
+                                            <constraint firstItem="4iA-4Y-1yt" firstAttribute="leading" secondItem="2fG-2d-gzs" secondAttribute="leading" id="tPf-HB-68N"/>
+                                            <constraint firstAttribute="trailing" secondItem="drm-pZ-Nvs" secondAttribute="trailing" id="vtT-fI-Lga"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="2fG-2d-gzs" secondAttribute="trailing" constant="15" id="3sw-8s-Xx3"/>
+                                    <constraint firstItem="jaP-Rf-dLD" firstAttribute="top" secondItem="V2h-S0-6S9" secondAttribute="top" constant="15" id="5jM-Vq-6UW"/>
+                                    <constraint firstItem="jaP-Rf-dLD" firstAttribute="leading" secondItem="V2h-S0-6S9" secondAttribute="leading" constant="15" id="E3z-Rp-NCs"/>
+                                    <constraint firstItem="2fG-2d-gzs" firstAttribute="leading" secondItem="jaP-Rf-dLD" secondAttribute="trailing" constant="10" id="aKQ-A2-ZCa"/>
+                                    <constraint firstItem="2fG-2d-gzs" firstAttribute="centerY" secondItem="jaP-Rf-dLD" secondAttribute="centerY" id="kar-xr-a7x"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                        <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                        <real key="value" value="4"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="50"/>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="25"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
-                            </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.40000000596046448" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Joined April 12, 2018" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4iA-4Y-1yt">
-                                <rect key="frame" x="135.5" y="343.5" width="143" height="18"/>
-                                <accessibility key="accessibilityConfiguration" identifier="ProfileEditCoverJoinedDateLabel" label="ProfileEditCoverJoinedDateLabel"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="sergey.marchenko" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="drm-pZ-Nvs">
-                                <rect key="frame" x="98.5" y="308" width="217.5" height="31.5"/>
-                                <accessibility key="accessibilityConfiguration" identifier="ProfileEditCoverUserNameLabel" label="ProfileEditCoverUserNameLabel"/>
-                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="26"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <view alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QXx-ix-XZS">
-                                <rect key="frame" x="87.5" y="124.5" width="239" height="37"/>
+                            </view>
+                            <view alpha="0.20000000000000001" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QXx-ix-XZS">
+                                <rect key="frame" x="87.5" y="148.5" width="239" height="37"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="QXx-ix-XZS" secondAttribute="height" multiplier="103:16" id="9Kt-WB-XBJ"/>
@@ -90,7 +120,7 @@
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ProfilePageCoverDragIcon" translatesAutoresizingMaskIntoConstraints="NO" id="zbE-KA-5Nk">
-                                <rect key="frame" x="103.5" y="132.5" width="21" height="21"/>
+                                <rect key="frame" x="103.5" y="156.5" width="21" height="21"/>
                                 <accessibility key="accessibilityConfiguration" identifier="ProfileEditCoverDragToMoveImageView" label="ProfileEditCoverDragToMoveImageView">
                                     <bool key="isElement" value="YES"/>
                                 </accessibility>
@@ -99,7 +129,7 @@
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Drag to move cover photo" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ell-cV-JLU">
-                                <rect key="frame" x="132.5" y="132.5" width="178" height="21"/>
+                                <rect key="frame" x="132.5" y="156.5" width="178" height="21"/>
                                 <accessibility key="accessibilityConfiguration" identifier="ProfileEditCoverDragToMoveLabel" label="ProfileEditCoverDragToMoveLabel"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -110,24 +140,19 @@
                         <constraints>
                             <constraint firstItem="zbE-KA-5Nk" firstAttribute="leading" secondItem="QXx-ix-XZS" secondAttribute="leading" constant="16" id="2BQ-oN-SQ0" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                             <constraint firstItem="ell-cV-JLU" firstAttribute="trailing" secondItem="QXx-ix-XZS" secondAttribute="trailing" constant="-16" id="2Dx-b2-cT7" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
+                            <constraint firstItem="QXx-ix-XZS" firstAttribute="centerX" secondItem="8cF-Ek-qIg" secondAttribute="centerX" id="2jD-F1-f4v"/>
                             <constraint firstItem="zbE-KA-5Nk" firstAttribute="bottom" secondItem="QXx-ix-XZS" secondAttribute="bottom" constant="-8" id="3EI-YQ-vJg" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
-                            <constraint firstItem="8cF-Ek-qIg" firstAttribute="height" secondItem="Dkf-uD-aTJ" secondAttribute="height" multiplier="160/896" id="3fe-dN-pj3"/>
-                            <constraint firstItem="QXx-ix-XZS" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="lkO-cg-dmd" secondAttribute="leading" constant="8" id="4Ts-Wf-4tg"/>
-                            <constraint firstItem="QXx-ix-XZS" firstAttribute="centerX" secondItem="8cF-Ek-qIg" secondAttribute="centerX" id="73X-4e-vJH"/>
-                            <constraint firstItem="jaP-Rf-dLD" firstAttribute="centerX" secondItem="lkO-cg-dmd" secondAttribute="centerX" id="7Yi-rr-eCE"/>
-                            <constraint firstItem="QXx-ix-XZS" firstAttribute="centerY" secondItem="8cF-Ek-qIg" secondAttribute="centerY" constant="-25" id="ArD-M5-cNW"/>
-                            <constraint firstItem="lkO-cg-dmd" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="QXx-ix-XZS" secondAttribute="trailing" constant="8" id="CXN-7x-5ku"/>
+                            <constraint firstItem="V2h-S0-6S9" firstAttribute="top" secondItem="8cF-Ek-qIg" secondAttribute="bottom" constant="-22" id="4oX-Fb-RSy"/>
+                            <constraint firstAttribute="trailing" secondItem="V2h-S0-6S9" secondAttribute="trailing" id="5DU-1t-PD5"/>
+                            <constraint firstItem="V2h-S0-6S9" firstAttribute="leading" secondItem="lkO-cg-dmd" secondAttribute="leading" id="BiP-FP-p90"/>
                             <constraint firstItem="ell-cV-JLU" firstAttribute="leading" secondItem="zbE-KA-5Nk" secondAttribute="trailing" constant="8" id="Da6-Qd-CQU"/>
                             <constraint firstItem="Hob-rx-vjU" firstAttribute="leading" secondItem="lkO-cg-dmd" secondAttribute="leading" id="INm-Al-wkd"/>
                             <constraint firstItem="Hob-rx-vjU" firstAttribute="trailing" secondItem="lkO-cg-dmd" secondAttribute="trailing" id="LaB-wr-oQK"/>
-                            <constraint firstItem="drm-pZ-Nvs" firstAttribute="top" secondItem="jaP-Rf-dLD" secondAttribute="bottom" constant="10" id="R0v-h0-cDV"/>
-                            <constraint firstItem="jaP-Rf-dLD" firstAttribute="bottom" secondItem="8cF-Ek-qIg" secondAttribute="bottom" constant="50" id="Szn-uX-e0q"/>
-                            <constraint firstItem="4iA-4Y-1yt" firstAttribute="top" secondItem="drm-pZ-Nvs" secondAttribute="bottom" constant="4" id="WEW-c2-zmG"/>
-                            <constraint firstItem="4iA-4Y-1yt" firstAttribute="centerX" secondItem="lkO-cg-dmd" secondAttribute="centerX" id="go8-LK-rnn"/>
+                            <constraint firstItem="QXx-ix-XZS" firstAttribute="centerY" secondItem="8cF-Ek-qIg" secondAttribute="centerY" constant="-11" id="RNT-ZH-Yix"/>
+                            <constraint firstAttribute="bottom" secondItem="V2h-S0-6S9" secondAttribute="bottom" id="Rvo-1o-N5s"/>
                             <constraint firstItem="8cF-Ek-qIg" firstAttribute="trailing" secondItem="lkO-cg-dmd" secondAttribute="trailing" id="jrV-yT-ZDQ"/>
                             <constraint firstItem="zbE-KA-5Nk" firstAttribute="top" secondItem="QXx-ix-XZS" secondAttribute="top" constant="8" id="kF8-cf-agC" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                             <constraint firstItem="8cF-Ek-qIg" firstAttribute="top" secondItem="Hob-rx-vjU" secondAttribute="bottom" id="pFA-Y9-K3c"/>
-                            <constraint firstItem="drm-pZ-Nvs" firstAttribute="centerX" secondItem="lkO-cg-dmd" secondAttribute="centerX" id="qC7-Ca-Eeo"/>
                             <constraint firstItem="Hob-rx-vjU" firstAttribute="top" secondItem="lkO-cg-dmd" secondAttribute="top" id="trg-Au-ezq"/>
                             <constraint firstItem="ell-cV-JLU" firstAttribute="top" secondItem="QXx-ix-XZS" secondAttribute="top" constant="8" id="vOi-0U-FF1" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                             <constraint firstItem="ell-cV-JLU" firstAttribute="bottom" secondItem="QXx-ix-XZS" secondAttribute="bottom" constant="-8" id="vc6-Wa-5u7" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
