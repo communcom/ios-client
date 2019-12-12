@@ -42,6 +42,10 @@ class VoteContainerView: MyView {
         upVoteButton.isEnabled         = !(votes.isBeingVoted ?? false)
         downVoteButton.isEnabled       = !(votes.isBeingVoted ?? false)
         likeCountLabel.textColor = votes.hasUpVote ?? false || votes.hasDownVote ?? false ? .appMainColor : .a5a7bd
+
+        let isCurrentUser = Config.currentUser?.id == userID
+        upVoteButton.isHidden = isCurrentUser
+        downVoteButton.isHidden = isCurrentUser
     }
     
     func animateUpVote(completion: @escaping () -> Void) {
