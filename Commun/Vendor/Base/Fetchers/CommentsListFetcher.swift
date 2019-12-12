@@ -10,7 +10,12 @@ import Foundation
 import CyberSwift
 import RxSwift
 
+public var maxNestedLevel = 6
+//    var maxNestedLevel = 6
 class CommentsListFetcher: ListFetcher<ResponseAPIContentGetComment> {
+    // MARK: - Properties
+
+
     // MARK: - type
     struct GroupedComment {
        var comment: ResponseAPIContentGetComment
@@ -39,15 +44,19 @@ class CommentsListFetcher: ListFetcher<ResponseAPIContentGetComment> {
             resolveNestedComments: Bool? = nil
         ) -> Filter {
             var newFilter = self
+            
             if let sortBy = sortBy {
                 newFilter.sortBy = sortBy
             }
+            
             if let type = type {
                 newFilter.type = type
             }
+            
             if let userId = userId {
                 newFilter.userId = userId
             }
+            
             if let permlink = permlink {
                 newFilter.permlink = permlink
             }
@@ -92,12 +101,15 @@ class CommentsListFetcher: ListFetcher<ResponseAPIContentGetComment> {
                         communityId: filter.communityId,
                         communityAlias: filter.communityAlias
                     )
+                
                 case .user:
                     result = RestAPIManager.instance.loadUserComments(
                         sortBy: filter.sortBy,
                         offset: offset,
                         limit: 30,
                         userId: filter.userId)
+                    maxNestedLevel = 0
+
                 case .replies:
                     result = RestAPIManager.instance.loadPostComments(
                         sortBy: filter.sortBy,
@@ -141,19 +153,20 @@ class CommentsListFetcher: ListFetcher<ResponseAPIContentGetComment> {
         // result array
         let result = comments.filter {$0.parents.comment == nil}
             .reduce([GroupedComment]()) { (result, comment) -> [GroupedComment] in
-                return result + [GroupedComment(comment: comment, replies: getChildForComment(comment, in: comments))]
+            return result + [GroupedComment(comment: comment, replies: getChildForComment(comment, in: comments))]
         }
 
         return flat(result)
     }
 
-    var maxNestedLevel = 6
-
     func getChildForComment(_ comment: ResponseAPIContentGetComment, in source: [ResponseAPIContentGetComment]) -> [GroupedComment] {
-
         var result = [GroupedComment]()
 
         // filter child
+        guard maxNestedLevel > 0 else {
+            return result
+        }
+        
         let childComments = source
             .filter {$0.parents.comment?.permlink == comment.contentId.permlink && $0.parents.comment?.userId == comment.contentId.userId}
 

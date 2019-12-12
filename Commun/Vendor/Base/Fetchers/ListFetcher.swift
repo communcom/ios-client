@@ -88,7 +88,8 @@ class ListFetcher<T: ListItemType> {
         request
             .subscribe(onSuccess: { (items) in
                 if self.offset == 0 {
-                    self.items.accept(items)
+                    self.items.accept(self.join(newItems: items))
+//                    self.items.accept(items)
                 }
                 else {
                     self.items.accept(self.join(newItems: items))

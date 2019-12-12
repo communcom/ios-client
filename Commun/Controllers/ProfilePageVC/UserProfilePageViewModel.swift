@@ -48,17 +48,19 @@ class UserProfilePageViewModel: ProfileViewModel<ResponseAPIContentGetProfile> {
             })
             .disposed(by: disposeBag)
         
-        let posts         = postsVM.items.map {$0 as [Any]}.skip(1)
-        let comments      = commentsVM.items.map {$0 as [Any]}.skip(1)
-        
+        let posts = postsVM.items.map {$0 as [Any]}.skip(1)
+        let comments = commentsVM.items.map { $0 as [Any] }.skip(1)
+
         Observable.merge(posts, comments)
-            .filter { (item) -> Bool in
-                if item is [ResponseAPIContentGetPost] && self.segmentedItem.value == .posts {
+            .filter { (items) -> Bool in
+                if items is [ResponseAPIContentGetPost] && self.segmentedItem.value == .posts {
                     return true
                 }
-                if item is [ResponseAPIContentGetComment] && self.segmentedItem.value == .comments {
+                
+                if items is [ResponseAPIContentGetComment] && self.segmentedItem.value == .comments {
                     return true
                 }
+                  
                 return false
             }
             .skip(1)
