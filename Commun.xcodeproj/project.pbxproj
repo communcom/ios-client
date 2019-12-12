@@ -182,6 +182,10 @@
 		B1C3712D2383D0F3000BAE2F /* ProfileEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C3712B2383D0F2000BAE2F /* ProfileEditViewController.swift */; };
 		B1C371362383E43C000BAE2F /* ProfileEditViewController+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C371352383E43C000BAE2F /* ProfileEditViewController+Actions.swift */; };
 		B1D1CF9922F8A28A0071F1B6 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B1D1CF9B22F8A28A0071F1B6 /* InfoPlist.strings */; };
+		B1D7AD5623A10582007D1A13 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D7AD5523A10581007D1A13 /* ErrorView.swift */; };
+		B1D7AD5823A10650007D1A13 /* SignInVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D7AD5723A10650007D1A13 /* SignInVC.swift */; };
+		B1D7AD5A23A1065A007D1A13 /* SignInViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D7AD5923A10659007D1A13 /* SignInViewModel.swift */; };
+		B1D7AD5C23A10664007D1A13 /* QRScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D7AD5B23A10664007D1A13 /* QRScannerViewController.swift */; };
 		B1EA02D72289882300835244 /* SF-Pro-Display-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = 57F9CA9C225B3AA400AC9ACA /* SF-Pro-Display-Black.otf */; };
 		B1EA02D82289882A00835244 /* SF-Pro-Display-BlackItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 57F9CA8E225B3A9400AC9ACA /* SF-Pro-Display-BlackItalic.otf */; };
 		B1EA02D92289882A00835244 /* SF-Pro-Display-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 57F9CA95225B3A9A00AC9ACA /* SF-Pro-Display-Bold.otf */; };
@@ -257,7 +261,6 @@
 		BC384F1A23862C580021A2A9 /* CommunityPageVC+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC384F1923862C580021A2A9 /* CommunityPageVC+Actions.swift */; };
 		BC384F1E23862FBC0021A2A9 /* CommunityPageVC+Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC384F1D23862FBC0021A2A9 /* CommunityPageVC+Binding.swift */; };
 		BC3AD9DC23838E920026EAB4 /* CommentFormViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3AD9DB23838E920026EAB4 /* CommentFormViewModel.swift */; };
-		BC3AD9DE2383CF3C0026EAB4 /* CommentForm+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3AD9DD2383CF3C0026EAB4 /* CommentForm+Actions.swift */; };
 		BC3D97612350384E00421718 /* ResponseAPIContentGetPosts.json in Resources */ = {isa = PBXBuildFile; fileRef = BC3D97602350384E00421718 /* ResponseAPIContentGetPosts.json */; };
 		BC401E3C2371143F00A53788 /* LeaderAvatarImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC401E3B2371143F00A53788 /* LeaderAvatarImageView.swift */; };
 		BC465927238E563F00AF9C29 /* BackUpKeysVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC465926238E563F00AF9C29 /* BackUpKeysVC.swift */; };
@@ -277,9 +280,6 @@
 		BC469300239663980064A38B /* ForceUpdateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4692FF239663980064A38B /* ForceUpdateView.swift */; };
 		BC469304239673CB0064A38B /* MyProfilePageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC469303239673CB0064A38B /* MyProfilePageViewModel.swift */; };
 		BC469306239677E00064A38B /* MyProfilePageVC+Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC469305239677E00064A38B /* MyProfilePageVC+Binding.swift */; };
-		BC46933E239E314E0064A38B /* SignInVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC46933D239E314E0064A38B /* SignInVC.swift */; };
-		BC469340239E42E30064A38B /* SignInViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC46933F239E42E20064A38B /* SignInViewModel.swift */; };
-		BC469347239F3A2C0064A38B /* QRScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC469346239F3A2C0064A38B /* QRScannerViewController.swift */; };
 		BC48FC42236689DC0049C4F4 /* LeadersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC48FC41236689DC0049C4F4 /* LeadersViewModel.swift */; };
 		BC48FC4423668A080049C4F4 /* LeadersListFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC48FC4323668A080049C4F4 /* LeadersListFetcher.swift */; };
 		BC48FC46236690880049C4F4 /* MyEmptyPlaceHolderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC48FC45236690880049C4F4 /* MyEmptyPlaceHolderView.swift */; };
@@ -325,7 +325,6 @@
 		BC6B7653236A74F000A7AF2A /* MyProfileEditBioVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC6B7652236A74F000A7AF2A /* MyProfileEditBioVC.swift */; };
 		BC6B7657236A9D4600A7AF2A /* CommunityRuleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC6B7656236A9D4600A7AF2A /* CommunityRuleCell.swift */; };
 		BC6B7659236AE14500A7AF2A /* CommunityPageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC6B7658236AE14500A7AF2A /* CommunityPageCell.swift */; };
-		BC6B765B236BC58600A7AF2A /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC6B765A236BC58600A7AF2A /* ErrorView.swift */; };
 		BC702C8E2362817700D9E88A /* CommunityLeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC702C8D2362817700D9E88A /* CommunityLeaderCell.swift */; };
 		BC702C902362825100D9E88A /* MyAvatarImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC702C8F2362825100D9E88A /* MyAvatarImageView.swift */; };
 		BC702C96236298CC00D9E88A /* CommunityAboutCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC702C95236298CC00D9E88A /* CommunityAboutCell.swift */; };
@@ -657,6 +656,10 @@
 		B1C3712B2383D0F2000BAE2F /* ProfileEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileEditViewController.swift; sourceTree = "<group>"; };
 		B1C371352383E43C000BAE2F /* ProfileEditViewController+Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProfileEditViewController+Actions.swift"; sourceTree = "<group>"; };
 		B1D1CF9A22F8A28A0071F1B6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		B1D7AD5523A10581007D1A13 /* ErrorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
+		B1D7AD5723A10650007D1A13 /* SignInVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInVC.swift; sourceTree = "<group>"; };
+		B1D7AD5923A10659007D1A13 /* SignInViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInViewModel.swift; sourceTree = "<group>"; };
+		B1D7AD5B23A10664007D1A13 /* QRScannerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QRScannerViewController.swift; sourceTree = "<group>"; };
 		B1EA02D42289734800835244 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		B1FA77C2238BBF0D006E57D1 /* UserNameRulesView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserNameRulesView.xib; sourceTree = "<group>"; };
 		B1FA77C3238BBF0D006E57D1 /* UserNameRulesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserNameRulesView.swift; sourceTree = "<group>"; };
@@ -704,7 +707,6 @@
 		BC384F1923862C580021A2A9 /* CommunityPageVC+Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CommunityPageVC+Actions.swift"; sourceTree = "<group>"; };
 		BC384F1D23862FBC0021A2A9 /* CommunityPageVC+Binding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CommunityPageVC+Binding.swift"; sourceTree = "<group>"; };
 		BC3AD9DB23838E920026EAB4 /* CommentFormViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentFormViewModel.swift; sourceTree = "<group>"; };
-		BC3AD9DD2383CF3C0026EAB4 /* CommentForm+Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CommentForm+Actions.swift"; sourceTree = "<group>"; };
 		BC3D97602350384E00421718 /* ResponseAPIContentGetPosts.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ResponseAPIContentGetPosts.json; sourceTree = "<group>"; };
 		BC401E3B2371143F00A53788 /* LeaderAvatarImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderAvatarImageView.swift; sourceTree = "<group>"; };
 		BC465926238E563F00AF9C29 /* BackUpKeysVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackUpKeysVC.swift; sourceTree = "<group>"; };
@@ -772,7 +774,6 @@
 		BC6B7652236A74F000A7AF2A /* MyProfileEditBioVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileEditBioVC.swift; sourceTree = "<group>"; };
 		BC6B7656236A9D4600A7AF2A /* CommunityRuleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityRuleCell.swift; sourceTree = "<group>"; };
 		BC6B7658236AE14500A7AF2A /* CommunityPageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityPageCell.swift; sourceTree = "<group>"; };
-		BC6B765A236BC58600A7AF2A /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
 		BC702C8D2362817700D9E88A /* CommunityLeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityLeaderCell.swift; sourceTree = "<group>"; };
 		BC702C8F2362825100D9E88A /* MyAvatarImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAvatarImageView.swift; sourceTree = "<group>"; };
 		BC702C95236298CC00D9E88A /* CommunityAboutCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityAboutCell.swift; sourceTree = "<group>"; };
@@ -1623,6 +1624,9 @@
 		57FB179E224C077300563BF7 /* SignInVC */ = {
 			isa = PBXGroup;
 			children = (
+				B1D7AD5723A10650007D1A13 /* SignInVC.swift */,
+				B1D7AD5923A10659007D1A13 /* SignInViewModel.swift */,
+				B1D7AD5B23A10664007D1A13 /* QRScannerViewController.swift */,
 				BC46933D239E314E0064A38B /* SignInVC.swift */,
 				BC46933F239E42E20064A38B /* SignInViewModel.swift */,
 				BC469346239F3A2C0064A38B /* QRScannerViewController.swift */,
@@ -1868,7 +1872,6 @@
 			isa = PBXGroup;
 			children = (
 				BC52913F23793D330022EC7F /* CommentForm.swift */,
-				BC3AD9DD2383CF3C0026EAB4 /* CommentForm+Actions.swift */,
 				BC3AD9DB23838E920026EAB4 /* CommentFormViewModel.swift */,
 			);
 			path = CommentForm;
@@ -2140,6 +2143,7 @@
 		BCA971292361304800AE37E1 /* UIViews */ = {
 			isa = PBXGroup;
 			children = (
+				B1D7AD5523A10581007D1A13 /* ErrorView.swift */,
 				3BB32F1A234436EF006572F3 /* PostMetaView.swift */,
 				3B06862F2346FFA6008953C5 /* CommunButton.swift */,
 				BCA9712A2361306700AE37E1 /* MyView.swift */,
@@ -2150,7 +2154,6 @@
 				BC48FC45236690880049C4F4 /* MyEmptyPlaceHolderView.swift */,
 				BCABF1302366CDC6006B05F5 /* MyNavigationBar.swift */,
 				BCA9712723608ABD00AE37E1 /* UsersStackView.swift */,
-				BC6B765A236BC58600A7AF2A /* ErrorView.swift */,
 				BC4692FF239663980064A38B /* ForceUpdateView.swift */,
 				BC22BBC9236C082600F40658 /* ContentHuggingScrollView.swift */,
 				BC401E3B2371143F00A53788 /* LeaderAvatarImageView.swift */,
@@ -2338,7 +2341,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1020;
-				LastUpgradeCheck = 1010;
+				LastUpgradeCheck = 1130;
 				ORGANIZATIONNAME = "Maxim Prigozhenkov";
 				TargetAttributes = {
 					3BEA224022B3DA9C00FF42DA = {
@@ -2349,7 +2352,6 @@
 					571B14EF223A935C00630C8F = {
 						CreatedOnToolsVersion = 10.1;
 						LastSwiftMigration = 1020;
-						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -2619,12 +2621,13 @@
 				3BC613B12342140000075570 /* SwipeDownInteractor.swift in Sources */,
 				BCD453AD2354473F005A454C /* BasicEditorVC+MediaViewDelegate.swift in Sources */,
 				3B8DDF5A234AF04C00B213F0 /* ArticleEditorVC.swift in Sources */,
+				B1D7AD5623A10582007D1A13 /* ErrorView.swift in Sources */,
 				BC597A6E238BC7C200103F4F /* PostsFilterVC.swift in Sources */,
 				5787C0C622650FA500568CEC /* SetUserViewModel.swift in Sources */,
 				BC4692EF239615160064A38B /* FriendsViewModel.swift in Sources */,
 				BCCB993623756375005252CF /* PostHeaderView.swift in Sources */,
+				B1D7AD5823A10650007D1A13 /* SignInVC.swift in Sources */,
 				BCABF1352366D5DC006B05F5 /* ProfileViewModel.swift in Sources */,
-				BC46933E239E314E0064A38B /* SignInVC.swift in Sources */,
 				BC7D6090237BF764007D8C1A /* BlacklistViewModel.swift in Sources */,
 				575AECB122606F6600A7EC2D /* SelectCountryVC.swift in Sources */,
 				BC22BBDB236C2A7F00F40658 /* NotificationSettingsViewModel.swift in Sources */,
@@ -2681,7 +2684,6 @@
 				BCD00FBF2375087C004A3952 /* PostPageVC.swift in Sources */,
 				BC597A89238CF20500103F4F /* FTUECommunityCell.swift in Sources */,
 				57E515B12270F4EA00A6F6DB /* SettingsKeyCell.swift in Sources */,
-				BC3AD9DE2383CF3C0026EAB4 /* CommentForm+Actions.swift in Sources */,
 				3BC613B32342162700075570 /* SwipeDownDismissViewController.swift in Sources */,
 				BC6B7653236A74F000A7AF2A /* MyProfileEditBioVC.swift in Sources */,
 				571B150B223A94DE00630C8F /* TabBarVC.swift in Sources */,
@@ -2694,7 +2696,6 @@
 				BC7D6097237C01BD007D8C1A /* BlacklistCell.swift in Sources */,
 				3BAD8E812318D838005A8AB3 /* UITextView+UILabel.swift in Sources */,
 				BCA97113236004F500AE37E1 /* CommentsViewModel.swift in Sources */,
-				BC6B765B236BC58600A7AF2A /* ErrorView.swift in Sources */,
 				3BAF69CF226787940055CCEB /* Date.swift in Sources */,
 				BC469300239663980064A38B /* ForceUpdateView.swift in Sources */,
 				3BE68AB222EEA7C300033B81 /* LocalAuthVC.swift in Sources */,
@@ -2705,6 +2706,7 @@
 				BC2C94FF2366F04100C9D7FE /* UserProfileHeaderView.swift in Sources */,
 				BC6B7657236A9D4600A7AF2A /* CommunityRuleCell.swift in Sources */,
 				BCF74A6723618D9000B91089 /* CMSegmentedControl.swift in Sources */,
+				B1D7AD5C23A10664007D1A13 /* QRScannerViewController.swift in Sources */,
 				BC22BBCF236C18BE00F40658 /* MyProfileSettingsVC+Actions.swift in Sources */,
 				3BB48AD022D5F84D00F11B6A /* SetPasscodeVC.swift in Sources */,
 				AC88ADD02386B12A00D72374 /* ShareHelper.swift in Sources */,
@@ -2745,7 +2747,7 @@
 				BCABF1392366DF2B006B05F5 /* UserProfilePageVC.swift in Sources */,
 				3B8DDF56234AD5D500B213F0 /* ContentTextView+Parsing.swift in Sources */,
 				57A95197224178010020F55D /* PostController.swift in Sources */,
-				BC469340239E42E30064A38B /* SignInViewModel.swift in Sources */,
+				B1D7AD5A23A1065A007D1A13 /* SignInViewModel.swift in Sources */,
 				BC48FC4423668A080049C4F4 /* LeadersListFetcher.swift in Sources */,
 				3B3C8B9E234796D900D8BADB /* PostEditorVC+Binding.swift in Sources */,
 				BC702C8E2362817700D9E88A /* CommunityLeaderCell.swift in Sources */,
@@ -2918,7 +2920,6 @@
 				3BB342B422CA7412009546B2 /* CreateBioVC.swift in Sources */,
 				3BB32F1923438D4F006572F3 /* DimmingPresentationController.swift in Sources */,
 				3B5CB30522A5752100757533 /* ListViewModelType.swift in Sources */,
-				BC469347239F3A2C0064A38B /* QRScannerViewController.swift in Sources */,
 				BC22BBC8236C055300F40658 /* MyProfileSettingsVC.swift in Sources */,
 				3B8DDF54234AD15A00B213F0 /* PostEditorVC+Actions.swift in Sources */,
 				BCA9712223603C6C00AE37E1 /* CommunityHeaderView.swift in Sources */,
@@ -3147,8 +3148,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Commun/Commun.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 5G8856SBG8;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -3179,8 +3180,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Commun/Commun.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 5G8856SBG8;
 				FRAMEWORK_SEARCH_PATHS = (

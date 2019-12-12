@@ -11,7 +11,7 @@ import RxSwift
 import CyberSwift
 
 class CommentForm: MyView {
-    // MARK: - Edit mode
+    // MARK: - Nested types
     enum Mode {
         case new
         case edit
@@ -19,42 +19,22 @@ class CommentForm: MyView {
     }
     
     // MARK: - Properties
-    let disposeBag = DisposeBag()
-    
-    var parentComment: ResponseAPIContentGetComment? {
-        didSet {
-            setParentComment()
-        }
-    }
-    
+    private let disposeBag = DisposeBag()
+    lazy var viewModel = CommentFormViewModel()
     var post: ResponseAPIContentGetPost? {
         didSet {
             viewModel.post = post
         }
     }
     
-    var mode: Mode = .new {
-        didSet {
-            switch mode {
-            case .new:
-                parentCommentTitleLabel.text = nil
-            case .edit:
-                parentCommentTitleLabel.text = "edit comment".localized().uppercaseFirst
-            case .reply:
-                parentCommentTitleLabel.text = "reply to comment".localized().uppercaseFirst
-            }
-        }
-    }
-    
-    lazy var viewModel = CommentFormViewModel()
-    
+    var originParentComment: ResponseAPIContentGetComment?
+    private var parentComment: ResponseAPIContentGetComment?
+    private var mode: Mode = .new
     
     // MARK: - Subviews
-    lazy var parentCommentView = UIView(height: CGFloat.adaptive(height: 40.0), backgroundColor: .white)
-    lazy var parentCommentTitleLabel = UILabel.with(text: "edit comment".localized().uppercaseFirst, textSize: CGFloat.adaptive(width: 15.0), weight: .semibold, textColor: .appMainColor)
-    lazy var parentCommentLabel = UILabel.with(text: "Amet incididunt enim dolore fugdasd ...", textSize: CGFloat.adaptive(width: 13.0))
-    lazy var closeParentCommentButton = UIButton.circle(size: CGFloat.adaptive(width: 20.0), backgroundColor: .white, imageName: "icon-close-black-default")
-        
+    var constraintTop: NSLayoutConstraint?
+    
+    lazy var stackView = UIStackView(axis: .horizontal, spacing: CGFloat.adaptive(width: 5.0))
     lazy var textView: CommentTextView = {
         let textView = CommentTextView(forExpandable: ())
         textView.placeholder = "write a comment".localized().uppercaseFirst + "..."
@@ -80,37 +60,12 @@ class CommentForm: MyView {
     // MARK: - Methods
     override func commonInit() {
         super.commonInit()
-        // ParentCommentView
-        addSubview(parentCommentView)
-        parentCommentView.autoPinEdge(toSuperviewEdge: .top, withInset: CGFloat.adaptive(height: 11.0))
         
-        let indicatorView = UIView(width: CGFloat.adaptive(width: 2.0), height: CGFloat.adaptive(height: 35.0), backgroundColor: .appMainColor, cornerRadius: CGFloat.adaptive(width: 1.0))
-        parentCommentView.addSubview(indicatorView)
-        indicatorView.autoPinTopAndLeadingToSuperView()
-        indicatorView.autoPinEdge(toSuperviewEdge: .bottom, withInset: CGFloat.adaptive(height: 5.0))
-        
-        parentCommentView.addSubview(parentCommentTitleLabel)
-        parentCommentTitleLabel.autoPinEdge(toSuperviewEdge: .top, withInset: CGFloat.adaptive(height: -2.0))
-        parentCommentTitleLabel.autoPinEdge(.leading, to: .trailing, of: indicatorView, withOffset: CGFloat.adaptive(width: 10.0))
-        
-        parentCommentView.addSubview(parentCommentLabel)
-        parentCommentLabel.autoPinEdge(.top, to: .bottom, of: parentCommentTitleLabel)
-        parentCommentLabel.autoPinEdge(.leading, to: .trailing, of: indicatorView, withOffset: CGFloat.adaptive(width: 10.0))
-        
-        parentCommentView.addSubview(closeParentCommentButton)
-        closeParentCommentButton.autoPinEdge(toSuperviewEdge: .trailing)
-        closeParentCommentButton.autoPinEdge(.leading, to: .trailing, of: parentCommentLabel, withOffset: CGFloat.adaptive(width: 21.0))
-        closeParentCommentButton.autoAlignAxis(toSuperviewAxis: .horizontal)
-        closeParentCommentButton.addTarget(self, action: #selector(closeButtonDidTouch), for: .touchUpInside)
-        
-        parentCommentView.autoPinEdge(toSuperviewEdge: .leading, withInset: CGFloat.adaptive(width: 26.0))
-        parentCommentView.autoPinEdge(toSuperviewEdge: .trailing, withInset: CGFloat.adaptive(width: 55.0))
-
-        let stackView = UIStackView(axis: .horizontal, spacing: CGFloat.adaptive(width: 5.0))
-        addSubview(stackView)
+        // bottom stackView
         stackView.alignment = .leading
         stackView.distribution = .fillProportionally
-        stackView.autoPinEdge(.top, to: .bottom, of: parentCommentView)
+        
+        addSubview(stackView)
         stackView.autoPinBottomAndLeadingToSuperView(inset: CGFloat.adaptive(height: 10.0), xInset: CGFloat.adaptive(width: 10.0))
         stackView.autoPinEdge(toSuperviewEdge: .right, withInset: CGFloat.adaptive(width: 10.0))
         
@@ -123,10 +78,104 @@ class CommentForm: MyView {
         stackView.addArrangedSubview(sendButton)
         sendButton.addTarget(self, action: #selector(commentSend), for: .touchUpInside)
         sendButton.isHidden = true
-
-        bind()
         
-        parentComment = nil
+        setUp()
+        bind()
+    }
+    
+    func setMode(_ mode: Mode, comment: ResponseAPIContentGetComment?) {
+        self.mode = mode
+        originParentComment = comment
+        parentComment = comment
+        setUp()
+    }
+    
+    func setUp() {
+        // clear
+        constraintTop?.isActive = false
+        for subview in subviews {
+            if subview != stackView {
+                subview.removeFromSuperview()
+            }
+        }
+        
+        // mode
+        if mode == .new {
+            constraintTop = stackView.autoPinEdge(toSuperviewEdge: .top, withInset: CGFloat.adaptive(height: 10.0))
+            #warning("image")
+        }
+        else {
+            let parentCommentView = createParentCommentView()
+            addSubview(parentCommentView)
+            constraintTop = parentCommentView.autoPinEdge(toSuperviewEdge: .top, withInset: CGFloat.adaptive(height: 10.0))
+            parentCommentView.autoPinEdge(.leading, to: .leading, of: textView)
+            parentCommentView.autoPinEdge(.trailing, to: .trailing, of: stackView, withOffset: -6)
+            parentCommentView.autoPinEdge(.bottom, to: .top, of: stackView, withOffset: -10)
+            UIView.animate(withDuration: 0.3, animations: {
+                parentCommentView.layoutIfNeeded()
+            })
+        }
+    }
+    
+    func createParentCommentView() -> UIView {
+        let height: CGFloat = 35
+        
+        let view = UIView(height: height)
+        
+        let indicatorView = UIView(width: 2, height: height, backgroundColor: .appMainColor, cornerRadius: 1)
+        view.addSubview(indicatorView)
+        indicatorView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .trailing)
+        
+        let imageView = UIImageView(width: height, height: height, cornerRadius: 4)
+        imageView.contentMode = .scaleAspectFill
+        view.addSubview(imageView)
+        imageView.autoPinEdge(.leading, to: .trailing, of: indicatorView, withOffset: 5)
+        imageView.autoAlignAxis(toSuperviewAxis: .horizontal)
+        
+        if let url = parentComment?.attachments.first?.thumbnailUrl
+        {
+            imageView.widthConstraint?.constant = height
+            imageView.setImageDetectGif(with: url)
+        }
+        else {
+            imageView.widthConstraint?.constant = 0
+        }
+        
+        let stackView = UIStackView(axis: .vertical)
+        stackView.alignment = .leading
+        view.addSubview(stackView)
+        stackView.autoPinEdge(.leading, to: .trailing, of: imageView, withOffset: 5)
+        stackView.autoPinEdge(toSuperviewEdge: .top)
+        stackView.autoPinEdge(toSuperviewEdge: .bottom)
+        
+        let parentCommentTitleLabel = UILabel.with(textSize: CGFloat.adaptive(width: 15.0), weight: .semibold, textColor: .appMainColor)
+        
+        if mode == .edit {
+            parentCommentTitleLabel.text = "edit comment".localized().uppercaseFirst
+        }
+        
+        if mode == .reply {
+            parentCommentTitleLabel.text = "reply to comment".localized().uppercaseFirst
+        }
+        
+        let parentCommentLabel = UILabel.with(textSize: CGFloat.adaptive(width: 13.0))
+        
+        
+        parentCommentLabel.attributedText = parentComment?.document?.toAttributedString(
+            currentAttributes: [.font: UIFont.systemFont(ofSize: 13)],
+            attachmentType: TextAttachment.self)
+        
+        stackView.addArrangedSubviews([parentCommentTitleLabel, parentCommentLabel])
+        
+        let closeParentCommentButton = UIButton.circle(size: CGFloat.adaptive(width: 20.0), backgroundColor: .white, imageName: "icon-close-black-default")
+        closeParentCommentButton.addTarget(self, action: #selector(closeButtonDidTouch), for: .touchUpInside)
+        
+        view.addSubview(closeParentCommentButton)
+        closeParentCommentButton.autoPinEdge(toSuperviewEdge: .trailing)
+        closeParentCommentButton.autoPinEdge(.leading, to: .trailing, of: stackView, withOffset: CGFloat.adaptive(width: 21.0))
+        closeParentCommentButton.autoAlignAxis(toSuperviewAxis: .horizontal)
+        
+        return view
     }
 
     func bind() {
@@ -172,31 +221,54 @@ class CommentForm: MyView {
         
     }
     
-    func setParentComment() {
-        guard let comment = parentComment else {
-            parentCommentView.heightConstraint?.constant = 0
-            parentCommentView.isHidden = true
-            UIView.animate(withDuration: 0.3) {
-                self.layoutIfNeeded()
-            }
-            return
-        }
-        parentCommentView.heightConstraint?.constant = 40
-        parentCommentView.isHidden = false
-        UIView.animate(withDuration: 0.3) {
-            self.layoutIfNeeded()
-        }
-        parentCommentLabel.attributedText = comment.document?.toAttributedString(
-            currentAttributes: [.font: UIFont.systemFont(ofSize: 13)],
-            attachmentType: TextAttachment.self)
-    }
-    
-    
-    // MARK: - Actions
-    @objc func closeButtonDidTouch() {
-        mode = .new
-        parentComment = nil
-    }
-    
     #warning("support image posting")
 }
+
+extension CommentForm {
+    // MARK: - Actions
+    @objc func closeButtonDidTouch() {
+        setMode(.new, comment: nil)
+    }
+    
+    @objc func commentAddImage() {
+        Logger.log(message: "Add image to comment...", event: .debug)
+    }
+    
+    @objc func commentSend() {
+        if mode != .new && parentComment == nil { return}
+        
+        #warning("send image")
+        var block: ResponseAPIContentBlock!
+        textView.getContentBlock()
+            .observeOn(MainScheduler.instance)
+            .flatMap { parsedBlock -> Single<SendPostCompletion> in
+                //clean
+                block = parsedBlock
+                block.maxId = nil
+                
+                // send new comment
+                let request: Single<SendPostCompletion>
+                switch self.mode {
+                case .new:
+                    request = self.viewModel.sendNewComment(block: block)
+                case .edit:
+                    request = self.viewModel.updateComment(self.parentComment!, block: block)
+                case .reply:
+                    request = self.viewModel.replyToComment(self.parentComment!, block: block)
+                }
+                
+                self.textView.text = ""
+                self.mode = .new
+                self.parentComment = nil
+                self.endEditing(true)
+                
+                return request
+            }
+            .subscribe(onError: { [weak self] error in
+//                self.setLoading(false)
+                self?.parentViewController?.showError(error)
+            })
+            .disposed(by: disposeBag)
+    }
+}
+

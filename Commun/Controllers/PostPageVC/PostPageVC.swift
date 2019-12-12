@@ -162,8 +162,7 @@ class PostPageVC: CommentsViewController {
     
     override func editComment(_ comment: ResponseAPIContentGetComment) {
         guard let document = comment.document else {return}
-        commentForm.mode = .edit
-        commentForm.parentComment = comment
+        commentForm.setMode(.edit, comment: comment)
         commentForm.textView.parseContentBlock(document)
             .do(onSubscribe: {
                 self.showIndetermineHudWithMessage("loading".localized().uppercaseFirst)
@@ -178,8 +177,7 @@ class PostPageVC: CommentsViewController {
     }
     
     override func replyToComment(_ comment: ResponseAPIContentGetComment) {
-        commentForm.mode = .reply
-        commentForm.parentComment = comment
+        commentForm.setMode(.reply, comment: comment)
         commentForm.textView.becomeFirstResponder()
     }
     
