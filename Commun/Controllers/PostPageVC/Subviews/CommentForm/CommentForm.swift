@@ -19,9 +19,9 @@ class CommentForm: MyView {
     }
     
     // MARK: - Properties
-    let disposeBag = DisposeBag()
+    private let disposeBag = DisposeBag()
     
-    var parentComment: ResponseAPIContentGetComment? {
+    private var parentComment: ResponseAPIContentGetComment? {
         didSet {
             setParentComment()
         }
@@ -33,7 +33,7 @@ class CommentForm: MyView {
         }
     }
     
-    var mode: Mode = .new {
+    private var mode: Mode = .new {
         didSet {
             switch mode {
             case .new:
@@ -50,9 +50,10 @@ class CommentForm: MyView {
     
     
     // MARK: - Subviews
-    lazy var parentCommentView = UIView(height: CGFloat.adaptive(height: 40.0), backgroundColor: .white)
-    lazy var parentCommentTitleLabel = UILabel.with(text: "edit comment".localized().uppercaseFirst, textSize: CGFloat.adaptive(width: 15.0), weight: .semibold, textColor: .appMainColor)
-    lazy var parentCommentLabel = UILabel.with(text: "Amet incididunt enim dolore fugdasd ...", textSize: CGFloat.adaptive(width: 13.0))
+    lazy var parentCommentView = UIView(height: 40, backgroundColor: .white)
+    lazy var parentCommentTitleLabel = UILabel.with(textSize: CGFloat.adaptive(width: 15.0), weight: .semibold, textColor: .appMainColor)
+    lazy var parentCommentAttachmentView = UIImageView(width: 35, height: 35, cornerRadius: 4)
+    lazy var parentCommentLabel = UILabel.with(textSize: CGFloat.adaptive(width: 13.0))
     lazy var closeParentCommentButton = UIButton.circle(size: CGFloat.adaptive(width: 20.0), backgroundColor: .white, imageName: "icon-close-black-default")
         
     lazy var textView: CommentTextView = {
@@ -89,22 +90,23 @@ class CommentForm: MyView {
         indicatorView.autoPinTopAndLeadingToSuperView()
         indicatorView.autoPinEdge(toSuperviewEdge: .bottom, withInset: CGFloat.adaptive(height: 5.0))
         
+        parentCommentView.addSubview(parentCommentAttachmentView)
+        parentCommentAttachmentView.autoPinEdge(.leading, to: .trailing, of: indicatorView, withOffset: 5)
+        parentCommentAttachmentView.autoPinEdge(toSuperviewEdge: .top)
+        
         parentCommentView.addSubview(parentCommentTitleLabel)
         parentCommentTitleLabel.autoPinEdge(toSuperviewEdge: .top, withInset: CGFloat.adaptive(height: -2.0))
-        parentCommentTitleLabel.autoPinEdge(.leading, to: .trailing, of: indicatorView, withOffset: CGFloat.adaptive(width: 10.0))
+        parentCommentTitleLabel.autoPinEdge(.leading, to: .trailing, of: parentCommentAttachmentView, withOffset: CGFloat.adaptive(width: 5.0))
         
         parentCommentView.addSubview(parentCommentLabel)
         parentCommentLabel.autoPinEdge(.top, to: .bottom, of: parentCommentTitleLabel)
-        parentCommentLabel.autoPinEdge(.leading, to: .trailing, of: indicatorView, withOffset: CGFloat.adaptive(width: 10.0))
+        parentCommentLabel.autoPinEdge(.leading, to: .leading, of: parentCommentTitleLabel)
         
         parentCommentView.addSubview(closeParentCommentButton)
         closeParentCommentButton.autoPinEdge(toSuperviewEdge: .trailing)
         closeParentCommentButton.autoPinEdge(.leading, to: .trailing, of: parentCommentLabel, withOffset: CGFloat.adaptive(width: 21.0))
         closeParentCommentButton.autoAlignAxis(toSuperviewAxis: .horizontal)
         closeParentCommentButton.addTarget(self, action: #selector(closeButtonDidTouch), for: .touchUpInside)
-        
-        parentCommentView.autoPinEdge(toSuperviewEdge: .leading, withInset: CGFloat.adaptive(width: 26.0))
-        parentCommentView.autoPinEdge(toSuperviewEdge: .trailing, withInset: CGFloat.adaptive(width: 55.0))
 
         let stackView = UIStackView(axis: .horizontal, spacing: CGFloat.adaptive(width: 5.0))
         addSubview(stackView)
@@ -124,9 +126,18 @@ class CommentForm: MyView {
         sendButton.addTarget(self, action: #selector(commentSend), for: .touchUpInside)
         sendButton.isHidden = true
 
+        // parentCommentView vs stackview
+        parentCommentView.autoPinEdge(.trailing, to: .trailing, of: stackView, withOffset: -6)
+        parentCommentView.autoPinEdge(.leading, to: .leading, of: textView)
+        
         bind()
         
         parentComment = nil
+    }
+    
+    func setMode(_ mode: Mode, comment: ResponseAPIContentGetComment?) {
+        self.mode = mode
+        parentComment = comment
     }
 
     func bind() {
@@ -183,9 +194,21 @@ class CommentForm: MyView {
         }
         parentCommentView.heightConstraint?.constant = 40
         parentCommentView.isHidden = false
+        
+        if let attachment = comment.attachments.first,
+            attachment.type == "image"
+        {
+            parentCommentAttachmentView.widthConstraint?.constant = 35
+            parentCommentAttachmentView.setImageDetectGif(with: attachment.content.stringValue)
+        }
+        else {
+            parentCommentAttachmentView.widthConstraint?.constant = 0
+        }
+        
         UIView.animate(withDuration: 0.3) {
             self.layoutIfNeeded()
         }
+        
         parentCommentLabel.attributedText = comment.document?.toAttributedString(
             currentAttributes: [.font: UIFont.systemFont(ofSize: 13)],
             attachmentType: TextAttachment.self)
@@ -193,10 +216,56 @@ class CommentForm: MyView {
     
     
     // MARK: - Actions
-    @objc func closeButtonDidTouch() {
-        mode = .new
-        parentComment = nil
-    }
+    
     
     #warning("support image posting")
 }
+
+extension CommentForm {
+    // MARK: - Actions
+    @objc func closeButtonDidTouch() {
+        setMode(.new, comment: nil)
+    }
+    
+    @objc func commentAddImage() {
+        Logger.log(message: "Add image to comment...", event: .debug)
+    }
+    
+    @objc func commentSend() {
+        if mode != .new && parentComment == nil { return}
+        
+        #warning("send image")
+        var block: ResponseAPIContentBlock!
+        textView.getContentBlock()
+            .observeOn(MainScheduler.instance)
+            .flatMap { parsedBlock -> Single<SendPostCompletion> in
+                //clean
+                block = parsedBlock
+                block.maxId = nil
+                
+                // send new comment
+                let request: Single<SendPostCompletion>
+                switch self.mode {
+                case .new:
+                    request = self.viewModel.sendNewComment(block: block)
+                case .edit:
+                    request = self.viewModel.updateComment(self.parentComment!, block: block)
+                case .reply:
+                    request = self.viewModel.replyToComment(self.parentComment!, block: block)
+                }
+                
+                self.textView.text = ""
+                self.mode = .new
+                self.parentComment = nil
+                self.endEditing(true)
+                
+                return request
+            }
+            .subscribe(onError: { [weak self] error in
+//                self.setLoading(false)
+                self?.parentViewController?.showError(error)
+            })
+            .disposed(by: disposeBag)
+    }
+}
+
