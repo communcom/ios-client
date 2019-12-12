@@ -296,38 +296,10 @@ extension CommentForm {
     @objc func commentSend() {
         if mode != .new && parentComment == nil { return}
         
-        var block: ResponseAPIContentBlock!
         textView.getContentBlock()
             .observeOn(MainScheduler.instance)
-            .flatMap { parsedBlock -> Single<ResponseAPIContentBlock> in
-                if let localImage = self.localImage.value {
-                    // upload image
-                    return NetworkService.shared.uploadImage(localImage)
-                        .observeOn(MainScheduler.instance)
-                        .flatMap {url in
-                            var block = parsedBlock
-                            
-                            var array = parsedBlock.content.arrayValue ?? []
-                            
-                            array.append(
-                                ResponseAPIContentBlock(id: (parsedBlock.maxId ?? 0) + 1, type: "attachments", attributes: nil, content: .array([
-                                    ResponseAPIContentBlock(id: (parsedBlock.maxId ?? 0) + 2, type: "image", attributes: nil, content: .string(url))
-                                ]))
-                            )
-                            
-                            block.content = .array(array)
-                            return .just(block)
-                        }
-                        .do(onSuccess: { (_) in
-                            self.parentViewController?.hideHud()
-                        }, onError: { (error) in
-                            self.parentViewController?.hideHud()
-                            self.parentViewController?.showError(error)
-                        }, onSubscribe: {
-                            self.parentViewController?.showIndetermineHudWithMessage("uploading image".localized().uppercaseFirst + "...")
-                        })
-                }
-                else if let url = self.url {
+            .map { parsedBlock -> ResponseAPIContentBlock in
+                if let url = self.url {
                     var block = parsedBlock
                     
                     var array = parsedBlock.content.arrayValue ?? []
@@ -339,25 +311,25 @@ extension CommentForm {
                     )
                     
                     block.content = .array(array)
-                    return .just(block)
+                    return block
                 }
                 
-                return .just(parsedBlock)
+                return parsedBlock
             }
             .flatMap { parsedBlock -> Single<SendPostCompletion> in
                 //clean
-                block = parsedBlock
+                var block = parsedBlock
                 block.maxId = nil
                 
                 // send new comment
                 let request: Single<SendPostCompletion>
                 switch self.mode {
                 case .new:
-                    request = self.viewModel.sendNewComment(block: block)
+                    request = self.viewModel.sendNewComment(block: block, uploadingImage: self.localImage.value)
                 case .edit:
-                    request = self.viewModel.updateComment(self.parentComment!, block: block)
+                    request = self.viewModel.updateComment(self.parentComment!, block: block, uploadingImage: self.localImage.value)
                 case .reply:
-                    request = self.viewModel.replyToComment(self.parentComment!, block: block)
+                    request = self.viewModel.replyToComment(self.parentComment!, block: block, uploadingImage: self.localImage.value)
                 }
                 
                 self.textView.text = ""
