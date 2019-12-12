@@ -104,28 +104,39 @@ class CommentForm: MyView {
         }
         
         // mode
-        if mode == .new {
-            if let image = localImage {
-                let imageView = UIImageView(width: CGFloat.adaptive(height: 80), height: CGFloat.adaptive(height: 80), cornerRadius: CGFloat.adaptive(height: 15))
-                imageView.image = image
-                addSubview(imageView)
-                constraintTop = imageView.autoPinEdge(toSuperviewEdge: .top, withInset: CGFloat.adaptive(height: 10.0))
-                imageView.autoPinEdge(toSuperviewEdge: .leading, withInset: CGFloat.adaptive(height: 10.0))
-                imageView.autoPinEdge(.bottom, to: .top, of: stackView, withOffset: CGFloat.adaptive(height: -10.0))
-                
-                UIView.animate(withDuration: 0.3) {
-                    imageView.layoutIfNeeded()
-                }
+        
+        var imageView: UIImageView?
+        if let image = localImage {
+            imageView = UIImageView(width: CGFloat.adaptive(height: 80), height: CGFloat.adaptive(height: 80), cornerRadius: CGFloat.adaptive(height: 15))
+            imageView!.image = image
+            addSubview(imageView!)
+            constraintTop = imageView!.autoPinEdge(toSuperviewEdge: .top, withInset: CGFloat.adaptive(height: 10.0))
+            imageView!.autoPinEdge(toSuperviewEdge: .leading, withInset: CGFloat.adaptive(height: 10.0))
+            imageView!.autoPinEdge(.bottom, to: .top, of: stackView, withOffset: CGFloat.adaptive(height: -10.0))
+            
+            UIView.animate(withDuration: 0.3) {
+                imageView!.layoutIfNeeded()
             }
-            else {
+        }
+        
+        
+        if mode == .new {
+            if imageView == nil {
                 constraintTop = stackView.autoPinEdge(toSuperviewEdge: .top, withInset: CGFloat.adaptive(height: 10.0))
             }
         }
         else {
             let parentCommentView = createParentCommentView()
             addSubview(parentCommentView)
-            constraintTop = parentCommentView.autoPinEdge(toSuperviewEdge: .top, withInset: CGFloat.adaptive(height: 10.0))
-            parentCommentView.autoPinEdge(.leading, to: .leading, of: textView)
+            
+            if imageView == nil {
+                constraintTop = parentCommentView.autoPinEdge(toSuperviewEdge: .top, withInset: CGFloat.adaptive(height: 10.0))
+                parentCommentView.autoPinEdge(.leading, to: .leading, of: textView)
+            }
+            else {
+                parentCommentView.autoPinEdge(.leading, to: .trailing, of: imageView!, withOffset: CGFloat.adaptive(height: 16))
+            }
+            
             parentCommentView.autoPinEdge(.trailing, to: .trailing, of: stackView, withOffset: -6)
             parentCommentView.autoPinEdge(.bottom, to: .top, of: stackView, withOffset: -10)
             UIView.animate(withDuration: 0.3, animations: {
