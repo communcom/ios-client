@@ -30,12 +30,12 @@ final class BasicPostCell: PostCell {
         configureTextView()
 
         contentView.addSubview(contentTextView)
-        contentTextView.autoPinEdge(.top, to: .bottom, of: metaView, withOffset: 10)
+        contentTextView.autoPinEdge(.top, to: .bottom, of: metaView, withOffset: 8)
         contentTextView.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
         contentTextView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
 
         contentView.addSubview(gridView)
-        centerConstraint = gridView.autoPinEdge(.top, to: .bottom, of: metaView, withOffset: 5)
+        centerConstraint = gridView.autoPinEdge(.top, to: .bottom, of: metaView, withOffset: 10)
         centerConstraint.isActive = false
         gridView.autoPinEdge(.top, to: .bottom, of: contentTextView, withOffset: 10)
         gridView.autoPinEdge(toSuperviewEdge: .left)
@@ -49,7 +49,8 @@ final class BasicPostCell: PostCell {
         centerConstraint.isActive = false
 
         let paragraph = NSMutableParagraphStyle()
-        paragraph.lineSpacing = 2.1
+        paragraph.minimumLineHeight = 21
+        paragraph.maximumLineHeight = 21
 
         let defaultAttributes: [NSAttributedString.Key: Any] = [
             .font: UIFont.systemFont(ofSize: 14),
