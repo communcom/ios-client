@@ -32,6 +32,16 @@ class MyProfilePageVC: UserProfilePageVC {
         fatalError("init(coder:) has not been implemented")
     }
     
+    
+    // MARK: - Class Functions
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        title = nil
+    }
+    
+    
+    // MARK: - Custom Functions
     override func setUp() {
         super.setUp()
         
