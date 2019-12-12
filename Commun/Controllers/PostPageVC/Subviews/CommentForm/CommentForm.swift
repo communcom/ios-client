@@ -9,6 +9,7 @@
 import Foundation
 import RxSwift
 import CyberSwift
+import RxCocoa
 
 class CommentForm: MyView {
     // MARK: - Nested types
@@ -27,14 +28,14 @@ class CommentForm: MyView {
         }
     }
     
-    var originParentComment: ResponseAPIContentGetComment?
-    private var parentComment: ResponseAPIContentGetComment?
-    private var mode: Mode = .new
-    var localImage: UIImage? {
+    private var parentComment: ResponseAPIContentGetComment? {
         didSet {
-            setUp()
+            self.url = parentComment?.attachments.first?.thumbnailUrl
         }
     }
+    private var mode: Mode = .new
+    let localImage = BehaviorRelay<UIImage?>(value: nil)
+    var url: String?
     
     // MARK: - Subviews
     var constraintTop: NSLayoutConstraint?
@@ -89,8 +90,16 @@ class CommentForm: MyView {
     
     func setMode(_ mode: Mode, comment: ResponseAPIContentGetComment?) {
         self.mode = mode
-        originParentComment = comment
         parentComment = comment
+        
+        if mode == .edit {
+            let aStr = parentComment?.document?.toAttributedString(
+                currentAttributes: [.font: UIFont.systemFont(ofSize: 13)],
+                attachmentType: TextAttachment.self)
+            textView.attributedText = aStr
+            textView.originalAttributedString = aStr
+        }
+        
         setUp()
     }
     
@@ -104,11 +113,10 @@ class CommentForm: MyView {
         }
         
         // mode
-        
         var imageView: UIImageView?
-        if let image = localImage {
-            imageView = UIImageView(width: CGFloat.adaptive(height: 80), height: CGFloat.adaptive(height: 80), cornerRadius: CGFloat.adaptive(height: 15))
-            imageView!.image = image
+        if (localImage.value != nil) || (mode == .edit && parentComment?.attachments.first?.thumbnailUrl != nil)
+        {
+            imageView = MyImageView(width: CGFloat.adaptive(height: 80), height: CGFloat.adaptive(height: 80), cornerRadius: CGFloat.adaptive(height: 15))
             addSubview(imageView!)
             constraintTop = imageView!.autoPinEdge(toSuperviewEdge: .top, withInset: CGFloat.adaptive(height: 10.0))
             imageView!.autoPinEdge(toSuperviewEdge: .leading, withInset: CGFloat.adaptive(height: 10.0))
@@ -121,6 +129,13 @@ class CommentForm: MyView {
             closeButton.autoPinEdge(.top, to: .top, of: imageView!, withOffset: -6)
             closeButton.autoPinEdge(.trailing, to: .trailing, of: imageView!, withOffset: 6)
             closeButton.addTarget(self, action: #selector(closeImageDidTouch), for: .touchUpInside)
+            
+            if let image = localImage.value {
+                imageView?.image = image
+            }
+            else if let url = url {
+                imageView?.setImageDetectGif(with: url)
+            }
         }
         
         
@@ -164,7 +179,8 @@ class CommentForm: MyView {
         imageView.autoPinEdge(.leading, to: .trailing, of: indicatorView, withOffset: 5)
         imageView.autoAlignAxis(toSuperviewAxis: .horizontal)
         
-        if let url = parentComment?.attachments.first?.thumbnailUrl
+        if let url = parentComment?.attachments.first?.thumbnailUrl,
+            mode != .edit
         {
             imageView.widthConstraint?.constant = height
             imageView.setImageDetectGif(with: url)
@@ -211,49 +227,42 @@ class CommentForm: MyView {
     }
 
     func bind() {
-        // setup observer
-        let isTextViewEmpty = textView.rx.text.orEmpty
-            .map{$0 == ""}
-            .distinctUntilChanged()
+        // local image
+        localImage
+            .subscribe(onNext: { (_) in
+                self.setUp()
+            })
+            .disposed(by: disposeBag)
         
-        #warning("bind imageViewIsEmpty")
-        isTextViewEmpty
-            .subscribe(onNext: { (isEmpty) in
-                self.sendButton.isEnabled = !isEmpty
-                self.sendButton.isHidden = isEmpty
+        
+        // setup observer
+        let textViewChanged = textView.rx.text.orEmpty
+            .distinctUntilChanged()
+            .map {_ in ()}
+        
+        let imageChanged = localImage.map {$0 == nil}
+            .distinctUntilChanged()
+            .map {_ in ()}
+        
+        Observable.merge(textViewChanged, imageChanged)
+            .map {_ -> Bool in
+                if self.localImage.value != nil {return true}
+                
+                let isTextViewEmpty = self.textView.text.isEmpty
+                let isTextChanged = (self.textView.attributedText != self.textView.originalAttributedString)
+                
+                return !isTextViewEmpty && isTextChanged
+            }
+            .subscribe(onNext: { (shouldEnableSendButton) in
+                self.sendButton.isEnabled = shouldEnableSendButton
+                self.sendButton.isHidden = !shouldEnableSendButton
                 
                 UIView.animate(withDuration: 0.3, animations: {
                     self.layoutIfNeeded()
                 })
             })
             .disposed(by: disposeBag)
-        
-//        Observable.combineLatest(isTextViewEmpty, imageView.rx.isEmpty)
-//            .map {$0 && $1}
-//            .distinctUntilChanged()
-//            .subscribe(onNext: {isEmpty in
-//                if isEmpty {
-//                    self.textFieldToSendBtnConstraint.constant = 0
-//                    self.sendBtnWidthConstraint.constant = 0
-//                } else {
-//                    self.textFieldToSendBtnConstraint.constant = 16
-//                    self.sendBtnWidthConstraint.constant = 36
-//                }
-//                UIView.animate(withDuration: 0.3, animations: {
-//                    self.layoutIfNeeded()
-//                })
-//            })
-//            .disposed(by: bag)
-//
-//        // observe image
-//        imageView.rx.isEmpty
-//            .map {$0 ? 0: 85}
-//            .bind(to: imageWrapperHeightConstraint.rx.constant)
-//            .disposed(by: bag)
-        
     }
-    
-    #warning("support image posting")
 }
 
 extension CommentForm {
@@ -263,7 +272,8 @@ extension CommentForm {
     }
     
     @objc func closeImageDidTouch() {
-        localImage = nil
+        self.url = nil
+        localImage.accept(nil)
     }
     
     @objc func commentAddImage() {
@@ -272,7 +282,7 @@ extension CommentForm {
         
         pickerVC.rx.didSelectAnImage
             .subscribe(onNext: {[weak self] image in
-                self?.localImage = image
+                self?.localImage.accept(image)
                 pickerVC.dismiss(animated: true, completion: nil)
             })
             .disposed(by: disposeBag)
