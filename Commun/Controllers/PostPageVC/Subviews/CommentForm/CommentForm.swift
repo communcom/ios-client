@@ -92,6 +92,8 @@ class CommentForm: MyView {
         self.mode = mode
         parentComment = comment
         
+        textView.text = nil
+        
         if mode == .edit {
             let aStr = parentComment?.document?.toAttributedString(
                 currentAttributes: [.font: UIFont.systemFont(ofSize: 13)],
@@ -114,7 +116,7 @@ class CommentForm: MyView {
         
         // mode
         var imageView: UIImageView?
-        if (localImage.value != nil) || (mode == .edit && parentComment?.attachments.first?.thumbnailUrl != nil)
+        if (localImage.value != nil) || (mode == .edit && url != nil)
         {
             imageView = MyImageView(width: CGFloat.adaptive(height: 80), height: CGFloat.adaptive(height: 80), cornerRadius: CGFloat.adaptive(height: 15))
             addSubview(imageView!)
@@ -240,9 +242,7 @@ class CommentForm: MyView {
             .distinctUntilChanged()
             .map {_ in ()}
         
-        let imageChanged = localImage.map {$0 == nil}
-            .distinctUntilChanged()
-            .map {_ in ()}
+        let imageChanged = localImage.map {_ in ()}
         
         Observable.merge(textViewChanged, imageChanged)
             .map {_ -> Bool in
@@ -250,6 +250,11 @@ class CommentForm: MyView {
                 
                 let isTextViewEmpty = self.textView.text.isEmpty
                 let isTextChanged = (self.textView.attributedText != self.textView.originalAttributedString)
+                
+                if self.mode == .edit && !isTextViewEmpty && self.url != self.parentComment?.attachments.first?.thumbnailUrl
+                {
+                    return true
+                }
                 
                 return !isTextViewEmpty && isTextChanged
             }
@@ -291,10 +296,54 @@ extension CommentForm {
     @objc func commentSend() {
         if mode != .new && parentComment == nil { return}
         
-        #warning("send image")
         var block: ResponseAPIContentBlock!
         textView.getContentBlock()
             .observeOn(MainScheduler.instance)
+            .flatMap { parsedBlock -> Single<ResponseAPIContentBlock> in
+                if let localImage = self.localImage.value {
+                    // upload image
+                    return NetworkService.shared.uploadImage(localImage)
+                        .observeOn(MainScheduler.instance)
+                        .flatMap {url in
+                            var block = parsedBlock
+                            
+                            var array = parsedBlock.content.arrayValue ?? []
+                            
+                            array.append(
+                                ResponseAPIContentBlock(id: (parsedBlock.maxId ?? 0) + 1, type: "attachments", attributes: nil, content: .array([
+                                    ResponseAPIContentBlock(id: (parsedBlock.maxId ?? 0) + 2, type: "image", attributes: nil, content: .string(url))
+                                ]))
+                            )
+                            
+                            block.content = .array(array)
+                            return .just(block)
+                        }
+                        .do(onSuccess: { (_) in
+                            self.parentViewController?.hideHud()
+                        }, onError: { (error) in
+                            self.parentViewController?.hideHud()
+                            self.parentViewController?.showError(error)
+                        }, onSubscribe: {
+                            self.parentViewController?.showIndetermineHudWithMessage("uploading image".localized().uppercaseFirst + "...")
+                        })
+                }
+                else if let url = self.url {
+                    var block = parsedBlock
+                    
+                    var array = parsedBlock.content.arrayValue ?? []
+                    
+                    array.append(
+                        ResponseAPIContentBlock(id: (parsedBlock.maxId ?? 0) + 1, type: "attachments", attributes: nil, content: .array([
+                            ResponseAPIContentBlock(id: (parsedBlock.maxId ?? 0) + 2, type: "image", attributes: nil, content: .string(url))
+                        ]))
+                    )
+                    
+                    block.content = .array(array)
+                    return .just(block)
+                }
+                
+                return .just(parsedBlock)
+            }
             .flatMap { parsedBlock -> Single<SendPostCompletion> in
                 //clean
                 block = parsedBlock
@@ -314,6 +363,7 @@ extension CommentForm {
                 self.textView.text = ""
                 self.mode = .new
                 self.parentComment = nil
+                self.localImage.accept(nil)
                 self.endEditing(true)
                 
                 return request

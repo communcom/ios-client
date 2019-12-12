@@ -106,6 +106,7 @@ class CommentsViewModel: ListViewModel<ResponseAPIContentGetComment> {
             updatedItem.children = ((oldItem.children ?? []) + (newChildren ?? []))
             guard let newUpdatedItem = items[index].newUpdatedItem(from: updatedItem) else {return}
             items[index] = newUpdatedItem
+            rowHeights.removeValue(forKey: updatedItem.identity)
             fetcher.items.accept(items)
             return
         }
@@ -116,6 +117,7 @@ class CommentsViewModel: ListViewModel<ResponseAPIContentGetComment> {
             if let replyIndex = items[commentIndex].children?.firstIndex(where: {$0.identity == updatedItem.identity}) {
                 guard let newUpdatedItem = items[commentIndex].children?[replyIndex].newUpdatedItem(from: updatedItem) else {return}
                 items[commentIndex].children?[replyIndex] = newUpdatedItem
+                rowHeights.removeValue(forKey: updatedItem.identity)
                 fetcher.items.accept(items)
             }
             return
@@ -128,6 +130,7 @@ class CommentsViewModel: ListViewModel<ResponseAPIContentGetComment> {
         // if item is a first lever comment
         if let index = items.firstIndex(where: {$0.identity == deletedItem.identity})
         {
+            rowHeights.removeValue(forKey: deletedItem.identity)
             items.remove(at: index)
             fetcher.items.accept(items)
             return
@@ -138,6 +141,7 @@ class CommentsViewModel: ListViewModel<ResponseAPIContentGetComment> {
             comment.children?.contains(where: {$0.identity == deletedItem.identity}) ?? false
         }) {
             if let replyIndex = items[commentIndex].children?.firstIndex(where: {$0.identity == deletedItem.identity}) {
+                rowHeights.removeValue(forKey: deletedItem.identity)
                 items[commentIndex].children?.remove(at: replyIndex)
                 fetcher.items.accept(items)
             }
