@@ -114,9 +114,13 @@ class CommentForm: MyView {
             imageView!.autoPinEdge(toSuperviewEdge: .leading, withInset: CGFloat.adaptive(height: 10.0))
             imageView!.autoPinEdge(.bottom, to: .top, of: stackView, withOffset: CGFloat.adaptive(height: -10.0))
             
-            UIView.animate(withDuration: 0.3) {
-                imageView!.layoutIfNeeded()
-            }
+            let closeButton = UIButton.close(size: 24)
+            closeButton.borderColor = .white
+            closeButton.borderWidth = 2
+            addSubview(closeButton)
+            closeButton.autoPinEdge(.top, to: .top, of: imageView!, withOffset: -6)
+            closeButton.autoPinEdge(.trailing, to: .trailing, of: imageView!, withOffset: 6)
+            closeButton.addTarget(self, action: #selector(closeImageDidTouch), for: .touchUpInside)
         }
         
         
@@ -256,6 +260,10 @@ extension CommentForm {
     // MARK: - Actions
     @objc func closeButtonDidTouch() {
         setMode(.new, comment: nil)
+    }
+    
+    @objc func closeImageDidTouch() {
+        localImage = nil
     }
     
     @objc func commentAddImage() {
