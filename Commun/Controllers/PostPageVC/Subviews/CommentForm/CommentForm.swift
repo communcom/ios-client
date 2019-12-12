@@ -30,10 +30,14 @@ class CommentForm: MyView {
     var originParentComment: ResponseAPIContentGetComment?
     private var parentComment: ResponseAPIContentGetComment?
     private var mode: Mode = .new
+    var localImage: UIImage? {
+        didSet {
+            setUp()
+        }
+    }
     
     // MARK: - Subviews
     var constraintTop: NSLayoutConstraint?
-    
     lazy var stackView = UIStackView(axis: .horizontal, spacing: CGFloat.adaptive(width: 5.0))
     lazy var textView: CommentTextView = {
         let textView = CommentTextView(forExpandable: ())
@@ -101,8 +105,21 @@ class CommentForm: MyView {
         
         // mode
         if mode == .new {
-            constraintTop = stackView.autoPinEdge(toSuperviewEdge: .top, withInset: CGFloat.adaptive(height: 10.0))
-            #warning("image")
+            if let image = localImage {
+                let imageView = UIImageView(width: CGFloat.adaptive(height: 80), height: CGFloat.adaptive(height: 80), cornerRadius: CGFloat.adaptive(height: 15))
+                imageView.image = image
+                addSubview(imageView)
+                constraintTop = imageView.autoPinEdge(toSuperviewEdge: .top, withInset: CGFloat.adaptive(height: 10.0))
+                imageView.autoPinEdge(toSuperviewEdge: .leading, withInset: CGFloat.adaptive(height: 10.0))
+                imageView.autoPinEdge(.bottom, to: .top, of: stackView, withOffset: CGFloat.adaptive(height: -10.0))
+                
+                UIView.animate(withDuration: 0.3) {
+                    imageView.layoutIfNeeded()
+                }
+            }
+            else {
+                constraintTop = stackView.autoPinEdge(toSuperviewEdge: .top, withInset: CGFloat.adaptive(height: 10.0))
+            }
         }
         else {
             let parentCommentView = createParentCommentView()
@@ -231,7 +248,15 @@ extension CommentForm {
     }
     
     @objc func commentAddImage() {
-        Logger.log(message: "Add image to comment...", event: .debug)
+        let pickerVC = CustomTLPhotosPickerVC.singleImage
+        self.parentViewController?.present(pickerVC, animated: true, completion: nil)
+        
+        pickerVC.rx.didSelectAnImage
+            .subscribe(onNext: {[weak self] image in
+                self?.localImage = image
+                pickerVC.dismiss(animated: true, completion: nil)
+            })
+            .disposed(by: disposeBag)
     }
     
     @objc func commentSend() {
