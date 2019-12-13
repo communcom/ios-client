@@ -62,6 +62,10 @@ class CommunityLeaderCell: CommunityPageCell {
         namePointsContainerView.addSubview(userNameLabel)
         userNameLabel.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .bottom)
         
+        let tap = UITapGestureRecognizer(target: self, action: #selector(userNameTapped))
+        userNameLabel.addGestureRecognizer(tap)
+        userNameLabel.isUserInteractionEnabled = true
+        
         namePointsContainerView.addSubview(pointsCountLabel)
         pointsCountLabel.autoPinBottomAndLeadingToSuperView(inset: 0)
         pointsCountLabel.autoPinEdge(.top, to: .bottom, of: userNameLabel)
@@ -121,5 +125,10 @@ class CommunityLeaderCell: CommunityPageCell {
         voteButton.animate {
             self.delegate?.buttonVoteDidTouch(leader: leader)
         }
+    }
+    
+    @objc func userNameTapped() {
+        guard let leader = leader else {return}
+        parentViewController?.showProfileWithUserId(leader.userId)
     }
 }
