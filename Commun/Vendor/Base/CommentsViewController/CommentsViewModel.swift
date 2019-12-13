@@ -105,8 +105,11 @@ class CommentsViewModel: ListViewModel<ResponseAPIContentGetComment> {
             })
             updatedItem.children = ((oldItem.children ?? []) + (newChildren ?? []))
             guard let newUpdatedItem = items[index].newUpdatedItem(from: updatedItem) else {return}
+            if !isEqualRowHeight(cmt1: items[index], cmt2: newUpdatedItem)
+            {
+                rowHeights.removeValue(forKey: updatedItem.identity)
+            }
             items[index] = newUpdatedItem
-            rowHeights.removeValue(forKey: updatedItem.identity)
             fetcher.items.accept(items)
             return
         }
@@ -116,12 +119,20 @@ class CommentsViewModel: ListViewModel<ResponseAPIContentGetComment> {
         }) {
             if let replyIndex = items[commentIndex].children?.firstIndex(where: {$0.identity == updatedItem.identity}) {
                 guard let newUpdatedItem = items[commentIndex].children?[replyIndex].newUpdatedItem(from: updatedItem) else {return}
+                if !isEqualRowHeight(cmt1: items[commentIndex].children?[replyIndex], cmt2: newUpdatedItem) {
+                    rowHeights.removeValue(forKey: updatedItem.identity)
+                }
+                
                 items[commentIndex].children?[replyIndex] = newUpdatedItem
-                rowHeights.removeValue(forKey: updatedItem.identity)
                 fetcher.items.accept(items)
             }
             return
         }
+    }
+    
+    func isEqualRowHeight(cmt1: ResponseAPIContentGetComment?, cmt2: ResponseAPIContentGetComment?) -> Bool {
+        return cmt1?.attachments.count == cmt2?.attachments.count &&
+            (try? cmt1?.document?.jsonString()) == (try? cmt2?.document?.jsonString())
     }
     
     override func deleteItem(_ deletedItem: ResponseAPIContentGetComment) {
