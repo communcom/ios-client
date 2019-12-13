@@ -78,6 +78,12 @@ class UserProfilePageViewModel: ProfileViewModel<ResponseAPIContentGetProfile> {
             .disposed(by: disposeBag)
     }
     
+    override func reload() {
+        postsVM.fetcher.reset()
+        commentsVM.fetcher.reset()
+        super.reload()
+    }
+    
     override func fetchNext(forceRetry: Bool = false) {
         super.fetchNext(forceRetry: forceRetry)
         

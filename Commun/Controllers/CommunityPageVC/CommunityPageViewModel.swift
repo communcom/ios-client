@@ -121,6 +121,12 @@ class CommunityPageViewModel: ProfileViewModel<ResponseAPIContentGetCommunity> {
             .disposed(by: disposeBag)
     }
     
+    override func reload() {
+        postsVM.fetcher.reset()
+        leadsVM.fetcher.reset()
+        super.reload()
+    }
+    
     override func fetchNext(forceRetry: Bool = false) {
         super.fetchNext(forceRetry: forceRetry)
         switch segmentedItem.value {
