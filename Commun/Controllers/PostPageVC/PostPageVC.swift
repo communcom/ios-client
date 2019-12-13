@@ -203,7 +203,8 @@ class PostPageVC: CommentsViewController {
                             originMessage:  comment,
                             communCode:     communCode,
                             permlink:       comment.contentId.permlink,
-                            block:          block
+                            block:          block,
+                            uploadingImage: comment.placeHolderImage?.image
                         )
                         .subscribe(onError: { [weak self] error in
                             self?.showError(error)
@@ -226,7 +227,8 @@ class PostPageVC: CommentsViewController {
                             communCode:     communCode,
                             parentAuthor:   parentAuthorId,
                             parentPermlink: parentPermlink,
-                            block:          block
+                            block:          block,
+                            uploadingImage: comment.placeHolderImage?.image
                         )
                         .subscribe(onError: { [weak self] error in
                             self?.showError(error)
@@ -252,7 +254,8 @@ class PostPageVC: CommentsViewController {
                             communCode:     communCode,
                             parentAuthor:   parentCommentAuthorId,
                             parentPermlink: parentCommentPermlink,
-                            block:          block
+                            block:          block,
+                            uploadingImage: comment.placeHolderImage?.image
                         )
                         .subscribe(onError: { [weak self] error in
                             self?.showError(error)

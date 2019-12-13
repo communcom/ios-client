@@ -9,6 +9,7 @@
 import Foundation
 import RxSwift
 import CyberSwift
+import RxCocoa
 
 class CommentForm: MyView {
     // MARK: - Nested types
@@ -27,13 +28,17 @@ class CommentForm: MyView {
         }
     }
     
-    var originParentComment: ResponseAPIContentGetComment?
-    private var parentComment: ResponseAPIContentGetComment?
+    private var parentComment: ResponseAPIContentGetComment? {
+        didSet {
+            self.url = parentComment?.attachments.first?.thumbnailUrl
+        }
+    }
     private var mode: Mode = .new
+    let localImage = BehaviorRelay<UIImage?>(value: nil)
+    var url: String?
     
     // MARK: - Subviews
     var constraintTop: NSLayoutConstraint?
-    
     lazy var stackView = UIStackView(axis: .horizontal, spacing: CGFloat.adaptive(width: 5.0))
     lazy var textView: CommentTextView = {
         let textView = CommentTextView(forExpandable: ())
@@ -85,8 +90,18 @@ class CommentForm: MyView {
     
     func setMode(_ mode: Mode, comment: ResponseAPIContentGetComment?) {
         self.mode = mode
-        originParentComment = comment
         parentComment = comment
+        
+        textView.text = nil
+        
+        if mode == .edit {
+            let aStr = parentComment?.document?.toAttributedString(
+                currentAttributes: [.font: UIFont.systemFont(ofSize: 13)],
+                attachmentType: TextAttachment.self)
+            textView.attributedText = aStr
+            textView.originalAttributedString = aStr
+        }
+        
         setUp()
     }
     
@@ -100,15 +115,49 @@ class CommentForm: MyView {
         }
         
         // mode
+        var imageView: UIImageView?
+        if (localImage.value != nil) || (mode == .edit && url != nil)
+        {
+            imageView = MyImageView(width: CGFloat.adaptive(height: 80), height: CGFloat.adaptive(height: 80), cornerRadius: CGFloat.adaptive(height: 15))
+            addSubview(imageView!)
+            constraintTop = imageView!.autoPinEdge(toSuperviewEdge: .top, withInset: CGFloat.adaptive(height: 10.0))
+            imageView!.autoPinEdge(toSuperviewEdge: .leading, withInset: CGFloat.adaptive(height: 10.0))
+            imageView!.autoPinEdge(.bottom, to: .top, of: stackView, withOffset: CGFloat.adaptive(height: -10.0))
+            
+            let closeButton = UIButton.close(size: 24)
+            closeButton.borderColor = .white
+            closeButton.borderWidth = 2
+            addSubview(closeButton)
+            closeButton.autoPinEdge(.top, to: .top, of: imageView!, withOffset: -6)
+            closeButton.autoPinEdge(.trailing, to: .trailing, of: imageView!, withOffset: 6)
+            closeButton.addTarget(self, action: #selector(closeImageDidTouch), for: .touchUpInside)
+            
+            if let image = localImage.value {
+                imageView?.image = image
+            }
+            else if let url = url {
+                imageView?.setImageDetectGif(with: url)
+            }
+        }
+        
+        
         if mode == .new {
-            constraintTop = stackView.autoPinEdge(toSuperviewEdge: .top, withInset: CGFloat.adaptive(height: 10.0))
-            #warning("image")
+            if imageView == nil {
+                constraintTop = stackView.autoPinEdge(toSuperviewEdge: .top, withInset: CGFloat.adaptive(height: 10.0))
+            }
         }
         else {
             let parentCommentView = createParentCommentView()
             addSubview(parentCommentView)
-            constraintTop = parentCommentView.autoPinEdge(toSuperviewEdge: .top, withInset: CGFloat.adaptive(height: 10.0))
-            parentCommentView.autoPinEdge(.leading, to: .leading, of: textView)
+            
+            if imageView == nil {
+                constraintTop = parentCommentView.autoPinEdge(toSuperviewEdge: .top, withInset: CGFloat.adaptive(height: 10.0))
+                parentCommentView.autoPinEdge(.leading, to: .leading, of: textView)
+            }
+            else {
+                parentCommentView.autoPinEdge(.leading, to: .trailing, of: imageView!, withOffset: CGFloat.adaptive(height: 16))
+            }
+            
             parentCommentView.autoPinEdge(.trailing, to: .trailing, of: stackView, withOffset: -6)
             parentCommentView.autoPinEdge(.bottom, to: .top, of: stackView, withOffset: -10)
             UIView.animate(withDuration: 0.3, animations: {
@@ -132,7 +181,8 @@ class CommentForm: MyView {
         imageView.autoPinEdge(.leading, to: .trailing, of: indicatorView, withOffset: 5)
         imageView.autoAlignAxis(toSuperviewAxis: .horizontal)
         
-        if let url = parentComment?.attachments.first?.thumbnailUrl
+        if let url = parentComment?.attachments.first?.thumbnailUrl,
+            mode != .edit
         {
             imageView.widthConstraint?.constant = height
             imageView.setImageDetectGif(with: url)
@@ -179,49 +229,45 @@ class CommentForm: MyView {
     }
 
     func bind() {
-        // setup observer
-        let isTextViewEmpty = textView.rx.text.orEmpty
-            .map{$0 == ""}
-            .distinctUntilChanged()
+        // local image
+        localImage
+            .subscribe(onNext: { (_) in
+                self.setUp()
+            })
+            .disposed(by: disposeBag)
         
-        #warning("bind imageViewIsEmpty")
-        isTextViewEmpty
-            .subscribe(onNext: { (isEmpty) in
-                self.sendButton.isEnabled = !isEmpty
-                self.sendButton.isHidden = isEmpty
+        
+        // setup observer
+        let textViewChanged = textView.rx.text.orEmpty
+            .distinctUntilChanged()
+            .map {_ in ()}
+        
+        let imageChanged = localImage.map {_ in ()}
+        
+        Observable.merge(textViewChanged, imageChanged)
+            .map {_ -> Bool in
+                if self.localImage.value != nil {return true}
+                
+                let isTextViewEmpty = self.textView.text.isEmpty
+                let isTextChanged = (self.textView.attributedText != self.textView.originalAttributedString)
+                
+                if self.mode == .edit && !isTextViewEmpty && self.url != self.parentComment?.attachments.first?.thumbnailUrl
+                {
+                    return true
+                }
+                
+                return !isTextViewEmpty && isTextChanged
+            }
+            .subscribe(onNext: { (shouldEnableSendButton) in
+                self.sendButton.isEnabled = shouldEnableSendButton
+                self.sendButton.isHidden = !shouldEnableSendButton
                 
                 UIView.animate(withDuration: 0.3, animations: {
                     self.layoutIfNeeded()
                 })
             })
             .disposed(by: disposeBag)
-        
-//        Observable.combineLatest(isTextViewEmpty, imageView.rx.isEmpty)
-//            .map {$0 && $1}
-//            .distinctUntilChanged()
-//            .subscribe(onNext: {isEmpty in
-//                if isEmpty {
-//                    self.textFieldToSendBtnConstraint.constant = 0
-//                    self.sendBtnWidthConstraint.constant = 0
-//                } else {
-//                    self.textFieldToSendBtnConstraint.constant = 16
-//                    self.sendBtnWidthConstraint.constant = 36
-//                }
-//                UIView.animate(withDuration: 0.3, animations: {
-//                    self.layoutIfNeeded()
-//                })
-//            })
-//            .disposed(by: bag)
-//
-//        // observe image
-//        imageView.rx.isEmpty
-//            .map {$0 ? 0: 85}
-//            .bind(to: imageWrapperHeightConstraint.rx.constant)
-//            .disposed(by: bag)
-        
     }
-    
-    #warning("support image posting")
 }
 
 extension CommentForm {
@@ -230,36 +276,66 @@ extension CommentForm {
         setMode(.new, comment: nil)
     }
     
+    @objc func closeImageDidTouch() {
+        self.url = nil
+        localImage.accept(nil)
+    }
+    
     @objc func commentAddImage() {
-        Logger.log(message: "Add image to comment...", event: .debug)
+        let pickerVC = CustomTLPhotosPickerVC.singleImage
+        self.parentViewController?.present(pickerVC, animated: true, completion: nil)
+        
+        pickerVC.rx.didSelectAnImage
+            .subscribe(onNext: {[weak self] image in
+                self?.localImage.accept(image)
+                pickerVC.dismiss(animated: true, completion: nil)
+            })
+            .disposed(by: disposeBag)
     }
     
     @objc func commentSend() {
         if mode != .new && parentComment == nil { return}
         
-        #warning("send image")
-        var block: ResponseAPIContentBlock!
         textView.getContentBlock()
             .observeOn(MainScheduler.instance)
+            .map { parsedBlock -> ResponseAPIContentBlock in
+                if let url = self.url {
+                    var block = parsedBlock
+                    
+                    var array = parsedBlock.content.arrayValue ?? []
+                    
+                    array.append(
+                        ResponseAPIContentBlock(id: (parsedBlock.maxId ?? 0) + 1, type: "attachments", attributes: nil, content: .array([
+                            ResponseAPIContentBlock(id: (parsedBlock.maxId ?? 0) + 2, type: "image", attributes: nil, content: .string(url))
+                        ]))
+                    )
+                    
+                    block.content = .array(array)
+                    return block
+                }
+                
+                return parsedBlock
+            }
             .flatMap { parsedBlock -> Single<SendPostCompletion> in
                 //clean
-                block = parsedBlock
+                var block = parsedBlock
                 block.maxId = nil
                 
                 // send new comment
                 let request: Single<SendPostCompletion>
                 switch self.mode {
                 case .new:
-                    request = self.viewModel.sendNewComment(block: block)
+                    request = self.viewModel.sendNewComment(block: block, uploadingImage: self.localImage.value)
                 case .edit:
-                    request = self.viewModel.updateComment(self.parentComment!, block: block)
+                    request = self.viewModel.updateComment(self.parentComment!, block: block, uploadingImage: self.localImage.value)
                 case .reply:
-                    request = self.viewModel.replyToComment(self.parentComment!, block: block)
+                    request = self.viewModel.replyToComment(self.parentComment!, block: block, uploadingImage: self.localImage.value)
                 }
                 
                 self.textView.text = ""
                 self.mode = .new
                 self.parentComment = nil
+                self.localImage.accept(nil)
                 self.endEditing(true)
                 
                 return request

@@ -84,7 +84,7 @@ class ErrorView: MyView {
         retryButton.autoPinEdge(.top, to: .bottom, of: subtitle, withOffset: 40 * Config.heightRatio)
         retryButton.autoPinEdge(toSuperviewEdge: .leading, withInset: 30 * Config.heightRatio)
         retryButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 30 * Config.heightRatio)
-        retryButton.autoPinEdge(toSuperviewSafeArea: .bottom, withInset: 16 * Config.heightRatio)
+        retryButton.autoPinEdge(toSuperviewSafeArea: .bottom, withInset: 16 * Config.heightRatio + 45)
     }
     
     override func layoutSubviews() {

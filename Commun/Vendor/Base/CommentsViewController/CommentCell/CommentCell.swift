@@ -166,10 +166,19 @@ class CommentCell: MyTableViewCell, ListItemCellType {
             gridView.setUp(embeds: embededResult)
         }
         else {
-            textViewToEmbedConstraint?.constant = 0
-            gridView.widthConstraint?.constant = 0
-            gridView.heightConstraint?.constant = 0
-            layoutIfNeeded()
+            if let image = comment.placeHolderImage?.image {
+                textViewToEmbedConstraint?.constant = 5
+                gridView.widthConstraint?.constant = embedSize.width
+                gridView.heightConstraint?.constant = embedSize.height
+                layoutIfNeeded()
+                gridView.setUp(placeholderImage: image)
+            }
+            else {
+                textViewToEmbedConstraint?.constant = 0
+                gridView.widthConstraint?.constant = 0
+                gridView.heightConstraint?.constant = 0
+                layoutIfNeeded()
+            }
         }
         
         if (self.comment!.sendingState ?? MessageSendingState.none) != MessageSendingState.none ||
