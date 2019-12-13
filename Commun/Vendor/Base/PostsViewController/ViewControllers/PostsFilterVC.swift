@@ -16,17 +16,20 @@ class PostsFilterVC: SwipeDownDismissViewController {
     var filter: BehaviorRelay<PostsListFetcher.Filter>
     var completion: ((PostsListFetcher.Filter) -> Void)?
     
+    
     // MARK: - Subview
-    lazy var closeButton = UIButton.close()
-    lazy var backButton = UIButton.circle(size: 30, backgroundColor: .f7f7f9, tintColor: .a5a7bd, imageName: "back-button", imageEdgeInsets: UIEdgeInsets(inset: 6))
+    lazy var closeButton = UIButton.close(size: CGFloat.adaptive(height: 30.0))
+    lazy var backButton = UIButton.circle(size: CGFloat.adaptive(height: 30.0), backgroundColor: .f7f7f9, tintColor: .a5a7bd, imageName: "back-button", imageEdgeInsets: .zero)
     
     lazy var tableView = UITableView(forAutoLayout: ())
-    lazy var saveButton = CommunButton.default(height: 50, label: "save".localized().uppercaseFirst)
+    lazy var saveButton = CommunButton.default(height: CGFloat.adaptive(height: 50.0), label: "save".localized().uppercaseFirst)
+    
     
     // MARK: - Initializers
     init(filter: PostsListFetcher.Filter, isTimeFrameMode: Bool = false) {
         self.isTimeFrameMode = isTimeFrameMode
         self.filter = BehaviorRelay<PostsListFetcher.Filter>(value: filter)
+        
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -34,9 +37,17 @@ class PostsFilterVC: SwipeDownDismissViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - Method
+    
+    // MARK: - Class Functions
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        navigationController?.view.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: CGFloat.adaptive(height: 20.0))
+        navigationController?.navigationBar.frame.size.height = CGFloat.adaptive(height: 58.0)
+    }
+    
     override func setUp() {
         super.setUp()
+        
         view.backgroundColor = .f7f7f9
         title = "sort by".localized().uppercaseFirst
 
@@ -52,23 +63,26 @@ class PostsFilterVC: SwipeDownDismissViewController {
         tableView.backgroundColor = .clear
         tableView.tableFooterView = UIView()
         tableView.separatorStyle = .none
-        tableView.autoPinEdgesToSuperviewSafeArea(with: UIEdgeInsets(top: 20, left: 16, bottom: 0, right: 16), excludingEdge: .bottom)
+        tableView.autoPinEdgesToSuperviewSafeArea(with:             UIEdgeInsets(top:       CGFloat.adaptive(height: 20.0),
+                                                                                 left:      CGFloat.adaptive(width: 15.0),
+                                                                                 bottom:    0.0,
+                                                                                 right:     CGFloat.adaptive(width: 15.0)),
+                                                  excludingEdge:    .bottom)
         
         view.addSubview(saveButton)
-        saveButton.autoPinEdge(.top, to: .bottom, of: tableView, withOffset: 20)
-        saveButton.autoPinEdgesToSuperviewSafeArea(with: UIEdgeInsets(top: 0, left: 16, bottom: 16, right: 16), excludingEdge: .top)
-        saveButton.addTarget(self, action: #selector(saveButtonDidTouch), for: .touchUpInside)
+        saveButton.autoPinEdge(.top, to: .bottom, of: tableView, withOffset: CGFloat.adaptive(height: 30.0))
+        saveButton.autoPinEdgesToSuperviewSafeArea(with:            UIEdgeInsets(top:       0.0,
+                                                                                 left:      CGFloat.adaptive(width: 16.0),
+                                                                                 bottom:    CGFloat.adaptive(height: 10.0),
+                                                                                 right:     CGFloat.adaptive(width: 16.0)),
+                                                   excludingEdge:   .top)
         
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        navigationController?.view.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: 20)
-        navigationController?.navigationBar.frame.size.height = 58
+        saveButton.addTarget(self, action: #selector(saveButtonDidTouch), for: .touchUpInside)
     }
     
     override func bind() {
         super.bind()
+        
         tableView.register(FilterCell.self, forCellReuseIdentifier: "FilterCell")
         
         filter
@@ -98,8 +112,8 @@ class PostsFilterVC: SwipeDownDismissViewController {
                 if index == (self.isTimeFrameMode ? 3 : 2) {
                     roundedCorner.insert([.bottomLeft, .bottomRight])
                 }
-                cell.roundedCorner = roundedCorner
                 
+                cell.roundedCorner = roundedCorner
                 cell.titleLabel.text = model.label
                 cell.checkBox.isSelected = model.isSelected
             }
@@ -111,9 +125,11 @@ class PostsFilterVC: SwipeDownDismissViewController {
                     if indexPath.row == 0 {
                         self.filter.accept(self.filter.value.newFilter(withFeedTypeMode: .hot, feedType: .time))
                     }
+                    
                     if indexPath.row == 1 {
                         self.filter.accept(self.filter.value.newFilter(withFeedTypeMode: .new, feedType: .time))
                     }
+                    
                     if indexPath.row == 2 {
                         self.filter.accept(self.filter.value.newFilter(withFeedTypeMode: .topLikes))
                         let vc = PostsFilterVC(filter: self.filter.value.newFilter(sortType: self.filter.value.sortType ?? .all), isTimeFrameMode: true)
@@ -121,16 +137,20 @@ class PostsFilterVC: SwipeDownDismissViewController {
                         self.show(vc, sender: nil)
                     }
                 }
+                
                 else {
                     if indexPath.row == 0 {
                         self.filter.accept(self.filter.value.newFilter(sortType: .day))
                     }
+                    
                     if indexPath.row == 1 {
                         self.filter.accept(self.filter.value.newFilter(sortType: .week))
                     }
+                    
                     if indexPath.row == 2 {
                         self.filter.accept(self.filter.value.newFilter(sortType: .month))
                     }
+                    
                     if indexPath.row == 3 {
                         self.filter.accept(self.filter.value.newFilter(sortType: .all))
                     }
@@ -142,6 +162,8 @@ class PostsFilterVC: SwipeDownDismissViewController {
             .disposed(by: disposeBag)
     }
     
+    
+    // MARK: - Actions
     @objc func closeButtonDidTouch() {
         self.dismiss(animated: true, completion: nil)
     }
@@ -161,7 +183,7 @@ class PostsFilterVC: SwipeDownDismissViewController {
 // MARK: - UIViewControllerTransitioningDelegate
 extension PostsFilterVC: UIViewControllerTransitioningDelegate {
     func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
-        return CustomHeightPresentationController(height: 443, presentedViewController: presented, presenting: presenting)
+        return CustomHeightPresentationController(height: CGFloat.adaptive(height: 443.0), presentedViewController: presented, presenting: presenting)
     }
 }
 
@@ -169,8 +191,6 @@ extension PostsFilterVC: UIViewControllerTransitioningDelegate {
 // MARK: - UITableViewDelegate
 extension PostsFilterVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 58
+        return CGFloat.adaptive(height: 58.0)
     }
 }
-
-
