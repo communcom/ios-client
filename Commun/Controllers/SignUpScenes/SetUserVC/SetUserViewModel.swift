@@ -30,7 +30,7 @@ class SetUserViewModel {
 
         // Rule 6
         // • The presence of two characters "dot" in a row is not valid
-        let twoNonAlphanumericCharacterNotSideBySide = !userName.contains(".") && !userName.contains(".-") && !userName.contains("-.") && !userName.contains("--")
+        let twoNonAlphanumericCharacterNotSideBySide = userName.count(of: ".") == 1 && !userName.contains(".-") && !userName.contains("-.") && !userName.contains("--")
         
         return [
             isBetween5To32Characters,
