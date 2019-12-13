@@ -7,10 +7,11 @@
 //
 
 import UIKit
+import WebKit
 import RxSwift
 import CyberSwift
 
-class EmbededView: UIView, UIWebViewDelegate {
+class EmbededView: UIView {
     var bag = DisposeBag()
     
     func setUpWithEmbeded(_ embededResult: ResponseAPIContentEmbedResult?){
@@ -20,6 +21,7 @@ class EmbededView: UIView, UIWebViewDelegate {
         } else if embededResult?.type == "photo",
             let urlString = embededResult?.url,
             let url = URL(string: urlString) {
+            
             if urlString.lowercased().ends(with: ".gif") {
                 showWebView(with: "<div><div style=\"left: 0; width: 100%; height: 0; position: relative; padding-bottom: 74.9457%;\"><img src=\"\(urlString)\" /></div></div>")
             } else {
@@ -51,10 +53,10 @@ class EmbededView: UIView, UIWebViewDelegate {
             webView.scrollView.bouncesZoom = false
             
             showLoading()
-            webView.delegate = self
+            webView.navigationDelegate = self
         }
         
-        webView.loadHTMLString(htmlString, baseURL: nil)
+        webView.load(htmlString: htmlString, baseURL: nil)
     }
     
     func showPhoto(with url: URL) {
@@ -89,10 +91,53 @@ class EmbededView: UIView, UIWebViewDelegate {
         self.setNeedsLayout()
 //        self.didShowContentWithHeight.onNext(height)
     }
-    
-    func webViewDidFinishLoad(_ webView: UIWebView) {
-        let height  = (UIScreen.main.bounds.width-16) * webView.contentHeight / webView.contentWidth
+}
+
+
+// MARK: - WKNavigationDelegate
+extension EmbededView: WKNavigationDelegate {
+    func webViewWebContentProcessDidTerminate(_ webView: WKWebView) {
+        Logger.log(message: #function, event: .debug)
+    }
+
+    func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
+        Logger.log(message: #function, event: .debug)
+    }
+
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        Logger.log(message: #function, event: .debug)
+        let height = (UIScreen.main.bounds.width - 16) * webView.height / webView.width
         adjustHeight(withHeight: height)
     }
 
+    func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
+        Logger.log(message: #function, event: .debug)
+    }
+
+    func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+        Logger.log(message: #function, event: .debug)
+    }
+
+    func webView(_ webView: WKWebView, didReceiveServerRedirectForProvisionalNavigation navigation: WKNavigation!) {
+        Logger.log(message: #function, event: .debug)
+    }
+
+    func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
+        Logger.log(message: #function, event: .debug)
+    }
+
+    func webView(_ webView: WKWebView, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
+        Logger.log(message: #function, event: .debug)
+        completionHandler(.performDefaultHandling,nil)
+    }
+
+    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        Logger.log(message: #function, event: .debug)
+        decisionHandler(.allow)
+    }
+
+    func webView(_ webView: WKWebView, decidePolicyFor navigationResponse: WKNavigationResponse, decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
+        Logger.log(message: #function, event: .debug)
+        decisionHandler(.allow)
+    }
 }
