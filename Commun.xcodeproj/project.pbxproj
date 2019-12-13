@@ -222,7 +222,6 @@
 		B1FA77DA238BF7E0006E57D1 /* WelcomeItemVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1FA77D7238BF7E0006E57D1 /* WelcomeItemVC.swift */; };
 		B1FA77DB238BF7E0006E57D1 /* WelcomePageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1FA77D8238BF7E0006E57D1 /* WelcomePageVC.swift */; };
 		B1FA77EC238C205F006E57D1 /* MasterPasswordAttention.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1FA77EB238C205F006E57D1 /* MasterPasswordAttention.swift */; };
-		B1FA77EE238C206B006E57D1 /* MasterPasswordAttention.xib in Resources */ = {isa = PBXBuildFile; fileRef = B1FA77ED238C206B006E57D1 /* MasterPasswordAttention.xib */; };
 		BC016D42235DA0D400F1319F /* ArticlePostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC016D39235DA0D400F1319F /* ArticlePostCell.swift */; };
 		BC016D43235DA0D400F1319F /* PostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC016D3B235DA0D400F1319F /* PostCell.swift */; };
 		BC016D44235DA0D400F1319F /* PostCell+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC016D3C235DA0D400F1319F /* PostCell+Actions.swift */; };
@@ -671,7 +670,6 @@
 		B1FA77D7238BF7E0006E57D1 /* WelcomeItemVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeItemVC.swift; sourceTree = "<group>"; };
 		B1FA77D8238BF7E0006E57D1 /* WelcomePageVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomePageVC.swift; sourceTree = "<group>"; };
 		B1FA77EB238C205F006E57D1 /* MasterPasswordAttention.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterPasswordAttention.swift; sourceTree = "<group>"; };
-		B1FA77ED238C206B006E57D1 /* MasterPasswordAttention.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MasterPasswordAttention.xib; sourceTree = "<group>"; };
 		BC016D39235DA0D400F1319F /* ArticlePostCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticlePostCell.swift; sourceTree = "<group>"; };
 		BC016D3B235DA0D400F1319F /* PostCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostCell.swift; sourceTree = "<group>"; };
 		BC016D3C235DA0D400F1319F /* PostCell+Actions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PostCell+Actions.swift"; sourceTree = "<group>"; };
@@ -1712,7 +1710,6 @@
 			isa = PBXGroup;
 			children = (
 				B1FA77EB238C205F006E57D1 /* MasterPasswordAttention.swift */,
-				B1FA77ED238C206B006E57D1 /* MasterPasswordAttention.xib */,
 			);
 			path = Subviews;
 			sourceTree = "<group>";
@@ -2463,7 +2460,6 @@
 				B1EA02ED2289882A00835244 /* SF-Pro-Text-Light.otf in Resources */,
 				B1EA02D82289882A00835244 /* SF-Pro-Display-BlackItalic.otf in Resources */,
 				B1EA02F42289882A00835244 /* SF-Pro-Text-SemiboldItalic.otf in Resources */,
-				B1FA77EE238C206B006E57D1 /* MasterPasswordAttention.xib in Resources */,
 				3B2F226A226892C5006B589E /* NotificationCell.xib in Resources */,
 				571B1501223A935D00630C8F /* LaunchScreen.storyboard in Resources */,
 				57A1CA652270FCF000E2A1E3 /* LanguageVC.storyboard in Resources */,

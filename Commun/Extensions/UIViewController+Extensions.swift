@@ -256,17 +256,6 @@ extension UIViewController {
         self.navigationItem.leftBarButtonItem = newBackButton
     }
     
-    func showBlackoutView(_ value: Bool) {
-        if value {
-            let blackoutView = UIView(frame: view.frame)
-            blackoutView.tag = 999
-            blackoutView.backgroundColor = UIColor(hexString: "#000000", transparency: 0.5)
-            self.view.addSubview(blackoutView)
-        } else {
-            self.view.viewWithTag(999)?.removeFromSuperview()
-        }
-    }
-    
     func showCardWithView(_ view: UIView) {
         let cardVC = CardViewController(contentView: view)
         self.present(cardVC, animated: true, completion: nil)
