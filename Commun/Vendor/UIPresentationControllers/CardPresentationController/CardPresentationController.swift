@@ -13,7 +13,7 @@ class CardPresentationController: DimmingPresentationController {
         guard let containerView = containerView,
             let presentedView = presentedView else { return .zero }
         
-        let inset: CGFloat = 16
+        let inset: CGFloat = 10
         
         // Make sure to account for the safe area insets
         let safeAreaFrame = containerView.bounds
