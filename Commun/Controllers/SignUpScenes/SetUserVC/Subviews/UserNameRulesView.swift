@@ -1,91 +1,57 @@
 //
-//  UserNameRules.swift
+//  UserNameRulesView.swift
 //  Commun
 //
-//  Created by Sergey Monastyrskiy on 07.11.2019.
+//  Created by Chung Tran on 12/13/19.
 //  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
 //
 
-import UIKit
+import Foundation
 
-class UserNameRulesView: UIView {
-    // MARK: - Properties
-    var handlerHide: (() -> Void)?
-
+class UserNameRulesView: MyCardView {
+    // MARK: - Subviews
+    lazy var understoodButton = CommunButton.default(height: 50, label: "understood".localized().uppercaseFirst, isHuggingContent: false)
+    lazy var closeButton = UIButton.close(size: 24)
     
-    // MARK: - IBOutlets
-    @IBOutlet var contentView: UIView!
-    
-    @IBOutlet weak var titleLabel: UILabel! {
-        didSet {
-            self.titleLabel.tune(withText:          "username must be".localized().uppercaseFirst,
-                                 hexColors:         blackWhiteColorPickers,
-                                 font:              UIFont(name: "SFProDisplay-Semibold", size: CGFloat.adaptive(width: 17.0)),
-                                 alignment:         .left,
-                                 isMultiLines:      false)
-        }
-    }
-    
-    @IBOutlet var rulesCollection: [UILabel]! {
-        didSet {
-            self.rulesCollection.forEach { label in
-                label.tune(withText:          "•  " + label.text!.localized().uppercaseFirst,
-                           hexColors:         grayishBluePickers,
-                           font:              UIFont(name: "SFProDisplay-Medium", size: CGFloat.adaptive(width: 15.0)),
-                           alignment:         .left,
-                           isMultiLines:      true)
-            }
-        }
-    }
-
-    @IBOutlet weak var understoodButton: UIButton! {
-        didSet {
-            self.understoodButton.backgroundColor = #colorLiteral(red: 0.4156862745, green: 0.5019607843, blue: 0.9607843137, alpha: 1)
-            self.understoodButton.setTitleColor(.white, for: .normal)
-            self.understoodButton.titleLabel?.font = .boldSystemFont(ofSize: 15)
-            self.understoodButton.layer.cornerRadius = self.understoodButton.frame.height / 2
-            self.understoodButton.clipsToBounds = true
-            self.understoodButton.setTitle("understood".localized().uppercaseFirst, for: .normal)
-        }
-    }
-    
-    
-    // MARK: - Initialization
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        commonInit()
-    }
-    
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        commonInit()
-    }
-    
-    private func commonInit() {
-        Bundle.main.loadNibNamed("UserNameRulesView", owner: self, options: nil)
-        addSubview(contentView)
-        contentView.frame = self.bounds
-        contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
-        contentView.layer.cornerRadius = CGFloat.adaptive(width: 25.0)
-        contentView.clipsToBounds = true
-    }
-    
-    
-    // MARK: - Custom Functions
-    func display(_ value: Bool) {
-        UIView.animateKeyframes(withDuration:   0.25,
-                                delay:          0.0,
-                                options:        UIView.KeyframeAnimationOptions(rawValue: 7),
-                                animations: {
-                                    self.frame.origin.y = value ? UIScreen.main.bounds.height - (355.0 + 54.0) * Config.heightRatio : 2000.0
-            },
-                                completion:     nil)
-    }
-
-    
-    // MARK: - Actions
-    @IBAction func actionButtonTapped(_ sender: UIButton) {
-        display(false)
-        handlerHide!()
+    // MARK: - Methods
+    override func commonInit() {
+        super.commonInit()
+        
+        addSubview(closeButton)
+        closeButton.autoPinTopAndTrailingToSuperView()
+        
+        let titleLabel = UILabel.with(text: "username must be".localized().uppercaseFirst, textSize: 17, weight: .semibold)
+        addSubview(titleLabel)
+        titleLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 20)
+        titleLabel.autoAlignAxis(.horizontal, toSameAxisOf: closeButton)
+        
+        let rulesText = """
+        •  The number of characters must not exceed 32
+        •  Uppercase letters in the username are not allowed
+        •  Valid characters: letters, numbers, hyphen
+        •  The hyphen character cannot be at the beginning or at the end of the username
+        •  The user name may contain a "dot" character
+        •  The presence of two "dot" characters in a row is not valid
+        """
+        
+        let attributedString = NSMutableAttributedString(string: rulesText)
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = 8 * Config.heightRatio
+        attributedString.addAttribute(NSAttributedString.Key.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, attributedString.length))
+        
+        let rulesLabel = UILabel.with(textSize: 15, textColor: .a5a7bd, numberOfLines: 0)
+        rulesLabel.attributedText = attributedString
+        
+        addSubview(rulesLabel)
+        rulesLabel.autoPinEdge(.top, to: .bottom, of: closeButton, withOffset: 13)
+        rulesLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 20)
+        rulesLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 20)
+        
+        addSubview(understoodButton)
+        understoodButton.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(inset: 20), excludingEdge: .top)
+        understoodButton.autoPinEdge(.top, to: .bottom, of: rulesLabel, withOffset: 20)
+        
+        closeButton.addTarget(self, action: #selector(close), for: .touchUpInside)
+        understoodButton.addTarget(self, action: #selector(close), for: .touchUpInside)
     }
 }

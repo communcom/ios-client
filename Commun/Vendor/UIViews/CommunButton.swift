@@ -15,7 +15,7 @@ class CommunButton: UIButton {
         case downVote
     }
     
-    static func `default`(height: CGFloat = 35.0, label: String? = nil, cornerRadius: CGFloat? = nil) -> CommunButton {
+    static func `default`(height: CGFloat = 35.0, label: String? = nil, cornerRadius: CGFloat? = nil, isHuggingContent: Bool = true) -> CommunButton {
         let button = CommunButton(height:           CGFloat.adaptive(height: height),
                                   label:            label,
                                   labelFont:        .boldSystemFont(ofSize: CGFloat.adaptive(width: 15.0)),
@@ -27,7 +27,9 @@ class CommunButton: UIButton {
                                                                  bottom:    CGFloat.adaptive(height: 10.0),
                                                                  right:     CGFloat.adaptive(width: 15.0)))
         
-        button.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        if isHuggingContent {
+            button.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        }
         
         return button
     }
