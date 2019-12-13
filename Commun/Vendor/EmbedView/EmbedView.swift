@@ -99,6 +99,15 @@ class EmbedView: UIView {
         NSLayoutConstraint(item: coverImageView!, attribute: .width, relatedBy: .equal, toItem: coverImageView!, attribute: .height, multiplier: 16/9, constant: 0).isActive = true
         
         coverImageView.image = localImage
+        
+        titleLabel.removeAllConstraints()
+        subtitleLabel.removeAllConstraints()
+        titlesView.removeAllConstraints()
+        
+        providerLabelView.isHidden = true
+        titlesView.isHidden = true
+        
+        coverImageView.autoPinEdge(toSuperviewEdge: .bottom)
     }
 
     private func configure(with content: ResponseAPIContentBlock) {

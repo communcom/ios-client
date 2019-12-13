@@ -267,6 +267,11 @@ extension UIViewController {
         }
     }
     
+    func showCardWithView(_ view: UIView) {
+        let cardVC = CardViewController(contentView: view)
+        self.present(cardVC, animated: true, completion: nil)
+    }
+    
 
     // MARK: - Actions
     @objc func popToPreviousVC() {

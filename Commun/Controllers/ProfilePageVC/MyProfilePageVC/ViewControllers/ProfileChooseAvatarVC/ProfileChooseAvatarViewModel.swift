@@ -44,20 +44,9 @@ struct ProfileChooseAvatarViewModel {
         }
     }
     
-    func onSelected(with scrollView: UIScrollView) -> CocoaAction {
+    func onSelected(with scrollView: UIScrollView, imageView: UIImageView) -> CocoaAction {
         return CocoaAction {_ in
-            UIGraphicsBeginImageContextWithOptions(scrollView.bounds.size, true, UIScreen.main.scale);
-            //this is the key
-            let offset:CGPoint = scrollView.contentOffset;
-            
-            let context = UIGraphicsGetCurrentContext()!
-            context.translateBy(x: -offset.x, y: -offset.y)
-            
-            scrollView.layer.render(in: context)
-            
-            let image = UIGraphicsGetImageFromCurrentImageContext()
-            UIGraphicsEndImageContext();
-            
+            let image = ProfileEditCoverVC.cropImage(scrollVIew: scrollView, imageView: imageView, maxSize: 300)
             self.didSelectImage.onNext(image)
             return .just(())
         }

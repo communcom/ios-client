@@ -171,6 +171,5 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
     
     @objc func reload() {
         viewModel.reload()
-        viewModel.fetchNext(forceRetry: true)
     }
 }

@@ -247,17 +247,7 @@ class NetworkService: NSObject {
     
     //  MARK: - Contract `gls.social`
     func uploadImage(_ image: UIImage) -> Single<String> {
-        return .create {single in
-            DispatchQueue(label: "Uploading queue").async {
-                RestAPIManager.instance.posting(image: image, responseHandling: { (url) in
-                    return single(.success(url))
-                }, errorHandling: { (error) in
-                    return single(.error(error))
-                })
-            }
-            
-            return Disposables.create()
-        }
+        RestAPIManager.instance.uploadImage(image)
     }
     
     func downloadImage(_ url: URL) -> Single<UIImage> {

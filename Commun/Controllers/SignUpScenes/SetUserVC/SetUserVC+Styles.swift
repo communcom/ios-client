@@ -28,6 +28,7 @@ extension SetUserVC {
                                     alignment:          .left)
         
         self.userNameTextField.inset = CGFloat.adaptive(width: 16.0)
+        self.userNameTextField.insetRight = 35 // avoid button
         self.userNameTextField.layer.cornerRadius = CGFloat.adaptive(height: 12.0)
         self.userNameTextField.clipsToBounds = true
         self.userNameTextField.keyboardType = .alphabet

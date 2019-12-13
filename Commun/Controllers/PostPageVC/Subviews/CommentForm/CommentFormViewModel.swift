@@ -14,7 +14,8 @@ class CommentFormViewModel {
     var post: ResponseAPIContentGetPost?
     
     func sendNewComment(
-        block: ResponseAPIContentBlock
+        block: ResponseAPIContentBlock,
+        uploadingImage: UIImage? = nil
     ) -> Single<SendPostCompletion> {
         guard let communCode = post?.community?.communityId,
             let authorId = post?.author?.userId,
@@ -27,13 +28,15 @@ class CommentFormViewModel {
             communCode:     communCode,
             parentAuthor:   authorId,
             parentPermlink: postPermlink,
-            block:          block
+            block:          block,
+            uploadingImage: uploadingImage
         )
     }
     
     func updateComment(
         _ comment: ResponseAPIContentGetComment,
-        block: ResponseAPIContentBlock
+        block: ResponseAPIContentBlock,
+        uploadingImage: UIImage? = nil
     ) -> Single<SendPostCompletion> {
         guard let communCode = post?.community?.communityId
         else {return .error(ErrorAPI.invalidData(message: "Post info missing"))}
@@ -44,13 +47,15 @@ class CommentFormViewModel {
             originMessage:  comment,
             communCode:     communCode,
             permlink:       comment.contentId.permlink,
-            block:          block
+            block:          block,
+            uploadingImage: uploadingImage
         )
     }
     
     func replyToComment(
         _ comment: ResponseAPIContentGetComment,
-        block: ResponseAPIContentBlock
+        block: ResponseAPIContentBlock,
+        uploadingImage: UIImage? = nil
     ) -> Single<SendPostCompletion> {
         guard let communCode = post?.community?.communityId
             else {return .error(ErrorAPI.invalidData(message: "Post info missing"))}
@@ -66,7 +71,8 @@ class CommentFormViewModel {
             communCode:     communCode,
             parentAuthor:   authorId,
             parentPermlink: parentCommentPermlink,
-            block:          block
+            block:          block,
+            uploadingImage: uploadingImage
         )
     }
 }

@@ -24,7 +24,7 @@ class CommentsListFetcher: ListFetcher<ResponseAPIContentGetComment> {
     
     // MARK: - Enums
     struct Filter: FilterType {
-        var sortBy: CommentSortMode = .time
+        var sortBy: CommentSortMode = .timeDesc
         var type: GetCommentsType
         var userId: String?
         var permlink: String?

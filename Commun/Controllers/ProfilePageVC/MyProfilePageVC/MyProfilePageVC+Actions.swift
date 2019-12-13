@@ -86,7 +86,7 @@ extension MyProfilePageVC {
                 
                 pickerVC.present(coverEditVC, animated: true
                     , completion: {
-                        coverEditVC.coverImage.image = image
+                        coverEditVC.updateImage(image)
                 })
                 
                 return coverEditVC.didSelectImage
@@ -138,9 +138,7 @@ extension MyProfilePageVC {
         
         // On updating
         let chooseAvatarVC = controllerContainer.resolve(ProfileChooseAvatarVC.self)!
-        self.present(chooseAvatarVC, animated: true, completion: {
-            chooseAvatarVC.viewModel.avatar.accept(self.headerView.avatarImageView.image)
-        })
+        self.present(chooseAvatarVC, animated: true, completion: nil)
         
         return chooseAvatarVC.viewModel.didSelectImage
             .filter {$0 != nil}

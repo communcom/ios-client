@@ -29,7 +29,7 @@ class ProfileChooseAvatarVC: UIViewController {
         // CollectionView
         collectionView.layoutMargins = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         collectionView.collectionViewLayout = layoutForCollectionView()
-        
+
         // device rotation
         NotificationCenter.default.rx.notification(Notification.Name("UIDeviceOrientationDidChangeNotification"))
             .subscribe(onNext: { [weak self] (_) in
@@ -69,7 +69,7 @@ class ProfileChooseAvatarVC: UIViewController {
         requestAccessButton.rx.action = viewModel.onRequestPermission()
         
         // bind assets to collectionView
-        self.viewModel.phAssets
+        viewModel.phAssets
             .bind(to: collectionView.rx.items(
                 cellIdentifier: "PhotoLibraryCell",
                 cellType: PhotoLibraryCell.self))
@@ -77,22 +77,24 @@ class ProfileChooseAvatarVC: UIViewController {
                 cell.setUp(with: asset)
             }
             .disposed(by: bag)
+
+        viewModel.phAssets.elementAt(0).subscribe { (event) in
+            self.loadImage(with: event.element?.first) { [weak self] (image) in
+                self?.updateImage(image)
+            }
+        }.disposed(by: bag)
         
         // item selected
         self.collectionView.rx.modelSelected(PHAsset.self)
             .subscribe(onNext: {asset in
-                let manager = PHImageManager.default()
-                let option = PHImageRequestOptions()
-                option.isSynchronous = true
-                option.deliveryMode = .highQualityFormat
-                manager.requestImage(for: asset, targetSize: self.avatarImageView.size, contentMode: .aspectFit, options: option) { (image, _) in
-                    self.avatarImageView.image = image
+                self.loadImage(with: asset) { [weak self] (image) in
+                    self?.updateImage(image)
                 }
             })
             .disposed(by: bag)
         
         // bind button
-        doneButton.rx.action = viewModel.onSelected(with: self.avatarScrollView)
+        doneButton.rx.action = viewModel.onSelected(with: self.avatarScrollView, imageView: avatarImageView)
         cancelButton.rx.action = viewModel.onCancel()
         
         // dismiss
@@ -102,16 +104,50 @@ class ProfileChooseAvatarVC: UIViewController {
             })
             .disposed(by: bag)
     }
+
+    private func loadImage(with asset: PHAsset?, completion: @escaping (UIImage?) -> Void) {
+        guard let asset = asset else { return }
+        let manager = PHImageManager.default()
+        let option = PHImageRequestOptions()
+        option.isSynchronous = true
+        option.deliveryMode = .highQualityFormat
+
+        manager.requestImage(for: asset, targetSize: PHImageManagerMaximumSize, contentMode: .aspectFill, options: option) { (image, _) in
+            completion(image)
+        }
+    }
+
+    func updateImage(_ image: UIImage?) {
+        avatarImageView.image = image
+        updateScrollVIew()
+    }
+
+    private func updateScrollVIew() {
+        guard let image = avatarImageView.image else {
+            return
+        }
+        let displayWidth = UIScreen.main.bounds.width
+
+        let proportion = image.size.width < image.size.height ? image.size.width / displayWidth : image.size.height / displayWidth
+        let imageHeight = image.size.height / proportion
+        let imageWidth = image.size.width / proportion
+
+        avatarImageView.frame = CGRect(x: 0, y: 0, width: imageWidth, height: imageHeight)
+        avatarScrollView.contentSize = avatarImageView.bounds.size
+    }
     
     func layoutForCollectionView() -> UICollectionViewFlowLayout {
-        let screenWidth = collectionView.bounds.inset(by: collectionView.layoutMargins).width
-        
+        let screenWidth = UIScreen.main.bounds.width
+        let spacing: CGFloat = 1
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         layout.sectionInsetReference = .fromSafeArea
-        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        layout.itemSize = CGSize(width: screenWidth/itemsInARow - 2, height: screenWidth/itemsInARow - 2)
-        layout.minimumInteritemSpacing = 2
-        layout.minimumLineSpacing = 2
+        layout.sectionInset = UIEdgeInsets(top: spacing, left: spacing, bottom: spacing, right: spacing)
+
+        let width = ((screenWidth - ((itemsInARow + 1) * spacing)) / itemsInARow).rounded(.down)
+        layout.itemSize = CGSize(width: width, height: width)
+
+        layout.minimumInteritemSpacing = spacing
+        layout.minimumLineSpacing = spacing
         return layout
     }
 }
