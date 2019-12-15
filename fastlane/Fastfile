@@ -13,6 +13,7 @@ APPLICATION_NAME = "Commun"
 BUNDLE_ID_DEV = "io.commun.eos.ios"
 BUNDLE_ID_RELEASE = "com.commun.ios"
 INFO_PLIST_PATH = "./Commun/Info.plist"
+SUBXCODEPROJ = "/cyberSwift/CyberSwift.xcodeproj"
 
 # Match
 MATCH_TYPE_DEV = "adhoc"
@@ -25,6 +26,45 @@ APPLE_ID = "shilinartem@gmail.com"
 SLACK_WEBHOOK = "https://hooks.slack.com/services/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"
 SLACK_API_TOKEN = "xoxp-131522248727-816480031911-825767630514-3dc514ecb1a5e8985cc0a8d55066e67e"
 
+lane :test do 
+	xcodeproj = 			"#{APPLICATION_NAME}.xcodeproj"
+	# project_path = File.join(File.expand_path("..").shellescape, xcodeproj)
+	# project = Xcodeproj::Project.open(project_path)
+	# targets = project.native_targets
+
+	# targets.each do |target|
+		
+	# 	target.build_configurations.each do |configuration|
+	# 		UI.message "#{configuration.build_settings}"
+ #            configuration.build_settings['OTHER_SWIFT_FLAGS'] = params[:teamid]
+ #        end
+	# end
+
+
+
+	change_other_swift_flag(
+		xcodeproj: "/cyberSwift/CyberSwift.xcodeproj",
+		new_flags: "$(inherited) -D COCOAPODS -D APPSTORE"
+	)
+
+	change_other_swift_flag(
+		xcodeproj: xcodeproj,
+		new_flags: "$(inherited) -D COCOAPODS -D APPSTORE"
+	)
+
+	# change_app_icon(
+	# 	xcodeproj: xcodeproj,
+	# 	icon_name: "AppIcon-PROD"
+	# )
+	
+
+	# change_proj(
+	# 		xcodeproj: xcodeproj,
+	# 		name: "$(inherited) -D COCOAPODS -D DEBUG",
+	# 		old_name: "$(inherited) -D COCOAPODS -D RELEASE"
+	# 	)
+end
+
 lane :beta do |options|
 
 	build(
@@ -32,6 +72,7 @@ lane :beta do |options|
 		app_name: APPLICATION_NAME,
 		plist_path: INFO_PLIST_PATH,
 		bundle_id: BUNDLE_ID_DEV,
+		icon_name: "AppIcon",
 		profile_name: "match Development #{BUNDLE_ID_DEV}",
 		team_id: TEAM_ID_DEV
 	)
@@ -69,7 +110,8 @@ lane :release do
 		bundle_id: BUNDLE_ID_RELEASE,
 		icon_name: "AppIcon-PROD",
 		profile_name: "match AppStore #{BUNDLE_ID_RELEASE}",
-		team_id: TEAM_ID_RELEASE
+		team_id: TEAM_ID_RELEASE,
+		subxcodeproj: SUBXCODEPROJ
 	)
 
 	build_path = ENV['BUILD_PATH']
@@ -86,6 +128,7 @@ end
 
 private_lane :build do |options|
 	# options
+	subxcodeproj = 			options[:subxcodeproj]
 	appstore = 				options[:appstore]
 	app_name = 				options[:app_name]
 	plist_path = 			options[:plist_path]
@@ -99,7 +142,7 @@ private_lane :build do |options|
 	# props
 	xcodeproj = 			"#{app_name}.xcodeproj"
 	build_version = 		get_version_number(xcodeproj: xcodeproj)
-	swift_flags = 			appstore ? '$(inherited) -DCOCOAPODS -DAPPSTORE' : '$(inherited) -DCOCOAPODS'
+	swift_flags = 			appstore ? '$(inherited) -D COCOAPODS -D APPSTORE' : '$(inherited) -D COCOAPODS'
 	output_directory = 		"build"
 	export_method = 		appstore ? "app-store" : "ad-hoc"
 	build_path = 			File.join(File.expand_path("..").shellescape, output_directory ,"#{ipa_name}")
@@ -135,9 +178,23 @@ private_lane :build do |options|
 
 	# update app icon
 	if icon_name 
-		change_icon(
+		change_app_icon(
 			xcodeproj: xcodeproj,
-			name: icon_name
+			icon_name: icon_name
+		)
+	end
+
+	# change other swift flags
+	change_other_swift_flag(
+		xcodeproj: xcodeproj,
+		new_flags: swift_flags
+	)
+
+	#change subproject other swift flags
+	if subxcodeproj
+		change_other_swift_flag(
+			xcodeproj: subxcodeproj,
+			new_flags: swift_flags
 		)
 	end
 
@@ -202,7 +259,7 @@ private_lane :build do |options|
 	UI.message "Build Path: #{build_path}"
 end
 
-private_lane :change_icon do |options|
+private_lane :change_proj do |options|
 	old_icon_name = options[:old_name] || "AppIcon"
 	new_icon_name = options[:name]
 	xcodeproj = options[:xcodeproj]
@@ -211,7 +268,8 @@ private_lane :change_icon do |options|
     	project_path = File.join(File.expand_path("..").shellescape, xcodeproj, "project.pbxproj")
 		data = File.read(project_path)
 		filtered_data = data.gsub(old_icon_name, new_icon_name)
-
+		UI.message "data: #{data}"
+		UI.message "filtered_data: #{filtered_data}"
 		# Save modified file
 		File.open(project_path, "w") do |f|
 			f.write(filtered_data)
@@ -246,6 +304,47 @@ lane :update_profiles do
 		force_for_new_devices: true,
 		force: true
 	)
+end
+
+
+private_lane :change_other_swift_flag do |options|
+	new_flags = options[:new_flags]
+	xcodeproj  = options[:xcodeproj]
+
+	change_proj_value(
+		xcodeproj: xcodeproj,
+		value_name: "OTHER_SWIFT_FLAGS",
+		value: new_flags
+	)
+end
+
+private_lane :change_app_icon do |options|
+	icon_name = options[:icon_name]
+	xcodeproj  = options[:xcodeproj]
+
+	change_proj_value(
+		xcodeproj: xcodeproj,
+		value_name: "ASSETCATALOG_COMPILER_APPICON_NAME",
+		value: icon_name
+	)
+end
+
+private_lane :change_proj_value do |options|
+	xcodeproj  = options[:xcodeproj]
+	value_name = options[:value_name]
+	value 	   = options[:value]
+
+	project_path = File.join(File.expand_path("..").shellescape, xcodeproj)
+	project = Xcodeproj::Project.open(project_path)
+	targets = project.native_targets
+
+	targets.each do |target|
+		target.build_configurations.each do |configuration|
+            configuration.build_settings[value_name] = value
+        end
+	end
+
+	project.save
 end
 
 # # -- End build or error --
