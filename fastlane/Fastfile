@@ -25,10 +25,6 @@ APPLE_ID = "shilinartem@gmail.com"
 SLACK_WEBHOOK = "https://hooks.slack.com/services/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"
 SLACK_API_TOKEN = "xoxp-131522248727-816480031911-825767630514-3dc514ecb1a5e8985cc0a8d55066e67e"
 
-lane :test do
-	puts "Application version: #{test_var}"
-end
-
 lane :beta do |options|
 
 	build(
@@ -37,11 +33,53 @@ lane :beta do |options|
 		plist_path: INFO_PLIST_PATH,
 		bundle_id: BUNDLE_ID_DEV,
 		profile_name: "match Development #{BUNDLE_ID_DEV}",
-		icon_name: "AppIcon-DEV",
-		team_id: TEAM_ID_DEV,
-		signing_certificate: "Apple Development: Artem Shilin (N3VJ3M7H43)",
+		team_id: TEAM_ID_DEV
 	)
 
+	build_path = ENV['BUILD_PATH']
+	build_number = ENV['BUILD_NUMBER']
+
+	crashlytics(
+		api_token: FABRIC_TOKEN,
+		build_secret: FABRIC_SECRET,
+		groups: FABRIC_TESTERS_GROUP,
+		notifications: "false"
+	)
+
+    slack_upload(
+        slack_api_token: SLACK_API_TOKEN,
+        title: "Commun-iOS-#{build_number}",
+        channel: "#commun-mobile-builds",
+        file_path: build_path
+    ) 
+
+	if isCI 
+		sh("git tag CI.#{build_number}")
+      	sh("git push --tags")
+  	end
+
+end
+
+lane :release do 
+
+	build(
+		appstore: true,
+		app_name: APPLICATION_NAME,
+		plist_path: INFO_PLIST_PATH,
+		bundle_id: BUNDLE_ID_RELEASE,
+		icon_name: "AppIcon-PROD",
+		profile_name: "match AppStore #{BUNDLE_ID_RELEASE}",
+		team_id: TEAM_ID_RELEASE
+	)
+
+	build_path = ENV['BUILD_PATH']
+
+	testflight(
+		ipa: build_path,
+		username: APPLE_ID,
+		app_identifier: BUNDLE_ID_RELEASE,
+		skip_waiting_for_build_processing: true,
+    )
 end
 
 
@@ -53,15 +91,14 @@ private_lane :build do |options|
 	bundle_id = 			options[:bundle_id]
 	build_number = 			options[:build_number] || number_of_commits(all: true)
 	profile_name = 			options[:profile_name]
-	icon_name = 			options[:icon_name] || "AppIcon"
+	icon_name = 			options[:icon_name]
 	ipa_name = 				options[:ipa_name] || "#{app_name}-#{build_number}.ipa"
 	team_id = 				options[:team_id]
-	signing_certificate = 	options[:signing_certificate]
 
 	# props
 	xcodeproj = 			"#{app_name}.xcodeproj"
 	build_version = 		get_version_number(xcodeproj: xcodeproj)
-	swift_flags = 			appstore ? '$(inherited) -DCOCOAPODS=1 -DAPPSTORE' : '$(inherited) -DCOCOAPODS=1'
+	swift_flags = 			appstore ? '$(inherited) -D COCOAPODS -D APPSTORE' : '$(inherited) -D COCOAPODS'
 	output_directory = 		"build"
 	export_method = 		appstore ? "app-store" : "ad-hoc"
 	build_path = 			File.join(File.expand_path("..").shellescape, output_directory ,"#{ipa_name}")
@@ -70,8 +107,9 @@ private_lane :build do |options|
 	archive_path = 			"#{output_directory}/#{app_name}.xcarchive"
 	match_git_branch =		appstore ? MATCH_GIT_BRANCH_RELEASE : MATCH_GIT_BRANCH_DEV
 	match_type = 			appstore ? MATCH_TYPE_RELEASE : MATCH_TYPE_DEV
+	provisioning_profile =  "match #{match_type} #{bundle_id}"
 
-
+	# Log
 	UI.success "appstore: #{appstore}"
 	UI.success "app_name: #{app_name}"
 	UI.success "plist_path: #{plist_path}"
@@ -81,9 +119,26 @@ private_lane :build do |options|
 	UI.success "icon_name: #{icon_name}"
 	UI.success "ipa_name: #{ipa_name}"
 	UI.success "team_id: #{team_id}"
-	UI.success "signing_certificate: #{signing_certificate}"
-	UI.success "export_method: #{export_method}"
 
+	UI.success "xcodeproj: #{xcodeproj}"
+	UI.success "build_version: #{build_version}"
+	UI.success "swift_flags: #{swift_flags}"
+	UI.success "output_directory: #{output_directory}"
+	UI.success "build_path: #{build_path}"
+	UI.success "scheme: #{scheme}"
+	UI.success "workspace: #{workspace}"
+	UI.success "archive_path: #{archive_path}"
+	UI.success "match_git_branch: #{match_git_branch}"
+	UI.success "match_type: #{match_type}"
+	UI.success "provisioning_profile: #{provisioning_profile}"
+
+	# update app icon
+	if icon_name 
+		change_icon(
+			xcodeproj: xcodeproj,
+			name: icon_name
+		)
+	end
 
 	# update bundle id
 	update_app_identifier(
@@ -108,16 +163,16 @@ private_lane :build do |options|
 	)
 
 	# manual signing
-	disable_automatic_code_signing
-	# automatic_code_signing(
-	# 	team_id: team_id,
-	# 	use_automatic_signing: true,
-	# 	code_sign_identity: "iPhone Developer",
-	# 	bundle_identifier: bundle_id
-	# )
+	automatic_code_signing(
+		team_id: team_id,
+		bundle_identifier: bundle_id,
+		use_automatic_signing: false,
+		code_sign_identity: appstore ? "iPhone Distribution" : "iPhone Developer",
+
+	)
 
 	# pod install
-	# cocoapods
+	cocoapods
 
 	UI.success "🤖 Start Build: #{app_name} #{build_version} (#{build_number})"
 
@@ -129,94 +184,41 @@ private_lane :build do |options|
 		archive_path: archive_path,
 		output_directory: output_directory,
 		output_name: ipa_name,
+		include_bitcode: false,
 		export_method: export_method,
 		xcargs: {
 			:BUNDLE_IDENTIFIER => bundle_id,
 			:PROVISIONING_PROFILE_SPECIFIER => profile_name,
 			:DEVELOPMENT_TEAM => team_id,
-			:OTHER_SWIFT_FLAGS => swift_flags,
-			:ASSETCATALOG_COMPILER_APPICON_NAME => icon_name
-		},
-		export_options: {
-			teamID: team_id,
-			signingStyle: "manual"
+			:OTHER_SWIFT_FLAGS => swift_flags
 		}
     )
 
     # create build path
-	ENV['BUILD_PATH'] = build_path
+	ENV['BUILD_PATH'] = "#{build_path}"
+	ENV['BUILD_NUMBER'] = "#{build_number}"
+
 	UI.message "Build Path: #{build_path}"
 end
 
+private_lane :change_icon do |options|
+	old_icon_name = options[:old_name] || "AppIcon"
+	new_icon_name = options[:name]
+	xcodeproj = options[:xcodeproj]
 
-# private_lane :configure_build do |options|
-# 	appstore = options[:appstore] ? true : false
+    if new_icon_name && xcodeproj
+    	project_path = File.join(File.expand_path("..").shellescape, xcodeproj, "project.pbxproj")
+		data = File.read(project_path)
+		filtered_data = data.gsub(old_icon_name, new_icon_name)
 
-# 	bundle_id = appstore ? application_release_bundle_id : application_dev_bundle_id
-# 	update_app_identifier(
-# 	  xcodeproj: "#{application_name}.xcodeproj", # Optional path to xcodeproj, will use the first .xcodeproj if not set
-# 	  plist_path: application_info_plist_path, # Path to info plist file, relative to xcodeproj
-# 	  app_identifier: bundle_id # The App Identifier
-# 	)
-
-# 	# add cert
-# 	match(
-# 		generate_apple_certs: true,
-# 		app_identifier: appstore ? application_release_bundle_id : application_dev_bundle_id,
-# 		type: appstore ? "appstore" : "development",
-# 		readonly: true
-# 	)
-
-# 	build_version = get_version_number(xcodeproj: "#{application_name}.xcodeproj")
-# 	new_bundle_version = number_of_commits(all: true)
-	
-# 	puts "Application version: #{build_version}"
-# 	puts "Bundle version: #{new_bundle_version}"
-
-# 	# build application
-# 	build(
-# 		appstore: appstore, 
-# 		build_number: new_bundle_version
-# 	)
-# end
-
-# lane :release do |options|
-# 	configure_build(appstore: true)
-# end
-
-# desc 'Build to Crashlytics Beta'
-# lane :beta do |options|
-# 	isCI = options[:ci] ? true : false
-
-# 	# create auto changelog
-# 	changed = changelog_from_git_commits(
-# 		tag_match_pattern: "CI.*",
-# 		pretty: "∙ %B",
-# 		merge_commit_filtering: "exclude_merges"
-# 	)
-
-# 	configure_build(appstore: false)
-	
-# 	crashlytics(
-# 		api_token: fabric_token,
-# 		build_secret: fabric_secret,
-# 		groups: fabric_testers_group,
-# 		notifications: "false",
-# 		notes: changed
-# 	)
-
-#     slack_upload(
-#         slack_api_token: slack_api_token,
-#         title: "commun-ios.#{build_version}(#{new_bundle_version})",
-#         channel: "#commun-mobile-builds",
-#         file_path: ENV['BUILD_PATH']
-#     ) 
-
-# 	if isCI 
-# 		sh("git tag CI.#{new_bundle_version}")
-#       	sh("git push --tags")
-#   	end
-# end
+		# Save modified file
+		File.open(project_path, "w") do |f|
+			f.write(filtered_data)
+		end
+    else
+    	UI.error "Params name and xcodeproj required"
+	end
+end
 
 desc 'Update profiles and add new devices'
 lane :update_profiles do 
@@ -244,84 +246,6 @@ lane :update_profiles do
 		force: true
 	)
 end
-
-# private_lane :build do |options|
-
-# 	disable_automatic_code_signing
-# 	new_build_version = options[:build_number] || Time.now.strftime('%Y%m%d.%H%M')
-
-# 	appstore = options[:appstore] ? true : false
-
-# 	cocoapods
-
-# 	version = get_info_plist_value(path: application_info_plist_path, key: 'CFBundleShortVersionString')
-# 	lane_context[SharedValues::VERSION_NUMBER] = version
-
-# 	bundle_id = appstore ? application_release_bundle_id : application_dev_bundle_id
-# 	profile_name = appstore ? "match AppStore com.commun.ios" : "match Development #{application_dev_bundle_id}"
-# 	swift_flags = appstore ? '$(inherited) -DCOCOAPODS=1 -DAPPSTORE' : '$(inherited) -DCOCOAPODS=1'
-# 	team_id = appstore ? application_release_team_id : application_dev_team_id
-# 	signing_certificate = appstore ? "Apple Development: Artem Shilin (E23BKKUH5D)" : "Apple Development: Artem Shilin (E23BKKUH5D)"
-#     # change buid number
-#     increment_build_number(
-#     	xcodeproj:"#{application_name}.xcodeproj",
-#     	build_number: new_build_version
-#     	)
-
-#     settings_to_override = {
-#     	:BUNDLE_IDENTIFIER => application_dev_bundle_id,
-#     	:PROVISIONING_PROFILE_SPECIFIER => profile_name,
-#     	:DEVELOPMENT_TEAM => team_id,
-#     	:OTHER_SWIFT_FLAGS => swift_flags,
-#     	:ASSETCATALOG_COMPILER_APPICON_NAME => appstore ? "AppIcon-PROD" : "AppIcon-DEV"
-#     }
-
-#     ipa_name = "#{application_name}.#{new_build_version}.ipa"
-# 	ENV['BUILD_PATH'] = File.join(File.expand_path("..").shellescape, "build" ,"#{ipa_name}")
-# 	puts "BUILD_PATH: #{ENV['BUILD_PATH']}"
-
-#     gym_options = {
-#     	clean: false,
-#     	configuration: 'Release',
-#     	scheme: "#{application_name}",
-#     	workspace: "#{application_name}.xcworkspace",
-#     	archive_path: "build/#{application_name}.xcarchive",
-#     	output_directory: 'build',
-#     	export_method: appstore ? 'app-store' : 'development',
-#     	include_bitcode: false,
-#     	output_name: ipa_name,
-#     	xcargs: settings_to_override,
-#     	export_options: {
-#     		teamID: team_id,
-#     		signingStyle: "manual",
-#     		signingCertificate: signing_certificate,
-#     		provisioningProfiles: { 
-#     			bundle_id => profile_name
-#     		}
-#     	}
-#     }
-
-#     gym(gym_options)
-# end
-
-# private_lane :end_clear do |options|
-# 	set_info_plist_value(
-# 		path: application_info_plist_path, 
-# 		key: 'CFBundleVersion', 
-# 		value:get_info_plist_value(
-# 			path: application_info_plist_path, 
-# 			key: 'CFBundleShortVersionString'
-# 			)
-# 		)
-
-# 	if ENV['DEV_APP_NAME']
-# 		set_info_plist_value(
-# 			path: application_info_plist_path, 
-# 			key: 'CFBundleDisplayName', 
-# 			value:ENV['DEV_APP_NAME']
-# 			)
-# 	end
-# end
 
 # # -- End build or error --
 

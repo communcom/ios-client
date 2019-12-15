@@ -25,6 +25,11 @@ fastlane test
 fastlane beta
 ```
 
+### release
+```
+fastlane release
+```
+
 ### update_profiles
 ```
 fastlane update_profiles
