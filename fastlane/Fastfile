@@ -79,6 +79,7 @@ lane :release do
 		username: APPLE_ID,
 		app_identifier: BUNDLE_ID_RELEASE,
 		skip_waiting_for_build_processing: true,
+		team_id: "118820022"
     )
 end
 
@@ -98,7 +99,7 @@ private_lane :build do |options|
 	# props
 	xcodeproj = 			"#{app_name}.xcodeproj"
 	build_version = 		get_version_number(xcodeproj: xcodeproj)
-	swift_flags = 			appstore ? '$(inherited) -D COCOAPODS -D APPSTORE' : '$(inherited) -D COCOAPODS'
+	swift_flags = 			appstore ? '$(inherited) -DCOCOAPODS -DAPPSTORE' : '$(inherited) -DCOCOAPODS'
 	output_directory = 		"build"
 	export_method = 		appstore ? "app-store" : "ad-hoc"
 	build_path = 			File.join(File.expand_path("..").shellescape, output_directory ,"#{ipa_name}")
