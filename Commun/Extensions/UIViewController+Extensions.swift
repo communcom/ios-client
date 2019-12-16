@@ -108,7 +108,7 @@ extension UIViewController {
         hideHud()
         
         // show new hud
-        let hud = MBProgressHUD.showAdded(to: vc.view, animated: true)
+        let hud = MBProgressHUD.showAdded(to: vc.view, animated: false)
         hud.mode = MBProgressHUDMode.indeterminate
         hud.isUserInteractionEnabled = true
         hud.label.text = message
@@ -123,7 +123,7 @@ extension UIViewController {
         hideHud()
         
         // show new hud
-        let hud = MBProgressHUD.showAdded(to: vc.view, animated: true)
+        let hud = MBProgressHUD.showAdded(to: vc.view, animated: false)
         hud.mode = .customView
         let image = UIImage(named: "checkmark-large")
         let imageView = UIImageView(image: image)
