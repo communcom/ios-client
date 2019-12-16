@@ -115,10 +115,6 @@ class ConfirmUserVC: UIViewController, SignUpRouter {
         
         self.pinCodeView.addSubview(pinCodeInputView)
         self.pinCodeInputView.center = pinCodeView.center
-        
-        if let smsCode = KeychainManager.currentUser()?.smsCode {
-            addAccessoryView(withSmsCode: String(smsCode))
-        }
     }
     
     override func viewWillLayoutSubviews() {
