@@ -16,7 +16,7 @@ INFO_PLIST_PATH = "./Commun/Info.plist"
 SUBXCODEPROJ = "/cyberSwift/CyberSwift.xcodeproj"
 
 # Match
-MATCH_TYPE_DEV = "adhoc"
+MATCH_TYPE_DEV = "development"
 MATCH_TYPE_RELEASE = "appstore"
 MATCH_GIT_BRANCH_DEV = "dev"
 MATCH_GIT_BRANCH_RELEASE = "release"
@@ -36,7 +36,7 @@ lane :beta do |options|
 		plist_path: INFO_PLIST_PATH,
 		bundle_id: BUNDLE_ID_DEV,
 		icon_name: "AppIcon",
-		profile_name: "match AdHoc #{BUNDLE_ID_DEV}",
+		profile_name: "match Development #{BUNDLE_ID_DEV}",
 		team_id: TEAM_ID_DEV
 	)
 
@@ -107,7 +107,7 @@ private_lane :build do |options|
 	build_version = 		get_version_number(xcodeproj: xcodeproj)
 	swift_flags = 			appstore ? '$(inherited) -D COCOAPODS -D APPSTORE' : '$(inherited) -D COCOAPODS'
 	output_directory = 		"build"
-	export_method = 		appstore ? "app-store" : "ad-hoc"
+	export_method = 		appstore ? "app-store" : "development"
 	build_path = 			File.join(File.expand_path("..").shellescape, output_directory ,"#{ipa_name}")
 	scheme = 				"#{app_name}"
 	workspace = 			"#{app_name}.xcworkspace"
@@ -244,16 +244,16 @@ end
 desc 'Update profiles and add new devices'
 lane :update_profiles do 
 
-	match(
-		git_branch: MATCH_GIT_BRANCH_RELEASE,
-		username: APPLE_ID,
-		team_id: TEAM_ID_RELEASE,
-		app_identifier: BUNDLE_ID_RELEASE,
-		generate_apple_certs: true,
-		type: MATCH_TYPE_RELEASE,
-		readonly: false,
-		force: true
-	)
+	# match(
+	# 	git_branch: MATCH_GIT_BRANCH_RELEASE,
+	# 	username: APPLE_ID,
+	# 	team_id: TEAM_ID_RELEASE,
+	# 	app_identifier: BUNDLE_ID_RELEASE,
+	# 	generate_apple_certs: true,
+	# 	type: MATCH_TYPE_RELEASE,
+	# 	readonly: false,
+	# 	force: true
+	# )
 
 	match(
 		git_branch: MATCH_GIT_BRANCH_DEV,
