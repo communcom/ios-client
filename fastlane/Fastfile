@@ -5,9 +5,9 @@ FABRIC_LINK = "https://betas.to/sz2yqJCL"
 FABRIC_TESTERS_GROUP = "demo"
 
 # Application
-
 TEAM_ID_DEV = "5G8856SBG8"
 TEAM_ID_RELEASE = "E23BKKUH5D"
+ITC_TEAM_ID = "118820022"
 
 APPLICATION_NAME = "Commun"
 BUNDLE_ID_DEV = "io.commun.eos.ios"
@@ -26,46 +26,9 @@ APPLE_ID = "shilinartem@gmail.com"
 SLACK_WEBHOOK = "https://hooks.slack.com/services/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"
 SLACK_API_TOKEN = "xoxp-131522248727-816480031911-825767630514-3dc514ecb1a5e8985cc0a8d55066e67e"
 
-lane :test do 
-	xcodeproj = 			"#{APPLICATION_NAME}.xcodeproj"
-	# project_path = File.join(File.expand_path("..").shellescape, xcodeproj)
-	# project = Xcodeproj::Project.open(project_path)
-	# targets = project.native_targets
-
-	# targets.each do |target|
-		
-	# 	target.build_configurations.each do |configuration|
-	# 		UI.message "#{configuration.build_settings}"
- #            configuration.build_settings['OTHER_SWIFT_FLAGS'] = params[:teamid]
- #        end
-	# end
-
-
-
-	change_other_swift_flag(
-		xcodeproj: "/cyberSwift/CyberSwift.xcodeproj",
-		new_flags: "$(inherited) -D COCOAPODS -D APPSTORE"
-	)
-
-	change_other_swift_flag(
-		xcodeproj: xcodeproj,
-		new_flags: "$(inherited) -D COCOAPODS -D APPSTORE"
-	)
-
-	# change_app_icon(
-	# 	xcodeproj: xcodeproj,
-	# 	icon_name: "AppIcon-PROD"
-	# )
-	
-
-	# change_proj(
-	# 		xcodeproj: xcodeproj,
-	# 		name: "$(inherited) -D COCOAPODS -D DEBUG",
-	# 		old_name: "$(inherited) -D COCOAPODS -D RELEASE"
-	# 	)
-end
 
 lane :beta do |options|
+	isCI = options[:ci]
 
 	build(
 		appstore: false,
@@ -121,7 +84,7 @@ lane :release do
 		username: APPLE_ID,
 		app_identifier: BUNDLE_ID_RELEASE,
 		skip_waiting_for_build_processing: true,
-		team_id: "118820022"
+		team_id: ITC_TEAM_ID
     )
 end
 
@@ -247,8 +210,7 @@ private_lane :build do |options|
 		xcargs: {
 			:BUNDLE_IDENTIFIER => bundle_id,
 			:PROVISIONING_PROFILE_SPECIFIER => profile_name,
-			:DEVELOPMENT_TEAM => team_id,
-			:OTHER_SWIFT_FLAGS => swift_flags
+			:DEVELOPMENT_TEAM => team_id
 		}
     )
 
