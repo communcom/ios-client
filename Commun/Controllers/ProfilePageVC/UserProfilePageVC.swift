@@ -29,6 +29,8 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile>, PostCellDelega
     
     // MARK: - Properties
     let userId: String
+    var userName: String?
+
     lazy var expandedComments = [ResponseAPIContentGetComment]()
     override func createViewModel() -> ProfileViewModel<ResponseAPIContentGetProfile> {
         UserProfilePageViewModel(profileId: userId)
@@ -83,8 +85,8 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile>, PostCellDelega
         tableView.register(CommentCell.self, forCellReuseIdentifier: "CommentCell")
         
         // title
-        title = profile.username
-        
+        userName = profile.username
+
         // cover
         if let urlString = profile.coverUrl {
             coverImageView.setImageDetectGif(with: urlString)
