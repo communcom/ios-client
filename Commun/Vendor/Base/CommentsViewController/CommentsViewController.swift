@@ -53,6 +53,10 @@ class CommentsViewController: ListViewController<ResponseAPIContentGetComment, C
         super.setUp()
         // setup datasource
         tableView.separatorStyle = .none
+        
+        // setup long press
+        let lpgr = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPressOnTableView(_:)))
+        tableView.addGestureRecognizer(lpgr)
     }
     
     override func configureCell(with comment: ResponseAPIContentGetComment, indexPath: IndexPath) -> UITableViewCell {
@@ -85,23 +89,23 @@ class CommentsViewController: ListViewController<ResponseAPIContentGetComment, C
             .disposed(by: disposeBag)
     }
     
-    override func bindItemSelected() {
-        tableView.rx.itemSelected
-            .subscribe(onNext: { (indexPath) in
-                guard let cell = self.tableView.cellForRow(at: indexPath) as? CommentCell,
-                    var comment = cell.comment
-                    else {return}
-                
-                // collapse expanded comment
-                self.expandedComments.removeAll(where: {$0.identity == comment.identity})
-                self.tableView.reloadRows(at: [indexPath], with: .fade)
-                
-                // collapse replies
-                comment.children = []
-                comment.notifyChildrenChanged()
-            })
-            .disposed(by: disposeBag)
-    }
+//    override func bindItemSelected() {
+//        tableView.rx.itemSelected
+//            .subscribe(onNext: { (indexPath) in
+//                guard let cell = self.tableView.cellForRow(at: indexPath) as? CommentCell,
+//                    var comment = cell.comment
+//                    else {return}
+//                
+//                // collapse expanded comment
+//                self.expandedComments.removeAll(where: {$0.identity == comment.identity})
+//                self.tableView.reloadRows(at: [indexPath], with: .fade)
+//                
+//                // collapse replies
+//                comment.children = []
+//                comment.notifyChildrenChanged()
+//            })
+//            .disposed(by: disposeBag)
+//    }
     
     func filterChanged(filter: CommentsListFetcher.Filter) {
         
@@ -132,35 +136,5 @@ class CommentsViewController: ListViewController<ResponseAPIContentGetComment, C
     
     func retrySendingComment(_ comment: ResponseAPIContentGetComment) {
         // for overriding
-    }
-}
-
-extension CommentsViewController: UITableViewDelegate {
-    func commentAtIndexPath(_ indexPath: IndexPath) -> ResponseAPIContentGetComment? {
-        // root comment
-        if indexPath.row == 0 {
-            return viewModel.items.value[safe: indexPath.section]
-        }
-        
-        return viewModel.items.value[safe: indexPath.section]?.children?[safe: indexPath.row]
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        guard let comment = commentAtIndexPath(indexPath),
-            let height = viewModel.rowHeights[comment.identity]
-        else {return UITableView.automaticDimension}
-        return height
-    }
-
-    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        guard let comment = commentAtIndexPath(indexPath)
-        else {return 88}
-        return viewModel.rowHeights[comment.identity] ?? 88
-    }
-
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        guard let comment = commentAtIndexPath(indexPath)
-        else {return}
-        viewModel.rowHeights[comment.identity] = cell.bounds.height
     }
 }
