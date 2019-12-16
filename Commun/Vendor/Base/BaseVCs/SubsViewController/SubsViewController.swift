@@ -36,7 +36,7 @@ class SubsViewController<T: ListItemType, CellType: ListItemCellType>: ListViewC
             .distinctUntilChanged()
             .subscribe(onNext: { (showShadow) in
                 if showShadow {
-                    self.navigationController?.navigationBar.addShadow(ofColor: .shadow, offset: CGSize(width: 0, height: 2), opacity: 0.1)
+                    self.navigationController?.navigationBar.addShadow(ofColor: .shadow, radius: 16, offset: CGSize(width: 0, height: 6), opacity: 0.05)
                 }
                 else {
                     self.navigationController?.navigationBar.shadowOpacity = 0

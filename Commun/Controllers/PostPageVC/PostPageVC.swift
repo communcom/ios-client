@@ -63,12 +63,18 @@ class PostPageVC: CommentsViewController {
     // MARK: - Methods
     override func setUp() {
         super.setUp()
-        
+
         // navigationBar
         view.addSubview(navigationBar)
         navigationBar.autoPinEdgesToSuperviewSafeArea(with: .zero, excludingEdge: .bottom)
         navigationBar.moreButton.addTarget(self, action: #selector(openMorePostActions), for: .touchUpInside)
-        
+
+        // top white view
+        let topView = UIView(backgroundColor: .white)
+        view.addSubview(topView)
+        topView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .bottom)
+        topView.autoPinEdge(.bottom, to: .top, of: navigationBar)
+
         // tableView
         tableView.contentInset = UIEdgeInsets(top: 56, left: 0, bottom: 0, right: 0)
         tableView.keyboardDismissMode = .onDrag
@@ -100,7 +106,7 @@ class PostPageVC: CommentsViewController {
         commentForm.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: 24.5)
         view.bringSubviewToFront(commentForm)
         startContentOffsetY = tableView.contentOffset.y
-        navigationBar.addShadow(ofColor: .clear, offset: CGSize(width: 0, height: 2), opacity: 0.1)
+        navigationBar.addShadow(ofColor: .shadow, radius: 16, offset: CGSize(width: 0, height: 6), opacity: 0.05)
     }
     
     override func bind() {
@@ -133,7 +139,7 @@ class PostPageVC: CommentsViewController {
         .map { $0.y <= self.startContentOffsetY }
         .distinctUntilChanged()
         .subscribe(onNext: { (showShadow) in
-            self.navigationBar.addShadow(ofColor: showShadow ? .clear : .shadow, offset: CGSize(width: 0, height: 2), opacity: 0.1)
+            self.navigationBar.addShadow(ofColor: showShadow ? .clear : .shadow, radius: 20, offset: CGSize(width: 0, height: 3), opacity: 0.07)
         })
         .disposed(by: disposeBag)
         

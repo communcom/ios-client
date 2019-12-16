@@ -157,7 +157,7 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
     }
 
     func showTitle(_ show: Bool, animated: Bool = false) {
-        navigationController?.navigationBar.addShadow(ofColor: .shadow, offset: CGSize(width: 0, height: 2), opacity: 0.1)
+        navigationController?.navigationBar.addShadow(ofColor: .shadow, radius: 16, offset: CGSize(width: 0, height: 6), opacity: 0.05)
         baseNavigationController?.changeStatusBarStyle(show ? .default : .lightContent)
         coverImageView.isHidden = show
         UIView.animate(withDuration: animated ? 0.3 : 0) {
