@@ -29,6 +29,7 @@ class CommentCell: MyTableViewCell, ListItemCellType {
     lazy var contentTextView: UITextView = {
         let textView = UITextView(forExpandable: ())
         textView.isEditable = false
+        textView.isSelectable = false
         textView.backgroundColor = contentTextViewBackgroundColor
         textView.textContainerInset = UIEdgeInsets(top: 7, left: 10, bottom: 7, right: 10)
         textView.cornerRadius = 12
