@@ -104,7 +104,7 @@ class BlacklistCell: SubsItemCell, ListItemCellType {
             actionButton.backgroundColor = !(user.isBlocked ?? true) ? #colorLiteral(red: 0.9525656104, green: 0.9605062604, blue: 0.9811610579, alpha: 1) : .appMainColor
             actionButton.setTitleColor(!(user.isBlocked ?? true) ? .appMainColor : .white , for: .normal)
         case .community(let community):
-            avatarImageView.setAvatar(urlString: nil, namePlaceHolder: community.name)
+            avatarImageView.setAvatar(urlString: community.avatarUrl, namePlaceHolder: community.name)
             nameLabel.text = community.name
             actionButton.isEnabled = !(community.isBeingUnblocked ?? false)
             actionButton.setTitle((community.isBlocked ?? true) ? "unhide".localized().uppercaseFirst : "hide".localized().uppercaseFirst, for: .normal)

@@ -13,6 +13,7 @@ import RxSwift
 class PostsFilterVC: SwipeDownDismissViewController {
     // MARK: - Properties
     var isTimeFrameMode: Bool
+    var isTrending: Bool
     var filter: BehaviorRelay<PostsListFetcher.Filter>
     var completion: ((PostsListFetcher.Filter) -> Void)?
     
@@ -37,6 +38,7 @@ class PostsFilterVC: SwipeDownDismissViewController {
     // MARK: - Initializers
     init(filter: PostsListFetcher.Filter, isTimeFrameMode: Bool = false) {
         self.isTimeFrameMode = isTimeFrameMode
+        self.isTrending = (filter.feedTypeMode == .hot || filter.feedTypeMode == .topLikes || filter.feedTypeMode == .new || filter.feedTypeMode == .community)
         self.filter = BehaviorRelay<PostsListFetcher.Filter>(value: filter)
 
         super.init(nibName: nil, bundle: nil)
@@ -101,9 +103,9 @@ class PostsFilterVC: SwipeDownDismissViewController {
             .map { (filter) -> [(label: String, isSelected: Bool)] in
                 if !self.isTimeFrameMode {
                     return [
-                        (label: FeedTypeMode.hot.localizedLabel!.uppercaseFirst, isSelected: filter.feedTypeMode == .hot),
-                        (label: FeedTypeMode.new.localizedLabel!.uppercaseFirst, isSelected: filter.feedTypeMode == .new),
-                        (label: FeedTypeMode.topLikes.localizedLabel!.uppercaseFirst, isSelected: filter.feedTypeMode == .topLikes)
+                        (label: FeedTypeMode.hot.localizedLabel!.uppercaseFirst, isSelected: (filter.feedTypeMode == .hot || filter.feedTypeMode == .subscriptionsHot)),
+                        (label: FeedTypeMode.new.localizedLabel!.uppercaseFirst, isSelected: (filter.feedTypeMode == .new || filter.feedTypeMode == .subscriptions)),
+                        (label: FeedTypeMode.topLikes.localizedLabel!.uppercaseFirst, isSelected: (filter.feedTypeMode == .topLikes || filter.feedTypeMode == .subscriptionsPopular))
                     ]
                 }
                 
@@ -134,16 +136,19 @@ class PostsFilterVC: SwipeDownDismissViewController {
         tableView.rx.itemSelected
             .subscribe(onNext: { (indexPath) in
                 if !self.isTimeFrameMode {
+                    let hotType: FeedTypeMode = self.isTrending ? .hot: .subscriptionsHot
+                    let newType: FeedTypeMode = self.isTrending ? .new: .subscriptions
+                    let popularType: FeedTypeMode = self.isTrending ? .topLikes: .subscriptionsPopular
                     if indexPath.row == 0 {
-                        self.filter.accept(self.filter.value.newFilter(withFeedTypeMode: .hot, feedType: .time))
+                        self.filter.accept(self.filter.value.newFilter(withFeedTypeMode: hotType, feedType: .time))
                     }
                     
                     if indexPath.row == 1 {
-                        self.filter.accept(self.filter.value.newFilter(withFeedTypeMode: .new, feedType: .time))
+                        self.filter.accept(self.filter.value.newFilter(withFeedTypeMode: newType, feedType: .time))
                     }
                     
                     if indexPath.row == 2 {
-                        self.filter.accept(self.filter.value.newFilter(withFeedTypeMode: .topLikes))
+                        self.filter.accept(self.filter.value.newFilter(withFeedTypeMode: popularType))
                         let vc = PostsFilterVC(filter: self.filter.value.newFilter(sortType: self.filter.value.sortType ?? .all), isTimeFrameMode: true)
                         vc.completion = self.completion
                         self.show(vc, sender: nil)

@@ -54,19 +54,43 @@ extension CommentCellDelegate where Self: BaseViewController {
         nameLabel.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 10)
         nameLabel.autoAlignAxis(.horizontal, toSameAxisOf: avatarImageView)
         nameLabel.autoPinEdge(toSuperviewEdge: .trailing)
-        
-        let actions: [CommunActionSheet.Action]
-        
+
+        var actions: [CommunActionSheet.Action] = []
+        // parsing all paragraph
+        var texts: [String] = []
+        for documentContent in comment.document?.content.arrayValue ?? [] {
+            if documentContent.type == "paragraph", documentContent.content.arrayValue?.count ?? 0 > 0 {
+                let paragraphContent = documentContent.content.arrayValue?.first
+                if let text = paragraphContent?.content.stringValue {
+                    texts.append(text)
+                }
+            }
+        }
+
+        if texts.count > 0 {
+            actions.append(
+                CommunActionSheet.Action(
+                title: "copy".localized().uppercaseFirst,
+                    icon: UIImage(named: "copy"),
+                    handle: {
+                        UIPasteboard.general.string = texts.joined(separator: "\n")
+                        self.showDone("copied to clipboard".localized().uppercaseFirst)
+                    },
+                    tintColor: .black)
+            )
+
+        }
         if comment.author?.userId == Config.currentUser?.id {
-            // edit, delete
-            actions = [
+            actions.append(
                 CommunActionSheet.Action(
                     title: "edit".localized().uppercaseFirst,
                     icon: UIImage(named: "edit"),
                     handle: {
                         self.cell(cell, didTapEditForComment: comment)
                     },
-                    tintColor: .black),
+                    tintColor: .black)
+            )
+            actions.append(
                 CommunActionSheet.Action(
                     title: "delete".localized().uppercaseFirst,
                     icon: UIImage(named: "delete"),
@@ -74,11 +98,9 @@ extension CommentCellDelegate where Self: BaseViewController {
                         self.deleteComment(comment)
                     },
                     tintColor: UIColor(hexString: "#ED2C5B")!)
-            ]
-        }
-        else {
-            // report
-            actions = [
+            )
+        } else {
+            actions.append(
                 CommunActionSheet.Action(
                     title: "report".localized().uppercaseFirst,
                     icon: UIImage(named: "report"),
@@ -86,8 +108,9 @@ extension CommentCellDelegate where Self: BaseViewController {
                         self.reportComment(comment)
                     },
                     tintColor: UIColor(hexString: "#ED2C5B")!)
-            ]
+            )
         }
+
         
         showCommunActionSheet(
             headerView: headerView,

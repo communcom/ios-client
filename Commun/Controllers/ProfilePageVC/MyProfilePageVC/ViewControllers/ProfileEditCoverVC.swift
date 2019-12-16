@@ -25,7 +25,7 @@ class ProfileEditCoverVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         // Bind
         bindProfile()
         
@@ -74,7 +74,7 @@ class ProfileEditCoverVC: UIViewController {
         didSelectImage.onNext(image ?? coverImage.image!)
     }
 
-    static func cropImage(scrollVIew: UIScrollView, imageView: UIImageView, maxSize: CGFloat = 1920, disableHorizontal: Bool = false) -> UIImage? {
+    static func cropImage(scrollVIew: UIScrollView, imageView: UIImageView, maxSize: CGFloat = 1280, disableHorizontal: Bool = false) -> UIImage? {
         guard let originalImage = imageView.image else {
             return nil
         }
@@ -92,6 +92,7 @@ class ProfileEditCoverVC: UIViewController {
         let offsetY = scrollVIew.contentOffset.y
 
         var finalRect = CGRect(x: offsetX, y: offsetY, width: displayWidth, height: scrollVIew.bounds.height)
+        finalRect.origin.x *= proportion
         finalRect.origin.y *= proportion
         finalRect.size.width *= proportion
         finalRect.size.height *= proportion
