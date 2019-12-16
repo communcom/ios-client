@@ -108,7 +108,7 @@ class MyProfilePageVC: UserProfilePageVC {
 //                self.show(vc, sender: self)
 //            }),
             CommunActionSheet.Action(title: "liked".localized().uppercaseFirst, icon: UIImage(named: "profile_options_liked"), handle: {
-                let vc = PostsViewController(filter: PostsListFetcher.Filter(feedTypeMode: .voted, feedType: .time))
+                let vc = PostsViewController(filter: PostsListFetcher.Filter(feedTypeMode: .voted, feedType: .time, userId: Config.currentUser?.id))
                 vc.title = "liked".localized().uppercaseFirst
                 self.navigationItem.backBarButtonItem = UIBarButtonItem(customView: UIView(backgroundColor: .clear))
                 self.show(vc, sender: self)
