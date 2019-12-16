@@ -45,14 +45,14 @@ class SetUserVC: BaseViewController, SignUpRouter {
         textField.autoPinEdge(toSuperviewEdge: .leading, withInset: 42 * Config.widthRatio)
         textField.autoPinEdge(toSuperviewEdge: .trailing, withInset: 42 * Config.widthRatio)
         
-        let leftView = UIView(frame: CGRect(x: 0, y: 0, width: 16, height: 56 * Config.heightRatio))
+        let leftView = UIView(width: 16, height: 56 * Config.heightRatio)
         textField.leftView = leftView
         textField.leftViewMode = .always
         
         let alertButton = UIButton(width: 24, height: 24)
         alertButton.setImage(UIImage(named: "icon-info-button-default"), for: .normal)
         alertButton.addTarget(self, action: #selector(infoButtonTapped), for: .touchUpInside)
-        let rightView = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: 56 * Config.heightRatio))
+        let rightView = UIView(width: 40, height: 56 * Config.heightRatio)
         rightView.addSubview(alertButton)
         alertButton.autoAlignAxis(toSuperviewAxis: .horizontal)
         alertButton.autoAlignAxis(toSuperviewAxis: .vertical)

@@ -72,7 +72,7 @@ class SignUpVC: UIViewController, SignUpRouter {
                                            alignment:           .left)
             
             // Configure textView
-            let paddingView: UIView = UIView(frame: CGRect(x: 0, y: 0, width: 16 * Config.widthRatio, height: 20))
+            let paddingView: UIView = UIView(width: 16 * Config.widthRatio, height: 20)
             phoneNumberTextField.leftView = paddingView
             phoneNumberTextField.leftViewMode = .always
 

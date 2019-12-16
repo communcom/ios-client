@@ -50,7 +50,7 @@ class SignInVC: BaseViewController {
     private func createTextField() -> UITextField {
         let textField = UITextField(height: 56 * Config.heightRatio, backgroundColor: .f3f5fa, cornerRadius: 12 * Config.heightRatio)
         textField.font = .systemFont(ofSize: 17 * Config.heightRatio)
-        let paddingView: UIView = UIView(frame: CGRect(x: 0, y: 0, width: 16, height: 20))
+        let paddingView: UIView = UIView(width: 16, height: 20)
         textField.leftView = paddingView
         textField.leftViewMode = .always
         return textField
