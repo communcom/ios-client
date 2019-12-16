@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 10/15/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -18,8 +18,7 @@ extension PostEditorVC {
             highlightedButtonIndex: 0) { (index) in
                 if index == 0 {
                     self.getDraft()
-                }
-                else if index == 1 {
+                } else if index == 1 {
                     self.removeDraft()
                 }
         }
@@ -32,8 +31,7 @@ extension PostEditorVC {
     @objc func getDraft() {
         // retrieve community
         if let savedCommunity = UserDefaults.standard.object(forKey: communityDraftKey) as? Data,
-            let loadedCommunity = try? JSONDecoder().decode(ResponseAPIContentGetCommunity.self, from: savedCommunity)
-        {
+            let loadedCommunity = try? JSONDecoder().decode(ResponseAPIContentGetCommunity.self, from: savedCommunity) {
             viewModel.community.accept(loadedCommunity)
         }
         
@@ -44,11 +42,10 @@ extension PostEditorVC {
         }
     }
     
-    @objc func saveDraft(completion: (()->Void)? = nil) {
+    @objc func saveDraft(completion: (() -> Void)? = nil) {
         // save community
         if let community = viewModel.community.value,
-            let encoded = try? JSONEncoder().encode(community)
-        {
+            let encoded = try? JSONEncoder().encode(community) {
             UserDefaults.standard.set(encoded, forKey: communityDraftKey)
         }
         

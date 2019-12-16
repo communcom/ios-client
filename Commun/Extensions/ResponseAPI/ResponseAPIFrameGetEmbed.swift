@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 10/8/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -17,7 +17,6 @@ extension ResponseAPIFrameGetEmbed {
         if self.type == "image" {self.type = "photo"}
         if self.type == "website" {self.type = "link"}
     }
-    
 
     func toTextAttachmentSingle(withSize size: CGSize, forTextView textView: UITextView) -> Single<TextAttachment>? {
         guard type != nil else {return nil}
@@ -37,8 +36,7 @@ extension ResponseAPIFrameGetEmbed {
         var downloadImage: Single<UIImage>
         if urlString == nil || URL(string: urlString!) == nil {
             downloadImage = .just(UIImage(named: "image-not-available")!)
-        }
-        else {
+        } else {
             downloadImage =
                 NetworkService.shared.downloadImage(URL(string: urlString!)!)
                     .catchErrorJustReturn(UIImage(named: "image-not-available")!)

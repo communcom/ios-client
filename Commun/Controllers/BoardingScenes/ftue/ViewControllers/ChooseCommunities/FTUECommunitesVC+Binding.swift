@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 11/26/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -39,15 +39,14 @@ extension FTUECommunitiesVC: UICollectionViewDelegateFlowLayout, CommunityCellDe
                 case .loading(let isLoading):
                     if isLoading && self?.viewModel.items.value.count == 0 {
                         self?.view.showLoading()
-                    }
-                    else {
+                    } else {
                         self?.view.hideLoading()
                     }
                 case .listEnded:
                     self?.view.hideLoading()
                 case .listEmpty:
                     self?.view.hideLoading()
-                case .error(_):
+                case .error:
                     self?.view.hideLoading()
                     if self?.viewModel.items.value.count == 0 {
                         self?.view.showErrorView {
@@ -90,12 +89,11 @@ extension FTUECommunitiesVC: UICollectionViewDelegateFlowLayout, CommunityCellDe
                 }
                 return Array(communities.prefix(3))
             }
-            .bind(to: chosenCommunitiesCollectionView.rx.items(cellIdentifier: "FTUEChosenCommunityCell", cellType: FTUEChosenCommunityCell.self)) { index, model, cell in
+            .bind(to: chosenCommunitiesCollectionView.rx.items(cellIdentifier: "FTUEChosenCommunityCell", cellType: FTUEChosenCommunityCell.self)) { _, model, cell in
                 if let model = model {
                     cell.deleteButton.isHidden = false
                     cell.setUp(with: model)
-                }
-                else {
+                } else {
                     cell.avatarImageView.image = nil
                     cell.avatarImageView.percent = 0
                     cell.deleteButton.isHidden = true

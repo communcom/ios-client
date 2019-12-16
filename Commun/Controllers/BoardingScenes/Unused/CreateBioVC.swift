@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 01/07/2019.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import UIKit
@@ -14,7 +14,6 @@ class CreateBioVC: UIViewController, BoardingRouter {
     // MARK: - Properties
     let disposeBag = DisposeBag()
     private let charactersLimit = 180
-
 
     // MARK: - IBOutlets
     @IBOutlet weak var characterCountLabel: UILabel!
@@ -28,14 +27,13 @@ class CreateBioVC: UIViewController, BoardingRouter {
     
     @IBOutlet weak var titleLabel: UILabel! {
         didSet {
-            self.titleLabel.tune(withText:          "describe yourself".localized().uppercaseFirst,
-                                 hexColors:         blackWhiteColorPickers,
-                                 font:              UIFont.init(name: "SFProText-Bold", size: 34.0 * Config.widthRatio),
-                                 alignment:         .left,
-                                 isMultiLines:      false)
+            self.titleLabel.tune(withText: "describe yourself".localized().uppercaseFirst,
+                                 hexColors: blackWhiteColorPickers,
+                                 font: UIFont.init(name: "SFProText-Bold", size: 34.0 * Config.widthRatio),
+                                 alignment: .left,
+                                 isMultiLines: false)
         }
     }
-
     
     // MARK: - Class Functions
     override func viewDidLoad() {
@@ -55,7 +53,6 @@ class CreateBioVC: UIViewController, BoardingRouter {
         
         navigationController?.setNavigationBarHidden(false, animated: animated)
     }
-    
 
     // MARK: - Custom Functions
     func bindUI() {
@@ -86,7 +83,6 @@ class CreateBioVC: UIViewController, BoardingRouter {
             self.textView.text = String(newText.prefix(self.charactersLimit))
         }
     }
-    
 
     // MARK: - Actions
     @IBAction func endEditing(_ sender: Any) {

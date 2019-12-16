@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 8/23/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -36,7 +36,7 @@ class ArticleEditorTextView: ContentTextView {
     let defaultFont = UIFont.systemFont(ofSize: 17)
     private let attachmentBehavior = SubviewAttachingTextViewBehavior()
     
-    override var defaultTypingAttributes: [NSAttributedString.Key : Any] {
+    override var defaultTypingAttributes: [NSAttributedString.Key: Any] {
         var attrs = super.defaultTypingAttributes
         attrs[.font] = defaultFont
         return attrs
@@ -69,7 +69,7 @@ class ArticleEditorTextView: ContentTextView {
     override func parseAttachments() -> Completable {
         var singles = [Single<UIImage>]()
 
-        textStorage.enumerateAttribute(.attachment, in: NSMakeRange(0, textStorage.length), options: []) { (value, range, bool) in
+        textStorage.enumerateAttribute(.attachment, in: NSRange(location: 0, length: textStorage.length), options: []) { (value, range, _) in
             // Get empty attachment
             guard let attachment = value as? TextAttachment,
                 let attributes = attachment.attributes
@@ -125,11 +125,9 @@ class ArticleEditorTextView: ContentTextView {
         
         // get AS, which was separated by the Escaping String
         var attachmentRanges = [NSRange]()
-        textStorage.enumerateAttributes(in: NSMakeRange(0, textStorage.length), options: []) { (attrs, range, bool) in
+        textStorage.enumerateAttributes(in: NSRange(location: 0, length: textStorage.length), options: []) { (_, range, _) in
             // parse attachments
-            if let _ = attrs[.attachment] as? TextAttachment {
-                attachmentRanges.append(range)
-            }
+            attachmentRanges.append(range)
         }
         
         // parse attributed string
@@ -139,7 +137,7 @@ class ArticleEditorTextView: ContentTextView {
             // add text from start to attachment's location
             if range.location - start > 0 {
                 let end = range.location - 1
-                let rangeForText = NSMakeRange(start, end - start + 1)
+                let rangeForText = NSRange(location: start, length: end - start + 1)
                 let subAS = textStorage.attributedSubstring(from: rangeForText)
                 let components = subAS.components(separatedBy: "\n")
                 for component in components {
@@ -151,8 +149,7 @@ class ArticleEditorTextView: ContentTextView {
             
             // add attachment
             if let attachment = textStorage.attributes(at: range.location, effectiveRange: nil)[.attachment] as? TextAttachment,
-                let single = attachment.toSingleContentBlock(id: &id)
-            {
+                let single = attachment.toSingleContentBlock(id: &id) {
                 contentBlocks.append(single)
             }
             
@@ -165,7 +162,7 @@ class ArticleEditorTextView: ContentTextView {
         
         // add last
         if start < textStorage.length {
-            let lastRange = NSMakeRange(start, textStorage.length - start)
+            let lastRange = NSRange(location: start, length: textStorage.length - start)
             let subAS = textStorage.attributedSubstring(from: lastRange)
             let components = subAS.components(separatedBy: "\n")
             for component in components {
@@ -174,7 +171,6 @@ class ArticleEditorTextView: ContentTextView {
                 }
             }
         }
-        
         
         return Single.zip(contentBlocks)
             .map {contentBlocks -> ResponseAPIContentBlock in

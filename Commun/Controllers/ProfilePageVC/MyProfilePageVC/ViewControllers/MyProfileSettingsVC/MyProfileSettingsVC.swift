@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 11/1/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -92,7 +92,6 @@ class MyProfileSettingsVC: BaseViewController {
         
         scrollView.contentView.addSubview(logoutButton)
         logoutButton.autoPinEdge(.top, to: .bottom, of: stackView, withOffset: 20)
-        
         
         logoutButton.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(inset: 10), excludingEdge: .top)
     }

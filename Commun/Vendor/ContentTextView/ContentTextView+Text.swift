@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 9/6/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -37,7 +37,7 @@ extension ContentTextView {
         else {
             // ignore link
             textStorage.enumerateAttributes(in: selectedRange, options: []) {
-                (attrs, range, stop) in
+                (attrs, range, _) in
                 if attrs[.link] != nil {
                     return
                 }
@@ -60,8 +60,7 @@ extension ContentTextView {
             currentTextStyle.accept(
                 currentTextStyle.value.setting(isBool: on)
             )
-        }
-        else if trait.contains(.traitItalic) {
+        } else if trait.contains(.traitItalic) {
             currentTextStyle.accept(
                 currentTextStyle.value.setting(isItalic: on)
             )
@@ -74,7 +73,7 @@ extension ContentTextView {
             typingAttributes[.foregroundColor] = color
         } else {
             textStorage.enumerateAttributes(in: selectedRange, options: []) {
-                (attrs, range, stop) in
+                (attrs, range, _) in
                 if attrs[.link] != nil {return}
                 textStorage.addAttribute(.foregroundColor, value: color, range: range)
             }

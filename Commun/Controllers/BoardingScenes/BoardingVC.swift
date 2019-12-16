@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 11/27/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -16,8 +16,7 @@ class BoardingVC: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         if let step = KeychainManager.currentUser()?.settingStep,
-            step != self.step
-        {
+            step != self.step {
             boardingNextStep()
         }
     }
@@ -41,8 +40,7 @@ class BoardingVC: BaseViewController {
     private func boardingNextStep() {
         let step = KeychainManager.currentUser()?.settingStep ?? .setPasscode
         
-        if KeychainManager.currentUser()?.registrationStep == .relogined
-        {
+        if KeychainManager.currentUser()?.registrationStep == .relogined {
 //            if step == .setAvatar {
 //                endBoarding()
 //                return

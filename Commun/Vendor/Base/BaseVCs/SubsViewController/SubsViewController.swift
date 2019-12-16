@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 11/4/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -37,8 +37,7 @@ class SubsViewController<T: ListItemType, CellType: ListItemCellType>: ListViewC
             .subscribe(onNext: { (showShadow) in
                 if showShadow {
                     self.navigationController?.navigationBar.addShadow(ofColor: .shadow, radius: 16, offset: CGSize(width: 0, height: 6), opacity: 0.05)
-                }
-                else {
+                } else {
                     self.navigationController?.navigationBar.shadowOpacity = 0
                 }
             })

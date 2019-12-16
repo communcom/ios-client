@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 11/8/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -50,7 +50,7 @@ extension PostPageVC {
                 
                 // add newComment to bottom of the list
                 var items = self.viewModel.items.value
-                items = items + [newComment]
+                items += [newComment]
                 self.viewModel.items.accept(items)
                 self.handleListEnded()
                 
@@ -86,7 +86,7 @@ extension PostPageVC {
                     self?.postView.showLoader()
                 case .finished:
                     self?.postView.hideLoader()
-                case .error(_):
+                case .error:
                     self?.postView.hideLoader()
                     guard let strongSelf = self else {return}
                     strongSelf.view.showErrorView {
@@ -109,7 +109,7 @@ extension PostPageVC {
             .disposed(by: disposeBag)
         
         // Mark post as read
-        post.filter{$0 != nil}.map {$0!}
+        post.filter {$0 != nil}.map {$0!}
             .take(1).asSingle()
             .flatMap {NetworkService.shared.markPostAsRead(permlink: $0.contentId.permlink)}
             .subscribe(onSuccess: {_ in

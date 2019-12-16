@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Maxim Prigozhenkov on 12/04/2019.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import RxSwift
@@ -46,14 +46,12 @@ class SetUserViewModel {
     }
     
     func isUserNameValid(_ userName: String) -> Bool {
-        return checkUserName(userName)
-            .reduce(true, { (result, element) -> Bool in
-                return result && element
-            })
+        return checkUserName(userName).reduce(true, { (result, element) -> Bool in
+            return result && element
+        })
     }
     
     func set(userName: String) -> Single<String> {
-        return RestAPIManager.instance.setUserName(userName)
-            .map {_ in userName}
+        return RestAPIManager.instance.setUserName(userName).map {_ in userName}
     }
 }

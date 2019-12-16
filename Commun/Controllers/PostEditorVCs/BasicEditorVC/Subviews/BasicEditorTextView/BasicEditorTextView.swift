@@ -3,14 +3,14 @@
 //  Commun
 //
 //  Created by Chung Tran on 10/4/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
 import RxSwift
 
 class BasicEditorTextView: ContentTextView {
-    override var defaultTypingAttributes: [NSAttributedString.Key : Any] {
+    override var defaultTypingAttributes: [NSAttributedString.Key: Any] {
         var attrs = super.defaultTypingAttributes
         attrs[.font] = UIFont.systemFont(ofSize: 17)
         return attrs
@@ -37,7 +37,7 @@ class BasicEditorTextView: ContentTextView {
         attrs[.link] = urlString
         let attrStr = NSMutableAttributedString(string: placeholder, attributes: attrs)
         textStorage.replaceCharacters(in: selectedRange, with: attrStr)
-        let newSelectedRange = NSMakeRange(selectedRange.location + attrStr.length, 0)
+        let newSelectedRange = NSRange(location: selectedRange.location + attrStr.length, length: 0)
         selectedRange = newSelectedRange
         typingAttributes = defaultTypingAttributes
     }

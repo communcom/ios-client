@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 11/25/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -90,7 +90,7 @@ class PostsFilterVC: SwipeDownDismissViewController {
                     (label: FeedTimeFrameMode.all.localizedLabel.uppercaseFirst, isSelected: filter.sortType == .all)
                 ]
             }
-            .bind(to: self.tableView.rx.items(cellIdentifier: "FilterCell", cellType: FilterCell.self)){ (index,model,cell) in
+            .bind(to: self.tableView.rx.items(cellIdentifier: "FilterCell", cellType: FilterCell.self)) { (index, model, cell) in
                 var roundedCorner: UIRectCorner = []
                 
                 if index == 0 {
@@ -125,8 +125,7 @@ class PostsFilterVC: SwipeDownDismissViewController {
                         vc.completion = self.completion
                         self.show(vc, sender: nil)
                     }
-                }
-                else {
+                } else {
                     if indexPath.row == 0 {
                         self.filter.accept(self.filter.value.newFilter(sortType: .day))
                     }
@@ -162,7 +161,6 @@ class PostsFilterVC: SwipeDownDismissViewController {
     }
 }
 
-
 // MARK: - UIViewControllerTransitioningDelegate
 extension PostsFilterVC: UIViewControllerTransitioningDelegate {
     func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
@@ -170,12 +168,9 @@ extension PostsFilterVC: UIViewControllerTransitioningDelegate {
     }
 }
 
-
 // MARK: - UITableViewDelegate
 extension PostsFilterVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 58
     }
 }
-
-

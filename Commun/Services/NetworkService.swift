@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Maxim Prigozhenkov on 19/03/2019.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import RxSwift
@@ -53,7 +53,6 @@ class NetworkService: NSObject {
     private func removeUserBiography() {
         UserDefaults.standard.removeObject(forKey: Config.currentUserBiographyKey)
     }
-
     
     // MARK: - Methods API
 //    func loadFeed(_ paginationKey: String?, withSortType sortType: FeedTimeFrameMode = .all, withFeedType type: FeedSortMode = .popular, withFeedTypeMode typeMode: FeedTypeMode = .community, userId: String? = nil) -> Single<ResponseAPIContentGetPosts> {
@@ -102,13 +101,13 @@ class NetworkService: NSObject {
         
         // send request
         return RestAPIManager.instance.vote(
-            voteType:    originHasUpVote ? .unvote: .upvote,
+            voteType: originHasUpVote ? .unvote: .upvote,
             communityId: message.community?.communityId ?? "",
-            author:      message.contentId.userId,
-            permlink:    message.contentId.permlink
+            author: message.contentId.userId,
+            permlink: message.contentId.permlink
         )
             .observeOn(MainScheduler.instance)
-            .do(onError: { (error) in
+            .do(onError: { (_) in
                 message.setHasVote(originHasUpVote, for: .upvote)
                 message.setHasVote(originHasDownVote, for: .downvote)
                 message.votes.isBeingVoted = false
@@ -136,13 +135,13 @@ class NetworkService: NSObject {
         
         // send request
         return RestAPIManager.instance.vote(
-            voteType:    originHasDownVote ? .unvote: .downvote,
+            voteType: originHasDownVote ? .unvote: .downvote,
             communityId: message.community?.communityId ?? "",
-            author:      message.contentId.userId,
-            permlink:    message.contentId.permlink
+            author: message.contentId.userId,
+            permlink: message.contentId.permlink
         )
             .observeOn(MainScheduler.instance)
-            .do(onError: { (error) in
+            .do(onError: { (_) in
                 message.setHasVote(originHasUpVote, for: .upvote)
                 message.setHasVote(originHasDownVote, for: .downvote)
                 message.votes.isBeingVoted = false
@@ -157,7 +156,6 @@ class NetworkService: NSObject {
     func waitForTransactionWith(id: String) -> Completable {
         return RestAPIManager.instance.waitForTransactionWith(id: id)
     }
-    
     
 //    func resendSmsCode(phone: String) -> Observable<String> {
 //        return Observable<String>.create({ observer -> Disposable in
@@ -182,7 +180,6 @@ class NetworkService: NSObject {
 //            return code.md5() ?? ""
 //        })
 //    }
-    
     
     func getUserProfile(userId: String? = nil) -> Single<ResponseAPIContentGetProfile> {
         // if userId = nil => retrieving current user
@@ -217,7 +214,7 @@ class NetworkService: NSObject {
 
     func userVerify(phone: String, code: String) -> Observable<Bool> {
         
-        return Observable<String>.create({ observer -> Disposable in
+        return Observable<String>.create({ _ -> Disposable in
             
 //            let isDebugMode: Bool   =   appBuildConfig == AppBuildConfig.debug
 //            
@@ -245,7 +242,7 @@ class NetworkService: NSObject {
         
     }
     
-    //  MARK: - Contract `gls.social`
+    // MARK: - Contract `gls.social`
     func uploadImage(_ image: UIImage) -> Single<String> {
         RestAPIManager.instance.uploadImage(image)
     }
@@ -298,7 +295,7 @@ class NetworkService: NSObject {
         // send request
         return RestAPIManager.instance.follow(user.userId, isUnfollow: originIsFollowing)
             .flatMapCompletable { self.waitForTransactionWith(id: $0) }
-            .do(onError: { (error) in
+            .do(onError: { (_) in
                 // reverse change
                 user.setIsSubscribed(originIsFollowing)
                 user.isBeingToggledFollow = false
@@ -326,14 +323,13 @@ class NetworkService: NSObject {
         
         if originIsSubscribed {
             request = RestAPIManager.instance.unfollowCommunity(community.communityId)
-        }
-        else {
+        } else {
             request = RestAPIManager.instance.followCommunity(community.communityId)
         }
         
         return request
             .flatMapCompletable {self.waitForTransactionWith(id: $0)}
-            .do(onError: { (error) in
+            .do(onError: { (_) in
                 // reverse change
                 community.setIsSubscribed(originIsSubscribed)
                 community.isBeingJoined = false
@@ -363,14 +359,13 @@ class NetworkService: NSObject {
         if originIsVoted {
             // unvote
             request = RestAPIManager.instance.unvoteLeader(communityId: leader.communityId ?? "", leader: leader.userId)
-        }
-        else {
+        } else {
             request = RestAPIManager.instance.voteLeader(communityId: leader.communityId ?? "", leader: leader.userId)
         }
         
         return request
             .flatMapCompletable { self.waitForTransactionWith(id: $0) }
-            .do(onError: { (error) in
+            .do(onError: { (_) in
                 // reverse change
                 // re-enable state
                 leader.setIsVoted(originIsVoted)

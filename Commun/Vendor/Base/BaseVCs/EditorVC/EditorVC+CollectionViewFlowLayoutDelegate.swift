@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 10/4/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -19,7 +19,7 @@ extension EditorVC: UICollectionViewDelegateFlowLayout {
                 EditorToolbarItemCell.separatorSpace +
                 item.iconSize.width +
                 desc.nsString.size(withAttributes: [
-                    .font : UIFont.systemFont(ofSize: EditorToolbarItemCell.fontSize, weight: EditorToolbarItemCell.fontWeight)
+                    .font: UIFont.systemFont(ofSize: EditorToolbarItemCell.fontSize, weight: EditorToolbarItemCell.fontWeight)
                     ]).width
         }
         return CGSize(width: width, height: height)

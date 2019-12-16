@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 11/4/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -20,8 +20,7 @@ class SubsItemCell: MyTableViewCell {
         didSet {
             if roundedCorner.contains(.bottomLeft) {
                 separator.isHidden = true
-            }
-            else {
+            } else {
                 separator.isHidden = false
             }
             layoutSubviews()

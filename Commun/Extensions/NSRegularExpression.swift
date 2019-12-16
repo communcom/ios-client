@@ -3,13 +3,12 @@
 //  Commun
 //
 //  Created by Chung Tran on 9/18/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
 
 extension NSRegularExpression {
-    
     
     static var nameRegexPattern: String {
         return "[\\p{L}0-9-_]+"
@@ -32,7 +31,7 @@ extension NSRegularExpression {
     }
     
     func matchedStrings(in string: String) -> [String] {
-        let strings = matches(in: string, options: [], range: NSMakeRange(0, string.count))
+        let strings = matches(in: string, options: [], range: NSRange(location: 0, length: string.count))
             .map {
                 string.nsString.substring(with: $0.range)
         }

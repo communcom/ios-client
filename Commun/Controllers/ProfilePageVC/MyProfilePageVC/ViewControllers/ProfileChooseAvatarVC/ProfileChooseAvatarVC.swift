@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 24/04/2019.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import UIKit
@@ -72,8 +72,7 @@ class ProfileChooseAvatarVC: UIViewController {
         viewModel.phAssets
             .bind(to: collectionView.rx.items(
                 cellIdentifier: "PhotoLibraryCell",
-                cellType: PhotoLibraryCell.self))
-            { index, asset, cell in
+                cellType: PhotoLibraryCell.self)) { _, asset, cell in
                 cell.setUp(with: asset)
             }
             .disposed(by: bag)

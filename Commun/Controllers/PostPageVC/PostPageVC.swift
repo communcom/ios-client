@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 11/8/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -28,7 +28,6 @@ class PostPageVC: CommentsViewController {
     var scrollToTopAfterLoadingComment = false
     var commentThatNeedsScrollTo: ResponseAPIContentGetComment?
     var startContentOffsetY: CGFloat = 0.0
-    
     
     // MARK: - Initializers
     init(post: ResponseAPIContentGetPost) {
@@ -85,7 +84,7 @@ class PostPageVC: CommentsViewController {
         
         // comment form
         let shadowView = UIView(forAutoLayout: ())
-        shadowView.addShadow(ofColor: #colorLiteral(red: 0.221, green: 0.234, blue: 0.279, alpha: 0.07), radius: CGFloat.adaptive(width: 4.0), offset: CGSize(width: 0, height: CGFloat.adaptive(height: -3.0)), opacity:  1.0)
+        shadowView.addShadow(ofColor: #colorLiteral(red: 0.221, green: 0.234, blue: 0.279, alpha: 0.07), radius: CGFloat.adaptive(width: 4.0), offset: CGSize(width: 0, height: CGFloat.adaptive(height: -3.0)), opacity: 1.0)
 //        shadowView.addShadow(ofColor: .shadow, radius: 4, offset: CGSize(width: 0, height: -6), opacity: 0.1)
 
         view.addSubview(shadowView)
@@ -129,11 +128,9 @@ class PostPageVC: CommentsViewController {
                 })
                 .disposed(by: disposeBag)
         }
-        else if let comment = commentThatNeedsScrollTo {
-            #warning("scroll to comment")
-//            tableView.rx.itemInserted
-//                .takeWhile(<#T##predicate: (IndexPath) throws -> Bool##(IndexPath) throws -> Bool#>)
-        }
+//        else if let comment = commentThatNeedsScrollTo {
+//            //TODO: scroll to comment
+//        }
 
         tableView.rx.contentOffset
         .map { $0.y <= self.startContentOffsetY }
@@ -203,13 +200,12 @@ class PostPageVC: CommentsViewController {
                         guard let communCode = post.community?.communityId
                         else {return}
                         
-                        
                         // Send request
                         RestAPIManager.instance.updateMessage(
-                            originMessage:  comment,
-                            communCode:     communCode,
-                            permlink:       comment.contentId.permlink,
-                            block:          block,
+                            originMessage: comment,
+                            communCode: communCode,
+                            permlink: comment.contentId.permlink,
+                            block: block,
                             uploadingImage: comment.placeHolderImage?.image
                         )
                         .subscribe(onError: { [weak self] error in
@@ -228,12 +224,12 @@ class PostPageVC: CommentsViewController {
                         let parentPermlink = post.contentId.permlink
                         // Send request
                         RestAPIManager.instance.createMessage(
-                            isComment:      true,
-                            parentPost:     post,
-                            communCode:     communCode,
-                            parentAuthor:   parentAuthorId,
+                            isComment: true,
+                            parentPost: post,
+                            communCode: communCode,
+                            parentAuthor: parentAuthorId,
                             parentPermlink: parentPermlink,
-                            block:          block,
+                            block: block,
                             uploadingImage: comment.placeHolderImage?.image
                         )
                         .subscribe(onError: { [weak self] error in
@@ -253,14 +249,14 @@ class PostPageVC: CommentsViewController {
                         
                         // Send request
                         RestAPIManager.instance.createMessage(
-                            isComment:      true,
-                            parentPost:     post,
-                            isReplying:     true,
-                            parentComment:  parentComment,
-                            communCode:     communCode,
-                            parentAuthor:   parentCommentAuthorId,
+                            isComment: true,
+                            parentPost: post,
+                            isReplying: true,
+                            parentComment: parentComment,
+                            communCode: communCode,
+                            parentAuthor: parentCommentAuthorId,
                             parentPermlink: parentCommentPermlink,
-                            block:          block,
+                            block: block,
                             uploadingImage: comment.placeHolderImage?.image
                         )
                         .subscribe(onError: { [weak self] error in
@@ -302,7 +298,7 @@ class PostPageVC: CommentsViewController {
                     handle: {
                         let vm = self.viewModel as! CommentsViewModel
                         vm.changeFilter(sortBy: .time)
-                    }),
+                    })
             ])
     }
     

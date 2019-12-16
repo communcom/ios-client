@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 10/30/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -12,7 +12,6 @@ import RxCocoa
 
 class EditorVC: BaseViewController {
     // MARK: - Constant
-    
     
     // MARK: - Properties
     let tools = BehaviorRelay<[EditorToolbarItem]>(value: [])
@@ -66,7 +65,6 @@ class EditorVC: BaseViewController {
         headerLabel.autoAlignAxis(toSuperviewAxis: .vertical)
         headerLabel.autoAlignAxis(.horizontal, toSameAxisOf: closeButton)
         
-        
         // scrollView
         let scrollView = UIScrollView(forAutoLayout: ())
         view.addSubview(scrollView)
@@ -109,7 +107,7 @@ class EditorVC: BaseViewController {
         
         tools
             .bind(to: buttonsCollectionView.rx.items(
-                cellIdentifier: "EditorToolbarItemCell", cellType: EditorToolbarItemCell.self)) { (index, item, cell) in
+                cellIdentifier: "EditorToolbarItemCell", cellType: EditorToolbarItemCell.self)) { (_, item, cell) in
                     cell.setUp(item: item)
                 }
             .disposed(by: disposeBag)

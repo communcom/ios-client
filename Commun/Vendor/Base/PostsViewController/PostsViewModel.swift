@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 10/22/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -33,8 +33,7 @@ class PostsViewModel: ListViewModel<ResponseAPIContentGetPost> {
                 
                 if filter.feedTypeMode == .subscriptions ||
                     filter.feedTypeMode == .subscriptionsHot ||
-                    filter.feedTypeMode == .subscriptionsPopular
-                {
+                    filter.feedTypeMode == .subscriptionsPopular {
                     filter.userId = Config.currentUser?.id
                 }
                 

@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Maxim Prigozhenkov on 22/04/2019.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import UIKit
@@ -29,7 +29,7 @@ struct Language {
     }
 }
 
-protocol LanguageVCDelegate {
+protocol LanguageVCDelegate: class {
     func didSelectLanguage(_ language: Language)
 }
 
@@ -37,12 +37,11 @@ class LanguageVC: UIViewController {
     // MARK: - Properties
     var searchController = UISearchController(searchResultsController: nil) // С поиском будут доработки
     
-    var delegate: LanguageVCDelegate?
+    weak var delegate: LanguageVCDelegate?
     var didChangeLanguage = PublishSubject<Language>()
     
     // MARK: - IBOutlets
     @IBOutlet weak var tableView: UITableView!
-
     
     // MARK: - Class Functions
     override func viewDidLoad() {
@@ -70,7 +69,6 @@ class LanguageVC: UIViewController {
     }
 }
 
-
 // MARK: - UITableViewDataSource, UITableViewDelegate
 extension LanguageVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -80,7 +78,7 @@ extension LanguageVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell = tableView.dequeueReusableCell(withIdentifier: "LangCell")
         
-        if (cell == nil) {
+        if cell == nil {
             cell = UITableViewCell(style: .default, reuseIdentifier: "LangCell")
         }
         

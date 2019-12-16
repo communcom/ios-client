@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 9/6/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -13,8 +13,7 @@ import RxSwift
 extension ArticleEditorTextView {
     var selectedAttachment: TextAttachment? {
         if selectedRange.length == 1,
-            let attachment = textStorage.attribute(.attachment, at: selectedRange.location, effectiveRange: nil) as? TextAttachment
-        {
+            let attachment = textStorage.attribute(.attachment, at: selectedRange.location, effectiveRange: nil) as? TextAttachment {
             return attachment
         }
         return nil
@@ -49,13 +48,12 @@ extension ArticleEditorTextView {
     func addLink(_ urlString: String, placeholder: String?) {
         // if link has placeholder
         if let placeholder = placeholder,
-            !placeholder.isEmpty
-        {
+            !placeholder.isEmpty {
             var attrs = typingAttributes
             attrs[.link] = urlString
             let attrStr = NSMutableAttributedString(string: placeholder, attributes: attrs)
             textStorage.replaceCharacters(in: selectedRange, with: attrStr)
-            let newSelectedRange = NSMakeRange(selectedRange.location + attrStr.length, 0)
+            let newSelectedRange = NSRange(location: selectedRange.location + attrStr.length, length: 0)
             selectedRange = newSelectedRange
             typingAttributes = defaultTypingAttributes
         }

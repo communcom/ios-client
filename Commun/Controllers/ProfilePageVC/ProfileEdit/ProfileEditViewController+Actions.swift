@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Sergey Monastyrskiy on 19.11.2019.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -18,7 +18,6 @@ extension ProfileEditViewController {
     @objc func changeAvatarBtnDidTouch(_ sender: Any) {
         openActionSheet(cover: false)
     }
-    
 
     // MARK: - Covers + Avatar
     func openActionSheet(cover: Bool) {
@@ -77,8 +76,7 @@ extension ProfileEditViewController {
 //                    .bind(to: coverEditVC.profile)
 //                    .disposed(by: self.disposeBag)
                 
-                pickerVC.present(coverEditVC, animated: true
-                    , completion: {
+                pickerVC.present(coverEditVC, animated: true, completion: {
                         coverEditVC.coverImage.image = image
                 })
                 

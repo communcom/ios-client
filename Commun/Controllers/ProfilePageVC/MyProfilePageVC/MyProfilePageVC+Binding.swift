@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 12/3/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -18,8 +18,7 @@ extension MyProfilePageVC {
                    self?.headerView.isCommunitiesHidden = false
                    if isLoading && (self?.viewModel as? MyProfilePageViewModel)?.subscriptionsVM.items.value.count == 0 {
                        self?.communitiesCollectionView.showLoading()
-                   }
-                   else {
+                   } else {
                        self?.communitiesCollectionView.hideLoading()
                    }
                case .listEnded:
@@ -28,8 +27,8 @@ extension MyProfilePageVC {
                case .listEmpty:
                    self?.communitiesCollectionView.hideLoading()
                    self?.headerView.isCommunitiesHidden = true
-               case .error(let error):
-                   #warning("error state")
+               case .error:
+                //TODO: error state
                    self?.communitiesCollectionView.hideLoading()
                    self?.headerView.isCommunitiesHidden = true
                }
@@ -49,7 +48,6 @@ extension MyProfilePageVC {
                }
            }
            .disposed(by: disposeBag)
-       
        
    }
 }

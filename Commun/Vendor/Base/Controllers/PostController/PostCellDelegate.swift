@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 11/29/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -15,7 +15,7 @@ protocol PostCellDelegate: class {
 }
 
 extension PostCellDelegate where Self: BaseViewController {
-    func upvoteButtonDidTouch(post: ResponseAPIContentGetPost){
+    func upvoteButtonDidTouch(post: ResponseAPIContentGetPost) {
         NetworkService.shared.upvoteMessage(message: post)
             .subscribe { (error) in
                 UIApplication.topViewController()?.showError(error)
@@ -83,8 +83,7 @@ extension PostCellDelegate where Self: BaseViewController {
             buttonTitles: [
                 "yes".localized().uppercaseFirst,
                 "no".localized().uppercaseFirst],
-            highlightedButtonIndex: 1)
-            { (index) in
+            highlightedButtonIndex: 1) { (index) in
                 if index == 0 {
                     topController.showIndetermineHudWithMessage("deleting post".localized().uppercaseFirst)
                     NetworkService.shared.deleteMessage(message: post)

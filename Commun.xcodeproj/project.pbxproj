@@ -163,7 +163,7 @@
 		57FB179D224BFBD700563BF7 /* PillPageControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FB179A224BFBD700563BF7 /* PillPageControl.swift */; };
 		7472E4613CDA904305E42A4F /* Pods_Commun.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F0772CC6D820AD11B1FF48A /* Pods_Commun.framework */; };
 		AC0F9C2F237C307300A5002C /* CyberSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC759B97237C15C20069D169 /* CyberSwift.framework */; };
-		AC0F9C30237C307300A5002C /* CyberSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = AC759B97237C15C20069D169 /* CyberSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		AC0F9C30237C307300A5002C /* CyberSwift.framework in CyberSwift */ = {isa = PBXBuildFile; fileRef = AC759B97237C15C20069D169 /* CyberSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		AC3386A12371D1B6009DB3BB /* EmbedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3386A02371D1B6009DB3BB /* EmbedView.swift */; };
 		AC3386A62371DDEA009DB3BB /* EmbedView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AC3386A52371DDEA009DB3BB /* EmbedView.xib */; };
 		AC5D7D8B2385A1C400EEC5ED /* Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC5D7D8A2385A1C400EEC5ED /* Formatter.swift */; };
@@ -429,15 +429,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		AC0F9C31237C307300A5002C /* Embed Frameworks */ = {
+		AC0F9C31237C307300A5002C /* CyberSwift */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				AC0F9C30237C307300A5002C /* CyberSwift.framework in Embed Frameworks */,
+				AC0F9C30237C307300A5002C /* CyberSwift.framework in CyberSwift */,
 			);
-			name = "Embed Frameworks";
+			name = CyberSwift;
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -2330,8 +2330,9 @@
 				571B14ED223A935C00630C8F /* Frameworks */,
 				571B14EE223A935C00630C8F /* Resources */,
 				A763FF25490FA583CA98714C /* [CP] Embed Pods Frameworks */,
-				B1A93CB922BB714F000D6A9C /* ShellScript */,
-				AC0F9C31237C307300A5002C /* Embed Frameworks */,
+				B1A93CB922BB714F000D6A9C /* Fabric */,
+				AC0F9C31237C307300A5002C /* CyberSwift */,
+				AC899CC323A7DAE10089F246 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -2350,7 +2351,7 @@
 			attributes = {
 				LastSwiftUpdateCheck = 1020;
 				LastUpgradeCheck = 1130;
-				ORGANIZATIONNAME = "Maxim Prigozhenkov";
+				ORGANIZATIONNAME = "Commun Limited";
 				TargetAttributes = {
 					3BEA224022B3DA9C00FF42DA = {
 						CreatedOnToolsVersion = 10.2.1;
@@ -2555,7 +2556,24 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Commun/Pods-Commun-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		B1A93CB922BB714F000D6A9C /* ShellScript */ = {
+		AC899CC323A7DAE10089F246 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which ${PODS_ROOT}/SwiftLint/swiftlint >/dev/null; then\n${PODS_ROOT}/SwiftLint/swiftlint\nelse\necho \"error: SwiftLint does not exist, download it from https://github.com/realm/SwiftLint\"\nexit 1\nfi\n";
+		};
+		B1A93CB922BB714F000D6A9C /* Fabric */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -2565,6 +2583,7 @@
 			inputPaths = (
 				"$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
 			);
+			name = Fabric;
 			outputFileListPaths = (
 			);
 			outputPaths = (

@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Maxim Prigozhenkov on 12/04/2019.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import UIKit
@@ -16,11 +16,9 @@ class SelectCountryVC: UIViewController {
     
     let searchController = UISearchController(searchResultsController: nil)
     let disposeBag = DisposeBag()
-
     
     // MARK: - IBOutlets
     @IBOutlet weak var tableView: UITableView!
-    
 
     // MARK: - Class Functions
     override func viewDidLoad() {
@@ -47,7 +45,6 @@ class SelectCountryVC: UIViewController {
         self.navigationItem.hidesSearchBarWhenScrolling = false
         self.definesPresentationContext = true
         searchController.obscuresBackgroundDuringPresentation = false
-
         
         setupActions()
         setupBindings()
@@ -60,7 +57,7 @@ class SelectCountryVC: UIViewController {
     func setupBindings() {
         if let viewModel = viewModel {
             viewModel.countries
-                .bind(to: tableView.rx.items(cellIdentifier: "CountryCell")) { (index, model, cell) in
+                .bind(to: tableView.rx.items(cellIdentifier: "CountryCell")) { (_, model, cell) in
                     (cell as! CountryCell).setupCountry(model)
                 }
                 .disposed(by: disposeBag)

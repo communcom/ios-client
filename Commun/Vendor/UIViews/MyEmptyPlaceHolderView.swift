@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 10/28/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -35,8 +35,7 @@ class MyEmptyPlaceHolderView: MyView {
         }
     }
     
-    var buttonAction: (()->Void)?
-    
+    var buttonAction: (() -> Void)?
   
     // MARK: - Subviews
     lazy var emojiLabel = UILabel.with(text: "😿", textSize: CGFloat.adaptive(width: 32.0))
@@ -44,9 +43,8 @@ class MyEmptyPlaceHolderView: MyView {
     lazy var descriptionLabel = UILabel.with(text: "Nothing's here", textSize: CGFloat.adaptive(width: 15.0), weight: .medium, textColor: #colorLiteral(red: 0.647, green: 0.655, blue: 0.741, alpha: 1))
     lazy var button = CommunButton.default(label: "retry")
     
-    
     // MARK: - Initializers
-    init(emoji: String = "😿", title: String, description: String?, buttonLabel: String? = nil, buttonAction: (()->Void)? = nil) {
+    init(emoji: String = "😿", title: String, description: String?, buttonLabel: String? = nil, buttonAction: (() -> Void)? = nil) {
         self.emoji              =   emoji
         self.title              =   title
         self.buttonLabel        =   buttonLabel
@@ -61,7 +59,6 @@ class MyEmptyPlaceHolderView: MyView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
     
     // MARK: - Custom Functions
     override func commonInit() {
@@ -108,7 +105,6 @@ class MyEmptyPlaceHolderView: MyView {
         titleLabel.text = title
         descriptionLabel.text = descriptionText
     }
-    
     
     // MARK: - Actions
     @objc func buttonDidTouch() {

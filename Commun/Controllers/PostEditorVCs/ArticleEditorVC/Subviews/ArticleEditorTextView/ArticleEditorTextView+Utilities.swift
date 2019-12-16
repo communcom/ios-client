@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 9/4/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -16,11 +16,10 @@ extension ArticleEditorTextView {
         var videoCount = attachment.attributes?.type == "video" ? 1 : 0
         
         // Count attachments
-        textStorage.enumerateAttribute(.attachment, in: NSMakeRange(0, textStorage.length), options: []) { (attr, range, stop) in
+        textStorage.enumerateAttribute(.attachment, in: NSRange(location: 0, length: textStorage.length), options: []) { (attr, _, _) in
             if let attr = attr as? TextAttachment {
                 embedCount += 1
-                if attr.attributes?.type == "video"
-                {
+                if attr.attributes?.type == "video" {
                     videoCount += 1
                 }
             }
@@ -41,17 +40,17 @@ extension ArticleEditorTextView {
         
         // insert an separator at the beggining of attachment if not exists
         if selectedRange.location > 0,
-            textStorage.attributedSubstring(from: NSMakeRange(selectedRange.location - 1, 1)).string != "\n" {
+            textStorage.attributedSubstring(from: NSRange(location: selectedRange.location - 1, length: 1)).string != "\n" {
             attachmentAS.append(NSAttributedString.separator)
         }
         
         attachmentAS.append(NSAttributedString(attachment: attachment))
         attachmentAS.append(NSAttributedString.separator)
-        attachmentAS.addAttributes(typingAttributes, range: NSMakeRange(0, attachmentAS.length))
+        attachmentAS.addAttributes(typingAttributes, range: NSRange(location: 0, length: attachmentAS.length))
         
         // replace
         textStorage.replaceCharacters(in: selectedRange, with: attachmentAS)
-        selectedRange = NSMakeRange(selectedRange.location + attachmentAS.length, 0)
+        selectedRange = NSRange(location: selectedRange.location + attachmentAS.length, length: 0)
     }
     
     func replaceCharacters(in range: NSRange, with attachment: TextAttachment) {
@@ -59,14 +58,13 @@ extension ArticleEditorTextView {
         attachment.delegate = parentViewController as? AttachmentViewDelegate
         let attachmentAS = NSAttributedString(attachment: attachment)
         textStorage.replaceCharacters(in: range, with: attachmentAS)
-        textStorage.addAttributes(typingAttributes, range: NSMakeRange(range.location, 1))
+        textStorage.addAttributes(typingAttributes, range: NSRange(location: range.location, length: 1))
     }
     
     // MARK: - contextMenu modification
     override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
         // if selected attachment
-        if selectedAttachment != nil
-        {
+        if selectedAttachment != nil {
             if action == #selector(copy(_:)) || action == #selector(cut(_:)) {
                 return true
             }
@@ -94,7 +92,7 @@ extension ArticleEditorTextView {
                 self.removeAttachment(at: &location)
                 
                 // Resign selection
-                self.selectedRange = NSMakeRange(location, 0)
+                self.selectedRange = NSRange(location: location, length: 0)
             })
             return
         }
@@ -106,8 +104,7 @@ extension ArticleEditorTextView {
         
         // Paste attachment
         if let data = pasteBoard.items.last?["attachment"] as? Data,
-            let attachment = try? JSONDecoder().decode(TextAttachment.self, from: data)
-        {
+            let attachment = try? JSONDecoder().decode(TextAttachment.self, from: data) {
             attachment.delegate = self.parentViewController as? AttachmentViewDelegate
             addAttachmentAtSelectedRange(attachment)
             return

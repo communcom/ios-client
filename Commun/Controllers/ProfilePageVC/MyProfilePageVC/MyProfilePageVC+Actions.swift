@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 10/29/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -60,8 +60,7 @@ extension MyProfilePageVC {
                 .subscribe(onError: {[weak self] error in
                     if let gif = originGif {
                         self?.coverImageView.setGifImage(gif)
-                    }
-                    else {
+                    } else {
                         self?.coverImageView.image = originalImage
                     }
                     
@@ -84,8 +83,7 @@ extension MyProfilePageVC {
                     .bind(to: coverEditVC.profile)
                     .disposed(by: self.disposeBag)
                 
-                pickerVC.present(coverEditVC, animated: true
-                    , completion: {
+                pickerVC.present(coverEditVC, animated: true, completion: {
                         coverEditVC.updateImage(image)
                 })
                 
@@ -125,8 +123,7 @@ extension MyProfilePageVC {
                 .subscribe(onError: {[weak self] error in
                     if let gif = originGif {
                         self?.headerView.avatarImageView.setGifImage(gif)
-                    }
-                    else {
+                    } else {
                         self?.headerView.avatarImageView.image = originalImage
                     }
                     

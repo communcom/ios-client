@@ -14,6 +14,9 @@ end
 
 def common_pods_commun
   common_pods
+  
+  pod 'SwiftLint'
+
   pod 'Fabric'
   pod 'Crashlytics'
   pod 'Firebase/Analytics'

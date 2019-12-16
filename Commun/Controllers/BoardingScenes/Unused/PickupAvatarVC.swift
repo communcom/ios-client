@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 01/07/2019.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import UIKit
@@ -15,7 +15,6 @@ class PickupAvatarVC: UIViewController, BoardingRouter {
     let disposeBag = DisposeBag()
     let image = BehaviorRelay<UIImage?>(value: nil)
     
-    
     // MARK: - IBOutlets
     @IBOutlet weak var userAvatarImage: UIImageView!
     @IBOutlet weak var chooseImageButton: UIButton!
@@ -23,14 +22,13 @@ class PickupAvatarVC: UIViewController, BoardingRouter {
     
     @IBOutlet weak var titleLabel: UILabel! {
         didSet {
-            self.titleLabel.tune(withText:          "pick a profile picture".localized().uppercaseFirst,
-                                 hexColors:         blackWhiteColorPickers,
-                                 font:              UIFont.init(name: "SFProText-Bold", size: 34.0 * Config.widthRatio),
-                                 alignment:         .left,
-                                 isMultiLines:      true)
+            self.titleLabel.tune(withText: "pick a profile picture".localized().uppercaseFirst,
+                                 hexColors: blackWhiteColorPickers,
+                                 font: UIFont.init(name: "SFProText-Bold", size: 34.0 * Config.widthRatio),
+                                 alignment: .left,
+                                 isMultiLines: true)
         }
     }
-    
 
     // MARK: - Class Functions
     override func viewDidLoad() {
@@ -55,12 +53,11 @@ class PickupAvatarVC: UIViewController, BoardingRouter {
         super.viewWillDisappear(animated)
         navigationController?.setNavigationBarHidden(false, animated: animated)
     }
-    
 
     // MARK: - Custom Functions
     func bindViews() {
         // bind image
-        image.filter{$0 != nil}
+        image.filter {$0 != nil}
             .bind(to: userAvatarImage.rx.image)
             .disposed(by: disposeBag)
         
@@ -74,7 +71,6 @@ class PickupAvatarVC: UIViewController, BoardingRouter {
             })
             .disposed(by: disposeBag)
     }
-    
 
     // MARK: - Actions
     @IBAction func chooseAvatarButtonDidTouch(_ sender: Any) {
@@ -95,7 +91,7 @@ class PickupAvatarVC: UIViewController, BoardingRouter {
         self.showIndetermineHudWithMessage("uploading...".localized().uppercaseFirst)
         NetworkService.shared.uploadImage(image)
             // Save to bc
-            .flatMap{ url -> Single<String> in
+            .flatMap { url -> Single<String> in
                 // UpdateProfile without waiting for transaction
                 return NetworkService.shared.updateMeta(
                     params: ["avatar_url": url],
@@ -103,7 +99,7 @@ class PickupAvatarVC: UIViewController, BoardingRouter {
                 )
                 .andThen(Single<String>.just(url))
             }
-            .subscribe(onSuccess: { (url) in
+            .subscribe(onSuccess: { (_) in
                 do {
                     try KeychainManager.save([
                         Config.settingStepKey: CurrentUserSettingStep.setBio.rawValue
