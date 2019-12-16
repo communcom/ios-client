@@ -10,7 +10,6 @@ import Foundation
 
 class MyProfilePageVC: UserProfilePageVC {
     // MARK: - Subviews
-    
     lazy var changeCoverButton: UIButton = {
         let button = UIButton(width: 24, height: 24, backgroundColor: UIColor.black.withAlphaComponent(0.3), cornerRadius: 12, contentInsets: UIEdgeInsets(top: 6, left: 6, bottom: 6, right: 6))
         button.tintColor = .white
@@ -30,14 +29,6 @@ class MyProfilePageVC: UserProfilePageVC {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    
-    // MARK: - Class Functions
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        title = nil
     }
     
     
@@ -73,6 +64,7 @@ class MyProfilePageVC: UserProfilePageVC {
             .map {$0 < -43}
             .subscribe(onNext: { showNavBar in
                 self.optionsButton.tintColor = !showNavBar ? .black : .white
+                self.title = !showNavBar ? self.userName : nil
             })
             .disposed(by: disposeBag)
     }
