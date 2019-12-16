@@ -31,7 +31,7 @@ extension SignUpRouter where Self: UIViewController {
             vc = confirmUserVC
             
         case .setUserName, .toBlockChain:
-            let setUserVC = controllerContainer.resolve(SetUserVC.self)!
+            let setUserVC = SetUserVC()
             vc = setUserVC
             
         default:
