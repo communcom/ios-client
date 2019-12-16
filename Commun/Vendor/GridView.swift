@@ -14,6 +14,7 @@ class GridView: UIView {
     var padding: CGFloat = 0.5
     var views = [UIView]()
     var embedView: EmbedView?
+    var placeholderImageView: UIImageView?
     var isPostDetail = false
     
     // MARK: - Initializers
@@ -42,6 +43,17 @@ class GridView: UIView {
             addSubview(view)
             view.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 0, bottom: 10, right: 0))
         }
+    }
+    
+    func setUp(placeholderImage: UIImage) {
+        embedView?.removeFromSuperview()
+        embedView = nil
+
+        let view = EmbedView(localImage: placeholderImage)
+        embedView = view
+        embedView?.layer.masksToBounds = true
+        addSubview(view)
+        view.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 0, bottom: 10, right: 0))
     }
 
     private func createVideoEmbed(_ embed: ResponseAPIContentBlock) {

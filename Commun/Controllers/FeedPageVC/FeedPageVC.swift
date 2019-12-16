@@ -57,6 +57,7 @@ final class FeedPageVC: PostsViewController {
             .subscribe(onNext: { _ in
                 self.floatViewTopConstraint.constant = 0
                 UIView.animate(withDuration: 0.3) {
+                    self.floatViewTopConstraint.constant = 0
                     self.view.layoutIfNeeded()
                     self.floatView.layoutIfNeeded()
                 }
@@ -66,14 +67,22 @@ final class FeedPageVC: PostsViewController {
         tableView.rx.willEndDragging
             .map {$0.velocity.y}
             .distinctUntilChanged()
-            .subscribe(onNext: { (y) in
-                if y == 0 {return}
-                self.floatViewTopConstraint.constant = (y < 0) ? 0 : -self.floatViewHeight
-                UIView.animate(withDuration: 0.3) {
-                    self.view.layoutIfNeeded()
-                }
+            .subscribe(onNext: { y in
+                self.updateFloatViewVisible(y)
             })
             .disposed(by: disposeBag)
+
+        tableView.rx.didEndScrollingAnimation.subscribe { _ in
+            self.updateFloatViewVisible(self.tableView.contentOffset.y, animation: false)
+        }.disposed(by: disposeBag)
+    }
+
+    private func updateFloatViewVisible(_ y: CGFloat, animation: Bool = true) {
+        if y == 0 { return }
+        self.floatViewTopConstraint.constant = (y < 0) ? 0 : -self.floatViewHeight
+        UIView.animate(withDuration: animation ? 0.3 : 0) {
+            self.view.layoutIfNeeded()
+        }
     }
     
     override func filterChanged(filter: PostsListFetcher.Filter) {

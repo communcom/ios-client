@@ -40,11 +40,6 @@ let controllerContainer: Container = {
         return vc
     })
     
-    container.register(SetUserVC.self, factory: { r in
-        let vc = SetUserVC.instanceController(fromStoryboard: "SetUserVC", withIdentifier: "SetUserVC") as! SetUserVC
-        return vc
-    })
-    
     container.register(ConfirmUserVC.self, factory: { r in
         let vc = ConfirmUserVC.instanceController(fromStoryboard: "ConfirmUserVC", withIdentifier: "ConfirmUserVC") as! ConfirmUserVC
         return vc

@@ -60,19 +60,6 @@ extension CommentCell: UITextViewDelegate {
         delegate?.cell(self, didTapReplyButtonForComment: comment)
     }
     
-    @objc func handleLongPressOnTextView(gestureRecognizer: UILongPressGestureRecognizer) {
-        guard let comment = comment else {return}
-        if gestureRecognizer.state == UIGestureRecognizer.State.ended {
-            //When lognpress is finish
-            if (comment.sendingState ?? MessageSendingState.none) != MessageSendingState.none ||
-                comment.document == nil
-            {
-                return
-            }
-            self.delegate?.cell(self, didTapMoreActionFor: comment)
-        }
-    }
-    
     @objc func retrySendingCommentDidTouch(gestureRecognizer: UITapGestureRecognizer) {
         guard let comment = comment else {return}
         delegate?.cell(self, didTapRetryForComment: comment)

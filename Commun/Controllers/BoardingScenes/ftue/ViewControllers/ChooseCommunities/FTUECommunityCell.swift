@@ -11,6 +11,11 @@ import Foundation
 class FTUECommunityCell: CommunityCollectionCell {
     var shouldShowBonus = true
     
+    override func setUpViews() {
+        super.setUpViews()
+        shouldAnimateOnFollowing = false
+    }
+    
     override func joinButtonDidTouch() {
         // points
         if (community?.isSubscribed ?? false) == false && shouldShowBonus {

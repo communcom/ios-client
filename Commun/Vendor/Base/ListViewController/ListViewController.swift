@@ -159,8 +159,11 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
                     self?.handleListEnded()
                 case .listEmpty:
                     self?.handleListEmpty()
-                case .error(_):
+                case .error(let error):
                     self?.handleListError()
+                    #if !APPSTRORE
+                        self?.showAlert(title: "Error", message: "\(error)")
+                    #endif
                 }
             })
             .disposed(by: disposeBag)

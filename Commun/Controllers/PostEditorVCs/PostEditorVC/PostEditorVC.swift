@@ -39,6 +39,8 @@ class PostEditorVC: EditorVC {
     
     var isParsingPost = false
     
+    var chooseCommunityAfterLoading = true
+    
     // MARK: - Subviews
     // community
     lazy var communityView = UIView(forAutoLayout: ())
@@ -75,8 +77,10 @@ class PostEditorVC: EditorVC {
                 }
             }
             else {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                    self.chooseCommunityDidTouch()
+                if chooseCommunityAfterLoading {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                        self.chooseCommunityDidTouch()
+                    }
                 }
             }
         }

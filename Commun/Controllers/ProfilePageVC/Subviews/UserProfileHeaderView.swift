@@ -180,7 +180,6 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
         setUpFollowButton(isFollowing: isFollowing)
         
         // bio
-        // description
         descriptionLabel.text = nil
         if let description = userProfile.personal?.biography {
             if description.count <= 180 {
