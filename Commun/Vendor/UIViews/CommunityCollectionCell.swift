@@ -13,6 +13,7 @@ class CommunityCollectionCell: MyCollectionViewCell, ListItemCellType {
     // MARK: - Properties
     var community: ResponseAPIContentGetCommunity?
     weak var delegate: CommunityCellDelegate?
+    var shouldAnimateOnFollowing = true
     
     // MARK: - Subviews
     lazy var coverImageView: UIImageView = {
@@ -84,7 +85,12 @@ class CommunityCollectionCell: MyCollectionViewCell, ListItemCellType {
     
     @objc func joinButtonDidTouch() {
         guard let community = community else {return}
-        joinButton.animate {
+        if shouldAnimateOnFollowing {
+            joinButton.animate {
+                self.delegate?.buttonFollowDidTouch(community: community)
+            }
+        }
+        else {
             self.delegate?.buttonFollowDidTouch(community: community)
         }
     }
