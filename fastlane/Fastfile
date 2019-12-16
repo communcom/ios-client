@@ -36,7 +36,7 @@ lane :beta do |options|
 		plist_path: INFO_PLIST_PATH,
 		bundle_id: BUNDLE_ID_DEV,
 		icon_name: "AppIcon",
-		profile_name: "match Development #{BUNDLE_ID_DEV}",
+		profile_name: "match AdHoc #{BUNDLE_ID_DEV}",
 		team_id: TEAM_ID_DEV
 	)
 
