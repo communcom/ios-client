@@ -96,39 +96,15 @@ class EmbededView: UIView {
 
 // MARK: - WKNavigationDelegate
 extension EmbededView: WKNavigationDelegate {
-    func webViewWebContentProcessDidTerminate(_ webView: WKWebView) {
-        Logger.log(message: #function, event: .debug)
-    }
-
-    func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
-        Logger.log(message: #function, event: .debug)
-    }
-
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         Logger.log(message: #function, event: .debug)
         let height = (UIScreen.main.bounds.width - 16) * webView.height / webView.width
         adjustHeight(withHeight: height)
     }
 
-    func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
-        Logger.log(message: #function, event: .debug)
-    }
-
-    func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
-        Logger.log(message: #function, event: .debug)
-    }
-
-    func webView(_ webView: WKWebView, didReceiveServerRedirectForProvisionalNavigation navigation: WKNavigation!) {
-        Logger.log(message: #function, event: .debug)
-    }
-
-    func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
-        Logger.log(message: #function, event: .debug)
-    }
-
     func webView(_ webView: WKWebView, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
         Logger.log(message: #function, event: .debug)
-        completionHandler(.performDefaultHandling,nil)
+        completionHandler(.performDefaultHandling, nil)
     }
 
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
