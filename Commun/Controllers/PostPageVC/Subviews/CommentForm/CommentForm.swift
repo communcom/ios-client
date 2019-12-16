@@ -119,6 +119,7 @@ class CommentForm: MyView {
         if (localImage.value != nil) || (mode == .edit && url != nil)
         {
             imageView = MyImageView(width: CGFloat.adaptive(height: 80), height: CGFloat.adaptive(height: 80), cornerRadius: CGFloat.adaptive(height: 15))
+            imageView?.contentMode = .scaleAspectFill
             addSubview(imageView!)
             constraintTop = imageView!.autoPinEdge(toSuperviewEdge: .top, withInset: CGFloat.adaptive(height: 10.0))
             imageView!.autoPinEdge(toSuperviewEdge: .leading, withInset: CGFloat.adaptive(height: 10.0))

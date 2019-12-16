@@ -113,6 +113,7 @@ class MyProfilePageVC: UserProfilePageVC {
                 let vc = PostsViewController(filter: PostsListFetcher.Filter(feedTypeMode: .voted, feedType: .time, userId: Config.currentUser?.id))
                 vc.title = "liked".localized().uppercaseFirst
                 self.navigationItem.backBarButtonItem = UIBarButtonItem(customView: UIView(backgroundColor: .clear))
+                self.baseNavigationController?.changeStatusBarStyle(.default)
                 self.show(vc, sender: self)
             }, style: .profile),
             CommunActionSheet.Action(title: "blacklist".localized().uppercaseFirst, icon: UIImage(named: "profile_options_blacklist"), handle: {
