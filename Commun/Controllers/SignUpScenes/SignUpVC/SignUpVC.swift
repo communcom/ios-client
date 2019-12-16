@@ -231,6 +231,7 @@ class SignUpVC: UIViewController, SignUpRouter {
         recaptcha.configureWebView { [weak self] webview in
             webview.frame = self?.view.bounds ?? CGRect.zero
             webview.tag = reCaptchaTag
+            self?.hideHud()
         }
     }
     
@@ -256,6 +257,8 @@ class SignUpVC: UIViewController, SignUpRouter {
             self.showAlert(title: "error".localized().uppercaseFirst, message: "wrong phone number".localized().uppercaseFirst)
             return
         }
+
+        self.showIndetermineHudWithMessage("signing you up".localized().uppercaseFirst + "...")
         
         self.view.endEditing(true)
         self.setupReCaptcha()
@@ -272,10 +275,7 @@ class SignUpVC: UIViewController, SignUpRouter {
                                     }
                                     
                                     print(captchaCode)                                    
-                                    strongSelf.view.viewWithTag(reCaptchaTag)?.removeFromSuperview()
-                                    
-                                    // API `registration.firstStep`
-                                    strongSelf.showIndetermineHudWithMessage("signing you up".localized().uppercaseFirst + "...")
+                                strongSelf.view.viewWithTag(reCaptchaTag)?.removeFromSuperview()
                                     
                                     RestAPIManager.instance.firstStep(phone: strongSelf.viewModel.phone.value, captchaCode: captchaCode)
                                         .subscribe(onSuccess: { _ in
