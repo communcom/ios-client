@@ -5,53 +5,324 @@
 //  Created by Maxim Prigozhenkov on 14/03/2019.
 //  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
 //
+//  https://console.firebase.google.com/project/golos-5b0d5/notification/compose?campaignId=9093831260433778480&dupe=true
+//
 
 import UIKit
+import Fabric
+import Crashlytics
 import CoreData
+import Firebase
+import FirebaseMessaging
+import UserNotifications
+import CyberSwift
+@_exported import CyberSwift
+import RxSwift
+import SDURLCache
+import SDWebImageWebPCoder
+
+let isDebugMode: Bool = true
+let smsCodeDebug: UInt64 = isDebugMode ? 9999 : 0
+let gcmMessageIDKey = "gcm.message_id"
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
+    // MARK: - Properties
     var window: UIWindow?
+    
+    static var reloadSubject = PublishSubject<Bool>()
+    let notificationCenter = UNUserNotificationCenter.current()
+    
+    private var bag = DisposeBag()
 
-
+    
+    // MARK: - Class Functions
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+
+        // Use Firebase library to configure APIs
+        FirebaseApp.configure()
+
+        // Config Fabric
+        Fabric.with([Crashlytics.self])
+
+        // global tintColor
+        window?.tintColor = .appMainColor
+        // Logger
+//        Logger.showEvents = [.request, .error]
+
+        // support webp image
+        SDImageCodersManager.shared.addCoder(SDImageWebPCoder.shared)
         
-        window = UIWindow(frame: UIScreen.main.bounds)
+        // Sync iCloud key-value store
+        NSUbiquitousKeyValueStore.default.synchronize()
+
+        #if !APPSTORE
+            // reset keychain
+            if !UserDefaults.standard.bool(forKey: UIApplication.versionBuild) {
+                try? KeychainManager.deleteUser()
+                UserDefaults.standard.set(true, forKey: UIApplication.versionBuild)
+            }
+        #endif
         
-        let tabBarVC = TabBarVC()
-        window?.rootViewController = tabBarVC
-        window?.makeKeyAndVisible()
+        // Hide constraint warning
+        UserDefaults.standard.setValue(false, forKey: "_UIConstraintBasedLayoutLogUnsatisfiable")
+        
+        // handle connected
+        SocketManager.shared.connected
+            .filter {$0}
+            .take(1)
+            .asSingle()
+            .timeout(5, scheduler: MainScheduler.instance)
+            .subscribe(onSuccess: { (connected) in
+                AppDelegate.reloadSubject.onNext(false)
+                self.window?.makeKeyAndVisible()
+                application.applicationIconBadgeNumber = 0
+            }, onError: {_ in
+                if let vc = self.window?.rootViewController as? SplashViewController {
+                    vc.showErrorScreen()
+                }
+            })
+            .disposed(by: bag)
+        
+        // Reload app
+        AppDelegate.reloadSubject
+            .subscribe(onNext: {force in
+                self.navigateWithRegistrationStep(force: force)
+            })
+            .disposed(by: bag)
+        
+        // Configure notification
+        configureNotifications(application: application)
+        
+        // cache
+        if let urlCache = SDURLCache(memoryCapacity: 0, diskCapacity: 2*1024*1024*1024, diskPath: SDURLCache.defaultCachePath(), enableForIOS5AndUp: true) {
+            URLCache.shared = urlCache
+        }
         
         return true
     }
+    
+    func navigateWithRegistrationStep(force: Bool = false) {
+        let completion = {
+            let step = KeychainManager.currentUser()?.registrationStep ?? .firstStep
+            // Registered user
+            if step == .registered || step == .relogined {
+                // If first setting is uncompleted
+                let settingStep = KeychainManager.currentUser()?.settingStep ?? .backUpICloud
+                if settingStep != .completed {
+                    if !force,
+                        let nc = self.window?.rootViewController as? UINavigationController,
+                        nc.viewControllers.first is BackUpKeysVC {
+                        return
+                    }
+                    
+                    let boardingVC = BackUpKeysVC()
+                    let nc = UINavigationController(rootViewController: boardingVC)
+                    
+                    self.changeRootVC(nc)
+                    return
+                }
+                
+                // if all set
+                RestAPIManager.instance.authorize()
+                    .subscribe(onSuccess: { (response) in
+                        // Retrieve favourites
+                        FavouritesList.shared.retrieve()
+                        
+                        // Turn notify on
+                        self.pushNotifyOn()
+                        
+                        // show feed
+                        if (!force && (self.window?.rootViewController is TabBarVC)) {return}
+                        self.changeRootVC(controllerContainer.resolve(TabBarVC.self)!)
+                    }, onError: { (error) in
+                        if let error = error as? ErrorAPI {
+                            switch error.caseInfo.message {
+                            case "Cannot get such account from BC",
+                                 _ where error.caseInfo.message.hasPrefix("Can't resolve name"):
+                                do {
+                                    try KeychainManager.deleteUser()
+                                    AppDelegate.reloadSubject.onNext(true)
+                                } catch {
+                                    print("Could not delete user from key chain")
+                                }
+                                return
+                            default:
+                                break
+                            }
+                        }
+                        if let splashVC = self.window?.rootViewController as? SplashViewController {
+                            splashVC.showErrorScreen()
+                        }
+                        
+                    })
+                    .disposed(by: self.bag)
+                
+                // New user
+            } else {
+                if !force,
+                    let nc = self.window?.rootViewController as? UINavigationController,
+                    nc.viewControllers.first is WelcomeVC {
+                    return
+                }
+                
+                let welcomeVC = controllerContainer.resolve(WelcomeVC.self)
+                let welcomeNav = UINavigationController(rootViewController: welcomeVC!)
+                self.changeRootVC(welcomeNav)
+                
+                let navigationBarAppearace = UINavigationBar.appearance()
+                navigationBarAppearace.tintColor = #colorLiteral(red: 0.4156862745, green: 0.5019607843, blue: 0.9607843137, alpha: 1)
+                navigationBarAppearace.largeTitleTextAttributes =   [
+                                                                        NSAttributedString.Key.foregroundColor:     UIColor.black,
+                                                                        NSAttributedString.Key.font:                UIFont(name:    "SFProDisplay-Bold",
+                                                                                                                           size:    30.0 * Config.widthRatio)!
+                ]
+            }
+        }
+        
+        if force, let vc = window?.rootViewController, !(vc is SplashViewController) {
+            // Closing animation
+            let vc = controllerContainer.resolve(SplashViewController.self)!
+            self.window?.rootViewController = vc
+            completion()
+        } else {
+            completion()
+        }
+    }
+    
+    func changeRootVC(_ rootVC: UIViewController) {
+        if let currentVC = window?.rootViewController as? SplashViewController {
+            currentVC.animateSplash {
+                self.window?.rootViewController = rootVC
+            }
+        } else {
+            self.window?.rootViewController = rootVC
+        }
+        
+        getConfig { (error) in
+            // Animation
+            rootVC.view.alpha = 0
+            UIView.animate(withDuration: 0.5, animations: {
+                rootVC.view.alpha = 1
+                if error != nil {
+                    if error?.toErrorAPI().caseInfo.message == "Need update application version" {
+                        rootVC.view.showForceUpdate()
+                        return
+                    }
+                    rootVC.view.showErrorView {
+                        AppDelegate.reloadSubject.onNext(true)
+                    }
+                }
+            })
+        }
+        
+    }
+    
+    func getConfig(completion: @escaping ((Error?)->Void)) {
+        RestAPIManager.instance.getConfig()
+            .subscribe(onSuccess: { _ in
+                completion(nil)
+            }) { (error) in
+                completion(error)
+            }
+            .disposed(by: bag)
+    }
 
     func applicationWillResignActive(_ application: UIApplication) {
-        // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-        // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
+        SocketManager.shared.disconnect()
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+//        NetworkService.shared.disconnect()
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
         // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
+        SocketManager.shared.connect()
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {
-        // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+//        NetworkService.shared.connect()
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
-        // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-        // Saves changes in the application's managed object context before the application terminates.
+        SocketManager.shared.disconnect()
         self.saveContext()
     }
+    
 
+    // MARK: - Custom Functions
+    private func configureNotifications(application: UIApplication) {
+        // Set delegate for Messaging
+        Messaging.messaging().delegate = self
+        
+        // Configure notificationCenter
+        self.notificationCenter.delegate = self
+        
+        self.notificationCenter.requestAuthorization(options:               [.alert, .sound, .badge],
+                                                     completionHandler:     { (granted, error) in
+                                                        Logger.log(message: "Permission granted: \(granted)", event: .debug)
+                                                        guard granted else { return }
+                                                        self.getNotificationSettings()
+        })
+        
+        // Register for remote notification
+        application.registerForRemoteNotifications()
+    }
+    
+    private func getNotificationSettings() {
+        self.notificationCenter.getNotificationSettings(completionHandler:  { (settings) in
+            Logger.log(message: "Notification settings: \(settings)", event: .debug)
+        })
+    }
+
+    private func scheduleLocalNotification(userInfo: [AnyHashable : Any]) {
+        let notificationContent                 =   UNMutableNotificationContent()
+        let categoryIdentifier                  =   userInfo["category"] as? String ?? "Commun"
+        
+        notificationContent.title               =   userInfo["title"] as? String ?? "Commun"
+        notificationContent.body                =   userInfo["body"] as? String ?? "Commun"
+        notificationContent.sound               =   userInfo["sound"] as? UNNotificationSound ?? UNNotificationSound.default
+        notificationContent.badge               =   userInfo["badge"] as? NSNumber ?? 1
+        notificationContent.categoryIdentifier  =   categoryIdentifier
+        
+        let trigger         =   UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
+        let identifier      =   "Commun Local Notification"
+        let request         =   UNNotificationRequest(identifier: identifier, content: notificationContent, trigger: trigger)
+        
+        self.notificationCenter.add(request) { (error) in
+            if let error = error {
+                Logger.log(message: "Error \(error.localizedDescription)", event: .error)
+            }
+        }
+        
+        let snoozeAction    =   UNNotificationAction(identifier: "ActionSnooze", title: "Snooze".localized(), options: [])
+        let deleteAction    =   UNNotificationAction(identifier: "ActionDelete", title: "delete".localized().uppercaseFirst, options: [.destructive])
+        
+        let category        =   UNNotificationCategory(identifier:          categoryIdentifier,
+                                                       actions:             [snoozeAction, deleteAction],
+                                                       intentIdentifiers:   [],
+                                                       options:             [])
+        
+        self.notificationCenter.setNotificationCategories([category])
+    }
+    
+    func pushNotifyOn() {
+        if UserDefaults.standard.value(forKey: Config.currentUserPushNotificationOn) == nil {
+            RestAPIManager.instance.pushNotifyOn()
+                .subscribe(onCompleted: {
+                    Logger.log(message: "Successfully turn pushNotificationOn", event: .severe)
+                }) { (error) in
+                    
+                }
+                .disposed(by: bag)
+        }
+    }
+    
+    
     // MARK: - Core Data stack
-
     lazy var persistentContainer: NSPersistentContainer = {
         /*
          The persistent container for the application. This implementation
@@ -94,6 +365,101 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
     }
-
 }
 
+
+// MARK: - Firebase Cloud Messaging (FCM)
+extension AppDelegate {
+    func application(_ application:                             UIApplication,
+                     didReceiveRemoteNotification userInfo:     [AnyHashable: Any]) {
+        if let messageID = userInfo[gcmMessageIDKey] {
+            Logger.log(message: "Message ID: \(messageID)", event: .severe)
+        }
+        
+        // Print full message.
+        Logger.log(message: "userInfo: \(userInfo)", event: .severe)
+    }
+    
+    func application(_ application:                             UIApplication,
+                     didReceiveRemoteNotification userInfo:     [AnyHashable: Any],
+                     fetchCompletionHandler completionHandler:  @escaping (UIBackgroundFetchResult) -> Void) {
+        if let messageID = userInfo[gcmMessageIDKey] {
+            Logger.log(message: "Message ID: \(messageID)", event: .severe)
+        }
+        
+        // Print full message.
+        Logger.log(message: "userInfo: \(userInfo)", event: .severe)
+
+        completionHandler(UIBackgroundFetchResult.newData)
+    }
+   
+    func application(_ application:                                             UIApplication,
+                     didFailToRegisterForRemoteNotificationsWithError error:    Error) {
+        Logger.log(message: "Unable to register for remote notifications: \(error.localizedDescription)", event: .error)
+    }
+    
+    func application(_ application:                                                 UIApplication,
+                     didRegisterForRemoteNotificationsWithDeviceToken deviceToken:  Data) {
+        Logger.log(message: "APNs token retrieved: \(deviceToken)", event: .severe)
+        
+        // With swizzling disabled you must set the APNs token here.
+        // Messaging.messaging().apnsToken = deviceToken
+    }
+}
+
+
+// MARK: - UNUserNotificationCenterDelegate
+@available(iOS 10, *)
+extension AppDelegate: UNUserNotificationCenterDelegate {
+    // Receive push-message when App is active/in background
+    func userNotificationCenter(_ center:                                   UNUserNotificationCenter,
+                                willPresent notification:                   UNNotification,
+                                withCompletionHandler completionHandler:    @escaping (UNNotificationPresentationOptions) -> Void) {
+        // Display Local Notification
+        let notificationContent = notification.request.content
+        
+        // Print full message.
+        Logger.log(message: "UINotificationContent: \(notificationContent)", event: .debug)
+
+        completionHandler([.alert, .sound])
+        
+        UIApplication.shared.applicationIconBadgeNumber = Int(truncating: notificationContent.badge ?? 1)
+    }
+    
+    // Tap on push message
+    func userNotificationCenter(_ center:                                   UNUserNotificationCenter,
+                                didReceive response:                        UNNotificationResponse,
+                                withCompletionHandler completionHandler:    @escaping () -> Void) {
+        let notificationContent = response.notification.request.content
+        
+        if response.notification.request.identifier == "Local Notification" {
+            Logger.log(message: "Handling notifications with the Local Notification Identifier", event: .debug)
+        }
+
+        // Print full message.
+        Logger.log(message: "UINotificationContent: \(notificationContent)", event: .debug)
+
+        completionHandler()
+    }
+}
+
+
+// MARK: - MessagingDelegate
+extension AppDelegate: MessagingDelegate {
+    func messaging(_ messaging:                             Messaging,
+                   didReceiveRegistrationToken fcmToken:    String) {
+        Logger.log(message: "FCM registration token: \(fcmToken)", event: .severe)
+        
+        let dataDict:[String: String] = ["token": fcmToken]
+        NotificationCenter.default.post(name: Notification.Name("FCMToken"), object: nil, userInfo: dataDict)
+
+        UserDefaults.standard.set(fcmToken, forKey: "fcmToken")
+
+        // TODO: If necessary send token to application server.
+        // Note: This callback is fired at each app startup and whenever a new token is generated.
+    }
+
+    func messaging(_ messaging: Messaging, didReceive remoteMessage: MessagingRemoteMessage) {
+        Logger.log(message: "Received data message: \(remoteMessage.appData)", event: .severe)
+    }
+}

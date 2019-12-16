@@ -1,0 +1,43 @@
+{
+    "jsonrpc": "2.0",
+    "id": 1,
+    "result": {
+        "items": [
+            {
+                "userId": "tst3fwejlkvx",
+                "username": "heidenreich-odessa-v",
+                "avatarUrl": "https://i.pravatar.cc/300"
+            },
+            {
+                "userId": "tst2hjvcmdnt",
+                "username": "daniel-dwight-dvm",
+                "avatarUrl": "https://i.pravatar.cc/301"
+            },
+            {
+                "userId": "tst3fwerlkvx",
+                "username": "heireich-odessa-v",
+                "avatarUrl": "https://i.pravatar.cc/302"
+            },
+            {
+                "userId": "ts13fwerlkvx",
+                "username": "heireichssa-v",
+                "avatarUrl": "https://i.pravatar.cc/303"
+            },
+            {
+                "userId": "ts130werlkvx",
+                "username": "ireichssa-v",
+                "avatarUrl": "https://i.pravatar.cc/304"
+            },
+            {
+                "userId": "ts130tyrlkvx",
+                "username": "eichssa-v",
+                "avatarUrl": "https://i.pravatar.cc/305"
+            },
+            {
+                "userId": "ts130tyrlkrt",
+                "username": "eicssa-v",
+                "avatarUrl": "https://i.pravatar.cc/306"
+            },
+        ]
+    }
+}

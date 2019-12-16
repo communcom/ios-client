@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PlaceholderPostCell" customModule="Commun" customModuleProvider="target">
+            <connections>
+                <outlet property="backgroundView" destination="WYs-zQ-iSs" id="bzv-eH-Ok3"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="WYs-zQ-iSs" userLabel="Background View">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="352"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tux" translatesAutoresizingMaskIntoConstraints="NO" id="SUC-uu-8k5">
+                    <rect key="frame" x="16" y="14" width="40" height="40"/>
+                    <accessibility key="accessibilityConfiguration" identifier="PostCardCellAvatarImageView" label="PostCardCellAvatarImageView">
+                        <bool key="isElement" value="YES"/>
+                    </accessibility>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="40" id="IUE-V2-Q2j"/>
+                        <constraint firstAttribute="height" constant="40" id="XwL-2e-fVw"/>
+                    </constraints>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                            <integer key="value" value="20"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Oyz-no-eKk">
+                    <rect key="frame" x="72" y="14" width="326" height="18"/>
+                    <accessibility key="accessibilityConfiguration" identifier="PostCardCellTitleLabel" label="PostCardCellTitleLabel"/>
+                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="4h ago" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="veQ-yo-cBJ">
+                    <rect key="frame" x="72" y="38" width="326" height="16"/>
+                    <accessibility key="accessibilityConfiguration" identifier="PostCardCellSubtitleLabel" label="PostCardCellSubtitleLabel"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                    <color key="textColor" red="0.60784313729999995" green="0.62352941179999999" blue="0.63529411759999999" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zwv-8r-1Qd">
+                    <rect key="frame" x="16" y="80" width="382" height="23.5"/>
+                    <accessibility key="accessibilityConfiguration" identifier="PostCardCellMainTextLabel" label="PostCardCellMainTextLabel"/>
+                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0jl-jk-7la">
+                    <rect key="frame" x="0.0" y="119.5" width="414" height="216.5"/>
+                    <subviews>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="BwL-RK-1qr">
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="204.5"/>
+                            <accessibility key="accessibilityConfiguration" identifier="PlaceholderPostCellImageView" label="PlaceholderPostCellImageView">
+                                <bool key="isElement" value="YES"/>
+                            </accessibility>
+                        </imageView>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="bottom" secondItem="BwL-RK-1qr" secondAttribute="bottom" constant="12" id="CKX-HM-Hi2"/>
+                        <constraint firstAttribute="height" constant="216.5" id="GQK-7N-GlY"/>
+                        <constraint firstItem="BwL-RK-1qr" firstAttribute="top" secondItem="0jl-jk-7la" secondAttribute="top" id="GZ2-ya-FOB"/>
+                        <constraint firstItem="BwL-RK-1qr" firstAttribute="leading" secondItem="0jl-jk-7la" secondAttribute="leading" id="irI-si-sdT"/>
+                        <constraint firstAttribute="trailing" secondItem="BwL-RK-1qr" secondAttribute="trailing" id="vHz-rI-UMr"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <accessibility key="accessibilityConfiguration" identifier="PlaceholderPostCell" label="PlaceholderPostCell">
+                <bool key="isElement" value="YES"/>
+            </accessibility>
+            <constraints>
+                <constraint firstItem="0jl-jk-7la" firstAttribute="leading" secondItem="WYs-zQ-iSs" secondAttribute="leading" id="4VD-mL-wQX"/>
+                <constraint firstAttribute="trailing" secondItem="Oyz-no-eKk" secondAttribute="trailing" constant="16" id="5zZ-yU-nmw"/>
+                <constraint firstItem="Oyz-no-eKk" firstAttribute="leading" secondItem="SUC-uu-8k5" secondAttribute="trailing" constant="16" id="9KZ-9X-G2A"/>
+                <constraint firstItem="zwv-8r-1Qd" firstAttribute="leading" secondItem="WYs-zQ-iSs" secondAttribute="leading" constant="16" id="LFi-XU-az8"/>
+                <constraint firstAttribute="trailing" secondItem="veQ-yo-cBJ" secondAttribute="trailing" constant="16" id="Y1L-d7-nPy"/>
+                <constraint firstItem="zwv-8r-1Qd" firstAttribute="top" secondItem="SUC-uu-8k5" secondAttribute="bottom" constant="26" id="YeW-lp-yMh"/>
+                <constraint firstItem="veQ-yo-cBJ" firstAttribute="leading" secondItem="Oyz-no-eKk" secondAttribute="leading" id="Yia-Pj-CVd"/>
+                <constraint firstItem="SUC-uu-8k5" firstAttribute="leading" secondItem="WYs-zQ-iSs" secondAttribute="leading" constant="16" id="f5j-bC-tle"/>
+                <constraint firstItem="veQ-yo-cBJ" firstAttribute="bottom" secondItem="SUC-uu-8k5" secondAttribute="bottom" id="hid-gu-Ifs"/>
+                <constraint firstAttribute="bottom" secondItem="0jl-jk-7la" secondAttribute="bottom" constant="16" id="mDG-Lg-Tvx"/>
+                <constraint firstItem="0jl-jk-7la" firstAttribute="top" secondItem="zwv-8r-1Qd" secondAttribute="bottom" constant="16" id="otS-eP-BTx"/>
+                <constraint firstAttribute="trailing" secondItem="0jl-jk-7la" secondAttribute="trailing" id="qXc-EC-gda"/>
+                <constraint firstItem="SUC-uu-8k5" firstAttribute="top" secondItem="WYs-zQ-iSs" secondAttribute="top" constant="14" id="tXt-gw-FGl"/>
+                <constraint firstItem="Oyz-no-eKk" firstAttribute="top" secondItem="WYs-zQ-iSs" secondAttribute="top" constant="14" id="uHu-o4-WIb"/>
+                <constraint firstAttribute="trailing" secondItem="zwv-8r-1Qd" secondAttribute="trailing" constant="16" id="vbO-0i-cWI"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="DxU-0p-C5p"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="tux" width="56" height="56"/>
+    </resources>
+</document>

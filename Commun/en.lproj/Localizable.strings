@@ -1,0 +1,258 @@
+/* 
+  Localizable.strings
+  Commun
+
+  Created by msm72 on 5/13/19.
+  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+*/
+
+
+// A
+"add bio"                                       =   "add bio";
+"add short PIN code"                            =   "add short PIN code";
+"ago"                                           =   "ago";
+"add to favourite"                              =   "add to favourite";
+"all-in-one"                                    =   "All-in-One";
+"attention"                                     =   "attention";
+
+
+// B
+"back"                                          =   "back";
+"backup iCloud"                                 =   "backup iCloud";
+"backup keys"                                   =   "backup keys";
+"by"                                            =   "by";
+"by users"                                      =   "by users";
+
+
+// C
+"can not fetch next items"                      =   "can not fetch next items";
+"cancel"                                        =   "cancel";
+"change"                                        =   "change";
+"choose from gallery"                           =   "choose from gallery";
+"close"                                         =   "close";
+"comment!"                                      =   "comment!";
+"comment"                                       =   "comment";
+"commented on a post"                           =   "commented on a post";
+"comments count"                                =   "comments";
+"comments"                                      =   "comments";
+"communities"                                   =   "communities";
+"confirm it's you"                              =   "confirm it's you";
+"cover photo"                                   =   "cover photo";
+"create post"                                   =   "create post";
+"create your passcode"                          =   "create your passcode";
+"create your username"                          =   "create your username";
+"continue without backup"                       =   "continue without backup";
+"copy master password to clipboard"             =   "copy to clipboard";
+
+
+// D
+"do you really want to delete this post"        =   "do you really want to delete this post";
+"delete current"                                =   "delete current";
+"delete"                                        =   "delete";
+"deleted"                                       =   "deleted";
+"describe yourself"                             =   "describe yourself";
+"discover"                                      =   "discover";
+"do you want to turn it on?"                    =   "do you want to turn it on?";
+"don't have an account?"                        =   "don't have an account?";
+"done"                                          =   "done";
+"download"                                      =   "download";
+"downvoted you in a post"                       =   "downvoted you in a post";
+"describe master password"                      =   "You need the master password to Log in\nWe don’t keep and can’t restore passwords\nSave it!";
+
+
+// E
+"edit bio"                                      =   "edit bio";
+"edit post"                                     =   "edit post";
+"edit"                                          =   "edit";
+"edit comment"                                  =   "edit comment";
+"enable Touch ID description"                   =   "enable Touch ID to secure your\ntransactions";
+"enable Touch ID title"                         =   "enable Touch ID";
+"enable"                                        =   "enable";
+"enter correct sms code"                        =   "enter correct sms code";
+"enter correct user name"                       =   "enter correct user name";
+"enter passcode"                                =   "enter passcode";
+"enter sms-code"                                =   "enter SMS-code";
+"enter your current passcode"                   =   "enter your current passcode";
+"enter text"                                    =   "enter text";
+"error"                                         =   "error";
+"empty subscriptions title"                     =   "no Subscriptions";
+"empty subscriptions description"               =   "you haven’t subscribed to any community yet";
+"empty subscriptions button title"              =   "find Communities";
+
+
+// F
+"favorite communities"                          =   "favorite communities";
+"follow"                                        =   "follow";
+"following"                                     =   "following";
+
+
+// G
+"go to commun.com and scan QR"                  =   "go to commun.com and scan QR";
+
+
+// H
+"has removed your voice from your..."           =   "has removed your voice from your delegate node";
+"hundreds"                                      =   "hundreds";
+"has been generated"                            =   "has been generated";
+
+
+// I
+"in a comment"                                  =   "in a comment";
+"in a post"                                     =   "in a post";
+"info"                                          =   "info";
+
+
+// J
+"join"                                          =   "join";
+"joined"                                        =   "joined";
+
+
+// K
+"key placeholder"                               =   "key";
+
+
+// L
+"later"                                         =   "later";
+"load more comments"                            =   "load more comments";
+"loading"                                       =   "loading";
+"login & key"                                   =   "login & master key";
+"login placeholder"                             =   "login";
+"logging out"                                   =   "logging out";
+"loading post"                                  =   "loading post";
+"liked"                                         =   "liked";
+                                
+
+// M
+"master key has been generated"                 =   "master key has been generated";
+"mentioned you"                                 =   "mentioned you";
+"my communities"                                =   "my communities";
+"my Feed"                                       =   "my Feed";
+"master password"                               =   "master password";
+"master password attention note"                =   "we do not keep master passwords and have no opportunity to restore them.";
+"master password attention describe"            =   "unfortunately for our comfort, blockchain doesn’t allow us to restore passwords. It means that it’s every user’s responsibility to keep the password in a safe place and be able to access it anytime.\n We strongly recommend you to save your password and make a copy of it.";
+"master password placeholder"                   =   "enter master password";
+"monetize"                                      =   "monetize";
+
+
+// N
+"new"                                           =   "new";
+"next"                                          =   "next";
+"no comments"                                   =   "no comments";
+"no notification"                               =   "no notification";
+"no post to show"                               =   "no post to show";
+"no posts"                                      =   "no posts";
+"notifications"                                 =   "notifications";
+
+
+// O
+"of all time"                                   =   "of all time";
+"of thematic"                                   =   "of thematic";
+"old"                                           =   "old";
+"owned"                                         =   "owned";
+"only alphanumeric, non-uppercased characters, \"-\" and \".\" are allowed"                                    =   "only alphanumeric, non-uppercased characters, \"-\" and \".\" are allowed";
+
+
+// P
+"past 24 hours"                                 =   "past 24 hours";
+"past month"                                    =   "past month";
+"past week"                                     =   "past week";
+"past year"                                     =   "past year";
+"phone number placeholder"                      =   "phone number";
+"pick a profile picture"                        =   "pick a profile picture";
+"post"                                          =   "post";
+"post not found"                                =   "post not found";
+"profile description"                           =   "profile description";
+"profile photo"                                 =   "profile photo";
+
+
+// R
+"read! upvote!"                                 =   "read! upvote!";
+"recommended"                                   =   "recommended";
+"replied to your comment"                       =   "replied to your comment";
+"report"                                        =   "report";
+"resend verification code"                      =   "resend verification code";
+"reward for post"                               =   "reward for post";
+"reward for votes"                              =   "reward for votes";
+"remove from favourite"                         =   "remove from favourite";
+"reply to comment"                              =   "reply to comment";
+
+
+// S
+"saving to blockchain..."                       =   "saving to blockchain...";
+"scan QR"                                       =   "scan QR";
+"search placeholder"                            =   "search";
+"see more"                                      =   "see more";
+"select country placeholder"                    =   "select country";
+"select country"                                =   "select country";
+"sending post"                                  =   "sending post";
+"set up passcode"                               =   "set up Passcode";
+"setting username"                              =   "setting username";
+"sign in"                                       =   "sign in";
+"sign up"                                       =   "sign up";
+"signing in"                                    =   "signing in";
+"signing you up"                                =   "signing you up";
+"something went wrong"                          =   "something went wrong";
+"skip"                                          =   "skip";
+"subscribe to your"                             =   "subscribe to your";
+"subscribed you"                                =   "subscribed you";
+"successfully resend code"                      =   "successfully resend code";
+"send post"                                     =   "post";
+"send report"                                   =   "report";
+"social network"                                =   "social network";
+
+
+// T
+"tap to try again"                              =   "tap to try again";
+"the post has been deleted"                     =   "the post has been deleted";
+"there is an error occurred"                    =   "oops, an error occurred";
+"title placeholder"                             =   "title";
+"to secure your transactions"                   =   "to secure your transactions";
+"top"                                           =   "top";
+"transfered you"                                =   "transfered you";
+"trending"                                      =   "trending";
+"try again"                                     =   "try again";
+"turn on"                                       =   "turn on";
+"to"                                            =   "to";
+"the presence of non-alphanumeric characters side by side is not allowed"  =   "the presence of non-alphanumeric characters side by side is not allowed";
+"non-alphanumeric character cannot be at the beginning or end of a username"   =   "non-alphanumeric character cannot be at the beginning or end of a username";
+
+
+// U
+"updating..."                                   =   "updating...";
+"upload image"                                  =   "upload image";
+"uploading..."                                  =   "uploading...";
+"upvoted you in a post"                         =   "upvoted you in a post";
+"user already in blockchain."                   =   "user already in blockchain.";
+"user keys info"                                =   "user keys info";
+"username placeholder"                          =   "username";
+"username must be between 5-32 characters"      =   "username must be between 5-32 characters";
+
+
+// V
+"verification"                                  =   "verification";
+"verify your new passcode"                      =   "verify your new passcode";
+"verifying..."                                  =   "verifying...";
+"views count"                                   =   "views";
+"views"                                         =   "views";
+"voted for you as a delegate"                   =   "voted for you as a delegate";
+
+
+// W
+"wait for transaction"                          =   "wait for transaction";
+"warning"                                       =   "warning";
+"was turned off"                                =   "was turned off";
+"welcome"                                       =   "welcome";
+"write text placeholder"                        =   "write text";
+"wrong phone number"                            =   "wrong phone number";
+"welcome-item-0"                                =   "Social platform based on blockchain\nand for the first time, it’s easy";
+"welcome-item-1"                                =   "Create, share, and evaluate content\nDecide yourself what deserves\nthe attention";
+"welcome-item-2"                                =   "Every post, share, comment\nor like is rewarded";
+"welcome-item-3"                                =   "Commun has no single owner\nand fully belongs to its members";
+"write a comment"                               =   "write a comment";
+
+
+// Y
+"you have a new notification"                   =   "you have a new notification";
+"you have no notification"                      =   "you have no notification";
+"you have not made any"                         =   "you have not made any";
+"your socializing"                              =   "your socializing";

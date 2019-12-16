@@ -1,0 +1,8 @@
+git_url("git@github.com:communcom/ios-match-profiles.git")
+
+storage_mode("git")
+
+type("development") # The default type, can be: appstore, adhoc, enterprise or development
+
+username("shilinartem@gmail.com")
+app_identifier(["io.commun.eos.ios", "com.commun.ios"])

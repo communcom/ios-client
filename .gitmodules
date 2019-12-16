@@ -1,0 +1,3 @@
+[submodule "cyberSwift"]
+	path = cyberSwift
+	url = git@github.com:communcom/cyberSwift.git

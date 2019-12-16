@@ -15,21 +15,67 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
+	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>34</string>
+	<key>Config</key>
+	<string>$(CONFIGURATION)</string>
+	<key>Fabric</key>
+	<dict>
+		<key>APIKey</key>
+		<string>a31221dc945d82768ff8fba65613cdf825d49797</string>
+		<key>Kits</key>
+		<array>
+			<dict>
+				<key>KitInfo</key>
+				<dict/>
+				<key>KitName</key>
+				<string>Crashlytics</string>
+			</dict>
+		</array>
+	</dict>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>The camera is need to scan QR codes</string>
+	<key>NSFaceIDUsageDescription</key>
+	<string>FaceID needed to identify user</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Location needed to define content and settings that is suitable for you</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Need photo</string>
+	<key>ReCaptchaDomain</key>
+	<string>https://dev.commun.com</string>
+	<key>ReCaptchaKey</key>
+	<string>6LdCT8EUAAAAAPrNiBZTNoHIQ4_gN4PjAubLvNd0</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>SF-Pro-Text-Regular.otf</string>
+		<string>SF-Pro-Text-Semibold.otf</string>
+		<string>SF-Pro-Display-Regular.otf</string>
+		<string>SF-Pro-Display-Bold.otf</string>
+		<string>SF-Pro-Dispaly-Medium.otf</string>
+		<string>SF-Pro-Display-Semibold.otf</string>
+	</array>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>remote-notification</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
+	<key>UIMainStoryboardFile</key>
+	<string>Main</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>
 	</array>
+	<key>UIStatusBarStyle</key>
+	<string>UIStatusBarStyleLightContent</string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
@@ -41,5 +87,7 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>UIUserInterfaceStyle</key>
+	<string>Light</string>
 </dict>
 </plist>

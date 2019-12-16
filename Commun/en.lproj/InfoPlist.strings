@@ -1,0 +1,15 @@
+/* 
+  InfoPlist.strings
+  golos-ios
+
+  Created by msm72 on 23.05.2018.
+  Copyright © 2018 golos. All rights reserved.
+ 
+  https://developer.apple.com/library/content/documentation/General/Reference/InfoPlistKeyReference/Articles/AboutInformationPropertyListFiles.html
+*/
+
+NSCameraUsageDescription                =   "Could you please allow Commun to access your camera to scan this QR code?";
+NSFaceIDUsageDescription                =   "Commun needs access to FaceID to identify you as our user";
+NSLocationWhenInUseUsageDescription     =   "We kindly ask your allowance to identify your location Commun needs it to add your country to the picker and then personalize settings according to your preferences";
+NSPhotoLibraryUsageDescription          =   "Commun needs access to your device's album to be able to share photos";
+NSPhotoLibraryAddUsageDescription       =   "Commun needs access to your device's album to be able to share photos";
