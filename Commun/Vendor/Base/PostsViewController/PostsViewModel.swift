@@ -28,6 +28,16 @@ class PostsViewModel: ListViewModel<ResponseAPIContentGetPost> {
         filter.skip(1).distinctUntilChanged()
             .subscribe(onNext: {filter in
                 self.fetcher.reset()
+                
+                var filter = filter
+                
+                if filter.feedTypeMode == .subscriptions ||
+                    filter.feedTypeMode == .subscriptionsHot ||
+                    filter.feedTypeMode == .subscriptionsPopular
+                {
+                    filter.userId = Config.currentUser?.id
+                }
+                
                 (self.fetcher as! PostsListFetcher).filter = filter
                 self.fetchNext()
             })
