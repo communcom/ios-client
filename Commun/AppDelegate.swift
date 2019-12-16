@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Maxim Prigozhenkov on 14/03/2019.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 //  https://console.firebase.google.com/project/golos-5b0d5/notification/compose?campaignId=9093831260433778480&dupe=true
 //
@@ -34,7 +34,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     let notificationCenter = UNUserNotificationCenter.current()
     
     private var bag = DisposeBag()
-
     
     // MARK: - Class Functions
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
@@ -73,7 +72,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             .take(1)
             .asSingle()
             .timeout(5, scheduler: MainScheduler.instance)
-            .subscribe(onSuccess: { (connected) in
+            .subscribe(onSuccess: { (_) in
                 AppDelegate.reloadSubject.onNext(false)
                 self.window?.makeKeyAndVisible()
                 application.applicationIconBadgeNumber = 0
@@ -125,7 +124,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 
                 // if all set
                 RestAPIManager.instance.authorize()
-                    .subscribe(onSuccess: { (response) in
+                    .subscribe(onSuccess: { (_) in
                         // Retrieve favourites
                         FavouritesList.shared.retrieve()
                         
@@ -133,7 +132,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                         self.pushNotifyOn()
                         
                         // show feed
-                        if (!force && (self.window?.rootViewController is TabBarVC)) {return}
+                        if !force && (self.window?.rootViewController is TabBarVC) {return}
                         self.changeRootVC(controllerContainer.resolve(TabBarVC.self)!)
                     }, onError: { (error) in
                         if let error = error as? ErrorAPI {
@@ -173,9 +172,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 let navigationBarAppearace = UINavigationBar.appearance()
                 navigationBarAppearace.tintColor = #colorLiteral(red: 0.4156862745, green: 0.5019607843, blue: 0.9607843137, alpha: 1)
                 navigationBarAppearace.largeTitleTextAttributes =   [
-                                                                        NSAttributedString.Key.foregroundColor:     UIColor.black,
-                                                                        NSAttributedString.Key.font:                UIFont(name:    "SFProDisplay-Bold",
-                                                                                                                           size:    30.0 * Config.widthRatio)!
+                                                                        NSAttributedString.Key.foregroundColor: UIColor.black,
+                                                                        NSAttributedString.Key.font: UIFont(name: "SFProDisplay-Bold",
+                                                                                                                           size: 30.0 * Config.widthRatio)!
                 ]
             }
         }
@@ -215,10 +214,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 }
             })
         }
-        
     }
     
-    func getConfig(completion: @escaping ((Error?)->Void)) {
+    func getConfig(completion: @escaping ((Error?) -> Void)) {
         RestAPIManager.instance.getConfig()
             .subscribe(onSuccess: { _ in
                 completion(nil)
@@ -232,26 +230,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         SocketManager.shared.disconnect()
     }
 
-    func applicationDidEnterBackground(_ application: UIApplication) {
-        // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-        // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-//        NetworkService.shared.disconnect()
-    }
-
     func applicationWillEnterForeground(_ application: UIApplication) {
-        // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
         SocketManager.shared.connect()
-    }
-
-    func applicationDidBecomeActive(_ application: UIApplication) {
-//        NetworkService.shared.connect()
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
         SocketManager.shared.disconnect()
         self.saveContext()
     }
-    
 
     // MARK: - Custom Functions
     private func configureNotifications(application: UIApplication) {
@@ -261,8 +247,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Configure notificationCenter
         self.notificationCenter.delegate = self
         
-        self.notificationCenter.requestAuthorization(options:               [.alert, .sound, .badge],
-                                                     completionHandler:     { (granted, error) in
+        self.notificationCenter.requestAuthorization(options: [.alert, .sound, .badge],
+                                                     completionHandler: { (granted, _) in
                                                         Logger.log(message: "Permission granted: \(granted)", event: .debug)
                                                         guard granted else { return }
                                                         self.getNotificationSettings()
@@ -273,12 +259,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     private func getNotificationSettings() {
-        self.notificationCenter.getNotificationSettings(completionHandler:  { (settings) in
+        self.notificationCenter.getNotificationSettings(completionHandler: { (settings) in
             Logger.log(message: "Notification settings: \(settings)", event: .debug)
         })
     }
 
-    private func scheduleLocalNotification(userInfo: [AnyHashable : Any]) {
+    private func scheduleLocalNotification(userInfo: [AnyHashable: Any]) {
         let notificationContent                 =   UNMutableNotificationContent()
         let categoryIdentifier                  =   userInfo["category"] as? String ?? "Commun"
         
@@ -301,10 +287,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let snoozeAction    =   UNNotificationAction(identifier: "ActionSnooze", title: "Snooze".localized(), options: [])
         let deleteAction    =   UNNotificationAction(identifier: "ActionDelete", title: "delete".localized().uppercaseFirst, options: [.destructive])
         
-        let category        =   UNNotificationCategory(identifier:          categoryIdentifier,
-                                                       actions:             [snoozeAction, deleteAction],
-                                                       intentIdentifiers:   [],
-                                                       options:             [])
+        let category        =   UNNotificationCategory(identifier: categoryIdentifier,
+                                                       actions: [snoozeAction, deleteAction],
+                                                       intentIdentifiers: [],
+                                                       options: [])
         
         self.notificationCenter.setNotificationCategories([category])
     }
@@ -314,13 +300,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             RestAPIManager.instance.pushNotifyOn()
                 .subscribe(onCompleted: {
                     Logger.log(message: "Successfully turn pushNotificationOn", event: .severe)
-                }) { (error) in
+                }) { (_) in
                     
                 }
                 .disposed(by: bag)
         }
     }
-    
     
     // MARK: - Core Data stack
     lazy var persistentContainer: NSPersistentContainer = {
@@ -331,7 +316,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
          error conditions that could cause the creation of the store to fail.
         */
         let container = NSPersistentContainer(name: "Commun")
-        container.loadPersistentStores(completionHandler: { (storeDescription, error) in
+        container.loadPersistentStores(completionHandler: { (_, error) in
             if let error = error as NSError? {
                 // Replace this implementation with code to handle the error appropriately.
                 // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
@@ -367,11 +352,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 }
 
-
 // MARK: - Firebase Cloud Messaging (FCM)
 extension AppDelegate {
-    func application(_ application:                             UIApplication,
-                     didReceiveRemoteNotification userInfo:     [AnyHashable: Any]) {
+    func application(_ application: UIApplication,
+                     didReceiveRemoteNotification userInfo: [AnyHashable: Any]) {
         if let messageID = userInfo[gcmMessageIDKey] {
             Logger.log(message: "Message ID: \(messageID)", event: .severe)
         }
@@ -380,8 +364,8 @@ extension AppDelegate {
         Logger.log(message: "userInfo: \(userInfo)", event: .severe)
     }
     
-    func application(_ application:                             UIApplication,
-                     didReceiveRemoteNotification userInfo:     [AnyHashable: Any],
+    func application(_ application: UIApplication,
+                     didReceiveRemoteNotification userInfo: [AnyHashable: Any],
                      fetchCompletionHandler completionHandler:  @escaping (UIBackgroundFetchResult) -> Void) {
         if let messageID = userInfo[gcmMessageIDKey] {
             Logger.log(message: "Message ID: \(messageID)", event: .severe)
@@ -393,13 +377,13 @@ extension AppDelegate {
         completionHandler(UIBackgroundFetchResult.newData)
     }
    
-    func application(_ application:                                             UIApplication,
-                     didFailToRegisterForRemoteNotificationsWithError error:    Error) {
+    func application(_ application: UIApplication,
+                     didFailToRegisterForRemoteNotificationsWithError error: Error) {
         Logger.log(message: "Unable to register for remote notifications: \(error.localizedDescription)", event: .error)
     }
     
-    func application(_ application:                                                 UIApplication,
-                     didRegisterForRemoteNotificationsWithDeviceToken deviceToken:  Data) {
+    func application(_ application: UIApplication,
+                     didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         Logger.log(message: "APNs token retrieved: \(deviceToken)", event: .severe)
         
         // With swizzling disabled you must set the APNs token here.
@@ -407,13 +391,12 @@ extension AppDelegate {
     }
 }
 
-
 // MARK: - UNUserNotificationCenterDelegate
 @available(iOS 10, *)
 extension AppDelegate: UNUserNotificationCenterDelegate {
     // Receive push-message when App is active/in background
-    func userNotificationCenter(_ center:                                   UNUserNotificationCenter,
-                                willPresent notification:                   UNNotification,
+    func userNotificationCenter(_ center: UNUserNotificationCenter,
+                                willPresent notification: UNNotification,
                                 withCompletionHandler completionHandler:    @escaping (UNNotificationPresentationOptions) -> Void) {
         // Display Local Notification
         let notificationContent = notification.request.content
@@ -427,8 +410,8 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     }
     
     // Tap on push message
-    func userNotificationCenter(_ center:                                   UNUserNotificationCenter,
-                                didReceive response:                        UNNotificationResponse,
+    func userNotificationCenter(_ center: UNUserNotificationCenter,
+                                didReceive response: UNNotificationResponse,
                                 withCompletionHandler completionHandler:    @escaping () -> Void) {
         let notificationContent = response.notification.request.content
         
@@ -443,14 +426,13 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     }
 }
 
-
 // MARK: - MessagingDelegate
 extension AppDelegate: MessagingDelegate {
-    func messaging(_ messaging:                             Messaging,
-                   didReceiveRegistrationToken fcmToken:    String) {
+    func messaging(_ messaging: Messaging,
+                   didReceiveRegistrationToken fcmToken: String) {
         Logger.log(message: "FCM registration token: \(fcmToken)", event: .severe)
         
-        let dataDict:[String: String] = ["token": fcmToken]
+        let dataDict: [String: String] = ["token": fcmToken]
         NotificationCenter.default.post(name: Notification.Name("FCMToken"), object: nil, userInfo: dataDict)
 
         UserDefaults.standard.set(fcmToken, forKey: "fcmToken")

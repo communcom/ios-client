@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 9/30/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import UIKit
@@ -37,8 +37,7 @@ class CommunCheckbox: UIButton {
                 setImage(image, for: .selected)
                 tintColor = .clear
                 imageEdgeInsets = UIEdgeInsets(top: 8, left: 6, bottom: 7, right: 5)
-            }
-            else {
+            } else {
                 backgroundColor = .white
                 borderWidth = 1
                 borderColor = .e2e6e8

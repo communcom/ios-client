@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 10/23/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -56,9 +56,7 @@ class UsersStackView: MyView {
                 imageView.setAvatar(urlString: friend.avatarUrl, namePlaceHolder: friend.username)
             }
             text = "\(friends.count)"
-        }
-        
-        else {
+        } else {
             for i in 0..<maxNumberOfAvatars {
                 let imageView = MyAvatarImageView(size: 34)
                 imageView.layer.borderWidth = 2
@@ -103,8 +101,7 @@ class UsersStackView: MyView {
                 avatarsStackView.addArrangedSubview(imageView)
             }
             avatarsStackView.autoPinEdge(toSuperviewEdge: .trailing)
-        }
-        else {
+        } else {
             for _ in 0..<3 {
                 let imageView = UIImageView(width: 34, height: 34)
                 imageView.layer.masksToBounds = true

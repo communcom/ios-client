@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 10/29/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -25,12 +25,10 @@ extension ProfileType {
         else {return}
         isSubscribed = value
         var subscribersCount: UInt64 = (self.subscribersCount ?? 0)
-        if value == false && subscribersCount == 0 {subscribersCount = 0}
-        else {
+        if value == false && subscribersCount == 0 {subscribersCount = 0} else {
             if value == true {
                 subscribersCount += 1
-            }
-            else {
+            } else {
                 subscribersCount -= 1
             }
         }

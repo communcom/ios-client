@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 17/06/2019.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import UIKit
@@ -14,7 +14,7 @@ import CyberSwift
 class EmbededView: UIView {
     var bag = DisposeBag()
     
-    func setUpWithEmbeded(_ embededResult: ResponseAPIContentEmbedResult?){
+    func setUpWithEmbeded(_ embededResult: ResponseAPIContentEmbedResult?) {
         if embededResult?.type == "video",
             let html = embededResult?.html {
             showWebView(with: html)
@@ -92,7 +92,6 @@ class EmbededView: UIView {
 //        self.didShowContentWithHeight.onNext(height)
     }
 }
-
 
 // MARK: - WKNavigationDelegate
 extension EmbededView: WKNavigationDelegate {

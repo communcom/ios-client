@@ -44,24 +44,21 @@ class QRScannerViewController: BaseViewController, AVCaptureMetadataOutputObject
         NotificationCenter.default.rx.notification(UIApplication.didBecomeActiveNotification)
             .subscribe(onNext: { (_) in
                 switch AVCaptureDevice.authorizationStatus(for: .video) {
-                    case .authorized: // The user has previously granted access to the camera.
-                        self.scan()
-                    
-                    case .notDetermined: // The user has not yet been asked for camera access.
-                        AVCaptureDevice.requestAccess(for: .video) { granted in
-                            if granted {
-                                self.scan()
-                            }
+                case .authorized: // The user has previously granted access to the camera.
+                    self.scan()
+                case .notDetermined: // The user has not yet been asked for camera access.
+                    AVCaptureDevice.requestAccess(for: .video) { granted in
+                        if granted {
+                            self.scan()
                         }
-                    
-                    case .denied: // The user has previously denied access.
+                    }
+                case .denied: // The user has previously denied access.
                         self.retryGrantingPermission()
                         return
-
-                    case .restricted: // The user can't grant access due to restrictions.
+                case .restricted: // The user can't grant access due to restrictions.
                         self.retryGrantingPermission()
                         return
-                    @unknown default:
+                @unknown default:
                         self.failed()
                         return
                 }
@@ -81,8 +78,7 @@ class QRScannerViewController: BaseViewController, AVCaptureMetadataOutputObject
         } catch {
             if (error as NSError).code == -11852 {
                 retryGrantingPermission()
-            }
-            else {
+            } else {
                 failed()
             }
             return
@@ -93,7 +89,7 @@ class QRScannerViewController: BaseViewController, AVCaptureMetadataOutputObject
         view.backgroundColor = UIColor.black
         captureSession = AVCaptureSession()
 
-        if (captureSession.canAddInput(videoInput)) {
+        if captureSession.canAddInput(videoInput) {
             captureSession.addInput(videoInput)
         } else {
             failed()
@@ -102,7 +98,7 @@ class QRScannerViewController: BaseViewController, AVCaptureMetadataOutputObject
 
         let metadataOutput = AVCaptureMetadataOutput()
 
-        if (captureSession.canAddOutput(metadataOutput)) {
+        if captureSession.canAddOutput(metadataOutput) {
             captureSession.addOutput(metadataOutput)
 
             metadataOutput.setMetadataObjectsDelegate(self, queue: DispatchQueue.main)
@@ -140,7 +136,7 @@ class QRScannerViewController: BaseViewController, AVCaptureMetadataOutputObject
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        if (captureSession?.isRunning == false) {
+        if captureSession?.isRunning == false {
             captureSession.startRunning()
         }
     }
@@ -148,7 +144,7 @@ class QRScannerViewController: BaseViewController, AVCaptureMetadataOutputObject
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
 
-        if (captureSession?.isRunning == true) {
+        if captureSession?.isRunning == true {
             captureSession.stopRunning()
         }
     }

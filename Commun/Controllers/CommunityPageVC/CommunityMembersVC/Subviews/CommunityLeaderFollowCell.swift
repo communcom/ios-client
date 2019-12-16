@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 12/3/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -91,7 +91,7 @@ class CommunityLeaderFollowCell: MyTableViewCell {
         // voteButton
         let followed = leader.isSubscribed ?? false
         followButton.backgroundColor = followed ? #colorLiteral(red: 0.9525656104, green: 0.9605062604, blue: 0.9811610579, alpha: 1): .appMainColor
-        followButton.setTitleColor(followed ? .appMainColor: .white , for: .normal)
+        followButton.setTitleColor(followed ? .appMainColor: .white, for: .normal)
         followButton.setTitle(followed ? "following".localized().uppercaseFirst : "follow".localized().uppercaseFirst, for: .normal)
         followButton.isEnabled = !(leader.isBeingToggledFollow ?? false)
     }

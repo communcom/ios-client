@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 10/4/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -20,16 +20,13 @@ class BasicEditorVC: PostEditorVC {
     var link: String? {
         didSet {
             if link == nil {
-                if let indexOfAddArticle = tools.value.firstIndex(of: .addArticle)
-                {
+                if let indexOfAddArticle = tools.value.firstIndex(of: .addArticle) {
                     insertTool(.addPhoto, at: indexOfAddArticle)
-                }
-                else {
+                } else {
                     appendTool(.addPhoto)
                 }
 
-            }
-            else {
+            } else {
                 removeTool(.addPhoto)
             }
         }
@@ -91,7 +88,7 @@ class BasicEditorVC: PostEditorVC {
     
     override func setUp() {
         super.setUp()
-        #warning("add Article later")
+        //TODO: add Article later
 //        if viewModel.postForEdit == nil {
 //            appendTool(EditorToolbarItem.addArticle)
 //        }
@@ -108,8 +105,7 @@ class BasicEditorVC: PostEditorVC {
             }
             // return a downloadSingle
             if let urlString = imageURL,
-                let url = URL(string: urlString)
-            {
+                let url = URL(string: urlString) {
                 let attributes = attachment.attributes ?? ResponseAPIContentBlockAttributes(type: attachment.type, url: imageURL)
                 let downloadImage = NetworkService.shared.downloadImage(url)
                     .catchErrorJustReturn(UIImage(named: "image-not-available")!)
@@ -120,7 +116,7 @@ class BasicEditorVC: PostEditorVC {
             else {
                 singles.append(
                     Single<UIImage>.just(UIImage(named: "image-not-available")!)
-                        .map{TextAttachment(attributes: attachment.attributes, localImage: $0, size: CGSize(width: self.view.size.width, height: self.attachmentHeight))}
+                        .map {TextAttachment(attributes: attachment.attributes, localImage: $0, size: CGSize(width: self.view.size.width, height: self.attachmentHeight))}
                 )
             }
         }

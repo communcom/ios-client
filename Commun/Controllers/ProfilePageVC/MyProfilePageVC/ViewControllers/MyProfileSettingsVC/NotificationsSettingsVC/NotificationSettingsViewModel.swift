@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 11/1/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -36,8 +36,7 @@ class NotificationSettingsViewModel: BaseViewModel {
             .subscribe(onNext: {[weak self] (isOn) in
                 if isOn {
                     self?.options.accept(ResponseAPIGetOptionsNotifyShow.allOn)
-                }
-                else {
+                } else {
                     self?.options.accept(nil)
                 }
             })

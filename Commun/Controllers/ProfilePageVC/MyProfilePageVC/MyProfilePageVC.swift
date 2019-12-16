@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 10/29/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -30,7 +30,6 @@ class MyProfilePageVC: UserProfilePageVC {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
     
     // MARK: - Custom Functions
     override func setUp() {

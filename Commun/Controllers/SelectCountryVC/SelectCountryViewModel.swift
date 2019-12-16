@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Maxim Prigozhenkov on 12/04/2019.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -17,7 +17,6 @@ class SelectCountryViewModel {
     let countries = BehaviorRelay<[Country]>(value: PhoneCode.getCountries())
     let selectedCountry = BehaviorRelay<Country?>(value: nil)
     let disposeBag = DisposeBag()
-    
     
     // MARK: - Class Initialization
     init(withModel model: SignUpViewModel) {

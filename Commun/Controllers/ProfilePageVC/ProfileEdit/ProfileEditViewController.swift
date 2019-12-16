@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Sergey Monastyrskiy on 11.11.2019.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 import UIKit
 import CyberSwift
@@ -37,10 +37,10 @@ class ProfileEditViewController: UIViewController {
     
     @IBOutlet weak var saveButton: UIButton! {
         didSet {
-            self.saveButton.tune(withTitle:     "save".localized().uppercaseFirst,
-                                 hexColors:     [whiteColorPickers, whiteColorPickers, whiteColorPickers, whiteColorPickers],
-                                 font:          UIFont(name: "SFProDisplay-Bold", size: 15.0 * Config.widthRatio),
-                                 alignment:     .center)
+            self.saveButton.tune(withTitle: "save".localized().uppercaseFirst,
+                                 hexColors: [whiteColorPickers, whiteColorPickers, whiteColorPickers, whiteColorPickers],
+                                 font: UIFont(name: "SFProDisplay-Bold", size: 15.0 * Config.widthRatio),
+                                 alignment: .center)
             self.saveButton.backgroundColor = #colorLiteral(red: 0.4156862745, green: 0.5019607843, blue: 0.9607843137, alpha: 1)
             self.saveButton.layer.cornerRadius = self.saveButton.frame.height / 2
             self.saveButton.clipsToBounds = true
@@ -60,11 +60,11 @@ class ProfileEditViewController: UIViewController {
     @IBOutlet var titleLabelsCollection: [UILabel]! {
         didSet {
             self.titleLabelsCollection.forEach {
-                $0.tune(withText:       $0.text!.localized().uppercaseFirst,
-                        hexColors:      grayishBluePickers,
-                        font:           UIFont(name: "SFProText-Semibold", size: 12.0 * Config.widthRatio),
-                        alignment:      .left,
-                        isMultiLines:   false)
+                $0.tune(withText: $0.text!.localized().uppercaseFirst,
+                        hexColors: grayishBluePickers,
+                        font: UIFont(name: "SFProText-Semibold", size: 12.0 * Config.widthRatio),
+                        alignment: .left,
+                        isMultiLines: false)
             }
         }
     }
@@ -72,10 +72,10 @@ class ProfileEditViewController: UIViewController {
     @IBOutlet var textFieldsCollection: [UITextField]! {
         didSet {
             self.textFieldsCollection.forEach {
-                $0.tune(withPlaceholder:    $0.placeholder!.localized().uppercaseFirst,
-                        textColors:         blackWhiteColorPickers,
-                        font:               UIFont(name: "SFProDisplay-Semibold", size: 17.0 * Config.widthRatio),
-                        alignment:          .left)
+                $0.tune(withPlaceholder: $0.placeholder!.localized().uppercaseFirst,
+                        textColors: blackWhiteColorPickers,
+                        font: UIFont(name: "SFProDisplay-Semibold", size: 17.0 * Config.widthRatio),
+                        alignment: .left)
                 
                 switch $0.tag {
                 case 1:
@@ -93,14 +93,13 @@ class ProfileEditViewController: UIViewController {
             let biographyValue = UserDefaults.standard.string(forKey: Config.currentUserBiographyKey)
             
             self.bioTextView.textContainerInset = .zero
-            self.bioTextView.tune(withTextColors:   biographyValue == nil ? grayishBluePickers : blackWhiteColorPickers,
-                                  font:             UIFont(name: "SFProDisplay-Semibold", size: 17.0 * Config.widthRatio),
-                                  alignment:        .left)
+            self.bioTextView.tune(withTextColors: biographyValue == nil ? grayishBluePickers : blackWhiteColorPickers,
+                                  font: UIFont(name: "SFProDisplay-Semibold", size: 17.0 * Config.widthRatio),
+                                  alignment: .left)
             
             self.bioTextView.text = biographyValue ?? "enter user biography".localized().uppercaseFirst
         }
     }
-    
     
     // MARK: - Class Functions
     override func viewDidLoad() {
@@ -122,7 +121,6 @@ class ProfileEditViewController: UIViewController {
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
-    
     
     // MARK: - Actions
     @IBAction func saveButtonTapped(_ sender: UIButton) {

@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 18/07/2019.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -57,7 +57,7 @@ extension SettingsVC {
             case .thirdSection(let header, _):
                 self = .thirdSection(header: header, items: items)
                 
-            case .forthSection(_):
+            case .forthSection:
                 self = .forthSection(items: items)
             }
         }
@@ -65,7 +65,7 @@ extension SettingsVC {
     
     var dataSource: RxTableViewSectionedReloadDataSource<Section> {
         return RxTableViewSectionedReloadDataSource<Section>(
-            configureCell: { dataSource, tableView, indexPath, item in
+            configureCell: { _, tableView, indexPath, item in
                 switch item {
                 case .option(let option):
                     let cell = tableView.dequeueReusableCell(withIdentifier: "SettingsOptionsCell", for: indexPath) as! SettingsOptionsCell

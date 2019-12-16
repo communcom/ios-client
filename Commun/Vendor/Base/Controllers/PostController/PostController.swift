@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Maxim Prigozhenkov on 19/03/2019.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import UIKit
@@ -141,8 +141,7 @@ extension PostController {
             buttonTitles: [
                 "yes".localized().uppercaseFirst,
                 "no".localized().uppercaseFirst],
-            highlightedButtonIndex: 1)
-            { (index) in
+            highlightedButtonIndex: 1) { (index) in
                 if index == 0 {
                     topController.showIndetermineHudWithMessage("deleting post".localized().uppercaseFirst)
                     NetworkService.shared.deleteMessage(message: post)

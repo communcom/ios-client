@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Artem Shilin on 05.11.2019.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import UIKit
@@ -291,7 +291,6 @@ class EmbedView: UIView {
         return srcStrings
     }
 }
-
 
 extension EmbedView: WKNavigationDelegate {
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {

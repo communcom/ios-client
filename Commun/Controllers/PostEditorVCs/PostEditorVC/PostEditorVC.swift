@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 10/4/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -67,16 +67,14 @@ class PostEditorVC: EditorVC {
                     self.showError(error)
                 }
                 .disposed(by: disposeBag)
-        }
-        else {
+        } else {
             // parse draft
             if hasDraft {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                     // your code here
                     self.retrieveDraft()
                 }
-            }
-            else {
+            } else {
                 if chooseCommunityAfterLoading {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                         self.chooseCommunityDidTouch()

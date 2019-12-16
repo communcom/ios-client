@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 08/07/2019.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import UIKit
@@ -23,17 +23,16 @@ import SwiftTheme
         
         commonInit()
     }
-
     
     // MARK: - Custom Functions
-    func commonInit(hexColors:      [ThemeColorPicker]? = [softBlueColorPickers, softBlueColorPickers, softBlueColorPickers, communGrayColorPickers],
-                    font:           UIFont? = UIFont.systemFont(ofSize: CGFloat.adaptive(width: 15.0), weight: .semibold),
-                    alignment:      NSTextAlignment? = .center) {
+    func commonInit(hexColors: [ThemeColorPicker]? = [softBlueColorPickers, softBlueColorPickers, softBlueColorPickers, communGrayColorPickers],
+                    font: UIFont? = UIFont.systemFont(ofSize: CGFloat.adaptive(width: 15.0), weight: .semibold),
+                    alignment: NSTextAlignment? = .center) {
         if let text = self.titleLabel?.text {
-            self.tune(withTitle:    text.localized().uppercaseFirst,
-                      hexColors:    hexColors!,
-                      font:         font,
-                      alignment:    alignment!)
+            self.tune(withTitle: text.localized().uppercaseFirst,
+                      hexColors: hexColors!,
+                      font: font,
+                      alignment: alignment!)
         }
     }
 }

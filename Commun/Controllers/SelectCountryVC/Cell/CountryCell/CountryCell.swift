@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Maxim Prigozhenkov on 12/04/2019.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import UIKit
@@ -29,20 +29,17 @@ class CountryCell: UITableViewCell {
         }
     }
     
-    
     // MARK: - Class Initialization
     override func awakeFromNib() {
         super.awakeFromNib()
         
         self.selectionStyle = .none
     }
-
     
     // MARK: - Class Functions
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
-    
     
     // MARK: - Custom Functions
     func setupCountry(_ country: Country) {

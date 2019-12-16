@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 11/25/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -26,7 +26,6 @@ class FittingSizePresentationController: DimmingPresentationController {
         )
         
         let targetHeight = presentedView.systemLayoutSizeFitting(fittingSize, withHorizontalFittingPriority: .required, verticalFittingPriority: .defaultLow).height
-        
         
         var frame = safeAreaFrame
         frame.origin.x += inset

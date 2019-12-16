@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 10/14/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -104,12 +104,10 @@ class AttachmentView: UIView {
         // image
         if let image = image {
             imageView.image = image
-        }
-        else if let urlString = url,
-            let url = URL(string: urlString)
-        {
+        } else if let urlString = url,
+            let url = URL(string: urlString) {
             contentView.showLoading()
-            imageView.sd_setImageCachedError(with: url) {[weak self] (error, image) in
+            imageView.sd_setImageCachedError(with: url) {[weak self] (_, _) in
                 self?.contentView.hideLoading()
             }
         }
@@ -163,8 +161,7 @@ class AttachmentView: UIView {
             if let height = absoluteHeight {
                 contentView.autoSetDimension(.height, toSize: height)
             }
-        }
-        else {
+        } else {
             addSubview(descriptionView)
             titleLabel.text = description
             urlLabel.text = url

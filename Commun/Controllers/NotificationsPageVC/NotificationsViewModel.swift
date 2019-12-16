@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 10/04/2019.
-//  Copyright (c) 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright (c) 2019 Commun Limited. All rights reserved.
 //
 
 import UIKit

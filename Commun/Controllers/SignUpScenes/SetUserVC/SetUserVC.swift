@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 12/16/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -104,13 +104,13 @@ class SetUserVC: BaseViewController, SignUpRouter {
             .catchError({ (error) -> Single<String> in
                 if let error = error as? ErrorAPI {
                     if error.caseInfo.message == "Invalid step taken",
-                        Config.currentUser?.registrationStep == .toBlockChain{
+                        Config.currentUser?.registrationStep == .toBlockChain {
                         return .just(Config.currentUser?.id ?? "")
                     }
                 }
                 throw error
             })
-            .flatMapCompletable({ (id) -> Completable in
+            .flatMapCompletable({ (_) -> Completable in
                 self.showIndetermineHudWithMessage("saving to blockchain...".localized().uppercaseFirst)
                 return RestAPIManager.instance.toBlockChain()
             })

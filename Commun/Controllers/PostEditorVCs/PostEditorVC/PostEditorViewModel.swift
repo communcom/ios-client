@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 10/4/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -21,26 +21,26 @@ class PostEditorViewModel {
         
         if let post = self.postForEdit {
             request = RestAPIManager.instance.updateMessage(
-                originMessage:  post,
-                communCode:     community.value?.communityId ?? "",
-                permlink:       post.contentId.permlink,
-                header:         title ?? "",
-                block:          block
+                originMessage: post,
+                communCode: community.value?.communityId ?? "",
+                permlink: post.contentId.permlink,
+                header: title ?? "",
+                block: block
             )
         }
             
         // If creating new post
         else {
             request = RestAPIManager.instance.createMessage(
-                communCode:     community.value?.communityId ?? "",
-                header:         title ?? "",
-                block:          block
+                communCode: community.value?.communityId ?? "",
+                header: title ?? "",
+                block: block
             )
         }
         
         // Request, then notify changes
         return request
-            .do(onSuccess: { (transactionId, userId, permlink) in
+            .do(onSuccess: { (_, _, _) in
                 // if editing post, then notify changes
                 if var post = self.postForEdit {
                     post.document = block

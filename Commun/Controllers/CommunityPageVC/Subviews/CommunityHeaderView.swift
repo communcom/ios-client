@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 10/23/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -13,7 +13,6 @@ import RxCocoa
 class CommunityHeaderView: ProfileHeaderView, CommunityController {
     // MARK: - CommunityController
     var community: ResponseAPIContentGetCommunity?
-    
     
     // MARK: - Subviews
     lazy var notificationButton: UIButton = {
@@ -230,7 +229,6 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
             }
         }
         
-        
         // membersCount
         let aStr = NSMutableAttributedString()
             .bold(Double(community.subscribersCount ?? 0).kmFormatted, font: .boldSystemFont(ofSize: 15))
@@ -274,8 +272,7 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
     @objc func leadsLabelDidTouch() {
         if segmentedControl.selectedIndex.value == 1 {
             parentViewController?.view.shake()
-        }
-        else {
+        } else {
             segmentedControl.changeSelectedIndex(1)
         }
     }

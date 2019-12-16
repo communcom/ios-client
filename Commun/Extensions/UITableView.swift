@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 31/05/2019.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -65,12 +65,12 @@ extension UITableView {
         self.tableFooterView = containerView
     }
     
-    func addNotificationsLoadingFooterView(){
+    func addNotificationsLoadingFooterView() {
         addLoadingFooterView(
-            rowType:        PlaceholderNotificationCell.self,
-            tag:            notificationsLoadingFooterViewTag,
-            rowHeight:      88,
-            numberOfRows:   5
+            rowType: PlaceholderNotificationCell.self,
+            tag: notificationsLoadingFooterViewTag,
+            rowHeight: 88,
+            numberOfRows: 5
         )
     }
     
@@ -170,7 +170,7 @@ extension UITableView {
         return ControlEvent(events: source)
     }
     
-    func addEmptyPlaceholderFooterView(title: String, description: String? = nil, buttonLabel: String? = nil, buttonAction: (()->Void)? = nil) {
+    func addEmptyPlaceholderFooterView(title: String, description: String? = nil, buttonLabel: String? = nil, buttonAction: (() -> Void)? = nil) {
         // Prevent dupplicating
         if tableFooterView?.tag == emptyPlaceholderViewTag {
             return
@@ -184,13 +184,13 @@ extension UITableView {
         containerView.layer.cornerRadius = CGFloat.adaptive(width: 10.0)
         containerView.clipsToBounds = true
 
-        placeholderView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(horizontal:     CGFloat.adaptive(width: 10.0),
-                                                                        vertical:       CGFloat.adaptive(height: 20.0)))
+        placeholderView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(horizontal: CGFloat.adaptive(width: 10.0),
+                                                                        vertical: CGFloat.adaptive(height: 20.0)))
 
         self.tableFooterView = containerView
     }
 
-    func addLoadMoreAction(_ loadMoreAction: @escaping (()->Void)) -> Disposable {
+    func addLoadMoreAction(_ loadMoreAction: @escaping (() -> Void)) -> Disposable {
         rx.didEndDecelerating
             .filter {_ in self.contentOffset.y > 0}
             .subscribe(onNext: { [weak self] _ in
@@ -204,7 +204,6 @@ extension UITableView {
             })
     }
 }
-
 
 extension Reactive where Base: UITableView {
     /// Reactive wrapper for `UITableView.insertRows(at:with:)`

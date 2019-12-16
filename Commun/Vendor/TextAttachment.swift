@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 8/23/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -95,8 +95,7 @@ final class TextAttachment: SubviewTextAttachment, TextAttachmentType {
                             attributes: nil,
                             content: .string(url))
                     }
-            }
-            else {
+            } else {
                 // TODO: support uploading image
                 return nil
             }

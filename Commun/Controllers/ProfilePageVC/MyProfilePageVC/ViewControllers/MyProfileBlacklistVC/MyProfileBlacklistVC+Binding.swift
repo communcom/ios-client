@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 11/13/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -39,7 +39,7 @@ extension MyProfileBlacklistVC: BlacklistCellDelegate {
                     self?.handleListEnded()
                 case .listEmpty:
                     self?.handleListEmpty()
-                case .error(_):
+                case .error:
                     self?.handleListError()
                 }
             })
@@ -49,7 +49,7 @@ extension MyProfileBlacklistVC: BlacklistCellDelegate {
     func bindList() {
         // bind items
         let dataSource = MyRxTableViewSectionedAnimatedDataSource<AnimatableSectionModel<String, ResponseAPIContentGetBlacklistItem>>(
-            configureCell: { (dataSource, tableView, indexPath, element) -> UITableViewCell in
+            configureCell: { (_, tableView, indexPath, element) -> UITableViewCell in
                 let cell = self.tableView.dequeueReusableCell(withIdentifier: "BlacklistCell") as! BlacklistCell
                 cell.setUp(with: element)
                 cell.delegate = self

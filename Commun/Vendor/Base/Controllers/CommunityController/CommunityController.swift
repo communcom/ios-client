@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 10/26/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -16,12 +16,10 @@ extension ResponseAPIContentGetCommunity {
         else {return}
         isSubscribed = value
         var subscribersCount: UInt64 = (self.subscribersCount ?? 0)
-        if value == false && subscribersCount == 0 {subscribersCount = 0}
-        else {
+        if value == false && subscribersCount == 0 {subscribersCount = 0} else {
             if value == true {
                 subscribersCount += 1
-            }
-            else {
+            } else {
                 subscribersCount -= 1
             }
         }
@@ -73,8 +71,7 @@ extension CommunityController {
         if originIsSubscribed {
             request = RestAPIManager.instance.unfollowCommunity(id)
                 .flatMapToCompletable()
-        }
-        else {
+        } else {
             request = RestAPIManager.instance.followCommunity(id)
                 .flatMapToCompletable()
         }
@@ -104,12 +101,10 @@ extension CommunityController {
         else {return}
         community!.isSubscribed = value
         var subscribersCount: UInt64 = (community!.subscribersCount ?? 0)
-        if value == false && subscribersCount == 0 {subscribersCount = 0}
-        else {
+        if value == false && subscribersCount == 0 {subscribersCount = 0} else {
             if value == true {
                 subscribersCount += 1
-            }
-            else {
+            } else {
                 subscribersCount -= 1
             }
         }

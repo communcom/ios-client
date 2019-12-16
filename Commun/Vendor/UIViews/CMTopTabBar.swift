@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 11/6/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -77,8 +77,7 @@ class CMTopTabBar: MyView {
                 scrollView.contentView.heightAnchor.constraint(equalTo: button.heightAnchor)
                     .isActive = true
                 button.autoPinEdge(toSuperviewEdge: .leading)
-            }
-            else {
+            } else {
                 button.autoPinEdge(.leading, to: .trailing, of: buttons[i-1], withOffset: 5)
             }
             
