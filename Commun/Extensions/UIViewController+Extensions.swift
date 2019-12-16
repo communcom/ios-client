@@ -198,29 +198,35 @@ extension UIViewController {
         view.removeFromSuperview()
         removeFromParent()
     }
-    
+   
+    @objc func back() {
+        popOrDismissVC()
+    }
+
     @objc func leftButtonTapped() {
-        if (self.isModal) {
-            self.dismiss(animated: true, completion: nil)
-        } else {
-            self.navigationController?.popViewController()
-        }
+        popOrDismissVC()
     }
 
     @objc func rightButtonTapped() {
-        self.dismiss(animated: true, completion: nil)
+        popOrDismissVC()
+    }
+
+    func backCompletion(_ completion: @escaping (()->Void)) {
+        popOrDismissVC(completion)
     }
     
-    func backCompletion(_ completion: @escaping (()->Void)) {
-        if (self.isModal) {
+    fileprivate func popOrDismissVC(_ completion: (()->Void)? = nil) {
+        if let nc = navigationController, nc.viewControllers.first != self
+        {
+            nc.popViewController(animated: true, completion)
+        }
+        else {
             self.dismiss(animated: true, completion: completion)
-        } else {
-            self.navigationController?.popViewController(animated: true, completion)
         }
     }
     
     func setLeftNavBarButtonForGoingBack(tintColor: UIColor = .black) {
-        let backButton = UIBarButtonItem(image: UIImage(named: "icon-back-bar-button-black-default"), style: .plain, target: self, action: #selector(leftButtonTapped))
+        let backButton = UIBarButtonItem(image: UIImage(named: "icon-back-bar-button-black-default"), style: .plain, target: self, action: #selector(back))
         backButton.tintColor = tintColor
         navigationItem.leftBarButtonItem = backButton
     }
