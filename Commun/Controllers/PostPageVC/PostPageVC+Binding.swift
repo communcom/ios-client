@@ -15,7 +15,7 @@ extension PostPageVC {
                 guard deletedPost.identity == (self.viewModel as! PostPageViewModel).post.value?.identity
                     else {return}
                 self.showAlert(title: "deleted".localized().uppercaseFirst, message: "the post has been deleted".localized().uppercaseFirst, completion: { (_) in
-                    self.leftButtonTapped()
+                    self.back()
                 })
             })
             .disposed(by: disposeBag)
@@ -26,7 +26,7 @@ extension PostPageVC {
             .subscribe(onNext: {blockedUser in
                 let post = (self.viewModel as! PostPageViewModel).post.value
                 if post?.author?.userId == blockedUser.userId {
-                    self.leftButtonTapped()
+                    self.back()
                 }
             })
             .disposed(by: disposeBag)
@@ -37,7 +37,7 @@ extension PostPageVC {
             .subscribe(onNext: { (blockedCommunity) in
                 let post = (self.viewModel as! PostPageViewModel).post.value
                 if post?.community?.communityId == blockedCommunity.communityId {
-                    self.leftButtonTapped()
+                    self.back()
                 }
             })
             .disposed(by: disposeBag)

@@ -73,6 +73,7 @@ class PostsFilterVC: SwipeDownDismissViewController {
 
         // Add table view
         view.addSubview(tableView)
+        tableView.isScrollEnabled = false
         tableView.backgroundColor = .clear
         tableView.tableFooterView = UIView()
         tableView.separatorStyle = .none
@@ -200,7 +201,7 @@ class PostsFilterVC: SwipeDownDismissViewController {
 // MARK: - UIViewControllerTransitioningDelegate
 extension PostsFilterVC: UIViewControllerTransitioningDelegate {
     func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
-        return CustomHeightPresentationController(height: CGFloat.adaptive(height: 406.0), presentedViewController: presented, presenting: presenting)
+        return CustomHeightPresentationController(height: CGFloat.adaptive(height: 418.0), presentedViewController: presented, presenting: presenting)
     }
 }
 

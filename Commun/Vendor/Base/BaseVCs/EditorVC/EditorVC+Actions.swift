@@ -10,7 +10,7 @@ import Foundation
 
 extension EditorVC {
     @objc func close() {
-        leftButtonTapped()
+        back()
     }
     
     @objc func send() {
