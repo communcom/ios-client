@@ -16,7 +16,7 @@ class MyProfileBlacklistVC: BaseViewController {
     // MARK: - Subviews
     
     lazy var topTabBar = CMTopTabBar(
-        height: 35,
+        height: 50,
         labels: MyProfileBlacklistViewModel.SegmentedItem.allCases.map {$0.rawValue.localized().uppercaseFirst},
         selectedIndex: 0)
     lazy var tableView: UITableView = {
@@ -36,6 +36,12 @@ class MyProfileBlacklistVC: BaseViewController {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        baseNavigationController?.changeStatusBarStyle(.default)
+        navigationController?.navigationBar.addShadow(ofColor: .clear, opacity: 0)
     }
     
     // MARK: - Methods
