@@ -48,7 +48,7 @@ class NotificationsSettingsVC: BaseVerticalStackViewController {
         
         title = "notifications".localized().uppercaseFirst
         setRightNavBarButton(with: closeButton)
-        closeButton.addTarget(self, action: #selector(back), for: .touchUpInside)
+        closeButton.addTarget(self, action: #selector(leftButtonTapped), for: .touchUpInside)
     }
     
     override func bind() {

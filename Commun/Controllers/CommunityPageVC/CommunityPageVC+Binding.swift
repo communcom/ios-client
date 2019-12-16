@@ -33,7 +33,7 @@ extension CommunityPageVC {
         ResponseAPIContentGetCommunity.observeEvent(eventName: ResponseAPIContentGetCommunity.blockedEventName)
             .subscribe(onNext: { (blockedProfile) in
                 guard blockedProfile.communityId == self.viewModel.profile.value?.communityId else {return}
-                self.back()
+                self.leftButtonTapped()
             })
             .disposed(by: disposeBag)
     }

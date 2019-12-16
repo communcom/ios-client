@@ -199,7 +199,7 @@ extension UIViewController {
         removeFromParent()
     }
     
-    @objc func back() {
+    @objc func leftButtonTapped() {
         if (self.isModal) {
             self.dismiss(animated: true, completion: nil)
         } else {
@@ -207,6 +207,9 @@ extension UIViewController {
         }
     }
 
+    @objc func rightButtonTapped() {
+        self.dismiss(animated: true, completion: nil)
+    }
     
     func backCompletion(_ completion: @escaping (()->Void)) {
         if (self.isModal) {
@@ -217,7 +220,7 @@ extension UIViewController {
     }
     
     func setLeftNavBarButtonForGoingBack(tintColor: UIColor = .black) {
-        let backButton = UIBarButtonItem(image: UIImage(named: "icon-back-bar-button-black-default"), style: .plain, target: self, action: #selector(back))
+        let backButton = UIBarButtonItem(image: UIImage(named: "icon-back-bar-button-black-default"), style: .plain, target: self, action: #selector(leftButtonTapped))
         backButton.tintColor = tintColor
         navigationItem.leftBarButtonItem = backButton
     }

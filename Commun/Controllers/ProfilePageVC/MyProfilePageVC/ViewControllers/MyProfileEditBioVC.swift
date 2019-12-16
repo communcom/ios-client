@@ -83,7 +83,7 @@ class MyProfileEditBioVC: EditorVC {
             didConfirm.onNext(textView.text)
         }
         didConfirm.onCompleted()
-        back()
+        leftButtonTapped()
     }
     
     override func close() {

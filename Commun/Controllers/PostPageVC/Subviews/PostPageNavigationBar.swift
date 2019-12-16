@@ -78,7 +78,7 @@ class PostPageNavigationBar: MyView, CommunityController {
     }
     
     @objc func backButtonDidTouch() {
-        parentViewController?.back()
+        parentViewController?.leftButtonTapped()
     }
     @objc func joinButtonDidTouch() {
         toggleJoin()

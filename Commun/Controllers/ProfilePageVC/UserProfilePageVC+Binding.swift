@@ -70,7 +70,7 @@ extension UserProfilePageVC: UICollectionViewDelegateFlowLayout, CommunityCellDe
         ResponseAPIContentGetProfile.observeEvent(eventName: ResponseAPIContentGetProfile.blockedEventName)
             .subscribe(onNext: { (blockedProfile) in
                 guard blockedProfile.userId == self.viewModel.profile.value?.userId else {return}
-                self.back()
+                self.leftButtonTapped()
             })
             .disposed(by: disposeBag)
     }

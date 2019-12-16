@@ -40,7 +40,7 @@ extension PostEditorVC {
         guard viewModel.postForEdit == nil,
             !contentTextView.text.isEmpty else
         {
-            back()
+            leftButtonTapped()
             return
         }
         

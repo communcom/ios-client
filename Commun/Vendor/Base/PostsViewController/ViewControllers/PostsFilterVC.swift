@@ -18,9 +18,18 @@ class PostsFilterVC: SwipeDownDismissViewController {
     
     
     // MARK: - Subview
-    lazy var closeButton = UIButton.close(size: CGFloat.adaptive(height: 30.0))
-    lazy var backButton = UIButton.circle(size: CGFloat.adaptive(height: 30.0), backgroundColor: .f7f7f9, tintColor: .a5a7bd, imageName: "back-button", imageEdgeInsets: .zero)
+    lazy var closeButton    =   UIButton.circle(size:                 CGFloat.adaptive(height: 30.0),
+                                                backgroundColor:      .f7f7f9,
+                                                tintColor:            .a5a7bd,
+                                                imageName:            "icon-round-close-grey-default",
+                                                imageEdgeInsets:      .zero)
     
+    lazy var backButton     =   UIButton.circle(size:                 CGFloat.adaptive(height: 30.0),
+                                                backgroundColor:      .f7f7f9,
+                                                tintColor:            .a5a7bd,
+                                                imageName:            "icon-round-back-grey-default",
+                                                imageEdgeInsets:      .zero)
+        
     lazy var tableView = UITableView(forAutoLayout: ())
     lazy var saveButton = CommunButton.default(height: CGFloat.adaptive(height: 50.0), label: "save".localized().uppercaseFirst)
     
@@ -29,46 +38,49 @@ class PostsFilterVC: SwipeDownDismissViewController {
     init(filter: PostsListFetcher.Filter, isTimeFrameMode: Bool = false) {
         self.isTimeFrameMode = isTimeFrameMode
         self.filter = BehaviorRelay<PostsListFetcher.Filter>(value: filter)
-        
+
         super.init(nibName: nil, bundle: nil)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+        
     
     // MARK: - Class Functions
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        navigationController?.view.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: CGFloat.adaptive(height: 20.0))
-        navigationController?.navigationBar.frame.size.height = CGFloat.adaptive(height: 58.0)
+        
+        navigationController?.setNavigationBarHidden(true, animated: false)
     }
     
     override func setUp() {
         super.setUp()
         
         view.backgroundColor = .f7f7f9
-        title = "sort by".localized().uppercaseFirst
 
-        setRightNavBarButton(with: closeButton)
-        closeButton.addTarget(self, action: #selector(closeButtonDidTouch), for: .touchUpInside)
-        
-        if isTimeFrameMode {
-            setLeftNavBarButton(with: backButton)
-            backButton.addTarget(self, action: #selector(backButtonDidTouch), for: .touchUpInside)
-        }
-        
+        // Add navigation bar
+        let navigationBarView = MyNavigationBar(title:          "sort by".localized().uppercaseFirst,
+                                                leftButton:     isTimeFrameMode ? backButton : nil,
+                                                rightButton:    closeButton)
+        navigationBarView.backgroundColor = .white
+        view.addSubview(navigationBarView)
+        navigationBarView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .bottom)
+        navigationBarView.heightAnchor.constraint(equalToConstant: CGFloat.adaptive(height: 58.0)).isActive = true
+        view.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: CGFloat.adaptive(height: 20.0))
+
+        // Add table view
         view.addSubview(tableView)
         tableView.backgroundColor = .clear
         tableView.tableFooterView = UIView()
         tableView.separatorStyle = .none
-        tableView.autoPinEdgesToSuperviewSafeArea(with:             UIEdgeInsets(top:       CGFloat.adaptive(height: 20.0),
+        tableView.autoPinEdgesToSuperviewSafeArea(with:             UIEdgeInsets(top:       CGFloat.adaptive(height: (58.0 + 20.0)),
                                                                                  left:      CGFloat.adaptive(width: 15.0),
                                                                                  bottom:    0.0,
                                                                                  right:     CGFloat.adaptive(width: 15.0)),
                                                   excludingEdge:    .bottom)
         
+        // Add Save button
         view.addSubview(saveButton)
         saveButton.autoPinEdge(.top, to: .bottom, of: tableView, withOffset: CGFloat.adaptive(height: 30.0))
         saveButton.autoPinEdgesToSuperviewSafeArea(with:            UIEdgeInsets(top:       0.0,
@@ -183,7 +195,7 @@ class PostsFilterVC: SwipeDownDismissViewController {
 // MARK: - UIViewControllerTransitioningDelegate
 extension PostsFilterVC: UIViewControllerTransitioningDelegate {
     func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
-        return CustomHeightPresentationController(height: CGFloat.adaptive(height: 443.0), presentedViewController: presented, presenting: presenting)
+        return CustomHeightPresentationController(height: CGFloat.adaptive(height: 406.0), presentedViewController: presented, presenting: presenting)
     }
 }
 

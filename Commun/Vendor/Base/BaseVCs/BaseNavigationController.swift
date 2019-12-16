@@ -54,7 +54,7 @@ final class BaseNavigationController: UINavigationController {
         // navigationBar
 //        navigationBar.addShadow(ofColor: .shadow, offset: CGSize(width: 0, height: 2), opacity: 0.1)
     }
-    
+          
     deinit {
         delegate = nil
         interactivePopGestureRecognizer?.delegate = nil

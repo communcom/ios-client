@@ -61,7 +61,7 @@ class MyProfileSettingsVC: BaseViewController {
         
         // backButton
         setLeftNavBarButton(with: backButton)
-        backButton.addTarget(self, action: #selector(back), for: .touchUpInside)
+        backButton.addTarget(self, action: #selector(leftButtonTapped), for: .touchUpInside)
         
         // scrollView
         view.addSubview(scrollView)
