@@ -64,30 +64,28 @@ extension SignUpRouter where Self: UIViewController {
     // MARK: - Handler
     func handleSignUpError(error: Error, with phone: String) {
         if let error = error as? ErrorAPI {
-            if error.caseInfo.message == "Invalid step taken" {
-                handleInvalidStepTakenWithPhone(phone)
-                return
+            switch error {
+            case .registrationRequestFailed(let message, let currentStep):
+                if message == "Invalid step taken" {
+                    // save state
+                    var dataToSave = [String: Any]()
+                    dataToSave[Config.registrationUserPhoneKey] = phone
+                    dataToSave[Config.registrationStepKey] = currentStep
+                    do {
+                        try KeychainManager.save(dataToSave)
+                        hideHud()
+                        signUpNextStep()
+                    } catch {
+                        hideHud()
+                        showError(error)
+                    }
+                    return
+                }
+            default:
+                break
             }
         }
         hideHud()
         showError(error)
-    }
-    
-    /// handle Invalid step taken
-    func handleInvalidStepTakenWithPhone(_ phone: String) {
-        // Get state
-        RestAPIManager.instance.getState(phone: phone)
-            .subscribe(onSuccess: { (result) in
-                if result.currentState == "registered" {
-                    self.showErrorWithLocalizedMessage("This number is already taken!")
-                    return
-                }
-                self.hideHud()
-                self.signUpNextStep()
-            }) { (error) in
-                self.hideHud()
-                self.showError(error)
-            }
-            .disposed(by: disposeBag)
     }
 }
