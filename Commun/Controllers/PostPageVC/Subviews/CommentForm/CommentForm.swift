@@ -28,11 +28,7 @@ class CommentForm: MyView {
         }
     }
     
-    private var parentComment: ResponseAPIContentGetComment? {
-        didSet {
-            self.url = parentComment?.attachments.first?.thumbnailUrl
-        }
-    }
+    private var parentComment: ResponseAPIContentGetComment?
     private var mode: Mode = .new
     let localImage = BehaviorRelay<UIImage?>(value: nil)
     var url: String?
@@ -93,12 +89,18 @@ class CommentForm: MyView {
         
         textView.text = nil
         
-        if mode == .edit {
+        switch mode {
+        case .edit:
             let aStr = parentComment?.document?.toAttributedString(
                 currentAttributes: [.font: UIFont.systemFont(ofSize: 13)],
                 attachmentType: TextAttachment.self)
             textView.attributedText = aStr
             textView.originalAttributedString = aStr
+            self.url = parentComment?.attachments.first?.thumbnailUrl
+        case .reply:
+            self.url = nil
+        case .new:
+            self.url = nil
         }
         
         setUp()
