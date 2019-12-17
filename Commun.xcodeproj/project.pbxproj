@@ -170,6 +170,7 @@
 		AC88ADD02386B12A00D72374 /* ShareHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC88ADCF2386B12A00D72374 /* ShareHelper.swift */; };
 		AC8C57BD238C408A00B0D260 /* InstagramView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8C57BC238C408A00B0D260 /* InstagramView.swift */; };
 		AC8C57C1238D494D00B0D260 /* InstagramView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AC8C57C0238D494D00B0D260 /* InstagramView.xib */; };
+		ACCCF74323A9105E00AF4FDE /* countries.json in Resources */ = {isa = PBXBuildFile; fileRef = ACCCF74023A9105E00AF4FDE /* countries.json */; };
 		B170AC15228AFBDA00C6FFBC /* SignUpVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5797E0F9225DDA490026C4D5 /* SignUpVC.storyboard */; };
 		B17A970C228002440081B8E0 /* SignUpRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17A970B228002440081B8E0 /* SignUpRouter.swift */; };
 		B1A6EE5122D5C8E300A5D6F0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B1A6EE5022D5C8E100A5D6F0 /* GoogleService-Info.plist */; };
@@ -643,6 +644,7 @@
 		AC88ADCF2386B12A00D72374 /* ShareHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareHelper.swift; sourceTree = "<group>"; };
 		AC8C57BC238C408A00B0D260 /* InstagramView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstagramView.swift; sourceTree = "<group>"; };
 		AC8C57C0238D494D00B0D260 /* InstagramView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InstagramView.xib; sourceTree = "<group>"; };
+		ACCCF74023A9105E00AF4FDE /* countries.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = countries.json; sourceTree = "<group>"; };
 		AE43B2305FC441D96462E0AB /* Pods-Commun.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Commun.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Commun/Pods-Commun.debug.xcconfig"; sourceTree = "<group>"; };
 		B12684EF22C1E56B0046C838 /* Commun.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Commun.entitlements; sourceTree = "<group>"; };
 		B17A970B228002440081B8E0 /* SignUpRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpRouter.swift; sourceTree = "<group>"; };
@@ -1283,6 +1285,7 @@
 				571B14F7223A935C00630C8F /* Main.storyboard */,
 				571B14FD223A935D00630C8F /* Assets.xcassets */,
 				571B14FF223A935D00630C8F /* LaunchScreen.storyboard */,
+				ACCCF74023A9105E00AF4FDE /* countries.json */,
 				571B1502223A935D00630C8F /* Info.plist */,
 				B1D1CF9B22F8A28A0071F1B6 /* InfoPlist.strings */,
 				B1A6EE5022D5C8E100A5D6F0 /* GoogleService-Info.plist */,
@@ -2459,6 +2462,7 @@
 				571B1501223A935D00630C8F /* LaunchScreen.storyboard in Resources */,
 				57A1CA652270FCF000E2A1E3 /* LanguageVC.storyboard in Resources */,
 				B1EA02DC2289882A00835244 /* SF-Pro-Display-HeavyItalic.otf in Resources */,
+				ACCCF74323A9105E00AF4FDE /* countries.json in Resources */,
 				BCF74A5C23617D3A00B91089 /* ResponseAPIContentGetSubscribers.json in Resources */,
 				B1EA02F32289882A00835244 /* SF-Pro-Text-Semibold.otf in Resources */,
 				B1A6EE5122D5C8E300A5D6F0 /* GoogleService-Info.plist in Resources */,

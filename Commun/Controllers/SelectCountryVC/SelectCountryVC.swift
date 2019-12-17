@@ -70,17 +70,19 @@ class SelectCountryVC: UIViewController {
                 .orEmpty
                 .bind(to: viewModel.search)
                 .disposed(by: disposeBag)
-            
+
+            tableView.rx
+                .modelSelected(Country.self).subscribe { event in
+                    if event.element?.available ?? false {
+                        self.navigationController?.dismiss(animated: true, completion: nil)
+                    } else {
+                        self.showAlert(title: "sorry".uppercaseFirst.localized(), message: "but we don’t support your region yet".uppercaseFirst.localized())
+                    }
+            }.disposed(by: disposeBag)
+
             tableView.rx
                 .modelSelected(Country.self)
                 .bind(to: viewModel.selectedCountry)
-                .disposed(by: disposeBag)
-            
-            tableView.rx
-                .itemSelected
-                .subscribe(onNext: { _ in
-                    self.navigationController?.dismiss(animated: true, completion: nil)
-                })
                 .disposed(by: disposeBag)
         }
     }

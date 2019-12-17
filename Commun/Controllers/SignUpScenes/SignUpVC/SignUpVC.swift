@@ -28,13 +28,7 @@ class SignUpVC: UIViewController, SignUpRouter {
     
     // MARK: - IBOutlets
     @IBOutlet weak var countryButton: UIButton!
-    
-    @IBOutlet weak var countryImageView: UIImageView! {
-        didSet {
-            self.countryImageView.layer.cornerRadius = 24.0 * Config.heightRatio / 2
-            self.countryImageView.clipsToBounds = true
-        }
-    }
+    @IBOutlet weak var flagLabel: UILabel!
     
     @IBOutlet weak var placeholderSelectCountryLabel: UILabel! {
         didSet {
@@ -153,7 +147,7 @@ class SignUpVC: UIViewController, SignUpRouter {
             .disposed(by: disposeBag)
         
         // Bind country name
-        let countryName = country.map {$0?.localizedName}
+        let countryName = country.map {$0?.name}
         countryName.map {$0 ?? "select country".localized().uppercaseFirst}
             .bind(to: countryLabel.rx.text)
             .disposed(by: disposeBag)
@@ -162,18 +156,15 @@ class SignUpVC: UIViewController, SignUpRouter {
             .subscribe(onNext: {[weak self] flag in
                 self?.placeholderSelectCountryLabel.isHidden = flag
                 self?.countryLabel.isHidden = !flag
-                self?.countryImageView.isHidden = !flag
+                self?.flagLabel.isHidden = !flag
             })
             .disposed(by: disposeBag)
-        
-        // Bind flag url
-        let flagUrl = country.filter {$0 != nil}.map {$0!.flagURL}
-        flagUrl
-            .subscribe(onNext: { [weak self] url in
-                self?.countryImageView.sd_setImage(with: url, completed: nil)
-            })
+
+        // Bind flag
+        country.map {$0?.emoji}
+            .bind(to: flagLabel.rx.text)
             .disposed(by: disposeBag)
-        
+
         // Bind textField
         country
             .filter {$0 != nil}
@@ -186,12 +177,20 @@ class SignUpVC: UIViewController, SignUpRouter {
         // Bind phone
         phoneNumberTextField.rx.text.orEmpty
             .map {text -> String in
-                var newText = text
-                if country.value != nil, !newText.contains("+\(country.value!.code)") {
-                    if "+\(country.value!.code)".contains(text) {return "+\(country.value!.code)"}
-                    newText = "+\(country.value!.code)\(newText)"
+                if let code = country.value?.code {
+                    var newText = text
+                    let cleanPhone = newText.components(separatedBy: CharacterSet.decimalDigits.inverted).joined(separator: "")
+                    if !("+\(cleanPhone)").contains("+\(code)") {
+
+                        if "+\(country.value!.code)".contains(text) {
+                            return "+\(code)"
+                        }
+
+                        newText = "+\(code)\(newText)"
+                    }
+                    return newText
                 }
-                return newText
+                return text
             }
             .subscribe(onNext: { (text) in
                 if self.phoneNumberTextField.isFirstResponder && text.isEmpty {
@@ -231,7 +230,7 @@ class SignUpVC: UIViewController, SignUpRouter {
             self?.hideHud()
         }
     }
-    
+
     private func showContriesList() {
          if let countryVC = controllerContainer.resolve(SelectCountryVC.self) {
              self.view.endEditing(true)

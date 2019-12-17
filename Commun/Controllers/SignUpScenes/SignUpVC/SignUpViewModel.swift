@@ -25,18 +25,9 @@ class SignUpViewModel {
         guard let selectedCountry = selectedCountry.value else {
             return false
         }
-        
-        let phone = self.phone.value
-        
-        let phoneNumberKit = PhoneNumberKit()
-        
+
         do {
-            let phoneNumberEntered = try phoneNumberKit.parse(phone, withRegion: selectedCountry.shortCode, ignoreType: true)
-            
-            if let nsnValue = selectedCountry.nsn {
-                return String(phoneNumberEntered.nationalNumber).count == nsnValue
-            }
-            
+            _ = try PhoneNumberKit().parse(self.phone.value, withRegion: selectedCountry.countryCode, ignoreType: false)
             return true
         } catch {
             return false

@@ -32,7 +32,7 @@ extension SignUpVC: CLLocationManagerDelegate {
             guard let placemarks = placemarks, placemarks.count > 0 else {return}
             let placemark = placemarks[0]
             guard let countryCode = placemark.isoCountryCode,
-                let country = PhoneCode.getCountries().first(where: {$0.shortCode == countryCode})
+                let country = SelectCountryViewModel.getCountriesList().first(where: {$0.countryCode == countryCode})
             else {return}
             
             self.viewModel.selectedCountry.accept(country)
