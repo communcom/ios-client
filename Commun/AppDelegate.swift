@@ -43,7 +43,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         #endif
         let filePath = Bundle.main.path(forResource: fileName, ofType: "plist")
         guard let fileopts = FirebaseOptions(contentsOfFile: filePath!)
-          else { assert(false, "Couldn't load config file") }
+            else { assert(false, "Couldn't load config file"); return }
         FirebaseApp.configure(options: fileopts)
     }
 
