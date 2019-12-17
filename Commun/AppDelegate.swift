@@ -34,12 +34,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     let notificationCenter = UNUserNotificationCenter.current()
     
     private var bag = DisposeBag()
-    
+
+    private func configureFirebase() {
+        #if APPSTORE
+            let fileName = "GoogleService-Info-Prod"
+        #else
+            let fileName = "GoogleService-Info-Dev"
+        #endif
+        let filePath = Bundle.main.path(forResource: fileName, ofType: "plist")
+        guard let fileopts = FirebaseOptions(contentsOfFile: filePath!)
+          else { assert(false, "Couldn't load config file") }
+        FirebaseApp.configure(options: fileopts)
+    }
+
     // MARK: - Class Functions
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
         // Use Firebase library to configure APIs
-        FirebaseApp.configure()
+        configureFirebase()
 
         // Config Fabric
         Fabric.with([Crashlytics.self])
