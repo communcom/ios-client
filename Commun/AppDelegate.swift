@@ -111,12 +111,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 if settingStep != .completed {
                     if !force,
                         let nc = self.window?.rootViewController as? UINavigationController,
-                        nc.viewControllers.first is BackUpKeysVC {
+                        (nc.viewControllers.first is BackUpKeysVC || nc.viewControllers.first is BoardingSetPasscodeVC)
+                    {
                         return
                     }
                     
-                    let boardingVC = BackUpKeysVC()
-                    let nc = UINavigationController(rootViewController: boardingVC)
+                    let vc: UIViewController
+                    
+                    if KeychainManager.currentUser()?.registrationStep == .relogined {
+                        vc = BoardingSetPasscodeVC()
+                    } else {
+                        vc = BackUpKeysVC()
+                    }
+                    
+                    let nc = UINavigationController(rootViewController: vc)
                     
                     self.changeRootVC(nc)
                     return

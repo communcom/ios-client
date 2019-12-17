@@ -27,9 +27,13 @@ class BoardingVC: BaseViewController {
             endBoarding()
             return
         }
+        jumpTo(step: nextStep!)
+    }
+    
+    private func jumpTo(step: CurrentUserSettingStep) {
         do {
             try KeychainManager.save([
-                Config.settingStepKey: nextStep!.rawValue
+                Config.settingStepKey: step.rawValue
             ])
             boardingNextStep()
         } catch {
@@ -41,10 +45,13 @@ class BoardingVC: BaseViewController {
         let step = KeychainManager.currentUser()?.settingStep ?? .setPasscode
         
         if KeychainManager.currentUser()?.registrationStep == .relogined {
-//            if step == .setAvatar {
-//                endBoarding()
-//                return
-//            }
+            // skip backup iCloud when relogined
+            if step == .backUpICloud {
+                jumpTo(step: .setPasscode)
+                return
+            }
+            
+            // skip all step after ftue
             if step == .ftue {
                 endBoarding()
                 return
