@@ -13,6 +13,8 @@ import Foundation
 class SetUserViewModel {
     // MARK: - Class Functions
     func checkUserName(_ userName: String) -> [Bool] {
+        guard !userName.isEmpty else { return [false, false, false, false, false, false] }
+        
         // Rule 1
         // • The number of characters must not exceed 32
         // username must be between 5-32 characters
@@ -30,18 +32,27 @@ class SetUserViewModel {
 
         // Rule 6
         // • The presence of two characters "dot" in a row is not valid
-        let twoNonAlphanumericCharacterNotSideBySide = !userName.contains(".-") && !userName.contains("-.") && !userName.contains("--")
+        let twoNonAlphanumericCharacterNotSideBySide = !userName.contains("..") && !userName.contains(".-") && !userName.contains("-.") && !userName.contains("--")
         
         // Rule 7
-        // • The user name may contain a "dot" character
-        let onlyOneDot = userName.count(of: ".") <= 1
+        // • Each user name segment should start with a letter
+        let segments = userName.components(separatedBy: ".").filter({ !$0.isEmpty })
+        var segmentsStartLetter = true
+        var segmentLength = true
         
+        if segments.count > 0 {
+            segmentsStartLetter = segments.filter({ Character($0.prefix(1).description).isNumber == true }).count == 0
+            segmentLength = segments.filter({ $0.count < 5}).count == 0
+        }
+        
+        print("\(segmentLength)")
         return [
             isBetween5To32Characters,
             containsOnlyAllowedCharacters,
             twoNonAlphanumericCharacterNotSideBySide,
             nonAlphanumericCharacterIsNotAtBeginOrEnd,
-            onlyOneDot
+            segmentsStartLetter,
+            segmentLength
         ]
     }
     
