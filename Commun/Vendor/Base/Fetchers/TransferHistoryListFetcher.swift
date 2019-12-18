@@ -17,10 +17,16 @@ class TransferHistoryListFetcher: ListFetcher<ResponseAPIWalletGetTransferHistor
     var symbol: String?
     var rewards: String = "all"
     
+    override init() {
+        super.init()
+        self.limit = 20
+    }
+    
     override var request: Single<[ResponseAPIWalletGetTransferHistoryItem]> {
-        // TODO: - Remove mock, replace by real request
-        ResponseAPIWalletGetTransferHistory.singleWithMockData()
+        RestAPIManager.instance.getTransferHistory(userId: userId, direction: direction, transferType: transferType, symbol: symbol, reward: rewards, offset: offset, limit: limit)
             .map {$0.items}
-            .delay(0.8, scheduler: MainScheduler.instance)
+//        ResponseAPIWalletGetTransferHistory.singleWithMockData()
+//            .map {$0.items}
+//            .delay(0.8, scheduler: MainScheduler.instance)
     }
 }
