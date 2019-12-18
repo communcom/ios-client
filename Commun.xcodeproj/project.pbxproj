@@ -341,6 +341,10 @@
 		BC9066EB23A9D9EC000F9A3B /* BalancesListFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC9066EA23A9D9EC000F9A3B /* BalancesListFetcher.swift */; };
 		BC9066EF23A9DABF000F9A3B /* ResponseAPIWalletGetBalances.json in Resources */ = {isa = PBXBuildFile; fileRef = BC9066EE23A9DABF000F9A3B /* ResponseAPIWalletGetBalances.json */; };
 		BC9066F123A9DB72000F9A3B /* BalancesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC9066F023A9DB72000F9A3B /* BalancesViewModel.swift */; };
+		BC9066F323A9DFC2000F9A3B /* ResponseAPIWalletGetTransferHistory.json in Resources */ = {isa = PBXBuildFile; fileRef = BC9066F223A9DFC2000F9A3B /* ResponseAPIWalletGetTransferHistory.json */; };
+		BC9066F523A9E002000F9A3B /* TransferHistoryListFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC9066F423A9E002000F9A3B /* TransferHistoryListFetcher.swift */; };
+		BC9066F723A9E1AC000F9A3B /* TransferHistoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC9066F623A9E1AC000F9A3B /* TransferHistoryViewModel.swift */; };
+		BC9066FA23A9E34C000F9A3B /* TransferHistoryItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC9066F923A9E34C000F9A3B /* TransferHistoryItemCell.swift */; };
 		BC9765B4237D430500FC096B /* EditorChooseCommunityVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC9765B3237D430500FC096B /* EditorChooseCommunityVC.swift */; };
 		BCA0039B23714920002A68BA /* ResponseAPIContentGetLeaders.json in Resources */ = {isa = PBXBuildFile; fileRef = BCA0039A23714920002A68BA /* ResponseAPIContentGetLeaders.json */; };
 		BCA0039D23716AA1002A68BA /* LeaderController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA0039C23716AA1002A68BA /* LeaderController.swift */; };
@@ -795,6 +799,10 @@
 		BC9066EA23A9D9EC000F9A3B /* BalancesListFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalancesListFetcher.swift; sourceTree = "<group>"; };
 		BC9066EE23A9DABF000F9A3B /* ResponseAPIWalletGetBalances.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ResponseAPIWalletGetBalances.json; sourceTree = "<group>"; };
 		BC9066F023A9DB72000F9A3B /* BalancesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalancesViewModel.swift; sourceTree = "<group>"; };
+		BC9066F223A9DFC2000F9A3B /* ResponseAPIWalletGetTransferHistory.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ResponseAPIWalletGetTransferHistory.json; sourceTree = "<group>"; };
+		BC9066F423A9E002000F9A3B /* TransferHistoryListFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferHistoryListFetcher.swift; sourceTree = "<group>"; };
+		BC9066F623A9E1AC000F9A3B /* TransferHistoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferHistoryViewModel.swift; sourceTree = "<group>"; };
+		BC9066F923A9E34C000F9A3B /* TransferHistoryItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferHistoryItemCell.swift; sourceTree = "<group>"; };
 		BC9765B3237D430500FC096B /* EditorChooseCommunityVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorChooseCommunityVC.swift; sourceTree = "<group>"; };
 		BCA0039A23714920002A68BA /* ResponseAPIContentGetLeaders.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ResponseAPIContentGetLeaders.json; sourceTree = "<group>"; };
 		BCA0039C23716AA1002A68BA /* LeaderController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderController.swift; sourceTree = "<group>"; };
@@ -946,6 +954,7 @@
 				BCA0039A23714920002A68BA /* ResponseAPIContentGetLeaders.json */,
 				BC247D0423823B650062C979 /* ResponseAPIContentGetProfile.json */,
 				BC9066EE23A9DABF000F9A3B /* ResponseAPIWalletGetBalances.json */,
+				BC9066F223A9DFC2000F9A3B /* ResponseAPIWalletGetTransferHistory.json */,
 			);
 			path = Mocking;
 			sourceTree = "<group>";
@@ -1782,6 +1791,7 @@
 				BC48FC41236689DC0049C4F4 /* LeadersViewModel.swift */,
 				BC7D608F237BF764007D8C1A /* BlacklistViewModel.swift */,
 				BC9066F023A9DB72000F9A3B /* BalancesViewModel.swift */,
+				BC9066F623A9E1AC000F9A3B /* TransferHistoryViewModel.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -2120,9 +2130,18 @@
 		BC9066E323A9D331000F9A3B /* WalletVC */ = {
 			isa = PBXGroup;
 			children = (
+				BC9066F823A9E32F000F9A3B /* Subviews */,
 				BC9066E623A9D48A000F9A3B /* WalletVC.swift */,
 			);
 			path = WalletVC;
+			sourceTree = "<group>";
+		};
+		BC9066F823A9E32F000F9A3B /* Subviews */ = {
+			isa = PBXGroup;
+			children = (
+				BC9066F923A9E34C000F9A3B /* TransferHistoryItemCell.swift */,
+			);
+			path = Subviews;
 			sourceTree = "<group>";
 		};
 		BC9765B0237D42DE00FC096B /* EditorChooseCommunityVC */ = {
@@ -2320,6 +2339,7 @@
 				BC619B10237268910005BB94 /* CommunitiesListFetcher.swift */,
 				BC7D608D237BF4E7007D8C1A /* BlacklistFetcher.swift */,
 				BC9066EA23A9D9EC000F9A3B /* BalancesListFetcher.swift */,
+				BC9066F423A9E002000F9A3B /* TransferHistoryListFetcher.swift */,
 			);
 			path = Fetchers;
 			sourceTree = "<group>";
@@ -2512,6 +2532,7 @@
 				B1EA02E82289882A00835244 /* SF-Pro-Display-UltralightItalic.otf in Resources */,
 				3BB342B222CA64EA009546B2 /* Boarding.storyboard in Resources */,
 				BC247D0523823B650062C979 /* ResponseAPIContentGetProfile.json in Resources */,
+				BC9066F323A9DFC2000F9A3B /* ResponseAPIWalletGetTransferHistory.json in Resources */,
 				BC83F26B2369322400B5719D /* Localizable.strings in Resources */,
 				B1EA02D72289882300835244 /* SF-Pro-Display-Black.otf in Resources */,
 				B1EA02DF2289882A00835244 /* SF-Pro-Display-Medium.otf in Resources */,
@@ -2759,6 +2780,7 @@
 				3B3C8B912347876000D8BADB /* ArticleEditorTextView.swift in Sources */,
 				BCC60E1623A0D02C00D40013 /* FeedPageHeaderView.swift in Sources */,
 				BC2C94FF2366F04100C9D7FE /* UserProfileHeaderView.swift in Sources */,
+				BC9066FA23A9E34C000F9A3B /* TransferHistoryItemCell.swift in Sources */,
 				BC6B7657236A9D4600A7AF2A /* CommunityRuleCell.swift in Sources */,
 				BCF74A6723618D9000B91089 /* CMSegmentedControl.swift in Sources */,
 				B1D7AD5C23A10664007D1A13 /* QRScannerViewController.swift in Sources */,
@@ -2768,6 +2790,7 @@
 				BC384F1E23862FBC0021A2A9 /* CommunityPageVC+Binding.swift in Sources */,
 				3B3C8B8223475AA100D8BADB /* EditorVC+Tools.swift in Sources */,
 				BCA971172360301100AE37E1 /* NotificationsListFetcher.swift in Sources */,
+				BC9066F723A9E1AC000F9A3B /* TransferHistoryViewModel.swift in Sources */,
 				B1FA77D9238BF7E0006E57D1 /* WelcomeVC.swift in Sources */,
 				5797E0F8225DDA400026C4D5 /* SignUpVC.swift in Sources */,
 				3BF2E09822D3A49F003B37AE /* StepButton.swift in Sources */,
@@ -2935,6 +2958,7 @@
 				BCCE0AAF2368217000A183AA /* MyProfilePageVC.swift in Sources */,
 				BCCE0AB723682D1B00A183AA /* MyProfilePageVC+Actions.swift in Sources */,
 				3BF37BCA22A11FA700A72FFE /* UIView.swift in Sources */,
+				BC9066F523A9E002000F9A3B /* TransferHistoryListFetcher.swift in Sources */,
 				575AECAE22606D0800A7EC2D /* SignUpViewModel.swift in Sources */,
 				BCCE0AAD23681B2400A183AA /* ProfileController.swift in Sources */,
 				BCF39150235FEEC100A9D1ED /* PostsListFetcher.swift in Sources */,
