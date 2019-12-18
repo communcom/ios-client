@@ -21,5 +21,6 @@ class TransferHistoryListFetcher: ListFetcher<ResponseAPIWalletGetTransferHistor
         // TODO: - Remove mock, replace by real request
         ResponseAPIWalletGetTransferHistory.singleWithMockData()
             .map {$0.items}
+            .delay(0.8, scheduler: MainScheduler.instance)
     }
 }

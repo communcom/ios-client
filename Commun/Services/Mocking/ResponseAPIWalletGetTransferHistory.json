@@ -6,8 +6,35 @@
          {
             "id":"5dee66a715ed6ccb06759b96",
             "sender":{
+                "userId":"c.point"
+            },
+            "receiver":{
+                "userId":"tst1sykkeaax",
+                "username":"Ivan Bilin",
+                "avatarUrl":"https://img.commun.com/images/84LPGkZQr1eEfANY1phwCX94H3u.png"
+            },
+            "quantity":"30.000",
+            "symbol":"MUSIC",
+            "point":{
+               "name":"Music",
+               "logo":"https://img.commun.com/images/2eT5QSNQVk4ZRZu6CNVjUiENB9sp.jpg",
+               "symbol":"MUSIC"
+            },
+            "trxId":"002f66e305df52a2512e904497f9cc5a0ed41617b3d52e2819d37f927ae715cb",
+            "memo":"30.000 MUSIC",
+            "timestamp":"2019-12-09T15:22:15.000Z",
+            "meta":{
+               "actionType":"transaction",
+               "transferType":"point",
+               "exchangeAmount":0.491,
+               "direction":"send"
+            }
+         },
+         {
+            "id":"5dee66a715ed6ccb06759b93",
+            "sender":{
                "userId":"tst1sykkeaax",
-               "username":"swift-shondra-dvm",
+               "username":"dracona",
                "avatarUrl":"https://img.commun.com/images/84LPGkZQr1eEfANY1phwCX94H3u.png"
             },
             "receiver":{
