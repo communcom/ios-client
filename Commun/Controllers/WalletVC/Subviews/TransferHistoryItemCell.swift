@@ -74,7 +74,7 @@ class TransferHistoryItemCell: MyTableViewCell, ListItemCellType {
             avatarImageView.setAvatar(urlString: avatarUrl, namePlaceHolder: username)
             
             iconImageView.isHidden = false
-            iconImageView.sd_setImage(with: URL(string: item.point.logo), placeholderImage: UIImage(color: .appMainColor))
+            iconImageView.sd_setImage(with: URL(string: item.point.logo ?? ""), placeholderImage: UIImage(color: .appMainColor))
             
         default:
             // TODO: - Other types

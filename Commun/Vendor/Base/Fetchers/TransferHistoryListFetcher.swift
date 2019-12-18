@@ -13,9 +13,9 @@ import CyberSwift
 class TransferHistoryListFetcher: ListFetcher<ResponseAPIWalletGetTransferHistoryItem> {
     var userId: String? = Config.currentUser?.id
     var direction: String = "all"
-    var transferType: String = "all"
+    var transferType: String?
     var symbol: String?
-    var rewards: String = "all"
+    var rewards: String?
     
     override init() {
         super.init()
