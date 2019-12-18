@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 11/13/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -37,18 +37,17 @@ extension BlacklistCellDelegate where Self: BaseViewController {
         var request: Single<String>
         if originIsBlocked {
             switch item {
-            case .user(_):
+            case .user:
                 request = RestAPIManager.instance.unblock(id)
-            case .community(_):
+            case .community:
                 request = RestAPIManager.instance.unhideCommunity(id)
             }
             
-        }
-        else {
+        } else {
             switch item {
-            case .user(_):
+            case .user:
                 request = RestAPIManager.instance.block(id)
-            case .community(_):
+            case .community:
                 request = RestAPIManager.instance.hideCommunity(id)
             }
         }
@@ -102,14 +101,14 @@ class BlacklistCell: SubsItemCell, ListItemCellType {
             actionButton.isEnabled = !(user.isBeingUnblocked ?? false)
             actionButton.setTitle((user.isBlocked ?? true) ? "unblock".localized().uppercaseFirst : "reblock".localized().uppercaseFirst, for: .normal)
             actionButton.backgroundColor = !(user.isBlocked ?? true) ? #colorLiteral(red: 0.9525656104, green: 0.9605062604, blue: 0.9811610579, alpha: 1) : .appMainColor
-            actionButton.setTitleColor(!(user.isBlocked ?? true) ? .appMainColor : .white , for: .normal)
+            actionButton.setTitleColor(!(user.isBlocked ?? true) ? .appMainColor : .white, for: .normal)
         case .community(let community):
             avatarImageView.setAvatar(urlString: community.avatarUrl, namePlaceHolder: community.name)
             nameLabel.text = community.name
             actionButton.isEnabled = !(community.isBeingUnblocked ?? false)
             actionButton.setTitle((community.isBlocked ?? true) ? "unhide".localized().uppercaseFirst : "hide".localized().uppercaseFirst, for: .normal)
             actionButton.backgroundColor = !(community.isBlocked ?? true) ? #colorLiteral(red: 0.9525656104, green: 0.9605062604, blue: 0.9811610579, alpha: 1) : .appMainColor
-            actionButton.setTitleColor(!(community.isBlocked ?? true) ? .appMainColor : .white , for: .normal)
+            actionButton.setTitleColor(!(community.isBlocked ?? true) ? .appMainColor : .white, for: .normal)
         }
         statsLabel.text = nil
     }

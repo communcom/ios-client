@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 11/8/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -75,8 +75,7 @@ extension CommentController {
             buttonTitles: [
                 "yes".localized().uppercaseFirst,
                 "no".localized().uppercaseFirst],
-            highlightedButtonIndex: 1)
-            { (index) in
+            highlightedButtonIndex: 1) { (index) in
                 if index == 0 {
                     topController.showIndetermineHudWithMessage("deleting".localized().uppercaseFirst)
                     NetworkService.shared.deletePost(communCode: communCode, permlink: comment.contentId.permlink)
@@ -92,5 +91,3 @@ extension CommentController {
             }
     }
 }
-
-

@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 18/07/2019.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -37,8 +37,6 @@ extension SettingsVC: UITableViewDelegate {
             switch section {
             case 0:
                 label.text = "general".localized().uppercaseFirst
-                break
-                
             case 1:
                 label.text = "notifications".localized().uppercaseFirst
                 let switcher = UISwitch(frame: CGRect.zero)
@@ -86,8 +84,6 @@ extension SettingsVC: UITableViewDelegate {
                 
                 switcher.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
                 switcher.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16).isActive = true
-                break
-                
             case 2:
                 label.text = "Passwords".localized()
                 viewModel.showKey
@@ -109,9 +105,6 @@ extension SettingsVC: UITableViewDelegate {
                         }
                     })
                     .disposed(by: bag)
-                
-                break
-                
             default:
                 label.text = ""
             }

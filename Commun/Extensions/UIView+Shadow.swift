@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 17/04/2019.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -14,7 +14,7 @@ extension UIView {
             return layer.shadowPath != nil ? true: false
         }
         set {
-            if (newValue == false) {
+            if newValue == false {
                 layer.masksToBounds = true
                 layer.shadowOffset = CGSize(width: 0, height: 0)
                 layer.shadowOpacity = 0

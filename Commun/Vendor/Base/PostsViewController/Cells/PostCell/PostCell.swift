@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 10/21/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import UIKit
@@ -14,7 +14,6 @@ class PostCell: MyTableViewCell, ListItemCellType {
     var post: ResponseAPIContentGetPost?
     let voteActionsContainerViewHeight: CGFloat = 35
     weak var delegate: PostCellDelegate?
-
     
     // MARK: - Subviews
     private func createDescriptionLabel() -> UILabel {
@@ -62,7 +61,6 @@ class PostCell: MyTableViewCell, ListItemCellType {
         button.touchAreaEdgeInsets = UIEdgeInsets(top: -11, left: -13, bottom: -11, right: -13)
         return button
     }()
-    
     
     // MARK: - Layout
     override func setUpViews() {
@@ -128,7 +126,6 @@ class PostCell: MyTableViewCell, ListItemCellType {
         fatalError("must override")
     }
     
-    
     // MARK: - Methods
     func setUp(with post: ResponseAPIContentGetPost) {
         self.post = post
@@ -143,7 +140,7 @@ class PostCell: MyTableViewCell, ListItemCellType {
         self.viewsCountLabel.text = "\(post.stats?.viewCount ?? 0)"
 
         // Shares count
-        #warning("change this number later")
+        //TODO: change this number later
         self.sharesCountLabel.text = "\(post.stats?.viewCount ?? 0)"
     }
 }

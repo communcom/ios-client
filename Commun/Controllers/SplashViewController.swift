@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 27/06/2019.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import UIKit
@@ -28,7 +28,7 @@ class SplashViewController: UIViewController {
         return .lightContent
     }
     
-    func animateSplash(_ completion: @escaping ()->Void) {
+    func animateSplash(_ completion: @escaping () -> Void) {
         splashImageView.layer.removeAnimation(forKey: "Loading")
         UIView.animate(withDuration: 0.3, animations: {
             self.splashImageView.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)

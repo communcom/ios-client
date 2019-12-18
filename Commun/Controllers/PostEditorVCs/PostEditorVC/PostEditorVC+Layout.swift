@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 10/4/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -27,7 +27,6 @@ extension PostEditorVC {
         
         communityView.addSubview(communityAvatarImage)
         communityAvatarImage.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(inset: 16), excludingEdge: .trailing)
-        
 
         let youWillPostIn = UILabel.descriptionLabel("you will post in".localized().uppercaseFirst)
         communityView.addSubview(youWillPostIn)

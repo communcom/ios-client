@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 19/07/2019.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -36,7 +36,7 @@ extension LABiometryType {
     static var current: LABiometryType {
         // retrieve policy
         let context = LAContext()
-        let _ = context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil)
+        _ = context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil)
         return context.biometryType
     }
     

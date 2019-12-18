@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 10/21/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import UIKit
@@ -58,14 +58,13 @@ final class BasicPostCell: PostCell {
         ]
         
         if let content = post.content,
-            let firstSentence = content.first(where: {$0.type == "paragraph"})
-        {
+            let firstSentence = content.first(where: {$0.type == "paragraph"}) {
             let mutableAS = NSMutableAttributedString()
             var attributedText = firstSentence
                 .toAttributedString(currentAttributes: defaultAttributes, attachmentType: TextAttachment.self)
             if attributedText.length > 600 {
                 let moreText = NSAttributedString(string: "... \("See More".localized())", attributes: [.foregroundColor: UIColor.appMainColor, .font: UIFont.systemFont(ofSize: 14)])
-                attributedText = attributedText.attributedSubstring(from: NSMakeRange(0, 400))
+                attributedText = attributedText.attributedSubstring(from: NSRange(location: 0, length: 400))
                 mutableAS.append(moreText)
             }
             mutableAS.insert(attributedText, at: 0)

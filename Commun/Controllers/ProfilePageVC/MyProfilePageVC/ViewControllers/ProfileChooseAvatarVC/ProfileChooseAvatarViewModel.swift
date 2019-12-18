@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 24/04/2019.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -26,10 +26,8 @@ struct ProfileChooseAvatarViewModel {
                 case .denied, .restricted:
                     UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
                     observer.onCompleted()
-                    break
                 case .authorized:
                     observer.onCompleted()
-                    break
                 default:
                     PHPhotoLibrary.requestAuthorization({ (status) in
                         DispatchQueue.main.sync {

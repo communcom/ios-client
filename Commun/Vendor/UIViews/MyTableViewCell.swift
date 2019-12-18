@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 10/21/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import UIKit
@@ -34,7 +34,6 @@ class MyTableViewCell: UITableViewCell {
     func setUpViews() {
         
     }
-    
     
     override func awakeFromNib() {
         super.awakeFromNib()

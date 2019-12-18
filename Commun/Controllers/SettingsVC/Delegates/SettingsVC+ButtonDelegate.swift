@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 7/29/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -38,11 +38,10 @@ extension SettingsVC: SettingsButtonCellDelegate {
             }
             let nc = UINavigationController(rootViewController: vc)
             present(nc, animated: true, completion: nil)
-            break
         case .changeAllPasswords:
-            let alert = UIAlertController(title:            "Change all passwords",
-                                          message:          "Changing passwords will save your wallet if someone saw your password.",
-                                          preferredStyle:   .alert)
+            let alert = UIAlertController(title: "Change all passwords",
+                                          message: "Changing passwords will save your wallet if someone saw your password.",
+                                          preferredStyle: .alert)
             alert.addTextField { field in
                 field.placeholder = "Paste owner password"
             }

@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 11/8/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -160,16 +160,14 @@ class CommentCell: MyTableViewCell, ListItemCellType {
             gridView.heightConstraint?.constant = embedSize.height
             layoutIfNeeded()
             gridView.setUp(embeds: embededResult)
-        }
-        else {
+        } else {
             if let image = comment.placeHolderImage?.image {
                 textViewToEmbedConstraint?.constant = 5
                 gridView.widthConstraint?.constant = embedSize.width
                 gridView.heightConstraint?.constant = embedSize.height
                 layoutIfNeeded()
                 gridView.setUp(placeholderImage: image)
-            }
-            else {
+            } else {
                 textViewToEmbedConstraint?.constant = 0
                 gridView.widthConstraint?.constant = 0
                 gridView.heightConstraint?.constant = 0
@@ -178,8 +176,7 @@ class CommentCell: MyTableViewCell, ListItemCellType {
         }
         
         if (self.comment!.sendingState ?? MessageSendingState.none) != MessageSendingState.none ||
-            comment.document == nil
-        {
+            comment.document == nil {
             // disable voting
             self.comment!.votes.isBeingVoted = true
         }
@@ -205,8 +202,7 @@ class CommentCell: MyTableViewCell, ListItemCellType {
         
         if content.string.trimmed == "" {
             contentTextView.backgroundColor = .clear
-        }
-        else {
+        } else {
             contentTextView.backgroundColor = .f3f5fa
         }
         
@@ -238,7 +234,6 @@ class CommentCell: MyTableViewCell, ListItemCellType {
                         .foregroundColor: themeColor
                 ])
             )
-
 
         contentTextView.attributedText = mutableAS
     }

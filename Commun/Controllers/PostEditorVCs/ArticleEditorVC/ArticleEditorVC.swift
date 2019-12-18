@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 10/7/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -104,7 +104,6 @@ class ArticleEditorVC: PostEditorVC {
         
         contentTextView.autoPinEdge(.top, to: .bottom, of: titleTextView, withOffset: 28)
     }
-    
     
     override func layoutBottomContentTextView() {
         contentTextView.autoPinEdge(toSuperviewEdge: .bottom)

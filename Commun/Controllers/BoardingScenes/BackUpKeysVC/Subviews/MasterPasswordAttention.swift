@@ -3,14 +3,14 @@
 //  Commun
 //
 //  Created by Sergey Monastyrskiy on 25.11.2019.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import UIKit
 
 class MasterPasswordAttention: MyCardView {
     // MARK: - Properties
-    var ignoreSavingAction: (()->Void)?
+    var ignoreSavingAction: (() -> Void)?
     
     // MARK: - Custom Functions
     override func commonInit() {
@@ -47,7 +47,6 @@ class MasterPasswordAttention: MyCardView {
         
         let secondAStr = NSAttributedString(string: "Unfortunately for our comfort, blockchain doesn’t allow us to restore passwords. It means that it’s every user’s responsibility to keep the password in a safe place and be able to access it anytime.\nWe strongly recommend you to save your password and make a copy of it.".localized().uppercaseFirst, attributes: [.paragraphStyle: paragraphStyle, .font: UIFont.systemFont(ofSize: 17 * Config.heightRatio)])
         
-        
         let secondDescriptionLabel = UILabel.with(textSize: 15 * Config.heightRatio, textColor: .a5a7bd, numberOfLines: 0, textAlignment: .center)
         secondDescriptionLabel.attributedText = secondAStr
         addSubview(secondDescriptionLabel)
@@ -76,7 +75,6 @@ class MasterPasswordAttention: MyCardView {
         ignoreButton.addTarget(self, action: #selector(continueButtonTapped(_:)), for: .touchUpInside)
         
     }
-
     
     // MARK: - Actions
     @objc func closeButtonTapped(_ sender: UIButton) {

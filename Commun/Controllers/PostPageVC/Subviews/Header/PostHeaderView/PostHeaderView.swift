@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 11/8/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -114,8 +114,7 @@ class PostHeaderView: MyTableHeaderView, PostController {
         if post.document?.attributes?.type == "article" {
             // Show title
             titleLabel.text = post.document?.attributes?.title
-        }
-        else {
+        } else {
             titleLabel.text = nil
         }
         
@@ -138,7 +137,6 @@ class PostHeaderView: MyTableHeaderView, PostController {
         contentTextView.attributedText = attributedString
         layoutSubviews()
     }
-    
     
     // MARK: - Actions
     @objc func upVoteButtonDidTouch(_ sender: Any) {

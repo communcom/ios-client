@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 12/3/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -15,8 +15,7 @@ class ForceUpdateView: ErrorView {
         imageNamed: "update-the-app",
         title: "update the app".localized().uppercaseFirst,
         subtitle: "this version of the application is out of date.\nPlease update to continue using the app.".localized().uppercaseFirst,
-        retryButtonTitle: "update".localized().uppercaseFirst)
-        {
+        retryButtonTitle: "update".localized().uppercaseFirst) {
             let url = URL(string: "itms-apps://itunes.apple.com/app/id\(Config.appStoreId)")!
             UIApplication.shared.open(url)
         }
@@ -25,7 +24,6 @@ class ForceUpdateView: ErrorView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
     
     override func commonInit() {
         super.commonInit()

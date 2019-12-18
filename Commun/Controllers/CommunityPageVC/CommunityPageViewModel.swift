@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 10/23/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -74,8 +74,7 @@ class CommunityPageViewModel: ProfileViewModel<ResponseAPIContentGetCommunity> {
                     self.leadsVM.reload()
                 case .about:
                     if let description = self.community.value?.description,
-                        !description.isEmpty
-                    {
+                        !description.isEmpty {
                         self.aboutSubject.onNext(description)
                         self.listLoadingState.accept(.listEnded)
                         return
@@ -87,8 +86,7 @@ class CommunityPageViewModel: ProfileViewModel<ResponseAPIContentGetCommunity> {
                     self.rulesSubject.onNext(rules)
                     if rules.isEmpty {
                         self.listLoadingState.accept(.listEmpty)
-                    }
-                    else {
+                    } else {
                         self.listLoadingState.accept(.listEnded)
                     }
                 }

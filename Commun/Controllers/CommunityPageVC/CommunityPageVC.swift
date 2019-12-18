@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 10/23/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -39,7 +39,6 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
     override func createViewModel() -> ProfileViewModel<ResponseAPIContentGetCommunity> {
         CommunityPageViewModel(communityId: communityId)
     }
-    
     
     // MARK: - Subviews
     var headerView: CommunityHeaderView!
@@ -77,7 +76,6 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
         return containerView
     }()
     
-    
     // MARK: - Initializers
     init(communityId: String) {
         self.communityId = communityId
@@ -87,7 +85,6 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
     
     // MARK: - Methods
     override func setUpTableView() -> UITableView {
@@ -176,7 +173,7 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
     
     override func bindItems() {
         let dataSource = MyRxTableViewSectionedAnimatedDataSource<AnimatableSectionModel<String, CustomElementType>>(
-            configureCell: { (dataSource, tableView, indexPath, element) -> UITableViewCell in
+            configureCell: { (_, tableView, indexPath, element) -> UITableViewCell in
                 switch element {
                 case .post(let post):
                     switch post.document?.attributes?.type {
@@ -244,9 +241,8 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
             let post = (viewModel as! CommunityPageViewModel).postsVM.items.value[indexPath.row]
             let postPageVC = PostPageVC(post: post)
             self.show(postPageVC, sender: nil)
-            break
         case is CommunityLeaderCell:
-            #warning("Tap a leaderCell")
+            //TODO: Tap a leaderCell
             break
         default:
             break

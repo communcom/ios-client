@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 12/9/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -108,12 +108,13 @@ class SignInVC: BaseViewController {
         signUpButton.addTarget(self, action: #selector(signUpButtonDidTouch), for: .touchUpInside)
         
         // retrieve icloud key-value
-        let keyStore = NSUbiquitousKeyValueStore()
-        if let login = keyStore.string(forKey: Config.currentUserNameKey),
-            let key = keyStore.string(forKey: Config.currentUserMasterKey)
-        {
-            setTextfieldWithLogin(login, key: key)
-        }
+        #if !APPSTORE
+            let keyStore = NSUbiquitousKeyValueStore()
+            if let login = keyStore.string(forKey: Config.currentUserNameKey),
+                let key = keyStore.string(forKey: Config.currentUserMasterKey) {
+                setTextfieldWithLogin(login, key: key)
+            }
+        #endif
     }
     
     override func bind() {
@@ -169,8 +170,8 @@ class SignInVC: BaseViewController {
         
         // send request
         viewModel.signIn(
-            login:      loginTextField.text!.trimmingCharacters(in: .whitespaces),
-            masterKey:  passwordTextField.text!.trimmingCharacters(in: .whitespaces)
+            login: loginTextField.text!.trimmingCharacters(in: .whitespaces),
+            masterKey: passwordTextField.text!.trimmingCharacters(in: .whitespaces)
             )
             .subscribe(onCompleted: {
                 AppDelegate.reloadSubject.onNext(true)

@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 10/23/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -14,7 +14,6 @@ public var maxNestedLevel = 6
 //    var maxNestedLevel = 6
 class CommentsListFetcher: ListFetcher<ResponseAPIContentGetComment> {
     // MARK: - Properties
-
 
     // MARK: - type
     struct GroupedComment {
@@ -135,7 +134,7 @@ class CommentsListFetcher: ListFetcher<ResponseAPIContentGetComment> {
         return newList
     }
     
-    func flat(_ array:[GroupedComment]) -> [ResponseAPIContentGetComment] {
+    func flat(_ array: [GroupedComment]) -> [ResponseAPIContentGetComment] {
         var myArray = [ResponseAPIContentGetComment]()
         for element in array {
             myArray.append(element.comment)

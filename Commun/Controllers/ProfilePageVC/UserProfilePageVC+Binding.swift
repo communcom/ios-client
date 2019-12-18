@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 10/29/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -32,7 +32,7 @@ extension UserProfilePageVC: UICollectionViewDelegateFlowLayout, CommunityCellDe
         
         highlightCommunities
             .skip(1)
-            .bind(to: communitiesCollectionView.rx.items(cellIdentifier: "CommunityCollectionCell", cellType: CommunityCollectionCell.self)) { index, model, cell in
+            .bind(to: communitiesCollectionView.rx.items(cellIdentifier: "CommunityCollectionCell", cellType: CommunityCollectionCell.self)) { _, model, cell in
                 cell.setUp(with: model)
                 cell.delegate = self
             }
@@ -126,4 +126,3 @@ extension UserProfilePageVC: UITableViewDelegate {
         }
     }
 }
-
