@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 10/07/2019.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import UIKit
@@ -13,10 +13,9 @@ import CyberSwift
 class SetPasscodeVC: THPinViewController {
     // MARK: - Properties
     var currentPin: String?
-    var completion: (()->Void)?
+    var completion: (() -> Void)?
     var onBoarding = true
     var isVerifyVC = false
-    
     
     // MARK: - Class Initialization
     init() {
@@ -28,17 +27,16 @@ class SetPasscodeVC: THPinViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
     // MARK: - Class Functions
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        if (currentPin == nil && onBoarding) {
+        if currentPin == nil && onBoarding {
             navigationController?.setNavigationBarHidden(true, animated: animated)
         } else {
             title = "passcode".localized().uppercaseFirst
             navigationController?.navigationBar.barTintColor = .white
-            navigationController?.navigationBar.setBackgroundImage(UIImage(), for:.default)
+            navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
             navigationController?.navigationBar.shadowImage = UIImage()
             navigationController?.navigationBar.layoutIfNeeded()
         }
@@ -49,7 +47,7 @@ class SetPasscodeVC: THPinViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
-        if (currentPin == nil && onBoarding) {
+        if currentPin == nil && onBoarding {
             navigationController?.setNavigationBarHidden(false, animated: animated)
         }
     }
@@ -78,7 +76,6 @@ class SetPasscodeVC: THPinViewController {
         view.tintColor = .black
     }
 }
-
 
 // NARK: - THPinViewControllerDelegate
 extension SetPasscodeVC: THPinViewControllerDelegate {

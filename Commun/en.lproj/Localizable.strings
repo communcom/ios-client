@@ -3,7 +3,7 @@
   Commun
 
   Created by msm72 on 5/13/19.
-  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+  Copyright © 2019 Commun Limited. All rights reserved.
 */
 
 
@@ -204,7 +204,7 @@
 // T
 "tap to try again"                              =   "tap to try again";
 "the post has been deleted"                     =   "the post has been deleted";
-"there is an error occurred"                    =   "there is an error occurred";
+"there is an error occurred"                    =   "oops, an error occurred";
 "title placeholder"                             =   "title";
 "to secure your transactions"                   =   "to secure your transactions";
 "top"                                           =   "top";

@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 7/29/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import UIKit
@@ -64,7 +64,7 @@ class LocalAuthVC: THPinViewController {
                 print(error)
                 return
             }
-            myContext.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: myReason) { (success, errror) in
+            myContext.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: myReason) { (success, _) in
                 DispatchQueue.main.sync {
                     if success {
                         self.completion?()
@@ -103,8 +103,7 @@ extension LocalAuthVC: THPinViewControllerDelegate {
     
     func pinViewController(_ pinViewController: THPinViewController, isPinValid pin: String) -> Bool {
         guard let correctPin = Config.currentUser?.passcode else {return false}
-        if pin == correctPin {return true}
-        else {
+        if pin == correctPin {return true} else {
             remainingPinEntries -= 1
             return false
         }

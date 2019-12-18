@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 31/05/2019.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -11,10 +11,7 @@ import CyberSwift
 import ASSpinnerView
 
 extension UIView {
-    func showErrorView(retryAction: (()->Void)?) {
-        // prevent dupplicated
-        if let _ = subviews.first(where: {$0 is ErrorView}) {return}
-        
+    func showErrorView(retryAction: (() -> Void)?) {
         // setup new errorView
         let errorView = ErrorView(retryAction: retryAction)
         
@@ -25,9 +22,6 @@ extension UIView {
     }
     
     func showForceUpdate() {
-        // prevent dupplicated
-        if let _ = subviews.first(where: {$0 is ErrorView}) {return}
-        
         // setup new errorView
         let errorView = ForceUpdateView()
         
@@ -97,11 +91,9 @@ extension UIView {
         layer.add(animation, forKey: "position")
     }
     
-    func removeConstraintToSuperView(withAttribute attribute: NSLayoutConstraint.Attribute)
-    {
+    func removeConstraintToSuperView(withAttribute attribute: NSLayoutConstraint.Attribute) {
         guard let superview = superview else {return}
-        if let constraint = superview.constraints.first(where: {(($0.firstItem as? UIView) == self || ($0.secondItem as? UIView) == self) && $0.firstAttribute == attribute})
-        {
+        if let constraint = superview.constraints.first(where: {(($0.firstItem as? UIView) == self || ($0.secondItem as? UIView) == self) && $0.firstAttribute == attribute}) {
             superview.removeConstraint(constraint)
         }
     }

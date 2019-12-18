@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 11/25/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -60,8 +60,7 @@ class FTUEVC: BoardingVC {
         pageControl.autoAlignAxis(.horizontal, toSameAxisOf: communLabel)
         pageControl.autoAlignAxis(toSuperviewAxis: .vertical)
         
-        if UserDefaults.standard.bool(forKey: Config.currentUserDidSubscribeToMoreThan3Communities) == false
-        {
+        if UserDefaults.standard.bool(forKey: Config.currentUserDidSubscribeToMoreThan3Communities) == false {
             add(childVC: communitiesVC)
         }
     }
@@ -85,7 +84,7 @@ class FTUEVC: BoardingVC {
         
         containerView.bringSubviewToFront(communitiesVC.view)
         
-        UIView.transition(from: communitiesVC.view, to: authorizeOnWebVC.view, duration: 0.5, options: .transitionFlipFromLeft) { (finished) in
+        UIView.transition(from: communitiesVC.view, to: authorizeOnWebVC.view, duration: 0.5, options: .transitionFlipFromLeft) { (_) in
             self.communitiesVC.removeViewAndControllerFromParentViewController()
         }
         

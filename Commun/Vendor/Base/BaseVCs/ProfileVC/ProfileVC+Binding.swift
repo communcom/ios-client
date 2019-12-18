@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 10/28/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -17,7 +17,7 @@ extension ProfileVC {
             .share()
             
         offSetY
-            .subscribe(onNext: {offsetY in
+            .subscribe(onNext: {_ in
                 self.updateHeaderView()
             })
             .disposed(by: disposeBag)
@@ -45,7 +45,7 @@ extension ProfileVC {
                     self?._headerView.showLoader()
                 case .finished:
                     self?._headerView.hideLoader()
-                case .error(_):
+                case .error:
                     guard let strongSelf = self else {return}
                     strongSelf._headerView.hideLoader()
                     let backButtonOriginTintColor = strongSelf.navigationItem.leftBarButtonItem?.tintColor
@@ -71,7 +71,7 @@ extension ProfileVC {
                     self?.handleListEnded()
                 case .listEmpty:
                     self?.handleListEmpty()
-                case .error(_):
+                case .error:
                     guard let strongSelf = self else {return}
                     strongSelf.tableView.addListErrorFooterView(with: #selector(strongSelf.didTapTryAgain(gesture:)), on: strongSelf)
                     strongSelf.tableView.reloadData()

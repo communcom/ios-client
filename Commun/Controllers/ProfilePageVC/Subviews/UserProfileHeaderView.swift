@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 10/28/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -184,13 +184,11 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
         if let description = userProfile.personal?.biography {
             if description.count <= 180 {
                 descriptionLabel.text = description
-            }
-            else {
+            } else {
                 descriptionLabel.text = String(description.prefix(177)) + "..."
             }
         }
-        
-        #warning("fix these number later")
+        //TODO: fix these number later
         // stats
         followersCountLabel.text = "\(userProfile.subscribers?.usersCount ?? 0)"
         followingsCountLabel.text = "\(userProfile.subscriptions?.usersCount ?? 0)"

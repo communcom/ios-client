@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 11/7/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -48,10 +48,10 @@ class LeaderCollectionCell: MyCollectionViewCell, ListItemCellType {
     
     func setUp(with leader: ResponseAPIContentGetLeader) {
         self.leader = leader
-        avatarImageView.setAvatar(urlString: leader.avatarUrl, namePlaceHolder: leader.username ?? leader.userId)
+        avatarImageView.setAvatar(urlString: leader.avatarUrl, namePlaceHolder: leader.username)
         avatarImageView.percent = leader.ratingPercent
         
-        nameLabel.text = leader.username ?? leader.userId
+        nameLabel.text = leader.username
         
         let pointsText = NSMutableAttributedString(
             string: "\(leader.rating.kmFormatted) " + "points".localized().uppercaseFirst + " • ",

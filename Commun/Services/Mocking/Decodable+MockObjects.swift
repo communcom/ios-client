@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 19/04/2019.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -11,7 +11,7 @@ import RxSwift
 import CyberSwift
 
 extension Decodable {
-    static func mockData() -> Self?  {
+    static func mockData() -> Self? {
         if let path = Bundle.main.path(forResource: String(describing: self), ofType: "json") {
             do {
                 let data = try Data(contentsOf: URL(fileURLWithPath: path), options: .mappedIfSafe)

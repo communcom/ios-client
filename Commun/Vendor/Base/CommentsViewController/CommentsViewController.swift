@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 11/8/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -113,10 +113,10 @@ class CommentsViewController: ListViewController<ResponseAPIContentGetComment, C
     
     override func handleLoading() {
         tableView.addLoadingFooterView(
-            rowType:        PlaceholderNotificationCell.self,
-            tag:            notificationsLoadingFooterViewTag,
-            rowHeight:      88,
-            numberOfRows:   1
+            rowType: PlaceholderNotificationCell.self,
+            tag: notificationsLoadingFooterViewTag,
+            rowHeight: 88,
+            numberOfRows: 1
         )
     }
     

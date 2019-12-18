@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 24/04/2019.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -34,7 +34,7 @@ extension UIImageView {
         // profile image
         if let avatarUrl = urlString {
             sd_setImage(with: URL(string: avatarUrl), placeholderImage: UIImage(named: "ProfilePageUserAvatar")) { [weak self] (_, error, _, _) in
-                if (error != nil) {
+                if error != nil {
                     // Placeholder image
                     self?.setNonAvatarImageWithId(namePlaceHolder)
                 }
@@ -49,7 +49,7 @@ extension UIImageView {
          // Cover image
          if let coverUrlValue = urlString {
              sd_setImage(with: URL(string: coverUrlValue), placeholderImage: UIImage(named: namePlaceHolder)) { [weak self] (_, error, _, _) in
-                 if (error != nil) {
+                 if error != nil {
                      // Placeholder image
                      self?.image = .placeholder
                  }
@@ -66,10 +66,9 @@ extension UIImageView {
         else {return}
         if urlString.lowercased().ends(with: ".gif") {
             setGifFromURL(url)
-        }
-        else {
+        } else {
             showLoading(cover: false)
-            sd_setImage(with: url, placeholderImage: image) { [weak self] (image, error, _, _) in
+            sd_setImage(with: url, placeholderImage: image) { [weak self] (_, _, _, _) in
                 self?.hideLoading()
             }
         }
@@ -99,25 +98,16 @@ extension UIImageView {
     }
     
     func sd_setImageCachedError(with url: URL?, completion: ((Error?, UIImage?) -> Void)?) {
-//        showLoading()
-        guard let url = url else {
-//            image = UIImage(named: "image-not-found")
-            return
-        }
-        sd_setImage(with: url, placeholderImage: nil) { [weak self] (image, error, _, _) in
-//            self?.hideLoading()
-            if error != nil {
-//                self?.image = UIImage(named: "image-not-found")
-            }
+        guard let url = url else { return }
+        sd_setImage(with: url, placeholderImage: nil) { (image, error, _, _) in
             completion?(error, image)
         }
     }
 }
 
-
 extension Reactive where Base: UIImageView {
     var isEmpty: Observable<Bool> {
-        return observe(UIImage.self, "image").map{ $0 == nil }
+        return observe(UIImage.self, "image").map { $0 == nil }
             .distinctUntilChanged()
     }
 }

@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 10/28/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -40,7 +40,7 @@ class ProfileViewModel<ProfileType: Decodable>: BaseViewModel {
     func loadProfile() {
         loadProfileRequest
             .map {$0 as ProfileType?}
-            .do(onSuccess: { (profile) in
+            .do(onSuccess: { (_) in
                 self.loadingState.accept(.finished)
             }, onError: { (error) in
                 self.loadingState.accept(.error(error: error))

@@ -14,6 +14,7 @@ end
 
 def common_pods_commun
   common_pods
+  
   pod 'Fabric'
   pod 'Crashlytics'
   pod 'Firebase/Analytics'
@@ -59,6 +60,7 @@ def common_pods_commun
   pod 'SubviewAttachingTextView', :git => "https://github.com/communcom/SubviewAttachingTextView.git"
   
   pod "ReCaptcha"
+  pod 'SwiftLint'
 
 end
 

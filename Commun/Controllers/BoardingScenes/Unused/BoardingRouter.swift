@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 10/07/2019.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -16,8 +16,7 @@ extension BoardingRouter where Self: UIViewController {
     func boardingNextStep() {
         let step = KeychainManager.currentUser()?.settingStep ?? .setPasscode
         
-        if KeychainManager.currentUser()?.registrationStep == .relogined
-        {
+        if KeychainManager.currentUser()?.registrationStep == .relogined {
             if step == .setAvatar {
                 endBoarding()
                 return

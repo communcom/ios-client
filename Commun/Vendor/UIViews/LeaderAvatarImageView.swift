@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 11/5/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -39,7 +39,6 @@ class LeaderAvatarImageView: MyAvatarImageView {
         // get angle
         let angle = CGFloat(percent) * CGFloat.pi * 2 - CGFloat.pi / 2
         
-        
         for i in 0..<numberOfPieces {
             let startAngle: CGFloat = -CGFloat.pi / 2 + CGFloat(i) * (arcSpaceAngle + arcAngle) + arcSpaceAngle / 2
             let endAngle: CGFloat = startAngle + arcAngle
@@ -47,12 +46,10 @@ class LeaderAvatarImageView: MyAvatarImageView {
             if angle <= startAngle {
                 let percentLayer = arcLayer(withColor: #colorLiteral(red: 0.9137254902, green: 0.9176470588, blue: 0.937254902, alpha: 1), startAngle: startAngle, endAngle: endAngle)
                 percentLayers.append(percentLayer)
-            }
-            else if angle >= endAngle {
+            } else if angle >= endAngle {
                 let percentLayer = arcLayer(withColor: .appMainColor, startAngle: startAngle, endAngle: endAngle)
                 percentLayers.append(percentLayer)
-            }
-            else {
+            } else {
                 // separate
                 let percentLayer1 = arcLayer(withColor: .appMainColor, startAngle: startAngle, endAngle: angle)
                 percentLayers.append(percentLayer1)

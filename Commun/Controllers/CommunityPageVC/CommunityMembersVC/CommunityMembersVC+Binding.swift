@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 11/7/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -33,8 +33,7 @@ extension CommunityMembersVC: UICollectionViewDelegateFlowLayout {
                 self.headerView.removeFromSuperview()
                 if isAll {
                     self.showHeaderView()
-                }
-                else {
+                } else {
                     self.tableView.tableHeaderView = nil
                 }
             })
@@ -60,7 +59,7 @@ extension CommunityMembersVC: UICollectionViewDelegateFlowLayout {
                     self?.handleListEnded()
                 case .listEmpty:
                     self?.handleListEmpty()
-                case .error(_):
+                case .error:
                     self?.handleListError()
                 }
             })
@@ -70,7 +69,7 @@ extension CommunityMembersVC: UICollectionViewDelegateFlowLayout {
     func bindList() {
         // bind items
         let dataSource = MyRxTableViewSectionedAnimatedDataSource<AnimatableSectionModel<String, CustomElementType>>(
-            configureCell: { (dataSource, tableView, indexPath, element) -> UITableViewCell in
+            configureCell: { (_, tableView, indexPath, element) -> UITableViewCell in
                 switch element {
                 case .subscriber(let subscriber):
                     let cell = self.tableView.dequeueReusableCell(withIdentifier: "SubscribersCell") as! SubscribersCell
@@ -115,8 +114,7 @@ extension CommunityMembersVC: UICollectionViewDelegateFlowLayout {
                 // disable binding to tableview when data is LeaderType
                 // as leaders have already been binded to collectionView
                 if items is [ResponseAPIContentGetLeader] &&
-                    self.viewModel.segmentedItem.value == .all
-                {
+                    self.viewModel.segmentedItem.value == .all {
                     return false
                 }
                 return true
@@ -137,7 +135,7 @@ extension CommunityMembersVC: UICollectionViewDelegateFlowLayout {
             .disposed(by: disposeBag)
         
         let leaderDataSource = RxCollectionViewSectionedAnimatedDataSource<AnimatableSectionModel<String, ResponseAPIContentGetLeader>>(
-            configureCell: { (dataSource, tableView, indexPath, leader) -> UICollectionViewCell in
+            configureCell: { (_, _, indexPath, leader) -> UICollectionViewCell in
                 
                 if indexPath.row >= self.viewModel.leadersVM.items.value.count - 2 {
                     self.viewModel.fetchNext()

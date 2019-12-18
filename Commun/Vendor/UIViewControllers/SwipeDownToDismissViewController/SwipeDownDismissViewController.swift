@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 9/30/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -21,7 +21,7 @@ class SwipeDownDismissViewController: BaseViewController {
     }
     
     @objc func panGestureAction(_ sender: UIPanGestureRecognizer) {
-        let percentThreshold:CGFloat = 0.3
+        let percentThreshold: CGFloat = 0.3
 
         // convert y-position to downward pull progress (percentage)
         let translation = sender.translation(in: view)

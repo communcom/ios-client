@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Maxim Prigozhenkov on 12/04/2019.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 // FIXME: Need Refactoring
@@ -26,7 +26,7 @@ class ConfirmUserVC: UIViewController, SignUpRouter {
 
     let pinCodeInputView: PinCodeInputView<ItemView> = .init(digit:         numberOfDigits,
                                                              itemSpacing:   12,
-                                                             itemFactory:   {
+                                                             itemFactory: {
                                                                 let itemView = ItemView()
                                                                 let autoTestMarker = String(format: "ConfirmUserPinCodeInputView-%i", counter)
                                                                 
@@ -37,7 +37,6 @@ class ConfirmUserVC: UIViewController, SignUpRouter {
                                                                 
                                                                 return itemView
     })
-
     
     // MARK: - IBOutlets
     @IBOutlet weak var pinCodeView: UIView!
@@ -54,11 +53,11 @@ class ConfirmUserVC: UIViewController, SignUpRouter {
     
     @IBOutlet weak var smsCodeLabel: UILabel! {
         didSet {
-            self.smsCodeLabel.tune(withText:      "enter sms-code".localized().uppercaseFirst,
-                                   hexColors:     blackWhiteColorPickers,
-                                   font:          UIFont(name: "SFProText-Regular", size: 17.0 * Config.widthRatio),
-                                   alignment:     .center,
-                                   isMultiLines:  false)
+            self.smsCodeLabel.tune(withText: "enter sms-code".localized().uppercaseFirst,
+                                   hexColors: blackWhiteColorPickers,
+                                   font: UIFont(name: "SFProText-Regular", size: 17.0 * Config.widthRatio),
+                                   alignment: .center,
+                                   isMultiLines: false)
         }
     }
     
@@ -68,25 +67,24 @@ class ConfirmUserVC: UIViewController, SignUpRouter {
         didSet {
             self.resendButton.isEnabled = true
             
-            self.resendButton.tune(withTitle:     "resend verification code".localized().uppercaseFirst,
-                                   hexColors:     [softBlueColorPickers, verySoftBlueColorPickers, verySoftBlueColorPickers, verySoftBlueColorPickers],
-                                   font:          UIFont(name: "SFProText-Semibold", size: 15.0 * Config.widthRatio),
-                                   alignment:     .center)
+            self.resendButton.tune(withTitle: "resend verification code".localized().uppercaseFirst,
+                                   hexColors: [softBlueColorPickers, verySoftBlueColorPickers, verySoftBlueColorPickers, verySoftBlueColorPickers],
+                                   font: UIFont(name: "SFProText-Semibold", size: 15.0 * Config.widthRatio),
+                                   alignment: .center)
         }
     }
 
     @IBOutlet weak var resendTimerLabel: UILabel! {
         didSet {
-            self.resendTimerLabel.tune(withText:      "",
-                                       hexColors:     verySoftBlueColorPickers,
-                                       font:          UIFont(name: "SFProText-Semibold", size: 15.0 * Config.widthRatio),
-                                       alignment:     .center,
-                                       isMultiLines:  false)
+            self.resendTimerLabel.tune(withText: "",
+                                       hexColors: verySoftBlueColorPickers,
+                                       font: UIFont(name: "SFProText-Semibold", size: 15.0 * Config.widthRatio),
+                                       alignment: .center,
+                                       isMultiLines: false)
             
             self.checkResendSmsCodeTime()
         }
     }
-    
     
     // MARK: - Class Functions
     override func viewDidLoad() {
@@ -98,13 +96,13 @@ class ConfirmUserVC: UIViewController, SignUpRouter {
 
         nextButton.isEnabled = false
 
-        self.pinCodeInputView.set(changeTextHandler: { text in
+        self.pinCodeInputView.set(changeTextHandler: { _ in
             self.verify()
         })
         
         self.pinCodeInputView.set(appearance: .init(itemSize:         CGSize(width: CGFloat.adaptive(width: 48.0), height: CGFloat.adaptive(height: 56.0)),
-                                                    font:             .init(descriptor:     UIFontDescriptor(name:  "SFProText-Regular",
-                                                                                                             size:  CGFloat.adaptive(width: 26.0)),
+                                                    font:             .init(descriptor:     UIFontDescriptor(name: "SFProText-Regular",
+                                                                                                             size: CGFloat.adaptive(width: 26.0)),
                                                                             size:           CGFloat.adaptive(height: 26.0)),
                                                     textColor:        .black,
                                                     backgroundColor:  UIColor(hexString: "F3F5FA")!,
@@ -115,10 +113,6 @@ class ConfirmUserVC: UIViewController, SignUpRouter {
         
         self.pinCodeView.addSubview(pinCodeInputView)
         self.pinCodeInputView.center = pinCodeView.center
-        
-        if let smsCode = KeychainManager.currentUser()?.smsCode {
-            addAccessoryView(withSmsCode: String(smsCode))
-        }
     }
     
     override func viewWillLayoutSubviews() {
@@ -137,7 +131,6 @@ class ConfirmUserVC: UIViewController, SignUpRouter {
         self.deleteCode()
         self.pinCodeInputView.resignFirstResponder()
     }
-    
     
     // MARK: - Custom Functions
     func checkResendSmsCodeTime() {
@@ -160,16 +153,16 @@ class ConfirmUserVC: UIViewController, SignUpRouter {
         self.resendTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(onTimerFires), userInfo: nil, repeats: true)
     }
     
-    func addAccessoryView(withSmsCode smsCode: String) -> Void {
+    func addAccessoryView(withSmsCode smsCode: String) {
         let toolBar = UIToolbar(frame: CGRect(x: 0.0, y: 0.0, width: self.view.frame.size.width, height: CGFloat.adaptive(height: 44.0)))
         let smsCodeButton = UIBarButtonItem(title: smsCode, style: .plain, target: self, action: #selector(smsCodeButtonTapped(button:)))
         let spacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        toolBar.items = [spacer ,smsCodeButton, spacer]
+        toolBar.items = [spacer, smsCodeButton, spacer]
         toolBar.tintColor = UIColor(hexString: "#6A80F5")
         self.securityCodeTextField.inputAccessoryView = toolBar
     }
 
-    func removeAccessoryView() -> Void {
+    func removeAccessoryView() {
         self.securityCodeTextField.inputAccessoryView = nil
     }
     
@@ -177,10 +170,9 @@ class ConfirmUserVC: UIViewController, SignUpRouter {
     @IBAction func handlerTapGestureRecognizer(_ sender: UITapGestureRecognizer) {
         self.view.endEditing(true)
     }
-
     
     // MARK: - Actions
-    @objc func smsCodeButtonTapped(button: UIBarButtonItem) -> Void {
+    @objc func smsCodeButtonTapped(button: UIBarButtonItem) {
         self.pinCodeInputView.insertText(button.title!)
         removeAccessoryView()
     }
@@ -208,9 +200,9 @@ class ConfirmUserVC: UIViewController, SignUpRouter {
         RestAPIManager.instance.resendSmsCode()
             .subscribe(onSuccess: { [weak self] (_) in
                 guard let strongSelf = self else { return }
-                strongSelf.showAlert(title:         "info".localized().uppercaseFirst,
-                                     message:       "successfully resend code".localized().uppercaseFirst,
-                                     completion:    { success in
+                strongSelf.showAlert(title: "info".localized().uppercaseFirst,
+                                     message: "successfully resend code".localized().uppercaseFirst,
+                                     completion: { _ in
                                         strongSelf.checkResendSmsCodeTime()
                 })
             }) {[weak self] (error) in
@@ -256,7 +248,6 @@ class ConfirmUserVC: UIViewController, SignUpRouter {
     }
 }
 
-
 class ResendButton: UIButton {
      override var isEnabled: Bool {
          didSet {
@@ -288,7 +279,6 @@ class ResendButton: UIButton {
     }
 }
 
-
 // MARK: - UITextFieldDelegate
 extension ConfirmUserVC: UITextFieldDelegate {
     // TextField become first responder
@@ -301,17 +291,17 @@ extension ConfirmUserVC: UITextFieldDelegate {
     
     // Add validation to TextField
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-        return true;
+        return true
     }
     
     // Clear button tap
     func textFieldShouldClear(_ textField: UITextField) -> Bool {
-        return true;
+        return true
     }
     
     // Hide keyboard
     func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
-        return true;
+        return true
     }
     
     // TextField editing
@@ -320,12 +310,12 @@ extension ConfirmUserVC: UITextFieldDelegate {
             self.pinCodeInputView.insertText(string)
         }
         
-        return true;
+        return true
     }
     
     // Return button tap
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder();
-        return true;
+        textField.resignFirstResponder()
+        return true
     }
 }

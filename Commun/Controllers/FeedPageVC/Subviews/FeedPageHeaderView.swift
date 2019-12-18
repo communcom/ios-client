@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 12/11/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -66,7 +66,7 @@ class FeedPageHeaderView: MyTableHeaderView {
         }
     }
     
-    func openEditor(completion: ((BasicEditorVC)->Void)? = nil) {
+    func openEditor(completion: ((BasicEditorVC) -> Void)? = nil) {
         let editorVC = BasicEditorVC()
         editorVC.modalPresentationStyle = .fullScreen
         

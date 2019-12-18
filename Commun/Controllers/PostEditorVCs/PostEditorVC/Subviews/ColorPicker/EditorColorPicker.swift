@@ -32,7 +32,7 @@ import UIKit
 class ColorPickerViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     private let numberOfCellsInSection = 10
     var colors: [UIColor]!
-    var didSelectColor: ((UIColor)->Void)?
+    var didSelectColor: ((UIColor) -> Void)?
     
     private lazy var collectionView: UICollectionView = {
         let frame = view.frame
@@ -59,7 +59,6 @@ class ColorPickerViewController: UIViewController, UICollectionViewDelegate, UIC
         let data = try! Data(contentsOf: url)
         let strings = try! PropertyListDecoder().decode([String].self, from: data)
         colors = strings.map {UIColor(hexString: $0)!}
-        
         
         view.backgroundColor = .white
         

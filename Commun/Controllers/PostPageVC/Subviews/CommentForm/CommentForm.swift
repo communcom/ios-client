@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 11/11/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -28,11 +28,7 @@ class CommentForm: MyView {
         }
     }
     
-    private var parentComment: ResponseAPIContentGetComment? {
-        didSet {
-            self.url = parentComment?.attachments.first?.thumbnailUrl
-        }
-    }
+    private var parentComment: ResponseAPIContentGetComment?
     private var mode: Mode = .new
     let localImage = BehaviorRelay<UIImage?>(value: nil)
     var url: String?
@@ -49,18 +45,17 @@ class CommentForm: MyView {
         return textView
     }()
 
-    lazy var imageButton = CommunButton.circle(size:                 CGFloat.adaptive(width: 35.0),
-                                               backgroundColor:      .white,
-                                               tintColor:            UIColor(hexString: "#A5A7BD"),
-                                               imageName:            "icon-send-comment-gray-default",
-                                               imageEdgeInsets:      .zero)
+    lazy var imageButton = CommunButton.circle(size: CGFloat.adaptive(width: 35.0),
+                                               backgroundColor: .white,
+                                               tintColor: UIColor(hexString: "#A5A7BD"),
+                                               imageName: "icon-send-comment-gray-default",
+                                               imageEdgeInsets: .zero)
 
-    lazy var sendButton = CommunButton.circle(size:                 CGFloat.adaptive(width: 35.0),
-                                              backgroundColor:      UIColor(hexString: "#6A80F5")!,
-                                              tintColor:            .white,
-                                              imageName:            "send",
-                                              imageEdgeInsets:      .zero)
-
+    lazy var sendButton = CommunButton.circle(size: CGFloat.adaptive(width: 35.0),
+                                              backgroundColor: UIColor(hexString: "#6A80F5")!,
+                                              tintColor: .white,
+                                              imageName: "send",
+                                              imageEdgeInsets: .zero)
     
     // MARK: - Methods
     override func commonInit() {
@@ -94,12 +89,18 @@ class CommentForm: MyView {
         
         textView.text = nil
         
-        if mode == .edit {
+        switch mode {
+        case .edit:
             let aStr = parentComment?.document?.toAttributedString(
                 currentAttributes: [.font: UIFont.systemFont(ofSize: 13)],
                 attachmentType: TextAttachment.self)
             textView.attributedText = aStr
             textView.originalAttributedString = aStr
+            self.url = parentComment?.attachments.first?.thumbnailUrl
+        case .reply:
+            self.url = nil
+        case .new:
+            self.url = nil
         }
         
         setUp()
@@ -108,16 +109,14 @@ class CommentForm: MyView {
     func setUp() {
         // clear
         constraintTop?.isActive = false
-        for subview in subviews {
-            if subview != stackView {
-                subview.removeFromSuperview()
-            }
+
+        for subview in subviews where subview != stackView {
+            subview.removeFromSuperview()
         }
         
         // mode
         var imageView: UIImageView?
-        if (localImage.value != nil) || (mode == .edit && url != nil)
-        {
+        if (localImage.value != nil) || (mode == .edit && url != nil) {
             imageView = MyImageView(width: CGFloat.adaptive(height: 80), height: CGFloat.adaptive(height: 80), cornerRadius: CGFloat.adaptive(height: 15))
             imageView?.contentMode = .scaleAspectFill
             addSubview(imageView!)
@@ -135,27 +134,23 @@ class CommentForm: MyView {
             
             if let image = localImage.value {
                 imageView?.image = image
-            }
-            else if let url = url {
+            } else if let url = url {
                 imageView?.setImageDetectGif(with: url)
             }
         }
-        
         
         if mode == .new {
             if imageView == nil {
                 constraintTop = stackView.autoPinEdge(toSuperviewEdge: .top, withInset: CGFloat.adaptive(height: 10.0))
             }
-        }
-        else {
+        } else {
             let parentCommentView = createParentCommentView()
             addSubview(parentCommentView)
             
             if imageView == nil {
                 constraintTop = parentCommentView.autoPinEdge(toSuperviewEdge: .top, withInset: CGFloat.adaptive(height: 10.0))
                 parentCommentView.autoPinEdge(.leading, to: .leading, of: textView)
-            }
-            else {
+            } else {
                 parentCommentView.autoPinEdge(.leading, to: .trailing, of: imageView!, withOffset: CGFloat.adaptive(height: 16))
             }
             
@@ -183,12 +178,10 @@ class CommentForm: MyView {
         imageView.autoAlignAxis(toSuperviewAxis: .horizontal)
         
         if let url = parentComment?.attachments.first?.thumbnailUrl,
-            mode != .edit
-        {
+            mode != .edit {
             imageView.widthConstraint?.constant = height
             imageView.setImageDetectGif(with: url)
-        }
-        else {
+        } else {
             imageView.widthConstraint?.constant = 0
         }
         
@@ -210,7 +203,6 @@ class CommentForm: MyView {
         }
         
         let parentCommentLabel = UILabel.with(textSize: CGFloat.adaptive(width: 13.0))
-        
         
         parentCommentLabel.attributedText = parentComment?.document?.toAttributedString(
             currentAttributes: [.font: UIFont.systemFont(ofSize: 13)],
@@ -237,7 +229,6 @@ class CommentForm: MyView {
             })
             .disposed(by: disposeBag)
         
-        
         // setup observer
         let textViewChanged = textView.rx.text.orEmpty
             .distinctUntilChanged()
@@ -252,8 +243,7 @@ class CommentForm: MyView {
                 let isTextViewEmpty = self.textView.text.isEmpty
                 let isTextChanged = (self.textView.attributedText != self.textView.originalAttributedString)
                 
-                if self.mode == .edit && !isTextViewEmpty && self.url != self.parentComment?.attachments.first?.thumbnailUrl
-                {
+                if self.mode == .edit && !isTextViewEmpty && self.url != self.parentComment?.attachments.first?.thumbnailUrl {
                     return true
                 }
                 
@@ -348,4 +338,3 @@ extension CommentForm {
             .disposed(by: disposeBag)
     }
 }
-

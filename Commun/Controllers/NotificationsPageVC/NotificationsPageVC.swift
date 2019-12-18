@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 10/04/2019.
-//  Copyright (c) 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright (c) 2019 Commun Limited. All rights reserved.
 //
 
 import UIKit
@@ -46,9 +46,8 @@ class NotificationsPageVC: SubsViewController<ResponseAPIOnlineNotificationData,
             .distinctUntilChanged()
             .subscribe(onNext: { (showShadow) in
                 if showShadow {
-                    self.navigationController?.navigationBar.addShadow(ofColor: .shadow, offset: CGSize(width: 0, height: 2), opacity: 0.1)
-                }
-                else {
+                    self.navigationController?.navigationBar.addShadow(ofColor: .shadow, radius: 16, offset: CGSize(width: 0, height: 6), opacity: 0.05)
+                } else {
                     self.navigationController?.navigationBar.shadowOpacity = 0
                 }
             })
@@ -110,7 +109,7 @@ class NotificationsPageVC: SubsViewController<ResponseAPIOnlineNotificationData,
     override func handleListError() {
         let title = "coming Soon"
         let description = "available in the future"
-        tableView.addEmptyPlaceholderFooterView(title: title.localized().uppercaseFirst, description: description.localized().uppercaseFirst, buttonLabel:nil)
+        tableView.addEmptyPlaceholderFooterView(title: title.localized().uppercaseFirst, description: description.localized().uppercaseFirst, buttonLabel: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {

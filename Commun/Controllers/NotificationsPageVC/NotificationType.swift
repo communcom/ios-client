@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 12/04/2019.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -36,7 +36,6 @@ enum NotificationType: String {
             
             detail.text = text
             detail.icon = UIImage(named: "NotificationUpvote")
-            break
         case .downvote:
             let text = NSMutableAttributedString()
                 .semibold(name)
@@ -47,7 +46,6 @@ enum NotificationType: String {
             
             detail.text = text
             detail.icon = UIImage(named: "NotificationDownvote")
-            break
         case .subscribe:
             let text = NSMutableAttributedString()
                 .semibold(name)
@@ -55,7 +53,6 @@ enum NotificationType: String {
                 .normal("subscribed you".localized())
             detail.text = text
             detail.icon = UIImage(named: "NotificationSubscribe")
-            break
         case .transfer:
             let text = NSMutableAttributedString()
                 .semibold(name)
@@ -64,7 +61,6 @@ enum NotificationType: String {
                 .normal(" \(notification.value!.amount) \(notification.value!.currency)")
             detail.text = text
             detail.icon = UIImage(named: "NotificationTransfer")
-            break
         case .reply:
             let text = NSMutableAttributedString()
                 .semibold(name)
@@ -83,7 +79,6 @@ enum NotificationType: String {
             
             detail.text = text
             detail.icon = UIImage(named: "NotificationComment")
-            break
         case .mention:
             let text = NSMutableAttributedString()
                 .semibold(name)
@@ -106,7 +101,6 @@ enum NotificationType: String {
             
             detail.text = text
             detail.icon = UIImage(named: "NotificationMention")
-            break
         case .reward:
             let text = NSMutableAttributedString()
                 .semibold("+\(notification.value!.amount) \(notification.value!.currency). ")
@@ -115,7 +109,6 @@ enum NotificationType: String {
                 .semibold(notification.post!.title ?? "")
             detail.text = text
             detail.icon = UIImage(named: "NotificationRewardsForPost")
-            break
         case .curatorReward:
             let text = NSMutableAttributedString()
                 .semibold("+\(notification.value!.amount) \(notification.value!.currency). ")
@@ -124,7 +117,6 @@ enum NotificationType: String {
                 .semibold(notification.post!.title ?? "")
             detail.text = text
             detail.icon = UIImage(named: "NotificationRewardsForVotes")
-            break
         case .witnessVote:
             let text = NSMutableAttributedString()
                 .semibold(name)
@@ -133,7 +125,6 @@ enum NotificationType: String {
                 .normal(". 🔥")
             detail.text = text
             detail.icon = UIImage(named: "NotificationUpvote")
-            break
         case .witnessCancelVote:
             let text = NSMutableAttributedString()
                 .semibold(name)
@@ -142,7 +133,6 @@ enum NotificationType: String {
                 .normal(". 🙈")
             detail.text = text
             detail.icon = UIImage(named: "NotificationDownvote")
-            break
         }
         return detail
     }

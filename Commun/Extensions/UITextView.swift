@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 8/23/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -17,7 +17,7 @@ extension UITextView {
         let attachmentAS = NSAttributedString(attachment: attachment)
         let currentMAS = NSMutableAttributedString(attributedString: attributedText)
         currentMAS.insert(attachmentAS, at: selectedRange.location)
-        currentMAS.addAttributes(typingAttributes, range: NSMakeRange(0, currentMAS.length))
+        currentMAS.addAttributes(typingAttributes, range: NSRange(location: 0, length: currentMAS.length))
         attributedText = currentMAS
     }
     
@@ -47,16 +47,14 @@ extension UITextView {
     
     // MARK: - Hashtags
     func resolveHashTags() {
-        if let regex = try? NSRegularExpression(pattern: NSRegularExpression.tagRegexPattern, options: .caseInsensitive)
-        {
+        if let regex = try? NSRegularExpression(pattern: NSRegularExpression.tagRegexPattern, options: .caseInsensitive) {
             addAppLink(regex: regex, prefix: "\(URL.appURL)/")
         }
     }
     
     // MARK: - Mentions
     func resolveMentions() {
-        if let regex = try? NSRegularExpression(pattern: NSRegularExpression.mentionRegexPattern, options: .caseInsensitive)
-        {
+        if let regex = try? NSRegularExpression(pattern: NSRegularExpression.mentionRegexPattern, options: .caseInsensitive) {
             addAppLink(regex: regex, prefix: "\(URL.appURL)/")
         }
     }

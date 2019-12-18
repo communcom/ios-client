@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 12/13/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -37,7 +37,7 @@ class UserNameRulesView: MyCardView {
         let attributedString = NSMutableAttributedString(string: rulesText)
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 8 * Config.heightRatio
-        attributedString.addAttribute(NSAttributedString.Key.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, attributedString.length))
+        attributedString.addAttribute(NSAttributedString.Key.paragraphStyle, value: paragraphStyle, range: NSRange(location: 0, length: attributedString.length))
         
         let rulesLabel = UILabel.with(textSize: 15, textColor: .a5a7bd, numberOfLines: 0)
         rulesLabel.attributedText = attributedString

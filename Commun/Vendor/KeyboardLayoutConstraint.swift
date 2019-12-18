@@ -25,8 +25,8 @@ import UIKit
 @available(tvOS, unavailable)
 class KeyboardLayoutConstraint: ScalableLayoutConstraint {
     
-    private var offset : CGFloat = 0
-    private var keyboardVisibleHeight : CGFloat = 0
+    private var offset: CGFloat = 0
+    private var keyboardVisibleHeight: CGFloat = 0
     
     func observeKeyboardHeight() {
         offset = constant
@@ -72,7 +72,7 @@ class KeyboardLayoutConstraint: ScalableLayoutConstraint {
                     animations: {
                         UIApplication.shared.keyWindow?.layoutIfNeeded()
                         return
-                }, completion: { finished in
+                }, completion: { _ in
                 })
             default:
                 
@@ -101,7 +101,7 @@ class KeyboardLayoutConstraint: ScalableLayoutConstraint {
                     animations: {
                         UIApplication.shared.keyWindow?.layoutIfNeeded()
                         return
-                }, completion: { finished in
+                }, completion: { _ in
                 })
             default:
                 break

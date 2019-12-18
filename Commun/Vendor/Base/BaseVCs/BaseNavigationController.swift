@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 8/13/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import UIKit
@@ -80,8 +80,7 @@ final class BaseNavigationController: UINavigationController {
             viewController.view.constraints.first(where: {constraint in
                 ((constraint.firstItem as? UIView) == scrollView || (constraint.secondItem as? UIView) == scrollView) &&
                 (constraint.firstAttribute == .bottom && constraint.secondAttribute == .bottom)
-            }) != nil
-        {
+            }) != nil {
             let bottomOffset: CGFloat = 10
             let bottomInset = scrollView.contentInset.bottom + bottomOffset + tabBarHeight
             scrollView.contentInset.bottom = bottomInset

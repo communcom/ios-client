@@ -3,14 +3,14 @@
 //  Commun
 //
 //  Created by Chung Tran on 9/23/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import UIKit
 import RxSwift
 
 class CommentTextView: ContentTextView {
-    override var defaultTypingAttributes: [NSAttributedString.Key : Any] {
+    override var defaultTypingAttributes: [NSAttributedString.Key: Any] {
         return [.font: UIFont.systemFont(ofSize: 14)]
     }
     
@@ -22,10 +22,8 @@ class CommentTextView: ContentTextView {
     override func clearFormatting() {
         if selectedRange.length <= 1 {
             typingAttributes = defaultTypingAttributes
-        }
-        else {
-            textStorage.enumerateAttributes(in: selectedRange, options: []) {
-                (attrs, range, stop) in
+        } else {
+            textStorage.enumerateAttributes(in: selectedRange, options: []) { (attrs, range, _) in
                 if let link = attrs[.link] as? String {
                     if link.isLinkToTag || link.isLinkToMention {
                         return

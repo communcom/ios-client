@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 10/15/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -52,8 +52,7 @@ extension BasicEditorVC {
             }
             for data in draft {
                 DispatchQueue.main.sync {
-                    if let attachment = try? JSONDecoder().decode(TextAttachment.self, from: data)
-                    {
+                    if let attachment = try? JSONDecoder().decode(TextAttachment.self, from: data) {
                         self._viewModel.attachment.accept(attachment)
                     }
                 }

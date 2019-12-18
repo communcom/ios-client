@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 10/2/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -29,7 +29,7 @@ extension VCWithParallax {
         
         tableView.rx.contentOffset
             .map {$0.y}
-            .subscribe(onNext: {offsetY in
+            .subscribe(onNext: {_ in
                 self.updateHeaderView()
             })
             .disposed(by: disposeBag)

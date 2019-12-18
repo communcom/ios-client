@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 12/2/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -39,7 +39,7 @@ extension CommentCellDelegate where Self: BaseViewController {
     }
     
     func cell(_ cell: CommentCell, didTapOnTag tag: String) {
-        #warning("open tag")
+        //TODO: open tag
     }
     
     func cell(_ cell: CommentCell, didTapMoreActionFor comment: ResponseAPIContentGetComment) {
@@ -58,8 +58,8 @@ extension CommentCellDelegate where Self: BaseViewController {
         var actions: [CommunActionSheet.Action] = []
         // parsing all paragraph
         var texts: [String] = []
-        for documentContent in comment.document?.content.arrayValue ?? [] {
-            if documentContent.type == "paragraph", documentContent.content.arrayValue?.count ?? 0 > 0 {
+        for documentContent in comment.document?.content.arrayValue ?? [] where documentContent.type == "paragraph" {
+            if documentContent.content.arrayValue?.count ?? 0 > 0 {
                 let paragraphContent = documentContent.content.arrayValue?.first
                 if let text = paragraphContent?.content.stringValue {
                     texts.append(text)
@@ -110,7 +110,6 @@ extension CommentCellDelegate where Self: BaseViewController {
                     tintColor: UIColor(hexString: "#ED2C5B")!)
             )
         }
-
         
         showCommunActionSheet(
             headerView: headerView,
@@ -156,8 +155,7 @@ extension CommentCellDelegate where Self: BaseViewController {
             buttonTitles: [
                 "yes".localized().uppercaseFirst,
                 "no".localized().uppercaseFirst],
-            highlightedButtonIndex: 1)
-            { (index) in
+            highlightedButtonIndex: 1) { (index) in
                 if index == 0 {
                     topController.showIndetermineHudWithMessage("deleting comment".localized().uppercaseFirst)
                     NetworkService.shared.deleteMessage(message: comment)

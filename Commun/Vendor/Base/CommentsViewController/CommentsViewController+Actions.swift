@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 12/16/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -21,8 +21,7 @@ extension CommentsViewController {
             currentCell.contentTextView.backgroundColor = .lightGray
         case .ended:
             if (comment.sendingState ?? MessageSendingState.none) != MessageSendingState.none ||
-                comment.document == nil
-            {
+                comment.document == nil {
                 return
             }
             cell(currentCell, didTapMoreActionFor: comment)

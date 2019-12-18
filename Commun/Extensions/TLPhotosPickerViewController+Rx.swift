@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 22/04/2019.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -89,7 +89,7 @@ extension Reactive where Base: TLPhotosPickerViewController {
                 requestOptions.isNetworkAccessAllowed = true
 
                 return .create {observer in
-                    imageManager.requestImage(for: asset, targetSize: PHImageManagerMaximumSize, contentMode: .aspectFill, options: requestOptions) { image, info in                        observer.onNext(image)
+                    imageManager.requestImage(for: asset, targetSize: PHImageManagerMaximumSize, contentMode: .aspectFill, options: requestOptions) { image, _ in                        observer.onNext(image)
                     }
                     return Disposables.create()
                 }

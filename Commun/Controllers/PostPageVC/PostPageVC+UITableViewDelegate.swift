@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 11/9/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -66,8 +66,7 @@ extension PostPageVC {
                 guard let strongSelf = self else {return}
                 // modify data
                 var comments = strongSelf.viewModel.items.value
-                if let currentCommentIndex = comments.firstIndex(where: {$0.identity == comment.identity})
-                {
+                if let currentCommentIndex = comments.firstIndex(where: {$0.identity == comment.identity}) {
                     var newChildren = comments[currentCommentIndex].children ?? []
                     newChildren.joinUnique(children ?? [])
                     newChildren = newChildren.sortedByTimeDesc

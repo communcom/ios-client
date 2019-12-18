@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 12/9/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -50,7 +50,7 @@ class SignInVC: BaseViewController {
     private func createTextField() -> UITextField {
         let textField = UITextField(height: 56 * Config.heightRatio, backgroundColor: .f3f5fa, cornerRadius: 12 * Config.heightRatio)
         textField.font = .systemFont(ofSize: 17 * Config.heightRatio)
-        let paddingView: UIView = UIView(frame: CGRect(x: 0, y: 0, width: 16, height: 20))
+        let paddingView: UIView = UIView(width: 16, height: 20)
         textField.leftView = paddingView
         textField.leftViewMode = .always
         return textField
@@ -110,8 +110,7 @@ class SignInVC: BaseViewController {
         // retrieve icloud key-value
         let keyStore = NSUbiquitousKeyValueStore()
         if let login = keyStore.string(forKey: Config.currentUserNameKey),
-            let key = keyStore.string(forKey: Config.currentUserMasterKey)
-        {
+            let key = keyStore.string(forKey: Config.currentUserMasterKey) {
             setTextfieldWithLogin(login, key: key)
         }
     }
@@ -169,8 +168,8 @@ class SignInVC: BaseViewController {
         
         // send request
         viewModel.signIn(
-            login:      loginTextField.text!.trimmingCharacters(in: .whitespaces),
-            masterKey:  passwordTextField.text!.trimmingCharacters(in: .whitespaces)
+            login: loginTextField.text!.trimmingCharacters(in: .whitespaces),
+            masterKey: passwordTextField.text!.trimmingCharacters(in: .whitespaces)
             )
             .subscribe(onCompleted: {
                 AppDelegate.reloadSubject.onNext(true)

@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 01/07/2019.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import UIKit
@@ -15,7 +15,6 @@ class WelcomeVC: UIViewController {
     // MARK: - Properties
     var welcomePageVC: WelcomePageVC!
     lazy var pageControl = CMPageControll(numberOfPages: 4)
-
     
     // MARK: - IBOutlets
     @IBOutlet weak var nextButton: StepButton!
@@ -28,9 +27,9 @@ class WelcomeVC: UIViewController {
     
     @IBOutlet weak var bottomSignInButton: StepButton! {
         didSet {
-            self.bottomSignInButton.commonInit(backgroundColor:     UIColor(hexString: "#F3F5FA"),
-                                               font:                .boldSystemFont(ofSize: CGFloat.adaptive(width: 15.0)),
-                                               cornerRadius:        self.bottomSignInButton.height / 2)
+            self.bottomSignInButton.commonInit(backgroundColor: UIColor(hexString: "#F3F5FA"),
+                                               font: .boldSystemFont(ofSize: CGFloat.adaptive(width: 15.0)),
+                                               cornerRadius: self.bottomSignInButton.height / 2)
             
             self.bottomSignInButton.setTitleColor(UIColor(hexString: "#6A80F5"), for: .normal)
             self.bottomSignInButton.isHidden = true
@@ -39,9 +38,9 @@ class WelcomeVC: UIViewController {
 
     @IBOutlet weak var topSignInButton: BlankButton! {
         didSet {
-            self.topSignInButton.commonInit(hexColors:      [blackWhiteColorPickers, grayishBluePickers, grayishBluePickers, grayishBluePickers],
-                                            font:           UIFont.systemFont(ofSize: CGFloat.adaptive(width: 15.0), weight: .medium),
-                                            alignment:      .right)
+            self.topSignInButton.commonInit(hexColors: [blackWhiteColorPickers, grayishBluePickers, grayishBluePickers, grayishBluePickers],
+                                            font: UIFont.systemFont(ofSize: CGFloat.adaptive(width: 15.0), weight: .medium),
+                                            alignment: .right)
         }
     }
     
@@ -49,8 +48,8 @@ class WelcomeVC: UIViewController {
         didSet {
             self.actionButtonsCollection.forEach {
                 $0.commonInit(backgroundColor: .appMainColor,
-                              font:            .boldSystemFont(ofSize: CGFloat.adaptive(width: 15.0)),
-                              cornerRadius:    $0.height / 2)
+                              font: .boldSystemFont(ofSize: CGFloat.adaptive(width: 15.0)),
+                              cornerRadius: $0.height / 2)
             }
         }
     }
@@ -60,7 +59,6 @@ class WelcomeVC: UIViewController {
             self.signUpButton.isHidden = true
         }
     }
-    
     
     // MARK: - Class Functions
     override func viewDidLoad() {
@@ -94,13 +92,11 @@ class WelcomeVC: UIViewController {
         }
     }
     
-    
     // MARK: - Custom Functions
     func navigateToSignUp() {
         let signUpVC = controllerContainer.resolve(SignUpVC.self)!
         show(signUpVC, sender: nil)
     }
-
     
     // MARK: - Actions
     @IBAction func signInButtonTap(_ sender: Any) {

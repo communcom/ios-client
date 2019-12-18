@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 10/22/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -13,9 +13,7 @@ extension PostsViewController {
         guard let viewModel = viewModel as? PostsViewModel else {return}
         if viewModel.filter.value.feedTypeMode == .subscriptions {
             viewModel.changeFilter(feedTypeMode: .new)
-        }
-        
-        else {
+        } else {
             viewModel.changeFilter(feedTypeMode: .subscriptions, feedType: .time)
         }
     }

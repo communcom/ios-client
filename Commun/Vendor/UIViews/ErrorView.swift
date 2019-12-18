@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 11/1/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -19,7 +19,7 @@ class ErrorView: MyView {
     
     lazy var retryButton = UIButton(height: CGFloat.adaptive(height: 50), labelFont: UIFont.systemFont(ofSize: 15, weight: .bold), backgroundColor: .appMainColor, textColor: .white, cornerRadius: CGFloat.adaptive(height: 25))
 
-    var retryAction: (()->Void)?
+    var retryAction: (() -> Void)?
     
     init(
         imageRatio: CGFloat = 285/350,
@@ -27,7 +27,7 @@ class ErrorView: MyView {
         title: String = "no connection".localized().uppercaseFirst,
         subtitle: String = "check your Internet connection\n and try again".localized().uppercaseFirst,
         retryButtonTitle: String = "try again".localized().uppercaseFirst,
-        retryAction: (()->Void)?
+        retryAction: (() -> Void)?
     ) {
         self.imageRatio = imageRatio
         super.init(frame: .zero)

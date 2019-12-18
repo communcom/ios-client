@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 11/07/2019.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import UIKit
@@ -14,13 +14,11 @@ import RxSwift
 class KeysVC: UIViewController, BoardingRouter {
     // MARK: - Properties
     var disposeBag = DisposeBag()
-    var completion: (()->Void)?
+    var completion: (() -> Void)?
     var onBoarding = true
-    
 
     // MARK: - IBOutlets
     @IBOutlet weak var tableView: UITableView!
-        
     
     // MARK: - Class Functions
     override func viewDidLoad() {
@@ -34,7 +32,6 @@ class KeysVC: UIViewController, BoardingRouter {
         
         bindUI()
     }
-    
     
     // MARK: - Custom Functions
     func bindUI() {
@@ -64,7 +61,7 @@ class KeysVC: UIViewController, BoardingRouter {
                 }
                 return keys
             }
-            .bind(to: tableView.rx.items(cellIdentifier: "KeyCell")) { (row, element, cell) in
+            .bind(to: tableView.rx.items(cellIdentifier: "KeyCell")) { (_, element, cell) in
                 let keyTypeLabel = cell.viewWithTag(1) as! UILabel
                 let keyLabel = cell.viewWithTag(2) as! UILabel
                 keyTypeLabel.text = element.key
@@ -72,7 +69,6 @@ class KeysVC: UIViewController, BoardingRouter {
             }
             .disposed(by: disposeBag)
     }
-
     
     // MARK: - Actions
     @IBAction func backupIcloudDidTouch(_ sender: Any) {

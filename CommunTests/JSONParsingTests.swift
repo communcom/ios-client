@@ -3,7 +3,7 @@
 //  CommunTests
 //
 //  Created by Chung Tran on 14/06/2019.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import XCTest

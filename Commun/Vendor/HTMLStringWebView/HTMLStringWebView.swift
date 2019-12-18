@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 24/07/2019.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import WebKit
@@ -13,7 +13,6 @@ import SafariServices
 class HTMLStringWebView: WKWebView {
     // MARK: - Properties
     var htmlString: String?
-    
     
     // MARK: - Custom Functions
     func load(htmlString string: String, baseURL: URL?) {

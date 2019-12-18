@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 9/23/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import UIKit
@@ -36,8 +36,7 @@ class ContentTextView: UITextView {
         }
         
         /// Return new TextStyle by modifying current TextStyle
-        func setting(isBool: Bool? = nil, isItalic: Bool? = nil, isMixed: Bool? = nil, textColor: UIColor? = nil, urlString: String? = nil) -> TextStyle
-        {
+        func setting(isBool: Bool? = nil, isItalic: Bool? = nil, isMixed: Bool? = nil, textColor: UIColor? = nil, urlString: String? = nil) -> TextStyle {
             let isBool = isBool ?? self.isBold
             let isItalic = isItalic ?? self.isItalic
             let isMixed = isMixed ?? self.isMixed
@@ -48,7 +47,7 @@ class ContentTextView: UITextView {
     }
     
     // MARK: - Properties
-    var addLinkDidTouch: (()->Void)?
+    var addLinkDidTouch: (() -> Void)?
     
     // Must override!!!
     var defaultTypingAttributes: [NSAttributedString.Key: Any] {
@@ -90,7 +89,7 @@ class ContentTextView: UITextView {
             UIMenuItem(
                 title: "clear formatting".localized().uppercaseFirst,
                 action: #selector(self.clearFormatting)
-            ),
+            )
         ]
     }
     
@@ -177,7 +176,7 @@ class ContentTextView: UITextView {
             typingAttributes = defaultTypingAttributes
             setCurrentTextStyle()
         } else {
-            textStorage.enumerateAttributes(in: selectedRange, options: []) { (attrs, range, stop) in
+            textStorage.enumerateAttributes(in: selectedRange, options: []) { (attrs, range, _) in
                 if let link = attrs[.link] as? String {
                     if link.isLinkToTag || link.isLinkToMention {
                         return
@@ -228,12 +227,10 @@ class ContentTextView: UITextView {
         } else if selectedRange.length == 0 {
             let attr = typingAttributes
             if let link = attr[.link] as? String,
-                link.isLink
-            {
-                textStorage.enumerateAttribute(.link, in: NSMakeRange(0, textStorage.length), options: []) { (currentLink, range, stop) in
+                link.isLink {
+                textStorage.enumerateAttribute(.link, in: NSRange(location: 0, length: textStorage.length), options: []) { (currentLink, range, _) in
                     if currentLink as? String == link,
-                        range.contains(selectedRange.location - 1)
-                    {
+                        range.contains(selectedRange.location - 1) {
                         textStorage.removeAttribute(.link, range: range)
                     }
                 }
@@ -245,20 +242,17 @@ class ContentTextView: UITextView {
         textStorage.insert(NSAttributedString(string: text, attributes: defaultTypingAttributes), at: index)
     }
     
-    
     // MARK: - Draft
     /// For parsing attachments only, if attachments are not allowed, leave an empty Completable
     func parseAttachments() -> Completable {
         return .empty()
     }
     
-    
     // MARK: - ContentBlock
     func getContentBlock() -> Single<ResponseAPIContentBlock> {
         fatalError("Must override")
     }
 }
- 
 
 // MARK: - UIPopoverPresentationControllerDelegate
 extension ContentTextView: UIPopoverPresentationControllerDelegate {

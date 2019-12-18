@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 10/16/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import UIKit
@@ -17,11 +17,11 @@ class PostHeaderTextView: MySubviewAttachingTextView {
     }()
     let defaultFont = UIFont.systemFont(ofSize: 17)
     
-    var defaultAttributes: [NSAttributedString.Key : Any] {
+    var defaultAttributes: [NSAttributedString.Key: Any] {
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.paragraphSpacing = 20
         return [
-            .font: defaultFont,
+            .font: defaultFont
 //            .paragraphStyle: paragraphStyle
         ]
     }
@@ -37,4 +37,3 @@ class PostHeaderTextView: MySubviewAttachingTextView {
         isEditable = false
     }
 }
-

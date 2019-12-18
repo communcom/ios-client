@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 11/13/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -50,7 +50,7 @@ class MyProfileBlacklistViewModel: BaseViewModel {
     func bind() {
         // segmented item change
         segmentedItem
-            .subscribe(onNext: { [weak self] (item) in
+            .subscribe(onNext: { [weak self] (_) in
                 self?.reload()
             })
             .disposed(by: disposeBag)

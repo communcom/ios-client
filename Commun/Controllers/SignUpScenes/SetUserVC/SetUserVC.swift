@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 12/16/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -45,14 +45,14 @@ class SetUserVC: BaseViewController, SignUpRouter {
         textField.autoPinEdge(toSuperviewEdge: .leading, withInset: 42 * Config.widthRatio)
         textField.autoPinEdge(toSuperviewEdge: .trailing, withInset: 42 * Config.widthRatio)
         
-        let leftView = UIView(frame: CGRect(x: 0, y: 0, width: 16, height: 56 * Config.heightRatio))
+        let leftView = UIView(width: 16, height: 56 * Config.heightRatio)
         textField.leftView = leftView
         textField.leftViewMode = .always
         
         let alertButton = UIButton(width: 24, height: 24)
         alertButton.setImage(UIImage(named: "icon-info-button-default"), for: .normal)
         alertButton.addTarget(self, action: #selector(infoButtonTapped), for: .touchUpInside)
-        let rightView = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: 56 * Config.heightRatio))
+        let rightView = UIView(width: 40, height: 56 * Config.heightRatio)
         rightView.addSubview(alertButton)
         alertButton.autoAlignAxis(toSuperviewAxis: .horizontal)
         alertButton.autoAlignAxis(toSuperviewAxis: .vertical)
@@ -104,13 +104,13 @@ class SetUserVC: BaseViewController, SignUpRouter {
             .catchError({ (error) -> Single<String> in
                 if let error = error as? ErrorAPI {
                     if error.caseInfo.message == "Invalid step taken",
-                        Config.currentUser?.registrationStep == .toBlockChain{
+                        Config.currentUser?.registrationStep == .toBlockChain {
                         return .just(Config.currentUser?.id ?? "")
                     }
                 }
                 throw error
             })
-            .flatMapCompletable({ (id) -> Completable in
+            .flatMapCompletable({ (_) -> Completable in
                 self.showIndetermineHudWithMessage("saving to blockchain...".localized().uppercaseFirst)
                 return RestAPIManager.instance.toBlockChain()
             })

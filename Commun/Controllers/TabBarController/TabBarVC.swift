@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Maxim Prigozhenkov on 14/03/2019.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import UIKit
@@ -22,11 +22,9 @@ class TabBarVC: UITabBarController {
     let selectedColor = UIColor.black
     let unselectedColor = UIColor(hexString: "#A5A7BD")
     
-    
     // MARK: - Properties
     let viewModel = TabBarViewModel()
     let bag = DisposeBag()
-    
     
     // MARK: - Subviews
     private lazy var tabBarContainerView = UIView(backgroundColor: .white)
@@ -51,8 +49,7 @@ class TabBarVC: UITabBarController {
         if hide {
             shadowView.isHidden = true
             shadowView.heightConstraint?.constant = 0
-        }
-        else {
+        } else {
             shadowView.isHidden = false
             shadowView.heightConstraint?.constant = tabBarHeight
         }
@@ -125,7 +122,7 @@ class TabBarVC: UITabBarController {
         profileNC.navigationBar.tintColor = UIColor.appMainColor
 
         // Set up controllers
-        viewControllers = [feedNC, communitiesNC,/* wallet,*/ followingsNC, profileNC]
+        viewControllers = [feedNC, communitiesNC, /* wallet,*/ followingsNC, profileNC]
         
         tabBarStackView.addArrangedSubviews([
             feedItem,
