@@ -337,6 +337,10 @@
 		BC7D6094237C004F007D8C1A /* MyProfileBlacklistVC+Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7D6093237C004F007D8C1A /* MyProfileBlacklistVC+Binding.swift */; };
 		BC7D6097237C01BD007D8C1A /* BlacklistCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7D6096237C01BD007D8C1A /* BlacklistCell.swift */; };
 		BC83F26B2369322400B5719D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B1EA02D52289734800835244 /* Localizable.strings */; };
+		BC9066E723A9D48A000F9A3B /* WalletVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC9066E623A9D48A000F9A3B /* WalletVC.swift */; };
+		BC9066EB23A9D9EC000F9A3B /* BalancesListFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC9066EA23A9D9EC000F9A3B /* BalancesListFetcher.swift */; };
+		BC9066EF23A9DABF000F9A3B /* ResponseAPIWalletGetBalances.json in Resources */ = {isa = PBXBuildFile; fileRef = BC9066EE23A9DABF000F9A3B /* ResponseAPIWalletGetBalances.json */; };
+		BC9066F123A9DB72000F9A3B /* BalancesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC9066F023A9DB72000F9A3B /* BalancesViewModel.swift */; };
 		BC9765B4237D430500FC096B /* EditorChooseCommunityVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC9765B3237D430500FC096B /* EditorChooseCommunityVC.swift */; };
 		BCA0039B23714920002A68BA /* ResponseAPIContentGetLeaders.json in Resources */ = {isa = PBXBuildFile; fileRef = BCA0039A23714920002A68BA /* ResponseAPIContentGetLeaders.json */; };
 		BCA0039D23716AA1002A68BA /* LeaderController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA0039C23716AA1002A68BA /* LeaderController.swift */; };
@@ -787,6 +791,10 @@
 		BC7D608F237BF764007D8C1A /* BlacklistViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlacklistViewModel.swift; sourceTree = "<group>"; };
 		BC7D6093237C004F007D8C1A /* MyProfileBlacklistVC+Binding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MyProfileBlacklistVC+Binding.swift"; sourceTree = "<group>"; };
 		BC7D6096237C01BD007D8C1A /* BlacklistCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlacklistCell.swift; sourceTree = "<group>"; };
+		BC9066E623A9D48A000F9A3B /* WalletVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletVC.swift; sourceTree = "<group>"; };
+		BC9066EA23A9D9EC000F9A3B /* BalancesListFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalancesListFetcher.swift; sourceTree = "<group>"; };
+		BC9066EE23A9DABF000F9A3B /* ResponseAPIWalletGetBalances.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ResponseAPIWalletGetBalances.json; sourceTree = "<group>"; };
+		BC9066F023A9DB72000F9A3B /* BalancesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalancesViewModel.swift; sourceTree = "<group>"; };
 		BC9765B3237D430500FC096B /* EditorChooseCommunityVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorChooseCommunityVC.swift; sourceTree = "<group>"; };
 		BCA0039A23714920002A68BA /* ResponseAPIContentGetLeaders.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ResponseAPIContentGetLeaders.json; sourceTree = "<group>"; };
 		BCA0039C23716AA1002A68BA /* LeaderController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderController.swift; sourceTree = "<group>"; };
@@ -937,6 +945,7 @@
 				BCF74A63236182B200B91089 /* ResponseAPIContentGetCommunity.json */,
 				BCA0039A23714920002A68BA /* ResponseAPIContentGetLeaders.json */,
 				BC247D0423823B650062C979 /* ResponseAPIContentGetProfile.json */,
+				BC9066EE23A9DABF000F9A3B /* ResponseAPIWalletGetBalances.json */,
 			);
 			path = Mocking;
 			sourceTree = "<group>";
@@ -1302,6 +1311,7 @@
 		571B1508223A937200630C8F /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				BC9066E323A9D331000F9A3B /* WalletVC */,
 				3BB48AD122D641C800F11B6A /* BoardingScenes */,
 				BC619B0F237268240005BB94 /* CommunitiesVC */,
 				BCA971192360339B00AE37E1 /* CommunityPageVC */,
@@ -1771,6 +1781,7 @@
 				BCA97111236004F500AE37E1 /* CommentsViewController */,
 				BC48FC41236689DC0049C4F4 /* LeadersViewModel.swift */,
 				BC7D608F237BF764007D8C1A /* BlacklistViewModel.swift */,
+				BC9066F023A9DB72000F9A3B /* BalancesViewModel.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -2106,6 +2117,14 @@
 			path = Subviews;
 			sourceTree = "<group>";
 		};
+		BC9066E323A9D331000F9A3B /* WalletVC */ = {
+			isa = PBXGroup;
+			children = (
+				BC9066E623A9D48A000F9A3B /* WalletVC.swift */,
+			);
+			path = WalletVC;
+			sourceTree = "<group>";
+		};
 		BC9765B0237D42DE00FC096B /* EditorChooseCommunityVC */ = {
 			isa = PBXGroup;
 			children = (
@@ -2300,6 +2319,7 @@
 				BCCE0A9B2367D47400A183AA /* SubscriptionsListFetcher.swift */,
 				BC619B10237268910005BB94 /* CommunitiesListFetcher.swift */,
 				BC7D608D237BF4E7007D8C1A /* BlacklistFetcher.swift */,
+				BC9066EA23A9D9EC000F9A3B /* BalancesListFetcher.swift */,
 			);
 			path = Fetchers;
 			sourceTree = "<group>";
@@ -2455,6 +2475,7 @@
 				B1D1CF9922F8A28A0071F1B6 /* InfoPlist.strings in Resources */,
 				AC8C57C1238D494D00B0D260 /* InstagramView.xib in Resources */,
 				572F81AB223C164C0007F2F9 /* SF-Pro-Text-Regular.otf in Resources */,
+				BC9066EF23A9DABF000F9A3B /* ResponseAPIWalletGetBalances.json in Resources */,
 				3BF53CE4230B93E10082464F /* HTMLStringWebView.css in Resources */,
 				BC247D0C23827C810062C979 /* ResponseAPIContentGetPost.json in Resources */,
 				B1EA02D92289882A00835244 /* SF-Pro-Display-Bold.otf in Resources */,
@@ -2762,6 +2783,7 @@
 				BC016D49235DA2AC00F1319F /* MyTableViewCell.swift in Sources */,
 				BCB2A6F023556FC100B3582B /* BasicEditorVC+Tools.swift in Sources */,
 				BC619B1F2373B5550005BB94 /* CommunityMembersVC.swift in Sources */,
+				BC9066F123A9DB72000F9A3B /* BalancesViewModel.swift in Sources */,
 				3B5D361C22E8303C0012A991 /* HTMLStringWebView.swift in Sources */,
 				BC22BBCC236C0E0300F40658 /* UIStackView+PureLayout.swift in Sources */,
 				3BB86B4922734AE4008F1C64 /* UIColor.swift in Sources */,
@@ -2833,6 +2855,7 @@
 				3B0E9C7122706985002AB1C2 /* ProfileChooseAvatarViewModel.swift in Sources */,
 				BC69F7CD236FC5D00097F870 /* LoadingState.swift in Sources */,
 				BC4692DF2394B4130064A38B /* CommentCellDelegate.swift in Sources */,
+				BC9066EB23A9D9EC000F9A3B /* BalancesListFetcher.swift in Sources */,
 				3B3C8B902347876000D8BADB /* ArticleEditorTextView+Attachment.swift in Sources */,
 				BCB4A4CA237019EF005EDAAD /* SubsViewController.swift in Sources */,
 				3BB342B022CA5CA6009546B2 /* PickupAvatarVC.swift in Sources */,
@@ -2946,6 +2969,7 @@
 				BC561E7B238B76A8004C53EB /* ReportVC.swift in Sources */,
 				3B2F226E226892C5006B589E /* NotificationType.swift in Sources */,
 				BC4692CF239114AB0064A38B /* CommunityCellDelegate.swift in Sources */,
+				BC9066E723A9D48A000F9A3B /* WalletVC.swift in Sources */,
 				BC69F7D8236FF6790097F870 /* SubscriptionsCommunityCell.swift in Sources */,
 				3BAE92A922DE553D00E97AE8 /* ScalableLayoutConstraint.swift in Sources */,
 				BC4692BD2390C3B20064A38B /* FeedPageFloatView.swift in Sources */,
