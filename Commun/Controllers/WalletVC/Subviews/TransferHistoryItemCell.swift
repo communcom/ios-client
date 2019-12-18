@@ -106,19 +106,27 @@ class TransferHistoryItemCell: MyTableViewCell, ListItemCellType {
             avatarImageView.image = UIImage(named: "wallet-like")
             iconImageView.isHidden = true
         default:
-            // TODO: - Other types
             username = ""
             memo = NSMutableAttributedString()
             iconImageView.isHidden = true
-            break
         }
         
-        contentLabel.attributedText = NSMutableAttributedString()
+        let content = NSMutableAttributedString()
             .semibold(username)
-            .normal("\n")
-            .semibold(item.meta.actionType?.localized().uppercaseFirst ?? "", font: .systemFont(ofSize: 12, weight: .semibold), color: .a5a7bd)
         
-        amountStatusLabel.attributedText = NSMutableAttributedString(attributedString: memo)
-            .normal("\n")
+        if item.meta.actionType != "reward" {
+            content
+                .normal("\n")
+                .semibold(item.meta.actionType?.localized().uppercaseFirst ?? "", font: .systemFont(ofSize: 12, weight: .semibold), color: .a5a7bd)
+        }
+        
+        contentLabel.attributedText = content
+        
+        let dateString = Date.from(string: item.timestamp).string(withFormat: "HH:mm")
+        
+        amountStatusLabel.attributedText =
+            NSMutableAttributedString(attributedString: memo)
+                .normal("\n")
+                .semibold(dateString, font: .systemFont(ofSize: 12, weight: .semibold), color: .a5a7bd)
     }
 }
