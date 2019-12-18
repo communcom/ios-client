@@ -111,28 +111,17 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
         bindList()
     }
     
-    func setUp(profile: ProfileType) {
-    }
+    func setUp(profile: ProfileType) {}
     
-    func handleListLoading() {
-        
-    }
+    func handleListLoading() {}
     
-    func handleListEnded() {
-        
-    }
+    func handleListEnded() {}
     
-    func handleListEmpty() {
-        
-    }
+    func handleListEmpty() {}
     
-    func bindItems() {
-        
-    }
+    func bindItems() {}
     
-    func cellSelected(_ indexPath: IndexPath) {
-        
-    }
+    func cellSelected(_ indexPath: IndexPath) {}
     
     @objc func didTapTryAgain(gesture: UITapGestureRecognizer) {
         guard let label = gesture.view as? UILabel,
@@ -150,20 +139,20 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
         navigationController?.setNavigationBarHidden(false, animated: animated)
         navigationController?.navigationBar.isTranslucent = true
-
-        showTitle(tableView.contentOffset.y >= -43)
+        showTitle(tableView.contentOffset.y >= -43.0)
     }
 
     func showTitle(_ show: Bool, animated: Bool = false) {
-        navigationController?.navigationBar.addShadow(ofColor: .shadow, radius: 16, offset: CGSize(width: 0, height: 6), opacity: 0.05)
+        navigationController?.navigationBar.addShadow(ofColor: .shadow, radius: CGFloat.adaptive(width: 16.0), offset: CGSize(width: 0.0, height: CGFloat.adaptive(height: 6.0)), opacity: 0.05)
         baseNavigationController?.changeStatusBarStyle(show ? .default : .lightContent)
         coverImageView.isHidden = show
-        UIView.animate(withDuration: animated ? 0.3 : 0) {
+        
+        UIView.animate(withDuration: animated ? 0.3 : 0.0) {
             self.navigationController?.navigationBar.subviews.first?.backgroundColor = show ? .white: .clear
-            self.navigationController?.navigationBar.setTitleFont(.boldSystemFont(ofSize: 17), color:
-                show ? .black: .clear)
+            self.navigationController?.navigationBar.setTitleFont(.boldSystemFont(ofSize: CGFloat.adaptive(width: 17.0)), color: show ? .black: .clear)
             self.navigationItem.leftBarButtonItem?.tintColor = show ? .black: .white
             self.optionsButton.tintColor = show ? .black: .white
         }
