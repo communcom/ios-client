@@ -9,6 +9,11 @@
 import Foundation
 
 class WalletVC: ListViewController<ResponseAPIWalletGetTransferHistoryItem, TransferHistoryItemCell> {
+    // MARK: - Properties
+    override var tableViewMargin: UIEdgeInsets {
+        UIEdgeInsets(inset: 10)
+    }
+    
     init() {
         let fetcher = TransferHistoryListFetcher()
         let viewModel = TransferHistoryViewModel(fetcher: fetcher)
@@ -29,6 +34,22 @@ class WalletVC: ListViewController<ResponseAPIWalletGetTransferHistoryItem, Tran
         
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
+    }
+    
+    override func configureCell(with item: ResponseAPIWalletGetTransferHistoryItem, indexPath: IndexPath) -> UITableViewCell {
+        let cell = super.configureCell(with: item, indexPath: indexPath) as! TransferHistoryItemCell
+        
+        cell.roundedCorner = []
+        
+        if indexPath.row == 0 {
+            cell.roundedCorner.insert([.topLeft, .topRight])
+        }
+        
+        if indexPath.row == self.viewModel.items.value.count - 1 {
+            cell.roundedCorner.insert([.bottomLeft, .bottomRight])
+        }
+        
+        return cell
     }
     
     override func handleListEmpty() {

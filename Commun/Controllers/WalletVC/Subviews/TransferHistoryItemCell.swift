@@ -36,8 +36,8 @@ class TransferHistoryItemCell: MyTableViewCell, ListItemCellType {
         avatarImageView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 10, left: 16, bottom: 10, right: 0), excludingEdge: .trailing)
         
         contentView.addSubview(iconImageView)
-        iconImageView.autoPinEdge(.bottom, to: .bottom, of: avatarImageView)
-        iconImageView.autoPinEdge(.trailing, to: .trailing, of: avatarImageView)
+        iconImageView.autoPinEdge(.bottom, to: .bottom, of: avatarImageView, withOffset: 2)
+        iconImageView.autoPinEdge(.trailing, to: .trailing, of: avatarImageView, withOffset: 2)
         
         contentView.addSubview(contentLabel)
         contentLabel.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 10)
@@ -52,6 +52,43 @@ class TransferHistoryItemCell: MyTableViewCell, ListItemCellType {
     
     func setUp(with item: ResponseAPIWalletGetTransferHistoryItem) {
         self.item = item
+
+        var username: String
+        var memo: NSAttributedString
         
+        switch item.meta.actionType {
+        case "transaction":
+            var avatarUrl: String?
+            if item.meta.direction == "send" {
+                avatarUrl = item.receiver.avatarUrl
+                username = item.receiver.username ?? item.receiver.userId
+                memo = NSMutableAttributedString()
+                    .semibold("-\(item.memo)", font: .systemFont(ofSize: 12, weight: .semibold))
+            } else {
+                avatarUrl = item.sender.avatarUrl
+                username = item.sender.username ?? item.sender.userId
+                memo = NSMutableAttributedString()
+                    .semibold("+\(item.memo)", font: .systemFont(ofSize: 12, weight: .semibold), color: .plus)
+            }
+            
+            avatarImageView.setAvatar(urlString: avatarUrl, namePlaceHolder: username)
+            
+            iconImageView.isHidden = false
+            iconImageView.sd_setImage(with: URL(string: item.point.logo), placeholderImage: UIImage(color: .appMainColor))
+            
+        default:
+            // TODO: - Other types
+            username = ""
+            memo = NSMutableAttributedString()
+            break
+        }
+        
+        contentLabel.attributedText = NSMutableAttributedString()
+            .semibold(username)
+            .normal("\n")
+            .semibold(item.meta.actionType?.localized().uppercaseFirst ?? "", font: .systemFont(ofSize: 12, weight: .semibold), color: .a5a7bd)
+        
+        amountStatusLabel.attributedText = NSMutableAttributedString(attributedString: memo)
+            .normal("\n")
     }
 }
