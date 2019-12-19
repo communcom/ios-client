@@ -181,4 +181,12 @@ class WalletHeaderView: MyTableHeaderView {
         
         return container
     }
+    
+    func startLoading() {
+        contentView.showLoader()
+    }
+    
+    func endLoading() {
+        contentView.hideLoader()
+    }
 }

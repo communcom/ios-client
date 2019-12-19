@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import RxSwift
 
 class WalletVC: TransferHistoryVC {
     // MARK: - Subviews
@@ -46,6 +47,37 @@ class WalletVC: TransferHistoryVC {
     override func bind() {
         super.bind()
         bindControls()
+    }
+    
+    override func bindState() {
+        super.bindState()
+        (viewModel as! WalletViewModel).balancesVM.state
+            .distinctUntilChanged()
+            .debounce(0.3, scheduler: MainScheduler.instance)
+            .subscribe(onNext: {[weak self] state in
+                switch state {
+                case .loading(let isLoading):
+                    if isLoading {
+                        self?.headerView.startLoading()
+                    } else {
+                        self?.headerView.endLoading()
+                    }
+                case .listEnded:
+                    self?.headerView.endLoading()
+                case .listEmpty:
+                    self?.headerView.endLoading()
+                case .error(let error):
+                    self?.headerView.endLoading()
+                    self?.view.showErrorView {
+                        self?.view.hideErrorView()
+                        self?.viewModel.reload()
+                    }
+                    #if !APPSTRORE
+                        self?.showAlert(title: "Error", message: "\(error)")
+                    #endif
+                }
+            })
+            .disposed(by: disposeBag)
     }
     
     func bindControls() {
