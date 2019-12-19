@@ -251,6 +251,7 @@ class SignUpVC: UIViewController, SignUpRouter {
             self.showAlert(title: "error".localized().uppercaseFirst, message: "wrong phone number".localized().uppercaseFirst)
             return
         }
+        AnalyticsManger.shared.PhoneNumberEntered()
 
         self.showIndetermineHudWithMessage("signing you up".localized().uppercaseFirst + "...")
         
@@ -285,6 +286,7 @@ class SignUpVC: UIViewController, SignUpRouter {
     
     @objc func tapSignInLabel(gesture: UITapGestureRecognizer) {
         guard let text = signInLabel.text else {return}
+        AnalyticsManger.shared.goToSingIn()
         let signInRange = (text as NSString).range(of: "sign in".localized().uppercaseFirst)
         
         let nc = navigationController

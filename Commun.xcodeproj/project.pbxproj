@@ -172,6 +172,7 @@
 		AC8C57BD238C408A00B0D260 /* InstagramView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8C57BC238C408A00B0D260 /* InstagramView.swift */; };
 		AC8C57C1238D494D00B0D260 /* InstagramView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AC8C57C0238D494D00B0D260 /* InstagramView.xib */; };
 		ACCCF74323A9105E00AF4FDE /* countries.json in Resources */ = {isa = PBXBuildFile; fileRef = ACCCF74023A9105E00AF4FDE /* countries.json */; };
+		ACFA282623AB8A00009B77A6 /* AnalyticsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACFA282523AB8A00009B77A6 /* AnalyticsManager.swift */; };
 		B170AC15228AFBDA00C6FFBC /* SignUpVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5797E0F9225DDA490026C4D5 /* SignUpVC.storyboard */; };
 		B17A970C228002440081B8E0 /* SignUpRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17A970B228002440081B8E0 /* SignUpRouter.swift */; };
 		B1A6EE5122D5C8E300A5D6F0 /* GoogleService-Info-Dev.plist in Resources */ = {isa = PBXBuildFile; fileRef = B1A6EE5022D5C8E100A5D6F0 /* GoogleService-Info-Dev.plist */; };
@@ -647,6 +648,7 @@
 		AC8C57BC238C408A00B0D260 /* InstagramView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstagramView.swift; sourceTree = "<group>"; };
 		AC8C57C0238D494D00B0D260 /* InstagramView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InstagramView.xib; sourceTree = "<group>"; };
 		ACCCF74023A9105E00AF4FDE /* countries.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = countries.json; sourceTree = "<group>"; };
+		ACFA282523AB8A00009B77A6 /* AnalyticsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsManager.swift; sourceTree = "<group>"; };
 		AE43B2305FC441D96462E0AB /* Pods-Commun.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Commun.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Commun/Pods-Commun.debug.xcconfig"; sourceTree = "<group>"; };
 		B12684EF22C1E56B0046C838 /* Commun.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Commun.entitlements; sourceTree = "<group>"; };
 		B17A970B228002440081B8E0 /* SignUpRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpRouter.swift; sourceTree = "<group>"; };
@@ -1060,6 +1062,7 @@
 			isa = PBXGroup;
 			children = (
 				3B6CB72F23432D6F0097B2A1 /* FavouritesList.swift */,
+				ACFA282523AB8A00009B77A6 /* AnalyticsManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -2855,6 +2858,7 @@
 				BC3694F723699A7E00B2E078 /* EditorVC+Layout.swift in Sources */,
 				3B8DDF63234B213E00B213F0 /* PostEditorVC+TextViewDelegate.swift in Sources */,
 				3B5CB30822A57AA400757533 /* PlaceholderNotificationCell.swift in Sources */,
+				ACFA282623AB8A00009B77A6 /* AnalyticsManager.swift in Sources */,
 				BC520A48237E7F3000033ED0 /* UserProfilePageVC+Actions.swift in Sources */,
 				B1A8AC1B22E6FF5400032030 /* BlankButton.swift in Sources */,
 				575AECAC226066F800A7EC2D /* FormTextField.swift in Sources */,

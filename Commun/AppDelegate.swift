@@ -24,6 +24,7 @@ import SDWebImageWebPCoder
 let isDebugMode: Bool = true
 let smsCodeDebug: UInt64 = isDebugMode ? 9999 : 0
 let gcmMessageIDKey = "gcm.message_id"
+let firstInstallAppKey = "com.commun.ios.firstInstallAppKey"
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -50,6 +51,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // MARK: - Class Functions
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
+        // first fun app
+        if !UserDefaults.standard.bool(forKey: firstInstallAppKey) {
+            AnalyticsManger.shared.launchFirstTime()
+            UserDefaults.standard.set(true, forKey: firstInstallAppKey)
+        }
+
+        AnalyticsManger.shared.sessionStart()
         // Use Firebase library to configure APIs
         configureFirebase()
 
@@ -247,10 +255,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
+        AnalyticsManger.shared.backgroundApp()
         SocketManager.shared.disconnect()
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
+        AnalyticsManger.shared.foregroundApp()
         SocketManager.shared.connect()
     }
 

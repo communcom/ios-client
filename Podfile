@@ -20,6 +20,8 @@ def common_pods_commun
   pod 'Firebase/Analytics'
   pod 'Firebase/Core'
   pod 'Firebase/Messaging'
+  pod 'Amplitude-iOS'
+
   
   pod 'Alamofire'
   pod 'Swinject'
