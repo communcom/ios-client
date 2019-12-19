@@ -157,14 +157,8 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
     }
 
     func showTitle(_ show: Bool, animated: Bool = false) {
-        navigationController?.navigationBar.addShadow(ofColor: .shadow, radius: 16, offset: CGSize(width: 0, height: 6), opacity: 0.05)
-        baseNavigationController?.changeStatusBarStyle(show ? .default : .lightContent)
         coverImageView.isHidden = show
-        UIView.animate(withDuration: animated ? 0.3 : 0) {
-            self.navigationController?.navigationBar.subviews.first?.backgroundColor = show ? .white: .clear
-            self.navigationController?.navigationBar.setTitleFont(.boldSystemFont(ofSize: 17), color:
-                show ? .black: .clear)
-            self.navigationItem.leftBarButtonItem?.tintColor = show ? .black: .white
+        showNavigationBar(show, animated: animated) {
             self.optionsButton.tintColor = show ? .black: .white
         }
     }

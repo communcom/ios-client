@@ -398,6 +398,9 @@
 		BCD00FBD23750859004A3952 /* PostPageNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD00FBC23750859004A3952 /* PostPageNavigationBar.swift */; };
 		BCD00FBF2375087C004A3952 /* PostPageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD00FBE2375087C004A3952 /* PostPageVC.swift */; };
 		BCD00FC123750B15004A3952 /* PostPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD00FC023750B15004A3952 /* PostPageViewModel.swift */; };
+		BCD3BC8423AB29C00036C947 /* WalletViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD3BC8323AB29C00036C947 /* WalletViewModel.swift */; };
+		BCD3BC8923AB2A340036C947 /* WalletHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD3BC8823AB2A340036C947 /* WalletHeaderView.swift */; };
+		BCD3BC8B23AB313E0036C947 /* UIStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD3BC8A23AB313E0036C947 /* UIStackView.swift */; };
 		BCD453AD2354473F005A454C /* BasicEditorVC+MediaViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD453AC2354473F005A454C /* BasicEditorVC+MediaViewDelegate.swift */; };
 		BCD453AF2354476B005A454C /* ArticleEditorVC+MediaViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD453AE2354476B005A454C /* ArticleEditorVC+MediaViewDelegate.swift */; };
 		BCE7F5702359A44A0008D91B /* ResponseAPIContentGetComments.json in Resources */ = {isa = PBXBuildFile; fileRef = BCE7F56F2359A44A0008D91B /* ResponseAPIContentGetComments.json */; };
@@ -857,6 +860,9 @@
 		BCD00FBC23750859004A3952 /* PostPageNavigationBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostPageNavigationBar.swift; sourceTree = "<group>"; };
 		BCD00FBE2375087C004A3952 /* PostPageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostPageVC.swift; sourceTree = "<group>"; };
 		BCD00FC023750B15004A3952 /* PostPageViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostPageViewModel.swift; sourceTree = "<group>"; };
+		BCD3BC8323AB29C00036C947 /* WalletViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletViewModel.swift; sourceTree = "<group>"; };
+		BCD3BC8823AB2A340036C947 /* WalletHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletHeaderView.swift; sourceTree = "<group>"; };
+		BCD3BC8A23AB313E0036C947 /* UIStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIStackView.swift; sourceTree = "<group>"; };
 		BCD453AC2354473F005A454C /* BasicEditorVC+MediaViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BasicEditorVC+MediaViewDelegate.swift"; sourceTree = "<group>"; };
 		BCD453AE2354476B005A454C /* ArticleEditorVC+MediaViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ArticleEditorVC+MediaViewDelegate.swift"; sourceTree = "<group>"; };
 		BCE7F56F2359A44A0008D91B /* ResponseAPIContentGetComments.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ResponseAPIContentGetComments.json; sourceTree = "<group>"; };
@@ -1490,6 +1496,7 @@
 				3B3C8B83234779FE00D8BADB /* UIImage.swift */,
 				BCB2A6E52355536D00B3582B /* UITableViewCell.swift */,
 				BCA971252360883D00AE37E1 /* Double.swift */,
+				BCD3BC8A23AB313E0036C947 /* UIStackView.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -2132,7 +2139,9 @@
 		BC9066E323A9D331000F9A3B /* WalletVC */ = {
 			isa = PBXGroup;
 			children = (
+				BCD3BC8723AB2A230036C947 /* Subviews */,
 				BC9066FE23AB228E000F9A3B /* WalletVC.swift */,
+				BCD3BC8323AB29C00036C947 /* WalletViewModel.swift */,
 			);
 			path = WalletVC;
 			sourceTree = "<group>";
@@ -2333,6 +2342,14 @@
 				BCD00FBC23750859004A3952 /* PostPageNavigationBar.swift */,
 				BC3AD9D823838E7D0026EAB4 /* CommentForm */,
 				BC529141237941920022EC7F /* CommentTextView.swift */,
+			);
+			path = Subviews;
+			sourceTree = "<group>";
+		};
+		BCD3BC8723AB2A230036C947 /* Subviews */ = {
+			isa = PBXGroup;
+			children = (
+				BCD3BC8823AB2A340036C947 /* WalletHeaderView.swift */,
 			);
 			path = Subviews;
 			sourceTree = "<group>";
@@ -2765,6 +2782,7 @@
 				BC597A67238B9C2600103F4F /* CustomHeightPresentationController.swift in Sources */,
 				3BA3779722E9DA6C0071AF3A /* SignupVC+Location.swift in Sources */,
 				BC384F1A23862C580021A2A9 /* CommunityPageVC+Actions.swift in Sources */,
+				BCD3BC8B23AB313E0036C947 /* UIStackView.swift in Sources */,
 				57FB179D224BFBD700563BF7 /* PillPageControl.swift in Sources */,
 				BCF1B40623A77E8100EB6FC8 /* SetUserVC.swift in Sources */,
 				BC7D608E237BF4E7007D8C1A /* BlacklistFetcher.swift in Sources */,
@@ -2927,6 +2945,7 @@
 				3B3C8B84234779FE00D8BADB /* UIImage.swift in Sources */,
 				3B5EDE2E22DF929D00897BF3 /* SettingsSwitcherCell.swift in Sources */,
 				BC619B1D2372C1480005BB94 /* CMTopTabBar.swift in Sources */,
+				BCD3BC8423AB29C00036C947 /* WalletViewModel.swift in Sources */,
 				BCB2A6E423546AF500B3582B /* PostEditorVC+AttachmentViewDelegate.swift in Sources */,
 				3B197C8A226A33CF008CF10D /* Decodable+MockObjects.swift in Sources */,
 				BC016D45235DA0D400F1319F /* BasicPostCell.swift in Sources */,
@@ -2949,6 +2968,7 @@
 				BC597A87238CE8FD00103F4F /* CommunityCollectionCell.swift in Sources */,
 				3BC6139E23419EFC00075570 /* HalfSizePresentationController.swift in Sources */,
 				BCD00FB42373C8BD004A3952 /* LeaderCollectionCell.swift in Sources */,
+				BCD3BC8923AB2A340036C947 /* WalletHeaderView.swift in Sources */,
 				BC597A83238CD42200103F4F /* FTUECommunitesVC+Binding.swift in Sources */,
 				BC69F7DC236FFAC40097F870 /* SubscriptionsUserCell.swift in Sources */,
 				BC520A40237E476100033ED0 /* MySubviewAttachingTextView.swift in Sources */,
