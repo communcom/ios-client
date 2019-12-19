@@ -115,11 +115,18 @@ class WalletHeaderView: MyTableHeaderView {
     private func setUpWithCommunValue() {
         var point: Double = 0
         if let balances = balances {
-            point = balances.reduce(0.0, { (result, balance) -> Double in
-                var result = result
-                result += balance.communValue
-                return result
-            })
+            if balances.first?.symbol == "CMN",
+                let communPoint = balances.first?.balance
+            {
+                point = Double(communPoint) ?? 0
+            } else {
+                point = balances.filter {$0.symbol != "CMN"}.reduce(0.0, { (result, balance) -> Double in
+                    var result = result
+                    result += balance.communValue
+                    return result
+                })
+            }
+            
         }
         // remove balanceContainerView if exists
         if balanceContainerView.isDescendant(of: contentView) {
