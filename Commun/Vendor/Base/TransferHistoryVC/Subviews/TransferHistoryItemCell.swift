@@ -30,20 +30,23 @@ class TransferHistoryItemCell: MyTableViewCell, ListItemCellType {
     // MARK: - Methods
     override func setUpViews() {
         super.setUpViews()
-        contentView.backgroundColor = .white
+        contentView.backgroundColor = .clear
+        let containerView = UIView(backgroundColor: .white)
+        contentView.addSubview(containerView)
+        containerView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10))
         
-        contentView.addSubview(avatarImageView)
+        containerView.addSubview(avatarImageView)
         avatarImageView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 10, left: 16, bottom: 10, right: 0), excludingEdge: .trailing)
         
-        contentView.addSubview(iconImageView)
+        containerView.addSubview(iconImageView)
         iconImageView.autoPinEdge(.bottom, to: .bottom, of: avatarImageView, withOffset: 2)
         iconImageView.autoPinEdge(.trailing, to: .trailing, of: avatarImageView, withOffset: 2)
         
-        contentView.addSubview(contentLabel)
+        containerView.addSubview(contentLabel)
         contentLabel.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 10)
         contentLabel.autoAlignAxis(toSuperviewAxis: .horizontal)
         
-        contentView.addSubview(amountStatusLabel)
+        containerView.addSubview(amountStatusLabel)
         amountStatusLabel.autoPinEdge(.leading, to: .trailing, of: contentLabel, withOffset: 10)
         amountStatusLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
         amountStatusLabel.autoAlignAxis(toSuperviewAxis: .horizontal)
