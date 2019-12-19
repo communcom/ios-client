@@ -104,13 +104,21 @@ class WalletHeaderView: MyTableHeaderView {
     
     func setUp(with balances: [ResponseAPIWalletGetBalance]) {
         self.balances = balances
-        
+        if currentIndex == 0 {
+            setUpWithCommunValue()
+        } else {
+            setUpWithCurrentBalance()
+        }
     }
     
     private func setUpWithCommunValue() {
-        var point = 0
+        var point: Double = 0
         if let balances = balances {
-            // TODO: - Count point
+            point = balances.reduce(0.0, { (result, balance) -> Double in
+                var result = result
+                result += balance.communValue
+                return result
+            })
         }
         // remove balanceContainerView if exists
         if !balanceContainerView.isDescendant(of: contentView) {
@@ -134,6 +142,7 @@ class WalletHeaderView: MyTableHeaderView {
         guard let balances = balances,
             let balance = balances[safe: currentIndex]
         else {
+            currentIndex = 0
             return
         }
         // add balanceContainerView
@@ -155,7 +164,7 @@ class WalletHeaderView: MyTableHeaderView {
         // set up
         titleLabel.text = balance.name ?? "" + "balance".localized().uppercaseFirst
         pointLabel.text = balance.balance
-        communValueLabel.text = "\((Double(balance.balance) ?? 0) * (Double(balance.price?.stringValue ?? "1") ?? 0))" + " " + "Commun"
+        communValueLabel.text = "= \((Double(balance.balance) ?? 0) * (Double(balance.price?.stringValue ?? "1") ?? 0))" + " " + "Commun"
         availableHoldValueLabel.attributedText = NSMutableAttributedString()
             .text("\(balance.balance)", size: 12, color: .white)
             .text("/\(balance.frozen ?? "0")", size: 12, color: UIColor.white.withAlphaComponent(0.5))

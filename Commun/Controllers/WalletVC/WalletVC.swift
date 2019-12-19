@@ -49,6 +49,15 @@ class WalletVC: TransferHistoryVC {
         bindControls()
     }
     
+    override func bindItems() {
+        super.bindItems()
+        (viewModel as! WalletViewModel).balancesVM.items
+            .subscribe(onNext: { (items) in
+                self.headerView.setUp(with: items)
+            })
+            .disposed(by: disposeBag)
+    }
+    
     override func bindState() {
         super.bindState()
         (viewModel as! WalletViewModel).balancesVM.state
