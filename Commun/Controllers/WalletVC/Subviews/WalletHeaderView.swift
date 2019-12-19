@@ -134,7 +134,7 @@ class WalletHeaderView: MyTableHeaderView {
         
         // set up
         titleLabel.text = "enquity Value Commun".localized().uppercaseFirst
-        pointLabel.text = "\(point)"
+        pointLabel.text = "\(point.currencyValueFormatted)"
         
     }
     
@@ -163,8 +163,8 @@ class WalletHeaderView: MyTableHeaderView {
         
         // set up
         titleLabel.text = balance.name ?? "" + "balance".localized().uppercaseFirst
-        pointLabel.text = balance.balance
-        communValueLabel.text = "= \((Double(balance.balance) ?? 0) * (Double(balance.price?.stringValue ?? "1") ?? 0))" + " " + "Commun"
+        pointLabel.text = "\(balance.balanceValue.currencyValueFormatted)"
+        communValueLabel.text = "= \(balance.communValue.currencyValueFormatted)" + " " + "Commun"
         availableHoldValueLabel.attributedText = NSMutableAttributedString()
             .text("\(balance.balance)", size: 12, color: .white)
             .text("/\(balance.frozen ?? "0")", size: 12, color: UIColor.white.withAlphaComponent(0.5))
