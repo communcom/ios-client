@@ -9,10 +9,23 @@
 import Foundation
 
 class WalletHeaderView: MyTableHeaderView {
+    // MARK: - Properties
+    var stackViewTopConstraint: NSLayoutConstraint?
+    
     // MARK: - Subviews
     lazy var shadowView = UIView(forAutoLayout: ())
-    lazy var appColorView = UIView(backgroundColor: .appMainColor)
+    lazy var contentView = UIView(backgroundColor: .appMainColor)
+    
+    lazy var titleLabel = UILabel.with(text: "Equity Value Commun", textSize: 15, weight: .semibold, textColor: .white)
     lazy var pointLabel = UILabel.with(text: "167 500.23", textSize: 30, weight: .bold, textColor: .white, textAlignment: .center)
+    
+    // MARK: - Balance
+    lazy var balanceContainerView = UIView(forAutoLayout: ())
+    lazy var communValueLabel = UILabel.with(text: "= 150 Commun", textSize: 12, weight: .semibold, textColor: .white)
+    lazy var progressView = UIProgressView(forAutoLayout: ())
+    lazy var availableHoldValueLabel = UILabel.with(text: "available".localized().uppercaseFirst + "/" + "hold".localized().uppercaseFirst, textSize: 12, textColor: .white)
+    
+    // MARK: - Buttons
     lazy var buttonsStackView: UIStackView = {
         let stackView = UIStackView(axis: .horizontal)
         stackView.addBackground(color: UIColor.white.withAlphaComponent(0.1), cornerRadius: 16)
@@ -30,20 +43,44 @@ class WalletHeaderView: MyTableHeaderView {
         addSubview(shadowView)
         shadowView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .bottom)
         
-        shadowView.addSubview(appColorView)
-        appColorView.autoPinEdgesToSuperviewEdges()
+        shadowView.addSubview(contentView)
+        contentView.autoPinEdgesToSuperviewEdges()
         
-        let firstLabel = UILabel.with(text: "Equity Value Commun", textSize: 15, weight: .semibold, textColor: .white)
-        appColorView.addSubview(firstLabel)
-        firstLabel.autoPinEdge(toSuperviewEdge: .top, withInset: 100 * Config.heightRatio)
-        firstLabel.autoAlignAxis(toSuperviewAxis: .vertical)
+        contentView.addSubview(titleLabel)
+        titleLabel.autoPinEdge(toSuperviewEdge: .top, withInset: 100 * Config.heightRatio)
+        titleLabel.autoAlignAxis(toSuperviewAxis: .vertical)
         
-        appColorView.addSubview(pointLabel)
-        pointLabel.autoPinEdge(.top, to: .bottom, of: firstLabel, withOffset: 5)
+        contentView.addSubview(pointLabel)
+        pointLabel.autoPinEdge(.top, to: .bottom, of: titleLabel, withOffset: 5)
         pointLabel.autoAlignAxis(toSuperviewAxis: .vertical)
         
-        appColorView.addSubview(buttonsStackView)
-        buttonsStackView.autoPinEdge(.top, to: .bottom, of: pointLabel, withOffset: 30 * Config.heightRatio)
+        // balance
+        balanceContainerView.addSubview(communValueLabel)
+        communValueLabel.autoPinEdge(toSuperviewEdge: .top, withInset: 5)
+        communValueLabel.autoAlignAxis(toSuperviewAxis: .vertical)
+        
+        balanceContainerView.addSubview(progressView)
+        progressView.autoPinEdge(.top, to: .bottom, of: communValueLabel, withOffset: 32 * Config.heightRatio)
+        progressView.autoPinEdge(toSuperviewEdge: .leading, withInset: 22 * Config.widthRatio)
+        progressView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 22 * Config.widthRatio)
+        
+
+        let label = UILabel.with(textSize: 12, textColor: .white)
+        label.attributedText = NSMutableAttributedString()
+            .text("available".localized().uppercaseFirst, size: 12, color: .white)
+            .text("/" + "hold".localized().uppercaseFirst, size: 12, color: UIColor.white.withAlphaComponent(0.5))
+        
+        balanceContainerView.addSubview(label)
+        label.autoPinEdge(.leading, to: .leading, of: progressView)
+        label.autoPinEdge(.top, to: .bottom, of: progressView, withOffset: 12)
+        label.autoPinEdge(toSuperviewEdge: .bottom)
+        
+        balanceContainerView.addSubview(availableHoldValueLabel)
+        availableHoldValueLabel.autoPinEdge(.top, to: .bottom, of: progressView, withOffset: 12)
+        availableHoldValueLabel.autoPinEdge(.trailing, to: .trailing, of: progressView)
+        
+        // stackView
+        contentView.addSubview(buttonsStackView)
         buttonsStackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 16 * Config.widthRatio, bottom: 30 * Config.heightRatio, right: 16 * Config.widthRatio), excludingEdge: .top)
         
         buttonsStackView.addArrangedSubview(buttonContainerViewWithButton(sendButton, label: "send".localized().uppercaseFirst))
@@ -51,11 +88,59 @@ class WalletHeaderView: MyTableHeaderView {
         
         // pin bottom
         shadowView.autoPinEdge(toSuperviewEdge: .bottom, withInset: 29)
+        
+        // initial setup
+        setUpWithCommunValue(0)
+    }
+    
+    private func setUpWithCommunValue(_ point: Double) {
+        // remove balanceContainerView if exists
+        if !balanceContainerView.isDescendant(of: contentView) {
+            contentView.backgroundColor = .appMainColor
+            balanceContainerView.removeFromSuperview()
+            
+            stackViewTopConstraint?.isActive = false
+            stackViewTopConstraint = buttonsStackView.autoPinEdge(.top, to: .bottom, of: pointLabel, withOffset: 30 * Config.heightRatio)
+            UIView.animate(withDuration: 0.3) {
+                self.layoutIfNeeded()
+            }
+        }
+        
+        // set up
+        titleLabel.text = "enquity Value Commun".localized().uppercaseFirst
+        pointLabel.text = "\(point)"
+        
+    }
+    
+    private func setUpWithBalance(_ balance: ResponseAPIWalletGetBalance) {
+        // add balanceContainerView
+        if !balanceContainerView.isDescendant(of: contentView) {
+            contentView.backgroundColor = UIColor(hexString: "#020202")
+            contentView.addSubview(balanceContainerView)
+            balanceContainerView.autoPinEdge(.top, to: .bottom, of: pointLabel)
+            balanceContainerView.autoPinEdge(toSuperviewEdge: .leading)
+            balanceContainerView.autoPinEdge(toSuperviewEdge: .trailing)
+            
+            stackViewTopConstraint?.isActive = false
+            stackViewTopConstraint = buttonsStackView.autoPinEdge(.top, to: .bottom, of: balanceContainerView, withOffset: 30 * Config.heightRatio)
+            
+            UIView.transition(with: balanceContainerView, duration: 0.3, animations: {
+                self.layoutIfNeeded()
+            })
+        }
+        
+        // set up
+        titleLabel.text = balance.name + "balance".localized().uppercaseFirst
+        pointLabel.text = balance.balance
+        communValueLabel.text = "\((Double(balance.balance) ?? 0) * (Double(balance.price) ?? 0))" + " " + "Commun"
+        availableHoldValueLabel.attributedText = NSMutableAttributedString()
+            .text("\(balance.balance)", size: 12, color: .white)
+            .text("/\(balance.frozen ?? "0")", size: 12, color: UIColor.white.withAlphaComponent(0.5))
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        appColorView.roundCorners(UIRectCorner(arrayLiteral: .bottomLeft, .bottomRight), radius: 30 * Config.heightRatio)
+        contentView.roundCorners(UIRectCorner(arrayLiteral: .bottomLeft, .bottomRight), radius: 30 * Config.heightRatio)
         shadowView.addShadow(ofColor: UIColor(red: 106, green: 128, blue: 245)!, radius: 19, offset: CGSize(width: 0, height: 14), opacity: 0.3)
     }
     

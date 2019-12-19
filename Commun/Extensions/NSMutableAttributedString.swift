@@ -32,6 +32,16 @@ extension NSMutableAttributedString {
         return self
     }
     
+    @discardableResult func text(_ text: String, size: CGFloat = 15, weight: UIFont.Weight = .regular, color: UIColor = .black) -> NSMutableAttributedString {
+        let attrs: [NSAttributedString.Key: Any] = [
+            .font: UIFont.systemFont(ofSize: size, weight: weight),
+            .foregroundColor: color
+        ]
+        let normal = NSAttributedString(string: text, attributes: attrs)
+        append(normal)
+        return self
+    }
+    
     @discardableResult func gray(_ text: String, font: UIFont = UIFont.systemFont(ofSize: 15)) -> NSMutableAttributedString {
         let attrs: [NSAttributedString.Key: Any] = [.font: font]
         let normal = NSAttributedString(string: text, attributes: attrs).colored(with: UIColor.gray)

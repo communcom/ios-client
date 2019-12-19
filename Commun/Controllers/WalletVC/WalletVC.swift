@@ -14,15 +14,7 @@ class WalletVC: TransferHistoryVC {
     lazy var headerView = WalletHeaderView(tableView: tableView)
     var sendButton: UIButton {headerView.sendButton}
     var convertButton: UIButton {headerView.convertButton}
-    lazy var communIconView: UIView = {
-        let view = UIView(width: 40, height: 40, backgroundColor: UIColor.white.withAlphaComponent(0.2), cornerRadius: 20)
-        let label = UIImageView(width: 7, height: 16, imageNamed: "slash")
-        
-        view.addSubview(label)
-        label.autoAlignAxis(toSuperviewAxis: .vertical)
-        label.autoAlignAxis(toSuperviewAxis: .horizontal)
-        return view
-    }()
+    
     override func createTableView() -> UITableView {
         let tableView = UITableView(forAutoLayout: ())
         tableView.insetsContentViewsToSafeArea = false
@@ -36,6 +28,7 @@ class WalletVC: TransferHistoryVC {
     
     override func setUp() {
         super.setUp()
+        title = "wallet".localized().uppercaseFirst
         
         setLeftNavBarButtonForGoingBack(tintColor: .white)
         
@@ -44,8 +37,6 @@ class WalletVC: TransferHistoryVC {
         
         sendButton.addTarget(self, action: #selector(sendButtonDidTouch), for: .touchUpInside)
         convertButton.addTarget(self, action: #selector(convertButtonDidTouch), for: .touchUpInside)
-        
-        navigationItem.titleView = communIconView
     }
     
     override func bind() {
@@ -74,7 +65,6 @@ class WalletVC: TransferHistoryVC {
     func showTitle(_ show: Bool, animated: Bool = false) {
         showNavigationBar(show, animated: animated) {
             self.optionsButton.tintColor = show ? .black: .white
-            self.communIconView.backgroundColor = show ? .appMainColor: UIColor.white.withAlphaComponent(0.2)
         }
     }
     
