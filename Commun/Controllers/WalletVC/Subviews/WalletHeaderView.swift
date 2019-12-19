@@ -90,6 +90,7 @@ class WalletHeaderView: MyTableHeaderView {
         
         // stackView
         contentView.addSubview(buttonsStackView)
+        stackViewTopConstraint = buttonsStackView.autoPinEdge(.top, to: .bottom, of: pointLabel, withOffset: 30 * Config.heightRatio)
         buttonsStackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 16 * Config.widthRatio, bottom: 30 * Config.heightRatio, right: 16 * Config.widthRatio), excludingEdge: .top)
         
         buttonsStackView.addArrangedSubview(buttonContainerViewWithButton(sendButton, label: "send".localized().uppercaseFirst))
@@ -121,7 +122,7 @@ class WalletHeaderView: MyTableHeaderView {
             })
         }
         // remove balanceContainerView if exists
-        if !balanceContainerView.isDescendant(of: contentView) {
+        if balanceContainerView.isDescendant(of: contentView) {
             contentView.backgroundColor = .appMainColor
             balanceContainerView.removeFromSuperview()
             
