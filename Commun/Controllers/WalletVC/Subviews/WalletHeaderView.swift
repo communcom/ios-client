@@ -10,6 +10,7 @@ import Foundation
 
 class WalletHeaderView: MyTableHeaderView {
     // MARK: - Subviews
+    lazy var shadowView = UIView(forAutoLayout: ())
     lazy var appColorView = UIView(backgroundColor: .appMainColor)
     lazy var pointLabel = UILabel.with(text: "167 500.23", textSize: 30, weight: .bold, textColor: .white, textAlignment: .center)
     lazy var buttonsStackView: UIStackView = {
@@ -26,8 +27,11 @@ class WalletHeaderView: MyTableHeaderView {
     override func commonInit() {
         super.commonInit()
         
-        addSubview(appColorView)
-        appColorView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .bottom)
+        addSubview(shadowView)
+        shadowView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .bottom)
+        
+        shadowView.addSubview(appColorView)
+        appColorView.autoPinEdgesToSuperviewEdges()
         
         let firstLabel = UILabel.with(text: "Equity Value Commun", textSize: 15, weight: .semibold, textColor: .white)
         appColorView.addSubview(firstLabel)
@@ -38,7 +42,7 @@ class WalletHeaderView: MyTableHeaderView {
         pointLabel.autoPinEdge(.top, to: .bottom, of: firstLabel, withOffset: 5)
         pointLabel.autoAlignAxis(toSuperviewAxis: .vertical)
         
-        addSubview(buttonsStackView)
+        appColorView.addSubview(buttonsStackView)
         buttonsStackView.autoPinEdge(.top, to: .bottom, of: pointLabel, withOffset: 30 * Config.heightRatio)
         buttonsStackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 16 * Config.widthRatio, bottom: 30 * Config.heightRatio, right: 16 * Config.widthRatio), excludingEdge: .top)
         
@@ -46,12 +50,13 @@ class WalletHeaderView: MyTableHeaderView {
         buttonsStackView.addArrangedSubview(buttonContainerViewWithButton(convertButton, label: "convert".localized().uppercaseFirst))
         
         // pin bottom
-        appColorView.autoPinEdge(toSuperviewEdge: .bottom)
+        shadowView.autoPinEdge(toSuperviewEdge: .bottom, withInset: 29)
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
         appColorView.roundCorners(UIRectCorner(arrayLiteral: .bottomLeft, .bottomRight), radius: 30 * Config.heightRatio)
+        shadowView.addShadow(ofColor: UIColor(red: 106, green: 128, blue: 245)!, radius: 19, offset: CGSize(width: 0, height: 14), opacity: 0.3)
     }
     
     private func buttonContainerViewWithButton(_ button: UIButton, label: String) -> UIView {
