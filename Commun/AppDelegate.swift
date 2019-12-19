@@ -111,7 +111,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             .disposed(by: bag)
         
         // Configure notification
-        configureNotifications(application: application)
+//        configureNotifications(application: application)
         
         // cache
         if let urlCache = SDURLCache(memoryCapacity: 0, diskCapacity: 2*1024*1024*1024, diskPath: SDURLCache.defaultCachePath(), enableForIOS5AndUp: true) {

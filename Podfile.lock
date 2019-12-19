@@ -5,7 +5,6 @@ PODS:
   - Alamofire (4.9.1)
   - Amplitude-iOS (4.9.3)
   - AppImageViewer (1.6.2)
-  - AppsFlyerFramework (5.0.0)
   - ASSpinnerView (0.1.2)
   - BigInt (3.1.0):
     - SipHash (~> 1.2)
@@ -164,7 +163,6 @@ DEPENDENCIES:
   - Alamofire
   - Amplitude-iOS
   - AppImageViewer
-  - AppsFlyerFramework
   - ASSpinnerView
   - Checksum
   - Crashlytics
@@ -216,7 +214,6 @@ SPEC REPOS:
     - Alamofire
     - Amplitude-iOS
     - AppImageViewer
-    - AppsFlyerFramework
     - ASSpinnerView
     - BigInt
     - Checksum
@@ -301,7 +298,6 @@ SPEC CHECKSUMS:
   Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
   Amplitude-iOS: 122e026c44db8460e5efcf84859aa290a0ae9786
   AppImageViewer: 33e149c38385363c3b12690c7945b9ca70524195
-  AppsFlyerFramework: 06f3c13fea4068757004065db8ac75672f69520e
   ASSpinnerView: 526e037b85b9db87d55db55297986b7da3059aa8
   BigInt: 76b5dfdfa3e2e478d4ffdf161aeede5502e2742f
   Checksum: f1aa56a27dea5db4006c819e2e129ee6aeb1d9af
@@ -360,6 +356,6 @@ SPEC CHECKSUMS:
   TLPhotoPicker: 04e4ef38b31ee51388058c3e1e7bbdbd79614cef
   "UITextView+Placeholder": c407b27599ea23cca425946fee3cf1db5d547008
 
-PODFILE CHECKSUM: 7f547d812c3990f5561bdde228cea283ae3a3e34
+PODFILE CHECKSUM: dc2587958ee069a8567f5a7324ee60ccf73dd89d
 
 COCOAPODS: 1.8.4
