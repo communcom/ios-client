@@ -10,7 +10,7 @@ import Foundation
 import CyberSwift
 
 class BalancesViewModel: ListViewModel<ResponseAPIWalletGetBalance> {
-    convenience init(userId: String) {
+    convenience init(userId: String? = nil) {
         let fetcher = BalancesListFetcher(userId: userId)
         self.init(fetcher: fetcher)
     }

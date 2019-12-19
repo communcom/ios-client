@@ -15,14 +15,12 @@ class BalancesListFetcher: ListFetcher<ResponseAPIWalletGetBalance> {
     var userId: String
     
     // MARK: - Methods
-    init(userId: String) {
-        self.userId = userId
+    init(userId: String?) {
+        self.userId = userId ?? Config.currentUser?.id ?? ""
     }
     
     override var request: Single<[ResponseAPIWalletGetBalance]> {
-        // TODO: - Delete mock, replace by real request
-        ResponseAPIWalletGetBalances.singleWithMockData()
+        RestAPIManager.instance.getBalance(userId: userId)
             .map {$0.balances}
-            .delay(0.8, scheduler: MainScheduler.instance)
     }
 }

@@ -9,5 +9,11 @@
 import Foundation
 
 class WalletViewModel: TransferHistoryViewModel {
-    
+    // MARK: - Properties
+    lazy var balancesVM = BalancesViewModel()
+
+    override func reload() {
+        balancesVM.reload()
+        super.reload()
+    }
 }

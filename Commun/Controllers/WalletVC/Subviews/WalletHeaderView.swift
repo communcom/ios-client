@@ -11,6 +11,16 @@ import Foundation
 class WalletHeaderView: MyTableHeaderView {
     // MARK: - Properties
     var stackViewTopConstraint: NSLayoutConstraint?
+    var balances: [ResponseAPIWalletGetBalance]?
+    var currentIndex: Int = 0 {
+        didSet {
+            if currentIndex == 0 {
+                setUpWithCommunValue()
+            } else {
+                setUpWithCurrentBalance()
+            }
+        }
+    }
     
     // MARK: - Subviews
     lazy var shadowView = UIView(forAutoLayout: ())
@@ -64,7 +74,6 @@ class WalletHeaderView: MyTableHeaderView {
         progressView.autoPinEdge(toSuperviewEdge: .leading, withInset: 22 * Config.widthRatio)
         progressView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 22 * Config.widthRatio)
         
-
         let label = UILabel.with(textSize: 12, textColor: .white)
         label.attributedText = NSMutableAttributedString()
             .text("available".localized().uppercaseFirst, size: 12, color: .white)
@@ -90,10 +99,19 @@ class WalletHeaderView: MyTableHeaderView {
         shadowView.autoPinEdge(toSuperviewEdge: .bottom, withInset: 29)
         
         // initial setup
-        setUpWithCommunValue(0)
+        setUpWithCommunValue()
     }
     
-    private func setUpWithCommunValue(_ point: Double) {
+    func setUp(with balances: [ResponseAPIWalletGetBalance]) {
+        self.balances = balances
+        
+    }
+    
+    private func setUpWithCommunValue() {
+        var point = 0
+        if let balances = balances {
+            // TODO: - Count point
+        }
         // remove balanceContainerView if exists
         if !balanceContainerView.isDescendant(of: contentView) {
             contentView.backgroundColor = .appMainColor
@@ -112,7 +130,12 @@ class WalletHeaderView: MyTableHeaderView {
         
     }
     
-    private func setUpWithBalance(_ balance: ResponseAPIWalletGetBalance) {
+    private func setUpWithCurrentBalance() {
+        guard let balances = balances,
+            let balance = balances[safe: currentIndex]
+        else {
+            return
+        }
         // add balanceContainerView
         if !balanceContainerView.isDescendant(of: contentView) {
             contentView.backgroundColor = UIColor(hexString: "#020202")
@@ -130,9 +153,9 @@ class WalletHeaderView: MyTableHeaderView {
         }
         
         // set up
-        titleLabel.text = balance.name + "balance".localized().uppercaseFirst
+        titleLabel.text = balance.name ?? "" + "balance".localized().uppercaseFirst
         pointLabel.text = balance.balance
-        communValueLabel.text = "\((Double(balance.balance) ?? 0) * (Double(balance.price) ?? 0))" + " " + "Commun"
+        communValueLabel.text = "\((Double(balance.balance) ?? 0) * (Double(balance.price?.stringValue ?? "1") ?? 0))" + " " + "Commun"
         availableHoldValueLabel.attributedText = NSMutableAttributedString()
             .text("\(balance.balance)", size: 12, color: .white)
             .text("/\(balance.frozen ?? "0")", size: 12, color: UIColor.white.withAlphaComponent(0.5))

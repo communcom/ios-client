@@ -15,6 +15,10 @@ class WalletVC: TransferHistoryVC {
     var sendButton: UIButton {headerView.sendButton}
     var convertButton: UIButton {headerView.convertButton}
     
+    override class func createViewModel() -> TransferHistoryViewModel {
+        WalletViewModel()
+    }
+    
     override func createTableView() -> UITableView {
         let tableView = UITableView(forAutoLayout: ())
         tableView.insetsContentViewsToSafeArea = false

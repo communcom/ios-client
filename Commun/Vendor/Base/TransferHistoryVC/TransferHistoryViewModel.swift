@@ -10,5 +10,7 @@ import Foundation
 import CyberSwift
 
 class TransferHistoryViewModel: ListViewModel<ResponseAPIWalletGetTransferHistoryItem> {
-    
+    init() {
+        super.init(fetcher: TransferHistoryListFetcher())
+    }
 }

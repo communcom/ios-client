@@ -11,13 +11,16 @@ import Foundation
 class TransferHistoryVC: ListViewController<ResponseAPIWalletGetTransferHistoryItem, TransferHistoryItemCell> {
     // MARK: - Properties
     init() {
-        let fetcher = TransferHistoryListFetcher()
-        let viewModel = TransferHistoryViewModel(fetcher: fetcher)
-        super.init(viewModel: viewModel)
+        super.init(viewModel: Self.createViewModel())
         
         defer {
-            self.viewModel.fetchNext()
+            self.viewModel.reload()
         }
+    }
+    
+    class func createViewModel() -> TransferHistoryViewModel {
+        let viewModel = TransferHistoryViewModel()
+        return viewModel
     }
     
     required init?(coder: NSCoder) {
