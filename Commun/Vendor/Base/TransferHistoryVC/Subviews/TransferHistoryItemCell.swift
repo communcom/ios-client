@@ -134,7 +134,12 @@ class TransferHistoryItemCell: MyTableViewCell, ListItemCellType {
     }
     
     override func roundCorners() {
-        if containerView.height > 0 {
+        if roundedCorner.isEmpty {return}
+        if containerView.height == 0 {
+            DispatchQueue.main.async {
+                self.roundCorners()
+            }
+        } else {
             containerView.roundCorners(roundedCorner, radius: 16)
         }
     }
