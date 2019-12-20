@@ -15,6 +15,7 @@ class WalletVC: TransferHistoryVC {
     lazy var headerView = WalletHeaderView(tableView: tableView)
     var sendButton: UIButton {headerView.sendButton}
     var convertButton: UIButton {headerView.convertButton}
+    var myPointsCollectionView: UICollectionView {headerView.myPointsCollectionView}
     
     override class func createViewModel() -> TransferHistoryViewModel {
         WalletViewModel()
@@ -47,6 +48,10 @@ class WalletVC: TransferHistoryVC {
     override func bind() {
         super.bind()
         bindControls()
+        
+        // forward delegate
+        myPointsCollectionView.rx.setDelegate(self)
+            .disposed(by: disposeBag)
     }
     
     override func bindItems() {
@@ -55,6 +60,12 @@ class WalletVC: TransferHistoryVC {
             .subscribe(onNext: { (items) in
                 self.headerView.setUp(with: items)
             })
+            .disposed(by: disposeBag)
+        
+        (viewModel as! WalletViewModel).balancesVM.items
+            .bind(to: myPointsCollectionView.rx.items(cellIdentifier: "\(MyPointCollectionCell.self)", cellType: MyPointCollectionCell.self)) { _, model, cell in
+                cell.setUp(with: model)
+            }
             .disposed(by: disposeBag)
     }
     
@@ -124,5 +135,11 @@ class WalletVC: TransferHistoryVC {
     
     @objc func moreActionsButtonDidTouch(_ sender: CommunButton) {
         
+    }
+}
+
+extension WalletVC: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 140, height: myPointsCollectionView.height)
     }
 }

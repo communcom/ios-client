@@ -402,6 +402,7 @@
 		BCD3BC8923AB2A340036C947 /* WalletHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD3BC8823AB2A340036C947 /* WalletHeaderView.swift */; };
 		BCD3BC8B23AB313E0036C947 /* UIStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD3BC8A23AB313E0036C947 /* UIStackView.swift */; };
 		BCD3BC8D23AC66740036C947 /* UICollectionView+PureLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD3BC8C23AC66740036C947 /* UICollectionView+PureLayout.swift */; };
+		BCD3BC8F23AC699B0036C947 /* MyPointCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD3BC8E23AC699B0036C947 /* MyPointCollectionCell.swift */; };
 		BCD453AD2354473F005A454C /* BasicEditorVC+MediaViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD453AC2354473F005A454C /* BasicEditorVC+MediaViewDelegate.swift */; };
 		BCD453AF2354476B005A454C /* ArticleEditorVC+MediaViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD453AE2354476B005A454C /* ArticleEditorVC+MediaViewDelegate.swift */; };
 		BCE7F5702359A44A0008D91B /* ResponseAPIContentGetComments.json in Resources */ = {isa = PBXBuildFile; fileRef = BCE7F56F2359A44A0008D91B /* ResponseAPIContentGetComments.json */; };
@@ -865,6 +866,7 @@
 		BCD3BC8823AB2A340036C947 /* WalletHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletHeaderView.swift; sourceTree = "<group>"; };
 		BCD3BC8A23AB313E0036C947 /* UIStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIStackView.swift; sourceTree = "<group>"; };
 		BCD3BC8C23AC66740036C947 /* UICollectionView+PureLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+PureLayout.swift"; sourceTree = "<group>"; };
+		BCD3BC8E23AC699B0036C947 /* MyPointCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPointCollectionCell.swift; sourceTree = "<group>"; };
 		BCD453AC2354473F005A454C /* BasicEditorVC+MediaViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BasicEditorVC+MediaViewDelegate.swift"; sourceTree = "<group>"; };
 		BCD453AE2354476B005A454C /* ArticleEditorVC+MediaViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ArticleEditorVC+MediaViewDelegate.swift"; sourceTree = "<group>"; };
 		BCE7F56F2359A44A0008D91B /* ResponseAPIContentGetComments.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ResponseAPIContentGetComments.json; sourceTree = "<group>"; };
@@ -2353,6 +2355,7 @@
 			isa = PBXGroup;
 			children = (
 				BCD3BC8823AB2A340036C947 /* WalletHeaderView.swift */,
+				BCD3BC8E23AC699B0036C947 /* MyPointCollectionCell.swift */,
 			);
 			path = Subviews;
 			sourceTree = "<group>";
@@ -3011,6 +3014,7 @@
 				BC3694F523698FEE00B2E078 /* EditorVC+Actions.swift in Sources */,
 				3B5EDE3B22E0DD5100897BF3 /* NotificationSettingType.swift in Sources */,
 				57840A1B2240DB9400338FD5 /* NetworkService.swift in Sources */,
+				BCD3BC8F23AC699B0036C947 /* MyPointCollectionCell.swift in Sources */,
 				572517322243935C0033125C /* ControllerContainer.swift in Sources */,
 				BC597A94238D1C6100103F4F /* AuthorizeOnWebVC.swift in Sources */,
 				3B3C8B982347911D00D8BADB /* PostEditorViewModel.swift in Sources */,

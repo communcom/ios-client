@@ -42,6 +42,14 @@ extension NSMutableAttributedString {
         return self
     }
     
+    @discardableResult func withParagraphSpacing(_ spacing: CGFloat) -> NSMutableAttributedString {
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.paragraphSpacing = 4
+        let attrs: [NSAttributedString.Key: Any] = [.paragraphStyle: paragraphStyle]
+        addAttributes(attrs, range: NSRange(location: 0, length: self.length))
+        return self
+    }
+    
     @discardableResult func gray(_ text: String, font: UIFont = UIFont.systemFont(ofSize: 15)) -> NSMutableAttributedString {
         let attrs: [NSAttributedString.Key: Any] = [.font: font]
         let normal = NSAttributedString(string: text, attributes: attrs).colored(with: UIColor.gray)

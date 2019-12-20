@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import RxSwift
 
 class WalletHeaderView: MyTableHeaderView {
     // MARK: - Properties
@@ -21,6 +22,7 @@ class WalletHeaderView: MyTableHeaderView {
             }
         }
     }
+    let disposeBag = DisposeBag()
     
     // MARK: - Subviews
     lazy var shadowView = UIView(forAutoLayout: ())
@@ -46,6 +48,19 @@ class WalletHeaderView: MyTableHeaderView {
     lazy var sendButton = UIButton.circle(size: 30, backgroundColor: UIColor.white.withAlphaComponent(0.2), tintColor: .white, imageName: "upVote", imageEdgeInsets: UIEdgeInsets(top: 6, left: 8, bottom: 6, right: 8))
     
     lazy var convertButton = UIButton.circle(size: 30, backgroundColor: UIColor.white.withAlphaComponent(0.2), tintColor: .white, imageName: "convert", imageEdgeInsets: UIEdgeInsets(inset: 6))
+    
+    // MARK: - My points
+    lazy var myPointsContainerView = UIView(forAutoLayout: ())
+    
+    lazy var myPointsCollectionView: UICollectionView = {
+        let collectionView = UICollectionView.horizontalFlow(
+            cellType: MyPointCollectionCell.self,
+            height: MyPointCollectionCell.height,
+            contentInsets: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
+        )
+        collectionView.layer.masksToBounds = false
+        return collectionView
+    }()
     
     override func commonInit() {
         super.commonInit()
@@ -96,8 +111,23 @@ class WalletHeaderView: MyTableHeaderView {
         buttonsStackView.addArrangedSubview(buttonContainerViewWithButton(sendButton, label: "send".localized().uppercaseFirst))
         buttonsStackView.addArrangedSubview(buttonContainerViewWithButton(convertButton, label: "convert".localized().uppercaseFirst))
         
+        // my points
+        addSubview(myPointsContainerView)
+        myPointsContainerView.autoPinEdge(.top, to: .bottom, of: shadowView, withOffset: 29)
+        myPointsContainerView.autoPinEdge(toSuperviewEdge: .leading)
+        myPointsContainerView.autoPinEdge(toSuperviewEdge: .trailing)
+        
+        let myPointsLabel = UILabel.with(text: "my points".localized().uppercaseFirst, textSize: 17, weight: .bold)
+        myPointsContainerView.addSubview(myPointsLabel)
+        myPointsLabel.autoPinEdge(toSuperviewEdge: .top)
+        myPointsLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 10)
+        
+        myPointsContainerView.addSubview(myPointsCollectionView)
+        myPointsCollectionView.autoPinEdge(.top, to: .bottom, of: myPointsLabel, withOffset: 20)
+        myPointsCollectionView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
+        
         // pin bottom
-        shadowView.autoPinEdge(toSuperviewEdge: .bottom, withInset: 29)
+        myPointsContainerView.autoPinEdge(toSuperviewEdge: .bottom, withInset: 29)
         
         // initial setup
         setUpWithCommunValue()
