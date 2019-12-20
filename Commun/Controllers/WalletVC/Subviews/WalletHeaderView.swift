@@ -8,11 +8,9 @@
 
 import Foundation
 import RxSwift
-import CircularCarousel
 
 class WalletHeaderView: MyTableHeaderView {
     // MARK: - Properties
-    var maxItemsInCarousel = 5
     var stackViewTopConstraint: NSLayoutConstraint?
     var sendPointsTopConstraint: NSLayoutConstraint?
     var balances: [ResponseAPIWalletGetBalance]?
@@ -31,7 +29,6 @@ class WalletHeaderView: MyTableHeaderView {
     lazy var shadowView = UIView(forAutoLayout: ())
     lazy var contentView = UIView(backgroundColor: .appMainColor)
     
-    lazy var carousel = CircularCarousel(height: 44)
     lazy var titleLabel = UILabel.with(text: "Equity Value Commun", textSize: 15, weight: .semibold, textColor: .white)
     lazy var pointLabel = UILabel.with(text: "167 500.23", textSize: 30, weight: .bold, textColor: .white, textAlignment: .center)
     
@@ -99,15 +96,8 @@ class WalletHeaderView: MyTableHeaderView {
         shadowView.addSubview(contentView)
         contentView.autoPinEdgesToSuperviewEdges()
         
-        contentView.addSubview(carousel)
-        carousel.autoPinEdge(toSuperviewSafeArea: .top)
-        carousel.autoAlignAxis(toSuperviewAxis: .vertical)
-        carousel.autoSetDimension(.width, toSize: 300)
-        carousel.delegate = self
-        carousel.dataSource = self
-        
         contentView.addSubview(titleLabel)
-        titleLabel.autoPinEdge(.top, to: .bottom, of: carousel, withOffset: 25)
+        titleLabel.autoPinEdge(toSuperviewSafeArea: .top, withInset: 25)
         titleLabel.autoAlignAxis(toSuperviewAxis: .vertical)
         
         contentView.addSubview(pointLabel)
@@ -220,7 +210,6 @@ class WalletHeaderView: MyTableHeaderView {
         } else {
             setUpWithCurrentBalance()
         }
-        carousel.reloadData()
     }
     
     private func setUpWithCommunValue() {
@@ -325,65 +314,5 @@ class WalletHeaderView: MyTableHeaderView {
     
     @objc func myPointsSeeAllDidTouch() {
         // TODO: see all
-    }
-}
-
-extension WalletHeaderView: CircularCarouselDataSource, CircularCarouselDelegate {
-    func startingItemIndex(inCarousel carousel: CircularCarousel) -> Int {
-        return currentIndex
-    }
-    
-    func numberOfItems(inCarousel carousel: CircularCarousel) -> Int {
-        return min(maxItemsInCarousel, balances?.count ?? 0)
-    }
-    func carousel(_: CircularCarousel, viewForItemAt indexPath: IndexPath, reuseView: UIView?) -> UIView {
-        guard let balances = balances,
-            let balance = balances[safe: indexPath.row]
-            else {
-                return UIView()
-        }
-        
-        var view = reuseView
-
-        if view == nil || view?.viewWithTag(1) == nil {
-            view = UIView(frame: CGRect(x: 0, y: 0, width: 44, height: 44))
-            let imageView = MyAvatarImageView(size: 44)
-            imageView.borderColor = .white
-            imageView.borderWidth = 2
-            imageView.tag = 1
-            view!.addSubview(imageView)
-            imageView.autoAlignAxis(toSuperviewAxis: .horizontal)
-            imageView.autoAlignAxis(toSuperviewAxis: .vertical)
-        }
-        
-        let imageView = view?.viewWithTag(1) as! MyAvatarImageView
-        
-        if balance.symbol == "CMN" {
-            imageView.image = UIImage(named: "tux")
-        } else {
-            imageView.setAvatar(urlString: balance.logo, namePlaceHolder: balance.name ?? "B\(indexPath.row)")
-        }
-        
-        return view!
-    }
-    // MARK: CircularCarouselDelegate
-    func carousel<CGFloat>(_ carousel: CircularCarousel, valueForOption option: CircularCarouselOption, withDefaultValue defaultValue: CGFloat) -> CGFloat {
-        if option == .itemWidth {
-            return CoreGraphics.CGFloat(44) as! CGFloat
-        }
-        
-        if option == .spacing {
-            return CoreGraphics.CGFloat(8) as! CGFloat
-        }
-        
-        if option == .minScale {
-            return CoreGraphics.CGFloat(0.7) as! CGFloat
-        }
-        
-        return defaultValue
-    }
-    
-    func carousel(_ carousel: CircularCarousel, willBeginScrollingToIndex index: Int) {
-        currentIndex = index
     }
 }

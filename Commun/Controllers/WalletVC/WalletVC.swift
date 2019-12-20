@@ -8,9 +8,15 @@
 
 import Foundation
 import RxSwift
+import CircularCarousel
 
 class WalletVC: TransferHistoryVC {
+    // MARK: - Properties
+    var maxItemsInCarousel = 5
+    var carouselHeight: CGFloat = 40
+    
     // MARK: - Subviews
+    lazy var carousel = CircularCarousel(frame: CGRect(x: 0, y: 0, width: 300, height: 44))
     lazy var optionsButton = UIButton.option(tintColor: .white, contentInsets: UIEdgeInsets(top: 12, left: 32, bottom: 12, right: 0))
     lazy var headerView = WalletHeaderView(tableView: tableView)
     var sendButton: UIButton {headerView.sendButton}
@@ -35,7 +41,9 @@ class WalletVC: TransferHistoryVC {
     
     override func setUp() {
         super.setUp()
-        title = "wallet".localized().uppercaseFirst
+        navigationItem.titleView = carousel
+        carousel.delegate = self
+        carousel.dataSource = self
         
         setLeftNavBarButtonForGoingBack(tintColor: .white)
         
@@ -69,6 +77,7 @@ class WalletVC: TransferHistoryVC {
         (viewModel as! WalletViewModel).balancesVM.items
             .bind(to: myPointsCollectionView.rx.items(cellIdentifier: "\(MyPointCollectionCell.self)", cellType: MyPointCollectionCell.self)) { _, model, cell in
                 cell.setUp(with: model)
+                self.carousel.reloadData()
             }
             .disposed(by: disposeBag)
         
@@ -138,6 +147,10 @@ class WalletVC: TransferHistoryVC {
         }
     }
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        .lightContent
+    }
+    
     // MARK: - Actions
     @objc func sendButtonDidTouch() {
         
@@ -158,5 +171,66 @@ extension WalletVC: UICollectionViewDelegateFlowLayout {
             return CGSize(width: 90, height: SendPointCollectionCell.height)
         }
         return CGSize(width: 140, height: MyPointCollectionCell.height)
+    }
+}
+
+extension WalletVC: CircularCarouselDataSource, CircularCarouselDelegate {
+    func startingItemIndex(inCarousel carousel: CircularCarousel) -> Int {
+        return headerView.currentIndex
+    }
+    
+    func numberOfItems(inCarousel carousel: CircularCarousel) -> Int {
+        return min(maxItemsInCarousel, (viewModel as! WalletViewModel).balancesVM.items.value.count)
+    }
+    func carousel(_: CircularCarousel, viewForItemAt indexPath: IndexPath, reuseView: UIView?) -> UIView {
+        let balances = (viewModel as! WalletViewModel).balancesVM.items.value
+        guard
+            let balance = balances[safe: indexPath.row]
+            else {
+                return UIView()
+        }
+        
+        var view = reuseView
+
+        if view == nil || view?.viewWithTag(1) == nil {
+            view = UIView(frame: CGRect(x: 0, y: 0, width: carouselHeight, height: carouselHeight))
+            let imageView = MyAvatarImageView(size: carouselHeight)
+            imageView.borderColor = .white
+            imageView.borderWidth = 2
+            imageView.tag = 1
+            view!.addSubview(imageView)
+            imageView.autoAlignAxis(toSuperviewAxis: .horizontal)
+            imageView.autoAlignAxis(toSuperviewAxis: .vertical)
+        }
+        
+        let imageView = view?.viewWithTag(1) as! MyAvatarImageView
+        
+        if balance.symbol == "CMN" {
+            imageView.image = UIImage(named: "tux")
+        } else {
+            imageView.setAvatar(urlString: balance.logo, namePlaceHolder: balance.name ?? "B\(indexPath.row)")
+        }
+        
+        return view!
+    }
+    // MARK: CircularCarouselDelegate
+    func carousel<CGFloat>(_ carousel: CircularCarousel, valueForOption option: CircularCarouselOption, withDefaultValue defaultValue: CGFloat) -> CGFloat {
+        if option == .itemWidth {
+            return CoreGraphics.CGFloat(carouselHeight) as! CGFloat
+        }
+        
+        if option == .spacing {
+            return CoreGraphics.CGFloat(8) as! CGFloat
+        }
+        
+        if option == .minScale {
+            return CoreGraphics.CGFloat(0.7) as! CGFloat
+        }
+        
+        return defaultValue
+    }
+    
+    func carousel(_ carousel: CircularCarousel, willBeginScrollingToIndex index: Int) {
+        headerView.currentIndex = index
     }
 }
