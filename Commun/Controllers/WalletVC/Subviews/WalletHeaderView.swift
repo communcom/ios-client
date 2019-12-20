@@ -147,7 +147,7 @@ class WalletHeaderView: MyTableHeaderView {
         myPointsLabel.autoPinEdge(toSuperviewEdge: .top)
         myPointsLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 10)
         
-        let myPointsSeeAllButton = UIButton(label: "see all".localized().uppercaseFirst, labelFont: .systemFont(ofSize: 15), textColor: .appMainColor, contentInsets: .zero)
+        let myPointsSeeAllButton = UIButton(label: "see all".localized().uppercaseFirst, labelFont: .systemFont(ofSize: 15, weight: .medium), textColor: .appMainColor, contentInsets: .zero)
         myPointsContainerView.addSubview(myPointsSeeAllButton)
         myPointsSeeAllButton.autoPinEdge(toSuperviewEdge: .top)
         myPointsSeeAllButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 10)
@@ -164,7 +164,7 @@ class WalletHeaderView: MyTableHeaderView {
         sendPointsContainerView.autoPinEdge(toSuperviewEdge: .leading)
         sendPointsContainerView.autoPinEdge(toSuperviewEdge: .trailing)
         
-        let sendPointsSeeAllButton = UIButton(label: "see all".localized().uppercaseFirst, labelFont: .systemFont(ofSize: 15), textColor: .appMainColor, contentInsets: .zero)
+        let sendPointsSeeAllButton = UIButton(label: "see all".localized().uppercaseFirst, labelFont: .systemFont(ofSize: 15, weight: .medium), textColor: .appMainColor, contentInsets: .zero)
         sendPointsContainerView.addSubview(sendPointsSeeAllButton)
         sendPointsSeeAllButton.autoPinEdge(toSuperviewEdge: .top)
         sendPointsSeeAllButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 10)
