@@ -12,6 +12,7 @@ import RxSwift
 class WalletHeaderView: MyTableHeaderView {
     // MARK: - Properties
     var stackViewTopConstraint: NSLayoutConstraint?
+    var sendPointsTopConstraint: NSLayoutConstraint?
     var balances: [ResponseAPIWalletGetBalance]?
     var currentIndex: Int = 0 {
         didSet {
@@ -56,6 +57,19 @@ class WalletHeaderView: MyTableHeaderView {
         let collectionView = UICollectionView.horizontalFlow(
             cellType: MyPointCollectionCell.self,
             height: MyPointCollectionCell.height,
+            contentInsets: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
+        )
+        collectionView.layer.masksToBounds = false
+        return collectionView
+    }()
+    
+    // MARK: - Send points
+    lazy var sendPointsContainerView = UIView(forAutoLayout: ())
+    
+    lazy var sendPointsCollectionView: UICollectionView = {
+        let collectionView = UICollectionView.horizontalFlow(
+            cellType: SendPointCollectionCell.self,
+            height: SendPointCollectionCell.height,
             contentInsets: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
         )
         collectionView.layer.masksToBounds = false
@@ -126,8 +140,23 @@ class WalletHeaderView: MyTableHeaderView {
         myPointsCollectionView.autoPinEdge(.top, to: .bottom, of: myPointsLabel, withOffset: 20)
         myPointsCollectionView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
         
+        // send points
+        addSubview(sendPointsContainerView)
+        sendPointsTopConstraint = sendPointsContainerView.autoPinEdge(.top, to: .bottom, of: myPointsContainerView, withOffset: 30 * Config.heightRatio)
+        sendPointsContainerView.autoPinEdge(toSuperviewEdge: .leading)
+        sendPointsContainerView.autoPinEdge(toSuperviewEdge: .trailing)
+        
+        let sendPointsLabel = UILabel.with(text: "send points".localized().uppercaseFirst, textSize: 17, weight: .bold)
+        sendPointsContainerView.addSubview(sendPointsLabel)
+        sendPointsLabel.autoPinEdge(toSuperviewEdge: .top)
+        sendPointsLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 10)
+        
+        sendPointsContainerView.addSubview(sendPointsCollectionView)
+        sendPointsCollectionView.autoPinEdge(.top, to: .bottom, of: sendPointsLabel, withOffset: 20)
+        sendPointsCollectionView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
+        
         // pin bottom
-        myPointsContainerView.autoPinEdge(toSuperviewEdge: .bottom, withInset: 29)
+        sendPointsContainerView.autoPinEdge(toSuperviewEdge: .bottom, withInset: 29)
         
         // initial setup
         setUpWithCommunValue()

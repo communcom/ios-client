@@ -33,9 +33,11 @@ class MyPointCollectionCell: MyCollectionViewCell {
         nameLabel.autoPinEdge(.top, to: .bottom, of: logoImageView, withOffset: 10)
         nameLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
         nameLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
+        nameLabel.adjustsFontSizeToFitWidth = true
         
         contentView.addSubview(pointLabel)
         pointLabel.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(inset: 16), excludingEdge: .top)
+        pointLabel.adjustsFontSizeToFitWidth = true
     }
     
     func setUp(with balance: ResponseAPIWalletGetBalance) {
@@ -48,6 +50,7 @@ class MyPointCollectionCell: MyCollectionViewCell {
                 .text(balance.balance, size: 20, weight: .semibold)
                 .text(" " + "token".localized().uppercaseFirst, size: 12, weight: .semibold, color: .a5a7bd)
                 .withParagraphSpacing(4)
+            pointLabel.numberOfLines = 1
         } else {
             logoImageView.setAvatar(urlString: balance.logo, namePlaceHolder: balance.name ?? "B")
             nameLabel.attributedText = NSMutableAttributedString()
@@ -57,8 +60,11 @@ class MyPointCollectionCell: MyCollectionViewCell {
             pointLabel.attributedText = NSMutableAttributedString()
                 .text(balance.balance, size: 20, weight: .semibold)
                 .text(" " + "points".localized().uppercaseFirst, size: 12, weight: .semibold, color: .a5a7bd)
-                .text("\n= \(balance.priceValue) Commun", size: 12, weight: .semibold, color: .a5a7bd)
+                .text("\n= \(balance.communValue.currencyValueFormatted) Commun", size: 12, weight: .semibold, color: .a5a7bd)
                 .withParagraphSpacing(4)
+            pointLabel.numberOfLines = 2
         }
+        nameLabel.lineBreakMode = .byTruncatingTail
+        pointLabel.lineBreakMode = .byTruncatingTail
     }
 }
