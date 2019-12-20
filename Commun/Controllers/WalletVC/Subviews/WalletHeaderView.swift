@@ -342,13 +342,11 @@ extension WalletHeaderView: CircularCarouselDataSource, CircularCarouselDelegate
             else {
                 return UIView()
         }
-            
-        let itemCount = balances.count
         
         var view = reuseView
 
         if view == nil || view?.viewWithTag(1) == nil {
-            view = UIView(frame: CGRect(x: 0, y: 0, width: 60, height: 44))
+            view = UIView(frame: CGRect(x: 0, y: 0, width: 44, height: 44))
             let imageView = MyAvatarImageView(size: 44)
             imageView.borderColor = .white
             imageView.borderWidth = 2
@@ -360,45 +358,28 @@ extension WalletHeaderView: CircularCarouselDataSource, CircularCarouselDelegate
         
         let imageView = view?.viewWithTag(1) as! MyAvatarImageView
         
-        // find size
-        var size: CGFloat = 44
-        
-        var rightIndex = currentIndex + 1
-        if rightIndex >= itemCount {rightIndex -= itemCount}
-        
-        var rightIndex2 = currentIndex + 2
-        if rightIndex2 >= itemCount {rightIndex2 -= itemCount}
-        
-        var leftIndex = currentIndex - 1
-        if leftIndex <= -1 {leftIndex += itemCount}
-        
-        var leftIndex2 = currentIndex - 2
-        if leftIndex2 <= -1 {leftIndex2 += itemCount}
-        
-        if indexPath.row == rightIndex || indexPath.row == leftIndex {
-            size = 44 * 0.8
+        if balance.symbol == "CMN" {
+            imageView.image = UIImage(named: "tux")
+        } else {
+            imageView.setAvatar(urlString: balance.logo, namePlaceHolder: balance.name ?? "B\(indexPath.row)")
         }
         
-        if indexPath.row == rightIndex2 || indexPath.row == leftIndex2 {
-            size = 44 * 0.8 * 0.8
-        }
-        
-        imageView.autoSetDimension(.width, toSize: size)
-        imageView.autoSetDimension(.height, toSize: size)
-        imageView.setCornerRadius(withSize: size)
-        
-        imageView.setAvatar(urlString: balance.logo, namePlaceHolder: balance.name ?? "B\(indexPath.row)")
         return view!
     }
     // MARK: CircularCarouselDelegate
     func carousel<CGFloat>(_ carousel: CircularCarousel, valueForOption option: CircularCarouselOption, withDefaultValue defaultValue: CGFloat) -> CGFloat {
         if option == .itemWidth {
-            return CoreGraphics.CGFloat(60) as! CGFloat
+            return CoreGraphics.CGFloat(44) as! CGFloat
         }
         
         if option == .spacing {
             return CoreGraphics.CGFloat(8) as! CGFloat
         }
+        
+        if option == .minScale {
+            return CoreGraphics.CGFloat(0.7) as! CGFloat
+        }
+        
         return defaultValue
     }
     
