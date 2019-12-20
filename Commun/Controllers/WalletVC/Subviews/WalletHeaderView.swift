@@ -229,12 +229,29 @@ class WalletHeaderView: MyTableHeaderView {
             
         }
         // remove balanceContainerView if exists
+        var needAnimation = false
         if balanceContainerView.isDescendant(of: contentView) {
             contentView.backgroundColor = .appMainColor
             balanceContainerView.removeFromSuperview()
             
             stackViewTopConstraint?.isActive = false
             stackViewTopConstraint = buttonsStackView.autoPinEdge(.top, to: .bottom, of: pointLabel, withOffset: 30 * Config.heightRatio)
+            needAnimation = true
+        }
+        
+        // add my point
+        if !myPointsContainerView.isDescendant(of: self) {
+            addSubview(myPointsContainerView)
+            myPointsContainerView.autoPinEdge(.top, to: .bottom, of: shadowView, withOffset: 29)
+            myPointsContainerView.autoPinEdge(toSuperviewEdge: .leading)
+            myPointsContainerView.autoPinEdge(toSuperviewEdge: .trailing)
+            
+            sendPointsTopConstraint?.isActive = false
+            sendPointsTopConstraint = sendPointsContainerView.autoPinEdge(.top, to: .bottom, of: myPointsContainerView, withOffset: 30 * Config.heightRatio)
+            needAnimation = true
+        }
+        
+        if needAnimation {
             UIView.animate(withDuration: 0.3) {
                 self.layoutIfNeeded()
             }
@@ -254,6 +271,7 @@ class WalletHeaderView: MyTableHeaderView {
             return
         }
         // add balanceContainerView
+        var needAnimation = false
         if !balanceContainerView.isDescendant(of: contentView) {
             contentView.backgroundColor = UIColor(hexString: "#020202")
             contentView.addSubview(balanceContainerView)
@@ -263,10 +281,22 @@ class WalletHeaderView: MyTableHeaderView {
             
             stackViewTopConstraint?.isActive = false
             stackViewTopConstraint = buttonsStackView.autoPinEdge(.top, to: .bottom, of: balanceContainerView, withOffset: 30 * Config.heightRatio)
+            needAnimation = true
+        }
+        
+        // remove my point
+        if myPointsContainerView.isDescendant(of: self) {
+            myPointsContainerView.removeFromSuperview()
             
-            UIView.transition(with: balanceContainerView, duration: 0.3, animations: {
+            sendPointsTopConstraint?.isActive = false
+            sendPointsTopConstraint = sendPointsContainerView.autoPinEdge(.top, to: .bottom, of: shadowView, withOffset: 29)
+            needAnimation = true
+        }
+        
+        if needAnimation {
+            UIView.animate(withDuration: 0.3) {
                 self.layoutIfNeeded()
-            })
+            }
         }
         
         // set up
