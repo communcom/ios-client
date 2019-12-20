@@ -17,6 +17,7 @@ class TransferHistoryItemCell: MyTableViewCell, ListItemCellType {
     var item: ResponseAPIWalletGetTransferHistoryItem?
     
     // MARK: - Subviews
+    lazy var containerView = UIView(backgroundColor: .white)
     lazy var avatarImageView = MyAvatarImageView(size: 50)
     lazy var iconImageView: UIImageView = {
         let imageView = UIImageView(width: 22, height: 22, cornerRadius: 11)
@@ -31,7 +32,6 @@ class TransferHistoryItemCell: MyTableViewCell, ListItemCellType {
     override func setUpViews() {
         super.setUpViews()
         contentView.backgroundColor = .clear
-        let containerView = UIView(backgroundColor: .white)
         contentView.addSubview(containerView)
         containerView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10))
         
@@ -66,12 +66,12 @@ class TransferHistoryItemCell: MyTableViewCell, ListItemCellType {
                 avatarUrl = item.receiver.avatarUrl
                 username = item.receiver.username ?? item.receiver.userId
                 memo = NSMutableAttributedString()
-                    .semibold("-\(item.quantity) Commun", font: .systemFont(ofSize: 15, weight: .semibold))
+                    .semibold("-\(item.quantityValue.currencyValueFormatted) Commun", font: .systemFont(ofSize: 15, weight: .semibold))
             } else {
                 avatarUrl = item.sender.avatarUrl
                 username = item.sender.username ?? item.sender.userId
                 memo = NSMutableAttributedString()
-                    .semibold("+\(item.quantity) Commun", font: .systemFont(ofSize: 15, weight: .semibold), color: .plus)
+                    .semibold("+\(item.quantityValue.currencyValueFormatted) Commun", font: .systemFont(ofSize: 15, weight: .semibold), color: .plus)
             }
             
             avatarImageView.setAvatar(urlString: avatarUrl, namePlaceHolder: username)
@@ -83,13 +83,13 @@ class TransferHistoryItemCell: MyTableViewCell, ListItemCellType {
             username = "refill".localized().uppercaseFirst
             if item.meta.transferType == "token" {
                 memo = NSMutableAttributedString()
-                    .semibold("+\(item.meta.exchangeAmount ?? 0) \(item.point.name!)", font: .systemFont(ofSize: 15, weight: .semibold), color: .plus)
+                    .semibold("+\((item.meta.exchangeAmount ?? 0).currencyValueFormatted) \(item.point.name!)", font: .systemFont(ofSize: 15, weight: .semibold), color: .plus)
                 iconImageView.isHidden = false
                 avatarImageView.setAvatar(urlString: item.point.logo, namePlaceHolder: item.point.name ?? "C")
                 iconImageView.image = UIImage(named: "tux")
             } else {
                 memo = NSMutableAttributedString()
-                    .semibold("+\(item.meta.exchangeAmount ?? 0) Commun", font: .systemFont(ofSize: 15, weight: .semibold), color: .plus)
+                    .semibold("+\((item.meta.exchangeAmount ?? 0).currencyValueFormatted) Commun", font: .systemFont(ofSize: 15, weight: .semibold), color: .plus)
                 iconImageView.isHidden = false
                 iconImageView.sd_setImage(with: URL(string: item.point.logo ?? ""), placeholderImage: UIImage(color: .appMainColor))
                 avatarImageView.image = UIImage(named: "tux")
@@ -97,14 +97,14 @@ class TransferHistoryItemCell: MyTableViewCell, ListItemCellType {
         case "reward":
             username = "reward".localized().uppercaseFirst
             memo = NSMutableAttributedString()
-                .semibold("+\(item.quantity) \(item.point.name!)", font: .systemFont(ofSize: 15, weight: .semibold), color: .plus)
+                .semibold("+\(item.quantityValue.currencyValueFormatted) \(item.point.name!)", font: .systemFont(ofSize: 15, weight: .semibold), color: .plus)
             
             avatarImageView.setAvatar(urlString: item.point.logo, namePlaceHolder: username)
             iconImageView.isHidden = true
         case "hold":
             username = item.meta.holdType?.localized().uppercaseFirst ?? ""
             memo = NSMutableAttributedString()
-                .semibold("+\(item.quantity) \(item.point.name!)", font: .systemFont(ofSize: 15, weight: .semibold), color: .plus)
+                .semibold("+\(item.quantityValue.currencyValueFormatted) \(item.point.name!)", font: .systemFont(ofSize: 15, weight: .semibold), color: .plus)
             
             avatarImageView.image = UIImage(named: "wallet-like")
             iconImageView.isHidden = true
@@ -131,5 +131,11 @@ class TransferHistoryItemCell: MyTableViewCell, ListItemCellType {
             NSMutableAttributedString(attributedString: memo)
                 .normal("\n")
                 .semibold(dateString, font: .systemFont(ofSize: 12, weight: .semibold), color: .a5a7bd)
+    }
+    
+    override func roundCorners() {
+        if containerView.height > 0 {
+            containerView.roundCorners(roundedCorner, radius: 16)
+        }
     }
 }

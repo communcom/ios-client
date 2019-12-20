@@ -76,6 +76,17 @@ class WalletHeaderView: MyTableHeaderView {
         return collectionView
     }()
     
+    // MARK: - Filter
+    lazy var filterContainerView = UIView(backgroundColor: .white)
+    lazy var filterButton: LeftAlignedIconButton = {
+        let space: CGFloat = 10
+        let button = LeftAlignedIconButton(height: 35, label: "filter".localized().uppercaseFirst, labelFont: .systemFont(ofSize: 15, weight: .semibold), backgroundColor: .f3f5fa, textColor: .a5a7bd, cornerRadius: 10, contentInsets: UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 12 + space))
+        button.textToImageSpace = space
+        button.setImage(UIImage(named: "filter"), for: .normal)
+        return button
+    }()
+    
+    // MARK: - Methods
     override func commonInit() {
         super.commonInit()
         
@@ -155,8 +166,24 @@ class WalletHeaderView: MyTableHeaderView {
         sendPointsCollectionView.autoPinEdge(.top, to: .bottom, of: sendPointsLabel, withOffset: 20)
         sendPointsCollectionView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
         
+        // filter
+        addSubview(filterContainerView)
+        filterContainerView.autoPinEdge(.top, to: .bottom, of: sendPointsContainerView, withOffset: 32)
+        filterContainerView.autoPinEdge(toSuperviewEdge: .leading, withInset: 10)
+        filterContainerView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 10)
+        
+        let historyLabel = UILabel.with(text: "history".localized().uppercaseFirst, textSize: 17, weight: .bold)
+        filterContainerView.addSubview(historyLabel)
+        historyLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
+        historyLabel.autoAlignAxis(toSuperviewAxis: .horizontal)
+        
+        filterContainerView.addSubview(filterButton)
+        filterButton.autoPinEdge(toSuperviewEdge: .top, withInset: 10)
+        filterButton.autoPinEdge(toSuperviewEdge: .bottom, withInset: 10)
+        filterButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
+        
         // pin bottom
-        sendPointsContainerView.autoPinEdge(toSuperviewEdge: .bottom, withInset: 29)
+        filterContainerView.autoPinEdge(toSuperviewEdge: .bottom)
         
         // initial setup
         setUpWithCommunValue()
@@ -241,6 +268,7 @@ class WalletHeaderView: MyTableHeaderView {
         super.layoutSubviews()
         contentView.roundCorners(UIRectCorner(arrayLiteral: .bottomLeft, .bottomRight), radius: 30 * Config.heightRatio)
         shadowView.addShadow(ofColor: UIColor(red: 106, green: 128, blue: 245)!, radius: 19, offset: CGSize(width: 0, height: 14), opacity: 0.3)
+        filterContainerView.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: 16)
     }
     
     private func buttonContainerViewWithButton(_ button: UIButton, label: String) -> UIView {
