@@ -401,6 +401,7 @@
 		BCD3BC8423AB29C00036C947 /* WalletViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD3BC8323AB29C00036C947 /* WalletViewModel.swift */; };
 		BCD3BC8923AB2A340036C947 /* WalletHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD3BC8823AB2A340036C947 /* WalletHeaderView.swift */; };
 		BCD3BC8B23AB313E0036C947 /* UIStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD3BC8A23AB313E0036C947 /* UIStackView.swift */; };
+		BCD3BC8D23AC66740036C947 /* UICollectionView+PureLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD3BC8C23AC66740036C947 /* UICollectionView+PureLayout.swift */; };
 		BCD453AD2354473F005A454C /* BasicEditorVC+MediaViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD453AC2354473F005A454C /* BasicEditorVC+MediaViewDelegate.swift */; };
 		BCD453AF2354476B005A454C /* ArticleEditorVC+MediaViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD453AE2354476B005A454C /* ArticleEditorVC+MediaViewDelegate.swift */; };
 		BCE7F5702359A44A0008D91B /* ResponseAPIContentGetComments.json in Resources */ = {isa = PBXBuildFile; fileRef = BCE7F56F2359A44A0008D91B /* ResponseAPIContentGetComments.json */; };
@@ -863,6 +864,7 @@
 		BCD3BC8323AB29C00036C947 /* WalletViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletViewModel.swift; sourceTree = "<group>"; };
 		BCD3BC8823AB2A340036C947 /* WalletHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletHeaderView.swift; sourceTree = "<group>"; };
 		BCD3BC8A23AB313E0036C947 /* UIStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIStackView.swift; sourceTree = "<group>"; };
+		BCD3BC8C23AC66740036C947 /* UICollectionView+PureLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+PureLayout.swift"; sourceTree = "<group>"; };
 		BCD453AC2354473F005A454C /* BasicEditorVC+MediaViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BasicEditorVC+MediaViewDelegate.swift"; sourceTree = "<group>"; };
 		BCD453AE2354476B005A454C /* ArticleEditorVC+MediaViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ArticleEditorVC+MediaViewDelegate.swift"; sourceTree = "<group>"; };
 		BCE7F56F2359A44A0008D91B /* ResponseAPIContentGetComments.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ResponseAPIContentGetComments.json; sourceTree = "<group>"; };
@@ -976,6 +978,7 @@
 				3B289B9B2346E7FC00598407 /* UIImage+PureLayout.swift */,
 				3B8DDF67234B388500B213F0 /* UITextView+PureLayout.swift */,
 				BC22BBCB236C0E0300F40658 /* UIStackView+PureLayout.swift */,
+				BCD3BC8C23AC66740036C947 /* UICollectionView+PureLayout.swift */,
 			);
 			path = PureLayout;
 			sourceTree = "<group>";
@@ -2949,6 +2952,7 @@
 				BCB2A6E423546AF500B3582B /* PostEditorVC+AttachmentViewDelegate.swift in Sources */,
 				3B197C8A226A33CF008CF10D /* Decodable+MockObjects.swift in Sources */,
 				BC016D45235DA0D400F1319F /* BasicPostCell.swift in Sources */,
+				BCD3BC8D23AC66740036C947 /* UICollectionView+PureLayout.swift in Sources */,
 				BC286C3523A2187100801A26 /* MyImageView.swift in Sources */,
 				BC74A18223643C6400D94EF2 /* CommunityController.swift in Sources */,
 				578B94DA2263CBD800FB5BC6 /* ConfirmUserVC.swift in Sources */,
