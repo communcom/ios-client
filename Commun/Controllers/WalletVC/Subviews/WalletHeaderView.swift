@@ -147,6 +147,13 @@ class WalletHeaderView: MyTableHeaderView {
         myPointsLabel.autoPinEdge(toSuperviewEdge: .top)
         myPointsLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 10)
         
+        let myPointsSeeAllButton = UIButton(label: "see all".localized().uppercaseFirst, labelFont: .systemFont(ofSize: 15), textColor: .appMainColor, contentInsets: .zero)
+        myPointsContainerView.addSubview(myPointsSeeAllButton)
+        myPointsSeeAllButton.autoPinEdge(toSuperviewEdge: .top)
+        myPointsSeeAllButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 10)
+        
+        myPointsSeeAllButton.addTarget(self, action: #selector(myPointsSeeAllDidTouch), for: .touchUpInside)
+        
         myPointsContainerView.addSubview(myPointsCollectionView)
         myPointsCollectionView.autoPinEdge(.top, to: .bottom, of: myPointsLabel, withOffset: 20)
         myPointsCollectionView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
@@ -156,6 +163,13 @@ class WalletHeaderView: MyTableHeaderView {
         sendPointsTopConstraint = sendPointsContainerView.autoPinEdge(.top, to: .bottom, of: myPointsContainerView, withOffset: 30 * Config.heightRatio)
         sendPointsContainerView.autoPinEdge(toSuperviewEdge: .leading)
         sendPointsContainerView.autoPinEdge(toSuperviewEdge: .trailing)
+        
+        let sendPointsSeeAllButton = UIButton(label: "see all".localized().uppercaseFirst, labelFont: .systemFont(ofSize: 15), textColor: .appMainColor, contentInsets: .zero)
+        sendPointsContainerView.addSubview(sendPointsSeeAllButton)
+        sendPointsSeeAllButton.autoPinEdge(toSuperviewEdge: .top)
+        sendPointsSeeAllButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 10)
+        
+        sendPointsSeeAllButton.addTarget(self, action: #selector(sendPointsSeeAllDidTouch), for: .touchUpInside)
         
         let sendPointsLabel = UILabel.with(text: "send points".localized().uppercaseFirst, textSize: 17, weight: .bold)
         sendPointsContainerView.addSubview(sendPointsLabel)
@@ -292,5 +306,13 @@ class WalletHeaderView: MyTableHeaderView {
     
     func endLoading() {
         contentView.hideLoader()
+    }
+    
+    @objc func sendPointsSeeAllDidTouch() {
+        // TODO: see all
+    }
+    
+    @objc func myPointsSeeAllDidTouch() {
+        // TODO: see all
     }
 }
