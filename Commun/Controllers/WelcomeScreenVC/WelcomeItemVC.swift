@@ -43,12 +43,18 @@ class WelcomeItemVC: UIViewController {
     func setupItem() {        
         // set images
         self.imageView.image = UIImage(named: "image-welcome-item-\(item)")
-        self.imageViewWidthConstraint.constant = CGFloat.adaptive(width: 310.0)
+
+        let isIphone5 = UIScreen.main.bounds.height == 568
+        if isIphone5 { //iphone 5 hotfix
+            self.imageViewWidthConstraint.constant = 240
+        } else {
+            self.imageViewWidthConstraint.constant = CGFloat.adaptive(width: 310.0)
+        }
         self.imageViewTopConstraint.constant = CGFloat.adaptive(height: -(70.0 + 36.0))
         
         self.describeLabel.tune(withAttributedText: "welcome-item-\(item)".localized(),
                                 hexColors: grayishBluePickers,
-                                font: UIFont.systemFont(ofSize: CGFloat.adaptive(width: 17.0), weight: .medium),
+                                font: UIFont.systemFont(ofSize: 17, weight: .medium),
                                 alignment: .center,
                                 isMultiLines: true)
 
@@ -101,7 +107,11 @@ class WelcomeItemVC: UIViewController {
             
             self.titleLabel1.isHidden = true
             self.imageViewTopConstraint.constant    =   CGFloat.adaptive(height: -73.0)
-            self.imageViewWidthConstraint.constant  =   CGFloat.adaptive(width: 340.0)
+            if isIphone5 { //iphone 5 hotfix
+                self.imageViewWidthConstraint.constant = 280
+            } else {
+                self.imageViewWidthConstraint.constant  =   CGFloat.adaptive(width: 340.0)
+            }
 
         // Welcome
         default:

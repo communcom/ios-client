@@ -49,11 +49,13 @@ class EnableBiometricsVC: BoardingVC {
     
     // MARK: - Actions
     @IBAction func enableButtonDidTouch(_ sender: Any) {
+        AnalyticsManger.shared.activateFaceID(true)
         UserDefaults.standard.set(true, forKey: Config.currentUserBiometryAuthEnabled)
         next()
     }
     
     @IBAction func skipButtonDidTouch(_ sender: Any) {
+        AnalyticsManger.shared.activateFaceID(false)
         next()
     }
 }
