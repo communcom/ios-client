@@ -108,11 +108,13 @@ class SignInVC: BaseViewController {
         signUpButton.addTarget(self, action: #selector(signUpButtonDidTouch), for: .touchUpInside)
         
         // retrieve icloud key-value
-        let keyStore = NSUbiquitousKeyValueStore()
-        if let login = keyStore.string(forKey: Config.currentUserNameKey),
-            let key = keyStore.string(forKey: Config.currentUserMasterKey) {
-            setTextfieldWithLogin(login, key: key)
-        }
+        #if !APPSTORE
+            let keyStore = NSUbiquitousKeyValueStore()
+            if let login = keyStore.string(forKey: Config.currentUserNameKey),
+                let key = keyStore.string(forKey: Config.currentUserMasterKey) {
+                setTextfieldWithLogin(login, key: key)
+            }
+        #endif
     }
     
     override func bind() {
@@ -172,8 +174,10 @@ class SignInVC: BaseViewController {
             masterKey: passwordTextField.text!.trimmingCharacters(in: .whitespaces)
             )
             .subscribe(onCompleted: {
+                AnalyticsManger.shared.signInStatus(success: true)
                 AppDelegate.reloadSubject.onNext(true)
             }, onError: { [weak self] (error) in
+                AnalyticsManger.shared.signInStatus(success: false)
                 self?.configure(signingIn: false)
                 self?.showError(error)
             })

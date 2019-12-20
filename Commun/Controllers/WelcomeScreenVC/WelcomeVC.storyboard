@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina5_9" orientation="portrait" appearance="light"/>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_0" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -18,17 +18,17 @@
             <objects>
                 <viewController storyboardIdentifier="WelcomeVC" id="5Vs-ev-2DK" customClass="WelcomeVC" customModule="Commun" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="oXF-w0-ktq">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <containerView clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qQo-fb-NcH">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="564"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="354"/>
                                 <connections>
                                     <segue destination="q5V-Zu-EaX" kind="embed" identifier="WelcomePageSegue" id="edI-Fw-8RT"/>
                                 </connections>
                             </containerView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9u7-LT-02r" userLabel="Top Sign In Button" customClass="BlankButton" customModule="Commun" customModuleProvider="target">
-                                <rect key="frame" x="307" y="50" width="53" height="44"/>
+                            <button opaque="NO" tag="7" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9u7-LT-02r" userLabel="Top Sign In Button" customClass="BlankButton" customModule="Commun" customModuleProvider="target">
+                                <rect key="frame" x="252" y="6" width="53" height="44"/>
                                 <accessibility key="accessibilityConfiguration" identifier="WelcomeSignInButton" label="WelcomeSignInButton"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="5Uy-kO-fpi" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
@@ -43,10 +43,10 @@
                                 </connections>
                             </button>
                             <stackView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="IfS-V6-9za">
-                                <rect key="frame" x="20" y="578" width="335" height="180"/>
+                                <rect key="frame" x="20" y="368" width="280" height="180"/>
                                 <subviews>
                                     <button clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8t8-vm-TGP" userLabel="Next Button" customClass="StepButton" customModule="Commun" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="335" height="50"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="280" height="50"/>
                                         <accessibility key="accessibilityConfiguration" identifier="WelcomeSignUpButton" label="WelcomeSignUpButton"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="Zy9-JZ-KHy" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
@@ -57,7 +57,7 @@
                                         </connections>
                                     </button>
                                     <button clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zIG-dP-Ewi" userLabel="Sign Up Button" customClass="StepButton" customModule="Commun" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="65" width="335" height="50"/>
+                                        <rect key="frame" x="0.0" y="65" width="280" height="50"/>
                                         <accessibility key="accessibilityConfiguration" identifier="WelcomeSignUpButton" label="WelcomeSignUpButton"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="QNK-sy-znB" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
@@ -68,7 +68,7 @@
                                         </connections>
                                     </button>
                                     <button clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zCr-Mk-Clg" userLabel="Bottom Sign In Button" customClass="StepButton" customModule="Commun" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="130" width="335" height="50"/>
+                                        <rect key="frame" x="0.0" y="130" width="280" height="50"/>
                                         <accessibility key="accessibilityConfiguration" identifier="WelcomeSignUpButton" label="WelcomeSignUpButton"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="NrQ-3a-xlT" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
@@ -122,45 +122,45 @@
             <objects>
                 <viewController storyboardIdentifier="WelcomeItemVC" id="Ztn-42-jHi" customClass="WelcomeItemVC" customModule="Commun" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="LzI-fj-DYP">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" verticalCompressionResistancePriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="dAW-BQ-tTo">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="375"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="dAW-BQ-tTo">
+                                <rect key="frame" x="-27.5" y="0.0" width="375" height="375"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="375" id="Ipg-bG-jPq" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                                     <constraint firstAttribute="width" secondItem="dAW-BQ-tTo" secondAttribute="height" multiplier="1:1" id="cLq-lo-yNI"/>
                                 </constraints>
                             </imageView>
-                            <label clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="752" text="Describe Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="04E-fR-nIC" userLabel="Describe Label">
-                                <rect key="frame" x="130.33333333333334" y="448.66666666666674" width="114.33333333333334" height="329.33333333333326"/>
+                            <label clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" horizontalCompressionResistancePriority="850" verticalCompressionResistancePriority="850" text="Describe Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="04E-fR-nIC" userLabel="Describe Label">
+                                <rect key="frame" x="14" y="474" width="292" height="20.5"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <stackView opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="751" axis="vertical" alignment="center" spacing="-5" translatesAutoresizingMaskIntoConstraints="NO" id="k9l-0G-pXD" userLabel="Titles Stack View">
-                                <rect key="frame" x="91.333333333333329" y="413" width="192.66666666666669" height="35.666666666666686"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="-5" translatesAutoresizingMaskIntoConstraints="NO" id="k9l-0G-pXD" userLabel="Titles Stack View">
+                                <rect key="frame" x="64" y="413" width="192.5" height="36"/>
                                 <subviews>
-                                    <label clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title Label 1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uNw-3J-9UB" userLabel="Title Label 1">
-                                        <rect key="frame" x="50.666666666666679" y="0.0" width="91.333333333333314" height="20.333333333333332"/>
+                                    <label clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Title Label 1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uNw-3J-9UB" userLabel="Title Label 1">
+                                        <rect key="frame" x="50.5" y="0.0" width="91.5" height="20.5"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="LxF-FF-Dsn" userLabel="Horizontal Stack View">
-                                        <rect key="frame" x="0.0" y="15.333333333333313" width="192.66666666666666" height="20.333333333333329"/>
+                                        <rect key="frame" x="0.0" y="15.5" width="192.5" height="20.5"/>
                                         <subviews>
-                                            <label clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title Label 2" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q6o-yz-maH" userLabel="Title Label 2">
-                                                <rect key="frame" x="0.0" y="0.0" width="93.666666666666671" height="20.333333333333332"/>
+                                            <label clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Title Label 2" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q6o-yz-maH" userLabel="Title Label 2">
+                                                <rect key="frame" x="0.0" y="0.0" width="93.5" height="20.5"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title Label 3" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gfU-gg-2Mn" userLabel="Title Label 3">
-                                                <rect key="frame" x="98.666666666666686" y="0.0" width="94" height="20.333333333333332"/>
+                                            <label clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Title Label 3" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gfU-gg-2Mn" userLabel="Title Label 3">
+                                                <rect key="frame" x="98.5" y="0.0" width="94" height="20.5"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
@@ -175,10 +175,11 @@
                         <constraints>
                             <constraint firstItem="k9l-0G-pXD" firstAttribute="top" secondItem="dAW-BQ-tTo" secondAttribute="bottom" constant="38" id="0Xp-mN-8VV" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                             <constraint firstAttribute="top" secondItem="dAW-BQ-tTo" secondAttribute="top" id="3VF-Yk-wGH"/>
-                            <constraint firstItem="GHG-MB-YcI" firstAttribute="bottom" secondItem="04E-fR-nIC" secondAttribute="bottom" id="DtU-Py-eFK" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
-                            <constraint firstItem="04E-fR-nIC" firstAttribute="top" secondItem="k9l-0G-pXD" secondAttribute="bottom" id="NmC-GE-nPK" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
+                            <constraint firstItem="04E-fR-nIC" firstAttribute="top" secondItem="k9l-0G-pXD" secondAttribute="bottom" constant="25" id="NmC-GE-nPK" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                             <constraint firstItem="dAW-BQ-tTo" firstAttribute="centerX" secondItem="LzI-fj-DYP" secondAttribute="centerX" id="OYj-e8-K7v"/>
-                            <constraint firstItem="04E-fR-nIC" firstAttribute="centerX" secondItem="LzI-fj-DYP" secondAttribute="centerX" id="Ygq-00-ygh"/>
+                            <constraint firstItem="GHG-MB-YcI" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="04E-fR-nIC" secondAttribute="bottom" constant="15" id="R3q-KG-103"/>
+                            <constraint firstItem="04E-fR-nIC" firstAttribute="leading" secondItem="GHG-MB-YcI" secondAttribute="leading" constant="14" id="kgp-og-5z8"/>
+                            <constraint firstItem="GHG-MB-YcI" firstAttribute="trailing" secondItem="04E-fR-nIC" secondAttribute="trailing" constant="14" id="vMZ-Yt-OXA"/>
                             <constraint firstItem="k9l-0G-pXD" firstAttribute="centerX" secondItem="LzI-fj-DYP" secondAttribute="centerX" id="zyX-B2-FRJ"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="GHG-MB-YcI"/>
