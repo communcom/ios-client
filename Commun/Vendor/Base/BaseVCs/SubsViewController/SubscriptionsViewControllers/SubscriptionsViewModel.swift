@@ -11,7 +11,7 @@ import CyberSwift
 
 class SubscriptionsViewModel: ListViewModel<ResponseAPIContentGetSubscriptionsItem> {
     let type: GetSubscriptionsType
-    init(userId: String?, type: GetSubscriptionsType) {
+    init(userId: String? = nil, type: GetSubscriptionsType) {
         var userId = userId
         if userId == nil {
             userId = Config.currentUser?.id ?? ""

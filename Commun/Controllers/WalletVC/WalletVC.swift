@@ -16,6 +16,7 @@ class WalletVC: TransferHistoryVC {
     var sendButton: UIButton {headerView.sendButton}
     var convertButton: UIButton {headerView.convertButton}
     var myPointsCollectionView: UICollectionView {headerView.myPointsCollectionView}
+    var sendPointsCollectionView: UICollectionView {headerView.sendPointsCollectionView}
     
     override class func createViewModel() -> TransferHistoryViewModel {
         WalletViewModel()
@@ -52,6 +53,9 @@ class WalletVC: TransferHistoryVC {
         // forward delegate
         myPointsCollectionView.rx.setDelegate(self)
             .disposed(by: disposeBag)
+        
+        sendPointsCollectionView.rx.setDelegate(self)
+            .disposed(by: disposeBag)
     }
     
     override func bindItems() {
@@ -64,6 +68,16 @@ class WalletVC: TransferHistoryVC {
         
         (viewModel as! WalletViewModel).balancesVM.items
             .bind(to: myPointsCollectionView.rx.items(cellIdentifier: "\(MyPointCollectionCell.self)", cellType: MyPointCollectionCell.self)) { _, model, cell in
+                cell.setUp(with: model)
+            }
+            .disposed(by: disposeBag)
+        
+        (viewModel as! WalletViewModel).subscriptionsVM.items
+            .map({ (items) -> [ResponseAPIContentGetSubscriptionsUser?] in
+                let items = items.compactMap {$0.userValue}
+                return [nil] + items
+            })
+            .bind(to: sendPointsCollectionView.rx.items(cellIdentifier: "\(SendPointCollectionCell.self)", cellType: SendPointCollectionCell.self)) { _, model, cell in
                 cell.setUp(with: model)
             }
             .disposed(by: disposeBag)
@@ -140,6 +154,9 @@ class WalletVC: TransferHistoryVC {
 
 extension WalletVC: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 140, height: myPointsCollectionView.height)
+        if collectionView == sendPointsCollectionView {
+            return CGSize(width: 90, height: SendPointCollectionCell.height)
+        }
+        return CGSize(width: 140, height: MyPointCollectionCell.height)
     }
 }
