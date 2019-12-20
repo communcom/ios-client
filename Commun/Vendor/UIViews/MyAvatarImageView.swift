@@ -33,6 +33,10 @@ class MyAvatarImageView: MyView {
     convenience init(size: CGFloat) {
         self.init(width: size, height: size)
         originSize = size
+        setCornerRadius(withSize: size)
+    }
+    
+    func setCornerRadius(withSize size: CGFloat) {
         cornerRadius = size / 2
         imageView.cornerRadius = (size - imageViewInsets.top - imageViewInsets.bottom) / 2
     }
