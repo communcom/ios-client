@@ -66,7 +66,7 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
         
         addSubview(followersCountLabel)
         followersCountLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
-        followersCountLabel.autoPinEdge(.top, to: .bottom, of: descriptionLabel, withOffset: 18)
+        layoutTopOfFollowerCountLabel()
 
         let followersLabel = UILabel.with(text: "followers".localized().uppercaseFirst, textSize: 12, weight: .bold, textColor: .appGrayColor)
         addSubview(followersLabel)
@@ -201,6 +201,10 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
         followButton.addTarget(self, action: #selector(followButtonDidTouch(_:)), for: .touchUpInside)
         followButton.leadingAnchor.constraint(greaterThanOrEqualTo: nameLabel.trailingAnchor, constant: 8)
             .isActive = true
+    }
+    
+    func layoutTopOfFollowerCountLabel() {
+        followersCountLabel.autoPinEdge(.top, to: .bottom, of: descriptionLabel, withOffset: 18)
     }
     
     func setUpFollowButton(isFollowing: Bool) {
