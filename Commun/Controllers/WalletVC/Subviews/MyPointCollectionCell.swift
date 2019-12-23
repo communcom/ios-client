@@ -58,7 +58,7 @@ class MyPointCollectionCell: MyCollectionViewCell {
                 .text("\n\(balance.frozen ?? "0") " + "on hold".localized(), size: 12, weight: .semibold, color: .a5a7bd)
                 .withParagraphSpacing(4)
             pointLabel.attributedText = NSMutableAttributedString()
-                .text(balance.balance, size: 20, weight: .semibold)
+                .text("\(balance.balanceValue.currencyValueFormatted)", size: 20, weight: .semibold)
                 .text(" " + "points".localized().uppercaseFirst, size: 12, weight: .semibold, color: .a5a7bd)
                 .text("\n= \(balance.communValue.currencyValueFormatted) Commun", size: 12, weight: .semibold, color: .a5a7bd)
                 .withParagraphSpacing(4)
