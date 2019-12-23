@@ -70,7 +70,7 @@ extension MyProfilePageVC {
             .disposed(by: disposeBag)
         
         (viewModel as! MyProfilePageViewModel).balancesVM.items
-            .map {$0.first(where: {$0.symbol == "CMN"})?.balance}
+            .map {$0.first(where: {$0.symbol == "CMN"})?.balanceValue.currencyValueFormatted}
             .bind(to: label.rx.text)
             .disposed(by: disposeBag)
     }

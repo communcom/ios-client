@@ -304,8 +304,8 @@ class WalletHeaderView: MyTableHeaderView {
         pointLabel.text = "\(balance.balanceValue.currencyValueFormatted)"
         communValueLabel.text = "= \(balance.communValue.currencyValueFormatted)" + " " + "Commun"
         availableHoldValueLabel.attributedText = NSMutableAttributedString()
-            .text("\(balance.balance)", size: 12, color: .white)
-            .text("/\(balance.frozen ?? "0")", size: 12, color: UIColor.white.withAlphaComponent(0.5))
+            .text("\(balance.balanceValue.currencyValueFormatted)", size: 12, color: .white)
+            .text("/\(balance.frozenValue.currencyValueFormatted)", size: 12, color: UIColor.white.withAlphaComponent(0.5))
         
         // progress bar
         var progress: Double = 0
