@@ -47,7 +47,7 @@ class MyPointCollectionCell: MyCollectionViewCell {
             logoImageView.image = UIImage(named: "tux")
             nameLabel.attributedText = NSAttributedString(string: "Commun", attributes: [.font: UIFont.systemFont(ofSize: 17, weight: .semibold)])
             pointLabel.attributedText = NSMutableAttributedString()
-                .text(balance.balance, size: 20, weight: .semibold)
+                .text(balance.balanceValue, size: 20, weight: .semibold)
                 .text(" " + "token".localized().uppercaseFirst, size: 12, weight: .semibold, color: .a5a7bd)
                 .withParagraphSpacing(4)
             pointLabel.numberOfLines = 1
