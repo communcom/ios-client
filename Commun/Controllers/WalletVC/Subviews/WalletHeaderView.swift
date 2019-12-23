@@ -349,7 +349,12 @@ class WalletHeaderView: MyTableHeaderView {
     }
     
     @objc func sendPointsSeeAllDidTouch() {
-        // TODO: see all
+        guard let balance = balances?[safe: currentIndex] else {return}
+        let vc = SendPointListVC { (user) in
+            self.parentViewController?.showAlert(title: "TODO: Send point", message: user.userId)
+        }
+        let nc = BaseNavigationController(rootViewController: vc)
+        parentViewController?.present(nc, animated: true, completion: nil)
     }
     
     @objc func myPointsSeeAllDidTouch() {

@@ -16,7 +16,7 @@ class SubscriptionsVC: SubsViewController<ResponseAPIContentGetSubscriptionsItem
     private var isNeedHideCloseButton = false
     
     // MARK: - Class Initialization
-    init(title: String? = nil, userId: String?, type: GetSubscriptionsType) {
+    init(title: String? = nil, userId: String? = nil, type: GetSubscriptionsType) {
         let viewModel = SubscriptionsViewModel(userId: userId, type: type)
         super.init(viewModel: viewModel)
         defer {self.title = title}

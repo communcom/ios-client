@@ -283,6 +283,7 @@
 		BC48FC4423668A080049C4F4 /* LeadersListFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC48FC4323668A080049C4F4 /* LeadersListFetcher.swift */; };
 		BC48FC46236690880049C4F4 /* MyEmptyPlaceHolderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC48FC45236690880049C4F4 /* MyEmptyPlaceHolderView.swift */; };
 		BC4AD64723B06196008546A4 /* GradientProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4AD64623B06196008546A4 /* GradientProgressBar.swift */; };
+		BC4AD64C23B094E9008546A4 /* SendPointListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4AD64B23B094E9008546A4 /* SendPointListVC.swift */; };
 		BC520A40237E476100033ED0 /* MySubviewAttachingTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC520A3F237E476100033ED0 /* MySubviewAttachingTextView.swift */; };
 		BC520A44237E49A900033ED0 /* PostPageTextAttachment.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC520A43237E49A900033ED0 /* PostPageTextAttachment.swift */; };
 		BC520A48237E7F3000033ED0 /* UserProfilePageVC+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC520A47237E7F3000033ED0 /* UserProfilePageVC+Actions.swift */; };
@@ -750,6 +751,7 @@
 		BC48FC4323668A080049C4F4 /* LeadersListFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeadersListFetcher.swift; sourceTree = "<group>"; };
 		BC48FC45236690880049C4F4 /* MyEmptyPlaceHolderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyEmptyPlaceHolderView.swift; sourceTree = "<group>"; };
 		BC4AD64623B06196008546A4 /* GradientProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientProgressBar.swift; sourceTree = "<group>"; };
+		BC4AD64B23B094E9008546A4 /* SendPointListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendPointListVC.swift; sourceTree = "<group>"; };
 		BC520A3F237E476100033ED0 /* MySubviewAttachingTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MySubviewAttachingTextView.swift; sourceTree = "<group>"; };
 		BC520A43237E49A900033ED0 /* PostPageTextAttachment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostPageTextAttachment.swift; sourceTree = "<group>"; };
 		BC520A47237E7F3000033ED0 /* UserProfilePageVC+Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserProfilePageVC+Actions.swift"; sourceTree = "<group>"; };
@@ -2010,6 +2012,14 @@
 			path = CardPresentationController;
 			sourceTree = "<group>";
 		};
+		BC4AD64A23B094D2008546A4 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				BC4AD64B23B094E9008546A4 /* SendPointListVC.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
 		BC52913623766EFA0022EC7F /* CommentCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -2148,6 +2158,7 @@
 		BC9066E323A9D331000F9A3B /* WalletVC */ = {
 			isa = PBXGroup;
 			children = (
+				BC4AD64A23B094D2008546A4 /* ViewControllers */,
 				BCD3BC8723AB2A230036C947 /* Subviews */,
 				BC9066FE23AB228E000F9A3B /* WalletVC.swift */,
 				BCD3BC8323AB29C00036C947 /* WalletViewModel.swift */,
@@ -2968,6 +2979,7 @@
 				578B94DA2263CBD800FB5BC6 /* ConfirmUserVC.swift in Sources */,
 				3B25E5C2234C4205005BD1B8 /* AttachmentsView.swift in Sources */,
 				BCCE0AB22368225600A183AA /* MyProfileHeaderView.swift in Sources */,
+				BC4AD64C23B094E9008546A4 /* SendPointListVC.swift in Sources */,
 				3BEC38E3230F801600662374 /* UITextView.swift in Sources */,
 				3B62055A2346E4220017FEB7 /* PostEditorVC.swift in Sources */,
 				3BF37BCC22A1297C00A72FFE /* UITableView.swift in Sources */,
