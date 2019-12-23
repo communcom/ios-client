@@ -35,7 +35,7 @@ class WalletHeaderView: MyTableHeaderView {
     // MARK: - Balance
     lazy var balanceContainerView = UIView(forAutoLayout: ())
     lazy var communValueLabel = UILabel.with(text: "= 150 Commun", textSize: 12, weight: .semibold, textColor: .white)
-    lazy var progressView = UIProgressView(forAutoLayout: ())
+    lazy var progressBar = GradientProgressBar(height: 10)
     lazy var availableHoldValueLabel = UILabel.with(text: "available".localized().uppercaseFirst + "/" + "hold".localized().uppercaseFirst, textSize: 12, textColor: .white)
     
     // MARK: - Buttons
@@ -109,10 +109,10 @@ class WalletHeaderView: MyTableHeaderView {
         communValueLabel.autoPinEdge(toSuperviewEdge: .top, withInset: 5)
         communValueLabel.autoAlignAxis(toSuperviewAxis: .vertical)
         
-        balanceContainerView.addSubview(progressView)
-        progressView.autoPinEdge(.top, to: .bottom, of: communValueLabel, withOffset: 32 * Config.heightRatio)
-        progressView.autoPinEdge(toSuperviewEdge: .leading, withInset: 22 * Config.widthRatio)
-        progressView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 22 * Config.widthRatio)
+        balanceContainerView.addSubview(progressBar)
+        progressBar.autoPinEdge(.top, to: .bottom, of: communValueLabel, withOffset: 32 * Config.heightRatio)
+        progressBar.autoPinEdge(toSuperviewEdge: .leading, withInset: 22 * Config.widthRatio)
+        progressBar.autoPinEdge(toSuperviewEdge: .trailing, withInset: 22 * Config.widthRatio)
         
         let label = UILabel.with(textSize: 12, textColor: .white)
         label.attributedText = NSMutableAttributedString()
@@ -120,13 +120,13 @@ class WalletHeaderView: MyTableHeaderView {
             .text("/" + "hold".localized().uppercaseFirst, size: 12, color: UIColor.white.withAlphaComponent(0.5))
         
         balanceContainerView.addSubview(label)
-        label.autoPinEdge(.leading, to: .leading, of: progressView)
-        label.autoPinEdge(.top, to: .bottom, of: progressView, withOffset: 12)
+        label.autoPinEdge(.leading, to: .leading, of: progressBar)
+        label.autoPinEdge(.top, to: .bottom, of: progressBar, withOffset: 12)
         label.autoPinEdge(toSuperviewEdge: .bottom)
         
         balanceContainerView.addSubview(availableHoldValueLabel)
-        availableHoldValueLabel.autoPinEdge(.top, to: .bottom, of: progressView, withOffset: 12)
-        availableHoldValueLabel.autoPinEdge(.trailing, to: .trailing, of: progressView)
+        availableHoldValueLabel.autoPinEdge(.top, to: .bottom, of: progressBar, withOffset: 12)
+        availableHoldValueLabel.autoPinEdge(.trailing, to: .trailing, of: progressBar)
         
         // stackView
         contentView.addSubview(buttonsStackView)
@@ -306,6 +306,16 @@ class WalletHeaderView: MyTableHeaderView {
         availableHoldValueLabel.attributedText = NSMutableAttributedString()
             .text("\(balance.balance)", size: 12, color: .white)
             .text("/\(balance.frozen ?? "0")", size: 12, color: UIColor.white.withAlphaComponent(0.5))
+        
+        // progress bar
+        var progress: Double = 0
+        let total = balance.balanceValue + balance.frozenValue
+        if total == 0 {
+            progress = 0
+        } else {
+            progress = balance.balanceValue / total
+        }
+        progressBar.progress = CGFloat(progress)
     }
     
     override func layoutSubviews() {
