@@ -12,10 +12,6 @@ class TransferHistoryVC: ListViewController<ResponseAPIWalletGetTransferHistoryI
     // MARK: - Properties
     init() {
         super.init(viewModel: Self.createViewModel())
-        
-        defer {
-            self.viewModel.reload()
-        }
     }
     
     class func createViewModel() -> TransferHistoryViewModel {

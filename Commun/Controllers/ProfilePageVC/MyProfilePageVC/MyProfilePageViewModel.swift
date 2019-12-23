@@ -10,6 +10,13 @@ import Foundation
 
 class MyProfilePageViewModel: UserProfilePageViewModel {
     lazy var subscriptionsVM = SubscriptionsViewModel(userId: profileId, type: .community)
+    lazy var balancesVM = BalancesViewModel()
+    
+    override func reload() {
+        subscriptionsVM.reload()
+        balancesVM.reload()
+        super.reload()
+    }
     
     override func bindHighlightCommunities() {
         // do nothing

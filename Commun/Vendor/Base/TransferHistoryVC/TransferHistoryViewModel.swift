@@ -12,5 +12,8 @@ import CyberSwift
 class TransferHistoryViewModel: ListViewModel<ResponseAPIWalletGetTransferHistoryItem> {
     init() {
         super.init(fetcher: TransferHistoryListFetcher())
+        defer {
+            fetchNext()
+        }
     }
 }

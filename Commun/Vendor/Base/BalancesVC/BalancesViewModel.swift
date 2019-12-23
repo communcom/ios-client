@@ -13,5 +13,8 @@ class BalancesViewModel: ListViewModel<ResponseAPIWalletGetBalance> {
     convenience init(userId: String? = nil) {
         let fetcher = BalancesListFetcher(userId: userId)
         self.init(fetcher: fetcher)
+        defer {
+            fetchNext()
+        }
     }
 }

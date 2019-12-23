@@ -11,9 +11,6 @@ import Foundation
 class BalancesVC: SubsViewController<ResponseAPIWalletGetBalance, BalanceCell> {
     init(userId: String? = nil) {
         super.init(viewModel: BalancesViewModel(userId: userId))
-        defer {
-            self.viewModel.reload()
-        }
     }
     
     required init?(coder: NSCoder) {
