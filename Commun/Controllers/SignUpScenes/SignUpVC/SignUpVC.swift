@@ -251,6 +251,7 @@ class SignUpVC: UIViewController, SignUpRouter {
             self.showAlert(title: "error".localized().uppercaseFirst, message: "wrong phone number".localized().uppercaseFirst)
             return
         }
+        AnalyticsManger.shared.PhoneNumberEntered()
 
         self.showIndetermineHudWithMessage("signing you up".localized().uppercaseFirst + "...")
         
@@ -270,8 +271,9 @@ class SignUpVC: UIViewController, SignUpRouter {
                                     
                                     print(captchaCode)                                    
                                 strongSelf.view.viewWithTag(reCaptchaTag)?.removeFromSuperview()
-                                    
-                                    RestAPIManager.instance.firstStep(phone: strongSelf.viewModel.phone.value, captchaCode: captchaCode)
+
+                                    let phone = "+" + strongSelf.viewModel.phone.value.components(separatedBy: CharacterSet.decimalDigits.inverted).joined(separator: "")
+                                    RestAPIManager.instance.firstStep(phone: phone, captchaCode: captchaCode)
                                         .subscribe(onSuccess: { _ in
                                             strongSelf.hideHud()
                                             strongSelf.signUpNextStep()
@@ -285,6 +287,7 @@ class SignUpVC: UIViewController, SignUpRouter {
     
     @objc func tapSignInLabel(gesture: UITapGestureRecognizer) {
         guard let text = signInLabel.text else {return}
+        AnalyticsManger.shared.goToSingIn()
         let signInRange = (text as NSString).range(of: "sign in".localized().uppercaseFirst)
         
         let nc = navigationController

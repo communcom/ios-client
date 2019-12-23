@@ -6,7 +6,7 @@ class QRScannerViewController: BaseViewController, AVCaptureMetadataOutputObject
     var captureSession: AVCaptureSession!
     var previewLayer: AVCaptureVideoPreviewLayer!
     var completion: ((LoginCredential) -> Void)?
-    
+
     // MARK: - Subviews
     lazy var errorView = ErrorView(
         title: "cannot use Back Camera".localized().uppercaseFirst,
@@ -14,30 +14,31 @@ class QRScannerViewController: BaseViewController, AVCaptureMetadataOutputObject
         retryButtonTitle: "open Settings".localized().uppercaseFirst) {
             UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!, options: [:], completionHandler: nil)
     }
-    
+
     override func setUp() {
         super.setUp()
+        AnalyticsManger.shared.startQRScanner()
         setLeftNavBarButtonForGoingBack(tintColor: .white)
         scan()
     }
-    
+
     func setUpViews() {
         let scanQrArea = UIImageView(width: 260 * Config.heightRatio, height: 260 * Config.heightRatio, imageNamed: "scan-qr-area")
         view.addSubview(scanQrArea)
         scanQrArea.autoAlignAxis(toSuperviewAxis: .horizontal)
         scanQrArea.autoAlignAxis(toSuperviewAxis: .vertical)
-        
+
         let scanQrTitle = UILabel.with(text: "scan QR".localized().uppercaseFirst, textSize: 30, weight: .bold, textColor: .white, textAlignment: .center)
         view.addSubview(scanQrTitle)
         scanQrTitle.autoAlignAxis(toSuperviewAxis: .vertical)
         scanQrTitle.autoPinEdge(.top, to: .bottom, of: scanQrArea, withOffset: 65 * Config.heightRatio)
-        
+
         let gotoCommunTitle = UILabel.with(text: "go to commun.com and scan QR".localized().uppercaseFirst, textSize: 17, weight: .semibold, textColor: .white, textAlignment: .center)
         view.addSubview(gotoCommunTitle)
         gotoCommunTitle.autoAlignAxis(toSuperviewAxis: .vertical)
         gotoCommunTitle.autoPinEdge(.top, to: .bottom, of: scanQrTitle, withOffset: 16)
     }
-    
+
     // MARK: - Methods
     override func bind() {
         super.bind()
@@ -65,7 +66,7 @@ class QRScannerViewController: BaseViewController, AVCaptureMetadataOutputObject
             })
             .disposed(by: disposeBag)
     }
-    
+
     func scan() {
         guard let videoCaptureDevice = AVCaptureDevice.default(for: .video) else {
             failed()
@@ -83,7 +84,7 @@ class QRScannerViewController: BaseViewController, AVCaptureMetadataOutputObject
             }
             return
         }
-        
+
         self.navigationItem.leftBarButtonItem?.tintColor = .white
         view.removeSubviews()
         view.backgroundColor = UIColor.black
@@ -116,7 +117,7 @@ class QRScannerViewController: BaseViewController, AVCaptureMetadataOutputObject
         captureSession.startRunning()
         setUpViews()
     }
-    
+
     func retryGrantingPermission() {
         self.navigationItem.leftBarButtonItem?.tintColor = .black
         view.addSubview(errorView)
@@ -164,18 +165,20 @@ class QRScannerViewController: BaseViewController, AVCaptureMetadataOutputObject
         guard let decodedData = Data(base64Encoded: code),
             let user = try? JSONDecoder().decode(QrCodeDecodedProfile.self, from: decodedData)
         else {
+            AnalyticsManger.shared.scanQRStatus(success: false)
             isBlocking = false
             return
         }
+        AnalyticsManger.shared.scanQRStatus(success: true)
 
         isBlocking = true
-        
+
         // vibrate
         AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
-        
+
         // completion
         captureSession.stopRunning()
-        
+
         self.backCompletion {
             self.completion?(LoginCredential(login: user.username, key: user.password))
         }

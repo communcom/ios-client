@@ -174,8 +174,10 @@ class SignInVC: BaseViewController {
             masterKey: passwordTextField.text!.trimmingCharacters(in: .whitespaces)
             )
             .subscribe(onCompleted: {
+                AnalyticsManger.shared.signInStatus(success: true)
                 AppDelegate.reloadSubject.onNext(true)
             }, onError: { [weak self] (error) in
+                AnalyticsManger.shared.signInStatus(success: false)
                 self?.configure(signingIn: false)
                 self?.showError(error)
             })

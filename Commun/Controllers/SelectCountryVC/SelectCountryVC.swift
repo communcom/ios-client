@@ -73,10 +73,13 @@ class SelectCountryVC: UIViewController {
 
             tableView.rx
                 .modelSelected(Country.self).subscribe { event in
-                    if event.element?.available ?? false {
-                        self.navigationController?.dismiss(animated: true, completion: nil)
-                    } else {
-                        self.showAlert(title: "sorry".uppercaseFirst.localized(), message: "but we don’t support your region yet".uppercaseFirst.localized())
+                    if let country = event.element {
+                        AnalyticsManger.shared.countrySelected(phoneCode: country.code, available: country.available)
+                        if country.available {
+                            self.navigationController?.dismiss(animated: true, completion: nil)
+                        } else {
+                            self.showAlert(title: "sorry".uppercaseFirst.localized(), message: "but we don’t support your region yet".uppercaseFirst.localized())
+                        }
                     }
             }.disposed(by: disposeBag)
 

@@ -101,6 +101,7 @@ class BackUpKeysVC: BoardingVC {
         guard let key = Config.currentUser?.masterKey else {return}
         UIPasteboard.general.string = key
         showDone("copied to clipboard".localized().uppercaseFirst)
+        AnalyticsManger.shared.passwordCopy()
     }
     
     @objc func iSavedItButtonDidTouch() {
@@ -116,6 +117,7 @@ class BackUpKeysVC: BoardingVC {
     }
     
     func save() {
+        AnalyticsManger.shared.passwordBackuped()
         RestAPIManager.instance.backUpICloud()
         next()
     }
