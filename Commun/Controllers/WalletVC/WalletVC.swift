@@ -92,6 +92,20 @@ class WalletVC: TransferHistoryVC {
             .disposed(by: disposeBag)
     }
     
+    override func bindItemSelected() {
+        super.bindItemSelected()
+        sendPointsCollectionView.rx.itemSelected
+            .subscribe(onNext: { (indexPath) in
+                if indexPath.row == 0 {
+                    self.addFriend()
+                } else {
+                    guard let user = (self.viewModel as! WalletViewModel).subscriptionsVM.items.value[safe: indexPath.row - 1]?.userValue else {return}
+                    self.sendPoint(to: user)
+                }
+            })
+            .disposed(by: disposeBag)
+    }
+    
     override func bindState() {
         super.bindState()
         (viewModel as! WalletViewModel).balancesVM.state
@@ -162,6 +176,14 @@ class WalletVC: TransferHistoryVC {
     
     @objc func moreActionsButtonDidTouch(_ sender: CommunButton) {
         
+    }
+    
+    func sendPoint(to user: ResponseAPIContentGetSubscriptionsUser) {
+        showAlert(title: "TODO: Send point", message: user.userId)
+    }
+    
+    func addFriend() {
+        showAlert(title: "TODO: Add friend", message: "add friend")
     }
 }
 

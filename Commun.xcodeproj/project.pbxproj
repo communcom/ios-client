@@ -284,6 +284,8 @@
 		BC48FC46236690880049C4F4 /* MyEmptyPlaceHolderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC48FC45236690880049C4F4 /* MyEmptyPlaceHolderView.swift */; };
 		BC4AD64723B06196008546A4 /* GradientProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4AD64623B06196008546A4 /* GradientProgressBar.swift */; };
 		BC4AD64C23B094E9008546A4 /* SendPointListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4AD64B23B094E9008546A4 /* SendPointListVC.swift */; };
+		BC4AD65123B09C11008546A4 /* BalancesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4AD65023B09C11008546A4 /* BalancesVC.swift */; };
+		BC4AD65423B09CB4008546A4 /* BalanceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4AD65323B09CB4008546A4 /* BalanceCell.swift */; };
 		BC520A40237E476100033ED0 /* MySubviewAttachingTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC520A3F237E476100033ED0 /* MySubviewAttachingTextView.swift */; };
 		BC520A44237E49A900033ED0 /* PostPageTextAttachment.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC520A43237E49A900033ED0 /* PostPageTextAttachment.swift */; };
 		BC520A48237E7F3000033ED0 /* UserProfilePageVC+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC520A47237E7F3000033ED0 /* UserProfilePageVC+Actions.swift */; };
@@ -752,6 +754,8 @@
 		BC48FC45236690880049C4F4 /* MyEmptyPlaceHolderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyEmptyPlaceHolderView.swift; sourceTree = "<group>"; };
 		BC4AD64623B06196008546A4 /* GradientProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientProgressBar.swift; sourceTree = "<group>"; };
 		BC4AD64B23B094E9008546A4 /* SendPointListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendPointListVC.swift; sourceTree = "<group>"; };
+		BC4AD65023B09C11008546A4 /* BalancesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalancesVC.swift; sourceTree = "<group>"; };
+		BC4AD65323B09CB4008546A4 /* BalanceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceCell.swift; sourceTree = "<group>"; };
 		BC520A3F237E476100033ED0 /* MySubviewAttachingTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MySubviewAttachingTextView.swift; sourceTree = "<group>"; };
 		BC520A43237E49A900033ED0 /* PostPageTextAttachment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostPageTextAttachment.swift; sourceTree = "<group>"; };
 		BC520A47237E7F3000033ED0 /* UserProfilePageVC+Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserProfilePageVC+Actions.swift"; sourceTree = "<group>"; };
@@ -1810,7 +1814,7 @@
 				BCA97111236004F500AE37E1 /* CommentsViewController */,
 				BC48FC41236689DC0049C4F4 /* LeadersViewModel.swift */,
 				BC7D608F237BF764007D8C1A /* BlacklistViewModel.swift */,
-				BC9066F023A9DB72000F9A3B /* BalancesViewModel.swift */,
+				BC4AD64F23B09BF7008546A4 /* BalancesVC */,
 				BC9066FD23AB2279000F9A3B /* TransferHistoryVC */,
 			);
 			path = Base;
@@ -2018,6 +2022,24 @@
 				BC4AD64B23B094E9008546A4 /* SendPointListVC.swift */,
 			);
 			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		BC4AD64F23B09BF7008546A4 /* BalancesVC */ = {
+			isa = PBXGroup;
+			children = (
+				BC4AD65223B09C15008546A4 /* Subviews */,
+				BC4AD65023B09C11008546A4 /* BalancesVC.swift */,
+				BC9066F023A9DB72000F9A3B /* BalancesViewModel.swift */,
+			);
+			path = BalancesVC;
+			sourceTree = "<group>";
+		};
+		BC4AD65223B09C15008546A4 /* Subviews */ = {
+			isa = PBXGroup;
+			children = (
+				BC4AD65323B09CB4008546A4 /* BalanceCell.swift */,
+			);
+			path = Subviews;
 			sourceTree = "<group>";
 		};
 		BC52913623766EFA0022EC7F /* CommentCell */ = {
@@ -2761,6 +2783,7 @@
 				BC016D54235EA32600F1319F /* PostsViewModel.swift in Sources */,
 				571B14FC223A935C00630C8F /* Commun.xcdatamodeld in Sources */,
 				BCB2A6E22354512D00B3582B /* AttachmentView.swift in Sources */,
+				BC4AD65123B09C11008546A4 /* BalancesVC.swift in Sources */,
 				BCD453AF2354476B005A454C /* ArticleEditorVC+MediaViewDelegate.swift in Sources */,
 				BC472D9F23A37FD800822371 /* MyCardView.swift in Sources */,
 				576DC921223E42C800EDED41 /* UIViewController+Extensions.swift in Sources */,
@@ -2813,6 +2836,7 @@
 				BCD00FBF2375087C004A3952 /* PostPageVC.swift in Sources */,
 				BC597A89238CF20500103F4F /* FTUECommunityCell.swift in Sources */,
 				57E515B12270F4EA00A6F6DB /* SettingsKeyCell.swift in Sources */,
+				BC4AD65423B09CB4008546A4 /* BalanceCell.swift in Sources */,
 				3BC613B32342162700075570 /* SwipeDownDismissViewController.swift in Sources */,
 				BC6B7653236A74F000A7AF2A /* MyProfileEditBioVC.swift in Sources */,
 				571B150B223A94DE00630C8F /* TabBarVC.swift in Sources */,
