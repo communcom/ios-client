@@ -33,13 +33,7 @@ class BalancesListFetcher: ListFetcher<ResponseAPIWalletGetBalance> {
                 balances.insert(element, at: 0)
             }
         } else {
-            let point = balances.filter {$0.symbol != "CMN"}.reduce(0.0, { (result, balance) -> Double in
-                var result = result
-                result += balance.communValue
-                return result
-            })
-            
-            balances.insert(ResponseAPIWalletGetBalance(symbol: "CMN", balance: "\(point)", logo: nil, name: nil, frozen: nil, price: nil), at: 0)
+            balances.insert(ResponseAPIWalletGetBalance(symbol: "CMN", balance: "0", logo: nil, name: nil, frozen: nil, price: nil), at: 0)
         }
         
         return balances
