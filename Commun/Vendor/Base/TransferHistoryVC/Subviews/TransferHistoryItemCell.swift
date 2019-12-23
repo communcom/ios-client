@@ -66,12 +66,12 @@ class TransferHistoryItemCell: MyTableViewCell, ListItemCellType {
                 avatarUrl = item.receiver.avatarUrl
                 username = item.receiver.username ?? item.receiver.userId
                 memo = NSMutableAttributedString()
-                    .semibold("-\(item.quantityValue.currencyValueFormatted) \(item.symbol)", font: .systemFont(ofSize: 15, weight: .semibold))
+                    .semibold("-\(item.quantityValue.currencyValueFormatted) \(item.point.name ?? item.symbol)", font: .systemFont(ofSize: 15, weight: .semibold))
             } else {
                 avatarUrl = item.sender.avatarUrl
                 username = item.sender.username ?? item.sender.userId
                 memo = NSMutableAttributedString()
-                    .semibold("+\(item.quantityValue.currencyValueFormatted) \(item.symbol)", font: .systemFont(ofSize: 15, weight: .semibold), color: .plus)
+                    .semibold("+\(item.quantityValue.currencyValueFormatted) \(item.point.name ?? item.symbol)", font: .systemFont(ofSize: 15, weight: .semibold), color: .plus)
             }
             
             avatarImageView.setAvatar(urlString: avatarUrl, namePlaceHolder: username)
