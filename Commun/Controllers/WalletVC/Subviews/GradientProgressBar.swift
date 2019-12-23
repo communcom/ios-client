@@ -11,6 +11,7 @@ import Foundation
 class GradientProgressBar: MyView {
     // MARK: - Properties
     var drawedBackground = false
+    var drawedGradientLayer = false
     var progress: CGFloat = 0 {
         didSet {
             layoutIfNeeded()
@@ -29,8 +30,9 @@ class GradientProgressBar: MyView {
             drawedBackground = true
         }
         
-        if progressLayer.superlayer == nil {
+        if !drawedGradientLayer {
             drawProgressLayer()
+            drawedGradientLayer = true
         }
     }
     
@@ -55,7 +57,18 @@ class GradientProgressBar: MyView {
         progressLayer.lineJoin = .round
         progressLayer.lineCap = .round
         progressLayer.path = createPath().cgPath
-        layer.addSublayer(progressLayer)
+        
+        // Gradient Layer
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
+        gradientLayer.endPoint = CGPoint(x: 1.0, y: 0.5)
+
+        // make sure to use .cgColor
+        gradientLayer.colors = [UIColor(hexString: "#C1CAF8")!.cgColor, UIColor(hexString: "#4EDBB0")!.cgColor]
+        gradientLayer.frame = bounds
+        gradientLayer.mask = progressLayer
+
+        layer.addSublayer(gradientLayer)
     }
     
     private func createPath() -> UIBezierPath {
