@@ -99,17 +99,24 @@ class WelcomeVC: UIViewController {
     }
     
     // MARK: - Actions
-    @IBAction func signInButtonTap(_ sender: Any) {
+    @IBAction func signInButtonTap(_ sender: UIButton) {
+        if sender.tag == 7 {
+            AnalyticsManger.shared.onboadringOpenScreen(page: pageControl.selectedIndex + 1, tapSignIn: true)
+        } else {
+            AnalyticsManger.shared.signInButtonPressed()
+        }
         let signInVC = SignInVC()
         navigationController?.pushViewController(signInVC)
     }
     
     @IBAction func signUpButtonTap(_ sender: Any) {
+        AnalyticsManger.shared.signUpButtonPressed()
         self.navigateToSignUp()
     }
     
     @IBAction func nextButtonTap(_ sender: Any) {
         let indexNext = self.welcomePageVC.currentPage + 1
+        AnalyticsManger.shared.onboadringOpenScreen(page: indexNext + 1)
         self.welcomePageVC.currentPage = indexNext
         self.welcomePageVC.showActionButtons(indexNext)
         self.pageControl.selectedIndex = indexNext

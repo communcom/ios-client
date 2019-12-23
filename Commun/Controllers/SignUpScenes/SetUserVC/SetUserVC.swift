@@ -81,6 +81,7 @@ class SetUserVC: BaseViewController, SignUpRouter {
     }
     
     @objc func infoButtonTapped() {
+        AnalyticsManger.shared.userNameHelp()
         let userNameRulesView = UserNameRulesView(forAutoLayout: ())
         showCardWithView(userNameRulesView)
     }
@@ -95,6 +96,8 @@ class SetUserVC: BaseViewController, SignUpRouter {
             viewModel.isUserNameValid(userName) else {
                 return
         }
+
+        AnalyticsManger.shared.userNameEntered()
         
         self.view.endEditing(true)
         

@@ -196,6 +196,7 @@ class ConfirmUserVC: UIViewController, SignUpRouter {
                 resetSignUpProcess()
                 return
         }
+        AnalyticsManger.shared.smsCodeResend()
         
         RestAPIManager.instance.resendSmsCode()
             .subscribe(onSuccess: { [weak self] (_) in
@@ -221,16 +222,19 @@ class ConfirmUserVC: UIViewController, SignUpRouter {
                 nextButton.isEnabled = false
                 return
         }
+        AnalyticsManger.shared.smsCodeEntered()
         
         nextButton.isEnabled = true
                 showIndetermineHudWithMessage("verifying...".localized().uppercaseFirst)
         
         RestAPIManager.instance.verify(code: code)
             .subscribe(onSuccess: { [weak self] (_) in
+                AnalyticsManger.shared.smsCodeRight()
                 self?.hideHud()
                 self?.signUpNextStep()
             }) { (error) in
                 self.deleteCode()
+                AnalyticsManger.shared.smsCodeError()
                 guard let phone = Config.currentUser?.phoneNumber else {
                     self.hideHud()
                     self.showError(error)
