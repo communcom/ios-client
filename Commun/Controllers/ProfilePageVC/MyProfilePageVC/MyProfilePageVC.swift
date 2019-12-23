@@ -49,6 +49,8 @@ class MyProfilePageVC: UserProfilePageVC {
     override func bind() {
         super.bind()
         
+        bindBalances()
+        
         let offSetY = tableView.rx.contentOffset
             .map {$0.y}.share()
             

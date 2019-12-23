@@ -42,6 +42,11 @@ class MyTableViewCell: UITableViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
+        roundCorners()
+    }
+    
+    func roundCorners() {
+        if roundedCorner.isEmpty {return}
         roundCorners(roundedCorner, radius: 10)
     }
 }

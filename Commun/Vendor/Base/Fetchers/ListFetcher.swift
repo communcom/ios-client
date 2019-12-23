@@ -47,7 +47,7 @@ enum ListFetcherState: Equatable {
 class ListFetcher<T: ListItemType> {
     
     // MARK: - Parammeters
-    let limit = UInt(Config.paginationLimit)
+    var limit = UInt(Config.paginationLimit)
     var offset: UInt = 0
     var search: String?
     
