@@ -68,7 +68,6 @@ class BalanceCell: MyTableViewCell, ListItemCellType {
         if item.symbol != "CMN" {
             secondText = secondText
                 .text("\n= \(item.communValue.currencyValueFormatted) Commun", size: 12, weight: .semibold, color: .a5a7bd)
-                .withParagraphSpacing(4)
             secondLabel.numberOfLines = 2
         } else {
             secondLabel.numberOfLines = 1
@@ -76,6 +75,7 @@ class BalanceCell: MyTableViewCell, ListItemCellType {
         
         let paragraphStyle: NSMutableParagraphStyle = NSMutableParagraphStyle()
         paragraphStyle.alignment = .right
+        paragraphStyle.paragraphSpacing = 4
         secondText.addAttributes([.paragraphStyle: paragraphStyle], range: NSRange(location: 0, length: secondText.length))
         
         secondLabel.attributedText = secondText
