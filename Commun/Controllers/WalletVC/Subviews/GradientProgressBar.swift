@@ -25,29 +25,37 @@ class GradientProgressBar: MyView {
     override func layoutSubviews() {
         super.layoutSubviews()
         if !drawedBackground {
-            let path = UIBezierPath()
-            path.move(to: CGPoint(x: 0, y: height / 2))
-            path.addLine(to: CGPoint(x: bounds.width, y: height / 2))
-            let shapeLayer = CAShapeLayer()
-            shapeLayer.path = path.cgPath
-            shapeLayer.strokeColor = UIColor.white.withAlphaComponent(0.1).cgColor
-            shapeLayer.lineWidth = height
-            shapeLayer.lineJoin = .round
-            shapeLayer.lineCap = .round
-            layer.addSublayer(shapeLayer)
-            layer.addSublayer(shapeLayer)
+            drawBackground()
             drawedBackground = true
         }
         
         if progressLayer.superlayer == nil {
-            // draw progress
-            progressLayer.strokeColor = UIColor.red.cgColor
-            progressLayer.lineWidth = height - 2 * 2
-            progressLayer.lineJoin = .round
-            progressLayer.lineCap = .round
-            progressLayer.path = createPath().cgPath
-            layer.addSublayer(progressLayer)
+            drawProgressLayer()
         }
+    }
+    
+    private func drawBackground() {
+        let path = UIBezierPath()
+        path.move(to: CGPoint(x: 0, y: height / 2))
+        path.addLine(to: CGPoint(x: bounds.width, y: height / 2))
+        let shapeLayer = CAShapeLayer()
+        shapeLayer.path = path.cgPath
+        shapeLayer.strokeColor = UIColor.white.withAlphaComponent(0.1).cgColor
+        shapeLayer.lineWidth = height
+        shapeLayer.lineJoin = .round
+        shapeLayer.lineCap = .round
+        layer.addSublayer(shapeLayer)
+        layer.addSublayer(shapeLayer)
+    }
+    
+    private func drawProgressLayer() {
+        // draw progress
+        progressLayer.strokeColor = UIColor.red.cgColor
+        progressLayer.lineWidth = height - 2 * 2
+        progressLayer.lineJoin = .round
+        progressLayer.lineCap = .round
+        progressLayer.path = createPath().cgPath
+        layer.addSublayer(progressLayer)
     }
     
     private func createPath() -> UIBezierPath {
