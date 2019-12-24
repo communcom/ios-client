@@ -16,7 +16,6 @@ class BottomMenuVC: BaseViewController {
             titleLabel.text = title
         }
     }
-    lazy var contentView = UIView(forAutoLayout: ())
     
     init() {
         super.init(nibName: nil, bundle: nil)
@@ -32,13 +31,10 @@ class BottomMenuVC: BaseViewController {
     
     override func setUp() {
         super.setUp()
-        view.addSubview(contentView)
-        contentView.autoPinEdgesToSuperviewEdges()
-        
-        contentView.addSubview(titleLabel)
+        view.addSubview(titleLabel)
         titleLabel.autoAlignAxis(toSuperviewAxis: .vertical)
         
-        contentView.addSubview(closeButton)
+        view.addSubview(closeButton)
         closeButton.autoPinEdge(toSuperviewEdge: .top, withInset: 16)
         closeButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
         closeButton.addTarget(self, action: #selector(back), for: .touchUpInside)

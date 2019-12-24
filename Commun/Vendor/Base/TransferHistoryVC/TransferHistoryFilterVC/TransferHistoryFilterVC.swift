@@ -9,6 +9,9 @@
 import Foundation
 
 class TransferHistoryFilterVC: BottomMenuVC {
+    // MARK: - Properties
+    
+    // MARK: - Subviews
     lazy var segmentedControl = TransferHistorySegmentedControl(height: 60 * Config.heightRatio)
     
     override func setUp() {
@@ -18,7 +21,7 @@ class TransferHistoryFilterVC: BottomMenuVC {
         segmentedControl.labels = ["all".localized().uppercaseFirst, "income".localized().uppercaseFirst, "outcome".localized().uppercaseFirst]
         segmentedControl.selectedIndex = 0
         
-        contentView.addSubview(segmentedControl)
+        view.addSubview(segmentedControl)
         segmentedControl.autoPinEdge(.top, to: .bottom, of: closeButton, withOffset: 24 * Config.heightRatio)
         segmentedControl.autoPinEdge(toSuperviewEdge: .leading, withInset: 20 * Config.heightRatio)
         segmentedControl.autoPinEdge(toSuperviewEdge: .trailing, withInset: 20 * Config.heightRatio)
