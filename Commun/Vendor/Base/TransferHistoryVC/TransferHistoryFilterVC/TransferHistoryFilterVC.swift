@@ -1,0 +1,13 @@
+//
+//  TransferHistoryFilterVC.swift
+//  Commun
+//
+//  Created by Chung Tran on 12/24/19.
+//  Copyright © 2019 Commun Limited. All rights reserved.
+//
+
+import Foundation
+
+class TransferHistoryFilterVC: BottomMenuVC {
+    
+}

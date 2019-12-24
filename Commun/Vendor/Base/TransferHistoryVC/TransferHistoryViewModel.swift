@@ -8,12 +8,27 @@
 
 import Foundation
 import CyberSwift
+import RxCocoa
 
 class TransferHistoryViewModel: ListViewModel<ResponseAPIWalletGetTransferHistoryItem> {
+    var filter: BehaviorRelay<TransferHistoryListFetcher.Filter>
+    
     init() {
-        super.init(fetcher: TransferHistoryListFetcher())
+        let filter = TransferHistoryListFetcher.Filter(userId: Config.currentUser?.id, direction: "all", transferType: nil, symbol: nil, rewards: nil)
+        self.filter = BehaviorRelay<TransferHistoryListFetcher.Filter>(value: filter)
+        super.init(fetcher: TransferHistoryListFetcher(filter: filter))
         defer {
-            fetchNext()
+            bindFilter()
         }
+    }
+    
+    func bindFilter() {
+        filter.distinctUntilChanged()
+            .subscribe(onNext: { (filter) in
+                self.fetcher.reset()
+                (self.fetcher as! TransferHistoryListFetcher).filter = filter
+                self.fetchNext()
+            })
+            .disposed(by: disposeBag)
     }
 }
