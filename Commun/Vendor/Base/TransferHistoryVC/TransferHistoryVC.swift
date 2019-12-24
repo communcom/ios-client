@@ -100,7 +100,8 @@ class TransferHistoryVC: ListViewController<ResponseAPIWalletGetTransferHistoryI
     
     // MARK: - Actions
     func openFilter() {
-        
+        let vc = TransferHistoryFilterVC()
+        present(vc, animated: true, completion: nil)
     }
 }
 

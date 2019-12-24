@@ -9,5 +9,10 @@
 import Foundation
 
 class TransferHistoryFilterVC: BottomMenuVC {
-    
+    override func setUp() {
+        super.setUp()
+        title = "filter".localized().uppercaseFirst
+        
+        titleLabel.autoPinEdge(toSuperviewEdge: .bottom)
+    }
 }

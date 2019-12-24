@@ -9,6 +9,13 @@
 import Foundation
 
 class BottomMenuVC: BaseViewController {
+    lazy var closeButton = UIButton.close(size: 30)
+    lazy var titleLabel = UILabel.with(textSize: 15, weight: .semibold)
+    override var title: String? {
+        didSet {
+            titleLabel.text = title
+        }
+    }
     lazy var contentView = UIView(forAutoLayout: ())
     
     init() {
@@ -27,6 +34,16 @@ class BottomMenuVC: BaseViewController {
         super.setUp()
         view.addSubview(contentView)
         contentView.autoPinEdgesToSuperviewEdges()
+        
+        contentView.addSubview(titleLabel)
+        titleLabel.autoAlignAxis(toSuperviewAxis: .vertical)
+        
+        contentView.addSubview(closeButton)
+        closeButton.autoPinEdge(toSuperviewEdge: .top, withInset: 16)
+        closeButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
+        closeButton.addTarget(self, action: #selector(back), for: .touchUpInside)
+        
+        titleLabel.autoAlignAxis(.horizontal, toSameAxisOf: closeButton)
     }
 }
 
