@@ -12,7 +12,6 @@ PODS:
   - Crashlytics (3.14.0):
     - Fabric (~> 1.10.2)
   - CryptoSwift (1.3.0)
-  - DateToolsSwift (4.0.0)
   - Differentiator (3.1.0)
   - eosswift (1.5.2):
     - BigInt (~> 3.1.0)
@@ -167,7 +166,6 @@ DEPENDENCIES:
   - Checksum
   - Crashlytics
   - CryptoSwift
-  - DateToolsSwift
   - "eosswift (from `git@github.com:communcom/eos-swift.git`)"
   - ESPullToRefresh
   - Fabric
@@ -219,7 +217,6 @@ SPEC REPOS:
     - Checksum
     - Crashlytics
     - CryptoSwift
-    - DateToolsSwift
     - Differentiator
     - ESPullToRefresh
     - Fabric
@@ -303,7 +300,6 @@ SPEC CHECKSUMS:
   Checksum: f1aa56a27dea5db4006c819e2e129ee6aeb1d9af
   Crashlytics: 540b7e5f5da5a042647227a5e3ac51d85eed06df
   CryptoSwift: 1283821600233bdbeb96d7b389c3288c3bf77211
-  DateToolsSwift: 875d97ff9e3a5d54abdd67a269b3f51c757b71ab
   Differentiator: be49ca3408f0ecfc761e4c7763d20c62be01b9ad
   eosswift: 5d65a45b38ba53e3096237d2c168589cf1862a1c
   ESPullToRefresh: ce058a36454a5032519cc9d8b45da217728cf104
@@ -356,6 +352,6 @@ SPEC CHECKSUMS:
   TLPhotoPicker: 04e4ef38b31ee51388058c3e1e7bbdbd79614cef
   "UITextView+Placeholder": c407b27599ea23cca425946fee3cf1db5d547008
 
-PODFILE CHECKSUM: dc2587958ee069a8567f5a7324ee60ccf73dd89d
+PODFILE CHECKSUM: f4af1d67d5d42e885175614b9ff5352bd728de70
 
 COCOAPODS: 1.8.4
