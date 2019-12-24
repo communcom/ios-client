@@ -16,7 +16,7 @@ class MyProfileBlacklistVC: BaseViewController {
     // MARK: - Subviews
     
     lazy var topTabBar = CMTopTabBar(
-        height: 50,
+        height: 35,
         labels: MyProfileBlacklistViewModel.SegmentedItem.allCases.map {$0.rawValue.localized().uppercaseFirst},
         selectedIndex: 0)
     lazy var tableView: UITableView = {
@@ -58,8 +58,8 @@ class MyProfileBlacklistVC: BaseViewController {
         topBarContainerView.autoPinEdgesToSuperviewSafeArea(with: .zero, excludingEdge: .bottom)
         
         topBarContainerView.addSubview(topTabBar)
-        topTabBar.autoPinEdge(toSuperviewEdge: .leading)
-        topTabBar.autoPinEdge(toSuperviewEdge: .trailing)
+        topTabBar.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
+        topTabBar.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
         topTabBar.autoAlignAxis(toSuperviewAxis: .horizontal)
         
         // tableView
