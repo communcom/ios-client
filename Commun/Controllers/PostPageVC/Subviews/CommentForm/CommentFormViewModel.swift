@@ -22,7 +22,7 @@ class CommentFormViewModel {
             let postPermlink = post?.contentId.permlink
             else {return .error(ErrorAPI.invalidData(message: "Post info missing"))}
         // Send request
-        return RestAPIManager.instance.createMessage(
+        return BlockchainManager.instance.createMessage(
             isComment: true,
             parentPost: post,
             communCode: communCode,
@@ -42,7 +42,7 @@ class CommentFormViewModel {
         else {return .error(ErrorAPI.invalidData(message: "Post info missing"))}
         
         // Send request
-        return RestAPIManager.instance.updateMessage(
+        return BlockchainManager.instance.updateMessage(
             originMessage: comment,
             communCode: communCode,
             permlink: comment.contentId.permlink,
@@ -62,7 +62,7 @@ class CommentFormViewModel {
         let authorId = comment.contentId.userId
         let parentCommentPermlink = comment.contentId.permlink
         // Send request
-        return RestAPIManager.instance.createMessage(
+        return BlockchainManager.instance.createMessage(
             isComment: true,
             parentPost: post,
             isReplying: true,

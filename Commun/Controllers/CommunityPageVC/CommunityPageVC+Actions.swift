@@ -13,9 +13,7 @@ extension CommunityPageVC {
         guard let id = viewModel.profile.value?.communityId else {return}
         showIndetermineHudWithMessage("hiding".localized().uppercaseFirst + "...")
         
-//        Completable.empty()
-//            .delay(0.8, scheduler: MainScheduler.instance)
-        RestAPIManager.instance.hideCommunity(id)
+        BlockchainManager.instance.hideCommunity(id)
             .flatMapCompletable {RestAPIManager.instance.waitForTransactionWith(id: $0)}
             .subscribe(onCompleted: {
                 self.hideHud()
