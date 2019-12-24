@@ -194,6 +194,7 @@ class WalletHeaderView: MyTableHeaderView {
         filterButton.autoPinEdge(toSuperviewEdge: .top, withInset: 10)
         filterButton.autoPinEdge(toSuperviewEdge: .bottom, withInset: 10)
         filterButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
+        filterButton.addTarget(self, action: #selector(filterButtonDidTouch), for: .touchUpInside)
         
         // pin bottom
         filterContainerView.autoPinEdge(toSuperviewEdge: .bottom)
@@ -359,5 +360,9 @@ class WalletHeaderView: MyTableHeaderView {
         let vc = BalancesVC()
         let nc = BaseNavigationController(rootViewController: vc)
         parentViewController?.present(nc, animated: true, completion: nil)
+    }
+    
+    @objc func filterButtonDidTouch() {
+        (parentViewController as? TransferHistoryVC)?.openFilter()
     }
 }

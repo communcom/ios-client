@@ -13,6 +13,7 @@ import RxSwift
 class CMTopTabBar: MyView {
     // MARK: - Properties
     var tabBarHeight: CGFloat
+    var spacing: CGFloat
     let bag = DisposeBag()
     var labels: [String] {
         didSet {
@@ -23,13 +24,14 @@ class CMTopTabBar: MyView {
     var selectedIndex: BehaviorRelay<Int>
     
     // MARK: - Subviews
-    lazy var scrollView = ContentHuggingScrollView(axis: .vertical, contentInset: UIEdgeInsets(top: 5, left: 15, bottom: 0, right: 15))
+    lazy var scrollView = ContentHuggingScrollView(axis: .vertical, contentInset: .zero)
     
     // MARK: - Init
-    init(height: CGFloat, labels: [String], selectedIndex: Int = 0) {
+    init(height: CGFloat, labels: [String], selectedIndex: Int = 0, spacing: CGFloat = 5) {
         self.labels = labels
         self.selectedIndex = BehaviorRelay<Int>(value: selectedIndex)
         self.tabBarHeight = height
+        self.spacing = spacing
         super.init(frame: .zero)
     }
     
@@ -65,7 +67,7 @@ class CMTopTabBar: MyView {
         buttons = [CommunButton]()
         
         for i in 0..<labels.count {
-            let button = CommunButton.default(height: tabBarHeight - 15, label: labels[i])
+            let button = CommunButton.default(height: tabBarHeight, label: labels[i])
             button.tag = i
             button.addTarget(self, action: #selector(changeSelection(_:)), for: .touchUpInside)
             
@@ -78,7 +80,7 @@ class CMTopTabBar: MyView {
                     .isActive = true
                 button.autoPinEdge(toSuperviewEdge: .leading)
             } else {
-                button.autoPinEdge(.leading, to: .trailing, of: buttons[i-1], withOffset: 5)
+                button.autoPinEdge(.leading, to: .trailing, of: buttons[i-1], withOffset: spacing)
             }
             
             if i == buttons.count - 1 {

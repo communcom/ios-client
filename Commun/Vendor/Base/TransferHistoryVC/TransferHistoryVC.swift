@@ -97,6 +97,15 @@ class TransferHistoryVC: ListViewController<ResponseAPIWalletGetTransferHistoryI
     override func handleLoading() {
         tableView.addNotificationsLoadingFooterView()
     }
+    
+    // MARK: - Actions
+    func openFilter() {
+        let vc = TransferHistoryFilterVC(filter: (viewModel as! TransferHistoryViewModel).filter.value)
+        vc.completion = {filter in
+            (self.viewModel as! TransferHistoryViewModel).filter.accept(filter)
+        }
+        present(vc, animated: true, completion: nil)
+    }
 }
 
 extension TransferHistoryVC: UITableViewDelegate {

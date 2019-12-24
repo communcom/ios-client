@@ -287,6 +287,11 @@
 		BC4AD64C23B094E9008546A4 /* SendPointListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4AD64B23B094E9008546A4 /* SendPointListVC.swift */; };
 		BC4AD65123B09C11008546A4 /* BalancesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4AD65023B09C11008546A4 /* BalancesVC.swift */; };
 		BC4AD65423B09CB4008546A4 /* BalanceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4AD65323B09CB4008546A4 /* BalanceCell.swift */; };
+		BC4AD65C23B1BA01008546A4 /* BottomMenuPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4AD65B23B1BA01008546A4 /* BottomMenuPresentationController.swift */; };
+		BC4AD65E23B1BA6E008546A4 /* BottomMenuVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4AD65D23B1BA6E008546A4 /* BottomMenuVC.swift */; };
+		BC4AD66123B1BB9D008546A4 /* TransferHistoryFilterVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4AD66023B1BB9D008546A4 /* TransferHistoryFilterVC.swift */; };
+		BC4AD66423B1C41C008546A4 /* TransferHistorySegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4AD66323B1C41C008546A4 /* TransferHistorySegmentedControl.swift */; };
+		BC4AD66623B1EBF1008546A4 /* TransferHistoryTopTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4AD66523B1EBF1008546A4 /* TransferHistoryTopTabBar.swift */; };
 		BC520A40237E476100033ED0 /* MySubviewAttachingTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC520A3F237E476100033ED0 /* MySubviewAttachingTextView.swift */; };
 		BC520A44237E49A900033ED0 /* PostPageTextAttachment.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC520A43237E49A900033ED0 /* PostPageTextAttachment.swift */; };
 		BC520A48237E7F3000033ED0 /* UserProfilePageVC+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC520A47237E7F3000033ED0 /* UserProfilePageVC+Actions.swift */; };
@@ -758,6 +763,11 @@
 		BC4AD64B23B094E9008546A4 /* SendPointListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendPointListVC.swift; sourceTree = "<group>"; };
 		BC4AD65023B09C11008546A4 /* BalancesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalancesVC.swift; sourceTree = "<group>"; };
 		BC4AD65323B09CB4008546A4 /* BalanceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceCell.swift; sourceTree = "<group>"; };
+		BC4AD65B23B1BA01008546A4 /* BottomMenuPresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomMenuPresentationController.swift; sourceTree = "<group>"; };
+		BC4AD65D23B1BA6E008546A4 /* BottomMenuVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomMenuVC.swift; sourceTree = "<group>"; };
+		BC4AD66023B1BB9D008546A4 /* TransferHistoryFilterVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferHistoryFilterVC.swift; sourceTree = "<group>"; };
+		BC4AD66323B1C41C008546A4 /* TransferHistorySegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferHistorySegmentedControl.swift; sourceTree = "<group>"; };
+		BC4AD66523B1EBF1008546A4 /* TransferHistoryTopTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferHistoryTopTabBar.swift; sourceTree = "<group>"; };
 		BC520A3F237E476100033ED0 /* MySubviewAttachingTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MySubviewAttachingTextView.swift; sourceTree = "<group>"; };
 		BC520A43237E49A900033ED0 /* PostPageTextAttachment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostPageTextAttachment.swift; sourceTree = "<group>"; };
 		BC520A47237E7F3000033ED0 /* UserProfilePageVC+Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserProfilePageVC+Actions.swift"; sourceTree = "<group>"; };
@@ -1208,6 +1218,7 @@
 				BC597A66238B9C2600103F4F /* CustomHeightPresentationController.swift */,
 				3BC6139D23419EFC00075570 /* HalfSizePresentationController.swift */,
 				BC597A6A238BBDAC00103F4F /* FittingSizePresentationController.swift */,
+				BC4AD65823B1B8C7008546A4 /* BottomMenuPresentationController */,
 				BC472D9923A376B700822371 /* CardPresentationController */,
 			);
 			path = UIPresentationControllers;
@@ -2045,6 +2056,33 @@
 			path = Subviews;
 			sourceTree = "<group>";
 		};
+		BC4AD65823B1B8C7008546A4 /* BottomMenuPresentationController */ = {
+			isa = PBXGroup;
+			children = (
+				BC4AD65B23B1BA01008546A4 /* BottomMenuPresentationController.swift */,
+				BC4AD65D23B1BA6E008546A4 /* BottomMenuVC.swift */,
+			);
+			path = BottomMenuPresentationController;
+			sourceTree = "<group>";
+		};
+		BC4AD65F23B1BB82008546A4 /* TransferHistoryFilterVC */ = {
+			isa = PBXGroup;
+			children = (
+				BC4AD66223B1C35F008546A4 /* Subviews */,
+				BC4AD66023B1BB9D008546A4 /* TransferHistoryFilterVC.swift */,
+			);
+			path = TransferHistoryFilterVC;
+			sourceTree = "<group>";
+		};
+		BC4AD66223B1C35F008546A4 /* Subviews */ = {
+			isa = PBXGroup;
+			children = (
+				BC4AD66323B1C41C008546A4 /* TransferHistorySegmentedControl.swift */,
+				BC4AD66523B1EBF1008546A4 /* TransferHistoryTopTabBar.swift */,
+			);
+			path = Subviews;
+			sourceTree = "<group>";
+		};
 		BC52913623766EFA0022EC7F /* CommentCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -2202,6 +2240,7 @@
 		BC9066FD23AB2279000F9A3B /* TransferHistoryVC */ = {
 			isa = PBXGroup;
 			children = (
+				BC4AD65F23B1BB82008546A4 /* TransferHistoryFilterVC */,
 				BC9066F823A9E32F000F9A3B /* Subviews */,
 				BC9066F623A9E1AC000F9A3B /* TransferHistoryViewModel.swift */,
 				BC9066E623A9D48A000F9A3B /* TransferHistoryVC.swift */,
@@ -2826,6 +2865,7 @@
 				3BE68AAE22EEA1AE00033B81 /* SettingsVC+ButtonDelegate.swift in Sources */,
 				BC619B1823726C180005BB94 /* CommunityCell.swift in Sources */,
 				3B8DDF58234AEA9600B213F0 /* ContentTextView+Draft.swift in Sources */,
+				BC4AD65C23B1BA01008546A4 /* BottomMenuPresentationController.swift in Sources */,
 				3B3C8B7C23472BF000D8BADB /* EditorToolbarItem.swift in Sources */,
 				3B8DDF65234B219D00B213F0 /* ArticleEditorVC+TextViewDelegate.swift in Sources */,
 				BC597A67238B9C2600103F4F /* CustomHeightPresentationController.swift in Sources */,
@@ -2979,6 +3019,7 @@
 				BC472D9B23A376CB00822371 /* CardViewController.swift in Sources */,
 				3B11911F2302B9B9008D0417 /* BaseNavigationController.swift in Sources */,
 				BCA9711F2360380400AE37E1 /* CommunityPageViewModel.swift in Sources */,
+				BC4AD65E23B1BA6E008546A4 /* BottomMenuVC.swift in Sources */,
 				BC3694F723699A7E00B2E078 /* EditorVC+Layout.swift in Sources */,
 				3B8DDF63234B213E00B213F0 /* PostEditorVC+TextViewDelegate.swift in Sources */,
 				3B5CB30822A57AA400757533 /* PlaceholderNotificationCell.swift in Sources */,
@@ -3033,6 +3074,7 @@
 				3B3C8B9C2347928D00D8BADB /* PostEditorVC+Layout.swift in Sources */,
 				BC597A77238BEC2700103F4F /* FTUEVC.swift in Sources */,
 				3B0E9C6C2270634B002AB1C2 /* ProfileChooseAvatarVC.swift in Sources */,
+				BC4AD66123B1BB9D008546A4 /* TransferHistoryFilterVC.swift in Sources */,
 				BC4692F9239640AE0064A38B /* LeaderFollowCollectionCell.swift in Sources */,
 				3B61AC3422E1CA8A00F608AF /* LAContext.swift in Sources */,
 				3B2538B1231E318400D0B1DA /* StateButton.swift in Sources */,
@@ -3089,11 +3131,13 @@
 				BC016D56235EA33C00F1319F /* ListViewModel.swift in Sources */,
 				BC597A6B238BBDAC00103F4F /* FittingSizePresentationController.swift in Sources */,
 				3B0686302346FFA6008953C5 /* CommunButton.swift in Sources */,
+				BC4AD66423B1C41C008546A4 /* TransferHistorySegmentedControl.swift in Sources */,
 				3BB342B422CA7412009546B2 /* CreateBioVC.swift in Sources */,
 				3BB32F1923438D4F006572F3 /* DimmingPresentationController.swift in Sources */,
 				3B5CB30522A5752100757533 /* ListViewModelType.swift in Sources */,
 				BC22BBC8236C055300F40658 /* MyProfileSettingsVC.swift in Sources */,
 				3B8DDF54234AD15A00B213F0 /* PostEditorVC+Actions.swift in Sources */,
+				BC4AD66623B1EBF1008546A4 /* TransferHistoryTopTabBar.swift in Sources */,
 				BCA9712223603C6C00AE37E1 /* CommunityHeaderView.swift in Sources */,
 				3B8DDF61234B1FC200B213F0 /* ArticleEditorVC+Binding.swift in Sources */,
 				57E5159E2270E5DE00A6F6DB /* SettingsVC.swift in Sources */,
