@@ -174,6 +174,18 @@ class EmbedView: UIView {
         coverImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapAction)))
 
         if isNeedShowImage {
+
+            let width: CGFloat = CGFloat(content.attributes?.width ?? content.attributes?.thumbnailWidth ?? 1280)
+            let height: CGFloat = CGFloat(content.attributes?.height ?? content.attributes?.thumbnailHeight ?? 720)
+
+            let screenWidth = UIScreen.main.bounds.width
+
+            var newHeight = screenWidth / width * height
+
+            if newHeight > 700 && !isPostDetail {
+                newHeight = 640
+            }
+
             if isNeedShowProvider {
                 providerLabelView.autoPinEdge(toSuperviewEdge: .right, withInset: insetX)
                 providerLabelView.autoPinEdge(.bottom, to: .bottom, of: coverImageView, withOffset: -insetY)
@@ -183,7 +195,9 @@ class EmbedView: UIView {
             coverImageView.autoPinEdge(toSuperviewEdge: .left)
             coverImageView.autoPinEdge(toSuperviewEdge: .right)
 
-            NSLayoutConstraint(item: coverImageView!, attribute: .width, relatedBy: .equal, toItem: coverImageView!, attribute: .height, multiplier: 16/9, constant: 0).isActive = true
+            NSLayoutConstraint(item: coverImageView!, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: newHeight).isActive = true
+
+//            NSLayoutConstraint(item: coverImageView!, attribute: .width, relatedBy: .equal, toItem: coverImageView!, attribute: .height, multiplier: 16/9, constant: 0).isActive = true
         }
 
         if let imageUrl = imageUrl {
@@ -242,7 +256,6 @@ class EmbedView: UIView {
     }
 
     @objc private func tapAction() {
-        
         if content.type == "video" {
             if let urlString = parseEmbed(content.attributes?.html), let url = URL(string: urlString) {
                 coverImageView.isHidden = true
