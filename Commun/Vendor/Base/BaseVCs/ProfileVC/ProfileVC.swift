@@ -149,11 +149,7 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
         navigationController?.navigationBar.addShadow(ofColor: .shadow, radius: CGFloat.adaptive(width: 16.0), offset: CGSize(width: 0.0, height: CGFloat.adaptive(height: 6.0)), opacity: 0.05)
         baseNavigationController?.changeStatusBarStyle(show ? .default : .lightContent)
         coverImageView.isHidden = show
-        
-        UIView.animate(withDuration: animated ? 0.3 : 0.0) {
-            self.navigationController?.navigationBar.subviews.first?.backgroundColor = show ? .white: .clear
-            self.navigationController?.navigationBar.setTitleFont(.boldSystemFont(ofSize: CGFloat.adaptive(width: 17.0)), color: show ? .black: .clear)
-            self.navigationItem.leftBarButtonItem?.tintColor = show ? .black: .white
+        showNavigationBar(show, animated: animated) {
             self.optionsButton.tintColor = show ? .black: .white
         }
     }

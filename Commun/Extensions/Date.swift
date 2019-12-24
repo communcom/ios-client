@@ -40,4 +40,25 @@ extension Date {
     static func timeAgo(string: String) -> String {
         return Date.from(string: string).shortTimeAgoSinceNow.replacingOccurrences(of: "_", with: "") + " " + "ago".localized()
     }
+    
+    func dayDifference(from interval : TimeInterval) -> String
+    {
+        let calendar = Calendar.current
+        let date = Date(timeIntervalSince1970: interval)
+        let startOfNow = calendar.startOfDay(for: Date())
+        let startOfTimeStamp = calendar.startOfDay(for: date)
+        let components = calendar.dateComponents([.day], from: startOfNow, to: startOfTimeStamp)
+        let day = components.day!
+        if abs(day) < 2 {
+            let formatter = DateFormatter()
+            formatter.dateStyle = .short
+            formatter.timeStyle = .none
+            formatter.doesRelativeDateFormatting = true
+            return formatter.string(from: date)
+        } else if day > 1 {
+            return "In \(day) days"
+        } else {
+            return "\(-day) days ago"
+        }
+    }
 }

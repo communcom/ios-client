@@ -44,8 +44,8 @@ class MyEmptyPlaceHolderView: MyView {
     lazy var button = CommunButton.default(label: "retry")
     
     // MARK: - Initializers
-    init(emoji: String = "😿", title: String, description: String?, buttonLabel: String? = nil, buttonAction: (() -> Void)? = nil) {
-        self.emoji              =   emoji
+    init(emoji: String? = nil, title: String, description: String?, buttonLabel: String? = nil, buttonAction: (() -> Void)? = nil) {
+        self.emoji              =   emoji ?? "😿"
         self.title              =   title
         self.buttonLabel        =   buttonLabel
         self.buttonAction       =   buttonAction

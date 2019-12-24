@@ -50,12 +50,14 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
     }()
     
     // MARK: - Subviews
-    lazy var tableView: UITableView = {
+    lazy var tableView = createTableView()
+    
+    func createTableView() -> UITableView {
         let tableView = UITableView(forAutoLayout: ())
         view.addSubview(tableView)
         tableView.autoPinEdgesToSuperviewSafeArea(with: tableViewMargin)
         return tableView
-    }()
+    }
     
     // MARK: - Initializers
     init(viewModel: ListViewModel<T>) {

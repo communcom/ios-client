@@ -1,0 +1,24 @@
+{
+   "jsonrpc":"2.0",
+   "id":3,
+   "result":{
+      "userId":"tst1sykkeaax",
+      "balances":[
+         {
+            "symbol":"CAT",
+            "balance":"601.963",
+            "logo":"https://img.commun.com/images/2hEesZprCrH1GMtvoomjEt2LcHzj.jpg",
+            "name":"Cats",
+            "frozen":"11.912",
+            "price":"9.8486"
+         },
+         {
+            "symbol":"MEME",
+            "balance":"717.505",
+            "logo":"https://img.commun.com/images/3kZfqfZRwF4wUcJnVooMRAY2LMh.jpg",
+            "name":"Meme's",
+            "price":"11.6989"
+         }
+      ]
+   }
+}

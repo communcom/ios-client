@@ -47,7 +47,7 @@ enum ListFetcherState: Equatable {
 class ListFetcher<T: ListItemType> {
     
     // MARK: - Parammeters
-    let limit = UInt(Config.paginationLimit)
+    var limit = UInt(Config.paginationLimit)
     var offset: UInt = 0
     var search: String?
     
@@ -87,12 +87,7 @@ class ListFetcher<T: ListItemType> {
         // send request
         request
             .subscribe(onSuccess: { (items) in
-                if self.offset == 0 {
-                    self.items.accept(self.join(newItems: items))
-//                    self.items.accept(items)
-                } else {
-                    self.items.accept(self.join(newItems: items))
-                }
+                self.items.accept(self.join(newItems: items))
                 
                 // resign state
                 if items.count == 0 {

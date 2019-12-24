@@ -21,4 +21,14 @@ extension Double {
 
         return String(format: "%.0f", locale: Locale.current, self)
     }
+    
+    var currencyValueFormatted: String {
+        let formatter = NumberFormatter()
+        formatter.usesGroupingSeparator = true
+        formatter.groupingSize = 3
+        formatter.numberStyle = .decimal
+        formatter.maximumFractionDigits = (self < 1000) ? 4 : 2
+        
+        return formatter.string(from: self as NSNumber) ?? "0"
+    }
 }
