@@ -100,13 +100,14 @@ class BasicEditorVC: PostEditorVC {
         for attachment in post.attachments {
             // get image url or thumbnail (for website or video)
             var imageURL = attachment.content.stringValue ?? attachment.attributes?.url
-            if attachment.attributes?.type == "video" || attachment.attributes?.type == "website" {
+            if attachment.type == "video" || attachment.type == "website" {
                 imageURL = attachment.attributes?.thumbnailUrl
             }
             // return a downloadSingle
             if let urlString = imageURL,
                 let url = URL(string: urlString) {
-                let attributes = attachment.attributes ?? ResponseAPIContentBlockAttributes(type: attachment.type, url: imageURL)
+                var attributes = attachment.attributes ?? ResponseAPIContentBlockAttributes(type: attachment.type, url: imageURL)
+                attributes.type = attachment.type
                 let downloadImage = NetworkService.shared.downloadImage(url)
                     .catchErrorJustReturn(UIImage(named: "image-not-available")!)
                     .map {TextAttachment(attributes: attributes, localImage: $0, size: CGSize(width: self.view.size.width, height: self.attachmentHeight))}
@@ -114,6 +115,8 @@ class BasicEditorVC: PostEditorVC {
             }
                 // return an error image if thumbnail not found
             else {
+                var attributes = attachment.attributes
+                attributes?.type = attachment.type
                 singles.append(
                     Single<UIImage>.just(UIImage(named: "image-not-available")!)
                         .map {TextAttachment(attributes: attachment.attributes, localImage: $0, size: CGSize(width: self.view.size.width, height: self.attachmentHeight))}

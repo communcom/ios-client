@@ -37,8 +37,6 @@ class PostEditorVC: EditorVC {
         fatalError("Must override")
     }
     
-    var isParsingPost = false
-    
     var chooseCommunityAfterLoading = true
     
     // MARK: - Subviews
@@ -155,12 +153,8 @@ class PostEditorVC: EditorVC {
         guard let document = post.document,
             let community = post.community
         else {return .empty()}
-        isParsingPost = true
         viewModel.community.accept(community)
         return contentTextView.parseContentBlock(document)
-            .do(onCompleted: {
-                self.isParsingPost = false
-            })
     }
     
     func getContentBlock() -> Single<ResponseAPIContentBlock> {
