@@ -25,7 +25,7 @@ class TransferHistoryViewModel: ListViewModel<ResponseAPIWalletGetTransferHistor
     func bindFilter() {
         filter.distinctUntilChanged()
             .subscribe(onNext: { (filter) in
-                self.fetcher.reset(clearResult: false)
+                self.fetcher.reset()
                 (self.fetcher as! TransferHistoryListFetcher).filter = filter
                 self.fetchNext()
             })
