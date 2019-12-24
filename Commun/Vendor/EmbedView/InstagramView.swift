@@ -102,7 +102,7 @@ class InstagramView: UIView {
             autorView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(openUrlAction)))
 
             imageView.isUserInteractionEnabled = true
-            imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(openImage)))
+            imageView.addTapToViewer()
         }
 
     }
@@ -112,10 +112,6 @@ class InstagramView: UIView {
             let safariVC = SFSafariViewController(url: url)
             parentViewController?.present(safariVC, animated: true, completion: nil)
         }
-    }
-
-    @objc private func openImage() {
-        imageView.openViewer(gesture: nil)
     }
 
     static func getRightHostName(url: URL) -> String {

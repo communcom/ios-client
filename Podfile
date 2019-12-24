@@ -52,7 +52,7 @@ def common_pods_commun
   
   pod 'THPinViewController', :git => "https://github.com/bigearsenal/THPinViewController.git", :branch => "commun"
   
-  pod 'AppImageViewer'
+  pod 'ImageViewer.swift'
   pod 'SDURLCache', '~> 1.3'
   pod 'UITextView+Placeholder'
   

@@ -31,7 +31,7 @@ extension BasicEditorVC {
         )
         attributes.type = "image"
         
-        let attachment = TextAttachment(attributes: attributes, localImage: image, size: CGSize(width: view.size.width, height: attachmentHeight))
+        let attachment = TextAttachment(attributes: attributes, localImage: image, size: CGSize(width: view.size.width, height: view.size.width / image.size.width * image.size.height))
         attachment.delegate = self
         
         // Add embeds

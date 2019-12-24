@@ -196,12 +196,11 @@ class EmbedView: UIView {
             coverImageView.autoPinEdge(toSuperviewEdge: .right)
 
             NSLayoutConstraint(item: coverImageView!, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: newHeight).isActive = true
-
-//            NSLayoutConstraint(item: coverImageView!, attribute: .width, relatedBy: .equal, toItem: coverImageView!, attribute: .height, multiplier: 16/9, constant: 0).isActive = true
         }
 
         if let imageUrl = imageUrl {
             coverImageView.setImageDetectGif(with: imageUrl)
+            coverImageView.addTapToViewer()
         }
 
         if isNeedShowTitle {
@@ -270,8 +269,6 @@ class EmbedView: UIView {
                 activityIndicator.startAnimating()
                 webView.load(URLRequest(url: url))
             }
-        } else if content.type == "photo" || content.type == "image" {
-            coverImageView.openViewer(gesture: nil)
         } else {
             if let url = URL(string: content.attributes?.url ?? "") {
                 let safariVC = SFSafariViewController(url: url)

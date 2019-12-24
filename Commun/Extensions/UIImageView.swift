@@ -9,10 +9,11 @@
 import Foundation
 import InitialsImageView
 import RxSwift
-import AppImageViewer
+//import AppImageViewer
 import CyberSwift
 import SDWebImage
 import SwiftyGif
+import ImageViewer_swift
 
 var nonAvatarColors = [String: UIColor]()
 
@@ -68,23 +69,31 @@ extension UIImageView {
             setGifFromURL(url)
         } else {
             showLoading(cover: false)
-            sd_setImage(with: url, placeholderImage: image) { [weak self] (_, _, _, _) in
-                self?.hideLoading()
+            downloadImageFromUrl(url, placeholderImage: image)
+        }
+    }
+
+    private func downloadImageFromUrl(_ url: URL, placeholderImage: UIImage?) {
+        var newUrl = url
+
+        // resize image
+        if url.host == "img.commun.com" {
+            let components = url.pathComponents
+            if components.count > 0 {
+                newUrl = url.deletingLastPathComponent()
+                newUrl = newUrl.appendingPathComponent("\(UInt(bounds.width * 1.5))x0")
+                newUrl = newUrl.appendingPathComponent((components.last)!)
             }
+        }
+
+        sd_setImage(with: newUrl, placeholderImage: image) { [weak self] (_, _, _, _) in
+            self?.hideLoading()
         }
     }
     
     func addTapToViewer() {
         self.isUserInteractionEnabled = true
-        let tap = UITapGestureRecognizer(target: self, action: #selector(openViewer(gesture:)))
-        addGestureRecognizer(tap)
-    }
-    
-    @objc func openViewer(gesture: UITapGestureRecognizer?) {
-        guard let image = image else {return}
-        let appImage = ViewerImage.appImage(forImage: image)
-        let viewer = AppImageViewer(originImage: image, photos: [appImage], animatedFromView: self)
-        parentViewController?.present(viewer, animated: false, completion: nil)
+        setupImageViewer(options: [.theme(ImageViewerTheme.dark), .closeIcon(UIImage(named: "close-x")!)])
     }
     
     func observeCurrentUserAvatar() -> Disposable {
