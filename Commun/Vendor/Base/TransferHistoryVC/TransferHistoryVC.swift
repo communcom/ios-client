@@ -97,6 +97,11 @@ class TransferHistoryVC: ListViewController<ResponseAPIWalletGetTransferHistoryI
     override func handleLoading() {
         tableView.addNotificationsLoadingFooterView()
     }
+    
+    // MARK: - Actions
+    func openFilter() {
+        
+    }
 }
 
 extension TransferHistoryVC: UITableViewDelegate {
