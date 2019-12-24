@@ -271,8 +271,9 @@ class SignUpVC: UIViewController, SignUpRouter {
                                     
                                     print(captchaCode)                                    
                                 strongSelf.view.viewWithTag(reCaptchaTag)?.removeFromSuperview()
-                                    
-                                    RestAPIManager.instance.firstStep(phone: strongSelf.viewModel.phone.value, captchaCode: captchaCode)
+
+                                    let phone = "+" + strongSelf.viewModel.phone.value.components(separatedBy: CharacterSet.decimalDigits.inverted).joined(separator: "")
+                                    RestAPIManager.instance.firstStep(phone: phone, captchaCode: captchaCode)
                                         .subscribe(onSuccess: { _ in
                                             strongSelf.hideHud()
                                             strongSelf.signUpNextStep()

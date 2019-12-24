@@ -9,6 +9,7 @@ PODS:
   - BigInt (3.1.0):
     - SipHash (~> 1.2)
   - Checksum (1.0.0)
+  - CircularCarousel (1.0.0)
   - Crashlytics (3.14.0):
     - Fabric (~> 1.10.2)
   - CryptoSwift (1.3.0)
@@ -165,6 +166,7 @@ DEPENDENCIES:
   - AppImageViewer
   - ASSpinnerView
   - Checksum
+  - CircularCarousel
   - Crashlytics
   - CryptoSwift
   - DateToolsSwift
@@ -217,6 +219,7 @@ SPEC REPOS:
     - ASSpinnerView
     - BigInt
     - Checksum
+    - CircularCarousel
     - Crashlytics
     - CryptoSwift
     - DateToolsSwift
@@ -301,6 +304,7 @@ SPEC CHECKSUMS:
   ASSpinnerView: 526e037b85b9db87d55db55297986b7da3059aa8
   BigInt: 76b5dfdfa3e2e478d4ffdf161aeede5502e2742f
   Checksum: f1aa56a27dea5db4006c819e2e129ee6aeb1d9af
+  CircularCarousel: 6248f5892c018fc2d115d4d5186be91d46bacbea
   Crashlytics: 540b7e5f5da5a042647227a5e3ac51d85eed06df
   CryptoSwift: 1283821600233bdbeb96d7b389c3288c3bf77211
   DateToolsSwift: 875d97ff9e3a5d54abdd67a269b3f51c757b71ab
@@ -356,6 +360,6 @@ SPEC CHECKSUMS:
   TLPhotoPicker: 04e4ef38b31ee51388058c3e1e7bbdbd79614cef
   "UITextView+Placeholder": c407b27599ea23cca425946fee3cf1db5d547008
 
-PODFILE CHECKSUM: dc2587958ee069a8567f5a7324ee60ccf73dd89d
+PODFILE CHECKSUM: a089f33c25560ad7ddd15cefdb543be22e7facd0
 
 COCOAPODS: 1.8.4

@@ -55,3 +55,15 @@ class RightAlignedIconButton: UIButton {
         titleEdgeInsets = UIEdgeInsets(top: 0, left: -textToImageSpace * 2, bottom: 0, right: availableWidth / 2 + textToImageSpace)
     }
 }
+
+class LeftAlignedIconButton: UIButton {
+    var textToImageSpace: CGFloat = 4
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        contentHorizontalAlignment = .left
+        let availableSpace = bounds.inset(by: contentEdgeInsets)
+        let availableWidth = availableSpace.width - imageEdgeInsets.right - (imageView?.frame.width ?? 0) - (titleLabel?.frame.width ?? 0)
+        titleEdgeInsets = UIEdgeInsets(top: 0, left: availableWidth / 2 + textToImageSpace, bottom: 0, right: -textToImageSpace)
+    }
+}

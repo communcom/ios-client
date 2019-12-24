@@ -33,7 +33,12 @@ extension UIButton {
             self.cornerRadius = cornerRadius
         }
         if let contentInsets = contentInsets {
-            contentEdgeInsets = contentInsets
+            if contentInsets == .zero {
+                // After some experimentation, it appears that if you try and set contentEdgeInsets to all zeros, the default insets are used. However, if you set them to nearly zero, it works:
+                contentEdgeInsets = UIEdgeInsets(top: 0, left: 0.01, bottom: 0.01, right: 0)
+            } else {
+                contentEdgeInsets = contentInsets
+            }
         }
     }
     

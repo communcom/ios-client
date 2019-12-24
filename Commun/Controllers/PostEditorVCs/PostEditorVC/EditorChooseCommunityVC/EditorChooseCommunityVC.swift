@@ -34,16 +34,11 @@ class EditorChooseCommunityVC: SubscriptionsVC {
         panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(panGestureAction(_:)))
         view.addGestureRecognizer(panGestureRecognizer!)
     }
-    
-    override func bindItemSelected() {
-        tableView.rx.modelSelected(ResponseAPIContentGetSubscriptionsItem.self)
-            .filter {$0.communityValue != nil}
-            .map {$0.communityValue!}
-            .subscribe(onNext: { (item) in
-                self.completion?(item)
-                self.dismiss(animated: true, completion: nil)
-            })
-            .disposed(by: disposeBag)
+        
+    override func modelSelected(_ item: ResponseAPIContentGetSubscriptionsItem) {
+        guard let community = item.communityValue else {return}
+        self.completion?(community)
+        self.dismiss(animated: true, completion: nil)
     }
     
     // MARK: - Actions
