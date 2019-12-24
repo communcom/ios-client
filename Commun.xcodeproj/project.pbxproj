@@ -290,6 +290,7 @@
 		BC4AD65C23B1BA01008546A4 /* BottomMenuPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4AD65B23B1BA01008546A4 /* BottomMenuPresentationController.swift */; };
 		BC4AD65E23B1BA6E008546A4 /* BottomMenuVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4AD65D23B1BA6E008546A4 /* BottomMenuVC.swift */; };
 		BC4AD66123B1BB9D008546A4 /* TransferHistoryFilterVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4AD66023B1BB9D008546A4 /* TransferHistoryFilterVC.swift */; };
+		BC4AD66423B1C41C008546A4 /* TransferHistorySegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4AD66323B1C41C008546A4 /* TransferHistorySegmentedControl.swift */; };
 		BC520A40237E476100033ED0 /* MySubviewAttachingTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC520A3F237E476100033ED0 /* MySubviewAttachingTextView.swift */; };
 		BC520A44237E49A900033ED0 /* PostPageTextAttachment.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC520A43237E49A900033ED0 /* PostPageTextAttachment.swift */; };
 		BC520A48237E7F3000033ED0 /* UserProfilePageVC+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC520A47237E7F3000033ED0 /* UserProfilePageVC+Actions.swift */; };
@@ -764,6 +765,7 @@
 		BC4AD65B23B1BA01008546A4 /* BottomMenuPresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomMenuPresentationController.swift; sourceTree = "<group>"; };
 		BC4AD65D23B1BA6E008546A4 /* BottomMenuVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomMenuVC.swift; sourceTree = "<group>"; };
 		BC4AD66023B1BB9D008546A4 /* TransferHistoryFilterVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferHistoryFilterVC.swift; sourceTree = "<group>"; };
+		BC4AD66323B1C41C008546A4 /* TransferHistorySegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferHistorySegmentedControl.swift; sourceTree = "<group>"; };
 		BC520A3F237E476100033ED0 /* MySubviewAttachingTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MySubviewAttachingTextView.swift; sourceTree = "<group>"; };
 		BC520A43237E49A900033ED0 /* PostPageTextAttachment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostPageTextAttachment.swift; sourceTree = "<group>"; };
 		BC520A47237E7F3000033ED0 /* UserProfilePageVC+Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserProfilePageVC+Actions.swift"; sourceTree = "<group>"; };
@@ -2064,9 +2066,18 @@
 		BC4AD65F23B1BB82008546A4 /* TransferHistoryFilterVC */ = {
 			isa = PBXGroup;
 			children = (
+				BC4AD66223B1C35F008546A4 /* Subviews */,
 				BC4AD66023B1BB9D008546A4 /* TransferHistoryFilterVC.swift */,
 			);
 			path = TransferHistoryFilterVC;
+			sourceTree = "<group>";
+		};
+		BC4AD66223B1C35F008546A4 /* Subviews */ = {
+			isa = PBXGroup;
+			children = (
+				BC4AD66323B1C41C008546A4 /* TransferHistorySegmentedControl.swift */,
+			);
+			path = Subviews;
 			sourceTree = "<group>";
 		};
 		BC52913623766EFA0022EC7F /* CommentCell */ = {
@@ -3117,6 +3128,7 @@
 				BC016D56235EA33C00F1319F /* ListViewModel.swift in Sources */,
 				BC597A6B238BBDAC00103F4F /* FittingSizePresentationController.swift in Sources */,
 				3B0686302346FFA6008953C5 /* CommunButton.swift in Sources */,
+				BC4AD66423B1C41C008546A4 /* TransferHistorySegmentedControl.swift in Sources */,
 				3BB342B422CA7412009546B2 /* CreateBioVC.swift in Sources */,
 				3BB32F1923438D4F006572F3 /* DimmingPresentationController.swift in Sources */,
 				3B5CB30522A5752100757533 /* ListViewModelType.swift in Sources */,
