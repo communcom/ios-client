@@ -100,7 +100,10 @@ class TransferHistoryVC: ListViewController<ResponseAPIWalletGetTransferHistoryI
     
     // MARK: - Actions
     func openFilter() {
-        let vc = TransferHistoryFilterVC()
+        let vc = TransferHistoryFilterVC(filter: (viewModel as! TransferHistoryViewModel).filter.value)
+        vc.completion = {filter in
+            (self.viewModel as! TransferHistoryViewModel).filter.accept(filter)
+        }
         present(vc, animated: true, completion: nil)
     }
 }
