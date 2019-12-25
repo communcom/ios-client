@@ -49,20 +49,7 @@ class CommunButton: UIButton {
     func animate(type: AnimationType = .default, completion: (() -> Void)? = nil) {
         switch type {
         case .default:
-            CATransaction.begin()
-            CATransaction.setCompletionBlock(completion)
-            
-            let moveDownAnim = CABasicAnimation(keyPath: "transform.scale")
-            moveDownAnim.byValue = 1.2
-            moveDownAnim.autoreverses = true
-            layer.add(moveDownAnim, forKey: "transform.scale")
-            
-            let fadeAnim = CABasicAnimation(keyPath: "opacity")
-            fadeAnim.byValue = -1
-            fadeAnim.autoreverses = true
-            layer.add(fadeAnim, forKey: "Fade")
-            
-            CATransaction.commit()
+            break
         case .upVote:
             CATransaction.begin()
             CATransaction.setCompletionBlock(completion)
