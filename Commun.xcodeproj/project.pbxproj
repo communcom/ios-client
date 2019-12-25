@@ -292,7 +292,7 @@
 		BC4AD66123B1BB9D008546A4 /* TransferHistoryFilterVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4AD66023B1BB9D008546A4 /* TransferHistoryFilterVC.swift */; };
 		BC4AD66423B1C41C008546A4 /* TransferHistorySegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4AD66323B1C41C008546A4 /* TransferHistorySegmentedControl.swift */; };
 		BC4AD66623B1EBF1008546A4 /* TransferHistoryTopTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4AD66523B1EBF1008546A4 /* TransferHistoryTopTabBar.swift */; };
-		BC4AD66D23B2072C008546A4 /* WalletConvertToCommunVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4AD66C23B2072C008546A4 /* WalletConvertToCommunVC.swift */; };
+		BC4AD66D23B2072C008546A4 /* WalletConvertVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4AD66C23B2072C008546A4 /* WalletConvertVC.swift */; };
 		BC520A40237E476100033ED0 /* MySubviewAttachingTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC520A3F237E476100033ED0 /* MySubviewAttachingTextView.swift */; };
 		BC520A44237E49A900033ED0 /* PostPageTextAttachment.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC520A43237E49A900033ED0 /* PostPageTextAttachment.swift */; };
 		BC520A48237E7F3000033ED0 /* UserProfilePageVC+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC520A47237E7F3000033ED0 /* UserProfilePageVC+Actions.swift */; };
@@ -769,7 +769,7 @@
 		BC4AD66023B1BB9D008546A4 /* TransferHistoryFilterVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferHistoryFilterVC.swift; sourceTree = "<group>"; };
 		BC4AD66323B1C41C008546A4 /* TransferHistorySegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferHistorySegmentedControl.swift; sourceTree = "<group>"; };
 		BC4AD66523B1EBF1008546A4 /* TransferHistoryTopTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferHistoryTopTabBar.swift; sourceTree = "<group>"; };
-		BC4AD66C23B2072C008546A4 /* WalletConvertToCommunVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletConvertToCommunVC.swift; sourceTree = "<group>"; };
+		BC4AD66C23B2072C008546A4 /* WalletConvertVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletConvertVC.swift; sourceTree = "<group>"; };
 		BC520A3F237E476100033ED0 /* MySubviewAttachingTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MySubviewAttachingTextView.swift; sourceTree = "<group>"; };
 		BC520A43237E49A900033ED0 /* PostPageTextAttachment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostPageTextAttachment.swift; sourceTree = "<group>"; };
 		BC520A47237E7F3000033ED0 /* UserProfilePageVC+Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserProfilePageVC+Actions.swift"; sourceTree = "<group>"; };
@@ -2089,7 +2089,7 @@
 		BC4AD66923B2070D008546A4 /* WalletConvertVC */ = {
 			isa = PBXGroup;
 			children = (
-				BC4AD66C23B2072C008546A4 /* WalletConvertToCommunVC.swift */,
+				BC4AD66C23B2072C008546A4 /* WalletConvertVC.swift */,
 			);
 			path = WalletConvertVC;
 			sourceTree = "<group>";
@@ -2875,7 +2875,7 @@
 				BC016D5A235EB88400F1319F /* PostsVC+Actions.swift in Sources */,
 				3BE68AAE22EEA1AE00033B81 /* SettingsVC+ButtonDelegate.swift in Sources */,
 				BC619B1823726C180005BB94 /* CommunityCell.swift in Sources */,
-				BC4AD66D23B2072C008546A4 /* WalletConvertToCommunVC.swift in Sources */,
+				BC4AD66D23B2072C008546A4 /* WalletConvertVC.swift in Sources */,
 				3B8DDF58234AEA9600B213F0 /* ContentTextView+Draft.swift in Sources */,
 				BC4AD65C23B1BA01008546A4 /* BottomMenuPresentationController.swift in Sources */,
 				3B3C8B7C23472BF000D8BADB /* EditorToolbarItem.swift in Sources */,

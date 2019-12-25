@@ -9,7 +9,7 @@
 import Foundation
 import RxCocoa
 
-class WalletConvertToCommunVC: BaseViewController {
+class WalletConvertVC: BaseViewController {
     // MARK: - Properties
     let viewModel = BalancesViewModel()
     var currentSymbol: String?
