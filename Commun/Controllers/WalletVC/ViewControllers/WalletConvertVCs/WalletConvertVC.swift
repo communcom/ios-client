@@ -16,7 +16,12 @@ class WalletConvertVC: BaseViewController {
     let currentBalance = BehaviorRelay<ResponseAPIWalletGetBalance?>(value: nil)
     var buyContainerRightConstraint: NSLayoutConstraint?
     
+    var topColor: UIColor {
+        .black
+    }
+    
     // MARK: - Subviews
+    lazy var scrollView = ContentHuggingScrollView(axis: .vertical)
     lazy var balanceNameLabel = UILabel.with(textSize: 17, weight: .semibold, textColor: .white)
     lazy var valueLabel = UILabel.with(textSize: 30, weight: .semibold, textColor: .white)
     lazy var whiteView = UIView(backgroundColor: .white)
@@ -63,17 +68,29 @@ class WalletConvertVC: BaseViewController {
         title = "convert".localized().uppercaseFirst
         setLeftNavBarButtonForGoingBack(tintColor: .white)
         
-        view.backgroundColor = .black
+        // backgroundColor
+        let topView = UIView(backgroundColor: topColor)
+        view.addSubview(topView)
+        topView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .bottom)
         
-        view.addSubview(balanceNameLabel)
+        // scroll view
+        view.addSubview(scrollView)
+        scrollView.autoPinEdgesToSuperviewSafeArea(with: .zero, excludingEdge: .bottom)
+        
+        let keyboardViewV = KeyboardLayoutConstraint(item: view!, attribute: .bottom, relatedBy: .equal, toItem: scrollView, attribute: .bottom, multiplier: 1.0, constant: 0.0)
+        keyboardViewV.observeKeyboardHeight()
+        self.view.addConstraint(keyboardViewV)
+        
+        // top scrollView
+        scrollView.contentView.addSubview(balanceNameLabel)
         layoutCarousel()
         balanceNameLabel.autoAlignAxis(toSuperviewAxis: .vertical)
         
-        view.addSubview(valueLabel)
+        scrollView.contentView.addSubview(valueLabel)
         valueLabel.autoPinEdge(.top, to: .bottom, of: balanceNameLabel, withOffset: 5)
         valueLabel.autoAlignAxis(toSuperviewAxis: .vertical)
         
-        view.addSubview(whiteView)
+        scrollView.contentView.addSubview(whiteView)
         whiteView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
         whiteView.autoPinEdge(.top, to: .bottom, of: valueLabel, withOffset: 40)
         
@@ -88,7 +105,7 @@ class WalletConvertVC: BaseViewController {
             return view
         }()
         
-        view.addSubview(convertLogoView)
+        scrollView.contentView.addSubview(convertLogoView)
         convertLogoView.autoPinEdge(.top, to: .top, of: whiteView, withOffset: -20)
         convertLogoView.autoAlignAxis(toSuperviewAxis: .vertical)
         
@@ -102,10 +119,16 @@ class WalletConvertVC: BaseViewController {
         whiteView.addSubview(rateLabel)
         rateLabel.autoPinEdge(.top, to: .bottom, of: convertContainer, withOffset: 20)
         rateLabel.autoAlignAxis(toSuperviewAxis: .vertical)
+        
+        // pin bottom
+        rateLabel.autoPinEdge(toSuperviewEdge: .bottom)
+        
+        // config topView
+        topView.autoPinEdge(.bottom, to: .top, of: whiteView, withOffset: 25)
     }
     
     func layoutCarousel() {
-        balanceNameLabel.autoPinEdge(toSuperviewSafeArea: .top, withInset: 20)
+        balanceNameLabel.autoPinEdge(toSuperviewEdge: .top, withInset: 20)
     }
     
     func layoutBuyContainer() {
@@ -237,5 +260,4 @@ class WalletConvertVC: BaseViewController {
         super.viewDidLayoutSubviews()
         whiteView.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: 25)
     }
-    
 }
