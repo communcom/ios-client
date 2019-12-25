@@ -9,17 +9,12 @@
 import Foundation
 
 class WalletBuyCommunVC: WalletConvertVC {
-    var currentBalance: ResponseAPIWalletGetBalance?
     
-    override func setUp(with balances: [ResponseAPIWalletGetBalance]) {
-        super.setUp(with: balances)
+    override func setUpCommunBalance() {
         
-        if let balance = balances.first(where: {$0.symbol == self.currentSymbol}) {
-            currentBalance =  balance
-        } else {
-            currentBalance = balances.first(where: {$0.symbol != "CMN"})
-        }
-        
+    }
+    
+    override func setUpCurrentBalance() {
         guard let balance = currentBalance else {return}
         balanceNameLabel.text = balance.name
         valueLabel.text = balance.balanceValue.currencyValueFormatted

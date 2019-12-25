@@ -244,7 +244,7 @@ extension WalletVC: CircularCarouselDataSource, CircularCarouselDelegate {
         if balance.symbol == "CMN" {
             imageView.image = UIImage(named: "tux")
         } else {
-            imageView.setAvatar(urlString: balance.logo, namePlaceHolder: balance.name ?? "B\(indexPath.row)")
+            imageView.setAvatar(urlString: balance.logo, namePlaceHolder: balance.name ?? balance.symbol)
         }
         
         return view!

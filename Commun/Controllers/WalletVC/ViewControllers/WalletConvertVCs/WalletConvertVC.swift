@@ -13,7 +13,16 @@ class WalletConvertVC: BaseViewController {
     // MARK: - Properties
     let viewModel = BalancesViewModel()
     var currentSymbol: String?
-    var buyContainerRightConstraint: NSLayoutConstraint?
+    var currentBalance: ResponseAPIWalletGetBalance? {
+        didSet {
+            setUpCurrentBalance()
+        }
+    }
+    var communBalance: ResponseAPIWalletGetBalance? {
+        didSet {
+            setUpCommunBalance()
+        }
+    }
     
     var topColor: UIColor {
         .black
@@ -153,14 +162,18 @@ class WalletConvertVC: BaseViewController {
         let balanceLabel = UILabel.with(text: "balance".localized().uppercaseFirst, textSize: 12, weight: .medium, textColor: .a5a7bd)
         buyContainer.addSubview(balanceLabel)
         balanceLabel.autoPinEdge(.top, to: .top, of: buyLogoImageView)
-        buyContainerRightConstraint = balanceLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
         
         buyContainer.addSubview(buyBalanceLabel)
-        buyBalanceLabel.autoPinEdge(.top, to: .bottom, of: balanceLabel, withOffset: 2)
-        buyBalanceLabel.autoPinEdge(.trailing, to: .trailing, of: balanceLabel)
         buyBalanceLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
-        
+        buyBalanceLabel.autoPinEdge(.top, to: .bottom, of: balanceLabel, withOffset: 2)
         buyBalanceLabel.autoPinEdge(.leading, to: .trailing, of: buyNameLabel, withOffset: 10)
+        layoutTrailingOfBuyContainer()
+        
+        balanceLabel.autoPinEdge(.trailing, to: .trailing, of: buyBalanceLabel)
+    }
+    
+    func layoutTrailingOfBuyContainer() {
+        buyBalanceLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
     }
     
     func layoutConvertView() {
@@ -238,7 +251,24 @@ class WalletConvertVC: BaseViewController {
             .disposed(by: disposeBag)
     }
     
-    func setUp(with balances: [ResponseAPIWalletGetBalance]) {
+    private func setUp(with balances: [ResponseAPIWalletGetBalance]) {
+        if let balance = balances.first(where: {$0.symbol == "CMN"}) {
+            communBalance = balance
+        }
+        
+        currentBalance = balances.first(where: {$0.symbol == currentSymbol}) ?? balances.first(where: {$0.symbol != "CMN"})
+        
+        if let balance = currentBalance {
+            rateLabel.text = "rate".localized().uppercaseFirst + ": 1 Commun = \(balance.priceValue.currencyValueFormatted) \(balance.name ?? balance.symbol)"
+            
+        }
+    }
+    
+    func setUpCommunBalance() {
+        
+    }
+    
+    func setUpCurrentBalance() {
         
     }
     

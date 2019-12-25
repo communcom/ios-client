@@ -18,12 +18,20 @@ class WalletSellCommunVC: WalletConvertVC {
     override func setUp() {
         super.setUp()
         balanceNameLabel.text = "Commun"
+        convertSellLabel.text = "sell".localized().uppercaseFirst + " Commun"
     }
     
-    override func setUp(with balances: [ResponseAPIWalletGetBalance]) {
-        super.setUp(with: balances)
-        guard let balance = balances.first(where: {$0.symbol == "CMN"}) else {return}
+    override func setUpCommunBalance() {
+        guard let balance = communBalance else {return}
         valueLabel.text = balance.balanceValue.currencyValueFormatted
+    }
+    
+    override func setUpCurrentBalance() {
+        guard let balance = currentBalance else {return}
+        buyLogoImageView.setAvatar(urlString: balance.logo, namePlaceHolder: balance.name ?? balance.symbol)
+        buyNameLabel.text = balance.name ?? balance.symbol
+        buyBalanceLabel.text = balance.balanceValue.currencyValueFormatted
+        convertBuyLabel.text = "buy".localized().uppercaseFirst + " \(balance.name ?? balance.symbol)"
     }
     
     override func layoutCarousel() {
@@ -39,5 +47,19 @@ class WalletSellCommunVC: WalletConvertVC {
         communLogo.autoAlignAxis(toSuperviewAxis: .vertical)
         
         balanceNameLabel.autoPinEdge(.top, to: .bottom, of: communLogo, withOffset: 20)
+    }
+    
+    override func layoutTrailingOfBuyContainer() {
+        let dropdownButton = UIButton.circleGray(imageName: "drop-down")
+        dropdownButton.addTarget(self, action: #selector(dropdownButtonDidTouch), for: .touchUpInside)
+        buyContainer.addSubview(dropdownButton)
+        dropdownButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
+        dropdownButton.autoAlignAxis(toSuperviewAxis: .horizontal)
+        dropdownButton.autoPinEdge(.leading, to: .trailing, of: buyBalanceLabel, withOffset: 10)
+    }
+    
+    // MARK: - Actions
+    @objc func dropdownButtonDidTouch() {
+        
     }
 }
