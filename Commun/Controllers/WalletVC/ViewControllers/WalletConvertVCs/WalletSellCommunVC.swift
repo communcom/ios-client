@@ -17,6 +17,13 @@ class WalletSellCommunVC: WalletConvertVC {
     // MARK: - Methods
     override func setUp() {
         super.setUp()
+        balanceNameLabel.text = "Commun"
+    }
+    
+    override func setUp(with balances: [ResponseAPIWalletGetBalance]) {
+        super.setUp(with: balances)
+        guard let balance = balances.first(where: {$0.symbol == "CMN"}) else {return}
+        valueLabel.text = balance.balanceValue.currencyValueFormatted
     }
     
     override func layoutCarousel() {

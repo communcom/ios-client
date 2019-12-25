@@ -13,7 +13,6 @@ class WalletConvertVC: BaseViewController {
     // MARK: - Properties
     let viewModel = BalancesViewModel()
     var currentSymbol: String?
-    let currentBalance = BehaviorRelay<ResponseAPIWalletGetBalance?>(value: nil)
     var buyContainerRightConstraint: NSLayoutConstraint?
     
     var topColor: UIColor {
@@ -233,23 +232,14 @@ class WalletConvertVC: BaseViewController {
             .disposed(by: disposeBag)
         
         viewModel.items
-            .map { (items) -> ResponseAPIWalletGetBalance? in
-                if let balance = items.first(where: {$0.symbol == self.currentSymbol}) {
-                    return balance
-                }
-                return items.first(where: {$0.symbol != "CMN"})
-            }
-            .bind(to: currentBalance)
-            .disposed(by: disposeBag)
-        
-        currentBalance
-            .filter {$0 != nil}
-            .map {$0!}
-            .subscribe(onNext: { (balance) in
-                self.balanceNameLabel.text = balance.name
-                self.valueLabel.text = balance.balanceValue.currencyValueFormatted
+            .subscribe(onNext: { (balances) in
+                self.setUp(with: balances)
             })
             .disposed(by: disposeBag)
+    }
+    
+    func setUp(with balances: [ResponseAPIWalletGetBalance]) {
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
