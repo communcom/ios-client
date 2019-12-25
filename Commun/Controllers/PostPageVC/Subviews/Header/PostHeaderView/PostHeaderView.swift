@@ -18,7 +18,7 @@ class PostHeaderView: MyTableHeaderView, PostController {
     var post: ResponseAPIContentGetPost?
     
     // MARK: - Subviews
-    lazy var titleLabel = UILabel.with(text: "Discussion - The Dangerous Path Overwatch is Headed: Giving Players", textSize: 21, weight: .bold, numberOfLines: 0)
+    lazy var titleLabel = UILabel.with(text: "", textSize: 21, weight: .bold, numberOfLines: 0)
     
     lazy var contentTextView = PostHeaderTextView(forExpandable: ())
     
@@ -53,7 +53,6 @@ class PostHeaderView: MyTableHeaderView, PostController {
     
     override func commonInit() {
         super.commonInit()
-        
         addSubview(titleLabel)
         titleLabel.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(inset: 16), excludingEdge: .bottom)
         

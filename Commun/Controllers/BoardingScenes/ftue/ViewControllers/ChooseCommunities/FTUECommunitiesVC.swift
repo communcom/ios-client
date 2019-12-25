@@ -22,7 +22,7 @@ class FTUECommunitiesVC: BaseViewController, BoardingRouter {
         return searchBar
     }()
     
-    lazy var nextButton = CommunButton.circle(size: 50, backgroundColor: .appMainColor, tintColor: .white, imageName: "next-arrow", imageEdgeInsets: UIEdgeInsets(top: 8, left: 12, bottom: 8, right: 12))
+    lazy var nextButton = CommunButton.circle(size: 50, backgroundColor: .appMainColor, tintColor: .white, imageName: "next-arrow", imageEdgeInsets: UIEdgeInsets(top: 4, left: 7, bottom: 4, right: 7))
     
     lazy var communitiesCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()

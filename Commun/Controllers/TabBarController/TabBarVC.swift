@@ -141,6 +141,7 @@ class TabBarVC: UITabBarController {
         button.setImage(image, for: .normal)
         button.tintColor = unselectedColor
         button.tag = tag
+        button.touchAreaEdgeInsets = UIEdgeInsets(inset: -10)
         button.addTarget(self, action: #selector(switchTab(button:)), for: .touchUpInside)
         return button
     }
