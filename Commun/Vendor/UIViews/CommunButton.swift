@@ -16,16 +16,16 @@ class CommunButton: UIButton {
     }
     
     static func `default`(height: CGFloat = 35.0, label: String? = nil, cornerRadius: CGFloat? = nil, isHuggingContent: Bool = true) -> CommunButton {
-        let button = CommunButton(height: CGFloat.adaptive(height: height),
+        let button = CommunButton(height: height,
                                   label: label,
-                                  labelFont: .boldSystemFont(ofSize: CGFloat.adaptive(width: 15.0)),
+                                  labelFont: .boldSystemFont(ofSize: 15.0),
                                   backgroundColor: .appMainColor,
                                   textColor: .white,
-                                  cornerRadius: cornerRadius ?? CGFloat.adaptive(height: height) / 2,
-                                  contentInsets: UIEdgeInsets(top: CGFloat.adaptive(height: 10.0),
-                                                                 left: CGFloat.adaptive(width: 15.0),
-                                                                 bottom: CGFloat.adaptive(height: 10.0),
-                                                                 right: CGFloat.adaptive(width: 15.0)))
+                                  cornerRadius: cornerRadius ?? height / 2,
+                                  contentInsets: UIEdgeInsets(top: 10.0,
+                                                                 left: 15.0,
+                                                                 bottom: 10.0,
+                                                                 right: 15.0))
         
         if isHuggingContent {
             button.setContentHuggingPriority(.defaultHigh, for: .horizontal)

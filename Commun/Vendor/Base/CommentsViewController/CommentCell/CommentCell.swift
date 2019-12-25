@@ -188,7 +188,7 @@ class CommentCell: MyTableViewCell, ListItemCellType {
         let userId = comment?.author?.username ?? comment?.author?.userId ?? "Unknown user"
         let mutableAS = NSMutableAttributedString(string: userId, attributes: [
             .font: UIFont.boldSystemFont(ofSize: defaultContentFontSize),
-            .link: "https://commun.com/@\(comment?.author?.userId ?? comment?.author?.username ?? "unknown-user")"
+            .foregroundColor: UIColor.black
         ])
         
         guard let content = comment?.document?.toAttributedString(
