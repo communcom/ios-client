@@ -9,13 +9,14 @@
 import Foundation
 
 class CommunButton: UIButton {
+    var isDisableGrayColor = false
     enum AnimationType {
         case `default`
         case upVote
         case downVote
     }
     
-    static func `default`(height: CGFloat = 35.0, label: String? = nil, cornerRadius: CGFloat? = nil, isHuggingContent: Bool = true) -> CommunButton {
+    static func `default`(height: CGFloat = 35.0, label: String? = nil, cornerRadius: CGFloat? = nil, isHuggingContent: Bool = true, isDisableGrayColor: Bool = false) -> CommunButton {
         let button = CommunButton(height: height,
                                   label: label,
                                   labelFont: .boldSystemFont(ofSize: 15.0),
@@ -26,7 +27,8 @@ class CommunButton: UIButton {
                                                                  left: 15.0,
                                                                  bottom: 10.0,
                                                                  right: 15.0))
-        
+
+        button.isDisableGrayColor = isDisableGrayColor
         if isHuggingContent {
             button.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         }
@@ -42,7 +44,11 @@ class CommunButton: UIButton {
     
     override var isEnabled: Bool {
         didSet {
-            alpha = isEnabled ? 1: 0.5
+            if isDisableGrayColor {
+                backgroundColor = isEnabled ? UIColor.appMainColor : .appGrayColor
+            } else {
+                alpha = isEnabled ? 1: 0.5
+            }
         }
     }
     
