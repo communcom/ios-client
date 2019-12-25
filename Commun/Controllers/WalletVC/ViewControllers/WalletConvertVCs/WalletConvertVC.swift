@@ -55,6 +55,8 @@ class WalletConvertVC: BaseViewController {
         textField.borderStyle = .none
         textField.font = .systemFont(ofSize: 17, weight: .semibold)
         textField.setPlaceHolderTextColor(.a5a7bd)
+        textField.keyboardType = .decimalPad
+        textField.delegate = self
         return textField
     }
     
@@ -257,11 +259,6 @@ class WalletConvertVC: BaseViewController {
         }
         
         currentBalance = balances.first(where: {$0.symbol == currentSymbol}) ?? balances.first(where: {$0.symbol != "CMN"})
-        
-        if let balance = currentBalance {
-            rateLabel.text = "rate".localized().uppercaseFirst + ": 1 Commun = \(balance.priceValue.currencyValueFormatted) \(balance.name ?? balance.symbol)"
-            
-        }
     }
     
     func setUpCommunBalance() {
@@ -287,5 +284,25 @@ class WalletConvertVC: BaseViewController {
     
     @objc func dismissKeyboard() {
         view.endEditing(true)
+    }
+    
+    // MARK: - Helpers
+    func stringFromNumber(_ number: Double) -> String {
+        let formatter = NumberFormatter()
+        formatter.usesGroupingSeparator = false
+        formatter.numberStyle = .decimal
+        formatter.maximumFractionDigits = (number < 1000) ? 4 : 2
+        return formatter.string(from: number as NSNumber) ?? "0"
+    }
+}
+
+extension WalletConvertVC: UITextFieldDelegate {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if textField.text != "" || string != "" {
+            let res = (textField.text ?? "") + string
+            let formatter = NumberFormatter()
+            return formatter.number(from: res) != nil
+        }
+        return true
     }
 }

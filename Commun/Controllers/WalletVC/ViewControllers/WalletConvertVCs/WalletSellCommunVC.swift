@@ -21,6 +21,29 @@ class WalletSellCommunVC: WalletConvertVC {
         convertSellLabel.text = "sell".localized().uppercaseFirst + " Commun"
     }
     
+    override func bind() {
+        super.bind()
+        sellTextField.rx.text.orEmpty
+            .skip(1)
+            .map {NumberFormatter().number(from: $0)?.doubleValue ?? 0}
+            .map {$0 * (self.currentBalance?.priceValue ?? 0)}
+            .map {self.stringFromNumber($0)}
+            .subscribe(onNext: { (text) in
+                self.buyTextField.text = text
+            })
+            .disposed(by: disposeBag)
+        
+        buyTextField.rx.text.orEmpty
+            .skip(1)
+            .map {NumberFormatter().number(from: $0)?.doubleValue ?? 0}
+            .map {$0 / (self.currentBalance?.priceValue ?? 1)}
+            .map {self.stringFromNumber($0)}
+            .subscribe(onNext: { (text) in
+                self.sellTextField.text = text
+            })
+            .disposed(by: disposeBag)
+    }
+    
     override func setUpCommunBalance() {
         guard let balance = communBalance else {return}
         valueLabel.text = balance.balanceValue.currencyValueFormatted
@@ -32,6 +55,7 @@ class WalletSellCommunVC: WalletConvertVC {
         buyNameLabel.text = balance.name ?? balance.symbol
         buyBalanceLabel.text = balance.balanceValue.currencyValueFormatted
         convertBuyLabel.text = "buy".localized().uppercaseFirst + " \(balance.name ?? balance.symbol)"
+        rateLabel.text = "rate".localized().uppercaseFirst + ": 1 Commun = \(balance.priceValue.currencyValueFormatted) \(balance.name ?? balance.symbol)"
     }
     
     override func layoutCarousel() {
