@@ -114,6 +114,9 @@ class WalletConvertVC: BaseViewController {
             imageView.autoAlignAxis(toSuperviewAxis: .horizontal)
             return view
         }()
+        convertLogoView.isUserInteractionEnabled = true
+        let tap2 = UITapGestureRecognizer(target: self, action: #selector(changeMode))
+        convertLogoView.addGestureRecognizer(tap2)
         
         scrollView.contentView.addSubview(convertLogoView)
         convertLogoView.autoPinEdge(.top, to: .top, of: whiteView, withOffset: -20)
@@ -308,6 +311,26 @@ class WalletConvertVC: BaseViewController {
     
     @objc func dismissKeyboard() {
         view.endEditing(true)
+    }
+    
+    @objc func changeMode() {
+        guard var viewControllers = navigationController?.viewControllers else { return }
+
+        // Pop sourceViewController
+        _ = viewControllers.popLast()
+
+        // Push targetViewController
+        let vc: UIViewController
+        
+        if self is WalletSellCommunVC {
+            vc = WalletBuyCommunVC(symbol: currentBalance?.symbol)
+        } else {
+            vc = WalletSellCommunVC(symbol: currentBalance?.symbol)
+        }
+        
+        viewControllers.append(vc)
+
+        navigationController?.setViewControllers(viewControllers, animated: false)
     }
     
     // MARK: - Helpers
