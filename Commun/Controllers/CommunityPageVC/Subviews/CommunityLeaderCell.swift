@@ -48,11 +48,12 @@ class CommunityLeaderCell: CommunityPageCell {
         // card
         let cardView = UIView(backgroundColor: .white, cornerRadius: CGFloat.adaptive(width: 10.0))
         contentView.addSubview(cardView)
-        cardView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top:     0.0,
-                                                                 left:    CGFloat.adaptive(width: 10.0),
-                                                                 bottom:  CGFloat.adaptive(height: 20.0),
-                                                                 right:   CGFloat.adaptive(width: 10.0)))
+        cardView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0.0,
+                                                                 left: CGFloat.adaptive(width: 10.0),
+                                                                 bottom: CGFloat.adaptive(height: 20.0),
+                                                                 right: CGFloat.adaptive(width: 10.0)))
 
+        
         let mainVerticalStackView = UIStackView(axis: .vertical, spacing: CGFloat.adaptive(height: 14.0))
         mainVerticalStackView.alignment = .leading
         mainVerticalStackView.distribution = .fillProportionally
@@ -104,18 +105,30 @@ class CommunityLeaderCell: CommunityPageCell {
         // voteButton
         let voted = leader.isVoted ?? false
         voteButton.backgroundColor = voted ? #colorLiteral(red: 0.9525656104, green: 0.9605062604, blue: 0.9811610579, alpha: 1) : .appMainColor
-        voteButton.setTitleColor(voted ? .appMainColor: .white , for: .normal)
+        voteButton.setTitleColor(voted ? .appMainColor: .white, for: .normal)
         voteButton.setTitle(voted ? "voted".localized().uppercaseFirst : "vote".localized().uppercaseFirst, for: .normal)
         voteButton.isEnabled = !(leader.isBeingVoted ?? false)
         voteButton.addTarget(self, action: #selector(voteButtonDidTouch), for: .touchUpInside)
+
+        let tap = UITapGestureRecognizer(target: self, action: #selector(userNameTapped))
+        userNameLabel.addGestureRecognizer(tap)
+        userNameLabel.isUserInteractionEnabled = true
+
+        let tapAvatar = UITapGestureRecognizer(target: self, action: #selector(userNameTapped))
+        avatarImageView.addGestureRecognizer(tapAvatar)
+        avatarImageView.isUserInteractionEnabled = true
     }
-    
-    
+
     // MARK: - Actions
     @objc func voteButtonDidTouch() {
         guard let leader = leader else {return}
         voteButton.animate {
             self.delegate?.buttonVoteDidTouch(leader: leader)
         }
+    }
+
+    @objc func userNameTapped() {
+        guard let leader = leader else {return}
+        parentViewController?.showProfileWithUserId(leader.userId)
     }
 }
