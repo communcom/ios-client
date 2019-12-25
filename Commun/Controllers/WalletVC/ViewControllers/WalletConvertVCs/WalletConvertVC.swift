@@ -63,22 +63,19 @@ class WalletConvertVC: BaseViewController {
         title = "convert".localized().uppercaseFirst
         setLeftNavBarButtonForGoingBack(tintColor: .white)
         
-        let blackView = UIView(backgroundColor: .black)
-        view.addSubview(blackView)
-        blackView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .bottom)
+        view.backgroundColor = .black
         
-        blackView.addSubview(balanceNameLabel)
+        view.addSubview(balanceNameLabel)
         layoutCarousel()
         balanceNameLabel.autoAlignAxis(toSuperviewAxis: .vertical)
         
-        blackView.addSubview(valueLabel)
+        view.addSubview(valueLabel)
         valueLabel.autoPinEdge(.top, to: .bottom, of: balanceNameLabel, withOffset: 5)
         valueLabel.autoAlignAxis(toSuperviewAxis: .vertical)
-        valueLabel.autoPinEdge(toSuperviewEdge: .bottom, withInset: 55)
         
         view.addSubview(whiteView)
         whiteView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
-        whiteView.autoPinEdge(.top, to: .bottom, of: blackView, withOffset: -25)
+        whiteView.autoPinEdge(.top, to: .bottom, of: valueLabel, withOffset: 40)
         
         let convertLogoView: UIView = {
             let view = UIView(width: 40, height: 40, backgroundColor: .appMainColor, cornerRadius: 20)
