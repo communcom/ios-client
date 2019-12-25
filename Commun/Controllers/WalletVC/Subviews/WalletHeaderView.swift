@@ -369,7 +369,6 @@ class WalletHeaderView: MyTableHeaderView {
     }
     
     @objc func convertButtonDidTouch() {
-        let vc = WalletConvertVC(symbol: balances?[safe: currentIndex]?.symbol)
-        parentViewController?.show(vc, sender: nil)
+        (parentViewController as? WalletVC)?.trade()
     }
 }
