@@ -28,33 +28,6 @@ class WalletSellCommunVC: WalletConvertVC {
     override func bind() {
         super.bind()
         
-        // textfields
-        sellTextField.rx.text.orEmpty
-            .skip(1)
-            .map {NumberFormatter().number(from: $0)?.doubleValue ?? 0}
-            .map {$0 * (self.currentBalance?.priceValue ?? 0)}
-            .map {self.stringFromNumber($0)}
-            .subscribe(onNext: { (text) in
-                self.buyTextField.text = text
-            })
-            .disposed(by: disposeBag)
-        
-        buyTextField.rx.text.orEmpty
-            .skip(1)
-            .map {NumberFormatter().number(from: $0)?.doubleValue ?? 0}
-            .map({ number -> Double in
-                let price: Double? = self.currentBalance?.priceValue
-                if price == 0 || price == nil {
-                    return 0
-                }
-                return (number ?? 0 ) / price!
-            })
-            .map {self.stringFromNumber($0)}
-            .subscribe(onNext: { (text) in
-                self.sellTextField.text = text
-            })
-            .disposed(by: disposeBag)
-        
         // convert button
         Observable.merge(
             sellTextField.rx.text.orEmpty.skip(1).map {_ in ()},
@@ -130,6 +103,18 @@ class WalletSellCommunVC: WalletConvertVC {
         self.view.addConstraint(keyboardViewV)
         
         scrollView.autoPinEdge(.bottom, to: .top, of: warningLabel)
+    }
+    
+    override func buyValue(fromSellValue value: Double) -> Double {
+        value * (self.currentBalance?.priceValue ?? 0)
+    }
+    
+    override func sellValue(fromBuyValue value: Double) -> Double {
+        let price: Double? = self.currentBalance?.priceValue
+        if price == 0 || price == nil {
+            return 0
+        }
+        return value / price!
     }
     
     // MARK: - Actions

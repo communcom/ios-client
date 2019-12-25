@@ -268,6 +268,35 @@ class WalletConvertVC: BaseViewController {
                 }
             })
             .disposed(by: disposeBag)
+        
+        // textfields
+        sellTextField.rx.text.orEmpty
+            .skip(1)
+            .map {NumberFormatter().number(from: $0)?.doubleValue ?? 0}
+            .map {self.buyValue(fromSellValue: $0)}
+            .map {self.stringFromNumber($0)}
+            .subscribe(onNext: { (text) in
+                self.buyTextField.text = text
+            })
+            .disposed(by: disposeBag)
+        
+        buyTextField.rx.text.orEmpty
+            .skip(1)
+            .map {NumberFormatter().number(from: $0)?.doubleValue ?? 0}
+            .map {self.sellValue(fromBuyValue: $0)}
+            .map {self.stringFromNumber($0)}
+            .subscribe(onNext: { (text) in
+                self.sellTextField.text = text
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    func buyValue(fromSellValue value: Double) -> Double {
+        fatalError("Must override")
+    }
+    
+    func sellValue(fromBuyValue value: Double) -> Double {
+        fatalError("Must override")
     }
     
     private func setUp(with balances: [ResponseAPIWalletGetBalance]) {
