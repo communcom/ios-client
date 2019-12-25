@@ -77,7 +77,7 @@ extension ResponseAPIContentBlock {
         }
     }
     
-    func toAttributedString<Attachment: SubviewTextAttachment & TextAttachmentType>(currentAttributes: [NSAttributedString.Key: Any], attachmentSize: CGSize = .zero, attachmentType: Attachment.Type) -> NSAttributedString {
+    func toAttributedString<Attachment: SubviewTextAttachment & TextAttachmentType>(currentAttributes: [NSAttributedString.Key: Any], attachmentSize: CGSize = .zero, attachmentType: Attachment.Type, viewMode: Bool = false) -> NSAttributedString {
         let child = NSMutableAttributedString()
         switch content {
         case .array(let array):
@@ -95,7 +95,9 @@ extension ResponseAPIContentBlock {
         
         switch type {
         case "paragraph":
-            child.insert(NSAttributedString.paragraphSeparator(attributes: currentAttributes), at: 0)
+            if !viewMode {
+                child.insert(NSAttributedString.paragraphSeparator(attributes: currentAttributes), at: 0)
+            }
         case "text":
             var attr = currentAttributes
             if let textColor = attributes?.textColor {

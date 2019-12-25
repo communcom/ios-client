@@ -59,16 +59,21 @@ final class BasicPostCell: PostCell {
 
         var texts = NSMutableAttributedString()
         var paragraphsTexts: [NSAttributedString] = []
-        for content in post.content ?? [] where content.type == "paragraph" {
-            let attributedText = content.toAttributedString(currentAttributes: defaultAttributes, attachmentType: TextAttachment.self)
-            texts.append(attributedText)
-            paragraphsTexts.append(attributedText)
+        for (index, content) in (post.content ?? []).enumerated() where content.type == "paragraph" {
+            let attributedText = content.toAttributedString(currentAttributes: defaultAttributes, attachmentType: TextAttachment.self, viewMode: true)
+            // remove empty text
+            let text = attributedText.string.replacingOccurrences(of: "\n", with: "").replacingOccurrences(of: "\r", with: "").replacingOccurrences(of: "  ", with: "")
+            if text != "", text != " " {
+                if index != 0 {
+                    texts.append(NSAttributedString(string: "\n"))
+                }
+                texts.append(attributedText)
+                paragraphsTexts.append(attributedText)
+            }
         }
 
         var moreTextAdded = false
         let moreText = NSAttributedString(string: "... \("See More".localized())", attributes: [.foregroundColor: UIColor.appMainColor, .font: UIFont.systemFont(ofSize: 14)])
-
-        texts = NSMutableAttributedString(string: texts.string.replacingOccurrences(of: "\r", with: ""), attributes: defaultAttributes)
 
         if texts.length > 600 && !moreTextAdded {
             moreTextAdded = true
