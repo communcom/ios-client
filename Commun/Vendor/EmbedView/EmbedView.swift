@@ -78,7 +78,7 @@ class EmbedView: UIView {
     private func configureXib() {
         Bundle.main.loadNibNamed("EmbedView", owner: self, options: nil)
         addSubview(contentView)
-        contentView.frame = frame
+        contentView.frame = bounds
         contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
     }
 
@@ -111,11 +111,11 @@ class EmbedView: UIView {
     }
 
     private func configure(with content: ResponseAPIContentBlock) {
+        titleLabel.numberOfLines = 1
         coverImageView.removeAllConstraints()
         titleLabel.removeAllConstraints()
         subtitleLabel.removeAllConstraints()
         titlesView.removeAllConstraints()
-        titleLabel.numberOfLines = 2
         providerLabelView.isHidden = true
         titlesView.isHidden = false
 
