@@ -20,7 +20,7 @@ class PostEditorViewModel {
         var request: Single<SendPostCompletion>!
         
         if let post = self.postForEdit {
-            request = RestAPIManager.instance.updateMessage(
+            request = BlockchainManager.instance.updateMessage(
                 originMessage: post,
                 communCode: community.value?.communityId ?? "",
                 permlink: post.contentId.permlink,
@@ -31,7 +31,7 @@ class PostEditorViewModel {
             
         // If creating new post
         else {
-            request = RestAPIManager.instance.createMessage(
+            request = BlockchainManager.instance.createMessage(
                 communCode: community.value?.communityId ?? "",
                 header: title ?? "",
                 block: block

@@ -38,17 +38,17 @@ extension BlacklistCellDelegate where Self: BaseViewController {
         if originIsBlocked {
             switch item {
             case .user:
-                request = RestAPIManager.instance.unblock(id)
+                request = BlockchainManager.instance.unblock(id)
             case .community:
-                request = RestAPIManager.instance.unhideCommunity(id)
+                request = BlockchainManager.instance.unhideCommunity(id)
             }
             
         } else {
             switch item {
             case .user:
-                request = RestAPIManager.instance.block(id)
+                request = BlockchainManager.instance.block(id)
             case .community:
-                request = RestAPIManager.instance.hideCommunity(id)
+                request = BlockchainManager.instance.hideCommunity(id)
             }
         }
         

@@ -201,7 +201,7 @@ class PostPageVC: CommentsViewController {
                         else {return}
                         
                         // Send request
-                        RestAPIManager.instance.updateMessage(
+                        BlockchainManager.instance.updateMessage(
                             originMessage: comment,
                             communCode: communCode,
                             permlink: comment.contentId.permlink,
@@ -223,7 +223,7 @@ class PostPageVC: CommentsViewController {
                         
                         let parentPermlink = post.contentId.permlink
                         // Send request
-                        RestAPIManager.instance.createMessage(
+                        BlockchainManager.instance.createMessage(
                             isComment: true,
                             parentPost: post,
                             communCode: communCode,
@@ -248,7 +248,7 @@ class PostPageVC: CommentsViewController {
                         else {return}
                         
                         // Send request
-                        RestAPIManager.instance.createMessage(
+                        BlockchainManager.instance.createMessage(
                             isComment: true,
                             parentPost: post,
                             isReplying: true,

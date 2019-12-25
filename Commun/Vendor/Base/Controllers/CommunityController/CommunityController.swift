@@ -69,10 +69,10 @@ extension CommunityController {
         let request: Completable
         
         if originIsSubscribed {
-            request = RestAPIManager.instance.unfollowCommunity(id)
+            request = BlockchainManager.instance.unfollowCommunity(id)
                 .flatMapToCompletable()
         } else {
-            request = RestAPIManager.instance.followCommunity(id)
+            request = BlockchainManager.instance.followCommunity(id)
                 .flatMapToCompletable()
         }
         
