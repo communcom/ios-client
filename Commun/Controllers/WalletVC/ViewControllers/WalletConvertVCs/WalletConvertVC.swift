@@ -91,10 +91,6 @@ class WalletConvertVC: BaseViewController {
         view.addSubview(scrollView)
         scrollView.autoPinEdgesToSuperviewSafeArea(with: .zero, excludingEdge: .bottom)
         
-        let keyboardViewV = KeyboardLayoutConstraint(item: view!, attribute: .bottom, relatedBy: .equal, toItem: scrollView, attribute: .bottom, multiplier: 1.0, constant: 0.0)
-        keyboardViewV.observeKeyboardHeight()
-        self.view.addConstraint(keyboardViewV)
-        
         // top scrollView
         scrollView.contentView.addSubview(balanceNameLabel)
         layoutCarousel()
@@ -135,10 +131,13 @@ class WalletConvertVC: BaseViewController {
         rateLabel.autoAlignAxis(toSuperviewAxis: .vertical)
         
         // pin bottom
-        rateLabel.autoPinEdge(toSuperviewEdge: .bottom)
+        rateLabel.autoPinEdge(toSuperviewEdge: .bottom, withInset: 20)
         
         // config topView
         topView.autoPinEdge(.bottom, to: .top, of: whiteView, withOffset: 25)
+        
+        // layout bottom
+        layoutBottom()
     }
     
     func layoutCarousel() {
@@ -222,6 +221,12 @@ class WalletConvertVC: BaseViewController {
         convertContainer.addArrangedSubview(secondView)
     }
     
+    func layoutBottom() {
+        let keyboardViewV = KeyboardLayoutConstraint(item: view!, attribute: .bottom, relatedBy: .equal, toItem: scrollView, attribute: .bottom, multiplier: 1.0, constant: 0.0)
+        keyboardViewV.observeKeyboardHeight()
+        self.view.addConstraint(keyboardViewV)
+    }
+    
     override func bind() {
         super.bind()
         viewModel.state
@@ -251,6 +256,15 @@ class WalletConvertVC: BaseViewController {
                 self.setUp(with: balances)
             })
             .disposed(by: disposeBag)
+        
+        UIResponder.isKeyboardShowed
+            .filter {$0}
+            .subscribe(onNext: { _ in
+                DispatchQueue.main.async {
+                    self.scrollView.scrollsToBottom()
+                }
+            })
+            .disposed(by: disposeBag)
     }
     
     private func setUp(with balances: [ResponseAPIWalletGetBalance]) {
@@ -275,6 +289,16 @@ class WalletConvertVC: BaseViewController {
         navigationController?.navigationBar.isTranslucent = true
         showNavigationBar(false, animated: true, completion: nil)
         self.navigationController?.navigationBar.setTitleFont(.boldSystemFont(ofSize: 17), color: .white)
+        
+        // hide bottom tabbar
+        tabBarController?.tabBar.isHidden = true
+        let tabBarVC = (tabBarController as? TabBarVC)
+        tabBarVC?.setTabBarHiden(true)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        let tabBarVC = (tabBarController as? TabBarVC)
+        tabBarVC?.setTabBarHiden(false)
     }
     
     override func viewDidLayoutSubviews() {
