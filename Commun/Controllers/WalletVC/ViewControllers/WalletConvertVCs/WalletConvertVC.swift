@@ -74,6 +74,10 @@ class WalletConvertVC: BaseViewController {
         topView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .bottom)
         
         // scroll view
+        scrollView.contentView.isUserInteractionEnabled = true
+        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        scrollView.contentView.addGestureRecognizer(tap)
+        
         view.addSubview(scrollView)
         scrollView.autoPinEdgesToSuperviewSafeArea(with: .zero, excludingEdge: .bottom)
         
@@ -259,5 +263,9 @@ class WalletConvertVC: BaseViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         whiteView.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: 25)
+    }
+    
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
     }
 }

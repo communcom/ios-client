@@ -9,6 +9,11 @@
 import Foundation
 
 class WalletSellCommunVC: WalletConvertVC {
+    // MARK: - Properties
+    override var topColor: UIColor {
+        .appMainColor
+    }
+    
     // MARK: - Methods
     override func setUp() {
         super.setUp()
