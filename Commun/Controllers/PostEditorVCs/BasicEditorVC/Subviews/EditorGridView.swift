@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 11/21/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import UIKit
@@ -93,8 +93,7 @@ class EditorGridView: UIView {
             views[2].bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
             views[2].leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
             views[2].widthAnchor.constraint(equalTo: widthAnchor, multiplier: 1/2, constant: -padding).isActive = true
-            views[2].heightAnchor.constraint(equalTo: heightAnchor
-                , multiplier: 1/2, constant: -padding).isActive = true
+            views[2].heightAnchor.constraint(equalTo: heightAnchor, multiplier: 1/2, constant: -padding).isActive = true
             
             views.last?.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 1/2, constant: -padding).isActive = true
             views.last?.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 1/2, constant: -padding).isActive = true
@@ -158,4 +157,3 @@ class EditorGridView: UIView {
         setUp(views: imageViews)
     }
 }
-

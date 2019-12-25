@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Maxim Prigozhenkov on 22/04/2019.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import UIKit
@@ -130,7 +130,7 @@ class SettingsVC: UIViewController {
                         verifyVC.currentPin = Config.currentUser?.passcode
                         
                         // if passcode existed
-                        if (Config.currentUser?.passcode != nil) {
+                        if Config.currentUser?.passcode != nil {
                             verifyVC.isVerifyVC = true
                             verifyVC.completion = {
                                 let setNewPasscodeVC = SetPasscodeVC()
@@ -152,7 +152,6 @@ class SettingsVC: UIViewController {
                     default:
                         break
                     }
-                    break
                 default:
                     break
                 }
@@ -165,5 +164,3 @@ class SettingsVC: UIViewController {
     }
 
 }
-
-

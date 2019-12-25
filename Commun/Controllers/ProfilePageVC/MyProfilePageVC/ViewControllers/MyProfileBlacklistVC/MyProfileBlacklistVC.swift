@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 11/13/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -16,7 +16,7 @@ class MyProfileBlacklistVC: BaseViewController {
     // MARK: - Subviews
     
     lazy var topTabBar = CMTopTabBar(
-        height: 35,
+        height: 50,
         labels: MyProfileBlacklistViewModel.SegmentedItem.allCases.map {$0.rawValue.localized().uppercaseFirst},
         selectedIndex: 0)
     lazy var tableView: UITableView = {
@@ -36,6 +36,12 @@ class MyProfileBlacklistVC: BaseViewController {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        baseNavigationController?.changeStatusBarStyle(.default)
+        navigationController?.navigationBar.addShadow(ofColor: .clear, opacity: 0)
     }
     
     // MARK: - Methods
@@ -110,8 +116,7 @@ class MyProfileBlacklistVC: BaseViewController {
     func handleListError() {
         let title = "error"
         let description = "there is an error occurs"
-        tableView.addEmptyPlaceholderFooterView(title: title.localized().uppercaseFirst, description: description.localized().uppercaseFirst, buttonLabel: "retry".localized().uppercaseFirst)
-        {
+        tableView.addEmptyPlaceholderFooterView(title: title.localized().uppercaseFirst, description: description.localized().uppercaseFirst, buttonLabel: "retry".localized().uppercaseFirst) {
             self.viewModel.fetchNext(forceRetry: true)
         }
     }

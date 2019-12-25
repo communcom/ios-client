@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 11/8/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -28,7 +28,6 @@ class PostPageVC: CommentsViewController {
     var scrollToTopAfterLoadingComment = false
     var commentThatNeedsScrollTo: ResponseAPIContentGetComment?
     var startContentOffsetY: CGFloat = 0.0
-    
     
     // MARK: - Initializers
     init(post: ResponseAPIContentGetPost) {
@@ -63,12 +62,18 @@ class PostPageVC: CommentsViewController {
     // MARK: - Methods
     override func setUp() {
         super.setUp()
-        
+
         // navigationBar
         view.addSubview(navigationBar)
         navigationBar.autoPinEdgesToSuperviewSafeArea(with: .zero, excludingEdge: .bottom)
         navigationBar.moreButton.addTarget(self, action: #selector(openMorePostActions), for: .touchUpInside)
-        
+
+        // top white view
+        let topView = UIView(backgroundColor: .white)
+        view.addSubview(topView)
+        topView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .bottom)
+        topView.autoPinEdge(.bottom, to: .top, of: navigationBar)
+
         // tableView
         tableView.contentInset = UIEdgeInsets(top: 56, left: 0, bottom: 0, right: 0)
         tableView.keyboardDismissMode = .onDrag
@@ -79,7 +84,7 @@ class PostPageVC: CommentsViewController {
         
         // comment form
         let shadowView = UIView(forAutoLayout: ())
-        shadowView.addShadow(ofColor: #colorLiteral(red: 0.221, green: 0.234, blue: 0.279, alpha: 0.07), radius: CGFloat.adaptive(width: 4.0), offset: CGSize(width: 0, height: CGFloat.adaptive(height: -3.0)), opacity:  1.0)
+        shadowView.addShadow(ofColor: #colorLiteral(red: 0.221, green: 0.234, blue: 0.279, alpha: 0.07), radius: CGFloat.adaptive(width: 4.0), offset: CGSize(width: 0, height: CGFloat.adaptive(height: -3.0)), opacity: 1.0)
 //        shadowView.addShadow(ofColor: .shadow, radius: 4, offset: CGSize(width: 0, height: -6), opacity: 0.1)
 
         view.addSubview(shadowView)
@@ -100,7 +105,7 @@ class PostPageVC: CommentsViewController {
         commentForm.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: 24.5)
         view.bringSubviewToFront(commentForm)
         startContentOffsetY = tableView.contentOffset.y
-        navigationBar.addShadow(ofColor: .clear, offset: CGSize(width: 0, height: 2), opacity: 0.1)
+        navigationBar.addShadow(ofColor: .shadow, radius: 16, offset: CGSize(width: 0, height: 6), opacity: 0.05)
     }
     
     override func bind() {
@@ -123,17 +128,15 @@ class PostPageVC: CommentsViewController {
                 })
                 .disposed(by: disposeBag)
         }
-        else if let comment = commentThatNeedsScrollTo {
-            #warning("scroll to comment")
-//            tableView.rx.itemInserted
-//                .takeWhile(<#T##predicate: (IndexPath) throws -> Bool##(IndexPath) throws -> Bool#>)
-        }
+//        else if let comment = commentThatNeedsScrollTo {
+//            //TODO: scroll to comment
+//        }
 
         tableView.rx.contentOffset
         .map { $0.y <= self.startContentOffsetY }
         .distinctUntilChanged()
         .subscribe(onNext: { (showShadow) in
-            self.navigationBar.addShadow(ofColor: showShadow ? .clear : .shadow, offset: CGSize(width: 0, height: 2), opacity: 0.1)
+            self.navigationBar.addShadow(ofColor: showShadow ? .clear : .shadow, radius: 20, offset: CGSize(width: 0, height: 3), opacity: 0.07)
         })
         .disposed(by: disposeBag)
         
@@ -162,15 +165,22 @@ class PostPageVC: CommentsViewController {
     
     override func editComment(_ comment: ResponseAPIContentGetComment) {
         guard let document = comment.document else {return}
-        commentForm.mode = .edit
-        commentForm.parentComment = comment
+        commentForm.setMode(.edit, comment: comment)
         commentForm.textView.parseContentBlock(document)
+            .do(onSubscribe: {
+                self.showIndetermineHudWithMessage("loading".localized().uppercaseFirst)
+            })
+            .subscribe(onCompleted: { [weak self] in
+                self?.hideHud()
+            }) { [weak self] (error) in
+                self?.showError(error)
+            }
+            .disposed(by: disposeBag)
         commentForm.textView.becomeFirstResponder()
     }
     
     override func replyToComment(_ comment: ResponseAPIContentGetComment) {
-        commentForm.mode = .reply
-        commentForm.parentComment = comment
+        commentForm.setMode(.reply, comment: comment)
         commentForm.textView.becomeFirstResponder()
     }
     
@@ -190,13 +200,13 @@ class PostPageVC: CommentsViewController {
                         guard let communCode = post.community?.communityId
                         else {return}
                         
-                        
                         // Send request
                         RestAPIManager.instance.updateMessage(
-                            originMessage:  comment,
-                            communCode:     communCode,
-                            permlink:       comment.contentId.permlink,
-                            block:          block
+                            originMessage: comment,
+                            communCode: communCode,
+                            permlink: comment.contentId.permlink,
+                            block: block,
+                            uploadingImage: comment.placeHolderImage?.image
                         )
                         .subscribe(onError: { [weak self] error in
                             self?.showError(error)
@@ -214,12 +224,13 @@ class PostPageVC: CommentsViewController {
                         let parentPermlink = post.contentId.permlink
                         // Send request
                         RestAPIManager.instance.createMessage(
-                            isComment:      true,
-                            parentPost:     post,
-                            communCode:     communCode,
-                            parentAuthor:   parentAuthorId,
+                            isComment: true,
+                            parentPost: post,
+                            communCode: communCode,
+                            parentAuthor: parentAuthorId,
                             parentPermlink: parentPermlink,
-                            block:          block
+                            block: block,
+                            uploadingImage: comment.placeHolderImage?.image
                         )
                         .subscribe(onError: { [weak self] error in
                             self?.showError(error)
@@ -238,14 +249,15 @@ class PostPageVC: CommentsViewController {
                         
                         // Send request
                         RestAPIManager.instance.createMessage(
-                            isComment:      true,
-                            parentPost:     post,
-                            isReplying:     true,
-                            parentComment:  parentComment,
-                            communCode:     communCode,
-                            parentAuthor:   parentCommentAuthorId,
+                            isComment: true,
+                            parentPost: post,
+                            isReplying: true,
+                            parentComment: parentComment,
+                            communCode: communCode,
+                            parentAuthor: parentCommentAuthorId,
                             parentPermlink: parentCommentPermlink,
-                            block:          block
+                            block: block,
+                            uploadingImage: comment.placeHolderImage?.image
                         )
                         .subscribe(onError: { [weak self] error in
                             self?.showError(error)
@@ -286,7 +298,7 @@ class PostPageVC: CommentsViewController {
                     handle: {
                         let vm = self.viewModel as! CommentsViewModel
                         vm.changeFilter(sortBy: .time)
-                    }),
+                    })
             ])
     }
     

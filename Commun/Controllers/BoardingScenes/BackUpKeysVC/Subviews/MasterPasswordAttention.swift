@@ -3,126 +3,88 @@
 //  Commun
 //
 //  Created by Sergey Monastyrskiy on 25.11.2019.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import UIKit
 
-class MasterPasswordAttention: UIView {
+class MasterPasswordAttention: MyCardView {
     // MARK: - Properties
-    var closeButtonTapHandler: (() -> Void)?
-    var continueButtonTapHandler: (() -> Void)?
-
-    
-    // MARK: - IBOutlets
-    @IBOutlet var contentView: UIView!
-
-    @IBOutlet weak var titleLabel: UILabel! {
-        didSet {
-            self.titleLabel.tune(withAttributedText:        "attention",
-                                 hexColors:                 blackWhiteColorPickers,
-                                 font:                      UIFont.systemFont(ofSize: CGFloat.adaptive(width: 30.0), weight: .bold),
-                                 alignment:                 .center,
-                                 isMultiLines:              false,
-                                 lineHeight:                30.0)
-        }
-    }
-    
-    @IBOutlet weak var noteLabel: UILabel! {
-        didSet {
-            self.noteLabel.tune(withAttributedText:         "master password attention note",
-                                hexColors:                  blackWhiteColorPickers,
-                                font:                       UIFont.systemFont(ofSize: CGFloat.adaptive(width: 17.0), weight: .medium),
-                                alignment:                  .center,
-                                isMultiLines:               true,
-                                lineHeight:                 24.0,
-                                lineHeightMultiple:         1.18)
-        }
-    }
-    
-    @IBOutlet weak var describeLabel: UILabel! {
-        didSet {
-            self.describeLabel.tune(withAttributedText:     "master password attention describe",
-                                    hexColors:              grayishBluePickers,
-                                    font:                   UIFont.systemFont(ofSize: CGFloat.adaptive(width: 15.0), weight: .medium),
-                                    alignment:              .center,
-                                    isMultiLines:           true,
-                                    lineHeight:             24.0,
-                                    lineHeightMultiple:     1.34)
-         }
-    }
-    
-    @IBOutlet weak var backButton: UIButton! {
-        didSet {
-            self.backButton.backgroundColor = #colorLiteral(red: 0.4156862745, green: 0.5019607843, blue: 0.9607843137, alpha: 1)
-            self.backButton.setTitleColor(.white, for: .normal)
-            self.backButton.titleLabel?.font = .boldSystemFont(ofSize: CGFloat.adaptive(width: 15.0))
-            self.backButton.setTitle("back".localized().uppercaseFirst, for: .normal)
-        }
-    }
-    
-    @IBOutlet weak var continueButton: UIButton! {
-        didSet {
-            self.continueButton.backgroundColor = UIColor(hexString: "#F3F5FA")
-            self.continueButton.setTitleColor(UIColor(hexString: "#6A80F5"), for: .normal)
-            self.continueButton.titleLabel?.font = .boldSystemFont(ofSize: CGFloat.adaptive(width: 15.0))
-            self.continueButton.setTitle("continue without backup".localized().uppercaseFirst, for: .normal)
-        }
-    }
-
-    
-    // MARK: - Initialization
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        
-        commonInit()
-    }
-    
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        
-        commonInit()
-    }
-    
+    var ignoreSavingAction: (() -> Void)?
     
     // MARK: - Custom Functions
-    private func commonInit() {
-        Bundle.main.loadNibNamed("MasterPasswordAttention", owner: self, options: nil)
-        addSubview(contentView)
-        contentView.frame = self.bounds
-        contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
-        contentView.layer.cornerRadius = CGFloat.adaptive(width: 25.0)
-        contentView.clipsToBounds = true
+    override func commonInit() {
+        super.commonInit()
+        backgroundColor = .white
         
-        self.backButton.layer.cornerRadius = CGFloat.adaptive(height: 50.0) / 2
-        self.backButton.clipsToBounds = true
+        let closeButton = UIButton.close(size: 30 * Config.heightRatio)
+        addSubview(closeButton)
+        closeButton.autoPinTopAndTrailingToSuperView(inset: 16 * Config.heightRatio, xInset: 20 * Config.heightRatio)
+        closeButton.addTarget(self, action: #selector(closeButtonTapped(_:)), for: .touchUpInside)
         
-        self.continueButton.layer.cornerRadius = CGFloat.adaptive(height: 50.0) / 2
-        self.continueButton.clipsToBounds = true
+        let imageView = UIImageView(width: 90, height: 90, imageNamed: "image-round-attention")
+        addSubview(imageView)
+        imageView.autoPinEdge(toSuperviewEdge: .top, withInset: 30 * Config.heightRatio)
+        imageView.autoAlignAxis(toSuperviewAxis: .vertical)
+        
+        let attentionLabel = UILabel.with(text: "attention".localized().uppercaseFirst, textSize: 30 * Config.heightRatio, weight: .bold)
+        addSubview(attentionLabel)
+        attentionLabel.autoPinEdge(.top, to: .bottom, of: imageView, withOffset: 20 * Config.heightRatio)
+        attentionLabel.autoAlignAxis(toSuperviewAxis: .vertical)
+        
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = 8 * Config.heightRatio
+        paragraphStyle.alignment = .center
+        
+        let firstAStr = NSAttributedString(string: "We do not keep master passwords and have no opportunity to restore them.".localized().uppercaseFirst, attributes: [.paragraphStyle: paragraphStyle, .font: UIFont.systemFont(ofSize: 17 * Config.heightRatio, weight: .semibold)])
+        
+        let firstDescriptionLabel = UILabel.with(textSize: 17 * Config.heightRatio, numberOfLines: 0, textAlignment: .center)
+        firstDescriptionLabel.attributedText = firstAStr
+        addSubview(firstDescriptionLabel)
+        firstDescriptionLabel.autoPinEdge(.top, to: .bottom, of: attentionLabel, withOffset: 16 * Config.heightRatio)
+        firstDescriptionLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 20 * Config.heightRatio)
+        firstDescriptionLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 20 * Config.heightRatio)
+        
+        let secondAStr = NSAttributedString(string: "Unfortunately for our comfort, blockchain doesn’t allow us to restore passwords. It means that it’s every user’s responsibility to keep the password in a safe place and be able to access it anytime.\nWe strongly recommend you to save your password and make a copy of it.".localized().uppercaseFirst, attributes: [.paragraphStyle: paragraphStyle, .font: UIFont.systemFont(ofSize: 17 * Config.heightRatio)])
+        
+        let secondDescriptionLabel = UILabel.with(textSize: 15 * Config.heightRatio, textColor: .a5a7bd, numberOfLines: 0, textAlignment: .center)
+        secondDescriptionLabel.attributedText = secondAStr
+        addSubview(secondDescriptionLabel)
+        secondDescriptionLabel.autoPinEdge(.top, to: .bottom, of: firstDescriptionLabel, withOffset: 16 * Config.heightRatio)
+        secondDescriptionLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 20 * Config.heightRatio)
+        secondDescriptionLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 20 * Config.heightRatio)
+        
+        let backButton = CommunButton.default(height: 50, label: "back".localized().uppercaseFirst, isHuggingContent: false)
+        addSubview(backButton)
+        backButton.autoPinEdge(.top, to: .bottom, of: secondDescriptionLabel, withOffset: 30 * Config.heightRatio)
+        backButton.autoPinEdge(toSuperviewEdge: .leading, withInset: 20 * Config.heightRatio)
+        backButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 20 * Config.heightRatio)
+        
+        backButton.addTarget(self, action: #selector(closeButtonTapped(_:)), for: .touchUpInside)
+        
+        let ignoreButton = CommunButton.default(height: 50, label: "continue without backup".localized().uppercaseFirst, isHuggingContent: false)
+        ignoreButton.backgroundColor = .f3f5fa
+        ignoreButton.setTitleColor(.appMainColor, for: .normal)
+        addSubview(ignoreButton)
+        ignoreButton.autoPinEdge(.top, to: .bottom, of: backButton, withOffset: 10)
+        ignoreButton.autoPinEdge(toSuperviewEdge: .leading, withInset: 20 * Config.heightRatio)
+        ignoreButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 20 * Config.heightRatio)
+        
+        ignoreButton.autoPinEdge(toSuperviewEdge: .bottom, withInset: 20 * Config.heightRatio)
+        
+        ignoreButton.addTarget(self, action: #selector(continueButtonTapped(_:)), for: .touchUpInside)
+        
     }
-        
-    
-    // MARK: - Custom Functions
-    func display(_ value: Bool) {
-        UIView.animateKeyframes(withDuration:   0.25,
-                                delay:          0.0,
-                                options:        UIView.KeyframeAnimationOptions(rawValue: 7),
-                                animations: {
-                                    let bottomOffset = CGFloat.adaptive(width: (20.0 + (UIDevice.hasNotch ? UIDevice.safeAreaInsets.bottom : 0.0)))
-                                    self.frame.origin.y = value ? UIScreen.main.bounds.height - (581.0 + bottomOffset) * Config.heightRatio : 2000.0
-            },
-                                completion:     nil)
-    }
-
     
     // MARK: - Actions
-    @IBAction func closeButtonTapped(_ sender: UIButton) {
-        self.display(false)
-        self.closeButtonTapHandler!()
+    @objc func closeButtonTapped(_ sender: UIButton) {
+        AnalyticsManger.shared.passwordNotBackuped(back: true)
+        close()
     }
     
-    @IBAction func continueButtonTapped(_ sender: UIButton) {
-        self.display(false)
-        self.continueButtonTapHandler!()
+    @objc func continueButtonTapped(_ sender: UIButton) {
+        AnalyticsManger.shared.passwordNotBackuped(back: false)
+        close()
+        ignoreSavingAction?()
     }
 }

@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 11/26/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -13,6 +13,7 @@ class CommunityCollectionCell: MyCollectionViewCell, ListItemCellType {
     // MARK: - Properties
     var community: ResponseAPIContentGetCommunity?
     weak var delegate: CommunityCellDelegate?
+    var shouldAnimateOnFollowing = true
     
     // MARK: - Subviews
     lazy var coverImageView: UIImageView = {
@@ -84,7 +85,11 @@ class CommunityCollectionCell: MyCollectionViewCell, ListItemCellType {
     
     @objc func joinButtonDidTouch() {
         guard let community = community else {return}
-        joinButton.animate {
+        if shouldAnimateOnFollowing {
+            joinButton.animate {
+                self.delegate?.buttonFollowDidTouch(community: community)
+            }
+        } else {
             self.delegate?.buttonFollowDidTouch(community: community)
         }
     }

@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 10/4/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -35,6 +35,28 @@ extension UIButton {
         if let contentInsets = contentInsets {
             contentEdgeInsets = contentInsets
         }
+    }
+    
+    static func roundedCorner(
+        _ cornerRadius: CGFloat,
+        size: CGFloat,
+        backgroundColor: UIColor,
+        tintColor: UIColor? = nil,
+        imageName: String,
+        imageEdgeInsets: UIEdgeInsets? = nil
+    ) -> UIButton {
+        let button = UIButton(width: size, height: size, backgroundColor: backgroundColor, cornerRadius: cornerRadius)
+        button.setImage(UIImage(named: imageName), for: .normal)
+        if let imageEdgeInsets = imageEdgeInsets {
+            button.imageEdgeInsets = imageEdgeInsets
+        }
+        if let tintColor = tintColor {
+            button.tintColor = tintColor
+        }
+        if size < 44 {
+            button.touchAreaEdgeInsets = UIEdgeInsets(inset: (size - 44) / 2)
+        }
+        return button
     }
     
     static func circle(
@@ -90,12 +112,11 @@ extension UIButton {
         return button
     }
     
-    static func back(tintColor: UIColor = .black, contentInsets: UIEdgeInsets = UIEdgeInsets(top: 11, left: 15, bottom: 11, right: 14)) -> UIButton {
+    static func back(tintColor: UIColor = .black, contentInsets: UIEdgeInsets = UIEdgeInsets(top: 11, left: 0, bottom: 11, right: 30)) -> UIButton {
         let button = UIButton(width: 40, height: 40)
         button.tintColor = tintColor
         button.setImage(UIImage(named: "back-button"), for: .normal)
         button.touchAreaEdgeInsets = UIEdgeInsets(inset: -2)
-        button.contentEdgeInsets = contentInsets
         return button
     }
     

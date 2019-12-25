@@ -3,22 +3,27 @@
 //  Commun
 //
 //  Created by Chung Tran on 24/07/2019.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
-import Foundation
 import WebKit
+import Foundation
 import SafariServices
 
-class HTMLStringWebView: UIWebView {
+class HTMLStringWebView: WKWebView {
+    // MARK: - Properties
     var htmlString: String?
-    override func loadHTMLString(_ string: String, baseURL: URL?) {
-        guard htmlString != string else {return}
+    
+    // MARK: - Custom Functions
+    func load(htmlString string: String, baseURL: URL?) {
+        guard htmlString != string else { return }
+        
         htmlString = string
         
         let htmlStart = "<HTML><HEAD><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, shrink-to-fit=no\"><link rel=\"stylesheet\" type=\"text/css\" href=\"HTMLStringWebView.css\"></HEAD><BODY><section style=\"word-break: hyphenate; -webkit-hyphens: auto; font-family: -apple-system; text-align: justify; font-size: 17\">"
         let htmlEnd = " </section></BODY></HTML>"
         let html = htmlStart + string + htmlEnd
+        
         super.loadHTMLString(html, baseURL: Bundle.main.bundleURL)
     }
     
@@ -43,10 +48,10 @@ class HTMLStringWebView: UIWebView {
 //        return result
 //    }
     
-    func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebView.NavigationType) -> Bool {
+    func webView(_ webView: WKWebView, shouldStartLoadWith request: URLRequest, navigationType: WKNavigationType) -> Bool {
         switch navigationType {
-        case .linkClicked:
-            guard let url = request.url else {return false}
+        case .linkActivated:
+            guard let url = request.url else { return false }
             let urlString = url.absoluteString
             
             // if userName tapped
@@ -55,8 +60,7 @@ class HTMLStringWebView: UIWebView {
                 parentViewController?.showProfileWithUserId(userName)
                 return false
             }
-            
-            
+                        
             let safariVC = SFSafariViewController(url: url)
             parentViewController?.present(safariVC, animated: true, completion: nil)
             

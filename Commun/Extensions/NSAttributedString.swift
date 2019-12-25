@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 8/30/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -33,7 +33,7 @@ extension NSAttributedString {
         id += 1
         
         var blocks = [ResponseAPIContentBlock]()
-        enumerateAttributes(in: NSMakeRange(0, length), options: []) { (attrs, range, bool) in
+        enumerateAttributes(in: NSRange(location: 0, length: length), options: []) { (attrs, range, _) in
             var content = attributedSubstring(from: range).string
             content = content.trimmed
             var blockType = "text"

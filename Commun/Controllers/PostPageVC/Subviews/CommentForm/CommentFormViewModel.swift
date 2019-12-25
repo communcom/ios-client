@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 11/19/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -14,7 +14,8 @@ class CommentFormViewModel {
     var post: ResponseAPIContentGetPost?
     
     func sendNewComment(
-        block: ResponseAPIContentBlock
+        block: ResponseAPIContentBlock,
+        uploadingImage: UIImage? = nil
     ) -> Single<SendPostCompletion> {
         guard let communCode = post?.community?.communityId,
             let authorId = post?.author?.userId,
@@ -22,35 +23,38 @@ class CommentFormViewModel {
             else {return .error(ErrorAPI.invalidData(message: "Post info missing"))}
         // Send request
         return RestAPIManager.instance.createMessage(
-            isComment:      true,
-            parentPost:     post,
-            communCode:     communCode,
-            parentAuthor:   authorId,
+            isComment: true,
+            parentPost: post,
+            communCode: communCode,
+            parentAuthor: authorId,
             parentPermlink: postPermlink,
-            block:          block
+            block: block,
+            uploadingImage: uploadingImage
         )
     }
     
     func updateComment(
         _ comment: ResponseAPIContentGetComment,
-        block: ResponseAPIContentBlock
+        block: ResponseAPIContentBlock,
+        uploadingImage: UIImage? = nil
     ) -> Single<SendPostCompletion> {
         guard let communCode = post?.community?.communityId
         else {return .error(ErrorAPI.invalidData(message: "Post info missing"))}
         
-        
         // Send request
         return RestAPIManager.instance.updateMessage(
-            originMessage:  comment,
-            communCode:     communCode,
-            permlink:       comment.contentId.permlink,
-            block:          block
+            originMessage: comment,
+            communCode: communCode,
+            permlink: comment.contentId.permlink,
+            block: block,
+            uploadingImage: uploadingImage
         )
     }
     
     func replyToComment(
         _ comment: ResponseAPIContentGetComment,
-        block: ResponseAPIContentBlock
+        block: ResponseAPIContentBlock,
+        uploadingImage: UIImage? = nil
     ) -> Single<SendPostCompletion> {
         guard let communCode = post?.community?.communityId
             else {return .error(ErrorAPI.invalidData(message: "Post info missing"))}
@@ -59,14 +63,15 @@ class CommentFormViewModel {
         let parentCommentPermlink = comment.contentId.permlink
         // Send request
         return RestAPIManager.instance.createMessage(
-            isComment:      true,
-            parentPost:     post,
-            isReplying:     true,
-            parentComment:  comment,
-            communCode:     communCode,
-            parentAuthor:   authorId,
+            isComment: true,
+            parentPost: post,
+            isReplying: true,
+            parentComment: comment,
+            communCode: communCode,
+            parentAuthor: authorId,
             parentPermlink: parentCommentPermlink,
-            block:          block
+            block: block,
+            uploadingImage: uploadingImage
         )
     }
 }

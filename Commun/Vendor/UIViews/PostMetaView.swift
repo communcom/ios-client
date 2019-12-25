@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 10/2/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -15,13 +15,11 @@ class PostMetaView: MyView {
         var post: ResponseAPIContentGetPost!
     }
     
-    
     // MARK: - Subviews
     lazy var avatarImageView = MyAvatarImageView(size: 40)
     lazy var comunityNameLabel = UILabel.with(textSize: 15, weight: .semibold)
     lazy var timeAgoLabel = UILabel.with(textSize: 12, weight: .semibold, textColor: .appGrayColor)
     lazy var byUserLabel = UILabel.with(textSize: 12, weight: .semibold, textColor: .appMainColor)
-    
 
     // MARK: - Properties
     var isUserNameTappable = true
@@ -42,11 +40,11 @@ class PostMetaView: MyView {
         comunityNameLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         
         // timeAgoLabel
-        timeAgoLabel.tune(withText:         "",
-                          hexColors:        grayishBluePickers,
-                          font:             UIFont(name: "SFProText-Semibold", size: CGFloat.adaptive(width: 12.0)),
-                          alignment:        .left,
-                          isMultiLines:     false)
+        timeAgoLabel.tune(withText: "",
+                          hexColors: grayishBluePickers,
+                          font: UIFont(name: "SFProText-Semibold", size: CGFloat.adaptive(width: 12.0)),
+                          alignment: .left,
+                          isMultiLines: false)
         
         addSubview(timeAgoLabel)
         timeAgoLabel.autoPinEdge(.top, to: .bottom, of: comunityNameLabel, withOffset: 3)

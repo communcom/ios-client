@@ -3,10 +3,11 @@
 //  Commun
 //
 //  Created by Chung Tran on 10/8/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
+import RxSwift
 
 extension BasicEditorVC {
     override func bindContentTextView() {
@@ -14,11 +15,12 @@ extension BasicEditorVC {
         
         // Parse link inside text
         contentTextView.rx.text
+            .filter {_ in !self.isParsingPost}
+            .debounce(0.3, scheduler: MainScheduler.instance)
             .subscribe(onNext: { (text) in
                 // ignore if one or more attachment existed
                 if self._viewModel.attachment.value != nil ||
-                    self.link != nil
-                {return}
+                    self.link != nil {return}
                 
                 // get link in text
                 guard let text = text,
@@ -40,8 +42,7 @@ extension BasicEditorVC {
                 // check ignored
                 if self.ignoredLinks.contains(String(url)) {
                     return
-                }
-                else {
+                } else {
                     self.ignoredLinks.append(String(url))
                 }
                 
@@ -83,11 +84,10 @@ extension BasicEditorVC {
                     embedView.autoPinEdgesToSuperviewEdges()
                     attachmentView.bringSubviewToFront(attachmentView.closeButton)
                     attachmentView.expandButton.isHidden = true
-                }
-                else {
+                } else {
                     attachmentView.setUp(image: attachment.localImage, url: attachment.attributes?.url, description: attachment.attributes?.title ?? attachment.attributes?.description)
-                    attachmentView.autoSetDimension(.height, toSize: 200)
-                    attachmentView.expandButton.isHidden = false
+                    attachmentView.autoSetDimension(.height, toSize: attachment.size?.height ?? 300)
+                    attachmentView.expandButton.isHidden = true
                 }
                 
             })

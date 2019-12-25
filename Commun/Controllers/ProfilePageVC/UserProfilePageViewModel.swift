@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 10/28/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -48,17 +48,19 @@ class UserProfilePageViewModel: ProfileViewModel<ResponseAPIContentGetProfile> {
             })
             .disposed(by: disposeBag)
         
-        let posts         = postsVM.items.map {$0 as [Any]}.skip(1)
-        let comments      = commentsVM.items.map {$0 as [Any]}.skip(1)
-        
+        let posts = postsVM.items.map {$0 as [Any]}.skip(1)
+        let comments = commentsVM.items.map { $0 as [Any] }.skip(1)
+
         Observable.merge(posts, comments)
-            .filter { (item) -> Bool in
-                if item is [ResponseAPIContentGetPost] && self.segmentedItem.value == .posts {
+            .filter { (items) -> Bool in
+                if items is [ResponseAPIContentGetPost] && self.segmentedItem.value == .posts {
                     return true
                 }
-                if item is [ResponseAPIContentGetComment] && self.segmentedItem.value == .comments {
+                
+                if items is [ResponseAPIContentGetComment] && self.segmentedItem.value == .comments {
                     return true
                 }
+                  
                 return false
             }
             .skip(1)
@@ -76,6 +78,12 @@ class UserProfilePageViewModel: ProfileViewModel<ResponseAPIContentGetProfile> {
             .take(1)
             .bind(to: highlightCommunities)
             .disposed(by: disposeBag)
+    }
+    
+    override func reload() {
+        postsVM.fetcher.reset()
+        commentsVM.fetcher.reset()
+        super.reload()
     }
     
     override func fetchNext(forceRetry: Bool = false) {

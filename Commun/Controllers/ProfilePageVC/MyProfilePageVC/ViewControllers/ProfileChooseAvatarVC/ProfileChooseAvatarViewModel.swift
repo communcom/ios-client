@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 24/04/2019.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -26,10 +26,8 @@ struct ProfileChooseAvatarViewModel {
                 case .denied, .restricted:
                     UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
                     observer.onCompleted()
-                    break
                 case .authorized:
                     observer.onCompleted()
-                    break
                 default:
                     PHPhotoLibrary.requestAuthorization({ (status) in
                         DispatchQueue.main.sync {
@@ -44,20 +42,9 @@ struct ProfileChooseAvatarViewModel {
         }
     }
     
-    func onSelected(with scrollView: UIScrollView) -> CocoaAction {
+    func onSelected(with scrollView: UIScrollView, imageView: UIImageView) -> CocoaAction {
         return CocoaAction {_ in
-            UIGraphicsBeginImageContextWithOptions(scrollView.bounds.size, true, UIScreen.main.scale);
-            //this is the key
-            let offset:CGPoint = scrollView.contentOffset;
-            
-            let context = UIGraphicsGetCurrentContext()!
-            context.translateBy(x: -offset.x, y: -offset.y)
-            
-            scrollView.layer.render(in: context)
-            
-            let image = UIGraphicsGetImageFromCurrentImageContext()
-            UIGraphicsEndImageContext();
-            
+            let image = ProfileEditCoverVC.cropImage(scrollVIew: scrollView, imageView: imageView, maxSize: 300)
             self.didSelectImage.onNext(image)
             return .just(())
         }

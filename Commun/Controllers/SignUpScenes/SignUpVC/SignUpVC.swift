@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Maxim Prigozhenkov on 10/04/2019.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import UIKit
@@ -25,35 +25,28 @@ class SignUpVC: UIViewController, SignUpRouter {
     private var recaptcha: ReCaptcha!
     private let locale = Locale(identifier: Locale.current.languageCode ?? "en")
     private var endpoint = ReCaptcha.Endpoint.default
-
     
     // MARK: - IBOutlets
     @IBOutlet weak var countryButton: UIButton!
-    
-    @IBOutlet weak var countryImageView: UIImageView! {
-        didSet {
-            self.countryImageView.layer.cornerRadius = 24.0 * Config.heightRatio / 2
-            self.countryImageView.clipsToBounds = true
-        }
-    }
+    @IBOutlet weak var flagLabel: UILabel!
     
     @IBOutlet weak var placeholderSelectCountryLabel: UILabel! {
         didSet {
-            self.placeholderSelectCountryLabel.tune(withText:       "select country placeholder".localized().uppercaseFirst,
-                                                    hexColors:      darkGrayishBluePickers,
-                                                    font:           UIFont.init(name: "SFProText-Regular", size: 17.0 * Config.widthRatio),
-                                                    alignment:      .left,
-                                                    isMultiLines:   false)
+            self.placeholderSelectCountryLabel.tune(withText: "select country placeholder".localized().uppercaseFirst,
+                                                    hexColors: darkGrayishBluePickers,
+                                                    font: UIFont.init(name: "SFProText-Regular", size: 17.0 * Config.widthRatio),
+                                                    alignment: .left,
+                                                    isMultiLines: false)
         }
     }
 
     @IBOutlet weak var countryLabel: UILabel! {
         didSet {
-            self.countryLabel.tune(withText:       "",
-                                   hexColors:      blackWhiteColorPickers,
-                                   font:           UIFont.init(name: "SFProText-Regular", size: 17.0 * Config.widthRatio),
-                                   alignment:      .left,
-                                   isMultiLines:   false)
+            self.countryLabel.tune(withText: "",
+                                   hexColors: blackWhiteColorPickers,
+                                   font: UIFont.init(name: "SFProText-Regular", size: 17.0 * Config.widthRatio),
+                                   alignment: .left,
+                                   isMultiLines: false)
         }
     }
 
@@ -66,13 +59,13 @@ class SignUpVC: UIViewController, SignUpRouter {
     
     @IBOutlet weak var phoneNumberTextField: PhoneNumberTextField! {
         didSet {
-            self.phoneNumberTextField.tune(withPlaceholder:     "phone number placeholder".localized().uppercaseFirst,
-                                           textColors:          blackWhiteColorPickers,
-                                           font:                UIFont.init(name: "SFProText-Regular", size: 17.0 * Config.widthRatio),
-                                           alignment:           .left)
+            self.phoneNumberTextField.tune(withPlaceholder: "phone number placeholder".localized().uppercaseFirst,
+                                           textColors: blackWhiteColorPickers,
+                                           font: UIFont.init(name: "SFProText-Regular", size: 17.0 * Config.widthRatio),
+                                           alignment: .left)
             
             // Configure textView
-            let paddingView: UIView = UIView(frame: CGRect(x: 0, y: 0, width: 16 * Config.widthRatio, height: 20))
+            let paddingView: UIView = UIView(width: 16 * Config.widthRatio, height: 20)
             phoneNumberTextField.leftView = paddingView
             phoneNumberTextField.leftViewMode = .always
 
@@ -86,7 +79,6 @@ class SignUpVC: UIViewController, SignUpRouter {
     
     lazy var termOfUseLabel = UILabel.with(textSize: 10, numberOfLines: 0, textAlignment: .center)
     lazy var signInLabel = UILabel.with(textSize: 15, textAlignment: .center)
-    
     
     // MARK: - Class Functions
     override func viewDidLoad() {
@@ -142,7 +134,6 @@ class SignUpVC: UIViewController, SignUpRouter {
 
         updateLocation()
     }
-        
     
     // MARK: - Custom Functions
     func setupBindings() {
@@ -156,7 +147,7 @@ class SignUpVC: UIViewController, SignUpRouter {
             .disposed(by: disposeBag)
         
         // Bind country name
-        let countryName = country.map {$0?.localizedName}
+        let countryName = country.map {$0?.name}
         countryName.map {$0 ?? "select country".localized().uppercaseFirst}
             .bind(to: countryLabel.rx.text)
             .disposed(by: disposeBag)
@@ -165,18 +156,15 @@ class SignUpVC: UIViewController, SignUpRouter {
             .subscribe(onNext: {[weak self] flag in
                 self?.placeholderSelectCountryLabel.isHidden = flag
                 self?.countryLabel.isHidden = !flag
-                self?.countryImageView.isHidden = !flag
+                self?.flagLabel.isHidden = !flag
             })
             .disposed(by: disposeBag)
-        
-        // Bind flag url
-        let flagUrl = country.filter {$0 != nil}.map {$0!.flagURL}
-        flagUrl
-            .subscribe(onNext: { [weak self] url in
-                self?.countryImageView.sd_setImage(with: url, completed: nil)
-            })
+
+        // Bind flag
+        country.map {$0?.emoji}
+            .bind(to: flagLabel.rx.text)
             .disposed(by: disposeBag)
-        
+
         // Bind textField
         country
             .filter {$0 != nil}
@@ -189,12 +177,20 @@ class SignUpVC: UIViewController, SignUpRouter {
         // Bind phone
         phoneNumberTextField.rx.text.orEmpty
             .map {text -> String in
-                var newText = text
-                if country.value != nil, !newText.contains("+\(country.value!.code)") {
-                    if "+\(country.value!.code)".contains(text) {return "+\(country.value!.code)"}
-                    newText = "+\(country.value!.code)\(newText)"
+                if let code = country.value?.code {
+                    var newText = text
+                    let cleanPhone = newText.components(separatedBy: CharacterSet.decimalDigits.inverted).joined(separator: "")
+                    if !("+\(cleanPhone)").contains("+\(code)") {
+
+                        if "+\(country.value!.code)".contains(text) {
+                            return "+\(code)"
+                        }
+
+                        newText = "+\(code)\(newText)"
+                    }
+                    return newText
                 }
-                return newText
+                return text
             }
             .subscribe(onNext: { (text) in
                 if self.phoneNumberTextField.isFirstResponder && text.isEmpty {
@@ -231,9 +227,10 @@ class SignUpVC: UIViewController, SignUpRouter {
         recaptcha.configureWebView { [weak self] webview in
             webview.frame = self?.view.bounds ?? CGRect.zero
             webview.tag = reCaptchaTag
+            self?.hideHud()
         }
     }
-    
+
     private func showContriesList() {
          if let countryVC = controllerContainer.resolve(SelectCountryVC.self) {
              self.view.endEditing(true)
@@ -242,13 +239,11 @@ class SignUpVC: UIViewController, SignUpRouter {
              self.present(nav, animated: true, completion: nil)
          }
      }
-
     
     // MARK: - Gestures
     @IBAction func handlingTapGesture(_ sender: UITapGestureRecognizer) {
         self.view.endEditing(true)
     }
-
     
     // MARK: - Actions
     @IBAction func nextButtonTapped(_ sender: Any) {
@@ -256,14 +251,17 @@ class SignUpVC: UIViewController, SignUpRouter {
             self.showAlert(title: "error".localized().uppercaseFirst, message: "wrong phone number".localized().uppercaseFirst)
             return
         }
+        AnalyticsManger.shared.PhoneNumberEntered()
+
+        self.showIndetermineHudWithMessage("signing you up".localized().uppercaseFirst + "...")
         
         self.view.endEditing(true)
         self.setupReCaptcha()
         
         // reCaptcha
-        self.recaptcha.validate(on:             view,
-                                resetOnError:   false,
-                                completion:     { [weak self] (result: ReCaptchaResult) in
+        self.recaptcha.validate(on: view,
+                                resetOnError: false,
+                                completion: { [weak self] (result: ReCaptchaResult) in
                                     guard let strongSelf = self else { return }
                                     
                                     guard let captchaCode = try? result.dematerialize() else {
@@ -272,12 +270,10 @@ class SignUpVC: UIViewController, SignUpRouter {
                                     }
                                     
                                     print(captchaCode)                                    
-                                    strongSelf.view.viewWithTag(reCaptchaTag)?.removeFromSuperview()
-                                    
-                                    // API `registration.firstStep`
-                                    strongSelf.showIndetermineHudWithMessage("signing you up".localized().uppercaseFirst + "...")
-                                    
-                                    RestAPIManager.instance.firstStep(phone: strongSelf.viewModel.phone.value, captchaCode: captchaCode)
+                                strongSelf.view.viewWithTag(reCaptchaTag)?.removeFromSuperview()
+
+                                    let phone = "+" + strongSelf.viewModel.phone.value.components(separatedBy: CharacterSet.decimalDigits.inverted).joined(separator: "")
+                                    RestAPIManager.instance.firstStep(phone: phone, captchaCode: captchaCode)
                                         .subscribe(onSuccess: { _ in
                                             strongSelf.hideHud()
                                             strongSelf.signUpNextStep()
@@ -291,12 +287,13 @@ class SignUpVC: UIViewController, SignUpRouter {
     
     @objc func tapSignInLabel(gesture: UITapGestureRecognizer) {
         guard let text = signInLabel.text else {return}
+        AnalyticsManger.shared.goToSingIn()
         let signInRange = (text as NSString).range(of: "sign in".localized().uppercaseFirst)
         
         let nc = navigationController
         if gesture.didTapAttributedTextInLabel(label: signInLabel, inRange: signInRange) {
             navigationController?.popViewController(animated: true, {
-                let signInVC = controllerContainer.resolve(SignInViewController.self)!
+                let signInVC = SignInVC()
                 nc?.pushViewController(signInVC)
             })
         }
@@ -309,10 +306,9 @@ class SignUpVC: UIViewController, SignUpRouter {
         let blockChainDisclaimerRange = (text as NSString).range(of: "blockchain Disclaimer".localized().uppercaseFirst)
         
         if gesture.didTapAttributedTextInLabel(label: termOfUseLabel, inRange: termsOfUseRange) {
-            showURL(string: "https://commun.com/privacy")
-        }
-        else if gesture.didTapAttributedTextInLabel(label: termOfUseLabel, inRange: blockChainDisclaimerRange) {
-            showURL(string: "https://commun.com/agreement")
+            showURL(string: "https://commun.com/doc/privacy")
+        } else if gesture.didTapAttributedTextInLabel(label: termOfUseLabel, inRange: blockChainDisclaimerRange) {
+            showURL(string: "https://commun.com/doc/disclaimer")
         }
     }
     

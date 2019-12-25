@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 10/4/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -16,10 +16,10 @@ struct EditorToolbarItem: Equatable {
     var name: String
     var icon: String
     var iconSize: CGSize
-    var description: String? = nil
+    var description: String?
     var isHighlighted = false
     var isEnabled = true
-    var other: Any? = nil // for colorPicking and other
+    var other: Any? // for colorPicking and other
     
     static var hideKeyboard: EditorToolbarItem {
         return EditorToolbarItem(

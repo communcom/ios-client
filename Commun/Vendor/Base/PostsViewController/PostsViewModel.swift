@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 10/22/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -28,6 +28,15 @@ class PostsViewModel: ListViewModel<ResponseAPIContentGetPost> {
         filter.skip(1).distinctUntilChanged()
             .subscribe(onNext: {filter in
                 self.fetcher.reset()
+                
+                var filter = filter
+                
+                if filter.feedTypeMode == .subscriptions ||
+                    filter.feedTypeMode == .subscriptionsHot ||
+                    filter.feedTypeMode == .subscriptionsPopular {
+                    filter.userId = Config.currentUser?.id
+                }
+                
                 (self.fetcher as! PostsListFetcher).filter = filter
                 self.fetchNext()
             })

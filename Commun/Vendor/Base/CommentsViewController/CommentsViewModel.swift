@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 10/22/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -13,8 +13,7 @@ class CommentsViewModel: ListViewModel<ResponseAPIContentGetComment> {
     var filter: BehaviorRelay<CommentsListFetcher.Filter>!
     
     init(
-        filter: CommentsListFetcher.Filter = CommentsListFetcher.Filter(type: .user))
-    {
+        filter: CommentsListFetcher.Filter = CommentsListFetcher.Filter(type: .user)) {
         let fetcher = CommentsListFetcher(filter: filter)
         super.init(fetcher: fetcher)
         self.filter = BehaviorRelay<CommentsListFetcher.Filter>(value: filter)
@@ -84,8 +83,7 @@ class CommentsViewModel: ListViewModel<ResponseAPIContentGetComment> {
             comment.children?.contains(where: {$0.identity == parentComment.identity}) ?? false
         }),
             let newChildren = parentComment.children,
-            !newChildren.isEmpty
-        {
+            !newChildren.isEmpty {
             items[commentIndex].children?.joinUnique(newChildren)
             fetcher.items.accept(items)
             return
@@ -96,8 +94,7 @@ class CommentsViewModel: ListViewModel<ResponseAPIContentGetComment> {
         var items = fetcher.items.value
         
         // if item is a first lever comment
-        if let index = items.firstIndex(where: {$0.identity == updatedItem.identity})
-        {
+        if let index = items.firstIndex(where: {$0.identity == updatedItem.identity}) {
             let oldItem = items[index]
             var updatedItem = updatedItem
             let newChildren = updatedItem.children?.filter({ (newComment) -> Bool in
@@ -105,6 +102,9 @@ class CommentsViewModel: ListViewModel<ResponseAPIContentGetComment> {
             })
             updatedItem.children = ((oldItem.children ?? []) + (newChildren ?? []))
             guard let newUpdatedItem = items[index].newUpdatedItem(from: updatedItem) else {return}
+            if !isEqualRowHeight(cmt1: items[index], cmt2: newUpdatedItem) {
+                rowHeights.removeValue(forKey: updatedItem.identity)
+            }
             items[index] = newUpdatedItem
             fetcher.items.accept(items)
             return
@@ -115,6 +115,10 @@ class CommentsViewModel: ListViewModel<ResponseAPIContentGetComment> {
         }) {
             if let replyIndex = items[commentIndex].children?.firstIndex(where: {$0.identity == updatedItem.identity}) {
                 guard let newUpdatedItem = items[commentIndex].children?[replyIndex].newUpdatedItem(from: updatedItem) else {return}
+                if !isEqualRowHeight(cmt1: items[commentIndex].children?[replyIndex], cmt2: newUpdatedItem) {
+                    rowHeights.removeValue(forKey: updatedItem.identity)
+                }
+                
                 items[commentIndex].children?[replyIndex] = newUpdatedItem
                 fetcher.items.accept(items)
             }
@@ -122,12 +126,17 @@ class CommentsViewModel: ListViewModel<ResponseAPIContentGetComment> {
         }
     }
     
+    func isEqualRowHeight(cmt1: ResponseAPIContentGetComment?, cmt2: ResponseAPIContentGetComment?) -> Bool {
+        return cmt1?.attachments.count == cmt2?.attachments.count &&
+            (try? cmt1?.document?.jsonString()) == (try? cmt2?.document?.jsonString())
+    }
+    
     override func deleteItem(_ deletedItem: ResponseAPIContentGetComment) {
         var items = fetcher.items.value
         
         // if item is a first lever comment
-        if let index = items.firstIndex(where: {$0.identity == deletedItem.identity})
-        {
+        if let index = items.firstIndex(where: {$0.identity == deletedItem.identity}) {
+            rowHeights.removeValue(forKey: deletedItem.identity)
             items.remove(at: index)
             fetcher.items.accept(items)
             return
@@ -138,6 +147,7 @@ class CommentsViewModel: ListViewModel<ResponseAPIContentGetComment> {
             comment.children?.contains(where: {$0.identity == deletedItem.identity}) ?? false
         }) {
             if let replyIndex = items[commentIndex].children?.firstIndex(where: {$0.identity == deletedItem.identity}) {
+                rowHeights.removeValue(forKey: deletedItem.identity)
                 items[commentIndex].children?.remove(at: replyIndex)
                 fetcher.items.accept(items)
             }

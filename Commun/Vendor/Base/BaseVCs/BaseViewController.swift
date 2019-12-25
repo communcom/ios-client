@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 10/22/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import UIKit
@@ -13,7 +13,6 @@ import SwiftTheme
 class BaseViewController: UIViewController {
     // MARK: - Properties
     lazy var disposeBag = DisposeBag()
-    
     
     // MARK: - Class Functions
     override func viewDidLoad() {
@@ -25,7 +24,6 @@ class BaseViewController: UIViewController {
         
         bind()
     }
-    
     
     // MARK: - Custom Functions
     func setUp() {

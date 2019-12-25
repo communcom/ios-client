@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 10/1/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import UIKit
@@ -11,7 +11,6 @@ import UIKit
 class DimmingPresentationController: UIPresentationController {
     // MARK: - Properties
     var dimmingView: UIView!
-    
     
     // MARK: - Class Initialization
     override init(presentedViewController: UIViewController, presenting presentingViewController: UIViewController?) {
@@ -47,7 +46,6 @@ class DimmingPresentationController: UIPresentationController {
         })
     }
     
-    
     // MARK: - Class Functions
     override func containerViewWillLayoutSubviews() {
         presentedView?.frame = frameOfPresentedViewInContainerView
@@ -64,7 +62,6 @@ class DimmingPresentationController: UIPresentationController {
         })
     }
     
-    
     // MARK: - Custom Functions
     func setupDimmingView() {
         dimmingView = UIView()
@@ -75,7 +72,6 @@ class DimmingPresentationController: UIPresentationController {
         let recognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap(recognizer:)))
         dimmingView.addGestureRecognizer(recognizer)
     }
-    
     
     // MARK: - Actions
     @objc func handleTap(recognizer: UITapGestureRecognizer) {

@@ -3,14 +3,14 @@
 //  Commun
 //
 //  Created by Chung Tran on 10/8/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
 
 class AttachmentsView: UIView {
     var imageViews: [UIImageView]?
-    var didRemoveAttachmentAtIndex: ((Int)->Void)?
+    var didRemoveAttachmentAtIndex: ((Int) -> Void)?
     
     @objc func close(sender: UIButton) {
         let index = sender.tag
@@ -27,8 +27,7 @@ class AttachmentsView: UIView {
         var attachmentViews = [AttachmentView]()
         
         if attachments.count == 1,
-            attachments[0].attributes?.type == "website" || attachments[0].attributes?.type == "video"
-        {
+            attachments[0].attributes?.type == "website" || attachments[0].attributes?.type == "video" {
             let attachmentView = AttachmentView(forAutoLayout: ())
             attachmentView.attachment = attachments[0]
             attachmentView.isUserInteractionEnabled = true
@@ -38,8 +37,7 @@ class AttachmentsView: UIView {
             attachmentView.setUp(image: attachments[0].localImage, url: attachments[0].attributes?.url, description: attachments[0].attributes?.title ?? attachments[0].attributes?.description)
             
             attachmentViews.append(attachmentView)
-        }
-        else {
+        } else {
             for (index, attachment) in attachments.enumerated() {
                 let attachmentView = AttachmentView(forAutoLayout: ())
                 attachmentView.attachment = attachment

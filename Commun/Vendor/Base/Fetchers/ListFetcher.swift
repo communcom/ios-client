@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 10/23/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -75,7 +75,7 @@ class ListFetcher<T: ListItemType> {
             if isLoading {return}
         case .listEnded, .listEmpty:
             return
-        case .error(_):
+        case .error:
             if !forceRetry {
                 return
             }
@@ -88,9 +88,9 @@ class ListFetcher<T: ListItemType> {
         request
             .subscribe(onSuccess: { (items) in
                 if self.offset == 0 {
-                    self.items.accept(items)
-                }
-                else {
+                    self.items.accept(self.join(newItems: items))
+//                    self.items.accept(items)
+                } else {
                     self.items.accept(self.join(newItems: items))
                 }
                 
@@ -98,17 +98,14 @@ class ListFetcher<T: ListItemType> {
                 if items.count == 0 {
                     if self.offset == 0 {
                         self.state.accept(.listEmpty)
-                    }
-                    else {
+                    } else {
                         if self.items.value.count > 0 {
                             self.state.accept(.listEnded)
                         }
                     }
-                }
-                else if items.count < self.limit {
+                } else if items.count < self.limit {
                     self.state.accept(.listEnded)
-                }
-                else {
+                } else {
                     self.state.accept(.loading(false))
                 }
                 
@@ -129,4 +126,3 @@ class ListFetcher<T: ListItemType> {
         return newList
     }
 }
-

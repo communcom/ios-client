@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 10/7/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -24,7 +24,7 @@ extension ArticleEditorVC {
                 let mutableAS = NSMutableAttributedString(attributedString: titleTextView.attributedText)
                 mutableAS.replaceCharacters(in: range, with: replacement)
                 titleTextView.attributedText = mutableAS
-                titleTextView.selectedRange = NSMakeRange(range.location + replacement.length, 0)
+                titleTextView.selectedRange = NSRange(location: range.location + replacement.length, length: 0)
                 return false
             }
             return true

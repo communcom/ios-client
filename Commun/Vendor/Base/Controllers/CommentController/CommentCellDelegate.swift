@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 12/2/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -39,7 +39,7 @@ extension CommentCellDelegate where Self: BaseViewController {
     }
     
     func cell(_ cell: CommentCell, didTapOnTag tag: String) {
-        #warning("open tag")
+        //TODO: open tag
     }
     
     func cell(_ cell: CommentCell, didTapMoreActionFor comment: ResponseAPIContentGetComment) {
@@ -54,19 +54,43 @@ extension CommentCellDelegate where Self: BaseViewController {
         nameLabel.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 10)
         nameLabel.autoAlignAxis(.horizontal, toSameAxisOf: avatarImageView)
         nameLabel.autoPinEdge(toSuperviewEdge: .trailing)
-        
-        let actions: [CommunActionSheet.Action]
-        
+
+        var actions: [CommunActionSheet.Action] = []
+        // parsing all paragraph
+        var texts: [String] = []
+        for documentContent in comment.document?.content.arrayValue ?? [] where documentContent.type == "paragraph" {
+            if documentContent.content.arrayValue?.count ?? 0 > 0 {
+                let paragraphContent = documentContent.content.arrayValue?.first
+                if let text = paragraphContent?.content.stringValue {
+                    texts.append(text)
+                }
+            }
+        }
+
+        if texts.count > 0 {
+            actions.append(
+                CommunActionSheet.Action(
+                title: "copy".localized().uppercaseFirst,
+                    icon: UIImage(named: "copy"),
+                    handle: {
+                        UIPasteboard.general.string = texts.joined(separator: "\n")
+                        self.showDone("copied to clipboard".localized().uppercaseFirst)
+                    },
+                    tintColor: .black)
+            )
+
+        }
         if comment.author?.userId == Config.currentUser?.id {
-            // edit, delete
-            actions = [
+            actions.append(
                 CommunActionSheet.Action(
                     title: "edit".localized().uppercaseFirst,
                     icon: UIImage(named: "edit"),
                     handle: {
                         self.cell(cell, didTapEditForComment: comment)
                     },
-                    tintColor: .black),
+                    tintColor: .black)
+            )
+            actions.append(
                 CommunActionSheet.Action(
                     title: "delete".localized().uppercaseFirst,
                     icon: UIImage(named: "delete"),
@@ -74,11 +98,9 @@ extension CommentCellDelegate where Self: BaseViewController {
                         self.deleteComment(comment)
                     },
                     tintColor: UIColor(hexString: "#ED2C5B")!)
-            ]
-        }
-        else {
-            // report
-            actions = [
+            )
+        } else {
+            actions.append(
                 CommunActionSheet.Action(
                     title: "report".localized().uppercaseFirst,
                     icon: UIImage(named: "report"),
@@ -86,7 +108,7 @@ extension CommentCellDelegate where Self: BaseViewController {
                         self.reportComment(comment)
                     },
                     tintColor: UIColor(hexString: "#ED2C5B")!)
-            ]
+            )
         }
         
         showCommunActionSheet(
@@ -133,8 +155,7 @@ extension CommentCellDelegate where Self: BaseViewController {
             buttonTitles: [
                 "yes".localized().uppercaseFirst,
                 "no".localized().uppercaseFirst],
-            highlightedButtonIndex: 1)
-            { (index) in
+            highlightedButtonIndex: 1) { (index) in
                 if index == 0 {
                     topController.showIndetermineHudWithMessage("deleting comment".localized().uppercaseFirst)
                     NetworkService.shared.deleteMessage(message: comment)

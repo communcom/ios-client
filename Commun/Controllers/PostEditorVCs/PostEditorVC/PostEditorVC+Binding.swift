@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 10/4/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -25,7 +25,7 @@ extension PostEditorVC {
     
     func bindSendPostButton() {
         // Verification
-        #warning("Verify community")
+        //TODO: Verify community
         contentCombined
             .map {_ in self.isContentValid}
             .bind(to: actionButton.rx.isEnabled)
@@ -40,7 +40,7 @@ extension PostEditorVC {
 //                self.appendTool(.setColor)
 //                self.appendTool(.addLink)
 //                self.appendTool(.clearFormatting)
-                #warning("change color")
+                //TODO: change color
                 self.contentTextViewCountLabel.isHidden = false
             })
             .disposed(by: disposeBag)
@@ -99,8 +99,7 @@ extension PostEditorVC {
                     self.communityAvatarImage.setAvatar(urlString: community.avatarUrl, namePlaceHolder: community.name)
                     self.communityNameLabel.text = community.name
                     self.communityNameLabel.textColor = .black
-                }
-                else {
+                } else {
                     self.communityAvatarImage.removeAvatar()
                     self.communityNameLabel.text = "choose a community".localized().uppercaseFirst
                     self.communityNameLabel.textColor = .a5a7bd

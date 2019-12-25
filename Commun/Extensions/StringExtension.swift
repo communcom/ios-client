@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Maxim Prigozhenkov on 15/04/2019.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -22,10 +22,9 @@ extension String {
     }
     
     func getTags() -> [String] {
-        if let regex = try? NSRegularExpression(pattern: NSRegularExpression.tagRegexPattern, options: .caseInsensitive)
-        {
+        if let regex = try? NSRegularExpression(pattern: NSRegularExpression.tagRegexPattern, options: .caseInsensitive) {
             let string = self as NSString
-            return regex.matches(in: self, options: [], range: NSMakeRange(0, string.length)).map {
+            return regex.matches(in: self, options: [], range: NSRange(location: 0, length: string.length)).map {
                 string.substring(with: $0.range)
                     .replacingOccurrences(of: "#", with: "")
             }
@@ -55,7 +54,6 @@ extension String {
         return self.range(of: regex, options: .regularExpression, range: nil, locale: nil) != nil
     }
     
-    
     // MARK: - Telephone verification
     /// Fill missing number with dashes
     func fillWithDash(start: Int, offsetBy: Int) -> String {
@@ -71,7 +69,7 @@ extension String {
         
         var result = String(self[substringStartIndex...])
         
-        if (result.count < offsetBy) {
+        if result.count < offsetBy {
             result += Array(0..<offsetBy-result.count).reduce("", {(result, _) -> String in
                 return result + "_"}
             )

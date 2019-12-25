@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 10/4/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -46,7 +46,7 @@ extension ContentTextView {
     var selectedRangeHasDifferentTextStyle: Bool {
         if selectedRange.length == 0 { return false }
         var isMixed = false
-        textStorage.enumerateAttributes(in: selectedRange, options: []) { (attrs, range, stop) in
+        textStorage.enumerateAttributes(in: selectedRange, options: []) { (_, range, stop) in
             if range != selectedRange {
                 isMixed = true
                 stop.pointee = true

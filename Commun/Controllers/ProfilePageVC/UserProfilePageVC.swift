@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 10/28/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -29,6 +29,8 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile>, PostCellDelega
     
     // MARK: - Properties
     let userId: String
+    var userName: String?
+
     lazy var expandedComments = [ResponseAPIContentGetComment]()
     override func createViewModel() -> ProfileViewModel<ResponseAPIContentGetProfile> {
         UserProfilePageViewModel(profileId: userId)
@@ -83,8 +85,8 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile>, PostCellDelega
         tableView.register(CommentCell.self, forCellReuseIdentifier: "CommentCell")
         
         // title
-        title = profile.username
-        
+        userName = profile.username
+
         // cover
         if let urlString = profile.coverUrl {
             coverImageView.setImageDetectGif(with: urlString)
@@ -125,7 +127,7 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile>, PostCellDelega
     
     override func bindItems() {
         let dataSource = MyRxTableViewSectionedAnimatedDataSource<AnimatableSectionModel<String, CustomElementType>>(
-            configureCell: { (dataSource, tableView, indexPath, element) -> UITableViewCell in
+            configureCell: { (_, tableView, _, element) -> UITableViewCell in
                 switch element {
                 case .post(let post):
                     switch post.document?.attributes?.type {
@@ -179,7 +181,6 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile>, PostCellDelega
             let post = (viewModel as! UserProfilePageViewModel).postsVM.items.value[indexPath.row]
             let postPageVC = PostPageVC(post: post)
             self.show(postPageVC, sender: nil)
-            break
         case is CommentCell:
             let comment = (viewModel as! UserProfilePageViewModel).commentsVM.items.value[indexPath.row]
             guard let userId = comment.parents.post?.userId,
@@ -190,7 +191,6 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile>, PostCellDelega
             }
             let postPageVC = PostPageVC(userId: userId, permlink: permlink, communityId: communityId)
             self.show(postPageVC, sender: nil)
-            break
         default:
             break
         }

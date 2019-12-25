@@ -3,16 +3,17 @@
 //  Commun
 //
 //  Created by Chung Tran on 11/25/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
 import RxCocoa
 import RxSwift
 
-class PostsFilterVC: SwipeDownDismissViewController {
+class PostsFilterVC: BaseViewController {
     // MARK: - Properties
     var isTimeFrameMode: Bool
+    var isTrending: Bool
     var filter: BehaviorRelay<PostsListFetcher.Filter>
     var completion: ((PostsListFetcher.Filter) -> Void)?
     
@@ -26,6 +27,7 @@ class PostsFilterVC: SwipeDownDismissViewController {
     // MARK: - Initializers
     init(filter: PostsListFetcher.Filter, isTimeFrameMode: Bool = false) {
         self.isTimeFrameMode = isTimeFrameMode
+        self.isTrending = (filter.feedTypeMode == .hot || filter.feedTypeMode == .topLikes || filter.feedTypeMode == .new || filter.feedTypeMode == .community)
         self.filter = BehaviorRelay<PostsListFetcher.Filter>(value: filter)
         super.init(nibName: nil, bundle: nil)
     }
@@ -52,6 +54,7 @@ class PostsFilterVC: SwipeDownDismissViewController {
         tableView.backgroundColor = .clear
         tableView.tableFooterView = UIView()
         tableView.separatorStyle = .none
+        tableView.isScrollEnabled = false
         tableView.autoPinEdgesToSuperviewSafeArea(with: UIEdgeInsets(top: 20, left: 16, bottom: 0, right: 16), excludingEdge: .bottom)
         
         view.addSubview(saveButton)
@@ -75,20 +78,20 @@ class PostsFilterVC: SwipeDownDismissViewController {
             .map { (filter) -> [(label: String, isSelected: Bool)] in
                 if !self.isTimeFrameMode {
                     return [
-                        (label: "hot".localized().uppercaseFirst, isSelected: filter.feedTypeMode == .hot),
-                        (label: "new".localized().uppercaseFirst, isSelected: filter.feedTypeMode == .new),
-                        (label: "popular".localized().uppercaseFirst, isSelected: filter.feedTypeMode == .topLikes)
+                        (label: FeedTypeMode.hot.localizedLabel!.uppercaseFirst, isSelected: (filter.feedTypeMode == .hot || filter.feedTypeMode == .subscriptionsHot)),
+                        (label: FeedTypeMode.new.localizedLabel!.uppercaseFirst, isSelected: (filter.feedTypeMode == .new || filter.feedTypeMode == .subscriptions)),
+                        (label: FeedTypeMode.topLikes.localizedLabel!.uppercaseFirst, isSelected: (filter.feedTypeMode == .topLikes || filter.feedTypeMode == .subscriptionsPopular))
                     ]
                 }
                 
                 return [
-                    (label: "past 24 hours".localized().uppercaseFirst, isSelected: filter.sortType == .day),
-                    (label: "past week".localized().uppercaseFirst, isSelected: filter.sortType == .week),
-                    (label: "past month".localized().uppercaseFirst, isSelected: filter.sortType == .month),
-                    (label: "all time".localized().uppercaseFirst, isSelected: filter.sortType == .all)
+                    (label: FeedTimeFrameMode.day.localizedLabel.uppercaseFirst, isSelected: filter.sortType == .day),
+                    (label: FeedTimeFrameMode.week.localizedLabel.uppercaseFirst, isSelected: filter.sortType == .week),
+                    (label: FeedTimeFrameMode.month.localizedLabel.uppercaseFirst, isSelected: filter.sortType == .month),
+                    (label: FeedTimeFrameMode.all.localizedLabel.uppercaseFirst, isSelected: filter.sortType == .all)
                 ]
             }
-            .bind(to: self.tableView.rx.items(cellIdentifier: "FilterCell", cellType: FilterCell.self)){ (index,model,cell) in
+            .bind(to: self.tableView.rx.items(cellIdentifier: "FilterCell", cellType: FilterCell.self)) { (index, model, cell) in
                 var roundedCorner: UIRectCorner = []
                 
                 if index == 0 {
@@ -108,20 +111,22 @@ class PostsFilterVC: SwipeDownDismissViewController {
         tableView.rx.itemSelected
             .subscribe(onNext: { (indexPath) in
                 if !self.isTimeFrameMode {
+                    let hotType: FeedTypeMode = self.isTrending ? .hot: .subscriptionsHot
+                    let newType: FeedTypeMode = self.isTrending ? .new: .subscriptions
+                    let popularType: FeedTypeMode = self.isTrending ? .topLikes: .subscriptionsPopular
                     if indexPath.row == 0 {
-                        self.filter.accept(self.filter.value.newFilter(withFeedTypeMode: .hot, feedType: .time))
+                        self.filter.accept(self.filter.value.newFilter(withFeedTypeMode: hotType, feedType: .time))
                     }
                     if indexPath.row == 1 {
-                        self.filter.accept(self.filter.value.newFilter(withFeedTypeMode: .new, feedType: .time))
+                        self.filter.accept(self.filter.value.newFilter(withFeedTypeMode: newType, feedType: .time))
                     }
                     if indexPath.row == 2 {
-                        self.filter.accept(self.filter.value.newFilter(withFeedTypeMode: .topLikes))
+                        self.filter.accept(self.filter.value.newFilter(withFeedTypeMode: popularType))
                         let vc = PostsFilterVC(filter: self.filter.value.newFilter(sortType: self.filter.value.sortType ?? .all), isTimeFrameMode: true)
                         vc.completion = self.completion
                         self.show(vc, sender: nil)
                     }
-                }
-                else {
+                } else {
                     if indexPath.row == 0 {
                         self.filter.accept(self.filter.value.newFilter(sortType: .day))
                     }
@@ -157,7 +162,6 @@ class PostsFilterVC: SwipeDownDismissViewController {
     }
 }
 
-
 // MARK: - UIViewControllerTransitioningDelegate
 extension PostsFilterVC: UIViewControllerTransitioningDelegate {
     func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
@@ -165,12 +169,9 @@ extension PostsFilterVC: UIViewControllerTransitioningDelegate {
     }
 }
 
-
 // MARK: - UITableViewDelegate
 extension PostsFilterVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 58
     }
 }
-
-

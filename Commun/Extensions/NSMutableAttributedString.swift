@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 15/04/2019.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -13,14 +13,14 @@ import CyberSwift
 extension NSMutableAttributedString {
     @discardableResult func bold(_ text: String, font: UIFont = UIFont.systemFont(ofSize: 15, weight: .bold), color: UIColor = .black) -> NSMutableAttributedString {
         let attrs: [NSAttributedString.Key: Any] = [.font: font]
-        let boldString = NSAttributedString(string:text, attributes: attrs).colored(with: color)
+        let boldString = NSAttributedString(string: text, attributes: attrs).colored(with: color)
         append(boldString)
         return self
     }
     
     @discardableResult func semibold(_ text: String, font: UIFont = UIFont.systemFont(ofSize: 15, weight: .semibold), color: UIColor = .black) -> NSMutableAttributedString {
         let attrs: [NSAttributedString.Key: Any] = [.font: font]
-        let boldString = NSAttributedString(string:text, attributes: attrs).colored(with: color)
+        let boldString = NSAttributedString(string: text, attributes: attrs).colored(with: color)
         append(boldString)
         return self
     }
@@ -53,7 +53,7 @@ extension NSMutableAttributedString {
             - keepSymbolicTraits: keep current symbolic traits or not
     */
     func overrideFont(replacementFont font: UIFont, keepSymbolicTraits: Bool = false) {
-        enumerateAttributes(in: NSMakeRange(0, length), options: []) { (attributes, range, stop) in
+        enumerateAttributes(in: NSRange(location: 0, length: length), options: []) { (attributes, range, _) in
             guard let currentFont = attributes[.font] as? UIFont else {return}
             var font = font
             if keepSymbolicTraits {
@@ -66,11 +66,8 @@ extension NSMutableAttributedString {
         }
     }
     
-    
-    
     func resolveTags() {
-        if let regex = try? NSRegularExpression(pattern: NSRegularExpression.tagRegexPattern, options: .caseInsensitive)
-        {
+        if let regex = try? NSRegularExpression(pattern: NSRegularExpression.tagRegexPattern, options: .caseInsensitive) {
             let matches = regex.matchedStrings(in: string)
             for match in matches {
                 let range = nsRangeOfText(match)
@@ -80,8 +77,7 @@ extension NSMutableAttributedString {
     }
     
     func resolveMentions() {
-        if let regex = try? NSRegularExpression(pattern: NSRegularExpression.mentionRegexPattern, options: .caseInsensitive)
-        {
+        if let regex = try? NSRegularExpression(pattern: NSRegularExpression.mentionRegexPattern, options: .caseInsensitive) {
             let matches = regex.matchedStrings(in: string)
             for match in matches {
                 let range = nsRangeOfText(match)

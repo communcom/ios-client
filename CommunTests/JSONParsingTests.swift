@@ -3,10 +3,11 @@
 //  CommunTests
 //
 //  Created by Chung Tran on 14/06/2019.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import XCTest
+import CyberSwift
 
 class JSONParsingTests: XCTestCase {
 
@@ -33,6 +34,19 @@ class JSONParsingTests: XCTestCase {
         XCTAssertEqual(messsage, "assertion failure with message: not enough power")
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct results.
+    }
+    
+    func testBase64ToJSON() {
+        let base64String = "eyJ1c2VySWQiOiJ0c3Q1bGlobHNtYXkiLCJ1c2VybmFtZSI6ImhyZW4tcGlwZW4iLCJwYXNzd29yZCI6IlA1SzU0V1pmem9TR1pzMmlhTHVzeThHRWVkbUJtOHpIYWdBTFQ4Q0dYVEZVb01UVEM3QTMifQ=="
+        
+        guard let decodedData = Data(base64Encoded: base64String),
+            let user = try? JSONDecoder().decode(QrCodeDecodedProfile.self, from: decodedData)
+        else {
+            XCTAssertFalse(true)
+            return
+        }
+        
+        XCTAssertEqual(user.username, "hren-pipen")
     }
 
     func testPerformanceExample() {

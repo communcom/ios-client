@@ -3,14 +3,14 @@
 //  Commun
 //
 //  Created by Chung Tran on 10/7/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
 import CyberSwift
 import RxSwift
 import SafariServices
-import AppImageViewer
+import ImageViewer_swift
 
 extension PostEditorVC {
     // MARK: - Communities
@@ -38,8 +38,7 @@ extension PostEditorVC {
     // MARK: - Immutable actions
     @objc override func close() {
         guard viewModel.postForEdit == nil,
-            !contentTextView.text.isEmpty else
-        {
+            !contentTextView.text.isEmpty else {
             back()
             return
         }
@@ -53,9 +52,7 @@ extension PostEditorVC {
                     self.saveDraft {
                         self.dismiss(animated: true, completion: nil)
                     }
-                }
-                    
-                else if index == 1 {
+                } else if index == 1 {
                     // remove draft if exists
                     self.removeDraft()
                     
@@ -92,8 +89,8 @@ extension PostEditorVC {
             .subscribe(onNext: {[weak self] image in
                 guard let strongSelf = self else {return}
                 let alert = UIAlertController(
-                    title:          "description".localized().uppercaseFirst,
-                    message:        "add a description for your image".localized().uppercaseFirst,
+                    title: "description".localized().uppercaseFirst,
+                    message: "add a description for your image".localized().uppercaseFirst,
                     preferredStyle: .alert)
                 
                 alert.addTextField { field in
@@ -138,8 +135,7 @@ extension PostEditorVC {
     // MARK: - Add link
     func addLink() {
         let currentSelectedRange = contentTextView.selectedRange
-        if let urlString = contentTextView.currentTextStyle.value.urlString
-        {
+        if let urlString = contentTextView.currentTextStyle.value.urlString {
             // Remove link that is not a mention or tag
             if urlString.isLink {
                 showActionSheet(title: urlString, message: nil, actions: [
@@ -149,12 +145,11 @@ extension PostEditorVC {
                 ])
             }
             
-        }
-        else {
+        } else {
             // Add link
             let alert = UIAlertController(
-                title:          "add link".localized().uppercaseFirst,
-                message:        "select a link to add to text".localized().uppercaseFirst,
+                title: "add link".localized().uppercaseFirst,
+                message: "select a link to add to text".localized().uppercaseFirst,
                 preferredStyle: .alert)
             
             alert.addTextField { field in
@@ -251,14 +246,13 @@ extension PostEditorVC {
                 }
             }) { (error) in
                 self.hideHud()
+                let message = "post not found".localized().uppercaseFirst
                 if let error = error as? ErrorAPI {
                     switch error {
-                    case .responseUnsuccessful(message: "post not found".localized().uppercaseFirst):
+                    case .responseUnsuccessful(message: message):
                         self.dismiss(animated: true, completion: nil)
-                        break
                     case .blockchain(message: let message):
                         self.showAlert(title: "error".localized().uppercaseFirst, message: message)
-                        break
                     default:
                         break
                     }
@@ -278,37 +272,35 @@ extension PostEditorVC {
             let safariVC = SFSafariViewController(url: url)
             present(safariVC, animated: true, completion: nil)
         case "image":
-            if let localImage = attachment.localImage {
-                let appImage = ViewerImage.appImage(forImage: localImage)
-                let viewer = AppImageViewer(photos: [appImage])
-                present(viewer, animated: false, completion: nil)
-            }
-            else if let imageUrl = attachment.attributes?.url,
-                let url = URL(string: imageUrl)
-            {
-                NetworkService.shared.downloadImage(url)
-                    .subscribe(onSuccess: { [weak self] (image) in
-                        let appImage = ViewerImage.appImage(forImage: image)
-                        let viewer = AppImageViewer(photos: [appImage])
-                        self?.present(viewer, animated: false, completion: nil)
-                        }, onError: {[weak self] (error) in
-                            self?.showError(error)
-                    })
-                    .disposed(by: self.disposeBag)
-            }
+//            if let localImage = attachment.localImage {
+//                let appImage = ViewerImage.appImage(forImage: localImage)
+//                let viewer = AppImageViewer(photos: [appImage])
+//                present(viewer, animated: false, completion: nil)
+//            } else if let imageUrl = attachment.attributes?.url,
+//                let url = URL(string: imageUrl) {
+//                NetworkService.shared.downloadImage(url)
+//                    .subscribe(onSuccess: { [weak self] (image) in
+//                        let appImage = ViewerImage.appImage(forImage: image)
+//                        let viewer = AppImageViewer(photos: [appImage])
+//
+//                        self?.present(viewer, animated: false, completion: nil)
+//                        }, onError: {[weak self] (error) in
+//                            self?.showError(error)
+//                    })
+//                    .disposed(by: self.disposeBag)
+//            }
+            break
         default:
             break
         }
     }
     
-    
     // MARK: - Add link
     func addAgeLimit() {
-        #warning("Change func")
+        //TODO: Change func
         showAlert(title: "info".localized().uppercaseFirst, message: "add age limit 18+ (coming soon)".localized().uppercaseFirst, buttonTitles: ["OK".localized()], highlightedButtonIndex: 0)
     }
 }
-
 
 extension PostEditorVC: UIPopoverPresentationControllerDelegate {
     func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {

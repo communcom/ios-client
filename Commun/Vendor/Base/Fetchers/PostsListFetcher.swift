@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 10/23/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -30,34 +30,29 @@ class PostsListFetcher: ListFetcher<ResponseAPIContentGetPost> {
         ) -> Filter {
             var newFilter = self
             if let feedTypeMode = feedTypeMode,
-                feedTypeMode != newFilter.feedTypeMode
-            {
+                feedTypeMode != newFilter.feedTypeMode {
                 newFilter.feedTypeMode = feedTypeMode
             }
             
             if let feedType = feedType,
-                feedType != newFilter.feedType
-            {
+                feedType != newFilter.feedType {
                 newFilter.feedType = feedType
             }
             
             if let sortType = sortType,
-                sortType != newFilter.sortType
-            {
+                sortType != newFilter.sortType {
                 newFilter.sortType = sortType
             }
             
             newFilter.searchKey = searchKey
             
             if let userId = userId,
-                userId != newFilter.userId
-            {
+                userId != newFilter.userId {
                 newFilter.userId = userId
             }
             
             if let communityId = communityId,
-                communityId != newFilter.communityId
-            {
+                communityId != newFilter.communityId {
                 newFilter.communityId = communityId
             }
             
@@ -75,7 +70,7 @@ class PostsListFetcher: ListFetcher<ResponseAPIContentGetPost> {
     override var request: Single<[ResponseAPIContentGetPost]> {
 //        return ResponseAPIContentGetPosts.singleWithMockData()
 //            .delay(0.8, scheduler: MainScheduler.instance)
-        return RestAPIManager.instance.getPosts(userId: filter.userId, communityId: filter.communityId, allowNsfw: false, type: filter.feedTypeMode, sortBy: filter.feedType, limit: limit, offset: offset)
+        return RestAPIManager.instance.getPosts(userId: filter.userId, communityId: filter.communityId, allowNsfw: false, type: filter.feedTypeMode, sortBy: filter.feedType, sortType: filter.sortType, limit: limit, offset: offset)
         .map {$0.items ?? []}
     }
     

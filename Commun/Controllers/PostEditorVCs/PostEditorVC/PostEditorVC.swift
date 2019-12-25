@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 10/4/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -37,6 +37,10 @@ class PostEditorVC: EditorVC {
         fatalError("Must override")
     }
     
+    var isParsingPost = false
+    
+    var chooseCommunityAfterLoading = true
+    
     // MARK: - Subviews
     // community
     lazy var communityView = UIView(forAutoLayout: ())
@@ -54,19 +58,27 @@ class PostEditorVC: EditorVC {
         // if editing post
         if let post = viewModel.postForEdit {
             communityView.removeGestureRecognizers()
+            showIndetermineHudWithMessage("loading".localized().uppercaseFirst)
             setUp(with: post)
-        }
-        else {
+                .subscribe(onCompleted: {
+                    self.hideHud()
+                }) { (error) in
+                    self.hideHud()
+                    self.showError(error)
+                }
+                .disposed(by: disposeBag)
+        } else {
             // parse draft
             if hasDraft {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                     // your code here
                     self.retrieveDraft()
                 }
-            }
-            else {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                    self.chooseCommunityDidTouch()
+            } else {
+                if chooseCommunityAfterLoading {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                        self.chooseCommunityDidTouch()
+                    }
                 }
             }
         }
@@ -139,12 +151,16 @@ class PostEditorVC: EditorVC {
     }
     
     // MARK: - action for overriding
-    func setUp(with post: ResponseAPIContentGetPost) {
+    func setUp(with post: ResponseAPIContentGetPost) -> Completable {
         guard let document = post.document,
             let community = post.community
-        else {return}
+        else {return .empty()}
+        isParsingPost = true
         viewModel.community.accept(community)
-        contentTextView.parseContentBlock(document)
+        return contentTextView.parseContentBlock(document)
+            .do(onCompleted: {
+                self.isParsingPost = false
+            })
     }
     
     func getContentBlock() -> Single<ResponseAPIContentBlock> {

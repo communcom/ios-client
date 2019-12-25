@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Maxim Prigozhenkov on 21/03/2019.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -29,7 +29,7 @@ class PostPageViewModel: CommentsViewModel {
         self.communityId = post.contentId.communityId ?? ""
         self.postForRequest = post
         super.init(filter: CommentsListFetcher.Filter(sortBy: .popularity, type: .post, userId: post.contentId.userId, permlink: post.contentId.permlink, communityId: post.community?.communityId))
-        defer {setUp()}
+        defer { setUp() }
     }
     
     init(userId: String, permlink: String, communityId: String) {
@@ -37,7 +37,7 @@ class PostPageViewModel: CommentsViewModel {
         self.permlink = permlink
         self.communityId = communityId
         super.init(filter: CommentsListFetcher.Filter(type: .post, userId: userId, permlink: permlink, communityId: communityId))
-        defer {setUp()}
+        defer { setUp() }
     }
     
     func setUp() {
@@ -48,7 +48,7 @@ class PostPageViewModel: CommentsViewModel {
     
     func loadPost() {
         RestAPIManager.instance.loadPost(userId: userId, permlink: permlink, communityId: communityId)
-            .do(onSuccess: { (profile) in
+            .do(onSuccess: { (_) in
                 self.loadingState.accept(.finished)
             }, onError: { (error) in
                 self.loadingState.accept(.error(error: error))

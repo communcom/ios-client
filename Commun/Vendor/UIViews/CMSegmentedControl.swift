@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 10/24/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -79,7 +79,7 @@ class CMSegmentedControl: MyView {
         
         selectedIndex
             .skip(1)
-            .subscribe(onNext: { (index) in
+            .subscribe(onNext: { (_) in
                 self.setUp()
             })
             .disposed(by: bag)
@@ -99,7 +99,6 @@ class CMSegmentedControl: MyView {
         
         // move indicator
         NSLayoutConstraint(item: indicatorView, attribute: .centerX, relatedBy: .equal, toItem: stackView, attribute: .centerX, multiplier: multiplier, constant: 0).isActive = true
-           
         
         UIView.animate(withDuration: 0.2) {
             self.layoutIfNeeded()

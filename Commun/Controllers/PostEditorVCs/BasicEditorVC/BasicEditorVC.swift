@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 10/4/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -20,16 +20,13 @@ class BasicEditorVC: PostEditorVC {
     var link: String? {
         didSet {
             if link == nil {
-                if let indexOfAddArticle = tools.value.firstIndex(of: .addArticle)
-                {
+                if let indexOfAddArticle = tools.value.firstIndex(of: .addArticle) {
                     insertTool(.addPhoto, at: indexOfAddArticle)
-                }
-                else {
+                } else {
                     appendTool(.addPhoto)
                 }
 
-            }
-            else {
+            } else {
                 removeTool(.addPhoto)
             }
         }
@@ -91,14 +88,13 @@ class BasicEditorVC: PostEditorVC {
     
     override func setUp() {
         super.setUp()
-        #warning("add Article later")
+        //TODO: add Article later
 //        if viewModel.postForEdit == nil {
 //            appendTool(EditorToolbarItem.addArticle)
 //        }
     }
     
-    override func setUp(with post: ResponseAPIContentGetPost) {
-        super.setUp(with: post)
+    override func setUp(with post: ResponseAPIContentGetPost) -> Completable {
         // download image && parse attachments
         var singles = [Single<TextAttachment>]()
         for attachment in post.attachments {
@@ -109,8 +105,7 @@ class BasicEditorVC: PostEditorVC {
             }
             // return a downloadSingle
             if let urlString = imageURL,
-                let url = URL(string: urlString)
-            {
+                let url = URL(string: urlString) {
                 let attributes = attachment.attributes ?? ResponseAPIContentBlockAttributes(type: attachment.type, url: imageURL)
                 let downloadImage = NetworkService.shared.downloadImage(url)
                     .catchErrorJustReturn(UIImage(named: "image-not-available")!)
@@ -121,23 +116,23 @@ class BasicEditorVC: PostEditorVC {
             else {
                 singles.append(
                     Single<UIImage>.just(UIImage(named: "image-not-available")!)
-                        .map{TextAttachment(attributes: attachment.attributes, localImage: $0, size: CGSize(width: self.view.size.width, height: self.attachmentHeight))}
+                        .map {TextAttachment(attributes: attachment.attributes, localImage: $0, size: CGSize(width: self.view.size.width, height: self.attachmentHeight))}
                 )
             }
         }
         
-        guard singles.count > 0 else {return}
-
-        showIndetermineHudWithMessage("parsing attachments".localized().uppercaseFirst)
+        guard singles.count > 0 else {return super.setUp(with: post)}
         
-        Single.zip(singles)
-            .subscribe(onSuccess: { [weak self] (attachments) in
-                if let attachment = attachments.first {
-                    self?._viewModel.attachment.accept(attachment)
-                }
-                self?.hideHud()
-            })
-            .disposed(by: disposeBag)
+        return super.setUp(with: post)
+            .andThen(
+                Single.zip(singles)
+                    .do(onSuccess: {[weak self] (attachments) in
+                        if let attachment = attachments.first {
+                            self?._viewModel.attachment.accept(attachment)
+                        }
+                    })
+                    .flatMapToCompletable()
+            )
     }
     
     override func bind() {

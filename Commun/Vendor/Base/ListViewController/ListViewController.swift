@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 10/22/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import UIKit
@@ -49,7 +49,6 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
         return sc
     }()
     
-    
     // MARK: - Subviews
     lazy var tableView: UITableView = {
         let tableView = UITableView(forAutoLayout: ())
@@ -80,8 +79,6 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
             definesPresentationContext = true
         }
         
-        
-        
         tableView.rowHeight = UITableView.automaticDimension
         
         // registerCell
@@ -89,7 +86,7 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
         
         // set up datasource
         dataSource = MyRxTableViewSectionedAnimatedDataSource<ListSection>(
-            configureCell: { dataSource, tableView, indexPath, item in
+            configureCell: { _, _, indexPath, item in
                 let cell = self.configureCell(with: item, indexPath: indexPath)
                 return cell
             }
@@ -159,8 +156,11 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
                     self?.handleListEnded()
                 case .listEmpty:
                     self?.handleListEmpty()
-                case .error(_):
+                case .error(let error):
                     self?.handleListError()
+                    #if !APPSTRORE
+                        self?.showAlert(title: "Error", message: "\(error)")
+                    #endif
                 }
             })
             .disposed(by: disposeBag)
@@ -231,10 +231,10 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
     // MARK: - State handling
     func handleLoading() {
         tableView.addLoadingFooterView(
-            rowType:        PlaceholderNotificationCell.self,
-            tag:            notificationsLoadingFooterViewTag,
-            rowHeight:      88,
-            numberOfRows:   1
+            rowType: PlaceholderNotificationCell.self,
+            tag: notificationsLoadingFooterViewTag,
+            rowHeight: 88,
+            numberOfRows: 1
         )
     }
     
@@ -249,8 +249,10 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
     func handleListError() {
         let title = "error"
         let description = "there is an error occurs"
-        tableView.addEmptyPlaceholderFooterView(title: title.localized().uppercaseFirst, description: description.localized().uppercaseFirst, buttonLabel: "retry".localized().uppercaseFirst)
-        {
+        
+        tableView.addEmptyPlaceholderFooterView(title: title.localized().uppercaseFirst,
+                                                description: description.localized().uppercaseFirst,
+                                                buttonLabel: "retry".localized().uppercaseFirst) {
             self.viewModel.fetchNext(forceRetry: true)
         }
     }
@@ -258,5 +260,4 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
     @objc func refresh() {
         viewModel.reload()
     }
-    
 }

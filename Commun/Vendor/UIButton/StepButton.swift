@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 08/07/2019.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import UIKit
@@ -22,7 +22,6 @@ import UIKit
         
         commonInit()
     }
-
     
     // MARK: - Class Functions
     override var isEnabled: Bool {
@@ -31,12 +30,11 @@ import UIKit
             self.backgroundColor = self.isEnabled ? .appMainColor : .appGrayColor
         }
     }
-
     
     // MARK: - Custom Functions
-    func commonInit(backgroundColor:    UIColor? = .appMainColor,
-                    font:               UIFont? = .boldSystemFont(ofSize: CGFloat.adaptive(width: 17.0)),
-                    cornerRadius:       CGFloat? = CGFloat.adaptive(width: 8.0)) {
+    func commonInit(backgroundColor: UIColor? = .appMainColor,
+                    font: UIFont? = .boldSystemFont(ofSize: CGFloat.adaptive(width: 17.0)),
+                    cornerRadius: CGFloat? = CGFloat.adaptive(width: 8.0)) {
         self.backgroundColor        =   backgroundColor!
         self.titleLabel?.font       =   font
         self.layer.cornerRadius     =   cornerRadius!

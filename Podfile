@@ -14,17 +14,20 @@ end
 
 def common_pods_commun
   common_pods
+  
   pod 'Fabric'
   pod 'Crashlytics'
   pod 'Firebase/Analytics'
   pod 'Firebase/Core'
   pod 'Firebase/Messaging'
+  pod 'Amplitude-iOS'
+
   
   pod 'Alamofire'
   pod 'Swinject'
-  pod 'SDWebImage', '~> 4.0'
+  pod 'SDWebImage'
+  pod 'SDWebImageWebPCoder'
   pod 'Action'
-  pod 'DateToolsSwift'
   pod 'SwiftyGif'
   
   pod "InitialsImageView"
@@ -49,7 +52,7 @@ def common_pods_commun
   
   pod 'THPinViewController', :git => "https://github.com/bigearsenal/THPinViewController.git", :branch => "commun"
   
-  pod 'AppImageViewer'
+  pod 'ImageViewer.swift'
   pod 'SDURLCache', '~> 1.3'
   pod 'UITextView+Placeholder'
   
@@ -58,6 +61,7 @@ def common_pods_commun
   pod 'SubviewAttachingTextView', :git => "https://github.com/communcom/SubviewAttachingTextView.git"
   
   pod "ReCaptcha"
+  pod 'SwiftLint'
 
 end
 

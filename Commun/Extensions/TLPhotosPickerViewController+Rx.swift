@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 22/04/2019.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -13,7 +13,7 @@ import RxSwift
 import Photos
 
 class CustomTLPhotosPickerVC: TLPhotosPickerViewController {
-    
+
     static var singleImage: CustomTLPhotosPickerVC {
         // If updating
         let pickerVC = CustomTLPhotosPickerVC()
@@ -24,6 +24,16 @@ class CustomTLPhotosPickerVC: TLPhotosPickerViewController {
         configure.allowedVideoRecording = false
         configure.mediaType = .image
         pickerVC.configure = configure
+
+        pickerVC.handleNoAlbumPermissions = { controller in
+            let emptyView = PhotoLibraryAccessDeniedView()
+            controller.view.addSubview(emptyView)
+            emptyView.autoPinEdge(toSuperviewEdge: .leading)
+            emptyView.autoPinEdge(toSuperviewEdge: .trailing)
+            emptyView.autoAlignAxis(toSuperviewAxis: .horizontal)
+            controller.indicator.isHidden = true
+        }
+
         return pickerVC
     }
     
@@ -48,6 +58,7 @@ class RxTLPhotosPickerViewControllerDelegateProxy: DelegateProxy<TLPhotosPickerV
         self.pickerVC = pickerVC
         super.init(parentObject: pickerVC, delegateProxy: RxTLPhotosPickerViewControllerDelegateProxy.self)
     }
+
     static func registerKnownImplementations() {
         self.register {RxTLPhotosPickerViewControllerDelegateProxy(pickerVC: $0)}
     }
@@ -89,7 +100,7 @@ extension Reactive where Base: TLPhotosPickerViewController {
                 requestOptions.isNetworkAccessAllowed = true
 
                 return .create {observer in
-                    imageManager.requestImage(for: asset, targetSize: PHImageManagerMaximumSize, contentMode: .aspectFill, options: requestOptions) { image, info in                        observer.onNext(image)
+                    imageManager.requestImage(for: asset, targetSize: PHImageManagerMaximumSize, contentMode: .aspectFill, options: requestOptions) { image, _ in                        observer.onNext(image)
                     }
                     return Disposables.create()
                 }

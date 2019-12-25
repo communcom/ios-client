@@ -3,23 +3,25 @@
 //  Commun
 //
 //  Created by Chung Tran on 17/06/2019.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import UIKit
+import WebKit
 import RxSwift
 import CyberSwift
 
-class EmbededView: UIView, UIWebViewDelegate {
+class EmbededView: UIView {
     var bag = DisposeBag()
     
-    func setUpWithEmbeded(_ embededResult: ResponseAPIContentEmbedResult?){
+    func setUpWithEmbeded(_ embededResult: ResponseAPIContentEmbedResult?) {
         if embededResult?.type == "video",
             let html = embededResult?.html {
             showWebView(with: html)
         } else if embededResult?.type == "photo",
             let urlString = embededResult?.url,
             let url = URL(string: urlString) {
+            
             if urlString.lowercased().ends(with: ".gif") {
                 showWebView(with: "<div><div style=\"left: 0; width: 100%; height: 0; position: relative; padding-bottom: 74.9457%;\"><img src=\"\(urlString)\" /></div></div>")
             } else {
@@ -51,10 +53,10 @@ class EmbededView: UIView, UIWebViewDelegate {
             webView.scrollView.bouncesZoom = false
             
             showLoading()
-            webView.delegate = self
+            webView.navigationDelegate = self
         }
         
-        webView.loadHTMLString(htmlString, baseURL: nil)
+        webView.load(htmlString: htmlString, baseURL: nil)
     }
     
     func showPhoto(with url: URL) {
@@ -89,10 +91,28 @@ class EmbededView: UIView, UIWebViewDelegate {
         self.setNeedsLayout()
 //        self.didShowContentWithHeight.onNext(height)
     }
-    
-    func webViewDidFinishLoad(_ webView: UIWebView) {
-        let height  = (UIScreen.main.bounds.width-16) * webView.contentHeight / webView.contentWidth
+}
+
+// MARK: - WKNavigationDelegate
+extension EmbededView: WKNavigationDelegate {
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        Logger.log(message: #function, event: .debug)
+        let height = (UIScreen.main.bounds.width - 16) * webView.height / webView.width
         adjustHeight(withHeight: height)
     }
 
+    func webView(_ webView: WKWebView, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
+        Logger.log(message: #function, event: .debug)
+        completionHandler(.performDefaultHandling, nil)
+    }
+
+    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        Logger.log(message: #function, event: .debug)
+        decisionHandler(.allow)
+    }
+
+    func webView(_ webView: WKWebView, decidePolicyFor navigationResponse: WKNavigationResponse, decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
+        Logger.log(message: #function, event: .debug)
+        decisionHandler(.allow)
+    }
 }

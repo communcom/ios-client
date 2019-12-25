@@ -3,12 +3,13 @@
 //  Commun
 //
 //  Created by Artem Shilin on 05.11.2019.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import UIKit
 import WebKit
 import SafariServices
+import AVKit
 
 class EmbedView: UIView {
     @IBOutlet weak private var contentView: UIView!
@@ -18,6 +19,11 @@ class EmbedView: UIView {
     @IBOutlet weak private var subtitleLabel: UILabel!
     @IBOutlet weak private var providerLabelView: UIView!
     @IBOutlet weak private var titlesView: UIView!
+
+    private var videoLayer: AVPlayerLayer?
+    private var player: AVPlayer?
+
+    private var isPostDetail = false
 
     private lazy var loadingView: UIView = {
         let view = UIView()
@@ -44,8 +50,9 @@ class EmbedView: UIView {
 
     private var content: ResponseAPIContentBlock!
 
-    init(content: ResponseAPIContentBlock) {
+    init(content: ResponseAPIContentBlock, isPostDetail: Bool = false) {
         super.init(frame: .zero)
+        self.isPostDetail = isPostDetail
         self.content = content
         self.configureXib()
         self.configure(with: content)
@@ -71,8 +78,13 @@ class EmbedView: UIView {
     private func configureXib() {
         Bundle.main.loadNibNamed("EmbedView", owner: self, options: nil)
         addSubview(contentView)
-        contentView.frame = frame
+        contentView.frame = bounds
         contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+    }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        videoLayer?.frame = bounds
     }
     
     private func configure(with localImage: UIImage) {
@@ -87,18 +99,28 @@ class EmbedView: UIView {
         NSLayoutConstraint(item: coverImageView!, attribute: .width, relatedBy: .equal, toItem: coverImageView!, attribute: .height, multiplier: 16/9, constant: 0).isActive = true
         
         coverImageView.image = localImage
+        
+        titleLabel.removeAllConstraints()
+        subtitleLabel.removeAllConstraints()
+        titlesView.removeAllConstraints()
+        
+        providerLabelView.isHidden = true
+        titlesView.isHidden = true
+        
+        coverImageView.autoPinEdge(toSuperviewEdge: .bottom)
     }
 
     private func configure(with content: ResponseAPIContentBlock) {
+        titleLabel.numberOfLines = 1
         coverImageView.removeAllConstraints()
         titleLabel.removeAllConstraints()
         subtitleLabel.removeAllConstraints()
         titlesView.removeAllConstraints()
-        titleLabel.numberOfLines = 2
         providerLabelView.isHidden = true
+        titlesView.isHidden = false
 
         if content.type == "rich" || content.type == "embed" {
-            let view = InstagramView(content: content)
+            let view = InstagramView(content: content, isPostDetail: isPostDetail)
             addSubview(view)
             view.autoPinEdgesToSuperviewEdges()
             return
@@ -115,13 +137,29 @@ class EmbedView: UIView {
         var subtitle: String?
 
         if content.type == "video" {
+            if let videoUrl = content.attributes?.url, videoUrl.lowercased().ends(with: ".mp4"),
+                let videoURL = URL(string: videoUrl) {
+                titlesView.isHidden = true
+
+                backgroundColor = .black
+                NSLayoutConstraint(item: self, attribute: .width, relatedBy: .equal, toItem: self, attribute: .height, multiplier: 16/9, constant: 0).isActive = true
+
+                player = AVPlayer(url: videoURL)
+                videoLayer = AVPlayerLayer(player: player)
+                videoLayer!.frame = bounds
+                layer.addSublayer(videoLayer!)
+                player?.play()
+                return
+            }
+
+            coverImageView.isUserInteractionEnabled = false
             subtitle = content.attributes?.author
             providerLabelView.isHidden = content.attributes?.providerName == nil
             providerNameLabel.text = content.attributes?.providerName?.uppercaseFirst
             providerLabelView.isHidden = content.attributes?.providerName == nil
             isNeedShowProvider = content.attributes?.providerName != nil
-        } else if content.type == "website" {
-            subtitle = content.attributes?.url
+        } else if content.type == "website", let url = URL(string: content.attributes?.url ?? "") {
+            subtitle = InstagramView.getRightHostName(url: url)
         } else {
             imageUrl = content.content.stringValue
         }
@@ -133,10 +171,21 @@ class EmbedView: UIView {
         let isNeedShowSubtitle = subtitle != nil
 
         coverImageView.isHidden = !isNeedShowImage
-        coverImageView.isUserInteractionEnabled = true
         coverImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapAction)))
 
         if isNeedShowImage {
+
+            let width: CGFloat = CGFloat(content.attributes?.width ?? content.attributes?.thumbnailWidth ?? 1280)
+            let height: CGFloat = CGFloat(content.attributes?.height ?? content.attributes?.thumbnailHeight ?? 720)
+
+            let screenWidth = UIScreen.main.bounds.width
+
+            var newHeight = screenWidth / width * height
+
+            if newHeight > 700 && !isPostDetail {
+                newHeight = 640
+            }
+
             if isNeedShowProvider {
                 providerLabelView.autoPinEdge(toSuperviewEdge: .right, withInset: insetX)
                 providerLabelView.autoPinEdge(.bottom, to: .bottom, of: coverImageView, withOffset: -insetY)
@@ -146,15 +195,12 @@ class EmbedView: UIView {
             coverImageView.autoPinEdge(toSuperviewEdge: .left)
             coverImageView.autoPinEdge(toSuperviewEdge: .right)
 
-            NSLayoutConstraint(item: coverImageView!, attribute: .width, relatedBy: .equal, toItem: coverImageView!, attribute: .height, multiplier: 16/9, constant: 0).isActive = true
+            NSLayoutConstraint(item: coverImageView!, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: newHeight).isActive = true
         }
 
-        if let url = URL(string: imageUrl ?? "") {
-            if url.path.lowercased().ends(with: ".gif") {
-                coverImageView.setImageDetectGif(with: imageUrl!)
-            } else {
-                coverImageView.sd_setImageCachedError(with: url, completion: nil)
-            }
+        if let imageUrl = imageUrl {
+            coverImageView.setImageDetectGif(with: imageUrl)
+            coverImageView.addTapToViewer()
         }
 
         if isNeedShowTitle {
@@ -190,10 +236,25 @@ class EmbedView: UIView {
         titleLabel.isHidden = content.attributes?.title == nil
         titleLabel.text = title
         subtitleLabel.isHidden = content.attributes?.url == nil
+
+        self.isUserInteractionEnabled = false
+        coverImageView.isUserInteractionEnabled = false
+
+        if isPostDetail {
+            self.isUserInteractionEnabled = true
+            coverImageView.isUserInteractionEnabled = true
+
+            if content.type == "video" {
+                NSLayoutConstraint(item: self, attribute: .width, relatedBy: .equal, toItem: self, attribute: .height, multiplier: 16/9, constant: 0).isActive = true
+                coverImageView.isHidden = true
+                tapAction()
+            }
+
+            return
+        }
     }
 
     @objc private func tapAction() {
-        
         if content.type == "video" {
             if let urlString = parseEmbed(content.attributes?.html), let url = URL(string: urlString) {
                 coverImageView.isHidden = true
@@ -208,8 +269,6 @@ class EmbedView: UIView {
                 activityIndicator.startAnimating()
                 webView.load(URLRequest(url: url))
             }
-        } else if content.type == "photo" || content.type == "image" {
-            coverImageView.openViewer(gesture: nil)
         } else {
             if let url = URL(string: content.attributes?.url ?? "") {
                 let safariVC = SFSafariViewController(url: url)
@@ -242,7 +301,6 @@ class EmbedView: UIView {
         return srcStrings
     }
 }
-
 
 extension EmbedView: WKNavigationDelegate {
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {

@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 10/21/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import UIKit
@@ -14,7 +14,6 @@ class PostCell: MyTableViewCell, ListItemCellType {
     var post: ResponseAPIContentGetPost?
     let voteActionsContainerViewHeight: CGFloat = 35
     weak var delegate: PostCellDelegate?
-
     
     // MARK: - Subviews
     private func createDescriptionLabel() -> UILabel {
@@ -62,7 +61,6 @@ class PostCell: MyTableViewCell, ListItemCellType {
         button.touchAreaEdgeInsets = UIEdgeInsets(top: -11, left: -13, bottom: -11, right: -13)
         return button
     }()
-    
     
     // MARK: - Layout
     override func setUpViews() {
@@ -117,7 +115,7 @@ class PostCell: MyTableViewCell, ListItemCellType {
         let separatorView = UIView(height: 10)
         separatorView.backgroundColor = #colorLiteral(red: 0.9599978328, green: 0.966491878, blue: 0.9829974771, alpha: 1)
         contentView.addSubview(separatorView)
-        separatorView.autoPinEdge(.top, to: .bottom, of: voteContainerView, withOffset: 9)
+        separatorView.autoPinEdge(.top, to: .bottom, of: voteContainerView, withOffset: 10)
         separatorView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
         
         // layout content
@@ -127,7 +125,6 @@ class PostCell: MyTableViewCell, ListItemCellType {
     func layoutContent() {
         fatalError("must override")
     }
-    
     
     // MARK: - Methods
     func setUp(with post: ResponseAPIContentGetPost) {
@@ -143,7 +140,7 @@ class PostCell: MyTableViewCell, ListItemCellType {
         self.viewsCountLabel.text = "\(post.stats?.viewCount ?? 0)"
 
         // Shares count
-        #warning("change this number later")
+        //TODO: change this number later
         self.sharesCountLabel.text = "\(post.stats?.viewCount ?? 0)"
     }
 }

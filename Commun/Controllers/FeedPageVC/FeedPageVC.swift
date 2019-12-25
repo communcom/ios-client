@@ -3,16 +3,19 @@
 //  Commun
 //
 //  Created by Chung Tran on 11/29/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
 
 final class FeedPageVC: PostsViewController {
     // MARK: - Properties
-    lazy var floatView = FeedPageHeaderView(forAutoLayout: ())
+    lazy var floatView = FeedPageFloatView(forAutoLayout: ())
+    var floatViewTopConstraint: NSLayoutConstraint!
+    var headerView: FeedPageHeaderView!
     var floatViewHeight: CGFloat = 0
-    
+    var lastContentOffset: CGFloat = 0
+
     // MARK: - Methods
     override func setUp() {
         super.setUp()
@@ -28,46 +31,63 @@ final class FeedPageVC: PostsViewController {
         
         statusBarView.autoPinEdge(.bottom, to: .top, of: tableView)
         view.addSubview(floatView)
-        floatView.autoPinEdgesToSuperviewSafeArea(with: .zero, excludingEdge: .bottom)
-        floatView.autoPinEdge(.top, to: .bottom, of: statusBarView)
+        floatViewTopConstraint = floatView.autoPinEdge(toSuperviewSafeArea: .top)
+        floatView.autoPinEdge(toSuperviewSafeArea: .leading)
+        floatView.autoPinEdge(toSuperviewSafeArea: .trailing)
+        
+        statusBarView.autoPinEdge(.bottom, to: .top, of: floatView)
         view.bringSubviewToFront(statusBarView)
+        
+        headerView = FeedPageHeaderView(tableView: tableView)
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        let height = floatView.bounds.height
+        let height = floatView.height
         if floatViewHeight == 0 {
             tableView.contentInset.top = height
             floatViewHeight = height
-            DispatchQueue.main.async {
-                self.tableView.safeScrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
-            }
+            scrollToTop()
         }
     }
     
     override func bind() {
         super.bind()
-        
-        tableView.rx.didScrollToTop
-            .subscribe(onNext: { _ in
-                self.floatView.topConstraint?.constant = 0
-                UIView.animate(withDuration: 0.3) {
+
+        tableView.rx.willBeginDragging.subscribe { _ in
+            self.lastContentOffset = self.tableView.contentOffset.y
+        }.disposed(by: disposeBag)
+
+        tableView.rx.contentOffset.subscribe {
+            guard let offset = $0.element else { return }
+
+            var needAnimation = false
+            var newConstraint: CGFloat = 0.0
+            var inset: CGFloat = 0.0
+            let lastOffset: CGFloat = self.lastContentOffset
+            let indent: CGFloat = 100
+
+            if lastOffset > offset.y + indent || offset.y <= 0  {
+                needAnimation = self.floatViewTopConstraint.constant <= 0
+                newConstraint = 0.0
+                inset = self.floatView.frame.size.height
+            } else if lastOffset < offset.y - indent {
+                let position = -self.floatView.frame.size.height
+                needAnimation = self.floatViewTopConstraint.constant >= position
+                newConstraint = position
+                inset = 0.0
+            }
+
+            if needAnimation {
+                self.view.layoutIfNeeded()
+                self.floatViewTopConstraint.constant = newConstraint
+                self.tableView.contentInset.top = inset
+                UIView.animate(withDuration: 0.3, animations: { [unowned self] in
+                    self.tableView.scrollIndicatorInsets.top = self.tableView.contentInset.top
                     self.view.layoutIfNeeded()
-                }
-            })
-            .disposed(by: disposeBag)
-        
-        tableView.rx.willEndDragging
-            .map {$0.velocity.y}
-            .distinctUntilChanged()
-            .subscribe(onNext: { (y) in
-                if y == 0 {return}
-                self.floatView.topConstraint?.constant = (y < 0) ? 0 : -self.floatViewHeight
-                UIView.animate(withDuration: 0.3) {
-                    self.view.layoutIfNeeded()
-                }
-            })
-            .disposed(by: disposeBag)
+                })
+            }
+        }.disposed(by: disposeBag)
     }
     
     override func filterChanged(filter: PostsListFetcher.Filter) {

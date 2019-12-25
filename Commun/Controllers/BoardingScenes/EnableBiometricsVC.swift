@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 12/07/2019.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import UIKit
@@ -46,15 +46,16 @@ class EnableBiometricsVC: BoardingVC {
         super.viewWillDisappear(animated)
         navigationController?.setNavigationBarHidden(false, animated: animated)
     }
-
     
     // MARK: - Actions
     @IBAction func enableButtonDidTouch(_ sender: Any) {
+        AnalyticsManger.shared.activateFaceID(true)
         UserDefaults.standard.set(true, forKey: Config.currentUserBiometryAuthEnabled)
         next()
     }
     
     @IBAction func skipButtonDidTouch(_ sender: Any) {
+        AnalyticsManger.shared.activateFaceID(false)
         next()
     }
 }

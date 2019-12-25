@@ -3,14 +3,18 @@
 //  Commun
 //
 //  Created by Chung Tran on 10/23/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
 import CyberSwift
 import RxSwift
 
+public var maxNestedLevel = 6
+//    var maxNestedLevel = 6
 class CommentsListFetcher: ListFetcher<ResponseAPIContentGetComment> {
+    // MARK: - Properties
+
     // MARK: - type
     struct GroupedComment {
        var comment: ResponseAPIContentGetComment
@@ -19,7 +23,7 @@ class CommentsListFetcher: ListFetcher<ResponseAPIContentGetComment> {
     
     // MARK: - Enums
     struct Filter: FilterType {
-        var sortBy: CommentSortMode = .time
+        var sortBy: CommentSortMode = .timeDesc
         var type: GetCommentsType
         var userId: String?
         var permlink: String?
@@ -39,15 +43,19 @@ class CommentsListFetcher: ListFetcher<ResponseAPIContentGetComment> {
             resolveNestedComments: Bool? = nil
         ) -> Filter {
             var newFilter = self
+            
             if let sortBy = sortBy {
                 newFilter.sortBy = sortBy
             }
+            
             if let type = type {
                 newFilter.type = type
             }
+            
             if let userId = userId {
                 newFilter.userId = userId
             }
+            
             if let permlink = permlink {
                 newFilter.permlink = permlink
             }
@@ -92,12 +100,15 @@ class CommentsListFetcher: ListFetcher<ResponseAPIContentGetComment> {
                         communityId: filter.communityId,
                         communityAlias: filter.communityAlias
                     )
+                
                 case .user:
                     result = RestAPIManager.instance.loadUserComments(
                         sortBy: filter.sortBy,
                         offset: offset,
                         limit: 30,
                         userId: filter.userId)
+                    maxNestedLevel = 0
+
                 case .replies:
                     result = RestAPIManager.instance.loadPostComments(
                         sortBy: filter.sortBy,
@@ -123,7 +134,7 @@ class CommentsListFetcher: ListFetcher<ResponseAPIContentGetComment> {
         return newList
     }
     
-    func flat(_ array:[GroupedComment]) -> [ResponseAPIContentGetComment] {
+    func flat(_ array: [GroupedComment]) -> [ResponseAPIContentGetComment] {
         var myArray = [ResponseAPIContentGetComment]()
         for element in array {
             myArray.append(element.comment)
@@ -141,19 +152,20 @@ class CommentsListFetcher: ListFetcher<ResponseAPIContentGetComment> {
         // result array
         let result = comments.filter {$0.parents.comment == nil}
             .reduce([GroupedComment]()) { (result, comment) -> [GroupedComment] in
-                return result + [GroupedComment(comment: comment, replies: getChildForComment(comment, in: comments))]
+            return result + [GroupedComment(comment: comment, replies: getChildForComment(comment, in: comments))]
         }
 
         return flat(result)
     }
 
-    var maxNestedLevel = 6
-
     func getChildForComment(_ comment: ResponseAPIContentGetComment, in source: [ResponseAPIContentGetComment]) -> [GroupedComment] {
-
         var result = [GroupedComment]()
 
         // filter child
+        guard maxNestedLevel > 0 else {
+            return result
+        }
+        
         let childComments = source
             .filter {$0.parents.comment?.permlink == comment.contentId.permlink && $0.parents.comment?.userId == comment.contentId.userId}
 

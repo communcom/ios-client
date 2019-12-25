@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 11/4/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -14,7 +14,6 @@ class SubscriptionsVC: SubsViewController<ResponseAPIContentGetSubscriptionsItem
     // MARK: - Properties
     var hideFollowButton = false
     private var isNeedHideCloseButton = false
-
     
     // MARK: - Class Initialization
     init(title: String? = nil, userId: String?, type: GetSubscriptionsType) {
@@ -37,14 +36,12 @@ class SubscriptionsVC: SubsViewController<ResponseAPIContentGetSubscriptionsItem
     deinit {
         Logger.log(message: "Success", event: .severe)
     }
-    
 
     // MARK: - Class Functions
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         baseNavigationController?.changeStatusBarStyle(.default)
     }
-    
     
     // MARK: - Custom Functions
     override func setUp() {
@@ -105,13 +102,11 @@ class SubscriptionsVC: SubsViewController<ResponseAPIContentGetSubscriptionsItem
     override func handleListEmpty() {
         var titleValue = "empty subscriptions title"
         var descriptionValue = "empty subscriptions description"
-        var heightValue: CGFloat = 133.0
         var buttonTitleValue: String?
         
         switch (viewModel as! SubscriptionsViewModel).type {
         case .community:
             titleValue          =   "empty subscriptions title".localized().uppercaseFirst
-            heightValue         =   183.0
             descriptionValue    =   "empty subscriptions description".localized().uppercaseFirst
             buttonTitleValue    =   "empty subscriptions button title".localized().uppercaseFirst
             
@@ -120,11 +115,10 @@ class SubscriptionsVC: SubsViewController<ResponseAPIContentGetSubscriptionsItem
             descriptionValue    =   "no subscribers found".localized().uppercaseFirst
         }
         
-        tableView.addEmptyPlaceholderFooterView(height:         heightValue,
-                                                title:          titleValue,
-                                                description:    descriptionValue,
-                                                buttonLabel:    buttonTitleValue,
-                                                buttonAction:   {
+        tableView.addEmptyPlaceholderFooterView(title: titleValue,
+                                                description: descriptionValue,
+                                                buttonLabel: buttonTitleValue,
+                                                buttonAction: {
                                                     Logger.log(message: "Action button tapped...", event: .debug)
         })
     }

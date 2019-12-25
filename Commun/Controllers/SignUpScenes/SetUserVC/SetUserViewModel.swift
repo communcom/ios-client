@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Maxim Prigozhenkov on 12/04/2019.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import RxSwift
@@ -13,6 +13,8 @@ import Foundation
 class SetUserViewModel {
     // MARK: - Class Functions
     func checkUserName(_ userName: String) -> [Bool] {
+        guard !userName.isEmpty else { return [false, false, false, false, false, false] }
+        
         // Rule 1
         // • The number of characters must not exceed 32
         // username must be between 5-32 characters
@@ -21,7 +23,7 @@ class SetUserViewModel {
         // Rule 2, 3, 5
         // • Uppercase letters in the username are not allowed
         // • Valid characters: letters, numbers, hyphen
-        // • The user name may contain a "dot" character
+        
         let containsOnlyAllowedCharacters = userName.matches("^[a-z0-9-.]+$")
         
         // Rule 4
@@ -30,25 +32,37 @@ class SetUserViewModel {
 
         // Rule 6
         // • The presence of two characters "dot" in a row is not valid
-        let twoNonAlphanumericCharacterNotSideBySide = !userName.contains(".") && !userName.contains(".-") && !userName.contains("-.") && !userName.contains("--")
+        let twoNonAlphanumericCharacterNotSideBySide = !userName.contains("..") && !userName.contains(".-") && !userName.contains("-.") && !userName.contains("--")
         
+        // Rule 7
+        // • Each user name segment should start with a letter
+        let segments = userName.components(separatedBy: ".").filter({ !$0.isEmpty })
+        var segmentsStartLetter = true
+        var segmentLength = true
+        
+        if segments.count > 0 {
+            segmentsStartLetter = segments.filter({ Character($0.prefix(1).description).isNumber == true }).count == 0
+            segmentLength = segments.filter({ $0.count < 5}).count == 0
+        }
+        
+        print("\(segmentLength)")
         return [
             isBetween5To32Characters,
             containsOnlyAllowedCharacters,
             twoNonAlphanumericCharacterNotSideBySide,
-            nonAlphanumericCharacterIsNotAtBeginOrEnd
+            nonAlphanumericCharacterIsNotAtBeginOrEnd,
+            segmentsStartLetter,
+            segmentLength
         ]
     }
     
     func isUserNameValid(_ userName: String) -> Bool {
-        return checkUserName(userName)
-            .reduce(true, { (result, element) -> Bool in
-                return result && element
-            })
+        return checkUserName(userName).reduce(true, { (result, element) -> Bool in
+            return result && element
+        })
     }
     
     func set(userName: String) -> Single<String> {
-        return RestAPIManager.instance.setUserName(userName)
-            .map {_ in userName}
+        return RestAPIManager.instance.setUserName(userName).map {_ in userName}
     }
 }

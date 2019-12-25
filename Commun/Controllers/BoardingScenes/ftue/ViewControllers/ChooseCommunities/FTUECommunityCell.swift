@@ -3,13 +3,18 @@
 //  Commun
 //
 //  Created by Chung Tran on 11/26/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
 
 class FTUECommunityCell: CommunityCollectionCell {
     var shouldShowBonus = true
+    
+    override func setUpViews() {
+        super.setUpViews()
+        shouldAnimateOnFollowing = false
+    }
     
     override func joinButtonDidTouch() {
         // points
@@ -53,8 +58,7 @@ class FTUECommunityCell: CommunityCollectionCell {
             pointsView.layer.add(groupAnim, forKey: nil)
 
             CATransaction.commit()
-        }
-        else {
+        } else {
             super.joinButtonDidTouch()
         }
     }

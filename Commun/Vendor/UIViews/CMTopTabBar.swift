@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 11/6/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -23,7 +23,7 @@ class CMTopTabBar: MyView {
     var selectedIndex: BehaviorRelay<Int>
     
     // MARK: - Subviews
-    lazy var scrollView = ContentHuggingScrollView(axis: .vertical, contentInset: UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16))
+    lazy var scrollView = ContentHuggingScrollView(axis: .vertical, contentInset: UIEdgeInsets(top: 5, left: 15, bottom: 0, right: 15))
     
     // MARK: - Init
     init(height: CGFloat, labels: [String], selectedIndex: Int = 0) {
@@ -65,7 +65,7 @@ class CMTopTabBar: MyView {
         buttons = [CommunButton]()
         
         for i in 0..<labels.count {
-            let button = CommunButton.default(height: tabBarHeight, label: labels[i])
+            let button = CommunButton.default(height: tabBarHeight - 15, label: labels[i])
             button.tag = i
             button.addTarget(self, action: #selector(changeSelection(_:)), for: .touchUpInside)
             
@@ -74,12 +74,11 @@ class CMTopTabBar: MyView {
             button.autoPinEdge(toSuperviewEdge: .bottom)
             
             if i == 0 {
-                button.autoPinEdge(toSuperviewEdge: .leading)
                 scrollView.contentView.heightAnchor.constraint(equalTo: button.heightAnchor)
                     .isActive = true
-            }
-            else {
-                button.autoPinEdge(.leading, to: .trailing, of: buttons[i-1], withOffset: 10)
+                button.autoPinEdge(toSuperviewEdge: .leading)
+            } else {
+                button.autoPinEdge(.leading, to: .trailing, of: buttons[i-1], withOffset: 5)
             }
             
             if i == buttons.count - 1 {

@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 9/20/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -13,7 +13,7 @@ extension ArticleEditorTextView {
         return false
     }
     
-    func copyAttachment(_ attachment: TextAttachment, completion: (()->Void)? = nil) {
+    func copyAttachment(_ attachment: TextAttachment, completion: (() -> Void)? = nil) {
         parentViewController?.showIndetermineHudWithMessage(
             "archiving".localized().uppercaseFirst)
         
@@ -32,7 +32,7 @@ extension ArticleEditorTextView {
         let range = NSRange(location: location, length: 1)
         
         var isAttachment = false
-        textStorage.enumerateAttribute(.attachment, in: range, options: []) { (att, range, stop) in
+        textStorage.enumerateAttribute(.attachment, in: range, options: []) { (att, _, stop) in
             if let attachment = att as? TextAttachment {
                 attachment.attachmentView?.removeFromSuperview()
                 isAttachment = true
@@ -44,19 +44,17 @@ extension ArticleEditorTextView {
         
         // Remove "\n" before attachment
         if location > 0,
-            self.textStorage.attributedSubstring(from: NSMakeRange(location - 1, 1)).string == "\n"
-        {
-            self.textStorage.replaceCharacters(in: NSMakeRange(self.selectedRange.location - 1, 1), with: "")
+            self.textStorage.attributedSubstring(from: NSRange(location: location - 1, length: 1)).string == "\n" {
+            self.textStorage.replaceCharacters(in: NSRange(location: self.selectedRange.location - 1, length: 1), with: "")
             location -= 1
         }
         
-        self.textStorage.replaceCharacters(in: NSMakeRange(location, 1), with: "")
+        self.textStorage.replaceCharacters(in: NSRange(location: location, length: 1), with: "")
         
         // Remove "\n" after attachment
         if location < self.textStorage.length,
-            self.textStorage.attributedSubstring(from: NSMakeRange(location, 1)).string == "\n"
-        {
-            self.textStorage.replaceCharacters(in: NSMakeRange(location, 1), with: "")
+            self.textStorage.attributedSubstring(from: NSRange(location: location, length: 1)).string == "\n" {
+            self.textStorage.replaceCharacters(in: NSRange(location: location, length: 1), with: "")
         }
     }
 }

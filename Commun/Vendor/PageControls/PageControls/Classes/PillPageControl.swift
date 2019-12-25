@@ -40,7 +40,7 @@ import UIKit
 
     @IBInspectable open var inactiveTint: UIColor = UIColor(white: 1, alpha: 0.3) {
         didSet {
-            inactiveLayers.forEach() { $0.backgroundColor = inactiveTint.cgColor }
+            inactiveLayers.forEach { $0.backgroundColor = inactiveTint.cgColor }
         }
     }
 
@@ -49,7 +49,6 @@ import UIKit
             layoutInactivePageIndicators(inactiveLayers)
         }
     }
-    
     
     // MARK: - Appearance
     fileprivate var inactiveLayers = [CALayer]()
@@ -69,16 +68,15 @@ import UIKit
         return layer
     }()
     
-    
     // MARK: - State Update
     fileprivate func updateNumberOfPages(_ count: Int) {
         // no need to update
         guard count != inactiveLayers.count else { return }
         // reset current layout
-        inactiveLayers.forEach() { $0.removeFromSuperlayer() }
+        inactiveLayers.forEach { $0.removeFromSuperlayer() }
         inactiveLayers = [CALayer]()
         // add layers for new page count
-        inactiveLayers = stride(from: 0, to:count, by:1).map() { _ in
+        inactiveLayers = stride(from: 0, to: count, by: 1).map { _ in
             let layer = CALayer()
             layer.backgroundColor = self.inactiveTint.cgColor
             self.layer.addSublayer(layer)
@@ -92,7 +90,6 @@ import UIKit
         self.invalidateIntrinsicContentSize()
     }
     
-    
     // MARK: - Layout
     fileprivate func layoutActivePageIndicator(_ progress: CGFloat) {
         // ignore if progress is outside of page indicators' bounds
@@ -103,7 +100,7 @@ import UIKit
     
     fileprivate func layoutInactivePageIndicators(_ layers: [CALayer]) {
         var layerFrame = CGRect(origin: CGPoint.zero, size: pillSize)
-        layers.forEach() { layer in
+        layers.forEach { layer in
             layer.cornerRadius = layerFrame.size.height / 2
             layer.frame = layerFrame
             layerFrame.origin.x += layerFrame.width + indicatorPadding
@@ -115,7 +112,7 @@ import UIKit
     }
     
     override open func sizeThatFits(_ size: CGSize) -> CGSize {
-        return CGSize(width:    CGFloat(inactiveLayers.count) * pillSize.width + CGFloat(inactiveLayers.count - 1) * indicatorPadding,
-                      height:   pillSize.height)
+        return CGSize(width: CGFloat(inactiveLayers.count) * pillSize.width + CGFloat(inactiveLayers.count - 1) * indicatorPadding,
+                      height: pillSize.height)
     }
 }

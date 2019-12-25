@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 10/30/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -31,7 +31,7 @@ extension BasicEditorVC {
         )
         attributes.type = "image"
         
-        let attachment = TextAttachment(attributes: attributes, localImage: image, size: CGSize(width: view.size.width, height: attachmentHeight))
+        let attachment = TextAttachment(attributes: attributes, localImage: image, size: CGSize(width: view.size.width, height: view.size.width / image.size.width * image.size.height))
         attachment.delegate = self
         
         // Add embeds
@@ -44,11 +44,9 @@ extension BasicEditorVC {
 
     override func didAddLink(_ urlString: String, placeholder: String? = nil) {
         if let placeholder = placeholder,
-            !placeholder.isEmpty
-        {
+            !placeholder.isEmpty {
             _contentTextView.addLink(urlString, placeholder: placeholder)
-        }
-        else {
+        } else {
             parseLink(urlString)
         }
         

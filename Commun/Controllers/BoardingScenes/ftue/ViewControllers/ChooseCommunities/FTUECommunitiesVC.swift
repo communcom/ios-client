@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 11/26/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -134,10 +134,10 @@ class FTUECommunitiesVC: BaseViewController, BoardingRouter {
     
     @objc func nextButtonDidTouch() {
         showIndetermineHudWithMessage("just a moment".localized().uppercaseFirst + "...")
-        RestAPIManager.instance.onboardingCommunitySubscriptions(
-            communityIds: viewModel.chosenCommunities.value.map {$0.communityId}
-        )
+        let ids = viewModel.chosenCommunities.value.map {$0.communityId}
+        RestAPIManager.instance.onboardingCommunitySubscriptions(communityIds: ids)
             .subscribe(onCompleted: {
+                AnalyticsManger.shared.ftueSubscribe(codes: ids)
                 self.hideHud()
                 UserDefaults.standard.set(true, forKey: Config.currentUserDidSubscribeToMoreThan3Communities)
             }) { (error) in

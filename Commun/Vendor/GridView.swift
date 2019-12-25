@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 9/10/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import UIKit
@@ -13,7 +13,9 @@ class GridView: UIView {
     // MARK: - Properties
     var padding: CGFloat = 0.5
     var views = [UIView]()
-    var embedView: UIView?
+    var embedView: EmbedView?
+    var placeholderImageView: UIImageView?
+    var isPostDetail = false
     
     // MARK: - Initializers
     override init(frame: CGRect) {
@@ -35,12 +37,23 @@ class GridView: UIView {
         embedView = nil
 
         if let embed = embeds?.first {
-            let view = EmbedView(content: embed)
+            let view = EmbedView(content: embed, isPostDetail: isPostDetail)
             embedView = view
             embedView?.layer.masksToBounds = true
             addSubview(view)
             view.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 0, bottom: 10, right: 0))
         }
+    }
+    
+    func setUp(placeholderImage: UIImage) {
+        embedView?.removeFromSuperview()
+        embedView = nil
+
+        let view = EmbedView(localImage: placeholderImage)
+        embedView = view
+        embedView?.layer.masksToBounds = true
+        addSubview(view)
+        view.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 0, bottom: 10, right: 0))
     }
 
     private func createVideoEmbed(_ embed: ResponseAPIContentBlock) {

@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Chung Tran on 11/7/19.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
@@ -32,7 +32,7 @@ class CommunityMembersVC: BaseViewController, LeaderCellDelegate, ProfileCellDel
     
     // MARK: - Subviews
     lazy var topTabBar = CMTopTabBar(
-        height: 35,
+        height: 50,
         labels: CommunityMembersViewModel.SegmentedItem.allCases.map {$0.rawValue.localized().uppercaseFirst},
         selectedIndex: selectedSegmentedItem.index)
     
@@ -41,7 +41,8 @@ class CommunityMembersVC: BaseViewController, LeaderCellDelegate, ProfileCellDel
         tableView.backgroundColor = .clear
         tableView.insetsContentViewsToSafeArea = false
         tableView.contentInsetAdjustmentBehavior = .never
-        tableView.contentInset = UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0)
+        tableView.contentInset = UIEdgeInsets(top: 10, left: -10, bottom: 0, right: 0)
+        tableView.showsVerticalScrollIndicator = false
         return tableView
     }()
     
@@ -57,13 +58,19 @@ class CommunityMembersVC: BaseViewController, LeaderCellDelegate, ProfileCellDel
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        baseNavigationController?.changeStatusBarStyle(.default)
+        navigationController?.navigationBar.addShadow(ofColor: .clear, opacity: 0)
+    }
     
     // MARK: - Methods
     override func setUp() {
         super.setUp()
         title = viewModel.community.name
         setLeftNavBarButtonForGoingBack()
-        
+
         edgesForExtendedLayout = .all
         view.backgroundColor = .f3f5fa
         
@@ -78,7 +85,7 @@ class CommunityMembersVC: BaseViewController, LeaderCellDelegate, ProfileCellDel
         
         // tableView
         view.addSubview(tableView)
-        tableView.autoPinEdgesToSuperviewSafeArea(with: UIEdgeInsets(inset: 10), excludingEdge: .top)
+        tableView.autoPinEdgesToSuperviewSafeArea(with: UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 0), excludingEdge: .top)
         tableView.autoPinEdge(.top, to: .bottom, of: topBarContainerView)
         
         tableView.backgroundColor = .f3f5fa
@@ -136,8 +143,7 @@ class CommunityMembersVC: BaseViewController, LeaderCellDelegate, ProfileCellDel
     func handleListError() {
         let title = "error"
         let description = "there is an error occurs"
-        tableView.addEmptyPlaceholderFooterView(title: title.localized().uppercaseFirst, description: description.localized().uppercaseFirst, buttonLabel: "retry".localized().uppercaseFirst)
-        {
+        tableView.addEmptyPlaceholderFooterView(title: title.localized().uppercaseFirst, description: description.localized().uppercaseFirst, buttonLabel: "retry".localized().uppercaseFirst) {
             self.viewModel.fetchNext(forceRetry: true)
         }
     }

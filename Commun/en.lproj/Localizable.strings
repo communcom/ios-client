@@ -3,7 +3,7 @@
   Commun
 
   Created by msm72 on 5/13/19.
-  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+  Copyright © 2019 Commun Limited. All rights reserved.
 */
 
 
@@ -64,6 +64,7 @@
 "edit bio"                                      =   "edit bio";
 "edit post"                                     =   "edit post";
 "edit"                                          =   "edit";
+"edit comment"                                  =   "edit comment";
 "enable Touch ID description"                   =   "enable Touch ID to secure your\ntransactions";
 "enable Touch ID title"                         =   "enable Touch ID";
 "enable"                                        =   "enable";
@@ -173,6 +174,7 @@
 "reward for post"                               =   "reward for post";
 "reward for votes"                              =   "reward for votes";
 "remove from favourite"                         =   "remove from favourite";
+"reply to comment"                              =   "reply to comment";
 
 
 // S
@@ -202,7 +204,7 @@
 // T
 "tap to try again"                              =   "tap to try again";
 "the post has been deleted"                     =   "the post has been deleted";
-"there is an error occurred"                    =   "there is an error occurred";
+"there is an error occurred"                    =   "oops, an error occurred";
 "title placeholder"                             =   "title";
 "to secure your transactions"                   =   "to secure your transactions";
 "top"                                           =   "top";
@@ -213,6 +215,7 @@
 "to"                                            =   "to";
 "the presence of non-alphanumeric characters side by side is not allowed"  =   "the presence of non-alphanumeric characters side by side is not allowed";
 "non-alphanumeric character cannot be at the beginning or end of a username"   =   "non-alphanumeric character cannot be at the beginning or end of a username";
+
 
 // U
 "updating..."                                   =   "updating...";
@@ -243,10 +246,10 @@
 "welcome"                                       =   "welcome";
 "write text placeholder"                        =   "write text";
 "wrong phone number"                            =   "wrong phone number";
-"welcome-item-0"                                =   "Social platform based on blockchain\nand for the first time, it’s easy";
-"welcome-item-1"                                =   "Create, share, and evaluate content\nDecide yourself what deserves\nthe attention";
-"welcome-item-2"                                =   "Every post, share, comment\nor like is rewarded";
-"welcome-item-3"                                =   "Commun has no single owner\nand fully belongs to its members";
+"welcome-item-0"                                =   "Social network based on blockchain\n independet communities";
+"welcome-item-1"                                =   "Find your Comminity and make it the center of your communication with like-minded people";
+"welcome-item-2"                                =   "Create posts, comments, like and get\n Community Points";
+"welcome-item-3"                                =   "Communities has no single owner\nand fully belongs to its members";
 "write a comment"                               =   "write a comment";
 
 

@@ -3,7 +3,7 @@
 //  Commun
 //
 //  Created by Maxim Prigozhenkov on 15/03/2019.
-//  Copyright © 2019 Maxim Prigozhenkov. All rights reserved.
+//  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import UIKit
@@ -23,7 +23,6 @@ extension UIViewController {
     var baseNavigationController: BaseNavigationController? {
         navigationController as? BaseNavigationController
     }
-
     
     // MARK: - Custom Functions
     @objc func popToSignUpVC() {
@@ -37,7 +36,7 @@ extension UIViewController {
         return st.instantiateViewController(withIdentifier: identifier)
     }
     
-    func showActionSheet(title: String? = nil, message: String? = nil, actions: [UIAlertAction] = [], cancelCompletion: (()->Void)? = nil) {
+    func showActionSheet(title: String? = nil, message: String? = nil, actions: [UIAlertAction] = [], cancelCompletion: (() -> Void)? = nil) {
         let alert = UIAlertController(title: title, message: nil, preferredStyle: .actionSheet)
         
         for action in actions {
@@ -108,7 +107,7 @@ extension UIViewController {
         hideHud()
         
         // show new hud
-        let hud = MBProgressHUD.showAdded(to: vc.view, animated: true)
+        let hud = MBProgressHUD.showAdded(to: vc.view, animated: false)
         hud.mode = MBProgressHUDMode.indeterminate
         hud.isUserInteractionEnabled = true
         hud.label.text = message
@@ -116,14 +115,14 @@ extension UIViewController {
 
     }
     
-    func showDone(_ message: String, completion: (()->Void)? = nil) {
+    func showDone(_ message: String, completion: (() -> Void)? = nil) {
         let vc = tabBarController ?? navigationController ?? parent ?? self
         
         // Hide all previous hud
         hideHud()
         
         // show new hud
-        let hud = MBProgressHUD.showAdded(to: vc.view, animated: true)
+        let hud = MBProgressHUD.showAdded(to: vc.view, animated: false)
         hud.mode = .customView
         let image = UIImage(named: "checkmark-large")
         let imageView = UIImageView(image: image)
@@ -200,17 +199,25 @@ extension UIViewController {
     }
     
     @objc func back() {
-        if (self.isModal) {
-            self.dismiss(animated: true, completion: nil)
+        popOrDismissVC()
+    }
+    
+    func backCompletion(_ completion: @escaping (() -> Void)) {
+        popOrDismissVC(completion)
+    }
+    
+    fileprivate func popOrDismissVC(_ completion: (() -> Void)? = nil) {
+        if let nc = navigationController, nc.viewControllers.first != self {
+            nc.popViewController(animated: true, completion)
         } else {
-            self.navigationController?.popViewController()
+            self.dismiss(animated: true, completion: completion)
         }
     }
     
-    func setLeftNavBarButtonForGoingBack() {
-        let backButton = UIButton.back(contentInsets: UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 24))
-        setLeftNavBarButton(with: backButton)
-        backButton.addTarget(self, action: #selector(back), for: .touchUpInside)
+    func setLeftNavBarButtonForGoingBack(tintColor: UIColor = .black) {
+        let backButton = UIBarButtonItem(image: UIImage(named: "icon-back-bar-button-black-default"), style: .plain, target: self, action: #selector(back))
+        backButton.tintColor = tintColor
+        navigationItem.leftBarButtonItem = backButton
     }
     
     func setLeftNavBarButton(with button: UIButton) {
@@ -247,17 +254,10 @@ extension UIViewController {
         self.navigationItem.leftBarButtonItem = newBackButton
     }
     
-    func showBlackoutView(_ value: Bool) {
-        if value {
-            let blackoutView = UIView(frame: view.frame)
-            blackoutView.tag = 999
-            blackoutView.backgroundColor = UIColor(hexString: "#000000", transparency: 0.5)
-            self.view.addSubview(blackoutView)
-        } else {
-            self.view.viewWithTag(999)?.removeFromSuperview()
-        }
+    func showCardWithView(_ view: UIView) {
+        let cardVC = CardViewController(contentView: view)
+        self.present(cardVC, animated: true, completion: nil)
     }
-    
 
     // MARK: - Actions
     @objc func popToPreviousVC() {
