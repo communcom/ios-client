@@ -44,6 +44,8 @@ class WalletSellCommunVC: WalletConvertVC {
         
         rateLabel.attributedText = NSMutableAttributedString()
             .text("rate".localized().uppercaseFirst + ": \(value.currencyValueFormatted) CMN = \(viewModel.buyPrice.value.currencyValueFormatted) \(currentBalance?.symbol ?? "")", size: 12, weight: .medium)
+        
+        convertButton.isEnabled = shouldEnableConvertButton()
     }
     
     override func setUpSellPrice() {
@@ -53,6 +55,8 @@ class WalletSellCommunVC: WalletConvertVC {
         
         rateLabel.attributedText = NSMutableAttributedString()
             .text("rate".localized().uppercaseFirst + ": \(viewModel.sellPrice.value.currencyValueFormatted) CMN = \(value.currencyValueFormatted) \(currentBalance?.symbol ?? "")", size: 12, weight: .medium)
+        
+        convertButton.isEnabled = shouldEnableConvertButton()
     }
     
     override func layoutCarousel() {

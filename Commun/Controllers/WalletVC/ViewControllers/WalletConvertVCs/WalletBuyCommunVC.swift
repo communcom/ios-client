@@ -39,6 +39,8 @@ class WalletBuyCommunVC: WalletConvertVC {
         
         rateLabel.attributedText = NSMutableAttributedString()
             .text("rate".localized().uppercaseFirst + ": \(viewModel.buyPrice.value.currencyValueFormatted) \(currentBalance?.symbol ?? "") = \(value.currencyValueFormatted) CMN", size: 12, weight: .medium)
+        
+        convertButton.isEnabled = shouldEnableConvertButton()
     }
     
     override func setUpSellPrice() {
@@ -48,6 +50,8 @@ class WalletBuyCommunVC: WalletConvertVC {
 
         rateLabel.attributedText = NSMutableAttributedString()
             .text("rate".localized().uppercaseFirst + ": \((viewModel.buyPrice.value != 0 ? 10 / viewModel.buyPrice.value : 0).currencyValueFormatted) \(currentBalance?.symbol ?? currentBalance?.name ?? "") = \(value.currencyValueFormatted) CMN", size: 12, weight: .medium)
+        
+        convertButton.isEnabled = shouldEnableConvertButton()
     }
     
     override func bindBuyPrice() {
@@ -112,6 +116,10 @@ class WalletBuyCommunVC: WalletConvertVC {
     }
     
     override func shouldEnableConvertButton() -> Bool {
-        true
+        guard let sellAmount = NumberFormatter().number(from: self.leftTextField.text ?? "0")?.doubleValue
+            else {return false}
+        guard let currentBalance = self.currentBalance else {return false}
+        guard sellAmount > 0 else {return false}
+        return sellAmount <= currentBalance.balanceValue
     }
 }

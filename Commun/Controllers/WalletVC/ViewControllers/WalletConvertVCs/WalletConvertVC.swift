@@ -232,15 +232,6 @@ class WalletConvertVC: BaseViewController {
                 }
             })
             .disposed(by: disposeBag)
-        
-        // convert button
-        Observable.merge(
-            leftTextField.rx.text.orEmpty.map {_ in ()},
-            rightTextField.rx.text.orEmpty.skip(1).map {_ in ()}
-        )
-            .map { _ in self.shouldEnableConvertButton()}
-            .bind(to: convertButton.rx.isEnabled)
-            .disposed(by: disposeBag)
     }
     
     func bindBuyPrice() {
