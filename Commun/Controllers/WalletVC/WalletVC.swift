@@ -183,11 +183,14 @@ class WalletVC: TransferHistoryVC {
     
     @objc func trade() {
         guard let balance = currentBalance else {return}
-        let vc: UIViewController
+        let vc: WalletConvertVC
         if balance.symbol == "CMN" {
             vc = WalletSellCommunVC()
         } else {
             vc = WalletBuyCommunVC(symbol: balance.symbol)
+        }
+        vc.completion = {
+            self.viewModel.reload()
         }
         show(vc, sender: nil)
     }

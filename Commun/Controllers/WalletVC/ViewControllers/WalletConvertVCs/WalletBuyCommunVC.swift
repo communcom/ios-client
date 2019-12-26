@@ -128,7 +128,7 @@ class WalletBuyCommunVC: WalletConvertVC {
     
     override func convertButtonDidTouch() {
         super.convertButtonDidTouch()
-        guard let balance = currentBalance,
+        guard var balance = currentBalance,
             let value = NumberFormatter().number(from: leftTextField.text ?? "")?.doubleValue
         else {return}
         showIndetermineHudWithMessage("selling".localized().uppercaseFirst + " \(balance.symbol)")
@@ -137,6 +137,7 @@ class WalletBuyCommunVC: WalletConvertVC {
             .subscribe(onCompleted: {
                 self.hideHud()
                 // TODO: - Show check
+                self.completion?()
                 self.back()
             }) { (error) in
                 self.hideHud()

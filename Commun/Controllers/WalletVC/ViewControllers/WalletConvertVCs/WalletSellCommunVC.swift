@@ -175,6 +175,7 @@ class WalletSellCommunVC: WalletConvertVC {
             .subscribe(onCompleted: {
                 self.hideHud()
                 // TODO: - Show check
+                self.completion?()
                 self.back()
             }) { (error) in
                 self.hideHud()
