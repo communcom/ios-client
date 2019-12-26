@@ -150,6 +150,131 @@ class WalletConvertVC: BaseViewController {
         layoutBottom()
     }
     
+    override func bind() {
+        super.bind()
+        viewModel.state
+            .subscribe(onNext: { (state) in
+                switch state {
+                case .loading(let isLoading):
+                    if isLoading {
+                        self.view.showLoading()
+                    }
+                case .listEnded, .listEmpty:
+                    self.view.hideLoading()
+                case .error(error: let error):
+                    #if !APPSTORE
+                        self.showError(error)
+                    #endif
+                    self.view.hideLoading()
+                    self.view.showErrorView {
+                        self.view.hideErrorView()
+                        self.viewModel.reload()
+                    }
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel.items
+            .subscribe(onNext: { (balances) in
+                self.setUp(with: balances)
+            })
+            .disposed(by: disposeBag)
+        
+        UIResponder.isKeyboardShowed
+            .filter {$0}
+            .subscribe(onNext: { _ in
+                DispatchQueue.main.async {
+                    self.scrollView.scrollsToBottom()
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        // textfields
+        sellTextField.rx.text.orEmpty
+            .skip(1)
+            .map {NumberFormatter().number(from: $0)?.doubleValue ?? 0}
+            .map {self.buyValue(fromSellValue: $0)}
+            .map {self.stringFromNumber($0)}
+            .subscribe(onNext: { (text) in
+                self.buyTextField.text = text
+            })
+            .disposed(by: disposeBag)
+        
+        buyTextField.rx.text.orEmpty
+            .skip(1)
+            .map {NumberFormatter().number(from: $0)?.doubleValue ?? 0}
+            .map {self.sellValue(fromBuyValue: $0)}
+            .map {self.stringFromNumber($0)}
+            .subscribe(onNext: { (text) in
+                self.sellTextField.text = text
+            })
+            .disposed(by: disposeBag)
+        
+        // price
+        viewModel.buyPriceLoadingState
+            .distinctUntilChanged()
+            .subscribe(onNext: { [weak self] (state) in
+                switch state {
+                case .loading:
+                    self?.rateLabel.showLoader()
+                    self?.rateLabel.isUserInteractionEnabled = false
+                case .finished:
+                    self?.rateLabel.hideLoader()
+                    self?.rateLabel.isUserInteractionEnabled = false
+                case .error(let error):
+                    #if !APP_STORE
+                        self?.showError(error)
+                    #endif
+                    self?.rateLabel.hideLoader()
+                    self?.rateLabel.attributedText = NSMutableAttributedString()
+                        .text("could not get price".localized().uppercaseFirst + ". ", size: 12, weight: .medium, color: .red)
+                        .text("retry".localized().uppercaseFirst + "?", size: 12, weight: .medium, color: .appMainColor)
+                    self?.rateLabel.isUserInteractionEnabled = true
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel.price
+            .distinctUntilChanged()
+            .subscribe(onNext: { [weak self] _ in
+                self?.setUpPrice()
+            })
+            .disposed(by: disposeBag)
+        
+        // convert button
+        Observable.merge(
+            sellTextField.rx.text.orEmpty.map {_ in ()},
+            buyTextField.rx.text.orEmpty.skip(1).map {_ in ()}
+        )
+            .map { _ in self.shouldEnableConvertButton()}
+            .bind(to: convertButton.rx.isEnabled)
+            .disposed(by: disposeBag)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: animated)
+        navigationController?.navigationBar.isTranslucent = true
+        showNavigationBar(false, animated: true, completion: nil)
+        self.navigationController?.navigationBar.setTitleFont(.boldSystemFont(ofSize: 17), color: .white)
+        
+        // hide bottom tabbar
+        tabBarController?.tabBar.isHidden = true
+        let tabBarVC = (tabBarController as? TabBarVC)
+        tabBarVC?.setTabBarHiden(true)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        let tabBarVC = (tabBarController as? TabBarVC)
+        tabBarVC?.setTabBarHiden(false)
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        whiteView.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: 25)
+    }
+    
+    // MARK: - Layout
     func layoutCarousel() {
         balanceNameLabel.autoPinEdge(toSuperviewEdge: .top, withInset: 20)
     }
@@ -256,119 +381,7 @@ class WalletConvertVC: BaseViewController {
         scrollView.autoPinEdge(.bottom, to: .top, of: warningLabel)
     }
     
-    override func bind() {
-        super.bind()
-        viewModel.state
-            .subscribe(onNext: { (state) in
-                switch state {
-                case .loading(let isLoading):
-                    if isLoading {
-                        self.view.showLoading()
-                    }
-                case .listEnded, .listEmpty:
-                    self.view.hideLoading()
-                case .error(error: let error):
-                    #if !APPSTORE
-                        self.showError(error)
-                    #endif
-                    self.view.hideLoading()
-                    self.view.showErrorView {
-                        self.view.hideErrorView()
-                        self.viewModel.reload()
-                    }
-                }
-            })
-            .disposed(by: disposeBag)
-        
-        viewModel.items
-            .subscribe(onNext: { (balances) in
-                self.setUp(with: balances)
-            })
-            .disposed(by: disposeBag)
-        
-        UIResponder.isKeyboardShowed
-            .filter {$0}
-            .subscribe(onNext: { _ in
-                DispatchQueue.main.async {
-                    self.scrollView.scrollsToBottom()
-                }
-            })
-            .disposed(by: disposeBag)
-        
-        // textfields
-        sellTextField.rx.text.orEmpty
-            .skip(1)
-            .map {NumberFormatter().number(from: $0)?.doubleValue ?? 0}
-            .map {self.buyValue(fromSellValue: $0)}
-            .map {self.stringFromNumber($0)}
-            .subscribe(onNext: { (text) in
-                self.buyTextField.text = text
-            })
-            .disposed(by: disposeBag)
-        
-        buyTextField.rx.text.orEmpty
-            .skip(1)
-            .map {NumberFormatter().number(from: $0)?.doubleValue ?? 0}
-            .map {self.sellValue(fromBuyValue: $0)}
-            .map {self.stringFromNumber($0)}
-            .subscribe(onNext: { (text) in
-                self.sellTextField.text = text
-            })
-            .disposed(by: disposeBag)
-        
-        // price
-        viewModel.buyPriceLoadingState
-            .distinctUntilChanged()
-            .subscribe(onNext: { [weak self] (state) in
-                switch state {
-                case .loading:
-                    self?.rateLabel.showLoader()
-                    self?.rateLabel.isUserInteractionEnabled = false
-                case .finished:
-                    self?.rateLabel.hideLoader()
-                    self?.rateLabel.isUserInteractionEnabled = false
-                case .error(let error):
-                    #if !APP_STORE
-                        self?.showError(error)
-                    #endif
-                    self?.rateLabel.hideLoader()
-                    self?.rateLabel.attributedText = NSMutableAttributedString()
-                        .text("could not get price".localized().uppercaseFirst + ". ", size: 12, weight: .medium, color: .red)
-                        .text("retry".localized().uppercaseFirst + "?", size: 12, weight: .medium, color: .appMainColor)
-                    self?.rateLabel.isUserInteractionEnabled = true
-                }
-            })
-            .disposed(by: disposeBag)
-        
-        viewModel.price
-            .distinctUntilChanged()
-            .subscribe(onNext: { [weak self] _ in
-                self?.setUpPrice()
-            })
-            .disposed(by: disposeBag)
-        
-        // convert button
-        Observable.merge(
-            sellTextField.rx.text.orEmpty.map {_ in ()},
-            buyTextField.rx.text.orEmpty.skip(1).map {_ in ()}
-        )
-            .map { _ in self.shouldEnableConvertButton()}
-            .bind(to: convertButton.rx.isEnabled)
-            .disposed(by: disposeBag)
-    }
-    
-    func buyValue(fromSellValue value: Double) -> Double {
-        fatalError("Must override")
-    }
-    
-    func sellValue(fromBuyValue value: Double) -> Double {
-        fatalError("Must override")
-    }
-    
-    func shouldEnableConvertButton() -> Bool {
-        fatalError("Must override")
-    }
-    
+    // MARK: - Updating
     private func setUp(with balances: [ResponseAPIWalletGetBalance]) {
         if let balance = balances.first(where: {$0.symbol == "CMN"}) {
             communBalance = balance
@@ -389,29 +402,20 @@ class WalletConvertVC: BaseViewController {
         
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(false, animated: animated)
-        navigationController?.navigationBar.isTranslucent = true
-        showNavigationBar(false, animated: true, completion: nil)
-        self.navigationController?.navigationBar.setTitleFont(.boldSystemFont(ofSize: 17), color: .white)
-        
-        // hide bottom tabbar
-        tabBarController?.tabBar.isHidden = true
-        let tabBarVC = (tabBarController as? TabBarVC)
-        tabBarVC?.setTabBarHiden(true)
+    // MARK: - Computing
+    func buyValue(fromSellValue value: Double) -> Double {
+        fatalError("Must override")
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        let tabBarVC = (tabBarController as? TabBarVC)
-        tabBarVC?.setTabBarHiden(false)
+    func sellValue(fromBuyValue value: Double) -> Double {
+        fatalError("Must override")
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        whiteView.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: 25)
+    func shouldEnableConvertButton() -> Bool {
+        fatalError("Must override")
     }
     
+    // MARK: - Actions
     @objc func dismissKeyboard() {
         view.endEditing(true)
     }
