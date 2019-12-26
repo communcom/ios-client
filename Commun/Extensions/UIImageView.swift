@@ -68,27 +68,43 @@ extension UIImageView {
         if urlString.lowercased().ends(with: ".gif") {
             setGifFromURL(url)
         } else {
-            showLoading(cover: false)
             downloadImageFromUrl(url, placeholderImage: image)
         }
     }
 
     private func downloadImageFromUrl(_ url: URL, placeholderImage: UIImage?) {
         var newUrl = url
-
+        var placeholderUrl: URL?
+        
         // resize image
         if url.host == "img.commun.com" {
             let components = url.pathComponents
             if components.count > 0 {
                 newUrl = url.deletingLastPathComponent()
+                placeholderUrl = newUrl.appendingPathComponent("20x0")
+                placeholderUrl = placeholderUrl?.appendingPathComponent((components.last)!)
                 newUrl = newUrl.appendingPathComponent("\(UInt(bounds.width * 1.5))x0")
                 newUrl = newUrl.appendingPathComponent((components.last)!)
             }
         }
 
-        sd_setImage(with: newUrl, placeholderImage: image) { [weak self] (_, _, _, _) in
-            self?.hideLoading()
+        showLoading(cover: false, spinnerColor: .white)
+
+        if let placeholderUrl = placeholderUrl {
+            sd_setImage(with: placeholderUrl, placeholderImage: nil) { [weak self] (image, _, _, _) in
+                self?.sd_setImage(with: newUrl, placeholderImage: image) { [weak self] (_, _, _, _) in
+                    self?.hideLoading()
+                }
+            }
+        } else {
+            sd_setImage(with: newUrl, placeholderImage: image) { [weak self] (_, _, _, _) in
+                self?.hideLoading()
+            }
         }
+    }
+
+    private func showBlur(_ show: Bool) {
+
     }
     
     func addTapToViewer() {

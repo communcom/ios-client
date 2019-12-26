@@ -53,8 +53,8 @@ class InstagramView: UIView {
 
         let multiplier = (CGFloat(content.attributes?.thumbnailWidth ?? 640) / CGFloat(content.attributes?.thumbnailHeight ?? 640))
 
-        if let urlString = content.attributes?.thumbnailUrl, let url = URL(string: urlString) {
-            imageView.sd_setImageCachedError(with: url, completion: nil)
+        if let urlString = content.attributes?.thumbnailUrl {
+            imageView.setImageDetectGif(with: urlString)
             NSLayoutConstraint(item: imageView!, attribute: .width, relatedBy: .equal, toItem: imageView!, attribute: .height, multiplier: multiplier, constant: 0).isActive = true
             imageView.autoPinEdge(.bottom, to: .top, of: autorView, withOffset: -15)
             imageView.isHidden = false

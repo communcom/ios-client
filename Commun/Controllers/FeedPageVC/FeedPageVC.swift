@@ -63,27 +63,22 @@ final class FeedPageVC: PostsViewController {
 
             var needAnimation = false
             var newConstraint: CGFloat = 0.0
-            var inset: CGFloat = 0.0
             let lastOffset: CGFloat = self.lastContentOffset
             let indent: CGFloat = 100
 
             if lastOffset > offset.y + indent || offset.y <= 0  {
                 needAnimation = self.floatViewTopConstraint.constant <= 0
                 newConstraint = 0.0
-                inset = self.floatView.frame.size.height
             } else if lastOffset < offset.y - indent {
                 let position = -self.floatView.frame.size.height
                 needAnimation = self.floatViewTopConstraint.constant >= position
                 newConstraint = position
-                inset = 0.0
             }
 
             if needAnimation {
                 self.view.layoutIfNeeded()
                 self.floatViewTopConstraint.constant = newConstraint
-                self.tableView.contentInset.top = inset
                 UIView.animate(withDuration: 0.3, animations: { [unowned self] in
-                    self.tableView.scrollIndicatorInsets.top = self.tableView.contentInset.top
                     self.view.layoutIfNeeded()
                 })
             }

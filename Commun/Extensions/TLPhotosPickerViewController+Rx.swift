@@ -26,12 +26,14 @@ class CustomTLPhotosPickerVC: TLPhotosPickerViewController {
         pickerVC.configure = configure
 
         pickerVC.handleNoAlbumPermissions = { controller in
-            let emptyView = PhotoLibraryAccessDeniedView()
-            controller.view.addSubview(emptyView)
-            emptyView.autoPinEdge(toSuperviewEdge: .leading)
-            emptyView.autoPinEdge(toSuperviewEdge: .trailing)
-            emptyView.autoAlignAxis(toSuperviewAxis: .horizontal)
-            controller.indicator.isHidden = true
+            DispatchQueue.main.async {
+                let emptyView = PhotoLibraryAccessDeniedView()
+                controller.view.addSubview(emptyView)
+                emptyView.autoPinEdge(toSuperviewEdge: .leading)
+                emptyView.autoPinEdge(toSuperviewEdge: .trailing)
+                emptyView.autoAlignAxis(toSuperviewAxis: .horizontal)
+                controller.indicator.isHidden = true
+            }
         }
 
         return pickerVC
