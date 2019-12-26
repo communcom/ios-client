@@ -42,14 +42,14 @@ class WalletBuyCommunVC: WalletConvertVC {
         if price == 0 {
             return 0
         }
-        return value / price
+        return value / price * 10
     }
     
     override func sellValue(fromBuyValue value: Double) -> Double {
-        value * viewModel.price.value
+        value * viewModel.price.value / 10
     }
     
-    override func shouldEnableConvertButton() -> Bool {
-        
-    }
+//    override func shouldEnableConvertButton() -> Bool {
+//
+//    }
 }
