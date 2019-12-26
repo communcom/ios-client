@@ -127,6 +127,7 @@ class WalletBuyCommunVC: WalletConvertVC {
     }
     
     override func convertButtonDidTouch() {
+        super.convertButtonDidTouch()
         guard let balance = currentBalance,
             let value = NumberFormatter().number(from: leftTextField.text ?? "")?.doubleValue
         else {return}

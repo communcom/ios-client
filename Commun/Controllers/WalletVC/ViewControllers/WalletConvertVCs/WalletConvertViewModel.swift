@@ -29,6 +29,12 @@ class WalletConvertViewModel: BalancesViewModel {
     private var currentSellPriceQuantity: String?
     
     func getBuyPrice(symbol: String, quantity: String) {
+        // prevent dupplicating
+        if symbol == currentBuyPriceSymbol && quantity == currentBuyPriceQuantity
+        {
+            return
+        }
+        
         // save current (for comparison
         currentBuyPriceSymbol = symbol
         currentBuyPriceQuantity = quantity
@@ -55,6 +61,9 @@ class WalletConvertViewModel: BalancesViewModel {
     }
     
     func getSellPrice(quantity: String) {
+        // prevent dupplicating
+        if quantity == currentSellPriceQuantity {return}
+        
         // save current (for comparison
         currentSellPriceQuantity = quantity
         

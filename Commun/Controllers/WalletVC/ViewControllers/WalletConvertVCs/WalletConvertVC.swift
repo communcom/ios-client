@@ -485,7 +485,7 @@ class WalletConvertVC: BaseViewController {
     }
     
     @objc func convertButtonDidTouch() {
-        
+        view.endEditing(true)
     }
     
     // MARK: - Helpers
