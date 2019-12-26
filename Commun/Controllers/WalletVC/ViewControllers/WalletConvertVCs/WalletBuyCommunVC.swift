@@ -32,8 +32,10 @@ class WalletBuyCommunVC: WalletConvertVC {
     }
     
     override func setUpBuyPrice() {
-        super.setUpBuyPrice()
         
+    }
+    
+    override func setUpSellPrice() {
         let value = NumberFormatter().number(from: sellTextField.text ?? "")?.doubleValue ?? 0
         
         rateLabel.attributedText = NSMutableAttributedString()
@@ -41,7 +43,10 @@ class WalletBuyCommunVC: WalletConvertVC {
     }
     
     override func getBuyPrice() {
-        
+        guard let balance = currentBalance,
+            let value = NumberFormatter().number(from: sellTextField.text ?? "")?.doubleValue
+        else {return}
+        viewModel.getSellPrice(quantity: "\(value) \(balance.symbol)")
     }
     
     override func getSellPrice() {

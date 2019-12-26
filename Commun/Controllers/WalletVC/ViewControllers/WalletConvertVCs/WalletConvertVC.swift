@@ -189,32 +189,13 @@ class WalletConvertVC: BaseViewController {
             })
             .disposed(by: disposeBag)
         
-        // textfields
-        sellTextField.rx.text.orEmpty
-            .skip(1)
-            .debounce(0.3, scheduler: MainScheduler.instance)
-            .map {NumberFormatter().number(from: $0)?.doubleValue ?? 0}
-            .subscribe(onNext: { (value) in
-                if value == 0 {
-                    self.viewModel.priceLoadingState.accept(.finished)
-                    self.viewModel.buyPrice.accept(0)
-                    return
-                }
-                self.getBuyPrice()
-            })
-            .disposed(by: disposeBag)
+        // buy price
+        bindBuyPrice()
         
-//        buyTextField.rx.text.orEmpty
-//            .skip(1)
-//            .map {NumberFormatter().number(from: $0)?.doubleValue ?? 0}
-//            .map {self.sellValue(fromBuyValue: $0)}
-//            .map {self.stringFromNumber($0)}
-//            .subscribe(onNext: { (text) in
-//                self.sellTextField.text = text
-//            })
-//            .disposed(by: disposeBag)
+        // sell price
+        bindSellPrice()
         
-        // buyPrice
+        // price loading state
         viewModel.priceLoadingState
             .skip(1)
             .distinctUntilChanged()
@@ -252,13 +233,6 @@ class WalletConvertVC: BaseViewController {
             })
             .disposed(by: disposeBag)
         
-        viewModel.buyPrice
-            .distinctUntilChanged()
-            .subscribe(onNext: { [weak self] _ in
-                self?.setUpBuyPrice()
-            })
-            .disposed(by: disposeBag)
-        
         // convert button
         Observable.merge(
             sellTextField.rx.text.orEmpty.map {_ in ()},
@@ -266,6 +240,52 @@ class WalletConvertVC: BaseViewController {
         )
             .map { _ in self.shouldEnableConvertButton()}
             .bind(to: convertButton.rx.isEnabled)
+            .disposed(by: disposeBag)
+    }
+    
+    func bindBuyPrice() {
+        sellTextField.rx.text.orEmpty
+            .skip(1)
+            .debounce(0.3, scheduler: MainScheduler.instance)
+            .map {NumberFormatter().number(from: $0)?.doubleValue ?? 0}
+            .subscribe(onNext: { (value) in
+                if value == 0 {
+                    self.viewModel.priceLoadingState.accept(.finished)
+                    self.viewModel.buyPrice.accept(0)
+                    return
+                }
+                self.getBuyPrice()
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel.buyPrice
+            .distinctUntilChanged()
+            .subscribe(onNext: { [weak self] _ in
+                self?.setUpBuyPrice()
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    func bindSellPrice() {
+        buyTextField.rx.text.orEmpty
+            .skip(1)
+            .debounce(0.3, scheduler: MainScheduler.instance)
+            .map {NumberFormatter().number(from: $0)?.doubleValue ?? 0}
+            .subscribe(onNext: { (value) in
+                if value == 0 {
+                    self.viewModel.priceLoadingState.accept(.finished)
+                    self.viewModel.sellPrice.accept(0)
+                    return
+                }
+                self.getSellPrice()
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel.sellPrice
+            .distinctUntilChanged()
+            .subscribe(onNext: { [weak self] _ in
+                self?.setUpSellPrice()
+            })
             .disposed(by: disposeBag)
     }
     
@@ -417,6 +437,10 @@ class WalletConvertVC: BaseViewController {
     }
     
     func setUpBuyPrice() {
+        fatalError("Must override")
+    }
+    
+    func setUpSellPrice() {
         fatalError("Must override")
     }
     

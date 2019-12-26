@@ -45,6 +45,15 @@ class WalletSellCommunVC: WalletConvertVC {
             .text("rate".localized().uppercaseFirst + ": \(value.currencyValueFormatted) CMN = \(viewModel.buyPrice.value.currencyValueFormatted) \(currentBalance?.symbol ?? "")", size: 12, weight: .medium)
     }
     
+    override func setUpSellPrice() {
+        sellTextField.text = stringFromNumber(viewModel.sellPrice.value)
+        
+        let value = NumberFormatter().number(from: buyTextField.text ?? "")?.doubleValue ?? 0
+        
+        rateLabel.attributedText = NSMutableAttributedString()
+            .text("rate".localized().uppercaseFirst + ": \(viewModel.sellPrice.value.currencyValueFormatted) CMN = \(value.currencyValueFormatted) \(currentBalance?.symbol ?? "")", size: 12, weight: .medium)
+    }
+    
     override func layoutCarousel() {
         let communLogo: UIView = {
             let view = UIView(width: 50, height: 50, backgroundColor: UIColor.white.withAlphaComponent(0.2), cornerRadius: 25)
@@ -94,6 +103,9 @@ class WalletSellCommunVC: WalletConvertVC {
     }
     
     override func getSellPrice() {
-        
+        guard let balance = currentBalance,
+            let value = NumberFormatter().number(from: buyTextField.text ?? "")?.doubleValue
+        else {return}
+        viewModel.getSellPrice(quantity: "\(value) \(balance.symbol)")
     }
 }
