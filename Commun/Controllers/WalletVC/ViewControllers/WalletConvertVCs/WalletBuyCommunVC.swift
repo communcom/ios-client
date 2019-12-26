@@ -127,6 +127,20 @@ class WalletBuyCommunVC: WalletConvertVC {
     }
     
     override func convertButtonDidTouch() {
-        
+        guard let balance = currentBalance,
+            let value = NumberFormatter().number(from: leftTextField.text ?? "")?.doubleValue
+        else {return}
+        showIndetermineHudWithMessage("selling".localized().uppercaseFirst + " \(balance.symbol)")
+        BlockchainManager.instance.sellPoints(number: value, pointsCurrencyName: balance.symbol)
+            .flatMapCompletable {RestAPIManager.instance.waitForTransactionWith(id: $0)}
+            .subscribe(onCompleted: {
+                self.hideHud()
+                // TODO: - Show check
+                self.back()
+            }) { (error) in
+                self.hideHud()
+                self.showError(error)
+            }
+            .disposed(by: disposeBag)
     }
 }
