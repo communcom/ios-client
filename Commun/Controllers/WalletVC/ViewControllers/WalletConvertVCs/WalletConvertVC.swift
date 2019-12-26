@@ -48,7 +48,11 @@ class WalletConvertVC: BaseViewController {
     lazy var convertSellLabel = UILabel.with(text: "Sell", textSize: 12, weight: .medium, textColor: .a5a7bd)
     lazy var leftTextField = createTextField()
     lazy var convertBuyLabel = UILabel.with(text: "Buy", textSize: 12, weight: .medium, textColor: .a5a7bd)
-    lazy var rightTextField = createTextField()
+    lazy var rightTextField: UITextField = {
+        let textField = createTextField()
+        textField.isEnabled = false
+        return textField
+    }()
     
     private func createTextField() -> UITextField {
         let textField = UITextField(backgroundColor: .clear)
@@ -261,6 +265,12 @@ class WalletConvertVC: BaseViewController {
                 }
             })
             .disposed(by: disposeBag)
+        
+        viewModel.rate
+            .subscribe(onNext: { [weak self] _ in
+                self?.bindRate()
+            })
+            .disposed(by: disposeBag)
     }
     
     func bindBuyPrice() {
@@ -269,6 +279,10 @@ class WalletConvertVC: BaseViewController {
     
     func bindSellPrice() {
         fatalError("Must override")
+    }
+    
+    func bindRate() {
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -416,6 +430,12 @@ class WalletConvertVC: BaseViewController {
     
     func setUpCurrentBalance() {
         getBuyPrice()
+        getRate()
+    }
+    
+    func getRate() {
+        guard let balance = currentBalance else {return}
+        viewModel.getRate(symbol: balance.symbol)
     }
     
     func setUpBuyPrice() {
@@ -465,7 +485,7 @@ class WalletConvertVC: BaseViewController {
     }
     
     @objc func convertButtonDidTouch() {
-        // TODO: - Convert
+        
     }
     
     // MARK: - Helpers

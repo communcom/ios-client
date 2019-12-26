@@ -21,6 +21,8 @@ class WalletConvertViewModel: BalancesViewModel {
     let sellPrice = BehaviorRelay<Double>(value: 0)
     let errorSubject = BehaviorRelay<ConvertError?>(value: nil)
     
+    let rate = BehaviorRelay<Double>(value: 0)
+    
     // Prevent duplicating
     private var currentBuyPriceSymbol: String?
     private var currentBuyPriceQuantity: String?
@@ -71,6 +73,14 @@ class WalletConvertViewModel: BalancesViewModel {
             }, onError: { [weak self] (error) in
                 self?.errorSubject.accept(.other(error))
                 self?.priceLoadingState.accept(.error(error: error))
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    func getRate(symbol: String) {
+        RestAPIManager.instance.getBuyPrice(symbol: symbol, quantity: "10 CMN")
+            .subscribe(onSuccess: { [weak self] result in
+                self?.rate.accept(result.priceValue)
             })
             .disposed(by: disposeBag)
     }

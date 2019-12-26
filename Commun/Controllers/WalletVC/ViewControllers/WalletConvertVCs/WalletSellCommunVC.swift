@@ -40,21 +40,11 @@ class WalletSellCommunVC: WalletConvertVC {
     override func setUpBuyPrice() {
         rightTextField.text = stringFromNumber(viewModel.buyPrice.value)
         
-        let value = NumberFormatter().number(from: leftTextField.text ?? "")?.doubleValue ?? 0
-        
-        rateLabel.attributedText = NSMutableAttributedString()
-            .text("rate".localized().uppercaseFirst + ": \(value.currencyValueFormatted) CMN = \(viewModel.buyPrice.value.currencyValueFormatted) \(currentBalance?.symbol ?? "")", size: 12, weight: .medium)
-        
         convertButton.isEnabled = shouldEnableConvertButton()
     }
     
     override func setUpSellPrice() {
         leftTextField.text = stringFromNumber(viewModel.sellPrice.value)
-        
-        let value = NumberFormatter().number(from: rightTextField.text ?? "")?.doubleValue ?? 0
-        
-        rateLabel.attributedText = NSMutableAttributedString()
-            .text("rate".localized().uppercaseFirst + ": \(viewModel.sellPrice.value.currencyValueFormatted) CMN = \(value.currencyValueFormatted) \(currentBalance?.symbol ?? "")", size: 12, weight: .medium)
         
         convertButton.isEnabled = shouldEnableConvertButton()
     }
@@ -142,6 +132,15 @@ class WalletSellCommunVC: WalletConvertVC {
             .disposed(by: disposeBag)
     }
     
+    override func bindRate() {
+        viewModel.rate
+            .subscribe(onNext: {[weak self] (value) in
+                self?.rateLabel.attributedText = NSMutableAttributedString()
+                    .text("rate".localized().uppercaseFirst + ": 10 CMN = \(value.currencyValueFormatted) \(self?.currentBalance?.symbol ?? "")", size: 12, weight: .medium)
+            })
+            .disposed(by: disposeBag)
+    }
+    
     // MARK: - Actions
     @objc func dropdownButtonDidTouch() {
         let vc = BalancesVC(canChooseCommun: false) { (balance) in
@@ -163,5 +162,9 @@ class WalletSellCommunVC: WalletConvertVC {
             let value = NumberFormatter().number(from: rightTextField.text ?? "")?.doubleValue
         else {return}
         viewModel.getSellPrice(quantity: "\(value) \(balance.symbol)")
+    }
+    
+    override func convertButtonDidTouch() {
+        
     }
 }

@@ -35,21 +35,11 @@ class WalletBuyCommunVC: WalletConvertVC {
     override func setUpBuyPrice() {
         leftTextField.text = stringFromNumber(viewModel.buyPrice.value)
         
-        let value = NumberFormatter().number(from: rightTextField.text ?? "")?.doubleValue ?? 0
-        
-        rateLabel.attributedText = NSMutableAttributedString()
-            .text("rate".localized().uppercaseFirst + ": \(viewModel.buyPrice.value.currencyValueFormatted) \(currentBalance?.symbol ?? "") = \(value.currencyValueFormatted) CMN", size: 12, weight: .medium)
-        
         convertButton.isEnabled = shouldEnableConvertButton()
     }
     
     override func setUpSellPrice() {
         rightTextField.text = stringFromNumber(viewModel.sellPrice.value)
-        
-        let value = NumberFormatter().number(from: leftTextField.text ?? "")?.doubleValue ?? 0
-
-        rateLabel.attributedText = NSMutableAttributedString()
-            .text("rate".localized().uppercaseFirst + ": \((viewModel.buyPrice.value != 0 ? 10 / viewModel.buyPrice.value : 0).currencyValueFormatted) \(currentBalance?.symbol ?? currentBalance?.name ?? "") = \(value.currencyValueFormatted) CMN", size: 12, weight: .medium)
         
         convertButton.isEnabled = shouldEnableConvertButton()
     }
@@ -100,6 +90,15 @@ class WalletBuyCommunVC: WalletConvertVC {
             .disposed(by: disposeBag)
     }
     
+    override func bindRate() {
+        viewModel.rate
+            .subscribe(onNext: {[weak self] (value) in
+                self?.rateLabel.attributedText = NSMutableAttributedString()
+                    .text("rate".localized().uppercaseFirst + ": \(value.currencyValueFormatted) \(self?.currentBalance?.symbol ?? "") = 10 CMN", size: 12, weight: .medium)
+            })
+            .disposed(by: disposeBag)
+    }
+    
     override func getBuyPrice() {
         guard let balance = currentBalance,
             let value = NumberFormatter().number(from: rightTextField.text ?? "")?.doubleValue
@@ -125,5 +124,9 @@ class WalletBuyCommunVC: WalletConvertVC {
             return false
         }
         return true
+    }
+    
+    override func convertButtonDidTouch() {
+        
     }
 }
