@@ -135,6 +135,8 @@ class WalletHeaderView: MyTableHeaderView {
         buttonsStackView.addArrangedSubview(buttonContainerViewWithButton(sendButton, label: "send".localized().uppercaseFirst))
         buttonsStackView.addArrangedSubview(buttonContainerViewWithButton(convertButton, label: "convert".localized().uppercaseFirst))
         
+        convertButton.addTarget(self, action: #selector(convertButtonDidTouch), for: .touchUpInside)
+        
         // my points
         addSubview(myPointsContainerView)
         myPointsContainerView.autoPinEdge(.top, to: .bottom, of: shadowView, withOffset: 29)
@@ -364,5 +366,9 @@ class WalletHeaderView: MyTableHeaderView {
     
     @objc func filterButtonDidTouch() {
         (parentViewController as? TransferHistoryVC)?.openFilter()
+    }
+    
+    @objc func convertButtonDidTouch() {
+        (parentViewController as? WalletVC)?.trade()
     }
 }

@@ -14,6 +14,9 @@ class WalletVC: TransferHistoryVC {
     // MARK: - Properties
     var maxItemsInCarousel = 5
     var carouselHeight: CGFloat = 40
+    var currentBalance: ResponseAPIWalletGetBalance? {
+        (self.viewModel as! WalletViewModel).balancesVM.items.value[safe: headerView.currentIndex]
+    }
     
     // MARK: - Subviews
     lazy var carousel = CircularCarousel(frame: CGRect(x: 0, y: 0, width: 300, height: 44))
@@ -178,6 +181,20 @@ class WalletVC: TransferHistoryVC {
         
     }
     
+    @objc func trade() {
+        guard let balance = currentBalance else {return}
+        let vc: WalletConvertVC
+        if balance.symbol == "CMN" {
+            vc = WalletSellCommunVC()
+        } else {
+            vc = WalletBuyCommunVC(symbol: balance.symbol)
+        }
+        vc.completion = {
+            self.viewModel.reload()
+        }
+        show(vc, sender: nil)
+    }
+    
     func sendPoint(to user: ResponseAPIContentGetSubscriptionsUser) {
         showAlert(title: "TODO: Send point", message: user.userId)
     }
@@ -230,7 +247,7 @@ extension WalletVC: CircularCarouselDataSource, CircularCarouselDelegate {
         if balance.symbol == "CMN" {
             imageView.image = UIImage(named: "tux")
         } else {
-            imageView.setAvatar(urlString: balance.logo, namePlaceHolder: balance.name ?? "B\(indexPath.row)")
+            imageView.setAvatar(urlString: balance.logo, namePlaceHolder: balance.name ?? balance.symbol)
         }
         
         return view!
