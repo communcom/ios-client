@@ -10,9 +10,16 @@ import Foundation
 import RxCocoa
 
 class WalletConvertViewModel: BalancesViewModel {
+    // MARK: - Nested type
+    enum ConvertError: Error {
+        case insufficientFunds
+        case other(Error)
+    }
+    
     let priceLoadingState = BehaviorRelay<LoadingState>(value: .loading)
     let buyPrice = BehaviorRelay<Double>(value: 0)
     let sellPrice = BehaviorRelay<Double>(value: 0)
+    let errorSubject = BehaviorRelay<ConvertError?>(value: nil)
     
     // Prevent duplicating
     private var currentBuyPriceSymbol: String?
@@ -23,6 +30,9 @@ class WalletConvertViewModel: BalancesViewModel {
         // save current (for comparison
         currentBuyPriceSymbol = symbol
         currentBuyPriceQuantity = quantity
+        
+        // reset error
+        errorSubject.accept(nil)
         
         // set state
         priceLoadingState.accept(.loading)
@@ -36,6 +46,7 @@ class WalletConvertViewModel: BalancesViewModel {
                 }
                 
             }, onError: { [weak self] (error) in
+                self?.errorSubject.accept(.other(error))
                 self?.priceLoadingState.accept(.error(error: error))
             })
             .disposed(by: disposeBag)
@@ -44,6 +55,9 @@ class WalletConvertViewModel: BalancesViewModel {
     func getSellPrice(quantity: String) {
         // save current (for comparison
         currentSellPriceQuantity = quantity
+        
+        // reset error
+        errorSubject.accept(nil)
         
         // set state
         priceLoadingState.accept(.loading)
@@ -55,6 +69,7 @@ class WalletConvertViewModel: BalancesViewModel {
                     self?.sellPrice.accept(result.priceValue)
                 }
             }, onError: { [weak self] (error) in
+                self?.errorSubject.accept(.other(error))
                 self?.priceLoadingState.accept(.error(error: error))
             })
             .disposed(by: disposeBag)

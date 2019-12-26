@@ -88,7 +88,11 @@ class WalletSellCommunVC: WalletConvertVC {
             else {return false}
         guard let communBalance = self.communBalance else {return false}
         guard sellAmount > 0 else {return false}
-        return sellAmount <= communBalance.balanceValue
+        if sellAmount > communBalance.balanceValue {
+            viewModel.errorSubject.accept(.insufficientFunds)
+            return false
+        }
+        return true
     }
     
     // MARK: - Binding

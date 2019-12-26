@@ -61,6 +61,7 @@ class WalletConvertVC: BaseViewController {
         return textField
     }
     
+    lazy var errorLabel = UILabel.with(textSize: 12, weight: .semibold, textColor: .red, textAlignment: .center)
     lazy var rateLabel = UILabel.with(text: "Rate: ", textSize: 12, weight: .medium, textAlignment: .center)
     
     lazy var convertButton = CommunButton.default(height: 50, label: "Convert", isHuggingContent: false)
@@ -131,13 +132,20 @@ class WalletConvertVC: BaseViewController {
         // convert view
         layoutConvertView()
         
+        // error Label
+        whiteView.addSubview(errorLabel)
+        errorLabel.autoPinEdge(.top, to: .bottom, of: convertContainer, withOffset: 8)
+        errorLabel.autoAlignAxis(toSuperviewAxis: .vertical)
+        errorLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 20)
+        errorLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 20)
+        
         // rate label
         whiteView.addSubview(rateLabel)
         
         let tap3 = UITapGestureRecognizer(target: self, action: #selector(getBuyPrice))
         rateLabel.addGestureRecognizer(tap3)
         
-        rateLabel.autoPinEdge(.top, to: .bottom, of: convertContainer, withOffset: 20)
+        rateLabel.autoPinEdge(.top, to: .bottom, of: errorLabel, withOffset: 12)
         rateLabel.autoAlignAxis(toSuperviewAxis: .vertical)
         
         // pin bottom
@@ -212,15 +220,16 @@ class WalletConvertVC: BaseViewController {
                     if !(self?.leftTextField.isFirstResponder ?? false) {
                         self?.leftTextField.showLoader()
                     }
+                    
+                    self?.convertButton.isEnabled = false
                 case .finished:
                     self?.rateLabel.hideLoader()
                     self?.rateLabel.isUserInteractionEnabled = false
                     self?.rightTextField.hideLoader()
                     self?.leftTextField.hideLoader()
+                    
+                    self?.convertButton.isEnabled = self?.shouldEnableConvertButton() ?? false
                 case .error(let error):
-                    #if !APP_STORE
-                        self?.showError(error)
-                    #endif
                     self?.rateLabel.hideLoader()
                     self?.rateLabel.attributedText = NSMutableAttributedString()
                         .text("could not get price".localized().uppercaseFirst + ". ", size: 12, weight: .medium, color: .red)
@@ -229,6 +238,26 @@ class WalletConvertVC: BaseViewController {
                     
                     self?.rightTextField.hideLoader()
                     self?.leftTextField.hideLoader()
+                    
+                    self?.convertButton.isEnabled = false
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        // errorLabel
+        viewModel.errorSubject
+            .subscribe(onNext: {[weak self] (error) in
+                switch error {
+                case .other(let error):
+                    if let error = error as? ErrorAPI {
+                        self?.errorLabel.text = "Error: " + error.caseInfo.message
+                    } else {
+                        self?.errorLabel.text = "Error: " + error.localizedDescription
+                    }
+                case .insufficientFunds:
+                    self?.errorLabel.text = "Error: Insufficient funds"
+                default:
+                    self?.errorLabel.text = nil
                 }
             })
             .disposed(by: disposeBag)
