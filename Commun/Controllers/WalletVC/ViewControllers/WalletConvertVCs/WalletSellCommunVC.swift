@@ -36,10 +36,13 @@ class WalletSellCommunVC: WalletConvertVC {
         convertBuyLabel.text = "buy".localized().uppercaseFirst + " \(balance.name ?? balance.symbol)"
     }
     
-    override func setUpPrice() {
-        super.setUpPrice()
+    override func setUpBuyPrice() {
+        buyTextField.text = stringFromNumber(viewModel.buyPrice.value)
+        
+        let value = NumberFormatter().number(from: sellTextField.text ?? "")?.doubleValue ?? 0
+        
         rateLabel.attributedText = NSMutableAttributedString()
-            .text("rate".localized().uppercaseFirst + ": 10 CMN = \(viewModel.price.value.currencyValueFormatted) \(currentBalance?.symbol ?? "")", size: 12, weight: .medium)
+            .text("rate".localized().uppercaseFirst + ": \(value.currencyValueFormatted) CMN = \(viewModel.buyPrice.value.currencyValueFormatted) \(currentBalance?.symbol ?? "")", size: 12, weight: .medium)
     }
     
     override func layoutCarousel() {
@@ -66,18 +69,6 @@ class WalletSellCommunVC: WalletConvertVC {
         dropdownButton.autoPinEdge(.leading, to: .trailing, of: buyBalanceLabel, withOffset: 10)
     }
     
-    override func buyValue(fromSellValue value: Double) -> Double {
-        value * viewModel.price.value / 10
-    }
-    
-    override func sellValue(fromBuyValue value: Double) -> Double {
-        let price = self.viewModel.price.value
-        if price == 0 {
-            return 0
-        }
-        return value / price * 10
-    }
-    
     override func shouldEnableConvertButton() -> Bool {
         guard let sellAmount = NumberFormatter().number(from: self.sellTextField.text ?? "0")?.doubleValue
             else {return false}
@@ -93,5 +84,16 @@ class WalletSellCommunVC: WalletConvertVC {
         }
         let nc = BaseNavigationController(rootViewController: vc)
         present(nc, animated: true, completion: nil)
+    }
+    
+    override func getBuyPrice() {
+        guard let balance = currentBalance,
+            let value = NumberFormatter().number(from: sellTextField.text ?? "")?.doubleValue
+        else {return}
+        viewModel.getBuyPrice(symbol: balance.symbol, quantity: "\(value) CMN")
+    }
+    
+    override func getSellPrice() {
+        
     }
 }

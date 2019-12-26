@@ -31,22 +31,24 @@ class WalletBuyCommunVC: WalletConvertVC {
         convertSellLabel.text = "sell".localized().uppercaseFirst + " \(balance.name ?? balance.symbol)"
     }
     
-    override func setUpPrice() {
-        super.setUpPrice()
+    override func setUpBuyPrice() {
+        super.setUpBuyPrice()
+        
+        let value = NumberFormatter().number(from: sellTextField.text ?? "")?.doubleValue ?? 0
+        
         rateLabel.attributedText = NSMutableAttributedString()
-            .text("rate".localized().uppercaseFirst + ": 10 \(currentBalance?.symbol ?? currentBalance?.name ?? "") = \((viewModel.price.value != 0 ? 10 / viewModel.price.value : 0).currencyValueFormatted) CMN", size: 12, weight: .medium)
+            .text("rate".localized().uppercaseFirst + ": \(value.currencyValueFormatted) \(currentBalance?.symbol ?? currentBalance?.name ?? "") = \((viewModel.buyPrice.value != 0 ? 10 / viewModel.buyPrice.value : 0).currencyValueFormatted) CMN", size: 12, weight: .medium)
     }
     
-    override func buyValue(fromSellValue value: Double) -> Double {
-        let price = viewModel.price.value
-        if price == 0 {
-            return 0
-        }
-        return value / price * 10
+    override func getBuyPrice() {
+        
     }
     
-    override func sellValue(fromBuyValue value: Double) -> Double {
-        value * viewModel.price.value / 10
+    override func getSellPrice() {
+        guard let balance = currentBalance,
+            let value = NumberFormatter().number(from: buyTextField.text ?? "")?.doubleValue
+        else {return}
+        viewModel.getBuyPrice(symbol: balance.symbol, quantity: "\(value) CMN")
     }
     
 //    override func shouldEnableConvertButton() -> Bool {

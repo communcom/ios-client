@@ -192,35 +192,50 @@ class WalletConvertVC: BaseViewController {
         // textfields
         sellTextField.rx.text.orEmpty
             .skip(1)
+            .debounce(0.3, scheduler: MainScheduler.instance)
             .map {NumberFormatter().number(from: $0)?.doubleValue ?? 0}
-            .map {self.buyValue(fromSellValue: $0)}
-            .map {self.stringFromNumber($0)}
-            .subscribe(onNext: { (text) in
-                self.buyTextField.text = text
+            .subscribe(onNext: { (value) in
+                if value == 0 {
+                    self.viewModel.buyPriceLoadingState.accept(.finished)
+                    self.viewModel.buyPrice.accept(0)
+                    return
+                }
+                self.getBuyPrice()
             })
             .disposed(by: disposeBag)
         
-        buyTextField.rx.text.orEmpty
-            .skip(1)
-            .map {NumberFormatter().number(from: $0)?.doubleValue ?? 0}
-            .map {self.sellValue(fromBuyValue: $0)}
-            .map {self.stringFromNumber($0)}
-            .subscribe(onNext: { (text) in
-                self.sellTextField.text = text
-            })
-            .disposed(by: disposeBag)
+//        buyTextField.rx.text.orEmpty
+//            .skip(1)
+//            .map {NumberFormatter().number(from: $0)?.doubleValue ?? 0}
+//            .map {self.sellValue(fromBuyValue: $0)}
+//            .map {self.stringFromNumber($0)}
+//            .subscribe(onNext: { (text) in
+//                self.sellTextField.text = text
+//            })
+//            .disposed(by: disposeBag)
         
-        // price
+        // buyPrice
         viewModel.buyPriceLoadingState
+            .skip(1)
             .distinctUntilChanged()
             .subscribe(onNext: { [weak self] (state) in
                 switch state {
                 case .loading:
                     self?.rateLabel.showLoader()
                     self?.rateLabel.isUserInteractionEnabled = false
+                    
+                    if !(self?.buyTextField.isFirstResponder ?? false) {
+                        self?.buyTextField.showLoader()
+                    }
+                    
+                    if !(self?.sellTextField.isFirstResponder ?? false) {
+                        self?.sellTextField.showLoader()
+                    }
                 case .finished:
                     self?.rateLabel.hideLoader()
                     self?.rateLabel.isUserInteractionEnabled = false
+                    self?.buyTextField.hideLoader()
+                    self?.sellTextField.hideLoader()
                 case .error(let error):
                     #if !APP_STORE
                         self?.showError(error)
@@ -230,14 +245,17 @@ class WalletConvertVC: BaseViewController {
                         .text("could not get price".localized().uppercaseFirst + ". ", size: 12, weight: .medium, color: .red)
                         .text("retry".localized().uppercaseFirst + "?", size: 12, weight: .medium, color: .appMainColor)
                     self?.rateLabel.isUserInteractionEnabled = true
+                    
+                    self?.buyTextField.hideLoader()
+                    self?.sellTextField.hideLoader()
                 }
             })
             .disposed(by: disposeBag)
         
-        viewModel.price
+        viewModel.buyPrice
             .distinctUntilChanged()
             .subscribe(onNext: { [weak self] _ in
-                self?.setUpPrice()
+                self?.setUpBuyPrice()
             })
             .disposed(by: disposeBag)
         
@@ -398,19 +416,11 @@ class WalletConvertVC: BaseViewController {
         getBuyPrice()
     }
     
-    func setUpPrice() {
-        
+    func setUpBuyPrice() {
+        fatalError("Must override")
     }
     
     // MARK: - Computing
-    func buyValue(fromSellValue value: Double) -> Double {
-        fatalError("Must override")
-    }
-    
-    func sellValue(fromBuyValue value: Double) -> Double {
-        fatalError("Must override")
-    }
-    
     func shouldEnableConvertButton() -> Bool {
         fatalError("Must override")
     }
@@ -441,8 +451,11 @@ class WalletConvertVC: BaseViewController {
     }
     
     @objc func getBuyPrice() {
-        guard let balance = currentBalance else {return}
-        viewModel.getBuyPrice(symbol: balance.symbol)
+        fatalError("Must override")
+    }
+    
+    @objc func getSellPrice() {
+        fatalError("Must override")
     }
     
     @objc func convertButtonDidTouch() {
