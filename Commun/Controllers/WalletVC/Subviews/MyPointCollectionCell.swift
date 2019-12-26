@@ -55,7 +55,7 @@ class MyPointCollectionCell: MyCollectionViewCell {
             logoImageView.setAvatar(urlString: balance.logo, namePlaceHolder: balance.name ?? balance.symbol)
             nameLabel.attributedText = NSMutableAttributedString()
                 .text(balance.name ?? "B", size: 17, weight: .semibold)
-                .text("\n\(balance.frozen ?? "0") " + "on hold".localized(), size: 12, weight: .semibold, color: .a5a7bd)
+                .text("\n\(balance.frozenValue.currencyValueFormatted) " + "on hold".localized(), size: 12, weight: .semibold, color: .a5a7bd)
                 .withParagraphSpacing(4)
             pointLabel.attributedText = NSMutableAttributedString()
                 .text("\(balance.balanceValue.currencyValueFormatted)", size: 20, weight: .semibold)
