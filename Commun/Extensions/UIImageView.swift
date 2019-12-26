@@ -75,7 +75,7 @@ extension UIImageView {
     private func downloadImageFromUrl(_ url: URL, placeholderImage: UIImage?) {
         var newUrl = url
         var placeholderUrl: URL?
-        
+
         // resize image
         if url.host == "img.commun.com" {
             let components = url.pathComponents
@@ -92,8 +92,11 @@ extension UIImageView {
 
         if let placeholderUrl = placeholderUrl {
             sd_setImage(with: placeholderUrl, placeholderImage: nil) { [weak self] (image, _, _, _) in
-                self?.sd_setImage(with: newUrl, placeholderImage: image) { [weak self] (_, _, _, _) in
+                self?.sd_setImage(with: newUrl, placeholderImage: image) { [weak self] (image, _, _, _) in
                     self?.hideLoading()
+                    if image == nil {
+                        self?.sd_setImageCachedError(with: newUrl, completion: nil)
+                    }
                 }
             }
         } else {
