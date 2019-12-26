@@ -196,7 +196,7 @@ class WalletConvertVC: BaseViewController {
             .map {NumberFormatter().number(from: $0)?.doubleValue ?? 0}
             .subscribe(onNext: { (value) in
                 if value == 0 {
-                    self.viewModel.buyPriceLoadingState.accept(.finished)
+                    self.viewModel.priceLoadingState.accept(.finished)
                     self.viewModel.buyPrice.accept(0)
                     return
                 }
@@ -215,7 +215,7 @@ class WalletConvertVC: BaseViewController {
 //            .disposed(by: disposeBag)
         
         // buyPrice
-        viewModel.buyPriceLoadingState
+        viewModel.priceLoadingState
             .skip(1)
             .distinctUntilChanged()
             .subscribe(onNext: { [weak self] (state) in
