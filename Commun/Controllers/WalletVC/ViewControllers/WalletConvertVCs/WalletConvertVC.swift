@@ -46,9 +46,9 @@ class WalletConvertVC: BaseViewController {
     
     lazy var convertContainer = UIStackView(axis: .horizontal, spacing: 10)
     lazy var convertSellLabel = UILabel.with(text: "Sell", textSize: 12, weight: .medium, textColor: .a5a7bd)
-    lazy var sellTextField = createTextField()
+    lazy var leftTextField = createTextField()
     lazy var convertBuyLabel = UILabel.with(text: "Buy", textSize: 12, weight: .medium, textColor: .a5a7bd)
-    lazy var buyTextField = createTextField()
+    lazy var rightTextField = createTextField()
     
     private func createTextField() -> UITextField {
         let textField = UITextField(backgroundColor: .clear)
@@ -205,18 +205,18 @@ class WalletConvertVC: BaseViewController {
                     self?.rateLabel.showLoader()
                     self?.rateLabel.isUserInteractionEnabled = false
                     
-                    if !(self?.buyTextField.isFirstResponder ?? false) {
-                        self?.buyTextField.showLoader()
+                    if !(self?.rightTextField.isFirstResponder ?? false) {
+                        self?.rightTextField.showLoader()
                     }
                     
-                    if !(self?.sellTextField.isFirstResponder ?? false) {
-                        self?.sellTextField.showLoader()
+                    if !(self?.leftTextField.isFirstResponder ?? false) {
+                        self?.leftTextField.showLoader()
                     }
                 case .finished:
                     self?.rateLabel.hideLoader()
                     self?.rateLabel.isUserInteractionEnabled = false
-                    self?.buyTextField.hideLoader()
-                    self?.sellTextField.hideLoader()
+                    self?.rightTextField.hideLoader()
+                    self?.leftTextField.hideLoader()
                 case .error(let error):
                     #if !APP_STORE
                         self?.showError(error)
@@ -227,16 +227,16 @@ class WalletConvertVC: BaseViewController {
                         .text("retry".localized().uppercaseFirst + "?", size: 12, weight: .medium, color: .appMainColor)
                     self?.rateLabel.isUserInteractionEnabled = true
                     
-                    self?.buyTextField.hideLoader()
-                    self?.sellTextField.hideLoader()
+                    self?.rightTextField.hideLoader()
+                    self?.leftTextField.hideLoader()
                 }
             })
             .disposed(by: disposeBag)
         
         // convert button
         Observable.merge(
-            sellTextField.rx.text.orEmpty.map {_ in ()},
-            buyTextField.rx.text.orEmpty.skip(1).map {_ in ()}
+            leftTextField.rx.text.orEmpty.map {_ in ()},
+            rightTextField.rx.text.orEmpty.skip(1).map {_ in ()}
         )
             .map { _ in self.shouldEnableConvertButton()}
             .bind(to: convertButton.rx.isEnabled)
@@ -244,49 +244,11 @@ class WalletConvertVC: BaseViewController {
     }
     
     func bindBuyPrice() {
-        sellTextField.rx.text.orEmpty
-            .skip(1)
-            .debounce(0.3, scheduler: MainScheduler.instance)
-            .map {NumberFormatter().number(from: $0)?.doubleValue ?? 0}
-            .subscribe(onNext: { (value) in
-                if value == 0 {
-                    self.viewModel.priceLoadingState.accept(.finished)
-                    self.viewModel.buyPrice.accept(0)
-                    return
-                }
-                self.getBuyPrice()
-            })
-            .disposed(by: disposeBag)
-        
-        viewModel.buyPrice
-            .distinctUntilChanged()
-            .subscribe(onNext: { [weak self] _ in
-                self?.setUpBuyPrice()
-            })
-            .disposed(by: disposeBag)
+        fatalError("Must override")
     }
     
     func bindSellPrice() {
-        buyTextField.rx.text.orEmpty
-            .skip(1)
-            .debounce(0.3, scheduler: MainScheduler.instance)
-            .map {NumberFormatter().number(from: $0)?.doubleValue ?? 0}
-            .subscribe(onNext: { (value) in
-                if value == 0 {
-                    self.viewModel.priceLoadingState.accept(.finished)
-                    self.viewModel.sellPrice.accept(0)
-                    return
-                }
-                self.getSellPrice()
-            })
-            .disposed(by: disposeBag)
-        
-        viewModel.sellPrice
-            .distinctUntilChanged()
-            .subscribe(onNext: { [weak self] _ in
-                self?.setUpSellPrice()
-            })
-            .disposed(by: disposeBag)
+        fatalError("Must override")
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -365,9 +327,9 @@ class WalletConvertVC: BaseViewController {
         firstView.addSubview(convertSellLabel)
         convertSellLabel.autoPinTopAndLeadingToSuperView(inset: 10, xInset: 16)
         
-        firstView.addSubview(sellTextField)
-        sellTextField.autoPinEdge(.top, to: .bottom, of: convertSellLabel, withOffset: 8)
-        sellTextField.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 16, bottom: 10, right: 16), excludingEdge: .top)
+        firstView.addSubview(leftTextField)
+        leftTextField.autoPinEdge(.top, to: .bottom, of: convertSellLabel, withOffset: 8)
+        leftTextField.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 16, bottom: 10, right: 16), excludingEdge: .top)
         
         convertContainer.addArrangedSubview(firstView)
         
@@ -386,10 +348,10 @@ class WalletConvertVC: BaseViewController {
         equalLabel.autoPinEdge(.top, to: .bottom, of: convertBuyLabel, withOffset: 8)
         equalLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
         
-        secondView.addSubview(buyTextField)
-        buyTextField.autoPinEdge(.top, to: .bottom, of: convertBuyLabel, withOffset: 8)
-        buyTextField.autoPinEdge(.leading, to: .trailing, of: equalLabel)
-        buyTextField.autoPinBottomAndTrailingToSuperView(inset: 10, xInset: 16)
+        secondView.addSubview(rightTextField)
+        rightTextField.autoPinEdge(.top, to: .bottom, of: convertBuyLabel, withOffset: 8)
+        rightTextField.autoPinEdge(.leading, to: .trailing, of: equalLabel)
+        rightTextField.autoPinBottomAndTrailingToSuperView(inset: 10, xInset: 16)
         
         convertContainer.addArrangedSubview(secondView)
     }

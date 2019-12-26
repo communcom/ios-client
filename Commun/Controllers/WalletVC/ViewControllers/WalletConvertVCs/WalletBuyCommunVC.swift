@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import RxSwift
 
 class WalletBuyCommunVC: WalletConvertVC {
     
@@ -32,31 +33,84 @@ class WalletBuyCommunVC: WalletConvertVC {
     }
     
     override func setUpBuyPrice() {
+        leftTextField.text = stringFromNumber(viewModel.buyPrice.value)
         
+//        let value = NumberFormatter().number(from: rightTextField.text ?? "")?.doubleValue ?? 0
+        
+//        rateLabel.attributedText = NSMutableAttributedString()
+//            .text("rate".localized().uppercaseFirst + ": \(value.currencyValueFormatted) CMN = \(viewModel.buyPrice.value.currencyValueFormatted) \(currentBalance?.symbol ?? "")", size: 12, weight: .medium)
     }
     
     override func setUpSellPrice() {
-        let value = NumberFormatter().number(from: sellTextField.text ?? "")?.doubleValue ?? 0
+        rightTextField.text = stringFromNumber(viewModel.sellPrice.value)
+//        let value = NumberFormatter().number(from: leftTextField.text ?? "")?.doubleValue ?? 0
+//        
+//        rateLabel.attributedText = NSMutableAttributedString()
+//            .text("rate".localized().uppercaseFirst + ": \(value.currencyValueFormatted) \(currentBalance?.symbol ?? currentBalance?.name ?? "") = \((viewModel.buyPrice.value != 0 ? 10 / viewModel.buyPrice.value : 0).currencyValueFormatted) CMN", size: 12, weight: .medium)
+    }
+    
+    override func bindBuyPrice() {
+        rightTextField.rx.text.orEmpty
+            .skip(1)
+            .debounce(0.3, scheduler: MainScheduler.instance)
+            .map {NumberFormatter().number(from: $0)?.doubleValue ?? 0}
+            .subscribe(onNext: { (value) in
+                if value == 0 {
+                    self.viewModel.priceLoadingState.accept(.finished)
+                    self.viewModel.buyPrice.accept(0)
+                    return
+                }
+                self.getBuyPrice()
+            })
+            .disposed(by: disposeBag)
         
-        rateLabel.attributedText = NSMutableAttributedString()
-            .text("rate".localized().uppercaseFirst + ": \(value.currencyValueFormatted) \(currentBalance?.symbol ?? currentBalance?.name ?? "") = \((viewModel.buyPrice.value != 0 ? 10 / viewModel.buyPrice.value : 0).currencyValueFormatted) CMN", size: 12, weight: .medium)
+        viewModel.buyPrice
+            .distinctUntilChanged()
+            .subscribe(onNext: { [weak self] _ in
+                self?.setUpBuyPrice()
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    override func bindSellPrice() {
+        leftTextField.rx.text.orEmpty
+            .skip(1)
+            .debounce(0.3, scheduler: MainScheduler.instance)
+            .map {NumberFormatter().number(from: $0)?.doubleValue ?? 0}
+            .subscribe(onNext: { (value) in
+                if value == 0 {
+                    self.viewModel.priceLoadingState.accept(.finished)
+                    self.viewModel.sellPrice.accept(0)
+                    return
+                }
+                self.getSellPrice()
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel.sellPrice
+            .distinctUntilChanged()
+            .subscribe(onNext: { [weak self] _ in
+                self?.setUpSellPrice()
+            })
+            .disposed(by: disposeBag)
     }
     
     override func getBuyPrice() {
         guard let balance = currentBalance,
-            let value = NumberFormatter().number(from: sellTextField.text ?? "")?.doubleValue
+            let value = NumberFormatter().number(from: rightTextField.text ?? "")?.doubleValue
         else {return}
-        viewModel.getSellPrice(quantity: "\(value) \(balance.symbol)")
+        viewModel.getBuyPrice(symbol: balance.symbol, quantity: "\(value) CMN")
+        
     }
     
     override func getSellPrice() {
         guard let balance = currentBalance,
-            let value = NumberFormatter().number(from: buyTextField.text ?? "")?.doubleValue
+            let value = NumberFormatter().number(from: leftTextField.text ?? "")?.doubleValue
         else {return}
-        viewModel.getBuyPrice(symbol: balance.symbol, quantity: "\(value) CMN")
+        viewModel.getSellPrice(quantity: "\(value) \(balance.symbol)")
     }
     
-//    override func shouldEnableConvertButton() -> Bool {
-//
-//    }
+    override func shouldEnableConvertButton() -> Bool {
+        true
+    }
 }
