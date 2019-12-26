@@ -8,6 +8,7 @@
 
 import Foundation
 import RxCocoa
+import RxSwift
 
 class WalletConvertVC: BaseViewController {
     // MARK: - Properties
@@ -61,6 +62,8 @@ class WalletConvertVC: BaseViewController {
     }
     
     lazy var rateLabel = UILabel.with(text: "Rate: ", textSize: 12, weight: .medium, textAlignment: .center)
+    
+    lazy var convertButton = CommunButton.default(height: 50, label: "Convert", isHuggingContent: false)
     
     // MARK: - Initializers
     init(symbol: String? = nil) {
@@ -229,9 +232,28 @@ class WalletConvertVC: BaseViewController {
     }
     
     func layoutBottom() {
-        let keyboardViewV = KeyboardLayoutConstraint(item: view!, attribute: .bottom, relatedBy: .equal, toItem: scrollView, attribute: .bottom, multiplier: 1.0, constant: 0.0)
+        let warningLabel = UILabel.with(textSize: 12, weight: .medium, textColor: .a5a7bd, numberOfLines: 0, textAlignment: .center)
+        warningLabel.attributedText = NSMutableAttributedString()
+            .text("transfer time takes up to".localized().uppercaseFirst, size: 12, weight: .medium, color: .a5a7bd)
+            .text(" 5-30 " + "minutes".localized().uppercaseFirst, size: 12, weight: .medium, color: .appMainColor)
+
+        view.addSubview(warningLabel)
+        warningLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 20)
+        warningLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 20)
+        
+        // convertButton
+        convertButton.addTarget(self, action: #selector(convertButtonDidTouch), for: .touchUpInside)
+        
+        view.addSubview(convertButton)
+        convertButton.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
+        convertButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
+        convertButton.autoPinEdge(.top, to: .bottom, of: warningLabel, withOffset: 20)
+        
+        let keyboardViewV = KeyboardLayoutConstraint(item: view!.safeAreaLayoutGuide, attribute: .bottom, relatedBy: .equal, toItem: convertButton, attribute: .bottom, multiplier: 1.0, constant: 16)
         keyboardViewV.observeKeyboardHeight()
         self.view.addConstraint(keyboardViewV)
+        
+        scrollView.autoPinEdge(.bottom, to: .top, of: warningLabel)
     }
     
     override func bind() {
@@ -324,6 +346,15 @@ class WalletConvertVC: BaseViewController {
                 self?.setUpPrice()
             })
             .disposed(by: disposeBag)
+        
+        // convert button
+        Observable.merge(
+            sellTextField.rx.text.orEmpty.map {_ in ()},
+            buyTextField.rx.text.orEmpty.skip(1).map {_ in ()}
+        )
+            .map { _ in self.shouldEnableConvertButton()}
+            .bind(to: convertButton.rx.isEnabled)
+            .disposed(by: disposeBag)
     }
     
     func buyValue(fromSellValue value: Double) -> Double {
@@ -331,6 +362,10 @@ class WalletConvertVC: BaseViewController {
     }
     
     func sellValue(fromBuyValue value: Double) -> Double {
+        fatalError("Must override")
+    }
+    
+    func shouldEnableConvertButton() -> Bool {
         fatalError("Must override")
     }
     
@@ -404,6 +439,10 @@ class WalletConvertVC: BaseViewController {
     @objc func getBuyPrice() {
         guard let balance = currentBalance else {return}
         viewModel.getBuyPrice(symbol: balance.symbol)
+    }
+    
+    @objc func convertButtonDidTouch() {
+        // TODO: - Convert
     }
     
     // MARK: - Helpers

@@ -38,14 +38,18 @@ class WalletBuyCommunVC: WalletConvertVC {
     }
     
     override func buyValue(fromSellValue value: Double) -> Double {
-        let price: Double? = self.currentBalance?.priceValue
-        if price == 0 || price == nil {
+        let price = viewModel.price.value
+        if price == 0 {
             return 0
         }
-        return value / price!
+        return value / price
     }
     
     override func sellValue(fromBuyValue value: Double) -> Double {
-        value * (self.currentBalance?.priceValue ?? 0)
+        value * viewModel.price.value
+    }
+    
+    override func shouldEnableConvertButton() -> Bool {
+        
     }
 }

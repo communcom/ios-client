@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import RxSwift
 
 class WalletSellCommunVC: WalletConvertVC {
     // MARK: - Properties
@@ -15,33 +14,11 @@ class WalletSellCommunVC: WalletConvertVC {
         .appMainColor
     }
     
-    // MARK: - Subviews
-    lazy var convertButton = CommunButton.default(height: 50, label: "Convert", isHuggingContent: false)
-    
     // MARK: - Methods
     override func setUp() {
         super.setUp()
         balanceNameLabel.text = "Commun"
         convertSellLabel.text = "sell".localized().uppercaseFirst + " Commun"
-    }
-    
-    override func bind() {
-        super.bind()
-        
-        // convert button
-        Observable.merge(
-            sellTextField.rx.text.orEmpty.skip(1).map {_ in ()},
-            buyTextField.rx.text.orEmpty.skip(1).map {_ in ()}
-        )
-            .map { _ in
-                guard let sellAmount = NumberFormatter().number(from: self.sellTextField.text ?? "0")?.doubleValue
-                    else {return false}
-                guard let communBalance = self.communBalance else {return false}
-                guard sellAmount > 0 else {return false}
-                return sellAmount <= communBalance.balanceValue
-            }
-            .bind(to: convertButton.rx.isEnabled)
-            .disposed(by: disposeBag)
     }
     
     override func setUpCommunBalance() {
@@ -89,39 +66,24 @@ class WalletSellCommunVC: WalletConvertVC {
         dropdownButton.autoPinEdge(.leading, to: .trailing, of: buyBalanceLabel, withOffset: 10)
     }
     
-    override func layoutBottom() {
-        let warningLabel = UILabel.with(textSize: 12, weight: .medium, textColor: .a5a7bd, numberOfLines: 0, textAlignment: .center)
-        warningLabel.attributedText = NSMutableAttributedString()
-            .text("transfer time takes up to".localized().uppercaseFirst, size: 12, weight: .medium, color: .a5a7bd)
-            .text(" 5-30 " + "minutes".localized().uppercaseFirst, size: 12, weight: .medium, color: .appMainColor)
-
-        view.addSubview(warningLabel)
-        warningLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 20)
-        warningLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 20)
-        
-        convertButton.addTarget(self, action: #selector(convertButtonDidTouch), for: .touchUpInside)
-        view.addSubview(convertButton)
-        convertButton.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
-        convertButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
-        convertButton.autoPinEdge(.top, to: .bottom, of: warningLabel, withOffset: 20)
-        
-        let keyboardViewV = KeyboardLayoutConstraint(item: view!.safeAreaLayoutGuide, attribute: .bottom, relatedBy: .equal, toItem: convertButton, attribute: .bottom, multiplier: 1.0, constant: 16)
-        keyboardViewV.observeKeyboardHeight()
-        self.view.addConstraint(keyboardViewV)
-        
-        scrollView.autoPinEdge(.bottom, to: .top, of: warningLabel)
-    }
-    
     override func buyValue(fromSellValue value: Double) -> Double {
-        value * (self.currentBalance?.priceValue ?? 0)
+        value * viewModel.price.value
     }
     
     override func sellValue(fromBuyValue value: Double) -> Double {
-        let price: Double? = self.currentBalance?.priceValue
-        if price == 0 || price == nil {
+        let price = self.viewModel.price.value
+        if price == 0 {
             return 0
         }
-        return value / price!
+        return value / price
+    }
+    
+    override func shouldEnableConvertButton() -> Bool {
+        guard let sellAmount = NumberFormatter().number(from: self.sellTextField.text ?? "0")?.doubleValue
+            else {return false}
+        guard let communBalance = self.communBalance else {return false}
+        guard sellAmount > 0 else {return false}
+        return sellAmount <= communBalance.balanceValue
     }
     
     // MARK: - Actions
@@ -131,9 +93,5 @@ class WalletSellCommunVC: WalletConvertVC {
         }
         let nc = BaseNavigationController(rootViewController: vc)
         present(nc, animated: true, completion: nil)
-    }
-    
-    @objc func convertButtonDidTouch() {
-        // TODO: - Convert
     }
 }
