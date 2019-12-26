@@ -35,18 +35,19 @@ class WalletBuyCommunVC: WalletConvertVC {
     override func setUpBuyPrice() {
         leftTextField.text = stringFromNumber(viewModel.buyPrice.value)
         
-//        let value = NumberFormatter().number(from: rightTextField.text ?? "")?.doubleValue ?? 0
+        let value = NumberFormatter().number(from: rightTextField.text ?? "")?.doubleValue ?? 0
         
-//        rateLabel.attributedText = NSMutableAttributedString()
-//            .text("rate".localized().uppercaseFirst + ": \(value.currencyValueFormatted) CMN = \(viewModel.buyPrice.value.currencyValueFormatted) \(currentBalance?.symbol ?? "")", size: 12, weight: .medium)
+        rateLabel.attributedText = NSMutableAttributedString()
+            .text("rate".localized().uppercaseFirst + ": \(viewModel.buyPrice.value.currencyValueFormatted) \(currentBalance?.symbol ?? "") = \(value.currencyValueFormatted) CMN", size: 12, weight: .medium)
     }
     
     override func setUpSellPrice() {
         rightTextField.text = stringFromNumber(viewModel.sellPrice.value)
-//        let value = NumberFormatter().number(from: leftTextField.text ?? "")?.doubleValue ?? 0
-//        
-//        rateLabel.attributedText = NSMutableAttributedString()
-//            .text("rate".localized().uppercaseFirst + ": \(value.currencyValueFormatted) \(currentBalance?.symbol ?? currentBalance?.name ?? "") = \((viewModel.buyPrice.value != 0 ? 10 / viewModel.buyPrice.value : 0).currencyValueFormatted) CMN", size: 12, weight: .medium)
+        
+        let value = NumberFormatter().number(from: leftTextField.text ?? "")?.doubleValue ?? 0
+
+        rateLabel.attributedText = NSMutableAttributedString()
+            .text("rate".localized().uppercaseFirst + ": \((viewModel.buyPrice.value != 0 ? 10 / viewModel.buyPrice.value : 0).currencyValueFormatted) \(currentBalance?.symbol ?? currentBalance?.name ?? "") = \(value.currencyValueFormatted) CMN", size: 12, weight: .medium)
     }
     
     override func bindBuyPrice() {
