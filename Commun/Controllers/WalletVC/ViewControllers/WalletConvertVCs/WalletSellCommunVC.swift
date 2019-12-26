@@ -45,17 +45,24 @@ class WalletSellCommunVC: WalletConvertVC {
     }
     
     override func setUpCommunBalance() {
+        super.setUpCommunBalance()
         guard let balance = communBalance else {return}
         valueLabel.text = balance.balanceValue.currencyValueFormatted
     }
     
     override func setUpCurrentBalance() {
+        super.setUpCurrentBalance()
         guard let balance = currentBalance else {return}
         buyLogoImageView.setAvatar(urlString: balance.logo, namePlaceHolder: balance.name ?? balance.symbol)
         buyNameLabel.text = balance.name ?? balance.symbol
         buyBalanceLabel.text = balance.balanceValue.currencyValueFormatted
         convertBuyLabel.text = "buy".localized().uppercaseFirst + " \(balance.name ?? balance.symbol)"
-        rateLabel.text = "rate".localized().uppercaseFirst + ": 1 Commun = \(balance.priceValue.currencyValueFormatted) \(balance.name ?? balance.symbol)"
+    }
+    
+    override func setUpPrice() {
+        super.setUpPrice()
+        rateLabel.attributedText = NSMutableAttributedString()
+            .text("rate".localized().uppercaseFirst + ": 10 CMN = \(viewModel.price.value.currencyValueFormatted) \(currentBalance?.symbol ?? "")", size: 12, weight: .medium)
     }
     
     override func layoutCarousel() {

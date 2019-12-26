@@ -11,7 +11,7 @@ import RxCocoa
 
 class WalletConvertVC: BaseViewController {
     // MARK: - Properties
-    let viewModel = BalancesViewModel()
+    let viewModel = WalletConvertViewModel()
     var currentSymbol: String?
     var currentBalance: ResponseAPIWalletGetBalance? {
         didSet {
@@ -130,6 +130,10 @@ class WalletConvertVC: BaseViewController {
         
         // rate label
         whiteView.addSubview(rateLabel)
+        
+        let tap3 = UITapGestureRecognizer(target: self, action: #selector(getBuyPrice))
+        rateLabel.addGestureRecognizer(tap3)
+        
         rateLabel.autoPinEdge(.top, to: .bottom, of: convertContainer, withOffset: 20)
         rateLabel.autoAlignAxis(toSuperviewAxis: .vertical)
         
@@ -289,6 +293,37 @@ class WalletConvertVC: BaseViewController {
                 self.sellTextField.text = text
             })
             .disposed(by: disposeBag)
+        
+        // price
+        viewModel.buyPriceLoadingState
+            .distinctUntilChanged()
+            .subscribe(onNext: { [weak self] (state) in
+                switch state {
+                case .loading:
+                    self?.rateLabel.showLoader()
+                    self?.rateLabel.isUserInteractionEnabled = false
+                case .finished:
+                    self?.rateLabel.hideLoader()
+                    self?.rateLabel.isUserInteractionEnabled = false
+                case .error(let error):
+                    #if !APP_STORE
+                        self?.showError(error)
+                    #endif
+                    self?.rateLabel.hideLoader()
+                    self?.rateLabel.attributedText = NSMutableAttributedString()
+                        .text("could not get price".localized().uppercaseFirst + ". ", size: 12, weight: .medium, color: .red)
+                        .text("retry".localized().uppercaseFirst + "?", size: 12, weight: .medium, color: .appMainColor)
+                    self?.rateLabel.isUserInteractionEnabled = true
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel.price
+            .distinctUntilChanged()
+            .subscribe(onNext: { [weak self] _ in
+                self?.setUpPrice()
+            })
+            .disposed(by: disposeBag)
     }
     
     func buyValue(fromSellValue value: Double) -> Double {
@@ -312,6 +347,10 @@ class WalletConvertVC: BaseViewController {
     }
     
     func setUpCurrentBalance() {
+        getBuyPrice()
+    }
+    
+    func setUpPrice() {
         
     }
     
@@ -360,6 +399,11 @@ class WalletConvertVC: BaseViewController {
         viewControllers.append(vc)
 
         navigationController?.setViewControllers(viewControllers, animated: false)
+    }
+    
+    @objc func getBuyPrice() {
+        guard let balance = currentBalance else {return}
+        viewModel.getBuyPrice(symbol: balance.symbol)
     }
     
     // MARK: - Helpers

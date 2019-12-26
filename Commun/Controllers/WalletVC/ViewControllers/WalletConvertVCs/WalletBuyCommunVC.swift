@@ -18,16 +18,23 @@ class WalletBuyCommunVC: WalletConvertVC {
     }
     
     override func setUpCommunBalance() {
+        super.setUpCommunBalance()
         guard let balance = communBalance else {return}
         buyBalanceLabel.text = balance.balanceValue.currencyValueFormatted
     }
     
     override func setUpCurrentBalance() {
+        super.setUpCurrentBalance()
         guard let balance = currentBalance else {return}
         balanceNameLabel.text = balance.name
         valueLabel.text = balance.balanceValue.currencyValueFormatted
         convertSellLabel.text = "sell".localized().uppercaseFirst + " \(balance.name ?? balance.symbol)"
-        rateLabel.text = "rate".localized().uppercaseFirst + ": 1 \(balance.name ?? balance.symbol) = \((1 / balance.priceValue).currencyValueFormatted) Commun"
+    }
+    
+    override func setUpPrice() {
+        super.setUpPrice()
+        rateLabel.attributedText = NSMutableAttributedString()
+            .text("rate".localized().uppercaseFirst + ": 10 \(currentBalance?.symbol ?? currentBalance?.name ?? "") = \((viewModel.price.value != 0 ? 10 / viewModel.price.value : 0).currencyValueFormatted) CMN", size: 12, weight: .medium)
     }
     
     override func buyValue(fromSellValue value: Double) -> Double {

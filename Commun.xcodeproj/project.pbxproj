@@ -259,6 +259,7 @@
 		BC3AD9DC23838E920026EAB4 /* CommentFormViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3AD9DB23838E920026EAB4 /* CommentFormViewModel.swift */; };
 		BC3D97612350384E00421718 /* ResponseAPIContentGetPosts.json in Resources */ = {isa = PBXBuildFile; fileRef = BC3D97602350384E00421718 /* ResponseAPIContentGetPosts.json */; };
 		BC401E3C2371143F00A53788 /* LeaderAvatarImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC401E3B2371143F00A53788 /* LeaderAvatarImageView.swift */; };
+		BC43FDFE23B44F7200255451 /* WalletConvertViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC43FDFD23B44F7200255451 /* WalletConvertViewModel.swift */; };
 		BC465927238E563F00AF9C29 /* BackUpKeysVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC465926238E563F00AF9C29 /* BackUpKeysVC.swift */; };
 		BC46592B238E633C00AF9C29 /* BoardingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC46592A238E633C00AF9C29 /* BoardingVC.swift */; };
 		BC46592D238E681500AF9C29 /* BoardingSetPasscodeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC46592C238E681500AF9C29 /* BoardingSetPasscodeVC.swift */; };
@@ -735,6 +736,7 @@
 		BC3AD9DB23838E920026EAB4 /* CommentFormViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentFormViewModel.swift; sourceTree = "<group>"; };
 		BC3D97602350384E00421718 /* ResponseAPIContentGetPosts.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ResponseAPIContentGetPosts.json; sourceTree = "<group>"; };
 		BC401E3B2371143F00A53788 /* LeaderAvatarImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderAvatarImageView.swift; sourceTree = "<group>"; };
+		BC43FDFD23B44F7200255451 /* WalletConvertViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletConvertViewModel.swift; sourceTree = "<group>"; };
 		BC465926238E563F00AF9C29 /* BackUpKeysVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackUpKeysVC.swift; sourceTree = "<group>"; };
 		BC46592A238E633C00AF9C29 /* BoardingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardingVC.swift; sourceTree = "<group>"; };
 		BC46592C238E681500AF9C29 /* BoardingSetPasscodeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardingSetPasscodeVC.swift; sourceTree = "<group>"; };
@@ -2093,6 +2095,7 @@
 		BC4AD66923B2070D008546A4 /* WalletConvertVCs */ = {
 			isa = PBXGroup;
 			children = (
+				BC43FDFD23B44F7200255451 /* WalletConvertViewModel.swift */,
 				BC4AD66C23B2072C008546A4 /* WalletConvertVC.swift */,
 				BC4AD67323B314F2008546A4 /* WalletSellCommunVC.swift */,
 				BC4AD67523B31683008546A4 /* WalletBuyCommunVC.swift */,
@@ -2912,6 +2915,7 @@
 				3BAD8E812318D838005A8AB3 /* UITextView+UILabel.swift in Sources */,
 				BCA97113236004F500AE37E1 /* CommentsViewModel.swift in Sources */,
 				3BAF69CF226787940055CCEB /* Date.swift in Sources */,
+				BC43FDFE23B44F7200255451 /* WalletConvertViewModel.swift in Sources */,
 				BC469300239663980064A38B /* ForceUpdateView.swift in Sources */,
 				3BE68AB222EEA7C300033B81 /* LocalAuthVC.swift in Sources */,
 				3B3C8B7A23472ADA00D8BADB /* PostEditorToolbarItemCell.swift in Sources */,
