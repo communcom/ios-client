@@ -11,16 +11,17 @@ import RxSwift
 import CircularCarousel
 
 class WalletHeaderView: MyTableHeaderView {
-    // MARK: - Constants
-    var maxItemsInCarousel = 5
-    var carouselHeight: CGFloat = 40
-    
     // MARK: - Properties
     var stackViewTopConstraint: NSLayoutConstraint?
     var sendPointsTopConstraint: NSLayoutConstraint?
-    var balances: [ResponseAPIWalletGetBalance]?
+    var balances: [ResponseAPIWalletGetBalance]? {
+        didSet {
+            carousel.balances = balances
+        }
+    }
     var currentIndex: Int = 0 {
         didSet {
+            carousel.currentIndex = currentIndex
             if currentIndex == 0 {
                 setUpWithCommunValue()
             } else {
@@ -36,7 +37,7 @@ class WalletHeaderView: MyTableHeaderView {
     
     lazy var backButton = UIButton.back(width: 44, height: 44, tintColor: .white, contentInsets: UIEdgeInsets(top: 11, left: 16, bottom: 11, right: 16))
     lazy var communLogo = UIView.transparentCommunLogo(size: 40)
-    lazy var carousel = CircularCarousel(width: 300, height: 44)
+    lazy var carousel = WalletCarousel(height: 40)
     lazy var optionsButton = UIButton.option(tintColor: .white)
     
     lazy var titleLabel = UILabel.with(text: "Equity Value Commun", textSize: 15, weight: .semibold, textColor: .white)
@@ -118,8 +119,9 @@ class WalletHeaderView: MyTableHeaderView {
         contentView.addSubview(carousel)
         carousel.autoAlignAxis(toSuperviewAxis: .vertical)
         carousel.autoAlignAxis(.horizontal, toSameAxisOf: backButton)
-        carousel.delegate = self
-        carousel.dataSource = self
+        carousel.scrollingHandler = {index in
+            self.currentIndex = index
+        }
         
         contentView.addSubview(optionsButton)
         optionsButton.autoPinEdge(toSuperviewSafeArea: .trailing)
@@ -369,61 +371,5 @@ class WalletHeaderView: MyTableHeaderView {
         guard let index = balances?.firstIndex(where: {$0.symbol == symbol}) else {return}
         currentIndex = index
         carousel.reloadData()
-    }
-}
-
-extension WalletHeaderView: CircularCarouselDataSource, CircularCarouselDelegate {
-    func startingItemIndex(inCarousel carousel: CircularCarousel) -> Int {
-        return currentIndex
-    }
-    
-    func numberOfItems(inCarousel carousel: CircularCarousel) -> Int {
-        return min(maxItemsInCarousel, balances?.count ?? 0)
-    }
-    func carousel(_: CircularCarousel, viewForItemAt indexPath: IndexPath, reuseView: UIView?) -> UIView {
-        guard let balance = balances?[safe: indexPath.row] else {return UIView()}
-        
-        var view = reuseView
-
-        if view == nil || view?.viewWithTag(1) == nil {
-            view = UIView(frame: CGRect(x: 0, y: 0, width: carouselHeight, height: carouselHeight))
-            let imageView = MyAvatarImageView(size: carouselHeight)
-            imageView.borderColor = .white
-            imageView.borderWidth = 2
-            imageView.tag = 1
-            view!.addSubview(imageView)
-            imageView.autoAlignAxis(toSuperviewAxis: .horizontal)
-            imageView.autoAlignAxis(toSuperviewAxis: .vertical)
-        }
-        
-        let imageView = view?.viewWithTag(1) as! MyAvatarImageView
-        
-        if balance.symbol == "CMN" {
-            imageView.image = UIImage(named: "tux")
-        } else {
-            imageView.setAvatar(urlString: balance.logo, namePlaceHolder: balance.name ?? balance.symbol)
-        }
-        
-        return view!
-    }
-    // MARK: CircularCarouselDelegate
-    func carousel<CGFloat>(_ carousel: CircularCarousel, valueForOption option: CircularCarouselOption, withDefaultValue defaultValue: CGFloat) -> CGFloat {
-        if option == .itemWidth {
-            return CoreGraphics.CGFloat(carouselHeight) as! CGFloat
-        }
-        
-        if option == .spacing {
-            return CoreGraphics.CGFloat(8) as! CGFloat
-        }
-        
-        if option == .minScale {
-            return CoreGraphics.CGFloat(0.7) as! CGFloat
-        }
-        
-        return defaultValue
-    }
-    
-    func carousel(_ carousel: CircularCarousel, willBeginScrollingToIndex index: Int) {
-        currentIndex = index
     }
 }

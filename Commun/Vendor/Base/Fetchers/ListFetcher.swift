@@ -100,6 +100,8 @@ class ListFetcher<T: ListItemType> {
                     }
                 } else if items.count < self.limit {
                     self.state.accept(.listEnded)
+                } else if items.count > self.limit {
+                    self.state.accept(.listEnded)
                 } else {
                     self.state.accept(.loading(false))
                 }
