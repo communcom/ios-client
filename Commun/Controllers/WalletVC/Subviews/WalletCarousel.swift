@@ -20,6 +20,14 @@ class WalletCarousel: MyView {
     
     // MARK: - Subviews
     private lazy var carousel = CircularCarousel(width: 300)
+    lazy var gradient: CAGradientLayer = {
+        let gradient = CAGradientLayer()
+        gradient.frame = bounds
+        gradient.colors = [UIColor.black.cgColor, UIColor.clear.cgColor, UIColor.black.cgColor]
+        gradient.startPoint = CGPoint(x: 0, y: 0.5)
+        gradient.endPoint = CGPoint(x: 1, y: 0.5)
+        return gradient
+    }()
     
     init(height: CGFloat) {
         carouselHeight = height
@@ -37,10 +45,17 @@ class WalletCarousel: MyView {
         carousel.autoPinEdgesToSuperviewEdges()
         carousel.delegate = self
         carousel.dataSource = self
+        
+        layer.addSublayer(gradient)
     }
     
     func reloadData() {
         carousel.reloadData()
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        gradient.frame = bounds
     }
 }
 
