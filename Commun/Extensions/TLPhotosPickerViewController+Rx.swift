@@ -13,7 +13,7 @@ import RxSwift
 import Photos
 
 class CustomTLPhotosPickerVC: TLPhotosPickerViewController {
-    
+
     static var singleImage: CustomTLPhotosPickerVC {
         // If updating
         let pickerVC = CustomTLPhotosPickerVC()
@@ -24,6 +24,18 @@ class CustomTLPhotosPickerVC: TLPhotosPickerViewController {
         configure.allowedVideoRecording = false
         configure.mediaType = .image
         pickerVC.configure = configure
+
+        pickerVC.handleNoAlbumPermissions = { controller in
+            DispatchQueue.main.async {
+                let emptyView = PhotoLibraryAccessDeniedView()
+                controller.view.addSubview(emptyView)
+                emptyView.autoPinEdge(toSuperviewEdge: .leading)
+                emptyView.autoPinEdge(toSuperviewEdge: .trailing)
+                emptyView.autoAlignAxis(toSuperviewAxis: .horizontal)
+                controller.indicator.isHidden = true
+            }
+        }
+
         return pickerVC
     }
     
@@ -48,6 +60,7 @@ class RxTLPhotosPickerViewControllerDelegateProxy: DelegateProxy<TLPhotosPickerV
         self.pickerVC = pickerVC
         super.init(parentObject: pickerVC, delegateProxy: RxTLPhotosPickerViewControllerDelegateProxy.self)
     }
+
     static func registerKnownImplementations() {
         self.register {RxTLPhotosPickerViewControllerDelegateProxy(pickerVC: $0)}
     }

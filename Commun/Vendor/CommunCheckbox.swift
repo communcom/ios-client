@@ -9,6 +9,8 @@
 import UIKit
 
 class CommunCheckbox: UIButton {
+    var notShowOffCheckbox = false
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         commonInit()
@@ -40,7 +42,7 @@ class CommunCheckbox: UIButton {
             } else {
                 backgroundColor = .white
                 borderWidth = 1
-                borderColor = .e2e6e8
+                borderColor = notShowOffCheckbox ? .clear : .e2e6e8
                 setImage(nil, for: .normal)
                 imageEdgeInsets = UIEdgeInsets.zero
             }

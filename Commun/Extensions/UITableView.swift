@@ -198,7 +198,7 @@ extension UITableView {
                 
                 if strongSelf.numberOfSections == 0 { return }
                 
-                if indexPath.row >= strongSelf.numberOfRows(inSection: strongSelf.numberOfSections - 1) - 3 {
+                if indexPath.row >= strongSelf.numberOfRows(inSection: strongSelf.numberOfSections - 1) - 5 {
                     loadMoreAction()
                 }
             })

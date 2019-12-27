@@ -100,7 +100,8 @@ class AttachmentView: UIView {
         // layout
         contentView.addSubview(imageView)
         imageView.autoPinEdgesToSuperviewEdges()
-        
+        imageView.addTapToViewer()
+
         // image
         if let image = image {
             imageView.image = image

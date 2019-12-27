@@ -74,7 +74,10 @@ class ProfileEditCoverVC: UIViewController {
         didSelectImage.onNext(image ?? coverImage.image!)
     }
 
-    static func cropImage(scrollVIew: UIScrollView, imageView: UIImageView, maxSize: CGFloat = 1280, disableHorizontal: Bool = false) -> UIImage? {
+    static func cropImage(scrollVIew: UIScrollView,
+                          imageView: UIImageView,
+                          maxSize: CGFloat = 1280,
+                          disableHorizontal: Bool = false) -> UIImage? {
         guard let originalImage = imageView.image else {
             return nil
         }
@@ -88,10 +91,15 @@ class ProfileEditCoverVC: UIViewController {
             proportion = originalImage.size.width / displayWidth
         }
 
+        proportion /= scrollVIew.zoomScale
+
         let offsetX = scrollVIew.contentOffset.x
         let offsetY = scrollVIew.contentOffset.y
 
-        var finalRect = CGRect(x: offsetX, y: offsetY, width: displayWidth, height: scrollVIew.bounds.height)
+        var finalRect = CGRect(x: offsetX,
+                               y: offsetY,
+                               width: displayWidth,
+                               height: scrollVIew.bounds.height)
         finalRect.origin.x *= proportion
         finalRect.origin.y *= proportion
         finalRect.size.width *= proportion

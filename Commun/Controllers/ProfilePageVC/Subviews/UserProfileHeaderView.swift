@@ -72,9 +72,18 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
         addSubview(followersLabel)
         followersLabel.autoPinEdge(.leading, to: .trailing, of: followersCountLabel, withOffset: 4)
         followersLabel.autoPinEdge(.bottom, to: .bottom, of: followersCountLabel)
-        let tap1 = UITapGestureRecognizer(target: self, action: #selector(followersLabelDidTouch))
-        followersLabel.isUserInteractionEnabled = true
-        followersLabel.addGestureRecognizer(tap1)
+
+        let followersButton = UIButton(height: 44, backgroundColor: .clear)
+        addSubview(followersButton)
+        followersButton.autoAlignAxis(.horizontal, toSameAxisOf: followersLabel)
+        followersButton.autoPinEdge(.left, to: .left, of: followersCountLabel)
+        followersButton.autoPinEdge(.right, to: .right, of: followersLabel)
+        followersButton.rx.tap.subscribe { _ in
+            let vc = SubscribersVC(title: self.profile?.username, userId: self.profile?.userId)
+            let navigation = BaseNavigationController(rootViewController: vc)
+            navigation.view.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: 20)
+            self.parentViewController?.present(navigation, animated: true, completion: nil)
+        }.disposed(by: disposeBag)
         
         let dotLabel = UILabel.with(text: "•", textSize: 15, weight: .regular, textColor: .appGrayColor)
         addSubview(dotLabel)
@@ -89,9 +98,18 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
         addSubview(followingsLabel)
         followingsLabel.autoPinEdge(.leading, to: .trailing, of: followingsCountLabel, withOffset: 4)
         followingsLabel.autoPinEdge(.bottom, to: .bottom, of: followingsCountLabel)
-        let tap2 = UITapGestureRecognizer(target: self, action: #selector(follwingLabelDidTouch))
-        followingsLabel.isUserInteractionEnabled = true
-        followingsLabel.addGestureRecognizer(tap2)
+
+        let followingsButton = UIButton(height: 44, backgroundColor: .clear)
+        addSubview(followingsButton)
+        followingsButton.autoAlignAxis(.horizontal, toSameAxisOf: followingsLabel)
+        followingsButton.autoPinEdge(.left, to: .left, of: followingsCountLabel)
+        followingsButton.autoPinEdge(.right, to: .right, of: followingsLabel)
+        followingsButton.rx.tap.subscribe { _ in
+            let vc = SubscriptionsVC(title: self.profile?.username, userId: self.profile?.userId, type: .user)
+            let navigation = BaseNavigationController(rootViewController: vc)
+            navigation.view.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: 20)
+            self.parentViewController?.present(navigation, animated: true, completion: nil)
+        }.disposed(by: disposeBag)
         
         firstSeparator = UIView(height: 2, backgroundColor: .appLightGrayColor)
         addSubview(firstSeparator)
@@ -218,20 +236,6 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
     
     @objc func seeAllButtonDidTouch() {
         let vc = SubscriptionsVC(title: profile?.username, userId: profile?.userId, type: .community)
-        let navigation = BaseNavigationController(rootViewController: vc)
-        navigation.view.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: 20)
-        parentViewController?.present(navigation, animated: true, completion: nil)
-    }
-    
-    @objc func follwingLabelDidTouch() {
-        let vc = SubscriptionsVC(title: profile?.username, userId: profile?.userId, type: .user)
-        let navigation = BaseNavigationController(rootViewController: vc)
-        navigation.view.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: 20)
-        parentViewController?.present(navigation, animated: true, completion: nil)
-    }
-    
-    @objc func followersLabelDidTouch() {
-        let vc = SubscribersVC(title: profile?.username, userId: profile?.userId)
         let navigation = BaseNavigationController(rootViewController: vc)
         navigation.view.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: 20)
         parentViewController?.present(navigation, animated: true, completion: nil)

@@ -86,8 +86,8 @@ extension BasicEditorVC {
                     attachmentView.expandButton.isHidden = true
                 } else {
                     attachmentView.setUp(image: attachment.localImage, url: attachment.attributes?.url, description: attachment.attributes?.title ?? attachment.attributes?.description)
-                    attachmentView.autoSetDimension(.height, toSize: 200)
-                    attachmentView.expandButton.isHidden = false
+                    attachmentView.autoSetDimension(.height, toSize: attachment.size?.height ?? 300)
+                    attachmentView.expandButton.isHidden = true
                 }
                 
             })
