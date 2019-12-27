@@ -42,7 +42,7 @@ class CMTopTabBar: MyView {
     override func commonInit() {
         super.commonInit()
         configureForAutoLayout()
-        autoSetDimension(.height, toSize: tabBarHeight)
+        autoSetDimension(.height, toSize: tabBarHeight * Config.heightRatio)
         
         scrollView.showsVerticalScrollIndicator = false
         scrollView.showsHorizontalScrollIndicator = false
@@ -72,8 +72,7 @@ class CMTopTabBar: MyView {
             button.addTarget(self, action: #selector(changeSelection(_:)), for: .touchUpInside)
             
             scrollView.contentView.addSubview(button)
-            button.autoPinEdge(toSuperviewEdge: .top)
-            button.autoPinEdge(toSuperviewEdge: .bottom)
+            button.autoAlignAxis(toSuperviewAxis: .horizontal)
             
             if i == 0 {
                 scrollView.contentView.heightAnchor.constraint(equalTo: button.heightAnchor)
