@@ -260,6 +260,7 @@
 		BC3D97612350384E00421718 /* ResponseAPIContentGetPosts.json in Resources */ = {isa = PBXBuildFile; fileRef = BC3D97602350384E00421718 /* ResponseAPIContentGetPosts.json */; };
 		BC401E3C2371143F00A53788 /* LeaderAvatarImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC401E3B2371143F00A53788 /* LeaderAvatarImageView.swift */; };
 		BC43FDFE23B44F7200255451 /* WalletConvertViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC43FDFD23B44F7200255451 /* WalletConvertViewModel.swift */; };
+		BC43FE0923B5F12C00255451 /* WalletCarousel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC43FE0823B5F12C00255451 /* WalletCarousel.swift */; };
 		BC465927238E563F00AF9C29 /* BackUpKeysVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC465926238E563F00AF9C29 /* BackUpKeysVC.swift */; };
 		BC46592B238E633C00AF9C29 /* BoardingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC46592A238E633C00AF9C29 /* BoardingVC.swift */; };
 		BC46592D238E681500AF9C29 /* BoardingSetPasscodeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC46592C238E681500AF9C29 /* BoardingSetPasscodeVC.swift */; };
@@ -736,6 +737,7 @@
 		BC3D97602350384E00421718 /* ResponseAPIContentGetPosts.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ResponseAPIContentGetPosts.json; sourceTree = "<group>"; };
 		BC401E3B2371143F00A53788 /* LeaderAvatarImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderAvatarImageView.swift; sourceTree = "<group>"; };
 		BC43FDFD23B44F7200255451 /* WalletConvertViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletConvertViewModel.swift; sourceTree = "<group>"; };
+		BC43FE0823B5F12C00255451 /* WalletCarousel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletCarousel.swift; sourceTree = "<group>"; };
 		BC465926238E563F00AF9C29 /* BackUpKeysVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackUpKeysVC.swift; sourceTree = "<group>"; };
 		BC46592A238E633C00AF9C29 /* BoardingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardingVC.swift; sourceTree = "<group>"; };
 		BC46592C238E681500AF9C29 /* BoardingSetPasscodeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardingSetPasscodeVC.swift; sourceTree = "<group>"; };
@@ -2450,6 +2452,7 @@
 		BCD3BC8723AB2A230036C947 /* Subviews */ = {
 			isa = PBXGroup;
 			children = (
+				BC43FE0823B5F12C00255451 /* WalletCarousel.swift */,
 				BCD3BC8823AB2A340036C947 /* WalletHeaderView.swift */,
 				BC4AD64623B06196008546A4 /* GradientProgressBar.swift */,
 				BCD3BC8E23AC699B0036C947 /* MyPointCollectionCell.swift */,
@@ -2949,6 +2952,7 @@
 				BC9066F123A9DB72000F9A3B /* BalancesViewModel.swift in Sources */,
 				3B5D361C22E8303C0012A991 /* HTMLStringWebView.swift in Sources */,
 				BC22BBCC236C0E0300F40658 /* UIStackView+PureLayout.swift in Sources */,
+				BC43FE0923B5F12C00255451 /* WalletCarousel.swift in Sources */,
 				3BB86B4922734AE4008F1C64 /* UIColor.swift in Sources */,
 				BCCC33EC237521FA004E46EF /* CommentController.swift in Sources */,
 				3B2F227122689308006B589E /* TabBarViewModel.swift in Sources */,
