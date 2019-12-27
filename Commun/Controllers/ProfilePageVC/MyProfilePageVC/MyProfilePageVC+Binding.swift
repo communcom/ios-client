@@ -58,6 +58,8 @@ extension MyProfilePageVC {
                 case .loading(let isLoading):
                     if isLoading {
                         label.showLoader()
+                    } else {
+                        label.hideLoader()
                     }
                 case .listEnded:
                     label.hideLoader()

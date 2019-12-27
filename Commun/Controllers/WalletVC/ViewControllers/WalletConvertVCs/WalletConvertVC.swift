@@ -171,6 +171,8 @@ class WalletConvertVC: BaseViewController {
                 case .loading(let isLoading):
                     if isLoading {
                         self.view.showLoading()
+                    } else {
+                        self.view.hideLoading()
                     }
                 case .listEnded, .listEmpty:
                     self.view.hideLoading()
