@@ -76,6 +76,8 @@ extension UIImageView {
         var newUrl = url
         var placeholderUrl: URL?
 
+        showBlur(false)
+
         // resize image
         if url.host == "img.commun.com" {
             let components = url.pathComponents
@@ -91,8 +93,10 @@ extension UIImageView {
         showLoading(cover: false, spinnerColor: .white)
 
         if let placeholderUrl = placeholderUrl {
+            showBlur(true)
             sd_setImage(with: placeholderUrl, placeholderImage: nil) { [weak self] (image, _, _, _) in
                 self?.sd_setImage(with: newUrl, placeholderImage: image) { [weak self] (image, _, _, _) in
+                    self?.showBlur(false)
                     self?.hideLoading()
                     if image == nil {
                         self?.sd_setImageCachedError(with: newUrl, completion: nil)
@@ -107,7 +111,19 @@ extension UIImageView {
     }
 
     private func showBlur(_ show: Bool) {
+        if !UIAccessibility.isReduceTransparencyEnabled {
+            self.viewWithTag(9435)?.removeFromSuperview()
+            if show {
+                let blurEffect = UIBlurEffect(style: .light)
+                let blurEffectView = UIVisualEffectView(effect: blurEffect)
+                blurEffectView.tag = 9435
+                //always fill the view
+                blurEffectView.frame = self.bounds
+                blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
 
+                addSubview(blurEffectView)
+            }
+        }
     }
     
     func addTapToViewer() {
