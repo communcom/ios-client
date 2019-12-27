@@ -78,7 +78,7 @@ class EmbedView: UIView {
     private func configureXib() {
         Bundle.main.loadNibNamed("EmbedView", owner: self, options: nil)
         addSubview(contentView)
-        contentView.frame = frame
+        contentView.frame = bounds
         contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
     }
 
@@ -111,11 +111,11 @@ class EmbedView: UIView {
     }
 
     private func configure(with content: ResponseAPIContentBlock) {
+        titleLabel.numberOfLines = 1
         coverImageView.removeAllConstraints()
         titleLabel.removeAllConstraints()
         subtitleLabel.removeAllConstraints()
         titlesView.removeAllConstraints()
-        titleLabel.numberOfLines = 2
         providerLabelView.isHidden = true
         titlesView.isHidden = false
 
@@ -174,6 +174,18 @@ class EmbedView: UIView {
         coverImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapAction)))
 
         if isNeedShowImage {
+
+            let width: CGFloat = CGFloat(content.attributes?.width ?? content.attributes?.thumbnailWidth ?? 1280)
+            let height: CGFloat = CGFloat(content.attributes?.height ?? content.attributes?.thumbnailHeight ?? 720)
+
+            let screenWidth = UIScreen.main.bounds.width
+
+            var newHeight = screenWidth / width * height
+
+            if newHeight > 700 && !isPostDetail {
+                newHeight = 640
+            }
+
             if isNeedShowProvider {
                 providerLabelView.autoPinEdge(toSuperviewEdge: .right, withInset: insetX)
                 providerLabelView.autoPinEdge(.bottom, to: .bottom, of: coverImageView, withOffset: -insetY)
@@ -183,11 +195,12 @@ class EmbedView: UIView {
             coverImageView.autoPinEdge(toSuperviewEdge: .left)
             coverImageView.autoPinEdge(toSuperviewEdge: .right)
 
-            NSLayoutConstraint(item: coverImageView!, attribute: .width, relatedBy: .equal, toItem: coverImageView!, attribute: .height, multiplier: 16/9, constant: 0).isActive = true
+            NSLayoutConstraint(item: coverImageView!, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: newHeight).isActive = true
         }
 
         if let imageUrl = imageUrl {
             coverImageView.setImageDetectGif(with: imageUrl)
+            coverImageView.addTapToViewer()
         }
 
         if isNeedShowTitle {
@@ -242,7 +255,6 @@ class EmbedView: UIView {
     }
 
     @objc private func tapAction() {
-        
         if content.type == "video" {
             if let urlString = parseEmbed(content.attributes?.html), let url = URL(string: urlString) {
                 coverImageView.isHidden = true
@@ -257,8 +269,6 @@ class EmbedView: UIView {
                 activityIndicator.startAnimating()
                 webView.load(URLRequest(url: url))
             }
-        } else if content.type == "photo" || content.type == "image" {
-            coverImageView.openViewer(gesture: nil)
         } else {
             if let url = URL(string: content.attributes?.url ?? "") {
                 let safariVC = SFSafariViewController(url: url)

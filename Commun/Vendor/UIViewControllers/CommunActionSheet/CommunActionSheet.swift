@@ -210,7 +210,7 @@ class CommunActionSheet: SwipeDownDismissViewController {
             
             // arrow image for style profile
             if action.style == .profile {
-                let nextButton = UIButton.circleGray(imageName: "next-arrow")
+                let nextButton = UIButton.circleGray(imageName: "cell-arrow", imageEdgeInsets: UIEdgeInsets(top: 4, left: 4, bottom: 4, right: 4))
                 nextButton.isUserInteractionEnabled = false
                 actionView.addSubview(nextButton)
                 nextButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)

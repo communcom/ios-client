@@ -56,35 +56,79 @@ final class BasicPostCell: PostCell {
             .font: UIFont.systemFont(ofSize: 14),
             .paragraphStyle: paragraph
         ]
-        
-        if let content = post.content,
-            let firstSentence = content.first(where: {$0.type == "paragraph"}) {
-            let mutableAS = NSMutableAttributedString()
-            var attributedText = firstSentence
-                .toAttributedString(currentAttributes: defaultAttributes, attachmentType: TextAttachment.self)
-            if attributedText.length > 600 {
-                let moreText = NSAttributedString(string: "... \("See More".localized())", attributes: [.foregroundColor: UIColor.appMainColor, .font: UIFont.systemFont(ofSize: 14)])
-                attributedText = attributedText.attributedSubstring(from: NSRange(location: 0, length: 400))
-                mutableAS.append(moreText)
-            }
-            mutableAS.insert(attributedText, at: 0)
 
-            // check last charters a space
-            let spaceSymbols = "\n"
-            let components = mutableAS.components(separatedBy: spaceSymbols)
-            if let last = components.last, last.isEqual(to: NSAttributedString(string: "")) {
-                mutableAS.deleteCharacters(in: NSRange(location: mutableAS.length - spaceSymbols.count, length: spaceSymbols.count))
+        var texts = NSMutableAttributedString()
+        var paragraphsTexts: [NSAttributedString] = []
+        for (index, content) in (post.content ?? []).enumerated() where content.type == "paragraph" {
+            let attributedText = content.toAttributedString(currentAttributes: defaultAttributes, attachmentType: TextAttachment.self, viewMode: true)
+            // remove empty text
+            let text = attributedText.string.replacingOccurrences(of: "\n", with: "").replacingOccurrences(of: "\r", with: "").replacingOccurrences(of: "  ", with: "")
+            if text != "", text != " " {
+                if index != 0 {
+                    texts.append(NSAttributedString(string: "\n"))
+                }
+                texts.append(attributedText)
+                paragraphsTexts.append(attributedText)
             }
-            
-            // remove paragraph separator
-            if mutableAS.string.starts(with: "\n\r") {
-                mutableAS.deleteCharacters(in: NSRange(location: 0, length: 2))
-            }
+        }
 
-            contentTextView.attributedText = mutableAS
+        var moreTextAdded = false
+        let moreText = NSAttributedString(string: "... \("See More".localized())", attributes: [.foregroundColor: UIColor.appMainColor, .font: UIFont.systemFont(ofSize: 14)])
+
+        if texts.length > 600 && !moreTextAdded {
+            moreTextAdded = true
+            texts = texts.attributedSubstring(from: NSRange(location: 0, length: 400)) as! NSMutableAttributedString
+            texts.append(moreText)
+        }
+
+        if paragraphsTexts.count > 6 && !moreTextAdded {
+            texts = NSMutableAttributedString()
+            for (index, paragraph) in paragraphsTexts.enumerated() where index < 6 {
+                texts.append(paragraph)
+            }
+            texts = NSMutableAttributedString(string: texts.string.replacingOccurrences(of: "\r", with: ""), attributes: defaultAttributes)
+            texts.append(moreText)
+        }
+
+        // remove paragraph separator
+        if texts.string.starts(with: "\n") {
+            texts.deleteCharacters(in: NSRange(location: 0, length: 1))
+        }
+
+        if texts.length > 0 {
+            contentTextView.attributedText = texts
         } else {
             centerConstraint.isActive = true
         }
+
+//        if let content = post.content,
+//            let firstSentence = content.first(where: {$0.type == "paragraph"}) {
+//            let mutableAS = NSMutableAttributedString()
+//            var attributedText = firstSentence
+//                .toAttributedString(currentAttributes: defaultAttributes, attachmentType: TextAttachment.self)
+//            if attributedText.length > 600 {
+//                let moreText = NSAttributedString(string: "... \("See More".localized())", attributes: [.foregroundColor: UIColor.appMainColor, .font: UIFont.systemFont(ofSize: 14)])
+//                attributedText = attributedText.attributedSubstring(from: NSRange(location: 0, length: 400))
+//                mutableAS.append(moreText)
+//            }
+//            mutableAS.insert(attributedText, at: 0)
+//
+//            // check last charters a space
+//            let spaceSymbols = "\n"
+//            let components = mutableAS.components(separatedBy: spaceSymbols)
+//            if let last = components.last, last.isEqual(to: NSAttributedString(string: "")) {
+//                mutableAS.deleteCharacters(in: NSRange(location: mutableAS.length - spaceSymbols.count, length: spaceSymbols.count))
+//            }
+//
+//            // remove paragraph separator
+//            if mutableAS.string.starts(with: "\n\r") {
+//                mutableAS.deleteCharacters(in: NSRange(location: 0, length: 2))
+//            }
+//
+//            contentTextView.attributedText = mutableAS
+//        } else {
+//            centerConstraint.isActive = true
+//        }
 
         contentTextView.resolveHashTags()
         contentTextView.resolveMentions()

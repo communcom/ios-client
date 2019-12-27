@@ -97,16 +97,19 @@ extension MyProfilePageVC {
             // Upload image
             .flatMap {image -> Single<String> in
                 self.coverImageView.image = image
+                self.coverImageView.showLoading(cover: false, spinnerColor: .white)
                 return NetworkService.shared.uploadImage(image)
             }
             // Save to db
-            .flatMap {NetworkService.shared.updateMeta(params: ["cover_url": $0])}
-            // Catch error and reverse image
-            .subscribe(onError: {[weak self] error in
+            .flatMap { url -> Single<String> in
+                return NetworkService.shared.updateMeta(params: ["cover_url": url]).andThen(Single<String>.just(url))
+            }
+            .subscribe(onNext: { [weak self] (_) in
+                self?.coverImageView.hideLoading()
+            }, onError: { [weak self] (error) in
+                self?.coverImageView.hideLoading()
                 self?.coverImageView.image = originalImage
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
-                    self?.showError(error)
-                }
+                self?.showError(error)
             })
             .disposed(by: disposeBag)
     }
@@ -142,14 +145,18 @@ extension MyProfilePageVC {
             .map {$0!}
             // Upload image
             .flatMap { image -> Single<String> in
+                self.headerView.avatarImageView.showLoading(cover: false, spinnerColor: .white)
                 self.headerView.avatarImageView.image = image
                 return NetworkService.shared.uploadImage(image)
             }
             // Save to db
-            .flatMap {NetworkService.shared.updateMeta(params: ["avatar_url": $0])}
+            .flatMap {NetworkService.shared.updateMeta(params: ["avatar_url": $0]).andThen(Single<String>.just($0))}
             // Catch error and reverse image
-            .subscribe(onError: {[weak self] error in
-                self?.headerView.avatarImageView.image = originalImage
+            .subscribe(onNext: { [weak self] (_) in
+                self?.headerView.avatarImageView.hideLoading()
+            }, onError: { [weak self] (error) in
+                self?.headerView.avatarImageView.hideLoading()
+                self?.coverImageView.image = originalImage
                 self?.showError(error)
             })
             .disposed(by: disposeBag)

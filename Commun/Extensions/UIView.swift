@@ -38,7 +38,7 @@ extension UIView {
         }
     }
     
-    func showLoading(cover: Bool = true) {
+    func showLoading(cover: Bool = true, spinnerColor: UIColor = #colorLiteral(red: 0.4784313725, green: 0.6470588235, blue: 0.8980392157, alpha: 1)) {
         // if loading view is existed
         if self.viewWithTag(9999) != nil {return}
         
@@ -62,7 +62,7 @@ extension UIView {
         spinnerView.translatesAutoresizingMaskIntoConstraints = false
         spinnerView.spinnerLineWidth = size/10
         spinnerView.spinnerDuration = 0.3
-        spinnerView.spinnerStrokeColor = #colorLiteral(red: 0.4784313725, green: 0.6470588235, blue: 0.8980392157, alpha: 1)
+        spinnerView.spinnerStrokeColor = spinnerColor.cgColor
         coverView.addSubview(spinnerView)
         
         // add constraint for spinnerView

@@ -14,7 +14,8 @@ final class FeedPageVC: PostsViewController {
     var floatViewTopConstraint: NSLayoutConstraint!
     var headerView: FeedPageHeaderView!
     var floatViewHeight: CGFloat = 0
-    
+    var lastContentOffset: CGFloat = 0
+
     // MARK: - Methods
     override func setUp() {
         super.setUp()
@@ -52,37 +53,36 @@ final class FeedPageVC: PostsViewController {
     
     override func bind() {
         super.bind()
-        
-        tableView.rx.didScrollToTop
-            .subscribe(onNext: { _ in
-                self.floatViewTopConstraint.constant = 0
-                UIView.animate(withDuration: 0.3) {
-                    self.floatViewTopConstraint.constant = 0
-                    self.view.layoutIfNeeded()
-                    self.floatView.layoutIfNeeded()
-                }
-            })
-            .disposed(by: disposeBag)
-        
-        tableView.rx.willEndDragging
-            .map {$0.velocity.y}
-            .distinctUntilChanged()
-            .subscribe(onNext: { y in
-                self.updateFloatViewVisible(y)
-            })
-            .disposed(by: disposeBag)
 
-        tableView.rx.didEndScrollingAnimation.subscribe { _ in
-            self.updateFloatViewVisible(self.tableView.contentOffset.y, animation: false)
+        tableView.rx.willBeginDragging.subscribe { _ in
+            self.lastContentOffset = self.tableView.contentOffset.y
         }.disposed(by: disposeBag)
-    }
 
-    private func updateFloatViewVisible(_ y: CGFloat, animation: Bool = true) {
-        if y == 0 { return }
-        self.floatViewTopConstraint.constant = (y < 0) ? 0 : -self.floatViewHeight
-        UIView.animate(withDuration: animation ? 0.3 : 0) {
-            self.view.layoutIfNeeded()
-        }
+        tableView.rx.contentOffset.subscribe {
+            guard let offset = $0.element else { return }
+
+            var needAnimation = false
+            var newConstraint: CGFloat = 0.0
+            let lastOffset: CGFloat = self.lastContentOffset
+            let indent: CGFloat = 100
+
+            if lastOffset > offset.y + indent || offset.y <= 0  {
+                needAnimation = self.floatViewTopConstraint.constant <= 0
+                newConstraint = 0.0
+            } else if lastOffset < offset.y - indent {
+                let position = -self.floatView.frame.size.height
+                needAnimation = self.floatViewTopConstraint.constant >= position
+                newConstraint = position
+            }
+
+            if needAnimation {
+                self.view.layoutIfNeeded()
+                self.floatViewTopConstraint.constant = newConstraint
+                UIView.animate(withDuration: 0.3, animations: { [unowned self] in
+                    self.view.layoutIfNeeded()
+                })
+            }
+        }.disposed(by: disposeBag)
     }
     
     override func filterChanged(filter: PostsListFetcher.Filter) {

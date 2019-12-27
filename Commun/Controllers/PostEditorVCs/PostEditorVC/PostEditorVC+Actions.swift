@@ -10,7 +10,7 @@ import Foundation
 import CyberSwift
 import RxSwift
 import SafariServices
-import AppImageViewer
+import ImageViewer_swift
 
 extension PostEditorVC {
     // MARK: - Communities
@@ -272,22 +272,24 @@ extension PostEditorVC {
             let safariVC = SFSafariViewController(url: url)
             present(safariVC, animated: true, completion: nil)
         case "image":
-            if let localImage = attachment.localImage {
-                let appImage = ViewerImage.appImage(forImage: localImage)
-                let viewer = AppImageViewer(photos: [appImage])
-                present(viewer, animated: false, completion: nil)
-            } else if let imageUrl = attachment.attributes?.url,
-                let url = URL(string: imageUrl) {
-                NetworkService.shared.downloadImage(url)
-                    .subscribe(onSuccess: { [weak self] (image) in
-                        let appImage = ViewerImage.appImage(forImage: image)
-                        let viewer = AppImageViewer(photos: [appImage])
-                        self?.present(viewer, animated: false, completion: nil)
-                        }, onError: {[weak self] (error) in
-                            self?.showError(error)
-                    })
-                    .disposed(by: self.disposeBag)
-            }
+//            if let localImage = attachment.localImage {
+//                let appImage = ViewerImage.appImage(forImage: localImage)
+//                let viewer = AppImageViewer(photos: [appImage])
+//                present(viewer, animated: false, completion: nil)
+//            } else if let imageUrl = attachment.attributes?.url,
+//                let url = URL(string: imageUrl) {
+//                NetworkService.shared.downloadImage(url)
+//                    .subscribe(onSuccess: { [weak self] (image) in
+//                        let appImage = ViewerImage.appImage(forImage: image)
+//                        let viewer = AppImageViewer(photos: [appImage])
+//
+//                        self?.present(viewer, animated: false, completion: nil)
+//                        }, onError: {[weak self] (error) in
+//                            self?.showError(error)
+//                    })
+//                    .disposed(by: self.disposeBag)
+//            }
+            break
         default:
             break
         }

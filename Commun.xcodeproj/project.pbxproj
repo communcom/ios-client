@@ -172,6 +172,7 @@
 		AC8C57BD238C408A00B0D260 /* InstagramView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8C57BC238C408A00B0D260 /* InstagramView.swift */; };
 		AC8C57C1238D494D00B0D260 /* InstagramView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AC8C57C0238D494D00B0D260 /* InstagramView.xib */; };
 		ACCCF74323A9105E00AF4FDE /* countries.json in Resources */ = {isa = PBXBuildFile; fileRef = ACCCF74023A9105E00AF4FDE /* countries.json */; };
+		ACD76C9823B23E91001FAECD /* PhotoLibraryAccessDeniedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD76C9723B23E91001FAECD /* PhotoLibraryAccessDeniedView.swift */; };
 		ACFA282623AB8A00009B77A6 /* AnalyticsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACFA282523AB8A00009B77A6 /* AnalyticsManager.swift */; };
 		B170AC15228AFBDA00C6FFBC /* SignUpVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5797E0F9225DDA490026C4D5 /* SignUpVC.storyboard */; };
 		B17A970C228002440081B8E0 /* SignUpRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17A970B228002440081B8E0 /* SignUpRouter.swift */; };
@@ -648,6 +649,7 @@
 		AC8C57BC238C408A00B0D260 /* InstagramView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstagramView.swift; sourceTree = "<group>"; };
 		AC8C57C0238D494D00B0D260 /* InstagramView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InstagramView.xib; sourceTree = "<group>"; };
 		ACCCF74023A9105E00AF4FDE /* countries.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = countries.json; sourceTree = "<group>"; };
+		ACD76C9723B23E91001FAECD /* PhotoLibraryAccessDeniedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibraryAccessDeniedView.swift; sourceTree = "<group>"; };
 		ACFA282523AB8A00009B77A6 /* AnalyticsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsManager.swift; sourceTree = "<group>"; };
 		AE43B2305FC441D96462E0AB /* Pods-Commun.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Commun.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Commun/Pods-Commun.debug.xcconfig"; sourceTree = "<group>"; };
 		B12684EF22C1E56B0046C838 /* Commun.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Commun.entitlements; sourceTree = "<group>"; };
@@ -2182,6 +2184,7 @@
 				BC520A3F237E476100033ED0 /* MySubviewAttachingTextView.swift */,
 				BC597A86238CE8FD00103F4F /* CommunityCollectionCell.swift */,
 				BCD00FB32373C8BD004A3952 /* LeaderCollectionCell.swift */,
+				ACD76C9723B23E91001FAECD /* PhotoLibraryAccessDeniedView.swift */,
 			);
 			path = UIViews;
 			sourceTree = "<group>";
@@ -2661,6 +2664,7 @@
 				BC597A6E238BC7C200103F4F /* PostsFilterVC.swift in Sources */,
 				5787C0C622650FA500568CEC /* SetUserViewModel.swift in Sources */,
 				BC4692EF239615160064A38B /* FriendsViewModel.swift in Sources */,
+				ACD76C9823B23E91001FAECD /* PhotoLibraryAccessDeniedView.swift in Sources */,
 				BCCB993623756375005252CF /* PostHeaderView.swift in Sources */,
 				B1D7AD5823A10650007D1A13 /* SignInVC.swift in Sources */,
 				BCABF1352366D5DC006B05F5 /* ProfileViewModel.swift in Sources */,
@@ -3202,7 +3206,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.2;
+				MARKETING_VERSION = 1.0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = io.commun.eos.ios;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -3234,7 +3238,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.2;
+				MARKETING_VERSION = 1.0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = io.commun.eos.ios;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

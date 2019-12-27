@@ -31,7 +31,7 @@ class CommunityCollectionCell: MyCollectionViewCell, ListItemCellType {
     
     lazy var nameLabel = UILabel.with(text: "Behance", textSize: 15, weight: .semibold, textAlignment: .center)
     lazy var descriptionLabel = UILabel.with(text: "12,2k members", textSize: 12, weight: .semibold, textColor: .a5a7bd, numberOfLines: 0, textAlignment: .center)
-    lazy var joinButton = CommunButton.default(label: "follow".localized().uppercaseFirst)
+    lazy var joinButton = CommunButton.default(height: 30, label: "follow".localized().uppercaseFirst)
     
     // MARK: - Methods
     override func setUpViews() {
