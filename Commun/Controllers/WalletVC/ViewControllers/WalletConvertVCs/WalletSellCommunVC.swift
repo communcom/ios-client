@@ -50,13 +50,7 @@ class WalletSellCommunVC: WalletConvertVC {
     }
     
     override func layoutCarousel() {
-        let communLogo: UIView = {
-            let view = UIView(width: 50, height: 50, backgroundColor: UIColor.white.withAlphaComponent(0.2), cornerRadius: 25)
-            let slash = UIImageView(width: 8.04, height: 19.64, imageNamed: "slash")
-            view.addSubview(slash)
-            slash.autoCenterInSuperview()
-            return view
-        }()
+        let communLogo = UIView.transparentCommunLogo(size: 50)
         scrollView.addSubview(communLogo)
         communLogo.autoPinEdge(toSuperviewEdge: .top, withInset: 20)
         communLogo.autoAlignAxis(toSuperviewAxis: .vertical)

@@ -117,8 +117,8 @@ extension UIButton {
         return button
     }
     
-    static func back(tintColor: UIColor = .black, contentInsets: UIEdgeInsets = UIEdgeInsets(top: 11, left: 0, bottom: 11, right: 30)) -> UIButton {
-        let button = UIButton(width: 40, height: 40)
+    static func back(width: CGFloat = 40, height: CGFloat = 40, tintColor: UIColor = .black, contentInsets: UIEdgeInsets = UIEdgeInsets(top: 11, left: 0, bottom: 11, right: 30)) -> UIButton {
+        let button = UIButton(width: width, height: height)
         button.tintColor = tintColor
         button.setImage(UIImage(named: "back-button"), for: .normal)
         button.touchAreaEdgeInsets = UIEdgeInsets(inset: -2)

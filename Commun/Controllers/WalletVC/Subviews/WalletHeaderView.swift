@@ -8,8 +8,13 @@
 
 import Foundation
 import RxSwift
+import CircularCarousel
 
 class WalletHeaderView: MyTableHeaderView {
+    // MARK: - Constants
+    var maxItemsInCarousel = 5
+    var carouselHeight: CGFloat = 40
+    
     // MARK: - Properties
     var stackViewTopConstraint: NSLayoutConstraint?
     var sendPointsTopConstraint: NSLayoutConstraint?
@@ -28,6 +33,11 @@ class WalletHeaderView: MyTableHeaderView {
     // MARK: - Subviews
     lazy var shadowView = UIView(forAutoLayout: ())
     lazy var contentView = UIView(backgroundColor: .appMainColor)
+    
+    lazy var backButton = UIButton.back(width: 44, height: 44, tintColor: .white, contentInsets: UIEdgeInsets(top: 11, left: 16, bottom: 11, right: 16))
+    lazy var communLogo = UIView.transparentCommunLogo(size: 40)
+    lazy var carousel = CircularCarousel(width: 300, height: 44)
+    lazy var optionsButton = UIButton.option(tintColor: .white)
     
     lazy var titleLabel = UILabel.with(text: "Equity Value Commun", textSize: 15, weight: .semibold, textColor: .white)
     lazy var pointLabel = UILabel.with(text: "167 500.23", textSize: 30, weight: .bold, textColor: .white, textAlignment: .center)
@@ -52,6 +62,7 @@ class WalletHeaderView: MyTableHeaderView {
     
     // MARK: - My points
     lazy var myPointsContainerView = UIView(forAutoLayout: ())
+    lazy var myPointsSeeAllButton = UIButton(label: "see all".localized().uppercaseFirst, labelFont: .systemFont(ofSize: 15, weight: .medium), textColor: .appMainColor, contentInsets: .zero)
     
     lazy var myPointsCollectionView: UICollectionView = {
         let collectionView = UICollectionView.horizontalFlow(
@@ -65,6 +76,7 @@ class WalletHeaderView: MyTableHeaderView {
     
     // MARK: - Send points
     lazy var sendPointsContainerView = UIView(forAutoLayout: ())
+    lazy var sendPointsSeeAllButton = UIButton(label: "see all".localized().uppercaseFirst, labelFont: .systemFont(ofSize: 15, weight: .medium), textColor: .appMainColor, contentInsets: .zero)
     
     lazy var sendPointsCollectionView: UICollectionView = {
         let collectionView = UICollectionView.horizontalFlow(
@@ -95,8 +107,26 @@ class WalletHeaderView: MyTableHeaderView {
         shadowView.addSubview(contentView)
         contentView.autoPinEdgesToSuperviewEdges()
         
+        contentView.addSubview(backButton)
+        backButton.autoPinEdge(toSuperviewSafeArea: .top, withInset: 8)
+        backButton.autoPinEdge(toSuperviewSafeArea: .leading)
+        
+        contentView.addSubview(communLogo)
+        communLogo.autoAlignAxis(toSuperviewAxis: .vertical)
+        communLogo.autoAlignAxis(.horizontal, toSameAxisOf: backButton)
+        
+        contentView.addSubview(carousel)
+        carousel.autoAlignAxis(toSuperviewAxis: .vertical)
+        carousel.autoAlignAxis(.horizontal, toSameAxisOf: backButton)
+        carousel.delegate = self
+        carousel.dataSource = self
+        
+        contentView.addSubview(optionsButton)
+        optionsButton.autoPinEdge(toSuperviewSafeArea: .trailing)
+        optionsButton.autoAlignAxis(.horizontal, toSameAxisOf: backButton)
+        
         contentView.addSubview(titleLabel)
-        titleLabel.autoPinEdge(toSuperviewSafeArea: .top, withInset: 25)
+        titleLabel.autoPinEdge(.top, to: .bottom, of: backButton, withOffset: 25)
         titleLabel.autoAlignAxis(toSuperviewAxis: .vertical)
         
         contentView.addSubview(pointLabel)
@@ -135,8 +165,6 @@ class WalletHeaderView: MyTableHeaderView {
         buttonsStackView.addArrangedSubview(buttonContainerViewWithButton(sendButton, label: "send".localized().uppercaseFirst))
         buttonsStackView.addArrangedSubview(buttonContainerViewWithButton(convertButton, label: "convert".localized().uppercaseFirst))
         
-        convertButton.addTarget(self, action: #selector(convertButtonDidTouch), for: .touchUpInside)
-        
         // my points
         addSubview(myPointsContainerView)
         myPointsContainerView.autoPinEdge(.top, to: .bottom, of: shadowView, withOffset: 29)
@@ -148,12 +176,9 @@ class WalletHeaderView: MyTableHeaderView {
         myPointsLabel.autoPinEdge(toSuperviewEdge: .top)
         myPointsLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 10)
         
-        let myPointsSeeAllButton = UIButton(label: "see all".localized().uppercaseFirst, labelFont: .systemFont(ofSize: 15, weight: .medium), textColor: .appMainColor, contentInsets: .zero)
         myPointsContainerView.addSubview(myPointsSeeAllButton)
         myPointsSeeAllButton.autoPinEdge(toSuperviewEdge: .top)
         myPointsSeeAllButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 10)
-        
-        myPointsSeeAllButton.addTarget(self, action: #selector(myPointsSeeAllDidTouch), for: .touchUpInside)
         
         myPointsContainerView.addSubview(myPointsCollectionView)
         myPointsCollectionView.autoPinEdge(.top, to: .bottom, of: myPointsLabel, withOffset: 20)
@@ -165,12 +190,9 @@ class WalletHeaderView: MyTableHeaderView {
         sendPointsContainerView.autoPinEdge(toSuperviewEdge: .leading)
         sendPointsContainerView.autoPinEdge(toSuperviewEdge: .trailing)
         
-        let sendPointsSeeAllButton = UIButton(label: "see all".localized().uppercaseFirst, labelFont: .systemFont(ofSize: 15, weight: .medium), textColor: .appMainColor, contentInsets: .zero)
         sendPointsContainerView.addSubview(sendPointsSeeAllButton)
         sendPointsSeeAllButton.autoPinEdge(toSuperviewEdge: .top)
         sendPointsSeeAllButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 10)
-        
-        sendPointsSeeAllButton.addTarget(self, action: #selector(sendPointsSeeAllDidTouch), for: .touchUpInside)
         
         let sendPointsLabel = UILabel.with(text: "send points".localized().uppercaseFirst, textSize: 17, weight: .bold)
         sendPointsContainerView.addSubview(sendPointsLabel)
@@ -196,7 +218,6 @@ class WalletHeaderView: MyTableHeaderView {
         filterButton.autoPinEdge(toSuperviewEdge: .top, withInset: 10)
         filterButton.autoPinEdge(toSuperviewEdge: .bottom, withInset: 10)
         filterButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
-        filterButton.addTarget(self, action: #selector(filterButtonDidTouch), for: .touchUpInside)
         
         // pin bottom
         filterContainerView.autoPinEdge(toSuperviewEdge: .bottom)
@@ -215,21 +236,11 @@ class WalletHeaderView: MyTableHeaderView {
     }
     
     private func setUpWithCommunValue() {
-        var point: Double = 0
-        if let balances = balances {
-            if balances.first?.symbol == "CMN",
-                let communPoint = balances.first?.balance
-            {
-                point = Double(communPoint) ?? 0
-            } else {
-                point = balances.filter {$0.symbol != "CMN"}.reduce(0.0, { (result, balance) -> Double in
-                    var result = result
-                    result += balance.communValue
-                    return result
-                })
-            }
-            
-        }
+        let point = balances?.first(where: {$0.symbol == "CMN"})?.balanceValue ?? 0
+        // show commun logo
+        communLogo.isHidden = false
+        carousel.isHidden = true
+        
         // remove balanceContainerView if exists
         var needAnimation = false
         if balanceContainerView.isDescendant(of: contentView) {
@@ -272,6 +283,10 @@ class WalletHeaderView: MyTableHeaderView {
             currentIndex = 0
             return
         }
+        // show carousel
+        communLogo.isHidden = true
+        carousel.isHidden = false
+        
         // add balanceContainerView
         var needAnimation = false
         if !balanceContainerView.isDescendant(of: contentView) {
@@ -350,25 +365,65 @@ class WalletHeaderView: MyTableHeaderView {
         contentView.hideLoader()
     }
     
-    @objc func sendPointsSeeAllDidTouch() {
-        let vc = SendPointListVC { (user) in
-            (self.parentViewController as? WalletVC)?.sendPoint(to: user)
+    func switchToSymbol(_ symbol: String) {
+        guard let index = balances?.firstIndex(where: {$0.symbol == symbol}) else {return}
+        currentIndex = index
+        carousel.reloadData()
+    }
+}
+
+extension WalletHeaderView: CircularCarouselDataSource, CircularCarouselDelegate {
+    func startingItemIndex(inCarousel carousel: CircularCarousel) -> Int {
+        return currentIndex
+    }
+    
+    func numberOfItems(inCarousel carousel: CircularCarousel) -> Int {
+        return min(maxItemsInCarousel, balances?.count ?? 0)
+    }
+    func carousel(_: CircularCarousel, viewForItemAt indexPath: IndexPath, reuseView: UIView?) -> UIView {
+        guard let balance = balances?[safe: indexPath.row] else {return UIView()}
+        
+        var view = reuseView
+
+        if view == nil || view?.viewWithTag(1) == nil {
+            view = UIView(frame: CGRect(x: 0, y: 0, width: carouselHeight, height: carouselHeight))
+            let imageView = MyAvatarImageView(size: carouselHeight)
+            imageView.borderColor = .white
+            imageView.borderWidth = 2
+            imageView.tag = 1
+            view!.addSubview(imageView)
+            imageView.autoAlignAxis(toSuperviewAxis: .horizontal)
+            imageView.autoAlignAxis(toSuperviewAxis: .vertical)
         }
-        let nc = BaseNavigationController(rootViewController: vc)
-        parentViewController?.present(nc, animated: true, completion: nil)
+        
+        let imageView = view?.viewWithTag(1) as! MyAvatarImageView
+        
+        if balance.symbol == "CMN" {
+            imageView.image = UIImage(named: "tux")
+        } else {
+            imageView.setAvatar(urlString: balance.logo, namePlaceHolder: balance.name ?? balance.symbol)
+        }
+        
+        return view!
+    }
+    // MARK: CircularCarouselDelegate
+    func carousel<CGFloat>(_ carousel: CircularCarousel, valueForOption option: CircularCarouselOption, withDefaultValue defaultValue: CGFloat) -> CGFloat {
+        if option == .itemWidth {
+            return CoreGraphics.CGFloat(carouselHeight) as! CGFloat
+        }
+        
+        if option == .spacing {
+            return CoreGraphics.CGFloat(8) as! CGFloat
+        }
+        
+        if option == .minScale {
+            return CoreGraphics.CGFloat(0.7) as! CGFloat
+        }
+        
+        return defaultValue
     }
     
-    @objc func myPointsSeeAllDidTouch() {
-        let vc = BalancesVC()
-        let nc = BaseNavigationController(rootViewController: vc)
-        parentViewController?.present(nc, animated: true, completion: nil)
-    }
-    
-    @objc func filterButtonDidTouch() {
-        (parentViewController as? TransferHistoryVC)?.openFilter()
-    }
-    
-    @objc func convertButtonDidTouch() {
-        (parentViewController as? WalletVC)?.trade()
+    func carousel(_ carousel: CircularCarousel, willBeginScrollingToIndex index: Int) {
+        currentIndex = index
     }
 }

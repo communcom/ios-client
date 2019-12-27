@@ -8,22 +8,15 @@
 
 import Foundation
 import RxSwift
-import CircularCarousel
 
 class WalletVC: TransferHistoryVC {
     // MARK: - Properties
-    var maxItemsInCarousel = 5
-    var carouselHeight: CGFloat = 40
     var currentBalance: ResponseAPIWalletGetBalance? {
         (self.viewModel as! WalletViewModel).balancesVM.items.value[safe: headerView.currentIndex]
     }
     
     // MARK: - Subviews
-    lazy var carousel = CircularCarousel(frame: CGRect(x: 0, y: 0, width: 300, height: 44))
-    lazy var optionsButton = UIButton.option(tintColor: .white, contentInsets: UIEdgeInsets(top: 12, left: 32, bottom: 12, right: 0))
     lazy var headerView = WalletHeaderView(tableView: tableView)
-    var sendButton: UIButton {headerView.sendButton}
-    var convertButton: UIButton {headerView.convertButton}
     var myPointsCollectionView: UICollectionView {headerView.myPointsCollectionView}
     var sendPointsCollectionView: UICollectionView {headerView.sendPointsCollectionView}
     
@@ -42,24 +35,31 @@ class WalletVC: TransferHistoryVC {
         return tableView
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.setNavigationBarHidden(true, animated: animated)
+        super.viewWillAppear(animated)
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        self.navigationController?.setNavigationBarHidden(false, animated: animated)
+        super.viewWillDisappear(animated)
+    }
+    
     override func setUp() {
         super.setUp()
-        navigationItem.titleView = carousel
-        carousel.delegate = self
-        carousel.dataSource = self
+        headerView.backButton.addTarget(self, action: #selector(back), for: .touchUpInside)
         
-        setLeftNavBarButtonForGoingBack(tintColor: .white)
+        headerView.sendButton.addTarget(self, action: #selector(sendButtonDidTouch), for: .touchUpInside)
+        headerView.convertButton.addTarget(self, action: #selector(convertButtonDidTouch), for: .touchUpInside)
         
-        setRightNavBarButton(with: optionsButton)
-        optionsButton.addTarget(self, action: #selector(moreActionsButtonDidTouch(_:)), for: .touchUpInside)
+        headerView.sendPointsSeeAllButton.addTarget(self, action: #selector(sendPointsSeeAllDidTouch), for: .touchUpInside)
+        headerView.myPointsSeeAllButton.addTarget(self, action: #selector(myPointsSeeAllDidTouch), for: .touchUpInside)
         
-        sendButton.addTarget(self, action: #selector(sendButtonDidTouch), for: .touchUpInside)
-        convertButton.addTarget(self, action: #selector(convertButtonDidTouch), for: .touchUpInside)
+        headerView.filterButton.addTarget(self, action: #selector(openFilter), for: .touchUpInside)
     }
     
     override func bind() {
         super.bind()
-        bindControls()
         
         // forward delegate
         myPointsCollectionView.rx.setDelegate(self)
@@ -80,8 +80,13 @@ class WalletVC: TransferHistoryVC {
         (viewModel as! WalletViewModel).balancesVM.items
             .bind(to: myPointsCollectionView.rx.items(cellIdentifier: "\(MyPointCollectionCell.self)", cellType: MyPointCollectionCell.self)) { _, model, cell in
                 cell.setUp(with: model)
-                self.carousel.reloadData()
             }
+            .disposed(by: disposeBag)
+        
+        myPointsCollectionView.rx.modelSelected(ResponseAPIWalletGetBalance.self)
+            .subscribe(onNext: { (balance) in
+                self.headerView.switchToSymbol(balance.symbol)
+            })
             .disposed(by: disposeBag)
         
         (viewModel as! WalletViewModel).subscriptionsVM.items
@@ -140,30 +145,6 @@ class WalletVC: TransferHistoryVC {
             .disposed(by: disposeBag)
     }
     
-    func bindControls() {
-        tableView.rx.contentOffset
-            .map {$0.y}
-            .map {$0 > 16.5 / Config.heightRatio}
-            .subscribe(onNext: { showNavBar in
-                self.showTitle(showNavBar)
-            })
-            .disposed(by: disposeBag)
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(false, animated: animated)
-        navigationController?.navigationBar.isTranslucent = true
-
-        showTitle(tableView.contentOffset.y > 16.5 / Config.heightRatio)
-    }
-    
-    func showTitle(_ show: Bool, animated: Bool = false) {
-        showNavigationBar(show, animated: animated) {
-            self.optionsButton.tintColor = show ? .black: .white
-        }
-    }
-    
     override var preferredStatusBarStyle: UIStatusBarStyle {
         .lightContent
     }
@@ -174,14 +155,6 @@ class WalletVC: TransferHistoryVC {
     }
     
     @objc func convertButtonDidTouch() {
-        
-    }
-    
-    @objc func moreActionsButtonDidTouch(_ sender: CommunButton) {
-        
-    }
-    
-    @objc func trade() {
         guard let balance = currentBalance else {return}
         let vc: WalletConvertVC
         if balance.symbol == "CMN" {
@@ -193,6 +166,26 @@ class WalletVC: TransferHistoryVC {
             self.viewModel.reload()
         }
         show(vc, sender: nil)
+    }
+    
+    @objc func moreActionsButtonDidTouch(_ sender: CommunButton) {
+        
+    }
+    
+    @objc func sendPointsSeeAllDidTouch() {
+        let vc = SendPointListVC { (user) in
+            self.sendPoint(to: user)
+        }
+        let nc = BaseNavigationController(rootViewController: vc)
+        present(nc, animated: true, completion: nil)
+    }
+    
+    @objc func myPointsSeeAllDidTouch() {
+        let vc = BalancesVC { balance in
+            self.headerView.switchToSymbol(balance.symbol)
+        }
+        let nc = BaseNavigationController(rootViewController: vc)
+        present(nc, animated: true, completion: nil)
     }
     
     func sendPoint(to user: ResponseAPIContentGetSubscriptionsUser) {
@@ -210,66 +203,5 @@ extension WalletVC: UICollectionViewDelegateFlowLayout {
             return CGSize(width: 90, height: SendPointCollectionCell.height)
         }
         return CGSize(width: 140, height: MyPointCollectionCell.height)
-    }
-}
-
-extension WalletVC: CircularCarouselDataSource, CircularCarouselDelegate {
-    func startingItemIndex(inCarousel carousel: CircularCarousel) -> Int {
-        return headerView.currentIndex
-    }
-    
-    func numberOfItems(inCarousel carousel: CircularCarousel) -> Int {
-        return min(maxItemsInCarousel, (viewModel as! WalletViewModel).balancesVM.items.value.count)
-    }
-    func carousel(_: CircularCarousel, viewForItemAt indexPath: IndexPath, reuseView: UIView?) -> UIView {
-        let balances = (viewModel as! WalletViewModel).balancesVM.items.value
-        guard
-            let balance = balances[safe: indexPath.row]
-            else {
-                return UIView()
-        }
-        
-        var view = reuseView
-
-        if view == nil || view?.viewWithTag(1) == nil {
-            view = UIView(frame: CGRect(x: 0, y: 0, width: carouselHeight, height: carouselHeight))
-            let imageView = MyAvatarImageView(size: carouselHeight)
-            imageView.borderColor = .white
-            imageView.borderWidth = 2
-            imageView.tag = 1
-            view!.addSubview(imageView)
-            imageView.autoAlignAxis(toSuperviewAxis: .horizontal)
-            imageView.autoAlignAxis(toSuperviewAxis: .vertical)
-        }
-        
-        let imageView = view?.viewWithTag(1) as! MyAvatarImageView
-        
-        if balance.symbol == "CMN" {
-            imageView.image = UIImage(named: "tux")
-        } else {
-            imageView.setAvatar(urlString: balance.logo, namePlaceHolder: balance.name ?? balance.symbol)
-        }
-        
-        return view!
-    }
-    // MARK: CircularCarouselDelegate
-    func carousel<CGFloat>(_ carousel: CircularCarousel, valueForOption option: CircularCarouselOption, withDefaultValue defaultValue: CGFloat) -> CGFloat {
-        if option == .itemWidth {
-            return CoreGraphics.CGFloat(carouselHeight) as! CGFloat
-        }
-        
-        if option == .spacing {
-            return CoreGraphics.CGFloat(8) as! CGFloat
-        }
-        
-        if option == .minScale {
-            return CoreGraphics.CGFloat(0.7) as! CGFloat
-        }
-        
-        return defaultValue
-    }
-    
-    func carousel(_ carousel: CircularCarousel, willBeginScrollingToIndex index: Int) {
-        headerView.currentIndex = index
     }
 }

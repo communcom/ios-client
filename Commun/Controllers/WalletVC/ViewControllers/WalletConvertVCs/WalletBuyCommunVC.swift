@@ -182,12 +182,7 @@ extension WalletBuyCommunVC: CircularCarouselDataSource, CircularCarouselDelegat
     }
     
     func carousel(_: CircularCarousel, viewForItemAt indexPath: IndexPath, reuseView: UIView?) -> UIView {
-        let balances = carouselItems
-        guard
-            let balance = balances[safe: indexPath.row]
-            else {
-                return UIView()
-        }
+        guard let balance = carouselItems[safe: indexPath.row] else {return UIView()}
         
         var view = reuseView
 
