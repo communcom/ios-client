@@ -44,6 +44,11 @@ class MyProfilePageVC: UserProfilePageVC {
         changeCoverButton.autoPinEdge(.trailing, to: .trailing, of: coverImageView, withOffset: -16)
         
         changeCoverButton.addTarget(self, action: #selector(changeCoverBtnDidTouch(_:)), for: .touchUpInside)
+        
+        // wallet
+        let tap = UITapGestureRecognizer(target: self, action: #selector(walletDidTouch))
+        (headerView as! MyProfileHeaderView).walletView.isUserInteractionEnabled = true
+        (headerView as! MyProfileHeaderView).walletView.addGestureRecognizer(tap)
     }
     
     override func bind() {

@@ -38,11 +38,6 @@ final class MyProfileHeaderView: UserProfileHeaderView {
         
         // bind
         bind()
-        
-        // actions
-        let tap = UITapGestureRecognizer(target: self, action: #selector(walletDidTouch))
-        walletView.isUserInteractionEnabled = true
-        walletView.addGestureRecognizer(tap)
     }
     
     override func setUp(with profile: ResponseAPIContentGetProfile) {
@@ -150,10 +145,5 @@ final class MyProfileHeaderView: UserProfileHeaderView {
             walletShadowView.addShadow(ofColor: UIColor(red: 106, green: 128, blue: 245)!, radius: 24, offset: CGSize(width: 0, height: 14), opacity: 0.4)
             hasFixedWalletView = true
         }
-    }
-    
-    @objc func walletDidTouch() {
-        let walletVC = WalletVC()
-        parentViewController?.show(walletVC, sender: nil)
     }
 }

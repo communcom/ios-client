@@ -21,7 +21,15 @@ extension MyProfilePageVC {
     
     @objc func settingsButtonDidTouch(_ sender: Any) {
         let settingsVC = controllerContainer.resolve(SettingsVC.self)!
-        self.show(settingsVC, sender: nil)
+        show(settingsVC, sender: nil)
+    }
+    
+    @objc func walletDidTouch() {
+        let walletVC = WalletVC()
+        let nc = navigationController as? BaseNavigationController
+        nc?.shouldResetNavigationBarOnPush = false
+        show(walletVC, sender: nil)
+        nc?.shouldResetNavigationBarOnPush = true
     }
     
     // MARK: - Covers + Avatar

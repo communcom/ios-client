@@ -165,7 +165,10 @@ class WalletVC: TransferHistoryVC {
         vc.completion = {
             self.viewModel.reload()
         }
+        let nc = navigationController as? BaseNavigationController
+        nc?.shouldResetNavigationBarOnPush = false
         show(vc, sender: nil)
+        nc?.shouldResetNavigationBarOnPush = true
     }
     
     @objc func moreActionsButtonDidTouch(_ sender: CommunButton) {
