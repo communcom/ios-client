@@ -67,7 +67,7 @@ class TransferHistoryFilterVC: BottomMenuVC {
         rewardsSegmentedControl.autoPinEdge(toSuperviewEdge: .trailing, withInset: 20 * Config.widthRatio)
         
         // save
-        let saveButton = CommunButton.default(height: 50, label: "save".localized().uppercaseFirst, isHuggingContent: false)
+        let saveButton = CommunButton.default(height: 50 * Config.heightRatio, label: "save".localized().uppercaseFirst, isHuggingContent: false)
         view.addSubview(saveButton)
         saveButton.autoPinEdge(.top, to: .bottom, of: rewardsSegmentedControl, withOffset: 40 * Config.heightRatio)
         saveButton.autoPinEdge(toSuperviewEdge: .leading, withInset: 20 * Config.widthRatio)

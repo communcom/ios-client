@@ -124,20 +124,15 @@ class TransferHistoryVC: ListViewController<ResponseAPIWalletGetTransferHistoryI
         UIView.setAnimationsEnabled(false)
         (viewModel as! TransferHistoryViewModel).filter.accept(filter)
         viewModel.state
-            .takeUntil(.inclusive) { (state) -> Bool in
-                switch state {
-                case .listEmpty, .listEnded, .error:
-                    return true
-                default:
-                    return false
-                }
-            }
-            .take(1)
-            .subscribe(onNext: { _ in
+            .filter {$0 != .loading(true)}
+            .first()
+            .subscribe(onSuccess: { _ in
                 DispatchQueue.main.async {
                     self.lastOffset = nil
                     UIView.setAnimationsEnabled(true)
                 }
+            }, onError: { error in
+                print(error)
             })
             .disposed(by: disposeBag)
     }
