@@ -10,6 +10,10 @@ import Foundation
 import RxCocoa
 import RxSwift
 
+protocol CMSegmentedControlDelegate: class {
+    func segmentedControl(_ segmentedControl: CMSegmentedControl, didTapOptionAtIndex: Int)
+}
+
 class CMSegmentedControl: MyView {
     // MARK: - Nested type
     class TapGesture: UITapGestureRecognizer {
@@ -21,6 +25,7 @@ class CMSegmentedControl: MyView {
     }
     
     // MARK: - Properties
+    weak var delegate: CMSegmentedControlDelegate?
     var labels: [UILabel]!
     var items: [Item]! {
         didSet {
@@ -107,6 +112,7 @@ class CMSegmentedControl: MyView {
     }
     
     @objc private func changeSelection(_ sender: TapGesture) {
+        delegate?.segmentedControl(self, didTapOptionAtIndex: sender.index)
         changeSelectedIndex(sender.index)
     }
     

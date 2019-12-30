@@ -39,8 +39,8 @@ class TransferHistoryVC: ListViewController<ResponseAPIWalletGetTransferHistoryI
         
         tableView.rx.endUpdatesEvent
             .subscribe(onNext: {_ in
-                self.tableView.layoutIfNeeded()
                 if let offset = self.lastOffset {
+                    self.tableView.layoutIfNeeded()
                     self.tableView.contentOffset = offset
                 }
             })
@@ -121,7 +121,6 @@ class TransferHistoryVC: ListViewController<ResponseAPIWalletGetTransferHistoryI
     
     func filterChanged(_ filter: TransferHistoryListFetcher.Filter) {
         lastOffset = tableView.contentOffset
-        UIView.setAnimationsEnabled(false)
         (viewModel as! TransferHistoryViewModel).filter.accept(filter)
         viewModel.state
             .filter {$0 != .loading(true)}
@@ -129,10 +128,7 @@ class TransferHistoryVC: ListViewController<ResponseAPIWalletGetTransferHistoryI
             .subscribe(onSuccess: { _ in
                 DispatchQueue.main.async {
                     self.lastOffset = nil
-                    UIView.setAnimationsEnabled(true)
                 }
-            }, onError: { error in
-                print(error)
             })
             .disposed(by: disposeBag)
     }

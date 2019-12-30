@@ -75,15 +75,15 @@ class MyProfilePageVC: UserProfilePageVC {
             .disposed(by: disposeBag)
     }
     
-    override func setHeaderView() {
-        headerView = MyProfileHeaderView(tableView: tableView)
+    override func createHeaderView() -> UserProfileHeaderView {
+        let headerView = MyProfileHeaderView(tableView: tableView)
         
-        let myHeader = headerView as! MyProfileHeaderView
-        myHeader.changeAvatarButton.addTarget(self, action: #selector(changeAvatarBtnDidTouch(_:)), for: .touchUpInside)
-        myHeader.addBioButton.addTarget(self, action: #selector(addBioButtonDidTouch(_:)), for: .touchUpInside)
-        myHeader.descriptionLabel.isUserInteractionEnabled = true
+        headerView.changeAvatarButton.addTarget(self, action: #selector(changeAvatarBtnDidTouch(_:)), for: .touchUpInside)
+        headerView.addBioButton.addTarget(self, action: #selector(addBioButtonDidTouch(_:)), for: .touchUpInside)
+        headerView.descriptionLabel.isUserInteractionEnabled = true
         let tap = UITapGestureRecognizer(target: self, action: #selector(bioLabelDidTouch(_:)))
-        myHeader.descriptionLabel.addGestureRecognizer(tap)
+        headerView.descriptionLabel.addGestureRecognizer(tap)
+        return headerView
     }
     
     override func moreActionsButtonDidTouch(_ sender: CommunButton) {

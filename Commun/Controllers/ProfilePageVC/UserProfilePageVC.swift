@@ -37,7 +37,7 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile>, PostCellDelega
     }
     
     // MARK: - Subviews
-    var headerView: UserProfileHeaderView!
+    lazy var headerView = createHeaderView()
     override var _headerView: ProfileHeaderView! {
         return headerView
     }
@@ -57,14 +57,8 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile>, PostCellDelega
     }
     
     // MARK: - Methods
-    override func setUp() {
-        super.setUp()
-        
-        setHeaderView()
-    }
-    
-    func setHeaderView() {
-        headerView = UserProfileHeaderView(tableView: tableView)
+    func createHeaderView() -> UserProfileHeaderView {
+        UserProfileHeaderView(tableView: tableView)
     }
     
     override func bind() {

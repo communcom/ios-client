@@ -41,7 +41,7 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
     }
     
     // MARK: - Subviews
-    var headerView: CommunityHeaderView!
+    lazy var headerView = CommunityHeaderView(tableView: tableView)
     override var _headerView: ProfileHeaderView! {
         return headerView
     }
@@ -95,12 +95,6 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
         tableView.contentInsetAdjustmentBehavior = .never
         tableView.showsVerticalScrollIndicator = false
         return tableView
-    }
-    
-    override func setUp() {
-        super.setUp()
-        
-        headerView = CommunityHeaderView(tableView: tableView)
     }
     
     override func bind() {

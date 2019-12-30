@@ -19,6 +19,7 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
     
     // MARK: - Properties
     lazy var viewModel: ProfileViewModel<ProfileType> = self.createViewModel()
+    var tableViewLastOffset: CGPoint?
     
     func createViewModel() -> ProfileViewModel<ProfileType> {
         fatalError("must override")
@@ -100,6 +101,17 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
             self.reload()
         }
         tableView.subviews.first(where: {$0 is ESRefreshHeaderView})?.alpha = 0
+        
+        tableView.rx.endUpdatesEvent
+            .subscribe(onNext: { _ in
+                if let offset = self.tableViewLastOffset {
+                    self.tableView.layoutIfNeeded()
+                    self.tableView.contentOffset = offset
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        _headerView.segmentedControl.delegate = self
     }
     
     override func bind() {
@@ -165,5 +177,19 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
     
     @objc func reload() {
         viewModel.reload()
+    }
+}
+
+extension ProfileVC: CMSegmentedControlDelegate {
+    func segmentedControl(_ segmentedControl: CMSegmentedControl, didTapOptionAtIndex: Int) {
+        tableViewLastOffset = tableView.contentOffset
+        
+        tableView.rx.endUpdatesEvent
+            .subscribe(onNext: { (_) in
+                DispatchQueue.main.async {
+                    self.tableViewLastOffset = nil
+                }
+            })
+            .disposed(by: disposeBag)
     }
 }
