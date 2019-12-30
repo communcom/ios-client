@@ -16,11 +16,11 @@ class WalletConvertViewModel: BalancesViewModel {
         case other(Error)
     }
     
+    // MARK: - Properties
     let priceLoadingState = BehaviorRelay<LoadingState>(value: .loading)
     let buyPrice = BehaviorRelay<Double>(value: 0)
     let sellPrice = BehaviorRelay<Double>(value: 0)
     let errorSubject = BehaviorRelay<ConvertError?>(value: nil)
-    
     let rate = BehaviorRelay<Double>(value: 0)
     
     // Prevent duplicating

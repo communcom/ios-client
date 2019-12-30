@@ -72,8 +72,9 @@ class WalletConvertVC: BaseViewController {
     lazy var convertButton = CommunButton.default(height: 50 * Config.heightRatio, label: "convert".localized().uppercaseFirst, isHuggingContent: false)
     
     // MARK: - Initializers
-    init(symbol: String? = nil) {
+    init(balances: [ResponseAPIWalletGetBalance], symbol: String? = nil) {
         currentSymbol = symbol == "CMN" ? nil : symbol
+        viewModel.items.accept(balances)
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -168,23 +169,16 @@ class WalletConvertVC: BaseViewController {
         viewModel.state
             .subscribe(onNext: { (state) in
                 switch state {
-                case .loading(let isLoading):
-                    if isLoading {
-                        self.view.showLoading()
-                    } else {
-                        self.view.hideLoading()
-                    }
-                case .listEnded, .listEmpty:
-                    self.view.hideLoading()
                 case .error(error: let error):
                     #if !APPSTORE
                         self.showError(error)
                     #endif
-                    self.view.hideLoading()
                     self.view.showErrorView {
                         self.view.hideErrorView()
                         self.viewModel.reload()
                     }
+                default:
+                    break
                 }
             })
             .disposed(by: disposeBag)
@@ -217,9 +211,6 @@ class WalletConvertVC: BaseViewController {
             .subscribe(onNext: { [weak self] (state) in
                 switch state {
                 case .loading:
-                    self?.rateLabel.showLoader()
-                    self?.rateLabel.isUserInteractionEnabled = false
-                    
                     if !(self?.rightTextField.isFirstResponder ?? false) {
                         self?.rightTextField.showLoader()
                     }
@@ -230,19 +221,11 @@ class WalletConvertVC: BaseViewController {
                     
                     self?.convertButton.isEnabled = false
                 case .finished:
-                    self?.rateLabel.hideLoader()
-                    self?.rateLabel.isUserInteractionEnabled = false
                     self?.rightTextField.hideLoader()
                     self?.leftTextField.hideLoader()
                     
                     self?.convertButton.isEnabled = self?.shouldEnableConvertButton() ?? false
-                case .error(let error):
-                    self?.rateLabel.hideLoader()
-                    self?.rateLabel.attributedText = NSMutableAttributedString()
-                        .text("could not get price".localized().uppercaseFirst + ". ", size: 12, weight: .medium, color: .red)
-                        .text("retry".localized().uppercaseFirst + "?", size: 12, weight: .medium, color: .appMainColor)
-                    self?.rateLabel.isUserInteractionEnabled = true
-                    
+                case .error(_):
                     self?.rightTextField.hideLoader()
                     self?.leftTextField.hideLoader()
                     
@@ -469,9 +452,9 @@ class WalletConvertVC: BaseViewController {
         let vc: UIViewController
         
         if self is WalletSellCommunVC {
-            vc = WalletBuyCommunVC(symbol: currentBalance?.symbol)
+            vc = WalletBuyCommunVC(balances: viewModel.items.value, symbol: currentBalance?.symbol)
         } else {
-            vc = WalletSellCommunVC(symbol: currentBalance?.symbol)
+            vc = WalletSellCommunVC(balances: viewModel.items.value, symbol: currentBalance?.symbol)
         }
         
         viewControllers.append(vc)

@@ -158,9 +158,9 @@ class WalletVC: TransferHistoryVC {
         guard let balance = currentBalance else {return}
         let vc: WalletConvertVC
         if balance.symbol == "CMN" {
-            vc = WalletSellCommunVC()
+            vc = WalletSellCommunVC(balances: (self.viewModel as! WalletViewModel).balancesVM.items.value)
         } else {
-            vc = WalletBuyCommunVC(symbol: balance.symbol)
+            vc = WalletBuyCommunVC(balances: (self.viewModel as! WalletViewModel).balancesVM.items.value, symbol: balance.symbol)
         }
         vc.completion = {
             self.viewModel.reload()
