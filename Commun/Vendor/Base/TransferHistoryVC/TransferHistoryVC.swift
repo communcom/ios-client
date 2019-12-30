@@ -10,6 +10,9 @@ import Foundation
 
 class TransferHistoryVC: ListViewController<ResponseAPIWalletGetTransferHistoryItem, TransferHistoryItemCell> {
     // MARK: - Properties
+    var lastOffset: CGPoint?
+    
+    // MARK: - Initializers
     init() {
         super.init(viewModel: Self.createViewModel())
     }
@@ -33,6 +36,15 @@ class TransferHistoryVC: ListViewController<ResponseAPIWalletGetTransferHistoryI
     
     override func bind() {
         super.bind()
+        
+        tableView.rx.endUpdatesEvent
+            .subscribe(onNext: {_ in
+                self.tableView.layoutIfNeeded()
+                if let offset = self.lastOffset {
+                    self.tableView.contentOffset = offset
+                }
+            })
+            .disposed(by: disposeBag)
         
         tableView.rx.setDelegate(self)
             .disposed(by: disposeBag)
@@ -102,9 +114,32 @@ class TransferHistoryVC: ListViewController<ResponseAPIWalletGetTransferHistoryI
     @objc func openFilter() {
         let vc = TransferHistoryFilterVC(filter: (viewModel as! TransferHistoryViewModel).filter.value)
         vc.completion = {filter in
-            (self.viewModel as! TransferHistoryViewModel).filter.accept(filter)
+            self.filterChanged(filter)
         }
         present(vc, animated: true, completion: nil)
+    }
+    
+    func filterChanged(_ filter: TransferHistoryListFetcher.Filter) {
+        lastOffset = tableView.contentOffset
+        UIView.setAnimationsEnabled(false)
+        (viewModel as! TransferHistoryViewModel).filter.accept(filter)
+        viewModel.state
+            .takeUntil(.inclusive) { (state) -> Bool in
+                switch state {
+                case .listEmpty, .listEnded, .error:
+                    return true
+                default:
+                    return false
+                }
+            }
+            .take(1)
+            .subscribe(onNext: { _ in
+                DispatchQueue.main.async {
+                    self.lastOffset = nil
+                    UIView.setAnimationsEnabled(true)
+                }
+            })
+            .disposed(by: disposeBag)
     }
 }
 
