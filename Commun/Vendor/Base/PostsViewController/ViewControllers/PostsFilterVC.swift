@@ -22,7 +22,7 @@ class PostsFilterVC: BaseViewController {
     lazy var backButton = UIButton.circle(size: 30, backgroundColor: .f7f7f9, tintColor: .a5a7bd, imageName: "back-button", imageEdgeInsets: UIEdgeInsets(inset: 6))
     
     lazy var tableView = UITableView(forAutoLayout: ())
-    lazy var saveButton = CommunButton.default(height: 50, label: "save".localized().uppercaseFirst)
+    lazy var saveButton = CommunButton.default(height: 50 * Config.heightRatio, label: "save".localized().uppercaseFirst)
     
     // MARK: - Initializers
     init(filter: PostsListFetcher.Filter, isTimeFrameMode: Bool = false) {

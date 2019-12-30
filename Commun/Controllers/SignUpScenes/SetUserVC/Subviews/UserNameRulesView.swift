@@ -10,7 +10,7 @@ import Foundation
 
 class UserNameRulesView: MyCardView {
     // MARK: - Subviews
-    lazy var understoodButton = CommunButton.default(height: 50, label: "understood".localized().uppercaseFirst, isHuggingContent: false)
+    lazy var understoodButton = CommunButton.default(height: 50 * Config.heightRatio, label: "understood".localized().uppercaseFirst, isHuggingContent: false)
     lazy var closeButton = UIButton.close(size: 24)
     
     // MARK: - Methods

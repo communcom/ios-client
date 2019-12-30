@@ -42,7 +42,7 @@ class CMTopTabBar: MyView {
     override func commonInit() {
         super.commonInit()
         configureForAutoLayout()
-        autoSetDimension(.height, toSize: tabBarHeight * Config.heightRatio)
+        autoSetDimension(.height, toSize: tabBarHeight)
         
         scrollView.showsVerticalScrollIndicator = false
         scrollView.showsHorizontalScrollIndicator = false

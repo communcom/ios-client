@@ -14,7 +14,7 @@ class BackUpKeysVC: BoardingVC {
     override var nextStep: CurrentUserSettingStep? {.setPasscode}
 
     lazy var copyButton = UIButton.circle(size: 24, backgroundColor: .a5a7bd, tintColor: .white, imageName: "copy", imageEdgeInsets: UIEdgeInsets(inset: 6))
-    lazy var backUpICloudButton = CommunButton.default(height: 50, label: "backup iCloud".localized().uppercaseFirst)
+    lazy var backUpICloudButton = CommunButton.default(height: 50 * Config.heightRatio, label: "backup iCloud".localized().uppercaseFirst)
 
     lazy var iSavedItButton: UIButton = {
         let button = UIButton(label: "i saved it".localized().uppercaseFirst, textColor: .appMainColor, contentInsets: UIEdgeInsets(top: 10, left: 100, bottom: 10, right: 100))

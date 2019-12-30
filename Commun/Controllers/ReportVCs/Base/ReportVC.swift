@@ -60,7 +60,7 @@ class ReportVC: BaseVerticalStackViewController {
         descriptionLabel.autoAlignAxis(toSuperviewAxis: .horizontal)
         descriptionLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
         
-        let sendButton = CommunButton.default(height: 50, label: "send".localized().uppercaseFirst)
+        let sendButton = CommunButton.default(height: 50 * Config.heightRatio, label: "send".localized().uppercaseFirst)
         scrollView.contentView.addSubview(sendButton)
         sendButton.autoPinEdge(.top, to: .bottom, of: alertView, withOffset: 30)
         sendButton.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)

@@ -69,7 +69,7 @@ class WalletConvertVC: BaseViewController {
     lazy var errorLabel = UILabel.with(textSize: 12, weight: .semibold, textColor: .red, textAlignment: .center)
     lazy var rateLabel = UILabel.with(text: "Rate: ", textSize: 12, weight: .medium, textAlignment: .center)
     
-    lazy var convertButton = CommunButton.default(height: 50, label: "Convert", isHuggingContent: false)
+    lazy var convertButton = CommunButton.default(height: 50 * Config.heightRatio, label: "convert".localized().uppercaseFirst, isHuggingContent: false)
     
     // MARK: - Initializers
     init(symbol: String? = nil) {
