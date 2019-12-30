@@ -53,7 +53,16 @@ class WalletVC: TransferHistoryVC {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         headerView.contentView.roundCorners(UIRectCorner(arrayLiteral: .bottomLeft, .bottomRight), radius: 30 * Config.heightRatio)
-        headerView.shadowView.addShadow(ofColor: UIColor(red: 106, green: 128, blue: 245)!, radius: 19, offset: CGSize(width: 0, height: 14), opacity: 0.3)
+        
+        var color = UIColor(red: 106, green: 128, blue: 245)!
+        var opacity: Float = 0.3
+        
+        if headerView.isCollapsed {
+            color = UIColor(red: 108, green: 123, blue: 173)!
+            opacity = 0.08
+        }
+        
+        headerView.shadowView.addShadow(ofColor: color, radius: 19, offset: CGSize(width: 0, height: 14), opacity: opacity)
     }
     
     override func setUp() {
@@ -85,6 +94,13 @@ class WalletVC: TransferHistoryVC {
             .disposed(by: disposeBag)
         
         sendPointsCollectionView.rx.setDelegate(self)
+            .disposed(by: disposeBag)
+        
+        tableView.rx.contentOffset.map {$0.y > 0}
+            .distinctUntilChanged()
+            .subscribe(onNext: { (collapse) in
+                self.headerView.setIsCollapsed(collapse)
+            })
             .disposed(by: disposeBag)
     }
     
