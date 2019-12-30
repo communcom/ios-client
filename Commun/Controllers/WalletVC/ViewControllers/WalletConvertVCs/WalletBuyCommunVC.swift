@@ -126,7 +126,8 @@ class WalletBuyCommunVC: WalletConvertVC {
     
     override func getBuyPrice() {
         guard let balance = currentBalance,
-            let value = NumberFormatter().number(from: rightTextField.text ?? "")?.doubleValue
+            let value = NumberFormatter().number(from: rightTextField.text ?? "")?.doubleValue,
+            value > 0
         else {return}
         viewModel.getBuyPrice(symbol: balance.symbol, quantity: "\(value) CMN")
         
@@ -134,7 +135,8 @@ class WalletBuyCommunVC: WalletConvertVC {
     
     override func getSellPrice() {
         guard let balance = currentBalance,
-            let value = NumberFormatter().number(from: leftTextField.text ?? "")?.doubleValue
+            let value = NumberFormatter().number(from: leftTextField.text ?? "")?.doubleValue,
+            value > 0
         else {return}
         viewModel.getSellPrice(quantity: "\(value) \(balance.symbol)")
     }
