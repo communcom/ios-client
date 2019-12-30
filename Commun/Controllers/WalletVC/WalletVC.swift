@@ -12,26 +12,31 @@ import RxSwift
 class WalletVC: TransferHistoryVC {
     // MARK: - Properties
     var currentBalance: ResponseAPIWalletGetBalance? {
-        (self.viewModel as! WalletViewModel).balancesVM.items.value[safe: headerView.currentIndex]
+        (self.viewModel as! WalletViewModel).balancesVM.items.value[safe: headerView.currentIndex.value]
     }
     
     // MARK: - Subviews
-    lazy var headerView = WalletHeaderView(tableView: tableView)
-    var myPointsCollectionView: UICollectionView {headerView.myPointsCollectionView}
-    var sendPointsCollectionView: UICollectionView {headerView.sendPointsCollectionView}
+    lazy var headerView = WalletHeaderView(forAutoLayout: ())
+    lazy var tableHeaderView = WalletTableHeaderView(tableView: tableView)
+    var myPointsCollectionView: UICollectionView {tableHeaderView.myPointsCollectionView}
+    var sendPointsCollectionView: UICollectionView {tableHeaderView.sendPointsCollectionView}
     
     override class func createViewModel() -> TransferHistoryViewModel {
         WalletViewModel()
     }
     
     override func createTableView() -> UITableView {
+        view.addSubview(headerView)
+        headerView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .bottom)
+        
         let tableView = UITableView(forAutoLayout: ())
         tableView.insetsContentViewsToSafeArea = false
         tableView.contentInsetAdjustmentBehavior = .never
         tableView.showsVerticalScrollIndicator = false
         
         view.addSubview(tableView)
-        tableView.autoPinEdgesToSuperviewEdges()
+        tableView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
+        tableView.autoPinEdge(.top, to: .bottom, of: headerView)
         return tableView
     }
     
@@ -45,6 +50,12 @@ class WalletVC: TransferHistoryVC {
         super.viewWillDisappear(animated)
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        headerView.contentView.roundCorners(UIRectCorner(arrayLiteral: .bottomLeft, .bottomRight), radius: 30 * Config.heightRatio)
+        headerView.shadowView.addShadow(ofColor: UIColor(red: 106, green: 128, blue: 245)!, radius: 19, offset: CGSize(width: 0, height: 14), opacity: 0.3)
+    }
+    
     override func setUp() {
         super.setUp()
         headerView.backButton.addTarget(self, action: #selector(back), for: .touchUpInside)
@@ -52,14 +63,22 @@ class WalletVC: TransferHistoryVC {
         headerView.sendButton.addTarget(self, action: #selector(sendButtonDidTouch), for: .touchUpInside)
         headerView.convertButton.addTarget(self, action: #selector(convertButtonDidTouch), for: .touchUpInside)
         
-        headerView.sendPointsSeeAllButton.addTarget(self, action: #selector(sendPointsSeeAllDidTouch), for: .touchUpInside)
-        headerView.myPointsSeeAllButton.addTarget(self, action: #selector(myPointsSeeAllDidTouch), for: .touchUpInside)
+        tableHeaderView.sendPointsSeeAllButton.addTarget(self, action: #selector(sendPointsSeeAllDidTouch), for: .touchUpInside)
+        tableHeaderView.myPointsSeeAllButton.addTarget(self, action: #selector(myPointsSeeAllDidTouch), for: .touchUpInside)
         
-        headerView.filterButton.addTarget(self, action: #selector(openFilter), for: .touchUpInside)
+        tableHeaderView.filterButton.addTarget(self, action: #selector(openFilter), for: .touchUpInside)
     }
     
     override func bind() {
         super.bind()
+        
+        // headerView
+        headerView.currentIndex
+            .map {$0 != 0}
+            .subscribe(onNext: { (shouldHide) in
+                self.tableHeaderView.setMyPointHidden(shouldHide)
+            })
+            .disposed(by: disposeBag)
         
         // forward delegate
         myPointsCollectionView.rx.setDelegate(self)
@@ -74,6 +93,7 @@ class WalletVC: TransferHistoryVC {
         (viewModel as! WalletViewModel).balancesVM.items
             .subscribe(onNext: { (items) in
                 self.headerView.setUp(with: items)
+                self.tableHeaderView.setMyPointHidden(self.headerView.currentIndex.value != 0)
             })
             .disposed(by: disposeBag)
         
@@ -124,15 +144,25 @@ class WalletVC: TransferHistoryVC {
                 case .loading(let isLoading):
                     if isLoading {
                         self?.headerView.startLoading()
+                        self?.myPointsCollectionView.showLoader()
+                        self?.sendPointsCollectionView.showLoader()
                     } else {
                         self?.headerView.endLoading()
+                        self?.myPointsCollectionView.hideLoader()
+                        self?.sendPointsCollectionView.hideLoader()
                     }
                 case .listEnded:
                     self?.headerView.endLoading()
+                    self?.myPointsCollectionView.hideLoader()
+                    self?.sendPointsCollectionView.hideLoader()
                 case .listEmpty:
                     self?.headerView.endLoading()
+                    self?.myPointsCollectionView.hideLoader()
+                    self?.sendPointsCollectionView.hideLoader()
                 case .error(let error):
                     self?.headerView.endLoading()
+                    self?.myPointsCollectionView.hideLoader()
+                    self?.sendPointsCollectionView.hideLoader()
                     self?.view.showErrorView {
                         self?.view.hideErrorView()
                         self?.viewModel.reload()

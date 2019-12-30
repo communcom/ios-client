@@ -2,34 +2,20 @@
 //  WalletHeaderView.swift
 //  Commun
 //
-//  Created by Chung Tran on 12/19/19.
+//  Created by Chung Tran on 12/30/19.
 //  Copyright © 2019 Commun Limited. All rights reserved.
 //
 
 import Foundation
 import RxSwift
-import CircularCarousel
+import RxCocoa
 
-class WalletHeaderView: MyTableHeaderView {
+class WalletHeaderView: MyView {
     // MARK: - Properties
-    var stackViewTopConstraint: NSLayoutConstraint?
-    var sendPointsTopConstraint: NSLayoutConstraint?
-    var balances: [ResponseAPIWalletGetBalance]? {
-        didSet {
-            carousel.balances = balances
-        }
-    }
-    var currentIndex: Int = 0 {
-        didSet {
-            carousel.currentIndex = currentIndex
-            if currentIndex == 0 {
-                setUpWithCommunValue()
-            } else {
-                setUpWithCurrentBalance()
-            }
-        }
-    }
     let disposeBag = DisposeBag()
+    var stackViewTopConstraint: NSLayoutConstraint?
+    var balances: [ResponseAPIWalletGetBalance]?
+    let currentIndex = BehaviorRelay<Int>(value: 0)
     
     // MARK: - Subviews
     lazy var shadowView = UIView(forAutoLayout: ())
@@ -61,47 +47,8 @@ class WalletHeaderView: MyTableHeaderView {
     
     lazy var convertButton = UIButton.circle(size: 30, backgroundColor: UIColor.white.withAlphaComponent(0.2), tintColor: .white, imageName: "convert", imageEdgeInsets: UIEdgeInsets(inset: 6))
     
-    // MARK: - My points
-    lazy var myPointsContainerView = UIView(forAutoLayout: ())
-    lazy var myPointsSeeAllButton = UIButton(label: "see all".localized().uppercaseFirst, labelFont: .systemFont(ofSize: 15, weight: .medium), textColor: .appMainColor, contentInsets: .zero)
-    
-    lazy var myPointsCollectionView: UICollectionView = {
-        let collectionView = UICollectionView.horizontalFlow(
-            cellType: MyPointCollectionCell.self,
-            height: MyPointCollectionCell.height,
-            contentInsets: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
-        )
-        collectionView.layer.masksToBounds = false
-        return collectionView
-    }()
-    
-    // MARK: - Send points
-    lazy var sendPointsContainerView = UIView(forAutoLayout: ())
-    lazy var sendPointsSeeAllButton = UIButton(label: "see all".localized().uppercaseFirst, labelFont: .systemFont(ofSize: 15, weight: .medium), textColor: .appMainColor, contentInsets: .zero)
-    
-    lazy var sendPointsCollectionView: UICollectionView = {
-        let collectionView = UICollectionView.horizontalFlow(
-            cellType: SendPointCollectionCell.self,
-            height: SendPointCollectionCell.height,
-            contentInsets: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
-        )
-        collectionView.layer.masksToBounds = false
-        return collectionView
-    }()
-    
-    // MARK: - Filter
-    lazy var filterContainerView = UIView(backgroundColor: .white)
-    lazy var filterButton: LeftAlignedIconButton = {
-        let button = LeftAlignedIconButton(height: 35, label: "filter".localized().uppercaseFirst, labelFont: .systemFont(ofSize: 15, weight: .semibold), backgroundColor: .f3f5fa, textColor: .a5a7bd, cornerRadius: 10, contentInsets: UIEdgeInsets(top: 4, left: 10, bottom: 4, right: 16))
-        button.setImage(UIImage(named: "Filter"), for: .normal)
-        button.tintColor = .a5a7bd
-        return button
-    }()
-    
-    // MARK: - Methods
     override func commonInit() {
         super.commonInit()
-        
         addSubview(shadowView)
         shadowView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .bottom)
         
@@ -120,7 +67,7 @@ class WalletHeaderView: MyTableHeaderView {
         carousel.autoAlignAxis(toSuperviewAxis: .vertical)
         carousel.autoAlignAxis(.horizontal, toSameAxisOf: backButton)
         carousel.scrollingHandler = {index in
-            self.currentIndex = index
+            self.currentIndex.accept(index)
         }
         
         contentView.addSubview(optionsButton)
@@ -167,70 +114,30 @@ class WalletHeaderView: MyTableHeaderView {
         buttonsStackView.addArrangedSubview(buttonContainerViewWithButton(sendButton, label: "send".localized().uppercaseFirst))
         buttonsStackView.addArrangedSubview(buttonContainerViewWithButton(convertButton, label: "convert".localized().uppercaseFirst))
         
-        // my points
-        addSubview(myPointsContainerView)
-        myPointsContainerView.autoPinEdge(.top, to: .bottom, of: shadowView, withOffset: 29)
-        myPointsContainerView.autoPinEdge(toSuperviewEdge: .leading)
-        myPointsContainerView.autoPinEdge(toSuperviewEdge: .trailing)
-        
-        let myPointsLabel = UILabel.with(text: "my points".localized().uppercaseFirst, textSize: 17, weight: .bold)
-        myPointsContainerView.addSubview(myPointsLabel)
-        myPointsLabel.autoPinEdge(toSuperviewEdge: .top)
-        myPointsLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 10)
-        
-        myPointsContainerView.addSubview(myPointsSeeAllButton)
-        myPointsSeeAllButton.autoPinEdge(toSuperviewEdge: .top)
-        myPointsSeeAllButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 10)
-        
-        myPointsContainerView.addSubview(myPointsCollectionView)
-        myPointsCollectionView.autoPinEdge(.top, to: .bottom, of: myPointsLabel, withOffset: 20)
-        myPointsCollectionView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
-        
-        // send points
-        addSubview(sendPointsContainerView)
-        sendPointsTopConstraint = sendPointsContainerView.autoPinEdge(.top, to: .bottom, of: myPointsContainerView, withOffset: 30 * Config.heightRatio)
-        sendPointsContainerView.autoPinEdge(toSuperviewEdge: .leading)
-        sendPointsContainerView.autoPinEdge(toSuperviewEdge: .trailing)
-        
-        sendPointsContainerView.addSubview(sendPointsSeeAllButton)
-        sendPointsSeeAllButton.autoPinEdge(toSuperviewEdge: .top)
-        sendPointsSeeAllButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 10)
-        
-        let sendPointsLabel = UILabel.with(text: "send points".localized().uppercaseFirst, textSize: 17, weight: .bold)
-        sendPointsContainerView.addSubview(sendPointsLabel)
-        sendPointsLabel.autoPinEdge(toSuperviewEdge: .top)
-        sendPointsLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 10)
-        
-        sendPointsContainerView.addSubview(sendPointsCollectionView)
-        sendPointsCollectionView.autoPinEdge(.top, to: .bottom, of: sendPointsLabel, withOffset: 20)
-        sendPointsCollectionView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
-        
-        // filter
-        addSubview(filterContainerView)
-        filterContainerView.autoPinEdge(.top, to: .bottom, of: sendPointsContainerView, withOffset: 32)
-        filterContainerView.autoPinEdge(toSuperviewEdge: .leading, withInset: 10)
-        filterContainerView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 10)
-        
-        let historyLabel = UILabel.with(text: "history".localized().uppercaseFirst, textSize: 17, weight: .bold)
-        filterContainerView.addSubview(historyLabel)
-        historyLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
-        historyLabel.autoAlignAxis(toSuperviewAxis: .horizontal)
-        
-        filterContainerView.addSubview(filterButton)
-        filterButton.autoPinEdge(toSuperviewEdge: .top, withInset: 10)
-        filterButton.autoPinEdge(toSuperviewEdge: .bottom, withInset: 10)
-        filterButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
-        
         // pin bottom
-        filterContainerView.autoPinEdge(toSuperviewEdge: .bottom)
+        shadowView.autoPinEdge(toSuperviewEdge: .bottom, withInset: 29)
         
-        // initial setup
-        setUpWithCommunValue()
+        // bind
+        bind()
+    }
+    
+    func bind() {
+        currentIndex
+            .subscribe(onNext: { (index) in
+                self.carousel.currentIndex = index
+                if index == 0 {
+                    self.setUpWithCommunValue()
+                } else {
+                    self.setUpWithCurrentBalance()
+                }
+            })
+            .disposed(by: disposeBag)
     }
     
     func setUp(with balances: [ResponseAPIWalletGetBalance]) {
         self.balances = balances
-        if currentIndex == 0 {
+        carousel.balances = balances
+        if currentIndex.value == 0 {
             setUpWithCommunValue()
         } else {
             setUpWithCurrentBalance()
@@ -244,29 +151,12 @@ class WalletHeaderView: MyTableHeaderView {
         carousel.isHidden = true
         
         // remove balanceContainerView if exists
-        var needAnimation = false
         if balanceContainerView.isDescendant(of: contentView) {
             contentView.backgroundColor = .appMainColor
             balanceContainerView.removeFromSuperview()
             
             stackViewTopConstraint?.isActive = false
             stackViewTopConstraint = buttonsStackView.autoPinEdge(.top, to: .bottom, of: pointLabel, withOffset: 30 * Config.heightRatio)
-            needAnimation = true
-        }
-        
-        // add my point
-        if !myPointsContainerView.isDescendant(of: self) {
-            addSubview(myPointsContainerView)
-            myPointsContainerView.autoPinEdge(.top, to: .bottom, of: shadowView, withOffset: 29)
-            myPointsContainerView.autoPinEdge(toSuperviewEdge: .leading)
-            myPointsContainerView.autoPinEdge(toSuperviewEdge: .trailing)
-            
-            sendPointsTopConstraint?.isActive = false
-            sendPointsTopConstraint = sendPointsContainerView.autoPinEdge(.top, to: .bottom, of: myPointsContainerView, withOffset: 30 * Config.heightRatio)
-            needAnimation = true
-        }
-        
-        if needAnimation {
             UIView.animate(withDuration: 0.3) {
                 self.layoutIfNeeded()
             }
@@ -275,22 +165,21 @@ class WalletHeaderView: MyTableHeaderView {
         // set up
         titleLabel.text = "enquity Value Commun".localized().uppercaseFirst
         pointLabel.text = "\(point.currencyValueFormatted)"
-        
     }
     
     private func setUpWithCurrentBalance() {
         guard let balances = balances,
-            let balance = balances[safe: currentIndex]
+            let balance = balances[safe: currentIndex.value]
         else {
-            currentIndex = 0
+            currentIndex.accept(0)
             return
         }
+        
         // show carousel
         communLogo.isHidden = true
         carousel.isHidden = false
         
         // add balanceContainerView
-        var needAnimation = false
         if !balanceContainerView.isDescendant(of: contentView) {
             contentView.backgroundColor = UIColor(hexString: "#020202")
             contentView.addSubview(balanceContainerView)
@@ -300,19 +189,6 @@ class WalletHeaderView: MyTableHeaderView {
             
             stackViewTopConstraint?.isActive = false
             stackViewTopConstraint = buttonsStackView.autoPinEdge(.top, to: .bottom, of: balanceContainerView, withOffset: 30 * Config.heightRatio)
-            needAnimation = true
-        }
-        
-        // remove my point
-        if myPointsContainerView.isDescendant(of: self) {
-            myPointsContainerView.removeFromSuperview()
-            
-            sendPointsTopConstraint?.isActive = false
-            sendPointsTopConstraint = sendPointsContainerView.autoPinEdge(.top, to: .bottom, of: shadowView, withOffset: 29)
-            needAnimation = true
-        }
-        
-        if needAnimation {
             UIView.animate(withDuration: 0.3) {
                 self.layoutIfNeeded()
             }
@@ -337,11 +213,12 @@ class WalletHeaderView: MyTableHeaderView {
         progressBar.progress = CGFloat(progress)
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        contentView.roundCorners(UIRectCorner(arrayLiteral: .bottomLeft, .bottomRight), radius: 30 * Config.heightRatio)
-        shadowView.addShadow(ofColor: UIColor(red: 106, green: 128, blue: 245)!, radius: 19, offset: CGSize(width: 0, height: 14), opacity: 0.3)
-        filterContainerView.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: 16)
+    func startLoading() {
+        contentView.showLoader()
+    }
+    
+    func endLoading() {
+        contentView.hideLoader()
     }
     
     private func buttonContainerViewWithButton(_ button: UIButton, label: String) -> UIView {
@@ -359,17 +236,9 @@ class WalletHeaderView: MyTableHeaderView {
         return container
     }
     
-    func startLoading() {
-        contentView.showLoader()
-    }
-    
-    func endLoading() {
-        contentView.hideLoader()
-    }
-    
     func switchToSymbol(_ symbol: String) {
         guard let index = balances?.firstIndex(where: {$0.symbol == symbol}) else {return}
-        currentIndex = index
+        currentIndex.accept(index)
         carousel.reloadData()
     }
 }
