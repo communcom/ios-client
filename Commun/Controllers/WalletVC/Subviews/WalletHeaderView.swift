@@ -16,7 +16,7 @@ class WalletHeaderView: MyView {
     var stackViewTopConstraint: NSLayoutConstraint?
     var balances: [ResponseAPIWalletGetBalance]?
     let currentIndex = BehaviorRelay<Int>(value: 0)
-    var isCollapsed = false
+    var isCollapsed = true
     
     var titleTopConstraint: NSLayoutConstraint?
     var titleToPoinConstraint: NSLayoutConstraint?
@@ -131,82 +131,93 @@ class WalletHeaderView: MyView {
             .disposed(by: disposeBag)
     }
     
-    func setUp(with balances: [ResponseAPIWalletGetBalance]) {
+    func setIsCollapsed(_ value: Bool) {
+        if isCollapsed == value {return}
+        self.isCollapsed = value
+        
+        layoutIfNeeded()
+        
+        let deactivateConstraints = {
+            self.titleTopConstraint?.isActive = false
+            self.pointBottomConstraint?.isActive = false
+            self.stackViewTopConstraint?.isActive = false
+        }
+        
+        if !isCollapsed {
+            UIView.animate(withDuration: 0.3) {
+                deactivateConstraints()
+                self.titleTopConstraint = self.titleLabel.autoPinEdge(.top, to: .bottom, of: self.backButton, withOffset: 25)
+                
+                self.titleToPoinConstraint?.constant = 5
+                
+                self.titleLabel.font = .systemFont(ofSize: 15, weight: .semibold)
+                self.pointLabel.font = .systemFont(ofSize: 30, weight: .bold)
+                
+                self.titleLabel.textColor = .white
+                self.pointLabel.textColor = .white
+                
+                self.backButton.tintColor = .white
+                self.optionsButton.tintColor = .white
+                
+                self.contentView.addSubview(self.communLogo)
+                self.communLogo.autoAlignAxis(toSuperviewAxis: .vertical)
+                self.communLogo.autoAlignAxis(.horizontal, toSameAxisOf: self.backButton)
+                
+                self.contentView.addSubview(self.carousel)
+                self.carousel.autoAlignAxis(toSuperviewAxis: .vertical)
+                self.carousel.autoAlignAxis(.horizontal, toSameAxisOf: self.backButton)
+                
+                self.contentView.addSubview(self.buttonsStackView)
+                self.stackViewTopConstraint = self.buttonsStackView.autoPinEdge(.top, to: .bottom, of: self.pointLabel, withOffset: 30 * Config.heightRatio)
+                self.buttonsStackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 16 * Config.widthRatio, bottom: 30 * Config.heightRatio, right: 16 * Config.widthRatio), excludingEdge: .top)
+                
+                if let balances = self.balances {
+                    self.setUp(with: balances, animated: false)
+                }
+                self.layoutIfNeeded()
+            }
+        } else {
+            UIView.animate(withDuration: 0.3) {
+                self.communLogo.removeFromSuperview()
+                self.carousel.removeFromSuperview()
+                self.buttonsStackView.removeFromSuperview()
+                self.balanceContainerView.removeFromSuperview()
+                self.buttonsStackView.removeFromSuperview()
+                
+                deactivateConstraints()
+                
+                self.titleTopConstraint = self.titleLabel.autoPinEdge(toSuperviewSafeArea: .top, withInset: 6)
+                
+                self.titleToPoinConstraint?.constant = 3
+                
+                self.pointBottomConstraint = self.pointLabel.autoPinEdge(toSuperviewEdge: .bottom, withInset: 10)
+                
+                self.titleLabel.font = .systemFont(ofSize: 12, weight: .semibold)
+                self.pointLabel.font = .systemFont(ofSize: 20, weight: .semibold)
+                
+                self.titleLabel.textColor = .black
+                self.pointLabel.textColor = .black
+                
+                self.contentView.backgroundColor = .white
+                
+                self.backButton.tintColor = .black
+                self.optionsButton.tintColor = .black
+                self.layoutIfNeeded()
+            }
+        }
+    }
+    
+    func setUp(with balances: [ResponseAPIWalletGetBalance], animated: Bool = true) {
         self.balances = balances
         carousel.balances = balances
         if currentIndex.value == 0 {
-            setUpWithCommunValue()
+            setUpWithCommunValue(animated: animated)
         } else {
-            setUpWithCurrentBalance()
+            setUpWithCurrentBalance(animated: animated)
         }
     }
     
-    func setIsCollapsed(_ value: Bool) {
-        self.isCollapsed = value
-        
-        communLogo.removeFromSuperview()
-        carousel.removeFromSuperview()
-        buttonsStackView.removeFromSuperview()
-        balanceContainerView.removeFromSuperview()
-        buttonsStackView.removeFromSuperview()
-        
-        titleTopConstraint?.isActive = false
-        pointBottomConstraint?.isActive = false
-        stackViewTopConstraint?.isActive = false
-        if !isCollapsed {
-            titleTopConstraint = titleLabel.autoPinEdge(.top, to: .bottom, of: backButton, withOffset: 25)
-            
-            titleToPoinConstraint?.constant = 5
-            
-            titleLabel.font = .systemFont(ofSize: 15, weight: .semibold)
-            pointLabel.font = .systemFont(ofSize: 30, weight: .bold)
-            
-            titleLabel.textColor = .white
-            pointLabel.textColor = .white
-            
-            backButton.tintColor = .white
-            optionsButton.tintColor = .white
-            
-            contentView.addSubview(communLogo)
-            communLogo.autoAlignAxis(toSuperviewAxis: .vertical)
-            communLogo.autoAlignAxis(.horizontal, toSameAxisOf: backButton)
-            
-            contentView.addSubview(carousel)
-            carousel.autoAlignAxis(toSuperviewAxis: .vertical)
-            carousel.autoAlignAxis(.horizontal, toSameAxisOf: backButton)
-            
-            contentView.addSubview(buttonsStackView)
-            stackViewTopConstraint = buttonsStackView.autoPinEdge(.top, to: .bottom, of: pointLabel, withOffset: 30 * Config.heightRatio)
-            buttonsStackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 16 * Config.widthRatio, bottom: 30 * Config.heightRatio, right: 16 * Config.widthRatio), excludingEdge: .top)
-            
-            if let balances = balances {
-                setUp(with: balances)
-            }
-        } else {
-            titleTopConstraint = titleLabel.autoPinEdge(toSuperviewSafeArea: .top, withInset: 6)
-            
-            titleToPoinConstraint?.constant = 3
-            
-            pointBottomConstraint = pointLabel.autoPinEdge(toSuperviewEdge: .bottom, withInset: 10)
-            
-            titleLabel.font = .systemFont(ofSize: 12, weight: .semibold)
-            pointLabel.font = .systemFont(ofSize: 20, weight: .semibold)
-            
-            titleLabel.textColor = .black
-            pointLabel.textColor = .black
-            
-            contentView.backgroundColor = .white
-            
-            backButton.tintColor = .black
-            optionsButton.tintColor = .black
-        }
-        
-        UIView.animate(withDuration: 0.3) {
-            self.layoutIfNeeded()
-        }
-    }
-    
-    private func setUpWithCommunValue() {
+    private func setUpWithCommunValue(animated: Bool = true) {
         let point = balances?.first(where: {$0.symbol == "CMN"})?.balanceValue ?? 0
         
         if !isCollapsed {
@@ -221,8 +232,10 @@ class WalletHeaderView: MyView {
                 
                 stackViewTopConstraint?.isActive = false
                 stackViewTopConstraint = buttonsStackView.autoPinEdge(.top, to: .bottom, of: pointLabel, withOffset: 30 * Config.heightRatio)
-                UIView.animate(withDuration: 0.3) {
-                    self.layoutIfNeeded()
+                if animated {
+                    UIView.animate(withDuration: 0.3) {
+                        self.layoutIfNeeded()
+                    }
                 }
             }
         }
@@ -232,7 +245,7 @@ class WalletHeaderView: MyView {
         pointLabel.text = "\(point.currencyValueFormatted)"
     }
     
-    private func setUpWithCurrentBalance() {
+    private func setUpWithCurrentBalance(animated: Bool = true) {
         guard let balances = balances,
             let balance = balances[safe: currentIndex.value]
         else {
@@ -255,8 +268,10 @@ class WalletHeaderView: MyView {
                 
                 stackViewTopConstraint?.isActive = false
                 stackViewTopConstraint = buttonsStackView.autoPinEdge(.top, to: .bottom, of: balanceContainerView, withOffset: 30 * Config.heightRatio)
-                UIView.animate(withDuration: 0.3) {
-                    self.layoutIfNeeded()
+                if animated {
+                    UIView.animate(withDuration: 0.3) {
+                        self.layoutIfNeeded()
+                    }
                 }
             }
             communValueLabel.text = "= \(balance.communValue.currencyValueFormatted)" + " " + "Commun"
