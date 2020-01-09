@@ -36,7 +36,7 @@ class WalletVC: TransferHistoryVC {
         
         view.addSubview(tableView)
         tableView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
-        tableView.autoPinEdge(.top, to: .bottom, of: headerView)
+        tableView.autoPinEdge(.top, to: .bottom, of: headerView, withOffset: -20)
         return tableView
     }
     
@@ -48,21 +48,6 @@ class WalletVC: TransferHistoryVC {
     override func viewWillDisappear(_ animated: Bool) {
         self.navigationController?.setNavigationBarHidden(false, animated: animated)
         super.viewWillDisappear(animated)
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        headerView.contentView.roundCorners(UIRectCorner(arrayLiteral: .bottomLeft, .bottomRight), radius: 30 * Config.heightRatio)
-        
-        var color = UIColor(red: 106, green: 128, blue: 245)!
-        var opacity: Float = 0.3
-        
-        if headerView.isCollapsed {
-            color = UIColor(red: 108, green: 123, blue: 173)!
-            opacity = 0.08
-        }
-        
-        headerView.shadowView.addShadow(ofColor: color, radius: 19, offset: CGSize(width: 0, height: 14), opacity: opacity)
     }
     
     override func setUp() {

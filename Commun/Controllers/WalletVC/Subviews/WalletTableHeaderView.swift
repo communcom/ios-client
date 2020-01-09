@@ -56,7 +56,7 @@ class WalletTableHeaderView: MyTableHeaderView {
         super.commonInit()
         // my points
         addSubview(myPointsContainerView)
-        myPointsContainerView.autoPinEdge(toSuperviewEdge: .top)
+        myPointsContainerView.autoPinEdge(toSuperviewEdge: .top, withInset: 20)
         myPointsContainerView.autoPinEdge(toSuperviewEdge: .leading)
         myPointsContainerView.autoPinEdge(toSuperviewEdge: .trailing)
         
@@ -120,7 +120,7 @@ class WalletTableHeaderView: MyTableHeaderView {
             // add my point
             if !myPointsContainerView.isDescendant(of: self) {
                 addSubview(myPointsContainerView)
-                myPointsContainerView.autoPinEdge(toSuperviewEdge: .top)
+                myPointsContainerView.autoPinEdge(toSuperviewEdge: .top, withInset: 20)
                 myPointsContainerView.autoPinEdge(toSuperviewEdge: .leading)
                 myPointsContainerView.autoPinEdge(toSuperviewEdge: .trailing)
                 
