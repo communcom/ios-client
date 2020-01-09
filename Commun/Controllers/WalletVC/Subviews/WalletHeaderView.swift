@@ -144,66 +144,64 @@ class WalletHeaderView: MyView {
         }
         
         if !isCollapsed {
-            UIView.animate(withDuration: 0.3) {
-                deactivateConstraints()
-                self.titleTopConstraint = self.titleLabel.autoPinEdge(.top, to: .bottom, of: self.backButton, withOffset: 25)
-                
-                self.titleToPoinConstraint?.constant = 5
-                
-                self.titleLabel.font = .systemFont(ofSize: 15, weight: .semibold)
-                self.pointLabel.font = .systemFont(ofSize: 30, weight: .bold)
-                
-                self.titleLabel.textColor = .white
-                self.pointLabel.textColor = .white
-                
-                self.backButton.tintColor = .white
-                self.optionsButton.tintColor = .white
-                
-                self.contentView.addSubview(self.communLogo)
-                self.communLogo.autoAlignAxis(toSuperviewAxis: .vertical)
-                self.communLogo.autoAlignAxis(.horizontal, toSameAxisOf: self.backButton)
-                
-                self.contentView.addSubview(self.carousel)
-                self.carousel.autoAlignAxis(toSuperviewAxis: .vertical)
-                self.carousel.autoAlignAxis(.horizontal, toSameAxisOf: self.backButton)
-                
-                self.contentView.addSubview(self.buttonsStackView)
-                self.stackViewTopConstraint = self.buttonsStackView.autoPinEdge(.top, to: .bottom, of: self.pointLabel, withOffset: 30 * Config.heightRatio)
-                self.buttonsStackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 16 * Config.widthRatio, bottom: 30 * Config.heightRatio, right: 16 * Config.widthRatio), excludingEdge: .top)
-                
-                if let balances = self.balances {
-                    self.setUp(with: balances, animated: false)
-                }
-                self.layoutIfNeeded()
+            deactivateConstraints()
+            self.titleTopConstraint = self.titleLabel.autoPinEdge(.top, to: .bottom, of: self.backButton, withOffset: 25)
+            
+            self.titleToPoinConstraint?.constant = 5
+            
+            self.titleLabel.font = .systemFont(ofSize: 15, weight: .semibold)
+            self.pointLabel.font = .systemFont(ofSize: 30, weight: .bold)
+            
+            self.titleLabel.textColor = .white
+            self.pointLabel.textColor = .white
+            
+            self.backButton.tintColor = .white
+            self.optionsButton.tintColor = .white
+            
+            self.contentView.addSubview(self.communLogo)
+            self.communLogo.autoAlignAxis(toSuperviewAxis: .vertical)
+            self.communLogo.autoAlignAxis(.horizontal, toSameAxisOf: self.backButton)
+            
+            self.contentView.addSubview(self.carousel)
+            self.carousel.autoAlignAxis(toSuperviewAxis: .vertical)
+            self.carousel.autoAlignAxis(.horizontal, toSameAxisOf: self.backButton)
+            
+            self.contentView.addSubview(self.buttonsStackView)
+            self.stackViewTopConstraint = self.buttonsStackView.autoPinEdge(.top, to: .bottom, of: self.pointLabel, withOffset: 30 * Config.heightRatio)
+            self.buttonsStackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 16 * Config.widthRatio, bottom: 30 * Config.heightRatio, right: 16 * Config.widthRatio), excludingEdge: .top)
+            
+            if let balances = self.balances {
+                self.setUp(with: balances, animated: false)
             }
         } else {
-            UIView.animate(withDuration: 0.3) {
-                self.communLogo.removeFromSuperview()
-                self.carousel.removeFromSuperview()
-                self.buttonsStackView.removeFromSuperview()
-                self.balanceContainerView.removeFromSuperview()
-                self.buttonsStackView.removeFromSuperview()
-                
-                deactivateConstraints()
-                
-                self.titleTopConstraint = self.titleLabel.autoPinEdge(toSuperviewSafeArea: .top, withInset: 6)
-                
-                self.titleToPoinConstraint?.constant = 3
-                
-                self.pointBottomConstraint = self.pointLabel.autoPinEdge(toSuperviewEdge: .bottom, withInset: 10)
-                
-                self.titleLabel.font = .systemFont(ofSize: 12, weight: .semibold)
-                self.pointLabel.font = .systemFont(ofSize: 20, weight: .semibold)
-                
-                self.titleLabel.textColor = .black
-                self.pointLabel.textColor = .black
-                
-                self.contentView.backgroundColor = .white
-                
-                self.backButton.tintColor = .black
-                self.optionsButton.tintColor = .black
-                self.layoutIfNeeded()
-            }
+            self.communLogo.removeFromSuperview()
+            self.carousel.removeFromSuperview()
+            self.buttonsStackView.removeFromSuperview()
+            self.balanceContainerView.removeFromSuperview()
+            self.buttonsStackView.removeFromSuperview()
+            
+            deactivateConstraints()
+            
+            self.titleTopConstraint = self.titleLabel.autoPinEdge(toSuperviewSafeArea: .top, withInset: 6)
+            
+            self.titleToPoinConstraint?.constant = 3
+            
+            self.pointBottomConstraint = self.pointLabel.autoPinEdge(toSuperviewEdge: .bottom, withInset: 10)
+            
+            self.titleLabel.font = .systemFont(ofSize: 12, weight: .semibold)
+            self.pointLabel.font = .systemFont(ofSize: 20, weight: .semibold)
+            
+            self.titleLabel.textColor = .black
+            self.pointLabel.textColor = .black
+            
+            self.contentView.backgroundColor = .white
+            
+            self.backButton.tintColor = .black
+            self.optionsButton.tintColor = .black
+        }
+        
+        UIView.animate(withDuration: 0.3) {
+            self.layoutIfNeeded()
         }
     }
     
@@ -293,6 +291,9 @@ class WalletHeaderView: MyView {
         // set up
         titleLabel.text = balance.name ?? "" + "balance".localized().uppercaseFirst
         pointLabel.text = "\(balance.balanceValue.currencyValueFormatted)"
+        
+        contentView.bringSubviewToFront(backButton)
+        contentView.bringSubviewToFront(optionsButton)
     }
     
     func startLoading() {
@@ -301,6 +302,27 @@ class WalletHeaderView: MyView {
     
     func endLoading() {
         contentView.hideLoader()
+    }
+    
+    func makeShadowAndRoundCorner() {
+        contentView.roundCorners(UIRectCorner(arrayLiteral: .bottomLeft, .bottomRight), radius: 30 * Config.heightRatio)
+        
+        var color = UIColor(red: 106, green: 128, blue: 245)!
+        var opacity: Float = 0.3
+        
+        if isCollapsed {
+            color = UIColor(red: 108, green: 123, blue: 173)!
+            opacity = 0.08
+        }
+        
+        shadowView.addShadow(ofColor: color, radius: 19, offset: CGSize(width: 0, height: 14), opacity: opacity)
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        DispatchQueue.main.async {
+            self.makeShadowAndRoundCorner()
+        }
     }
     
     private func buttonContainerViewWithButton(_ button: UIButton, label: String) -> UIView {
