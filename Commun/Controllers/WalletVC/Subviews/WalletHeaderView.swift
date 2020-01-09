@@ -135,7 +135,7 @@ class WalletHeaderView: MyView {
         if isCollapsed == value {return}
         self.isCollapsed = value
         
-        layoutIfNeeded()
+        superview?.layoutIfNeeded()
         
         let deactivateConstraints = {
             self.titleTopConstraint?.isActive = false
@@ -201,7 +201,8 @@ class WalletHeaderView: MyView {
         }
         
         UIView.animate(withDuration: 0.3) {
-            self.layoutIfNeeded()
+            // https://stackoverflow.com/questions/38646063/constraint-animation-only-partially-animating-causing-what-looks-like-a-jump#comment94319390_38646063
+            self.superview?.layoutIfNeeded()
         }
     }
     
@@ -232,7 +233,7 @@ class WalletHeaderView: MyView {
                 stackViewTopConstraint = buttonsStackView.autoPinEdge(.top, to: .bottom, of: pointLabel, withOffset: 30 * Config.heightRatio)
                 if animated {
                     UIView.animate(withDuration: 0.3) {
-                        self.layoutIfNeeded()
+                        self.superview?.layoutIfNeeded()
                     }
                 }
             }
@@ -268,7 +269,7 @@ class WalletHeaderView: MyView {
                 stackViewTopConstraint = buttonsStackView.autoPinEdge(.top, to: .bottom, of: balanceContainerView, withOffset: 30 * Config.heightRatio)
                 if animated {
                     UIView.animate(withDuration: 0.3) {
-                        self.layoutIfNeeded()
+                        self.superview?.layoutIfNeeded()
                     }
                 }
             }
