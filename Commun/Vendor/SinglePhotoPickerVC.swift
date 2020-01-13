@@ -9,10 +9,11 @@
 import Foundation
 import TLPhotoPicker
 import Photos
+import MBProgressHUD
 
 class SinglePhotoPickerVC: TLPhotosPickerViewController {
     // MARK: - Properties
-    var completion: ((UIImage)->Void)?
+    var completion: ((UIImage) -> Void)?
     
     // MARK: - Initializers
     override init() {
@@ -43,15 +44,29 @@ class SinglePhotoPickerVC: TLPhotosPickerViewController {
     
     override func doneButtonTap() {
         guard let asset = selectedAssets.first?.phAsset else {return}
+        
+        let hud = MBProgressHUD.showAdded(to: view, animated: true)
+        hud.mode = .annularDeterminate
+        hud.label.text = "download image from iCloud".localized().uppercaseFirst + "..."
+        hud.backgroundColor = UIColor(white: 0, alpha: 0.2)
+        hud.isUserInteractionEnabled = true
+        
         let manager = PHImageManager.default()
         let option = PHImageRequestOptions()
         option.deliveryMode = .highQualityFormat
         option.isSynchronous = false
         option.isNetworkAccessAllowed = true
-
-        showIndetermineHudWithMessage("download image from iCloud".localized().uppercaseFirst + "...")
+        option.progressHandler = { [weak self] progress, error, _, _ in
+            DispatchQueue.main.async {
+                hud.progress = Float(progress)
+                if let error = error {
+                    hud.hide(animated: true)
+                    self?.showError(error)
+                }
+            }
+        }
         
-        manager.requestImage(for: asset, targetSize: PHImageManagerMaximumSize, contentMode: .aspectFill, options: option) { [weak self] (image, info) in
+        manager.requestImage(for: asset, targetSize: PHImageManagerMaximumSize, contentMode: .aspectFill, options: option) { [weak self] (image, _) in
             guard let image = image else {return}
             self?.completion?(image)
         }
