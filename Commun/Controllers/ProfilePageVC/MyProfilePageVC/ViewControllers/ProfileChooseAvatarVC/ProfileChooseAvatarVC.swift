@@ -45,11 +45,24 @@ class ProfileChooseAvatarVC: UIViewController {
     
     func bindUI() {
         // bind avatar
-        viewModel.avatar
-            .filter {$0 != nil}
-            .map {$0!}
-            .bind(to: avatarImageView.rx.image)
-            .disposed(by: bag)
+        if let urlString = UserDefaults.standard.string(forKey: Config.currentUserAvatarUrlKey),
+            let url = URL(string: urlString)
+        {
+            avatarImageView.sd_setImage(with: url, completed: nil)
+        } else {
+            viewModel.phAssets
+                .filter {$0.count > 0}
+                .take(1)
+                .asSingle()
+                .subscribe(onSuccess: { (assets) in
+                    guard let asset = assets.first else {return}
+                    self.currentAsset = asset
+                    self.loadImage(with: asset) { [weak self] (image) in
+                        self?.updateImage(image)
+                    }
+                })
+                .disposed(by: bag)
+        }
         
         // request permission
         viewModel.authorizationStatus
@@ -77,13 +90,6 @@ class ProfileChooseAvatarVC: UIViewController {
                 cell.setUp(with: asset)
             }
             .disposed(by: bag)
-
-        viewModel.phAssets.elementAt(0).subscribe { (event) in
-            self.currentAsset = event.element?.first
-            self.loadImage(with: event.element?.first) { [weak self] (image) in
-                self?.updateImage(image)
-            }
-        }.disposed(by: bag)
         
         // item selected
         self.collectionView.rx.modelSelected(PHAsset.self)

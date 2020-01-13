@@ -14,7 +14,6 @@ import Action
 import RxSwift
 
 struct ProfileChooseAvatarViewModel {
-    let avatar = BehaviorRelay<UIImage?>(value: nil)
     let authorizationStatus = BehaviorRelay<PHAuthorizationStatus>(value: PHPhotoLibrary.authorizationStatus())
     let phAssets = BehaviorRelay<[PHAsset]>(value: [])
     let didSelectImage = PublishSubject<UIImage?>()

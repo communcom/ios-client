@@ -129,9 +129,7 @@ extension ProfileEditViewController {
         
         // On updating
         let chooseAvatarVC = controllerContainer.resolve(ProfileChooseAvatarVC.self)!
-        self.present(chooseAvatarVC, animated: true, completion: {
-            chooseAvatarVC.viewModel.avatar.accept(self.avatarView.image)
-        })
+        self.present(chooseAvatarVC, animated: true, completion: nil)
         
         return chooseAvatarVC.viewModel.didSelectImage
             .filter {$0 != nil}
