@@ -55,7 +55,6 @@
 		3B3C8B9E234796D900D8BADB /* PostEditorVC+Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3C8B9D234796D900D8BADB /* PostEditorVC+Binding.swift */; };
 		3B515819226DDE8D00108F17 /* EmptyCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3B515818226DDE8D00108F17 /* EmptyCell.xib */; };
 		3B51581C226DE28D00108F17 /* EmptyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B51581B226DE28D00108F17 /* EmptyCell.swift */; };
-		3B51581E226E0D3A00108F17 /* TLPhotosPickerViewController+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B51581D226E0D3A00108F17 /* TLPhotosPickerViewController+Rx.swift */; };
 		3B5CB30322A56BD500757533 /* UITapGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5CB30222A56BD500757533 /* UITapGestureRecognizer.swift */; };
 		3B5CB30522A5752100757533 /* ListViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5CB30422A5752100757533 /* ListViewModelType.swift */; };
 		3B5CB30822A57AA400757533 /* PlaceholderNotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5CB30722A57AA400757533 /* PlaceholderNotificationCell.swift */; };
@@ -260,6 +259,7 @@
 		BC3AD9DC23838E920026EAB4 /* CommentFormViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3AD9DB23838E920026EAB4 /* CommentFormViewModel.swift */; };
 		BC3D97612350384E00421718 /* ResponseAPIContentGetPosts.json in Resources */ = {isa = PBXBuildFile; fileRef = BC3D97602350384E00421718 /* ResponseAPIContentGetPosts.json */; };
 		BC401E3C2371143F00A53788 /* LeaderAvatarImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC401E3B2371143F00A53788 /* LeaderAvatarImageView.swift */; };
+		BC40F7EF23CC4ADA00C2A3D3 /* SinglePhotoPickerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC40F7EE23CC4ADA00C2A3D3 /* SinglePhotoPickerVC.swift */; };
 		BC43FDFE23B44F7200255451 /* WalletConvertViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC43FDFD23B44F7200255451 /* WalletConvertViewModel.swift */; };
 		BC43FE0923B5F12C00255451 /* WalletCarousel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC43FE0823B5F12C00255451 /* WalletCarousel.swift */; };
 		BC465927238E563F00AF9C29 /* BackUpKeysVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC465926238E563F00AF9C29 /* BackUpKeysVC.swift */; };
@@ -523,7 +523,6 @@
 		3B3C8B9D234796D900D8BADB /* PostEditorVC+Binding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PostEditorVC+Binding.swift"; sourceTree = "<group>"; };
 		3B515818226DDE8D00108F17 /* EmptyCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmptyCell.xib; sourceTree = "<group>"; };
 		3B51581B226DE28D00108F17 /* EmptyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyCell.swift; sourceTree = "<group>"; };
-		3B51581D226E0D3A00108F17 /* TLPhotosPickerViewController+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TLPhotosPickerViewController+Rx.swift"; sourceTree = "<group>"; };
 		3B5CB30222A56BD500757533 /* UITapGestureRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITapGestureRecognizer.swift; sourceTree = "<group>"; };
 		3B5CB30422A5752100757533 /* ListViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewModelType.swift; sourceTree = "<group>"; };
 		3B5CB30722A57AA400757533 /* PlaceholderNotificationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceholderNotificationCell.swift; sourceTree = "<group>"; };
@@ -739,6 +738,7 @@
 		BC3AD9DB23838E920026EAB4 /* CommentFormViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentFormViewModel.swift; sourceTree = "<group>"; };
 		BC3D97602350384E00421718 /* ResponseAPIContentGetPosts.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ResponseAPIContentGetPosts.json; sourceTree = "<group>"; };
 		BC401E3B2371143F00A53788 /* LeaderAvatarImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderAvatarImageView.swift; sourceTree = "<group>"; };
+		BC40F7EE23CC4ADA00C2A3D3 /* SinglePhotoPickerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SinglePhotoPickerVC.swift; sourceTree = "<group>"; };
 		BC43FDFD23B44F7200255451 /* WalletConvertViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletConvertViewModel.swift; sourceTree = "<group>"; };
 		BC43FE0823B5F12C00255451 /* WalletCarousel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletCarousel.swift; sourceTree = "<group>"; };
 		BC465926238E563F00AF9C29 /* BackUpKeysVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackUpKeysVC.swift; sourceTree = "<group>"; };
@@ -1517,7 +1517,6 @@
 				3B2F227222689334006B589E /* NSMutableAttributedString.swift */,
 				3BAD8E822318FB1C005A8AB3 /* NSAttributedString.swift */,
 				5721E87022650AC0003BE04B /* StringExtension.swift */,
-				3B51581D226E0D3A00108F17 /* TLPhotosPickerViewController+Rx.swift */,
 				3BDD9A0E228F07EF00B2A1DA /* UIApplication.swift */,
 				3BB86B4822734AE4008F1C64 /* UIColor.swift */,
 				3B0E9C65227050E3002AB1C2 /* UIImageView.swift */,
@@ -1569,6 +1568,7 @@
 				3BC613A42341AAAF00075570 /* CommunCheckbox.swift */,
 				3BB32F1C23445618006572F3 /* VCWithParallax.swift */,
 				BCB2A6E12354512D00B3582B /* AttachmentView.swift */,
+				BC40F7EE23CC4ADA00C2A3D3 /* SinglePhotoPickerVC.swift */,
 			);
 			path = Vendor;
 			sourceTree = "<group>";
@@ -2874,7 +2874,6 @@
 				BC22BBD6236C26EF00F40658 /* NotificationsSettingsVC.swift in Sources */,
 				3B0E9C732270785E002AB1C2 /* PhotoLibraryCell.swift in Sources */,
 				3B6CB732234331830097B2A1 /* Array.swift in Sources */,
-				3B51581E226E0D3A00108F17 /* TLPhotosPickerViewController+Rx.swift in Sources */,
 				3BB48AD322D6432200F11B6A /* BoardingRouter.swift in Sources */,
 				3B289B9E2346EB0400598407 /* UIView+PureLayout.swift in Sources */,
 				3B06863423470A33008953C5 /* BasicEditorTextView.swift in Sources */,
@@ -2883,6 +2882,7 @@
 				3B82D0F722D8D56A004EE848 /* EnableBiometricsVC.swift in Sources */,
 				BCB4A4C72370188B005EDAAD /* SubscribersCell.swift in Sources */,
 				3BC613A52341AAAF00075570 /* CommunCheckbox.swift in Sources */,
+				BC40F7EF23CC4ADA00C2A3D3 /* SinglePhotoPickerVC.swift in Sources */,
 				3B25E5C0234C2F66005BD1B8 /* BasicEditorVC+Binding.swift in Sources */,
 				3BB32F1D23445618006572F3 /* VCWithParallax.swift in Sources */,
 				BC4AD67623B31683008546A4 /* WalletBuyCommunVC.swift in Sources */,

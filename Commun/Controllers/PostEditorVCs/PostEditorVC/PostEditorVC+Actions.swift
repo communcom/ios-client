@@ -84,30 +84,25 @@ extension PostEditorVC {
     }
     
     @objc func chooseFromGallery() {
-        let pickerVC = CustomTLPhotosPickerVC.singleImage
+        let pickerVC = SinglePhotoPickerVC()
+        pickerVC.completion = { image in
+            let alert = UIAlertController(
+                title: "description".localized().uppercaseFirst,
+                message: "add a description for your image".localized().uppercaseFirst,
+                preferredStyle: .alert)
+            
+            alert.addTextField { field in
+                field.placeholder = "description".localized().uppercaseFirst + "(" + "optional".localized() + ")"
+            }
+            
+            alert.addAction(UIAlertAction(title: "add".localized().uppercaseFirst, style: .cancel, handler: { _ in
+                self.didChooseImageFromGallery(image, description: alert.textFields?.first?.text)
+                pickerVC.dismiss(animated: true, completion: nil)
+            }))
+            
+            pickerVC.present(alert, animated: true, completion: nil)
+        }
         self.present(pickerVC, animated: true, completion: nil)
-        
-        pickerVC.rx.didSelectAnImage
-            .subscribe(onNext: {[weak self] image in
-                guard let strongSelf = self else {return}
-                let alert = UIAlertController(
-                    title: "description".localized().uppercaseFirst,
-                    message: "add a description for your image".localized().uppercaseFirst,
-                    preferredStyle: .alert)
-                
-                alert.addTextField { field in
-                    field.placeholder = "description".localized().uppercaseFirst + "(" + "optional".localized() + ")"
-                }
-                
-                alert.addAction(UIAlertAction(title: "add".localized().uppercaseFirst, style: .cancel, handler: { _ in
-                    guard let image = image else {return}
-                    strongSelf.didChooseImageFromGallery(image, description: alert.textFields?.first?.text)
-                    pickerVC.dismiss(animated: true, completion: nil)
-                }))
-                
-                pickerVC.present(alert, animated: true, completion: nil)
-            })
-            .disposed(by: disposeBag)
     }
     
     //    func selectImageFromUrl() {

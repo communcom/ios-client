@@ -273,15 +273,12 @@ extension CommentForm {
     }
     
     @objc func commentAddImage() {
-        let pickerVC = CustomTLPhotosPickerVC.singleImage
+        let pickerVC = SinglePhotoPickerVC()
+        pickerVC.completion = { image in
+            self.localImage.accept(image)
+            pickerVC.dismiss(animated: true, completion: nil)
+        }
         self.parentViewController?.present(pickerVC, animated: true, completion: nil)
-        
-        pickerVC.rx.didSelectAnImage
-            .subscribe(onNext: {[weak self] image in
-                self?.localImage.accept(image)
-                pickerVC.dismiss(animated: true, completion: nil)
-            })
-            .disposed(by: disposeBag)
     }
     
     @objc func commentSend() {
