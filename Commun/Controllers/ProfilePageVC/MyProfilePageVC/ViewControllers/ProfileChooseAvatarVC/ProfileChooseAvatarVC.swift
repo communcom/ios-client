@@ -21,6 +21,7 @@ class ProfileChooseAvatarVC: UIViewController {
     
     var viewModel = ProfileChooseAvatarViewModel()
     private let bag = DisposeBag()
+    var currentAsset: PHAsset?
     
     private let itemsInARow: CGFloat = 4
 
@@ -78,6 +79,7 @@ class ProfileChooseAvatarVC: UIViewController {
             .disposed(by: bag)
 
         viewModel.phAssets.elementAt(0).subscribe { (event) in
+            self.currentAsset = event.element?.first
             self.loadImage(with: event.element?.first) { [weak self] (image) in
                 self?.updateImage(image)
             }
@@ -86,6 +88,7 @@ class ProfileChooseAvatarVC: UIViewController {
         // item selected
         self.collectionView.rx.modelSelected(PHAsset.self)
             .subscribe(onNext: {asset in
+                self.currentAsset = asset
                 self.loadImage(with: asset) { [weak self] (image) in
                     self?.updateImage(image)
                 }
@@ -115,6 +118,7 @@ class ProfileChooseAvatarVC: UIViewController {
         avatarScrollView.showLoading(cover: false, spinnerColor: .white)
         
         manager.requestImage(for: asset, targetSize: PHImageManagerMaximumSize, contentMode: .aspectFill, options: option) { [weak self] (image, info) in
+            if asset != self?.currentAsset {return}
             let degraded = info?[PHImageResultIsDegradedKey] as? NSNumber
 
             if degraded != nil && !degraded!.boolValue {
