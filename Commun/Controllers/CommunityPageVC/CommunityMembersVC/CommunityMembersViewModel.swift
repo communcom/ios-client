@@ -53,7 +53,6 @@ class CommunityMembersViewModel: BaseViewModel {
         super.init()
         defer {
             bind()
-            fetchNext()
         }
     }
     
@@ -61,6 +60,7 @@ class CommunityMembersViewModel: BaseViewModel {
     func bind() {
         // segmented item change
         segmentedItem
+            .distinctUntilChanged()
             .subscribe(onNext: { [weak self] (_) in
                 self?.reload()
             })
