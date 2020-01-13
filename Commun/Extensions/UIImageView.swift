@@ -128,7 +128,11 @@ extension UIImageView {
     
     func addTapToViewer() {
         self.isUserInteractionEnabled = true
-        setupImageViewer(options: [.theme(ImageViewerTheme.dark), .closeIcon(UIImage(named: "close-x")!)])
+        setupImageViewer(options: [
+            .theme(ImageViewerTheme.dark),
+            .closeIcon(UIImage(named: "close-x")!),
+            .rightNavItemIcon(UIImage(named: "image-share")!, delegate: self)
+        ])
     }
     
     func observeCurrentUserAvatar() -> Disposable {
@@ -153,5 +157,12 @@ extension Reactive where Base: UIImageView {
     var isEmpty: Observable<Bool> {
         return observe(UIImage.self, "image").map { $0 == nil }
             .distinctUntilChanged()
+    }
+}
+
+extension UIImageView: RightNavItemDelegate {
+    public func imageViewer(_ imageViewer: ImageCarouselViewController, didTapRightNavItem index: Int) {
+        guard let image = image else {return}
+        ShareHelper.share(image: image)
     }
 }

@@ -298,6 +298,7 @@ class WalletHeaderView: MyView {
     }
     
     func startLoading() {
+        contentView.hideLoader()
         contentView.showLoader()
     }
     
