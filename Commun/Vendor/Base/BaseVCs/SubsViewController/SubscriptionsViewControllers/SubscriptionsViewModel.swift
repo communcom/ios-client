@@ -22,6 +22,7 @@ class SubscriptionsViewModel: ListViewModel<ResponseAPIContentGetSubscriptionsIt
         
         defer {
             fetchNext()
+            observeProfileBlocked()
         }
     }
     
@@ -49,6 +50,20 @@ class SubscriptionsViewModel: ListViewModel<ResponseAPIContentGetSubscriptionsIt
         ResponseAPIContentGetCommunity.observeItemChanged()
             .subscribe(onNext: {newCommunity in
                 self.updateItem(ResponseAPIContentGetSubscriptionsItem.community(newCommunity))
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    func observeProfileBlocked() {
+        ResponseAPIContentGetProfile.observeEvent(eventName: ResponseAPIContentGetProfile.blockedEventName)
+            .subscribe(onNext: { (blockedProfile) in
+                self.deleteItemWithIdentity(blockedProfile.identity)
+            })
+            .disposed(by: disposeBag)
+        
+        ResponseAPIContentGetCommunity.observeEvent(eventName: ResponseAPIContentGetCommunity.blockedEventName)
+            .subscribe(onNext: { (blockedProfile) in
+                self.deleteItemWithIdentity(blockedProfile.identity)
             })
             .disposed(by: disposeBag)
     }

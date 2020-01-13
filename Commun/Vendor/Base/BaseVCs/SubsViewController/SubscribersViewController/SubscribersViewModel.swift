@@ -15,6 +15,10 @@ class SubscribersViewModel: ListViewModel<ResponseAPIContentResolveProfile> {
         fetcher.userId = userId
         fetcher.communityId = communityId
         self.init(fetcher: fetcher)
+        
+        defer {
+            observeProfileBlocked()
+        }
     }
     
     override func observeItemChange() {
@@ -24,6 +28,14 @@ class SubscribersViewModel: ListViewModel<ResponseAPIContentResolveProfile> {
             .map {ResponseAPIContentResolveProfile(leader: $0)}
             .subscribe(onNext: { (profile) in
                 self.updateItem(profile)
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    func observeProfileBlocked() {
+        ResponseAPIContentGetProfile.observeEvent(eventName: ResponseAPIContentGetProfile.blockedEventName)
+            .subscribe(onNext: { (blockedProfile) in
+                self.deleteItemWithIdentity(blockedProfile.identity)
             })
             .disposed(by: disposeBag)
     }

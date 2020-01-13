@@ -56,8 +56,12 @@ class ListViewModel<T: ListItemType>: BaseViewModel {
     }
     
     func deleteItem(_ deletedItem: T) {
-        let newItems = fetcher.items.value.filter {$0.identity != deletedItem.identity}
-        rowHeights.removeValue(forKey: deletedItem.identity as! String)
+        deleteItemWithIdentity(deletedItem.identity)
+    }
+    
+    func deleteItemWithIdentity(_ identity: T.Identity) {
+        let newItems = fetcher.items.value.filter {$0.identity != identity}
+        rowHeights.removeValue(forKey: identity as! String)
         fetcher.items.accept(newItems)
     }
     
