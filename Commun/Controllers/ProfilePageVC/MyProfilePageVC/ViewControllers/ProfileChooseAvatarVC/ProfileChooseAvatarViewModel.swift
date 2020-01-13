@@ -44,6 +44,7 @@ struct ProfileChooseAvatarViewModel {
     
     func onSelected(with scrollView: UIScrollView, imageView: UIImageView) -> CocoaAction {
         return CocoaAction {_ in
+            if scrollView.isLoading {return .just(())}
             let image = ProfileEditCoverVC.cropImage(scrollVIew: scrollView, imageView: imageView, maxSize: 300)
             self.didSelectImage.onNext(image)
             return .just(())

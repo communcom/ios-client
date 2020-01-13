@@ -38,6 +38,10 @@ extension UIView {
         }
     }
     
+    var isLoading: Bool {
+        self.viewWithTag(9999) != nil
+    }
+    
     func showLoading(cover: Bool = true, spinnerColor: UIColor = #colorLiteral(red: 0.4784313725, green: 0.6470588235, blue: 0.8980392157, alpha: 1)) {
         // if loading view is existed
         if self.viewWithTag(9999) != nil {return}

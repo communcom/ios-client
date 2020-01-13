@@ -108,10 +108,18 @@ class ProfileChooseAvatarVC: UIViewController {
         guard let asset = asset else { return }
         let manager = PHImageManager.default()
         let option = PHImageRequestOptions()
-        option.isSynchronous = true
-        option.deliveryMode = .highQualityFormat
+        option.deliveryMode = .opportunistic
+        option.isSynchronous = false
+        option.isNetworkAccessAllowed = true
 
-        manager.requestImage(for: asset, targetSize: PHImageManagerMaximumSize, contentMode: .aspectFill, options: option) { (image, _) in
+        avatarScrollView.showLoading(cover: false, spinnerColor: .white)
+        
+        manager.requestImage(for: asset, targetSize: PHImageManagerMaximumSize, contentMode: .aspectFill, options: option) { [weak self] (image, info) in
+            let degraded = info?[PHImageResultIsDegradedKey] as? NSNumber
+
+            if degraded != nil && !degraded!.boolValue {
+                self?.avatarScrollView.hideLoading()
+            }
             completion(image)
         }
     }
