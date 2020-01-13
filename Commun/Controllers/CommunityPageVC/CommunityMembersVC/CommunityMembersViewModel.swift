@@ -71,16 +71,7 @@ class CommunityMembersViewModel: BaseViewModel {
             leadersVM.state.asObservable().filter {_ in self.segmentedItem.value == .leaders},
             subscribersVM.state.asObservable().filter {_ in self.segmentedItem.value == .all}
         )
-            .distinctUntilChanged { (lhs, rhs) -> Bool in
-                switch (lhs, rhs) {
-                case (.loading(let isLoading1), .loading(let isLoading2)):
-                    return isLoading1 == isLoading2
-                case (.listEnded, .listEnded):
-                    return true
-                default:
-                    return false
-                }
-            }
+            .distinctUntilChanged()
             .bind(to: listLoadingState)
             .disposed(by: disposeBag)
         
@@ -128,7 +119,7 @@ class CommunityMembersViewModel: BaseViewModel {
     func fetchNext(forceRetry: Bool = false) {
         switch segmentedItem.value {
         case .all:
-            leadersVM.fetchNext(forceRetry: forceRetry)
+            subscribersVM.fetchNext(forceRetry: forceRetry)
         case .leaders:
             leadersVM.fetchNext(forceRetry: forceRetry)
         case .friends:

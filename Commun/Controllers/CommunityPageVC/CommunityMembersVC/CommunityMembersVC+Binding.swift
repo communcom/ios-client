@@ -138,7 +138,7 @@ extension CommunityMembersVC: UICollectionViewDelegateFlowLayout {
             configureCell: { (_, _, indexPath, leader) -> UICollectionViewCell in
                 
                 if indexPath.row >= self.viewModel.leadersVM.items.value.count - 2 {
-                    self.viewModel.fetchNext()
+                    self.viewModel.leadersVM.fetchNext()
                 }
                 
                 let cell = self.headerView.leadersCollectionView.dequeueReusableCell(withReuseIdentifier: "LeaderFollowCollectionCell", for: indexPath) as! LeaderFollowCollectionCell
