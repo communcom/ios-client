@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import RxSwift
 
 final class FeedPageVC: PostsViewController {
     // MARK: - Properties
@@ -58,7 +59,8 @@ final class FeedPageVC: PostsViewController {
             self.lastContentOffset = self.tableView.contentOffset.y
         }.disposed(by: disposeBag)
 
-        tableView.rx.contentOffset.subscribe {
+        tableView.rx.contentOffset.observeOn(MainScheduler.asyncInstance)
+            .subscribe {
             guard let offset = $0.element else { return }
 
             var needAnimation = false

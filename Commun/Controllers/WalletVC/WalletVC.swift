@@ -82,6 +82,7 @@ class WalletVC: TransferHistoryVC {
             .disposed(by: disposeBag)
         
         tableView.rx.contentOffset.map {$0.y > 0}
+            .observeOn(MainScheduler.asyncInstance)
             .distinctUntilChanged()
             .subscribe(onNext: { (collapse) in
                 self.headerView.setIsCollapsed(collapse)
