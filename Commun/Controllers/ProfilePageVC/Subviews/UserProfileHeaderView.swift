@@ -178,6 +178,9 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
     
     func setUp(with userProfile: ResponseAPIContentGetProfile) {
         self.profile = userProfile
+        if self.profile?.isInBlacklist == true {
+            self.profile?.isSubscribed = false
+        }
         
         // avatar
         avatarImageView.setAvatar(urlString: userProfile.avatarUrl, namePlaceHolder: userProfile.username)

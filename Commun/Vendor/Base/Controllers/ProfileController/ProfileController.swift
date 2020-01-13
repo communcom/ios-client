@@ -17,6 +17,7 @@ protocol ProfileType: ListItemType {
     var subscribersCount: UInt64? {get set}
     var identity: String {get}
     var isBeingToggledFollow: Bool? {get set}
+    var isInBlacklist: Bool? {get set}
 }
 
 extension ProfileType {
@@ -68,8 +69,25 @@ extension ProfileController {
     }
     
     func toggleFollow() {
-        guard let profile = profile else {return}
+        guard let profile = profile,
+            let vc = UIApplication.topViewController()
+        else {return}
         
+        if profile.isInBlacklist == true
+        {
+            vc.showAlert(title: "unblock and follow".localized().uppercaseFirst, message: "this user is on your blacklist. Do you really want to unblock and follow him/her anyway?".localized().uppercaseFirst, buttonTitles: ["yes".localized().uppercaseFirst, "no".localized().uppercaseFirst], highlightedButtonIndex: 1, completion:
+            { (index) in
+                if index == 0 {
+                    self.sendRequest()
+                }
+            })
+        } else {
+            self.sendRequest()
+        }
+    }
+    
+    private func sendRequest() {
+        guard let profile = profile else {return}
         followButton.animate {
             NetworkService.shared.triggerFollow(user: profile)
                 .subscribe(onError: { (error) in

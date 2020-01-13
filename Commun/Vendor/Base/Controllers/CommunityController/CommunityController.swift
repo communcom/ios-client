@@ -50,15 +50,32 @@ extension CommunityController {
     
     // join
     func toggleJoin() {
+        guard let vc = UIApplication.topViewController() else {return}
+        if community?.isInBlacklist == true
+        {
+            vc.showAlert(title: "unhide and follow".localized().uppercaseFirst, message: "this community is on your blacklist. Do you really want to unhide and follow it anyway?".localized().uppercaseFirst, buttonTitles: ["yes".localized().uppercaseFirst, "no".localized().uppercaseFirst], highlightedButtonIndex: 1, completion:
+            { (index) in
+                if index == 0 {
+                    self.sendJoinRequest()
+                }
+            })
+        } else {
+            sendJoinRequest()
+        }
+    }
+    
+    private func sendJoinRequest() {
         guard community != nil else {return}
         let id = community!.communityId
         
         // for reverse
         let originIsSubscribed = community!.isSubscribed ?? false
+        let originIsInBlacklist = community!.isInBlacklist ?? false
         
         // set value
         setIsSubscribed(!originIsSubscribed)
         community?.isBeingJoined = true
+        community?.isInBlacklist = false
         
         // notify changes
         community!.notifyChanged()
@@ -66,17 +83,21 @@ extension CommunityController {
         // send request
 //        Completable.empty()
 //            .delay(0.8, scheduler: MainScheduler.instance)
-        let request: Completable
+        let request: Single<String>
         
         if originIsSubscribed {
             request = BlockchainManager.instance.unfollowCommunity(id)
-                .flatMapToCompletable()
         } else {
-            request = BlockchainManager.instance.followCommunity(id)
-                .flatMapToCompletable()
+            if originIsInBlacklist {
+                request = BlockchainManager.instance.unhideCommunity(id)
+                    .flatMap {_ in BlockchainManager.instance.followCommunity(id)}
+            } else {
+                request = BlockchainManager.instance.followCommunity(id)
+            }
         }
         
         request
+            .flatMapToCompletable()
             .subscribe(onCompleted: { [weak self] in
                 // re-enable state
                 self?.community?.isBeingJoined = false
@@ -87,6 +108,7 @@ extension CommunityController {
                 // reverse change
                 strongSelf.setIsSubscribed(originIsSubscribed)
                 strongSelf.community?.isBeingJoined = false
+                strongSelf.community?.isInBlacklist = originIsInBlacklist
                 strongSelf.community?.notifyChanged()
                 
                 // show error

@@ -186,6 +186,9 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
     
     func setUp(with community: ResponseAPIContentGetCommunity) {
         self.community = community
+        if self.community?.isInBlacklist == true {
+            self.community?.isSubscribed = false
+        }
         
         // avatar
         avatarImageView.setAvatar(urlString: community.avatarUrl, namePlaceHolder: community.name)
