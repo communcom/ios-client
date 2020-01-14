@@ -248,7 +248,6 @@ class WalletHeaderView: MyView {
         guard let balances = balances,
             let balance = balances[safe: currentIndex.value]
         else {
-            currentIndex.accept(0)
             return
         }
         
