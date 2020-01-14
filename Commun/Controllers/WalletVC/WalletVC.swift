@@ -97,7 +97,6 @@ class WalletVC: TransferHistoryVC {
             .share()
             
         offsetY
-            .do(onNext: {print($0)})
             .map {$0 > -self.headerViewExpandedHeight / 2}
             .distinctUntilChanged()
             .observeOn(MainScheduler.asyncInstance)
