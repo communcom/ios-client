@@ -154,4 +154,14 @@ extension TransferHistoryVC: UITableViewDelegate {
         label.autoAlignAxis(toSuperviewAxis: .horizontal)
         return view
     }
+    
+    // https://stackoverflow.com/questions/1074006/is-it-possible-to-disable-floating-headers-in-uitableview-with-uitableviewstylep
+    
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        CGFloat.leastNormalMagnitude
+    }
+    
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        UIView(frame: .zero)
+    }
 }

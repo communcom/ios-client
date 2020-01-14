@@ -200,10 +200,7 @@ class WalletHeaderView: MyView {
             self.optionsButton.tintColor = .black
         }
         
-        UIView.animate(withDuration: 0.3) {
-            // https://stackoverflow.com/questions/38646063/constraint-animation-only-partially-animating-causing-what-looks-like-a-jump#comment94319390_38646063
-            self.superview?.layoutIfNeeded()
-        }
+        animate()
     }
     
     func setUp(with balances: [ResponseAPIWalletGetBalance], animated: Bool = true) {
@@ -232,9 +229,7 @@ class WalletHeaderView: MyView {
                 stackViewTopConstraint?.isActive = false
                 stackViewTopConstraint = buttonsStackView.autoPinEdge(.top, to: .bottom, of: pointLabel, withOffset: 30 * Config.heightRatio)
                 if animated {
-                    UIView.animate(withDuration: 0.3) {
-                        self.superview?.layoutIfNeeded()
-                    }
+                    animate()
                 }
             }
         }
@@ -248,7 +243,6 @@ class WalletHeaderView: MyView {
         guard let balances = balances,
             let balance = balances[safe: currentIndex.value]
         else {
-            currentIndex.accept(0)
             return
         }
         
@@ -268,9 +262,7 @@ class WalletHeaderView: MyView {
                 stackViewTopConstraint?.isActive = false
                 stackViewTopConstraint = buttonsStackView.autoPinEdge(.top, to: .bottom, of: balanceContainerView, withOffset: 30 * Config.heightRatio)
                 if animated {
-                    UIView.animate(withDuration: 0.3) {
-                        self.superview?.layoutIfNeeded()
-                    }
+                    animate()
                 }
             }
             communValueLabel.text = "= \(balance.communValue.currencyValueFormatted)" + " " + "Commun"
@@ -304,6 +296,13 @@ class WalletHeaderView: MyView {
     
     func endLoading() {
         contentView.hideLoader()
+    }
+    
+    private func animate() {
+        UIView.animate(withDuration: 0.3) {
+            // https://stackoverflow.com/questions/38646063/constraint-animation-only-partially-animating-causing-what-looks-like-a-jump#comment94319390_38646063
+            self.superview?.layoutIfNeeded()
+        }
     }
     
     func makeShadowAndRoundCorner() {
