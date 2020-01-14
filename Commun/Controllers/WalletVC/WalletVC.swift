@@ -29,14 +29,16 @@ class WalletVC: TransferHistoryVC {
         view.addSubview(headerView)
         headerView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .bottom)
         
-        let tableView = UITableView(forAutoLayout: ())
+        let tableView = UITableView(frame: .zero, style: .grouped)
+        tableView.configureForAutoLayout()
         tableView.insetsContentViewsToSafeArea = false
         tableView.contentInsetAdjustmentBehavior = .never
         tableView.showsVerticalScrollIndicator = false
         
         view.addSubview(tableView)
-        tableView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
-        tableView.autoPinEdge(.top, to: .bottom, of: headerView, withOffset: -20)
+        tableView.autoPinEdgesToSuperviewEdges()
+        
+        view.bringSubviewToFront(headerView)
         return tableView
     }
     
@@ -74,6 +76,13 @@ class WalletVC: TransferHistoryVC {
             })
             .disposed(by: disposeBag)
         
+        headerView.currentIndex
+            .distinctUntilChanged()
+            .subscribe(onNext: { (_) in
+                self.resetTableViewContentInset()
+            })
+            .disposed(by: disposeBag)
+        
         // forward delegate
         myPointsCollectionView.rx.setDelegate(self)
             .disposed(by: disposeBag)
@@ -81,13 +90,20 @@ class WalletVC: TransferHistoryVC {
         sendPointsCollectionView.rx.setDelegate(self)
             .disposed(by: disposeBag)
         
-        tableView.rx.contentOffset.map {$0.y > 0}
+        tableView.rx.contentOffset
+            .map {$0.y > -44}
             .observeOn(MainScheduler.asyncInstance)
             .distinctUntilChanged()
             .subscribe(onNext: { (collapse) in
                 self.headerView.setIsCollapsed(collapse)
             })
             .disposed(by: disposeBag)
+    }
+    
+    private func resetTableViewContentInset() {
+        let headerHeight = headerView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
+        tableView.contentInset = UIEdgeInsets(top: headerHeight - 20, left: 0, bottom: 0, right: 0)
+        tableView.setContentOffset(CGPoint(x: 0, y: -headerHeight + 20), animated: false)
     }
     
     override func bindItems() {
