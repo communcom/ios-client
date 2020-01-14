@@ -8,6 +8,7 @@
 
 import Foundation
 import RxSwift
+import ESPullToRefresh
 
 class WalletVC: TransferHistoryVC {
     // MARK: - Properties
@@ -20,6 +21,7 @@ class WalletVC: TransferHistoryVC {
     lazy var tableHeaderView = WalletTableHeaderView(tableView: tableView)
     var myPointsCollectionView: UICollectionView {tableHeaderView.myPointsCollectionView}
     var sendPointsCollectionView: UICollectionView {tableHeaderView.sendPointsCollectionView}
+    var headerViewExpandedHeight: CGFloat = 0
     
     override class func createViewModel() -> TransferHistoryViewModel {
         WalletViewModel()
@@ -90,20 +92,32 @@ class WalletVC: TransferHistoryVC {
         sendPointsCollectionView.rx.setDelegate(self)
             .disposed(by: disposeBag)
         
-        tableView.rx.contentOffset
-            .map {$0.y > -44}
-            .observeOn(MainScheduler.asyncInstance)
+        let offsetY = tableView.rx.contentOffset
+            .map {$0.y}
+            .share()
+            
+        offsetY
+            .do(onNext: {print($0)})
+            .map {$0 > -self.headerViewExpandedHeight / 2}
             .distinctUntilChanged()
+            .observeOn(MainScheduler.asyncInstance)
             .subscribe(onNext: { (collapse) in
                 self.headerView.setIsCollapsed(collapse)
+            })
+            .disposed(by: disposeBag)
+        
+        offsetY
+            .map {$0 < -self.headerViewExpandedHeight}
+            .subscribe(onNext: { (show) in
+                self.tableView.subviews.first(where: {$0 is ESRefreshHeaderView})?.alpha = show ? 1 : 0
             })
             .disposed(by: disposeBag)
     }
     
     private func resetTableViewContentInset() {
-        let headerHeight = headerView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
-        tableView.contentInset = UIEdgeInsets(top: headerHeight - 20, left: 0, bottom: 0, right: 0)
-        tableView.setContentOffset(CGPoint(x: 0, y: -headerHeight + 20), animated: false)
+        headerViewExpandedHeight = headerView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
+        tableView.contentInset = UIEdgeInsets(top: headerViewExpandedHeight - 20, left: 0, bottom: 0, right: 0)
+        tableView.setContentOffset(CGPoint(x: 0, y: -headerViewExpandedHeight + 20), animated: false)
     }
     
     override func bindItems() {
