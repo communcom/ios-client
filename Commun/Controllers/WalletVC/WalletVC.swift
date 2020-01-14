@@ -65,6 +65,10 @@ class WalletVC: TransferHistoryVC {
         tableHeaderView.myPointsSeeAllButton.addTarget(self, action: #selector(myPointsSeeAllDidTouch), for: .touchUpInside)
         
         tableHeaderView.filterButton.addTarget(self, action: #selector(openFilter), for: .touchUpInside)
+        
+        headerView.didUpdateHeight = {
+            self.resetTableViewContentInset()
+        }
     }
     
     override func bind() {
@@ -75,13 +79,6 @@ class WalletVC: TransferHistoryVC {
             .map {$0 != 0}
             .subscribe(onNext: { (shouldHide) in
                 self.tableHeaderView.setMyPointHidden(shouldHide)
-            })
-            .disposed(by: disposeBag)
-        
-        headerView.currentIndex
-            .distinctUntilChanged()
-            .subscribe(onNext: { (_) in
-                self.resetTableViewContentInset()
             })
             .disposed(by: disposeBag)
         
@@ -102,6 +99,7 @@ class WalletVC: TransferHistoryVC {
             .observeOn(MainScheduler.asyncInstance)
             .subscribe(onNext: { (collapse) in
                 self.headerView.setIsCollapsed(collapse)
+                self.resetTableViewContentInset()
             })
             .disposed(by: disposeBag)
         
@@ -114,6 +112,7 @@ class WalletVC: TransferHistoryVC {
     }
     
     private func resetTableViewContentInset() {
+        if headerView.isCollapsed {return}
         headerViewExpandedHeight = headerView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
         tableView.contentInset = UIEdgeInsets(top: headerViewExpandedHeight - 20, left: 0, bottom: 0, right: 0)
         tableView.setContentOffset(CGPoint(x: 0, y: -headerViewExpandedHeight + 20), animated: false)

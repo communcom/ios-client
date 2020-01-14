@@ -299,9 +299,11 @@ class WalletHeaderView: MyView {
     }
     
     private func animate() {
-        UIView.animate(withDuration: 0.3) {
+        UIView.animate(withDuration: 0.3, animations: {
             // https://stackoverflow.com/questions/38646063/constraint-animation-only-partially-animating-causing-what-looks-like-a-jump#comment94319390_38646063
             self.superview?.layoutIfNeeded()
+        }) { (_) in
+            self.didUpdateHeight?()
         }
     }
     
@@ -341,6 +343,7 @@ class WalletHeaderView: MyView {
         return container
     }
     
+    var didUpdateHeight: (() -> Void)?
     func switchToSymbol(_ symbol: String) {
         guard let index = balances?.firstIndex(where: {$0.symbol == symbol}) else {return}
         currentIndex.accept(index)
