@@ -55,7 +55,6 @@ extension MyProfilePageVC {
         (viewModel as! MyProfilePageViewModel).balancesVM.state
             .subscribe(onNext: {(state) in
                 label.textColor = .white
-                label.text = "loading..."
                 switch state {
                 case .loading(let isLoading):
                     if isLoading {
