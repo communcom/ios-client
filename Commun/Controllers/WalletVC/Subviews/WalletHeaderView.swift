@@ -10,8 +10,13 @@ import Foundation
 import RxSwift
 import RxCocoa
 
+protocol WalletHeaderViewDatasource: class {
+    func data(forWalletHeaderView headerView: WalletHeaderView) -> [ResponseAPIWalletGetBalance]
+}
+
 class WalletHeaderView: MyView {
     // MARK: - Constants
+    weak var dataSource: WalletHeaderViewDatasource?
     
     // MARK: - Properties
     var selectedIndex = 0
@@ -89,7 +94,36 @@ class WalletHeaderView: MyView {
     }
     
     func reloadData() {
-        
+        guard let balances = dataSource?.data(forWalletHeaderView: self) else {return}
+        if selectedIndex == 0 {
+            guard let point = balances.first(where: {$0.symbol == "CMN"})?.balanceValue else {return}
+            // set up with commun value
+            titleLabel.text = "enquity Value Commun".localized().uppercaseFirst
+            pointLabel.text = "\(point.currencyValueFormatted)"
+        } else {
+            guard let balance = balances[safe: selectedIndex] else {return}
+            // set up with other value
+            communValueLabel.text = "= \(balance.communValue.currencyValueFormatted)" + " " + "Commun"
+            availableHoldValueLabel.attributedText = NSMutableAttributedString()
+                .text("\(balance.balanceValue.currencyValueFormatted)", size: 12, color: .white)
+                .text("/\(balance.frozenValue.currencyValueFormatted)", size: 12, color: UIColor.white.withAlphaComponent(0.5))
+            
+            // progress bar
+            var progress: Double = 0
+            let total = balance.balanceValue + balance.frozenValue
+            if total == 0 {
+                progress = 0
+            } else {
+                progress = balance.balanceValue / total
+            }
+            progressBar.progress = CGFloat(progress)
+            
+            titleLabel.text = balance.name ?? "" + "balance".localized().uppercaseFirst
+            pointLabel.text = "\(balance.balanceValue.currencyValueFormatted)"
+//            
+//            contentView.bringSubviewToFront(backButton)
+//            contentView.bringSubviewToFront(optionsButton)
+        }
     }
     
     func reloadViews() {
