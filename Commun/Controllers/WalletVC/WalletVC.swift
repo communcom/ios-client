@@ -91,15 +91,14 @@ class WalletVC: TransferHistoryVC {
             .map {$0.y}
             .share()
             
-        offsetY
-            .map {$0 > -self.headerViewExpandedHeight / 2}
-            .distinctUntilChanged()
-            .observeOn(MainScheduler.asyncInstance)
-            .subscribe(onNext: { (collapse) in
-                self.headerView.isCollapsed = collapse
-                self.headerView.reloadViews()
-            })
-            .disposed(by: disposeBag)
+//        offsetY
+//            .map {$0 > -self.headerViewExpandedHeight / 2}
+//            .distinctUntilChanged()
+//            .observeOn(MainScheduler.asyncInstance)
+//            .subscribe(onNext: { (collapse) in
+//                self.headerView.setIsCollapsed(collapse)
+//            })
+//            .disposed(by: disposeBag)
         
         offsetY
             .map {$0 < -self.headerViewExpandedHeight}
@@ -277,7 +276,9 @@ extension WalletVC: WalletHeaderViewDelegate, WalletHeaderViewDatasource {
     }
     
     private func resetTableViewContentInset() {
-        headerViewExpandedHeight = headerView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
+        let height = headerView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
+        if headerViewExpandedHeight == height {return}
+        headerViewExpandedHeight = height
         tableView.contentInset = UIEdgeInsets(top: headerViewExpandedHeight - 20, left: 0, bottom: 0, right: 0)
         tableView.setContentOffset(CGPoint(x: 0, y: -headerViewExpandedHeight + 20), animated: false)
     }

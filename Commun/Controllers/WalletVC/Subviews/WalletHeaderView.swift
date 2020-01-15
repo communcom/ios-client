@@ -97,6 +97,8 @@ class WalletHeaderView: MyView {
         
         // pin bottom
         shadowView.autoPinEdge(toSuperviewEdge: .bottom, withInset: 29)
+        
+        reloadViews()
     }
     
     func reloadData() {
@@ -133,22 +135,23 @@ class WalletHeaderView: MyView {
         }
     }
     
-    func reloadViews() {
-        if isCollapsed {
-            collapse()
-        } else {
-            expand()
-        }
-        
-        delegate?.walletHeaderView(self, willUpdateHeightCollapsed: isCollapsed)
+    func setIsCollapsed(_ value: Bool) {
+        if isCollapsed == value {return}
+        isCollapsed = value
+        reloadViews()
     }
     
     func setSelectedIndex(_ index: Int) {
         if index == selectedIndex {return}
-        selectedIndex = index
         
-        // if switch from commun to other or reverse
+        // if switch from commun to other and vice versa
+        var needsReloadViews = false
         if index == 0 || selectedIndex == 0 {
+            needsReloadViews = true
+        }
+        
+        selectedIndex = index
+        if needsReloadViews {
             reloadViews()
         }
         reloadData()
@@ -166,12 +169,21 @@ class WalletHeaderView: MyView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
+        delegate?.walletHeaderView(self, willUpdateHeightCollapsed: isCollapsed)
         DispatchQueue.main.async {
             self.makeShadowAndRoundCorner()
         }
     }
     
     // MARK: - Private functions
+    private func reloadViews() {
+        if isCollapsed {
+            collapse()
+        } else {
+            expand()
+        }
+    }
+    
     private func expand() {
         // deactivate non-needed constraints
         titleTopConstraint?.isActive = false
