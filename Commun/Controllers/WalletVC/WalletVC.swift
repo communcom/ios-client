@@ -18,6 +18,9 @@ class WalletVC: TransferHistoryVC {
     var currentBalance: ResponseAPIWalletGetBalance? {
         balances?[safe: headerView.selectedIndex]
     }
+    var isUserScrolling: Bool {
+        tableView.isTracking || tableView.isDragging || tableView.isDecelerating
+    }
     
     // MARK: - Subviews
     lazy var headerView: WalletHeaderView = {
@@ -91,14 +94,16 @@ class WalletVC: TransferHistoryVC {
             .map {$0.y}
             .share()
             
-//        offsetY
-//            .map {$0 > -self.headerViewExpandedHeight / 2}
-//            .distinctUntilChanged()
-//            .observeOn(MainScheduler.asyncInstance)
-//            .subscribe(onNext: { (collapse) in
-//                self.headerView.setIsCollapsed(collapse)
-//            })
-//            .disposed(by: disposeBag)
+        offsetY
+            .map {$0 > -self.headerViewExpandedHeight / 2}
+            .distinctUntilChanged()
+            .observeOn(MainScheduler.asyncInstance)
+            .subscribe(onNext: { (collapse) in
+                if self.isUserScrolling {
+                    self.headerView.setIsCollapsed(collapse)
+                }
+            })
+            .disposed(by: disposeBag)
         
         offsetY
             .map {$0 < -self.headerViewExpandedHeight}
@@ -280,6 +285,10 @@ extension WalletVC: WalletHeaderViewDelegate, WalletHeaderViewDatasource {
         if headerViewExpandedHeight == height {return}
         headerViewExpandedHeight = height
         tableView.contentInset = UIEdgeInsets(top: headerViewExpandedHeight - 20, left: 0, bottom: 0, right: 0)
-        tableView.setContentOffset(CGPoint(x: 0, y: -headerViewExpandedHeight + 20), animated: false)
+        
+        // change bounds without calling scrollViewDidScroll
+        var bounds = tableView.bounds
+        bounds.origin = CGPoint(x: 0, y: -headerViewExpandedHeight + 20)
+        tableView.bounds = bounds
     }
 }

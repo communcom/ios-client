@@ -138,7 +138,9 @@ class WalletHeaderView: MyView {
     func setIsCollapsed(_ value: Bool) {
         if isCollapsed == value {return}
         isCollapsed = value
-        reloadViews()
+        UIView.animate(withDuration: 0.3) {
+            self.reloadViews()
+        }
     }
     
     func setSelectedIndex(_ index: Int) {
