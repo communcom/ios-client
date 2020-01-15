@@ -31,8 +31,8 @@ extension UIView {
         }
     }
     
-    static func transparentCommunLogo(size: CGFloat) -> UIView {
-        let view = UIView(width: size, height: size, backgroundColor: UIColor.white.withAlphaComponent(0.2), cornerRadius: size / 2)
+    static func transparentCommunLogo(size: CGFloat, backgroundColor: UIColor? = nil) -> UIView {
+        let view = UIView(width: size, height: size, backgroundColor: backgroundColor ?? UIColor.white.withAlphaComponent(0.2), cornerRadius: size / 2)
         let slash = UIImageView(width: 6.43 / 40 * size, height: 15.71 / 40 * size, imageNamed: "slash")
         view.addSubview(slash)
         slash.autoCenterInSuperview()
