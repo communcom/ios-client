@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 
 class WalletBuyCommunVC: WalletConvertVC {
-    lazy var carousel = WalletCarousel(height: 50)
+    lazy var carousel = WalletCarouselWrapper(height: 50)
     
     override func setUp() {
         super.setUp()
