@@ -11,16 +11,22 @@ import RxSwift
 import RxCocoa
 
 protocol WalletHeaderViewDatasource: class {
-    func data(forWalletHeaderView headerView: WalletHeaderView) -> [ResponseAPIWalletGetBalance]
+    func data(forWalletHeaderView headerView: WalletHeaderView) -> [ResponseAPIWalletGetBalance]?
+}
+
+protocol WalletHeaderViewDelegate: class {
+    func walletHeaderView(_ headerView: WalletHeaderView, willUpdateHeightCollapsed isCollapsed: Bool)
+    func walletHeaderView(_ headerView: WalletHeaderView, currentIndexDidChangeTo index: Int)
 }
 
 class WalletHeaderView: MyView {
     // MARK: - Constants
     weak var dataSource: WalletHeaderViewDatasource?
+    weak var delegate: WalletHeaderViewDelegate?
     
     // MARK: - Properties
-    var selectedIndex = 0
     var isCollapsed = false
+    var selectedIndex = 0
     
     // MARK: - ConfigurableConstraints
     var titleTopConstraint: NSLayoutConstraint?
@@ -94,7 +100,8 @@ class WalletHeaderView: MyView {
     }
     
     func reloadData() {
-        guard let balances = dataSource?.data(forWalletHeaderView: self) else {return}
+        guard let balances = dataSource?.data(forWalletHeaderView: self)
+        else {return}
         if selectedIndex == 0 {
             guard let point = balances.first(where: {$0.symbol == "CMN"})?.balanceValue else {return}
             // set up with commun value
@@ -120,7 +127,7 @@ class WalletHeaderView: MyView {
             
             titleLabel.text = balance.name ?? "" + "balance".localized().uppercaseFirst
             pointLabel.text = "\(balance.balanceValue.currencyValueFormatted)"
-//            
+//
 //            contentView.bringSubviewToFront(backButton)
 //            contentView.bringSubviewToFront(optionsButton)
         }
@@ -131,6 +138,36 @@ class WalletHeaderView: MyView {
             collapse()
         } else {
             expand()
+        }
+        
+        delegate?.walletHeaderView(self, willUpdateHeightCollapsed: isCollapsed)
+    }
+    
+    func setSelectedIndex(_ index: Int) {
+        if index == selectedIndex {return}
+        selectedIndex = index
+        
+        // if switch from commun to other or reverse
+        if index == 0 || selectedIndex == 0 {
+            reloadViews()
+        }
+        reloadData()
+    }
+    
+    // MARK: - Layout
+    func startLoading() {
+        contentView.hideLoader()
+        contentView.showLoader()
+    }
+    
+    func endLoading() {
+        contentView.hideLoader()
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        DispatchQueue.main.async {
+            self.makeShadowAndRoundCorner()
         }
     }
     
@@ -146,6 +183,12 @@ class WalletHeaderView: MyView {
         
         // modify space between title and point label
         titleToPointConstraint?.constant = 5
+        
+        // add stackview
+        if !buttonsStackView.isDescendant(of: contentView) {
+            contentView.addSubview(buttonsStackView)
+            buttonsStackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 16 * Config.widthRatio, bottom: 30 * Config.heightRatio, right: 16 * Config.widthRatio), excludingEdge: .top)
+        }
         
         // add needed views
         if selectedIndex == 0 {
@@ -188,11 +231,6 @@ class WalletHeaderView: MyView {
                 
                 stackViewTopConstraint = buttonsStackView.autoPinEdge(.top, to: .bottom, of: balanceContainerView, withOffset: 30 * Config.heightRatio)
             }
-        }
-        
-        // add stackview
-        if !buttonsStackView.isDescendant(of: contentView) {
-            buttonsStackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 16 * Config.widthRatio, bottom: 30 * Config.heightRatio, right: 16 * Config.widthRatio), excludingEdge: .top)
         }
         
         // modify fonts, colors
@@ -275,5 +313,19 @@ class WalletHeaderView: MyView {
         label.autoPinEdge(toSuperviewEdge: .bottom, withInset: 10)
         
         return container
+    }
+    
+    private func makeShadowAndRoundCorner() {
+        contentView.roundCorners(UIRectCorner(arrayLiteral: .bottomLeft, .bottomRight), radius: 30 * Config.heightRatio)
+        
+        var color = UIColor(red: 106, green: 128, blue: 245)!
+        var opacity: Float = 0.3
+        
+        if isCollapsed {
+            color = UIColor(red: 108, green: 123, blue: 173)!
+            opacity = 0.08
+        }
+        
+        shadowView.addShadow(ofColor: color, radius: 19, offset: CGSize(width: 0, height: 14), opacity: opacity)
     }
 }

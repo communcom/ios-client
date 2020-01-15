@@ -12,12 +12,20 @@ import ESPullToRefresh
 
 class WalletVC: TransferHistoryVC {
     // MARK: - Properties
+    var balances: [ResponseAPIWalletGetBalance]? {
+        (self.viewModel as! WalletViewModel).balancesVM.items.value
+    }
     var currentBalance: ResponseAPIWalletGetBalance? {
-        (self.viewModel as! WalletViewModel).balancesVM.items.value[safe: headerView.currentIndex.value]
+        balances?[safe: headerView.selectedIndex]
     }
     
     // MARK: - Subviews
-    lazy var headerView = WalletHeaderView(forAutoLayout: ())
+    lazy var headerView: WalletHeaderView = {
+        let headerView = WalletHeaderView(forAutoLayout: ())
+        headerView.delegate = self
+        headerView.dataSource = self
+        return headerView
+    }()
     lazy var tableHeaderView = WalletTableHeaderView(tableView: tableView)
     var myPointsCollectionView: UICollectionView {tableHeaderView.myPointsCollectionView}
     var sendPointsCollectionView: UICollectionView {tableHeaderView.sendPointsCollectionView}
@@ -66,21 +74,11 @@ class WalletVC: TransferHistoryVC {
         
         tableHeaderView.filterButton.addTarget(self, action: #selector(openFilter), for: .touchUpInside)
         
-        headerView.didUpdateHeight = {
-            self.resetTableViewContentInset()
-        }
+        tableHeaderView.setMyPointHidden(false)
     }
     
     override func bind() {
         super.bind()
-        
-        // headerView
-        headerView.currentIndex
-            .map {$0 != 0}
-            .subscribe(onNext: { (shouldHide) in
-                self.tableHeaderView.setMyPointHidden(shouldHide)
-            })
-            .disposed(by: disposeBag)
         
         // forward delegate
         myPointsCollectionView.rx.setDelegate(self)
@@ -98,8 +96,8 @@ class WalletVC: TransferHistoryVC {
             .distinctUntilChanged()
             .observeOn(MainScheduler.asyncInstance)
             .subscribe(onNext: { (collapse) in
-                self.headerView.setIsCollapsed(collapse)
-                self.resetTableViewContentInset()
+                self.headerView.isCollapsed = collapse
+                self.headerView.reloadViews()
             })
             .disposed(by: disposeBag)
         
@@ -111,19 +109,12 @@ class WalletVC: TransferHistoryVC {
             .disposed(by: disposeBag)
     }
     
-    private func resetTableViewContentInset() {
-        if headerView.isCollapsed {return}
-        headerViewExpandedHeight = headerView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
-        tableView.contentInset = UIEdgeInsets(top: headerViewExpandedHeight - 20, left: 0, bottom: 0, right: 0)
-        tableView.setContentOffset(CGPoint(x: 0, y: -headerViewExpandedHeight + 20), animated: false)
-    }
-    
     override func bindItems() {
         super.bindItems()
         (viewModel as! WalletViewModel).balancesVM.items
-            .subscribe(onNext: { (items) in
-                self.headerView.setUp(with: items)
-                self.tableHeaderView.setMyPointHidden(self.headerView.currentIndex.value != 0)
+            .distinctUntilChanged()
+            .subscribe(onNext: { (_) in
+                self.headerView.reloadData()
             })
             .disposed(by: disposeBag)
         
@@ -135,7 +126,8 @@ class WalletVC: TransferHistoryVC {
         
         myPointsCollectionView.rx.modelSelected(ResponseAPIWalletGetBalance.self)
             .subscribe(onNext: { (balance) in
-                self.headerView.switchToSymbol(balance.symbol)
+                guard let index = self.balances?.firstIndex(where: {$0.symbol == balance.symbol}) else {return}
+                self.headerView.setSelectedIndex(index)
             })
             .disposed(by: disposeBag)
         
@@ -245,7 +237,8 @@ class WalletVC: TransferHistoryVC {
     
     @objc func myPointsSeeAllDidTouch() {
         let vc = BalancesVC { balance in
-            self.headerView.switchToSymbol(balance.symbol)
+            guard let index = self.balances?.firstIndex(where: {$0.symbol == balance.symbol}) else {return}
+            self.headerView.setSelectedIndex(index)
         }
         let nc = BaseNavigationController(rootViewController: vc)
         present(nc, animated: true, completion: nil)
@@ -266,5 +259,26 @@ extension WalletVC: UICollectionViewDelegateFlowLayout {
             return CGSize(width: 90, height: SendPointCollectionCell.height)
         }
         return CGSize(width: 140, height: MyPointCollectionCell.height)
+    }
+}
+
+extension WalletVC: WalletHeaderViewDelegate, WalletHeaderViewDatasource {
+    func data(forWalletHeaderView headerView: WalletHeaderView) -> [ResponseAPIWalletGetBalance]? {
+        balances
+    }
+    
+    func walletHeaderView(_ headerView: WalletHeaderView, willUpdateHeightCollapsed isCollapsed: Bool) {
+        if isCollapsed {return}
+        resetTableViewContentInset()
+    }
+    
+    func walletHeaderView(_ headerView: WalletHeaderView, currentIndexDidChangeTo index: Int) {
+        tableHeaderView.setMyPointHidden(index != 0)
+    }
+    
+    private func resetTableViewContentInset() {
+        headerViewExpandedHeight = headerView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
+        tableView.contentInset = UIEdgeInsets(top: headerViewExpandedHeight - 20, left: 0, bottom: 0, right: 0)
+        tableView.setContentOffset(CGPoint(x: 0, y: -headerViewExpandedHeight + 20), animated: false)
     }
 }
