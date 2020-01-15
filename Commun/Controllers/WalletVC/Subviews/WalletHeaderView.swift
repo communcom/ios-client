@@ -94,9 +94,8 @@ class WalletHeaderView: MyView {
     
     func reloadViews() {
         if isCollapsed {
-            // collapse
+            collapse()
         } else {
-            // expand
             expand()
         }
     }
@@ -174,7 +173,32 @@ class WalletHeaderView: MyView {
     }
     
     private func collapse() {
+        // remove unused views
+        communLogo.removeFromSuperview()
+        carousel.removeFromSuperview()
+        buttonsStackView.removeFromSuperview()
+        balanceContainerView.removeFromSuperview()
         
+        // deactivate non-needed constraints
+        titleTopConstraint?.isActive = false
+        pointBottomConstraint?.isActive = false
+        
+        // modify constraints
+        titleTopConstraint = titleLabel.autoPinEdge(toSuperviewSafeArea: .top, withInset: 6)
+        titleToPointConstraint?.constant = 3
+        pointBottomConstraint = pointLabel.autoPinEdge(toSuperviewEdge: .bottom, withInset: 10)
+        
+        // modify fonts, colors
+        self.contentView.backgroundColor = .white
+        
+        self.titleLabel.font = .systemFont(ofSize: 12, weight: .semibold)
+        self.pointLabel.font = .systemFont(ofSize: 20, weight: .semibold)
+        
+        self.titleLabel.textColor = .black
+        self.pointLabel.textColor = .black
+        
+        self.backButton.tintColor = .black
+        self.optionsButton.tintColor = .black
     }
     
     // MARK: - Helpers
