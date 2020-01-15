@@ -154,9 +154,13 @@ class WalletHeaderView: MyView {
         
         selectedIndex = index
         if needsReloadViews {
-            reloadViews()
+            UIView.animate(withDuration: 0.3) {
+                self.reloadViews()
+            }
         }
+        
         reloadData()
+        delegate?.walletHeaderView(self, currentIndexDidChangeTo: index)
     }
     
     // MARK: - Layout

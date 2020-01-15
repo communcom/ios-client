@@ -95,13 +95,15 @@ class WalletVC: TransferHistoryVC {
             .share()
             
         offsetY
-            .map {$0 > -self.headerViewExpandedHeight / 2}
+            .filter {_ in self.isUserScrolling}
+            .map({ y in
+                if y > 0 {return true}
+                return self.headerViewExpandedHeight + y > 40
+            })
             .distinctUntilChanged()
             .observeOn(MainScheduler.asyncInstance)
             .subscribe(onNext: { (collapse) in
-                if self.isUserScrolling {
-                    self.headerView.setIsCollapsed(collapse)
-                }
+                self.headerView.setIsCollapsed(collapse)
             })
             .disposed(by: disposeBag)
         
