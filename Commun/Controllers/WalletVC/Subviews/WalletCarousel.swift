@@ -11,7 +11,6 @@ import CircularCarousel
 
 class WalletCarousel: CircularCarousel {
     // MARK: - Constants
-    var carouselHeight: CGFloat
     
     // MARK: - Subviews
     lazy var gradient: CAGradientLayer = {
@@ -24,12 +23,8 @@ class WalletCarousel: CircularCarousel {
     }()
     
     // MARK: - Methods
-    init(height: CGFloat) {
-        carouselHeight = height
-        super.init(frame: .zero)
-        configureForAutoLayout()
-        autoSetDimension(.height, toSize: height)
-        
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         commonInit()
     }
     

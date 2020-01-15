@@ -9,6 +9,7 @@
 import Foundation
 import RxSwift
 import RxCocoa
+import CircularCarousel
 
 protocol WalletHeaderViewDatasource: class {
     func data(forWalletHeaderView headerView: WalletHeaderView) -> [ResponseAPIWalletGetBalance]?
@@ -21,6 +22,7 @@ protocol WalletHeaderViewDelegate: class {
 
 class WalletHeaderView: MyView {
     // MARK: - Constants
+    let carouselHeight: CGFloat = 40
     weak var dataSource: WalletHeaderViewDatasource?
     weak var delegate: WalletHeaderViewDelegate?
     
@@ -41,7 +43,12 @@ class WalletHeaderView: MyView {
     lazy var backButton = UIButton.back(width: 44, height: 44, tintColor: .white, contentInsets: UIEdgeInsets(top: 11, left: 16, bottom: 11, right: 16))
     
     lazy var communLogo = UIView.transparentCommunLogo(size: 40)
-    lazy var carousel = UIView.transparentCommunLogo(size: 40, backgroundColor: .black)
+    lazy var carousel: WalletCarousel = {
+        let carousel = WalletCarousel(width: 300, height: 40)
+        carousel.delegate = self
+        carousel.dataSource = self
+        return carousel
+    }()
     
     lazy var optionsButton = UIButton.option(tintColor: .white)
     lazy var titleLabel = UILabel.with(text: "Equity Value Commun", textSize: 15, weight: .semibold, textColor: .white)
@@ -129,9 +136,6 @@ class WalletHeaderView: MyView {
             
             titleLabel.text = balance.name ?? "" + "balance".localized().uppercaseFirst
             pointLabel.text = "\(balance.balanceValue.currencyValueFormatted)"
-//
-//            contentView.bringSubviewToFront(backButton)
-//            contentView.bringSubviewToFront(optionsButton)
         }
     }
     
@@ -143,7 +147,7 @@ class WalletHeaderView: MyView {
         }
     }
     
-    func setSelectedIndex(_ index: Int) {
+    func setSelectedIndex(_ index: Int, shouldUpdateCarousel: Bool = true) {
         if index == selectedIndex {return}
         
         // if switch from commun to other and vice versa
@@ -154,9 +158,12 @@ class WalletHeaderView: MyView {
         
         selectedIndex = index
         if needsReloadViews {
+            carousel.reloadData()
             UIView.animate(withDuration: 0.3) {
                 self.reloadViews()
             }
+        } else if shouldUpdateCarousel {
+            carousel.scroll(toItemAtIndex: index, animated: true)
         }
         
         reloadData()
@@ -249,6 +256,9 @@ class WalletHeaderView: MyView {
                 
                 stackViewTopConstraint = buttonsStackView.autoPinEdge(.top, to: .bottom, of: balanceContainerView, withOffset: 30 * Config.heightRatio)
             }
+            
+            contentView.bringSubviewToFront(backButton)
+            contentView.bringSubviewToFront(optionsButton)
         }
         
         // modify fonts, colors
@@ -345,5 +355,77 @@ class WalletHeaderView: MyView {
         }
         
         shadowView.addShadow(ofColor: color, radius: 19, offset: CGSize(width: 0, height: 14), opacity: opacity)
+    }
+}
+
+extension WalletHeaderView: CircularCarouselDataSource, CircularCarouselDelegate {
+    func startingItemIndex(inCarousel carousel: CircularCarousel) -> Int {
+        return selectedIndex
+    }
+    
+    func numberOfItems(inCarousel carousel: CircularCarousel) -> Int {
+        return dataSource?.data(forWalletHeaderView: self)?.count ?? 0
+    }
+    func carousel(_: CircularCarousel, viewForItemAt indexPath: IndexPath, reuseView: UIView?) -> UIView {
+        guard let balance = dataSource?.data(forWalletHeaderView: self)?[safe: indexPath.row] else {return UIView()}
+        
+        var view = reuseView
+
+        if view == nil || view?.viewWithTag(1) == nil {
+            view = UIView(frame: CGRect(x: 0, y: 0, width: carouselHeight, height: carouselHeight))
+            let imageView = MyAvatarImageView(size: carouselHeight)
+            imageView.borderColor = .white
+            imageView.borderWidth = 2
+            imageView.tag = 1
+            view!.addSubview(imageView)
+            imageView.autoAlignAxis(toSuperviewAxis: .horizontal)
+            imageView.autoAlignAxis(toSuperviewAxis: .vertical)
+        }
+        
+        let imageView = view?.viewWithTag(1) as! MyAvatarImageView
+        
+        if balance.symbol == "CMN" {
+            imageView.image = UIImage(named: "tux")
+        } else {
+            imageView.setAvatar(urlString: balance.logo, namePlaceHolder: balance.name ?? balance.symbol)
+        }
+        
+        return view!
+    }
+    // MARK: CircularCarouselDelegate
+    func carousel<T>(_ carousel: CircularCarousel, valueForOption option: CircularCarouselOption, withDefaultValue defaultValue: T) -> T {
+        if option == .itemWidth {
+            return CoreGraphics.CGFloat(carouselHeight) as! T
+        }
+        
+//        if option == .spacing {
+//            return CoreGraphics.CGFloat(8) as! T
+//        }
+        
+        if option == .scaleMultiplier {
+            return CoreGraphics.CGFloat(0.25) as! T
+        }
+        
+        if option == .minScale {
+            return CoreGraphics.CGFloat(0.5) as! T
+        }
+        
+//        if option == .fadeMin {
+//            return CoreGraphics.CGFloat(-2) as! T
+//        }
+//
+//        if option == .fadeMax {
+//            return CoreGraphics.CGFloat(2) as! T
+//        }
+        
+        if option == .visibleItems {
+            return Int(5) as! T
+        }
+        
+        return defaultValue
+    }
+    
+    func carousel(_ carousel: CircularCarousel, willBeginScrollingToIndex index: Int) {
+        setSelectedIndex(index, shouldUpdateCarousel: false)
     }
 }
