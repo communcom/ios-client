@@ -255,6 +255,10 @@
 		BC40718E23CEEFC7000027A3 /* WalletCarousel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC40718D23CEEFC7000027A3 /* WalletCarousel.swift */; };
 		BC40719923CEF801000027A3 /* PlaceholderNotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC40719723CEF801000027A3 /* PlaceholderNotificationCell.swift */; };
 		BC40719A23CEF801000027A3 /* PlaceholderNotificationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BC40719823CEF801000027A3 /* PlaceholderNotificationCell.xib */; };
+		BC40719E23CF0137000027A3 /* NotificationsListFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC40719D23CF0137000027A3 /* NotificationsListFetcher.swift */; };
+		BC4071A823CF09A0000027A3 /* NotificationsPageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4071A723CF09A0000027A3 /* NotificationsPageVC.swift */; };
+		BC4071AA23CF09B2000027A3 /* NotificationsPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4071A923CF09B2000027A3 /* NotificationsPageViewModel.swift */; };
+		BC4071AD23CF0AFA000027A3 /* NotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4071AC23CF0AFA000027A3 /* NotificationCell.swift */; };
 		BC40F7EF23CC4ADA00C2A3D3 /* SinglePhotoPickerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC40F7EE23CC4ADA00C2A3D3 /* SinglePhotoPickerVC.swift */; };
 		BC43FDFE23B44F7200255451 /* WalletConvertViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC43FDFD23B44F7200255451 /* WalletConvertViewModel.swift */; };
 		BC43FE0923B5F12C00255451 /* WalletCarouselWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC43FE0823B5F12C00255451 /* WalletCarouselWrapper.swift */; };
@@ -729,6 +733,10 @@
 		BC40718D23CEEFC7000027A3 /* WalletCarousel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletCarousel.swift; sourceTree = "<group>"; };
 		BC40719723CEF801000027A3 /* PlaceholderNotificationCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceholderNotificationCell.swift; sourceTree = "<group>"; };
 		BC40719823CEF801000027A3 /* PlaceholderNotificationCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlaceholderNotificationCell.xib; sourceTree = "<group>"; };
+		BC40719D23CF0137000027A3 /* NotificationsListFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsListFetcher.swift; sourceTree = "<group>"; };
+		BC4071A723CF09A0000027A3 /* NotificationsPageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsPageVC.swift; sourceTree = "<group>"; };
+		BC4071A923CF09B2000027A3 /* NotificationsPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsPageViewModel.swift; sourceTree = "<group>"; };
+		BC4071AC23CF0AFA000027A3 /* NotificationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCell.swift; sourceTree = "<group>"; };
 		BC40F7EE23CC4ADA00C2A3D3 /* SinglePhotoPickerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SinglePhotoPickerVC.swift; sourceTree = "<group>"; };
 		BC43FDFD23B44F7200255451 /* WalletConvertViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletConvertViewModel.swift; sourceTree = "<group>"; };
 		BC43FE0823B5F12C00255451 /* WalletCarouselWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletCarouselWrapper.swift; sourceTree = "<group>"; };
@@ -1346,6 +1354,7 @@
 				5725173A2243E4510033125C /* PostPageVC */,
 				3BAF69C122675ADB0055CCEB /* ProfilePageVC */,
 				BC9066E323A9D331000F9A3B /* WalletVC */,
+				BC4071A423CF0982000027A3 /* NotificationsPageVC */,
 				BC561E7E238B76AD004C53EB /* ReportVCs */,
 				575AECAF22606F5200A7EC2D /* SelectCountryVC */,
 				57E5159A2270E5C700A6F6DB /* SettingsVC */,
@@ -1925,6 +1934,24 @@
 			path = PlaceholderNotificationCell;
 			sourceTree = "<group>";
 		};
+		BC4071A423CF0982000027A3 /* NotificationsPageVC */ = {
+			isa = PBXGroup;
+			children = (
+				BC4071AB23CF0AE5000027A3 /* Subviews */,
+				BC4071A723CF09A0000027A3 /* NotificationsPageVC.swift */,
+				BC4071A923CF09B2000027A3 /* NotificationsPageViewModel.swift */,
+			);
+			path = NotificationsPageVC;
+			sourceTree = "<group>";
+		};
+		BC4071AB23CF0AE5000027A3 /* Subviews */ = {
+			isa = PBXGroup;
+			children = (
+				BC4071AC23CF0AFA000027A3 /* NotificationCell.swift */,
+			);
+			path = Subviews;
+			sourceTree = "<group>";
+		};
 		BC46592E238E6D2100AF9C29 /* Unused */ = {
 			isa = PBXGroup;
 			children = (
@@ -2458,6 +2485,7 @@
 				BC7D608D237BF4E7007D8C1A /* BlacklistFetcher.swift */,
 				BC9066EA23A9D9EC000F9A3B /* BalancesListFetcher.swift */,
 				BC9066F423A9E002000F9A3B /* TransferHistoryListFetcher.swift */,
+				BC40719D23CF0137000027A3 /* NotificationsListFetcher.swift */,
 			);
 			path = Fetchers;
 			sourceTree = "<group>";
@@ -2836,6 +2864,7 @@
 				BC22BBCA236C082600F40658 /* ContentHuggingScrollView.swift in Sources */,
 				BCABF1332366D4E2006B05F5 /* ProfileVC+Binding.swift in Sources */,
 				BC4692C82390E7120064A38B /* ListItemCellType.swift in Sources */,
+				BC4071A823CF09A0000027A3 /* NotificationsPageVC.swift in Sources */,
 				BC469304239673CB0064A38B /* MyProfilePageViewModel.swift in Sources */,
 				3B2F227322689334006B589E /* NSMutableAttributedString.swift in Sources */,
 				BC016D42235DA0D400F1319F /* ArticlePostCell.swift in Sources */,
@@ -2848,10 +2877,12 @@
 				BC22BBD4236C215900F40658 /* BaseTableViewController.swift in Sources */,
 				BC22BBD6236C26EF00F40658 /* NotificationsSettingsVC.swift in Sources */,
 				3B0E9C732270785E002AB1C2 /* PhotoLibraryCell.swift in Sources */,
+				BC4071AA23CF09B2000027A3 /* NotificationsPageViewModel.swift in Sources */,
 				3B6CB732234331830097B2A1 /* Array.swift in Sources */,
 				3BB48AD322D6432200F11B6A /* BoardingRouter.swift in Sources */,
 				3B289B9E2346EB0400598407 /* UIView+PureLayout.swift in Sources */,
 				3B06863423470A33008953C5 /* BasicEditorTextView.swift in Sources */,
+				BC4071AD23CF0AFA000027A3 /* NotificationCell.swift in Sources */,
 				3B0506EE22D7309900B4E4A3 /* KeysVC.swift in Sources */,
 				BC52913523765EAB0022EC7F /* RightAlignedIconButton.swift in Sources */,
 				3B82D0F722D8D56A004EE848 /* EnableBiometricsVC.swift in Sources */,
@@ -2947,6 +2978,7 @@
 				BC702C902362825100D9E88A /* MyAvatarImageView.swift in Sources */,
 				BC69F7D1236FD1690097F870 /* NotificationSettingsView.swift in Sources */,
 				BC7D608A237BF3F1007D8C1A /* MyProfileBlacklistVC.swift in Sources */,
+				BC40719E23CF0137000027A3 /* NotificationsListFetcher.swift in Sources */,
 				3B3C8B932347876000D8BADB /* ArticleEditorTextView+Delegate.swift in Sources */,
 				BCABF1392366DF2B006B05F5 /* UserProfilePageVC.swift in Sources */,
 				3B8DDF56234AD5D500B213F0 /* ContentTextView+Parsing.swift in Sources */,
