@@ -54,6 +54,8 @@ extension MyProfilePageVC {
         let label = (headerView as! MyProfileHeaderView).communValueLabel
         (viewModel as! MyProfilePageViewModel).balancesVM.state
             .subscribe(onNext: {(state) in
+                label.textColor = .white
+                label.text = "loading..."
                 switch state {
                 case .loading(let isLoading):
                     if isLoading {
@@ -66,7 +68,9 @@ extension MyProfilePageVC {
                 case .listEmpty:
                     label.hideLoader()
                 case .error:
-                    label.text = "Error! Please refresh the page!"
+                    label.hideLoader()
+                    label.textColor = .red
+                    label.text = "error".localized().uppercaseFirst + "!!!"
                 }
             })
             .disposed(by: disposeBag)
