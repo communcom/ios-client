@@ -35,13 +35,10 @@ class WalletVC: TransferHistoryVC {
     var myPointsCollectionView: UICollectionView {tableHeaderView.myPointsCollectionView}
     var sendPointsCollectionView: UICollectionView {tableHeaderView.sendPointsCollectionView}
     var headerViewExpandedHeight: CGFloat = 0
-<<<<<<< Updated upstream
-    
-=======
+
     private var barStyle: UIStatusBarStyle = .lightContent
 
     // MARK: - Class Functions
->>>>>>> Stashed changes
     override class func createViewModel() -> TransferHistoryViewModel {
         WalletViewModel()
     }
@@ -216,15 +213,7 @@ class WalletVC: TransferHistoryVC {
             })
             .disposed(by: disposeBag)
     }
-<<<<<<< Updated upstream
-    
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        .lightContent
-    }
-    
-=======
 
->>>>>>> Stashed changes
     // MARK: - Actions
     @objc func sendButtonDidTouch() {
         
@@ -277,10 +266,7 @@ class WalletVC: TransferHistoryVC {
     }
 }
 
-<<<<<<< Updated upstream
-=======
 // MARK: - UICollectionViewDelegateFlowLayout
->>>>>>> Stashed changes
 extension WalletVC: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if collectionView == sendPointsCollectionView {

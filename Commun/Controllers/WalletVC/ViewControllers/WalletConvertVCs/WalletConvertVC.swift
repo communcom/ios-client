@@ -27,7 +27,7 @@ class WalletConvertVC: BaseViewController {
     }
     
     var topColor: UIColor {
-        .black
+        .appMainColor
     }
     
     // MARK: - Subviews
