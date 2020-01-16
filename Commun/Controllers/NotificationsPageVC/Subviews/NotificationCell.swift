@@ -20,12 +20,7 @@ class NotificationCell: MyTableViewCell, ListItemCellType {
     // MARK: - Subviews
     lazy var isNewMark = UIView(width: 6, height: 6, backgroundColor: .appMainColor, cornerRadius: 3)
     lazy var avatarImageView = MyAvatarImageView(size: 44)
-    lazy var iconImageView: UIImageView = {
-        let icon = UIImageView(width: 20, height: 20, cornerRadius: 10)
-        icon.borderWidth = 2
-        icon.borderColor = .white
-        return icon
-    }()
+    lazy var iconImageView: UIImageView = UIImageView(width: 22, height: 22, cornerRadius: 11)
     lazy var contentContainerView = UIView(forAutoLayout: ())
     lazy var contentLabel = UILabel.with(text: "Notification", textSize: 15, numberOfLines: 4)
     lazy var timestampLabel = UILabel.with(text: "ago", textSize: 13, textColor: .a5a7bd)
@@ -43,8 +38,8 @@ class NotificationCell: MyTableViewCell, ListItemCellType {
             .isActive = true
         
         contentView.addSubview(iconImageView)
-        iconImageView.autoPinEdge(.trailing, to: .trailing, of: avatarImageView)
-        iconImageView.autoPinEdge(.bottom, to: .bottom, of: avatarImageView)
+        iconImageView.autoPinEdge(.trailing, to: .trailing, of: avatarImageView, withOffset: 4)
+        iconImageView.autoPinEdge(.bottom, to: .bottom, of: avatarImageView, withOffset: 4)
         
         contentView.addSubview(contentContainerView)
         contentContainerView.autoPinEdge(.top, to: .top, of: avatarImageView)
@@ -63,10 +58,81 @@ class NotificationCell: MyTableViewCell, ListItemCellType {
         
         // pin trailing of content
         contentTrailingConstraint = contentContainerView.autoPinEdge(toSuperviewEdge: .trailing, withInset: -16)
+        
+        selectionStyle = .none
     }
     
     // MARk: - Methods
     func setUp(with item: ResponseAPIGetNotificationItem) {
         self.item = item
+        
+        // clear
+        actionButton.removeFromSuperview()
+        descriptionImageView.removeFromSuperview()
+        contentTrailingConstraint?.isActive = false
+        contentTrailingConstraint = contentContainerView.autoPinEdge(toSuperviewEdge: .trailing, withInset: -16)
+        
+        // common setup
+        isNewMark.isHidden = !item.isNew
+        
+        iconImageView.isHidden = false
+        avatarImageView.setAvatar(urlString: item.user?.avatarUrl, namePlaceHolder: item.user?.username ?? "User")
+        
+        timestampLabel.text = Date.timeAgo(string: item.timestamp)
+        
+        switch item.eventType {
+        case "mention":
+            break
+        case "subscribe":
+            iconImageView.isHidden = true
+            let aStr = NSMutableAttributedString()
+                .semibold(item.user?.username ?? "a user".localized().uppercaseFirst)
+                .normal(" ")
+                .normal("subscribed to you")
+            contentLabel.attributedText = aStr
+            
+            contentView.addSubview(actionButton)
+            actionButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
+            actionButton.autoAlignAxis(.horizontal, toSameAxisOf: avatarImageView)
+            // TODO: follow ?? unfollow
+            actionButton.setTitle("follow", for: .normal)
+            
+            contentTrailingConstraint?.isActive = false
+            contentTrailingConstraint = contentContainerView.autoPinEdge(.trailing, to: .leading, of: actionButton, withOffset: -10)
+        case "upvote":
+            iconImageView.image = UIImage(named: "notifications-page-upvote")
+            let aStr = NSMutableAttributedString()
+                .semibold(item.user?.username ?? "a user".localized().uppercaseFirst)
+                .normal(" ")
+                .normal("liked".localized() + " " + "your \(item.entityType ?? "post")".localized())
+                .normal(": \"")
+            
+            // TODO: - Comment
+//            if item.entityType == "comment" {
+//                aStr.normal("")
+//            }
+            aStr.normal(item.post?.shortText ?? "" + "...\"")
+            contentLabel.attributedText = aStr
+        case "reply":
+            iconImageView.image = UIImage(named: "notifications-page-reply")
+            let aStr = NSMutableAttributedString()
+                .semibold(item.voter?.username ?? "a user".localized().uppercaseFirst)
+                .normal(" ")
+                .normal("left a comment".localized())
+                .normal(" ")
+                .semibold("on post".localized())
+                .normal(": \"")
+            
+            // TODO: - Comment
+//            if item.entityType == "comment" {
+//                aStr.normal("")
+//            }
+            aStr.normal(item.post?.shortText ?? "" + "...\"")
+            contentLabel.attributedText = aStr
+        default:
+            iconImageView.isHidden = true
+            contentLabel.text = "notification"
+            break
+        }
     }
 }
