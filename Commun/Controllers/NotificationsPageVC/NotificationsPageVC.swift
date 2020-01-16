@@ -80,16 +80,19 @@ class NotificationsPageVC: ListViewController<ResponseAPIGetNotificationItem, No
         tableView.rx.contentOffset.map {$0.y}
             .subscribe(onNext: { (y) in
                 if y >= -self.headerViewMinHeight {
+                    if self.headerViewHeightConstraint?.constant == self.headerViewMinHeight {return}
                     self.headerViewHeightConstraint?.constant = self.headerViewMinHeight
                     self.largeTitleLabel.isHidden = true
                     self.newNotificationsCountLabel.isHidden = true
                     self.smallTitleLabel.isHidden = false
                 } else if y <= -self.headerViewMaxHeight {
+                    if self.headerViewHeightConstraint?.constant == self.headerViewMaxHeight {return}
                     self.headerViewHeightConstraint?.constant = self.headerViewMaxHeight
                     self.largeTitleLabel.isHidden = false
                     self.newNotificationsCountLabel.isHidden = false
                     self.smallTitleLabel.isHidden = true
                 } else {
+                    if self.headerViewHeightConstraint?.constant == abs(y) {return}
                     self.headerViewHeightConstraint?.constant = abs(y)
                     self.largeTitleLabel.isHidden = false
                     self.newNotificationsCountLabel.isHidden = false

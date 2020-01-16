@@ -109,32 +109,46 @@ class NotificationCell: MyTableViewCell, ListItemCellType {
                 .normal("liked".localized() + " " + "your \(item.entityType ?? "post")".localized())
                 .normal(": \"")
             
-            // TODO: - Comment
-//            if item.entityType == "comment" {
-//                aStr.normal("")
-//            }
-            aStr.normal(item.post?.shortText ?? "" + "...\"")
+            if item.entityType == "comment" {
+                aStr.normal(item.post?.shortText ?? "")
+                    .normal("...\"")
+                    .normal(" ")
+                    .semibold("on post".localized().uppercaseFirst)
+                    .semibold(": \"")
+            }
+            aStr.normal((item.post?.shortText ?? "") + "...\"")
             contentLabel.attributedText = aStr
+            
+            if let imageUrl = item.comment?.imageUrl ?? item.post?.imageUrl {
+                contentView.addSubview(descriptionImageView)
+                descriptionImageView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
+                descriptionImageView.autoAlignAxis(.horizontal, toSameAxisOf: avatarImageView)
+                
+                descriptionImageView.setImageDetectGif(with: imageUrl)
+                
+                contentTrailingConstraint?.isActive = false
+                contentTrailingConstraint = contentContainerView.autoPinEdge(.trailing, to: .leading, of: descriptionImageView)
+            }
         case "reply":
             iconImageView.image = UIImage(named: "notifications-page-reply")
             let aStr = NSMutableAttributedString()
                 .semibold(item.user?.username ?? "a user".localized().uppercaseFirst)
                 .normal(" ")
                 .normal("left a comment".localized())
-                .normal(" ")
-                .semibold("on post".localized())
                 .normal(": \"")
             
-            // TODO: - Comment
-//            if item.entityType == "comment" {
-//                aStr.normal("")
-//            }
+            if item.entityType == "comment" {
+                aStr.normal(item.comment?.shortText ?? "")
+                    .normal("...\"")
+                    .normal(" ")
+                    .semibold("on your post".localized())
+                    .semibold(": \"")
+            }
             aStr.normal(item.post?.shortText ?? "" + "...\"")
             contentLabel.attributedText = aStr
         default:
             iconImageView.isHidden = true
             contentLabel.text = "notification"
-            break
         }
     }
 }
