@@ -100,7 +100,7 @@ class NotificationCell: MyTableViewCell, ListItemCellType {
             actionButton.setTitle("follow", for: .normal)
             
             contentTrailingConstraint?.isActive = false
-            contentTrailingConstraint = contentContainerView.autoPinEdge(.trailing, to: .leading, of: actionButton, withOffset: -10)
+            contentTrailingConstraint = contentContainerView.autoPinEdge(.trailing, to: .leading, of: actionButton, withOffset: -4)
         case "upvote":
             iconImageView.image = UIImage(named: "notifications-page-upvote")
             let aStr = NSMutableAttributedString()
@@ -127,12 +127,12 @@ class NotificationCell: MyTableViewCell, ListItemCellType {
                 descriptionImageView.setImageDetectGif(with: imageUrl)
                 
                 contentTrailingConstraint?.isActive = false
-                contentTrailingConstraint = contentContainerView.autoPinEdge(.trailing, to: .leading, of: descriptionImageView)
+                contentTrailingConstraint = contentContainerView.autoPinEdge(.trailing, to: .leading, of: descriptionImageView, withOffset: -4)
             }
         case "reply":
             iconImageView.image = UIImage(named: "notifications-page-reply")
             let aStr = NSMutableAttributedString()
-                .semibold(item.user?.username ?? "a user".localized().uppercaseFirst)
+                .semibold(item.author?.username ?? "a user".localized().uppercaseFirst)
                 .normal(" ")
                 .normal("left a comment".localized())
                 .normal(": \"")
