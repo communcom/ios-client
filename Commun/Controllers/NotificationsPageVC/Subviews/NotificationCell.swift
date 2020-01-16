@@ -93,14 +93,14 @@ class NotificationCell: MyTableViewCell, ListItemCellType {
                 .normal("subscribed to you")
             contentLabel.attributedText = aStr
             
-            contentView.addSubview(actionButton)
-            actionButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
-            actionButton.autoAlignAxis(.horizontal, toSameAxisOf: avatarImageView)
             // TODO: follow ?? unfollow
-            actionButton.setTitle("follow", for: .normal)
-            
-            contentTrailingConstraint?.isActive = false
-            contentTrailingConstraint = contentContainerView.autoPinEdge(.trailing, to: .leading, of: actionButton, withOffset: -4)
+//            contentView.addSubview(actionButton)
+//            actionButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
+//            actionButton.autoAlignAxis(.horizontal, toSameAxisOf: avatarImageView)
+//            actionButton.setTitle("follow", for: .normal)
+//            
+//            contentTrailingConstraint?.isActive = false
+//            contentTrailingConstraint = contentContainerView.autoPinEdge(.trailing, to: .leading, of: actionButton, withOffset: -4)
         case "upvote":
             iconImageView.image = UIImage(named: "notifications-page-upvote")
             let aStr = NSMutableAttributedString()
