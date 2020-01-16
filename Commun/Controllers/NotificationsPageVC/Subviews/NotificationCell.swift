@@ -76,7 +76,9 @@ class NotificationCell: MyTableViewCell, ListItemCellType {
         isNewMark.isHidden = !item.isNew
         
         iconImageView.isHidden = false
-        avatarImageView.setAvatar(urlString: item.user?.avatarUrl, namePlaceHolder: item.user?.username ?? "User")
+        avatarImageView.setAvatar(
+            urlString: (item.voter ?? item.user)?.avatarUrl,
+            namePlaceHolder: (item.voter ?? item.user)?.username ?? "User")
         
         timestampLabel.text = Date.timeAgo(string: item.timestamp)
         

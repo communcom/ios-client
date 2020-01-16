@@ -14,6 +14,10 @@ extension UIScrollView {
         let bottomOffset = CGPoint(x: 0, y: contentSize.height - bounds.size.height)
         setContentOffset(bottomOffset, animated: true)
     }
+    
+    var isUserScrolling: Bool {
+        isTracking || isDragging || isDecelerating
+    }
 }
 
 extension Reactive where Base: UIScrollView {

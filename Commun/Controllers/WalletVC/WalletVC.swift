@@ -18,9 +18,6 @@ class WalletVC: TransferHistoryVC {
     var currentBalance: ResponseAPIWalletGetBalance? {
         balances?[safe: headerView.selectedIndex]
     }
-    var isUserScrolling: Bool {
-        tableView.isTracking || tableView.isDragging || tableView.isDecelerating
-    }
     
     // MARK: - Subviews
     lazy var headerView: WalletHeaderView = {
@@ -95,7 +92,7 @@ class WalletVC: TransferHistoryVC {
             .share()
             
         offsetY
-            .filter {_ in self.isUserScrolling}
+            .filter {_ in self.tableView.isUserScrolling}
             .map({ y in
                 if y > 0 {return true}
                 return self.headerViewExpandedHeight + y > 40
