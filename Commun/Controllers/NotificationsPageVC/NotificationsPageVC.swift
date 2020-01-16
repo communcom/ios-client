@@ -144,6 +144,16 @@ class NotificationsPageVC: ListViewController<ResponseAPIGetNotificationItem, No
             .disposed(by: disposeBag)
     }
     
+    override func modelSelected(_ item: ResponseAPIGetNotificationItem) {
+        
+        
+        if item.isNew {
+            var item = item
+            item.isNew = false
+            item.notifyChanged()
+        }
+    }
+    
     override func handleListEmpty() {
         let title = "no notification"
         let description = "you haven't had any notification yet"
