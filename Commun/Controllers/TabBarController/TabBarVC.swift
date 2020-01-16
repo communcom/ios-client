@@ -101,18 +101,11 @@ class TabBarVC: UITabBarController {
         comunities.accessibilityLabel = "TabBarComunitiesTabBarItem"
         
         // Notifications Tab
-//        let notifications = NotificationsPageVC()
-//        let notificationsNC = BaseNavigationController(rootViewController: notifications, tabBarVC: self)
-//        let notificationsItem = buttonTabBarItem(image: UIImage(named: "notifications")!, tag: notificationTabIndex)
-//        notificationsNC.navigationBar.prefersLargeTitles = true
-//        notifications.accessibilityLabel = "TabBarNotificationsTabBarItem"
-
-        // Following Tab
-        let followings = SubscriptionsVC()
-        let followingsNC = BaseNavigationController(rootViewController: followings, tabBarVC: self)
-        let followingsItem = buttonTabBarItem(image: UIImage(named: "tabbar-community")!, tag: notificationTabIndex)
-        followingsNC.navigationBar.prefersLargeTitles = false
-        followings.accessibilityLabel = "TabBarNotificationsTabBarItem"
+        let notifications = NotificationsPageVC()
+        let notificationsNC = BaseNavigationController(rootViewController: notifications, tabBarVC: self)
+        let notificationsItem = buttonTabBarItem(image: UIImage(named: "notifications")!, tag: notificationTabIndex)
+        notificationsNC.navigationBar.prefersLargeTitles = true
+        notifications.accessibilityLabel = "TabBarNotificationsTabBarItem"
 
         // Profile Tab
         let profile = MyProfilePageVC()
@@ -122,13 +115,13 @@ class TabBarVC: UITabBarController {
         profileNC.navigationBar.tintColor = UIColor.appMainColor
 
         // Set up controllers
-        viewControllers = [feedNC, communitiesNC, /* wallet,*/ followingsNC, profileNC]
+        viewControllers = [feedNC, communitiesNC, /* wallet,*/ notificationsNC, profileNC]
         
         tabBarStackView.addArrangedSubviews([
             feedItem,
             communitiesItem,
             tabBarItemAdd,
-            followingsItem,
+            notificationsItem,
             profileItem
         ])
                 
