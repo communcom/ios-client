@@ -21,6 +21,8 @@ class WalletVC: TransferHistoryVC {
     var isUserScrolling: Bool {
         tableView.isTracking || tableView.isDragging || tableView.isDecelerating
     }
+
+    var tableTopConstraint: NSLayoutConstraint!
     
     // MARK: - Subviews
     lazy var headerView: WalletHeaderView = {
@@ -33,7 +35,13 @@ class WalletVC: TransferHistoryVC {
     var myPointsCollectionView: UICollectionView {tableHeaderView.myPointsCollectionView}
     var sendPointsCollectionView: UICollectionView {tableHeaderView.sendPointsCollectionView}
     var headerViewExpandedHeight: CGFloat = 0
+<<<<<<< Updated upstream
     
+=======
+    private var barStyle: UIStatusBarStyle = .lightContent
+
+    // MARK: - Class Functions
+>>>>>>> Stashed changes
     override class func createViewModel() -> TransferHistoryViewModel {
         WalletViewModel()
     }
@@ -47,10 +55,11 @@ class WalletVC: TransferHistoryVC {
         tableView.insetsContentViewsToSafeArea = false
         tableView.contentInsetAdjustmentBehavior = .never
         tableView.showsVerticalScrollIndicator = false
-        
+        tableView.contentInset.top = 0
+
         view.addSubview(tableView)
-        tableView.autoPinEdgesToSuperviewEdges()
-        
+        tableView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
+        tableTopConstraint = tableView.autoPinEdge(toSuperviewEdge: .top)
         view.bringSubviewToFront(headerView)
         return tableView
     }
@@ -96,14 +105,14 @@ class WalletVC: TransferHistoryVC {
             
         offsetY
             .filter {_ in self.isUserScrolling}
-            .map({ y in
-                if y > 0 {return true}
-                return self.headerViewExpandedHeight + y > 40
+            .map({ y -> Bool in
+                return y > 0
             })
             .distinctUntilChanged()
             .observeOn(MainScheduler.asyncInstance)
             .subscribe(onNext: { (collapse) in
                 self.headerView.setIsCollapsed(collapse)
+                self.changeStatusBarStyle(collapse ? .default : .lightContent)
             })
             .disposed(by: disposeBag)
         
@@ -114,6 +123,11 @@ class WalletVC: TransferHistoryVC {
             })
             .disposed(by: disposeBag)
     }
+
+//    override var preferredStatusBarStyle: UIStatusBarStyle {
+//        .lightContent
+//    }
+
     
     override func bindItems() {
         super.bindItems()
@@ -202,11 +216,15 @@ class WalletVC: TransferHistoryVC {
             })
             .disposed(by: disposeBag)
     }
+<<<<<<< Updated upstream
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         .lightContent
     }
     
+=======
+
+>>>>>>> Stashed changes
     // MARK: - Actions
     @objc func sendButtonDidTouch() {
         
@@ -259,6 +277,10 @@ class WalletVC: TransferHistoryVC {
     }
 }
 
+<<<<<<< Updated upstream
+=======
+// MARK: - UICollectionViewDelegateFlowLayout
+>>>>>>> Stashed changes
 extension WalletVC: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if collectionView == sendPointsCollectionView {
@@ -274,10 +296,15 @@ extension WalletVC: WalletHeaderViewDelegate, WalletHeaderViewDatasource {
     }
     
     func walletHeaderView(_ headerView: WalletHeaderView, willUpdateHeightCollapsed isCollapsed: Bool) {
-        if isCollapsed {return}
-        resetTableViewContentInset()
+//        if isCollapsed {
+//            let height = headerView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
+//            headerViewExpandedHeight = height
+//            tableView.bounds.origin.y = headerViewExpandedHeight
+//        } else {
+            resetTableViewContentInset()
+//        }
     }
-    
+
     func walletHeaderView(_ headerView: WalletHeaderView, currentIndexDidChangeTo index: Int) {
         tableHeaderView.setMyPointHidden(index != 0)
     }
@@ -286,11 +313,21 @@ extension WalletVC: WalletHeaderViewDelegate, WalletHeaderViewDatasource {
         let height = headerView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
         if headerViewExpandedHeight == height {return}
         headerViewExpandedHeight = height
-        tableView.contentInset = UIEdgeInsets(top: headerViewExpandedHeight - 20, left: 0, bottom: 0, right: 0)
-        
-        // change bounds without calling scrollViewDidScroll
-        var bounds = tableView.bounds
-        bounds.origin = CGPoint(x: 0, y: -headerViewExpandedHeight + 20)
-        tableView.bounds = bounds
+
+        view.layoutIfNeeded()
+        tableTopConstraint.constant = headerViewExpandedHeight - 30
+        tableView.contentInset.top = 30
+        UIView.animate(withDuration: 0.3) {
+            self.view.layoutIfNeeded()
+        }
+    }
+
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return self.barStyle
+    }
+
+    func changeStatusBarStyle(_ style: UIStatusBarStyle) {
+        self.barStyle = style
+        setNeedsStatusBarAppearanceUpdate()
     }
 }

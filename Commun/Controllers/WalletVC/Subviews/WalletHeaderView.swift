@@ -80,7 +80,6 @@ class WalletHeaderView: MyView {
         super.commonInit()
         addSubview(shadowView)
         shadowView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .bottom)
-        
         shadowView.addSubview(contentView)
         contentView.autoPinEdgesToSuperviewEdges()
         
@@ -235,7 +234,7 @@ class WalletHeaderView: MyView {
             stackViewTopConstraint = buttonsStackView.autoPinEdge(.top, to: .bottom, of: pointLabel, withOffset: 30 * Config.heightRatio)
         } else {
             // set up with other value
-            contentView.backgroundColor = .black
+            contentView.backgroundColor = .appMainColor
             
             // remove unused views
             communLogo.removeFromSuperview()

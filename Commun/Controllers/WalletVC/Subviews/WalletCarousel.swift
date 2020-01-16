@@ -11,17 +11,7 @@ import CircularCarousel
 
 class WalletCarousel: CircularCarousel {
     // MARK: - Constants
-    
-    // MARK: - Subviews
-    lazy var gradient: CAGradientLayer = {
-        let gradient = CAGradientLayer()
-        gradient.frame = bounds
-        gradient.colors = [UIColor.black.cgColor, UIColor.clear.cgColor, UIColor.black.cgColor]
-        gradient.startPoint = CGPoint(x: 0, y: 0.5)
-        gradient.endPoint = CGPoint(x: 1, y: 0.5)
-        return gradient
-    }()
-    
+
     // MARK: - Methods
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -33,11 +23,10 @@ class WalletCarousel: CircularCarousel {
     }
     
     func commonInit() {
-        layer.addSublayer(gradient)
+
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        gradient.frame = bounds
     }
 }
