@@ -53,11 +53,11 @@ class NotificationCell: MyTableViewCell, ListItemCellType {
         
         contentContainerView.addSubview(timestampLabel)
         timestampLabel.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
-        timestampLabel.autoPinEdge(.top, to: .bottom, of: contentLabel)
+        timestampLabel.autoPinEdge(.top, to: .bottom, of: contentLabel, withOffset: 2)
         timestampLabel.setContentHuggingPriority(.defaultHigh, for: .vertical)
         
         // pin trailing of content
-        contentTrailingConstraint = contentContainerView.autoPinEdge(toSuperviewEdge: .trailing, withInset: -16)
+        contentTrailingConstraint = contentContainerView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
         
         selectionStyle = .none
     }
@@ -70,7 +70,7 @@ class NotificationCell: MyTableViewCell, ListItemCellType {
         actionButton.removeFromSuperview()
         descriptionImageView.removeFromSuperview()
         contentTrailingConstraint?.isActive = false
-        contentTrailingConstraint = contentContainerView.autoPinEdge(toSuperviewEdge: .trailing, withInset: -16)
+        contentTrailingConstraint = contentContainerView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
         
         // common setup
         isNewMark.isHidden = !item.isNew
