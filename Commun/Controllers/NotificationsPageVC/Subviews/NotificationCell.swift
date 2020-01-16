@@ -102,7 +102,7 @@ class NotificationCell: MyTableViewCell, ListItemCellType {
         case "upvote":
             iconImageView.image = UIImage(named: "notifications-page-upvote")
             let aStr = NSMutableAttributedString()
-                .semibold(item.user?.username ?? "a user".localized().uppercaseFirst)
+                .semibold(item.voter?.username ?? "a user".localized().uppercaseFirst)
                 .normal(" ")
                 .normal("liked".localized() + " " + "your \(item.entityType ?? "post")".localized())
                 .normal(": \"")
@@ -116,7 +116,7 @@ class NotificationCell: MyTableViewCell, ListItemCellType {
         case "reply":
             iconImageView.image = UIImage(named: "notifications-page-reply")
             let aStr = NSMutableAttributedString()
-                .semibold(item.voter?.username ?? "a user".localized().uppercaseFirst)
+                .semibold(item.user?.username ?? "a user".localized().uppercaseFirst)
                 .normal(" ")
                 .normal("left a comment".localized())
                 .normal(" ")
