@@ -10,7 +10,6 @@ import Foundation
 
 class NotificationsPageVC: ListViewController<ResponseAPIGetNotificationItem, NotificationCell> {
     // MARK: - Properties
-    override var tableViewMargin: UIEdgeInsets {UIEdgeInsets(top: 40, left: 0, bottom: 0, right: 0)}
     
     // MARK: - Initializers
     init() {

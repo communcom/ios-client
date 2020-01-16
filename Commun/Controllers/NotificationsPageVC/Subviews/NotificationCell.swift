@@ -39,7 +39,8 @@ class NotificationCell: MyTableViewCell, ListItemCellType {
         
         contentView.addSubview(avatarImageView)
         avatarImageView.autoPinTopAndLeadingToSuperView(inset: 16)
-        avatarImageView.bottomAnchor.constraint(greaterThanOrEqualTo: contentView.bottomAnchor, constant: 16).isActive = true
+        contentView.bottomAnchor.constraint(greaterThanOrEqualTo: avatarImageView.bottomAnchor, constant: 16)
+            .isActive = true
         
         contentView.addSubview(iconImageView)
         iconImageView.autoPinEdge(.trailing, to: .trailing, of: avatarImageView)
@@ -48,17 +49,20 @@ class NotificationCell: MyTableViewCell, ListItemCellType {
         contentView.addSubview(contentContainerView)
         contentContainerView.autoPinEdge(.top, to: .top, of: avatarImageView)
         contentContainerView.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 10)
-        contentContainerView.bottomAnchor.constraint(greaterThanOrEqualTo: contentView.bottomAnchor, constant: 16).isActive = true
+        contentView.bottomAnchor.constraint(greaterThanOrEqualTo: contentContainerView.bottomAnchor, constant: 16)
+            .isActive = true
         
         contentContainerView.addSubview(contentLabel)
         contentLabel.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .bottom)
+        contentLabel.setContentHuggingPriority(.defaultHigh, for: .vertical)
         
         contentContainerView.addSubview(timestampLabel)
         timestampLabel.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
         timestampLabel.autoPinEdge(.top, to: .bottom, of: contentLabel)
+        timestampLabel.setContentHuggingPriority(.defaultHigh, for: .vertical)
         
         // pin trailing of content
-        contentTrailingConstraint = contentContainerView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
+        contentTrailingConstraint = contentContainerView.autoPinEdge(toSuperviewEdge: .trailing, withInset: -16)
     }
     
     // MARk: - Methods
