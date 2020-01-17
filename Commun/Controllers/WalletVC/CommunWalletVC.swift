@@ -10,14 +10,12 @@ import Foundation
 import RxSwift
 import ESPullToRefresh
 
-class WalletVC: TransferHistoryVC {
+class CommunWalletVC: TransferHistoryVC, CommunWalletHeaderViewDatasource {
     // MARK: - Properties
     var balances: [ResponseAPIWalletGetBalance]? {
         (self.viewModel as! WalletViewModel).balancesVM.items.value
     }
-    var currentBalance: ResponseAPIWalletGetBalance? {
-        balances?[safe: headerView.selectedIndex]
-    }
+    
     var isUserScrolling: Bool {
         tableView.isTracking || tableView.isDragging || tableView.isDecelerating
     }
@@ -25,12 +23,13 @@ class WalletVC: TransferHistoryVC {
     var tableTopConstraint: NSLayoutConstraint!
     
     // MARK: - Subviews
-    lazy var headerView: WalletHeaderView = {
-        let headerView = WalletHeaderView(forAutoLayout: ())
+    lazy var headerView: CommunWalletHeaderView = createHeaderView()
+    func createHeaderView() -> CommunWalletHeaderView {
+        let headerView = CommunWalletHeaderView(forAutoLayout: ())
         headerView.delegate = self
         headerView.dataSource = self
         return headerView
-    }()
+    }
     lazy var tableHeaderView = WalletTableHeaderView(tableView: tableView)
     var myPointsCollectionView: UICollectionView {tableHeaderView.myPointsCollectionView}
     var sendPointsCollectionView: UICollectionView {tableHeaderView.sendPointsCollectionView}
@@ -144,7 +143,7 @@ class WalletVC: TransferHistoryVC {
         myPointsCollectionView.rx.modelSelected(ResponseAPIWalletGetBalance.self)
             .subscribe(onNext: { (balance) in
                 guard let index = self.balances?.firstIndex(where: {$0.symbol == balance.symbol}) else {return}
-                self.headerView.setSelectedIndex(index)
+                // TODO: - Open OtherBalancesVC
             })
             .disposed(by: disposeBag)
         
@@ -220,13 +219,7 @@ class WalletVC: TransferHistoryVC {
     }
     
     @objc func convertButtonDidTouch() {
-        guard let balance = currentBalance else {return}
-        let vc: WalletConvertVC
-        if balance.symbol == "CMN" {
-            vc = WalletSellCommunVC(balances: (self.viewModel as! WalletViewModel).balancesVM.items.value)
-        } else {
-            vc = WalletBuyCommunVC(balances: (self.viewModel as! WalletViewModel).balancesVM.items.value, symbol: balance.symbol)
-        }
+        guard let vc = createConvertVC() else {return}
         vc.completion = {
             self.viewModel.reload()
         }
@@ -234,6 +227,10 @@ class WalletVC: TransferHistoryVC {
         nc?.shouldResetNavigationBarOnPush = false
         show(vc, sender: nil)
         nc?.shouldResetNavigationBarOnPush = true
+    }
+    
+    func createConvertVC() -> WalletConvertVC? {
+        WalletSellCommunVC(balances: (self.viewModel as! WalletViewModel).balancesVM.items.value)
     }
     
     @objc func moreActionsButtonDidTouch(_ sender: CommunButton) {
@@ -251,7 +248,7 @@ class WalletVC: TransferHistoryVC {
     @objc func myPointsSeeAllDidTouch() {
         let vc = BalancesVC { balance in
             guard let index = self.balances?.firstIndex(where: {$0.symbol == balance.symbol}) else {return}
-            self.headerView.setSelectedIndex(index)
+            // TODO: - Open OtherBalancesVC
         }
         let nc = BaseNavigationController(rootViewController: vc)
         present(nc, animated: true, completion: nil)
@@ -264,24 +261,33 @@ class WalletVC: TransferHistoryVC {
     func addFriend() {
         showAlert(title: "TODO: Add friend", message: "add friend")
     }
+    
+    func data(forWalletHeaderView headerView: CommunWalletHeaderView) -> [ResponseAPIWalletGetBalance]? {
+        balances
+    }
 }
 
 // MARK: - UICollectionViewDelegateFlowLayout
-extension WalletVC: UICollectionViewDelegateFlowLayout {
+extension CommunWalletVC: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if collectionView == sendPointsCollectionView {
             return CGSize(width: 90, height: SendPointCollectionCell.height)
         }
         return CGSize(width: 140, height: MyPointCollectionCell.height)
     }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return self.barStyle
+    }
+
+    func changeStatusBarStyle(_ style: UIStatusBarStyle) {
+        self.barStyle = style
+        setNeedsStatusBarAppearanceUpdate()
+    }
 }
 
-extension WalletVC: WalletHeaderViewDelegate, WalletHeaderViewDatasource {
-    func data(forWalletHeaderView headerView: WalletHeaderView) -> [ResponseAPIWalletGetBalance]? {
-        balances
-    }
-    
-    func walletHeaderView(_ headerView: WalletHeaderView, willUpdateHeightCollapsed isCollapsed: Bool) {
+extension CommunWalletVC: CommunWalletHeaderViewDelegate {
+    func walletHeaderView(_ headerView: CommunWalletHeaderView, willUpdateHeightCollapsed isCollapsed: Bool) {
 //        if isCollapsed {
 //            let height = headerView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
 //            headerViewExpandedHeight = height
@@ -289,10 +295,6 @@ extension WalletVC: WalletHeaderViewDelegate, WalletHeaderViewDatasource {
 //        } else {
             resetTableViewContentInset()
 //        }
-    }
-
-    func walletHeaderView(_ headerView: WalletHeaderView, currentIndexDidChangeTo index: Int) {
-        tableHeaderView.setMyPointHidden(index != 0)
     }
     
     private func resetTableViewContentInset() {
@@ -306,14 +308,5 @@ extension WalletVC: WalletHeaderViewDelegate, WalletHeaderViewDatasource {
         UIView.animate(withDuration: 0.3) {
             self.view.layoutIfNeeded()
         }
-    }
-
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return self.barStyle
-    }
-
-    func changeStatusBarStyle(_ style: UIStatusBarStyle) {
-        self.barStyle = style
-        setNeedsStatusBarAppearanceUpdate()
     }
 }
