@@ -11,7 +11,7 @@ import Foundation
 class OtherBalancesWalletVC: CommunWalletVC {
     // MARK: - Properties
     override var balances: [ResponseAPIWalletGetBalance] {
-        super.balances.filter {$0.symbol != "CMN"}
+        super.balances.filter {$0.symbol != Config.defaultSymbol}
     }
     
     var currentBalance: ResponseAPIWalletGetBalance? {

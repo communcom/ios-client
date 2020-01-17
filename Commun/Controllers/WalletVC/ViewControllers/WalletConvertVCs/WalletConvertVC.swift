@@ -73,7 +73,7 @@ class WalletConvertVC: BaseViewController {
     
     // MARK: - Initializers
     init(balances: [ResponseAPIWalletGetBalance], symbol: String? = nil) {
-        currentSymbol = symbol == "CMN" ? nil : symbol
+        currentSymbol = symbol == Config.defaultSymbol ? nil : symbol
         viewModel.items.accept(balances)
         super.init(nibName: nil, bundle: nil)
     }
@@ -403,11 +403,11 @@ class WalletConvertVC: BaseViewController {
     
     // MARK: - Updating
     private func setUp(with balances: [ResponseAPIWalletGetBalance]) {
-        if let balance = balances.first(where: {$0.symbol == "CMN"}) {
+        if let balance = balances.first(where: {$0.symbol == Config.defaultSymbol}) {
             communBalance = balance
         }
         
-        currentBalance = balances.first(where: {$0.symbol == currentSymbol}) ?? balances.first(where: {$0.symbol != "CMN"})
+        currentBalance = balances.first(where: {$0.symbol == currentSymbol}) ?? balances.first(where: {$0.symbol != Config.defaultSymbol})
     }
     
     func setUpCommunBalance() {

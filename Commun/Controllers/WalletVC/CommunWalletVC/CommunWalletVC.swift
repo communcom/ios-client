@@ -211,10 +211,6 @@ class CommunWalletVC: TransferHistoryVC {
     }
 
     // MARK: - Actions
-    @objc func sendButtonDidTouch() {
-        
-    }
-    
     @objc func convertButtonDidTouch() {
         guard let vc = createConvertVC() else {return}
         vc.completion = {
@@ -224,6 +220,25 @@ class CommunWalletVC: TransferHistoryVC {
         nc?.shouldResetNavigationBarOnPush = false
         show(vc, sender: nil)
         nc?.shouldResetNavigationBarOnPush = true
+    }
+    
+    // Select balance
+    @objc func sendButtonDidTouch(_ sender: UIButton) {
+        routeToSendPointsScene()
+    }
+
+    // Select recipient from friends
+    func sendPoint(to user: ResponseAPIContentGetSubscriptionsUser) {
+        routeToSendPointsScene(withRecipient: user)
+    }
+
+    private func routeToSendPointsScene(withRecipient recipient: ResponseAPIContentGetSubscriptionsUser? = nil) {
+        showIndetermineHudWithMessage("loading".localized().uppercaseFirst)
+
+        let walletSendPointsVC = WalletSendPointsVC(withSelectedBalance: headerView.sendButton.accessibilityHint ?? Config.defaultSymbol, andRecipient: recipient)
+        show(walletSendPointsVC, sender: nil)
+
+        hideHud()
     }
     
     func createConvertVC() -> WalletConvertVC? {
@@ -249,18 +264,14 @@ class CommunWalletVC: TransferHistoryVC {
         let nc = BaseNavigationController(rootViewController: vc)
         present(nc, animated: true, completion: nil)
     }
-    
-    func sendPoint(to user: ResponseAPIContentGetSubscriptionsUser) {
-        showAlert(title: "TODO: Send point", message: user.userId)
-    }
-    
+        
     func addFriend() {
         showAlert(title: "TODO: Add friend", message: "add friend")
     }
     
     private func openOtherBalancesWalletVC(withSelectedBalance balance: ResponseAPIWalletGetBalance?) {
         let viewModel = (self.viewModel as! WalletViewModel)
-        guard let balance = balance, let index = (balances.filter {$0.symbol != "CMN"}).firstIndex(where: {$0.symbol == balance.symbol}) else {return}
+        guard let balance = balance, let index = (balances.filter {$0.symbol != Config.defaultSymbol}).firstIndex(where: {$0.symbol == balance.symbol}) else {return}
         let vc = OtherBalancesWalletVC(balances: viewModel.balancesVM.items.value, selectedIndex: index, subscriptions: viewModel.subscriptionsVM.items.value, history: viewModel.items.value)
         show(vc, sender: self)
     }

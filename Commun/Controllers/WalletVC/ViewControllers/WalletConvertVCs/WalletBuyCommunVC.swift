@@ -26,7 +26,7 @@ class WalletBuyCommunVC: WalletConvertVC {
     override func bind() {
         super.bind()
         viewModel.items
-            .map {$0.filter {$0.symbol != "CMN"}}
+            .map {$0.filter {$0.symbol != Config.defaultSymbol}}
             .subscribe(onNext: { (items) in
                 self.carousel.balances = items
                 self.carousel.currentIndex = items.firstIndex(where: {$0.symbol == self.currentSymbol}) ?? 0
@@ -155,7 +155,7 @@ class WalletBuyCommunVC: WalletConvertVC {
     
     override func convertButtonDidTouch() {
         super.convertButtonDidTouch()
-        guard var balance = currentBalance,
+        guard let balance = currentBalance,
             let value = NumberFormatter().number(from: leftTextField.text ?? "")?.doubleValue
         else {return}
         showIndetermineHudWithMessage("selling".localized().uppercaseFirst + " \(balance.symbol)")

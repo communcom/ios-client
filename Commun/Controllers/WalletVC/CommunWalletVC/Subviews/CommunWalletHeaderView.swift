@@ -45,7 +45,9 @@ class CommunWalletHeaderView: MyView {
         let stackView = UIStackView(axis: .horizontal)
         stackView.addBackground(color: UIColor.white.withAlphaComponent(0.1), cornerRadius: 16)
         stackView.cornerRadius = 16
+        
         // stackView
+        sendButton.accessibilityHint = Config.defaultSymbol
         stackView.addArrangedSubview(buttonContainerViewWithButton(sendButton, label: "send".localized().uppercaseFirst))
         stackView.addArrangedSubview(buttonContainerViewWithButton(convertButton, label: "convert".localized().uppercaseFirst))
         return stackView
@@ -86,7 +88,7 @@ class CommunWalletHeaderView: MyView {
     
     func reloadData() {
         guard let balances = dataSource?.data(forWalletHeaderView: self),
-            let point = balances.first(where: {$0.symbol == "CMN"})?.balanceValue
+            let point = balances.first(where: {$0.symbol == Config.defaultSymbol})?.balanceValue
         else {return}
         // set up with commun value
         titleLabel.text = "enquity Value Commun".localized().uppercaseFirst
