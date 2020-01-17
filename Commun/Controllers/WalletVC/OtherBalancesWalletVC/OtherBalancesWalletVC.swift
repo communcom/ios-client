@@ -20,6 +20,20 @@ class OtherBalancesWalletVC: CommunWalletVC {
         tableHeaderView.setMyPointHidden(true)
     }
     
+    // MARK: - Initializers
+    init(
+        balances: [ResponseAPIWalletGetBalance]? = nil,
+        subscriptions: [ResponseAPIContentGetSubscriptionsItem]? = nil,
+        history: [ResponseAPIWalletGetTransferHistoryItem]? = nil
+    ) {
+        let vm = WalletViewModel(balances: balances, subscriptions: subscriptions, history: history)
+        super.init(viewModel: vm)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func reloadData() {
         (headerView as! WalletHeaderView).carousel.reloadData()
         super.reloadData()

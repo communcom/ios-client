@@ -37,9 +37,9 @@ class CommunWalletVC: TransferHistoryVC, CommunWalletHeaderViewDatasource {
 
     private var barStyle: UIStatusBarStyle = .lightContent
 
-    // MARK: - Class Functions
-    override class func createViewModel() -> TransferHistoryViewModel {
-        WalletViewModel()
+    // MARK: - Initializers
+    convenience init() {
+        self.init(viewModel: WalletViewModel())
     }
     
     override func createTableView() -> UITableView {
@@ -268,7 +268,8 @@ class CommunWalletVC: TransferHistoryVC, CommunWalletHeaderViewDatasource {
     }
     
     private func openOtherBalancesWalletVC() {
-        let vc = OtherBalancesWalletVC()
+        let viewModel = (self.viewModel as! WalletViewModel)
+        let vc = OtherBalancesWalletVC(balances: viewModel.balancesVM.items.value, subscriptions: viewModel.subscriptionsVM.items.value, history: viewModel.items.value)
         show(vc, sender: self)
     }
 }

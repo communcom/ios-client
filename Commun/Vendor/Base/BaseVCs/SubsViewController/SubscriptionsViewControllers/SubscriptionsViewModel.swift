@@ -11,7 +11,7 @@ import CyberSwift
 
 class SubscriptionsViewModel: ListViewModel<ResponseAPIContentGetSubscriptionsItem> {
     let type: GetSubscriptionsType
-    init(userId: String? = nil, type: GetSubscriptionsType) {
+    init(userId: String? = nil, type: GetSubscriptionsType, initialItems: [ResponseAPIContentGetSubscriptionsItem]? = nil) {
         var userId = userId
         if userId == nil {
             userId = Config.currentUser?.id ?? ""
@@ -21,7 +21,12 @@ class SubscriptionsViewModel: ListViewModel<ResponseAPIContentGetSubscriptionsIt
         super.init(fetcher: fetcher)
         
         defer {
-            fetchNext()
+            if let initItems = initialItems {
+                items.accept(initItems)
+            } else {
+                fetchNext()
+            }
+            
             observeProfileBlocked()
         }
     }
