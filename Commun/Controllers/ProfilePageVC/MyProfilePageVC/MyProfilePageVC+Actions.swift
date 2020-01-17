@@ -30,7 +30,7 @@ extension MyProfilePageVC {
         case .error:
             (viewModel as! MyProfilePageViewModel).balancesVM.reload()
         case .listEnded, .loading(false):
-            let walletVC = WalletVC()
+            let walletVC = CommunWalletVC()
             let nc = navigationController as? BaseNavigationController
             nc?.shouldResetNavigationBarOnPush = false
             show(walletVC, sender: nil)

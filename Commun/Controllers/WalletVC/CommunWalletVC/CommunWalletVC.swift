@@ -9,15 +9,18 @@
 import Foundation
 import RxSwift
 import ESPullToRefresh
+import RxCocoa
 
-class WalletVC: TransferHistoryVC {
+class CommunWalletVC: TransferHistoryVC {
     // MARK: - Properties
-    var balances: [ResponseAPIWalletGetBalance]? {
-        (self.viewModel as! WalletViewModel).balancesVM.items.value
+    var balancesSubject: BehaviorRelay<[ResponseAPIWalletGetBalance]> {
+        (viewModel as! WalletViewModel).balancesVM.items
     }
-    var currentBalance: ResponseAPIWalletGetBalance? {
-        balances?[safe: headerView.selectedIndex]
+    
+    var balances: [ResponseAPIWalletGetBalance] {
+        balancesSubject.value
     }
+    
     var isUserScrolling: Bool {
         tableView.isTracking || tableView.isDragging || tableView.isDecelerating
     }
@@ -25,12 +28,13 @@ class WalletVC: TransferHistoryVC {
     var tableTopConstraint: NSLayoutConstraint!
     
     // MARK: - Subviews
-    lazy var headerView: WalletHeaderView = {
-        let headerView = WalletHeaderView(forAutoLayout: ())
+    lazy var headerView: CommunWalletHeaderView = createHeaderView()
+    func createHeaderView() -> CommunWalletHeaderView {
+        let headerView = CommunWalletHeaderView(forAutoLayout: ())
         headerView.delegate = self
         headerView.dataSource = self
         return headerView
-    }()
+    }
     lazy var tableHeaderView = WalletTableHeaderView(tableView: tableView)
     var myPointsCollectionView: UICollectionView {tableHeaderView.myPointsCollectionView}
     var sendPointsCollectionView: UICollectionView {tableHeaderView.sendPointsCollectionView}
@@ -38,9 +42,9 @@ class WalletVC: TransferHistoryVC {
 
     private var barStyle: UIStatusBarStyle = .lightContent
 
-    // MARK: - Class Functions
-    override class func createViewModel() -> TransferHistoryViewModel {
-        WalletViewModel()
+    // MARK: - Initializers
+    convenience init() {
+        self.init(viewModel: WalletViewModel())
     }
     
     override func createTableView() -> UITableView {
@@ -125,17 +129,16 @@ class WalletVC: TransferHistoryVC {
 //        .lightContent
 //    }
 
-    
     override func bindItems() {
         super.bindItems()
-        (viewModel as! WalletViewModel).balancesVM.items
+        balancesSubject
             .distinctUntilChanged()
             .subscribe(onNext: { (_) in
-                self.headerView.reloadData()
+                self.reloadData()
             })
             .disposed(by: disposeBag)
         
-        (viewModel as! WalletViewModel).balancesVM.items
+        balancesSubject
             .bind(to: myPointsCollectionView.rx.items(cellIdentifier: "\(MyPointCollectionCell.self)", cellType: MyPointCollectionCell.self)) { _, model, cell in
                 cell.setUp(with: model)
             }
@@ -143,8 +146,7 @@ class WalletVC: TransferHistoryVC {
         
         myPointsCollectionView.rx.modelSelected(ResponseAPIWalletGetBalance.self)
             .subscribe(onNext: { (balance) in
-                guard let index = self.balances?.firstIndex(where: {$0.symbol == balance.symbol}) else {return}
-                self.headerView.setSelectedIndex(index)
+                self.openOtherBalancesWalletVC(withSelectedBalance: balance)
             })
             .disposed(by: disposeBag)
         
@@ -157,6 +159,10 @@ class WalletVC: TransferHistoryVC {
                 cell.setUp(with: model)
             }
             .disposed(by: disposeBag)
+    }
+    
+    func reloadData() {
+        headerView.reloadData()
     }
     
     override func bindItemSelected() {
@@ -220,13 +226,7 @@ class WalletVC: TransferHistoryVC {
     }
     
     @objc func convertButtonDidTouch() {
-        guard let balance = currentBalance else {return}
-        let vc: WalletConvertVC
-        if balance.symbol == "CMN" {
-            vc = WalletSellCommunVC(balances: (self.viewModel as! WalletViewModel).balancesVM.items.value)
-        } else {
-            vc = WalletBuyCommunVC(balances: (self.viewModel as! WalletViewModel).balancesVM.items.value, symbol: balance.symbol)
-        }
+        guard let vc = createConvertVC() else {return}
         vc.completion = {
             self.viewModel.reload()
         }
@@ -234,6 +234,10 @@ class WalletVC: TransferHistoryVC {
         nc?.shouldResetNavigationBarOnPush = false
         show(vc, sender: nil)
         nc?.shouldResetNavigationBarOnPush = true
+    }
+    
+    func createConvertVC() -> WalletConvertVC? {
+        WalletSellCommunVC(balances: (self.viewModel as! WalletViewModel).balancesVM.items.value)
     }
     
     @objc func moreActionsButtonDidTouch(_ sender: CommunButton) {
@@ -250,8 +254,7 @@ class WalletVC: TransferHistoryVC {
     
     @objc func myPointsSeeAllDidTouch() {
         let vc = BalancesVC { balance in
-            guard let index = self.balances?.firstIndex(where: {$0.symbol == balance.symbol}) else {return}
-            self.headerView.setSelectedIndex(index)
+            self.openOtherBalancesWalletVC(withSelectedBalance: balance)
         }
         let nc = BaseNavigationController(rootViewController: vc)
         present(nc, animated: true, completion: nil)
@@ -264,24 +267,40 @@ class WalletVC: TransferHistoryVC {
     func addFriend() {
         showAlert(title: "TODO: Add friend", message: "add friend")
     }
+    
+    private func openOtherBalancesWalletVC(withSelectedBalance balance: ResponseAPIWalletGetBalance?) {
+        let viewModel = (self.viewModel as! WalletViewModel)
+        guard let balance = balance, let index = (balances.filter {$0.symbol != "CMN"}).firstIndex(where: {$0.symbol == balance.symbol}) else {return}
+        let vc = OtherBalancesWalletVC(balances: viewModel.balancesVM.items.value, selectedIndex: index, subscriptions: viewModel.subscriptionsVM.items.value, history: viewModel.items.value)
+        show(vc, sender: self)
+    }
 }
 
 // MARK: - UICollectionViewDelegateFlowLayout
-extension WalletVC: UICollectionViewDelegateFlowLayout {
+extension CommunWalletVC: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if collectionView == sendPointsCollectionView {
             return CGSize(width: 90, height: SendPointCollectionCell.height)
         }
         return CGSize(width: 140, height: MyPointCollectionCell.height)
     }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return self.barStyle
+    }
+
+    func changeStatusBarStyle(_ style: UIStatusBarStyle) {
+        self.barStyle = style
+        setNeedsStatusBarAppearanceUpdate()
+    }
 }
 
-extension WalletVC: WalletHeaderViewDelegate, WalletHeaderViewDatasource {
-    func data(forWalletHeaderView headerView: WalletHeaderView) -> [ResponseAPIWalletGetBalance]? {
+extension CommunWalletVC: CommunWalletHeaderViewDelegate, CommunWalletHeaderViewDatasource {
+    func data(forWalletHeaderView headerView: CommunWalletHeaderView) -> [ResponseAPIWalletGetBalance]? {
         balances
     }
     
-    func walletHeaderView(_ headerView: WalletHeaderView, willUpdateHeightCollapsed isCollapsed: Bool) {
+    func walletHeaderView(_ headerView: CommunWalletHeaderView, willUpdateHeightCollapsed isCollapsed: Bool) {
 //        if isCollapsed {
 //            let height = headerView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
 //            headerViewExpandedHeight = height
@@ -289,10 +308,6 @@ extension WalletVC: WalletHeaderViewDelegate, WalletHeaderViewDatasource {
 //        } else {
             resetTableViewContentInset()
 //        }
-    }
-
-    func walletHeaderView(_ headerView: WalletHeaderView, currentIndexDidChangeTo index: Int) {
-        tableHeaderView.setMyPointHidden(index != 0)
     }
     
     private func resetTableViewContentInset() {
@@ -306,14 +321,5 @@ extension WalletVC: WalletHeaderViewDelegate, WalletHeaderViewDatasource {
         UIView.animate(withDuration: 0.3) {
             self.view.layoutIfNeeded()
         }
-    }
-
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return self.barStyle
-    }
-
-    func changeStatusBarStyle(_ style: UIStatusBarStyle) {
-        self.barStyle = style
-        setNeedsStatusBarAppearanceUpdate()
     }
 }
