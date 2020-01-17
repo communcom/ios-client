@@ -10,8 +10,12 @@ import Foundation
 
 class OtherBalancesWalletVC: CommunWalletVC {
     // MARK: - Properties
+    override var balances: [ResponseAPIWalletGetBalance] {
+        super.balances.filter {$0.symbol != "CMN"}
+    }
+    
     var currentBalance: ResponseAPIWalletGetBalance? {
-        balances?[safe: (headerView as! WalletHeaderView).selectedIndex]
+        balances[safe: (headerView as! WalletHeaderView).selectedIndex]
     }
     
     // MARK: - Subviews
@@ -23,11 +27,16 @@ class OtherBalancesWalletVC: CommunWalletVC {
     // MARK: - Initializers
     init(
         balances: [ResponseAPIWalletGetBalance]? = nil,
+        selectedIndex: Int = 0,
         subscriptions: [ResponseAPIContentGetSubscriptionsItem]? = nil,
         history: [ResponseAPIWalletGetTransferHistoryItem]? = nil
     ) {
         let vm = WalletViewModel(balances: balances, subscriptions: subscriptions, history: history)
         super.init(viewModel: vm)
+        
+        defer {
+            (headerView as! WalletHeaderView).selectedIndex = selectedIndex
+        }
     }
     
     required init?(coder: NSCoder) {
@@ -50,10 +59,6 @@ class OtherBalancesWalletVC: CommunWalletVC {
     override func createConvertVC() -> WalletConvertVC? {
         guard let balance = currentBalance else {return nil}
         return WalletBuyCommunVC(balances: (self.viewModel as! WalletViewModel).balancesVM.items.value, symbol: balance.symbol)
-    }
-    
-    override func data(forWalletHeaderView headerView: CommunWalletHeaderView) -> [ResponseAPIWalletGetBalance]? {
-        super.data(forWalletHeaderView: headerView)?.filter {$0.symbol != "CMN"}
     }
 }
 

@@ -9,11 +9,16 @@
 import Foundation
 import RxSwift
 import ESPullToRefresh
+import RxCocoa
 
-class CommunWalletVC: TransferHistoryVC, CommunWalletHeaderViewDatasource {
+class CommunWalletVC: TransferHistoryVC {
     // MARK: - Properties
-    var balances: [ResponseAPIWalletGetBalance]? {
-        (self.viewModel as! WalletViewModel).balancesVM.items.value
+    var balancesSubject: BehaviorRelay<[ResponseAPIWalletGetBalance]> {
+        (viewModel as! WalletViewModel).balancesVM.items
+    }
+    
+    var balances: [ResponseAPIWalletGetBalance] {
+        balancesSubject.value
     }
     
     var isUserScrolling: Bool {
@@ -126,14 +131,14 @@ class CommunWalletVC: TransferHistoryVC, CommunWalletHeaderViewDatasource {
 
     override func bindItems() {
         super.bindItems()
-        (viewModel as! WalletViewModel).balancesVM.items
+        balancesSubject
             .distinctUntilChanged()
             .subscribe(onNext: { (_) in
                 self.reloadData()
             })
             .disposed(by: disposeBag)
         
-        (viewModel as! WalletViewModel).balancesVM.items
+        balancesSubject
             .bind(to: myPointsCollectionView.rx.items(cellIdentifier: "\(MyPointCollectionCell.self)", cellType: MyPointCollectionCell.self)) { _, model, cell in
                 cell.setUp(with: model)
             }
@@ -141,7 +146,7 @@ class CommunWalletVC: TransferHistoryVC, CommunWalletHeaderViewDatasource {
         
         myPointsCollectionView.rx.modelSelected(ResponseAPIWalletGetBalance.self)
             .subscribe(onNext: { (balance) in
-                self.openOtherBalancesWalletVC()
+                self.openOtherBalancesWalletVC(withSelectedBalance: balance)
             })
             .disposed(by: disposeBag)
         
@@ -249,7 +254,7 @@ class CommunWalletVC: TransferHistoryVC, CommunWalletHeaderViewDatasource {
     
     @objc func myPointsSeeAllDidTouch() {
         let vc = BalancesVC { balance in
-            self.openOtherBalancesWalletVC()
+            self.openOtherBalancesWalletVC(withSelectedBalance: balance)
         }
         let nc = BaseNavigationController(rootViewController: vc)
         present(nc, animated: true, completion: nil)
@@ -263,13 +268,10 @@ class CommunWalletVC: TransferHistoryVC, CommunWalletHeaderViewDatasource {
         showAlert(title: "TODO: Add friend", message: "add friend")
     }
     
-    func data(forWalletHeaderView headerView: CommunWalletHeaderView) -> [ResponseAPIWalletGetBalance]? {
-        balances
-    }
-    
-    private func openOtherBalancesWalletVC() {
+    private func openOtherBalancesWalletVC(withSelectedBalance balance: ResponseAPIWalletGetBalance?) {
         let viewModel = (self.viewModel as! WalletViewModel)
-        let vc = OtherBalancesWalletVC(balances: viewModel.balancesVM.items.value, subscriptions: viewModel.subscriptionsVM.items.value, history: viewModel.items.value)
+        guard let balance = balance, let index = (balances.filter {$0.symbol != "CMN"}).firstIndex(where: {$0.symbol == balance.symbol}) else {return}
+        let vc = OtherBalancesWalletVC(balances: viewModel.balancesVM.items.value, selectedIndex: index, subscriptions: viewModel.subscriptionsVM.items.value, history: viewModel.items.value)
         show(vc, sender: self)
     }
 }
@@ -293,7 +295,11 @@ extension CommunWalletVC: UICollectionViewDelegateFlowLayout {
     }
 }
 
-extension CommunWalletVC: CommunWalletHeaderViewDelegate {
+extension CommunWalletVC: CommunWalletHeaderViewDelegate, CommunWalletHeaderViewDatasource {
+    func data(forWalletHeaderView headerView: CommunWalletHeaderView) -> [ResponseAPIWalletGetBalance]? {
+        balances
+    }
+    
     func walletHeaderView(_ headerView: CommunWalletHeaderView, willUpdateHeightCollapsed isCollapsed: Bool) {
 //        if isCollapsed {
 //            let height = headerView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
