@@ -306,7 +306,7 @@ extension CommunWalletVC: CommunWalletHeaderViewDelegate, CommunWalletHeaderView
         headerViewExpandedHeight = height
 
         view.layoutIfNeeded()
-        tableTopConstraint.constant = headerViewExpandedHeight - 20
+        tableTopConstraint.constant = headerViewExpandedHeight - 30
         tableView.contentInset.top = 20
         UIView.animate(withDuration: 0.3) {
             self.view.layoutIfNeeded()
