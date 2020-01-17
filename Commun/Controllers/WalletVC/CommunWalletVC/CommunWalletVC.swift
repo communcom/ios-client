@@ -8,7 +8,6 @@
 
 import Foundation
 import RxSwift
-import ESPullToRefresh
 import RxCocoa
 
 class CommunWalletVC: TransferHistoryVC {
@@ -100,11 +99,8 @@ class CommunWalletVC: TransferHistoryVC {
         sendPointsCollectionView.rx.setDelegate(self)
             .disposed(by: disposeBag)
         
-        let offsetY = tableView.rx.contentOffset
+        tableView.rx.contentOffset
             .map {$0.y}
-            .share()
-            
-        offsetY
             .filter {_ in self.isUserScrolling}
             .map({ y -> Bool in
                 return y > 0
@@ -117,12 +113,6 @@ class CommunWalletVC: TransferHistoryVC {
             })
             .disposed(by: disposeBag)
         
-        offsetY
-            .map {$0 < -self.headerViewExpandedHeight}
-            .subscribe(onNext: { (show) in
-                self.tableView.subviews.first(where: {$0 is ESRefreshHeaderView})?.alpha = show ? 1 : 0
-            })
-            .disposed(by: disposeBag)
     }
 
 //    override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -317,7 +307,7 @@ extension CommunWalletVC: CommunWalletHeaderViewDelegate, CommunWalletHeaderView
 
         view.layoutIfNeeded()
         tableTopConstraint.constant = headerViewExpandedHeight - 30
-        tableView.contentInset.top = 30
+        tableView.contentInset.top = 20
         UIView.animate(withDuration: 0.3) {
             self.view.layoutIfNeeded()
         }

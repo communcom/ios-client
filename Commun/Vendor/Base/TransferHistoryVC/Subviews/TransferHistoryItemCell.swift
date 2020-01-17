@@ -36,7 +36,9 @@ class TransferHistoryItemCell: MyTableViewCell, ListItemCellType {
         containerView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10))
         
         containerView.addSubview(avatarImageView)
-        avatarImageView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 10, left: 16, bottom: 10, right: 0), excludingEdge: .trailing)
+        avatarImageView.autoPinTopAndLeadingToSuperView(inset: 10, xInset: 16)
+        avatarImageView.bottomAnchor.constraint(lessThanOrEqualTo: containerView.bottomAnchor, constant: -10)
+            .isActive = true
         
         containerView.addSubview(iconImageView)
         iconImageView.autoPinEdge(.bottom, to: .bottom, of: avatarImageView, withOffset: 2)
@@ -45,12 +47,24 @@ class TransferHistoryItemCell: MyTableViewCell, ListItemCellType {
         containerView.addSubview(contentLabel)
         contentLabel.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 10)
         contentLabel.autoAlignAxis(toSuperviewAxis: .horizontal)
+        contentLabel.topAnchor.constraint(greaterThanOrEqualTo: containerView.topAnchor, constant: 10)
+            .isActive = true
+        contentLabel.bottomAnchor.constraint(lessThanOrEqualTo: containerView.bottomAnchor, constant: -10)
+            .isActive = true
+        contentLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
+        contentLabel.setContentHuggingPriority(.defaultHigh, for: .vertical)
         
         containerView.addSubview(amountStatusLabel)
         amountStatusLabel.autoPinEdge(.leading, to: .trailing, of: contentLabel, withOffset: 10)
         amountStatusLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
         amountStatusLabel.autoAlignAxis(toSuperviewAxis: .horizontal)
+        amountStatusLabel.topAnchor.constraint(greaterThanOrEqualTo: containerView.topAnchor, constant: 10)
+            .isActive = true
+        amountStatusLabel.bottomAnchor.constraint(lessThanOrEqualTo: containerView.bottomAnchor, constant: -10)
+            .isActive = true
+        
         amountStatusLabel.setContentHuggingPriority(.defaultHigh, for: .vertical)
+        amountStatusLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
     }
     
     func setUp(with item: ResponseAPIWalletGetTransferHistoryItem) {
@@ -95,7 +109,7 @@ class TransferHistoryItemCell: MyTableViewCell, ListItemCellType {
                 avatarImageView.image = UIImage(named: "tux")
             }
         case "reward":
-            username = "reward".localized().uppercaseFirst
+            username = item.point.name ?? ""
             memo = NSMutableAttributedString()
                 .semibold("+\(item.quantityValue.currencyValueFormatted) \(item.point.name!)", font: .systemFont(ofSize: 15, weight: .semibold), color: .plus)
             
@@ -108,6 +122,13 @@ class TransferHistoryItemCell: MyTableViewCell, ListItemCellType {
             
             avatarImageView.image = UIImage(named: "wallet-like")
             iconImageView.isHidden = true
+        case "unhold":
+            username = item.point.name ?? ""
+            memo = NSMutableAttributedString()
+                .semibold("+\(item.quantityValue.currencyValueFormatted) \(item.point.name!)", font: .systemFont(ofSize: 15, weight: .semibold), color: .plus)
+            
+            avatarImageView.setAvatar(urlString: item.point.logo, namePlaceHolder: username)
+            iconImageView.isHidden = true
         default:
             username = ""
             memo = NSMutableAttributedString()
@@ -117,11 +138,10 @@ class TransferHistoryItemCell: MyTableViewCell, ListItemCellType {
         let content = NSMutableAttributedString()
             .semibold(username)
         
-        if item.meta.actionType != "reward" {
-            content
-                .normal("\n")
-                .semibold(item.meta.actionType?.localized().uppercaseFirst ?? "", font: .systemFont(ofSize: 12, weight: .semibold), color: .a5a7bd)
-        }
+        content
+            .normal("\n")
+            .semibold(item.meta.actionType?.localized().uppercaseFirst ?? "", font: .systemFont(ofSize: 12, weight: .semibold), color: .a5a7bd)
+    
         
         contentLabel.attributedText = content
         
