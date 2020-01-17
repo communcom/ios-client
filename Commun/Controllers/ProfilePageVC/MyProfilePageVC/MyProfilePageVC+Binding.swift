@@ -59,7 +59,7 @@ extension MyProfilePageVC {
                 switch state {
                 case .loading(let isLoading):
                     if isLoading {
-                        walletView.showLoading()
+                        walletView.showLoading(cover: false, spinnerColor: .white, size: 20, centerYOffset: 10)
                     } else {
                         walletView.hideLoading()
                     }
