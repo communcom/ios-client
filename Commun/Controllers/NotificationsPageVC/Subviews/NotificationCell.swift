@@ -29,6 +29,7 @@ class NotificationCell: MyTableViewCell, ListItemCellType {
     
     override func setUpViews() {
         super.setUpViews()
+        contentView.backgroundColor = .white
         contentView.addSubview(isNewMark)
         isNewMark.autoPinTopAndLeadingToSuperView(inset: 13)
         
@@ -77,20 +78,29 @@ class NotificationCell: MyTableViewCell, ListItemCellType {
         
         iconImageView.isHidden = false
         avatarImageView.setAvatar(
-            urlString: (item.voter ?? item.user)?.avatarUrl,
-            namePlaceHolder: (item.voter ?? item.user)?.username ?? "User")
+            urlString: (item.author ?? item.voter ?? item.user)?.avatarUrl,
+            namePlaceHolder: (item.author ?? item.voter ?? item.user)?.username ?? "User")
         
-        timestampLabel.text = Date.timeAgo(string: item.timestamp)
+        let dateString = Date.from(string: item.timestamp).string(withFormat: "HH:mm")
+        timestampLabel.text = dateString
         
         switch item.eventType {
         case "mention":
-            break
+            iconImageView.image = UIImage(named: "notifications-page-mention")
+            let aStr = NSMutableAttributedString()
+                .semibold(item.author?.username ?? "a user".localized().uppercaseFirst)
+                .normal(" ")
+                .normal("mentioned you in a \(item.entityType ?? "comment")".localized())
+                .normal(": \"")
+                .normal(item.comment?.shortText ?? "")
+                .normal("\"")
+            contentLabel.attributedText = aStr
         case "subscribe":
             iconImageView.isHidden = true
             let aStr = NSMutableAttributedString()
                 .semibold(item.user?.username ?? "a user".localized().uppercaseFirst)
                 .normal(" ")
-                .normal("subscribed to you")
+                .normal("is following you")
             contentLabel.attributedText = aStr
             
             // TODO: follow ?? unfollow
@@ -109,14 +119,7 @@ class NotificationCell: MyTableViewCell, ListItemCellType {
                 .normal("liked".localized() + " " + "your \(item.entityType ?? "post")".localized())
                 .normal(": \"")
             
-            if item.entityType == "comment" {
-                aStr.normal(item.post?.shortText ?? "")
-                    .normal("...\"")
-                    .normal(" ")
-                    .semibold("on post".localized().uppercaseFirst)
-                    .semibold(": \"")
-            }
-            aStr.normal((item.post?.shortText ?? "") + "...\"")
+            aStr.normal((item.comment?.shortText ?? item.post?.shortText ?? "") + "...\"")
             contentLabel.attributedText = aStr
             
             if let imageUrl = item.comment?.imageUrl ?? item.post?.imageUrl {
@@ -136,15 +139,7 @@ class NotificationCell: MyTableViewCell, ListItemCellType {
                 .normal(" ")
                 .normal("left a comment".localized())
                 .normal(": \"")
-            
-            if item.entityType == "comment" {
-                aStr.normal(item.comment?.shortText ?? "")
-                    .normal("...\"")
-                    .normal(" ")
-                    .semibold("on your post".localized())
-                    .semibold(": \"")
-            }
-            aStr.normal(item.post?.shortText ?? "" + "...\"")
+            aStr.normal((item.comment?.shortText ?? "") + "...\"")
             contentLabel.attributedText = aStr
         default:
             iconImageView.isHidden = true

@@ -50,8 +50,9 @@ class NotificationsPageVC: ListViewController<ResponseAPIGetNotificationItem, No
     override func setUp() {
         super.setUp()
         title = "notifications".localized().uppercaseFirst
+        view.backgroundColor = .white
         
-        tableView.backgroundColor = .clear
+        tableView.backgroundColor = .f3f5fa
         tableView.separatorStyle = .none
         tableView.contentInset.top = headerViewMaxHeight
         tableView.tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: CGFloat.leastNormalMagnitude, height: CGFloat.leastNormalMagnitude))
@@ -73,6 +74,8 @@ class NotificationsPageVC: ListViewController<ResponseAPIGetNotificationItem, No
         newNotificationsCountLabel.autoPinEdge(.top, to: .bottom, of: largeTitleLabel, withOffset: -4)
         newNotificationsCountLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
         newNotificationsCountLabel.autoPinEdge(toSuperviewEdge: .bottom, withInset: 12)
+        
+        smallTitleLabel.isHidden = true
     }
     
     override func bind() {
@@ -107,6 +110,15 @@ class NotificationsPageVC: ListViewController<ResponseAPIGetNotificationItem, No
     
     override func bindItems() {
         viewModel.items
+            .map {items in
+                // TODO: - Restrict notification types, remove later
+                items.filter {
+                    $0.eventType == "subscribe" ||
+                    $0.eventType == "reply" ||
+                    $0.eventType == "mention" ||
+                    $0.eventType == "upvote"
+                }
+            }
             .map { (items) -> [ListSection] in
                 let calendar = Calendar.current
                 let today = calendar.startOfDay(for: Date())
@@ -153,7 +165,7 @@ class NotificationsPageVC: ListViewController<ResponseAPIGetNotificationItem, No
             if let id = item.user?.userId {
                 showProfileWithUserId(id)
             }
-        case "upvote", "reply":
+        case "upvote", "reply", "mention":
             switch item.entityType {
             case "post":
                 if let userId = item.post?.contentId.userId,
