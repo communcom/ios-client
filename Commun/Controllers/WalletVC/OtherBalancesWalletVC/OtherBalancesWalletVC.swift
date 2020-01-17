@@ -15,6 +15,16 @@ class OtherBalancesWalletVC: CommunWalletVC {
     }
     
     // MARK: - Subviews
+    override func setUp() {
+        super.setUp()
+        tableHeaderView.setMyPointHidden(true)
+    }
+    
+    override func reloadData() {
+        (headerView as! WalletHeaderView).carousel.reloadData()
+        super.reloadData()
+    }
+    
     override func createHeaderView() -> CommunWalletHeaderView {
         let headerView = WalletHeaderView(forAutoLayout: ())
         headerView.delegate = self

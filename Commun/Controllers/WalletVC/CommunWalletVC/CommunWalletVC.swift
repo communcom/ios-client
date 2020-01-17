@@ -124,13 +124,12 @@ class CommunWalletVC: TransferHistoryVC, CommunWalletHeaderViewDatasource {
 //        .lightContent
 //    }
 
-    
     override func bindItems() {
         super.bindItems()
         (viewModel as! WalletViewModel).balancesVM.items
             .distinctUntilChanged()
             .subscribe(onNext: { (_) in
-                self.headerView.reloadData()
+                self.reloadData()
             })
             .disposed(by: disposeBag)
         
@@ -142,8 +141,7 @@ class CommunWalletVC: TransferHistoryVC, CommunWalletHeaderViewDatasource {
         
         myPointsCollectionView.rx.modelSelected(ResponseAPIWalletGetBalance.self)
             .subscribe(onNext: { (balance) in
-                guard let index = self.balances?.firstIndex(where: {$0.symbol == balance.symbol}) else {return}
-                // TODO: - Open OtherBalancesVC
+                self.openOtherBalancesWalletVC()
             })
             .disposed(by: disposeBag)
         
@@ -156,6 +154,10 @@ class CommunWalletVC: TransferHistoryVC, CommunWalletHeaderViewDatasource {
                 cell.setUp(with: model)
             }
             .disposed(by: disposeBag)
+    }
+    
+    func reloadData() {
+        headerView.reloadData()
     }
     
     override func bindItemSelected() {
@@ -247,8 +249,7 @@ class CommunWalletVC: TransferHistoryVC, CommunWalletHeaderViewDatasource {
     
     @objc func myPointsSeeAllDidTouch() {
         let vc = BalancesVC { balance in
-            guard let index = self.balances?.firstIndex(where: {$0.symbol == balance.symbol}) else {return}
-            // TODO: - Open OtherBalancesVC
+            self.openOtherBalancesWalletVC()
         }
         let nc = BaseNavigationController(rootViewController: vc)
         present(nc, animated: true, completion: nil)
@@ -264,6 +265,11 @@ class CommunWalletVC: TransferHistoryVC, CommunWalletHeaderViewDatasource {
     
     func data(forWalletHeaderView headerView: CommunWalletHeaderView) -> [ResponseAPIWalletGetBalance]? {
         balances
+    }
+    
+    private func openOtherBalancesWalletVC() {
+        let vc = OtherBalancesWalletVC()
+        show(vc, sender: self)
     }
 }
 

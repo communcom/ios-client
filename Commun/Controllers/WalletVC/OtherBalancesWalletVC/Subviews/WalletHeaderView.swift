@@ -70,19 +70,12 @@ class WalletHeaderView: CommunWalletHeaderView {
     func setSelectedIndex(_ index: Int, shouldUpdateCarousel: Bool = true) {
         if index == selectedIndex {return}
         
-        // if switch from commun to other and vice versa
-        var needsReloadViews = false
-        if index == 0 || selectedIndex == 0 {
-            needsReloadViews = true
-        }
-        
         selectedIndex = index
-        if needsReloadViews {
-            carousel.reloadData()
-            UIView.animate(withDuration: 0.3) {
-                self.reloadViews()
-            }
-        } else if shouldUpdateCarousel {
+//            carousel.reloadData()
+//            UIView.animate(withDuration: 0.3) {
+//                self.reloadViews()
+//            }
+        if shouldUpdateCarousel {
             carousel.scroll(toItemAtIndex: index, animated: true)
         }
         
