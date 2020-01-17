@@ -95,7 +95,7 @@ class TransferHistoryItemCell: MyTableViewCell, ListItemCellType {
                 avatarImageView.image = UIImage(named: "tux")
             }
         case "reward":
-            username = "reward".localized().uppercaseFirst
+            username = item.point.name ?? ""
             memo = NSMutableAttributedString()
                 .semibold("+\(item.quantityValue.currencyValueFormatted) \(item.point.name!)", font: .systemFont(ofSize: 15, weight: .semibold), color: .plus)
             
@@ -108,6 +108,13 @@ class TransferHistoryItemCell: MyTableViewCell, ListItemCellType {
             
             avatarImageView.image = UIImage(named: "wallet-like")
             iconImageView.isHidden = true
+        case "unhold":
+            username = item.point.name ?? ""
+            memo = NSMutableAttributedString()
+                .semibold("+\(item.quantityValue.currencyValueFormatted) \(item.point.name!)", font: .systemFont(ofSize: 15, weight: .semibold), color: .plus)
+            
+            avatarImageView.setAvatar(urlString: item.point.logo, namePlaceHolder: username)
+            iconImageView.isHidden = true
         default:
             username = ""
             memo = NSMutableAttributedString()
@@ -117,11 +124,10 @@ class TransferHistoryItemCell: MyTableViewCell, ListItemCellType {
         let content = NSMutableAttributedString()
             .semibold(username)
         
-        if item.meta.actionType != "reward" {
-            content
-                .normal("\n")
-                .semibold(item.meta.actionType?.localized().uppercaseFirst ?? "", font: .systemFont(ofSize: 12, weight: .semibold), color: .a5a7bd)
-        }
+        content
+            .normal("\n")
+            .semibold(item.meta.actionType?.localized().uppercaseFirst ?? "", font: .systemFont(ofSize: 12, weight: .semibold), color: .a5a7bd)
+    
         
         contentLabel.attributedText = content
         
