@@ -157,6 +157,7 @@ class CommunWalletVC: TransferHistoryVC {
     
     override func bindItemSelected() {
         super.bindItemSelected()
+        
         sendPointsCollectionView.rx.itemSelected
             .subscribe(onNext: { (indexPath) in
                 if indexPath.row == 0 {

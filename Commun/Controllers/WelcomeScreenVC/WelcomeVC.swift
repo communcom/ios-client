@@ -122,3 +122,33 @@ class WelcomeVC: UIViewController {
         self.pageControl.selectedIndex = indexNext
     }
 }
+
+///*
+// MARK: - FOR TEST!!!
+ extension WelcomeVC {
+     @IBAction func testButtonTapped(_ sender: UIButton) {
+//         testSendVCShow()
+        
+        sender.tag = 1
+        testCommunBuyVCShow(sender)
+     }
+
+    private func testSendVCShow() {
+//        let modalViewController = WalletSendPointsVC(withSelectedBalance: 0, andRecipient: nil)
+//        show(modalViewController, sender: nil)
+    }
+    
+    private func testCommunBuyVCShow(_ sender: UIButton) {
+//        let overwatch = Overwatch(typeView: TypeView(rawValue: sender.tag) ?? .send)
+        let modalViewController = TransactionCompletedVC(transaction: Transaction(recipient: Recipient(id: "2", name: "XXX", avatarURL: nil),
+                                                                                  operationDate: Date(),
+                                                                                  accuracy: 2,
+                                                                                  symbol: "CMN",
+                                                                                  type: TransactionType.history,
+                                                                                  amount: 30))
+        modalViewController.modalPresentationStyle = .overCurrentContext
+
+        present(modalViewController, animated: true, completion: nil)
+    }
+}
+//*/

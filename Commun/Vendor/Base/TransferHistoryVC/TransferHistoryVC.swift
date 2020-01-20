@@ -92,7 +92,30 @@ class TransferHistoryVC: ListViewController<ResponseAPIWalletGetTransferHistoryI
     }
     
     override func bindItemSelected() {
-        // do nothing
+        tableView.rx.itemSelected
+            .subscribe(onNext: { [weak self] indexPath in
+                guard let strongSelf = self else { return }
+                
+                // TODO: - DISPLAY TRANSACTION SCENE
+//                if let selectedCell = strongSelf.tableView.cellForRow(at: indexPath) as? TransferHistoryItemCell, let selectedTransaction = selectedCell.item {
+//                    strongSelf.showIndetermineHudWithMessage("loading".localized().uppercaseFirst + " \(balance.symbol)")
+//
+//                    // .history type
+//                    let transaction = Transaction(recipient: Recipient(id: balance.identity,
+//                                                                       name: balance.name!,
+//                                                                       avatarURL: balance.logo),
+//                                                  operationDate: Date(),
+//                                                  accuracy: 2,
+//                                                  symbol: balance.symbol,
+//                                                  type: .history,
+//                                                  amount: CGFloat(value * strongSelf.viewModel.rate.value / 10))
+//
+//                    let completedVC = TransactionCompletedVC(transaction: transaction)
+//                    strongSelf.show(completedVC, sender: nil)
+//                    strongSelf.hideHud()
+//                }
+            })
+            .disposed(by: disposeBag)
     }
     
     override func handleListEmpty() {

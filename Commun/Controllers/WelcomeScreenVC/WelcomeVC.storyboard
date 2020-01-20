@@ -80,12 +80,21 @@
                                     </button>
                                 </subviews>
                             </stackView>
+                            <button hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oUt-dY-5Em" userLabel="Test Button">
+                                <rect key="frame" x="27" y="57" width="30" height="30"/>
+                                <state key="normal" title="Test"/>
+                                <connections>
+                                    <action selector="testButtonTapped:" destination="5Vs-ev-2DK" eventType="touchUpInside" id="jeA-H0-1g2"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="oUt-dY-5Em" firstAttribute="top" secondItem="bF6-IB-5mY" secondAttribute="top" constant="13" id="I2v-IQ-Ug4"/>
                             <constraint firstItem="IfS-V6-9za" firstAttribute="top" secondItem="qQo-fb-NcH" secondAttribute="bottom" constant="14" id="S5D-R6-UkA" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                             <constraint firstItem="qQo-fb-NcH" firstAttribute="leading" secondItem="bF6-IB-5mY" secondAttribute="leading" id="Tjd-Cq-itW"/>
                             <constraint firstItem="qQo-fb-NcH" firstAttribute="top" secondItem="oXF-w0-ktq" secondAttribute="top" id="UWO-ih-eU6" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
+                            <constraint firstItem="oUt-dY-5Em" firstAttribute="leading" secondItem="bF6-IB-5mY" secondAttribute="leading" constant="27" id="UiO-bP-S8S"/>
                             <constraint firstItem="bF6-IB-5mY" firstAttribute="trailing" secondItem="9u7-LT-02r" secondAttribute="trailing" constant="15" id="Vz7-oj-mvg" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                             <constraint firstItem="IfS-V6-9za" firstAttribute="leading" secondItem="bF6-IB-5mY" secondAttribute="leading" constant="20" id="aJ5-L4-K3B" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
                             <constraint firstItem="9u7-LT-02r" firstAttribute="top" secondItem="bF6-IB-5mY" secondAttribute="top" constant="6" id="ciL-uL-cY7" customClass="ScalableLayoutConstraint" customModule="Commun" customModuleProvider="target"/>
