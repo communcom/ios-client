@@ -379,6 +379,8 @@ class TransactionCompletedView: UIView {
                 transactionAmountLabel.theme_textColor = blackWhiteColorPickers
                 transactionCurrencyLabel.theme_textColor = blackWhiteColorPickers
             }
+            
+            repeatButton.isHidden = !["transfer", "convert"].contains(transaction.actionType.rawValue)
         }
     }
 }

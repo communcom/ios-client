@@ -125,6 +125,7 @@ class TransferHistoryVC: ListViewController<ResponseAPIWalletGetTransferHistoryI
                                                   accuracy: 4,
                                                   symbol: selectedItem.symbol,
                                                   type: .history,
+                                                  actionType: TypeOfAction(rawValue: selectedItem.meta.actionType ?? "hold")!,
                                                   amount: amount)
 
                     let completedVC = TransactionCompletedVC(transaction: transaction)

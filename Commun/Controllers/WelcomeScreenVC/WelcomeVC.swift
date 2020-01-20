@@ -139,12 +139,12 @@ class WelcomeVC: UIViewController {
     }
     
     private func testCommunBuyVCShow(_ sender: UIButton) {
-//        let overwatch = Overwatch(typeView: TypeView(rawValue: sender.tag) ?? .send)
         let modalViewController = TransactionCompletedVC(transaction: Transaction(recipient: Recipient(id: "2", name: "XXX", avatarURL: nil),
                                                                                   operationDate: Date(),
                                                                                   accuracy: 2,
                                                                                   symbol: "CMN",
                                                                                   type: TransactionType.history,
+                                                                                  actionType: .transfer,
                                                                                   amount: 30))
         modalViewController.modalPresentationStyle = .overCurrentContext
 

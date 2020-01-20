@@ -14,6 +14,14 @@ public enum TransactionType: Int {
     case history
 }
 
+public enum TypeOfAction: String {
+    case transfer = "transfer"
+    case convert = "convert"
+    case hold = "hold"
+    case reward = "reward"
+    case unhold = "unhold"
+}
+
 struct Transaction {
     // MARK: - Properties
     var recipient = Recipient()
@@ -22,7 +30,8 @@ struct Transaction {
     var accuracy: Int = 4
     var symbol: String = Config.defaultSymbol
     var type: TransactionType = .send
-
+    var actionType: TypeOfAction = .transfer
+    
     var amount: CGFloat = 0.0 {
         didSet {
             self.accuracy = amount == 0 ? 0 : (amount >= 1_000.0 ? 2 : 4)
