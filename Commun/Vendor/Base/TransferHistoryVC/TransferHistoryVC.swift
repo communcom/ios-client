@@ -135,8 +135,23 @@ class TransferHistoryVC: ListViewController<ResponseAPIWalletGetTransferHistoryI
                     strongSelf.present(completedVC, animated: true, completion: nil)
                     strongSelf.hideHud()
                     
-                    completedVC.completion = {
+                    completedVC.completionDismiss = {
                         (strongSelf.tabBarController as? TabBarVC)!.setTabBarHiden(false)
+                    }
+                    
+                    completedVC.completionRepeat = { [weak self] transition in
+                        guard let strongSelf = self else { return }
+                        
+                        let walletSendPointsVC = WalletSendPointsVC(withSelectedBalance: transaction.symbol, andRecipient: transaction.recipient)
+                        walletSendPointsVC.dataModel.transaction = transition
+                        walletSendPointsVC.dataModel.transaction.amount = abs(walletSendPointsVC.dataModel.transaction.amount)
+                        walletSendPointsVC.dataModel.transaction.type = transition.actionType == .transfer ? .send : .convert
+
+                        if let walletVC = strongSelf.navigationController?.viewControllers.filter({ $0 is CommunWalletVC }).first {
+                            strongSelf.navigationController?.popToViewController(walletVC, animated: false)
+                            walletVC.show(walletSendPointsVC, sender: nil)
+                            strongSelf.hideHud()
+                        }
                     }
                 }
             })

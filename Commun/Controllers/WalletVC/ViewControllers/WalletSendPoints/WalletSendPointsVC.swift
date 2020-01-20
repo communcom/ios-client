@@ -110,7 +110,7 @@ class WalletSendPointsVC: UIViewController {
     
     
     // MARK: - Class Initialization
-    init(withSelectedBalance symbol: String, andRecipient friend: ResponseAPIContentGetSubscriptionsUser?) {
+    init(withSelectedBalance symbol: String, andFriend friend: ResponseAPIContentGetSubscriptionsUser?) {
         self.dataModel = SendPointsModel(withSelectedBalanceSymbol: symbol)
         
         if let recipient = friend  {
@@ -119,7 +119,14 @@ class WalletSendPointsVC: UIViewController {
 
         super.init(nibName: nil, bundle: nil)
     }
-    
+
+    init(withSelectedBalance symbol: String, andRecipient recipient: Recipient) {
+        self.dataModel = SendPointsModel(withSelectedBalanceSymbol: symbol)
+        self.dataModel.transaction.recipient = recipient
+
+        super.init(nibName: nil, bundle: nil)
+    }
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -203,9 +210,9 @@ class WalletSendPointsVC: UIViewController {
             balanceStackView.autoPinEdge(.top, to: .bottom, of: carouselView, withOffset: CGFloat.adaptive(height: 20.0))
         }
         
-        updateBalanceInfo()
         updateRecipientInfo()
-        
+        updateBalanceInfo()
+
         // Action view
         let whiteView = UIView(width: CGFloat.adaptive(width: 375.0), height: CGFloat.adaptive(height: 543.0), backgroundColor: .white, cornerRadius: CGFloat.adaptive(width: 25.0))
         view.addSubview(whiteView)
@@ -333,12 +340,22 @@ class WalletSendPointsVC: UIViewController {
     }
 
     private func updateSendPointsInfo() {
-        guard let text = pointsTextField.text?.replacingOccurrences(of: ",", with: ".") else { return }
+        guard var text = pointsTextField.text?.replacingOccurrences(of: ",", with: ".") else { return }
         
         let amountEntered = CGFloat((text as NSString).floatValue)
-        dataModel.transaction.amount = amountEntered
-        setSendButton(amount: amountEntered, percent: 0.1)
+        
+        if amountEntered == 0 {
+            text = String(format: "%.*f", dataModel.transaction.accuracy, abs(dataModel.transaction.amount))
+            setSendButton(amount: abs(dataModel.transaction.amount), percent: 0.1)
+        } else {
+            text = String(format: "%.*f", dataModel.transaction.accuracy, amountEntered)
+            dataModel.transaction.amount = amountEntered
+            setSendButton(amount: amountEntered, percent: 0.1)
+        }
+
+        pointsTextField.text = text
         pointsTextField.placeholder = String(format: "0 %@", dataModel.transaction.symbol.fullName)
+
         checkAmount()
     }
     
@@ -369,19 +386,19 @@ class WalletSendPointsVC: UIViewController {
     }
 
     @objc func sendPointsButtonTapped(_ sender: UITapGestureRecognizer) {
-        let numberValue = dataModel.transaction.amount
+        let numberValue = abs(dataModel.transaction.amount)
 
         guard let recipientID = dataModel.transaction.recipient.id, numberValue > 0 else { return }
 
         dataModel.transaction.operationDate = Date()
         
-        showIndetermineHudWithMessage("sending".localized().uppercaseFirst + " \(dataModel.transaction.symbol.fullName)")
+//        showIndetermineHudWithMessage("sending".localized().uppercaseFirst + " \(dataModel.transaction.symbol.fullName)")
 
         // FOR TEST
-//        let completedVC = TransactionCompletedVC(transaction: dataModel.transaction)
-//        show(completedVC, sender: nil)
+        let completedVC = TransactionCompletedVC(transaction: dataModel.transaction)
+        show(completedVC, sender: nil)
 
-        ///*
+        /*
         BlockchainManager.instance.transferPoints(to: recipientID, number: Double(numberValue), currency: dataModel.transaction.symbol)
             .flatMapCompletable { RestAPIManager.instance.waitForTransactionWith(id: $0) }
             .subscribe(onCompleted: { [weak self] in
@@ -398,7 +415,7 @@ class WalletSendPointsVC: UIViewController {
                 strongSelf.showError(error)
         }
         .disposed(by: disposeBag)
-        //*/
+        */
     }
     
     @objc func viewTapped( _ sender: UITapGestureRecognizer) {

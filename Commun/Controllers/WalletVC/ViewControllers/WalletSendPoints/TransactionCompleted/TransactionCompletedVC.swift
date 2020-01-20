@@ -14,8 +14,9 @@ class TransactionCompletedVC: UIViewController {
     var transaction: Transaction!
     var transactionCompletedView: TransactionCompletedView!
     
-    var completion: (() -> Void)?
-    
+    var completionDismiss: (() -> Void)?
+    var completionRepeat: ((Transaction) -> Void)?
+
     
     // MARK: - Class Initialization
     init(transaction: Transaction) {
@@ -104,8 +105,9 @@ class TransactionCompletedVC: UIViewController {
             
             switch actionType {
             case .repeat:
-                // TODO: - ADD ACTION
-                strongSelf.showAlert(title: "TODO", message: "Add action")
+                strongSelf.showIndetermineHudWithMessage("loading".localized().uppercaseFirst)
+                strongSelf.dismiss()
+                strongSelf.completionRepeat!(strongSelf.dataModel.transaction)
 
             case .wallet:
                 strongSelf.backToWallet()
@@ -128,11 +130,15 @@ class TransactionCompletedVC: UIViewController {
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(viewTapped)))
     }
     
+    private func dismiss() {
+        completionDismiss!()
+        self.dismiss(animated: true, completion: nil)
+    }
+    
     
     // MARK: - Actions
     @objc func viewTapped( _ sender: UITapGestureRecognizer) {
-        completion!()
-        self.dismiss(animated: true, completion: nil)
+        dismiss()
     }
 
     @objc func actionBarButtonTapped(_ sender: UIBarButtonItem) {

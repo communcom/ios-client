@@ -48,8 +48,8 @@ class SendPointsModel {
     }
 
     func checkAmounts() -> Bool {
-        guard transaction.amount > 0 else { return false }
-        return transaction.amount <= currentBalance.amount
+        guard abs(transaction.amount) > 0 else { return false }
+        return abs(transaction.amount) <= currentBalance.amount
     }
         
     private func loadBalances(byUserID userID: String) -> Single<[ResponseAPIWalletGetBalance]> {
