@@ -227,7 +227,7 @@ class CommunWalletVC: TransferHistoryVC {
     }
     
     func createConvertVC() -> WalletConvertVC? {
-        WalletSellCommunVC(balances: (self.viewModel as! WalletViewModel).balancesVM.items.value)
+        WalletConvertSellCommunVC(balances: (self.viewModel as! WalletViewModel).balancesVM.items.value)
     }
     
     @objc func moreActionsButtonDidTouch(_ sender: CommunButton) {

@@ -139,7 +139,6 @@ class TransferHistoryItemCell: MyTableViewCell, ListItemCellType {
             .normal("\n")
             .semibold(item.meta.actionType?.localized().uppercaseFirst ?? "", font: .systemFont(ofSize: 12, weight: .semibold), color: .a5a7bd)
     
-        
         contentLabel.attributedText = content
         
         let dateString = Date.from(string: item.timestamp).string(withFormat: "HH:mm")

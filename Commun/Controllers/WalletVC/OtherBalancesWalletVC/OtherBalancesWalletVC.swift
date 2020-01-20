@@ -58,7 +58,7 @@ class OtherBalancesWalletVC: CommunWalletVC {
     // MARK: - Methods
     override func createConvertVC() -> WalletConvertVC? {
         guard let balance = currentBalance else {return nil}
-        return WalletBuyCommunVC(balances: (self.viewModel as! WalletViewModel).balancesVM.items.value, symbol: balance.symbol)
+        return WalletConvertBuyCommunVC(balances: (self.viewModel as! WalletViewModel).balancesVM.items.value, symbol: balance.symbol)
     }
 }
 

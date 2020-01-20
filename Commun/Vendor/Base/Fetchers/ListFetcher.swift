@@ -45,6 +45,8 @@ enum ListFetcherState: Equatable {
 }
 
 class ListFetcher<T: ListItemType> {
+    // MARK: - Constants
+    var isPaginationEnabled: Bool {true}
     
     // MARK: - Parammeters
     var limit = UInt(Config.paginationLimit)
@@ -90,20 +92,24 @@ class ListFetcher<T: ListItemType> {
                 self.items.accept(self.join(newItems: items))
                 
                 // resign state
-                if items.count == 0 {
-                    if self.offset == 0 {
-                        self.state.accept(.listEmpty)
-                    } else {
-                        if self.items.value.count > 0 {
-                            self.state.accept(.listEnded)
+                if self.isPaginationEnabled {
+                    if items.count == 0 {
+                        if self.offset == 0 {
+                            self.state.accept(.listEmpty)
+                        } else {
+                            if self.items.value.count > 0 {
+                                self.state.accept(.listEnded)
+                            }
                         }
+                    } else if items.count < self.limit {
+                        self.state.accept(.listEnded)
+                    } else if items.count > self.limit {
+                        self.state.accept(.listEnded)
+                    } else {
+                        self.state.accept(.loading(false))
                     }
-                } else if items.count < self.limit {
-                    self.state.accept(.listEnded)
-                } else if items.count > self.limit {
-                    self.state.accept(.listEnded)
                 } else {
-                    self.state.accept(.loading(false))
+                    self.state.accept(items.count == 0 ? .listEmpty: .listEnded)
                 }
                 
                 // get next offset

@@ -233,6 +233,9 @@
 		BC016D54235EA32600F1319F /* PostsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC016D53235EA32600F1319F /* PostsViewModel.swift */; };
 		BC016D56235EA33C00F1319F /* ListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC016D55235EA33C00F1319F /* ListViewModel.swift */; };
 		BC016D5A235EB88400F1319F /* PostsVC+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC016D59235EB88400F1319F /* PostsVC+Actions.swift */; };
+		BC18FA1923D54D2F005DC7E3 /* CurrenciesListFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC18FA1823D54D2F005DC7E3 /* CurrenciesListFetcher.swift */; };
+		BC18FA2123D54E26005DC7E3 /* CurrencyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC18FA2023D54E26005DC7E3 /* CurrencyCell.swift */; };
+		BC18FA2323D550E4005DC7E3 /* CurrenciesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC18FA2223D550E4005DC7E3 /* CurrenciesVC.swift */; };
 		BC22BBC8236C055300F40658 /* MyProfileSettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC22BBC7236C055300F40658 /* MyProfileSettingsVC.swift */; };
 		BC22BBCA236C082600F40658 /* ContentHuggingScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC22BBC9236C082600F40658 /* ContentHuggingScrollView.swift */; };
 		BC22BBCC236C0E0300F40658 /* UIStackView+PureLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC22BBCB236C0E0300F40658 /* UIStackView+PureLayout.swift */; };
@@ -299,8 +302,8 @@
 		BC4AD66423B1C41C008546A4 /* TransferHistorySegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4AD66323B1C41C008546A4 /* TransferHistorySegmentedControl.swift */; };
 		BC4AD66623B1EBF1008546A4 /* TransferHistoryTopTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4AD66523B1EBF1008546A4 /* TransferHistoryTopTabBar.swift */; };
 		BC4AD66D23B2072C008546A4 /* WalletConvertVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4AD66C23B2072C008546A4 /* WalletConvertVC.swift */; };
-		BC4AD67423B314F2008546A4 /* WalletSellCommunVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4AD67323B314F2008546A4 /* WalletSellCommunVC.swift */; };
-		BC4AD67623B31683008546A4 /* WalletBuyCommunVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4AD67523B31683008546A4 /* WalletBuyCommunVC.swift */; };
+		BC4AD67423B314F2008546A4 /* WalletConvertSellCommunVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4AD67323B314F2008546A4 /* WalletConvertSellCommunVC.swift */; };
+		BC4AD67623B31683008546A4 /* WalletConvertBuyCommunVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4AD67523B31683008546A4 /* WalletConvertBuyCommunVC.swift */; };
 		BC520A40237E476100033ED0 /* MySubviewAttachingTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC520A3F237E476100033ED0 /* MySubviewAttachingTextView.swift */; };
 		BC520A44237E49A900033ED0 /* PostPageTextAttachment.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC520A43237E49A900033ED0 /* PostPageTextAttachment.swift */; };
 		BC520A48237E7F3000033ED0 /* UserProfilePageVC+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC520A47237E7F3000033ED0 /* UserProfilePageVC+Actions.swift */; };
@@ -715,6 +718,9 @@
 		BC016D53235EA32600F1319F /* PostsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostsViewModel.swift; sourceTree = "<group>"; };
 		BC016D55235EA33C00F1319F /* ListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewModel.swift; sourceTree = "<group>"; };
 		BC016D59235EB88400F1319F /* PostsVC+Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PostsVC+Actions.swift"; sourceTree = "<group>"; };
+		BC18FA1823D54D2F005DC7E3 /* CurrenciesListFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrenciesListFetcher.swift; sourceTree = "<group>"; };
+		BC18FA2023D54E26005DC7E3 /* CurrencyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyCell.swift; sourceTree = "<group>"; };
+		BC18FA2223D550E4005DC7E3 /* CurrenciesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrenciesVC.swift; sourceTree = "<group>"; };
 		BC22BBC7236C055300F40658 /* MyProfileSettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileSettingsVC.swift; sourceTree = "<group>"; };
 		BC22BBC9236C082600F40658 /* ContentHuggingScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentHuggingScrollView.swift; sourceTree = "<group>"; };
 		BC22BBCB236C0E0300F40658 /* UIStackView+PureLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+PureLayout.swift"; sourceTree = "<group>"; };
@@ -784,8 +790,8 @@
 		BC4AD66323B1C41C008546A4 /* TransferHistorySegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferHistorySegmentedControl.swift; sourceTree = "<group>"; };
 		BC4AD66523B1EBF1008546A4 /* TransferHistoryTopTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferHistoryTopTabBar.swift; sourceTree = "<group>"; };
 		BC4AD66C23B2072C008546A4 /* WalletConvertVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletConvertVC.swift; sourceTree = "<group>"; };
-		BC4AD67323B314F2008546A4 /* WalletSellCommunVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletSellCommunVC.swift; sourceTree = "<group>"; };
-		BC4AD67523B31683008546A4 /* WalletBuyCommunVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletBuyCommunVC.swift; sourceTree = "<group>"; };
+		BC4AD67323B314F2008546A4 /* WalletConvertSellCommunVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletConvertSellCommunVC.swift; sourceTree = "<group>"; };
+		BC4AD67523B31683008546A4 /* WalletConvertBuyCommunVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletConvertBuyCommunVC.swift; sourceTree = "<group>"; };
 		BC520A3F237E476100033ED0 /* MySubviewAttachingTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MySubviewAttachingTextView.swift; sourceTree = "<group>"; };
 		BC520A43237E49A900033ED0 /* PostPageTextAttachment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostPageTextAttachment.swift; sourceTree = "<group>"; };
 		BC520A47237E7F3000033ED0 /* UserProfilePageVC+Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserProfilePageVC+Actions.swift"; sourceTree = "<group>"; };
@@ -1848,8 +1854,26 @@
 				BC7D608F237BF764007D8C1A /* BlacklistViewModel.swift */,
 				BC4AD64F23B09BF7008546A4 /* BalancesVC */,
 				BC9066FD23AB2279000F9A3B /* TransferHistoryVC */,
+				BC18FA1C23D54DB1005DC7E3 /* CurrenciesVC */,
 			);
 			path = Base;
+			sourceTree = "<group>";
+		};
+		BC18FA1C23D54DB1005DC7E3 /* CurrenciesVC */ = {
+			isa = PBXGroup;
+			children = (
+				BC18FA1F23D54E14005DC7E3 /* Subviews */,
+				BC18FA2223D550E4005DC7E3 /* CurrenciesVC.swift */,
+			);
+			path = CurrenciesVC;
+			sourceTree = "<group>";
+		};
+		BC18FA1F23D54E14005DC7E3 /* Subviews */ = {
+			isa = PBXGroup;
+			children = (
+				BC18FA2023D54E26005DC7E3 /* CurrencyCell.swift */,
+			);
+			path = Subviews;
 			sourceTree = "<group>";
 		};
 		BC22BBCD236C18A900F40658 /* MyProfileSettingsVC */ = {
@@ -2145,8 +2169,8 @@
 			children = (
 				BC43FDFD23B44F7200255451 /* WalletConvertViewModel.swift */,
 				BC4AD66C23B2072C008546A4 /* WalletConvertVC.swift */,
-				BC4AD67323B314F2008546A4 /* WalletSellCommunVC.swift */,
-				BC4AD67523B31683008546A4 /* WalletBuyCommunVC.swift */,
+				BC4AD67323B314F2008546A4 /* WalletConvertSellCommunVC.swift */,
+				BC4AD67523B31683008546A4 /* WalletConvertBuyCommunVC.swift */,
 			);
 			path = WalletConvertVCs;
 			sourceTree = "<group>";
@@ -2522,6 +2546,7 @@
 				BC7D608D237BF4E7007D8C1A /* BlacklistFetcher.swift */,
 				BC9066EA23A9D9EC000F9A3B /* BalancesListFetcher.swift */,
 				BC9066F423A9E002000F9A3B /* TransferHistoryListFetcher.swift */,
+				BC18FA1823D54D2F005DC7E3 /* CurrenciesListFetcher.swift */,
 			);
 			path = Fetchers;
 			sourceTree = "<group>";
@@ -2881,6 +2906,7 @@
 				B1D7AD5623A10582007D1A13 /* ErrorView.swift in Sources */,
 				BC597A6E238BC7C200103F4F /* PostsFilterVC.swift in Sources */,
 				5787C0C622650FA500568CEC /* SetUserViewModel.swift in Sources */,
+				BC18FA2123D54E26005DC7E3 /* CurrencyCell.swift in Sources */,
 				BC4692EF239615160064A38B /* FriendsViewModel.swift in Sources */,
 				ACD76C9823B23E91001FAECD /* PhotoLibraryAccessDeniedView.swift in Sources */,
 				BCCB993623756375005252CF /* PostHeaderView.swift in Sources */,
@@ -2926,7 +2952,7 @@
 				BC40F7EF23CC4ADA00C2A3D3 /* SinglePhotoPickerVC.swift in Sources */,
 				3B25E5C0234C2F66005BD1B8 /* BasicEditorVC+Binding.swift in Sources */,
 				3BB32F1D23445618006572F3 /* VCWithParallax.swift in Sources */,
-				BC4AD67623B31683008546A4 /* WalletBuyCommunVC.swift in Sources */,
+				BC4AD67623B31683008546A4 /* WalletConvertBuyCommunVC.swift in Sources */,
 				BC619B1523726ADF0005BB94 /* CommunitiesVC.swift in Sources */,
 				B1FA77DB238BF7E0006E57D1 /* WelcomePageVC.swift in Sources */,
 				BC22BBD9236C27C000F40658 /* BaseStackViewController.swift in Sources */,
@@ -3065,7 +3091,7 @@
 				BC401E3C2371143F00A53788 /* LeaderAvatarImageView.swift in Sources */,
 				3B289B9C2346E7FC00598407 /* UIImage+PureLayout.swift in Sources */,
 				BC31BA55235EBD7C0007D89A /* ProfileVC.swift in Sources */,
-				BC4AD67423B314F2008546A4 /* WalletSellCommunVC.swift in Sources */,
+				BC4AD67423B314F2008546A4 /* WalletConvertSellCommunVC.swift in Sources */,
 				BC6B7659236AE14500A7AF2A /* CommunityPageCell.swift in Sources */,
 				BC597A7E238CC53D00103F4F /* FTUECommunitiesVC.swift in Sources */,
 				BCE9390B234DBBC300226E39 /* ResponseAPIContentBlock.swift in Sources */,
@@ -3113,6 +3139,7 @@
 				3B3C8B84234779FE00D8BADB /* UIImage.swift in Sources */,
 				3B5EDE2E22DF929D00897BF3 /* SettingsSwitcherCell.swift in Sources */,
 				BC619B1D2372C1480005BB94 /* CMTopTabBar.swift in Sources */,
+				BC18FA2323D550E4005DC7E3 /* CurrenciesVC.swift in Sources */,
 				BCD3BC8423AB29C00036C947 /* WalletViewModel.swift in Sources */,
 				BCB2A6E423546AF500B3582B /* PostEditorVC+AttachmentViewDelegate.swift in Sources */,
 				BC3E3D2923D15D5A0076E46E /* CommunWalletHeaderView.swift in Sources */,
@@ -3125,6 +3152,7 @@
 				3B25E5C2234C4205005BD1B8 /* AttachmentsView.swift in Sources */,
 				BCCE0AB22368225600A183AA /* MyProfileHeaderView.swift in Sources */,
 				BC4AD64C23B094E9008546A4 /* SendPointListVC.swift in Sources */,
+				BC18FA1923D54D2F005DC7E3 /* CurrenciesListFetcher.swift in Sources */,
 				3BEC38E3230F801600662374 /* UITextView.swift in Sources */,
 				3B62055A2346E4220017FEB7 /* PostEditorVC.swift in Sources */,
 				3BF37BCC22A1297C00A72FFE /* UITableView.swift in Sources */,

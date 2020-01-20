@@ -1,5 +1,5 @@
 //
-//  WalletBuyCommunVC.swift
+//  WalletSellCommunVC.swift
 //  Commun
 //
 //  Created by Chung Tran on 12/25/19.
@@ -9,68 +9,79 @@
 import Foundation
 import RxSwift
 
-class WalletBuyCommunVC: WalletConvertVC {
-    lazy var carousel = WalletCarouselWrapper(height: 50)
+class WalletConvertSellCommunVC: WalletConvertVC {
+    // MARK: - Properties
+    override var topColor: UIColor {
+        .appMainColor
+    }
     
+    // MARK: - Methods
     override func setUp() {
         super.setUp()
-        buyNameLabel.text = "Commun"
-        buyLogoImageView.image = UIImage(named: "tux")
-        convertBuyLabel.text = "buy".localized().uppercaseFirst + " Commun"
-        
-        carousel.scrollingHandler = { index in
-            self.currentBalance = self.viewModel.items.value[safe: index + 1]
-        }
-    }
-    
-    override func bind() {
-        super.bind()
-        viewModel.items
-            .map {$0.filter {$0.symbol != "CMN"}}
-            .subscribe(onNext: { (items) in
-                self.carousel.balances = items
-                self.carousel.currentIndex = items.firstIndex(where: {$0.symbol == self.currentSymbol}) ?? 0
-                self.carousel.reloadData()
-            })
-            .disposed(by: disposeBag)
-    }
-    
-    override func layoutCarousel() {
-        scrollView.addSubview(carousel)
-        carousel.autoPinEdge(toSuperviewEdge: .top, withInset: 20)
-        carousel.autoAlignAxis(toSuperviewAxis: .vertical)
-        
-        balanceNameLabel.autoPinEdge(.top, to: .bottom, of: carousel, withOffset: 20)
+        balanceNameLabel.text = "Commun"
+        convertSellLabel.text = "sell".localized().uppercaseFirst + " Commun"
     }
     
     override func setUpCommunBalance() {
         super.setUpCommunBalance()
         guard let balance = communBalance else {return}
-        buyBalanceLabel.text = balance.balanceValue.currencyValueFormatted
+        valueLabel.text = balance.balanceValue.currencyValueFormatted
     }
     
     override func setUpCurrentBalance() {
         super.setUpCurrentBalance()
         guard let balance = currentBalance else {return}
-        balanceNameLabel.text = balance.name
-        valueLabel.text = balance.balanceValue.currencyValueFormatted
-        convertSellLabel.text = "sell".localized().uppercaseFirst + " \(balance.name ?? balance.symbol)"
+        buyLogoImageView.setAvatar(urlString: balance.logo, namePlaceHolder: balance.name ?? balance.symbol)
+        buyNameLabel.text = balance.name ?? balance.symbol
+        buyBalanceLabel.text = balance.balanceValue.currencyValueFormatted
+        convertBuyLabel.text = "buy".localized().uppercaseFirst + " \(balance.name ?? balance.symbol)"
     }
     
     override func setUpBuyPrice() {
-        leftTextField.text = stringFromNumber(viewModel.buyPrice.value)
+        rightTextField.text = stringFromNumber(viewModel.buyPrice.value)
         
         convertButton.isEnabled = shouldEnableConvertButton()
     }
     
     override func setUpSellPrice() {
-        rightTextField.text = stringFromNumber(viewModel.sellPrice.value)
+        leftTextField.text = stringFromNumber(viewModel.sellPrice.value)
         
         convertButton.isEnabled = shouldEnableConvertButton()
     }
     
+    override func layoutCarousel() {
+        let communLogo = UIView.transparentCommunLogo(size: 50)
+        scrollView.addSubview(communLogo)
+        communLogo.autoPinEdge(toSuperviewEdge: .top, withInset: 20)
+        communLogo.autoAlignAxis(toSuperviewAxis: .vertical)
+        
+        balanceNameLabel.autoPinEdge(.top, to: .bottom, of: communLogo, withOffset: 20)
+    }
+    
+    override func layoutTrailingOfBuyContainer() {
+        let dropdownButton = UIButton.circleGray(imageName: "drop-down")
+        dropdownButton.addTarget(self, action: #selector(dropdownButtonDidTouch), for: .touchUpInside)
+        buyContainer.addSubview(dropdownButton)
+        dropdownButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
+        dropdownButton.autoAlignAxis(toSuperviewAxis: .horizontal)
+        dropdownButton.autoPinEdge(.leading, to: .trailing, of: buyBalanceLabel, withOffset: 10)
+    }
+    
+    override func shouldEnableConvertButton() -> Bool {
+        guard let sellAmount = NumberFormatter().number(from: self.leftTextField.text ?? "0")?.doubleValue
+            else {return false}
+        guard let communBalance = self.communBalance else {return false}
+        guard sellAmount > 0 else {return false}
+        if sellAmount > communBalance.balanceValue {
+            viewModel.errorSubject.accept(.insufficientFunds)
+            return false
+        }
+        return true
+    }
+    
+    // MARK: - Binding
     override func bindBuyPrice() {
-        rightTextField.rx.text.orEmpty
+        leftTextField.rx.text.orEmpty
             .skip(1)
             .debounce(0.3, scheduler: MainScheduler.instance)
             .map {NumberFormatter().number(from: $0)?.doubleValue ?? 0}
@@ -93,7 +104,7 @@ class WalletBuyCommunVC: WalletConvertVC {
     }
     
     override func bindSellPrice() {
-        leftTextField.rx.text.orEmpty
+        rightTextField.rx.text.orEmpty
             .skip(1)
             .debounce(0.3, scheduler: MainScheduler.instance)
             .map {NumberFormatter().number(from: $0)?.doubleValue ?? 0}
@@ -119,47 +130,43 @@ class WalletBuyCommunVC: WalletConvertVC {
         viewModel.rate
             .subscribe(onNext: {[weak self] (value) in
                 self?.rateLabel.attributedText = NSMutableAttributedString()
-                    .text("rate".localized().uppercaseFirst + ": \(value.currencyValueFormatted) \(self?.currentBalance?.symbol ?? "") = 10 CMN", size: 12, weight: .medium)
+                    .text("rate".localized().uppercaseFirst + ": 10 CMN = \(value.currencyValueFormatted) \(self?.currentBalance?.symbol ?? "")", size: 12, weight: .medium)
             })
             .disposed(by: disposeBag)
     }
     
+    // MARK: - Actions
+    @objc func dropdownButtonDidTouch() {
+        let vc = BalancesVC(canChooseCommun: false) { (balance) in
+            self.currentBalance = balance
+        }
+        let nc = BaseNavigationController(rootViewController: vc)
+        present(nc, animated: true, completion: nil)
+    }
+    
     override func getBuyPrice() {
         guard let balance = currentBalance,
-            let value = NumberFormatter().number(from: rightTextField.text ?? "")?.doubleValue,
+            let value = NumberFormatter().number(from: leftTextField.text ?? "")?.doubleValue,
             value > 0
         else {return}
         viewModel.getBuyPrice(symbol: balance.symbol, quantity: "\(value) CMN")
-        
     }
     
     override func getSellPrice() {
         guard let balance = currentBalance,
-            let value = NumberFormatter().number(from: leftTextField.text ?? "")?.doubleValue,
+            let value = NumberFormatter().number(from: rightTextField.text ?? "")?.doubleValue,
             value > 0
         else {return}
         viewModel.getSellPrice(quantity: "\(value) \(balance.symbol)")
     }
     
-    override func shouldEnableConvertButton() -> Bool {
-        guard let sellAmount = NumberFormatter().number(from: self.leftTextField.text ?? "0")?.doubleValue
-            else {return false}
-        guard let currentBalance = self.currentBalance else {return false}
-        guard sellAmount > 0 else {return false}
-        if sellAmount > currentBalance.balanceValue {
-            viewModel.errorSubject.accept(.insufficientFunds)
-            return false
-        }
-        return true
-    }
-    
     override func convertButtonDidTouch() {
         super.convertButtonDidTouch()
-        guard var balance = currentBalance,
+        guard let balance = currentBalance,
             let value = NumberFormatter().number(from: leftTextField.text ?? "")?.doubleValue
         else {return}
-        showIndetermineHudWithMessage("selling".localized().uppercaseFirst + " \(balance.symbol)")
-        BlockchainManager.instance.sellPoints(number: value, pointsCurrencyName: balance.symbol)
+        showIndetermineHudWithMessage("buying".localized().uppercaseFirst + " \(balance.symbol)")
+        BlockchainManager.instance.buyPoints(communNumber: value, pointsCurrencyName: balance.symbol)
             .flatMapCompletable {RestAPIManager.instance.waitForTransactionWith(id: $0)}
             .subscribe(onCompleted: {
                 self.hideHud()

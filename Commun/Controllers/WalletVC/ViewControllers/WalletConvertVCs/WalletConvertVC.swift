@@ -451,10 +451,10 @@ class WalletConvertVC: BaseViewController {
         // Push targetViewController
         let vc: UIViewController
         
-        if self is WalletSellCommunVC {
-            vc = WalletBuyCommunVC(balances: viewModel.items.value, symbol: currentBalance?.symbol)
+        if self is WalletConvertSellCommunVC {
+            vc = WalletConvertBuyCommunVC(balances: viewModel.items.value, symbol: currentBalance?.symbol)
         } else {
-            vc = WalletSellCommunVC(balances: viewModel.items.value, symbol: currentBalance?.symbol)
+            vc = WalletConvertSellCommunVC(balances: viewModel.items.value, symbol: currentBalance?.symbol)
         }
         
         viewControllers.append(vc)
