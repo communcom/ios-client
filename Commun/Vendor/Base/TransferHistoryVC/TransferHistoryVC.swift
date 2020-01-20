@@ -96,24 +96,27 @@ class TransferHistoryVC: ListViewController<ResponseAPIWalletGetTransferHistoryI
             .subscribe(onNext: { [weak self] indexPath in
                 guard let strongSelf = self else { return }
                 
-                // TODO: - DISPLAY TRANSACTION SCENE
-//                if let selectedCell = strongSelf.tableView.cellForRow(at: indexPath) as? TransferHistoryItemCell, let selectedTransaction = selectedCell.item {
-//                    strongSelf.showIndetermineHudWithMessage("loading".localized().uppercaseFirst + " \(balance.symbol)")
-//
-//                    // .history type
-//                    let transaction = Transaction(recipient: Recipient(id: balance.identity,
-//                                                                       name: balance.name!,
-//                                                                       avatarURL: balance.logo),
-//                                                  operationDate: Date(),
-//                                                  accuracy: 2,
-//                                                  symbol: balance.symbol,
-//                                                  type: .history,
-//                                                  amount: CGFloat(value * strongSelf.viewModel.rate.value / 10))
-//
-//                    let completedVC = TransactionCompletedVC(transaction: transaction)
-//                    strongSelf.show(completedVC, sender: nil)
-//                    strongSelf.hideHud()
-//                }
+                if let selectedCell = strongSelf.tableView.cellForRow(at: indexPath) as? TransferHistoryItemCell, let selectedItem = selectedCell.item {
+                    strongSelf.showIndetermineHudWithMessage("loading".localized().uppercaseFirst)
+                    (strongSelf.tabBarController as? TabBarVC)!.setTabBarHiden(true)
+
+                    // .history type
+                    let transaction = Transaction(recipient: Recipient(id: selectedItem.receiver.userId,
+                                                                       name: selectedItem.receiver.username ?? Config.defaultSymbol,
+                                                                       avatarURL: selectedItem.receiver.avatarUrl),
+                                                  operationDate: Date(),
+                                                  accuracy: 2,
+                                                  symbol: selectedItem.symbol,
+                                                  type: .history,
+                                                  amount: CGFloat(selectedItem.quantityValue) * (selectedItem.meta.actionType == "transfer" ? -1 : 1))
+
+                    let completedVC = TransactionCompletedVC(transaction: transaction)
+                    completedVC.modalPresentationStyle = .overCurrentContext
+                    completedVC.modalTransitionStyle = .crossDissolve
+
+                    strongSelf.present(completedVC, animated: true, completion: nil)
+                    strongSelf.hideHud()
+                }
             })
             .disposed(by: disposeBag)
     }

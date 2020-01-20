@@ -381,7 +381,7 @@ class WalletSendPointsVC: UIViewController {
 //        let completedVC = TransactionCompletedVC(transaction: dataModel.transaction)
 //        show(completedVC, sender: nil)
 
-        ///*
+        /*
         BlockchainManager.instance.transferPoints(to: recipientID, number: Double(numberValue), currency: dataModel.transaction.symbol)
             .flatMapCompletable { RestAPIManager.instance.waitForTransactionWith(id: $0) }
             .subscribe(onCompleted: { [weak self] in
@@ -398,7 +398,7 @@ class WalletSendPointsVC: UIViewController {
                 strongSelf.showError(error)
         }
         .disposed(by: disposeBag)
-        //*/
+        */
     }
     
     @objc func viewTapped( _ sender: UITapGestureRecognizer) {

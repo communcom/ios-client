@@ -136,10 +136,14 @@ class TransactionCompletedView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+       
     
     // MARK: - Custom Functions
     private func setupView() {
+        if viewType == .history {
+            addGesture()
+        }
+        
         backgroundColor = .clear
         boldLabels = [transactionTitleLabel, recipientNameLabel]
         semiboldLabels = [transactionDateLabel, recipientIDLabel, burnedPercentLabel]
@@ -149,7 +153,8 @@ class TransactionCompletedView: UIView {
         contentView.backgroundColor = .white
         contentView.layer.cornerRadius = CGFloat.adaptive(width: 20.0)
         contentView.clipsToBounds = true
-
+        contentView.tag = 99
+        
         // Add white view
         addSubview(contentView)
         contentView.autoPinEdgesToSuperviewSafeArea(with: .zero, excludingEdge: .bottom)
@@ -220,8 +225,6 @@ class TransactionCompletedView: UIView {
         namesStackView.autoAlignAxis(toSuperviewAxis: .vertical)
         namesStackView.autoPinEdge(.top, to: .bottom, of: recipientAvatarImageView, withOffset: CGFloat.adaptive(height: 10.0))
 
-//        namesStackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(horizontal: CGFloat.adaptive(width: 44.0), vertical: CGFloat.adaptive(height: 636.0)), excludingEdge: .bottom)
-
         // Draw second dashed line
         if let dashedLine2 = dashedLine1.copyView() {
             draw(dashedLine: dashedLine2)
@@ -230,19 +233,19 @@ class TransactionCompletedView: UIView {
         }
         
         // Add circles
-        let leftTopCircle = createCircleView(withColor: viewType == .send ? #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1) : #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1), sideSize: CGFloat.adaptive(width: 24.0))
+        let leftTopCircle = createCircleView(withColor: viewType == .send ? #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1) : #colorLiteral(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.3), sideSize: CGFloat.adaptive(width: 24.0))
         contentView.addSubview(leftTopCircle)
         leftTopCircle.autoPinTopAndLeadingToSuperView(inset: CGFloat.adaptive(height: 154.0), xInset: CGFloat.adaptive(width: -24.0 / 2))
 
-        let leftBottomCircle = createCircleView(withColor: viewType == .send ? #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1) : #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.6), sideSize: CGFloat.adaptive(width: 24.0))
+        let leftBottomCircle = createCircleView(withColor: viewType == .send ? #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1) : #colorLiteral(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.3), sideSize: CGFloat.adaptive(width: 24.0))
         contentView.addSubview(leftBottomCircle)
         leftBottomCircle.autoPinBottomAndLeadingToSuperView(inset: CGFloat.adaptive(height: 97.0), xInset: CGFloat.adaptive(width: -24.0 / 2))
 
-        let rightTopCircle = createCircleView(withColor: viewType == .send ? #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1) : #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1), sideSize: CGFloat.adaptive(width: 24.0))
+        let rightTopCircle = createCircleView(withColor: viewType == .send ? #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1) : #colorLiteral(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.3), sideSize: CGFloat.adaptive(width: 24.0))
         contentView.addSubview(rightTopCircle)
         rightTopCircle.autoPinTopAndTrailingToSuperView(inset: CGFloat.adaptive(height: 154.0), xInset: CGFloat.adaptive(width: -24.0 / 2))
 
-        let rightBottomCircle = createCircleView(withColor: viewType == .send ? #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1) : #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.6), sideSize: CGFloat.adaptive(width: 24.0))
+        let rightBottomCircle = createCircleView(withColor: viewType == .send ? #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1) : #colorLiteral(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.3), sideSize: CGFloat.adaptive(width: 24.0))
         contentView.addSubview(rightBottomCircle)
         rightBottomCircle.autoPinBottomAndTrailingToSuperView(inset: CGFloat.adaptive(height: 97.0), xInset: CGFloat.adaptive(width: -24.0 / 2))
         
@@ -288,6 +291,10 @@ class TransactionCompletedView: UIView {
         actionButtonsStackView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
     }
     
+    private func addGesture() {
+        addGestureRecognizer(UITapGestureRecognizer(target: nil, action: nil))
+    }
+
     func actions(_ sender: @escaping (ActionType) -> Void) {
         // Home button
         homeButton.rx.tap

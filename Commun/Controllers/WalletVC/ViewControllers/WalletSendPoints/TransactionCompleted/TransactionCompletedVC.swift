@@ -32,7 +32,7 @@ class TransactionCompletedVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        dataModel.transaction.type == .send ? setupNavBar() : navigationController?.setToolbarHidden(true, animated: false)
+        dataModel.transaction.type == .send ? setupNavBar() : addGesture()
 
         dataModel.loadBalances { [weak self] success in
             guard let strongSelf = self else { return }
@@ -65,12 +65,8 @@ class TransactionCompletedVC: UIViewController {
         super.viewWillLayoutSubviews()
         
         view.backgroundColor = dataModel.transaction.type == .send ? #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1) : #colorLiteral(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.3)
-        
-        if dataModel.transaction.type == .history {
-            view.superview?.frame = CGRect(x: 0.0, y: CGFloat.adaptive(height: 201.0), width: view.frame.width, height: CGFloat.adaptive(height: 567.0))
-        }
     }
-
+        
     
     // MARK: - Custom Functions
     private func setupNavBar() {
@@ -126,8 +122,16 @@ class TransactionCompletedVC: UIViewController {
         }
     }
     
+    private func addGesture() {
+        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(viewTapped)))
+    }
+    
     
     // MARK: - Actions
+    @objc func viewTapped( _ sender: UITapGestureRecognizer) {
+        self.dismiss(animated: true, completion: nil)
+    }
+
     @objc func actionBarButtonTapped(_ sender: UIBarButtonItem) {
         // TODO: - ADD ACTION
         showAlert(title: "TODO", message: "Add action")
