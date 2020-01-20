@@ -18,7 +18,7 @@ struct Transaction {
     var recipient = Recipient()
 
     var operationDate: Date = Date()
-    var accuracy: Int = 2
+    var accuracy: Int = 4
     var symbol: String = Config.defaultSymbol
     var type: TransactionType = .send
 

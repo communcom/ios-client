@@ -172,7 +172,7 @@ class WalletSendPointsVC: UIViewController {
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         
-        view.backgroundColor = #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1)
+//        view.backgroundColor = #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1)
         pointsToolbar.frame.size = CGSize(width: CGFloat.adaptive(width: 375.0), height: CGFloat.adaptive(height: 50.0))
     }
     
@@ -191,7 +191,7 @@ class WalletSendPointsVC: UIViewController {
         balanceContentView.addSubview(balanceStackView)
         balanceStackView.autoAlignAxis(toSuperviewAxis: .vertical)
 
-        if dataModel.balances.count == 1 {
+        if dataModel.currentBalanceSymbol == Config.defaultSymbol {
             balanceContentView.addSubview(communLogoImageView)
             communLogoImageView.autoPinEdge(toSuperviewEdge: .top, withInset: CGFloat.adaptive(height: 20.0))
             communLogoImageView.autoAlignAxis(toSuperviewAxis: .vertical)
@@ -283,7 +283,9 @@ class WalletSendPointsVC: UIViewController {
     }
     
     private func setSendButton(amount: CGFloat = 0.0, percent: CGFloat) {
-        let subtitle1 = String(format: "%@: %.*f %@", "send".localized().uppercaseFirst, dataModel.transaction.accuracy, amount, dataModel.transaction.symbol.fullName)
+        //        let subtitle1 = String(format: "%@: %.*f %@", "send".localized().uppercaseFirst, dataModel.transaction.accuracy, amount, dataModel.transaction.symbol.fullName)
+        
+        let subtitle1 = String(format: "%@: %@ %@", "send".localized().uppercaseFirst, amount.convertToString(withAccuracy: dataModel.transaction.accuracy), dataModel.transaction.symbol.fullName)
         let subtitle2 = String(format: "%.1f%% %@", percent, "will be burned".localized())
         let title = NSMutableAttributedString(string: "\(subtitle1)\n\(subtitle2)")
 
@@ -313,8 +315,8 @@ class WalletSendPointsVC: UIViewController {
     
     private func updateBalanceInfo() {
         balanceNameLabel.text = dataModel.currentBalance.name
-        balanceCurrencyLabel.text = dataModel.currentBalance.amount == 0 ? "0" : dataModel.currentBalance.amount.formattedWithSeparator
-        
+        balanceCurrencyLabel.text = dataModel.currentBalance.amount == 0 ? "0" : dataModel.currentBalance.amount.convertToString(withAccuracy: dataModel.currentBalance.accuracy)
+
         updateSendPointsInfo()
     }
     
@@ -373,13 +375,13 @@ class WalletSendPointsVC: UIViewController {
 
         dataModel.transaction.operationDate = Date()
         
-        showIndetermineHudWithMessage("sending".localized().uppercaseFirst + " \(dataModel.transaction.symbol.fullName)")
+//        showIndetermineHudWithMessage("sending".localized().uppercaseFirst + " \(dataModel.transaction.symbol.fullName)")
 
         // FOR TEST
-//        let completedVC = TransactionCompletedVC(transaction: dataModel.transaction)
-//        show(completedVC, sender: nil)
+        let completedVC = TransactionCompletedVC(transaction: dataModel.transaction)
+        show(completedVC, sender: nil)
 
-        ///*
+        /*
         BlockchainManager.instance.transferPoints(to: recipientID, number: Double(numberValue), currency: dataModel.transaction.symbol)
             .flatMapCompletable { RestAPIManager.instance.waitForTransactionWith(id: $0) }
             .subscribe(onCompleted: { [weak self] in
@@ -396,7 +398,7 @@ class WalletSendPointsVC: UIViewController {
                 strongSelf.showError(error)
         }
         .disposed(by: disposeBag)
-        //*/
+         */
     }
     
     @objc func viewTapped( _ sender: UITapGestureRecognizer) {

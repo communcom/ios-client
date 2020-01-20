@@ -11,6 +11,12 @@ import Foundation
 struct Balance {
     // MARK: - Properties
     var name: String = ""
-    var amount: CGFloat = 0.0
     var avatarURL: String?
+    var accuracy: Int = 4
+
+    var amount: CGFloat = 0.0 {
+        didSet {
+            accuracy = amount == 0 ? 0 : (amount >= 1_000 ? 2 : 4)
+        }
+    }
 }

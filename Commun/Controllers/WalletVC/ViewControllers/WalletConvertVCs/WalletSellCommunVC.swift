@@ -162,17 +162,33 @@ class WalletSellCommunVC: WalletConvertVC {
     
     override func convertButtonDidTouch() {
         super.convertButtonDidTouch()
-        guard let balance = currentBalance,
-            let value = NumberFormatter().number(from: leftTextField.text ?? "")?.doubleValue
-        else {return}
+        
+        guard let balance = currentBalance, let value = NumberFormatter().number(from: leftTextField.text ?? "")?.doubleValue else { return }
+                
         showIndetermineHudWithMessage("buying".localized().uppercaseFirst + " \(balance.symbol)")
+         
         BlockchainManager.instance.buyPoints(communNumber: value, pointsCurrencyName: balance.symbol)
             .flatMapCompletable {RestAPIManager.instance.waitForTransactionWith(id: $0)}
-            .subscribe(onCompleted: {
-                self.hideHud()
-                // TODO: - Show check
-                self.completion?()
-                self.back()
+            .subscribe(onCompleted: { [weak self] in
+                guard let strongSelf = self else { return }
+                
+                strongSelf.hideHud()
+                strongSelf.completion?()
+//                self.back()
+                
+                // Default .send type
+                let transaction = Transaction(recipient: Recipient(id: balance.identity,
+                                                                   name: balance.name!,
+                                                                   avatarURL: balance.logo),
+                                              operationDate: Date(),
+                                              accuracy: 2,
+                                              symbol: balance.symbol,
+                                              type: .send,
+                                              amount: CGFloat(value * strongSelf.viewModel.rate.value / 10))
+
+                let completedVC = TransactionCompletedVC(transaction: transaction)
+                strongSelf.show(completedVC, sender: nil)
+                strongSelf.hideHud()
             }) { (error) in
                 self.hideHud()
                 self.showError(error)
