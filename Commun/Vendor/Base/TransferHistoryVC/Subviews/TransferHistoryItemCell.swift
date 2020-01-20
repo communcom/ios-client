@@ -26,7 +26,7 @@ class TransferHistoryItemCell: MyTableViewCell, ListItemCellType {
         return imageView
     }()
     lazy var contentLabel = UILabel.with(text: "Ivan Bilin\nTransaction", textSize: 15, weight: .semibold, numberOfLines: 0)
-    lazy var amountStatusLabel = UILabel.with(text: "-500 Commun\nOn hold", textSize: 15, weight: .semibold, numberOfLines: 2, textAlignment: .right)
+    lazy var amountStatusLabel = UILabel.with(text: "-500 Commun\nOn hold", textSize: 15, weight: .semibold, numberOfLines: 0, textAlignment: .right)
     
     // MARK: - Methods
     override func setUpViews() {
@@ -52,7 +52,6 @@ class TransferHistoryItemCell: MyTableViewCell, ListItemCellType {
         contentLabel.bottomAnchor.constraint(lessThanOrEqualTo: containerView.bottomAnchor, constant: -10)
             .isActive = true
         contentLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
-        contentLabel.setContentHuggingPriority(.defaultHigh, for: .vertical)
         
         containerView.addSubview(amountStatusLabel)
         amountStatusLabel.autoPinEdge(.leading, to: .trailing, of: contentLabel, withOffset: 10)
@@ -62,9 +61,7 @@ class TransferHistoryItemCell: MyTableViewCell, ListItemCellType {
             .isActive = true
         amountStatusLabel.bottomAnchor.constraint(lessThanOrEqualTo: containerView.bottomAnchor, constant: -10)
             .isActive = true
-        
-        amountStatusLabel.setContentHuggingPriority(.defaultHigh, for: .vertical)
-        amountStatusLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        amountStatusLabel.setContentHuggingPriority(.required, for: .horizontal)
     }
     
     func setUp(with item: ResponseAPIWalletGetTransferHistoryItem) {

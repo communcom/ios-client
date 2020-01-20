@@ -37,7 +37,7 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
         return view
     }()
     
-    lazy var optionsButton = UIButton.option(tintColor: .white, contentInsets: UIEdgeInsets(top: 0, left: 32, bottom: 0, right: 0))
+    lazy var optionsButton = UIButton.option(tintColor: .white, contentInsets: UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16))
     
     lazy var coverImageView: UIImageView = {
         let imageView = UIImageView()
@@ -166,6 +166,15 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
         navigationController?.navigationBar.isTranslucent = true
 
         showTitle(tableView.contentOffset.y >= -43)
+    }
+    
+    // TODO: - Temporary solution to fix rightBarButton padding, remove later
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        if let view = self.navigationController?.navigationBar.subviews[safe: 1]
+        {
+            view.constraints.first(where: {$0.constant == -16 && $0.firstAttribute == .trailing})?.constant = 0
+        }
     }
 
     func showTitle(_ show: Bool, animated: Bool = false) {
