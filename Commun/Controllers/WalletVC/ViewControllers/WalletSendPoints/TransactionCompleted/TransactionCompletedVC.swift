@@ -14,6 +14,8 @@ class TransactionCompletedVC: UIViewController {
     var transaction: Transaction!
     var transactionCompletedView: TransactionCompletedView!
     
+    var completion: (() -> Void)?
+    
     
     // MARK: - Class Initialization
     init(transaction: Transaction) {
@@ -129,6 +131,7 @@ class TransactionCompletedVC: UIViewController {
     
     // MARK: - Actions
     @objc func viewTapped( _ sender: UITapGestureRecognizer) {
+        completion!()
         self.dismiss(animated: true, completion: nil)
     }
 

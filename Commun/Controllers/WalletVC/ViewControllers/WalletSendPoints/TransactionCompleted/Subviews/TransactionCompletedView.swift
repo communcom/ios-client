@@ -369,5 +369,16 @@ class TransactionCompletedView: UIView {
         transactionDateLabel.text = transaction.operationDate.convert(toStringFormat: .transactionCompletedType)
         transactionAmountLabel.text = String(Double(transaction.amount).currencyValueFormatted)
         transactionCurrencyLabel.text = transaction.symbol.fullName
+        
+        if viewType != .send {
+            if transaction.amount > 0 {
+                transactionAmountLabel.text = "+" + transactionAmountLabel.text!
+                transactionAmountLabel.theme_textColor = softCyanLimeGreenColorPickers
+                transactionCurrencyLabel.theme_textColor = softCyanLimeGreenColorPickers
+            } else {
+                transactionAmountLabel.theme_textColor = blackWhiteColorPickers
+                transactionCurrencyLabel.theme_textColor = blackWhiteColorPickers
+            }
+        }
     }
 }

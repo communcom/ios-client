@@ -10,6 +10,7 @@ import Foundation
 
 public enum TransactionType: Int {
     case send
+    case convert
     case history
 }
 

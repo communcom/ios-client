@@ -172,7 +172,7 @@ class WalletSendPointsVC: UIViewController {
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         
-//        view.backgroundColor = #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1)
+        view.backgroundColor = .clear //#colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1)
         pointsToolbar.frame.size = CGSize(width: CGFloat.adaptive(width: 375.0), height: CGFloat.adaptive(height: 50.0))
     }
     
@@ -381,7 +381,7 @@ class WalletSendPointsVC: UIViewController {
 //        let completedVC = TransactionCompletedVC(transaction: dataModel.transaction)
 //        show(completedVC, sender: nil)
 
-        /*
+        ///*
         BlockchainManager.instance.transferPoints(to: recipientID, number: Double(numberValue), currency: dataModel.transaction.symbol)
             .flatMapCompletable { RestAPIManager.instance.waitForTransactionWith(id: $0) }
             .subscribe(onCompleted: { [weak self] in
@@ -398,7 +398,7 @@ class WalletSendPointsVC: UIViewController {
                 strongSelf.showError(error)
         }
         .disposed(by: disposeBag)
-        */
+        //*/
     }
     
     @objc func viewTapped( _ sender: UITapGestureRecognizer) {

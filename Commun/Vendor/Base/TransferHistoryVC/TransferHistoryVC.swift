@@ -101,14 +101,31 @@ class TransferHistoryVC: ListViewController<ResponseAPIWalletGetTransferHistoryI
                     (strongSelf.tabBarController as? TabBarVC)!.setTabBarHiden(true)
 
                     // .history type
-                    let transaction = Transaction(recipient: Recipient(id: selectedItem.receiver.userId,
-                                                                       name: selectedItem.receiver.username ?? Config.defaultSymbol,
-                                                                       avatarURL: selectedItem.receiver.avatarUrl),
-                                                  operationDate: Date(),
-                                                  accuracy: 2,
+                    var recipient: Recipient
+                    var amount: CGFloat = 0.0
+                    
+                    switch selectedItem.meta.actionType {
+                    case "convert":
+                        recipient = Recipient(id: selectedItem.point.symbol ?? Config.defaultSymbol,
+                                              name: selectedItem.point.name ?? Config.defaultSymbol,
+                                              avatarURL: selectedItem.point.logo)
+
+                        amount = CGFloat((selectedItem.meta.exchangeAmount ?? 0.0) * (selectedItem.meta.actionType == "transfer" ? -1 : 1))
+
+                    default:
+                        recipient = Recipient(id: selectedItem.receiver.userId,
+                                              name: selectedItem.receiver.username ?? Config.defaultSymbol,
+                                              avatarURL: selectedItem.receiver.avatarUrl)
+                        
+                        amount = CGFloat(selectedItem.quantityValue * (selectedItem.meta.actionType == "transfer" ? -1 : 1))
+                    }
+
+                    let transaction = Transaction(recipient: recipient,
+                                                  operationDate: selectedItem.timestamp.convert(toDateFormat: .nextSmsDateType),
+                                                  accuracy: 4,
                                                   symbol: selectedItem.symbol,
                                                   type: .history,
-                                                  amount: CGFloat(selectedItem.quantityValue) * (selectedItem.meta.actionType == "transfer" ? -1 : 1))
+                                                  amount: amount)
 
                     let completedVC = TransactionCompletedVC(transaction: transaction)
                     completedVC.modalPresentationStyle = .overCurrentContext
@@ -116,6 +133,10 @@ class TransferHistoryVC: ListViewController<ResponseAPIWalletGetTransferHistoryI
 
                     strongSelf.present(completedVC, animated: true, completion: nil)
                     strongSelf.hideHud()
+                    
+                    completedVC.completion = {
+                        (strongSelf.tabBarController as? TabBarVC)!.setTabBarHiden(false)
+                    }
                 }
             })
             .disposed(by: disposeBag)
