@@ -59,7 +59,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             // create deviceId
             if KeychainManager.currentDeviceId == nil {
                 let id = UUID().uuidString + "." + "\(Date().timeIntervalSince1970)"
-                KeychainManager.save([Config.currentDeviceIdKey: id])
+                try? KeychainManager.save([Config.currentDeviceIdKey: id])
             }
             
             UserDefaults.standard.set(true, forKey: firstInstallAppKey)
