@@ -8,31 +8,42 @@
 
 import Foundation
 import RxSwift
-import ESPullToRefresh
+import RxCocoa
 
-class WalletVC: TransferHistoryVC {
+class CommunWalletVC: TransferHistoryVC {
     // MARK: - Properties
-    var balances: [ResponseAPIWalletGetBalance]? {
-        (self.viewModel as! WalletViewModel).balancesVM.items.value
-    }
-    var currentBalance: ResponseAPIWalletGetBalance? {
-        balances?[safe: headerView.selectedIndex]
+    var balancesSubject: BehaviorRelay<[ResponseAPIWalletGetBalance]> {
+        (viewModel as! WalletViewModel).balancesVM.items
     }
     
+    var balances: [ResponseAPIWalletGetBalance] {
+        balancesSubject.value
+    }
+    
+    var isUserScrolling: Bool {
+        tableView.isTracking || tableView.isDragging || tableView.isDecelerating
+    }
+
+    var tableTopConstraint: NSLayoutConstraint!
+    
     // MARK: - Subviews
-    lazy var headerView: WalletHeaderView = {
-        let headerView = WalletHeaderView(forAutoLayout: ())
+    lazy var headerView: CommunWalletHeaderView = createHeaderView()
+    func createHeaderView() -> CommunWalletHeaderView {
+        let headerView = CommunWalletHeaderView(forAutoLayout: ())
         headerView.delegate = self
         headerView.dataSource = self
         return headerView
-    }()
+    }
     lazy var tableHeaderView = WalletTableHeaderView(tableView: tableView)
     var myPointsCollectionView: UICollectionView {tableHeaderView.myPointsCollectionView}
     var sendPointsCollectionView: UICollectionView {tableHeaderView.sendPointsCollectionView}
     var headerViewExpandedHeight: CGFloat = 0
-    
-    override class func createViewModel() -> TransferHistoryViewModel {
-        WalletViewModel()
+
+    private var barStyle: UIStatusBarStyle = .lightContent
+
+    // MARK: - Initializers
+    convenience init() {
+        self.init(viewModel: WalletViewModel())
     }
     
     override func createTableView() -> UITableView {
@@ -44,10 +55,11 @@ class WalletVC: TransferHistoryVC {
         tableView.insetsContentViewsToSafeArea = false
         tableView.contentInsetAdjustmentBehavior = .never
         tableView.showsVerticalScrollIndicator = false
-        
+        tableView.contentInset.top = 0
+
         view.addSubview(tableView)
-        tableView.autoPinEdgesToSuperviewEdges()
-        
+        tableView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
+        tableTopConstraint = tableView.autoPinEdge(toSuperviewEdge: .top)
         view.bringSubviewToFront(headerView)
         return tableView
     }
@@ -87,41 +99,36 @@ class WalletVC: TransferHistoryVC {
         sendPointsCollectionView.rx.setDelegate(self)
             .disposed(by: disposeBag)
         
-        let offsetY = tableView.rx.contentOffset
+        tableView.rx.contentOffset
             .map {$0.y}
-            .share()
-            
-        offsetY
-            .filter {_ in self.tableView.isUserScrolling}
-            .map({ y in
-                if y > 0 {return true}
-                return self.headerViewExpandedHeight + y > 40
+            .filter {_ in self.isUserScrolling}
+            .map({ y -> Bool in
+                return y > 0
             })
             .distinctUntilChanged()
             .observeOn(MainScheduler.asyncInstance)
             .subscribe(onNext: { (collapse) in
                 self.headerView.setIsCollapsed(collapse)
+                self.changeStatusBarStyle(collapse ? .default : .lightContent)
             })
             .disposed(by: disposeBag)
         
-        offsetY
-            .map {$0 < -self.headerViewExpandedHeight}
-            .subscribe(onNext: { (show) in
-                self.tableView.subviews.first(where: {$0 is ESRefreshHeaderView})?.alpha = show ? 1 : 0
-            })
-            .disposed(by: disposeBag)
     }
-    
+
+//    override var preferredStatusBarStyle: UIStatusBarStyle {
+//        .lightContent
+//    }
+
     override func bindItems() {
         super.bindItems()
-        (viewModel as! WalletViewModel).balancesVM.items
+        balancesSubject
             .distinctUntilChanged()
             .subscribe(onNext: { (_) in
-                self.headerView.reloadData()
+                self.reloadData()
             })
             .disposed(by: disposeBag)
         
-        (viewModel as! WalletViewModel).balancesVM.items
+        balancesSubject
             .bind(to: myPointsCollectionView.rx.items(cellIdentifier: "\(MyPointCollectionCell.self)", cellType: MyPointCollectionCell.self)) { _, model, cell in
                 cell.setUp(with: model)
             }
@@ -129,8 +136,7 @@ class WalletVC: TransferHistoryVC {
         
         myPointsCollectionView.rx.modelSelected(ResponseAPIWalletGetBalance.self)
             .subscribe(onNext: { (balance) in
-                guard let index = self.balances?.firstIndex(where: {$0.symbol == balance.symbol}) else {return}
-                self.headerView.setSelectedIndex(index)
+                self.openOtherBalancesWalletVC(withSelectedBalance: balance)
             })
             .disposed(by: disposeBag)
         
@@ -143,6 +149,10 @@ class WalletVC: TransferHistoryVC {
                 cell.setUp(with: model)
             }
             .disposed(by: disposeBag)
+    }
+    
+    func reloadData() {
+        headerView.reloadData()
     }
     
     override func bindItemSelected() {
@@ -199,24 +209,14 @@ class WalletVC: TransferHistoryVC {
             })
             .disposed(by: disposeBag)
     }
-    
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        .lightContent
-    }
-    
+
     // MARK: - Actions
     @objc func sendButtonDidTouch() {
         
     }
     
     @objc func convertButtonDidTouch() {
-        guard let balance = currentBalance else {return}
-        let vc: WalletConvertVC
-        if balance.symbol == "CMN" {
-            vc = WalletSellCommunVC(balances: (self.viewModel as! WalletViewModel).balancesVM.items.value)
-        } else {
-            vc = WalletBuyCommunVC(balances: (self.viewModel as! WalletViewModel).balancesVM.items.value, symbol: balance.symbol)
-        }
+        guard let vc = createConvertVC() else {return}
         vc.completion = {
             self.viewModel.reload()
         }
@@ -224,6 +224,10 @@ class WalletVC: TransferHistoryVC {
         nc?.shouldResetNavigationBarOnPush = false
         show(vc, sender: nil)
         nc?.shouldResetNavigationBarOnPush = true
+    }
+    
+    func createConvertVC() -> WalletConvertVC? {
+        WalletSellCommunVC(balances: (self.viewModel as! WalletViewModel).balancesVM.items.value)
     }
     
     @objc func moreActionsButtonDidTouch(_ sender: CommunButton) {
@@ -240,8 +244,7 @@ class WalletVC: TransferHistoryVC {
     
     @objc func myPointsSeeAllDidTouch() {
         let vc = BalancesVC { balance in
-            guard let index = self.balances?.firstIndex(where: {$0.symbol == balance.symbol}) else {return}
-            self.headerView.setSelectedIndex(index)
+            self.openOtherBalancesWalletVC(withSelectedBalance: balance)
         }
         let nc = BaseNavigationController(rootViewController: vc)
         present(nc, animated: true, completion: nil)
@@ -254,40 +257,59 @@ class WalletVC: TransferHistoryVC {
     func addFriend() {
         showAlert(title: "TODO: Add friend", message: "add friend")
     }
+    
+    private func openOtherBalancesWalletVC(withSelectedBalance balance: ResponseAPIWalletGetBalance?) {
+        let viewModel = (self.viewModel as! WalletViewModel)
+        guard let balance = balance, let index = (balances.filter {$0.symbol != "CMN"}).firstIndex(where: {$0.symbol == balance.symbol}) else {return}
+        let vc = OtherBalancesWalletVC(balances: viewModel.balancesVM.items.value, selectedIndex: index, subscriptions: viewModel.subscriptionsVM.items.value, history: viewModel.items.value)
+        show(vc, sender: self)
+    }
 }
 
-extension WalletVC: UICollectionViewDelegateFlowLayout {
+// MARK: - UICollectionViewDelegateFlowLayout
+extension CommunWalletVC: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if collectionView == sendPointsCollectionView {
             return CGSize(width: 90, height: SendPointCollectionCell.height)
         }
         return CGSize(width: 140, height: MyPointCollectionCell.height)
     }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return self.barStyle
+    }
+
+    func changeStatusBarStyle(_ style: UIStatusBarStyle) {
+        self.barStyle = style
+        setNeedsStatusBarAppearanceUpdate()
+    }
 }
 
-extension WalletVC: WalletHeaderViewDelegate, WalletHeaderViewDatasource {
-    func data(forWalletHeaderView headerView: WalletHeaderView) -> [ResponseAPIWalletGetBalance]? {
+extension CommunWalletVC: CommunWalletHeaderViewDelegate, CommunWalletHeaderViewDatasource {
+    func data(forWalletHeaderView headerView: CommunWalletHeaderView) -> [ResponseAPIWalletGetBalance]? {
         balances
     }
     
-    func walletHeaderView(_ headerView: WalletHeaderView, willUpdateHeightCollapsed isCollapsed: Bool) {
-        if isCollapsed {return}
-        resetTableViewContentInset()
-    }
-    
-    func walletHeaderView(_ headerView: WalletHeaderView, currentIndexDidChangeTo index: Int) {
-        tableHeaderView.setMyPointHidden(index != 0)
+    func walletHeaderView(_ headerView: CommunWalletHeaderView, willUpdateHeightCollapsed isCollapsed: Bool) {
+//        if isCollapsed {
+//            let height = headerView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
+//            headerViewExpandedHeight = height
+//            tableView.bounds.origin.y = headerViewExpandedHeight
+//        } else {
+            resetTableViewContentInset()
+//        }
     }
     
     private func resetTableViewContentInset() {
         let height = headerView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
         if headerViewExpandedHeight == height {return}
         headerViewExpandedHeight = height
-        tableView.contentInset = UIEdgeInsets(top: headerViewExpandedHeight - 20, left: 0, bottom: 0, right: 0)
-        
-        // change bounds without calling scrollViewDidScroll
-        var bounds = tableView.bounds
-        bounds.origin = CGPoint(x: 0, y: -headerViewExpandedHeight + 20)
-        tableView.bounds = bounds
+
+        view.layoutIfNeeded()
+        tableTopConstraint.constant = headerViewExpandedHeight - 30
+        tableView.contentInset.top = 20
+        UIView.animate(withDuration: 0.3) {
+            self.view.layoutIfNeeded()
+        }
     }
 }

@@ -126,9 +126,6 @@ class WalletTableHeaderView: MyTableHeaderView {
                 
                 sendPointsTopConstraint?.isActive = false
                 sendPointsTopConstraint = sendPointsContainerView.autoPinEdge(.top, to: .bottom, of: myPointsContainerView, withOffset: 30 * Config.heightRatio)
-                UIView.animate(withDuration: 0.3) {
-                    self.layoutIfNeeded()
-                }
             }
         } else {
             // remove my point
@@ -137,9 +134,6 @@ class WalletTableHeaderView: MyTableHeaderView {
                 
                 sendPointsTopConstraint?.isActive = false
                 sendPointsTopConstraint = sendPointsContainerView.autoPinEdge(toSuperviewEdge: .top)
-                UIView.animate(withDuration: 0.3) {
-                    self.layoutIfNeeded()
-                }
             }
         }
         

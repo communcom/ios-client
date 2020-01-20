@@ -13,13 +13,8 @@ class TransferHistoryVC: ListViewController<ResponseAPIWalletGetTransferHistoryI
     var lastOffset: CGPoint?
     
     // MARK: - Initializers
-    init() {
-        super.init(viewModel: Self.createViewModel())
-    }
-    
-    class func createViewModel() -> TransferHistoryViewModel {
-        let viewModel = TransferHistoryViewModel()
-        return viewModel
+    init(viewModel: TransferHistoryViewModel = TransferHistoryViewModel()) {
+        super.init(viewModel: viewModel)
     }
     
     required init?(coder: NSCoder) {

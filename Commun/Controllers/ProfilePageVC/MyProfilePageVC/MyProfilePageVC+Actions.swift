@@ -25,11 +25,19 @@ extension MyProfilePageVC {
     }
     
     @objc func walletDidTouch() {
-        let walletVC = WalletVC()
-        let nc = navigationController as? BaseNavigationController
-        nc?.shouldResetNavigationBarOnPush = false
-        show(walletVC, sender: nil)
-        nc?.shouldResetNavigationBarOnPush = true
+        let state = (viewModel as! MyProfilePageViewModel).balancesVM.state.value
+        switch state {
+        case .error:
+            (viewModel as! MyProfilePageViewModel).balancesVM.reload()
+        case .listEnded, .loading(false):
+            let walletVC = CommunWalletVC()
+            let nc = navigationController as? BaseNavigationController
+            nc?.shouldResetNavigationBarOnPush = false
+            show(walletVC, sender: nil)
+            nc?.shouldResetNavigationBarOnPush = true
+        default:
+            break
+        }
     }
     
     // MARK: - Covers + Avatar

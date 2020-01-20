@@ -94,6 +94,7 @@ final class MyProfileHeaderView: UserProfileHeaderView {
         walletView.addSubview(nextView)
         nextView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
         nextView.autoAlignAxis(toSuperviewAxis: .horizontal)
+        nextView.autoPinEdge(.leading, to: .trailing, of: communValueLabel, withOffset: 8)
         
         followersCountLabel.autoPinEdge(.top, to: .bottom, of: walletView, withOffset: 25)
     }

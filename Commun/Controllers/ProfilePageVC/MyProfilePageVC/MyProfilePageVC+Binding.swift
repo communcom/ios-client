@@ -51,22 +51,26 @@ extension MyProfilePageVC {
     }
     
     func bindBalances() {
+        let walletView = (headerView as! MyProfileHeaderView).walletShadowView
         let label = (headerView as! MyProfileHeaderView).communValueLabel
         (viewModel as! MyProfilePageViewModel).balancesVM.state
             .subscribe(onNext: {(state) in
+                label.textColor = .white
                 switch state {
                 case .loading(let isLoading):
                     if isLoading {
-                        label.showLoader()
+                        walletView.showLoading(cover: false, spinnerColor: .white, size: 20, centerYOffset: 10)
                     } else {
-                        label.hideLoader()
+                        walletView.hideLoading()
                     }
                 case .listEnded:
-                    label.hideLoader()
+                    walletView.hideLoading()
                 case .listEmpty:
-                    label.hideLoader()
+                    walletView.hideLoading()
                 case .error:
-                    label.text = "Error! Please refresh the page!"
+                    walletView.hideLoading()
+                    label.textColor = .red
+                    label.text = "error".localized().uppercaseFirst + "!!!"
                 }
             })
             .disposed(by: disposeBag)
