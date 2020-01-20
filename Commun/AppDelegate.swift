@@ -157,9 +157,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                         // Retrieve favourites
                         FavouritesList.shared.retrieve()
                         
-                        // Turn notify on
-                        self.pushNotifyOn()
-                        
                         // show feed
                         if !force && (self.window?.rootViewController is TabBarVC) {return}
                         self.changeRootVC(controllerContainer.resolve(TabBarVC.self)!)
@@ -324,18 +321,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                                        options: [])
         
         self.notificationCenter.setNotificationCategories([category])
-    }
-    
-    func pushNotifyOn() {
-        if UserDefaults.standard.value(forKey: Config.currentUserPushNotificationOn) == nil {
-            RestAPIManager.instance.pushNotifyOn()
-                .subscribe(onCompleted: {
-                    Logger.log(message: "Successfully turn pushNotificationOn", event: .severe)
-                }) { (_) in
-                    
-                }
-                .disposed(by: bag)
-        }
     }
     
     // MARK: - Core Data stack
