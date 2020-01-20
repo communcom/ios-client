@@ -53,6 +53,8 @@ class CommunWalletHeaderView: MyView {
     
     lazy var sendButton = UIButton.circle(size: 30, backgroundColor: UIColor.white.withAlphaComponent(0.2), tintColor: .white, imageName: "upVote", imageEdgeInsets: UIEdgeInsets(top: 6, left: 8, bottom: 6, right: 8))
     
+    lazy var buyButton = UIButton.circle(size: 30, backgroundColor: UIColor.white.withAlphaComponent(0.2), tintColor: .white, imageName: "buyCommun", imageEdgeInsets: UIEdgeInsets(top: 6, left: 8, bottom: 6, right: 8))
+    
     lazy var convertButton = UIButton.circle(size: 30, backgroundColor: UIColor.white.withAlphaComponent(0.2), tintColor: .white, imageName: "convert", imageEdgeInsets: UIEdgeInsets(inset: 6))
     
     // MARK: - Methods
@@ -99,6 +101,14 @@ class CommunWalletHeaderView: MyView {
         UIView.animate(withDuration: 0.3) {
             self.reloadViews()
         }
+    }
+    
+    func addBuyButton() {
+        let button = buttonContainerViewWithButton(buyButton, label: "buy".localized().uppercaseFirst)
+        var buttons = buttonsStackView.arrangedSubviews
+        buttons.insert(button, at: 1)
+        buttonsStackView.removeArrangedSubviews()
+        buttonsStackView.addArrangedSubviews(buttons)
     }
     
     // MARK: - Private functions

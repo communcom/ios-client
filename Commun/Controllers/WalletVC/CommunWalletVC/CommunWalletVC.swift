@@ -30,6 +30,7 @@ class CommunWalletVC: TransferHistoryVC {
     lazy var headerView: CommunWalletHeaderView = createHeaderView()
     func createHeaderView() -> CommunWalletHeaderView {
         let headerView = CommunWalletHeaderView(forAutoLayout: ())
+        headerView.addBuyButton()
         headerView.delegate = self
         headerView.dataSource = self
         return headerView
@@ -79,6 +80,9 @@ class CommunWalletVC: TransferHistoryVC {
         headerView.backButton.addTarget(self, action: #selector(back), for: .touchUpInside)
         
         headerView.sendButton.addTarget(self, action: #selector(sendButtonDidTouch), for: .touchUpInside)
+        if headerView.buyButton.superview != nil {
+            headerView.buyButton.addTarget(self, action: #selector(buyButtonDidTouch), for: .touchUpInside)
+        }
         headerView.convertButton.addTarget(self, action: #selector(convertButtonDidTouch), for: .touchUpInside)
         
         tableHeaderView.sendPointsSeeAllButton.addTarget(self, action: #selector(sendPointsSeeAllDidTouch), for: .touchUpInside)
@@ -212,6 +216,10 @@ class CommunWalletVC: TransferHistoryVC {
 
     // MARK: - Actions
     @objc func sendButtonDidTouch() {
+        
+    }
+    
+    @objc func buyButtonDidTouch() {
         
     }
     
