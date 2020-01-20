@@ -103,7 +103,6 @@ class WalletHeaderView: CommunWalletHeaderView {
         }
         
         contentView.bringSubviewToFront(backButton)
-        contentView.bringSubviewToFront(optionsButton)
     }
     
     override func collapse() {

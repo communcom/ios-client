@@ -35,8 +35,7 @@ class CommunWalletHeaderView: MyView {
     lazy var backButton = UIButton.back(width: 44, height: 44, tintColor: .white, contentInsets: UIEdgeInsets(top: 11, left: 16, bottom: 11, right: 16))
     
     lazy var communLogo = UIView.transparentCommunLogo(size: 40)
-    
-    lazy var optionsButton = UIButton.option(tintColor: .white)
+
     lazy var titleLabel = UILabel.with(text: "Equity Value Commun", textSize: 15, weight: .semibold, textColor: .white)
     lazy var pointLabel = UILabel.with(text: "167 500.23", textSize: 30, weight: .bold, textColor: .white, textAlignment: .center)
     
@@ -68,10 +67,6 @@ class CommunWalletHeaderView: MyView {
         contentView.addSubview(backButton)
         backButton.autoPinEdge(toSuperviewSafeArea: .top, withInset: 8)
         backButton.autoPinEdge(toSuperviewSafeArea: .leading)
-        
-        contentView.addSubview(optionsButton)
-        optionsButton.autoPinEdge(toSuperviewSafeArea: .trailing)
-        optionsButton.autoAlignAxis(.horizontal, toSameAxisOf: backButton)
         
         contentView.addSubview(titleLabel)
         titleLabel.autoAlignAxis(toSuperviewAxis: .vertical)
@@ -143,7 +138,6 @@ class CommunWalletHeaderView: MyView {
         self.pointLabel.textColor = .white
         
         self.backButton.tintColor = .white
-        self.optionsButton.tintColor = .white
     }
     
     func layoutBalanceExpanded() {
@@ -179,7 +173,6 @@ class CommunWalletHeaderView: MyView {
         self.pointLabel.textColor = .black
         
         self.backButton.tintColor = .black
-        self.optionsButton.tintColor = .black
     }
     
     // MARK: - Layout
