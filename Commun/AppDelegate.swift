@@ -53,7 +53,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         // first fun app
         if !UserDefaults.standard.bool(forKey: firstInstallAppKey) {
+            // Analytics
             AnalyticsManger.shared.launchFirstTime()
+            
+            // create deviceId
+            if KeychainManager.currentDeviceId == nil {
+                let id = UUID().uuidString + "." + "\(Date().timeIntervalSince1970)"
+                KeychainManager.save([Config.currentDeviceIdKey: id])
+            }
+            
             UserDefaults.standard.set(true, forKey: firstInstallAppKey)
         }
 
@@ -74,14 +82,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Sync iCloud key-value store
         NSUbiquitousKeyValueStore.default.synchronize()
-
-        #if !APPSTORE
-            // reset keychain
-            if !UserDefaults.standard.bool(forKey: UIApplication.versionBuild) {
-                try? KeychainManager.deleteUser()
-                UserDefaults.standard.set(true, forKey: UIApplication.versionBuild)
-            }
-        #endif
         
         // Hide constraint warning
         UserDefaults.standard.setValue(false, forKey: "_UIConstraintBasedLayoutLogUnsatisfiable")
