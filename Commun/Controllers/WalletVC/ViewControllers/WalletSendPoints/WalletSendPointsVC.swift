@@ -285,7 +285,7 @@ class WalletSendPointsVC: UIViewController {
     private func setSendButton(amount: CGFloat = 0.0, percent: CGFloat) {
         //        let subtitle1 = String(format: "%@: %.*f %@", "send".localized().uppercaseFirst, dataModel.transaction.accuracy, amount, dataModel.transaction.symbol.fullName)
         
-        let subtitle1 = String(format: "%@: %@ %@", "send".localized().uppercaseFirst, amount.convertToString(withAccuracy: dataModel.transaction.accuracy), dataModel.transaction.symbol.fullName)
+        let subtitle1 = String(format: "%@: %@ %@", "send".localized().uppercaseFirst, Double(amount).currencyValueFormatted, dataModel.transaction.symbol.fullName)
         let subtitle2 = String(format: "%.1f%% %@", percent, "will be burned".localized())
         let title = NSMutableAttributedString(string: "\(subtitle1)\n\(subtitle2)")
 
@@ -315,7 +315,7 @@ class WalletSendPointsVC: UIViewController {
     
     private func updateBalanceInfo() {
         balanceNameLabel.text = dataModel.currentBalance.name
-        balanceCurrencyLabel.text = dataModel.currentBalance.amount == 0 ? "0" : dataModel.currentBalance.amount.convertToString(withAccuracy: dataModel.currentBalance.accuracy)
+        balanceCurrencyLabel.text = dataModel.currentBalance.amount == 0 ? "0" : Double(dataModel.currentBalance.amount).currencyValueFormatted
 
         updateSendPointsInfo()
     }

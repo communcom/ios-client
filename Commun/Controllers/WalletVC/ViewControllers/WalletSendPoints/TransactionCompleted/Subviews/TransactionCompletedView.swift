@@ -357,7 +357,7 @@ class TransactionCompletedView: UIView {
     func update(transaction: Transaction) {
         transactionTitleLabel.text = "transaction completed".localized().uppercaseFirst
         transactionDateLabel.text = transaction.operationDate.convert(toStringFormat: .transactionCompletedType)
-        transactionAmountLabel.text = String(format: "%@", transaction.amount.convertToString(withAccuracy: transaction.accuracy))
+        transactionAmountLabel.text = String(Double(transaction.amount).currencyValueFormatted)
         transactionCurrencyLabel.text = transaction.symbol.fullName
     }
 }
