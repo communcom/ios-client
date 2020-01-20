@@ -396,10 +396,6 @@ class NetworkService: NSObject {
     }
     
     // MARK: - Notifications
-    func getNotifications(fromId: String? = nil, markAsViewed: Bool = true, freshOnly: Bool = false) -> Single<ResponseAPIOnlineNotifyHistory> {
-        return RestAPIManager.instance.getOnlineNotifyHistory(fromId: fromId, freshOnly: false)
-    }
-    
     func getFreshNotifications() -> Single<ResponseAPIOnlineNotifyHistoryFresh> {
         return RestAPIManager.instance.getOnlineNotifyHistoryFresh()
     }

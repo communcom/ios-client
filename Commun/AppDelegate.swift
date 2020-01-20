@@ -20,6 +20,7 @@ import CyberSwift
 import RxSwift
 import SDURLCache
 import SDWebImageWebPCoder
+import ListPlaceholder
 
 let isDebugMode: Bool = true
 let smsCodeDebug: UInt64 = isDebugMode ? 9999 : 0
