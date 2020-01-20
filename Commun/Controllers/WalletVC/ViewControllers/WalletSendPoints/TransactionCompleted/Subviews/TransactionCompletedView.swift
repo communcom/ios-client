@@ -193,7 +193,6 @@ class TransactionCompletedView: UIView {
         recipientStackView.alignment = .center
         recipientStackView.distribution = .equalCentering
         
-//        recipientStackView.widthAnchor.constraint(equalToConstant: CGFloat.adaptive(width: 280.0)).isActive = true
         recipientStackView.addArrangedSubviews([transactionAmountLabel, transactionCurrencyLabel])
         
         burnedPercentLabel.text = String(format: "%.1f%% %@ 🔥", 0.1, "was burned".localized())
@@ -218,7 +217,10 @@ class TransactionCompletedView: UIView {
         
         contentView.addSubview(namesStackView)
         namesStackView.addArrangedSubviews([recipientNameLabel, recipientIDLabel])
-        namesStackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(horizontal: CGFloat.adaptive(width: 44.0), vertical: CGFloat.adaptive(height: 636.0)), excludingEdge: .bottom)
+        namesStackView.autoAlignAxis(toSuperviewAxis: .vertical)
+        namesStackView.autoPinEdge(.top, to: .bottom, of: recipientAvatarImageView, withOffset: CGFloat.adaptive(height: 10.0))
+
+//        namesStackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(horizontal: CGFloat.adaptive(width: 44.0), vertical: CGFloat.adaptive(height: 636.0)), excludingEdge: .bottom)
 
         // Draw second dashed line
         if let dashedLine2 = dashedLine1.copyView() {
