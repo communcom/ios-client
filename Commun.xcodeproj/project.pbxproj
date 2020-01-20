@@ -236,6 +236,8 @@
 		BC18FA1923D54D2F005DC7E3 /* CurrenciesListFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC18FA1823D54D2F005DC7E3 /* CurrenciesListFetcher.swift */; };
 		BC18FA2123D54E26005DC7E3 /* CurrencyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC18FA2023D54E26005DC7E3 /* CurrencyCell.swift */; };
 		BC18FA2323D550E4005DC7E3 /* CurrenciesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC18FA2223D550E4005DC7E3 /* CurrenciesVC.swift */; };
+		BC18FA2523D55BC6005DC7E3 /* BuyCommunVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC18FA2423D55BC6005DC7E3 /* BuyCommunVC.swift */; };
+		BC18FA2723D56325005DC7E3 /* UITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC18FA2623D56325005DC7E3 /* UITextField.swift */; };
 		BC22BBC8236C055300F40658 /* MyProfileSettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC22BBC7236C055300F40658 /* MyProfileSettingsVC.swift */; };
 		BC22BBCA236C082600F40658 /* ContentHuggingScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC22BBC9236C082600F40658 /* ContentHuggingScrollView.swift */; };
 		BC22BBCC236C0E0300F40658 /* UIStackView+PureLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC22BBCB236C0E0300F40658 /* UIStackView+PureLayout.swift */; };
@@ -721,6 +723,8 @@
 		BC18FA1823D54D2F005DC7E3 /* CurrenciesListFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrenciesListFetcher.swift; sourceTree = "<group>"; };
 		BC18FA2023D54E26005DC7E3 /* CurrencyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyCell.swift; sourceTree = "<group>"; };
 		BC18FA2223D550E4005DC7E3 /* CurrenciesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrenciesVC.swift; sourceTree = "<group>"; };
+		BC18FA2423D55BC6005DC7E3 /* BuyCommunVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuyCommunVC.swift; sourceTree = "<group>"; };
+		BC18FA2623D56325005DC7E3 /* UITextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextField.swift; sourceTree = "<group>"; };
 		BC22BBC7236C055300F40658 /* MyProfileSettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileSettingsVC.swift; sourceTree = "<group>"; };
 		BC22BBC9236C082600F40658 /* ContentHuggingScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentHuggingScrollView.swift; sourceTree = "<group>"; };
 		BC22BBCB236C0E0300F40658 /* UIStackView+PureLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+PureLayout.swift"; sourceTree = "<group>"; };
@@ -1549,6 +1553,7 @@
 				BCB2A6E52355536D00B3582B /* UITableViewCell.swift */,
 				BCA971252360883D00AE37E1 /* Double.swift */,
 				BCD3BC8A23AB313E0036C947 /* UIStackView.swift */,
+				BC18FA2623D56325005DC7E3 /* UITextField.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -2115,6 +2120,7 @@
 			children = (
 				BC4AD66923B2070D008546A4 /* WalletConvertVCs */,
 				BC4AD64B23B094E9008546A4 /* SendPointListVC.swift */,
+				BC18FA2423D55BC6005DC7E3 /* BuyCommunVC.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -2899,6 +2905,7 @@
 				BC3694FB23699C0F00B2E078 /* BasicEditorVC+Actions.swift in Sources */,
 				3BAF69CB226773000055CCEB /* UIView+Shadow.swift in Sources */,
 				3BAD8E832318FB1C005A8AB3 /* NSAttributedString.swift in Sources */,
+				BC18FA2723D56325005DC7E3 /* UITextField.swift in Sources */,
 				3B6CB73023432D6F0097B2A1 /* FavouritesList.swift in Sources */,
 				3BC613B12342140000075570 /* SwipeDownInteractor.swift in Sources */,
 				BCD453AD2354473F005A454C /* BasicEditorVC+MediaViewDelegate.swift in Sources */,
@@ -2986,6 +2993,7 @@
 				BC619B1B2372B5760005BB94 /* CommunityMembersViewModel.swift in Sources */,
 				AC5D7D8B2385A1C400EEC5ED /* Formatter.swift in Sources */,
 				BC7D6097237C01BD007D8C1A /* BlacklistCell.swift in Sources */,
+				BC18FA2523D55BC6005DC7E3 /* BuyCommunVC.swift in Sources */,
 				3BAD8E812318D838005A8AB3 /* UITextView+UILabel.swift in Sources */,
 				BCA97113236004F500AE37E1 /* CommentsViewModel.swift in Sources */,
 				3BAF69CF226787940055CCEB /* Date.swift in Sources */,

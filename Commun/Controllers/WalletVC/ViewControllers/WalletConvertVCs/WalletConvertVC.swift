@@ -56,12 +56,7 @@ class WalletConvertVC: BaseViewController {
     }()
     
     private func createTextField() -> UITextField {
-        let textField = UITextField(backgroundColor: .clear)
-        textField.placeholder = "0"
-        textField.borderStyle = .none
-        textField.font = .systemFont(ofSize: 17, weight: .semibold)
-        textField.setPlaceHolderTextColor(.a5a7bd)
-        textField.keyboardType = .decimalPad
+        let textField = UITextField.decimalPad()
         textField.delegate = self
         return textField
     }
