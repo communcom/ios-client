@@ -61,13 +61,13 @@ class TransactionCompletedView: UIView {
         let transactionCurrencyLabelInstance = UILabel()
         transactionCurrencyLabelInstance.tune(withText: "",
                                               hexColors: grayishBluePickers,
-                                              font: UIFont.systemFont(ofSize: CGFloat.adaptive(width: 20.0), weight: .semibold),
+                                              font: UIFont.systemFont(ofSize: CGFloat.adaptive(width: 20.0), weight: .regular),
                                               alignment: .left,
                                               isMultiLines: false)
         
         return transactionCurrencyLabelInstance
     }()
-    
+        
     var recipientIDLabel: UILabel = UILabel()
     var recipientNameLabel: UILabel = UILabel()
     var burnedPercentLabel: UILabel = UILabel()
@@ -190,23 +190,24 @@ class TransactionCompletedView: UIView {
 
         // Add Recipient data
         let recipientStackView = UIStackView(axis: NSLayoutConstraint.Axis.horizontal, spacing: CGFloat.adaptive(width: 8.0))
-        recipientStackView.alignment = .fill
-        recipientStackView.distribution = .fillProportionally
+        recipientStackView.alignment = .center
+        recipientStackView.distribution = .equalCentering
         
-        recipientStackView.widthAnchor.constraint(equalToConstant: CGFloat.adaptive(width: 280.0)).isActive = true
+//        recipientStackView.widthAnchor.constraint(equalToConstant: CGFloat.adaptive(width: 280.0)).isActive = true
         recipientStackView.addArrangedSubviews([transactionAmountLabel, transactionCurrencyLabel])
-
+        
         burnedPercentLabel.text = String(format: "%.1f%% %@ 🔥", 0.1, "was burned".localized())
         
         let recipientDataStackView = UIStackView(axis: NSLayoutConstraint.Axis.vertical, spacing: CGFloat.adaptive(height: 8.0))
-        recipientDataStackView.alignment = .center
+        recipientDataStackView.alignment = .fill
         recipientDataStackView.distribution = .fillProportionally
         
         contentView.addSubview(recipientDataStackView)
         recipientDataStackView.addArrangedSubviews([recipientStackView, burnedPercentLabel])
         recipientDataStackView.autoAlignAxis(toSuperviewAxis: .vertical)
         recipientDataStackView.autoPinEdge(.top, to: .bottom, of: dashedLine1, withOffset: CGFloat.adaptive(height: 32))
-
+        recipientDataStackView.setContentHuggingPriority(249.0, for: NSLayoutConstraint.Axis.horizontal)
+        
         contentView.addSubview(recipientAvatarImageView)
         recipientAvatarImageView.autoAlignAxis(toSuperviewAxis: .vertical)
         recipientAvatarImageView.autoPinEdge(.top, to: .bottom, of: dashedLine1, withOffset: CGFloat.adaptive(height: 92.0))

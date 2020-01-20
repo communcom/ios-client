@@ -58,7 +58,9 @@ class WalletBuyCommunVC: WalletConvertVC {
     }
     
     override func setUpBuyPrice() {
-        leftTextField.text = stringFromNumber(viewModel.buyPrice.value)
+        if viewModel.buyPrice.value > 0 {
+            leftTextField.text = stringFromNumber(viewModel.buyPrice.value)
+        }
         
         convertButton.isEnabled = shouldEnableConvertButton()
     }
