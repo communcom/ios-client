@@ -20,7 +20,6 @@ class SinglePhotoPickerVC: TLPhotosPickerViewController {
         super.init()
         var configure = TLPhotosPickerConfigure()
         configure.singleSelectedMode = true
-        configure.allowedLivePhotos = false
         configure.allowedVideo = false
         configure.allowedVideoRecording = false
         configure.mediaType = .image

@@ -284,7 +284,10 @@ class CommunWalletVC: TransferHistoryVC {
         let viewModel = (self.viewModel as! WalletViewModel)
         guard let balance = balance, let index = (balances.filter {$0.symbol != Config.defaultSymbol}).firstIndex(where: {$0.symbol == balance.symbol}) else {return}
         let vc = OtherBalancesWalletVC(balances: viewModel.balancesVM.items.value, selectedIndex: index, subscriptions: viewModel.subscriptionsVM.items.value, history: viewModel.items.value)
-        show(vc, sender: self)
+        let nc = navigationController as? BaseNavigationController
+        nc?.shouldResetNavigationBarOnPush = false
+        show(vc, sender: nil)
+        nc?.shouldResetNavigationBarOnPush = true
     }
 }
 

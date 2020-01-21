@@ -149,15 +149,18 @@ class TabBarVC: UITabBarController {
     var tabBarItemAdd: UIButton {
         let button = UIButton(type: .system)
         
-        let view = UIView(width: 45, height: 45, backgroundColor: .appMainColor)
-        view.cornerRadius = 45 / 2
+        let itemSize = CGFloat.adaptive(height: 45)
+        let itemPadding = CGFloat.adaptive(height: 14)
+        
+        let view = UIView(width: itemSize, height: itemSize, backgroundColor: .appMainColor)
+        view.cornerRadius = itemSize / 2
         
         let imageView = UIImageView(image: UIImage(named: "add"))
         imageView.configureForAutoLayout()
         imageView.tintColor = .white
         
         view.addSubview(imageView)
-        imageView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 14, left: 14, bottom: 14, right: 14))
+        imageView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: itemPadding, left: itemPadding, bottom: itemPadding, right: itemPadding))
         
         button.addSubview(view)
         view.autoAlignAxis(toSuperviewAxis: .vertical)
