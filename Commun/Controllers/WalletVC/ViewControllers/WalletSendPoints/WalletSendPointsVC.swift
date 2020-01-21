@@ -162,14 +162,14 @@ class WalletSendPointsVC: UIViewController {
         super.viewWillAppear(animated)
 
         setupNavBar()
-        setupTabBar(hide: true)
+//        setupTabBar(hide: true)
         setNeedsStatusBarAppearanceUpdate()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
-        setupTabBar(hide: false)
+//        setupTabBar(hide: false)
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -277,11 +277,11 @@ class WalletSendPointsVC: UIViewController {
         navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
     }
     
-    private func setupTabBar(hide isHidden: Bool) {
-        tabBarController?.tabBar.isHidden = isHidden
-        let tabBarVC = (tabBarController as? TabBarVC)
-        tabBarVC?.setTabBarHiden(isHidden)
-    }
+//    private func setupTabBar(hide isHidden: Bool) {
+//        tabBarController?.tabBar.isHidden = isHidden
+//        let tabBarVC = (tabBarController as? TabBarVC)
+//        tabBarVC?.setTabBarHiden(isHidden)
+//    }
 
     private func setup(borderedView: UIView) {
         borderedView.translatesAutoresizingMaskIntoConstraints = false
@@ -400,7 +400,6 @@ class WalletSendPointsVC: UIViewController {
             .subscribe(onCompleted: { [weak self] in
                 guard let strongSelf = self else { return }
 
-                // Default .send type
                 let completedVC = TransactionCompletedVC(transaction: strongSelf.dataModel.transaction)
                 strongSelf.show(completedVC, sender: nil)
                 strongSelf.hideHud()

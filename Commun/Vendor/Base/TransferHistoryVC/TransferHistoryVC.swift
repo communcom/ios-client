@@ -11,6 +11,9 @@ import Foundation
 class TransferHistoryVC: ListViewController<ResponseAPIWalletGetTransferHistoryItem, TransferHistoryItemCell> {
     // MARK: - Properties
     var lastOffset: CGPoint?
+
+    var completionTabBarHide: ((Bool) -> Void)?
+    
     
     // MARK: - Initializers
     init(viewModel: TransferHistoryViewModel = TransferHistoryViewModel()) {
@@ -97,9 +100,9 @@ class TransferHistoryVC: ListViewController<ResponseAPIWalletGetTransferHistoryI
                 guard let strongSelf = self else { return }
                 
                 if let selectedCell = strongSelf.tableView.cellForRow(at: indexPath) as? TransferHistoryItemCell, let selectedItem = selectedCell.item {
+                    strongSelf.completionTabBarHide!(true)
                     strongSelf.showIndetermineHudWithMessage("loading".localized().uppercaseFirst)
-                    (strongSelf.tabBarController as? TabBarVC)!.setTabBarHiden(true)
-
+                    
                     // .history type
                     var recipient: Recipient
                     var amount: CGFloat = 0.0
@@ -109,9 +112,9 @@ class TransferHistoryVC: ListViewController<ResponseAPIWalletGetTransferHistoryI
                         recipient = Recipient(id: selectedItem.point.symbol ?? Config.defaultSymbol,
                                               name: selectedItem.point.name ?? Config.defaultSymbol,
                                               avatarURL: selectedItem.point.logo)
-
+                        
                         amount = CGFloat((selectedItem.meta.exchangeAmount ?? 0.0) * (selectedItem.meta.actionType == "transfer" ? -1 : 1))
-
+                        
                     default:
                         recipient = Recipient(id: selectedItem.receiver.userId,
                                               name: selectedItem.receiver.username ?? Config.defaultSymbol,
@@ -119,23 +122,23 @@ class TransferHistoryVC: ListViewController<ResponseAPIWalletGetTransferHistoryI
                         
                         amount = CGFloat(selectedItem.quantityValue * (selectedItem.meta.actionType == "transfer" ? -1 : 1))
                     }
-
+                    
                     let transaction = Transaction(recipient: recipient,
                                                   operationDate: selectedItem.timestamp.convert(toDateFormat: .nextSmsDateType),
                                                   accuracy: 4,
                                                   symbol: selectedItem.symbol,
                                                   history: selectedItem,
                                                   amount: amount)
-
+                    
                     let completedVC = TransactionCompletedVC(transaction: transaction)
                     completedVC.modalPresentationStyle = .overCurrentContext
                     completedVC.modalTransitionStyle = .crossDissolve
-
+                    
                     strongSelf.present(completedVC, animated: true, completion: nil)
                     strongSelf.hideHud()
                     
                     completedVC.completionDismiss = {
-                        (strongSelf.tabBarController as? TabBarVC)!.setTabBarHiden(false)
+                        strongSelf.completionTabBarHide!(false)
                     }
                     
                     completedVC.completionRepeat = { [weak self] transition in
@@ -143,12 +146,11 @@ class TransferHistoryVC: ListViewController<ResponseAPIWalletGetTransferHistoryI
                         
                         let walletSendPointsVC = WalletSendPointsVC(withSelectedBalance: transaction.symbol, andRecipient: transaction.recipient)
                         walletSendPointsVC.dataModel.transaction = transition
-//                        walletSendPointsVC.dataModel.transaction.amount = abs(walletSendPointsVC.dataModel.transaction.amount)
-//                        walletSendPointsVC.dataModel.transaction.type = transition.actionType == .transfer ? .send : .convert
-
+                        
                         if let walletVC = strongSelf.navigationController?.viewControllers.filter({ $0 is CommunWalletVC }).first {
                             strongSelf.navigationController?.popToViewController(walletVC, animated: false)
                             walletVC.show(walletSendPointsVC, sender: nil)
+                            strongSelf.completionTabBarHide!(true)
                             strongSelf.hideHud()
                         }
                     }
