@@ -8,14 +8,14 @@
 
 import UIKit
 
-class TransactionCompletedVC: UIViewController {
+class TransactionCompletedVC: BaseViewController {
     // MARK: - Properties
     var dataModel = SendPointsModel(withSelectedBalanceSymbol: Config.defaultSymbol)
     var transaction: Transaction!
     var transactionCompletedView: TransactionCompletedView!
     
     var completionRepeat: (() -> Void)?
-    var completionDismiss: (() -> Void)?
+//    var completionDismiss: (() -> Void)?
 
     
     // MARK: - Class Initialization
@@ -51,10 +51,13 @@ class TransactionCompletedVC: UIViewController {
         
         setupNavBar()
         setNeedsStatusBarAppearanceUpdate()
+        setTabBarHidden(true)
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        
+        setTabBarHidden(false)
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -125,7 +128,7 @@ class TransactionCompletedVC: UIViewController {
     }
     
     private func dismiss() {
-        completionDismiss!()
+//        completionDismiss!()
         self.dismiss(animated: true, completion: nil)
     }
     

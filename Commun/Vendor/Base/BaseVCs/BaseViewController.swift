@@ -34,6 +34,12 @@ class BaseViewController: UIViewController {
         
     }
     
+    func setTabBarHidden(_ value: Bool) {
+        if let tabBarVC = tabBarController as? TabBarVC {
+            tabBarVC.setTabBarHiden(value)
+        }
+    }
+    
 //    func avoidTabBar() {
 //        // avoid tabBar
 //        guard let scrollView = contentScrollView,

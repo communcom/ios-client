@@ -11,7 +11,7 @@ import RxSwift
 import CyberSwift
 import CircularCarousel
 
-class WalletSendPointsVC: UIViewController {
+class WalletSendPointsVC: BaseViewController {
     // MARK: - Properties
     var dataModel: SendPointsModel
     lazy var disposeBag = DisposeBag()
@@ -162,6 +162,7 @@ class WalletSendPointsVC: UIViewController {
         super.viewWillAppear(animated)
 
         setupNavBar()
+        setTabBarHidden(true)
         setNeedsStatusBarAppearanceUpdate()
     }
 

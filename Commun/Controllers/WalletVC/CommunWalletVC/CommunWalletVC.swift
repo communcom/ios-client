@@ -66,12 +66,16 @@ class CommunWalletVC: TransferHistoryVC {
     
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
-        completionTabBarHide!(false)
+        self.setTabBarHidden(false)
+//        completionTabBarHide!(false)
+        
         super.viewWillAppear(animated)
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         self.navigationController?.setNavigationBarHidden(false, animated: animated)
+        self.setTabBarHidden(false)
+        
         super.viewWillDisappear(animated)
     }
     
@@ -89,13 +93,11 @@ class CommunWalletVC: TransferHistoryVC {
         
         tableHeaderView.setMyPointHidden(false)
         
-        completionTabBarHide = { [weak self] isHiden in
-            guard let strongSelf = self else { return }
-            
-            if let tabbar = strongSelf.tabBarController as? TabBarVC {
-                tabbar.setTabBarHiden(isHiden)
-            }
-        }
+//        completionTabBarHide = { [weak self] isHiden in
+//            guard let strongSelf = self else { return }
+//
+//            strongSelf.setTabBarHidden(isHiden)
+//        }
     }
     
     override func bind() {
@@ -257,7 +259,7 @@ class CommunWalletVC: TransferHistoryVC {
 
         let walletSendPointsVC = WalletSendPointsVC(withSelectedBalance: headerView.sendButton.accessibilityHint ?? Config.defaultSymbol, andFriend: recipient)
         show(walletSendPointsVC, sender: nil)
-        completionTabBarHide!(true)
+//        completionTabBarHide!(true)
         
         hideHud()
     }

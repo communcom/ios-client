@@ -285,15 +285,11 @@ class WalletConvertVC: BaseViewController {
         showNavigationBar(false, animated: true, completion: nil)
         self.navigationController?.navigationBar.setTitleFont(.boldSystemFont(ofSize: 17), color: .white)
         
-        // hide bottom tabbar
-        tabBarController?.tabBar.isHidden = true
-        let tabBarVC = (tabBarController as? TabBarVC)
-        tabBarVC?.setTabBarHiden(true)
+        setTabBarHidden(true)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        let tabBarVC = (tabBarController as? TabBarVC)
-        tabBarVC?.setTabBarHiden(false)
+        setTabBarHidden(false)
     }
     
     override func viewDidLayoutSubviews() {
