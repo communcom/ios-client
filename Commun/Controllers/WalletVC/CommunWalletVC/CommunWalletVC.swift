@@ -67,14 +67,12 @@ class CommunWalletVC: TransferHistoryVC {
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
         self.setTabBarHidden(false)
-//        completionTabBarHide!(false)
         
         super.viewWillAppear(animated)
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         self.navigationController?.setNavigationBarHidden(false, animated: animated)
-        self.setTabBarHidden(false)
         
         super.viewWillDisappear(animated)
     }
@@ -92,12 +90,6 @@ class CommunWalletVC: TransferHistoryVC {
         tableHeaderView.filterButton.addTarget(self, action: #selector(openFilter), for: .touchUpInside)
         
         tableHeaderView.setMyPointHidden(false)
-        
-//        completionTabBarHide = { [weak self] isHiden in
-//            guard let strongSelf = self else { return }
-//
-//            strongSelf.setTabBarHidden(isHiden)
-//        }
     }
     
     override func bind() {
@@ -125,10 +117,6 @@ class CommunWalletVC: TransferHistoryVC {
             .disposed(by: disposeBag)
         
     }
-
-//    override var preferredStatusBarStyle: UIStatusBarStyle {
-//        .lightContent
-//    }
 
     override func bindItems() {
         super.bindItems()
@@ -171,12 +159,8 @@ class CommunWalletVC: TransferHistoryVC {
         
         sendPointsCollectionView.rx.itemSelected
             .subscribe(onNext: { (indexPath) in
-//                if indexPath.row == 0 { // Temp hide Add friends
-//                    self.addFriend()
-//                } else {
-                    guard let user = (self.viewModel as! WalletViewModel).subscriptionsVM.items.value[safe: indexPath.row]?.userValue else {return}
-                    self.sendPoint(to: user)
-//                }
+                guard let user = (self.viewModel as! WalletViewModel).subscriptionsVM.items.value[safe: indexPath.row]?.userValue else {return}
+                self.sendPoint(to: user)
             })
             .disposed(by: disposeBag)
     }
@@ -259,7 +243,7 @@ class CommunWalletVC: TransferHistoryVC {
 
         let walletSendPointsVC = WalletSendPointsVC(withSelectedBalance: headerView.sendButton.accessibilityHint ?? Config.defaultSymbol, andFriend: recipient)
         show(walletSendPointsVC, sender: nil)
-//        completionTabBarHide!(true)
+        setTabBarHidden(true)
         
         hideHud()
     }

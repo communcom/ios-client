@@ -11,8 +11,6 @@ import Foundation
 class TransferHistoryVC: ListViewController<ResponseAPIWalletGetTransferHistoryItem, TransferHistoryItemCell> {
     // MARK: - Properties
     var lastOffset: CGPoint?
-
-//    var completionTabBarHide: ((Bool) -> Void)?
     
     
     // MARK: - Initializers
@@ -100,7 +98,7 @@ class TransferHistoryVC: ListViewController<ResponseAPIWalletGetTransferHistoryI
                 guard let strongSelf = self else { return }
                 
                 if let selectedCell = strongSelf.tableView.cellForRow(at: indexPath) as? TransferHistoryItemCell, let selectedItem = selectedCell.item {
-//                    strongSelf.completionTabBarHide!(true)
+                    strongSelf.setTabBarHidden(true)
                     strongSelf.showIndetermineHudWithMessage("loading".localized().uppercaseFirst)
                     
                     // .history type
@@ -137,9 +135,9 @@ class TransferHistoryVC: ListViewController<ResponseAPIWalletGetTransferHistoryI
                     strongSelf.present(completedVC, animated: true, completion: nil)
                     strongSelf.hideHud()
                     
-//                    completedVC.completionDismiss = {
-//                        strongSelf.completionTabBarHide!(false)
-//                    }
+                    completedVC.completionDismiss = {
+                        strongSelf.setTabBarHidden(false)
+                    }
                     
                     completedVC.completionRepeat = { [weak self] in
                         guard let strongSelf = self else { return }
@@ -149,7 +147,6 @@ class TransferHistoryVC: ListViewController<ResponseAPIWalletGetTransferHistoryI
                         
                         if let communWalletVC = strongSelf.navigationController?.viewControllers.filter({ $0 is CommunWalletVC }).first as? CommunWalletVC {
                             strongSelf.navigationController?.popToViewController(communWalletVC, animated: false)
-//                            strongSelf.completionTabBarHide!(true)
 
                             switch selectedItem.meta.actionType {
                             case "transfer":
@@ -165,6 +162,7 @@ class TransferHistoryVC: ListViewController<ResponseAPIWalletGetTransferHistoryI
                             }
 
                             strongSelf.hideHud()
+                            strongSelf.setTabBarHidden(true)
                          }
                     }
                 }

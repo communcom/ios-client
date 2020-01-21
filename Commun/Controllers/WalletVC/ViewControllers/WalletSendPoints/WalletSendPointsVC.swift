@@ -11,10 +11,9 @@ import RxSwift
 import CyberSwift
 import CircularCarousel
 
-class WalletSendPointsVC: BaseViewController {
+class WalletSendPointsVC: UIViewController {
     // MARK: - Properties
     var dataModel: SendPointsModel
-    lazy var disposeBag = DisposeBag()
     
     lazy var carouselView: CircularCarousel = {
         let carouselViewInstance = CircularCarousel(width: CGFloat.adaptive(width: 247.0), height: carouselHeight)
@@ -162,7 +161,6 @@ class WalletSendPointsVC: BaseViewController {
         super.viewWillAppear(animated)
 
         setupNavBar()
-        setTabBarHidden(true)
         setNeedsStatusBarAppearanceUpdate()
     }
 
