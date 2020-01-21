@@ -57,13 +57,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             // Analytics
             AnalyticsManger.shared.launchFirstTime()
             
-            // create deviceId
-            if KeychainManager.currentDeviceId == nil {
-                let id = UUID().uuidString + "." + "\(Date().timeIntervalSince1970)"
-                try? KeychainManager.save([Config.currentDeviceIdKey: id])
-            }
-            
             UserDefaults.standard.set(true, forKey: firstInstallAppKey)
+        }
+        
+        // create deviceId
+        if KeychainManager.currentDeviceId == nil {
+            let id = UUID().uuidString + "." + "\(Date().timeIntervalSince1970)"
+            do {
+                try KeychainManager.save([Config.currentDeviceIdKey: id])
+                SocketManager.shared.deviceIdDidSet()
+            } catch {
+                Logger.log(message: error.localizedDescription, event: .debug)
+            }
         }
 
         AnalyticsManger.shared.sessionStart()
@@ -76,7 +81,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // global tintColor
         window?.tintColor = .appMainColor
         // Logger
-//        Logger.showEvents = [.request, .error]
+        Logger.showEvents = [.debug]
 
         // support webp image
         SDImageCodersManager.shared.addCoder(SDImageWebPCoder.shared)
@@ -90,6 +95,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // handle connected
         SocketManager.shared.connected
             .filter {$0}
+            .debounce(0.3, scheduler: MainScheduler.instance)
             .take(1)
             .asSingle()
             .timeout(5, scheduler: MainScheduler.instance)
@@ -110,9 +116,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 self.navigateWithRegistrationStep(force: force)
             })
             .disposed(by: bag)
-        
-        // Configure notification
-//        configureNotifications(application: application)
         
         // cache
         if let urlCache = SDURLCache(memoryCapacity: 0, diskCapacity: 2*1024*1024*1024, diskPath: SDURLCache.defaultCachePath(), enableForIOS5AndUp: true) {
@@ -160,6 +163,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                         // show feed
                         if !force && (self.window?.rootViewController is TabBarVC) {return}
                         self.changeRootVC(controllerContainer.resolve(TabBarVC.self)!)
+                        
+                        // ask for permission for sending notifications
+                        self.configureNotifications()
                     }, onError: { (error) in
                         if let error = error as? ErrorAPI {
                             switch error.caseInfo.message {
@@ -268,7 +274,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     // MARK: - Custom Functions
-    private func configureNotifications(application: UIApplication) {
+    private func configureNotifications() {
         // Set delegate for Messaging
         Messaging.messaging().delegate = self
         
@@ -283,10 +289,33 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         })
         
         // Register for remote notification
-        application.registerForRemoteNotifications()
+        UIApplication.shared.registerForRemoteNotifications()
     }
     
     private func getNotificationSettings() {
+        // set info
+        let key = "AppDelegate.setInfo"
+        if !UserDefaults.standard.bool(forKey: key) {
+            let offset = -TimeZone.current.secondsFromGMT() / 60
+            RestAPIManager.instance.deviceSetInfo(timeZoneOffset: offset)
+                .subscribe(onSuccess: { (_) in
+                    UserDefaults.standard.set(true, forKey: key)
+                })
+                .disposed(by: bag)
+        }
+        
+        // fcm token
+        if !UserDefaults.standard.bool(forKey: Config.currentDeviceDidSendFCMToken),
+            let token = UserDefaults.standard.string(forKey: Config.currentDeviceFcmTokenKey)
+        {
+            RestAPIManager.instance.deviceSetFcmToken(token)
+                .subscribe(onSuccess: { (_) in
+                    UserDefaults.standard.set(true, forKey: Config.currentDeviceDidSendFCMToken)
+                    print(UserDefaults.standard.bool(forKey: Config.currentDeviceDidSendFCMToken))
+                })
+                .disposed(by: bag)
+        }
+        
         self.notificationCenter.getNotificationSettings(completionHandler: { (settings) in
             Logger.log(message: "Notification settings: \(settings)", event: .debug)
         })
@@ -451,7 +480,7 @@ extension AppDelegate: MessagingDelegate {
         let dataDict: [String: String] = ["token": fcmToken]
         NotificationCenter.default.post(name: Notification.Name("FCMToken"), object: nil, userInfo: dataDict)
 
-        UserDefaults.standard.set(fcmToken, forKey: "fcmToken")
+        UserDefaults.standard.set(fcmToken, forKey: Config.currentDeviceFcmTokenKey)
 
         // TODO: If necessary send token to application server.
         // Note: This callback is fired at each app startup and whenever a new token is generated.
