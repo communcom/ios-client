@@ -314,10 +314,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         // fcm token
-        if !UserDefaults.standard.bool(forKey: Config.currentDeviceDidSendFCMToken),
-            let token = UserDefaults.standard.string(forKey: Config.currentDeviceFcmTokenKey)
+        if !UserDefaults.standard.bool(forKey: Config.currentDeviceDidSendFCMToken)
         {
-            RestAPIManager.instance.deviceSetFcmToken(token)
+            UserDefaults.standard.rx.observe(String.self, Config.currentDeviceFcmTokenKey)
+                .filter {$0 != nil}
+                .map {$0!}
+                .take(1)
+                .asSingle()
+                .flatMap {RestAPIManager.instance.deviceSetFcmToken($0)}
                 .subscribe(onSuccess: { (_) in
                     UserDefaults.standard.set(true, forKey: Config.currentDeviceDidSendFCMToken)
                 })
