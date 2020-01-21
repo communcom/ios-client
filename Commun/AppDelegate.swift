@@ -74,6 +74,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         AnalyticsManger.shared.sessionStart()
         // Use Firebase library to configure APIs
         configureFirebase()
+        
+        // ask for permission for sending notifications
+        configureNotifications()
 
         // Config Fabric
         Fabric.with([Crashlytics.self])
@@ -81,7 +84,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // global tintColor
         window?.tintColor = .appMainColor
         // Logger
-        Logger.showEvents = [.debug]
+//        Logger.showEvents = [.debug]
 
         // support webp image
         SDImageCodersManager.shared.addCoder(SDImageWebPCoder.shared)
@@ -164,8 +167,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                         if !force && (self.window?.rootViewController is TabBarVC) {return}
                         self.changeRootVC(controllerContainer.resolve(TabBarVC.self)!)
                         
-                        // ask for permission for sending notifications
-                        self.configureNotifications()
+                        // set info
+                        self.deviceSetInfo()
                     }, onError: { (error) in
                         if let error = error as? ErrorAPI {
                             switch error.caseInfo.message {
@@ -293,6 +296,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     private func getNotificationSettings() {
+        self.notificationCenter.getNotificationSettings(completionHandler: { (settings) in
+            Logger.log(message: "Notification settings: \(settings)", event: .debug)
+        })
+    }
+    
+    private func deviceSetInfo() {
         // set info
         let key = "AppDelegate.setInfo"
         if !UserDefaults.standard.bool(forKey: key) {
@@ -311,14 +320,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             RestAPIManager.instance.deviceSetFcmToken(token)
                 .subscribe(onSuccess: { (_) in
                     UserDefaults.standard.set(true, forKey: Config.currentDeviceDidSendFCMToken)
-                    print(UserDefaults.standard.bool(forKey: Config.currentDeviceDidSendFCMToken))
                 })
                 .disposed(by: bag)
         }
-        
-        self.notificationCenter.getNotificationSettings(completionHandler: { (settings) in
-            Logger.log(message: "Notification settings: \(settings)", event: .debug)
-        })
     }
 
     private func scheduleLocalNotification(userInfo: [AnyHashable: Any]) {
