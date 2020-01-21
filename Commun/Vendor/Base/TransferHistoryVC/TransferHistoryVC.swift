@@ -124,11 +124,11 @@ class TransferHistoryVC: ListViewController<ResponseAPIWalletGetTransferHistoryI
                     }
                     
                     let transaction = Transaction(recipient: recipient,
-                                                  operationDate: selectedItem.timestamp.convert(toDateFormat: .nextSmsDateType),
                                                   accuracy: 4,
                                                   symbol: selectedItem.symbol,
                                                   history: selectedItem,
-                                                  amount: amount)
+                                                  amount: amount,
+                                                  operationDate: selectedItem.timestamp.convert(toDateFormat: .nextSmsDateType))
                     
                     let completedVC = TransactionCompletedVC(transaction: transaction)
                     completedVC.modalPresentationStyle = .overCurrentContext

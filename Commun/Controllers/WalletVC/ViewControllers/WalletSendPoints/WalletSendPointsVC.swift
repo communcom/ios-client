@@ -162,14 +162,11 @@ class WalletSendPointsVC: UIViewController {
         super.viewWillAppear(animated)
 
         setupNavBar()
-//        setupTabBar(hide: true)
         setNeedsStatusBarAppearanceUpdate()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        
-//        setupTabBar(hide: false)
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -277,12 +274,6 @@ class WalletSendPointsVC: UIViewController {
         navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
     }
     
-//    private func setupTabBar(hide isHidden: Bool) {
-//        tabBarController?.tabBar.isHidden = isHidden
-//        let tabBarVC = (tabBarController as? TabBarVC)
-//        tabBarVC?.setTabBarHiden(isHidden)
-//    }
-
     private func setup(borderedView: UIView) {
         borderedView.translatesAutoresizingMaskIntoConstraints = false
         borderedView.layer.borderColor = UIColor.e2e6e8.cgColor
@@ -291,8 +282,6 @@ class WalletSendPointsVC: UIViewController {
     }
     
     private func setSendButton(amount: CGFloat = 0.0, percent: CGFloat) {
-        //        let subtitle1 = String(format: "%@: %.*f %@", "send".localized().uppercaseFirst, dataModel.transaction.accuracy, amount, dataModel.transaction.symbol.fullName)
-        
         let subtitle1 = String(format: "%@: %@ %@", "send".localized().uppercaseFirst, Double(amount).currencyValueFormatted, dataModel.transaction.symbol.fullName)
         let subtitle2 = String(format: "%.1f%% %@", percent, "will be burned".localized())
         let title = NSMutableAttributedString(string: "\(subtitle1)\n\(subtitle2)")
@@ -339,7 +328,13 @@ class WalletSendPointsVC: UIViewController {
     }
 
     private func updateSendInfoByHistory() {
-    
+        let amount = CGFloat(dataModel.transaction.history!.quantityValue)
+        let accuracy = amount >= 1_000.0 ? 2 : 4
+
+        setSendButton(amount: amount, percent: 0.1)
+        pointsTextField.text = String(format: "%.*f", accuracy, amount)
+
+        sendPointsButton.isEnabled = dataModel.checkHistoryAmounts() && chooseRecipientButton.isSelected
     }
     
     private func updateSendInfoByEnteredPoints() {
@@ -350,13 +345,9 @@ class WalletSendPointsVC: UIViewController {
         setSendButton(amount: amountEntered, percent: 0.1)
         pointsTextField.placeholder = String(format: "0 %@", dataModel.transaction.symbol.fullName)
 
-        checkAmount()
+        sendPointsButton.isEnabled = dataModel.checkEnteredAmounts() && chooseRecipientButton.isSelected
     }
     
-    private func checkAmount() {
-        sendPointsButton.isEnabled = dataModel.checkAmounts() && chooseRecipientButton.isSelected
-    }
-
     
     // MARK: - Actions
     @objc func chooseRecipientViewTapped(_ sender: UITapGestureRecognizer) {
@@ -387,7 +378,7 @@ class WalletSendPointsVC: UIViewController {
         guard let recipientID = dataModel.transaction.recipient.id, numberValue > 0 else { return }
 
         dataModel.transaction.operationDate = Date()
-        
+
         showIndetermineHudWithMessage("sending".localized().uppercaseFirst + " \(dataModel.transaction.symbol.fullName)")
 
         // FOR TEST
@@ -421,6 +412,14 @@ class WalletSendPointsVC: UIViewController {
 
 // MARK: - UITextFieldDelegate
 extension WalletSendPointsVC: UITextFieldDelegate {
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        clearPointsButton.isHidden = textField.text == ""
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        clearPointsButton.isHidden = true
+    }
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         // TODO: - Add action
         textField.resignFirstResponder()

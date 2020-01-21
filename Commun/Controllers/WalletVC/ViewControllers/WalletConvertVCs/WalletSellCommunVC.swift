@@ -179,10 +179,10 @@ class WalletSellCommunVC: WalletConvertVC {
                 let transaction = Transaction(recipient: Recipient(id: balance.identity,
                                                                    name: balance.name!,
                                                                    avatarURL: balance.logo),
-                                              operationDate: Date(),
-                                              accuracy: 2,
+                                              accuracy: 4,
                                               symbol: balance.symbol,
-                                              amount: CGFloat(value * strongSelf.viewModel.rate.value / 10))
+                                              amount: CGFloat(value * strongSelf.viewModel.rate.value / 10),
+                                              operationDate: Date())
 
                 let completedVC = TransactionCompletedVC(transaction: transaction)
                 strongSelf.show(completedVC, sender: nil)

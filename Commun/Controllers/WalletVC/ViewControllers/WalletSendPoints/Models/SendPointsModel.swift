@@ -45,12 +45,17 @@ class SendPointsModel {
         
         return balanceInstance
     }
-
-    func checkAmounts() -> Bool {
+        
+    func checkEnteredAmounts() -> Bool {
         guard abs(transaction.amount) > 0 else { return false }
         return abs(transaction.amount) <= currentBalance.amount
     }
-        
+
+    func checkHistoryAmounts() -> Bool {
+        guard abs(transaction.history!.quantityValue) > 0 else { return false }
+        return abs(CGFloat(transaction.history!.quantityValue)) <= currentBalance.amount
+    }
+
     private func loadBalances(byUserID userID: String) -> Single<[ResponseAPIWalletGetBalance]> {
         return RestAPIManager.instance.getBalance(userId: userID).map{ $0.balances }
     }

@@ -50,14 +50,11 @@ class TransactionCompletedVC: UIViewController {
         super.viewWillAppear(animated)
         
         setupNavBar()
-        setupTabBar(hide: true)
         setNeedsStatusBarAppearanceUpdate()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        
-        setupTabBar(hide: false)
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -84,12 +81,6 @@ class TransactionCompletedVC: UIViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(stopBarButtonTapped))
     }
     
-    private func setupTabBar(hide isHidden: Bool) {
-        tabBarController?.tabBar.isHidden = isHidden
-        let tabBarVC = (tabBarController as? TabBarVC)
-        tabBarVC?.setTabBarHiden(isHidden)
-    }
-
     private func setupView() {
         transactionCompletedView.update(balance: dataModel.currentBalance)
         transactionCompletedView.update(transaction: dataModel.transaction)
@@ -113,9 +104,12 @@ class TransactionCompletedVC: UIViewController {
                 strongSelf.backToWallet()
                 
             default:
-                // Display `Feed` page
-                strongSelf.tabBarController?.selectedIndex = 0
-                strongSelf.navigationController?.popToRootViewController(animated: false)
+                // Return to `Feed` page
+                if let tabBarVC = strongSelf.tabBarController as? TabBarVC {
+                    tabBarVC.setTabBarHiden(false)
+                    tabBarVC.switchTab(index: 0)
+                    strongSelf.navigationController?.popToRootViewController(animated: false)
+                }
             }
         }
     }
