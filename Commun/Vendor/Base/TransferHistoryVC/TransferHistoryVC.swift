@@ -141,18 +141,31 @@ class TransferHistoryVC: ListViewController<ResponseAPIWalletGetTransferHistoryI
                         strongSelf.completionTabBarHide!(false)
                     }
                     
-                    completedVC.completionRepeat = { [weak self] transition in
+                    completedVC.completionRepeat = { [weak self] in
                         guard let strongSelf = self else { return }
                         
                         let walletSendPointsVC = WalletSendPointsVC(withSelectedBalance: transaction.symbol, andRecipient: transaction.recipient)
-                        walletSendPointsVC.dataModel.transaction = transition
+                        walletSendPointsVC.dataModel.transaction = transaction
                         
-                        if let walletVC = strongSelf.navigationController?.viewControllers.filter({ $0 is CommunWalletVC }).first {
-                            strongSelf.navigationController?.popToViewController(walletVC, animated: false)
-                            walletVC.show(walletSendPointsVC, sender: nil)
+                        if let communWalletVC = strongSelf.navigationController?.viewControllers.filter({ $0 is CommunWalletVC }).first as? CommunWalletVC {
+                            strongSelf.navigationController?.popToViewController(communWalletVC, animated: false)
                             strongSelf.completionTabBarHide!(true)
+
+                            switch selectedItem.meta.actionType {
+                            case "transfer":
+                                communWalletVC.show(walletSendPointsVC, sender: nil)
+
+                            case "convert":
+                                if let walletConvertVC = communWalletVC.createConvertVC(withHistoryItem: transaction.history) {
+                                    communWalletVC.routeToConvertScene(walletConvertVC: walletConvertVC)
+                                }
+                                
+                            default:
+                                break
+                            }
+
                             strongSelf.hideHud()
-                        }
+                         }
                     }
                 }
             })

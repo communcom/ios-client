@@ -30,6 +30,8 @@ class WalletConvertVC: BaseViewController {
         .appMainColor
     }
     
+    var historyItem: ResponseAPIWalletGetTransferHistoryItem?
+    
     // MARK: - Subviews
     lazy var scrollView = ContentHuggingScrollView(axis: .vertical)
     lazy var balanceNameLabel = UILabel.with(textSize: 17, weight: .semibold, textColor: .white)
@@ -72,9 +74,14 @@ class WalletConvertVC: BaseViewController {
     lazy var convertButton = CommunButton.default(height: 50 * Config.heightRatio, label: "convert".localized().uppercaseFirst, isHuggingContent: false)
     
     // MARK: - Initializers
-    init(balances: [ResponseAPIWalletGetBalance], symbol: String? = nil) {
+    init(balances: [ResponseAPIWalletGetBalance], symbol: String? = nil, historyItem: ResponseAPIWalletGetTransferHistoryItem? = nil) {
         currentSymbol = symbol == Config.defaultSymbol ? nil : symbol
         viewModel.items.accept(balances)
+        
+        if let history = historyItem {
+            self.historyItem = history
+        }
+        
         super.init(nibName: nil, bundle: nil)
     }
     

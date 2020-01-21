@@ -222,14 +222,24 @@ class CommunWalletVC: TransferHistoryVC {
 
     // MARK: - Actions
     @objc func convertButtonDidTouch() {
-        guard let vc = createConvertVC() else {return}
-        vc.completion = {
+        guard let walletConvertVC = createConvertVC() else { return }
+        
+        routeToConvertScene(walletConvertVC: walletConvertVC)
+    }
+    
+    func routeToConvertScene(walletConvertVC: WalletConvertVC) {
+        walletConvertVC.completion = {
             self.viewModel.reload()
         }
+        
         let nc = navigationController as? BaseNavigationController
         nc?.shouldResetNavigationBarOnPush = false
-        show(vc, sender: nil)
+        show(walletConvertVC, sender: nil)
         nc?.shouldResetNavigationBarOnPush = true
+    }
+    
+    func createConvertVC(withHistoryItem historyItem: ResponseAPIWalletGetTransferHistoryItem? = nil) -> WalletConvertVC? {
+        WalletSellCommunVC(balances: (self.viewModel as! WalletViewModel).balancesVM.items.value, historyItem: historyItem)
     }
     
     // Select balance
@@ -252,10 +262,6 @@ class CommunWalletVC: TransferHistoryVC {
         hideHud()
     }
     
-    func createConvertVC() -> WalletConvertVC? {
-        WalletSellCommunVC(balances: (self.viewModel as! WalletViewModel).balancesVM.items.value)
-    }
-    
     @objc func moreActionsButtonDidTouch(_ sender: CommunButton) {
         
     }
@@ -264,6 +270,7 @@ class CommunWalletVC: TransferHistoryVC {
         let vc = SendPointListVC { (user) in
             self.sendPoint(to: user)
         }
+        
         let nc = BaseNavigationController(rootViewController: vc)
         present(nc, animated: true, completion: nil)
     }
@@ -272,6 +279,7 @@ class CommunWalletVC: TransferHistoryVC {
         let vc = BalancesVC { balance in
             self.openOtherBalancesWalletVC(withSelectedBalance: balance)
         }
+        
         let nc = BaseNavigationController(rootViewController: vc)
         present(nc, animated: true, completion: nil)
     }

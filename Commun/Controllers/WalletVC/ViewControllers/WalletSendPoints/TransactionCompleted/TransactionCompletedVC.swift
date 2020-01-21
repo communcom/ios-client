@@ -14,8 +14,8 @@ class TransactionCompletedVC: UIViewController {
     var transaction: Transaction!
     var transactionCompletedView: TransactionCompletedView!
     
+    var completionRepeat: (() -> Void)?
     var completionDismiss: (() -> Void)?
-    var completionRepeat: ((Transaction) -> Void)?
 
     
     // MARK: - Class Initialization
@@ -98,7 +98,7 @@ class TransactionCompletedVC: UIViewController {
             case .repeat:
                 strongSelf.showIndetermineHudWithMessage("loading".localized().uppercaseFirst)
                 strongSelf.dismiss()
-                strongSelf.completionRepeat!(strongSelf.dataModel.transaction)
+                strongSelf.completionRepeat!()
 
             case .wallet:
                 strongSelf.backToWallet()
