@@ -18,6 +18,7 @@ import UserNotifications
 import CyberSwift
 @_exported import CyberSwift
 import RxSwift
+import RxCocoa
 import SDURLCache
 import SDWebImageWebPCoder
 import ListPlaceholder
@@ -34,6 +35,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     static var reloadSubject = PublishSubject<Bool>()
     let notificationCenter = UNUserNotificationCenter.current()
+    let notificationRelay = BehaviorRelay<ResponseAPIGetNotificationItem>(value: ResponseAPIGetNotificationItem.empty)
     
     private var bag = DisposeBag()
 
@@ -474,6 +476,18 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
 
         // Print full message.
         Logger.log(message: "UINotificationContent: \(notificationContent)", event: .debug)
+        
+        // decode notification
+        if let string = notificationContent.userInfo["notification"] as? String,
+            let data = string.data(using: .utf8)
+        {
+            do {
+                let notification = try JSONDecoder().decode(ResponseAPIGetNotificationItem.self, from: data)
+                notificationRelay.accept(notification)
+            } catch {
+                Logger.log(message: "Receiving notification error: \(error)", event: .error)
+            }
+        }
 
         completionHandler()
     }
