@@ -124,8 +124,7 @@ class TransferHistoryVC: ListViewController<ResponseAPIWalletGetTransferHistoryI
                                                   operationDate: selectedItem.timestamp.convert(toDateFormat: .nextSmsDateType),
                                                   accuracy: 4,
                                                   symbol: selectedItem.symbol,
-                                                  type: .history,
-                                                  actionType: TypeOfAction(rawValue: selectedItem.meta.actionType ?? "hold")!,
+                                                  history: selectedItem,
                                                   amount: amount)
 
                     let completedVC = TransactionCompletedVC(transaction: transaction)
@@ -144,8 +143,8 @@ class TransferHistoryVC: ListViewController<ResponseAPIWalletGetTransferHistoryI
                         
                         let walletSendPointsVC = WalletSendPointsVC(withSelectedBalance: transaction.symbol, andRecipient: transaction.recipient)
                         walletSendPointsVC.dataModel.transaction = transition
-                        walletSendPointsVC.dataModel.transaction.amount = abs(walletSendPointsVC.dataModel.transaction.amount)
-                        walletSendPointsVC.dataModel.transaction.type = transition.actionType == .transfer ? .send : .convert
+//                        walletSendPointsVC.dataModel.transaction.amount = abs(walletSendPointsVC.dataModel.transaction.amount)
+//                        walletSendPointsVC.dataModel.transaction.type = transition.actionType == .transfer ? .send : .convert
 
                         if let walletVC = strongSelf.navigationController?.viewControllers.filter({ $0 is CommunWalletVC }).first {
                             strongSelf.navigationController?.popToViewController(walletVC, animated: false)

@@ -143,8 +143,6 @@ class WelcomeVC: UIViewController {
                                                                                   operationDate: Date(),
                                                                                   accuracy: 2,
                                                                                   symbol: "CMN",
-                                                                                  type: TransactionType.history,
-                                                                                  actionType: .transfer,
                                                                                   amount: 30))
         modalViewController.modalPresentationStyle = .overCurrentContext
 

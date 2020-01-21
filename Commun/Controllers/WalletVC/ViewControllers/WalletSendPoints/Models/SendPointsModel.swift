@@ -41,7 +41,6 @@ class SendPointsModel {
         balanceInstance.name = balance.name ?? balance.symbol.fullName
         balanceInstance.avatarURL = balance.logo
         balanceInstance.amount = CGFloat(balance.balanceValue)
-//        transaction.symbol = balance.symbol
         transaction.accuracy = transaction.amount == 0 ? 0 : (transaction.amount >= 1_000.0 ? 2 : 4)
         
         return balanceInstance

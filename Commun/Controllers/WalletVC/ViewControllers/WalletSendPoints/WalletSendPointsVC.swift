@@ -154,7 +154,7 @@ class WalletSendPointsVC: UIViewController {
             strongSelf.dataModel.transaction.amount = newAmount
             strongSelf.pointsTextField.text = String(format: "%.*f", strongSelf.dataModel.transaction.accuracy, newAmount)
             strongSelf.clearPointsButton.isHidden = false
-            strongSelf.updateSendPointsInfo()
+            strongSelf.updateSendInfoByEnteredPoints()
         }
     }
     
@@ -212,6 +212,7 @@ class WalletSendPointsVC: UIViewController {
         
         updateRecipientInfo()
         updateBalanceInfo()
+        dataModel.transaction.history == nil ? updateSendInfoByEnteredPoints() : updateSendInfoByHistory()
 
         // Action view
         let whiteView = UIView(width: CGFloat.adaptive(width: 375.0), height: CGFloat.adaptive(height: 543.0), backgroundColor: .white, cornerRadius: CGFloat.adaptive(width: 25.0))
@@ -323,8 +324,6 @@ class WalletSendPointsVC: UIViewController {
     private func updateBalanceInfo() {
         balanceNameLabel.text = dataModel.currentBalance.name
         balanceCurrencyLabel.text = dataModel.currentBalance.amount == 0 ? "0" : Double(dataModel.currentBalance.amount).currencyValueFormatted
-
-        updateSendPointsInfo()
     }
     
     private func updateRecipientInfo() {
@@ -339,21 +338,16 @@ class WalletSendPointsVC: UIViewController {
         }
     }
 
-    private func updateSendPointsInfo() {
-        guard var text = pointsTextField.text?.replacingOccurrences(of: ",", with: ".") else { return }
+    private func updateSendInfoByHistory() {
+    
+    }
+    
+    private func updateSendInfoByEnteredPoints() {
+        guard let text = pointsTextField.text?.replacingOccurrences(of: ",", with: ".") else { return }
         
         let amountEntered = CGFloat((text as NSString).floatValue)
-        
-        if amountEntered == 0 {
-            text = String(format: "%.*f", dataModel.transaction.accuracy, abs(dataModel.transaction.amount))
-            setSendButton(amount: abs(dataModel.transaction.amount), percent: 0.1)
-        } else {
-            text = String(format: "%.*f", dataModel.transaction.accuracy, amountEntered)
-            dataModel.transaction.amount = amountEntered
-            setSendButton(amount: amountEntered, percent: 0.1)
-        }
-
-        pointsTextField.text = text
+        dataModel.transaction.amount = amountEntered
+        setSendButton(amount: amountEntered, percent: 0.1)
         pointsTextField.placeholder = String(format: "0 %@", dataModel.transaction.symbol.fullName)
 
         checkAmount()
@@ -372,7 +366,7 @@ class WalletSendPointsVC: UIViewController {
             strongSelf.dataModel.transaction.update(recipient: recipient)
             strongSelf.chooseRecipientButton.isSelected = true
             strongSelf.updateRecipientInfo()
-            strongSelf.updateSendPointsInfo()
+            strongSelf.updateSendInfoByEnteredPoints()
         }
         
         let nc = BaseNavigationController(rootViewController: friendsListVC)
@@ -382,7 +376,9 @@ class WalletSendPointsVC: UIViewController {
     @objc func clearButtonTapped(_ sender: UIButton) {
         sender.isHidden = true
         pointsTextField.text = nil
-        updateSendPointsInfo()
+        dataModel.transaction.amount = 0
+        
+        updateSendInfoByEnteredPoints()
     }
 
     @objc func sendPointsButtonTapped(_ sender: UITapGestureRecognizer) {
@@ -392,13 +388,13 @@ class WalletSendPointsVC: UIViewController {
 
         dataModel.transaction.operationDate = Date()
         
-//        showIndetermineHudWithMessage("sending".localized().uppercaseFirst + " \(dataModel.transaction.symbol.fullName)")
+        showIndetermineHudWithMessage("sending".localized().uppercaseFirst + " \(dataModel.transaction.symbol.fullName)")
 
         // FOR TEST
-        let completedVC = TransactionCompletedVC(transaction: dataModel.transaction)
-        show(completedVC, sender: nil)
+//        let completedVC = TransactionCompletedVC(transaction: dataModel.transaction)
+//        show(completedVC, sender: nil)
 
-        /*
+        ///*
         BlockchainManager.instance.transferPoints(to: recipientID, number: Double(numberValue), currency: dataModel.transaction.symbol)
             .flatMapCompletable { RestAPIManager.instance.waitForTransactionWith(id: $0) }
             .subscribe(onCompleted: { [weak self] in
@@ -415,7 +411,7 @@ class WalletSendPointsVC: UIViewController {
                 strongSelf.showError(error)
         }
         .disposed(by: disposeBag)
-        */
+        //*/
     }
     
     @objc func viewTapped( _ sender: UITapGestureRecognizer) {
@@ -452,7 +448,7 @@ extension WalletSendPointsVC: UITextFieldDelegate {
     }
     
     func textFieldDidChangeSelection(_ textField: UITextField) {
-        updateSendPointsInfo()
+        updateSendInfoByEnteredPoints()
     }
 }
 
@@ -522,6 +518,7 @@ extension WalletSendPointsVC: CircularCarouselDelegate {
     func carousel(_ carousel: CircularCarousel, didSelectItemAtIndex index: Int) {
         dataModel.currentBalanceSymbol = dataModel.balances[index].symbol
         updateBalanceInfo()
+        updateSendInfoByEnteredPoints()
     }
     
     func carousel(_ carousel: CircularCarousel, willBeginScrollingToIndex index: Int) {

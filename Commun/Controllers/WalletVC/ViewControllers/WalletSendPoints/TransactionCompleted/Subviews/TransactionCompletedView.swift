@@ -19,7 +19,7 @@ enum ActionType {
 
 class TransactionCompletedView: UIView {
     // MARK: - Properties
-    var viewType: TransactionType = .send
+    var isHistoryMode: Bool = false
     
     var recipientAvatarImageView: UIImageView = UIImageView.circle(size: CGFloat.adaptive(width: 40.0), imageName: "tux")
 
@@ -121,10 +121,10 @@ class TransactionCompletedView: UIView {
 
     
     // MARK: - Class Initialization
-    init(withType type: TransactionType) {
-        self.viewType = type
+    init(withHistoryMode isHistoryMode: Bool = false) {
+        self.isHistoryMode = isHistoryMode
         
-        super.init(frame: CGRect(origin: .zero, size: CGSize(width: CGFloat.adaptive(width: 335.0), height: CGFloat.adaptive(height: type == .send ? 641.0 : 567.0))))
+        super.init(frame: CGRect(origin: .zero, size: CGSize(width: CGFloat.adaptive(width: 335.0), height: CGFloat.adaptive(height: isHistoryMode ? 567.0 : 641.0))))
         setupView()
     }
     
@@ -140,7 +140,7 @@ class TransactionCompletedView: UIView {
     
     // MARK: - Custom Functions
     private func setupView() {
-        if viewType == .history {
+        if isHistoryMode {
             addGesture()
         }
         
@@ -233,19 +233,19 @@ class TransactionCompletedView: UIView {
         }
         
         // Add circles
-        let leftTopCircle = createCircleView(withColor: viewType == .send ? #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1) : #colorLiteral(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.3), sideSize: CGFloat.adaptive(width: 24.0))
+        let leftTopCircle = createCircleView(withColor: isHistoryMode ? #colorLiteral(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.3) : #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1), sideSize: CGFloat.adaptive(width: 24.0))
         contentView.addSubview(leftTopCircle)
         leftTopCircle.autoPinTopAndLeadingToSuperView(inset: CGFloat.adaptive(height: 154.0), xInset: CGFloat.adaptive(width: -24.0 / 2))
 
-        let leftBottomCircle = createCircleView(withColor: viewType == .send ? #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1) : #colorLiteral(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.3), sideSize: CGFloat.adaptive(width: 24.0))
+        let leftBottomCircle = createCircleView(withColor: isHistoryMode ? #colorLiteral(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.3) : #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1), sideSize: CGFloat.adaptive(width: 24.0))
         contentView.addSubview(leftBottomCircle)
         leftBottomCircle.autoPinBottomAndLeadingToSuperView(inset: CGFloat.adaptive(height: 97.0), xInset: CGFloat.adaptive(width: -24.0 / 2))
 
-        let rightTopCircle = createCircleView(withColor: viewType == .send ? #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1) : #colorLiteral(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.3), sideSize: CGFloat.adaptive(width: 24.0))
+        let rightTopCircle = createCircleView(withColor: isHistoryMode ? #colorLiteral(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.3) : #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1), sideSize: CGFloat.adaptive(width: 24.0))
         contentView.addSubview(rightTopCircle)
         rightTopCircle.autoPinTopAndTrailingToSuperView(inset: CGFloat.adaptive(height: 154.0), xInset: CGFloat.adaptive(width: -24.0 / 2))
 
-        let rightBottomCircle = createCircleView(withColor: viewType == .send ? #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1) : #colorLiteral(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.3), sideSize: CGFloat.adaptive(width: 24.0))
+        let rightBottomCircle = createCircleView(withColor: isHistoryMode ? #colorLiteral(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.3) : #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1), sideSize: CGFloat.adaptive(width: 24.0))
         contentView.addSubview(rightBottomCircle)
         rightBottomCircle.autoPinBottomAndTrailingToSuperView(inset: CGFloat.adaptive(height: 97.0), xInset: CGFloat.adaptive(width: -24.0 / 2))
         
@@ -286,8 +286,8 @@ class TransactionCompletedView: UIView {
         actionButtonsStackView.distribution = .fillEqually
         
         self.addSubview(actionButtonsStackView)
-        actionButtonsStackView.addArrangedSubviews(viewType == .send ? [homeButton, backToWalletButton] : [repeatButton])
-        actionButtonsStackView.autoPinEdge(.top, to: .bottom, of: contentView, withOffset: CGFloat.adaptive(width: viewType == .send ? 34.0 : 20.0))
+        actionButtonsStackView.addArrangedSubviews(isHistoryMode ? [repeatButton] : [homeButton, backToWalletButton])
+        actionButtonsStackView.autoPinEdge(.top, to: .bottom, of: contentView, withOffset: CGFloat.adaptive(width: isHistoryMode ? 20.0 : 34.0))
         actionButtonsStackView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
     }
     
@@ -370,7 +370,7 @@ class TransactionCompletedView: UIView {
         transactionAmountLabel.text = String(Double(transaction.amount).currencyValueFormatted)
         transactionCurrencyLabel.text = transaction.symbol.fullName
         
-        if viewType != .send {
+        if isHistoryMode {
             if transaction.amount > 0 {
                 transactionAmountLabel.text = "+" + transactionAmountLabel.text!
                 transactionAmountLabel.theme_textColor = softCyanLimeGreenColorPickers
@@ -380,7 +380,7 @@ class TransactionCompletedView: UIView {
                 transactionCurrencyLabel.theme_textColor = blackWhiteColorPickers
             }
             
-            repeatButton.isHidden = !["transfer", "convert"].contains(transaction.actionType.rawValue)
+            repeatButton.isHidden = !["transfer", "convert"].contains(transaction.history?.meta.actionType ?? Config.defaultSymbol)
         }
     }
 }

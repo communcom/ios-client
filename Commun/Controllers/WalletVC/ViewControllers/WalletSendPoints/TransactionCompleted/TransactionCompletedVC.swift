@@ -21,7 +21,7 @@ class TransactionCompletedVC: UIViewController {
     // MARK: - Class Initialization
     init(transaction: Transaction) {
         self.dataModel.transaction = transaction
-        self.transactionCompletedView = TransactionCompletedView(withType: transaction.type)
+        self.transactionCompletedView = TransactionCompletedView(withHistoryMode: transaction.history != nil)
         
         super.init(nibName: nil, bundle: nil)
     }
@@ -35,7 +35,7 @@ class TransactionCompletedVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        dataModel.transaction.type == .send ? setupNavBar() : addGesture()
+        dataModel.transaction.history == nil ? setupNavBar() : addGesture()
 
         dataModel.loadBalances { [weak self] success in
             guard let strongSelf = self else { return }
@@ -67,7 +67,7 @@ class TransactionCompletedVC: UIViewController {
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         
-        view.backgroundColor = dataModel.transaction.type == .send ? #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1) : #colorLiteral(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.3)
+        view.backgroundColor = dataModel.transaction.history == nil ? #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1) : #colorLiteral(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.3)
     }
         
     

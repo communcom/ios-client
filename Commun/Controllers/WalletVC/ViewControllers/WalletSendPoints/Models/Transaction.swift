@@ -8,11 +8,11 @@
 
 import Foundation
 
-public enum TransactionType: Int {
-    case send
-    case convert
-    case history
-}
+//public enum TransactionType: Int {
+//    case send
+//    case convert
+//    case history
+//}
 
 public enum TypeOfAction: String {
     case transfer = "transfer"
@@ -29,9 +29,8 @@ struct Transaction {
     var operationDate: Date = Date()
     var accuracy: Int = 4
     var symbol: String = Config.defaultSymbol
-    var type: TransactionType = .send
-    var actionType: TypeOfAction = .transfer
-    
+    var history: ResponseAPIWalletGetTransferHistoryItem?
+
     var amount: CGFloat = 0.0 {
         didSet {
             self.accuracy = amount == 0 ? 0 : (amount >= 1_000.0 ? 2 : 4)
