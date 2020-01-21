@@ -195,23 +195,22 @@ class TransactionCompletedView: UIView {
 
         // Add Recipient data
         let recipientStackView = UIStackView(axis: NSLayoutConstraint.Axis.horizontal, spacing: CGFloat.adaptive(width: 8.0))
-        recipientStackView.alignment = .center
-        recipientStackView.distribution = .equalCentering
+        recipientStackView.alignment = .fill
+        recipientStackView.distribution = .fill
         
         recipientStackView.addArrangedSubviews([transactionAmountLabel, transactionCurrencyLabel])
         
         burnedPercentLabel.text = String(format: "%.1f%% %@ 🔥", 0.1, "was burned".localized())
-        
+
         let recipientDataStackView = UIStackView(axis: NSLayoutConstraint.Axis.vertical, spacing: CGFloat.adaptive(height: 8.0))
-        recipientDataStackView.alignment = .fill
+        recipientDataStackView.alignment = .center
         recipientDataStackView.distribution = .fillProportionally
         
         contentView.addSubview(recipientDataStackView)
         recipientDataStackView.addArrangedSubviews([recipientStackView, burnedPercentLabel])
         recipientDataStackView.autoAlignAxis(toSuperviewAxis: .vertical)
         recipientDataStackView.autoPinEdge(.top, to: .bottom, of: dashedLine1, withOffset: CGFloat.adaptive(height: 32))
-        recipientDataStackView.setContentHuggingPriority(249.0, for: NSLayoutConstraint.Axis.horizontal)
-        
+
         contentView.addSubview(recipientAvatarImageView)
         recipientAvatarImageView.autoAlignAxis(toSuperviewAxis: .vertical)
         recipientAvatarImageView.autoPinEdge(.top, to: .bottom, of: dashedLine1, withOffset: CGFloat.adaptive(height: 92.0))
@@ -372,10 +371,13 @@ class TransactionCompletedView: UIView {
         
         if isHistoryMode {
             if transaction.amount > 0 {
-                transactionAmountLabel.text = "+" + transactionAmountLabel.text!
+                transactionAmountLabel.text = "+" + String(Double(transaction.amount).currencyValueFormatted)
+                transactionCurrencyLabel.text = transaction.history?.point.symbol?.fullName ?? Config.defaultSymbol
                 transactionAmountLabel.theme_textColor = softCyanLimeGreenColorPickers
                 transactionCurrencyLabel.theme_textColor = softCyanLimeGreenColorPickers
             } else {
+                transactionAmountLabel.text = "-" + String(transaction.history!.quantityValue.currencyValueFormatted)
+                transactionCurrencyLabel.text = transaction.history!.symbol.fullName
                 transactionAmountLabel.theme_textColor = blackWhiteColorPickers
                 transactionCurrencyLabel.theme_textColor = blackWhiteColorPickers
             }
