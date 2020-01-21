@@ -171,6 +171,38 @@ extension UIViewController {
 //        }
     }
     
+    func navigateWithNotificationItem(_ item: ResponseAPIGetNotificationItem) {
+        switch item.eventType {
+        case "subscribe":
+            if let id = item.user?.userId {
+                showProfileWithUserId(id)
+            }
+        case "upvote", "reply", "mention":
+            switch item.entityType {
+            case "post":
+                if let userId = item.post?.contentId.userId,
+                    let permlink = item.post?.contentId.permlink,
+                    let communityId = item.post?.contentId.communityId
+                {
+                    let postVC = PostPageVC(userId: userId, permlink: permlink, communityId: communityId)
+                    show(postVC, sender: self)
+                }
+            case "comment":
+                if let userId = item.comment?.parents?.post?.userId,
+                    let permlink = item.comment?.parents?.post?.permlink,
+                    let communityId = item.comment?.parents?.post?.communityId
+                {
+                    let postVC = PostPageVC(userId: userId, permlink: permlink, communityId: communityId)
+                    show(postVC, sender: self)
+                }
+            default:
+                break
+            }
+        default:
+            break
+        }
+    }
+    
     func showCommunityWithCommunityId(_ id: String) {
         if let vc = self as? CommunityPageVC, vc.communityId == id {
             vc.view.shake()

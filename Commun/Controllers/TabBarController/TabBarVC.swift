@@ -42,7 +42,7 @@ class TabBarVC: UITabBarController {
         configTabs()
         
         // bind view model
-        bindViewModel()
+        bind()
     }
     
     func setTabBarHiden(_ hide: Bool) {
@@ -215,7 +215,15 @@ class TabBarVC: UITabBarController {
 //        ])
     }
 
-    func bindViewModel() {
+    func bind() {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        appDelegate.notificationRelay
+            .skipWhile {$0 == .empty}
+            .subscribe(onNext: { (item) in
+                self.selectedViewController?.navigateWithNotificationItem(item)
+            })
+            .disposed(by: bag)
+        
         // Get number of fresh notifications
 //        viewModel.getFreshCount()
 //            .asDriver(onErrorJustReturn: 0)
