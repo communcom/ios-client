@@ -38,12 +38,19 @@ class WalletSellCommunVC: WalletConvertVC {
     }
     
     override func setUpBuyPrice() {
-        rightTextField.text = stringFromNumber(viewModel.buyPrice.value)
+        if let history = historyItem, !leftTextField.isFirstResponder {
+            rightTextField.text = stringFromNumber(history.meta.exchangeAmount!)
+        } else {
+            rightTextField.text = stringFromNumber(viewModel.buyPrice.value)
+        }
+        
         convertButton.isEnabled = shouldEnableConvertButton()
     }
     
     override func setUpSellPrice() {
-        if viewModel.sellPrice.value > 0 {
+        if let history = historyItem, !leftTextField.isFirstResponder {
+            leftTextField.text = stringFromNumber(history.quantityValue)
+        } else if viewModel.sellPrice.value > 0 {
             leftTextField.text = stringFromNumber(viewModel.sellPrice.value)
         }
         
