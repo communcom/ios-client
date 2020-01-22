@@ -87,12 +87,12 @@ class TransactionCompletedVC: UIViewController {
             dataModel.transaction.buyBalance = dataModel.getBalance()
             dataModel.transaction.sellBalance = dataModel.getBalance(bySymbol: Config.defaultSymbol)
             
-        // Example: MEME -> CMN
+        // Example: sell `MEME` -> buy `CMN`
         case .buy:
             dataModel.transaction.buyBalance = dataModel.getBalance(bySymbol: Config.defaultSymbol)
             dataModel.transaction.sellBalance = dataModel.getBalance(bySymbol: dataModel.transaction.symbol)
 
-        // Example: CMN -> MEME
+        // Example: sell `CMN` -> buy `MEME`
         case .sell:
             dataModel.transaction.buyBalance = dataModel.getBalance(bySymbol: dataModel.transaction.symbol)
             dataModel.transaction.sellBalance = dataModel.getBalance(bySymbol: Config.defaultSymbol)

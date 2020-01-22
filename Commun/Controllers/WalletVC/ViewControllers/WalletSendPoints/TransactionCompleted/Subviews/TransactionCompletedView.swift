@@ -21,7 +21,7 @@ class TransactionCompletedView: UIView {
     // MARK: - Properties
     var isHistoryMode: Bool = false
     
-    var recipientAvatarImageView: UIImageView = UIImageView.circle(size: CGFloat.adaptive(width: 40.0), imageName: "tux")
+    var buyerAvatarImageView: UIImageView = UIImageView.circle(size: CGFloat.adaptive(width: 40.0), imageName: "tux")
 
     var boldLabels = [UILabel]() {
         didSet {
@@ -211,9 +211,9 @@ class TransactionCompletedView: UIView {
         recipientDataStackView.autoAlignAxis(toSuperviewAxis: .vertical)
         recipientDataStackView.autoPinEdge(.top, to: .bottom, of: dashedLine1, withOffset: CGFloat.adaptive(height: 32))
 
-        contentView.addSubview(recipientAvatarImageView)
-        recipientAvatarImageView.autoAlignAxis(toSuperviewAxis: .vertical)
-        recipientAvatarImageView.autoPinEdge(.top, to: .bottom, of: dashedLine1, withOffset: CGFloat.adaptive(height: 92.0))
+        contentView.addSubview(buyerAvatarImageView)
+        buyerAvatarImageView.autoAlignAxis(toSuperviewAxis: .vertical)
+        buyerAvatarImageView.autoPinEdge(.top, to: .bottom, of: dashedLine1, withOffset: CGFloat.adaptive(height: 92.0))
 
         let namesStackView = UIStackView(axis: NSLayoutConstraint.Axis.vertical, spacing: CGFloat.adaptive(height: 8.0))
         titlesStackView.alignment = .center
@@ -222,7 +222,7 @@ class TransactionCompletedView: UIView {
         contentView.addSubview(namesStackView)
         namesStackView.addArrangedSubviews([buyerNameLabel, buyerBalanceOrFriendIDLabel])
         namesStackView.autoAlignAxis(toSuperviewAxis: .vertical)
-        namesStackView.autoPinEdge(.top, to: .bottom, of: recipientAvatarImageView, withOffset: CGFloat.adaptive(height: 10.0))
+        namesStackView.autoPinEdge(.top, to: .bottom, of: buyerAvatarImageView, withOffset: CGFloat.adaptive(height: 10.0))
 
         // Draw second dashed line
         if let dashedLine2 = dashedLine1.copyView() {
@@ -360,14 +360,15 @@ class TransactionCompletedView: UIView {
     func updateBuyerInfo(fromTransaction transaction: Transaction) {
         switch transaction.actionType {
         case .buy, .sell:
+            buyerNameLabel.text = transaction.buyBalance!.name
             buyerBalanceOrFriendIDLabel.text = String(Double(transaction.buyBalance!.amount).currencyValueFormatted)
+            buyerAvatarImageView.setAvatar(urlString: transaction.buyBalance?.avatarURL, namePlaceHolder: transaction.buyBalance?.name ?? Config.defaultSymbol)
 
         default:
+            buyerNameLabel.text = transaction.friend?.name ?? Config.defaultSymbol
             buyerBalanceOrFriendIDLabel.text = transaction.friend?.id ?? Config.defaultSymbol
+            buyerAvatarImageView.setAvatar(urlString: transaction.friend?.avatarURL, namePlaceHolder: transaction.friend?.name ?? Config.defaultSymbol)
         }
-        
-        buyerNameLabel.text = transaction.friend?.name ?? Config.defaultSymbol
-        recipientAvatarImageView.setAvatar(urlString: transaction.friend?.avatarURL, namePlaceHolder: transaction.friend?.name ?? Config.defaultSymbol)
     }
     
     func updateTransactionInfo(_ transaction: Transaction) {
