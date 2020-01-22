@@ -183,9 +183,21 @@ class WalletSellCommunVC: WalletConvertVC {
                 strongSelf.hideHud()
                 strongSelf.completion?()
                 
+                var symbol: Symbol = Symbol(sell: Config.defaultSymbol, buy: Config.defaultSymbol)
+                
+                // Sell `MEME` -> buy `CMN`
+                if balance.symbol == Config.defaultSymbol {
+                    symbol.sell = balance.symbol
+                }
+                
+                // Sell `CMN` -> buy `MEME`
+                else {
+                    symbol.buy = balance.symbol
+                }
+                
                 let transaction = Transaction(amount: CGFloat(value * strongSelf.viewModel.rate.value / 10),
                                               actionType: .sell,
-                                              symbol: Symbol(sell: balance.symbol, buy: balance.symbol),
+                                              symbol: symbol,
                                               operationDate: Date())
 
                 let completedVC = TransactionCompletedVC(transaction: transaction)

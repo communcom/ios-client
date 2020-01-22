@@ -81,46 +81,6 @@ class TransactionCompletedVC: UIViewController {
     }
     
     private func setupView() {
-        /*
-        switch dataModel.transaction.actionType {
-        case .send:
-            dataModel.transaction.buyBalance = dataModel.getBalance()
-            dataModel.transaction.sellBalance = dataModel.getBalance(bySymbol: Config.defaultSymbol)
-            
-        // Example: sell `MEME` -> buy `CMN`
-        case .buy:
-            dataModel.transaction.buyBalance = dataModel.getBalance(bySymbol: Config.defaultSymbol)
-            dataModel.transaction.sellBalance = dataModel.getBalance(bySymbol: dataModel.transaction.symbol.buy)
-
-        // Example: sell `CMN` -> buy `MEME`
-        case .sell:
-            dataModel.transaction.buyBalance = dataModel.getBalance(bySymbol: dataModel.transaction.symbol)
-            dataModel.transaction.sellBalance = dataModel.getBalance(bySymbol: Config.defaultSymbol)
-
-        // History: send CMN, MEME...
-        case .transfer:
-            dataModel.transaction.buyBalance = dataModel.getBalance(bySymbol: dataModel.transaction.symbol)
-            dataModel.transaction.sellBalance = dataModel.getBalance(bySymbol: dataModel.transaction.symbol)
-
-        // History: convert
-//        case .convert:
-//            // Example: sell `CMN` -> buy `MEME`
-//            if dataModel.transaction.symbol == Config.defaultSymbol {
-//                dataModel.transaction.sellBalance = dataModel.getBalance(bySymbol: dataModel.transaction.symbol)
-//                dataModel.transaction.buyBalance = dataModel.getBalance(bySymbol: Config.defaultSymbol)
-//            }
-//            
-//            // Example: sell `MEME` -> buy `CMN`
-//            else {
-//                dataModel.transaction.sellBalance = dataModel.getBalance(bySymbol: dataModel.transaction.symbol)
-//                dataModel.transaction.buyBalance = dataModel.getBalance(bySymbol: Config.defaultSymbol)
-//            }
-            
-        default:
-            break
-        }
-        */
-        
         dataModel.transaction.buyBalance = dataModel.getBalance(bySymbol: dataModel.transaction.symbol.buy)
         dataModel.transaction.sellBalance = dataModel.getBalance(bySymbol: dataModel.transaction.symbol.sell)
 

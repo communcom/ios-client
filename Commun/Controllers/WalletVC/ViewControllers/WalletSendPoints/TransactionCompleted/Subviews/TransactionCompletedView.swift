@@ -385,20 +385,9 @@ class TransactionCompletedView: UIView {
         transactionDateLabel.text = transaction.operationDate.convert(toStringFormat: .transactionCompletedType)
         transactionAmountLabel.text = String(Double(transaction.amount).currencyValueFormatted)
         transactionCurrencyLabel.text = transaction.symbol.buy.fullName
-        
-        switch transaction.actionType {
-        case .buy, .sell:
-            setColor(amount: transaction.amount)
-//            transactionCurrencyLabel.text = transaction.buyBalance!.symbol.fullName
+ 
+        setColor(amount: transaction.amount)
 
-        case .transfer, .convert:
-            setColor(amount: transaction.amount)
-//            transactionCurrencyLabel.text = transaction.buyBalance!.symbol.fullName
-
-        default:
-            break
-        }
-        
         if isHistoryMode {
             repeatButton.isHidden = !repeatButtonsArray.contains(transaction.history?.meta.actionType ?? Config.defaultSymbol)
         }

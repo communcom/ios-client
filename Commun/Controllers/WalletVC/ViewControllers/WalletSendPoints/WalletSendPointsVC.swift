@@ -111,16 +111,7 @@ class WalletSendPointsVC: UIViewController {
     // MARK: - Class Initialization
     init(withSelectedBalanceSymbol symbol: String, andUser user: ResponseAPIContentGetSubscriptionsUser?) {
         self.dataModel = SendPointsModel()
-        
-        var symbolValue: Symbol!
-        
-        if symbol == Config.defaultSymbol {
-            symbolValue = Symbol(sell: symbol, buy: symbol)
-        } else {
-            symbolValue = Symbol(sell: Config.defaultSymbol, buy: symbol)
-        }
-        
-        self.dataModel.transaction.symbol = symbolValue
+        self.dataModel.transaction.symbol = Symbol(sell: symbol, buy: symbol)
         
         if let userValue = user  {
             self.dataModel.transaction.createFriend(from: userValue)
@@ -517,12 +508,14 @@ extension WalletSendPointsVC: CircularCarouselDelegate {
     }
     
     func carousel(_ carousel: CircularCarousel, didSelectItemAtIndex index: Int) {
-        dataModel.transaction.symbol.sell = dataModel.balances[index].symbol
+        let selectedSymbol = dataModel.balances[index].symbol
+        dataModel.transaction.symbol = Symbol(sell: selectedSymbol, buy: selectedSymbol)
         updateSellerInfo()
         updateSendInfoByEnteredPoints()
     }
     
     func carousel(_ carousel: CircularCarousel, willBeginScrollingToIndex index: Int) {
-        dataModel.transaction.symbol.sell = dataModel.balances[index].symbol
+        let selectedSymbol = dataModel.balances[index].symbol
+        dataModel.transaction.symbol = Symbol(sell: selectedSymbol, buy: selectedSymbol)
     }
 }
