@@ -28,7 +28,7 @@ class SendPointsModel {
     
     func checkEnteredAmounts() -> Bool {
         guard abs(transaction.amount) > 0 else { return false }
-        return abs(transaction.amount) <= getBalance().amount
+        return abs(transaction.amount) <= getBalance(bySymbol: transaction.symbol.sell).amount
     }
 
     func checkHistoryAmounts() -> Bool {

@@ -8,6 +8,7 @@
 
 import Foundation
 
+typealias Symbol = (sell: String, buy: String)
 typealias Friend = (id: String, name: String, avatarURL: String?)
 typealias Balance = (name: String, avatarURL: String?, amount: CGFloat, symbol: String)
 
@@ -29,10 +30,10 @@ struct Transaction {
     var sellBalance: Balance?
     var friend: Friend?
     var amount: CGFloat = 0.0
-    var symbol: String = Config.defaultSymbol
     var history: ResponseAPIWalletGetTransferHistoryItem?
     var actionType: TransActionType = .send
-    
+    var symbol: Symbol = Symbol(sell: Config.defaultSymbol, buy: Config.defaultSymbol)
+
     var operationDate: Date = Date() {
         didSet {
             history = nil

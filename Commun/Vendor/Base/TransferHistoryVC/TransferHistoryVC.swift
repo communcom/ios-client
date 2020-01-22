@@ -104,6 +104,7 @@ class TransferHistoryVC: ListViewController<ResponseAPIWalletGetTransferHistoryI
                     // .history type
                     var friend: Friend?
                     var amount: CGFloat = 0.0
+                    var symbol: Symbol = Symbol(sell: selectedItem.symbol, buy: selectedItem.symbol)
                     
                     switch selectedItem.meta.actionType {
                     case "transfer":
@@ -112,19 +113,12 @@ class TransferHistoryVC: ListViewController<ResponseAPIWalletGetTransferHistoryI
                         amount = -1 * CGFloat(selectedItem.quantityValue)
                         
                     case "convert":
-//                        recipient = Recipient(id: nil,
-//                                              name: selectedItem.symbol == Config.defaultSymbol ?
-//                                                        selectedItem.point.name : Config.defaultSymbol.fullName,
-//                                              avatarURL: selectedItem.symbol == Config.defaultSymbol ? selectedItem.point.logo : nil)
-//                        
-                        amount = CGFloat((selectedItem.meta.exchangeAmount ?? 0.0) * (selectedItem.meta.actionType == "transfer" ? -1 : 1))
+                        amount = CGFloat(selectedItem.meta.exchangeAmount ?? 0.0)
+                        symbol = selectedItem.symbol == Config.defaultSymbol ?
+                                    Symbol(sell: selectedItem.symbol, buy: selectedItem.symbol) :
+                                    Symbol(sell: selectedItem.symbol, buy: selectedItem.symbol)
                         
                     default:
-//                        friend = selectedItem.f
-//                        Recipient(id: selectedItem.receiver.userId,
-//                                              name: selectedItem.receiver.username ?? Config.defaultSymbol,
-//                                              avatarURL: selectedItem.receiver.avatarUrl)
-                        
                         amount = CGFloat(selectedItem.quantityValue * (selectedItem.meta.actionType == "transfer" ? -1 : 1))
                     }
                     
@@ -132,16 +126,16 @@ class TransferHistoryVC: ListViewController<ResponseAPIWalletGetTransferHistoryI
                                                   sellBalance: nil,
                                                   friend: friend,
                                                   amount: amount,
-                                                  symbol: selectedItem.symbol,
                                                   history: selectedItem,
                                                   actionType: TransActionType(rawValue: selectedItem.meta.actionType ?? "send")!,
+                                                  symbol: symbol,
                                                   operationDate: selectedItem.timestamp.convert(toDateFormat: .nextSmsDateType))
                     
                     let completedVC = TransactionCompletedVC(transaction: transaction)
                     completedVC.modalPresentationStyle = .overCurrentContext
                     completedVC.modalTransitionStyle = .crossDissolve
-                    
                     strongSelf.present(completedVC, animated: true, completion: nil)
+                    
                     strongSelf.hideHud()
                     
                     completedVC.completionDismiss = {
@@ -151,7 +145,7 @@ class TransferHistoryVC: ListViewController<ResponseAPIWalletGetTransferHistoryI
                     completedVC.completionRepeat = { [weak self] in
                         guard let strongSelf = self else { return }
                         
-                        let walletSendPointsVC = WalletSendPointsVC(withSelectedBalanceSymbol: transaction.symbol, andUser: nil)
+                        let walletSendPointsVC = WalletSendPointsVC(withSelectedBalanceSymbol: transaction.symbol.sell, andUser: nil)
                         walletSendPointsVC.dataModel.transaction = transaction
                         
                         if let communWalletVC = strongSelf.navigationController?.viewControllers.filter({ $0 is CommunWalletVC }).first as? CommunWalletVC {

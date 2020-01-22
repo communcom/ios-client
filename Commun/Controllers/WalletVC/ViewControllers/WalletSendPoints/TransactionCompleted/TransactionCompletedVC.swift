@@ -81,6 +81,7 @@ class TransactionCompletedVC: UIViewController {
     }
     
     private func setupView() {
+        /*
         switch dataModel.transaction.actionType {
         case .send:
             dataModel.transaction.buyBalance = dataModel.getBalance()
@@ -89,7 +90,7 @@ class TransactionCompletedVC: UIViewController {
         // Example: sell `MEME` -> buy `CMN`
         case .buy:
             dataModel.transaction.buyBalance = dataModel.getBalance(bySymbol: Config.defaultSymbol)
-            dataModel.transaction.sellBalance = dataModel.getBalance(bySymbol: dataModel.transaction.symbol)
+            dataModel.transaction.sellBalance = dataModel.getBalance(bySymbol: dataModel.transaction.symbol.buy)
 
         // Example: sell `CMN` -> buy `MEME`
         case .sell:
@@ -101,18 +102,28 @@ class TransactionCompletedVC: UIViewController {
             dataModel.transaction.buyBalance = dataModel.getBalance(bySymbol: dataModel.transaction.symbol)
             dataModel.transaction.sellBalance = dataModel.getBalance(bySymbol: dataModel.transaction.symbol)
 
-        case .convert:
-            dataModel.transaction.buyBalance = dataModel.getBalance(bySymbol: dataModel.transaction.symbol)
-            dataModel.transaction.sellBalance = dataModel.getBalance(bySymbol: Config.defaultSymbol)
-
+        // History: convert
+//        case .convert:
+//            // Example: sell `CMN` -> buy `MEME`
+//            if dataModel.transaction.symbol == Config.defaultSymbol {
+//                dataModel.transaction.sellBalance = dataModel.getBalance(bySymbol: dataModel.transaction.symbol)
+//                dataModel.transaction.buyBalance = dataModel.getBalance(bySymbol: Config.defaultSymbol)
+//            }
+//            
+//            // Example: sell `MEME` -> buy `CMN`
+//            else {
+//                dataModel.transaction.sellBalance = dataModel.getBalance(bySymbol: dataModel.transaction.symbol)
+//                dataModel.transaction.buyBalance = dataModel.getBalance(bySymbol: Config.defaultSymbol)
+//            }
+            
         default:
             break
         }
+        */
         
-//        if let history = dataModel.transaction.history, history.meta.actionType == "convert" {
-//            dataModel.transaction.recipient.balance = dataModel.getBalance(bySymbol: history.symbol == Config.defaultSymbol ? history.symbol: Config.defaultSymbol)
-//        }
-        
+        dataModel.transaction.buyBalance = dataModel.getBalance(bySymbol: dataModel.transaction.symbol.buy)
+        dataModel.transaction.sellBalance = dataModel.getBalance(bySymbol: dataModel.transaction.symbol.sell)
+
         transactionCompletedView.updateSellerInfo(fromTransaction: dataModel.transaction)
         transactionCompletedView.updateTransactionInfo(dataModel.transaction)
         transactionCompletedView.updateBuyerInfo(fromTransaction: dataModel.transaction)

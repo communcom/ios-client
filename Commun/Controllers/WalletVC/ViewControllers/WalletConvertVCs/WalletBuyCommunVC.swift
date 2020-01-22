@@ -185,9 +185,9 @@ class WalletBuyCommunVC: WalletConvertVC {
                                               sellBalance: nil,
                                               friend: nil,
                                               amount: CGFloat(buyValue),
-                                              symbol: balance.symbol,
                                               history: nil,
                                               actionType: .buy,
+                                              symbol: Symbol(sell: balance.symbol, buy: balance.symbol),
                                               operationDate: Date())
                 
                 let completedVC = TransactionCompletedVC(transaction: transaction)

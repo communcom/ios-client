@@ -368,6 +368,11 @@ class TransactionCompletedView: UIView {
             buyerBalanceOrFriendIDLabel.text = String(Double(transaction.buyBalance!.amount).currencyValueFormatted)
             buyerAvatarImageView.setAvatar(urlString: transaction.buyBalance?.avatarURL, namePlaceHolder: transaction.buyBalance?.name ?? Config.defaultSymbol)
 
+        case .convert:
+            buyerNameLabel.text = transaction.buyBalance!.name
+            buyerBalanceOrFriendIDLabel.text = String(Double(transaction.buyBalance!.amount).currencyValueFormatted)
+            buyerAvatarImageView.setAvatar(urlString: transaction.buyBalance?.avatarURL, namePlaceHolder: transaction.buyBalance?.name ?? Config.defaultSymbol)
+
         default:
             buyerNameLabel.text = transaction.friend?.name ?? Config.defaultSymbol
             buyerBalanceOrFriendIDLabel.text = transaction.friend?.id ?? Config.defaultSymbol
@@ -379,26 +384,17 @@ class TransactionCompletedView: UIView {
         transactionTitleLabel.text = "transaction completed".localized().uppercaseFirst
         transactionDateLabel.text = transaction.operationDate.convert(toStringFormat: .transactionCompletedType)
         transactionAmountLabel.text = String(Double(transaction.amount).currencyValueFormatted)
-        transactionCurrencyLabel.text = transaction.symbol.fullName
+        transactionCurrencyLabel.text = transaction.symbol.buy.fullName
         
         switch transaction.actionType {
         case .buy, .sell:
             setColor(amount: transaction.amount)
-            transactionCurrencyLabel.text = transaction.buyBalance!.symbol.fullName
+//            transactionCurrencyLabel.text = transaction.buyBalance!.symbol.fullName
 
         case .transfer, .convert:
             setColor(amount: transaction.amount)
-            
-//            if transaction.amount > 0 {
-//                transactionAmountLabel.text = "+" + String(Double(transaction.amount).currencyValueFormatted)
-//                transactionCurrencyLabel.text = (transaction.history!.symbol == Config.defaultSymbol ? transaction.history!.point.symbol! : Config.defaultSymbol).fullName
-//            } else {
-//                transactionAmountLabel.text = "-" + String(transaction.history!.quantityValue.currencyValueFormatted)
-//                transactionCurrencyLabel.text = transaction.history!.symbol.fullName
-//                transactionAmountLabel.theme_textColor = blackWhiteColorPickers
-//                transactionCurrencyLabel.theme_textColor = blackWhiteColorPickers
-//            }
-            
+//            transactionCurrencyLabel.text = transaction.buyBalance!.symbol.fullName
+
         default:
             break
         }

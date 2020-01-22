@@ -184,8 +184,8 @@ class WalletSellCommunVC: WalletConvertVC {
                 strongSelf.completion?()
                 
                 let transaction = Transaction(amount: CGFloat(value * strongSelf.viewModel.rate.value / 10),
-                                              symbol: balance.symbol,
                                               actionType: .sell,
+                                              symbol: Symbol(sell: balance.symbol, buy: balance.symbol),
                                               operationDate: Date())
 
                 let completedVC = TransactionCompletedVC(transaction: transaction)

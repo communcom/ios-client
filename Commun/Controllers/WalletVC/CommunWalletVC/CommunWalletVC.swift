@@ -66,7 +66,7 @@ class CommunWalletVC: TransferHistoryVC {
     
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
-        self.setTabBarHidden(false)
+//        self.setTabBarHidden(false)
         
         super.viewWillAppear(animated)
     }
