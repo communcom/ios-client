@@ -213,6 +213,16 @@ class CommunWalletVC: TransferHistoryVC {
         routeToConvertScene(walletConvertVC: walletConvertVC)
     }
     
+    func routeToConvertScene(withTransacion transaction: Transaction) {
+        if let history = transaction.history {
+            let walletConvertVC = history.symbol == Config.defaultSymbol ?
+                WalletSellCommunVC(balances: (self.viewModel as! WalletViewModel).balancesVM.items.value, historyItem: history) :
+                WalletBuyCommunVC(balances: (self.viewModel as! WalletViewModel).balancesVM.items.value, symbol: history.symbol, historyItem: history)
+            
+            routeToConvertScene(walletConvertVC: walletConvertVC)
+        }
+    }
+    
     func routeToConvertScene(walletConvertVC: WalletConvertVC) {
         walletConvertVC.completion = {
             self.viewModel.reload()
@@ -226,16 +236,6 @@ class CommunWalletVC: TransferHistoryVC {
     
     func createConvertVC(withHistoryItem historyItem: ResponseAPIWalletGetTransferHistoryItem? = nil) -> WalletConvertVC? {
         WalletSellCommunVC(balances: (self.viewModel as! WalletViewModel).balancesVM.items.value, historyItem: historyItem)
-    }
-    
-    func routeToConvertScene(withTransacion transaction: Transaction) {
-        if let history = transaction.history {
-            let walletConvertVC = history.symbol == Config.defaultSymbol ?
-                WalletSellCommunVC(balances: (self.viewModel as! WalletViewModel).balancesVM.items.value, historyItem: history) :
-                WalletBuyCommunVC(balances: (self.viewModel as! WalletViewModel).balancesVM.items.value, symbol: history.symbol, historyItem: history)
-            
-            routeToConvertScene(walletConvertVC: walletConvertVC)
-        }
     }
     
     // Select balance

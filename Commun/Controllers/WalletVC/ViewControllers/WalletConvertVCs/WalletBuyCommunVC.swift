@@ -58,7 +58,9 @@ class WalletBuyCommunVC: WalletConvertVC {
     }
     
     override func setUpBuyPrice() {
-        if viewModel.buyPrice.value > 0 {
+        if let history = historyItem, !leftTextField.isFirstResponder {
+            leftTextField.text = stringFromNumber(history.quantityValue)
+        } else if viewModel.buyPrice.value > 0 {
             leftTextField.text = stringFromNumber(viewModel.buyPrice.value)
         }
         
@@ -66,7 +68,11 @@ class WalletBuyCommunVC: WalletConvertVC {
     }
     
     override func setUpSellPrice() {
-        rightTextField.text = stringFromNumber(viewModel.sellPrice.value)
+        if let history = historyItem, !leftTextField.isFirstResponder {
+            rightTextField.text = stringFromNumber(history.meta.exchangeAmount!)
+        } else {
+            rightTextField.text = stringFromNumber(viewModel.sellPrice.value)
+        }
         
         convertButton.isEnabled = shouldEnableConvertButton()
     }
@@ -105,6 +111,7 @@ class WalletBuyCommunVC: WalletConvertVC {
                     self.viewModel.sellPrice.accept(0)
                     return
                 }
+                
                 self.getSellPrice()
             })
             .disposed(by: disposeBag)
@@ -148,10 +155,12 @@ class WalletBuyCommunVC: WalletConvertVC {
             else {return false}
         guard let currentBalance = self.currentBalance else {return false}
         guard sellAmount > 0 else {return false}
+        
         if sellAmount > currentBalance.balanceValue {
             viewModel.errorSubject.accept(.insufficientFunds)
             return false
         }
+        
         return true
     }
     

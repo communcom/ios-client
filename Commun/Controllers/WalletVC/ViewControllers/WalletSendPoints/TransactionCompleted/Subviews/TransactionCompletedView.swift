@@ -372,7 +372,7 @@ class TransactionCompletedView: UIView {
         if isHistoryMode {
             if transaction.amount > 0 {
                 transactionAmountLabel.text = "+" + String(Double(transaction.amount).currencyValueFormatted)
-                transactionCurrencyLabel.text = transaction.history?.point.symbol?.fullName ?? Config.defaultSymbol
+                transactionCurrencyLabel.text = (transaction.history!.symbol == Config.defaultSymbol ? transaction.history!.symbol : Config.defaultSymbol).fullName
                 transactionAmountLabel.theme_textColor = softCyanLimeGreenColorPickers
                 transactionCurrencyLabel.theme_textColor = softCyanLimeGreenColorPickers
             } else {
