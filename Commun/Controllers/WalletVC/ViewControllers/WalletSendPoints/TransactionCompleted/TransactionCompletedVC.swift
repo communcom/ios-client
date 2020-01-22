@@ -82,15 +82,32 @@ class TransactionCompletedVC: UIViewController {
     }
     
     private func setupView() {
-        var balanceSell = dataModel.getBalance()
-    
-        if let history = dataModel.transaction.history, history.meta.actionType == "convert" {
-            dataModel.transaction.recipient.balance = dataModel.getBalance(bySymbol: history.symbol == Config.defaultSymbol ? history.symbol: Config.defaultSymbol)
+        switch dataModel.transaction.actionType {
+        case .send:
+            dataModel.transaction.buyBalance = dataModel.getBalance()
+            dataModel.transaction.sellBalance = dataModel.getBalance(bySymbol: Config.defaultSymbol)
+            
+        // Example: MEME -> CMN
+        case .buy:
+            dataModel.transaction.buyBalance = dataModel.getBalance(bySymbol: Config.defaultSymbol)
+            dataModel.transaction.sellBalance = dataModel.getBalance(bySymbol: dataModel.transaction.symbol)
+
+        // Example: CMN -> MEME
+        case .sell:
+            dataModel.transaction.buyBalance = dataModel.getBalance(bySymbol: dataModel.transaction.symbol)
+            dataModel.transaction.sellBalance = dataModel.getBalance(bySymbol: Config.defaultSymbol)
+
+        default:
+            break
         }
         
-        transactionCompletedView.update(balance: balanceSell)
-        transactionCompletedView.update(transaction: dataModel.transaction)
-        transactionCompletedView.update(recipient: dataModel.transaction.recipient)
+//        if let history = dataModel.transaction.history, history.meta.actionType == "convert" {
+//            dataModel.transaction.recipient.balance = dataModel.getBalance(bySymbol: history.symbol == Config.defaultSymbol ? history.symbol: Config.defaultSymbol)
+//        }
+        
+        transactionCompletedView.updateSellerInfo(fromTransaction: dataModel.transaction)
+        transactionCompletedView.updateTransactionInfo(dataModel.transaction)
+        transactionCompletedView.updateBuyerInfo(fromTransaction: dataModel.transaction)
         
         view.addSubview(transactionCompletedView)
         transactionCompletedView.autoPinEdgesToSuperviewSafeArea(with: UIEdgeInsets(horizontal: CGFloat.adaptive(width: 40.0), vertical: CGFloat.adaptive(height: 20.0)), excludingEdge: .top)

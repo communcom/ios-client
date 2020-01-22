@@ -8,27 +8,30 @@
 
 import Foundation
 
-public enum TypeOfAction: String {
-    case transfer = "transfer"
-    case convert = "convert"
+typealias Friend = (id: String, name: String, avatarURL: String?)
+typealias Balance = (name: String, avatarURL: String?, amount: CGFloat)
+
+public enum TransActionType: String {
+    case buy = "buy"
+    case sell = "sell"
+    case send = "send"
+
     case hold = "hold"
     case reward = "reward"
     case unhold = "unhold"
+    case convert = "convert"
+    case transfer = "transfer"
 }
 
 struct Transaction {
     // MARK: - Properties
-    var recipient = Recipient()
-
-    var accuracy: Int = 4
+    var buyBalance: Balance?
+    var sellBalance: Balance?
+    var friend: Friend?
+    var amount: CGFloat = 0.0
     var symbol: String = Config.defaultSymbol
     var history: ResponseAPIWalletGetTransferHistoryItem?
-
-    var amount: CGFloat = 0.0 {
-        didSet {
-            self.accuracy = amount == 0 ? 0 : (amount >= 1_000.0 ? 2 : 4)
-        }
-    }
+    var actionType: TransActionType = .send
     
     var operationDate: Date = Date() {
         didSet {
@@ -37,11 +40,8 @@ struct Transaction {
     }
 
         
-    
     // MARK: - Custom Functions
-    mutating func update(recipient: ResponseAPIContentGetSubscriptionsUser) {
-        self.recipient.id = recipient.userId
-        self.recipient.name = recipient.username
-        self.recipient.avatarURL = recipient.avatarUrl
+    mutating func createFriend(from user: ResponseAPIContentGetSubscriptionsUser) {
+        self.friend = (id: user.userId, name: user.username, avatarURL: user.avatarUrl)
     }
 }

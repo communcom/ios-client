@@ -11,7 +11,7 @@ import RxSwift
 
 let disposeBag = DisposeBag()
 
-enum ActionType {
+enum ActionButtonType {
     case home
     case wallet
     case `repeat`
@@ -68,22 +68,22 @@ class TransactionCompletedView: UIView {
         return transactionCurrencyLabelInstance
     }()
         
-    var recipientIDLabel: UILabel = UILabel()
-    var recipientNameLabel: UILabel = UILabel()
+    var buyerNameLabel: UILabel = UILabel()
+    var buyerBalanceOrFriendIDLabel: UILabel = UILabel()
     var burnedPercentLabel: UILabel = UILabel()
 
-    let balanceNameLabel = UILabel()
-    var balanceAvatarImageView: UIImageView = UIImageView.circle(size: CGFloat.adaptive(width: 30.0))
+    let sellerNameLabel = UILabel()
+    var sellerAvatarImageView: UIImageView = UIImageView.circle(size: CGFloat.adaptive(width: 30.0))
 
-    var balanceAmountLabel: UILabel = {
-        let senderBalanceLabelInstance = UILabel()
-        senderBalanceLabelInstance.tune(withText: "",
-                                        hexColors: whiteColorPickers,
-                                        font: UIFont.systemFont(ofSize: CGFloat.adaptive(width: 15.0), weight: .bold),
-                                        alignment: .right,
-                                        isMultiLines: false)
+    var sellerAmountLabel: UILabel = {
+        let sellerAmountLabelInstance = UILabel()
+        sellerAmountLabelInstance.tune(withText: "",
+                                       hexColors: whiteColorPickers,
+                                       font: UIFont.systemFont(ofSize: CGFloat.adaptive(width: 15.0), weight: .bold),
+                                       alignment: .right,
+                                       isMultiLines: false)
 
-        return senderBalanceLabelInstance
+        return sellerAmountLabelInstance
     }()
     
     let homeButton: UIButton = {
@@ -145,8 +145,8 @@ class TransactionCompletedView: UIView {
         }
         
         backgroundColor = .clear
-        boldLabels = [transactionTitleLabel, recipientNameLabel]
-        semiboldLabels = [transactionDateLabel, recipientIDLabel, burnedPercentLabel]
+        boldLabels = [transactionTitleLabel, buyerNameLabel]
+        semiboldLabels = [transactionDateLabel, buyerBalanceOrFriendIDLabel, burnedPercentLabel]
         
         // Add content view
         let contentView = UIView(frame: CGRect(origin: .zero, size: CGSize(width: bounds.width, height: CGFloat.adaptive(height: 497.0))))
@@ -220,7 +220,7 @@ class TransactionCompletedView: UIView {
         titlesStackView.distribution = .fillProportionally
         
         contentView.addSubview(namesStackView)
-        namesStackView.addArrangedSubviews([recipientNameLabel, recipientIDLabel])
+        namesStackView.addArrangedSubviews([buyerNameLabel, buyerBalanceOrFriendIDLabel])
         namesStackView.autoAlignAxis(toSuperviewAxis: .vertical)
         namesStackView.autoPinEdge(.top, to: .bottom, of: recipientAvatarImageView, withOffset: CGFloat.adaptive(height: 10.0))
 
@@ -273,8 +273,8 @@ class TransactionCompletedView: UIView {
         senderStackView.alignment = .fill
         senderStackView.distribution = .fill
                 
-        senderStackView.addArrangedSubviews([balanceAvatarImageView, balanceNameLabel, balanceAmountLabel])
-        balanceNameLabel.setContentHuggingPriority(249.0, for: NSLayoutConstraint.Axis.horizontal)
+        senderStackView.addArrangedSubviews([sellerAvatarImageView, sellerNameLabel, sellerAmountLabel])
+        sellerNameLabel.setContentHuggingPriority(249.0, for: NSLayoutConstraint.Axis.horizontal)
         
         blueBottomView.addSubview(senderStackView)
         senderStackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(horizontal: CGFloat.adaptive(width: 30.0), vertical: CGFloat.adaptive(height: 20.0)))
@@ -294,7 +294,7 @@ class TransactionCompletedView: UIView {
         addGestureRecognizer(UITapGestureRecognizer(target: nil, action: nil))
     }
 
-    func actions(_ sender: @escaping (ActionType) -> Void) {
+    func actions(_ sender: @escaping (ActionButtonType) -> Void) {
         // Home button
         homeButton.rx.tap
         .bind {
@@ -336,58 +336,81 @@ class TransactionCompletedView: UIView {
         return viewInstance
     }
     
-    func update(balance: Balance) {
-        if let senderAvatarURL = balance.avatarURL {
-            balanceAvatarImageView.setAvatar(urlString: senderAvatarURL, namePlaceHolder: "icon-select-user-grey-cyrcle-default")
+    func updateSellerInfo(fromTransaction transaction: Transaction) {
+        if let sellBalance = transaction.sellBalance, let avatarURL = sellBalance.avatarURL {
+            sellerAvatarImageView.setAvatar(urlString: avatarURL, namePlaceHolder: "icon-select-user-grey-cyrcle-default")
         } else {
             let communLogo = UIView.transparentCommunLogo(size: CGFloat.adaptive(width: 30.0), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.2))
-            balanceAvatarImageView.addSubview(communLogo)
+            sellerAvatarImageView.addSubview(communLogo)
             communLogo.autoAlignAxis(toSuperviewAxis: .vertical)
             communLogo.autoAlignAxis(toSuperviewAxis: .horizontal)
             communLogo.isUserInteractionEnabled = false
-            balanceAvatarImageView.backgroundColor = .clear
+            sellerAvatarImageView.backgroundColor = .clear
         }
 
-        balanceAmountLabel.text = balance.amount.formattedWithSeparator
+        sellerAmountLabel.text = transaction.sellBalance!.amount.formattedWithSeparator
 
-        balanceNameLabel.tune(withText: balance.name,
-                              hexColors: whiteColorPickers,
-                              font: UIFont.systemFont(ofSize: CGFloat.adaptive(width: 15.0), weight: .semibold),
-                              alignment: .left,
-                              isMultiLines: false)
+        sellerNameLabel.tune(withText: transaction.sellBalance!.name,
+                             hexColors: whiteColorPickers,
+                             font: UIFont.systemFont(ofSize: CGFloat.adaptive(width: 15.0), weight: .semibold),
+                             alignment: .left,
+                             isMultiLines: false)
     }
     
-    func update(recipient: Recipient) {
-        if isHistoryMode, let amountValue = recipient.balance?.amount {
-            recipientIDLabel.text = String(Double(amountValue).currencyValueFormatted)
-        } else {
-            recipientIDLabel.text = recipient.id
+    func updateBuyerInfo(fromTransaction transaction: Transaction) {
+        switch transaction.actionType {
+        case .buy, .sell:
+            buyerBalanceOrFriendIDLabel.text = String(Double(transaction.buyBalance!.amount).currencyValueFormatted)
+
+        default:
+            buyerBalanceOrFriendIDLabel.text = transaction.friend?.id ?? Config.defaultSymbol
         }
-
-        recipientNameLabel.text = recipient.name
-        recipientAvatarImageView.setAvatar(urlString: recipient.avatarURL, namePlaceHolder: recipient.name!)
+        
+        buyerNameLabel.text = transaction.friend?.name ?? Config.defaultSymbol
+        recipientAvatarImageView.setAvatar(urlString: transaction.friend?.avatarURL, namePlaceHolder: transaction.friend?.name ?? Config.defaultSymbol)
     }
     
-    func update(transaction: Transaction) {
+    func updateTransactionInfo(_ transaction: Transaction) {
         transactionTitleLabel.text = "transaction completed".localized().uppercaseFirst
         transactionDateLabel.text = transaction.operationDate.convert(toStringFormat: .transactionCompletedType)
         transactionAmountLabel.text = String(Double(transaction.amount).currencyValueFormatted)
         transactionCurrencyLabel.text = transaction.symbol.fullName
         
-        if isHistoryMode {
-            if transaction.amount > 0 {
-                transactionAmountLabel.text = "+" + String(Double(transaction.amount).currencyValueFormatted)
-                transactionCurrencyLabel.text = (transaction.history!.symbol == Config.defaultSymbol ? transaction.history!.point.symbol! : Config.defaultSymbol).fullName
-                transactionAmountLabel.theme_textColor = softCyanLimeGreenColorPickers
-                transactionCurrencyLabel.theme_textColor = softCyanLimeGreenColorPickers
-            } else {
-                transactionAmountLabel.text = "-" + String(transaction.history!.quantityValue.currencyValueFormatted)
-                transactionCurrencyLabel.text = transaction.history!.symbol.fullName
-                transactionAmountLabel.theme_textColor = blackWhiteColorPickers
-                transactionCurrencyLabel.theme_textColor = blackWhiteColorPickers
-            }
+        switch transaction.actionType {
+        case .buy, .sell:
+            setColor(amount: transaction.amount)
+
+        case .transfer, .convert:
+            setColor(amount: transaction.amount)
             
+//            if transaction.amount > 0 {
+//                transactionAmountLabel.text = "+" + String(Double(transaction.amount).currencyValueFormatted)
+//                transactionCurrencyLabel.text = (transaction.history!.symbol == Config.defaultSymbol ? transaction.history!.point.symbol! : Config.defaultSymbol).fullName
+//            } else {
+//                transactionAmountLabel.text = "-" + String(transaction.history!.quantityValue.currencyValueFormatted)
+//                transactionCurrencyLabel.text = transaction.history!.symbol.fullName
+//                transactionAmountLabel.theme_textColor = blackWhiteColorPickers
+//                transactionCurrencyLabel.theme_textColor = blackWhiteColorPickers
+//            }
+            
+        default:
+            break
+        }
+        
+        if isHistoryMode {
             repeatButton.isHidden = !["transfer", "convert"].contains(transaction.history?.meta.actionType ?? Config.defaultSymbol)
         }
     }
+
+//    private func setAmountColor(sell: String = Config.defaultSymbol, buy: String = Config.defaultSymbol) {
+
+    private func setColor(amount: CGFloat) {
+        transactionAmountLabel.text = "+" + String(Double(amount).currencyValueFormatted)
+        transactionAmountLabel.theme_textColor = amount > 0 ? softCyanLimeGreenColorPickers : blackWhiteColorPickers
+        transactionCurrencyLabel.theme_textColor = amount > 0 ? softCyanLimeGreenColorPickers : blackWhiteColorPickers
+    }
+    
+//    private func setAmount(currency: String, (amount: CGFloat) {
+//
+//    }
 }

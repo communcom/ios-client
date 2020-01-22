@@ -183,11 +183,9 @@ class WalletSellCommunVC: WalletConvertVC {
                 strongSelf.hideHud()
                 strongSelf.completion?()
                 
-                let transaction = Transaction(recipient: Recipient(name: balance.name!,
-                                                                   avatarURL: balance.logo),
-                                              accuracy: 4,
+                let transaction = Transaction(amount: CGFloat(value * strongSelf.viewModel.rate.value / 10),
                                               symbol: balance.symbol,
-                                              amount: CGFloat(value * strongSelf.viewModel.rate.value / 10),
+                                              actionType: .sell,
                                               operationDate: Date())
 
                 let completedVC = TransactionCompletedVC(transaction: transaction)

@@ -15,29 +15,11 @@ class SendPointsModel {
     let disposeBag = DisposeBag()
     var balances = [ResponseAPIWalletGetBalance]()
     var transaction = Transaction()
-
-//    var currentBalanceSymbol: String {
-//        get {
-//            return transaction.symbol
-//        }
-//    }
-
-//    var currentBalance: Balance {
-//        get {
-//            return convert(balance: balances.first(where: { $0.symbol == currentBalanceSymbol })!)
-//        }
-//    }
     
 
     // MARK: - Custom Functions
     private func convert(balance: ResponseAPIWalletGetBalance) -> Balance {
-        var balanceInstance = Balance()
-        balanceInstance.name = balance.name ?? balance.symbol.fullName
-        balanceInstance.avatarURL = balance.logo
-        balanceInstance.amount = CGFloat(balance.balanceValue)
-        transaction.accuracy = transaction.amount == 0 ? 0 : (transaction.amount >= 1_000.0 ? 2 : 4)
-        
-        return balanceInstance
+        return (name: balance.name ?? balance.symbol.fullName, avatarURL: balance.logo, amount: CGFloat(balance.balanceValue))
     }
        
     func getBalance(bySymbol symbol: String? = nil) -> Balance {

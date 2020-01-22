@@ -246,13 +246,13 @@ class CommunWalletVC: TransferHistoryVC {
 
     // Select recipient from friends
     func sendPoint(to user: ResponseAPIContentGetSubscriptionsUser) {
-        routeToSendPointsScene(withRecipient: user)
+        routeToSendPointsScene(withUser: user)
     }
 
-    private func routeToSendPointsScene(withRecipient recipient: ResponseAPIContentGetSubscriptionsUser? = nil) {
+    private func routeToSendPointsScene(withUser user: ResponseAPIContentGetSubscriptionsUser? = nil) {
         showIndetermineHudWithMessage("loading".localized().uppercaseFirst)
 
-        let walletSendPointsVC = WalletSendPointsVC(withSelectedBalanceSymbol: headerView.sendButton.accessibilityHint ?? Config.defaultSymbol, andFriend: recipient)
+        let walletSendPointsVC = WalletSendPointsVC(withSelectedBalanceSymbol: headerView.sendButton.accessibilityHint ?? Config.defaultSymbol, andUser: user)
         show(walletSendPointsVC, sender: nil)
         setTabBarHidden(true)
         

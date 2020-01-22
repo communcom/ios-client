@@ -30,7 +30,7 @@ class WalletSendPointsVC: UIViewController {
     lazy var communLogoImageView = UIView.transparentCommunLogo(size: CGFloat.adaptive(width: 50.0))
 
     // Balance
-    var balanceNameLabel: UILabel = {
+    var sellerNameLabel: UILabel = {
         let balanceNameLabelInstance = UILabel()
         balanceNameLabelInstance.tune(withText: "",
                                       hexColors: whiteColorPickers,
@@ -41,7 +41,7 @@ class WalletSendPointsVC: UIViewController {
         return balanceNameLabelInstance
     }()
 
-    var balanceCurrencyLabel: UILabel = {
+    var sellerCurrencyLabel: UILabel = {
         let balanceCurrencyLabelInstance = UILabel()
         balanceCurrencyLabelInstance.tune(withText: "",
                                           hexColors: whiteColorPickers,
@@ -53,14 +53,14 @@ class WalletSendPointsVC: UIViewController {
     }()
 
     // Recipient
-    var recipientAvatarImageView: UIImageView = UIImageView.circle(size: CGFloat.adaptive(width: 40.0), imageName: "tux")
+    var friendAvatarImageView: UIImageView = UIImageView.circle(size: CGFloat.adaptive(width: 40.0), imageName: "tux")
     
-    let recipientNameLabel: UILabel = UILabel(text: "select user".localized().uppercaseFirst,
+    let friendNameLabel: UILabel = UILabel(text: "select user".localized().uppercaseFirst,
                                                 font: .systemFont(ofSize: CGFloat.adaptive(width: 15.0), weight: .semibold),
                                                 numberOfLines: 1,
                                                 color: .black)
     
-    let chooseRecipientButton: UIButton = {
+    let chooseFriendButton: UIButton = {
         let chooseRecipientButtonInstance = UIButton.circle(size: CGFloat.adaptive(width: 24.0),
                                                             backgroundColor: .clear,
                                                             tintColor: .white,
@@ -109,24 +109,24 @@ class WalletSendPointsVC: UIViewController {
     
     
     // MARK: - Class Initialization
-    init(withSelectedBalanceSymbol symbol: String, andFriend friend: ResponseAPIContentGetSubscriptionsUser?) {
+    init(withSelectedBalanceSymbol symbol: String, andUser user: ResponseAPIContentGetSubscriptionsUser?) {
         self.dataModel = SendPointsModel()
         self.dataModel.transaction.symbol = symbol
         
-        if let recipient = friend  {
-            self.dataModel.transaction.update(recipient: recipient)
+        if let userValue = user  {
+            self.dataModel.transaction.createFriend(from: userValue)
         }
 
         super.init(nibName: nil, bundle: nil)
     }
 
-    init(withSelectedBalanceSymbol symbol: String, andRecipient recipient: Recipient) {
-        self.dataModel = SendPointsModel()
-        self.dataModel.transaction.symbol = symbol
-        self.dataModel.transaction.recipient = recipient
-
-        super.init(nibName: nil, bundle: nil)
-    }
+//    init(withSelectedBalanceSymbol symbol: String) {
+//        self.dataModel = SendPointsModel()
+//        self.dataModel.transaction.symbol = symbol
+//        self.dataModel.transaction.recipient = recipient
+//
+//        super.init(nibName: nil, bundle: nil)
+//    }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -153,7 +153,7 @@ class WalletSendPointsVC: UIViewController {
             
             let newAmount = value + strongSelf.dataModel.transaction.amount
             strongSelf.dataModel.transaction.amount = newAmount
-            strongSelf.pointsTextField.text = String(format: "%.*f", strongSelf.dataModel.transaction.accuracy, newAmount)
+            strongSelf.pointsTextField.text = String(Double(newAmount).currencyValueFormatted)
             strongSelf.clearPointsButton.isHidden = false
             strongSelf.updateSendInfoByEnteredPoints()
         }
@@ -191,7 +191,7 @@ class WalletSendPointsVC: UIViewController {
         let balanceStackView = UIStackView(axis: .vertical, spacing: CGFloat.adaptive(height: 5.0))
         balanceStackView.alignment = .fill
         balanceStackView.distribution = .fillProportionally
-        balanceStackView.addArrangedSubviews([balanceNameLabel, balanceCurrencyLabel])
+        balanceStackView.addArrangedSubviews([sellerNameLabel, sellerCurrencyLabel])
         
         balanceContentView.addSubview(balanceStackView)
         balanceStackView.autoAlignAxis(toSuperviewAxis: .vertical)
@@ -208,8 +208,8 @@ class WalletSendPointsVC: UIViewController {
             balanceStackView.autoPinEdge(.top, to: .bottom, of: carouselView, withOffset: CGFloat.adaptive(height: 20.0))
         }
         
-        updateRecipientInfo()
-        updateBalanceInfo()
+        updateBuyerInfo()
+        updateSellerInfo()
         dataModel.transaction.history == nil ? updateSendInfoByEnteredPoints() : updateSendInfoByHistory()
 
         // Action view
@@ -228,9 +228,9 @@ class WalletSendPointsVC: UIViewController {
         recipientStackView.alignment = .leading
         recipientStackView.distribution = .fill
 
-        recipientStackView.addArrangedSubviews([recipientAvatarImageView, recipientNameLabel, chooseRecipientButton])
-        recipientNameLabel.autoAlignAxis(toSuperviewAxis: .horizontal)
-        chooseRecipientButton.autoAlignAxis(toSuperviewAxis: .horizontal)
+        recipientStackView.addArrangedSubviews([friendAvatarImageView, friendNameLabel, chooseFriendButton])
+        friendNameLabel.autoAlignAxis(toSuperviewAxis: .horizontal)
+        chooseFriendButton.autoAlignAxis(toSuperviewAxis: .horizontal)
 
         firstBorderView.addSubview(recipientStackView)
         recipientStackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(horizontal: CGFloat.adaptive(width: 30.0), vertical: CGFloat.adaptive(height: 30.0)))
@@ -311,21 +311,21 @@ class WalletSendPointsVC: UIViewController {
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(viewTapped)))
     }
     
-    private func updateBalanceInfo() {
-        let balance = dataModel.getBalance()
-        balanceNameLabel.text = balance.name
-        balanceCurrencyLabel.text = balance.amount == 0 ? "0" : Double(balance.amount).currencyValueFormatted
+    private func updateSellerInfo() {
+        let sellBalance = dataModel.getBalance()
+        sellerNameLabel.text = sellBalance.name
+        sellerCurrencyLabel.text = sellBalance.amount == 0 ? "0" : Double(sellBalance.amount).currencyValueFormatted
     }
     
-    private func updateRecipientInfo() {
-        chooseRecipientButton.isSelected = dataModel.transaction.recipient.name != nil
+    private func updateBuyerInfo() {
+        chooseFriendButton.isSelected = dataModel.transaction.friend?.name != nil
 
-        if let recipientName = dataModel.transaction.recipient.name {
-            recipientNameLabel.text = recipientName
-            recipientAvatarImageView.setAvatar(urlString: dataModel.transaction.recipient.avatarURL, namePlaceHolder: recipientName)
+        if let friendName = dataModel.transaction.friend?.name {
+            friendNameLabel.text = friendName
+            friendAvatarImageView.setAvatar(urlString: dataModel.transaction.friend?.avatarURL, namePlaceHolder: friendName)
         } else {
-            recipientNameLabel.text = "select user".localized().uppercaseFirst
-            recipientAvatarImageView = UIImageView.circle(size: CGFloat.adaptive(width: 40.0), imageName: "tux")
+            friendNameLabel.text = "select user".localized().uppercaseFirst
+            friendAvatarImageView = UIImageView.circle(size: CGFloat.adaptive(width: 40.0), imageName: "tux")
         }
     }
 
@@ -336,7 +336,7 @@ class WalletSendPointsVC: UIViewController {
         setSendButton(amount: amount, percent: 0.1)
         pointsTextField.text = String(format: "%.*f", accuracy, amount)
 
-        sendPointsButton.isEnabled = dataModel.checkHistoryAmounts() && chooseRecipientButton.isSelected
+        sendPointsButton.isEnabled = dataModel.checkHistoryAmounts() && chooseFriendButton.isSelected
     }
     
     private func updateSendInfoByEnteredPoints() {
@@ -347,18 +347,18 @@ class WalletSendPointsVC: UIViewController {
         setSendButton(amount: amountEntered, percent: 0.1)
         pointsTextField.placeholder = String(format: "0 %@", dataModel.transaction.symbol.fullName)
 
-        sendPointsButton.isEnabled = dataModel.checkEnteredAmounts() && chooseRecipientButton.isSelected
+        sendPointsButton.isEnabled = dataModel.checkEnteredAmounts() && chooseFriendButton.isSelected
     }
     
     
     // MARK: - Actions
     @objc func chooseRecipientViewTapped(_ sender: UITapGestureRecognizer) {
-        let friendsListVC = SendPointListVC { [weak self] recipient in
+        let friendsListVC = SendPointListVC { [weak self] user in
             guard let strongSelf = self else { return }
             
-            strongSelf.dataModel.transaction.update(recipient: recipient)
-            strongSelf.chooseRecipientButton.isSelected = true
-            strongSelf.updateRecipientInfo()
+            strongSelf.dataModel.transaction.createFriend(from: user)
+            strongSelf.chooseFriendButton.isSelected = true
+            strongSelf.updateBuyerInfo()
             strongSelf.updateSendInfoByEnteredPoints()
         }
         
@@ -377,7 +377,7 @@ class WalletSendPointsVC: UIViewController {
     @objc func sendPointsButtonTapped(_ sender: UITapGestureRecognizer) {
         let numberValue = abs(dataModel.transaction.amount)
 
-        guard let recipientID = dataModel.transaction.recipient.id, numberValue > 0 else { return }
+        guard let recipientID = dataModel.transaction.friend?.id, numberValue > 0 else { return }
 
         dataModel.transaction.operationDate = Date()
 
@@ -517,7 +517,7 @@ extension WalletSendPointsVC: CircularCarouselDelegate {
     
     func carousel(_ carousel: CircularCarousel, didSelectItemAtIndex index: Int) {
         dataModel.transaction.symbol = dataModel.balances[index].symbol
-        updateBalanceInfo()
+        updateSellerInfo()
         updateSendInfoByEnteredPoints()
     }
     

@@ -215,10 +215,8 @@
 		B1EA02F32289882A00835244 /* SF-Pro-Text-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 57F9CA94225B3A9900AC9ACA /* SF-Pro-Text-Semibold.otf */; };
 		B1EA02F42289882A00835244 /* SF-Pro-Text-SemiboldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 57F9CAA6225B3AAF00AC9ACA /* SF-Pro-Text-SemiboldItalic.otf */; };
 		B1F87FEB23D1C6B60097DCA3 /* WalletSendPointsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1F87FEA23D1C6B60097DCA3 /* WalletSendPointsVC.swift */; };
-		B1F87FF123D1C6D00097DCA3 /* Balance.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1F87FED23D1C6CF0097DCA3 /* Balance.swift */; };
 		B1F87FF223D1C6D00097DCA3 /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1F87FEE23D1C6CF0097DCA3 /* Transaction.swift */; };
 		B1F87FF323D1C6D00097DCA3 /* SendPointsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1F87FEF23D1C6D00097DCA3 /* SendPointsModel.swift */; };
-		B1F87FF423D1C6D00097DCA3 /* Recipient.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1F87FF023D1C6D00097DCA3 /* Recipient.swift */; };
 		B1F87FF723D1C6ED0097DCA3 /* CMToolbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1F87FF623D1C6ED0097DCA3 /* CMToolbarView.swift */; };
 		B1F87FFA23D1C70A0097DCA3 /* TransactionCompletedVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1F87FF923D1C70A0097DCA3 /* TransactionCompletedVC.swift */; };
 		B1F87FFD23D1C7220097DCA3 /* TransactionCompletedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1F87FFC23D1C7210097DCA3 /* TransactionCompletedView.swift */; };
@@ -705,10 +703,8 @@
 		B1D7AD5B23A10664007D1A13 /* QRScannerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QRScannerViewController.swift; sourceTree = "<group>"; };
 		B1EA02D42289734800835244 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		B1F87FEA23D1C6B60097DCA3 /* WalletSendPointsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletSendPointsVC.swift; sourceTree = "<group>"; };
-		B1F87FED23D1C6CF0097DCA3 /* Balance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Balance.swift; sourceTree = "<group>"; };
 		B1F87FEE23D1C6CF0097DCA3 /* Transaction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Transaction.swift; sourceTree = "<group>"; };
 		B1F87FEF23D1C6D00097DCA3 /* SendPointsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendPointsModel.swift; sourceTree = "<group>"; };
-		B1F87FF023D1C6D00097DCA3 /* Recipient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Recipient.swift; sourceTree = "<group>"; };
 		B1F87FF623D1C6ED0097DCA3 /* CMToolbarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CMToolbarView.swift; sourceTree = "<group>"; };
 		B1F87FF923D1C70A0097DCA3 /* TransactionCompletedVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionCompletedVC.swift; sourceTree = "<group>"; };
 		B1F87FFC23D1C7210097DCA3 /* TransactionCompletedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionCompletedView.swift; sourceTree = "<group>"; };
@@ -1801,8 +1797,6 @@
 		B1F87FEC23D1C6C30097DCA3 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				B1F87FED23D1C6CF0097DCA3 /* Balance.swift */,
-				B1F87FF023D1C6D00097DCA3 /* Recipient.swift */,
 				B1F87FEF23D1C6D00097DCA3 /* SendPointsModel.swift */,
 				B1F87FEE23D1C6CF0097DCA3 /* Transaction.swift */,
 			);
@@ -2932,7 +2926,6 @@
 				3BEC38EC230FED2B00662374 /* TextAttachment.swift in Sources */,
 				3B3C8B862347866D00D8BADB /* ContentTextView+Utilities.swift in Sources */,
 				BC74F503237957790018DB8E /* CommentsVC+CommentCellDelegate.swift in Sources */,
-				B1F87FF423D1C6D00097DCA3 /* Recipient.swift in Sources */,
 				3B51581C226DE28D00108F17 /* EmptyCell.swift in Sources */,
 				3B5CB30322A56BD500757533 /* UITapGestureRecognizer.swift in Sources */,
 				BC3AD9DC23838E920026EAB4 /* CommentFormViewModel.swift in Sources */,
@@ -3267,7 +3260,6 @@
 				BCB4A4C523701441005EDAAD /* SubscribersVC.swift in Sources */,
 				3BF381812331D9CD00C02123 /* URL.swift in Sources */,
 				BC3694EF2369850100B2E078 /* EditorVC.swift in Sources */,
-				B1F87FF123D1C6D00097DCA3 /* Balance.swift in Sources */,
 				BC561E7B238B76A8004C53EB /* ReportVC.swift in Sources */,
 				3B2F226E226892C5006B589E /* NotificationType.swift in Sources */,
 				BC4692CF239114AB0064A38B /* CommunityCellDelegate.swift in Sources */,

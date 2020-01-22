@@ -102,31 +102,34 @@ class TransferHistoryVC: ListViewController<ResponseAPIWalletGetTransferHistoryI
                     strongSelf.showIndetermineHudWithMessage("loading".localized().uppercaseFirst)
                     
                     // .history type
-                    var recipient: Recipient
+                    var friend: Friend?
                     var amount: CGFloat = 0.0
                     
                     switch selectedItem.meta.actionType {
                     case "convert":
-                        recipient = Recipient(id: nil,
-                                              name: selectedItem.symbol == Config.defaultSymbol ?
-                                                        selectedItem.point.name : Config.defaultSymbol.fullName,
-                                              avatarURL: selectedItem.symbol == Config.defaultSymbol ? selectedItem.point.logo : nil)
-                        
+//                        recipient = Recipient(id: nil,
+//                                              name: selectedItem.symbol == Config.defaultSymbol ?
+//                                                        selectedItem.point.name : Config.defaultSymbol.fullName,
+//                                              avatarURL: selectedItem.symbol == Config.defaultSymbol ? selectedItem.point.logo : nil)
+//                        
                         amount = CGFloat((selectedItem.meta.exchangeAmount ?? 0.0) * (selectedItem.meta.actionType == "transfer" ? -1 : 1))
                         
                     default:
-                        recipient = Recipient(id: selectedItem.receiver.userId,
-                                              name: selectedItem.receiver.username ?? Config.defaultSymbol,
-                                              avatarURL: selectedItem.receiver.avatarUrl)
+//                        friend = selectedItem.f
+//                        Recipient(id: selectedItem.receiver.userId,
+//                                              name: selectedItem.receiver.username ?? Config.defaultSymbol,
+//                                              avatarURL: selectedItem.receiver.avatarUrl)
                         
                         amount = CGFloat(selectedItem.quantityValue * (selectedItem.meta.actionType == "transfer" ? -1 : 1))
                     }
                     
-                    let transaction = Transaction(recipient: recipient,
-                                                  accuracy: 4,
+                    let transaction = Transaction(buyBalance: nil,
+                                                  sellBalance: nil,
+                                                  friend: friend,
+                                                  amount: amount,
                                                   symbol: selectedItem.symbol,
                                                   history: selectedItem,
-                                                  amount: amount,
+                                                  actionType: TransActionType(rawValue: selectedItem.meta.actionType ?? "send")!,
                                                   operationDate: selectedItem.timestamp.convert(toDateFormat: .nextSmsDateType))
                     
                     let completedVC = TransactionCompletedVC(transaction: transaction)
@@ -143,7 +146,7 @@ class TransferHistoryVC: ListViewController<ResponseAPIWalletGetTransferHistoryI
                     completedVC.completionRepeat = { [weak self] in
                         guard let strongSelf = self else { return }
                         
-                        let walletSendPointsVC = WalletSendPointsVC(withSelectedBalanceSymbol: transaction.symbol, andRecipient: transaction.recipient)
+                        let walletSendPointsVC = WalletSendPointsVC(withSelectedBalanceSymbol: transaction.symbol, andUser: nil)
                         walletSendPointsVC.dataModel.transaction = transaction
                         
                         if let communWalletVC = strongSelf.navigationController?.viewControllers.filter({ $0 is CommunWalletVC }).first as? CommunWalletVC {

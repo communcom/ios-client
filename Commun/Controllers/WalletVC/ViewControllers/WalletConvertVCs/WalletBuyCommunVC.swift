@@ -180,12 +180,13 @@ class WalletBuyCommunVC: WalletConvertVC {
                 strongSelf.completion?()
                 
                 // Default .send type
-                let transaction = Transaction(recipient: Recipient(id: nil,
-                                                                   name: balance.name!,
-                                                                   avatarURL: balance.logo),
-                                              accuracy: 4,
-                                              symbol: balance.symbol,
+                let transaction = Transaction(buyBalance: nil,
+                                              sellBalance: nil,
+                                              friend: nil,
                                               amount: CGFloat(value * strongSelf.viewModel.rate.value / 10),
+                                              symbol: balance.symbol,
+                                              history: nil,
+                                              actionType: .buy,
                                               operationDate: Date())
                 
                 let completedVC = TransactionCompletedVC(transaction: transaction)
