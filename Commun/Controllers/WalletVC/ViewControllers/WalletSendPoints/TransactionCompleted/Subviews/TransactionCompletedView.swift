@@ -19,7 +19,10 @@ enum ActionButtonType {
 
 class TransactionCompletedView: UIView {
     // MARK: - Properties
-    var isHistoryMode: Bool = false
+    let repeatButtonsArray = ["transfer", "convert"]
+    private var isHistoryMode: Bool = false
+    var mode: TransActionType!
+
     
     var buyerAvatarImageView: UIImageView = UIImageView.circle(size: CGFloat.adaptive(width: 40.0), imageName: "tux")
 
@@ -88,12 +91,12 @@ class TransactionCompletedView: UIView {
     
     let homeButton: UIButton = {
         let homeButtonInstance = UIButton(width: CGFloat.adaptive(width: 335.0),
-                                                  height: CGFloat.adaptive(height: 50.0),
-                                                  label: "home".localized().uppercaseFirst,
-                                                  labelFont: .systemFont(ofSize: CGFloat.adaptive(width: 15.0), weight: .bold),
-                                                  backgroundColor: #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.1),
-                                                  textColor: #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1),
-                                                  cornerRadius: CGFloat.adaptive(width: 50.0) / 2)
+                                          height: CGFloat.adaptive(height: 50.0),
+                                          label: "home".localized().uppercaseFirst,
+                                          labelFont: .systemFont(ofSize: CGFloat.adaptive(width: 15.0), weight: .bold),
+                                          backgroundColor: #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.1),
+                                          textColor: #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1),
+                                          cornerRadius: CGFloat.adaptive(width: 50.0) / 2)
         return homeButtonInstance
     }()
 
@@ -110,19 +113,20 @@ class TransactionCompletedView: UIView {
 
     let repeatButton: UIButton = {
         let repeatButtonInstance = UIButton(width: CGFloat.adaptive(width: 335.0),
-                                                  height: CGFloat.adaptive(height: 50.0),
-                                                  label: "repeat".localized().uppercaseFirst,
-                                                  labelFont: .systemFont(ofSize: CGFloat.adaptive(width: 15.0), weight: .bold),
-                                                  backgroundColor: #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1),
-                                                  textColor: #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1),
-                                                  cornerRadius: CGFloat.adaptive(width: 50.0) / 2)
+                                            height: CGFloat.adaptive(height: 50.0),
+                                            label: "repeat".localized().uppercaseFirst,
+                                            labelFont: .systemFont(ofSize: CGFloat.adaptive(width: 15.0), weight: .bold),
+                                            backgroundColor: #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1),
+                                            textColor: #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1),
+                                            cornerRadius: CGFloat.adaptive(width: 50.0) / 2)
         return repeatButtonInstance
     }()
 
     
     // MARK: - Class Initialization
-    init(withHistoryMode isHistoryMode: Bool = false) {
-        self.isHistoryMode = isHistoryMode
+    init(withMode mode: TransActionType) {
+        self.mode = mode
+        self.isHistoryMode = !["buy", "sell", "send"].contains(mode.rawValue)
         
         super.init(frame: CGRect(origin: .zero, size: CGSize(width: CGFloat.adaptive(width: 335.0), height: CGFloat.adaptive(height: isHistoryMode ? 567.0 : 641.0))))
         setupView()
@@ -400,19 +404,13 @@ class TransactionCompletedView: UIView {
         }
         
         if isHistoryMode {
-            repeatButton.isHidden = !["transfer", "convert"].contains(transaction.history?.meta.actionType ?? Config.defaultSymbol)
+            repeatButton.isHidden = !repeatButtonsArray.contains(transaction.history?.meta.actionType ?? Config.defaultSymbol)
         }
     }
 
-//    private func setAmountColor(sell: String = Config.defaultSymbol, buy: String = Config.defaultSymbol) {
-
     private func setColor(amount: CGFloat) {
-        transactionAmountLabel.text = "+" + String(Double(amount).currencyValueFormatted)
+        transactionAmountLabel.text = (amount > 0 ? "+" : "-") + String(Double(abs(amount)).currencyValueFormatted)
         transactionAmountLabel.theme_textColor = amount > 0 ? softCyanLimeGreenColorPickers : blackWhiteColorPickers
         transactionCurrencyLabel.theme_textColor = amount > 0 ? softCyanLimeGreenColorPickers : blackWhiteColorPickers
     }
-    
-//    private func setAmount(currency: String, (amount: CGFloat) {
-//
-//    }
 }

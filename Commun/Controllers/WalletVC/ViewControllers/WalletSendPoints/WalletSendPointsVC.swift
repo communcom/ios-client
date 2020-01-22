@@ -377,18 +377,18 @@ class WalletSendPointsVC: UIViewController {
     @objc func sendPointsButtonTapped(_ sender: UITapGestureRecognizer) {
         let numberValue = abs(dataModel.transaction.amount)
 
-        guard let recipientID = dataModel.transaction.friend?.id, numberValue > 0 else { return }
+        guard let friendID = dataModel.transaction.friend?.id, numberValue > 0 else { return }
 
         dataModel.transaction.operationDate = Date()
 
-//        showIndetermineHudWithMessage("sending".localized().uppercaseFirst + " \(dataModel.transaction.symbol.fullName.uppercased())")
+        showIndetermineHudWithMessage("sending".localized().uppercaseFirst + " \(dataModel.transaction.symbol.fullName.uppercased())")
 
         // FOR TEST
-        let completedVC = TransactionCompletedVC(transaction: dataModel.transaction)
-        show(completedVC, sender: nil)
+//        let completedVC = TransactionCompletedVC(transaction: dataModel.transaction)
+//        show(completedVC, sender: nil)
 
-        /*
-        BlockchainManager.instance.transferPoints(to: recipientID, number: Double(numberValue), currency: dataModel.transaction.symbol)
+        ///*
+        BlockchainManager.instance.transferPoints(to: friendID, number: Double(numberValue), currency: dataModel.transaction.symbol)
             .flatMapCompletable { RestAPIManager.instance.waitForTransactionWith(id: $0) }
             .subscribe(onCompleted: { [weak self] in
                 guard let strongSelf = self else { return }
@@ -403,7 +403,7 @@ class WalletSendPointsVC: UIViewController {
                 strongSelf.showError(error)
         }
         .disposed(by: disposeBag)
-        */
+        //*/
     }
     
     @objc func viewTapped( _ sender: UITapGestureRecognizer) {

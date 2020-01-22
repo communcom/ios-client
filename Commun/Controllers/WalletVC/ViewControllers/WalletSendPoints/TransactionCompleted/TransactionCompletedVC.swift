@@ -11,7 +11,6 @@ import UIKit
 class TransactionCompletedVC: UIViewController {
     // MARK: - Properties
     var dataModel = SendPointsModel()
-    var transaction: Transaction!
     var transactionCompletedView: TransactionCompletedView!
     
     var completionRepeat: (() -> Void)?
@@ -21,7 +20,7 @@ class TransactionCompletedVC: UIViewController {
     // MARK: - Class Initialization
     init(transaction: Transaction) {
         self.dataModel.transaction = transaction
-        self.transactionCompletedView = TransactionCompletedView(withHistoryMode: transaction.history != nil)
+        self.transactionCompletedView = TransactionCompletedView(withMode: transaction.actionType)
         
         super.init(nibName: nil, bundle: nil)
     }
@@ -94,6 +93,15 @@ class TransactionCompletedVC: UIViewController {
 
         // Example: sell `CMN` -> buy `MEME`
         case .sell:
+            dataModel.transaction.buyBalance = dataModel.getBalance(bySymbol: dataModel.transaction.symbol)
+            dataModel.transaction.sellBalance = dataModel.getBalance(bySymbol: Config.defaultSymbol)
+
+        // History: send CMN, MEME...
+        case .transfer:
+            dataModel.transaction.buyBalance = dataModel.getBalance(bySymbol: dataModel.transaction.symbol)
+            dataModel.transaction.sellBalance = dataModel.getBalance(bySymbol: dataModel.transaction.symbol)
+
+        case .convert:
             dataModel.transaction.buyBalance = dataModel.getBalance(bySymbol: dataModel.transaction.symbol)
             dataModel.transaction.sellBalance = dataModel.getBalance(bySymbol: Config.defaultSymbol)
 

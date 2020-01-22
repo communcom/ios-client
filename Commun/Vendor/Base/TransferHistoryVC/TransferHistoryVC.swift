@@ -106,6 +106,11 @@ class TransferHistoryVC: ListViewController<ResponseAPIWalletGetTransferHistoryI
                     var amount: CGFloat = 0.0
                     
                     switch selectedItem.meta.actionType {
+                    case "transfer":
+                        let receiver = selectedItem.receiver
+                        friend = Friend(id: receiver.userId, name: receiver.username ?? Config.defaultSymbol, avatarURL: receiver.avatarUrl)
+                        amount = -1 * CGFloat(selectedItem.quantityValue)
+                        
                     case "convert":
 //                        recipient = Recipient(id: nil,
 //                                              name: selectedItem.symbol == Config.defaultSymbol ?

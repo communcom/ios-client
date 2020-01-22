@@ -22,9 +22,8 @@ class SendPointsModel {
         return (name: balance.name ?? balance.symbol.fullName, avatarURL: balance.logo, amount: CGFloat(balance.balanceValue), symbol: balance.symbol)
     }
        
-    func getBalance(bySymbol symbol: String? = nil) -> Balance {
-        let symbolValue = symbol ?? transaction.symbol
-        return convert(balance: balances.first(where: { $0.symbol == symbolValue })!)
+    func getBalance(bySymbol symbol: String = Config.defaultSymbol) -> Balance {
+        return convert(balance: balances.first(where: { $0.symbol == symbol })!)
     }
     
     func checkEnteredAmounts() -> Bool {
