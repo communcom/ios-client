@@ -127,6 +127,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             URLCache.shared = urlCache
         }
         
+        // badge
+        SocketManager.shared.unseenNotificationsRelay
+            .subscribe(onNext: { (count) in
+                UIApplication.shared.applicationIconBadgeNumber = Int(count)
+            })
+            .disposed(by: bag)
+        
         return true
     }
     
@@ -460,8 +467,6 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         Logger.log(message: "UINotificationContent: \(notificationContent)", event: .debug)
 
         completionHandler([.alert, .sound])
-        
-        UIApplication.shared.applicationIconBadgeNumber = Int(truncating: notificationContent.badge ?? 1)
     }
     
     // Tap on push message
