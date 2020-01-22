@@ -9,7 +9,7 @@
 import Foundation
 
 typealias Friend = (id: String, name: String, avatarURL: String?)
-typealias Balance = (name: String, avatarURL: String?, amount: CGFloat)
+typealias Balance = (name: String, avatarURL: String?, amount: CGFloat, symbol: String)
 
 public enum TransActionType: String {
     case buy = "buy"

@@ -380,6 +380,7 @@ class TransactionCompletedView: UIView {
         switch transaction.actionType {
         case .buy, .sell:
             setColor(amount: transaction.amount)
+            transactionCurrencyLabel.text = transaction.buyBalance!.symbol.fullName
 
         case .transfer, .convert:
             setColor(amount: transaction.amount)

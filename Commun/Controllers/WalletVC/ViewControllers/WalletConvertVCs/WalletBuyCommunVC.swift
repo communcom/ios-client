@@ -167,11 +167,13 @@ class WalletBuyCommunVC: WalletConvertVC {
     override func convertButtonDidTouch() {
         super.convertButtonDidTouch()
         
-        guard let balance = currentBalance, let value = NumberFormatter().number(from: leftTextField.text ?? "")?.doubleValue else { return }
+        guard let balance = currentBalance,
+            let sellValue = NumberFormatter().number(from: leftTextField.text ?? "")?.doubleValue,
+            let buyValue = NumberFormatter().number(from: rightTextField.text ?? "")?.doubleValue else { return }
                 
         showIndetermineHudWithMessage("selling".localized().uppercaseFirst + " \(balance.symbol)")
         
-        BlockchainManager.instance.sellPoints(number: value, pointsCurrencyName: balance.symbol)
+        BlockchainManager.instance.sellPoints(number: sellValue, pointsCurrencyName: balance.symbol)
             .flatMapCompletable {RestAPIManager.instance.waitForTransactionWith(id: $0)}
             .subscribe(onCompleted: { [weak self] in
                 guard let strongSelf = self else { return }
@@ -179,11 +181,10 @@ class WalletBuyCommunVC: WalletConvertVC {
                 strongSelf.hideHud()
                 strongSelf.completion?()
                 
-                // Default .send type
                 let transaction = Transaction(buyBalance: nil,
                                               sellBalance: nil,
                                               friend: nil,
-                                              amount: CGFloat(value * strongSelf.viewModel.rate.value / 10),
+                                              amount: CGFloat(buyValue),
                                               symbol: balance.symbol,
                                               history: nil,
                                               actionType: .buy,

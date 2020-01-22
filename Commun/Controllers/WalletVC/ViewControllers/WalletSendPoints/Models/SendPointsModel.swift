@@ -19,7 +19,7 @@ class SendPointsModel {
 
     // MARK: - Custom Functions
     private func convert(balance: ResponseAPIWalletGetBalance) -> Balance {
-        return (name: balance.name ?? balance.symbol.fullName, avatarURL: balance.logo, amount: CGFloat(balance.balanceValue))
+        return (name: balance.name ?? balance.symbol.fullName, avatarURL: balance.logo, amount: CGFloat(balance.balanceValue), symbol: balance.symbol)
     }
        
     func getBalance(bySymbol symbol: String? = nil) -> Balance {
