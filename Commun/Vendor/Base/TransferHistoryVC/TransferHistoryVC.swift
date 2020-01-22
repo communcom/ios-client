@@ -153,9 +153,7 @@ class TransferHistoryVC: ListViewController<ResponseAPIWalletGetTransferHistoryI
                                 communWalletVC.show(walletSendPointsVC, sender: nil)
 
                             case "convert":
-                                if let walletConvertVC = communWalletVC.createConvertVC(withHistoryItem: transaction.history) {
-                                    communWalletVC.routeToConvertScene(walletConvertVC: walletConvertVC)
-                                }
+                                communWalletVC.routeToConvertScene(withTransacion: transaction)
                                 
                             default:
                                 break
