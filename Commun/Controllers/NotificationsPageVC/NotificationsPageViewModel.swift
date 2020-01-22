@@ -21,6 +21,7 @@ class NotificationsPageViewModel: ListViewModel<ResponseAPIGetNotificationItem> 
         super.init(fetcher: NotificationListFetcher(filter: filter))
         defer {
             bindFilter()
+            observeNewNotifications()
         }
     }
     
@@ -30,6 +31,15 @@ class NotificationsPageViewModel: ListViewModel<ResponseAPIGetNotificationItem> 
                 self.fetcher.reset()
                 (self.fetcher as! NotificationListFetcher).filter = filter
                 self.fetchNext()
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    func observeNewNotifications() {
+        SocketManager.shared.newNotificationsRelay
+            .subscribe(onNext: { (items) in
+                let newItems = ResponseAPIGetNotificationItem.join(array1: self.items.value, array2: items)
+                self.items.accept(newItems)
             })
             .disposed(by: disposeBag)
     }

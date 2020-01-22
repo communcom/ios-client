@@ -41,4 +41,8 @@ class NotificationListFetcher: ListFetcher<ResponseAPIGetNotificationItem> {
                 return result.items
             }
     }
+    
+    override func join(newItems items: [ResponseAPIGetNotificationItem]) -> [ResponseAPIGetNotificationItem] {
+        return ResponseAPIGetNotificationItem.join(array1: self.items.value, array2: items)
+    }
 }
