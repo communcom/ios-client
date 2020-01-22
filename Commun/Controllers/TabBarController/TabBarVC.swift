@@ -65,7 +65,11 @@ class TabBarVC: UITabBarController {
     }
     
     func setNotificationRedMarkHidden(_ hide: Bool) {
-        if hide {notificationRedMark.removeFromSuperview()}
+        if hide {
+            notificationRedMark.removeFromSuperview()
+            return
+        }
+        
         if !notificationRedMark.isDescendant(of: notificationsItem) {
             notificationsItem.addSubview(notificationRedMark)
             notificationRedMark.centerXAnchor.constraint(equalTo: notificationsItem.centerXAnchor, constant: 6).isActive = true
@@ -238,6 +242,14 @@ class TabBarVC: UITabBarController {
             .skipWhile {$0 == .empty}
             .subscribe(onNext: { (item) in
                 self.selectedViewController?.navigateWithNotificationItem(item)
+            })
+            .disposed(by: bag)
+        
+        SocketManager.shared
+            .unseenNotificationsRelay
+            .subscribe(onNext: { (unseen) in
+                print("unseenCountRelay \(unseen)")
+                self.setNotificationRedMarkHidden(unseen == 0)
             })
             .disposed(by: bag)
         
