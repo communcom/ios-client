@@ -31,6 +31,15 @@ class TabBarVC: UITabBarController {
     private lazy var shadowView = UIView(height: tabBarHeight)
     lazy var tabBarStackView = UIStackView(forAutoLayout: ())
     
+    // Notification
+    private lazy var notificationsItem = buttonTabBarItem(image: UIImage(named: "notifications")!, tag: notificationTabIndex)
+    private lazy var notificationRedMark: UIView = {
+        let notificationRedMark = UIView(width: 10, height: 10, backgroundColor: .ed2c5b, cornerRadius: 5)
+        notificationRedMark.borderColor = .white
+        notificationRedMark.borderWidth = 1
+        return notificationRedMark
+    }()
+    
     // MARK: - Methods
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,6 +61,15 @@ class TabBarVC: UITabBarController {
         } else {
             shadowView.isHidden = false
             shadowView.heightConstraint?.constant = tabBarHeight
+        }
+    }
+    
+    func setNotificationRedMarkHidden(_ hide: Bool) {
+        if hide {notificationRedMark.removeFromSuperview()}
+        if !notificationRedMark.isDescendant(of: notificationsItem) {
+            notificationsItem.addSubview(notificationRedMark)
+            notificationRedMark.centerXAnchor.constraint(equalTo: notificationsItem.centerXAnchor, constant: 6).isActive = true
+            notificationRedMark.autoPinEdge(toSuperviewEdge: .top)
         }
     }
     
@@ -103,7 +121,6 @@ class TabBarVC: UITabBarController {
         // Notifications Tab
         let notifications = NotificationsPageVC()
         let notificationsNC = BaseNavigationController(rootViewController: notifications, tabBarVC: self)
-        let notificationsItem = buttonTabBarItem(image: UIImage(named: "notifications")!, tag: notificationTabIndex)
         notificationsNC.navigationBar.prefersLargeTitles = true
         notifications.accessibilityLabel = "TabBarNotificationsTabBarItem"
 

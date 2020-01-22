@@ -53,6 +53,10 @@ extension UIColor {
         return UIColor(hexString: "#E2E6E8")!
     }
     
+    static var ed2c5b: UIColor {
+        return UIColor(hexString: "#ED2C5B")!
+    }
+    
     static var shadow: UIColor {
         return UIColor(hexString: "#383C47")!
     }
