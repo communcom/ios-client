@@ -10,7 +10,7 @@ import UIKit
 
 class TransactionCompletedVC: UIViewController {
     // MARK: - Properties
-    var dataModel = SendPointsModel(withSelectedBalanceSymbol: Config.defaultSymbol)
+    var dataModel = SendPointsModel()
     var transaction: Transaction!
     var transactionCompletedView: TransactionCompletedView!
     
@@ -82,7 +82,13 @@ class TransactionCompletedVC: UIViewController {
     }
     
     private func setupView() {
-        transactionCompletedView.update(balance: dataModel.currentBalance)
+        var balanceSell = dataModel.getBalance()
+    
+        if let history = dataModel.transaction.history, history.meta.actionType == "convert" {
+            dataModel.transaction.recipient.balance = dataModel.getBalance(bySymbol: history.symbol == Config.defaultSymbol ? history.symbol: Config.defaultSymbol)
+        }
+        
+        transactionCompletedView.update(balance: balanceSell)
         transactionCompletedView.update(transaction: dataModel.transaction)
         transactionCompletedView.update(recipient: dataModel.transaction.recipient)
         

@@ -358,7 +358,12 @@ class TransactionCompletedView: UIView {
     }
     
     func update(recipient: Recipient) {
-        recipientIDLabel.text = recipient.id
+        if isHistoryMode, let amountValue = recipient.balance?.amount {
+            recipientIDLabel.text = String(Double(amountValue).currencyValueFormatted)
+        } else {
+            recipientIDLabel.text = recipient.id
+        }
+
         recipientNameLabel.text = recipient.name
         recipientAvatarImageView.setAvatar(urlString: recipient.avatarURL, namePlaceHolder: recipient.name!)
     }

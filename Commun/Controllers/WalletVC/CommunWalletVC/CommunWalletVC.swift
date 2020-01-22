@@ -219,6 +219,7 @@ class CommunWalletVC: TransferHistoryVC {
                 WalletSellCommunVC(balances: (self.viewModel as! WalletViewModel).balancesVM.items.value, historyItem: history) :
                 WalletBuyCommunVC(balances: (self.viewModel as! WalletViewModel).balancesVM.items.value, symbol: history.symbol, historyItem: history)
             
+            walletConvertVC.currentSymbol = history.symbol == Config.defaultSymbol ? history.point.symbol! : Config.defaultSymbol
             routeToConvertScene(walletConvertVC: walletConvertVC)
         }
     }
@@ -251,7 +252,7 @@ class CommunWalletVC: TransferHistoryVC {
     private func routeToSendPointsScene(withRecipient recipient: ResponseAPIContentGetSubscriptionsUser? = nil) {
         showIndetermineHudWithMessage("loading".localized().uppercaseFirst)
 
-        let walletSendPointsVC = WalletSendPointsVC(withSelectedBalance: headerView.sendButton.accessibilityHint ?? Config.defaultSymbol, andFriend: recipient)
+        let walletSendPointsVC = WalletSendPointsVC(withSelectedBalanceSymbol: headerView.sendButton.accessibilityHint ?? Config.defaultSymbol, andFriend: recipient)
         show(walletSendPointsVC, sender: nil)
         setTabBarHidden(true)
         

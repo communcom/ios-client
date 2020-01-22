@@ -13,4 +13,5 @@ struct Recipient {
     var id: String?
     var name: String?
     var avatarURL: String?
+    var balance: Balance?
 }

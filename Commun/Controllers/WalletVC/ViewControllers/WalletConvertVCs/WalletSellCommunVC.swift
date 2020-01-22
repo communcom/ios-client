@@ -183,8 +183,7 @@ class WalletSellCommunVC: WalletConvertVC {
                 strongSelf.hideHud()
                 strongSelf.completion?()
                 
-                let transaction = Transaction(recipient: Recipient(id: balance.identity,
-                                                                   name: balance.name!,
+                let transaction = Transaction(recipient: Recipient(name: balance.name!,
                                                                    avatarURL: balance.logo),
                                               accuracy: 4,
                                               symbol: balance.symbol,
@@ -194,6 +193,7 @@ class WalletSellCommunVC: WalletConvertVC {
                 let completedVC = TransactionCompletedVC(transaction: transaction)
                 strongSelf.show(completedVC, sender: nil)
                 strongSelf.hideHud()
+                strongSelf.setTabBarHidden(true)
             }) { (error) in
                 self.hideHud()
                 self.showError(error)

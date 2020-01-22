@@ -289,7 +289,7 @@ class WalletConvertVC: BaseViewController {
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        setTabBarHidden(false)
+//        setTabBarHidden(false)
     }
     
     override func viewDidLayoutSubviews() {
@@ -403,7 +403,7 @@ class WalletConvertVC: BaseViewController {
         
         scrollView.autoPinEdge(.bottom, to: .top, of: warningLabel)
     }
-    
+        
     // MARK: - Updating
     private func setUp(with balances: [ResponseAPIWalletGetBalance]) {
         if let balance = balances.first(where: {$0.symbol == Config.defaultSymbol}) {

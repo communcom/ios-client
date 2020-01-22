@@ -107,9 +107,10 @@ class TransferHistoryVC: ListViewController<ResponseAPIWalletGetTransferHistoryI
                     
                     switch selectedItem.meta.actionType {
                     case "convert":
-                        recipient = Recipient(id: selectedItem.point.symbol ?? Config.defaultSymbol,
-                                              name: selectedItem.point.name ?? Config.defaultSymbol,
-                                              avatarURL: selectedItem.point.logo)
+                        recipient = Recipient(id: nil,
+                                              name: selectedItem.symbol == Config.defaultSymbol ?
+                                                        selectedItem.point.name : Config.defaultSymbol.fullName,
+                                              avatarURL: selectedItem.symbol == Config.defaultSymbol ? selectedItem.point.logo : nil)
                         
                         amount = CGFloat((selectedItem.meta.exchangeAmount ?? 0.0) * (selectedItem.meta.actionType == "transfer" ? -1 : 1))
                         
@@ -142,7 +143,7 @@ class TransferHistoryVC: ListViewController<ResponseAPIWalletGetTransferHistoryI
                     completedVC.completionRepeat = { [weak self] in
                         guard let strongSelf = self else { return }
                         
-                        let walletSendPointsVC = WalletSendPointsVC(withSelectedBalance: transaction.symbol, andRecipient: transaction.recipient)
+                        let walletSendPointsVC = WalletSendPointsVC(withSelectedBalanceSymbol: transaction.symbol, andRecipient: transaction.recipient)
                         walletSendPointsVC.dataModel.transaction = transaction
                         
                         if let communWalletVC = strongSelf.navigationController?.viewControllers.filter({ $0 is CommunWalletVC }).first as? CommunWalletVC {

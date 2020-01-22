@@ -109,8 +109,9 @@ class WalletSendPointsVC: UIViewController {
     
     
     // MARK: - Class Initialization
-    init(withSelectedBalance symbol: String, andFriend friend: ResponseAPIContentGetSubscriptionsUser?) {
-        self.dataModel = SendPointsModel(withSelectedBalanceSymbol: symbol)
+    init(withSelectedBalanceSymbol symbol: String, andFriend friend: ResponseAPIContentGetSubscriptionsUser?) {
+        self.dataModel = SendPointsModel()
+        self.dataModel.transaction.symbol = symbol
         
         if let recipient = friend  {
             self.dataModel.transaction.update(recipient: recipient)
@@ -119,8 +120,9 @@ class WalletSendPointsVC: UIViewController {
         super.init(nibName: nil, bundle: nil)
     }
 
-    init(withSelectedBalance symbol: String, andRecipient recipient: Recipient) {
-        self.dataModel = SendPointsModel(withSelectedBalanceSymbol: symbol)
+    init(withSelectedBalanceSymbol symbol: String, andRecipient recipient: Recipient) {
+        self.dataModel = SendPointsModel()
+        self.dataModel.transaction.symbol = symbol
         self.dataModel.transaction.recipient = recipient
 
         super.init(nibName: nil, bundle: nil)
@@ -194,7 +196,7 @@ class WalletSendPointsVC: UIViewController {
         balanceContentView.addSubview(balanceStackView)
         balanceStackView.autoAlignAxis(toSuperviewAxis: .vertical)
 
-        if dataModel.currentBalanceSymbol == Config.defaultSymbol {
+        if dataModel.transaction.symbol == Config.defaultSymbol {
             balanceContentView.addSubview(communLogoImageView)
             communLogoImageView.autoPinEdge(toSuperviewEdge: .top, withInset: CGFloat.adaptive(height: 20.0))
             communLogoImageView.autoAlignAxis(toSuperviewAxis: .vertical)
@@ -310,8 +312,9 @@ class WalletSendPointsVC: UIViewController {
     }
     
     private func updateBalanceInfo() {
-        balanceNameLabel.text = dataModel.currentBalance.name
-        balanceCurrencyLabel.text = dataModel.currentBalance.amount == 0 ? "0" : Double(dataModel.currentBalance.amount).currencyValueFormatted
+        let balance = dataModel.getBalance()
+        balanceNameLabel.text = balance.name
+        balanceCurrencyLabel.text = balance.amount == 0 ? "0" : Double(balance.amount).currencyValueFormatted
     }
     
     private func updateRecipientInfo() {
@@ -378,13 +381,13 @@ class WalletSendPointsVC: UIViewController {
 
         dataModel.transaction.operationDate = Date()
 
-        showIndetermineHudWithMessage("sending".localized().uppercaseFirst + " \(dataModel.transaction.symbol.fullName)")
+//        showIndetermineHudWithMessage("sending".localized().uppercaseFirst + " \(dataModel.transaction.symbol.fullName.uppercased())")
 
         // FOR TEST
-//        let completedVC = TransactionCompletedVC(transaction: dataModel.transaction)
-//        show(completedVC, sender: nil)
+        let completedVC = TransactionCompletedVC(transaction: dataModel.transaction)
+        show(completedVC, sender: nil)
 
-        ///*
+        /*
         BlockchainManager.instance.transferPoints(to: recipientID, number: Double(numberValue), currency: dataModel.transaction.symbol)
             .flatMapCompletable { RestAPIManager.instance.waitForTransactionWith(id: $0) }
             .subscribe(onCompleted: { [weak self] in
@@ -400,7 +403,7 @@ class WalletSendPointsVC: UIViewController {
                 strongSelf.showError(error)
         }
         .disposed(by: disposeBag)
-        //*/
+        */
     }
     
     @objc func viewTapped( _ sender: UITapGestureRecognizer) {
@@ -485,7 +488,7 @@ extension WalletSendPointsVC: CircularCarouselDataSource {
     }
     
     func startingItemIndex(inCarousel carousel: CircularCarousel) -> Int {
-        return dataModel.balances.firstIndex(where: { $0.symbol == dataModel.currentBalanceSymbol }) ?? 0
+        return dataModel.balances.firstIndex(where: { $0.symbol == dataModel.transaction.symbol }) ?? 0
     }
 }
 
@@ -513,12 +516,12 @@ extension WalletSendPointsVC: CircularCarouselDelegate {
     }
     
     func carousel(_ carousel: CircularCarousel, didSelectItemAtIndex index: Int) {
-        dataModel.currentBalanceSymbol = dataModel.balances[index].symbol
+        dataModel.transaction.symbol = dataModel.balances[index].symbol
         updateBalanceInfo()
         updateSendInfoByEnteredPoints()
     }
     
     func carousel(_ carousel: CircularCarousel, willBeginScrollingToIndex index: Int) {
-        dataModel.currentBalanceSymbol = dataModel.balances[index].symbol
+        dataModel.transaction.symbol = dataModel.balances[index].symbol
     }
 }

@@ -139,14 +139,14 @@ class WelcomeVC: UIViewController {
     }
     
     private func testCommunBuyVCShow(_ sender: UIButton) {
-        let modalViewController = TransactionCompletedVC(transaction: Transaction(recipient: Recipient(id: "2", name: "XXX", avatarURL: nil),
-                                                                                  accuracy: 4,
-                                                                                  symbol: "CMN",
-                                                                                  amount: 30,
-                                                                                  operationDate: Date()))
-        modalViewController.modalPresentationStyle = .overCurrentContext
-
-        present(modalViewController, animated: true, completion: nil)
+//        let modalViewController = TransactionCompletedVC(transaction: Transaction(recipient: Recipient(id: "2", name: "XXX", avatarURL: nil),
+//                                                                                  accuracy: 4,
+//                                                                                  symbol: "CMN",
+//                                                                                  amount: 30,
+//                                                                                  operationDate: Date()))
+//        modalViewController.modalPresentationStyle = .overCurrentContext
+//
+//        present(modalViewController, animated: true, completion: nil)
     }
 }
 //*/
