@@ -11,6 +11,9 @@ import RxCocoa
 
 class NotificationsPageViewModel: ListViewModel<ResponseAPIGetNotificationItem> {
     var filter: BehaviorRelay<NotificationListFetcher.Filter>
+    var unseenCount: BehaviorRelay<UInt64> {
+        SocketManager.shared.unseenNotificationsRelay
+    }
     
     init() {
         let filter = NotificationListFetcher.Filter(beforeThan: nil, filter: [])

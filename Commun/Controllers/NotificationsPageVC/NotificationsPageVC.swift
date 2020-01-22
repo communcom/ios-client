@@ -145,8 +145,7 @@ class NotificationsPageVC: ListViewController<ResponseAPIGetNotificationItem, No
             .bind(to: tableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
         
-        viewModel.items
-            .map {$0.count(where: {$0.isNew})}
+        (viewModel as! NotificationsPageViewModel).unseenCount
             .subscribe(onNext: { (newCount) in
                 let text = NSMutableAttributedString()
                 if newCount > 0 {
