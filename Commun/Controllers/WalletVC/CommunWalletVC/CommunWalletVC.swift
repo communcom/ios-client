@@ -220,7 +220,11 @@ class CommunWalletVC: TransferHistoryVC {
     }
     
     @objc func buyButtonDidTouch() {
-        
+        let vc = BuyCommunVC()
+        let nc = navigationController as? BaseNavigationController
+        nc?.shouldResetNavigationBarOnPush = false
+        show(vc, sender: nil)
+        nc?.shouldResetNavigationBarOnPush = true
     }
     
     @objc func convertButtonDidTouch() {
