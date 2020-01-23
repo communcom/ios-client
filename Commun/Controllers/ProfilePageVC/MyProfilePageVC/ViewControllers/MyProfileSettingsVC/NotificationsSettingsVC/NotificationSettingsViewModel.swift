@@ -46,7 +46,14 @@ class NotificationSettingsViewModel: BaseViewModel {
     }
     
     func getOptionsPushShow() {
+        RestAPIManager.instance.notificationsGetPushSettings()
+            .subscribe(onSuccess: {_ in
+                
+            })
+            .disposed(by: disposeBag)
+        
         guard notificationOn.value else {return}
+        
         RestAPIManager.instance.getPushNotify()
             .map {$0.notify.show}
             .subscribe(onSuccess: { [weak self] (show) in

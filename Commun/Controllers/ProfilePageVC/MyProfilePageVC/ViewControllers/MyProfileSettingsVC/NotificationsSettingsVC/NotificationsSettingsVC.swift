@@ -12,14 +12,6 @@ import RxSwift
 class NotificationsSettingsVC: BaseVerticalStackViewController {
     // MARK: - Subviews
     lazy var closeButton = UIButton.close()
-    lazy var notificationOnAction: NotificationSettingsView = {
-        let view = viewForAction(
-            Action(title: "notifications".localized().uppercaseFirst, icon: UIImage(named: "profile_options_mention"))
-        ) as! NotificationSettingsView
-        view.switchButton.addTarget(self, action: #selector(toggleNotificationOn(_:)), for: .valueChanged)
-        view.cornerRadius = 10
-        return view
-    }()
     
     // MARK: - Properties
     var viewModel = NotificationSettingsViewModel()
@@ -49,23 +41,6 @@ class NotificationsSettingsVC: BaseVerticalStackViewController {
         title = "notifications".localized().uppercaseFirst
         setRightNavBarButton(with: closeButton)
         closeButton.addTarget(self, action: #selector(back), for: .touchUpInside)
-    }
-    
-    override func bind() {
-        super.bind()
-        viewModel.notificationOn
-            .filter {$0 != self.notificationOnAction.switchButton.isOn}
-            .asDriver(onErrorJustReturn: true)
-            .drive(notificationOnAction.switchButton.rx.isOn)
-            .disposed(by: disposeBag)
-    }
-    
-    override func layout() {
-        scrollView.contentView.addSubview(notificationOnAction)
-        notificationOnAction.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 20, left: 10, bottom: 10, right: 10), excludingEdge: .bottom)
-        
-        stackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 20, left: 10, bottom: 10, right: 10), excludingEdge: .top)
-        stackView.autoPinEdge(.top, to: .bottom, of: notificationOnAction, withOffset: 20)
     }
     
     override func viewForAction(_ action: Action) -> UIView {
