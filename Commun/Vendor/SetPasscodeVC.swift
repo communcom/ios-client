@@ -16,10 +16,14 @@ class SetPasscodeVC: THPinViewController {
     var completion: (() -> Void)?
     var onBoarding = true
     var isVerifyVC = false
+    var needTransactionConfirmation: Bool!
+    
     
     // MARK: - Class Initialization
-    init() {
+    init(forTransactionConfirmation needTransactionConfirmation: Bool = false) {
         super.init(delegate: nil)
+        
+        self.needTransactionConfirmation = needTransactionConfirmation
         self.delegate = self
     }
     
@@ -27,11 +31,12 @@ class SetPasscodeVC: THPinViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    
     // MARK: - Class Functions
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        if currentPin == nil && onBoarding {
+        if currentPin == nil && onBoarding || needTransactionConfirmation {
             navigationController?.setNavigationBarHidden(true, animated: animated)
         } else {
             title = "passcode".localized().uppercaseFirst
@@ -62,13 +67,18 @@ class SetPasscodeVC: THPinViewController {
         disableCancel = false
         
         // Text
-        if isVerifyVC {
-            promptTitle = "enter your current passcode".localized().uppercaseFirst
+        if needTransactionConfirmation {
+            promptTitle = "enter passcode".localized().uppercaseFirst
+            currentPin = Config.currentUser?.passcode
         } else {
-            promptTitle = (currentPin == nil ? "create your passcode" : "verify your new passcode").localized().uppercaseFirst
-            
-            if currentPin != nil {
-                self.setNavBarBackButton()
+            if isVerifyVC {
+                promptTitle = "enter your current passcode".localized().uppercaseFirst
+            } else {
+                promptTitle = (currentPin == nil ? "create your passcode" : "verify your new passcode").localized().uppercaseFirst
+                
+                if currentPin != nil {
+                    self.setNavBarBackButton()
+                }
             }
         }
         
@@ -76,6 +86,7 @@ class SetPasscodeVC: THPinViewController {
         view.tintColor = .black
     }
 }
+
 
 // NARK: - THPinViewControllerDelegate
 extension SetPasscodeVC: THPinViewControllerDelegate {
@@ -90,21 +101,27 @@ extension SetPasscodeVC: THPinViewControllerDelegate {
             verifyVC.completion = completion
             verifyVC.onBoarding = onBoarding
             show(verifyVC, sender: self)
+            
             return true
         }
+        
         if pin == currentPin {
             do {
-                if !isVerifyVC {
+                if needTransactionConfirmation {
+                    completion!()
+                } else if !isVerifyVC {
                     try RestAPIManager.instance.setPasscode(pin, onBoarding: onBoarding)
-                }
-                if let completion = completion {
-                    completion()
+                    
+                    if let completion = completion {
+                        completion()
+                    }
                 }
             } catch {
                 self.showError(error)
                 return false
             }
         }
+       
         return pin == currentPin
     }
     
