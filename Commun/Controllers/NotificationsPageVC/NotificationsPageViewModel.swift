@@ -22,6 +22,7 @@ class NotificationsPageViewModel: ListViewModel<ResponseAPIGetNotificationItem> 
         defer {
             bindFilter()
             observeNewNotifications()
+            getStatus()
         }
     }
     
@@ -40,6 +41,15 @@ class NotificationsPageViewModel: ListViewModel<ResponseAPIGetNotificationItem> 
             .subscribe(onNext: { (items) in
                 let newItems = self.fetcher.join(newItems: items)
                 self.items.accept(newItems)
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    func getStatus() {
+        RestAPIManager.instance.notificationsGetStatus()
+            .map {$0.unseenCount}
+            .subscribe(onSuccess: { (unseenCount) in
+                self.unseenCount.accept(unseenCount)
             })
             .disposed(by: disposeBag)
     }
