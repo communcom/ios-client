@@ -7,8 +7,9 @@
 //
 
 import UIKit
-import THPinViewController
 import CyberSwift
+import THPinViewController
+import LocalAuthentication
 
 class SetPasscodeVC: THPinViewController {
     // MARK: - Properties
@@ -17,7 +18,13 @@ class SetPasscodeVC: THPinViewController {
     var onBoarding = true
     var isVerifyVC = false
     var needTransactionConfirmation: Bool!
-    
+
+    lazy var buttonFaceID = UIButton(frame: CGRect(origin: .zero, size: CGSize(width: CGFloat.adaptive(width: 50.0), height: CGFloat.adaptive(width: 50.0))))
+    lazy var buttonTouchID = UIButton(frame: CGRect(origin: .zero, size: CGSize(width: CGFloat.adaptive(width: 43.33), height: CGFloat.adaptive(width: 43.31))))
+
+    lazy var context = LAContext()
+    var error: NSError?
+
     
     // MARK: - Class Initialization
     init(forTransactionConfirmation needTransactionConfirmation: Bool = false) {
@@ -68,9 +75,8 @@ class SetPasscodeVC: THPinViewController {
         
         // Text
         if needTransactionConfirmation {
+            addActionButton()
             currentPin = Config.currentUser?.passcode
-            
-            addActionButtons()
         }
         
         view.tintColor = .black
@@ -79,17 +85,31 @@ class SetPasscodeVC: THPinViewController {
     
     
     // MARK: - Custom Functions
-    private func addActionButtons() {
-        // Add close button
+    private func addActionButton() {
+        // Add Close button
         let closeButton = UIButton.circle(size: CGFloat.adaptive(width: 24.0), backgroundColor: #colorLiteral(red: 0.953, green: 0.961, blue: 0.98, alpha: 1), imageName: "icon-round-close-grey-default")
         closeButton.addTarget(self, action: #selector(closeButtonTapped), for: .touchUpInside)
         view.addSubview(closeButton)
         closeButton.autoPinTopAndTrailingToSuperView(inset: CGFloat.adaptive(height: 55.0), xInset: CGFloat.adaptive(width: 15.0))
+        
+        // Add Face/Touch ID button
+        buttonFaceID.setImage(UIImage(named: "icon-face-id-grey-default"), for: .normal)
+        buttonFaceID.addTarget(self, action: #selector(faceIdButtonTapped), for: .touchUpInside)
+        buttonFaceID.isHidden = true
+        
+        buttonTouchID.setImage(UIImage(named: "icon-touch-id-grey-default"), for: .normal)
+        buttonTouchID.addTarget(self, action: #selector(touchIdButtonTapped), for: .touchUpInside)
+        buttonTouchID.isHidden = !isTouchIdEnable()
+        
+        let buttonsStackView = UIStackView(arrangedSubviews: [buttonFaceID, buttonTouchID], axis: .horizontal, spacing: 0.0, alignment: .center, distribution: .fill)
+        view.addSubview(buttonsStackView)
+        buttonsStackView.autoPinBottomAndTrailingToSuperView(inset: CGFloat.adaptive(height: 63.0), xInset: CGFloat.adaptive(width: 63.0))
+    }
 
-        // Add FaceID/TouchID buttons
-//        if {
-//
-//        }
+    private func didShowVerifyButton(_ value: Bool) {
+        if needTransactionConfirmation {
+            buttonTouchID.isHidden = !value
+        }
     }
     
     private func modifyPromtTitle(asError isError: Bool) {
@@ -120,10 +140,33 @@ class SetPasscodeVC: THPinViewController {
         }
     }
     
+    private func isTouchIdEnable() -> Bool {
+        return context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error)
+    }
     
     // MARK: - Actions
     @objc func closeButtonTapped(_ sender: UIButton) {
         popToPreviousVC()
+    }
+    
+    @objc func faceIdButtonTapped(_ sender: UIButton) {
+        print("FaceID button tapped")
+    }
+
+    @objc func touchIdButtonTapped(_ sender: UIButton) {
+        let reason = "Identify yourself!"
+        
+        context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reason) { [weak self] success, authenticationError in
+            guard let strongSelf = self else { return }
+            
+            if success {
+                DispatchQueue.main.async {
+                    strongSelf.completion!()
+                }
+            } else {
+                strongSelf.showError(authenticationError!)
+            }
+        }
     }
 }
 
@@ -137,6 +180,11 @@ extension SetPasscodeVC: THPinViewControllerDelegate {
     func incorrectPinEntered(in pinViewController: THPinViewController) {
         modifyPromtTitle(asError: true)
     }
+    
+//    func pinViewController(_ pinViewController: THPinViewController, didAddNumberToCurrentPin pin: String) {
+//        modifyPromtTitle(asError: false)
+//        didShowVerifyButton(pin.count == 0)
+//    }
     
     func pinViewController(_ pinViewController: THPinViewController, isPinValid pin: String) -> Bool {
         if currentPin == nil {
@@ -170,6 +218,7 @@ extension SetPasscodeVC: THPinViewControllerDelegate {
     }
     
     func userCanRetry(in pinViewController: THPinViewController) -> Bool {
+        didShowVerifyButton(true)
         return true
     }
 }

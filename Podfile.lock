@@ -291,7 +291,7 @@ CHECKOUT OPTIONS:
     :commit: 141dcc300ee804e5d11f27fa9e685dc91889c262
     :git: https://github.com/communcom/SubviewAttachingTextView.git
   THPinViewController:
-    :commit: 3a9214d337cb96e6491325f8e0a72e50d62fc210
+    :commit: cb9822d19e19d0adc50ac73ec7bef89a2e7cc7c4
     :git: https://github.com/bigearsenal/THPinViewController.git
 
 SPEC CHECKSUMS:
