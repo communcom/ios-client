@@ -9,95 +9,66 @@
 import Foundation
 
 class GradientProgressBar: MyView {
+    let padding: CGFloat = 2
     // MARK: - Properties
-    var drawedBackground = false
-    var drawedGradientLayer = false
+    var actualHeight: CGFloat
     var progress: CGFloat = 0 {
         didSet {
             layoutIfNeeded()
             animate()
         }
     }
+    var progressViewWidthConstraint: NSLayoutConstraint?
     
-    // MARK: - Sublayers
-    lazy var progressLayer = CAShapeLayer()
-    
-    // MARK: - Methods
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        if !drawedBackground {
-            drawBackground()
-            drawedBackground = true
-        }
-        
-        if !drawedGradientLayer {
-            drawProgressLayer()
-            drawedGradientLayer = true
-        }
-    }
-    
-    private func drawBackground() {
-        let path = UIBezierPath()
-        path.move(to: CGPoint(x: 0, y: height / 2))
-        path.addLine(to: CGPoint(x: bounds.width, y: height / 2))
-        let shapeLayer = CAShapeLayer()
-        shapeLayer.path = path.cgPath
-        shapeLayer.strokeColor = UIColor.white.withAlphaComponent(0.1).cgColor
-        shapeLayer.lineWidth = height
-        shapeLayer.lineJoin = .round
-        shapeLayer.lineCap = .round
-        layer.addSublayer(shapeLayer)
-        layer.addSublayer(shapeLayer)
-    }
-    
-    private func drawProgressLayer() {
-        // draw progress
-        progressLayer.strokeColor = UIColor.red.cgColor
-        progressLayer.lineWidth = height - 2 * 2
-        progressLayer.lineJoin = .round
-        progressLayer.lineCap = .round
-        progressLayer.path = createPath().cgPath
-        
-        // Gradient Layer
+    // MARK: - Subviews
+    lazy var progressView = UIView(forAutoLayout: ())
+    lazy var gradientLayer: CAGradientLayer = {
         let gradientLayer = CAGradientLayer()
         gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
         gradientLayer.endPoint = CGPoint(x: 1.0, y: 0.5)
 
         // make sure to use .cgColor
-        gradientLayer.colors = [UIColor(hexString: "#C1CAF8")!.cgColor, UIColor(hexString: "#4EDBB0")!.cgColor]
-        gradientLayer.frame = bounds
-        gradientLayer.mask = progressLayer
-
-        layer.addSublayer(gradientLayer)
+        gradientLayer.colors = [UIColor(hexString: "#B1F4E0")!.cgColor, UIColor(hexString: "#4EDBB0")!.cgColor]
+        return gradientLayer
+    }()
+    
+    // MARK: - Methods
+    init(height: CGFloat) {
+        self.actualHeight = height
+        super.init(frame: .zero)
     }
     
-    private func createPath() -> UIBezierPath {
-        let newX = (bounds.width - 2 * 2) * progress + 2
-        let path = UIBezierPath()
-        path.move(to: CGPoint(x: 2, y: height / 2))
-        path.addLine(to: CGPoint(x: newX, y: height / 2))
-        return path
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func commonInit() {
+        super.commonInit()
+        
+        configureForAutoLayout()
+        autoSetDimension(.height, toSize: actualHeight)
+        backgroundColor = UIColor.white.withAlphaComponent(0.1)
+        cornerRadius = actualHeight / 2
+        
+        progressView.cornerRadius = (actualHeight - padding * 2) / 2
+        progressView.autoSetDimension(.height, toSize: actualHeight - padding * 2)
+        
+        addSubview(progressView)
+        progressView.autoPinEdge(toSuperviewEdge: .leading, withInset: padding)
+        progressView.autoAlignAxis(toSuperviewAxis: .horizontal)
+        
+        progressViewWidthConstraint = progressView.autoSetDimension(.width, toSize: progress)
+
+        progressView.layer.insertSublayer(gradientLayer, at: 0)
     }
     
     private func animate() {
-        let newShapePath = createPath().cgPath
+        let newWidth = (bounds.width - padding * 2) * progress
+        progressViewWidthConstraint?.constant = newWidth
         
-        let animation = CABasicAnimation(keyPath: "path")
-        animation.duration = 1
-        animation.toValue = newShapePath
-        animation.timingFunction = CAMediaTimingFunction(name: .easeOut)
-        animation.fillMode = .forwards
-        animation.isRemovedOnCompletion = false
-        animation.delegate = self
-        
-        progressLayer.add(animation, forKey: "path")
-    }
-}
-
-extension GradientProgressBar: CAAnimationDelegate {
-    func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
-        if flag {
-            progressLayer.path = createPath().cgPath
+        UIView.animate(withDuration: 1) {
+            self.layoutIfNeeded()
+            self.gradientLayer.frame = self.progressView.bounds
         }
     }
 }
