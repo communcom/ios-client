@@ -124,7 +124,7 @@ extension NotificationsSettingsVC: NotificationSettingsViewDelegate {
                 guard let strongSelf = self else {return}
                 strongSelf.showError(error)
                 self?.switchers.forEach {$0.isEnabled = true}
-                switcher.isEnabled = !switcher.isEnabled
+                switcher.isOn = !switcher.isOn
             }
             .disposed(by: disposeBag)
     }
