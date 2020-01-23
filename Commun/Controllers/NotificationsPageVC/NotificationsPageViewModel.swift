@@ -38,7 +38,7 @@ class NotificationsPageViewModel: ListViewModel<ResponseAPIGetNotificationItem> 
     func observeNewNotifications() {
         SocketManager.shared.newNotificationsRelay
             .subscribe(onNext: { (items) in
-                let newItems = ResponseAPIGetNotificationItem.join(array1: self.items.value, array2: items)
+                let newItems = self.fetcher.join(newItems: items)
                 self.items.accept(newItems)
             })
             .disposed(by: disposeBag)
