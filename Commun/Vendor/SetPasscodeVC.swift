@@ -68,15 +68,45 @@ class SetPasscodeVC: THPinViewController {
         
         // Text
         if needTransactionConfirmation {
-            promptTitle = "enter passcode".localized().uppercaseFirst
             currentPin = Config.currentUser?.passcode
             
-            let closeButton = UIButton.circle(size: CGFloat.adaptive(width: 24.0), backgroundColor: #colorLiteral(red: 0.953, green: 0.961, blue: 0.98, alpha: 1), imageName: "icon-round-close-grey-default")
-            closeButton.addTarget(self, action: #selector(closeButtonTapped), for: .touchUpInside)
-            view.addSubview(closeButton)
-            closeButton.autoPinTopAndTrailingToSuperView(inset: CGFloat.adaptive(height: 55.0), xInset: CGFloat.adaptive(width: 15.0))
-        } else {
-            if isVerifyVC {
+            addActionButtons()
+        }
+        
+        view.tintColor = .black
+        modifyPromtTitle(asError: false)
+    }
+    
+    
+    // MARK: - Custom Functions
+    private func addActionButtons() {
+        // Add close button
+        let closeButton = UIButton.circle(size: CGFloat.adaptive(width: 24.0), backgroundColor: #colorLiteral(red: 0.953, green: 0.961, blue: 0.98, alpha: 1), imageName: "icon-round-close-grey-default")
+        closeButton.addTarget(self, action: #selector(closeButtonTapped), for: .touchUpInside)
+        view.addSubview(closeButton)
+        closeButton.autoPinTopAndTrailingToSuperView(inset: CGFloat.adaptive(height: 55.0), xInset: CGFloat.adaptive(width: 15.0))
+
+        // Add FaceID/TouchID buttons
+//        if {
+//
+//        }
+    }
+    
+    private func modifyPromtTitle(asError isError: Bool) {
+        switch needTransactionConfirmation {
+        case true:
+            if isError {
+                promptTitle = "wrong code".localized().uppercaseFirst
+                promptColor = #colorLiteral(red: 0.929, green: 0.173, blue: 0.357, alpha: 1)
+            } else {
+                promptTitle = "enter passcode".localized().uppercaseFirst
+                promptColor = #colorLiteral(red: 0.0, green: 0.0, blue: 0.0, alpha: 1)
+            }
+            
+        default:
+            if isError {
+                // TODO: - ADD ERROR TEXT
+            } else if isVerifyVC {
                 promptTitle = "enter your current passcode".localized().uppercaseFirst
             } else {
                 promptTitle = (currentPin == nil ? "create your passcode" : "verify your new passcode").localized().uppercaseFirst
@@ -85,10 +115,9 @@ class SetPasscodeVC: THPinViewController {
                     self.setNavBarBackButton()
                 }
             }
+            
+            promptColor = #colorLiteral(red: 0.0, green: 0.0, blue: 0.0, alpha: 1)
         }
-        
-        promptColor = .black
-        view.tintColor = .black
     }
     
     
@@ -99,10 +128,14 @@ class SetPasscodeVC: THPinViewController {
 }
 
 
-// NARK: - THPinViewControllerDelegate
+// MARK: - THPinViewControllerDelegate
 extension SetPasscodeVC: THPinViewControllerDelegate {
     func pinLength(for pinViewController: THPinViewController) -> UInt {
         return 4
+    }
+    
+    func incorrectPinEntered(in pinViewController: THPinViewController) {
+        modifyPromtTitle(asError: true)
     }
     
     func pinViewController(_ pinViewController: THPinViewController, isPinValid pin: String) -> Bool {
