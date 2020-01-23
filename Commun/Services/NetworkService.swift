@@ -404,12 +404,6 @@ class NetworkService: NSObject {
         return RestAPIManager.instance.notifyMarkAllAsViewed()
     }
     
-    func markAsRead(ids: [String]) -> Completable {
-        if ids.isEmpty {return .empty()}
-        return RestAPIManager.instance.markAsRead(notifies: ids)
-            .flatMapToCompletable()
-    }
-    
     // MARK: - Other
     func getEmbed(url: String) -> Single<ResponseAPIFrameGetEmbed> {
         return RestAPIManager.instance.getEmbed(url: url)

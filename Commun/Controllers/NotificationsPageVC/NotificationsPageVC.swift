@@ -160,13 +160,7 @@ class NotificationsPageVC: ListViewController<ResponseAPIGetNotificationItem, No
     
     override func modelSelected(_ item: ResponseAPIGetNotificationItem) {
         navigateWithNotificationItem(item)
-        
-        if item.isNew {
-            // TODO: - Mark as read
-            var item = item
-            item.isNew = false
-            item.notifyChanged()
-        }
+        (viewModel as! NotificationsPageViewModel).markAsRead([item])
     }
     
     override func handleListEmpty() {

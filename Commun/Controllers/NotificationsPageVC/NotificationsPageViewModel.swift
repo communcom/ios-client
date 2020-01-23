@@ -26,6 +26,11 @@ class NotificationsPageViewModel: ListViewModel<ResponseAPIGetNotificationItem> 
         }
     }
     
+    override func reload() {
+        super.reload()
+        getStatus()
+    }
+    
     func bindFilter() {
         filter.distinctUntilChanged()
             .subscribe(onNext: { filter in
@@ -50,6 +55,24 @@ class NotificationsPageViewModel: ListViewModel<ResponseAPIGetNotificationItem> 
             .map {$0.unseenCount}
             .subscribe(onSuccess: { (unseenCount) in
                 self.unseenCount.accept(unseenCount)
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    func markAsRead(_ items: [ResponseAPIGetNotificationItem]) {
+        RestAPIManager.instance.notificationsMarkAsRead(items.map {$0.id})
+            .subscribe(onSuccess: { (_) in
+                for item in items {
+                    var item = item
+                    item.isNew = false
+                    item.notifyChanged()
+                }
+                let unseenCount = self.unseenCount.value
+                if unseenCount < items.count {
+                    self.unseenCount.accept(0)
+                } else {
+                    self.unseenCount.accept(unseenCount - UInt64(items.count))
+                }
             })
             .disposed(by: disposeBag)
     }
