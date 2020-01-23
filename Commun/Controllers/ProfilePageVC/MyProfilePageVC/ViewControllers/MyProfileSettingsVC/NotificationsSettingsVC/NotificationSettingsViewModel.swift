@@ -13,63 +13,25 @@ import RxSwift
 class NotificationSettingsViewModel: BaseViewModel {
     // MARK: - Properties
     let loadingState    = BehaviorRelay<LoadingState>(value: .loading)
-    let notificationOn  = BehaviorRelay<Bool>(value: UserDefaults.standard.object(forKey: Config.currentUserPushNotificationOn) == nil ? true: UserDefaults.standard.bool(forKey: Config.currentUserPushNotificationOn))
-    let options         = BehaviorRelay<ResponseAPIGetOptionsNotifyShow?>(value: nil)
+    let disabledTypes   = BehaviorRelay<[String]>(value: [])
     
     override init() {
         super.init()
-        defer {bind()}
+        defer {
+            getSettings()
+        }
     }
     
-    func bind() {
-        // bind notificationOn
-        UserDefaults.standard.rx
-            .observe(Bool.self, Config.currentUserPushNotificationOn)
-            .skip(1)
-            .filter {$0 != nil}
-            .map {$0!}
-            .bind(to: notificationOn)
-            .disposed(by: disposeBag)
-        
-        // notification on
-        notificationOn
-            .subscribe(onNext: {[weak self] (isOn) in
-                if isOn {
-                    self?.options.accept(ResponseAPIGetOptionsNotifyShow.allOn)
-                } else {
-                    self?.options.accept(nil)
-                }
-            })
-            .disposed(by: disposeBag)
-        
-        getOptionsPushShow()
-    }
-    
-    func getOptionsPushShow() {
+    func getSettings() {
+        loadingState.accept(.loading)
         RestAPIManager.instance.notificationsGetPushSettings()
-            .subscribe(onSuccess: {_ in
-                
-            })
-            .disposed(by: disposeBag)
-        
-        guard notificationOn.value else {return}
-        
-        RestAPIManager.instance.getPushNotify()
-            .map {$0.notify.show}
-            .subscribe(onSuccess: { [weak self] (show) in
-                self?.options.accept(show)
-            })
-            .disposed(by: disposeBag)
-    }
-    
-    func togglePushNotify(on: Bool) {
-        let operation = on ? RestAPIManager.instance.pushNotifyOn() :
-            RestAPIManager.instance.pushNotifyOff()
-                
-        operation
-            .subscribe(onCompleted: {
-            
-            })
+            .map {$0.disabled}
+            .subscribe(onSuccess: { (disabledTypes) in
+                self.disabledTypes.accept(disabledTypes)
+                self.loadingState.accept(.finished)
+            }) { (error) in
+                self.loadingState.accept(.error(error: error))
+            }
             .disposed(by: disposeBag)
     }
 }

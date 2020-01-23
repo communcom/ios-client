@@ -202,7 +202,7 @@ class CommunWalletVC: TransferHistoryVC {
                         self?.view.hideErrorView()
                         self?.viewModel.reload()
                     }
-                    #if !APPSTRORE
+                    #if !APPSTORE
                         self?.showAlert(title: "Error", message: "\(error)")
                     #endif
                 }

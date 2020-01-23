@@ -160,7 +160,7 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
                     self?.handleListEmpty()
                 case .error(let error):
                     self?.handleListError()
-                    #if !APPSTRORE
+                    #if !APPSTORE
                         self?.showAlert(title: "Error", message: "\(error)")
                     #endif
                 }
