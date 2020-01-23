@@ -15,6 +15,13 @@ class NotificationsSettingsVC: BaseVerticalStackViewController {
     
     // MARK: - Properties
     var viewModel = NotificationSettingsViewModel()
+    var settingViews: [NotificationSettingsView] {
+        stackView.arrangedSubviews.compactMap {$0 as? NotificationSettingsView}
+    }
+    
+    var switchers: [UISwitch] {
+        settingViews.map {$0.switchButton}
+    }
     
     // MARK: - Initializers
     init() {
@@ -69,8 +76,11 @@ class NotificationsSettingsVC: BaseVerticalStackViewController {
         
         // disabledType
         viewModel.disabledTypes
-            .subscribe(onNext: { (disabledTypes) in
-                
+            .subscribe(onNext: { [weak self] (disabledTypes) in
+                guard let strongSelf = self else {return}
+                for view in strongSelf.settingViews {
+                    view.switchButton.isOn = !disabledTypes.contains(view.notificationType)
+                }
             })
             .disposed(by: disposeBag)
     }
@@ -99,6 +109,23 @@ class NotificationsSettingsVC: BaseVerticalStackViewController {
 
 extension NotificationsSettingsVC: NotificationSettingsViewDelegate {
     func notificationSettingsView(_ notificationSettingsView: NotificationSettingsView, didChangeValueForSwitch switcher: UISwitch, forNotificationType type: String) {
-        print(switcher.isOn)
+        var disabledTypes = [String]()
+        for view in settingViews {
+            if !view.switchButton.isOn {disabledTypes.append(view.notificationType)}
+            
+            // disable all button
+            view.switchButton.isEnabled = false
+        }
+        
+        RestAPIManager.instance.notificationsSetPushSettings(disable: disabledTypes)
+            .subscribe(onSuccess: { [weak self] (_) in
+                self?.switchers.forEach {$0.isEnabled = true}
+            }) { [weak self] (error) in
+                guard let strongSelf = self else {return}
+                strongSelf.showError(error)
+                self?.switchers.forEach {$0.isEnabled = true}
+                switcher.isEnabled = !switcher.isEnabled
+            }
+            .disposed(by: disposeBag)
     }
 }
