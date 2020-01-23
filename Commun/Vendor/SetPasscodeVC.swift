@@ -52,7 +52,7 @@ class SetPasscodeVC: THPinViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
-        if currentPin == nil && onBoarding {
+        if currentPin == nil && onBoarding || needTransactionConfirmation {
             navigationController?.setNavigationBarHidden(false, animated: animated)
         }
     }
@@ -70,6 +70,11 @@ class SetPasscodeVC: THPinViewController {
         if needTransactionConfirmation {
             promptTitle = "enter passcode".localized().uppercaseFirst
             currentPin = Config.currentUser?.passcode
+            
+            let closeButton = UIButton.circle(size: CGFloat.adaptive(width: 24.0), backgroundColor: #colorLiteral(red: 0.953, green: 0.961, blue: 0.98, alpha: 1), imageName: "icon-round-close-grey-default")
+            closeButton.addTarget(self, action: #selector(closeButtonTapped), for: .touchUpInside)
+            view.addSubview(closeButton)
+            closeButton.autoPinTopAndTrailingToSuperView(inset: CGFloat.adaptive(height: 55.0), xInset: CGFloat.adaptive(width: 15.0))
         } else {
             if isVerifyVC {
                 promptTitle = "enter your current passcode".localized().uppercaseFirst
@@ -84,6 +89,12 @@ class SetPasscodeVC: THPinViewController {
         
         promptColor = .black
         view.tintColor = .black
+    }
+    
+    
+    // MARK: - Actions
+    @objc func closeButtonTapped(_ sender: UIButton) {
+        popToPreviousVC()
     }
 }
 
