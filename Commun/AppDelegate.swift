@@ -107,7 +107,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             .subscribe(onSuccess: { (_) in
                 AppDelegate.reloadSubject.onNext(false)
                 self.window?.makeKeyAndVisible()
-                application.applicationIconBadgeNumber = 0
             }, onError: {_ in
                 if let vc = self.window?.rootViewController as? SplashViewController {
                     vc.showErrorScreen()
