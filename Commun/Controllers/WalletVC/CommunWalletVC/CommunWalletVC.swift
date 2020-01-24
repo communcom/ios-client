@@ -43,7 +43,7 @@ class CommunWalletVC: TransferHistoryVC {
 
     // MARK: - Initializers
     convenience init() {
-        self.init(viewModel: WalletViewModel())
+        self.init(viewModel: WalletViewModel(symbol: "CMN"))
     }
     
     override func createTableView() -> UITableView {
@@ -260,8 +260,8 @@ class CommunWalletVC: TransferHistoryVC {
     
     private func openOtherBalancesWalletVC(withSelectedBalance balance: ResponseAPIWalletGetBalance?) {
         let viewModel = (self.viewModel as! WalletViewModel)
-        guard let balance = balance, let index = (balances.filter {$0.symbol != "CMN"}).firstIndex(where: {$0.symbol == balance.symbol}) else {return}
-        let vc = OtherBalancesWalletVC(balances: viewModel.balancesVM.items.value, selectedIndex: index, subscriptions: viewModel.subscriptionsVM.items.value, history: viewModel.items.value)
+        guard let balance = balance else {return}
+        let vc = OtherBalancesWalletVC(balances: viewModel.balancesVM.items.value, symbol: balance.symbol, subscriptions: viewModel.subscriptionsVM.items.value, history: viewModel.items.value)
         let nc = navigationController as? BaseNavigationController
         nc?.shouldResetNavigationBarOnPush = false
         show(vc, sender: nil)
