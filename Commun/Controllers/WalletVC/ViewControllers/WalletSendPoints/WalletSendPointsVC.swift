@@ -276,8 +276,14 @@ class WalletSendPointsVC: UIViewController {
     
     private func setSendButton(amount: CGFloat = 0.0, percent: CGFloat) {
         let subtitle1 = String(format: "%@: %@ %@", "send".localized().uppercaseFirst, Double(amount).currencyValueFormatted, dataModel.transaction.symbol.sell.fullName)
-        let subtitle2 = String(format: "%.1f%% %@", percent, "will be burned".localized())
-        let title = NSMutableAttributedString(string: "\(subtitle1)\n\(subtitle2)")
+        var title: NSMutableAttributedString!
+        var subtitle2 = ""
+        if percent > 0 {
+            subtitle2 = String(format: "%.1f%% %@", percent, "will be burned".localized())
+            title = NSMutableAttributedString(string: "\(subtitle1)\n\(subtitle2)")
+        } else {
+            title = NSMutableAttributedString(string: subtitle1)
+        }
 
         let style = NSMutableParagraphStyle()
         style.alignment = .center
@@ -336,7 +342,8 @@ class WalletSendPointsVC: UIViewController {
         
         let amountEntered = CGFloat((text as NSString).floatValue)
         dataModel.transaction.amount = amountEntered
-        setSendButton(amount: amountEntered, percent: 0.1)
+        let isCMN = dataModel.transaction.symbol.sell == "CMN"
+        setSendButton(amount: amountEntered, percent: isCMN ? 0 : 0.1)
         pointsTextField.placeholder = String(format: "0 %@", dataModel.transaction.symbol.sell.fullName)
 
         sendPointsButton.isEnabled = dataModel.checkEnteredAmounts() && chooseFriendButton.isSelected
