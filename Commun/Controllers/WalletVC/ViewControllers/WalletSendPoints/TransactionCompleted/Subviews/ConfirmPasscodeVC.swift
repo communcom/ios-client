@@ -104,7 +104,7 @@ class ConfirmPasscodeVC: THPinViewController {
     }
     
     private func didShowVerifyButton(_ value: Bool) {
-        touchFaceIdButton.isHidden = !(context.biometryType == .touchID || context.biometryType == .faceID && value)
+        touchFaceIdButton.isHidden = !value
     }
     
     private func verificationSuccessful() {

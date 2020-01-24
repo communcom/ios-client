@@ -369,43 +369,39 @@ class WalletSendPointsVC: UIViewController {
     @objc func sendPointsButtonTapped(_ sender: UITapGestureRecognizer) {
         let confirmPasscodeVC = ConfirmPasscodeVC()
         present(confirmPasscodeVC, animated: true, completion: nil)
-//        (confirmPasscodeVC, sender: nil)
         
         confirmPasscodeVC.completion = {
-            print("User verify successfully!!!")
-        }
-        
-        /*
-        let numberValue = abs(dataModel.transaction.amount)
+            let numberValue = abs(self.dataModel.transaction.amount)
 
-        guard let friendID = dataModel.transaction.friend?.id, numberValue > 0 else { return }
+            guard let friendID = self.dataModel.transaction.friend?.id, numberValue > 0 else { return }
 
-        dataModel.transaction.operationDate = Date()
+            self.dataModel.transaction.operationDate = Date()
 
-        showIndetermineHudWithMessage("sending".localized().uppercaseFirst + " \(dataModel.transaction.symbol.sell.fullName.uppercased())")
+            self.showIndetermineHudWithMessage("sending".localized().uppercaseFirst + " \(self.dataModel.transaction.symbol.sell.fullName.uppercased())")
 
-        // FOR TEST
+            // FOR TEST
 //        let completedVC = TransactionCompletedVC(transaction: dataModel.transaction)
 //        show(completedVC, sender: nil)
-*/
-        
-        /*
-        BlockchainManager.instance.transferPoints(to: friendID, number: Double(numberValue), currency: dataModel.transaction.symbol.sell)
-            .flatMapCompletable { RestAPIManager.instance.waitForTransactionWith(id: $0) }
-            .subscribe(onCompleted: { [weak self] in
-                guard let strongSelf = self else { return }
+            //*/
+                    
+            ///*
+            BlockchainManager.instance.transferPoints(to: friendID, number: Double(numberValue), currency: self.dataModel.transaction.symbol.sell)
+                .flatMapCompletable { RestAPIManager.instance.waitForTransactionWith(id: $0) }
+                .subscribe(onCompleted: { [weak self] in
+                    guard let strongSelf = self else { return }
 
-                let completedVC = TransactionCompletedVC(transaction: strongSelf.dataModel.transaction)
-                strongSelf.show(completedVC, sender: nil)
-                strongSelf.hideHud()
-            }) { [weak self] error in
-                guard let strongSelf = self else { return }
-                
-                strongSelf.hideHud()
-                strongSelf.showError(error)
+                    let completedVC = TransactionCompletedVC(transaction: strongSelf.dataModel.transaction)
+                        strongSelf.show(completedVC, sender: nil)
+                        strongSelf.hideHud()
+                    }) { [weak self] error in
+                        guard let strongSelf = self else { return }
+                            
+                        strongSelf.hideHud()
+                        strongSelf.showError(error)
+                }
+                .disposed(by: disposeBag)
+                //*/
         }
-        .disposed(by: disposeBag)
-        */
     }
     
     @objc func viewTapped( _ sender: UITapGestureRecognizer) {
