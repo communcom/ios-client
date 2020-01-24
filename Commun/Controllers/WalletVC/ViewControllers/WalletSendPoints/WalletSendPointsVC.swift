@@ -8,12 +8,14 @@
 
 import UIKit
 import RxSwift
+import RxCocoa
 import CyberSwift
 import CircularCarousel
 
 class WalletSendPointsVC: UIViewController {
     // MARK: - Properties
     var dataModel: SendPointsModel
+    let disposeBag = DisposeBag()
     
     lazy var carouselView: CircularCarousel = {
         let carouselViewInstance = CircularCarousel(width: CGFloat.adaptive(width: 247.0), height: carouselHeight)
@@ -128,7 +130,7 @@ class WalletSendPointsVC: UIViewController {
     // MARK: - Class Functions
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+                
         dataModel.loadBalances { [weak self] success in
             guard let strongSelf = self else { return }
             
@@ -137,8 +139,6 @@ class WalletSendPointsVC: UIViewController {
                 strongSelf.addGesture()
             }
         }
-        
-        pointsTextField.delegate = self
         
         pointsToolbar.addCompletion = { [weak self] value in
             guard let strongSelf = self else { return }
@@ -149,6 +149,8 @@ class WalletSendPointsVC: UIViewController {
             strongSelf.clearPointsButton.isHidden = false
             strongSelf.updateSendInfoByEnteredPoints()
         }
+        
+        bind()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -175,6 +177,17 @@ class WalletSendPointsVC: UIViewController {
     
     
     // MARK: - Custom Functions
+    func bind() {
+        pointsTextField.delegate = self
+
+        pointsTextField.rx.text
+            .orEmpty
+            .subscribe(onNext: { value in 
+                self.updateSendInfoByEnteredPoints()
+            })
+            .disposed(by: disposeBag)
+    }
+
     func setupView() {
         let balanceContentView = UIView(width: CGFloat.adaptive(width: 375.0), height: CGFloat.adaptive(height: 300.0), backgroundColor: #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1), cornerRadius: 0.0)
         view.addSubview(balanceContentView)
@@ -389,17 +402,17 @@ class WalletSendPointsVC: UIViewController {
                 .flatMapCompletable { RestAPIManager.instance.waitForTransactionWith(id: $0) }
                 .subscribe(onCompleted: { [weak self] in
                     guard let strongSelf = self else { return }
-
+                    
                     let completedVC = TransactionCompletedVC(transaction: strongSelf.dataModel.transaction)
-                        strongSelf.show(completedVC, sender: nil)
-                        strongSelf.hideHud()
-                    }) { [weak self] error in
-                        guard let strongSelf = self else { return }
-                            
-                        strongSelf.hideHud()
-                        strongSelf.showError(error)
-                }
-                .disposed(by: disposeBag)
+                    strongSelf.show(completedVC, sender: nil)
+                    strongSelf.hideHud()
+                }) { [weak self] error in
+                    guard let strongSelf = self else { return }
+                    
+                    strongSelf.hideHud()
+                    strongSelf.showError(error)
+            }
+            .disposed(by: self.disposeBag)
                 //*/
         }
     }
@@ -415,39 +428,34 @@ extension WalletSendPointsVC: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
         clearPointsButton.isHidden = textField.text == ""
     }
-    
+
     func textFieldDidEndEditing(_ textField: UITextField) {
         clearPointsButton.isHidden = true
     }
-    
+
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         // TODO: - Add action
         textField.resignFirstResponder()
         return true
     }
-    
+
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         if let text = textField.text {
             guard CharacterSet(charactersIn: "0123456789.,").isSuperset(of: CharacterSet(charactersIn: string)) || string.isEmpty else { return false }
-            
+
             let countDots = (text + string).filter({$0 == "."}).count
             let countCommas = (text + string).filter({$0 == ","}).count
-                
+
             guard countDots + countCommas <= 1 else { return false }
 
             if (text.hasSuffix(".") || text.hasSuffix(",")) && (string == "." || string == ",") {
                 return false
             }
-            
+
             clearPointsButton.isHidden = text.count == 1 && string.isEmpty
         }
-                        
+
         return true
-    }
-    
-    // iOS 13
-    func textFieldDidChangeSelection(_ textField: UITextField) {
-        updateSendInfoByEnteredPoints()
     }
 }
 
