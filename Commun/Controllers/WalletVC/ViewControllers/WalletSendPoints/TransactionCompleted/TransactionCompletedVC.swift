@@ -28,8 +28,8 @@ class TransactionCompletedVC: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-        
     
+
     // MARK: - Class Functions
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -146,3 +146,4 @@ class TransactionCompletedVC: UIViewController {
         backToWallet()
     }
 }
+

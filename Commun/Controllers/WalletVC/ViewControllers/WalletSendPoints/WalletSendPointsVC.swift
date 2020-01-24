@@ -276,14 +276,8 @@ class WalletSendPointsVC: UIViewController {
     
     private func setSendButton(amount: CGFloat = 0.0, percent: CGFloat) {
         let subtitle1 = String(format: "%@: %@ %@", "send".localized().uppercaseFirst, Double(amount).currencyValueFormatted, dataModel.transaction.symbol.sell.fullName)
-        var title: NSMutableAttributedString!
-        var subtitle2 = ""
-        if percent > 0 {
-            subtitle2 = String(format: "%.1f%% %@", percent, "will be burned".localized())
-            title = NSMutableAttributedString(string: "\(subtitle1)\n\(subtitle2)")
-        } else {
-            title = NSMutableAttributedString(string: subtitle1)
-        }
+        let subtitle2 = String(format: "%.1f%% %@", percent, "will be burned".localized())
+        let title = NSMutableAttributedString(string: "\(subtitle1)\n\(subtitle2)")
 
         let style = NSMutableParagraphStyle()
         style.alignment = .center
@@ -342,8 +336,7 @@ class WalletSendPointsVC: UIViewController {
         
         let amountEntered = CGFloat((text as NSString).floatValue)
         dataModel.transaction.amount = amountEntered
-        let isCMN = dataModel.transaction.symbol.sell == "CMN"
-        setSendButton(amount: amountEntered, percent: isCMN ? 0 : 0.1)
+        setSendButton(amount: amountEntered, percent: 0.1)
         pointsTextField.placeholder = String(format: "0 %@", dataModel.transaction.symbol.sell.fullName)
 
         sendPointsButton.isEnabled = dataModel.checkEnteredAmounts() && chooseFriendButton.isSelected
@@ -374,16 +367,15 @@ class WalletSendPointsVC: UIViewController {
     }
 
     @objc func sendPointsButtonTapped(_ sender: UITapGestureRecognizer) {
-        // Route to Passcode scene
-        let passcodeVC = SetPasscodeVC(forTransactionConfirmation: true)
-        show(passcodeVC, sender: nil)
+        let confirmPasscodeVC = ConfirmPasscodeVC()
+        present(confirmPasscodeVC, animated: true, completion: nil)
+//        (confirmPasscodeVC, sender: nil)
         
-        passcodeVC.completion = {
-            print("XXX")
+        confirmPasscodeVC.completion = {
+            print("User verify successfully!!!")
         }
-
-
-/*
+        
+        /*
         let numberValue = abs(dataModel.transaction.amount)
 
         guard let friendID = dataModel.transaction.friend?.id, numberValue > 0 else { return }
@@ -391,11 +383,12 @@ class WalletSendPointsVC: UIViewController {
         dataModel.transaction.operationDate = Date()
 
         showIndetermineHudWithMessage("sending".localized().uppercaseFirst + " \(dataModel.transaction.symbol.sell.fullName.uppercased())")
-*/
+
         // FOR TEST
 //        let completedVC = TransactionCompletedVC(transaction: dataModel.transaction)
 //        show(completedVC, sender: nil)
-
+*/
+        
         /*
         BlockchainManager.instance.transferPoints(to: friendID, number: Double(numberValue), currency: dataModel.transaction.symbol.sell)
             .flatMapCompletable { RestAPIManager.instance.waitForTransactionWith(id: $0) }
@@ -413,7 +406,6 @@ class WalletSendPointsVC: UIViewController {
         }
         .disposed(by: disposeBag)
         */
-
     }
     
     @objc func viewTapped( _ sender: UITapGestureRecognizer) {
@@ -457,6 +449,7 @@ extension WalletSendPointsVC: UITextFieldDelegate {
         return true
     }
     
+    // iOS 13
     func textFieldDidChangeSelection(_ textField: UITextField) {
         updateSendInfoByEnteredPoints()
     }

@@ -399,3 +399,4 @@ class TransactionCompletedView: UIView {
         transactionCurrencyLabel.theme_textColor = amount > 0 ? softCyanLimeGreenColorPickers : blackWhiteColorPickers
     }
 }
+

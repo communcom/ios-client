@@ -175,6 +175,7 @@
 		ACFA282623AB8A00009B77A6 /* AnalyticsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACFA282523AB8A00009B77A6 /* AnalyticsManager.swift */; };
 		B170AC15228AFBDA00C6FFBC /* SignUpVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5797E0F9225DDA490026C4D5 /* SignUpVC.storyboard */; };
 		B17A970C228002440081B8E0 /* SignUpRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17A970B228002440081B8E0 /* SignUpRouter.swift */; };
+		B1A6573E23DB535000EB1824 /* ConfirmPasscodeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A6573B23DB535000EB1824 /* ConfirmPasscodeVC.swift */; };
 		B1A6EE5122D5C8E300A5D6F0 /* GoogleService-Info-Dev.plist in Resources */ = {isa = PBXBuildFile; fileRef = B1A6EE5022D5C8E100A5D6F0 /* GoogleService-Info-Dev.plist */; };
 		B1A8AC1B22E6FF5400032030 /* BlankButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A8AC1A22E6FF5400032030 /* BlankButton.swift */; };
 		B1C3712C2383D0F3000BAE2F /* ProfileEdit.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B1C3712A2383D0F2000BAE2F /* ProfileEdit.storyboard */; };
@@ -691,6 +692,7 @@
 		AE43B2305FC441D96462E0AB /* Pods-Commun.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Commun.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Commun/Pods-Commun.debug.xcconfig"; sourceTree = "<group>"; };
 		B12684EF22C1E56B0046C838 /* Commun.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Commun.entitlements; sourceTree = "<group>"; };
 		B17A970B228002440081B8E0 /* SignUpRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpRouter.swift; sourceTree = "<group>"; };
+		B1A6573B23DB535000EB1824 /* ConfirmPasscodeVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfirmPasscodeVC.swift; sourceTree = "<group>"; };
 		B1A6EE5022D5C8E100A5D6F0 /* GoogleService-Info-Dev.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-Dev.plist"; sourceTree = "<group>"; };
 		B1A8AC1A22E6FF5400032030 /* BlankButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlankButton.swift; sourceTree = "<group>"; };
 		B1C3712A2383D0F2000BAE2F /* ProfileEdit.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ProfileEdit.storyboard; sourceTree = "<group>"; };
@@ -1823,6 +1825,7 @@
 		B1F87FFB23D1C7170097DCA3 /* Subviews */ = {
 			isa = PBXGroup;
 			children = (
+				B1A6573B23DB535000EB1824 /* ConfirmPasscodeVC.swift */,
 				B1F87FFC23D1C7210097DCA3 /* TransactionCompletedView.swift */,
 			);
 			path = Subviews;
@@ -3128,6 +3131,7 @@
 				3B289B9C2346E7FC00598407 /* UIImage+PureLayout.swift in Sources */,
 				BC31BA55235EBD7C0007D89A /* ProfileVC.swift in Sources */,
 				BC4AD67423B314F2008546A4 /* WalletSellCommunVC.swift in Sources */,
+				B1A6573E23DB535000EB1824 /* ConfirmPasscodeVC.swift in Sources */,
 				BC6B7659236AE14500A7AF2A /* CommunityPageCell.swift in Sources */,
 				BC597A7E238CC53D00103F4F /* FTUECommunitiesVC.swift in Sources */,
 				BCE9390B234DBBC300226E39 /* ResponseAPIContentBlock.swift in Sources */,
