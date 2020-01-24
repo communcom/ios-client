@@ -17,6 +17,7 @@ class SetPasscodeVC: THPinViewController {
     var onBoarding = true
     var isVerifyVC = false
     
+    
     // MARK: - Class Initialization
     init() {
         super.init(delegate: nil)
@@ -26,6 +27,7 @@ class SetPasscodeVC: THPinViewController {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
     
     // MARK: - Class Functions
     override func viewWillAppear(_ animated: Bool) {
@@ -40,13 +42,13 @@ class SetPasscodeVC: THPinViewController {
             navigationController?.navigationBar.shadowImage = UIImage()
             navigationController?.navigationBar.layoutIfNeeded()
         }
-        
+     
         clear()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        
+       
         if currentPin == nil && onBoarding {
             navigationController?.setNavigationBarHidden(false, animated: animated)
         }
@@ -66,7 +68,7 @@ class SetPasscodeVC: THPinViewController {
             promptTitle = "enter your current passcode".localized().uppercaseFirst
         } else {
             promptTitle = (currentPin == nil ? "create your passcode" : "verify your new passcode").localized().uppercaseFirst
-            
+        
             if currentPin != nil {
                 self.setNavBarBackButton()
             }
@@ -76,6 +78,7 @@ class SetPasscodeVC: THPinViewController {
         view.tintColor = .black
     }
 }
+
 
 // NARK: - THPinViewControllerDelegate
 extension SetPasscodeVC: THPinViewControllerDelegate {
@@ -92,6 +95,7 @@ extension SetPasscodeVC: THPinViewControllerDelegate {
             show(verifyVC, sender: self)
             return true
         }
+    
         if pin == currentPin {
             do {
                 if !isVerifyVC {
@@ -105,6 +109,7 @@ extension SetPasscodeVC: THPinViewControllerDelegate {
                 return false
             }
         }
+        
         return pin == currentPin
     }
     
@@ -112,7 +117,5 @@ extension SetPasscodeVC: THPinViewControllerDelegate {
         return true
     }
     
-    func pinViewController(_ pinViewController: THPinViewController, didAddNumberToCurrentPin pin: String) {
-        print ("XXX")
-    }
+//    func pinViewController(_ pinViewController: THPinViewController, didAddNumberToCurrentPin pin: String) { }
 }

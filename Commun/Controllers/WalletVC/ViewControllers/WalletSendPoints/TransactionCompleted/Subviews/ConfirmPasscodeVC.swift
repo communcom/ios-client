@@ -5,6 +5,8 @@
 //  Created by Chung Tran on 10/07/2019.
 //  Copyright © 2019 Commun Limited. All rights reserved.
 //
+//  Apple recommends that you “Don’t reference Touch ID on a device that supports Face ID [and] don’t reference Face ID on a device that supports Touch ID”
+//
 
 import UIKit
 import CyberSwift
@@ -16,12 +18,9 @@ import RxSwift
 class ConfirmPasscodeVC: THPinViewController {
     // MARK: - Properties
     let currentPin: String = Config.currentUser?.passcode ?? "XXXX"
-    let buttonsView = UIView(frame: CGRect(origin: .zero, size: CGSize(width: CGFloat.adaptive(width: 50.0), height: CGFloat.adaptive(width: 50.0))))
     let closeButton = UIButton.circle(size: CGFloat.adaptive(width: 24.0), backgroundColor: #colorLiteral(red: 0.953, green: 0.961, blue: 0.98, alpha: 1), imageName: "icon-round-close-grey-default")
-    let buttonFaceID = UIButton(frame: CGRect(origin: .zero, size: CGSize(width: CGFloat.adaptive(width: 50.0), height: CGFloat.adaptive(width: 50.0))))
-    let buttonTouchID = UIButton(frame: CGRect(origin: .zero, size: CGSize(width: CGFloat.adaptive(width: 50.0), height: CGFloat.adaptive(width: 50.0))))
-    var deleteButton: UIButton = UIButton()
-    
+    let touchFaceIdButton = UIButton(frame: CGRect(origin: .zero, size: CGSize(width: CGFloat.adaptive(width: 50.0), height: CGFloat.adaptive(width: 50.0))))
+
     var error: NSError?
     var completion: (() -> Void)?
     let disposeBag = DisposeBag()
@@ -31,7 +30,6 @@ class ConfirmPasscodeVC: THPinViewController {
     // MARK: - Class Initialization
     init() {
         super.init(delegate: nil)
-        self.delegate = self
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -60,6 +58,10 @@ class ConfirmPasscodeVC: THPinViewController {
         view.tintColor = .black
         backgroundColor = .white
         modifyPromtTitle(asError: false)
+        
+        if !context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
+            showAlert(title: "info".localized().uppercaseFirst, message: "no biometry on your device".localized())
+        }
     }
     
     // MARK: - Custom Functions
@@ -69,27 +71,19 @@ class ConfirmPasscodeVC: THPinViewController {
         view.addSubview(closeButton)
         closeButton.autoPinTopAndTrailingToSuperView(inset: CGFloat.adaptive(height: 15.0), xInset: CGFloat.adaptive(width: 15.0))
         
-        // Add Face/Touch ID button
-        buttonFaceID.setImage(UIImage(named: "icon-face-id-grey-default"), for: .normal)
-        buttonFaceID.addTarget(self, action: #selector(faceIdButtonTapped), for: .touchUpInside)
-        
-        buttonTouchID.setImage(UIImage(named: "icon-touch-id-grey-default"), for: .normal)
-        buttonTouchID.addTarget(self, action: #selector(touchIdButtonTapped), for: .touchUpInside)
+        // Add Touch/Face ID button
+        let buttonImage = UIImage(named: context.biometryType == .faceID ? "icon-face-id-grey-default" : "icon-touch-id-grey-default" )
+        touchFaceIdButton.setImage(buttonImage, for: .normal)
+        touchFaceIdButton.addTarget(self, action: #selector(touchFaceIdButtonTapped), for: .touchUpInside)
         
         didShowVerifyButton(true)
         
         if let pinView = view.subviews.first as? THPinView, let pinNumPadView = pinView.subviews.first(where: { $0.isKind(of: THPinNumPadView.self )}),
             let deleteButton = pinView.subviews.first(where: { $0.isKind(of: UIButton.self )}) as? UIButton {
-            let buttonsStackView = UIStackView(arrangedSubviews: [buttonFaceID, buttonTouchID], axis: .horizontal, spacing: 0.0, alignment: .fill, distribution: .fill)
-            buttonsView.addSubview(buttonsStackView)
-            buttonsStackView.autoPinEdgesToSuperviewEdges()
-            
-            pinNumPadView.addSubview(buttonsView)
-            buttonsView.autoPinBottomAndTrailingToSuperView(inset: CGFloat.adaptive(height: 25.0 / 2), xInset: CGFloat.adaptive(width: 25.0 / 2))
-            
-            self.deleteButton = deleteButton
-            
-            self.deleteButton.rx.tap
+            pinNumPadView.addSubview(touchFaceIdButton)
+            touchFaceIdButton.autoPinBottomAndTrailingToSuperView(inset: CGFloat.adaptive(height: 25.0 / 2), xInset: CGFloat.adaptive(width: 25.0 / 2))
+                        
+            deleteButton.rx.tap
                 .bind {
                     self.didShowVerifyButton(deleteButton.isHidden)
             }
@@ -110,9 +104,7 @@ class ConfirmPasscodeVC: THPinViewController {
     }
     
     private func didShowVerifyButton(_ value: Bool) {
-        buttonsView.isHidden = !value
-        buttonFaceID.isHidden = false
-        buttonTouchID.isHidden = !context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error)
+        touchFaceIdButton.isHidden = !(context.biometryType == .touchID || context.biometryType == .faceID && value)
     }
     
     private func verificationSuccessful() {
@@ -126,17 +118,15 @@ class ConfirmPasscodeVC: THPinViewController {
         dismiss(animated: true, completion: nil)
     }
     
-    @objc func faceIdButtonTapped(_ sender: UIButton) {
-        print("FaceID button tapped")
-    }
-
-     @objc func touchIdButtonTapped(_ sender: UIButton) {
+     @objc func touchFaceIdButtonTapped(_ sender: UIButton) {
+        guard error == nil else { return }
+        
         let reason = "Identify yourself!"
-
-         context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reason) { [weak self] success, authenticationError in
+        
+        context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reason) { [weak self] success, authenticationError in
             guard let strongSelf = self else { return }
-
-             if success {
+            
+            if success {
                 DispatchQueue.main.async {
                     strongSelf.verificationSuccessful()
                 }
@@ -148,58 +138,29 @@ class ConfirmPasscodeVC: THPinViewController {
 }
 
 
-//// NARK: - THPinViewDelegate
-//extension ConfirmPasscodeVC: THPinViewDelegate {
-//    func pinView(_ pinView: THPinView, isPinValid pin: String) -> Bool {
-//        modifyPromtTitle(asError: false)
-//        didShowVerifyButton(deleteButton.isHidden)
-//        return pin == currentPin
-//    }
-//
-//    func pinLength(for pinView: THPinView) -> UInt {
-//        return 4
-//    }
-//
-//    func cancelButtonTapped(in pinView: THPinView) {
-//    }
-//
-//    func correctPinWasEntered(in pinView: THPinView) {
-//        verificationSuccessful()
-//    }
-//
-//    func incorrectPinWasEntered(in pinView: THPinView) {
-//        modifyPromtTitle(asError: true)
-//    }
-//
-//    func pinView(_ pinView: THPinView, didAddNumberToCurrentPin pin: String) {
-//        modifyPromtTitle(asError: false)
-//        didShowVerifyButton(pin.count == 0)
-//    }
-//}
-
-
-// MARK: - THPinViewControllerDelegate
-extension ConfirmPasscodeVC: THPinViewControllerDelegate {
-    func pinLength(for pinViewController: THPinViewController) -> UInt {
-        return 4
-    }
-
-    func incorrectPinEntered(in pinViewController: THPinViewController) {
-        modifyPromtTitle(asError: true)
-    }
-
-    func pinViewController(_ pinViewController: THPinViewController, isPinValid pin: String) -> Bool {
-        modifyPromtTitle(asError: false)
-        didShowVerifyButton(deleteButton.isHidden)
-        
+// NARK: - THPinViewDelegate
+extension ConfirmPasscodeVC: THPinViewDelegate {
+    func pinView(_ pinView: THPinView, isPinValid pin: String) -> Bool {
         return pin == currentPin
     }
 
-    func userCanRetry(in pinViewController: THPinViewController) -> Bool {
-        return true
+    func pinLength(for pinView: THPinView) -> UInt {
+        return 4
     }
 
-    func pinViewController(_ pinViewController: THPinViewController, didAddNumberToCurrentPin pin: String) {
-        print("XXX")
+    func cancelButtonTapped(in pinView: THPinView) {
+    }
+
+    func correctPinWasEntered(in pinView: THPinView) {
+        verificationSuccessful()
+    }
+
+    func incorrectPinWasEntered(in pinView: THPinView) {
+        modifyPromtTitle(asError: true)
+    }
+
+    func pinView(_ pinView: THPinView, didAddNumberToCurrentPin pin: String) {
+        modifyPromtTitle(asError: false)
+        didShowVerifyButton(pin.count == 0)
     }
 }
