@@ -400,10 +400,6 @@ class NetworkService: NSObject {
         return RestAPIManager.instance.getOnlineNotifyHistoryFresh()
     }
     
-    func markAllAsViewed() -> Single<ResponseAPIStatus> {
-        return RestAPIManager.instance.notifyMarkAllAsViewed()
-    }
-    
     // MARK: - Other
     func getEmbed(url: String) -> Single<ResponseAPIFrameGetEmbed> {
         return RestAPIManager.instance.getEmbed(url: url)

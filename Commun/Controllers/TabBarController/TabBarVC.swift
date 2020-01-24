@@ -213,6 +213,24 @@ class TabBarVC: UITabBarController {
         for item in unselectedItems {
             item.tintColor = unselectedColor
         }
+        
+        // markAllAsViewed
+        if let nc = selectedViewController as? BaseNavigationController,
+            let vc = nc.topViewController as? NotificationsPageVC
+        {
+            let vm = vc.viewModel as! NotificationsPageViewModel
+            vm.items
+                .filter {$0.count > 0}
+                .take(1)
+                .asSingle()
+                .subscribe(onSuccess: { (items) in
+                    guard let timestamp = items.first?.timestamp else {
+                        return
+                    }
+                    vm.markAllAsViewed(timestamp: timestamp)
+                })
+                .disposed(by: bag)
+        }
     }
     
     @objc func buttonAddTapped() {
@@ -248,16 +266,15 @@ class TabBarVC: UITabBarController {
         SocketManager.shared
             .unseenNotificationsRelay
             .subscribe(onNext: { (unseen) in
-                print("unseenCountRelay \(unseen)")
                 self.setNotificationRedMarkHidden(unseen == 0)
+                
+                if let nc = self.selectedViewController as? BaseNavigationController,
+                    let vc = nc.topViewController as? NotificationsPageVC
+                {
+                    let vm = vc.viewModel as? NotificationsPageViewModel
+                    vm?.markAllAsViewed(timestamp: Date().string())
+                }
             })
             .disposed(by: bag)
-        
-        // Get number of fresh notifications
-//        viewModel.getFreshCount()
-//            .asDriver(onErrorJustReturn: 0)
-//            .map {$0 > 0 ? "\($0)" : nil}
-//            .drive(tabBar.items!.first(where: {$0.tag == 4})!.rx.badgeValue)
-//            .disposed(by: bag)
     }
 }

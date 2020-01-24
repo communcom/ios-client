@@ -14,13 +14,14 @@ class NotificationsPageViewModel: ListViewModel<ResponseAPIGetNotificationItem> 
     var unseenCount: BehaviorRelay<UInt64> {
         SocketManager.shared.unseenNotificationsRelay
     }
+    var unseenTimestamp: String?
     
     init() {
         let filter = NotificationListFetcher.Filter(beforeThan: nil, filter: [])
         self.filter = BehaviorRelay<NotificationListFetcher.Filter>(value: filter)
         super.init(fetcher: NotificationListFetcher(filter: filter))
         defer {
-            bindFilter()
+            bind()
             observeNewNotifications()
             getStatus()
         }
@@ -31,7 +32,7 @@ class NotificationsPageViewModel: ListViewModel<ResponseAPIGetNotificationItem> 
         getStatus()
     }
     
-    func bindFilter() {
+    func bind() {
         filter.distinctUntilChanged()
             .subscribe(onNext: { filter in
                 self.fetcher.reset()
@@ -73,6 +74,18 @@ class NotificationsPageViewModel: ListViewModel<ResponseAPIGetNotificationItem> 
                 } else {
                     self.unseenCount.accept(unseenCount - UInt64(items.count))
                 }
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    func markAllAsViewed(timestamp: String) {
+        guard unseenTimestamp != timestamp,
+            unseenCount.value > 0
+        else {return}
+        self.unseenTimestamp = timestamp
+        RestAPIManager.instance.notificationsMarkAllAsViewed(until: timestamp)
+            .subscribe(onSuccess: {[weak self] (_) in
+                self?.unseenCount.accept(0)
             })
             .disposed(by: disposeBag)
     }
