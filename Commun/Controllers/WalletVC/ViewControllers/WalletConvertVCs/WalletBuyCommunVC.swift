@@ -156,19 +156,42 @@ class WalletBuyCommunVC: WalletConvertVC {
     override func convertButtonDidTouch() {
         super.convertButtonDidTouch()
         guard var balance = currentBalance,
+            var communBalance = communBalance,
             let value = NumberFormatter().number(from: leftTextField.text ?? "")?.doubleValue
         else {return}
+        
+        let expectedValue = NumberFormatter().number(from: rightTextField.text ?? "")?.doubleValue
+        
         showIndetermineHudWithMessage("selling".localized().uppercaseFirst + " \(balance.symbol)")
         BlockchainManager.instance.sellPoints(number: value, pointsCurrencyName: balance.symbol)
-            .flatMapCompletable {RestAPIManager.instance.waitForTransactionWith(id: $0)}
-            .subscribe(onCompleted: {
+            .flatMapCompletable({ (transactionId) -> Completable in
                 self.hideHud()
+                
+                if let expectedValue = expectedValue {
+                    let newValue = balance.balanceValue - value
+                    balance.balance = String(newValue)
+                    balance.isWaitingForTransaction = true
+                    balance.notifyChanged()
+                    
+                    let newCMNValue = communBalance.balanceValue + expectedValue
+                    communBalance.balance = String(newCMNValue)
+                    communBalance.isWaitingForTransaction = true
+                    communBalance.notifyChanged()
+                }
                 // TODO: - Show check
-                self.completion?()
                 self.back()
-            }) { (error) in
-                self.hideHud()
-                self.showError(error)
+                
+                return RestAPIManager.instance.waitForTransactionWith(id: transactionId)
+            })
+            .subscribe(onCompleted: {
+                balance.isWaitingForTransaction = false
+                balance.notifyChanged()
+                
+                communBalance.isWaitingForTransaction = false
+                communBalance.notifyChanged()
+            }) { [weak self] (error) in
+                self?.hideHud()
+                self?.showError(error)
             }
             .disposed(by: disposeBag)
     }

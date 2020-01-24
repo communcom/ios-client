@@ -217,9 +217,6 @@ class CommunWalletVC: TransferHistoryVC {
     
     @objc func convertButtonDidTouch() {
         guard let vc = createConvertVC() else {return}
-        vc.completion = {
-            self.viewModel.reload()
-        }
         let nc = navigationController as? BaseNavigationController
         nc?.shouldResetNavigationBarOnPush = false
         show(vc, sender: nil)
