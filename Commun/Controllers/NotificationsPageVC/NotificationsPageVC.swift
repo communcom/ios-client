@@ -19,6 +19,7 @@ class NotificationsPageVC: ListViewController<ResponseAPIGetNotificationItem, No
     private lazy var largeTitleLabel = UILabel.with(text: title, textSize: 30, weight: .bold)
     private lazy var newNotificationsCountLabel = UILabel.with(text: "", textSize: 12, weight: .regular, textColor: .a5a7bd)
     private var headerViewHeightConstraint: NSLayoutConstraint?
+    private var headerViewHeight: CGFloat = 0
     
     // MARK: - Initializers
     init() {
@@ -41,21 +42,25 @@ class NotificationsPageVC: ListViewController<ResponseAPIGetNotificationItem, No
         return tableView
     }
     
-    // MARK: - Methods
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: animated)
     }
     
-    override func setUp() {
-        super.setUp()
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        let height = headerView.height
+        if headerViewHeight == 0 {
+            tableView.contentInset.top = height
+            headerViewHeight = height
+            scrollToTop()
+        }
+    }
+    
+    override func viewWillSetUpTableView() {
+        super.viewWillSetUpTableView()
         title = "notifications".localized().uppercaseFirst
         view.backgroundColor = .white
-        
-        tableView.backgroundColor = .f3f5fa
-        tableView.separatorStyle = .none
-        tableView.contentInset.top = headerViewMaxHeight
-        tableView.tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: CGFloat.leastNormalMagnitude, height: CGFloat.leastNormalMagnitude))
         
         // headerView
         headerView.clipsToBounds = true
@@ -75,14 +80,26 @@ class NotificationsPageVC: ListViewController<ResponseAPIGetNotificationItem, No
         newNotificationsCountLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
         newNotificationsCountLabel.autoPinEdge(toSuperviewEdge: .bottom, withInset: 12)
         
-        // setupHeader
         smallTitleLabel.isHidden = true
         headerView.addShadow(ofColor: .shadow, radius: 16, offset: CGSize(width: 0, height: 6), opacity: 0)
+    }
+    
+    override func setUpTableView() {
+        super.setUpTableView()
+        tableView.backgroundColor = .f3f5fa
+        tableView.separatorStyle = .none
+        tableView.tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: CGFloat.leastNormalMagnitude, height: CGFloat.leastNormalMagnitude))
+    }
+    
+    override func viewDidSetUpTableView() {
+        super.viewDidSetUpTableView()
+        view.bringSubviewToFront(headerView)
     }
     
     override func bind() {
         super.bind()
         tableView.rx.contentOffset.map {$0.y}
+            .skip(2)
             .subscribe(onNext: { (y) in
                 if y >= -self.headerViewMinHeight {
                     if self.headerViewHeightConstraint?.constant == self.headerViewMinHeight {return}
