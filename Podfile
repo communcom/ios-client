@@ -50,7 +50,7 @@ def common_pods_commun
   
   pod 'QRCodeReaderViewController', '~> 4.0.2'
   
-  pod 'THPinViewController', :git => "https://github.com/bigearsenal/THPinViewController.git", :branch => "commun"
+  pod 'THPinViewController', :git => "https://github.com/communcom/THPinViewController.git", :branch => "commun"
   
   pod 'ImageViewer.swift'
   pod 'SDURLCache', '~> 1.3'

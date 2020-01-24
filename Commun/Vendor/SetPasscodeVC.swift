@@ -170,7 +170,6 @@ class SetPasscodeVC: THPinViewController {
     }
 }
 
-
 // MARK: - THPinViewControllerDelegate
 extension SetPasscodeVC: THPinViewControllerDelegate {
     func pinLength(for pinViewController: THPinViewController) -> UInt {
@@ -181,10 +180,9 @@ extension SetPasscodeVC: THPinViewControllerDelegate {
         modifyPromtTitle(asError: true)
     }
     
-//    func pinViewController(_ pinViewController: THPinViewController, didAddNumberToCurrentPin pin: String) {
-//        modifyPromtTitle(asError: false)
-//        didShowVerifyButton(pin.count == 0)
-//    }
+    func pinViewController(_ pinViewController: THPinViewController, didAddNumberToCurrentPin pin: String) {
+        
+    }
     
     func pinViewController(_ pinViewController: THPinViewController, isPinValid pin: String) -> Bool {
         if currentPin == nil {
