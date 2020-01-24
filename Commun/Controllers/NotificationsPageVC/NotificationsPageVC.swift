@@ -75,7 +75,9 @@ class NotificationsPageVC: ListViewController<ResponseAPIGetNotificationItem, No
         newNotificationsCountLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
         newNotificationsCountLabel.autoPinEdge(toSuperviewEdge: .bottom, withInset: 12)
         
+        // setupHeader
         smallTitleLabel.isHidden = true
+        headerView.addShadow(ofColor: .shadow, radius: 16, offset: CGSize(width: 0, height: 6), opacity: 0)
     }
     
     override func bind() {
@@ -88,18 +90,21 @@ class NotificationsPageVC: ListViewController<ResponseAPIGetNotificationItem, No
                     self.largeTitleLabel.isHidden = true
                     self.newNotificationsCountLabel.isHidden = true
                     self.smallTitleLabel.isHidden = false
+                    self.headerView.shadowOpacity = 0.05
                 } else if y <= -self.headerViewMaxHeight {
                     if self.headerViewHeightConstraint?.constant == self.headerViewMaxHeight {return}
                     self.headerViewHeightConstraint?.constant = self.headerViewMaxHeight
                     self.largeTitleLabel.isHidden = false
                     self.newNotificationsCountLabel.isHidden = false
                     self.smallTitleLabel.isHidden = true
+                    self.headerView.shadowOpacity = 0
                 } else {
                     if self.headerViewHeightConstraint?.constant == abs(y) {return}
                     self.headerViewHeightConstraint?.constant = abs(y)
                     self.largeTitleLabel.isHidden = false
                     self.newNotificationsCountLabel.isHidden = false
                     self.smallTitleLabel.isHidden = true
+                    self.headerView.shadowOpacity = 0
                 }
             })
             .disposed(by: disposeBag)

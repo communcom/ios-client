@@ -38,6 +38,7 @@ class NotificationCell: MyTableViewCell, ListItemCellType {
         contentView.bottomAnchor.constraint(greaterThanOrEqualTo: avatarImageView.bottomAnchor, constant: 16)
             .isActive = true
         
+        iconImageView.contentMode = .scaleAspectFill
         contentView.addSubview(iconImageView)
         iconImageView.autoPinEdge(.trailing, to: .trailing, of: avatarImageView, withOffset: 4)
         iconImageView.autoPinEdge(.bottom, to: .bottom, of: avatarImageView, withOffset: 4)
