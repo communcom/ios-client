@@ -347,11 +347,10 @@ class WalletSendPointsVC: UIViewController {
     }
     
     private func updateSendInfoByEnteredPoints() {
-//        guard let text = pointsTextField.text?.replacingOccurrences(of: ",", with: ".") else { return }
+        guard let text = pointsTextField.text?.replacingOccurrences(of: ",", with: ".") else { return }
         
-//        let amountEntered = dataModel.transaction.amount
-        //CGFloat((text as NSString).floatValue)
-//        dataModel.transaction.amount = amountEntered
+        let amountEntered = CGFloat(text.toDouble())
+        dataModel.transaction.amount = amountEntered
         setSendButton(amount: dataModel.transaction.amount, percent: 0.1)
         pointsTextField.placeholder = String(format: "0 %@", dataModel.transaction.symbol.sell.fullName)
 
