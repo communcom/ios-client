@@ -54,8 +54,8 @@ class WalletSendPointsVC: UIViewController {
         return balanceCurrencyLabelInstance
     }()
 
-    // Recipient
-    var friendAvatarImageView: UIImageView = UIImageView.circle(size: CGFloat.adaptive(width: 40.0), imageName: "tux")
+    // Friend
+    var friendAvatarImageView = UIView.createCircleCommunLogo(side: CGFloat.adaptive(height: 40.0))
     
     let friendNameLabel: UILabel = UILabel(text: "select user".localized().uppercaseFirst,
                                                 font: .systemFont(ofSize: CGFloat.adaptive(width: 15.0), weight: .semibold),
@@ -327,10 +327,9 @@ class WalletSendPointsVC: UIViewController {
 
         if let friendName = dataModel.transaction.friend?.name {
             friendNameLabel.text = friendName
-            friendAvatarImageView.setAvatar(urlString: dataModel.transaction.friend?.avatarURL, namePlaceHolder: friendName)
+            friendAvatarImageView.addCircleImage(byURL: dataModel.transaction.friend?.avatarURL, withPlaceholderName: friendName, andSide: CGFloat.adaptive(height: 40.0))
         } else {
             friendNameLabel.text = "select user".localized().uppercaseFirst
-            friendAvatarImageView = UIImageView.circle(size: CGFloat.adaptive(width: 40.0), imageName: "tux")
         }
     }
 
