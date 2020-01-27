@@ -29,7 +29,7 @@ extension PostCell {
     }
 
     @objc func shareButtonTapped(button: UIButton) {
-        guard let post = post else {return}
+        guard let post = post else { return }
         ShareHelper.share(post: post)
     }
     
@@ -38,5 +38,11 @@ extension PostCell {
         let postPageVC = PostPageVC(post: post)
         postPageVC.scrollToTopAfterLoadingComment = true
         parentViewController?.show(postPageVC, sender: nil)
+    }
+    
+    @objc func stateButtonTapped(_ sender: UIButton) {
+        guard let post = post else { return }
+        
+        print(sender.tag)
     }
 }
