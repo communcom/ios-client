@@ -254,7 +254,7 @@ class CommunWalletVC: TransferHistoryVC {
         let walletSendPointsVC = WalletSendPointsVC(withSelectedBalanceSymbol: headerView.sendButton.accessibilityHint ?? Config.defaultSymbol, andUser: user)
         show(walletSendPointsVC, sender: nil)
         setTabBarHidden(true)
-        
+
         hideHud()
     }
     

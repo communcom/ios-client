@@ -122,6 +122,7 @@ class WalletSendPointsVC: UIViewController {
         }
 
         super.init(nibName: nil, bundle: nil)
+        view.backgroundColor = .clear
     }
 
     required init?(coder: NSCoder) {
@@ -157,7 +158,7 @@ class WalletSendPointsVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
+        
         setupNavBar()
         setNeedsStatusBarAppearanceUpdate()
     }
@@ -173,7 +174,6 @@ class WalletSendPointsVC: UIViewController {
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         
-        view.backgroundColor = .clear //#colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1)
         pointsToolbar.frame.size = CGSize(width: CGFloat.adaptive(width: 375.0), height: CGFloat.adaptive(height: 50.0))
     }
     
@@ -274,13 +274,14 @@ class WalletSendPointsVC: UIViewController {
     
     
     // MARK: - Custom Functions
-    private func setupNavBar() {
+    func setupNavBar() {
         title = "send points".localized()
         setLeftNavBarButtonForGoingBack(tintColor: .white)
         navigationController?.navigationBar.tintColor = .white
         navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1)
-        navigationController?.navigationBar.isTranslucent = false
+        navigationController?.navigationBar.isTranslucent = true
         navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
+        navigationController?.tabBarController?.view.backgroundColor = #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1)
     }
     
     private func setup(borderedView: UIView) {
