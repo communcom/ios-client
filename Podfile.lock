@@ -155,7 +155,7 @@ PODS:
   - SwiftyGif (5.2.0)
   - SwiftyJSON (4.3.0)
   - Swinject (2.7.1)
-  - THPinViewController (1.2.6)
+  - THPinViewController (1.2.8)
   - TLPhotoPicker (2.0.7)
   - "UITextView+Placeholder (1.3.3)"
 
@@ -205,7 +205,7 @@ DEPENDENCIES:
   - SwiftyGif
   - SwiftyJSON (~> 4.0)
   - Swinject
-  - THPinViewController (from `https://github.com/bigearsenal/THPinViewController.git`, branch `commun`)
+  - THPinViewController (from `https://github.com/communcom/THPinViewController.git`, branch `commun`)
   - TLPhotoPicker
   - "UITextView+Placeholder"
 
@@ -278,7 +278,7 @@ EXTERNAL SOURCES:
     :git: https://github.com/communcom/SubviewAttachingTextView.git
   THPinViewController:
     :branch: commun
-    :git: https://github.com/bigearsenal/THPinViewController.git
+    :git: https://github.com/communcom/THPinViewController.git
 
 CHECKOUT OPTIONS:
   eosswift:
@@ -291,8 +291,8 @@ CHECKOUT OPTIONS:
     :commit: 141dcc300ee804e5d11f27fa9e685dc91889c262
     :git: https://github.com/communcom/SubviewAttachingTextView.git
   THPinViewController:
-    :commit: 3a9214d337cb96e6491325f8e0a72e50d62fc210
-    :git: https://github.com/bigearsenal/THPinViewController.git
+    :commit: 70354d5f437b5fa385c2753fb420d3f42e06c680
+    :git: https://github.com/communcom/THPinViewController.git
 
 SPEC CHECKSUMS:
   Action: 689181e4c3f6566844178d8a7da6fef39a9597fc
@@ -353,10 +353,10 @@ SPEC CHECKSUMS:
   SwiftyGif: b85c6b33a9411859d9e1db998b6a8214aea942df
   SwiftyJSON: 6faa0040f8b59dead0ee07436cbf76b73c08fd08
   Swinject: ddf78b8486dd9b71a667b852cad919ab4484478e
-  THPinViewController: e0dc717a61c8a0a0f251764da26b9ca8a4fd2ec1
+  THPinViewController: 7c8df68f412ca0b3fa42a84848c382bc343372f3
   TLPhotoPicker: 04e4ef38b31ee51388058c3e1e7bbdbd79614cef
   "UITextView+Placeholder": c407b27599ea23cca425946fee3cf1db5d547008
 
-PODFILE CHECKSUM: 70f70c1b731f3ac99bedc4814c08f78a9562ec51
+PODFILE CHECKSUM: b502861030e0b8b3f4cead801beaacd6e11dbaae
 
-COCOAPODS: 1.8.4
+COCOAPODS: 1.9.0.beta.2
