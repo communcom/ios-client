@@ -117,8 +117,9 @@ class TransactionCompletedVC: UIViewController {
     }
     
     private func backToWallet() {
-        if let walletVC = navigationController?.viewControllers.filter({ $0 is CommunWalletVC }).first {
+        if let walletVC = navigationController?.viewControllers.filter({ $0 is CommunWalletVC }).first as? CommunWalletVC {
             navigationController?.popToViewController(walletVC, animated: true)
+            walletVC.viewModel.reload()
         }
     }
     

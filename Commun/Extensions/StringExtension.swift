@@ -99,4 +99,17 @@ extension String {
             }
         }
     }
+    
+    func toDouble() -> Double {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.locale = Locale(identifier: "en")
+        formatter.usesGroupingSeparator = false
+        
+        if let result = formatter.number(from: self.replacingOccurrences(of: " ", with: "").replacingOccurrences(of: ".", with: ","))?.doubleValue {
+            return result
+        } else {
+            return 0
+        }
+    }
 }

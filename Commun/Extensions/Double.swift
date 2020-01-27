@@ -24,9 +24,10 @@ extension Double {
     
     var currencyValueFormatted: String {
         let formatter = NumberFormatter()
-        formatter.usesGroupingSeparator = true
         formatter.groupingSize = 3
         formatter.numberStyle = .decimal
+        formatter.usesGroupingSeparator = true
+        formatter.locale = Locale(identifier: "ru")
         formatter.maximumFractionDigits = (self < 1000) ? 4 : 2
         
         return formatter.string(from: self as NSNumber) ?? "0"

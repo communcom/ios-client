@@ -9,11 +9,11 @@
 import UIKit
 
 let inset: CGFloat = CGFloat.adaptive(width: 20.0)
-let titles: [CGFloat] = [1_000, 10_000, 100_000, 1_000_000]
+let titles: [CGFloat] = [1000, 10000, 100000, 1000000]
 
 class CMToolbarView: UIView {
     // MARK: - Properties
-    var addCompletion: ((CGFloat) -> ())?
+    var addCompletion: ((CGFloat) -> Void)?
     
     var scrollView: UIScrollView = {
         let scrollViewInstance = UIScrollView()

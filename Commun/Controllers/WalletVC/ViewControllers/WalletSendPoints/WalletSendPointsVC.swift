@@ -17,6 +17,8 @@ class WalletSendPointsVC: UIViewController {
     var dataModel: SendPointsModel
     let disposeBag = DisposeBag()
     
+    var enteredAmount: CGFloat = 0.0
+    
     lazy var carouselView: CircularCarousel = {
         let carouselViewInstance = CircularCarousel(width: CGFloat.adaptive(width: 247.0), height: carouselHeight)
         carouselViewInstance.delegate = self
@@ -143,9 +145,9 @@ class WalletSendPointsVC: UIViewController {
         pointsToolbar.addCompletion = { [weak self] value in
             guard let strongSelf = self else { return }
             
-            let newAmount = value + strongSelf.dataModel.transaction.amount
-            strongSelf.dataModel.transaction.amount = newAmount
-            strongSelf.pointsTextField.text = String(Double(newAmount).currencyValueFormatted)
+            strongSelf.enteredAmount = value + strongSelf.dataModel.transaction.amount
+            strongSelf.dataModel.transaction.amount = strongSelf.enteredAmount
+            strongSelf.pointsTextField.text = String(Double(strongSelf.enteredAmount).currencyValueFormatted)
             strongSelf.clearPointsButton.isHidden = false
             strongSelf.updateSendInfoByEnteredPoints()
         }
@@ -182,7 +184,8 @@ class WalletSendPointsVC: UIViewController {
 
         pointsTextField.rx.text
             .orEmpty
-            .subscribe(onNext: { value in 
+            .subscribe(onNext: { value in
+                self.dataModel.transaction.amount = CGFloat(value.toDouble())
                 self.updateSendInfoByEnteredPoints()
             })
             .disposed(by: disposeBag)
@@ -344,11 +347,12 @@ class WalletSendPointsVC: UIViewController {
     }
     
     private func updateSendInfoByEnteredPoints() {
-        guard let text = pointsTextField.text?.replacingOccurrences(of: ",", with: ".") else { return }
+//        guard let text = pointsTextField.text?.replacingOccurrences(of: ",", with: ".") else { return }
         
-        let amountEntered = CGFloat((text as NSString).floatValue)
-        dataModel.transaction.amount = amountEntered
-        setSendButton(amount: amountEntered, percent: 0.1)
+//        let amountEntered = dataModel.transaction.amount
+        //CGFloat((text as NSString).floatValue)
+//        dataModel.transaction.amount = amountEntered
+        setSendButton(amount: dataModel.transaction.amount, percent: 0.1)
         pointsTextField.placeholder = String(format: "0 %@", dataModel.transaction.symbol.sell.fullName)
 
         sendPointsButton.isEnabled = dataModel.checkEnteredAmounts() && chooseFriendButton.isSelected
