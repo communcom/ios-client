@@ -37,6 +37,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     let notificationCenter = UNUserNotificationCenter.current()
     let notificationRelay = BehaviorRelay<ResponseAPIGetNotificationItem>(value: ResponseAPIGetNotificationItem.empty)
     
+    let deepLinkPath = BehaviorRelay<[String]>(value: [])
+    
     private var bag = DisposeBag()
 
     private func configureFirebase() {
@@ -514,5 +516,19 @@ extension AppDelegate: MessagingDelegate {
 
     func messaging(_ messaging: Messaging, didReceive remoteMessage: MessagingRemoteMessage) {
         Logger.log(message: "Received data message: \(remoteMessage.appData)", event: .severe)
+    }
+}
+
+// MARK: - Deeplink
+extension AppDelegate {
+    func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
+        if let url = userActivity.webpageURL {
+            let path = Array(url.path.components(separatedBy: "/").dropFirst())
+            if path.count == 1 || path.count == 3 {
+                deepLinkPath.accept(path)
+                return true
+            }
+        }
+        return false
     }
 }

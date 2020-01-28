@@ -19,6 +19,7 @@ class PostsListFetcher: ListFetcher<ResponseAPIContentGetPost> {
         var searchKey: String?
         var userId: String?
         var communityId: String?
+        var communityAlias: String?
         
         func newFilter(
             withFeedTypeMode feedTypeMode: FeedTypeMode? = nil,
@@ -26,7 +27,8 @@ class PostsListFetcher: ListFetcher<ResponseAPIContentGetPost> {
             sortType: FeedTimeFrameMode? = nil,
             searchKey: String? = nil,
             userId: String? = nil,
-            communityId: String? = nil
+            communityId: String? = nil,
+            communityAlias: String? = nil
         ) -> Filter {
             var newFilter = self
             if let feedTypeMode = feedTypeMode,
@@ -56,6 +58,12 @@ class PostsListFetcher: ListFetcher<ResponseAPIContentGetPost> {
                 newFilter.communityId = communityId
             }
             
+            if let alias = communityAlias,
+                communityAlias != newFilter.communityAlias
+            {
+                newFilter.communityAlias = alias
+            }
+            
             return newFilter
         }
     }
@@ -70,7 +78,7 @@ class PostsListFetcher: ListFetcher<ResponseAPIContentGetPost> {
     override var request: Single<[ResponseAPIContentGetPost]> {
 //        return ResponseAPIContentGetPosts.singleWithMockData()
 //            .delay(0.8, scheduler: MainScheduler.instance)
-        return RestAPIManager.instance.getPosts(userId: filter.userId, communityId: filter.communityId, allowNsfw: false, type: filter.feedTypeMode, sortBy: filter.feedType, sortType: filter.sortType, limit: limit, offset: offset)
+        return RestAPIManager.instance.getPosts(userId: filter.userId, communityId: filter.communityId, communityAlias: filter.communityAlias, allowNsfw: false, type: filter.feedTypeMode, sortBy: filter.feedType, sortType: filter.sortType, limit: limit, offset: offset)
         .map {$0.items ?? []}
     }
     
