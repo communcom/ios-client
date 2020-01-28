@@ -522,9 +522,7 @@ extension AppDelegate: MessagingDelegate {
 
 // MARK: - Deeplink
 extension AppDelegate {
-    public func application(_ application: UIApplication,
-                            continue userActivity: NSUserActivity,
-                            restorationHandler: @escaping ([Any]?) -> Void) -> Bool {
+    func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
         if let url = userActivity.webpageURL {
             let path = Array(url.path.components(separatedBy: "/").dropFirst())
             if path.count == 1 || path.count == 3 {

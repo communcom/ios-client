@@ -212,6 +212,15 @@ extension UIViewController {
         show(communityVC, sender: nil)
     }
     
+    func showCommunityWithCommunityAlias(_ alias: String) {
+        if let vc = self as? CommunityPageVC, vc.communityAlias == alias {
+            vc.view.shake()
+            return
+        }
+        let communityVC = CommunityPageVC(communityAlias: alias)
+        show(communityVC, sender: nil)
+    }
+    
     // MARK: - ChildVC
     func add(_ child: UIViewController, to view: UIView? = nil) {
         addChild(child)
