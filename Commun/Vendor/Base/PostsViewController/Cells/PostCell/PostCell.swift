@@ -17,7 +17,7 @@ class PostCell: MyTableViewCell, ListItemCellType {
     
     // MARK: - Subviews
     private func createDescriptionLabel() -> UILabel {
-        UILabel.with(textSize: CGFloat.adaptive(width: 12.0), weight: .medium, textColor: UIColor(hexString: "#A5A7BD")!, numberOfLines: 1)
+        UILabel.with(textSize: CGFloat.adaptive(width: 12.0), weight: .medium, textColor: #colorLiteral(red: 0.6470588235, green: 0.6549019608, blue: 0.7411764706, alpha: 1), numberOfLines: 1)
     }
     
     lazy var metaView: PostMetaView = {
@@ -33,7 +33,7 @@ class PostCell: MyTableViewCell, ListItemCellType {
                                                  label: ((arc4random_uniform(2) == 0) ? "top" : "550.30").localized().uppercaseFirst,
                                                  labelFont: UIFont.systemFont(ofSize: CGFloat.adaptive(width: 12.0), weight: .semibold),
                                                  backgroundColor: #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1),
-                                                 textColor: #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1),
+                                                 textColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1),
                                                  cornerRadius: CGFloat.adaptive(height: 30.0) / 2,
                                                  contentInsets: nil)
         
@@ -44,11 +44,6 @@ class PostCell: MyTableViewCell, ListItemCellType {
                                                                    bottom: CGFloat.adaptive(height: 5.0),
                                                                    right: CGFloat.adaptive(width: 5.0))
         
-//        stateActionButtonInstance.imageEdgeInsets = UIEdgeInsets(top: CGFloat.adaptive(height: 0.0),
-//                                                                 left: CGFloat.adaptive(width: 0.0),
-//                                                                 bottom: CGFloat.adaptive(height: 0.0),
-//                                                                 right: CGFloat.adaptive(width: 10.0))
-//
         stateActionButtonInstance.titleEdgeInsets = UIEdgeInsets(top: CGFloat.adaptive(height: 0.0),
                                                                  left: CGFloat.adaptive(width: 5.0),
                                                                  bottom: CGFloat.adaptive(height: 0.0),
@@ -76,34 +71,43 @@ class PostCell: MyTableViewCell, ListItemCellType {
     lazy var sharesCountLabel = self.createDescriptionLabel()
     
     lazy var shareButton: UIButton = {
-        let button = UIButton(width: 20, height: 18)
-        button.setImage(UIImage(named: "share-count"), for: .normal)
-        button.addTarget(self, action: #selector(shareButtonTapped(button:)), for: .touchUpInside)
-        button.touchAreaEdgeInsets = UIEdgeInsets(top: -11, left: -13, bottom: -11, right: -13)
+        let shareButtonInstance = UIButton(width: CGFloat.adaptive(width: 20.0), height: CGFloat.adaptive(height: 18.0))
+        shareButtonInstance.setImage(UIImage(named: "share-count"), for: .normal)
+        shareButtonInstance.addTarget(self, action: #selector(shareButtonTapped(button:)), for: .touchUpInside)
+        shareButtonInstance.touchAreaEdgeInsets = UIEdgeInsets(top: CGFloat.adaptive(height: -11.0),
+                                                               left: CGFloat.adaptive(width: -13.0),
+                                                               bottom: CGFloat.adaptive(height: -11.0),
+                                                               right: CGFloat.adaptive(width: -13.0))
         
-        return button
+        return shareButtonInstance
     }()
     
     // Number of views
     lazy var viewsCountLabel = self.createDescriptionLabel()
    
     lazy var viewsCountButton: UIButton = {
-        let button = UIButton(width: 24, height: 16)
-        button.setImage(UIImage(named: "icon-views-count-gray-default"), for: .normal)
-        button.touchAreaEdgeInsets = UIEdgeInsets(top: -14, left: -10, bottom: -14, right: -10)
+        let viewsCountButtonInstance = UIButton(width: CGFloat.adaptive(width: 24.0), height: CGFloat.adaptive(height: 16.0))
+        viewsCountButtonInstance.setImage(UIImage(named: "icon-views-count-gray-default"), for: .normal)
+        viewsCountButtonInstance.touchAreaEdgeInsets = UIEdgeInsets(top: CGFloat.adaptive(height: -14.0),
+                                                                    left: CGFloat.adaptive(width: -10.0),
+                                                                    bottom: CGFloat.adaptive(height: -14.0),
+                                                                    right: CGFloat.adaptive(width: -10.0))
         
-        return button
+        return viewsCountButtonInstance
     }()
 
     // Number of comments
     lazy var commentsCountLabel = self.createDescriptionLabel()
     
     lazy var commentsCountButton: UIButton = {
-        let button = UIButton(width: 20, height: 18)
-        button.setImage(UIImage(named: "comment-count"), for: .normal)
-        button.touchAreaEdgeInsets = UIEdgeInsets(top: -11, left: -13, bottom: -11, right: -13)
-        
-        return button
+        let commentsCountButtonInstance = UIButton(width: CGFloat.adaptive(width: 20.0), height: CGFloat.adaptive(height: 18.0))
+        commentsCountButtonInstance.setImage(UIImage(named: "comment-count"), for: .normal)
+        commentsCountButtonInstance.touchAreaEdgeInsets = UIEdgeInsets(top: CGFloat.adaptive(height: -11.0),
+                                                                       left: CGFloat.adaptive(width: -13.0),
+                                                                       bottom: CGFloat.adaptive(height: -11.0),
+                                                                       right: CGFloat.adaptive(width: -13.0))
+
+        return commentsCountButtonInstance
     }()
     
     
@@ -113,18 +117,25 @@ class PostCell: MyTableViewCell, ListItemCellType {
         
         selectionStyle = .none
         
+        // Meta view
+        contentView.addSubview(metaView)
+        metaView.autoPinEdge(toSuperviewEdge: .top, withInset: CGFloat.adaptive(height: 16.0))
+        metaView.autoPinEdge(toSuperviewEdge: .leading, withInset: CGFloat.adaptive(width: 16.0))
+
         // state & moreAction buttons
-        let actionButtonsStackView = UIStackView(axis: .horizontal, spacing: CGFloat.adaptive(width: 8.0))
+        let actionButtonsStackView = UIStackView(axis: .horizontal, spacing: CGFloat.adaptive(width: 0.0))
         actionButtonsStackView.alignment = .fill
         actionButtonsStackView.distribution = .fillProportionally
-        
+
         let width = stateActionButton.intrinsicContentSize.width + 15.0
         stateActionButton.widthAnchor.constraint(equalToConstant: width).isActive = true
-        actionButtonsStackView.addArrangedSubviews([metaView, stateActionButton, moreActionButton])
-        
+        actionButtonsStackView.addArrangedSubviews([stateActionButton, moreActionButton])
+
         contentView.addSubview(actionButtonsStackView)
-        actionButtonsStackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(horizontal: CGFloat.adaptive(width: 15.0), vertical: CGFloat.adaptive(height: 15.0)))
-        
+        actionButtonsStackView.autoPinTopAndTrailingToSuperView(inset: CGFloat.adaptive(height: 21.0), xInset: CGFloat.adaptive(width: 4.0))
+
+        metaView.autoPinEdge(.trailing, to: .leading, of: actionButtonsStackView, withOffset: CGFloat.adaptive(width: 0.0))
+
         // action buttons
         contentView.addSubview(voteContainerView)
         voteContainerView.autoPinEdge(toSuperviewEdge: .leading, withInset: CGFloat.adaptive(width: 16.0))
@@ -134,16 +145,16 @@ class PostCell: MyTableViewCell, ListItemCellType {
 
         // Shares
         contentView.addSubview(shareButton)
-        shareButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
+        shareButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: CGFloat.adaptive(width: 16.0))
         shareButton.autoAlignAxis(.horizontal, toSameAxisOf: voteContainerView)
 
         // Comments
         contentView.addSubview(commentsCountLabel)
-        commentsCountLabel.autoPinEdge(.trailing, to: .leading, of: shareButton, withOffset: -23)
+        commentsCountLabel.autoPinEdge(.trailing, to: .leading, of: shareButton, withOffset: CGFloat.adaptive(width: -23.0))
         commentsCountLabel.autoAlignAxis(.horizontal, toSameAxisOf: voteContainerView)
        
         contentView.addSubview(commentsCountButton)
-        commentsCountButton.autoPinEdge(.trailing, to: .leading, of: commentsCountLabel, withOffset: -8)
+        commentsCountButton.autoPinEdge(.trailing, to: .leading, of: commentsCountLabel, withOffset: CGFloat.adaptive(width: -8.0))
         commentsCountButton.autoAlignAxis(.horizontal, toSameAxisOf: voteContainerView)
         commentsCountButton.addTarget(self, action: #selector(commentCountsButtonDidTouch), for: .touchUpInside)
         
