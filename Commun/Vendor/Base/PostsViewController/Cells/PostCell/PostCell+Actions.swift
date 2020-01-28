@@ -41,9 +41,7 @@ extension PostCell {
     }
     
     @objc func stateButtonTapped(_ sender: UIButton) {
-//        guard let post = post else { return }
-        
-        let postLink = sender.tag == 0 ? "https://www.hackingwithswift.com" : "https://swiftbook.ru"
+        let postLink = sender.tag == 0 ? "https://dev.commun.com/" : "https://golos.io"
         let userNameRulesView = UserNameRulesView(withFrame: CGRect(origin: .zero, size: CGSize(width: CGFloat.adaptive(width: 355.0), height: CGFloat.adaptive(height: 193.0))), andParameters: sender.tag == 0 ? .topState : .rewardState)
         
         let cardVC = CardViewController(contentView: userNameRulesView)

@@ -52,11 +52,13 @@ class PostCell: MyTableViewCell, ListItemCellType {
         stateActionButtonInstance.addTarget(self, action: #selector(stateButtonTapped), for: .touchUpInside)
         stateActionButtonInstance.tag = 0
         stateActionButtonInstance.contentHorizontalAlignment = .leading
-//        stateActionButtonInstance.sizeToFit()
+        stateActionButtonInstance.translatesAutoresizingMaskIntoConstraints = false
         
         return stateActionButtonInstance
     }()
 
+    var stateActionButtonWidthConstraint: NSLayoutConstraint?
+    
     lazy var moreActionButton: UIButton = {
         let moreActionButtonInstance = UIButton(width: CGFloat.adaptive(width: 40.0), height: CGFloat.adaptive(width: 40.0))
         moreActionButtonInstance.tintColor = .appGrayColor
@@ -127,10 +129,10 @@ class PostCell: MyTableViewCell, ListItemCellType {
         actionButtonsStackView.alignment = .fill
         actionButtonsStackView.distribution = .fillProportionally
 
-//        let width = stateActionButton.intrinsicContentSize.width + 15.0
-//        stateActionButton.widthAnchor.constraint(equalToConstant: width).isActive = true
         actionButtonsStackView.addArrangedSubviews([stateActionButton, moreActionButton])
-
+        stateActionButtonWidthConstraint = stateActionButton.widthAnchor.constraint(equalToConstant: CGFloat.adaptive(width: 78.0))
+        stateActionButtonWidthConstraint!.isActive = true
+        
         contentView.addSubview(actionButtonsStackView)
         actionButtonsStackView.autoPinTopAndTrailingToSuperView(inset: CGFloat.adaptive(height: 21.0), xInset: CGFloat.adaptive(width: 4.0))
 
@@ -183,21 +185,13 @@ class PostCell: MyTableViewCell, ListItemCellType {
         fatalError("must override")
     }
     
+    
     // MARK: - Methods
     func setUp(with post: ResponseAPIContentGetPost) {
         self.post = post
 
         metaView.setUp(post: post)
         voteContainerView.setUp(with: post.votes, userID: post.author?.userId)
-
-        // State action button: set value & button width
-        let state = arc4random_uniform(2)
-        stateActionButton.setTitle((state == 0 ? "top" : "550.30").localized().uppercaseFirst, for: .normal)
-        stateActionButton.tag = Int(state)
-        stateActionButton.sizeToFit()
-        
-        let width = stateActionButton.intrinsicContentSize.width + 15.0
-        stateActionButton.widthAnchor.constraint(equalToConstant: width).isActive = true
 
         // Comments count
         self.commentsCountLabel.text = "\(post.stats?.commentsCount ?? 0)"
@@ -206,7 +200,18 @@ class PostCell: MyTableViewCell, ListItemCellType {
         self.viewsCountLabel.text = "\(post.stats?.viewCount ?? 0)"
 
         // Shares count
-        //TODO: change this number later
+        // TODO: change this number later
         self.sharesCountLabel.text = "\(post.stats?.viewCount ?? 0)"
+        
+        // State action button: set value & button width
+        let state = arc4random_uniform(3)
+        
+        stateActionButton.isHidden = state == 2
+        stateActionButton.setTitle((state == 0 ? "top" : "550.30").localized().uppercaseFirst, for: .normal)
+        stateActionButton.tag = Int(state)
+        stateActionButton.sizeToFit()
+        
+        let width = stateActionButton.intrinsicContentSize.width + 15.0
+        stateActionButtonWidthConstraint?.constant = width
     }
 }
