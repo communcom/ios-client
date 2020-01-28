@@ -124,6 +124,9 @@ extension UIImageView {
                 addSubview(blurEffectView)
             }
         }
+        if let loadingView = viewWithTag(9999) {
+            self.bringSubviewToFront(loadingView)
+        }
     }
     
     func addTapToViewer() {

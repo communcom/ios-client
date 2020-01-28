@@ -170,43 +170,53 @@ class WalletSellCommunVC: WalletConvertVC {
     
     override func convertButtonDidTouch() {
         super.convertButtonDidTouch()
+        guard var balance = currentBalance,
+            var communBalance = communBalance,
+            let value = NumberFormatter().number(from: leftTextField.text ?? "")?.doubleValue
+        else {return}
         
-        guard let balance = currentBalance, let value = NumberFormatter().number(from: leftTextField.text ?? "")?.doubleValue else { return }
-                
+        let expectedValue = NumberFormatter().number(from: rightTextField.text ?? "")?.doubleValue
+        
         showIndetermineHudWithMessage("buying".localized().uppercaseFirst + " \(balance.symbol)")
-         
         BlockchainManager.instance.buyPoints(communNumber: value, pointsCurrencyName: balance.symbol)
-            .flatMapCompletable {RestAPIManager.instance.waitForTransactionWith(id: $0)}
-            .subscribe(onCompleted: { [weak self] in
-                guard let strongSelf = self else { return }
+            .flatMapCompletable({ (transactionId) -> Completable in
+                self.hideHud()
                 
-                strongSelf.hideHud()
-                strongSelf.completion?()
-                
-                var symbol: Symbol = Symbol(sell: Config.defaultSymbol, buy: Config.defaultSymbol)
-                
-                // Sell `MEME` -> buy `CMN`
-                if balance.symbol == Config.defaultSymbol {
-                    symbol.sell = balance.symbol
+                if let expectedValue = expectedValue {
+                    let newValue = expectedValue + balance.balanceValue
+                    balance.balance = String(newValue)
+                    balance.isWaitingForTransaction = true
+                    balance.notifyChanged()
+                    
+                    let newCMNValue = communBalance.balanceValue - value
+                    communBalance.balance = String(newCMNValue)
+                    communBalance.isWaitingForTransaction = true
+                    communBalance.notifyChanged()
                 }
-                
-                // Sell `CMN` -> buy `MEME`
-                else {
-                    symbol.buy = balance.symbol
-                }
-                
-                let transaction = Transaction(amount: CGFloat(value * strongSelf.viewModel.rate.value / 10),
+
+                let symbol: Symbol = Symbol(sell: Config.defaultSymbol, buy: Config.defaultSymbol)
+
+                let transaction = Transaction(amount: CGFloat(value * self.viewModel.rate.value / 10),
                                               actionType: .sell,
                                               symbol: symbol,
                                               operationDate: Date())
 
                 let completedVC = TransactionCompletedVC(transaction: transaction)
-                strongSelf.show(completedVC, sender: nil)
-                strongSelf.hideHud()
-//                strongSelf.setTabBarHidden(true)
-            }) { (error) in
+                self.show(completedVC, sender: nil)
                 self.hideHud()
-                self.showError(error)
+//                strongSelf.setTabBarHidden(true)
+                
+                return RestAPIManager.instance.waitForTransactionWith(id: transactionId)
+            })
+            .subscribe(onCompleted: {
+                balance.isWaitingForTransaction = false
+                balance.notifyChanged()
+                
+                communBalance.isWaitingForTransaction = false
+                communBalance.notifyChanged()
+            }) { [weak self] (error) in
+                self?.hideHud()
+                self?.showError(error)
             }
             .disposed(by: disposeBag)
     }

@@ -27,15 +27,17 @@ class OtherBalancesWalletVC: CommunWalletVC {
     // MARK: - Initializers
     init(
         balances: [ResponseAPIWalletGetBalance]? = nil,
-        selectedIndex: Int = 0,
+        symbol: String,
         subscriptions: [ResponseAPIContentGetSubscriptionsItem]? = nil,
         history: [ResponseAPIWalletGetTransferHistoryItem]? = nil
     ) {
-        let vm = WalletViewModel(balances: balances, subscriptions: subscriptions, history: history)
+        let vm = WalletViewModel(balances: balances, subscriptions: subscriptions, symbol: symbol)
         super.init(viewModel: vm)
         
         defer {
-            (headerView as! WalletHeaderView).selectedIndex = selectedIndex
+            if let index = self.balances.firstIndex(where: {$0.symbol == symbol}) {
+                (headerView as! WalletHeaderView).selectedIndex = index
+            }
         }
     }
     
@@ -56,14 +58,16 @@ class OtherBalancesWalletVC: CommunWalletVC {
     }
     
     // MARK: - Methods
-    override func createConvertVC(withHistoryItem historyItem: ResponseAPIWalletGetTransferHistoryItem? = nil) -> WalletConvertVC? {
-        guard let balance = currentBalance else { return nil }
-        return WalletBuyCommunVC(balances: (self.viewModel as! WalletViewModel).balancesVM.items.value, symbol: balance.symbol, historyItem: historyItem)
-    }
+//    override func createConvertVC(withHistoryItem historyItem: ResponseAPIWalletGetTransferHistoryItem? = nil) -> WalletConvertVC? {
+//        guard let balance = currentBalance else { return nil }
+//        return WalletBuyCommunVC(balances: (self.viewModel as! WalletViewModel).balancesVM.items.value, symbol: balance.symbol, historyItem: historyItem)
+//    }
 }
 
 extension OtherBalancesWalletVC: WalletHeaderViewDelegate {
     func walletHeaderView(_ headerView: WalletHeaderView, currentIndexDidChangeTo index: Int) {
-//        tableHeaderView.setMyPointHidden(index != 0)
+        let currentFilter = (viewModel as! TransferHistoryViewModel).filter.value
+        guard let balance = balances[safe: index] else {return}
+        filterChanged(TransferHistoryListFetcher.Filter(userId: currentFilter.userId, direction: currentFilter.direction, transferType: currentFilter.transferType, symbol: balance.symbol, rewards: currentFilter.rewards))
     }
 }

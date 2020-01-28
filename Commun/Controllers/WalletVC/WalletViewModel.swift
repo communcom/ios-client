@@ -19,11 +19,11 @@ class WalletViewModel: TransferHistoryViewModel {
     init(
         balances: [ResponseAPIWalletGetBalance]? = nil,
         subscriptions: [ResponseAPIContentGetSubscriptionsItem]? = nil,
-        history: [ResponseAPIWalletGetTransferHistoryItem]? = nil
+        symbol: String
     ) {
         self.initialBalances = balances
         self.initialSubscriptionItems = subscriptions
-        super.init(initialItems: history)
+        super.init(symbol: symbol)
     }
     
     override func reload() {

@@ -70,6 +70,9 @@ class TransferHistoryItemCell: MyTableViewCell, ListItemCellType {
         var username: String
         var memo: NSAttributedString
         
+        var pointName = item.point.name ?? item.symbol
+        if pointName == "CMN" {pointName = "Commun"}
+        
         switch item.meta.actionType {
         case "transfer":
             var avatarUrl: String?
@@ -77,12 +80,12 @@ class TransferHistoryItemCell: MyTableViewCell, ListItemCellType {
                 avatarUrl = item.receiver.avatarUrl
                 username = item.receiver.username ?? item.receiver.userId
                 memo = NSMutableAttributedString()
-                    .semibold("-\(item.quantityValue.currencyValueFormatted) \(item.point.name ?? item.symbol)", font: .systemFont(ofSize: 15, weight: .semibold))
+                    .semibold("-\(item.quantityValue.currencyValueFormatted) \(pointName)", font: .systemFont(ofSize: 15, weight: .semibold))
             } else {
                 avatarUrl = item.sender.avatarUrl
                 username = item.sender.username ?? item.sender.userId
                 memo = NSMutableAttributedString()
-                    .semibold("+\(item.quantityValue.currencyValueFormatted) \(item.point.name ?? item.symbol)", font: .systemFont(ofSize: 15, weight: .semibold), color: .plus)
+                    .semibold("+\(item.quantityValue.currencyValueFormatted) \(pointName)", font: .systemFont(ofSize: 15, weight: .semibold), color: .plus)
             }
             
             avatarImageView.setAvatar(urlString: avatarUrl, namePlaceHolder: username)
@@ -94,7 +97,7 @@ class TransferHistoryItemCell: MyTableViewCell, ListItemCellType {
             username = "refill".localized().uppercaseFirst
             if item.meta.transferType == "token" {
                 memo = NSMutableAttributedString()
-                    .semibold("+\((item.meta.exchangeAmount ?? 0).currencyValueFormatted) \(item.point.name!)", font: .systemFont(ofSize: 15, weight: .semibold), color: .plus)
+                    .semibold("+\((item.meta.exchangeAmount ?? 0).currencyValueFormatted) \(pointName)", font: .systemFont(ofSize: 15, weight: .semibold), color: .plus)
                 iconImageView.isHidden = false
                 avatarImageView.setAvatar(urlString: item.point.logo, namePlaceHolder: item.point.name ?? "C")
                 iconImageView.image = UIImage(named: "tux")
@@ -108,21 +111,21 @@ class TransferHistoryItemCell: MyTableViewCell, ListItemCellType {
         case "reward":
             username = item.point.name ?? ""
             memo = NSMutableAttributedString()
-                .semibold("+\(item.quantityValue.currencyValueFormatted) \(item.point.name!)", font: .systemFont(ofSize: 15, weight: .semibold), color: .plus)
+                .semibold("+\(item.quantityValue.currencyValueFormatted) \(pointName)", font: .systemFont(ofSize: 15, weight: .semibold), color: .plus)
             
             avatarImageView.setAvatar(urlString: item.point.logo, namePlaceHolder: username)
             iconImageView.isHidden = true
         case "hold":
             username = item.meta.holdType?.localized().uppercaseFirst ?? ""
             memo = NSMutableAttributedString()
-                .semibold("+\(item.quantityValue.currencyValueFormatted) \(item.point.name!)", font: .systemFont(ofSize: 15, weight: .semibold), color: .plus)
+                .semibold("+\(item.quantityValue.currencyValueFormatted) \(pointName)", font: .systemFont(ofSize: 15, weight: .semibold), color: .plus)
             
             avatarImageView.image = UIImage(named: "wallet-like")
             iconImageView.isHidden = true
         case "unhold":
             username = item.point.name ?? ""
             memo = NSMutableAttributedString()
-                .semibold("+\(item.quantityValue.currencyValueFormatted) \(item.point.name!)", font: .systemFont(ofSize: 15, weight: .semibold), color: .plus)
+                .semibold("+\(item.quantityValue.currencyValueFormatted) \(pointName)", font: .systemFont(ofSize: 15, weight: .semibold), color: .plus)
             
             avatarImageView.setAvatar(urlString: item.point.logo, namePlaceHolder: username)
             iconImageView.isHidden = true
@@ -139,7 +142,6 @@ class TransferHistoryItemCell: MyTableViewCell, ListItemCellType {
             .normal("\n")
             .semibold(item.meta.actionType?.localized().uppercaseFirst ?? "", font: .systemFont(ofSize: 12, weight: .semibold), color: .a5a7bd)
     
-        
         contentLabel.attributedText = content
         
         let dateString = Date.from(string: item.timestamp).string(withFormat: "HH:mm")

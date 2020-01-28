@@ -150,65 +150,69 @@ class WalletBuyCommunVC: WalletConvertVC {
         viewModel.getSellPrice(quantity: "\(value) \(balance.symbol)")
     }
     
-    override func shouldEnableConvertButton() -> Bool {
+     override func shouldEnableConvertButton() -> Bool {
         guard let sellAmount = NumberFormatter().number(from: self.leftTextField.text ?? "0")?.doubleValue
             else {return false}
         guard let currentBalance = self.currentBalance else {return false}
         guard sellAmount > 0 else {return false}
-        
         if sellAmount > currentBalance.balanceValue {
             viewModel.errorSubject.accept(.insufficientFunds)
             return false
         }
-        
         return true
     }
     
     override func convertButtonDidTouch() {
         super.convertButtonDidTouch()
+        guard var balance = currentBalance,
+            var communBalance = communBalance,
+            let value = NumberFormatter().number(from: leftTextField.text ?? "")?.doubleValue
+        else {return}
         
-        guard let balance = currentBalance,
-            let sellValue = NumberFormatter().number(from: leftTextField.text ?? "")?.doubleValue,
-            let buyValue = NumberFormatter().number(from: rightTextField.text ?? "")?.doubleValue else { return }
-                
+        let expectedValue = NumberFormatter().number(from: rightTextField.text ?? "")?.doubleValue
+        
         showIndetermineHudWithMessage("selling".localized().uppercaseFirst + " \(balance.symbol)")
-        
-        BlockchainManager.instance.sellPoints(number: sellValue, pointsCurrencyName: balance.symbol)
-            .flatMapCompletable {RestAPIManager.instance.waitForTransactionWith(id: $0)}
-            .subscribe(onCompleted: { [weak self] in
-                guard let strongSelf = self else { return }
+        BlockchainManager.instance.sellPoints(number: value, pointsCurrencyName: balance.symbol)
+            .flatMapCompletable({ (transactionId) -> Completable in
+                self.hideHud()
                 
-                strongSelf.hideHud()
-                strongSelf.completion?()
-                
-                var symbol: Symbol = Symbol(sell: Config.defaultSymbol, buy: Config.defaultSymbol)
-                
-                // Sell `MEME` -> buy `CMN`
-                if balance.symbol != Config.defaultSymbol {
-                    symbol.sell = balance.symbol
-                }
-                
-                // Sell `CMN` -> buy `MEME`
-                else {
-                    symbol.buy = balance.symbol
+                if let expectedValue = expectedValue {
+                    let newValue = balance.balanceValue - value
+                    balance.balance = String(newValue)
+                    balance.isWaitingForTransaction = true
+                    balance.notifyChanged()
+                    
+                    let newCMNValue = communBalance.balanceValue + expectedValue
+                    communBalance.balance = String(newCMNValue)
+                    communBalance.isWaitingForTransaction = true
+                    communBalance.notifyChanged()
                 }
 
+                let symbol: Symbol = Symbol(sell: Config.defaultSymbol, buy: Config.defaultSymbol)
                 let transaction = Transaction(buyBalance: nil,
                                               sellBalance: nil,
                                               friend: nil,
-                                              amount: CGFloat(buyValue),
+                                              amount: CGFloat(value),
                                               history: nil,
                                               actionType: .buy,
                                               symbol: symbol,
                                               operationDate: Date())
                 
                 let completedVC = TransactionCompletedVC(transaction: transaction)
-                strongSelf.show(completedVC, sender: nil)
-                strongSelf.hideHud()
-//                strongSelf.setTabBarHidden(true)
-            }) { (error) in
-                self.hideHud()
-                self.showError(error)
+                self.show(completedVC, sender: nil)
+
+                
+                return RestAPIManager.instance.waitForTransactionWith(id: transactionId)
+            })
+            .subscribe(onCompleted: {
+                balance.isWaitingForTransaction = false
+                balance.notifyChanged()
+                
+                communBalance.isWaitingForTransaction = false
+                communBalance.notifyChanged()
+            }) { [weak self] (error) in
+                self?.hideHud()
+                self?.showError(error)
             }
             .disposed(by: disposeBag)
     }

@@ -12,7 +12,6 @@ import RxSwift
 
 class WalletConvertVC: BaseViewController {
     // MARK: - Properties
-    var completion: (() -> Void)?
     let viewModel = WalletConvertViewModel()
     var currentSymbol: String?
     var currentBalance: ResponseAPIWalletGetBalance? {
