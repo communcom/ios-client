@@ -12,13 +12,10 @@ import RxCocoa
 import CyberSwift
 import CircularCarousel
 
-class WalletSendPointsVC: UIViewController {
+class WalletSendPointsVC: BaseViewController {
     // MARK: - Properties
     var dataModel: SendPointsModel
-    let disposeBag = DisposeBag()
-    
-    var enteredAmount: CGFloat = 0.0
-    
+        
     lazy var carouselView: CircularCarousel = {
         let carouselViewInstance = CircularCarousel(width: CGFloat.adaptive(width: 247.0), height: carouselHeight)
         carouselViewInstance.delegate = self
@@ -146,9 +143,9 @@ class WalletSendPointsVC: UIViewController {
         pointsToolbar.addCompletion = { [weak self] value in
             guard let strongSelf = self else { return }
             
-            strongSelf.enteredAmount = value + strongSelf.dataModel.transaction.amount
-            strongSelf.dataModel.transaction.amount = strongSelf.enteredAmount
-            strongSelf.pointsTextField.text = String(Double(strongSelf.enteredAmount).currencyValueFormatted)
+            let enteredAmount = value + strongSelf.dataModel.transaction.amount
+            strongSelf.dataModel.transaction.amount = enteredAmount
+            strongSelf.pointsTextField.text = String(Double(enteredAmount).currencyValueFormatted)
             strongSelf.clearPointsButton.isHidden = false
             strongSelf.updateSendInfoByEnteredPoints()
         }
@@ -158,13 +155,20 @@ class WalletSendPointsVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+    
         setupNavBar()
         setNeedsStatusBarAppearanceUpdate()
     }
-
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        
+        setTabBarHidden(sendPointsButton.isSelected)
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -176,10 +180,10 @@ class WalletSendPointsVC: UIViewController {
         
         pointsToolbar.frame.size = CGSize(width: CGFloat.adaptive(width: 375.0), height: CGFloat.adaptive(height: 50.0))
     }
-    
+
     
     // MARK: - Custom Functions
-    func bind() {
+    override func bind() {
         pointsTextField.delegate = self
 
         pointsTextField.rx.text
@@ -272,16 +276,17 @@ class WalletSendPointsVC: UIViewController {
         sendPointsButton.autoPinEdgesToSuperviewSafeArea(with: UIEdgeInsets(horizontal: CGFloat.adaptive(width: 30.0), vertical: CGFloat.adaptive(height: 20.0)), excludingEdge: .top)
     }
     
-    
-    // MARK: - Custom Functions
-    func setupNavBar() {
+    private func setupNavBar() {
         title = "send points".localized()
         setLeftNavBarButtonForGoingBack(tintColor: .white)
-        navigationController?.navigationBar.tintColor = .white
-        navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1)
+        view.backgroundColor = #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1)
+        navigationController?.navigationBar.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1) // items color
+        navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1) // bar color
         navigationController?.navigationBar.isTranslucent = true
+        navigationController?.navigationBar.shadowImage?.clear()
         navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
-        navigationController?.tabBarController?.view.backgroundColor = #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1)
+        
+        setTabBarHidden(true)
     }
     
     private func setup(borderedView: UIView) {
@@ -409,11 +414,13 @@ class WalletSendPointsVC: UIViewController {
                     let completedVC = TransactionCompletedVC(transaction: strongSelf.dataModel.transaction)
                     strongSelf.show(completedVC, sender: nil)
                     strongSelf.hideHud()
+                    strongSelf.sendPointsButton.isSelected = true
                 }) { [weak self] error in
                     guard let strongSelf = self else { return }
                     
                     strongSelf.hideHud()
                     strongSelf.showError(error)
+                    strongSelf.sendPointsButton.isSelected = false
             }
             .disposed(by: self.disposeBag)
                 //*/

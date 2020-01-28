@@ -69,7 +69,7 @@ class ConfirmPasscodeVC: THPinViewController {
         // Add close button
         closeButton.addTarget(self, action: #selector(closeButtonTapped), for: .touchUpInside)
         view.addSubview(closeButton)
-        closeButton.autoPinTopAndTrailingToSuperView(inset: CGFloat.adaptive(height: 15.0), xInset: CGFloat.adaptive(width: 15.0))
+        closeButton.autoPinTopAndTrailingToSuperView(inset: CGFloat.adaptive(height: 45.0), xInset: CGFloat.adaptive(width: 15.0))
         
         // Add Touch/Face ID button
         let buttonImage = UIImage(named: context.biometryType == .faceID ? "icon-face-id-grey-default" : "icon-touch-id-grey-default" )

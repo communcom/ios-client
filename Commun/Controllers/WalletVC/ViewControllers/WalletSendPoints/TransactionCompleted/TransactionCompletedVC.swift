@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TransactionCompletedVC: UIViewController {
+class TransactionCompletedVC: BaseViewController {
     // MARK: - Properties
     var dataModel = SendPointsModel()
     var transactionCompletedView: TransactionCompletedView!
@@ -45,15 +45,17 @@ class TransactionCompletedVC: UIViewController {
         }
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
         setupNavBar()
         setNeedsStatusBarAppearanceUpdate()
     }
-
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        
+        setTabBarHidden(false)
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -71,15 +73,18 @@ class TransactionCompletedVC: UIViewController {
     private func setupNavBar() {
         title = "send points".localized()
         setLeftNavBarButtonForGoingBack(tintColor: .white)
-        navigationController?.navigationBar.tintColor = .white
-        navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1)
-        navigationController?.navigationBar.isTranslucent = false
+        navigationController?.navigationBar.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1) // items color
+        navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1) // bar color
+        navigationController?.navigationBar.isTranslucent = true
+        navigationController?.navigationBar.shadowImage?.clear()
         navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
 //        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(actionBarButtonTapped))
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: " ", style: .plain, target: nil, action: nil)
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(stopBarButtonTapped))
+
+        setTabBarHidden(true)
     }
-    
+
     private func setupView() {
         dataModel.transaction.buyBalance = dataModel.getBalance(bySymbol: dataModel.transaction.symbol.buy)
         dataModel.transaction.sellBalance = dataModel.getBalance(bySymbol: dataModel.transaction.symbol.sell)
@@ -147,4 +152,3 @@ class TransactionCompletedVC: UIViewController {
         backToWallet()
     }
 }
-

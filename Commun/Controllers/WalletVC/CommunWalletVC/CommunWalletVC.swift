@@ -66,16 +66,19 @@ class CommunWalletVC: TransferHistoryVC {
     
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
-
+        self.setTabBarHidden(false)
+        
         super.viewWillAppear(animated)
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         self.navigationController?.setNavigationBarHidden(false, animated: animated)
-        
+
         super.viewWillDisappear(animated)
     }
+        
     
+    // MARK: - Custom Functions
     override func setUp() {
         super.setUp()
         headerView.backButton.addTarget(self, action: #selector(back), for: .touchUpInside)
@@ -253,8 +256,6 @@ class CommunWalletVC: TransferHistoryVC {
 
         let walletSendPointsVC = WalletSendPointsVC(withSelectedBalanceSymbol: headerView.sendButton.accessibilityHint ?? Config.defaultSymbol, andUser: user)
         show(walletSendPointsVC, sender: nil)
-        setTabBarHidden(true)
-
         hideHud()
     }
     

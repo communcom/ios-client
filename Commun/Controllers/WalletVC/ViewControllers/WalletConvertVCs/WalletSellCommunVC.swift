@@ -203,7 +203,7 @@ class WalletSellCommunVC: WalletConvertVC {
                 let completedVC = TransactionCompletedVC(transaction: transaction)
                 strongSelf.show(completedVC, sender: nil)
                 strongSelf.hideHud()
-                strongSelf.setTabBarHidden(true)
+//                strongSelf.setTabBarHidden(true)
             }) { (error) in
                 self.hideHud()
                 self.showError(error)

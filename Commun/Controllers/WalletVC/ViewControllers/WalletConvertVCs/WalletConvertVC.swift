@@ -289,7 +289,7 @@ class WalletConvertVC: BaseViewController {
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-//        setTabBarHidden(false)
+        setTabBarHidden(false)
     }
     
     override func viewDidLayoutSubviews() {
