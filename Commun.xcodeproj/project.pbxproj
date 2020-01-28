@@ -261,6 +261,9 @@
 		BC3694FB23699C0F00B2E078 /* BasicEditorVC+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3694FA23699C0F00B2E078 /* BasicEditorVC+Actions.swift */; };
 		BC384F1A23862C580021A2A9 /* CommunityPageVC+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC384F1923862C580021A2A9 /* CommunityPageVC+Actions.swift */; };
 		BC384F1E23862FBC0021A2A9 /* CommunityPageVC+Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC384F1D23862FBC0021A2A9 /* CommunityPageVC+Binding.swift */; };
+		BC3AAF1523E0218F005E8DAB /* BuyCommunSelectCurrencyVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3AAF1423E0218F005E8DAB /* BuyCommunSelectCurrencyVC.swift */; };
+		BC3AAF1723E021D2005E8DAB /* BuyCommunViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3AAF1623E021D2005E8DAB /* BuyCommunViewModel.swift */; };
+		BC3AAF1923E0223F005E8DAB /* CurrenciesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3AAF1823E0223F005E8DAB /* CurrenciesViewModel.swift */; };
 		BC3AD9DC23838E920026EAB4 /* CommentFormViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3AD9DB23838E920026EAB4 /* CommentFormViewModel.swift */; };
 		BC3D97612350384E00421718 /* ResponseAPIContentGetPosts.json in Resources */ = {isa = PBXBuildFile; fileRef = BC3D97602350384E00421718 /* ResponseAPIContentGetPosts.json */; };
 		BC3E3D2923D15D5A0076E46E /* CommunWalletHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3E3D2823D15D5A0076E46E /* CommunWalletHeaderView.swift */; };
@@ -748,6 +751,9 @@
 		BC3694FA23699C0F00B2E078 /* BasicEditorVC+Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BasicEditorVC+Actions.swift"; sourceTree = "<group>"; };
 		BC384F1923862C580021A2A9 /* CommunityPageVC+Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CommunityPageVC+Actions.swift"; sourceTree = "<group>"; };
 		BC384F1D23862FBC0021A2A9 /* CommunityPageVC+Binding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CommunityPageVC+Binding.swift"; sourceTree = "<group>"; };
+		BC3AAF1423E0218F005E8DAB /* BuyCommunSelectCurrencyVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuyCommunSelectCurrencyVC.swift; sourceTree = "<group>"; };
+		BC3AAF1623E021D2005E8DAB /* BuyCommunViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuyCommunViewModel.swift; sourceTree = "<group>"; };
+		BC3AAF1823E0223F005E8DAB /* CurrenciesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrenciesViewModel.swift; sourceTree = "<group>"; };
 		BC3AD9DB23838E920026EAB4 /* CommentFormViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentFormViewModel.swift; sourceTree = "<group>"; };
 		BC3D97602350384E00421718 /* ResponseAPIContentGetPosts.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ResponseAPIContentGetPosts.json; sourceTree = "<group>"; };
 		BC3E3D2823D15D5A0076E46E /* CommunWalletHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunWalletHeaderView.swift; sourceTree = "<group>"; };
@@ -1869,6 +1875,7 @@
 			children = (
 				BC18FA1F23D54E14005DC7E3 /* Subviews */,
 				BC18FA2223D550E4005DC7E3 /* CurrenciesVC.swift */,
+				BC3AAF1823E0223F005E8DAB /* CurrenciesViewModel.swift */,
 			);
 			path = CurrenciesVC;
 			sourceTree = "<group>";
@@ -1973,6 +1980,24 @@
 				3B3C8B7923472ADA00D8BADB /* PostEditorToolbarItemCell.swift */,
 			);
 			path = Subviews;
+			sourceTree = "<group>";
+		};
+		BC3AAF1023E02159005E8DAB /* BuyCommunVC */ = {
+			isa = PBXGroup;
+			children = (
+				BC3AAF1323E02165005E8DAB /* ViewControllers */,
+				BC18FA2423D55BC6005DC7E3 /* BuyCommunVC.swift */,
+				BC3AAF1623E021D2005E8DAB /* BuyCommunViewModel.swift */,
+			);
+			path = BuyCommunVC;
+			sourceTree = "<group>";
+		};
+		BC3AAF1323E02165005E8DAB /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				BC3AAF1423E0218F005E8DAB /* BuyCommunSelectCurrencyVC.swift */,
+			);
+			path = ViewControllers;
 			sourceTree = "<group>";
 		};
 		BC3AD9D823838E7D0026EAB4 /* CommentForm */ = {
@@ -2120,7 +2145,7 @@
 			children = (
 				BC4AD66923B2070D008546A4 /* WalletConvertVCs */,
 				BC4AD64B23B094E9008546A4 /* SendPointListVC.swift */,
-				BC18FA2423D55BC6005DC7E3 /* BuyCommunVC.swift */,
+				BC3AAF1023E02159005E8DAB /* BuyCommunVC */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -2909,6 +2934,7 @@
 				3B6CB73023432D6F0097B2A1 /* FavouritesList.swift in Sources */,
 				3BC613B12342140000075570 /* SwipeDownInteractor.swift in Sources */,
 				BCD453AD2354473F005A454C /* BasicEditorVC+MediaViewDelegate.swift in Sources */,
+				BC3AAF1923E0223F005E8DAB /* CurrenciesViewModel.swift in Sources */,
 				3B8DDF5A234AF04C00B213F0 /* ArticleEditorVC.swift in Sources */,
 				B1D7AD5623A10582007D1A13 /* ErrorView.swift in Sources */,
 				BC597A6E238BC7C200103F4F /* PostsFilterVC.swift in Sources */,
@@ -3066,6 +3092,7 @@
 				BC469306239677E00064A38B /* MyProfilePageVC+Binding.swift in Sources */,
 				BC561E85238B9989004C53EB /* ReportVC+Presentation.swift in Sources */,
 				3B25E5BE234C2A0C005BD1B8 /* BasicEditorViewModel.swift in Sources */,
+				BC3AAF1723E021D2005E8DAB /* BuyCommunViewModel.swift in Sources */,
 				BC74F505237957F00018DB8E /* UserProfilePageVC+CommentCellDelegate.swift in Sources */,
 				3B9BEB3D2300EC7D003C70B3 /* EmptyView.swift in Sources */,
 				BCA0039D23716AA1002A68BA /* LeaderController.swift in Sources */,
@@ -3169,6 +3196,7 @@
 				BCD00FC123750B15004A3952 /* PostPageViewModel.swift in Sources */,
 				3B5CB31022A5880D00757533 /* MyRxTableViewSectionedAnimatedDataSource.swift in Sources */,
 				BCABF1372366DC3D006B05F5 /* UserProfilePageViewModel.swift in Sources */,
+				BC3AAF1523E0218F005E8DAB /* BuyCommunSelectCurrencyVC.swift in Sources */,
 				3B6CB734234335130097B2A1 /* CommunActionSheet.swift in Sources */,
 				B1FA77DA238BF7E0006E57D1 /* WelcomeItemVC.swift in Sources */,
 				BC4AD64723B06196008546A4 /* GradientProgressBar.swift in Sources */,

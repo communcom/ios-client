@@ -11,9 +11,7 @@ import CyberSwift
 
 class CurrenciesVC: ListViewController<ResponseAPIGetCurrency, CurrencyCell> {
     init() {
-        let fetcher = CurrenciesListFetcher()
-        let vm = ListViewModel<ResponseAPIGetCurrency>(fetcher: fetcher)
-        vm.fetchNext()
+        let vm = CurrenciesViewModel()
         super.init(viewModel: vm)
     }
     
