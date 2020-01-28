@@ -26,7 +26,7 @@ class BalancesVC: SubsViewController<ResponseAPIWalletGetBalance, BalanceCell> {
     
     override func setUp() {
         super.setUp()
-        title = "balances".localized().uppercaseFirst
+        title = "points".localized().uppercaseFirst
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
     }

@@ -125,10 +125,10 @@ extension UIButton {
         return button
     }
     
-    static func option(tintColor: UIColor = .black, contentInsets: UIEdgeInsets = UIEdgeInsets(top: 12, left: 16, bottom: 12, right: 16)) -> UIButton {
+    static func option(tintColor: UIColor = .black, contentInsets: UIEdgeInsets = UIEdgeInsets(top: 8, left: 6, bottom: 8, right: 6)) -> UIButton {
         let button = UIButton(width: 36, height: 40, contentInsets: contentInsets)
         button.tintColor = tintColor
-        button.setImage(UIImage(named: "postpage-more"), for: .normal)
+        button.setImage(UIImage(named: "icon-post-cell-more-center-default"), for: .normal)
         button.touchAreaEdgeInsets = UIEdgeInsets(inset: -2)
         button.contentEdgeInsets = contentInsets
         return button

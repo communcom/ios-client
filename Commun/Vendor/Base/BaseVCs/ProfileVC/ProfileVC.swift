@@ -37,7 +37,7 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
         return view
     }()
     
-    lazy var optionsButton = UIButton.option(tintColor: .white, contentInsets: UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16))
+    lazy var optionsButton = UIButton.option(tintColor: .white)
     
     lazy var coverImageView: UIImageView = {
         let imageView = UIImageView()
@@ -181,6 +181,15 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
         coverImageView.isHidden = show
         showNavigationBar(show, animated: animated) {
             self.optionsButton.tintColor = show ? .black: .white
+            if !show {
+                self.optionsButton.layer.shadowRadius = 2
+                self.optionsButton.layer.shadowColor = UIColor.black.cgColor
+                self.optionsButton.layer.shadowOffset = CGSize(width: 0, height: 1)
+                self.optionsButton.layer.shadowOpacity = 0.25
+                self.optionsButton.layer.masksToBounds = false
+            } else {
+                self.optionsButton.layer.shadowOpacity = 0
+            }
         }
     }
     

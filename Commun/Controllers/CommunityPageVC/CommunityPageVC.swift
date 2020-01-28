@@ -35,6 +35,7 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
     
     // MARK: - Properties
     let communityId: String
+    var dataSource: MyRxTableViewSectionedAnimatedDataSource<AnimatableSectionModel<String, CustomElementType>>!
     
     override func createViewModel() -> ProfileViewModel<ResponseAPIContentGetCommunity> {
         CommunityPageViewModel(communityId: communityId)
@@ -166,7 +167,7 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
     }
     
     override func bindItems() {
-        let dataSource = MyRxTableViewSectionedAnimatedDataSource<AnimatableSectionModel<String, CustomElementType>>(
+        dataSource = MyRxTableViewSectionedAnimatedDataSource<AnimatableSectionModel<String, CustomElementType>>(
             configureCell: { (_, tableView, indexPath, element) -> UITableViewCell in
                 switch element {
                 case .post(let post):
@@ -223,7 +224,30 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
                     return nil
                 }
             }
-            .map {[AnimatableSectionModel<String, CustomElementType>(model: "", items: $0)]}
+            .map {items -> [AnimatableSectionModel<String, CustomElementType>] in
+                if (self.viewModel as! CommunityPageViewModel).segmentedItem.value == .leads {
+                    var leaders = [CustomElementType]()
+                    var nominees = [CustomElementType]()
+                    
+                    for item in items {
+                        switch item {
+                        case .leader(let leader):
+                            if leader.inTop {
+                                leaders.append(.leader(leader))
+                            } else {
+                                nominees.append(.leader(leader))
+                            }
+                        default:
+                            break
+                        }
+                    }
+                    return [
+                        AnimatableSectionModel<String, CustomElementType>(model: "leaders", items: leaders),
+                        AnimatableSectionModel<String, CustomElementType>(model: "nominees", items: nominees)
+                    ]
+                }
+                return [AnimatableSectionModel<String, CustomElementType>(model: "", items: items)]
+            }
             .bind(to: tableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
     }
@@ -285,15 +309,32 @@ extension CommunityPageVC: UITableViewDelegate {
     // MARK: - Sorting
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         let viewModel = self.viewModel as! CommunityPageViewModel
-        if viewModel.segmentedItem.value != .posts {
-            return 0
+        if viewModel.segmentedItem.value == .posts {
+            return 48
         }
-        return 48
+        if viewModel.segmentedItem.value == .leads {
+            return 42
+        }
+        return 0
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        updatePostSortingView()
-        return postSortingView
+        let viewModel = self.viewModel as! CommunityPageViewModel
+        if viewModel.segmentedItem.value == .posts {
+            updatePostSortingView()
+            return postSortingView
+        }
+        
+        if viewModel.segmentedItem.value == .leads {
+            let headerView = UIView(frame: .zero)
+            
+            let label = UILabel.with(text: dataSource.sectionModels[section].model.localized().uppercaseFirst, textSize: 17, weight: .semibold)
+            headerView.addSubview(label)
+            label.autoPinEdge(toSuperviewEdge: .leading, withInset: 20)
+            label.autoAlignAxis(toSuperviewAxis: .horizontal)
+            return headerView
+        }
+        return nil
     }
     
     func updatePostSortingView() {
@@ -390,5 +431,15 @@ extension CommunityPageVC: UITableViewDelegate {
         default:
             break
         }
+    }
+    
+    // https://stackoverflow.com/questions/1074006/is-it-possible-to-disable-floating-headers-in-uitableview-with-uitableviewstylep
+    
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        CGFloat.leastNormalMagnitude
+    }
+    
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        UIView(frame: .zero)
     }
 }

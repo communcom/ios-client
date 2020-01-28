@@ -28,6 +28,7 @@ class PostCell: MyTableViewCell, ListItemCellType {
     
     lazy var moreActionsButton: UIButton = {
         let button = UIButton(width: 40, height: 40)
+        button.tintColor = .appGrayColor
         button.setImage(UIImage(named: "icon-post-cell-more-center-default"), for: .normal)
         button.addTarget(self, action: #selector(menuButtonTapped(button:)), for: .touchUpInside)
         return button
@@ -76,7 +77,7 @@ class PostCell: MyTableViewCell, ListItemCellType {
         // moreActionsButton
         contentView.addSubview(moreActionsButton)
         moreActionsButton.autoPinEdge(toSuperviewEdge: .top, withInset: 16)
-        moreActionsButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 0)
+        moreActionsButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 15)
         
         metaView.autoPinEdge(.trailing, to: .leading, of: moreActionsButton, withOffset: -8)
         

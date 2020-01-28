@@ -28,9 +28,6 @@ extension ResponseAPIContentGetCommunity {
 }
 
 protocol CommunityController: class {
-    // Required views
-    var joinButton: CommunButton {get set}
-    
     // Required properties
     var disposeBag: DisposeBag {get}
     var community: ResponseAPIContentGetCommunity? {get set}
