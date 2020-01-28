@@ -132,6 +132,15 @@
 "master password attention describe"            =   "unfortunately for our comfort, blockchain doesn’t allow us to restore passwords. It means that it’s every user’s responsibility to keep the password in a safe place and be able to access it anytime.\n We strongly recommend you to save your password and make a copy of it.";
 "master password placeholder"                   =   "enter master password";
 "monetize"                                      =   "monetize";
+"modal view user title"                         =   "username must be";
+"modal view user note"                          =   "";
+"modal view user button title"                  =   "understood";
+"modal view top state title"                    =   "this post is featured in Top";
+"modal view top state note"                     =   "after a given time, it will get the reward";
+"modal view top state button title"             =   "learn more about reward";
+"modal view reward state title"                 =   "this post has been rewarded";
+"modal view reward state note"                  =   "this publication was interesting for Community members";
+"modal view reward state button title"          =   "learn more about reward";
 
 
 // N
@@ -163,6 +172,10 @@
 "post not found"                                =   "post not found";
 "profile description"                           =   "profile description";
 "profile photo"                                 =   "profile photo";
+"post top state title"                          =   "this post is featured in Top";
+"post top state description"                    =   "after a given time, it will get the reward";
+"post reward state title"                       =   "this post has been rewarded";
+"post reward state description"                 =   "this publication was interesting for Community members";
 
 
 // R
@@ -225,7 +238,6 @@
 "user already in blockchain."                   =   "user already in blockchain.";
 "user keys info"                                =   "user keys info";
 "username placeholder"                          =   "username";
-"username must be between 5-32 characters"      =   "username must be between 5-32 characters";
 
 
 // V
