@@ -20,6 +20,7 @@ class BuyCommunViewModel {
         return CurrenciesViewModel()
     }()
     let currentCurrency = BehaviorRelay<ResponseAPIGetCurrency?>(value: nil)
+    let price = BehaviorRelay<Double>(value: 0)
     let minMaxAmount = BehaviorRelay<ResponseAPIGetMinMaxAmount?>(value: nil)
     let expectedAmount = BehaviorRelay<Double?>(value: nil)
     
@@ -56,6 +57,7 @@ class BuyCommunViewModel {
         currentCurrency
             .subscribe(onNext: {[weak self] (currency) in
                 self?.getMinMaxAmount()
+                self?.getPrice()
             })
             .disposed(by: disposeBag)
     }
@@ -74,6 +76,17 @@ class BuyCommunViewModel {
                 self?.minMaxAmount.accept(amount)
             }) { [weak self] (error) in
                 self?.loadingState.accept(.error(error: error))
+            }
+            .disposed(by: disposeBag)
+    }
+    
+    private func getPrice() {
+        guard let currentSymbol = currentCurrency.value?.name.uppercased() else {return}
+        getExpectedAmount(from: currentSymbol, to: "CMN", amount: 1)
+            .subscribe(onSuccess: { (price) in
+                self.price.accept(price)
+            }) { (error) in
+                self.loadingState.accept(.error(error: error))
             }
             .disposed(by: disposeBag)
     }

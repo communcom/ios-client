@@ -9,11 +9,18 @@
 import Foundation
 
 class BuyCommunVC: BaseViewController {
+    // MARK: - Properties
+    lazy var viewModel = BuyCommunViewModel()
+    var currentCurrencyName: String? {
+        viewModel.currentCurrency.value?.name.uppercased()
+    }
+    
     // MARK: - Subviews
     lazy var scrollView = ContentHuggingScrollView(axis: .vertical)
     lazy var currencyAvatarImageView = MyAvatarImageView(size: 40)
     lazy var currencyNameLabel = UILabel.with(textSize: 15, weight: .medium)
     lazy var youSendTextField = UITextField.decimalPad()
+    lazy var minimunChargeLabel = UILabel.with(text: "minimum charge is".localized().uppercaseFirst, textSize: 12, weight: .medium, textColor: .a5a7bd)
     lazy var youGetTextField = UITextField.decimalPad()
     lazy var rateLabel = UILabel.with(text: "Rate:", textSize: 12, weight: .medium, textColor: .a5a7bd, textAlignment: .center)
     lazy var buyCommunButton = CommunButton.default(height: 50, label: "buy Commun".localized().uppercaseFirst, cornerRadius: 25, isHuggingContent: false, isDisableGrayColor: true)
@@ -70,7 +77,6 @@ class BuyCommunVC: BaseViewController {
         youSendContainerView.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
         youSendContainerView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
         
-        let minimunChargeLabel = UILabel.with(text: "minimum charge is 5.00 USD".localized().uppercaseFirst, textSize: 12, weight: .medium, textColor: .a5a7bd)
         scrollView.contentView.addSubview(minimunChargeLabel)
         minimunChargeLabel.autoPinEdge(.top, to: .bottom, of: youSendContainerView, withOffset: 5)
         minimunChargeLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 32)
@@ -159,5 +165,69 @@ class BuyCommunVC: BaseViewController {
         buyCommunButton.autoPinEdge(.top, to: .bottom, of: termsOfUseLabel, withOffset: 16)
         
         buyCommunButton.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(inset: 16), excludingEdge: .top)
+    }
+    
+    override func bind() {
+        super.bind()
+        // loading state
+        viewModel.loadingState
+            .subscribe(onNext: { (state) in
+                switch state {
+                case .loading:
+                    self.scrollView.showLoader()
+                case .finished:
+                    self.scrollView.hideLoader()
+                case .error(let error):
+                    #if !APPSTORE
+                    self.showError(error)
+                    #endif
+                    self.scrollView.hideLoader()
+                    self.view.showErrorView {
+                        self.view.hideErrorView()
+                        self.viewModel.currenciesVM.reload()
+                    }
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        // current currency
+        viewModel.currentCurrency
+            .filter {$0 != nil}
+            .map {$0!}
+            .subscribe(onNext: { [weak self] (currency) in
+                self?.setUpWithCurrentCurrency(currency)
+            })
+            .disposed(by: disposeBag)
+        
+        // min max amount
+        viewModel.minMaxAmount
+            .filter {$0 != nil}
+            .map {$0!}
+            .subscribe(onNext: { [weak self] (amount) in
+                // minimun charge
+                self?.minimunChargeLabel.text = "minimum charge is".localized().uppercaseFirst + " \((Double(amount.minFromAmount) ?? 0).currencyValueFormatted) " + (self?.currentCurrencyName ?? "")
+            })
+            .disposed(by: disposeBag)
+        
+        // price
+        viewModel.price
+            .subscribe(onNext: { [weak self] (price) in
+                var text = "rate".localized().uppercaseFirst
+                text += ": 1 "
+                text += (self?.currentCurrencyName ?? "")
+                text += " = "
+                text += price.currencyValueFormatted
+                text += " CMN"
+                self?.rateLabel.text = text
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    private func setUpWithCurrentCurrency(_ currency: ResponseAPIGetCurrency) {
+        // avatar
+        currencyAvatarImageView.setAvatar(urlString: currency.image, namePlaceHolder: currency.name)
+        
+        // name
+        currencyNameLabel.text = currency.name.uppercased()
     }
 }
