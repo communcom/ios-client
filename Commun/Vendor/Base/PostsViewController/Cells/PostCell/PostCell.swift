@@ -30,7 +30,7 @@ class PostCell: MyTableViewCell, ListItemCellType {
     lazy var stateActionButton: UIButton = {
         let stateActionButtonInstance = UIButton(width: CGFloat.adaptive(width: 78.0),
                                                  height: CGFloat.adaptive(height: 30.0),
-                                                 label: ((arc4random_uniform(2) == 0) ? "top" : "550.30").localized().uppercaseFirst,
+                                                 label: "".localized().uppercaseFirst,
                                                  labelFont: UIFont.systemFont(ofSize: CGFloat.adaptive(width: 12.0), weight: .semibold),
                                                  backgroundColor: #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1),
                                                  textColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1),
@@ -52,7 +52,7 @@ class PostCell: MyTableViewCell, ListItemCellType {
         stateActionButtonInstance.addTarget(self, action: #selector(stateButtonTapped), for: .touchUpInside)
         stateActionButtonInstance.tag = 0
         stateActionButtonInstance.contentHorizontalAlignment = .leading
-        stateActionButtonInstance.sizeToFit()
+//        stateActionButtonInstance.sizeToFit()
         
         return stateActionButtonInstance
     }()
@@ -127,8 +127,8 @@ class PostCell: MyTableViewCell, ListItemCellType {
         actionButtonsStackView.alignment = .fill
         actionButtonsStackView.distribution = .fillProportionally
 
-        let width = stateActionButton.intrinsicContentSize.width + 15.0
-        stateActionButton.widthAnchor.constraint(equalToConstant: width).isActive = true
+//        let width = stateActionButton.intrinsicContentSize.width + 15.0
+//        stateActionButton.widthAnchor.constraint(equalToConstant: width).isActive = true
         actionButtonsStackView.addArrangedSubviews([stateActionButton, moreActionButton])
 
         contentView.addSubview(actionButtonsStackView)
@@ -189,6 +189,15 @@ class PostCell: MyTableViewCell, ListItemCellType {
 
         metaView.setUp(post: post)
         voteContainerView.setUp(with: post.votes, userID: post.author?.userId)
+
+        // State action button: set value & button width
+        let state = arc4random_uniform(2)
+        stateActionButton.setTitle((state == 0 ? "top" : "550.30").localized().uppercaseFirst, for: .normal)
+        stateActionButton.tag = Int(state)
+        stateActionButton.sizeToFit()
+        
+        let width = stateActionButton.intrinsicContentSize.width + 15.0
+        stateActionButton.widthAnchor.constraint(equalToConstant: width).isActive = true
 
         // Comments count
         self.commentsCountLabel.text = "\(post.stats?.commentsCount ?? 0)"
