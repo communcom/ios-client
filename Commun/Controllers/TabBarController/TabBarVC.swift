@@ -298,7 +298,12 @@ class TabBarVC: UITabBarController {
                 self.selectedViewController?.showCommunityWithCommunityAlias(alias)
             }
         } else {
+            let communityAlias = path[0]
+            let username = String(path[1].dropFirst())
+            let permlink = path[2]
             
+            let postVC = PostPageVC(username: username, permlink: permlink, communityAlias: communityAlias)
+            self.selectedViewController?.show(postVC, sender: nil)
         }
     }
 }

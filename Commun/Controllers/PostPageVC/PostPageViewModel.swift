@@ -14,9 +14,8 @@ import CyberSwift
 class PostPageViewModel: CommentsViewModel {
     // MARK: - Input
     var postForRequest: ResponseAPIContentGetPost?
-    var userId: String
-    var permlink: String
-    var communityId: String
+    var username: String?
+    var communityAlias: String?
     
     // MARK: - Objects
     let loadingState = BehaviorRelay<LoadingState>(value: .loading)
@@ -24,18 +23,14 @@ class PostPageViewModel: CommentsViewModel {
     
     // MARK: - Initializers
     init(post: ResponseAPIContentGetPost) {
-        self.userId = post.contentId.userId
-        self.permlink = post.contentId.permlink
-        self.communityId = post.contentId.communityId ?? ""
         self.postForRequest = post
         super.init(filter: CommentsListFetcher.Filter(sortBy: .popularity, type: .post, userId: post.contentId.userId, permlink: post.contentId.permlink, communityId: post.community?.communityId))
         defer { setUp() }
     }
     
-    init(userId: String, permlink: String, communityId: String) {
-        self.userId = userId
-        self.permlink = permlink
-        self.communityId = communityId
+    init(userId: String?, username: String?, permlink: String, communityId: String?, communityAlias: String?) {
+        self.username = username
+        self.communityAlias = communityAlias
         super.init(filter: CommentsListFetcher.Filter(type: .post, userId: userId, permlink: permlink, communityId: communityId))
         defer { setUp() }
     }
@@ -46,10 +41,20 @@ class PostPageViewModel: CommentsViewModel {
         bind()
     }
     
+    override func fetchNext(forceRetry: Bool = false) {
+        if filter.value.userId == nil && filter.value.communityId == nil {
+            return
+        }
+        super.fetchNext(forceRetry: forceRetry)
+    }
+    
     func loadPost() {
-        RestAPIManager.instance.loadPost(userId: userId, permlink: permlink, communityId: communityId)
-            .do(onSuccess: { (_) in
+        RestAPIManager.instance.loadPost(userId: filter.value.userId, username: username, permlink: filter.value.permlink!, communityId: filter.value.communityId, communityAlias: communityAlias)
+            .do(onSuccess: { (post) in
                 self.loadingState.accept(.finished)
+                if self.filter.value.userId == nil || self.filter.value.communityId == nil {
+                    self.changeFilter(userId: post.contentId.userId, communityId: post.contentId.communityId)
+                }
             }, onError: { (error) in
                 self.loadingState.accept(.error(error: error))
             }, onSubscribe: {
