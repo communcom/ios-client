@@ -17,7 +17,7 @@ class PostCell: MyTableViewCell, ListItemCellType {
     
     // MARK: - Subviews
     private func createDescriptionLabel() -> UILabel {
-        UILabel.with(textSize: 12, weight: .medium, textColor: UIColor(hexString: "#A5A7BD")!, numberOfLines: 1)
+        UILabel.with(textSize: CGFloat.adaptive(width: 12.0), weight: .medium, textColor: UIColor(hexString: "#A5A7BD")!, numberOfLines: 1)
     }
     
     lazy var metaView: PostMetaView = {
@@ -30,7 +30,7 @@ class PostCell: MyTableViewCell, ListItemCellType {
     lazy var stateActionButton: UIButton = {
         let stateActionButtonInstance = UIButton(width: CGFloat.adaptive(width: 78.0),
                                                  height: CGFloat.adaptive(height: 30.0),
-                                                 label: "top".localized().uppercaseFirst,
+                                                 label: ((arc4random_uniform(2) == 0) ? "top" : "550.30").localized().uppercaseFirst,
                                                  labelFont: UIFont.systemFont(ofSize: CGFloat.adaptive(width: 12.0), weight: .semibold),
                                                  backgroundColor: #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1),
                                                  textColor: #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1),
@@ -39,20 +39,20 @@ class PostCell: MyTableViewCell, ListItemCellType {
         
         stateActionButtonInstance.setImage(UIImage(named: "icon-post-state-default"), for: .normal)
         
-        stateActionButtonInstance.contentEdgeInsets = UIEdgeInsets(top: CGFloat.adaptive(height: 5.04),
-                                                                 left: CGFloat.adaptive(width: 5.0),
-                                                                 bottom: CGFloat.adaptive(height: 5.0),
-                                                                 right: CGFloat.adaptive(width: 10.0))
+        stateActionButtonInstance.contentEdgeInsets = UIEdgeInsets(top: CGFloat.adaptive(height: 5.0),
+                                                                   left: CGFloat.adaptive(width: 5.0),
+                                                                   bottom: CGFloat.adaptive(height: 5.0),
+                                                                   right: CGFloat.adaptive(width: 5.0))
         
-        stateActionButtonInstance.imageEdgeInsets = UIEdgeInsets(top: CGFloat.adaptive(height: 0.0),
-                                                                 left: CGFloat.adaptive(width: 0.0),
-                                                                 bottom: CGFloat.adaptive(height: 0.0),
-                                                                 right: CGFloat.adaptive(width: 10.0))
-
-        stateActionButtonInstance.titleEdgeInsets = UIEdgeInsets(top: CGFloat.adaptive(height: 5.0),
+//        stateActionButtonInstance.imageEdgeInsets = UIEdgeInsets(top: CGFloat.adaptive(height: 0.0),
+//                                                                 left: CGFloat.adaptive(width: 0.0),
+//                                                                 bottom: CGFloat.adaptive(height: 0.0),
+//                                                                 right: CGFloat.adaptive(width: 10.0))
+//
+        stateActionButtonInstance.titleEdgeInsets = UIEdgeInsets(top: CGFloat.adaptive(height: 0.0),
                                                                  left: CGFloat.adaptive(width: 5.0),
-                                                                 bottom: CGFloat.adaptive(height: 5.0),
-                                                                 right: CGFloat.adaptive(width: -5.0))
+                                                                 bottom: CGFloat.adaptive(height: 0.0),
+                                                                 right: CGFloat.adaptive(width: 0.0))
         
         stateActionButtonInstance.addTarget(self, action: #selector(stateButtonTapped), for: .touchUpInside)
         stateActionButtonInstance.tag = 0
@@ -114,10 +114,12 @@ class PostCell: MyTableViewCell, ListItemCellType {
         selectionStyle = .none
         
         // state & moreAction buttons
-        let actionButtonsStackView = UIStackView(axis: NSLayoutConstraint.Axis.horizontal, spacing: CGFloat.adaptive(width: 11.0))
+        let actionButtonsStackView = UIStackView(axis: .horizontal, spacing: CGFloat.adaptive(width: 8.0))
         actionButtonsStackView.alignment = .fill
         actionButtonsStackView.distribution = .fillProportionally
         
+        let width = stateActionButton.intrinsicContentSize.width + 15.0
+        stateActionButton.widthAnchor.constraint(equalToConstant: width).isActive = true
         actionButtonsStackView.addArrangedSubviews([metaView, stateActionButton, moreActionButton])
         
         contentView.addSubview(actionButtonsStackView)
