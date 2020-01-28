@@ -263,6 +263,13 @@ class TabBarVC: UITabBarController {
             })
             .disposed(by: bag)
         
+        appDelegate.deepLinkPath
+            .filter {!$0.isEmpty}
+            .subscribe(onNext: { (path) in
+                self.navigateWithDeeplinkPath(path)
+            })
+            .disposed(by: bag)
+        
         SocketManager.shared
             .unseenNotificationsRelay
             .subscribe(onNext: { (unseen) in
@@ -276,5 +283,22 @@ class TabBarVC: UITabBarController {
                 }
             })
             .disposed(by: bag)
+    }
+    
+    private func navigateWithDeeplinkPath(_ path: [String]) {
+        guard path.count == 1 || path.count == 3 else {return}
+        if path.count == 1 {
+            if path[0].starts(with: "@") {
+                // user's profile
+                let userId = String(path[0].dropFirst())
+                self.selectedViewController?.showProfileWithUserId(userId)
+            } else {
+                // community
+                let alias = path[0]
+                
+            }
+        } else {
+            
+        }
     }
 }
