@@ -43,7 +43,7 @@ class MyPointCollectionCell: MyCollectionViewCell {
     func setUp(with balance: ResponseAPIWalletGetBalance) {
         self.balance = balance
         
-        if balance.symbol == "CMN" {
+        if balance.symbol == Config.defaultSymbol {
             logoImageView.image = UIImage(named: "tux")
             nameLabel.attributedText = NSAttributedString(string: "Commun", attributes: [.font: UIFont.systemFont(ofSize: 17, weight: .semibold)])
             pointLabel.attributedText = NSMutableAttributedString()
