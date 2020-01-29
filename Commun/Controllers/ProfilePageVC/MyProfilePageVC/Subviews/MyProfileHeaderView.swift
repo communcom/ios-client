@@ -80,33 +80,43 @@ final class MyProfileHeaderView: UserProfileHeaderView {
         imageContainerView.bottomAnchor.constraint(lessThanOrEqualTo: walletView.bottomAnchor, constant: -16)
             .isActive = true
         
-        let equityCommunValueLabel = UILabel.with(text: "equity Commun Value".localized().uppercaseFirst, textSize: 12, weight: .semibold, textColor: .white, numberOfLines: 0)
-        walletView.addSubview(equityCommunValueLabel)
-        equityCommunValueLabel.autoPinEdge(.leading, to: .trailing, of: imageContainerView, withOffset: 10)
-        equityCommunValueLabel.topAnchor.constraint(greaterThanOrEqualTo: walletView.topAnchor, constant: 16)
-            .isActive = true
+        // commun value
+        let communValueContainerView: UIView = {
+            let containerView = UIView(forAutoLayout: ())
+            let equityCommunValueLabel = UILabel.with(text: "equity Commun Value".localized().uppercaseFirst, textSize: 12 * Config.widthRatio, weight: .semibold, textColor: .white, numberOfLines: 0)
+            containerView.addSubview(equityCommunValueLabel)
+            equityCommunValueLabel.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .bottom)
+            
+            containerView.addSubview(self.communValueLabel)
+            self.communValueLabel.autoPinEdge(.top, to: .bottom, of: equityCommunValueLabel, withOffset: 4)
+            self.communValueLabel.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
+            
+            return containerView
+        }()
         
-        walletView.addSubview(communValueLabel)
-        communValueLabel.autoPinEdge(.leading, to: .trailing, of: imageContainerView, withOffset: 10)
-        communValueLabel.autoPinEdge(.top, to: .bottom, of: equityCommunValueLabel, withOffset: 4)
-        communValueLabel.bottomAnchor.constraint(lessThanOrEqualTo: walletView.bottomAnchor, constant: -16)
+        walletView.addSubview(communValueContainerView)
+        communValueContainerView.autoPinEdge(.leading, to: .trailing, of: imageContainerView, withOffset: 10)
+        communValueContainerView.autoAlignAxis(toSuperviewAxis: .horizontal)
+        communValueContainerView.topAnchor.constraint(greaterThanOrEqualTo: walletView.topAnchor, constant: 16)
+            .isActive = true
+        communValueContainerView.bottomAnchor.constraint(lessThanOrEqualTo: walletView.bottomAnchor, constant: -16)
             .isActive = true
         
         let nextView: UIView = {
             let view = UIView(height: 35, backgroundColor: UIColor.white.withAlphaComponent(0.1), cornerRadius: 35 / 2)
             
-            let label = UILabel.with(text: "wallet".localized().uppercaseFirst, textSize: 15, weight: .medium, textColor: .white)
+            let label = UILabel.with(text: "wallet".localized().uppercaseFirst, textSize: 15 * Config.widthRatio, weight: .medium, textColor: .white)
             label.setContentHuggingPriority(.required, for: .horizontal)
             view.addSubview(label)
-            label.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
+            label.autoPinEdge(toSuperviewEdge: .leading, withInset: 16 * Config.widthRatio)
             label.autoAlignAxis(toSuperviewAxis: .horizontal)
             
             let nextArrow = UIImageView(width: 7.5, height: 15, imageNamed: "next-arrow")
             nextArrow.tintColor = .white
             view.addSubview(nextArrow)
             nextArrow.autoAlignAxis(toSuperviewAxis: .horizontal)
-            nextArrow.autoPinEdge(.leading, to: .trailing, of: label, withOffset: 10)
-            nextArrow.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
+            nextArrow.autoPinEdge(.leading, to: .trailing, of: label, withOffset: 10 * Config.widthRatio)
+            nextArrow.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16 * Config.widthRatio)
             
             return view
         }()
@@ -115,10 +125,7 @@ final class MyProfileHeaderView: UserProfileHeaderView {
         nextView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
         nextView.autoAlignAxis(toSuperviewAxis: .horizontal)
         
-        nextView.leadingAnchor.constraint(greaterThanOrEqualTo: equityCommunValueLabel.trailingAnchor, constant: 8)
-            .isActive = true
-        nextView.leadingAnchor.constraint(greaterThanOrEqualTo: communValueLabel.trailingAnchor, constant: 8)
-            .isActive = true
+        nextView.autoPinEdge(.leading, to: .trailing, of: communValueContainerView, withOffset: 4)
         
         followersCountLabel.autoPinEdge(.top, to: .bottom, of: walletView, withOffset: 25)
     }
