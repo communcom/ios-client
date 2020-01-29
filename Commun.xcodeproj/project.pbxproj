@@ -175,6 +175,7 @@
 		ACFA282623AB8A00009B77A6 /* AnalyticsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACFA282523AB8A00009B77A6 /* AnalyticsManager.swift */; };
 		B170AC15228AFBDA00C6FFBC /* SignUpVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5797E0F9225DDA490026C4D5 /* SignUpVC.storyboard */; };
 		B17A970C228002440081B8E0 /* SignUpRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17A970B228002440081B8E0 /* SignUpRouter.swift */; };
+		B1A6573E23DB535000EB1824 /* ConfirmPasscodeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A6573B23DB535000EB1824 /* ConfirmPasscodeVC.swift */; };
 		B1A6EE5122D5C8E300A5D6F0 /* GoogleService-Info-Dev.plist in Resources */ = {isa = PBXBuildFile; fileRef = B1A6EE5022D5C8E100A5D6F0 /* GoogleService-Info-Dev.plist */; };
 		B1A8AC1B22E6FF5400032030 /* BlankButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A8AC1A22E6FF5400032030 /* BlankButton.swift */; };
 		B1C3712C2383D0F3000BAE2F /* ProfileEdit.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B1C3712A2383D0F2000BAE2F /* ProfileEdit.storyboard */; };
@@ -214,6 +215,12 @@
 		B1EA02F22289882A00835244 /* SF-Pro-Text-RegularItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 57F9CAA1225B3AAA00AC9ACA /* SF-Pro-Text-RegularItalic.otf */; };
 		B1EA02F32289882A00835244 /* SF-Pro-Text-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 57F9CA94225B3A9900AC9ACA /* SF-Pro-Text-Semibold.otf */; };
 		B1EA02F42289882A00835244 /* SF-Pro-Text-SemiboldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 57F9CAA6225B3AAF00AC9ACA /* SF-Pro-Text-SemiboldItalic.otf */; };
+		B1F87FEB23D1C6B60097DCA3 /* WalletSendPointsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1F87FEA23D1C6B60097DCA3 /* WalletSendPointsVC.swift */; };
+		B1F87FF223D1C6D00097DCA3 /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1F87FEE23D1C6CF0097DCA3 /* Transaction.swift */; };
+		B1F87FF323D1C6D00097DCA3 /* SendPointsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1F87FEF23D1C6D00097DCA3 /* SendPointsModel.swift */; };
+		B1F87FF723D1C6ED0097DCA3 /* CMToolbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1F87FF623D1C6ED0097DCA3 /* CMToolbarView.swift */; };
+		B1F87FFA23D1C70A0097DCA3 /* TransactionCompletedVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1F87FF923D1C70A0097DCA3 /* TransactionCompletedVC.swift */; };
+		B1F87FFD23D1C7220097DCA3 /* TransactionCompletedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1F87FFC23D1C7210097DCA3 /* TransactionCompletedView.swift */; };
 		B1FA77C7238BBF64006E57D1 /* Bool+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1FA77C6238BBF64006E57D1 /* Bool+Extensions.swift */; };
 		B1FA77D5238BF7A6006E57D1 /* WelcomeVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B1FA77D4238BF7A6006E57D1 /* WelcomeVC.storyboard */; };
 		B1FA77D9238BF7E0006E57D1 /* WelcomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1FA77D6238BF7DF006E57D1 /* WelcomeVC.swift */; };
@@ -693,6 +700,7 @@
 		AE43B2305FC441D96462E0AB /* Pods-Commun.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Commun.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Commun/Pods-Commun.debug.xcconfig"; sourceTree = "<group>"; };
 		B12684EF22C1E56B0046C838 /* Commun.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Commun.entitlements; sourceTree = "<group>"; };
 		B17A970B228002440081B8E0 /* SignUpRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpRouter.swift; sourceTree = "<group>"; };
+		B1A6573B23DB535000EB1824 /* ConfirmPasscodeVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfirmPasscodeVC.swift; sourceTree = "<group>"; };
 		B1A6EE5022D5C8E100A5D6F0 /* GoogleService-Info-Dev.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-Dev.plist"; sourceTree = "<group>"; };
 		B1A8AC1A22E6FF5400032030 /* BlankButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlankButton.swift; sourceTree = "<group>"; };
 		B1C3712A2383D0F2000BAE2F /* ProfileEdit.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ProfileEdit.storyboard; sourceTree = "<group>"; };
@@ -704,6 +712,12 @@
 		B1D7AD5923A10659007D1A13 /* SignInViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInViewModel.swift; sourceTree = "<group>"; };
 		B1D7AD5B23A10664007D1A13 /* QRScannerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QRScannerViewController.swift; sourceTree = "<group>"; };
 		B1EA02D42289734800835244 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		B1F87FEA23D1C6B60097DCA3 /* WalletSendPointsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletSendPointsVC.swift; sourceTree = "<group>"; };
+		B1F87FEE23D1C6CF0097DCA3 /* Transaction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Transaction.swift; sourceTree = "<group>"; };
+		B1F87FEF23D1C6D00097DCA3 /* SendPointsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendPointsModel.swift; sourceTree = "<group>"; };
+		B1F87FF623D1C6ED0097DCA3 /* CMToolbarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CMToolbarView.swift; sourceTree = "<group>"; };
+		B1F87FF923D1C70A0097DCA3 /* TransactionCompletedVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionCompletedVC.swift; sourceTree = "<group>"; };
+		B1F87FFC23D1C7210097DCA3 /* TransactionCompletedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionCompletedView.swift; sourceTree = "<group>"; };
 		B1FA77C6238BBF64006E57D1 /* Bool+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Bool+Extensions.swift"; sourceTree = "<group>"; };
 		B1FA77D4238BF7A6006E57D1 /* WelcomeVC.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = WelcomeVC.storyboard; sourceTree = "<group>"; };
 		B1FA77D6238BF7DF006E57D1 /* WelcomeVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeVC.swift; sourceTree = "<group>"; };
@@ -1788,6 +1802,52 @@
 			path = ProfileEdit;
 			sourceTree = "<group>";
 		};
+		B1F87FE923D1C69D0097DCA3 /* WalletSendPoints */ = {
+			isa = PBXGroup;
+			children = (
+				B1F87FEC23D1C6C30097DCA3 /* Models */,
+				B1F87FF523D1C6DB0097DCA3 /* Subviews */,
+				B1F87FF823D1C6FC0097DCA3 /* TransactionCompleted */,
+				B1F87FEA23D1C6B60097DCA3 /* WalletSendPointsVC.swift */,
+			);
+			path = WalletSendPoints;
+			sourceTree = "<group>";
+		};
+		B1F87FEC23D1C6C30097DCA3 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				B1F87FEF23D1C6D00097DCA3 /* SendPointsModel.swift */,
+				B1F87FEE23D1C6CF0097DCA3 /* Transaction.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		B1F87FF523D1C6DB0097DCA3 /* Subviews */ = {
+			isa = PBXGroup;
+			children = (
+				B1F87FF623D1C6ED0097DCA3 /* CMToolbarView.swift */,
+			);
+			path = Subviews;
+			sourceTree = "<group>";
+		};
+		B1F87FF823D1C6FC0097DCA3 /* TransactionCompleted */ = {
+			isa = PBXGroup;
+			children = (
+				B1F87FFB23D1C7170097DCA3 /* Subviews */,
+				B1F87FF923D1C70A0097DCA3 /* TransactionCompletedVC.swift */,
+			);
+			path = TransactionCompleted;
+			sourceTree = "<group>";
+		};
+		B1F87FFB23D1C7170097DCA3 /* Subviews */ = {
+			isa = PBXGroup;
+			children = (
+				B1A6573B23DB535000EB1824 /* ConfirmPasscodeVC.swift */,
+				B1F87FFC23D1C7210097DCA3 /* TransactionCompletedView.swift */,
+			);
+			path = Subviews;
+			sourceTree = "<group>";
+		};
 		B1FA77BF238BBEF4006E57D1 /* Subviews */ = {
 			isa = PBXGroup;
 			children = (
@@ -2143,6 +2203,7 @@
 		BC4AD64A23B094D2008546A4 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				B1F87FE923D1C69D0097DCA3 /* WalletSendPoints */,
 				BC4AD66923B2070D008546A4 /* WalletConvertVCs */,
 				BC4AD64B23B094E9008546A4 /* SendPointListVC.swift */,
 				BC3AAF1023E02159005E8DAB /* BuyCommunVC */,
@@ -2919,6 +2980,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B1F87FF223D1C6D00097DCA3 /* Transaction.swift in Sources */,
 				BCD00FB62373D280004A3952 /* CommunityMembersHeaderView.swift in Sources */,
 				3BEC38EC230FED2B00662374 /* TextAttachment.swift in Sources */,
 				3B3C8B862347866D00D8BADB /* ContentTextView+Utilities.swift in Sources */,
@@ -2979,6 +3041,7 @@
 				3B06863423470A33008953C5 /* BasicEditorTextView.swift in Sources */,
 				3B0506EE22D7309900B4E4A3 /* KeysVC.swift in Sources */,
 				BC52913523765EAB0022EC7F /* RightAlignedIconButton.swift in Sources */,
+				B1F87FF323D1C6D00097DCA3 /* SendPointsModel.swift in Sources */,
 				3B82D0F722D8D56A004EE848 /* EnableBiometricsVC.swift in Sources */,
 				BCB4A4C72370188B005EDAAD /* SubscribersCell.swift in Sources */,
 				3BC613A52341AAAF00075570 /* CommunCheckbox.swift in Sources */,
@@ -3108,10 +3171,12 @@
 				BCD00FBD23750859004A3952 /* PostPageNavigationBar.swift in Sources */,
 				BCA9711D2360347D00AE37E1 /* CommunityPageVC.swift in Sources */,
 				BC465927238E563F00AF9C29 /* BackUpKeysVC.swift in Sources */,
+				B1F87FFD23D1C7220097DCA3 /* TransactionCompletedView.swift in Sources */,
 				BC016D43235DA0D400F1319F /* PostCell.swift in Sources */,
 				BC69F7CF236FC63F0097F870 /* BaseViewModel.swift in Sources */,
 				BC619B11237268910005BB94 /* CommunitiesListFetcher.swift in Sources */,
 				BC597A8E238D0CEC00103F4F /* FTUEChosenCommunityCell.swift in Sources */,
+				B1F87FFA23D1C70A0097DCA3 /* TransactionCompletedVC.swift in Sources */,
 				57E515B62270F7B200A6F6DB /* SettingsButtonCell.swift in Sources */,
 				3B5EDE3022DF92D000897BF3 /* SettingsOptionsCell.swift in Sources */,
 				57A1CA632270FC4700E2A1E3 /* LanguageVC.swift in Sources */,
@@ -3127,6 +3192,8 @@
 				3B289B9C2346E7FC00598407 /* UIImage+PureLayout.swift in Sources */,
 				BC31BA55235EBD7C0007D89A /* ProfileVC.swift in Sources */,
 				BC4AD67423B314F2008546A4 /* WalletConvertSellCommunVC.swift in Sources */,
+				BC4AD67423B314F2008546A4 /* WalletSellCommunVC.swift in Sources */,
+				B1A6573E23DB535000EB1824 /* ConfirmPasscodeVC.swift in Sources */,
 				BC6B7659236AE14500A7AF2A /* CommunityPageCell.swift in Sources */,
 				BC597A7E238CC53D00103F4F /* FTUECommunitiesVC.swift in Sources */,
 				BCE9390B234DBBC300226E39 /* ResponseAPIContentBlock.swift in Sources */,
@@ -3144,6 +3211,7 @@
 				3B5EDE3722E07DCC00897BF3 /* SettingsVC+SectionHeader.swift in Sources */,
 				BC4692BF2390D1E10064A38B /* FeedPageVC.swift in Sources */,
 				BC4692DB2394B0540064A38B /* ProfileCellDelegate.swift in Sources */,
+				B1F87FF723D1C6ED0097DCA3 /* CMToolbarView.swift in Sources */,
 				BC4692D22391160E0064A38B /* LeaderCellDelegate.swift in Sources */,
 				3B197C532269BE0E008CF10D /* SegmentioExtension.swift in Sources */,
 				BC016D44235DA0D400F1319F /* PostCell+Actions.swift in Sources */,
@@ -3239,6 +3307,7 @@
 				BCA9712823608ABD00AE37E1 /* UsersStackView.swift in Sources */,
 				BC016D46235DA0D400F1319F /* PlaceholderPostCell.swift in Sources */,
 				3B289B9A2346E6D800598407 /* UILabel+PureLayout.swift in Sources */,
+				B1F87FEB23D1C6B60097DCA3 /* WalletSendPointsVC.swift in Sources */,
 				3B2F2269226892C5006B589E /* NotificationCell.swift in Sources */,
 				BC529142237941920022EC7F /* CommentTextView.swift in Sources */,
 				BC3694F523698FEE00B2E078 /* EditorVC+Actions.swift in Sources */,

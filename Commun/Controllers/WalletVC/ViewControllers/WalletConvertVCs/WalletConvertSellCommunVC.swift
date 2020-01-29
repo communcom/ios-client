@@ -38,13 +38,21 @@ class WalletConvertSellCommunVC: WalletConvertVC {
     }
     
     override func setUpBuyPrice() {
-        rightTextField.text = stringFromNumber(viewModel.buyPrice.value)
+        if let history = historyItem, !leftTextField.isFirstResponder {
+            rightTextField.text = stringFromNumber(history.meta.exchangeAmount!)
+        } else {
+            rightTextField.text = stringFromNumber(viewModel.buyPrice.value)
+        }
         
         convertButton.isEnabled = shouldEnableConvertButton()
     }
     
     override func setUpSellPrice() {
-        leftTextField.text = stringFromNumber(viewModel.sellPrice.value)
+        if let history = historyItem, !leftTextField.isFirstResponder {
+            leftTextField.text = stringFromNumber(history.quantityValue)
+        } else if viewModel.sellPrice.value > 0 {
+            leftTextField.text = stringFromNumber(viewModel.sellPrice.value)
+        }
         
         convertButton.isEnabled = shouldEnableConvertButton()
     }
@@ -185,9 +193,18 @@ class WalletConvertSellCommunVC: WalletConvertVC {
                     communBalance.isWaitingForTransaction = true
                     communBalance.notifyChanged()
                 }
-                
-                // TODO: - Show check
-                self.back()
+
+                let symbol: Symbol = Symbol(sell: Config.defaultSymbol, buy: Config.defaultSymbol)
+
+                let transaction = Transaction(amount: CGFloat(value * self.viewModel.rate.value / 10),
+                                              actionType: .sell,
+                                              symbol: symbol,
+                                              operationDate: Date())
+
+                let completedVC = TransactionCompletedVC(transaction: transaction)
+                self.show(completedVC, sender: nil)
+                self.hideHud()
+//                strongSelf.setTabBarHidden(true)
                 
                 return RestAPIManager.instance.waitForTransactionWith(id: transactionId)
             })

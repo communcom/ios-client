@@ -49,14 +49,14 @@ class PostPageVC: CommentsViewController {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: animated)
         tabBarController?.tabBar.isHidden = true
-        let tabBarVC = (tabBarController as? TabBarVC)
-        tabBarVC?.setTabBarHiden(true)
+        
+        setTabBarHidden(true)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        let tabBarVC = (tabBarController as? TabBarVC)
-        tabBarVC?.setTabBarHiden(false)
+        
+        setTabBarHidden(false)
     }
     
     // MARK: - Methods

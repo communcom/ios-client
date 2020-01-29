@@ -67,14 +67,19 @@ class CommunWalletVC: TransferHistoryVC {
     
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
+        self.setTabBarHidden(false)
+        
         super.viewWillAppear(animated)
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         self.navigationController?.setNavigationBarHidden(false, animated: animated)
+
         super.viewWillDisappear(animated)
     }
+        
     
+    // MARK: - Custom Functions
     override func setUp() {
         super.setUp()
         headerView.backButton.addTarget(self, action: #selector(back), for: .touchUpInside)
@@ -119,10 +124,6 @@ class CommunWalletVC: TransferHistoryVC {
         
     }
 
-//    override var preferredStatusBarStyle: UIStatusBarStyle {
-//        .lightContent
-//    }
-
     override func bindItems() {
         super.bindItems()
         balancesSubject
@@ -147,7 +148,7 @@ class CommunWalletVC: TransferHistoryVC {
         (viewModel as! WalletViewModel).subscriptionsVM.items
             .map({ (items) -> [ResponseAPIContentGetSubscriptionsUser?] in
                 let items = items.compactMap {$0.userValue}
-                return [nil] + items
+                return items//[nil] + items // Temp hide Add friends
             })
             .bind(to: sendPointsCollectionView.rx.items(cellIdentifier: "\(SendPointCollectionCell.self)", cellType: SendPointCollectionCell.self)) { _, model, cell in
                 cell.setUp(with: model)
@@ -161,14 +162,11 @@ class CommunWalletVC: TransferHistoryVC {
     
     override func bindItemSelected() {
         super.bindItemSelected()
+        
         sendPointsCollectionView.rx.itemSelected
             .subscribe(onNext: { (indexPath) in
-                if indexPath.row == 0 {
-                    self.addFriend()
-                } else {
-                    guard let user = (self.viewModel as! WalletViewModel).subscriptionsVM.items.value[safe: indexPath.row - 1]?.userValue else {return}
-                    self.sendPoint(to: user)
-                }
+                guard let user = (self.viewModel as! WalletViewModel).subscriptionsVM.items.value[safe: indexPath.row]?.userValue else {return}
+                self.sendPoint(to: user)
             })
             .disposed(by: disposeBag)
     }
@@ -215,9 +213,6 @@ class CommunWalletVC: TransferHistoryVC {
     }
 
     // MARK: - Actions
-    @objc func sendButtonDidTouch() {
-        
-    }
     
     @objc func buyButtonDidTouch() {
         let vc = BuyCommunVC()
@@ -235,6 +230,50 @@ class CommunWalletVC: TransferHistoryVC {
     func createConvertVC() -> WalletConvertVC? {
         WalletConvertSellCommunVC(balances: (self.viewModel as! WalletViewModel).balancesVM.items.value)
     }
+
+    func routeToConvertScene(withTransacion transaction: Transaction) {
+        if let history = transaction.history {
+            let walletConvertVC = history.symbol == Config.defaultSymbol ?
+                WalletConvertSellCommunVC(balances: (self.viewModel as! WalletViewModel).balancesVM.items.value, historyItem: history) :
+                WalletConvertBuyCommunVC(balances: (self.viewModel as! WalletViewModel).balancesVM.items.value, symbol: history.symbol, historyItem: history)
+
+            walletConvertVC.currentSymbol = history.symbol == Config.defaultSymbol ? history.point.symbol! : Config.defaultSymbol
+            routeToConvertScene(walletConvertVC: walletConvertVC)
+        }
+    }
+
+    func routeToConvertScene(walletConvertVC: WalletConvertVC) {
+//        walletConvertVC.completion = {
+//            self.viewModel.reload()
+//        }
+
+        let nc = navigationController as? BaseNavigationController
+        nc?.shouldResetNavigationBarOnPush = false
+        show(walletConvertVC, sender: nil)
+        nc?.shouldResetNavigationBarOnPush = true
+    }
+
+    func createConvertVC(withHistoryItem historyItem: ResponseAPIWalletGetTransferHistoryItem? = nil) -> WalletConvertVC? {
+        WalletConvertSellCommunVC(balances: (self.viewModel as! WalletViewModel).balancesVM.items.value, historyItem: historyItem)
+    }
+
+    // Select balance
+    @objc func sendButtonDidTouch(_ sender: UIButton) {
+        routeToSendPointsScene()
+    }
+
+    // Select recipient from friends
+    func sendPoint(to user: ResponseAPIContentGetSubscriptionsUser) {
+        routeToSendPointsScene(withUser: user)
+    }
+
+    private func routeToSendPointsScene(withUser user: ResponseAPIContentGetSubscriptionsUser? = nil) {
+        showIndetermineHudWithMessage("loading".localized().uppercaseFirst)
+
+        let walletSendPointsVC = WalletSendPointsVC(withSelectedBalanceSymbol: headerView.sendButton.accessibilityHint ?? Config.defaultSymbol, andUser: user)
+        show(walletSendPointsVC, sender: nil)
+        hideHud()
+    }
     
     @objc func moreActionsButtonDidTouch(_ sender: CommunButton) {
         
@@ -244,6 +283,7 @@ class CommunWalletVC: TransferHistoryVC {
         let vc = SendPointListVC { (user) in
             self.sendPoint(to: user)
         }
+        
         let nc = BaseNavigationController(rootViewController: vc)
         present(nc, animated: true, completion: nil)
     }
@@ -252,14 +292,11 @@ class CommunWalletVC: TransferHistoryVC {
         let vc = BalancesVC { balance in
             self.openOtherBalancesWalletVC(withSelectedBalance: balance)
         }
+        
         let nc = BaseNavigationController(rootViewController: vc)
         present(nc, animated: true, completion: nil)
     }
-    
-    func sendPoint(to user: ResponseAPIContentGetSubscriptionsUser) {
-        showAlert(title: "TODO: Send point", message: user.userId)
-    }
-    
+        
     func addFriend() {
         showAlert(title: "TODO: Add friend", message: "add friend")
     }

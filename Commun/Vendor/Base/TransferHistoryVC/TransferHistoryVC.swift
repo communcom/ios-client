@@ -12,6 +12,7 @@ class TransferHistoryVC: ListViewController<ResponseAPIWalletGetTransferHistoryI
     // MARK: - Properties
     var lastOffset: CGPoint?
     
+    
     // MARK: - Initializers
     init(viewModel: TransferHistoryViewModel = TransferHistoryViewModel()) {
         super.init(viewModel: viewModel)
@@ -92,7 +93,89 @@ class TransferHistoryVC: ListViewController<ResponseAPIWalletGetTransferHistoryI
     }
     
     override func bindItemSelected() {
-        // do nothing
+        tableView.rx.itemSelected
+            .subscribe(onNext: { [weak self] indexPath in
+                guard let strongSelf = self else { return }
+                
+                if let selectedCell = strongSelf.tableView.cellForRow(at: indexPath) as? TransferHistoryItemCell, let selectedItem = selectedCell.item {
+                    strongSelf.setTabBarHidden(true)
+                    strongSelf.showIndetermineHudWithMessage("loading".localized().uppercaseFirst)
+                    
+                    // .history type
+                    var friend: Friend?
+                    var amount: CGFloat = 0.0
+                    var symbol: Symbol = Symbol(sell: selectedItem.symbol, buy: selectedItem.symbol)
+                    
+                    switch selectedItem.meta.actionType {
+                    case "transfer":
+                        let receiver = selectedItem.receiver
+                        friend = Friend(id: receiver.userId, name: receiver.username ?? Config.defaultSymbol, avatarURL: receiver.avatarUrl)
+                        amount = -1 * CGFloat(selectedItem.quantityValue)
+                        
+                    case "convert":
+                        amount = CGFloat(selectedItem.meta.exchangeAmount ?? 0.0)
+                        
+                        // Sell `MEME` -> buy `CMN`
+                        if selectedItem.symbol != Config.defaultSymbol {
+                            symbol.buy = Config.defaultSymbol
+                        }
+                        
+                        // Sell `CMN` -> buy `MEME`
+                        else {
+                            symbol.sell = Config.defaultSymbol
+                        }
+                        
+                    default:
+                        amount = CGFloat(selectedItem.quantityValue * (selectedItem.meta.actionType == "transfer" ? -1 : 1))
+                    }
+                    
+                    let transaction = Transaction(buyBalance: nil,
+                                                  sellBalance: nil,
+                                                  friend: friend,
+                                                  amount: amount,
+                                                  history: selectedItem,
+                                                  actionType: TransActionType(rawValue: selectedItem.meta.actionType ?? "send")!,
+                                                  symbol: symbol,
+                                                  operationDate: selectedItem.timestamp.convert(toDateFormat: .nextSmsDateType))
+                    
+                    let completedVC = TransactionCompletedVC(transaction: transaction)
+                    completedVC.modalPresentationStyle = .overCurrentContext
+                    completedVC.modalTransitionStyle = .crossDissolve
+                    strongSelf.present(completedVC, animated: true, completion: nil)
+                    
+                    strongSelf.hideHud()
+                    
+                    completedVC.completionDismiss = {
+                        strongSelf.setTabBarHidden(false)
+                    }
+                    
+                    completedVC.completionRepeat = { [weak self] in
+                        guard let strongSelf = self else { return }
+                        
+                        let walletSendPointsVC = WalletSendPointsVC(withSelectedBalanceSymbol: transaction.symbol.sell, andUser: nil)
+                        walletSendPointsVC.dataModel.transaction = transaction
+                        
+                        if let communWalletVC = strongSelf.navigationController?.viewControllers.filter({ $0 is CommunWalletVC }).first as? CommunWalletVC {
+                            strongSelf.navigationController?.popToViewController(communWalletVC, animated: false)
+
+                            switch selectedItem.meta.actionType {
+                            case "transfer":
+                                communWalletVC.show(walletSendPointsVC, sender: nil)
+
+                            case "convert":
+                                communWalletVC.routeToConvertScene(withTransacion: transaction)
+                                
+                            default:
+                                break
+                            }
+
+                            strongSelf.hideHud()
+//                            strongSelf.setTabBarHidden(true)
+                         }
+                    }
+                }
+            })
+            .disposed(by: disposeBag)
     }
     
     override func handleListEmpty() {

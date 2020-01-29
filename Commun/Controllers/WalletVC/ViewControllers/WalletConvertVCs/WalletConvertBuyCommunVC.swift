@@ -26,7 +26,7 @@ class WalletConvertBuyCommunVC: WalletConvertVC {
     override func bind() {
         super.bind()
         viewModel.items
-            .map {$0.filter {$0.symbol != "CMN"}}
+            .map {$0.filter {$0.symbol != Config.defaultSymbol}}
             .subscribe(onNext: { (items) in
                 self.carousel.balances = items
                 self.carousel.currentIndex = items.firstIndex(where: {$0.symbol == self.currentSymbol}) ?? 0
@@ -58,13 +58,21 @@ class WalletConvertBuyCommunVC: WalletConvertVC {
     }
     
     override func setUpBuyPrice() {
-        leftTextField.text = stringFromNumber(viewModel.buyPrice.value)
+        if let history = historyItem, !leftTextField.isFirstResponder {
+            leftTextField.text = stringFromNumber(history.quantityValue)
+        } else if viewModel.buyPrice.value > 0 {
+            leftTextField.text = stringFromNumber(viewModel.buyPrice.value)
+        }
         
         convertButton.isEnabled = shouldEnableConvertButton()
     }
     
     override func setUpSellPrice() {
-        rightTextField.text = stringFromNumber(viewModel.sellPrice.value)
+        if let history = historyItem, !leftTextField.isFirstResponder {
+            rightTextField.text = stringFromNumber(history.meta.exchangeAmount!)
+        } else {
+            rightTextField.text = stringFromNumber(viewModel.sellPrice.value)
+        }
         
         convertButton.isEnabled = shouldEnableConvertButton()
     }
@@ -103,6 +111,7 @@ class WalletConvertBuyCommunVC: WalletConvertVC {
                     self.viewModel.sellPrice.accept(0)
                     return
                 }
+                
                 self.getSellPrice()
             })
             .disposed(by: disposeBag)
@@ -141,7 +150,7 @@ class WalletConvertBuyCommunVC: WalletConvertVC {
         viewModel.getSellPrice(quantity: "\(value) \(balance.symbol)")
     }
     
-    override func shouldEnableConvertButton() -> Bool {
+     override func shouldEnableConvertButton() -> Bool {
         guard let sellAmount = NumberFormatter().number(from: self.leftTextField.text ?? "0")?.doubleValue
             else {return false}
         guard let currentBalance = self.currentBalance else {return false}
@@ -178,8 +187,20 @@ class WalletConvertBuyCommunVC: WalletConvertVC {
                     communBalance.isWaitingForTransaction = true
                     communBalance.notifyChanged()
                 }
-                // TODO: - Show check
-                self.back()
+
+                let symbol: Symbol = Symbol(sell: Config.defaultSymbol, buy: Config.defaultSymbol)
+                let transaction = Transaction(buyBalance: nil,
+                                              sellBalance: nil,
+                                              friend: nil,
+                                              amount: CGFloat(value),
+                                              history: nil,
+                                              actionType: .buy,
+                                              symbol: symbol,
+                                              operationDate: Date())
+                
+                let completedVC = TransactionCompletedVC(transaction: transaction)
+                self.show(completedVC, sender: nil)
+
                 
                 return RestAPIManager.instance.waitForTransactionWith(id: transactionId)
             })

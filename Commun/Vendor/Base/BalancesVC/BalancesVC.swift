@@ -45,7 +45,7 @@ class BalancesVC: SubsViewController<ResponseAPIWalletGetBalance, BalanceCell> {
     }
     
     override func modelSelected(_ item: ResponseAPIWalletGetBalance) {
-        if !canChooseCommun && item.symbol == "CMN" {return}
+        if !canChooseCommun && item.symbol == Config.defaultSymbol {return}
         self.completion?(item)
         self.dismiss(animated: true, completion: nil)
     }
