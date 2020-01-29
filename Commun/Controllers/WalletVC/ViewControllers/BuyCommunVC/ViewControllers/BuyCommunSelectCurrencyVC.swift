@@ -9,5 +9,10 @@
 import Foundation
 
 class BuyCommunSelectCurrencyVC: CurrenciesVC {
+    var completion: ((ResponseAPIGetCurrency) -> Void)?
     
+    override func modelSelected(_ item: ResponseAPIGetCurrency) {
+        completion?(item)
+        back()
+    }
 }

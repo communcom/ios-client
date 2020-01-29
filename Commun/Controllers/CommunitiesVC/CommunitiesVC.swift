@@ -10,7 +10,7 @@ import Foundation
 
 class CommunitiesVC: SubsViewController<ResponseAPIContentGetCommunity, CommunityCell>, CommunityCellDelegate {
     // MARK: - Properties
-    override var isSearchEnabled: Bool {false}
+//    override var isSearchEnabled: Bool {false}
     
     // MARK: - Initializers
     init(type: GetCommunitiesType, userId: String? = nil) {

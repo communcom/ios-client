@@ -50,6 +50,7 @@ class BuyCommunVC: BaseViewController {
             self.currencyNameLabel.autoAlignAxis(.horizontal, toSameAxisOf: self.currencyAvatarImageView)
             
             let dropdownButton = UIButton.circleGray(imageName: "drop-down")
+            dropdownButton.addTarget(self, action: #selector(buttonDropDownDidTouch), for: .touchUpInside)
             view.addSubview(dropdownButton)
             dropdownButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
             dropdownButton.autoAlignAxis(.horizontal, toSameAxisOf: self.currencyAvatarImageView)
@@ -174,14 +175,14 @@ class BuyCommunVC: BaseViewController {
             .subscribe(onNext: { (state) in
                 switch state {
                 case .loading:
-                    self.scrollView.showLoader()
+                    self.scrollView.contentView.showLoader()
                 case .finished:
-                    self.scrollView.hideLoader()
+                    self.scrollView.contentView.hideLoader()
                 case .error(let error):
                     #if !APPSTORE
                     self.showError(error)
                     #endif
-                    self.scrollView.hideLoader()
+                    self.scrollView.contentView.hideLoader()
                     self.view.showErrorView {
                         self.view.hideErrorView()
                         self.viewModel.currenciesVM.reload()
@@ -229,5 +230,14 @@ class BuyCommunVC: BaseViewController {
         
         // name
         currencyNameLabel.text = currency.name.uppercased()
+    }
+    
+    // MARK: - Actions
+    @objc func buttonDropDownDidTouch() {
+        let vc = BuyCommunSelectCurrencyVC()
+        vc.completion = {currency in
+            self.viewModel.currentCurrency.accept(currency)
+        }
+        show(vc, sender: self)
     }
 }

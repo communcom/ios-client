@@ -21,34 +21,6 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
     var tableViewMargin: UIEdgeInsets {.zero}
     var pullToRefreshAdded = false
     
-    // Search manager
-    var isSearchEnabled: Bool {false}
-    var searchPlaceholder: String? {nil}
-    lazy var searchController: UISearchController? = {
-        if !isSearchEnabled {return nil}
-        let sc = UISearchController(searchResultsController: nil)
-        
-        if let textfield = sc.searchBar.value(forKey: "searchField") as? UITextField {
-            //textfield.textColor = // Set text color
-            if let backgroundview = textfield.subviews.first {
-
-                // Background color
-                backgroundview.backgroundColor = .f3f5fa
-
-                // Rounded corner
-                backgroundview.cornerRadius = sc.searchBar.height
-            }
-            
-            textfield.attributedPlaceholder = NSAttributedString(string: "search".localized().uppercaseFirst, attributes: [.font: UIFont.systemFont(ofSize: 17), .foregroundColor: UIColor.a7a9bf])
-            
-            if let iconView = textfield.leftView as? UIImageView {
-                iconView.tintColor = .a7a9bf
-            }
-        }
-        
-        return sc
-    }()
-    
     // MARK: - Subviews
     lazy var tableView = createTableView()
     
@@ -72,15 +44,6 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
     // MARK: - Methods
     override func setUp() {
         super.setUp()
-        // searchController
-        if isSearchEnabled {
-            // searchController
-            extendedLayoutIncludesOpaqueBars = true
-            searchController?.obscuresBackgroundDuringPresentation = false
-            navigationItem.searchController = searchController
-            definesPresentationContext = true
-        }
-        
         tableView.rowHeight = UITableView.automaticDimension
         
         // registerCell
@@ -127,10 +90,6 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
         bindItems()
         bindItemSelected()
         bindScrollView()
-        
-        if isSearchEnabled {
-            bindSearchController()
-        }
     }
     
     func bindItems() {
@@ -164,25 +123,6 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
                         self?.showAlert(title: "Error", message: "\(error)")
                     #endif
                 }
-            })
-            .disposed(by: disposeBag)
-    }
-    
-    func bindSearchController() {
-        searchController?.searchBar.rx.text.orEmpty
-            .skip(1)
-            .throttle(0.5, scheduler: MainScheduler.instance)
-            .distinctUntilChanged()
-            .flatMapLatest {Observable<String>.just($0)}
-            .subscribe(onNext: { (query) in
-                if query.isEmpty {
-                    self.viewModel.fetcher.search = nil
-                    self.viewModel.reload()
-                    return
-                }
-                
-                self.viewModel.fetcher.search = query
-                self.viewModel.reload()
             })
             .disposed(by: disposeBag)
     }
