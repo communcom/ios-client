@@ -82,12 +82,11 @@ class CommunWalletHeaderView: MyView {
     }
     
     func reloadData() {
-        guard let balances = dataSource?.data(forWalletHeaderView: self),
-            let point = balances.first(where: {$0.symbol == Config.defaultSymbol})?.balanceValue
+        guard let balances = dataSource?.data(forWalletHeaderView: self)
         else {return}
         // set up with commun value
-        titleLabel.text = "enquity Value Commun".localized().uppercaseFirst
-        pointLabel.text = "\(point.currencyValueFormatted)"
+        titleLabel.text = "enquity Commun Value".localized().uppercaseFirst
+        pointLabel.text = "\(balances.enquityCommunValue.currencyValueFormatted)"
     }
     
     func setIsCollapsed(_ value: Bool) {
