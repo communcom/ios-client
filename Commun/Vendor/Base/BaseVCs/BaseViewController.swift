@@ -35,6 +35,12 @@ class BaseViewController: UIViewController {
         
     }
     
+    func setTabBarHidden(_ value: Bool) {
+        if let tabBarVC = tabBarController as? TabBarVC {
+            tabBarVC.setTabBarHiden(value)
+        }
+    }
+    
     func load(url: String) {
         if let url = URL(string: url) {
             let config = SFSafariViewController.Configuration()

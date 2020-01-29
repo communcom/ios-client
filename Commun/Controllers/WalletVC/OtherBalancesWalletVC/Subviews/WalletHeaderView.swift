@@ -103,7 +103,6 @@ class WalletHeaderView: CommunWalletHeaderView {
         }
         
         contentView.bringSubviewToFront(backButton)
-        contentView.bringSubviewToFront(optionsButton)
     }
     
     override func collapse() {
@@ -166,7 +165,7 @@ extension WalletHeaderView: CircularCarouselDataSource, CircularCarouselDelegate
         
         let imageView = view?.viewWithTag(1) as! MyAvatarImageView
         
-        if balance.symbol == "CMN" {
+        if balance.symbol == Config.defaultSymbol {
             imageView.image = UIImage(named: "tux")
         } else {
             imageView.setAvatar(urlString: balance.logo, namePlaceHolder: balance.name ?? balance.symbol)
@@ -209,5 +208,8 @@ extension WalletHeaderView: CircularCarouselDataSource, CircularCarouselDelegate
     
     func carousel(_ carousel: CircularCarousel, willBeginScrollingToIndex index: Int) {
         setSelectedIndex(index, shouldUpdateCarousel: false)
+        
+        guard let balance = dataSource?.data(forWalletHeaderView: self)?[safe: index] else { return }
+        sendButton.accessibilityHint = balance.symbol
     }
 }

@@ -151,6 +151,7 @@
 "no post to show"                               =   "no post to show";
 "no posts"                                      =   "no posts";
 "notifications"                                 =   "notifications";
+"no biometry on your device"                    =   "no biometry on your device";
 
 
 // O
@@ -212,6 +213,7 @@
 "send post"                                     =   "post";
 "send report"                                   =   "report";
 "social network"                                =   "social network";
+"send points"                                   =   "Send Points";
 
 
 // T
@@ -263,6 +265,7 @@
 "welcome-item-2"                                =   "Create posts, comments, like and get\n Community Points";
 "welcome-item-3"                                =   "Communities has no single owner\nand fully belongs to its members";
 "write a comment"                               =   "write a comment";
+"wrong code"                                    =   "wrong code";
 
 
 // Y
