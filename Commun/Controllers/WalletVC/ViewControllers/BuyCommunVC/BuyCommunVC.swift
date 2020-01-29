@@ -8,6 +8,7 @@
 
 import Foundation
 import SafariServices
+import RxSwift
 
 class BuyCommunVC: BaseViewController {
     // MARK: - Properties
@@ -115,6 +116,7 @@ class BuyCommunVC: BaseViewController {
             separator.autoPinEdge(toSuperviewEdge: .trailing)
             
             view.addSubview(self.youGetTextField)
+            youGetTextField.isUserInteractionEnabled = false
             youGetTextField.autoPinEdge(.top, to: .bottom, of: separator, withOffset: 22)
             youGetTextField.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 22, left: 16, bottom: 22, right: 16), excludingEdge: .top)
             return view
@@ -220,7 +222,7 @@ class BuyCommunVC: BaseViewController {
             .map {$0!}
             .subscribe(onNext: { [weak self] (amount) in
                 // minimun charge
-                self?.minimunChargeLabel.text = "minimum charge is".localized().uppercaseFirst + " \((Double(amount.minFromAmount) ?? 0).currencyValueFormatted) " + (self?.currentCurrencyName ?? "")
+                self?.minimunChargeLabel.text = "minimum charge is".localized().uppercaseFirst + " \(amount.minValue.currencyValueFormatted) " + (self?.currentCurrencyName ?? "")
             })
             .disposed(by: disposeBag)
         
@@ -234,6 +236,43 @@ class BuyCommunVC: BaseViewController {
                 text += price.currencyValueFormatted
                 text += " CMN"
                 self?.rateLabel.text = text
+            })
+            .disposed(by: disposeBag)
+        
+        // youSendTextView
+        youSendTextField.rx.text.orEmpty
+            .do(onNext: {[weak self] (_) in
+                self?.youGetTextField.hideLoader()
+            })
+            .filter {_ in self.currentCurrencyName != nil}
+            .skip(1)
+            .debounce(0.3, scheduler: MainScheduler.instance)
+            .map {NumberFormatter().number(from: $0)?.doubleValue ?? 0}
+            .flatMap { amount -> Single<Double> in
+                return self.viewModel.getExpectedAmount(from: self.currentCurrencyName!, to: "CMN", amount: amount)
+                    .do(onSuccess: { [weak self] _ in
+                        self?.youGetTextField.hideLoader()
+                    }, onError: { [weak self] error in
+                        self?.youGetTextField.hideLoader()
+                        var text = "Error! Please try again"
+                        #if !APPSTORE
+                        text += "\(error)"
+                        #endif
+                        self?.youGetTextField.text = text
+                    }, onSubscribe: { [weak self] in
+                        self?.youGetTextField.showLoader()
+                    })
+            }
+            .map {$0.readableString}
+            .bind(to: youGetTextField.rx.text)
+            .disposed(by: disposeBag)
+        
+        youSendTextField.rx.text.orEmpty
+            .map {NumberFormatter().number(from: $0)?.doubleValue ?? 0}
+            .map {$0 >= (self.viewModel.minMaxAmount.value?.minValue ?? 0)}
+            .map {$0 ? UIColor.a5a7bd: UIColor.red}
+            .subscribe(onNext: {color in
+                self.minimunChargeLabel.textColor = color
             })
             .disposed(by: disposeBag)
     }

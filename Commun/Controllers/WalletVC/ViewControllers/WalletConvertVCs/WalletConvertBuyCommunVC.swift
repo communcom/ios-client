@@ -59,9 +59,9 @@ class WalletConvertBuyCommunVC: WalletConvertVC {
     
     override func setUpBuyPrice() {
         if let history = historyItem, !leftTextField.isFirstResponder {
-            leftTextField.text = stringFromNumber(history.quantityValue)
+            leftTextField.text = history.quantityValue.readableString
         } else if viewModel.buyPrice.value > 0 {
-            leftTextField.text = stringFromNumber(viewModel.buyPrice.value)
+            leftTextField.text = viewModel.buyPrice.value.readableString
         }
         
         convertButton.isEnabled = shouldEnableConvertButton()
@@ -69,9 +69,9 @@ class WalletConvertBuyCommunVC: WalletConvertVC {
     
     override func setUpSellPrice() {
         if let history = historyItem, !leftTextField.isFirstResponder {
-            rightTextField.text = stringFromNumber(history.meta.exchangeAmount!)
+            rightTextField.text = history.meta.exchangeAmount!.readableString
         } else {
-            rightTextField.text = stringFromNumber(viewModel.sellPrice.value)
+            rightTextField.text = viewModel.sellPrice.value.readableString
         }
         
         convertButton.isEnabled = shouldEnableConvertButton()

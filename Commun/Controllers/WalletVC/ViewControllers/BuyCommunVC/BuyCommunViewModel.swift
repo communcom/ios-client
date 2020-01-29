@@ -22,7 +22,6 @@ class BuyCommunViewModel {
     let currentCurrency = BehaviorRelay<ResponseAPIGetCurrency?>(value: nil)
     let price = BehaviorRelay<Double>(value: 0)
     let minMaxAmount = BehaviorRelay<ResponseAPIGetMinMaxAmount?>(value: nil)
-    let expectedAmount = BehaviorRelay<Double?>(value: nil)
     
     // MARK: - Methods
     init() {

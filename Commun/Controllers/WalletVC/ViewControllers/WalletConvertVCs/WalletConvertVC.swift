@@ -9,6 +9,7 @@
 import Foundation
 import RxCocoa
 import RxSwift
+import CyberSwift
 
 class WalletConvertVC: BaseViewController {
     // MARK: - Properties
@@ -473,15 +474,6 @@ class WalletConvertVC: BaseViewController {
     
     @objc func convertButtonDidTouch() {
         view.endEditing(true)
-    }
-    
-    // MARK: - Helpers
-    func stringFromNumber(_ number: Double) -> String {
-        let formatter = NumberFormatter()
-        formatter.usesGroupingSeparator = false
-        formatter.numberStyle = .decimal
-        formatter.maximumFractionDigits = (number < 1000) ? 4 : 2
-        return formatter.string(from: number as NSNumber) ?? "0"
     }
 }
 
