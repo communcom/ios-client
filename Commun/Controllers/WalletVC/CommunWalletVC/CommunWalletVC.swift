@@ -45,17 +45,43 @@ class CommunWalletVC: TransferHistoryVC {
     convenience init() {
         self.init(viewModel: WalletViewModel(symbol: "CMN"))
     }
-    
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        tableView.tableHeaderView?.alpha = 0.2
+        if let headerView = tableView.tableHeaderView {
+
+            let height = headerView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
+            var headerFrame = headerView.frame
+
+            //Comparison necessary to avoid infinite loop
+            if height != headerFrame.size.height {
+                headerFrame.size.height = height
+                headerView.frame = headerFrame
+                headerView.frame.size.width = view.bounds.width
+                tableView.tableHeaderView = headerView
+            }
+        }
+    }
+
     override func createTableView() -> UITableView {
-        view.addSubview(headerView)
-        headerView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .bottom)
+//        view.addSubview(headerView)
+//        headerView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .bottom)
         
         let tableView = UITableView(frame: .zero, style: .grouped)
         tableView.configureForAutoLayout()
         tableView.insetsContentViewsToSafeArea = false
-        tableView.contentInsetAdjustmentBehavior = .never
+//        tableView.contentInsetAdjustmentBehavior = .never
+        tableView.contentInsetAdjustmentBehavior = .automatic
         tableView.showsVerticalScrollIndicator = false
-        tableView.contentInset.top = 0
+//        tableView.contentInset.top = -50
+
+        // add bg blue view
+        let topBlueView = UIView.init(forAutoLayout: ())
+        topBlueView.backgroundColor = .appMainColor
+        view.addSubview(topBlueView)
+        topBlueView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .bottom)
+        NSLayoutConstraint(item: topBlueView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 150).isActive = true
 
         view.addSubview(tableView)
         tableView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
@@ -63,11 +89,18 @@ class CommunWalletVC: TransferHistoryVC {
         view.bringSubviewToFront(headerView)
         return tableView
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
-        self.navigationController?.setNavigationBarHidden(true, animated: animated)
+        self.navigationController?.setNavigationBarHidden(false, animated: animated)
+        self.navigationController?.navigationBar.isTranslucent = false
+        self.navigationController?.navigationBar.barTintColor = .appMainColor
+
+        self.navigationController?.navigationBar.tintColor = .white//
+        self.navigationItem.titleView = UIView.transparentCommunLogo(size: 40)
+//        self.navigationController?.navigationBar.setTitleFont(.boldSystemFont(ofSize: 17), color:
+//            show ? .black: .clear)
+//        self.navigationItem.leftBarButtonItem?.tintColor = show ? .black: .white
         self.setTabBarHidden(false)
-        
         super.viewWillAppear(animated)
     }
 
@@ -81,6 +114,8 @@ class CommunWalletVC: TransferHistoryVC {
     // MARK: - Custom Functions
     override func setUp() {
         super.setUp()
+        refreshTintColor(.white)
+
         headerView.backButton.addTarget(self, action: #selector(back), for: .touchUpInside)
         
         headerView.sendButton.addTarget(self, action: #selector(sendButtonDidTouch), for: .touchUpInside)
@@ -92,6 +127,8 @@ class CommunWalletVC: TransferHistoryVC {
         tableHeaderView.filterButton.addTarget(self, action: #selector(openFilter), for: .touchUpInside)
         
         tableHeaderView.setMyPointHidden(false)
+//        tableView.tableHeaderView = headerView
+        NSLayoutConstraint(item: headerView, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: UIScreen.main.bounds.width).isActive = true
     }
     
     override func bind() {
@@ -100,23 +137,23 @@ class CommunWalletVC: TransferHistoryVC {
         // forward delegate
         myPointsCollectionView.rx.setDelegate(self)
             .disposed(by: disposeBag)
-        
+
         sendPointsCollectionView.rx.setDelegate(self)
             .disposed(by: disposeBag)
-        
-        tableView.rx.contentOffset
-            .map {$0.y}
-            .filter {_ in self.isUserScrolling}
-            .map({ y -> Bool in
-                return y > 0
-            })
-            .distinctUntilChanged()
-            .observeOn(MainScheduler.asyncInstance)
-            .subscribe(onNext: { (collapse) in
-                self.headerView.setIsCollapsed(collapse)
-                self.changeStatusBarStyle(collapse ? .default : .lightContent)
-            })
-            .disposed(by: disposeBag)
+//
+//        tableView.rx.contentOffset
+//            .map {$0.y}
+//            .filter {_ in self.isUserScrolling}
+//            .map({ y -> Bool in
+//                return y > 0
+//            })
+//            .distinctUntilChanged()
+//            .observeOn(MainScheduler.asyncInstance)
+//            .subscribe(onNext: { (collapse) in
+////                self.headerView.setIsCollapsed(collapse)
+////                self.changeStatusBarStyle(collapse ? .default : .lightContent)
+//            })
+//            .disposed(by: disposeBag)
         
     }
 
@@ -332,20 +369,20 @@ extension CommunWalletVC: CommunWalletHeaderViewDelegate, CommunWalletHeaderView
 //            headerViewExpandedHeight = height
 //            tableView.bounds.origin.y = headerViewExpandedHeight
 //        } else {
-            resetTableViewContentInset()
+//            resetTableViewContentInset()
 //        }
     }
     
     private func resetTableViewContentInset() {
-        let height = headerView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
-        if headerViewExpandedHeight == height {return}
-        headerViewExpandedHeight = height
-
-        view.layoutIfNeeded()
-        tableTopConstraint.constant = headerViewExpandedHeight - 30
-        tableView.contentInset.top = 20
-        UIView.animate(withDuration: 0.3) {
-            self.view.layoutIfNeeded()
-        }
+//        let height = headerView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
+//        if headerViewExpandedHeight == height {return}
+//        headerViewExpandedHeight = height
+//
+//        view.layoutIfNeeded()
+//        tableTopConstraint.constant = headerViewExpandedHeight - 30
+//        tableView.contentInset.top = 20
+//        UIView.animate(withDuration: 0.3) {
+//            self.view.layoutIfNeeded()
+//        }
     }
 }

@@ -91,20 +91,20 @@ class CommunWalletHeaderView: MyView {
     }
     
     func setIsCollapsed(_ value: Bool) {
-        if isCollapsed == value {return}
-        isCollapsed = value
-        UIView.animate(withDuration: 0.3) {
-            self.reloadViews()
-        }
+//        if isCollapsed == value {return}
+//        isCollapsed = value
+//        UIView.animate(withDuration: 0.3) {
+//            self.reloadViews()
+//        }
     }
     
     // MARK: - Private functions
     func reloadViews() {
-        if isCollapsed {
-            collapse()
-        } else {
+//        if isCollapsed {
+//            collapse()
+//        } else {
             expand()
-        }
+//        }
     }
     
     private func expand() {
@@ -138,6 +138,8 @@ class CommunWalletHeaderView: MyView {
         self.pointLabel.textColor = .white
         
         self.backButton.tintColor = .white
+
+//        self.makeShadowAndRoundCorner()
     }
     
     func layoutBalanceExpanded() {
@@ -151,28 +153,28 @@ class CommunWalletHeaderView: MyView {
     
     func collapse() {
         // remove unused views
-        communLogo.removeFromSuperview()
-        buttonsStackView.removeFromSuperview()
-        
-        // deactivate non-needed constraints
-        titleTopConstraint?.isActive = false
-        pointBottomConstraint?.isActive = false
-        
-        // modify constraints
-        titleTopConstraint = titleLabel.autoPinEdge(toSuperviewSafeArea: .top, withInset: 6)
-        titleToPointConstraint?.constant = 3
-        pointBottomConstraint = pointLabel.autoPinEdge(toSuperviewEdge: .bottom, withInset: 10)
-        
-        // modify fonts, colors
-        self.contentView.backgroundColor = .white
-        
-        self.titleLabel.font = .systemFont(ofSize: 12, weight: .semibold)
-        self.pointLabel.font = .systemFont(ofSize: 20, weight: .semibold)
-        
-        self.titleLabel.textColor = .black
-        self.pointLabel.textColor = .black
-        
-        self.backButton.tintColor = .black
+//        communLogo.removeFromSuperview()
+//        buttonsStackView.removeFromSuperview()
+//
+//        // deactivate non-needed constraints
+//        titleTopConstraint?.isActive = false
+//        pointBottomConstraint?.isActive = false
+//
+//        // modify constraints
+//        titleTopConstraint = titleLabel.autoPinEdge(toSuperviewSafeArea: .top, withInset: 6)
+//        titleToPointConstraint?.constant = 3
+//        pointBottomConstraint = pointLabel.autoPinEdge(toSuperviewEdge: .bottom, withInset: 10)
+//
+//        // modify fonts, colors
+//        self.contentView.backgroundColor = .white
+//
+//        self.titleLabel.font = .systemFont(ofSize: 12, weight: .semibold)
+//        self.pointLabel.font = .systemFont(ofSize: 20, weight: .semibold)
+//
+//        self.titleLabel.textColor = .black
+//        self.pointLabel.textColor = .black
+//
+//        self.backButton.tintColor = .black
     }
     
     // MARK: - Layout
@@ -187,7 +189,7 @@ class CommunWalletHeaderView: MyView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        delegate?.walletHeaderView(self, willUpdateHeightCollapsed: isCollapsed)
+//        delegate?.walletHeaderView(self, willUpdateHeightCollapsed: isCollapsed)
         DispatchQueue.main.async {
             self.makeShadowAndRoundCorner()
         }
