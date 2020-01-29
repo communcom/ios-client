@@ -9,33 +9,62 @@
 import Foundation
 import SafariServices
 
-extension CommentCell: UITextViewDelegate {
-    func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
-        if URL.absoluteString == "seemore://" {
-            guard let comment = comment else {return true}
-            delegate?.cell(self, didTapSeeMoreButtonForComment: comment)
-            return false
+extension CommentCell {
+    @objc func tapTextView(sender: UITapGestureRecognizer) {
+        let myTextView = sender.view as! UITextView
+        let layoutManager = myTextView.layoutManager
+
+        // location of tap in myTextView coordinates and taking the inset into account
+        var location = sender.location(in: myTextView)
+        location.x -= myTextView.textContainerInset.left
+        location.y -= myTextView.textContainerInset.top
+
+        // character index at tap location
+        let characterIndex = layoutManager.characterIndex(for: location, in: myTextView.textContainer, fractionOfDistanceBetweenInsertionPoints: nil)
+
+        // if index is valid then do something.
+        if characterIndex < myTextView.textStorage.length {
+
+            // print the character index
+            print("character index: \(characterIndex)")
+
+            // print the character at the index
+            let myRange = NSRange(location: characterIndex, length: 1)
+            let substring = (myTextView.attributedText.string as NSString).substring(with: myRange)
+            print("character at index: \(substring)")
+
+            // check if the tap location has a certain attribute
+            let attributeName = NSAttributedString.Key.link
+            let attributeValue = myTextView.attributedText?.attribute(attributeName, at: characterIndex, effectiveRange: nil)
+            if let urlString = attributeValue as? String {
+                if urlString == "seemore://" {
+                    guard let comment = comment else {return}
+                    delegate?.cell(self, didTapSeeMoreButtonForComment: comment)
+                    return
+                }
+                
+                if urlString.isLinkToMention,
+                    let userName = urlString.components(separatedBy: "@").last {
+                    parentViewController?.showProfileWithUserId(userName)
+                    return
+                }
+                
+                if urlString.isLinkToTag,
+                    let tag = urlString.components(separatedBy: "#").last {
+                    delegate?.cell(self, didTapOnTag: tag)
+                    return
+                }
+                
+                if urlString.starts(with: "https://") ||
+                    urlString.starts(with: "http://"),
+                    let url = URL(string: urlString)
+                {
+                    let safariVC = SFSafariViewController(url: url)
+                    parentViewController?.present(safariVC, animated: true, completion: nil)
+                    return
+                }
+            }
         }
-        
-        if URL.absoluteString.isLinkToMention,
-            let userName = URL.absoluteString.components(separatedBy: "@").last {
-            parentViewController?.showProfileWithUserId(userName)
-            return false
-        }
-        if URL.absoluteString.isLinkToTag,
-            let tag = URL.absoluteString.components(separatedBy: "#").last {
-            delegate?.cell(self, didTapOnTag: tag)
-            return false
-        }
-        
-        if URL.absoluteString.starts(with: "https://") ||
-            URL.absoluteString.starts(with: "http://") {
-            let safariVC = SFSafariViewController(url: URL)
-            parentViewController?.present(safariVC, animated: true, completion: nil)
-            return false
-        }
-        
-        return false
     }
     
     @objc func upVoteButtonDidTouch() {

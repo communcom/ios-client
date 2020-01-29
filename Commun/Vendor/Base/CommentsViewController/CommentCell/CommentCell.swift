@@ -54,7 +54,6 @@ class CommentCell: MyTableViewCell, ListItemCellType {
         contentTextView.autoPinEdge(.top, to: .top, of: avatarImageView)
         contentTextView.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 10)
         contentTextView.trailingAnchor.constraint(lessThanOrEqualTo: contentView.trailingAnchor, constant: -16).isActive = true
-        contentTextView.delegate = self
         
         contentView.addSubview(gridView)
         gridView.autoPinEdge(.leading, to: .leading, of: contentTextView)
@@ -87,6 +86,10 @@ class CommentCell: MyTableViewCell, ListItemCellType {
         constraint.isActive = true
         
         voteContainerView.autoPinEdge(toSuperviewEdge: .bottom, withInset: 8)
+        
+        // handle tap on see more
+        let tap = UITapGestureRecognizer(target: self, action: #selector(tapTextView(sender:)))
+        contentTextView.addGestureRecognizer(tap)
     }
     
     // MARK: - Setup
