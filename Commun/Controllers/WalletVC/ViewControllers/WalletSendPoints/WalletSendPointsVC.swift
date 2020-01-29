@@ -226,6 +226,7 @@ class WalletSendPointsVC: BaseViewController {
 
         // Action view
         let whiteView = UIView(width: CGFloat.adaptive(width: 375.0), height: CGFloat.adaptive(height: 543.0), backgroundColor: .white, cornerRadius: CGFloat.adaptive(width: 25.0))
+        whiteView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         view.addSubview(whiteView)
         whiteView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
                 
