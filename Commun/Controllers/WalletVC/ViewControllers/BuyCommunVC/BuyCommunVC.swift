@@ -182,6 +182,8 @@ class BuyCommunVC: BaseViewController {
         buyCommunButton.autoPinEdge(.top, to: .bottom, of: termsOfUseLabel, withOffset: 16)
         
         buyCommunButton.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(inset: 16), excludingEdge: .top)
+        
+        buyCommunButton.isEnabled = false
     }
     
     override func bind() {
@@ -267,13 +269,21 @@ class BuyCommunVC: BaseViewController {
             .bind(to: youGetTextField.rx.text)
             .disposed(by: disposeBag)
         
-        youSendTextField.rx.text.orEmpty
+        let isGreaterThanOrEqualMinValue = youSendTextField.rx.text.orEmpty
             .map {NumberFormatter().number(from: $0)?.doubleValue ?? 0}
             .map {$0 >= (self.viewModel.minMaxAmount.value?.minValue ?? 0)}
+            .share()
+            
+        isGreaterThanOrEqualMinValue
             .map {$0 ? UIColor.a5a7bd: UIColor.red}
             .subscribe(onNext: {color in
                 self.minimunChargeLabel.textColor = color
             })
+            .disposed(by: disposeBag)
+        
+        isGreaterThanOrEqualMinValue
+            .map {$0 && (NumberFormatter().number(from: self.youSendTextField.text ?? "")?.doubleValue ?? 0) != 0}
+            .bind(to: buyCommunButton.rx.isEnabled)
             .disposed(by: disposeBag)
     }
     
@@ -290,6 +300,7 @@ class BuyCommunVC: BaseViewController {
         let vc = BuyCommunSelectCurrencyVC()
         vc.completion = {currency in
             self.viewModel.currentCurrency.accept(currency)
+            self.youSendTextField.text = nil
         }
         show(vc, sender: self)
     }
