@@ -9,7 +9,7 @@
 import Foundation
 import RxSwift
 
-class WalletSellCommunVC: WalletConvertVC {
+class WalletConvertSellCommunVC: WalletConvertVC {
     // MARK: - Properties
     override var topColor: UIColor {
         .appMainColor
@@ -39,9 +39,9 @@ class WalletSellCommunVC: WalletConvertVC {
     
     override func setUpBuyPrice() {
         if let history = historyItem, !leftTextField.isFirstResponder {
-            rightTextField.text = stringFromNumber(history.meta.exchangeAmount!)
+            rightTextField.text = history.meta.exchangeAmount!.readableString
         } else {
-            rightTextField.text = stringFromNumber(viewModel.buyPrice.value)
+            rightTextField.text = viewModel.buyPrice.value.readableString
         }
         
         convertButton.isEnabled = shouldEnableConvertButton()
@@ -49,9 +49,9 @@ class WalletSellCommunVC: WalletConvertVC {
     
     override func setUpSellPrice() {
         if let history = historyItem, !leftTextField.isFirstResponder {
-            leftTextField.text = stringFromNumber(history.quantityValue)
+            leftTextField.text = history.quantityValue.readableString
         } else if viewModel.sellPrice.value > 0 {
-            leftTextField.text = stringFromNumber(viewModel.sellPrice.value)
+            leftTextField.text = viewModel.sellPrice.value.readableString
         }
         
         convertButton.isEnabled = shouldEnableConvertButton()
