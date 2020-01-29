@@ -85,7 +85,7 @@ class CommunWalletHeaderView: MyView {
         guard let balances = dataSource?.data(forWalletHeaderView: self)
         else {return}
         // set up with commun value
-        titleLabel.text = "enquity Commun Value".localized().uppercaseFirst
+        titleLabel.text = "equity Commun Value".localized().uppercaseFirst
         pointLabel.text = "\(balances.enquityCommunValue.currencyValueFormatted)"
     }
     
