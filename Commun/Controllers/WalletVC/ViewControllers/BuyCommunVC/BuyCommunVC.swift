@@ -33,7 +33,15 @@ class BuyCommunVC: BaseViewController {
         view.backgroundColor = .f3f5fa
         
         view.addSubview(scrollView)
-        scrollView.autoPinEdgesToSuperviewSafeArea()
+        scrollView.autoPinEdgesToSuperviewSafeArea(with: .zero, excludingEdge: .bottom)
+        
+        // pin bottom
+        let keyboardViewV = KeyboardLayoutConstraint(item: view!.safeAreaLayoutGuide, attribute: .bottom, relatedBy: .equal, toItem: scrollView, attribute: .bottom, multiplier: 1.0, constant: 0)
+        keyboardViewV.observeKeyboardHeight()
+        self.view.addConstraint(keyboardViewV)
+        
+        scrollView.isUserInteractionEnabled = true
+        scrollView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard)))
         
         let youSendLabel = UILabel.with(text: "you send".localized().uppercaseFirst, textSize: 15, weight: .medium)
         scrollView.contentView.addSubview(youSendLabel)
@@ -251,5 +259,9 @@ class BuyCommunVC: BaseViewController {
         let url = URL(string: "https://changehero.io/terms-of-use")!
         let vc = SFSafariViewController(url: url)
         present(vc, animated: true, completion: nil)
+    }
+    
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
     }
 }
