@@ -35,8 +35,7 @@ class CommunWalletHeaderView: MyView {
     lazy var backButton = UIButton.back(width: 44, height: 44, tintColor: .white, contentInsets: UIEdgeInsets(top: 11, left: 16, bottom: 11, right: 16))
     
     lazy var communLogo = UIView.transparentCommunLogo(size: 40)
-    
-    lazy var optionsButton = UIButton.option(tintColor: .white)
+
     lazy var titleLabel = UILabel.with(text: "Equity Value Commun", textSize: 15, weight: .semibold, textColor: .white)
     lazy var pointLabel = UILabel.with(text: "167 500.23", textSize: 30, weight: .bold, textColor: .white, textAlignment: .center)
     
@@ -45,7 +44,9 @@ class CommunWalletHeaderView: MyView {
         let stackView = UIStackView(axis: .horizontal)
         stackView.addBackground(color: UIColor.white.withAlphaComponent(0.1), cornerRadius: 16)
         stackView.cornerRadius = 16
+        
         // stackView
+        sendButton.accessibilityHint = Config.defaultSymbol
         stackView.addArrangedSubview(buttonContainerViewWithButton(sendButton, label: "send".localized().uppercaseFirst))
         stackView.addArrangedSubview(buttonContainerViewWithButton(convertButton, label: "convert".localized().uppercaseFirst))
         return stackView
@@ -67,10 +68,6 @@ class CommunWalletHeaderView: MyView {
         backButton.autoPinEdge(toSuperviewSafeArea: .top, withInset: 8)
         backButton.autoPinEdge(toSuperviewSafeArea: .leading)
         
-        contentView.addSubview(optionsButton)
-        optionsButton.autoPinEdge(toSuperviewSafeArea: .trailing)
-        optionsButton.autoAlignAxis(.horizontal, toSameAxisOf: backButton)
-        
         contentView.addSubview(titleLabel)
         titleLabel.autoAlignAxis(toSuperviewAxis: .vertical)
         
@@ -85,12 +82,11 @@ class CommunWalletHeaderView: MyView {
     }
     
     func reloadData() {
-        guard let balances = dataSource?.data(forWalletHeaderView: self),
-            let point = balances.first(where: {$0.symbol == "CMN"})?.balanceValue
+        guard let balances = dataSource?.data(forWalletHeaderView: self)
         else {return}
         // set up with commun value
-        titleLabel.text = "enquity Value Commun".localized().uppercaseFirst
-        pointLabel.text = "\(point.currencyValueFormatted)"
+        titleLabel.text = "equity Commun Value".localized().uppercaseFirst
+        pointLabel.text = "\(balances.enquityCommunValue.currencyValueFormatted)"
     }
     
     func setIsCollapsed(_ value: Bool) {
@@ -141,7 +137,6 @@ class CommunWalletHeaderView: MyView {
         self.pointLabel.textColor = .white
         
         self.backButton.tintColor = .white
-        self.optionsButton.tintColor = .white
     }
     
     func layoutBalanceExpanded() {
@@ -177,7 +172,6 @@ class CommunWalletHeaderView: MyView {
         self.pointLabel.textColor = .black
         
         self.backButton.tintColor = .black
-        self.optionsButton.tintColor = .black
     }
     
     // MARK: - Layout

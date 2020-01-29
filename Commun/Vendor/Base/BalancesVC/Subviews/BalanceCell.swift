@@ -43,7 +43,7 @@ class BalanceCell: MyTableViewCell, ListItemCellType {
     func setUp(with item: ResponseAPIWalletGetBalance) {
         self.item = item
         
-        if item.symbol == "CMN" {
+        if item.symbol == Config.defaultSymbol {
             avatarImageView.image = UIImage(named: "tux")
         } else {
             avatarImageView.setAvatar(urlString: item.logo, namePlaceHolder: item.name ?? "B")
@@ -65,7 +65,7 @@ class BalanceCell: MyTableViewCell, ListItemCellType {
             .text(item.balanceValue.currencyValueFormatted, size: 15, weight: .semibold)
             .text(" " + "points".localized().uppercaseFirst, size: 15, weight: .semibold)
             
-        if item.symbol != "CMN" {
+        if item.symbol != Config.defaultSymbol {
             secondText = secondText
                 .text("\n= \(item.communValue.currencyValueFormatted) Commun", size: 12, weight: .semibold, color: .a5a7bd)
             secondLabel.numberOfLines = 2

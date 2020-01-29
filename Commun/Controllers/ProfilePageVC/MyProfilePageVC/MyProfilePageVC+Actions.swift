@@ -95,6 +95,7 @@ extension MyProfilePageVC {
                 .bind(to: coverEditVC.profile)
                 .disposed(by: self.disposeBag)
             
+            coverEditVC.modalPresentationStyle = .fullScreen
             pickerVC.present(coverEditVC, animated: true, completion: {
                     coverEditVC.updateImage(image)
             })
@@ -122,6 +123,8 @@ extension MyProfilePageVC {
                 })
                 .disposed(by: self.disposeBag)
         }
+        
+        pickerVC.modalPresentationStyle = .fullScreen
         self.present(pickerVC, animated: true, completion: nil)
     }
     

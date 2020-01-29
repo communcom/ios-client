@@ -12,7 +12,6 @@ import RxSwift
 
 class WalletConvertVC: BaseViewController {
     // MARK: - Properties
-    var completion: (() -> Void)?
     let viewModel = WalletConvertViewModel()
     var currentSymbol: String?
     var currentBalance: ResponseAPIWalletGetBalance? {
@@ -29,6 +28,8 @@ class WalletConvertVC: BaseViewController {
     var topColor: UIColor {
         .appMainColor
     }
+    
+    var historyItem: ResponseAPIWalletGetTransferHistoryItem?
     
     // MARK: - Subviews
     lazy var scrollView = ContentHuggingScrollView(axis: .vertical)
@@ -72,9 +73,14 @@ class WalletConvertVC: BaseViewController {
     lazy var convertButton = CommunButton.default(height: 50 * Config.heightRatio, label: "convert".localized().uppercaseFirst, isHuggingContent: false)
     
     // MARK: - Initializers
-    init(balances: [ResponseAPIWalletGetBalance], symbol: String? = nil) {
-        currentSymbol = symbol == "CMN" ? nil : symbol
+    init(balances: [ResponseAPIWalletGetBalance], symbol: String? = nil, historyItem: ResponseAPIWalletGetTransferHistoryItem? = nil) {
+        currentSymbol = symbol == Config.defaultSymbol ? nil : symbol
         viewModel.items.accept(balances)
+        
+        if let history = historyItem {
+            self.historyItem = history
+        }
+        
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -278,15 +284,11 @@ class WalletConvertVC: BaseViewController {
         showNavigationBar(false, animated: true, completion: nil)
         self.navigationController?.navigationBar.setTitleFont(.boldSystemFont(ofSize: 17), color: .white)
         
-        // hide bottom tabbar
-        tabBarController?.tabBar.isHidden = true
-        let tabBarVC = (tabBarController as? TabBarVC)
-        tabBarVC?.setTabBarHiden(true)
+        setTabBarHidden(true)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        let tabBarVC = (tabBarController as? TabBarVC)
-        tabBarVC?.setTabBarHiden(false)
+        setTabBarHidden(false)
     }
     
     override func viewDidLayoutSubviews() {
@@ -400,14 +402,14 @@ class WalletConvertVC: BaseViewController {
         
         scrollView.autoPinEdge(.bottom, to: .top, of: warningLabel)
     }
-    
+        
     // MARK: - Updating
     private func setUp(with balances: [ResponseAPIWalletGetBalance]) {
-        if let balance = balances.first(where: {$0.symbol == "CMN"}) {
+        if let balance = balances.first(where: {$0.symbol == Config.defaultSymbol}) {
             communBalance = balance
         }
         
-        currentBalance = balances.first(where: {$0.symbol == currentSymbol}) ?? balances.first(where: {$0.symbol != "CMN"})
+        currentBalance = balances.first(where: {$0.symbol == currentSymbol}) ?? balances.first(where: {$0.symbol != Config.defaultSymbol})
     }
     
     func setUpCommunBalance() {
@@ -443,23 +445,27 @@ class WalletConvertVC: BaseViewController {
     }
     
     @objc func changeMode() {
-        guard var viewControllers = navigationController?.viewControllers else { return }
-
-        // Pop sourceViewController
-        _ = viewControllers.popLast()
-
-        // Push targetViewController
-        let vc: UIViewController
+        view.endEditing(true)
         
-        if self is WalletSellCommunVC {
-            vc = WalletBuyCommunVC(balances: viewModel.items.value, symbol: currentBalance?.symbol)
-        } else {
-            vc = WalletSellCommunVC(balances: viewModel.items.value, symbol: currentBalance?.symbol)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            guard var viewControllers = self.navigationController?.viewControllers else { return }
+
+            // Pop sourceViewController
+            _ = viewControllers.popLast()
+
+            // Push targetViewController
+            let vc: UIViewController
+            
+            if self is WalletSellCommunVC {
+                vc = WalletBuyCommunVC(balances: self.viewModel.items.value, symbol: self.currentBalance?.symbol)
+            } else {
+                vc = WalletSellCommunVC(balances: self.viewModel.items.value, symbol: self.currentBalance?.symbol)
+            }
+            
+            viewControllers.append(vc)
+
+            self.navigationController?.setViewControllers(viewControllers, animated: false)
         }
-        
-        viewControllers.append(vc)
-
-        navigationController?.setViewControllers(viewControllers, animated: false)
     }
     
     @objc func getBuyPrice() {

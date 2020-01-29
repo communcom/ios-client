@@ -30,8 +30,7 @@ class WalletConvertViewModel: BalancesViewModel {
     
     func getBuyPrice(symbol: String, quantity: String) {
         // prevent dupplicating
-        if symbol == currentBuyPriceSymbol && quantity == currentBuyPriceQuantity
-        {
+        if symbol == currentBuyPriceSymbol && quantity == currentBuyPriceQuantity {
             return
         }
         
@@ -47,12 +46,11 @@ class WalletConvertViewModel: BalancesViewModel {
         RestAPIManager.instance.getBuyPrice(symbol: symbol, quantity: quantity)
             .subscribe(onSuccess: { [weak self] result in
                 self?.priceLoadingState.accept(.finished)
+                
                 // prevent duplicating
-                if result.symbol == self?.currentBuyPriceSymbol && result.quantity == self?.currentBuyPriceQuantity
-                {
+                if result.symbol == self?.currentBuyPriceSymbol && result.quantity == self?.currentBuyPriceQuantity {
                     self?.buyPrice.accept(result.priceValue)
                 }
-                
             }, onError: { [weak self] (error) in
                 self?.errorSubject.accept(.other(error))
                 self?.priceLoadingState.accept(.error(error: error))
