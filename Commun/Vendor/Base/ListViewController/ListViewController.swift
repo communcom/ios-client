@@ -81,7 +81,14 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
             definesPresentationContext = true
         }
         
-        tableView.rowHeight = UITableView.automaticDimension
+        // before setting tableView
+        viewWillSetUpTableView()
+        
+        // setUpTableView
+        setUpTableView()
+        
+        // after setting tableView
+        viewDidSetUpTableView()
         
         // registerCell
         registerCell()
@@ -95,6 +102,18 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
         )
         
         dataSource.animationConfiguration = AnimationConfiguration(reloadAnimation: .none)
+    }
+    
+    func viewWillSetUpTableView() {
+        
+    }
+    
+    func viewDidSetUpTableView() {
+        
+    }
+    
+    func setUpTableView() {
+        tableView.rowHeight = UITableView.automaticDimension
     }
     
     override func viewDidLayoutSubviews() {
@@ -160,7 +179,7 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
                     self?.handleListEmpty()
                 case .error(let error):
                     self?.handleListError()
-                    #if !APPSTRORE
+                    #if !APPSTORE
                         self?.showAlert(title: "Error", message: "\(error)")
                     #endif
                 }

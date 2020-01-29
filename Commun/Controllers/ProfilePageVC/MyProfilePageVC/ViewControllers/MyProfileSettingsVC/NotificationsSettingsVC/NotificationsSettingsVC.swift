@@ -12,29 +12,28 @@ import RxSwift
 class NotificationsSettingsVC: BaseVerticalStackViewController {
     // MARK: - Subviews
     lazy var closeButton = UIButton.close()
-    lazy var notificationOnAction: NotificationSettingsView = {
-        let view = viewForAction(
-            Action(title: "notifications".localized().uppercaseFirst, icon: UIImage(named: "profile_options_mention"))
-        ) as! NotificationSettingsView
-        view.switchButton.addTarget(self, action: #selector(toggleNotificationOn(_:)), for: .valueChanged)
-        view.cornerRadius = 10
-        return view
-    }()
     
     // MARK: - Properties
     var viewModel = NotificationSettingsViewModel()
+    var settingViews: [NotificationSettingsView] {
+        stackView.arrangedSubviews.compactMap {$0 as? NotificationSettingsView}
+    }
+    
+    var switchers: [UISwitch] {
+        settingViews.map {$0.switchButton}
+    }
     
     // MARK: - Initializers
     init() {
         super.init(actions: [
             Action(title: "upvote".localized().uppercaseFirst, icon: UIImage(named: "profile_options_upvote")),
-            Action(title: "downvote".localized().uppercaseFirst, icon: UIImage(named: "profile_options_downvote")),
-            Action(title: "points transfer".localized().uppercaseFirst, icon: UIImage(named: "profile_options_points_transfer")),
-            Action(title: "comment and reply".localized().uppercaseFirst, icon: UIImage(named: "profile_options_comment_and_reply")),
+//            Action(title: "downvote".localized().uppercaseFirst, icon: UIImage(named: "profile_options_downvote")),
+//            Action(title: "points transfer".localized().uppercaseFirst, icon: UIImage(named: "profile_options_points_transfer")),
+            Action(title: "reply".localized().uppercaseFirst, icon: UIImage(named: "profile_options_comment_and_reply")),
             Action(title: "mention".localized().uppercaseFirst, icon: UIImage(named: "profile_options_mention")),
-            Action(title: "rewards for post".localized().uppercaseFirst, icon: UIImage(named: "profile_options_rewards_for_post")),
-            Action(title: "rewards for vote".localized().uppercaseFirst, icon: UIImage(named: "profile_options_rewards_for_vote")),
-            Action(title: "following".localized().uppercaseFirst, icon: UIImage(named: "profile_options_following"))
+//            Action(title: "rewards for post".localized().uppercaseFirst, icon: UIImage(named: "profile_options_rewards_for_post")),
+//            Action(title: "rewards for vote".localized().uppercaseFirst, icon: UIImage(named: "profile_options_rewards_for_vote")),
+            Action(title: "subscribe".localized().uppercaseFirst, icon: UIImage(named: "profile_options_following"))
         ])
     }
     
@@ -53,28 +52,80 @@ class NotificationsSettingsVC: BaseVerticalStackViewController {
     
     override func bind() {
         super.bind()
-        viewModel.notificationOn
-            .filter {$0 != self.notificationOnAction.switchButton.isOn}
-            .asDriver(onErrorJustReturn: true)
-            .drive(notificationOnAction.switchButton.rx.isOn)
-            .disposed(by: disposeBag)
-    }
-    
-    override func layout() {
-        scrollView.contentView.addSubview(notificationOnAction)
-        notificationOnAction.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 20, left: 10, bottom: 10, right: 10), excludingEdge: .bottom)
         
-        stackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 20, left: 10, bottom: 10, right: 10), excludingEdge: .top)
-        stackView.autoPinEdge(.top, to: .bottom, of: notificationOnAction, withOffset: 20)
+        // loadingState
+        viewModel.loadingState
+            .subscribe(onNext: {[weak self] (state) in
+                switch state {
+                case .loading:
+                    self?.stackView.showLoader()
+                case .finished:
+                    self?.stackView.hideLoader()
+                case .error(let error):
+                    #if !APPSTORE
+                    self?.showError(error)
+                    #endif
+                    self?.stackView.hideLoader()
+                    self?.view.showErrorView {
+                        self?.view.hideErrorView()
+                        self?.viewModel.getSettings()
+                    }
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        // disabledType
+        viewModel.disabledTypes
+            .subscribe(onNext: { [weak self] (disabledTypes) in
+                guard let strongSelf = self else {return}
+                for view in strongSelf.settingViews {
+                    view.switchButton.isOn = !disabledTypes.contains(view.notificationType)
+                }
+            })
+            .disposed(by: disposeBag)
     }
     
     override func viewForAction(_ action: Action) -> UIView {
         let actionView = NotificationSettingsView(height: 65, backgroundColor: .white)
+        var notificationType = ""
+        switch action.title {
+        case "upvote".localized().uppercaseFirst:
+            notificationType = "upvote"
+        case "reply".localized().uppercaseFirst:
+            notificationType = "reply"
+        case "mention".localized().uppercaseFirst:
+            notificationType = "mention"
+        case "subscribe".localized().uppercaseFirst:
+            notificationType = "subscribe"
+        default:
+            break
+        }
+        actionView.notificationType = notificationType
         actionView.setUp(with: action)
+        actionView.delegate = self
         return actionView
     }
-    
-    @objc func toggleNotificationOn(_ switcher: UISwitch) {
-        viewModel.togglePushNotify(on: switcher.isOn)
+}
+
+extension NotificationsSettingsVC: NotificationSettingsViewDelegate {
+    func notificationSettingsView(_ notificationSettingsView: NotificationSettingsView, didChangeValueForSwitch switcher: UISwitch, forNotificationType type: String) {
+        var disabledTypes = [String]()
+        for view in settingViews {
+            if !view.switchButton.isOn {disabledTypes.append(view.notificationType)}
+            
+            // disable all button
+            view.switchButton.isEnabled = false
+        }
+        
+        RestAPIManager.instance.notificationsSetPushSettings(disable: disabledTypes)
+            .subscribe(onSuccess: { [weak self] (_) in
+                self?.switchers.forEach {$0.isEnabled = true}
+            }) { [weak self] (error) in
+                guard let strongSelf = self else {return}
+                strongSelf.showError(error)
+                self?.switchers.forEach {$0.isEnabled = true}
+                switcher.isOn = !switcher.isOn
+            }
+            .disposed(by: disposeBag)
     }
 }

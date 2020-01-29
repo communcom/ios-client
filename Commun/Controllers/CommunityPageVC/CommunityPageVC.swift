@@ -34,11 +34,15 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
     }
     
     // MARK: - Properties
-    let communityId: String
+    var communityId: String?
+    var communityAlias: String?
     var dataSource: MyRxTableViewSectionedAnimatedDataSource<AnimatableSectionModel<String, CustomElementType>>!
     
     override func createViewModel() -> ProfileViewModel<ResponseAPIContentGetCommunity> {
-        CommunityPageViewModel(communityId: communityId)
+        if let alias = communityAlias {
+            return CommunityPageViewModel(communityAlias: alias)
+        }
+        return CommunityPageViewModel(communityId: communityId)
     }
     
     // MARK: - Subviews
@@ -80,6 +84,11 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
     // MARK: - Initializers
     init(communityId: String) {
         self.communityId = communityId
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    init(communityAlias: String) {
+        self.communityAlias = communityAlias
         super.init(nibName: nil, bundle: nil)
     }
     
