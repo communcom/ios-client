@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SafariServices
 
 class BuyCommunVC: BaseViewController {
     // MARK: - Properties
@@ -146,6 +147,9 @@ class BuyCommunVC: BaseViewController {
             
             return view
         }()
+        let tap = UITapGestureRecognizer(target: self, action: #selector(changeHeroViewDidTouch))
+        changeHeroView.isUserInteractionEnabled = true
+        changeHeroView.addGestureRecognizer(tap)
         
         scrollView.contentView.addSubview(changeHeroView)
         changeHeroView.autoPinEdge(.top, to: .bottom, of: rateLabel, withOffset: 70 * Config.heightRatio)
@@ -156,6 +160,8 @@ class BuyCommunVC: BaseViewController {
         let aStr = NSMutableAttributedString()
             .text("by clicking convert, you agree to ChangeHero's terms of service.".localized().uppercaseFirst, size: 12, weight: .medium, color: .a5a7bd)
         termsOfUseLabel.attributedText = aStr.applying(attributes: [.foregroundColor: UIColor.appMainColor], toOccurrencesOf: "terms of service.".localized())
+        termsOfUseLabel.isUserInteractionEnabled = true
+        termsOfUseLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(changeHeroViewDidTouch)))
         
         scrollView.contentView.addSubview(termsOfUseLabel)
         termsOfUseLabel.autoPinEdge(.top, to: .bottom, of: changeHeroView, withOffset: 18)
@@ -239,5 +245,11 @@ class BuyCommunVC: BaseViewController {
             self.viewModel.currentCurrency.accept(currency)
         }
         show(vc, sender: self)
+    }
+    
+    @objc func changeHeroViewDidTouch() {
+        let url = URL(string: "https://changehero.io/terms-of-use")!
+        let vc = SFSafariViewController(url: url)
+        present(vc, animated: true, completion: nil)
     }
 }
