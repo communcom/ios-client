@@ -102,7 +102,7 @@ extension String {
     
     func toDouble() -> Double {
         let formatter = NumberFormatter()
-        let selfCopy = self.replacingOccurrences(of: " ", with: "").replacingOccurrences(of: ",", with: ".")
+        let selfCopy = self.replacingOccurrences(of: " ", with: "").replacingOccurrences(of: ".", with: ",")
 
         return formatter.number(from: selfCopy)?.doubleValue ?? 0
     }

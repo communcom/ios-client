@@ -189,6 +189,7 @@ class WalletBuyCommunVC: WalletConvertVC {
                 }
 
                 let symbol: Symbol = Symbol(sell: Config.defaultSymbol, buy: Config.defaultSymbol)
+                
                 let transaction = Transaction(buyBalance: nil,
                                               sellBalance: nil,
                                               friend: nil,
@@ -198,10 +199,12 @@ class WalletBuyCommunVC: WalletConvertVC {
                                               symbol: symbol,
                                               operationDate: Date())
                 
-                let completedVC = TransactionCompletedVC(transaction: transaction)
-                self.show(completedVC, sender: nil)
+                if let baseNC = self.navigationController as? BaseNavigationController {
+                    let completedVC = TransactionCompletedVC(transaction: transaction)
+                    baseNC.shouldResetNavigationBarOnPush = false
+                    self.show(completedVC, sender: nil)
+                }
 
-                
                 return RestAPIManager.instance.waitForTransactionWith(id: transactionId)
             })
             .subscribe(onCompleted: {

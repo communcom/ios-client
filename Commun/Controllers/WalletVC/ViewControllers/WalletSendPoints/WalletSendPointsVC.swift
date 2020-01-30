@@ -226,6 +226,7 @@ class WalletSendPointsVC: BaseViewController {
 
         // Action view
         let whiteView = UIView(width: CGFloat.adaptive(width: 375.0), height: CGFloat.adaptive(height: 543.0), backgroundColor: .white, cornerRadius: CGFloat.adaptive(width: 25.0))
+        whiteView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         view.addSubview(whiteView)
         whiteView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
                 
@@ -353,7 +354,7 @@ class WalletSendPointsVC: BaseViewController {
     }
     
     private func updateSendInfoByEnteredPoints() {
-        guard let text = pointsTextField.text?.replacingOccurrences(of: ",", with: ".") else { return }
+        guard let text = pointsTextField.text else { return }
         
         let amountEntered = CGFloat(text.toDouble())
         dataModel.transaction.amount = amountEntered
@@ -398,21 +399,27 @@ class WalletSendPointsVC: BaseViewController {
 
             self.dataModel.transaction.operationDate = Date()
 
-            self.showIndetermineHudWithMessage("sending".localized().uppercaseFirst + " \(self.dataModel.transaction.symbol.sell.fullName.uppercased())")
+//            self.showIndetermineHudWithMessage("sending".localized().uppercaseFirst + " \(self.dataModel.transaction.symbol.sell.fullName.uppercased())")
 
             // FOR TEST
-//        let completedVC = TransactionCompletedVC(transaction: dataModel.transaction)
-//        show(completedVC, sender: nil)
-            //*/
-                    
+//            if let baseNC = self.navigationController as? BaseNavigationController {
+//                let completedVC = TransactionCompletedVC(transaction: self.dataModel.transaction)
+//                baseNC.shouldResetNavigationBarOnPush = false
+//                self.show(completedVC, sender: nil)
+//            }
+                                
             ///*
             BlockchainManager.instance.transferPoints(to: friendID, number: Double(numberValue), currency: self.dataModel.transaction.symbol.sell)
                 .flatMapCompletable { RestAPIManager.instance.waitForTransactionWith(id: $0) }
                 .subscribe(onCompleted: { [weak self] in
                     guard let strongSelf = self else { return }
                     
-                    let completedVC = TransactionCompletedVC(transaction: strongSelf.dataModel.transaction)
-                    strongSelf.show(completedVC, sender: nil)
+                    if let baseNC = strongSelf.navigationController as? BaseNavigationController {
+                        let completedVC = TransactionCompletedVC(transaction: strongSelf.dataModel.transaction)
+                        baseNC.shouldResetNavigationBarOnPush = false
+                        strongSelf.show(completedVC, sender: nil)
+                    }
+
                     strongSelf.hideHud()
                     strongSelf.sendPointsButton.isSelected = true
                 }) { [weak self] error in
@@ -423,7 +430,7 @@ class WalletSendPointsVC: BaseViewController {
                     strongSelf.sendPointsButton.isSelected = false
             }
             .disposed(by: self.disposeBag)
-                //*/
+            //*/
         }
     }
     
