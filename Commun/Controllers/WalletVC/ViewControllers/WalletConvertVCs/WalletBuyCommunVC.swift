@@ -9,7 +9,7 @@
 import Foundation
 import RxSwift
 
-class WalletConvertBuyCommunVC: WalletConvertVC {
+class WalletBuyCommunVC: WalletConvertVC {
     lazy var carousel = WalletCarouselWrapper(height: 50)
     
     override func setUp() {
@@ -59,9 +59,9 @@ class WalletConvertBuyCommunVC: WalletConvertVC {
     
     override func setUpBuyPrice() {
         if let history = historyItem, !leftTextField.isFirstResponder {
-            leftTextField.text = history.quantityValue.readableString
+            leftTextField.text = stringFromNumber(history.quantityValue)
         } else if viewModel.buyPrice.value > 0 {
-            leftTextField.text = viewModel.buyPrice.value.readableString
+            leftTextField.text = stringFromNumber(viewModel.buyPrice.value)
         }
         
         convertButton.isEnabled = shouldEnableConvertButton()
@@ -69,9 +69,9 @@ class WalletConvertBuyCommunVC: WalletConvertVC {
     
     override func setUpSellPrice() {
         if let history = historyItem, !leftTextField.isFirstResponder {
-            rightTextField.text = history.meta.exchangeAmount!.readableString
+            rightTextField.text = stringFromNumber(history.meta.exchangeAmount!)
         } else {
-            rightTextField.text = viewModel.sellPrice.value.readableString
+            rightTextField.text = stringFromNumber(viewModel.sellPrice.value)
         }
         
         convertButton.isEnabled = shouldEnableConvertButton()
