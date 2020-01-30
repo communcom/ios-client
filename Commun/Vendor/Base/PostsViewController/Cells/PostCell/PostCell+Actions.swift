@@ -16,6 +16,10 @@ extension PostCell {
     
     @objc func upVoteButtonTapped(button: UIButton) {
         guard let post = post else {return}
+        if post.contentId.userId == Config.currentUser?.id {
+            self.parentViewController?.showAlert(title: "error".localized().uppercaseFirst, message: "can't cancel vote on own publication".localized().uppercaseFirst)
+            return
+        }
         voteContainerView.animateUpVote {
             self.delegate?.upvoteButtonDidTouch(post: post)
         }
@@ -23,6 +27,10 @@ extension PostCell {
     
     @objc func downVoteButtonTapped(button: UIButton) {
         guard let post = post else {return}
+        if post.contentId.userId == Config.currentUser?.id {
+            self.parentViewController?.showAlert(title: "error".localized().uppercaseFirst, message: "can't cancel vote on own publication".localized().uppercaseFirst)
+            return
+        }
         voteContainerView.animateDownVote {
             self.delegate?.downvoteButtonDidTouch(post: post)
         }

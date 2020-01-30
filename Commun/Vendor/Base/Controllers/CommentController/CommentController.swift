@@ -42,6 +42,10 @@ extension CommentController {
     // MARK: - Voting
     func upVote() {
         guard let comment = comment else {return}
+        if comment.contentId.userId == Config.currentUser?.id {
+            UIApplication.topViewController()?.showAlert(title: "error".localized().uppercaseFirst, message: "can't cancel vote on own publication".localized().uppercaseFirst)
+            return
+        }
         // animate
         voteContainerView.animateUpVote {
             NetworkService.shared.upvoteMessage(message: comment)
@@ -54,6 +58,10 @@ extension CommentController {
     
     func downVote() {
         guard let comment = comment else {return}
+        if comment.contentId.userId == Config.currentUser?.id {
+            UIApplication.topViewController()?.showAlert(title: "error".localized().uppercaseFirst, message: "can't cancel vote on own publication".localized().uppercaseFirst)
+            return
+        }
         // animate
         voteContainerView.animateDownVote {
             NetworkService.shared.downvoteMessage(message: comment)

@@ -92,6 +92,10 @@ extension PostController {
     
     func upVote() {
         guard let post = post else {return}
+        if post.contentId.userId == Config.currentUser?.id {
+            UIApplication.topViewController()?.showAlert(title: "error".localized().uppercaseFirst, message: "can't cancel vote on own publication".localized().uppercaseFirst)
+            return
+        }
         // animate
         voteContainerView.animateUpVote {
             NetworkService.shared.upvoteMessage(message: post)
@@ -104,6 +108,10 @@ extension PostController {
     
     func downVote() {
         guard let post = post else {return}
+        if post.contentId.userId == Config.currentUser?.id {
+            UIApplication.topViewController()?.showAlert(title: "error".localized().uppercaseFirst, message: "can't cancel vote on own publication".localized().uppercaseFirst)
+            return
+        }
         // animate
         voteContainerView.animateDownVote {
             NetworkService.shared.downvoteMessage(message: post)
