@@ -260,8 +260,12 @@ class CommunWalletVC: TransferHistoryVC {
     private func routeToSendPointsScene(withUser user: ResponseAPIContentGetSubscriptionsUser? = nil) {
         showIndetermineHudWithMessage("loading".localized().uppercaseFirst)
 
-        let walletSendPointsVC = WalletSendPointsVC(withSelectedBalanceSymbol: headerView.sendButton.accessibilityHint ?? Config.defaultSymbol, andUser: user)
-        show(walletSendPointsVC, sender: nil)
+        if let baseNC = navigationController as? BaseNavigationController {
+            let walletSendPointsVC = WalletSendPointsVC(withSelectedBalanceSymbol: headerView.sendButton.accessibilityHint ?? Config.defaultSymbol, andUser: user)
+            baseNC.shouldResetNavigationBarOnPush = false
+            show(walletSendPointsVC, sender: nil)
+        }
+        
         hideHud()
     }
     

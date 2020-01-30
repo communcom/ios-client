@@ -105,6 +105,7 @@ final class BaseNavigationController: UINavigationController {
     
     override func pushViewController(_ viewController: UIViewController, animated: Bool) {
         duringPushAnimation = true
+        
         if shouldResetNavigationBarOnPush {
             resetNavigationBar()
         }
