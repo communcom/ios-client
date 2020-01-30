@@ -14,9 +14,9 @@ import UIKit
 class ShareExtensionNavigationController: UINavigationController {
     // MARK: - Class Initialization
      init() {
-        let viewController: UIViewController = TestViewController(nibName: nil, bundle: nil)
+        let testViewController: UIViewController = TestViewController(nibName: nil, bundle: nil)
 
-        super.init(rootViewController: viewController)
+        super.init(rootViewController: testViewController)
     }
 
     required init(coder aDecoder: NSCoder) {

@@ -19,7 +19,7 @@ class TestViewController: UIViewController {
         self.navigationItem.title = "Share this"
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(cancelButtonTapped))
     }
-    
+
     
     // MARK: - Custom Functions
     func hideExtensionWithCompletionHandler(completion:@escaping (Bool) -> Void) {
