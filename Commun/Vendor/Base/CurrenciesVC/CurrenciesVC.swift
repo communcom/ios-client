@@ -31,6 +31,11 @@ class CurrenciesVC: ListViewController<ResponseAPIGetCurrency, CurrencyCell>, UI
         setUpSearchController()
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        searchController.searchBar.textField?.cornerRadius = (searchController.searchBar.textField?.height ?? 0) / 2
+    }
+    
     override func bindItems() {
         let viewModel = self.viewModel as! CurrenciesViewModel
         

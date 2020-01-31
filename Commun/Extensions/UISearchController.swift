@@ -9,23 +9,16 @@
 import Foundation
 
 extension UISearchController {
-    static func `default`(placeholder: String = "search".localized().uppercaseFirst) -> UISearchController {
+    static func `default`(
+        placeholder: String = "search".localized().uppercaseFirst
+    ) -> UISearchController {
         let sc = UISearchController(searchResultsController: nil)
-        if let textfield = sc.searchBar.value(forKey: "searchField") as? UITextField {
-            //textfield.textColor = // Set text color
-            if let backgroundview = textfield.subviews.first {
-
-                // Background color
-                backgroundview.backgroundColor = .f3f5fa
-
-                // Rounded corner
-                backgroundview.cornerRadius = sc.searchBar.height
-            }
-            
-            textfield.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [.font: UIFont.systemFont(ofSize: 17), .foregroundColor: UIColor.a7a9bf])
-            
+        if let textfield = sc.searchBar.textField {
+            textfield.backgroundColor = .f3f5fa
+            textfield.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [.foregroundColor: UIColor.a5a7bd])
             if let iconView = textfield.leftView as? UIImageView {
-                iconView.tintColor = .a7a9bf
+                iconView.image = iconView.image?.withRenderingMode(.alwaysTemplate)
+                iconView.tintColor = .a5a7bd
             }
         }
         
