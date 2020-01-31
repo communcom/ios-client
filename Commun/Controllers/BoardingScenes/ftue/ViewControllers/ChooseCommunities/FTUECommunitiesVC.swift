@@ -84,6 +84,8 @@ class FTUECommunitiesVC: BaseViewController, BoardingRouter {
         
         // collection view
         communitiesCollectionView.keyboardDismissMode = .onDrag
+        communitiesCollectionView.isUserInteractionEnabled = true
+        communitiesCollectionView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard)))
         communitiesCollectionView.register(FTUECommunityCell.self, forCellWithReuseIdentifier: "CommunityCollectionCell")
         communitiesCollectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: bottomBarHeight, right: 0)
         communitiesCollectionView.es.addPullToRefresh {
@@ -122,6 +124,7 @@ class FTUECommunitiesVC: BaseViewController, BoardingRouter {
         observeCommunityFollowed()
         
         searchBar.rx.text.orEmpty
+            .distinctUntilChanged()
             .skip(1)
             .debounce(0.3, scheduler: MainScheduler.instance)
             .subscribe(onNext: { (string) in
@@ -138,9 +141,7 @@ class FTUECommunitiesVC: BaseViewController, BoardingRouter {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        var contentInset = communitiesCollectionView.contentInset
-        contentInset.top = headerView.height + 20
-        communitiesCollectionView.contentInset = contentInset
+        communitiesCollectionView.contentInset.top = headerView.height + 20
         
         shadowView.layoutIfNeeded()
         bottomBar.roundCorners(UIRectCorner(arrayLiteral: .topLeft, .topRight), radius: 24.5)
@@ -159,5 +160,9 @@ class FTUECommunitiesVC: BaseViewController, BoardingRouter {
                 self.showError(error)
             }
             .disposed(by: disposeBag)
+    }
+    
+    @objc func dismissKeyboard() {
+        self.view.endEditing(true)
     }
 }
