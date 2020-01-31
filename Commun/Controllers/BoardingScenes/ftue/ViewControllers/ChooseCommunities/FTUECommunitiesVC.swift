@@ -120,6 +120,20 @@ class FTUECommunitiesVC: BaseViewController, BoardingRouter {
         bindControl()
         bindCommunities()
         observeCommunityFollowed()
+        
+        searchBar.rx.text.orEmpty
+            .skip(1)
+            .debounce(0.3, scheduler: MainScheduler.instance)
+            .subscribe(onNext: { (string) in
+                if string.isEmpty {
+                    self.viewModel.fetcher.search = nil
+                } else {
+                    self.viewModel.fetcher.search = string
+                }
+                self.viewModel.reload()
+                self.viewModel.fetchNext()
+            })
+            .disposed(by: disposeBag)
     }
     
     override func viewDidLayoutSubviews() {
