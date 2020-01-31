@@ -81,10 +81,12 @@ class BasicEditorVC: PostEditorVC {
         return _viewModel
     }
     
+    
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.loadShareExtensionData()
         self.navigationItem.title = "Share this"
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(cancelButtonTapped))
     }
@@ -153,6 +155,14 @@ class BasicEditorVC: PostEditorVC {
         
         bindAttachments()
     }
+    
+    private func loadShareExtensionData() {
+        if let shareExtensionData = UserDefaults.appGroups.loadShareExtensionData() {
+            // TODO: - ADD SHARE TO SCENE
+            print(shareExtensionData.description)
+        }
+    }
+    
     
     // MARK: - GetContentBlock
     override func getContentBlock() -> Single<ResponseAPIContentBlock> {

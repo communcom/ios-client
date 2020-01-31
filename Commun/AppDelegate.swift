@@ -529,6 +529,25 @@ extension AppDelegate {
                 return true
             }
         }
+
         return false
+    }
+}
+
+
+// MARK: - Share Extension pass data
+extension AppDelegate {
+    func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
+        switch url.description {
+        case "AppShareExtensionCreatePost://":
+            if let tabBar = self.window?.rootViewController as? TabBarVC {
+                tabBar.buttonAddTapped()
+            }
+       
+        default:
+            return false
+        }
+        
+        return true
     }
 }

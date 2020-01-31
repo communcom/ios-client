@@ -167,6 +167,8 @@
 		ACCCF74323A9105E00AF4FDE /* countries.json in Resources */ = {isa = PBXBuildFile; fileRef = ACCCF74023A9105E00AF4FDE /* countries.json */; };
 		ACD76C9823B23E91001FAECD /* PhotoLibraryAccessDeniedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD76C9723B23E91001FAECD /* PhotoLibraryAccessDeniedView.swift */; };
 		ACFA282623AB8A00009B77A6 /* AnalyticsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACFA282523AB8A00009B77A6 /* AnalyticsManager.swift */; };
+		B101CB6823E4631B00269253 /* ShareExtensionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B101CB6723E4631B00269253 /* ShareExtensionData.swift */; };
+		B101CB6B23E4634900269253 /* ShareExtensionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B101CB6723E4631B00269253 /* ShareExtensionData.swift */; };
 		B170AC15228AFBDA00C6FFBC /* SignUpVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5797E0F9225DDA490026C4D5 /* SignUpVC.storyboard */; };
 		B17A970C228002440081B8E0 /* SignUpRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17A970B228002440081B8E0 /* SignUpRouter.swift */; };
 		B1A6EE5122D5C8E300A5D6F0 /* GoogleService-Info-Dev.plist in Resources */ = {isa = PBXBuildFile; fileRef = B1A6EE5022D5C8E100A5D6F0 /* GoogleService-Info-Dev.plist */; };
@@ -182,6 +184,8 @@
 		B1C3712D2383D0F3000BAE2F /* ProfileEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C3712B2383D0F2000BAE2F /* ProfileEditViewController.swift */; };
 		B1C371362383E43C000BAE2F /* ProfileEditViewController+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C371352383E43C000BAE2F /* ProfileEditViewController+Actions.swift */; };
 		B1D1CF9922F8A28A0071F1B6 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B1D1CF9B22F8A28A0071F1B6 /* InfoPlist.strings */; };
+		B1D78C0923E335D100772BD9 /* UserDefaults+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D78C0823E335D100772BD9 /* UserDefaults+Extensions.swift */; };
+		B1D78C0A23E339C400772BD9 /* UserDefaults+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D78C0823E335D100772BD9 /* UserDefaults+Extensions.swift */; };
 		B1D7AD5623A10582007D1A13 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D7AD5523A10581007D1A13 /* ErrorView.swift */; };
 		B1D7AD5823A10650007D1A13 /* SignInVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D7AD5723A10650007D1A13 /* SignInVC.swift */; };
 		B1D7AD5A23A1065A007D1A13 /* SignInViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D7AD5923A10659007D1A13 /* SignInViewModel.swift */; };
@@ -718,6 +722,7 @@
 		ACD76C9723B23E91001FAECD /* PhotoLibraryAccessDeniedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibraryAccessDeniedView.swift; sourceTree = "<group>"; };
 		ACFA282523AB8A00009B77A6 /* AnalyticsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsManager.swift; sourceTree = "<group>"; };
 		AE43B2305FC441D96462E0AB /* Pods-Commun.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Commun.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Commun/Pods-Commun.debug.xcconfig"; sourceTree = "<group>"; };
+		B101CB6723E4631B00269253 /* ShareExtensionData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareExtensionData.swift; sourceTree = "<group>"; };
 		B12684EF22C1E56B0046C838 /* Commun.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Commun.entitlements; sourceTree = "<group>"; };
 		B17A970B228002440081B8E0 /* SignUpRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpRouter.swift; sourceTree = "<group>"; };
 		B1A6EE5022D5C8E100A5D6F0 /* GoogleService-Info-Dev.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-Dev.plist"; sourceTree = "<group>"; };
@@ -733,6 +738,7 @@
 		B1C3712B2383D0F2000BAE2F /* ProfileEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileEditViewController.swift; sourceTree = "<group>"; };
 		B1C371352383E43C000BAE2F /* ProfileEditViewController+Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProfileEditViewController+Actions.swift"; sourceTree = "<group>"; };
 		B1D1CF9A22F8A28A0071F1B6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		B1D78C0823E335D100772BD9 /* UserDefaults+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Extensions.swift"; sourceTree = "<group>"; };
 		B1D7AD5523A10581007D1A13 /* ErrorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
 		B1D7AD5723A10650007D1A13 /* SignInVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInVC.swift; sourceTree = "<group>"; };
 		B1D7AD5923A10659007D1A13 /* SignInViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInViewModel.swift; sourceTree = "<group>"; };
@@ -1590,6 +1596,7 @@
 				3BF37BC922A11FA700A72FFE /* UIView.swift */,
 				3BAF69CA226773000055CCEB /* UIView+Shadow.swift */,
 				576DC920223E42C800EDED41 /* UIViewController+Extensions.swift */,
+				B1D78C0823E335D100772BD9 /* UserDefaults+Extensions.swift */,
 				3B61AC3322E1CA8A00F608AF /* LAContext.swift */,
 				3BEC38E2230F801600662374 /* UITextView.swift */,
 				3BAD8E802318D838005A8AB3 /* UITextView+UILabel.swift */,
@@ -1827,6 +1834,7 @@
 				B1AB195B23E1BA0900CAD9EC /* CommunShare.entitlements */,
 				B1AB197223E2C77B00CAD9EC /* TestViewController.swift */,
 				B1AB194C23E1B9EB00CAD9EC /* ShareViewController.swift */,
+				B101CB6723E4631B00269253 /* ShareExtensionData.swift */,
 				B1AB196D23E2C73A00CAD9EC /* ShareExtensionNavigationController.swift */,
 				B1AB194E23E1B9EB00CAD9EC /* MainInterface.storyboard */,
 				B1AB195123E1B9EB00CAD9EC /* Info.plist */,
@@ -3158,6 +3166,7 @@
 				BC561E80238B836D004C53EB /* ReportOptionView.swift in Sources */,
 				BCF1B3FC23A730EF00EB6FC8 /* CommentsViewController+UITableViewDelegate.swift in Sources */,
 				B17A970C228002440081B8E0 /* SignUpRouter.swift in Sources */,
+				B1D78C0923E335D100772BD9 /* UserDefaults+Extensions.swift in Sources */,
 				BC247D1223827F460062C979 /* PostHeaderView+UITextViewDelegate.swift in Sources */,
 				5721E87122650AC0003BE04B /* StringExtension.swift in Sources */,
 				3B3C8B7E23473ED900D8BADB /* EditorVC+CollectionViewFlowLayoutDelegate.swift in Sources */,
@@ -3448,6 +3457,7 @@
 				AC3386A12371D1B6009DB3BB /* EmbedView.swift in Sources */,
 				3B5EDE3922E07F0300897BF3 /* SettingsVC+DataSource.swift in Sources */,
 				BC8F815623E27ECE0024C04A /* WalletSellCommunVC.swift in Sources */,
+				B101CB6B23E4634900269253 /* ShareExtensionData.swift in Sources */,
 				BC8F814223E27ECE0024C04A /* WalletCarousel.swift in Sources */,
 				3BE68AAA22EEA08600033B81 /* SettingsVC+SwitcherDelegate.swift in Sources */,
 				575945A122607F1F004041C9 /* CountryCell.swift in Sources */,
@@ -3485,8 +3495,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B101CB6823E4631B00269253 /* ShareExtensionData.swift in Sources */,
 				B1AB194D23E1B9EB00CAD9EC /* ShareViewController.swift in Sources */,
 				B1AB197423E2C77B00CAD9EC /* TestViewController.swift in Sources */,
+				B1D78C0A23E339C400772BD9 /* UserDefaults+Extensions.swift in Sources */,
 				B1AB197123E2C73A00CAD9EC /* ShareExtensionNavigationController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
