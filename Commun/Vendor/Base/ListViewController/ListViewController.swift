@@ -101,7 +101,7 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
         }
         
         if isSearchEnabled {
-            searchController.searchBar.textField?.cornerRadius = (searchController.searchBar.textField?.height ?? 0) / 2
+            searchController.roundCorner()
         }
     }
     

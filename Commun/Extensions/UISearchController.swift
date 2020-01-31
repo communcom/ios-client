@@ -24,4 +24,8 @@ extension UISearchController {
         
         return sc
     }
+    
+    func roundCorner(cornerRadius: CGFloat? = nil) {
+        searchBar.textField?.cornerRadius = cornerRadius ?? ((searchBar.textField?.height ?? 0) / 2)
+    }
 }
