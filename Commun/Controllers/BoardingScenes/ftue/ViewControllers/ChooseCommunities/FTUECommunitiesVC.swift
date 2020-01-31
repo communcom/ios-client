@@ -134,7 +134,6 @@ class FTUECommunitiesVC: BaseViewController, BoardingRouter {
                     self.viewModel.fetcher.search = string
                 }
                 self.viewModel.reload()
-                self.viewModel.fetchNext()
             })
             .disposed(by: disposeBag)
     }

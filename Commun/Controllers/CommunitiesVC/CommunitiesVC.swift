@@ -10,7 +10,7 @@ import Foundation
 
 class CommunitiesVC: SubsViewController<ResponseAPIContentGetCommunity, CommunityCell>, CommunityCellDelegate {
     // MARK: - Properties
-//    override var isSearchEnabled: Bool {false}
+    override var isSearchEnabled: Bool {true}
     
     // MARK: - Initializers
     init(type: GetCommunitiesType, userId: String? = nil) {
@@ -32,6 +32,13 @@ class CommunitiesVC: SubsViewController<ResponseAPIContentGetCommunity, Communit
     override func setUp() {
         super.setUp()
         navigationItem.rightBarButtonItem = nil
+    }
+    
+    override func bindItems() {
+        viewModel.items
+            .map {[ListSection(model: "", items: $0)]}
+            .bind(to: tableView.rx.items(dataSource: dataSource))
+            .disposed(by: disposeBag)
     }
     
     override func configureCell(with community: ResponseAPIContentGetCommunity, indexPath: IndexPath) -> UITableViewCell {
@@ -56,5 +63,24 @@ class CommunitiesVC: SubsViewController<ResponseAPIContentGetCommunity, Communit
         let title = "no communities"
         let description = "no communities found"
         tableView.addEmptyPlaceholderFooterView(title: title.localized().uppercaseFirst, description: description.localized().uppercaseFirst)
+    }
+    
+    // MARK: - Search manager
+    override func updateSearchResults(for searchController: UISearchController) {
+        super.updateSearchResults(for: searchController)
+        if searchController.searchBar.text == nil || (searchController.searchBar.text ?? "1").isEmpty {
+            if self.viewModel.fetcher.search != nil {
+                self.viewModel.fetcher.search = nil
+                self.viewModel.reload()
+            }
+        }
+    }
+    
+    override func search(_ keyword: String) {
+        if self.viewModel.fetcher.search != keyword {
+            self.viewModel.fetcher.search = keyword
+            self.viewModel.fetcher.reset(clearResult: false)
+            self.viewModel.fetchNext()
+        }
     }
 }
