@@ -242,12 +242,12 @@ extension UIViewController {
         navigationItem.rightBarButtonItem = rightBarButton
     }
     
-    func setNavBarBackButton(title: String? = nil) {
+    func setNavBarBackButton(title: String? = nil, tintColor: UIColor = .black) {
         let newBackButton = title == nil ?  UIBarButtonItem(image: UIImage(named: "icon-back-bar-button-black-default"), style: .plain, target: self, action: #selector(popToPreviousVC)) :
                                             UIBarButtonItem(title: title!.localized().uppercaseFirst, style: .plain, target: self, action: #selector(popToPreviousVC))
         
         if title == nil {
-            newBackButton.tintColor = .black
+            newBackButton.tintColor = tintColor
         }
         
         self.navigationItem.hidesBackButton = true

@@ -20,7 +20,7 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
     var dataSource: MyRxTableViewSectionedAnimatedDataSource<ListSection>!
     var tableViewMargin: UIEdgeInsets {.zero}
     var pullToRefreshAdded = false
-    private var refreshControl = UIRefreshControl()
+    let refreshControl = UIRefreshControl(forAutoLayout: ())
     
     // Search manager
     var isSearchEnabled: Bool {false}

@@ -11,7 +11,7 @@ import RxSwift
 import RxCocoa
 import CircularCarousel
 
-protocol WalletHeaderViewDelegate: CommunWalletHeaderViewDelegate {
+protocol WalletHeaderViewDelegate: class {
     func walletHeaderView(_ headerView: WalletHeaderView, currentIndexDidChangeTo index: Int)
 }
 
@@ -22,14 +22,6 @@ class WalletHeaderView: CommunWalletHeaderView {
     // MARK: - Properties
     var selectedIndex = 0
     
-    // MARK: - Subviews
-    lazy var carousel: WalletCarousel = {
-        let carousel = WalletCarousel(width: 300, height: 40)
-        carousel.delegate = self
-        carousel.dataSource = self
-        return carousel
-    }()
-    
     // MARK: - Balance
     lazy var balanceContainerView = UIView(forAutoLayout: ())
     lazy var communValueLabel = UILabel.with(text: "= 150 Commun", textSize: 12, weight: .semibold, textColor: .white)
@@ -39,8 +31,26 @@ class WalletHeaderView: CommunWalletHeaderView {
     // MARK: - Methods
     override func commonInit() {
         // balance
+
+        carousel = WalletCarousel(width: 300, height: 40)
+        carousel!.delegate = self
+        carousel!.dataSource = self
+
         layoutBalanceContainerView()
         super.commonInit()
+    }
+
+    override func updateYPosition(y: CGFloat) {
+        var alpha: CGFloat = 1
+        if y > 30 {
+            alpha = 1 - ((100 / 50) / 100 * (y - 30))
+        }
+
+        communValueLabel.alpha = alpha
+        availableHoldValueLabel.alpha = alpha
+        balanceContainerView.alpha = alpha
+
+        super.updateYPosition(y: y)
     }
     
     override func reloadData() {
@@ -62,7 +72,7 @@ class WalletHeaderView: CommunWalletHeaderView {
             progress = balance.balanceValue / total
         }
         progressBar.progress = CGFloat(progress)
-        
+
         titleLabel.text = balance.name ?? "" + "balance".localized().uppercaseFirst
         pointLabel.text = "\(balance.balanceValue.currencyValueFormatted)"
     }
@@ -76,22 +86,14 @@ class WalletHeaderView: CommunWalletHeaderView {
 //                self.reloadViews()
 //            }
         if shouldUpdateCarousel {
-            carousel.scroll(toItemAtIndex: index, animated: true)
+            carousel?.scroll(toItemAtIndex: index, animated: true)
         }
         
         reloadData()
-        (delegate as? WalletHeaderViewDelegate)?.walletHeaderView(self, currentIndexDidChangeTo: index)
     }
     
     // MARK: - Private functions
     override func layoutBalanceExpanded() {
-        // add carousel
-        if !carousel.isDescendant(of: contentView) {
-            contentView.addSubview(carousel)
-            carousel.autoAlignAxis(toSuperviewAxis: .vertical)
-            carousel.autoAlignAxis(.horizontal, toSameAxisOf: backButton)
-        }
-        
         // add balance container
         if !balanceContainerView.isDescendant(of: contentView) {
             contentView.addSubview(balanceContainerView)
@@ -101,16 +103,8 @@ class WalletHeaderView: CommunWalletHeaderView {
             
             stackViewTopConstraint = buttonsStackView.autoPinEdge(.top, to: .bottom, of: balanceContainerView, withOffset: 30 * Config.heightRatio)
         }
-        
-        contentView.bringSubviewToFront(backButton)
     }
-    
-    override func collapse() {
-        carousel.removeFromSuperview()
-        balanceContainerView.removeFromSuperview()
-        super.collapse()
-    }
-    
+
     // MARK: - Helpers
     private func layoutBalanceContainerView() {
         // balance
@@ -179,10 +173,6 @@ extension WalletHeaderView: CircularCarouselDataSource, CircularCarouselDelegate
             return CoreGraphics.CGFloat(carouselHeight) as! T
         }
         
-//        if option == .spacing {
-//            return CoreGraphics.CGFloat(8) as! T
-//        }
-        
         if option == .scaleMultiplier {
             return CoreGraphics.CGFloat(0.25) as! T
         }
@@ -190,14 +180,6 @@ extension WalletHeaderView: CircularCarouselDataSource, CircularCarouselDelegate
         if option == .minScale {
             return CoreGraphics.CGFloat(0.5) as! T
         }
-        
-//        if option == .fadeMin {
-//            return CoreGraphics.CGFloat(-2) as! T
-//        }
-//
-//        if option == .fadeMax {
-//            return CoreGraphics.CGFloat(2) as! T
-//        }
         
         if option == .visibleItems {
             return Int(5) as! T
