@@ -10,9 +10,9 @@ import Foundation
 import CyberSwift
 import RxSwift
 
-class CurrenciesVC: ListViewController<ResponseAPIGetCurrency, CurrencyCell>, UISearchResultsUpdating {
+class CurrenciesVC: ListViewController<ResponseAPIGetCurrency, CurrencyCell> {
     // MARK: - Properties
-    lazy var searchController = UISearchController.default()
+    override var isSearchEnabled: Bool {true}
     
     // MARK: - Initializers
     init() {
@@ -28,28 +28,6 @@ class CurrenciesVC: ListViewController<ResponseAPIGetCurrency, CurrencyCell>, UI
     override func setUp() {
         super.setUp()
         setLeftNavBarButtonForGoingBack()
-        setUpSearchController()
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        searchController.searchBar.textField?.cornerRadius = (searchController.searchBar.textField?.height ?? 0) / 2
-    }
-    
-    override func bindItems() {
-        let viewModel = self.viewModel as! CurrenciesViewModel
-        
-        Observable.merge(viewModel.items.asObservable(), viewModel.searchResult.filter {$0 != nil}.map {$0!}.asObservable())
-            .map {[ListSection(model: "", items: $0)]}
-            .bind(to: tableView.rx.items(dataSource: dataSource))
-            .disposed(by: disposeBag)
-        
-        viewModel.searchResult
-            .filter {$0 == nil}
-            .subscribe(onNext: { (_) in
-                viewModel.items.accept(viewModel.items.value)
-            })
-            .disposed(by: disposeBag)
     }
     
     override func handleListEmpty() {
@@ -63,35 +41,9 @@ class CurrenciesVC: ListViewController<ResponseAPIGetCurrency, CurrencyCell>, UI
     }
     
     // MARK: - Search manager
-    fileprivate func setUpSearchController() {
-        searchController.searchResultsUpdater = self
-        self.definesPresentationContext = true
-
-        layoutSearchBar()
-
-        // Don't hide the navigation bar because the search bar is in it.
-        searchController.hidesNavigationBarDuringPresentation = false
-        
-        searchController.obscuresBackgroundDuringPresentation = false
-    }
-
-    func layoutSearchBar() {
-        // Place the search bar in the navigation item's title view.
-        self.navigationItem.titleView = searchController.searchBar
-    }
-
-    func updateSearchResults(for searchController: UISearchController) {
-        // If the search bar contains text, filter our data with the string
-        if let searchText = searchController.searchBar.text,
-            !searchText.isEmpty
-        {
-            (viewModel as! CurrenciesViewModel).searchResult.accept(filteredItemsWithKeyword(searchText))
-        } else {
-            (viewModel as! CurrenciesViewModel).searchResult.accept(nil)
-        }
-    }
-    
-    func filteredItemsWithKeyword(_ keyword: String) -> [ResponseAPIGetCurrency] {
-        viewModel.items.value.filter {$0.name.lowercased().contains(keyword.lowercased()) || ($0.fullName?.lowercased().contains(keyword.lowercased()) ?? false)}
+    override func search(_ keyword: String) {
+        viewModel.searchResult.accept(
+            viewModel.items.value.filter {$0.name.lowercased().contains(keyword.lowercased()) || ($0.fullName?.lowercased().contains(keyword.lowercased()) ?? false)}
+        )
     }
 }
