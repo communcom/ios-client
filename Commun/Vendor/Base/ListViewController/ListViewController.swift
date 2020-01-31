@@ -11,7 +11,7 @@ import RxSwift
 import RxDataSources
 import RxCocoa
 
-class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewController {
+class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewController, UISearchResultsUpdating {
     // MARK: - Nested type
     public typealias ListSection = AnimatableSectionModel<String, T>
     
@@ -22,33 +22,9 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
     var pullToRefreshAdded = false
     let refreshControl = UIRefreshControl(forAutoLayout: ())
     
-    // Search manager
+    // search
     var isSearchEnabled: Bool {false}
-    var searchPlaceholder: String? {nil}
-    lazy var searchController: UISearchController? = {
-        if !isSearchEnabled {return nil}
-        let sc = UISearchController(searchResultsController: nil)
-        
-        if let textfield = sc.searchBar.value(forKey: "searchField") as? UITextField {
-            //textfield.textColor = // Set text color
-            if let backgroundview = textfield.subviews.first {
-
-                // Background color
-                backgroundview.backgroundColor = .f3f5fa
-
-                // Rounded corner
-                backgroundview.cornerRadius = sc.searchBar.height
-            }
-            
-            textfield.attributedPlaceholder = NSAttributedString(string: "search".localized().uppercaseFirst, attributes: [.font: UIFont.systemFont(ofSize: 17), .foregroundColor: UIColor.a7a9bf])
-            
-            if let iconView = textfield.leftView as? UIImageView {
-                iconView.tintColor = .a7a9bf
-            }
-        }
-        
-        return sc
-    }()
+    lazy var searchController = UISearchController.default()
     
     // MARK: - Subviews
     lazy var tableView = createTableView()
@@ -73,16 +49,20 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
     // MARK: - Methods
     override func setUp() {
         super.setUp()
-        // searchController
+        
+        // search
         if isSearchEnabled {
-            // searchController
-            extendedLayoutIncludesOpaqueBars = true
-            searchController?.obscuresBackgroundDuringPresentation = false
-            navigationItem.searchController = searchController
-            definesPresentationContext = true
+            setUpSearchController()
         }
         
-        tableView.rowHeight = UITableView.automaticDimension
+        // before setting tableView
+        viewWillSetUpTableView()
+        
+        // setUpTableView
+        setUpTableView()
+        
+        // after setting tableView
+        viewDidSetUpTableView()
         
         // registerCell
         registerCell()
@@ -105,9 +85,17 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
             pullToRefreshAdded = true
         }
     }
-
-    func refreshTintColor(_ color: UIColor) {
-        refreshControl.tintColor = color
+    
+    func viewWillSetUpTableView() {
+        
+    }
+    
+    func viewDidSetUpTableView() {
+        
+    }
+    
+    func setUpTableView() {
+        tableView.rowHeight = UITableView.automaticDimension
     }
     
     func registerCell() {
@@ -128,17 +116,28 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
         bindItems()
         bindItemSelected()
         bindScrollView()
-        
-        if isSearchEnabled {
-            bindSearchController()
-        }
     }
     
     func bindItems() {
-        viewModel.items
-            .map {[ListSection(model: "", items: $0)]}
-            .bind(to: tableView.rx.items(dataSource: dataSource))
-            .disposed(by: disposeBag)
+        if !isSearchEnabled {
+            viewModel.items
+                .map {[ListSection(model: "", items: $0)]}
+                .bind(to: tableView.rx.items(dataSource: dataSource))
+                .disposed(by: disposeBag)
+        } else {
+            Observable.merge(viewModel.items.asObservable(), viewModel.searchResult.filter {$0 != nil}.map {$0!}.asObservable())
+                .map {[ListSection(model: "", items: $0)]}
+                .bind(to: tableView.rx.items(dataSource: dataSource))
+                .disposed(by: disposeBag)
+            
+            viewModel.searchResult
+                .filter {$0 == nil}
+                .subscribe(onNext: { (_) in
+                    self.viewModel.items.accept(self.viewModel.items.value)
+                })
+                .disposed(by: disposeBag)
+        }
+        
     }
     
     func bindState() {
@@ -161,29 +160,10 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
                     self?.handleListEmpty()
                 case .error(let error):
                     self?.handleListError()
-                    #if !APPSTRORE
+                    #if !APPSTORE
                         self?.showAlert(title: "Error", message: "\(error)")
                     #endif
                 }
-            })
-            .disposed(by: disposeBag)
-    }
-    
-    func bindSearchController() {
-        searchController?.searchBar.rx.text.orEmpty
-            .skip(1)
-            .throttle(0.5, scheduler: MainScheduler.instance)
-            .distinctUntilChanged()
-            .flatMapLatest {Observable<String>.just($0)}
-            .subscribe(onNext: { (query) in
-                if query.isEmpty {
-                    self.viewModel.fetcher.search = nil
-                    self.viewModel.reload()
-                    return
-                }
-                
-                self.viewModel.fetcher.search = query
-                self.viewModel.reload()
             })
             .disposed(by: disposeBag)
     }
@@ -262,6 +242,39 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
     
     @objc func refresh() {
         viewModel.reload()
-        refreshControl.endRefreshing()
+refreshControl.endRefreshing()
+    }
+    
+    // MARK: - Search manager
+    private func setUpSearchController() {
+        searchController.searchResultsUpdater = self
+        self.definesPresentationContext = true
+
+        layoutSearchBar()
+
+        // Don't hide the navigation bar because the search bar is in it.
+        searchController.hidesNavigationBarDuringPresentation = false
+        
+        searchController.obscuresBackgroundDuringPresentation = false
+    }
+
+    func layoutSearchBar() {
+        // Place the search bar in the navigation item's title view.
+        self.navigationItem.titleView = searchController.searchBar
+    }
+
+    func updateSearchResults(for searchController: UISearchController) {
+        // If the search bar contains text, filter our data with the string
+        if let searchText = searchController.searchBar.text,
+            !searchText.isEmpty
+        {
+            search(searchText)
+        } else {
+            viewModel.searchResult.accept(nil)
+        }
+    }
+    
+    func search(_ keyword: String) {
+        fatalError("Must override")
     }
 }

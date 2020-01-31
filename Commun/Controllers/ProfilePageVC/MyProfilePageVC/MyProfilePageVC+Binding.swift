@@ -76,7 +76,7 @@ extension MyProfilePageVC {
             .disposed(by: disposeBag)
         
         (viewModel as! MyProfilePageViewModel).balancesVM.items
-            .map {$0.first(where: {$0.symbol == Config.defaultSymbol})?.balanceValue.currencyValueFormatted}
+            .map {$0.enquityCommunValue.currencyValueFormatted}
             .bind(to: label.rx.text)
             .disposed(by: disposeBag)
     }

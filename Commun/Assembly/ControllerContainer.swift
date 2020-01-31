@@ -96,12 +96,6 @@ let controllerContainer: Container = {
         let vc = LanguageVC.instanceController(fromStoryboard: "LanguageVC", withIdentifier: "LanguageVC") as! LanguageVC
         return vc
     })
-
-    // Notifications scene
-    container.register(NotificationsPageVC.self, factory: { _ in
-        let vc = NotificationsPageVC.instanceController(fromStoryboard: "NotificationsPageVC", withIdentifier: "NotificationsPageVC") as! NotificationsPageVC
-        return vc
-    })
     
     // ProfileEdit scene
     container.register(ProfileEditViewController.self, factory: { _ in

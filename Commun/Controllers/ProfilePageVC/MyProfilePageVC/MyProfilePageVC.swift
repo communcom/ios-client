@@ -125,23 +125,27 @@ class MyProfilePageVC: UserProfilePageVC {
             CommunActionSheet.Action(title: "blacklist".localized().uppercaseFirst, icon: UIImage(named: "profile_options_blacklist"), handle: {
                 self.show(MyProfileBlacklistVC(), sender: self)
             }, style: .profile),
-            CommunActionSheet.Action(title: "logout".localized().uppercaseFirst, icon: nil, handle: {
-                self.showAlert(title: "Logout".localized(), message: "Do you really want to logout?".localized(), buttonTitles: ["Ok".localized(), "cancel".localized().uppercaseFirst], highlightedButtonIndex: 1) { (index) in
-
-                    if index == 0 {
-                        self.navigationController?.showIndetermineHudWithMessage("logging out".localized().uppercaseFirst)
-                        RestAPIManager.instance.logout()
-                            .subscribe(onCompleted: {
-                                self.navigationController?.hideHud()
-                                AppDelegate.reloadSubject.onNext(true)
-                            }, onError: { (error) in
-                                self.navigationController?.hideHud()
-                                self.navigationController?.showError(error)
-                            })
-                            .disposed(by: self.disposeBag)
-                    }
-                }
-            }, tintColor: UIColor(hexString: "#ED2C5B")!, marginTop: 14)
+            CommunActionSheet.Action(title: "settings".localized().uppercaseFirst, icon: UIImage(named: "profile_options_settings"), handle: {
+                let vc = MyProfileSettingsVC()
+                self.show(vc, sender: self)
+            }, marginTop: 14)
+//            CommunActionSheet.Action(title: "logout".localized().uppercaseFirst, icon: nil, handle: {
+//                self.showAlert(title: "Logout".localized(), message: "Do you really want to logout?".localized(), buttonTitles: ["Ok".localized(), "cancel".localized().uppercaseFirst], highlightedButtonIndex: 1) { (index) in
+//
+//                    if index == 0 {
+//                        self.navigationController?.showIndetermineHudWithMessage("logging out".localized().uppercaseFirst)
+//                        RestAPIManager.instance.logout()
+//                            .subscribe(onCompleted: {
+//                                self.navigationController?.hideHud()
+//                                AppDelegate.reloadSubject.onNext(true)
+//                            }, onError: { (error) in
+//                                self.navigationController?.hideHud()
+//                                self.navigationController?.showError(error)
+//                            })
+//                            .disposed(by: self.disposeBag)
+//                    }
+//                }
+//            }, tintColor: UIColor(hexString: "#ED2C5B")!, marginTop: 14)
         ]) {
             
         }

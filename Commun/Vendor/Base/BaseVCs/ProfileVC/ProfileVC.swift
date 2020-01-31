@@ -164,6 +164,7 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(false, animated: animated)
         navigationController?.navigationBar.isTranslucent = true
+        navigationController?.navigationBar.prefersLargeTitles = false
 
         showTitle(tableView.contentOffset.y >= -43)
     }

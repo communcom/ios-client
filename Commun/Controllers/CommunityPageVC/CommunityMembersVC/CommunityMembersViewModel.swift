@@ -53,6 +53,11 @@ class CommunityMembersViewModel: BaseViewModel {
         super.init()
         defer {
             bind()
+            if starterSegmentedItem == .friends,
+                let friends = community.friends
+            {
+                friendsVM.accept(friends)
+            }
         }
     }
     

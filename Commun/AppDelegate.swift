@@ -18,8 +18,10 @@ import UserNotifications
 import CyberSwift
 @_exported import CyberSwift
 import RxSwift
+import RxCocoa
 import SDURLCache
 import SDWebImageWebPCoder
+import ListPlaceholder
 
 let isDebugMode: Bool = true
 let smsCodeDebug: UInt64 = isDebugMode ? 9999 : 0
@@ -33,6 +35,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     static var reloadSubject = PublishSubject<Bool>()
     let notificationCenter = UNUserNotificationCenter.current()
+    let notificationRelay = BehaviorRelay<ResponseAPIGetNotificationItem>(value: ResponseAPIGetNotificationItem.empty)
+    
+    let deepLinkPath = BehaviorRelay<[String]>(value: [])
     
     private var bag = DisposeBag()
 
@@ -53,13 +58,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         // first fun app
         if !UserDefaults.standard.bool(forKey: firstInstallAppKey) {
+            // Analytics
             AnalyticsManger.shared.launchFirstTime()
+            
             UserDefaults.standard.set(true, forKey: firstInstallAppKey)
+        }
+        
+        // create deviceId
+        if KeychainManager.currentDeviceId == nil {
+            let id = UUID().uuidString + "." + "\(Date().timeIntervalSince1970)"
+            do {
+                try KeychainManager.save([Config.currentDeviceIdKey: id])
+                SocketManager.shared.deviceIdDidSet()
+            } catch {
+                Logger.log(message: error.localizedDescription, event: .debug)
+            }
         }
 
         AnalyticsManger.shared.sessionStart()
         // Use Firebase library to configure APIs
         configureFirebase()
+        
+        // ask for permission for sending notifications
+        configureNotifications()
 
         // Config Fabric
         Fabric.with([Crashlytics.self])
@@ -67,21 +88,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // global tintColor
         window?.tintColor = .appMainColor
         // Logger
-//        Logger.showEvents = [.request, .error]
+//        Logger.showEvents = [.debug]
 
         // support webp image
         SDImageCodersManager.shared.addCoder(SDImageWebPCoder.shared)
         
         // Sync iCloud key-value store
         NSUbiquitousKeyValueStore.default.synchronize()
-
-        #if !APPSTORE
-            // reset keychain
-            if !UserDefaults.standard.bool(forKey: UIApplication.versionBuild) {
-                try? KeychainManager.deleteUser()
-                UserDefaults.standard.set(true, forKey: UIApplication.versionBuild)
-            }
-        #endif
         
         // Hide constraint warning
         UserDefaults.standard.setValue(false, forKey: "_UIConstraintBasedLayoutLogUnsatisfiable")
@@ -89,13 +102,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // handle connected
         SocketManager.shared.connected
             .filter {$0}
+            .debounce(0.3, scheduler: MainScheduler.instance)
             .take(1)
             .asSingle()
             .timeout(5, scheduler: MainScheduler.instance)
             .subscribe(onSuccess: { (_) in
                 AppDelegate.reloadSubject.onNext(false)
                 self.window?.makeKeyAndVisible()
-                application.applicationIconBadgeNumber = 0
             }, onError: {_ in
                 if let vc = self.window?.rootViewController as? SplashViewController {
                     vc.showErrorScreen()
@@ -110,13 +123,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             })
             .disposed(by: bag)
         
-        // Configure notification
-//        configureNotifications(application: application)
-        
         // cache
         if let urlCache = SDURLCache(memoryCapacity: 0, diskCapacity: 2*1024*1024*1024, diskPath: SDURLCache.defaultCachePath(), enableForIOS5AndUp: true) {
             URLCache.shared = urlCache
         }
+        
+        // badge
+        SocketManager.shared.unseenNotificationsRelay
+            .subscribe(onNext: { (count) in
+                UIApplication.shared.applicationIconBadgeNumber = Int(count)
+            })
+            .disposed(by: bag)
         
         return true
     }
@@ -156,12 +173,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                         // Retrieve favourites
                         FavouritesList.shared.retrieve()
                         
-                        // Turn notify on
-                        self.pushNotifyOn()
-                        
                         // show feed
                         if !force && (self.window?.rootViewController is TabBarVC) {return}
                         self.changeRootVC(controllerContainer.resolve(TabBarVC.self)!)
+                        
+                        // set info
+                        self.deviceSetInfo()
                     }, onError: { (error) in
                         if let error = error as? ErrorAPI {
                             switch error.caseInfo.message {
@@ -270,7 +287,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     // MARK: - Custom Functions
-    private func configureNotifications(application: UIApplication) {
+    private func configureNotifications() {
         // Set delegate for Messaging
         Messaging.messaging().delegate = self
         
@@ -285,13 +302,41 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         })
         
         // Register for remote notification
-        application.registerForRemoteNotifications()
+        UIApplication.shared.registerForRemoteNotifications()
     }
     
     private func getNotificationSettings() {
         self.notificationCenter.getNotificationSettings(completionHandler: { (settings) in
             Logger.log(message: "Notification settings: \(settings)", event: .debug)
         })
+    }
+    
+    private func deviceSetInfo() {
+        // set info
+        let key = "AppDelegate.setInfo"
+        if !UserDefaults.standard.bool(forKey: key) {
+            let offset = -TimeZone.current.secondsFromGMT() / 60
+            RestAPIManager.instance.deviceSetInfo(timeZoneOffset: offset)
+                .subscribe(onSuccess: { (_) in
+                    UserDefaults.standard.set(true, forKey: key)
+                })
+                .disposed(by: bag)
+        }
+        
+        // fcm token
+        if !UserDefaults.standard.bool(forKey: Config.currentDeviceDidSendFCMToken)
+        {
+            UserDefaults.standard.rx.observe(String.self, Config.currentDeviceFcmTokenKey)
+                .filter {$0 != nil}
+                .map {$0!}
+                .take(1)
+                .asSingle()
+                .flatMap {RestAPIManager.instance.deviceSetFcmToken($0)}
+                .subscribe(onSuccess: { (_) in
+                    UserDefaults.standard.set(true, forKey: Config.currentDeviceDidSendFCMToken)
+                })
+                .disposed(by: bag)
+        }
     }
 
     private func scheduleLocalNotification(userInfo: [AnyHashable: Any]) {
@@ -323,18 +368,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                                        options: [])
         
         self.notificationCenter.setNotificationCategories([category])
-    }
-    
-    func pushNotifyOn() {
-        if UserDefaults.standard.value(forKey: Config.currentUserPushNotificationOn) == nil {
-            RestAPIManager.instance.pushNotifyOn()
-                .subscribe(onCompleted: {
-                    Logger.log(message: "Successfully turn pushNotificationOn", event: .severe)
-                }) { (_) in
-                    
-                }
-                .disposed(by: bag)
-        }
     }
     
     // MARK: - Core Data stack
@@ -435,8 +468,6 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         Logger.log(message: "UINotificationContent: \(notificationContent)", event: .debug)
 
         completionHandler([.alert, .sound])
-        
-        UIApplication.shared.applicationIconBadgeNumber = Int(truncating: notificationContent.badge ?? 1)
     }
     
     // Tap on push message
@@ -451,6 +482,18 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
 
         // Print full message.
         Logger.log(message: "UINotificationContent: \(notificationContent)", event: .debug)
+        
+        // decode notification
+        if let string = notificationContent.userInfo["notification"] as? String,
+            let data = string.data(using: .utf8)
+        {
+            do {
+                let notification = try JSONDecoder().decode(ResponseAPIGetNotificationItem.self, from: data)
+                notificationRelay.accept(notification)
+            } catch {
+                Logger.log(message: "Receiving notification error: \(error)", event: .error)
+            }
+        }
 
         completionHandler()
     }
@@ -465,7 +508,7 @@ extension AppDelegate: MessagingDelegate {
         let dataDict: [String: String] = ["token": fcmToken]
         NotificationCenter.default.post(name: Notification.Name("FCMToken"), object: nil, userInfo: dataDict)
 
-        UserDefaults.standard.set(fcmToken, forKey: "fcmToken")
+        UserDefaults.standard.set(fcmToken, forKey: Config.currentDeviceFcmTokenKey)
 
         // TODO: If necessary send token to application server.
         // Note: This callback is fired at each app startup and whenever a new token is generated.
@@ -473,5 +516,19 @@ extension AppDelegate: MessagingDelegate {
 
     func messaging(_ messaging: Messaging, didReceive remoteMessage: MessagingRemoteMessage) {
         Logger.log(message: "Received data message: \(remoteMessage.appData)", event: .severe)
+    }
+}
+
+// MARK: - Deeplink
+extension AppDelegate {
+    func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
+        if let url = userActivity.webpageURL {
+            let path = Array(url.path.components(separatedBy: "/").dropFirst())
+            if path.count == 1 || path.count == 3 {
+                deepLinkPath.accept(path)
+                return true
+            }
+        }
+        return false
     }
 }

@@ -35,7 +35,6 @@ extension NSAttributedString {
         var blocks = [ResponseAPIContentBlock]()
         enumerateAttributes(in: NSRange(location: 0, length: length), options: []) { (attrs, range, _) in
             var content = attributedSubstring(from: range).string
-            content = content.trimmed
             var blockType = "text"
             
             // Parse links and tags

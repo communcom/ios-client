@@ -445,23 +445,27 @@ class WalletConvertVC: BaseViewController {
     }
     
     @objc func changeMode() {
-        guard var viewControllers = navigationController?.viewControllers else { return }
-
-        // Pop sourceViewController
-        _ = viewControllers.popLast()
-
-        // Push targetViewController
-        let vc: UIViewController
+        view.endEditing(true)
         
-        if self is WalletSellCommunVC {
-            vc = WalletBuyCommunVC(balances: viewModel.items.value, symbol: currentBalance?.symbol)
-        } else {
-            vc = WalletSellCommunVC(balances: viewModel.items.value, symbol: currentBalance?.symbol)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            guard var viewControllers = self.navigationController?.viewControllers else { return }
+
+            // Pop sourceViewController
+            _ = viewControllers.popLast()
+
+            // Push targetViewController
+            let vc: UIViewController
+            
+            if self is WalletSellCommunVC {
+                vc = WalletBuyCommunVC(balances: self.viewModel.items.value, symbol: self.currentBalance?.symbol)
+            } else {
+                vc = WalletSellCommunVC(balances: self.viewModel.items.value, symbol: self.currentBalance?.symbol)
+            }
+            
+            viewControllers.append(vc)
+
+            self.navigationController?.setViewControllers(viewControllers, animated: false)
         }
-        
-        viewControllers.append(vc)
-
-        navigationController?.setViewControllers(viewControllers, animated: false)
     }
     
     @objc func getBuyPrice() {
