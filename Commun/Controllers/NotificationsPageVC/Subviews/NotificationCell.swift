@@ -78,13 +78,14 @@ class NotificationCell: MyTableViewCell, ListItemCellType {
         isNewMark.isHidden = !item.isNew
         
         iconImageView.isHidden = false
-        avatarImageView.setAvatar(
-            urlString: (item.author ?? item.voter ?? item.user)?.avatarUrl,
-            namePlaceHolder: (item.author ?? item.voter ?? item.user)?.username ?? "User")
+        iconImageView.borderColor = .clear
+        iconImageView.borderWidth = 0
         
         let dateString = Date.from(string: item.timestamp).string(withFormat: "HH:mm")
         timestampLabel.text = dateString
         
+        var avatarUrl = (item.author ?? item.voter ?? item.user)?.avatarUrl
+        var avatarPlaceholder = (item.author ?? item.voter ?? item.user)?.username ?? "User"
         switch item.eventType {
         case "mention":
             iconImageView.image = UIImage(named: "notifications-page-mention")
@@ -142,9 +143,35 @@ class NotificationCell: MyTableViewCell, ListItemCellType {
                 .normal(": \"")
             aStr.normal((item.comment?.shortText ?? "") + "...\"")
             contentLabel.attributedText = aStr
+        case "reward":
+            avatarUrl = item.community?.avatarUrl
+            avatarPlaceholder = item.community?.name ?? "Community"
+            iconImageView.image = UIImage(named: "notifications-page-reward")
+            let aStr = NSMutableAttributedString()
+                .normal("you got".localized().uppercaseFirst)
+                .normal(" ")
+                .normal("\(item.amount ?? "0") \(item.community?.communityId ?? "POINTS")")
+                .normal(" ")
+                .normal("as a reward".localized())
+            contentLabel.attributedText = aStr
+        case "transfer":
+            avatarUrl = item.from?.avatarUrl
+            avatarPlaceholder = item.from?.username ?? "User"
+            iconImageView.isHidden = true
+            let aStr = NSMutableAttributedString()
+                .semibold(item.from?.username ?? "a user".localized().uppercaseFirst)
+                .normal(" ")
+                .normal("sent you".localized())
+                .normal(" ")
+                .normal("\(item.amount ?? "0") \(item.pointType ?? "points")")
+            contentLabel.attributedText = aStr
         default:
             iconImageView.isHidden = true
             contentLabel.text = "notification"
         }
+        
+        avatarImageView.setAvatar(
+            urlString: avatarUrl,
+            namePlaceHolder: avatarPlaceholder)
     }
 }
