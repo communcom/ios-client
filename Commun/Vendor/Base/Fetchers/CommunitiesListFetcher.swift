@@ -27,4 +27,12 @@ class CommunitiesListFetcher: ListFetcher<ResponseAPIContentGetCommunity> {
         return RestAPIManager.instance.getCommunities(type: .all, userId: userId, offset: Int(offset), limit: Int(limit), search: search)
             .map {$0.items}
     }
+    
+    override func join(newItems items: [ResponseAPIContentGetCommunity]) -> [ResponseAPIContentGetCommunity] {
+        var items = super.join(newItems: items)
+        if search != nil {
+            items = items.filter {$0.name.contains(search!)}
+        }
+        return items
+    }
 }

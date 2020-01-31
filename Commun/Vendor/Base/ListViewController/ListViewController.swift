@@ -11,7 +11,7 @@ import RxSwift
 import RxDataSources
 import RxCocoa
 
-class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewController {
+class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewController, UISearchResultsUpdating {
     // MARK: - Nested type
     public typealias ListSection = AnimatableSectionModel<String, T>
     
@@ -20,6 +20,10 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
     var dataSource: MyRxTableViewSectionedAnimatedDataSource<ListSection>!
     var tableViewMargin: UIEdgeInsets {.zero}
     var pullToRefreshAdded = false
+    
+    // search
+    var isSearchEnabled: Bool {false}
+    lazy var searchController = UISearchController.default()
     
     // MARK: - Subviews
     lazy var tableView = createTableView()
@@ -44,6 +48,11 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
     // MARK: - Methods
     override func setUp() {
         super.setUp()
+        
+        // search
+        if isSearchEnabled {
+            setUpSearchController()
+        }
         
         // before setting tableView
         viewWillSetUpTableView()
@@ -90,6 +99,10 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
             }
             pullToRefreshAdded = true
         }
+        
+        if isSearchEnabled {
+            searchController.roundCorner()
+        }
     }
     
     func registerCell() {
@@ -113,10 +126,25 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
     }
     
     func bindItems() {
-        viewModel.items
-            .map {[ListSection(model: "", items: $0)]}
-            .bind(to: tableView.rx.items(dataSource: dataSource))
-            .disposed(by: disposeBag)
+        if !isSearchEnabled {
+            viewModel.items
+                .map {[ListSection(model: "", items: $0)]}
+                .bind(to: tableView.rx.items(dataSource: dataSource))
+                .disposed(by: disposeBag)
+        } else {
+            Observable.merge(viewModel.items.asObservable(), viewModel.searchResult.filter {$0 != nil}.map {$0!}.asObservable())
+                .map {[ListSection(model: "", items: $0)]}
+                .bind(to: tableView.rx.items(dataSource: dataSource))
+                .disposed(by: disposeBag)
+            
+            viewModel.searchResult
+                .filter {$0 == nil}
+                .subscribe(onNext: { (_) in
+                    self.viewModel.items.accept(self.viewModel.items.value)
+                })
+                .disposed(by: disposeBag)
+        }
+        
     }
     
     func bindState() {
@@ -221,5 +249,38 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
     
     @objc func refresh() {
         viewModel.reload()
+    }
+    
+    // MARK: - Search manager
+    private func setUpSearchController() {
+        searchController.searchResultsUpdater = self
+        self.definesPresentationContext = true
+
+        layoutSearchBar()
+
+        // Don't hide the navigation bar because the search bar is in it.
+        searchController.hidesNavigationBarDuringPresentation = false
+        
+        searchController.obscuresBackgroundDuringPresentation = false
+    }
+
+    func layoutSearchBar() {
+        // Place the search bar in the navigation item's title view.
+        self.navigationItem.titleView = searchController.searchBar
+    }
+
+    func updateSearchResults(for searchController: UISearchController) {
+        // If the search bar contains text, filter our data with the string
+        if let searchText = searchController.searchBar.text,
+            !searchText.isEmpty
+        {
+            search(searchText)
+        } else {
+            viewModel.searchResult.accept(nil)
+        }
+    }
+    
+    func search(_ keyword: String) {
+        fatalError("Must override")
     }
 }

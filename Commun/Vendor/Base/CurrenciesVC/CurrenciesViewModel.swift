@@ -10,9 +10,6 @@ import Foundation
 import RxCocoa
 
 class CurrenciesViewModel: ListViewModel<ResponseAPIGetCurrency> {
-    // MARK: - Properties
-    let searchResult = BehaviorRelay<[ResponseAPIGetCurrency]?>(value: nil)
-    
     // MARK: - Initializers
     init() {
         let fetcher = CurrenciesListFetcher()

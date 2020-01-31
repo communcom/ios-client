@@ -138,7 +138,9 @@ class NotificationsPageVC: ListViewController<ResponseAPIGetNotificationItem, No
                     $0.eventType == "subscribe" ||
                     $0.eventType == "reply" ||
                     $0.eventType == "mention" ||
-                    $0.eventType == "upvote"
+                    $0.eventType == "upvote" ||
+                    $0.eventType == "reward" ||
+                    $0.eventType == "transfer"
                 }
             }
             .map { (items) -> [ListSection] in

@@ -299,8 +299,14 @@ class WalletSendPointsVC: BaseViewController {
     
     private func setSendButton(amount: CGFloat = 0.0, percent: CGFloat) {
         let subtitle1 = String(format: "%@: %@ %@", "send".localized().uppercaseFirst, Double(amount).currencyValueFormatted, dataModel.transaction.symbol.sell.fullName)
-        let subtitle2 = String(format: "%.1f%% %@", percent, "will be burned".localized())
-        let title = NSMutableAttributedString(string: "\(subtitle1)\n\(subtitle2)")
+        var title: NSMutableAttributedString!
+        var subtitle2 = ""
+        if percent > 0 {
+            subtitle2 = String(format: "%.1f%% %@", percent, "will be burned".localized())
+            title = NSMutableAttributedString(string: "\(subtitle1)\n\(subtitle2)")
+        } else {
+            title = NSMutableAttributedString(string: subtitle1)
+        }
 
         let style = NSMutableParagraphStyle()
         style.alignment = .center
@@ -358,13 +364,13 @@ class WalletSendPointsVC: BaseViewController {
         
         let amountEntered = CGFloat(text.toDouble())
         dataModel.transaction.amount = amountEntered
-        setSendButton(amount: dataModel.transaction.amount, percent: 0.1)
+        let isCMN = dataModel.transaction.symbol.sell == Config.defaultSymbol
+        setSendButton(amount: dataModel.transaction.amount, percent: isCMN ? 0.0 : 0.1)
         pointsTextField.placeholder = String(format: "0 %@", dataModel.transaction.symbol.sell.fullName)
 
         sendPointsButton.isEnabled = dataModel.checkEnteredAmounts() && chooseFriendButton.isSelected
     }
-    
-    
+
     // MARK: - Actions
     @objc func chooseRecipientViewTapped(_ sender: UITapGestureRecognizer) {
         let friendsListVC = SendPointListVC { [weak self] user in

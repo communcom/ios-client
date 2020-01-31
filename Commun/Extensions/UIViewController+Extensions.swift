@@ -198,6 +198,14 @@ extension UIViewController {
             default:
                 break
             }
+        case "transfer":
+            if let id = item.from?.userId {
+                showProfileWithUserId(id)
+            }
+        case "reward":
+            if let id = item.community?.communityId {
+                showCommunityWithCommunityId(id)
+            }
         default:
             break
         }
