@@ -22,7 +22,9 @@ class SearchViewController: BaseViewController {
             "users".localized().uppercaseFirst,
             "posts".localized().uppercaseFirst
         ],
-        selectedIndex: 0)
+        selectedIndex: 0,
+        contentInset: UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
+    )
     
     // MARK: - Methods
     override func viewDidLayoutSubviews() {
@@ -34,15 +36,10 @@ class SearchViewController: BaseViewController {
         super.setUp()
         setUpSearchController()
         
-//        // topTabBar
-//        view.addSubview(scrollView)
-//        scrollView.autoPinEdgesToSuperviewSafeArea(with: .zero, excludingEdge: .bottom)
-//
-//        let aView = UIView(width: 10000, height: 35, backgroundColor: .red)
-//        scrollView.contentView.addSubview(aView)
-//        aView.autoPinEdgesToSuperviewEdges()
+        // topTabBar
         view.addSubview(topTabBar)
-        topTabBar.autoPinEdgesToSuperviewSafeArea(with: UIEdgeInsets(top: 0, left: 16, bottom: 10, right: 0), excludingEdge: .bottom)
+        topTabBar.autoPinEdgesToSuperviewSafeArea(with: .zero, excludingEdge: .bottom)
+        topTabBar.scrollView.contentOffset.x = -16
     }
     
     override func bind() {
