@@ -242,7 +242,7 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
     
     @objc func refresh() {
         viewModel.reload()
-refreshControl.endRefreshing()
+        refreshControl.endRefreshing()
     }
     
     // MARK: - Search manager
