@@ -13,6 +13,17 @@ class SearchViewController: BaseViewController {
     // MARK: - Properties
     lazy var searchController = UISearchController.default()
     
+    // MARK: - Subviews
+    lazy var topTabBar = CMTopTabBar(
+        height: 35,
+        labels: [
+            "all".localized().uppercaseFirst,
+            "communities".localized().uppercaseFirst,
+            "users".localized().uppercaseFirst,
+            "posts".localized().uppercaseFirst
+        ],
+        selectedIndex: 0)
+    
     // MARK: - Methods
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -22,6 +33,16 @@ class SearchViewController: BaseViewController {
     override func setUp() {
         super.setUp()
         setUpSearchController()
+        
+//        // topTabBar
+//        view.addSubview(scrollView)
+//        scrollView.autoPinEdgesToSuperviewSafeArea(with: .zero, excludingEdge: .bottom)
+//
+//        let aView = UIView(width: 10000, height: 35, backgroundColor: .red)
+//        scrollView.contentView.addSubview(aView)
+//        aView.autoPinEdgesToSuperviewEdges()
+        view.addSubview(topTabBar)
+        topTabBar.autoPinEdgesToSuperviewSafeArea(with: UIEdgeInsets(top: 0, left: 16, bottom: 10, right: 0), excludingEdge: .bottom)
     }
     
     override func bind() {
