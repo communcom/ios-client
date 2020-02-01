@@ -11,7 +11,7 @@ import RxSwift
 import RxDataSources
 import RxCocoa
 
-class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewController, UISearchResultsUpdating {
+class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewController {
     // MARK: - Nested type
     public typealias ListSection = AnimatableSectionModel<String, T>
     
@@ -47,6 +47,13 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
     }
     
     // MARK: - Methods
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        if isSearchEnabled {
+            searchController.roundCorner()
+        }
+    }
+    
     override func setUp() {
         super.setUp()
         
@@ -116,6 +123,9 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
         bindItems()
         bindItemSelected()
         bindScrollView()
+        if isSearchEnabled {
+            bindSearchBar()
+        }
     }
     
     func bindItems() {
@@ -246,8 +256,18 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
     }
     
     // MARK: - Search manager
+    func bindSearchBar() {
+        searchController.searchBar.rx.text
+            .distinctUntilChanged()
+            .skip(1)
+            .debounce(0.3, scheduler: MainScheduler.instance)
+            .subscribe(onNext: { (query) in
+                self.search(query)
+            })
+            .disposed(by: disposeBag)
+
+    }
     private func setUpSearchController() {
-        searchController.searchResultsUpdater = self
         self.definesPresentationContext = true
         layoutSearchBar()
     }
@@ -256,19 +276,8 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
         // Place the search bar in the navigation item's title view.
         self.navigationItem.titleView = searchController.searchBar
     }
-
-    func updateSearchResults(for searchController: UISearchController) {
-        // If the search bar contains text, filter our data with the string
-        if let searchText = searchController.searchBar.text,
-            !searchText.isEmpty
-        {
-            search(searchText)
-        } else {
-            viewModel.searchResult.accept(nil)
-        }
-    }
     
-    func search(_ keyword: String) {
+    func search(_ keyword: String?) {
         fatalError("Must override")
     }
 }

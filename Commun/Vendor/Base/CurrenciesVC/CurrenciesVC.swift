@@ -41,7 +41,11 @@ class CurrenciesVC: ListViewController<ResponseAPIGetCurrency, CurrencyCell> {
     }
     
     // MARK: - Search manager
-    override func search(_ keyword: String) {
+    override func search(_ keyword: String?) {
+        guard let keyword = keyword, !keyword.isEmpty else {
+            viewModel.items.accept(viewModel.items.value)
+            return
+        }
         viewModel.searchResult.accept(
             viewModel.items.value.filter {$0.name.lowercased().contains(keyword.lowercased()) || ($0.fullName?.lowercased().contains(keyword.lowercased()) ?? false)}
         )

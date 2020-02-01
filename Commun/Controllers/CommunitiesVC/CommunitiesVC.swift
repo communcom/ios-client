@@ -19,16 +19,16 @@ class CommunitiesVC: SubsViewController<ResponseAPIContentGetCommunity, Communit
         defer {self.title = "communities".localized().uppercaseFirst}
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        baseNavigationController?.changeStatusBarStyle(.default)
-    }
-
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     // MARK: - Methods
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        baseNavigationController?.changeStatusBarStyle(.default)
+    }
+    
     override func setUp() {
         super.setUp()
         navigationItem.rightBarButtonItem = nil
@@ -66,17 +66,15 @@ class CommunitiesVC: SubsViewController<ResponseAPIContentGetCommunity, Communit
     }
     
     // MARK: - Search manager
-    override func updateSearchResults(for searchController: UISearchController) {
-        super.updateSearchResults(for: searchController)
-        if searchController.searchBar.text == nil || (searchController.searchBar.text ?? "1").isEmpty {
+    override func search(_ keyword: String?) {
+        guard let keyword = keyword, !keyword.isEmpty else {
             if self.viewModel.fetcher.search != nil {
                 self.viewModel.fetcher.search = nil
                 self.viewModel.reload()
             }
+            return
         }
-    }
-    
-    override func search(_ keyword: String) {
+        
         if self.viewModel.fetcher.search != keyword {
             self.viewModel.fetcher.search = keyword
             self.viewModel.reload(clearResult: false)
