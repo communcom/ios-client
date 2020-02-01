@@ -18,7 +18,7 @@ class BuyCommunVC: BaseViewController {
     }
     
     // MARK: - Subviews
-    lazy var scrollView = ContentHuggingScrollView(axis: .vertical)
+    lazy var scrollView = ContentHuggingScrollView(axis: .horizontal)
     lazy var currencyAvatarImageView = MyAvatarImageView(size: 40)
     lazy var currencyNameLabel = UILabel.with(textSize: 15, weight: .medium)
     lazy var youSendTextField = UITextField.decimalPad()
