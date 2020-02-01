@@ -249,13 +249,7 @@ refreshControl.endRefreshing()
     private func setUpSearchController() {
         searchController.searchResultsUpdater = self
         self.definesPresentationContext = true
-
         layoutSearchBar()
-
-        // Don't hide the navigation bar because the search bar is in it.
-        searchController.hidesNavigationBarDuringPresentation = false
-        
-        searchController.obscuresBackgroundDuringPresentation = false
     }
 
     func layoutSearchBar() {
