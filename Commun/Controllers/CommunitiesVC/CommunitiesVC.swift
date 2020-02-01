@@ -79,8 +79,7 @@ class CommunitiesVC: SubsViewController<ResponseAPIContentGetCommunity, Communit
     override func search(_ keyword: String) {
         if self.viewModel.fetcher.search != keyword {
             self.viewModel.fetcher.search = keyword
-            self.viewModel.fetcher.reset(clearResult: false)
-            self.viewModel.fetchNext()
+            self.viewModel.reload(clearResult: false)
         }
     }
 }
