@@ -231,6 +231,7 @@ extension PostEditorVC {
                 // if editing post
                 if (self.viewModel.postForEdit) != nil {
                     self.dismiss(animated: true, completion: nil)
+                    UserDefaults.appGroups.removeObject(forKey: appShareExtensionKey)
                 }
                     // if creating post
                 else {

@@ -160,6 +160,18 @@ class BasicEditorVC: PostEditorVC {
         if let shareExtensionData = UserDefaults.appGroups.loadShareExtensionData() {
             // TODO: - ADD SHARE TO SCENE
             print(shareExtensionData.description)
+            
+            if let text = shareExtensionData.text {
+                contentTextView.text = text
+            }
+            
+            if let link = shareExtensionData.link {
+//                contentTextView.lin
+            }
+            
+            if let image = shareExtensionData.image {
+//                contentTextView.image
+            }
         }
     }
     
