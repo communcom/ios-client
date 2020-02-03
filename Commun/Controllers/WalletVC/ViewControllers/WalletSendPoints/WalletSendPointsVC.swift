@@ -278,14 +278,14 @@ class WalletSendPointsVC: BaseViewController {
     }
     
     private func setupNavBar() {
-        setLeftNavBarButtonForGoingBack(tintColor: .white)
-//        view.backgroundColor = #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1)
-//        navigationController?.navigationBar.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1) // items color
-//        navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1) // bar color
-//        navigationController?.navigationBar.isTranslucent = true
-        navigationController?.navigationBar.shadowImage?.clear()
-
         title = "send points".localized()
+
+        setLeftNavBarButtonForGoingBack(tintColor: .white)
+        view.backgroundColor = #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1)
+        navigationController?.navigationBar.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1) // items color
+        navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1) // bar color
+        navigationController?.navigationBar.isTranslucent = true
+        navigationController?.navigationBar.shadowImage?.clear()
         navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
         
         setTabBarHidden(true)
