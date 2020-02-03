@@ -171,6 +171,8 @@
 		B101CB6B23E4634900269253 /* ShareExtensionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B101CB6723E4631B00269253 /* ShareExtensionData.swift */; };
 		B170AC15228AFBDA00C6FFBC /* SignUpVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5797E0F9225DDA490026C4D5 /* SignUpVC.storyboard */; };
 		B17A970C228002440081B8E0 /* SignUpRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17A970B228002440081B8E0 /* SignUpRouter.swift */; };
+		B1A6344E23E83BDA00996375 /* UIApplication+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A6344D23E83BDA00996375 /* UIApplication+Extensions.swift */; };
+		B1A6345123E83BE700996375 /* UIApplication+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A6344D23E83BDA00996375 /* UIApplication+Extensions.swift */; };
 		B1A6EE5122D5C8E300A5D6F0 /* GoogleService-Info-Dev.plist in Resources */ = {isa = PBXBuildFile; fileRef = B1A6EE5022D5C8E100A5D6F0 /* GoogleService-Info-Dev.plist */; };
 		B1A8AC1B22E6FF5400032030 /* BlankButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A8AC1A22E6FF5400032030 /* BlankButton.swift */; };
 		B1AB194D23E1B9EB00CAD9EC /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1AB194C23E1B9EB00CAD9EC /* ShareViewController.swift */; };
@@ -725,6 +727,7 @@
 		B101CB6723E4631B00269253 /* ShareExtensionData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareExtensionData.swift; sourceTree = "<group>"; };
 		B12684EF22C1E56B0046C838 /* Commun.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Commun.entitlements; sourceTree = "<group>"; };
 		B17A970B228002440081B8E0 /* SignUpRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpRouter.swift; sourceTree = "<group>"; };
+		B1A6344D23E83BDA00996375 /* UIApplication+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+Extensions.swift"; sourceTree = "<group>"; };
 		B1A6EE5022D5C8E100A5D6F0 /* GoogleService-Info-Dev.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-Dev.plist"; sourceTree = "<group>"; };
 		B1A8AC1A22E6FF5400032030 /* BlankButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlankButton.swift; sourceTree = "<group>"; };
 		B1AB194A23E1B9EB00CAD9EC /* CommunShare.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = CommunShare.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1609,6 +1612,7 @@
 				BCD3BC8A23AB313E0036C947 /* UIStackView.swift */,
 				BC18FA2623D56325005DC7E3 /* UITextField.swift */,
 				BC99B65923E17848004AA74E /* UISearchController.swift */,
+				B1A6344D23E83BDA00996375 /* UIApplication+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -3149,6 +3153,7 @@
 				BC016D54235EA32600F1319F /* PostsViewModel.swift in Sources */,
 				571B14FC223A935C00630C8F /* Commun.xcdatamodeld in Sources */,
 				BCB2A6E22354512D00B3582B /* AttachmentView.swift in Sources */,
+				B1A6344E23E83BDA00996375 /* UIApplication+Extensions.swift in Sources */,
 				BC4AD65123B09C11008546A4 /* BalancesVC.swift in Sources */,
 				BCD453AF2354476B005A454C /* ArticleEditorVC+MediaViewDelegate.swift in Sources */,
 				BC8F815923E27ECE0024C04A /* WalletViewModel.swift in Sources */,
@@ -3497,6 +3502,7 @@
 			files = (
 				B101CB6823E4631B00269253 /* ShareExtensionData.swift in Sources */,
 				B1AB194D23E1B9EB00CAD9EC /* ShareViewController.swift in Sources */,
+				B1A6345123E83BE700996375 /* UIApplication+Extensions.swift in Sources */,
 				B1AB197423E2C77B00CAD9EC /* TestViewController.swift in Sources */,
 				B1D78C0A23E339C400772BD9 /* UserDefaults+Extensions.swift in Sources */,
 				B1AB197123E2C73A00CAD9EC /* ShareExtensionNavigationController.swift in Sources */,

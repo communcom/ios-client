@@ -87,15 +87,15 @@ class ShareViewController: SLComposeServiceViewController {
         
         // URL Scheme
         guard let url = URL(string: "AppShareExtensionCreatePost://") else { return }
-
+        
         var responder: UIResponder? = self
         let selectorOpenURL = sel_registerName("openURL:")
-        
+
         while responder != nil {
             if responder?.responds(to: selectorOpenURL) == true {
                 responder?.perform(selectorOpenURL, with: url)
             }
-            
+
             responder = responder?.next
         }
         

@@ -55,7 +55,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     // MARK: - Class Functions
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-
+        
         // first fun app
         if !UserDefaults.standard.bool(forKey: firstInstallAppKey) {
             // Analytics
@@ -537,7 +537,7 @@ extension AppDelegate {
 
 // MARK: - Share Extension pass data
 extension AppDelegate {
-    func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
+    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
         switch url.description {
         case "AppShareExtensionCreatePost://":
             if let tabBar = self.window?.rootViewController as? TabBarVC {
