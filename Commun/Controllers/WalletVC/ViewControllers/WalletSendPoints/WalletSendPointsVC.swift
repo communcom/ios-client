@@ -405,7 +405,7 @@ class WalletSendPointsVC: BaseViewController {
 
             self.dataModel.transaction.operationDate = Date()
 
-//            self.showIndetermineHudWithMessage("sending".localized().uppercaseFirst + " \(self.dataModel.transaction.symbol.sell.fullName.uppercased())")
+            self.showIndetermineHudWithMessage("sending".localized().uppercaseFirst + " \(self.dataModel.transaction.symbol.sell.fullName.uppercased())")
 
             // FOR TEST
 //            if let baseNC = self.navigationController as? BaseNavigationController {
