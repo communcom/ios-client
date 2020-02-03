@@ -12,8 +12,15 @@ def common_pods
   pod 'RxDataSources', '~> 3.0'
 end
 
+def extensions_pods
+    pod 'RxSwift'
+    pod 'RxCocoa'
+    
+end
+
 def common_pods_commun
   common_pods
+  extensions_pods
   
   pod 'Fabric'
   pod 'Crashlytics'
@@ -21,8 +28,8 @@ def common_pods_commun
   pod 'Firebase/Core'
   pod 'Firebase/Messaging'
   pod 'Amplitude-iOS'
-
-  
+     
+  pod 'PureLayout'
   pod 'Alamofire'
   pod 'Swinject'
   pod 'SDWebImage'
@@ -57,7 +64,6 @@ def common_pods_commun
   pod 'UITextView+Placeholder'
   
   pod "ESPullToRefresh"
-  pod 'PureLayout'
   pod 'SubviewAttachingTextView', :git => "https://github.com/communcom/SubviewAttachingTextView.git"
   
   pod "ReCaptcha"
@@ -71,8 +77,7 @@ def cyberswift_common_pods
   # EOS framework
   pod 'eosswift', :git => "git@github.com:communcom/eos-swift.git"
   
-  pod 'RxSwift'
-  pod 'RxCocoa'
+
   
   pod 'Checksum'
   pod 'Locksmith'
@@ -107,6 +112,13 @@ target 'Commun' do
       end
     end
   end
+  
+end
+
+target 'CommunShare' do
+  project 'Commun.xcodeproj'
+  extensions_pods
+
   
 end
 
