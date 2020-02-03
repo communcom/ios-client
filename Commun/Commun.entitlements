@@ -15,7 +15,7 @@
 	<string>$(TeamIdentifierPrefix)$(CFBundleIdentifier)</string>
 	<key>com.apple.security.application-groups</key>
 	<array>
-		<string>group.io.commun.eos.ios.CommunShare</string>
+		<string>group.io.commun.eos.ios</string>
 	</array>
 </dict>
 </plist>
