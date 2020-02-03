@@ -11,8 +11,7 @@ import Foundation
 class TransferHistoryVC: ListViewController<ResponseAPIWalletGetTransferHistoryItem, TransferHistoryItemCell> {
     // MARK: - Properties
     var lastOffset: CGPoint?
-    
-    
+
     // MARK: - Initializers
     init(viewModel: TransferHistoryViewModel = TransferHistoryViewModel()) {
         super.init(viewModel: viewModel)

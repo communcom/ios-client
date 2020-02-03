@@ -18,7 +18,7 @@ class SignInVC: BaseViewController {
     let viewModel = SignInViewModel()
     
     // MARK: - Subviews
-    lazy var scrollView = ContentHuggingScrollView(forAutoLayout: ())
+    lazy var scrollView = ContentHuggingScrollView(axis: .horizontal)
     
     lazy var loginTextField: UITextField = {
         let textField = createTextField()

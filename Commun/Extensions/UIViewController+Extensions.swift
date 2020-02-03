@@ -171,12 +171,61 @@ extension UIViewController {
 //        }
     }
     
+    func navigateWithNotificationItem(_ item: ResponseAPIGetNotificationItem) {
+        switch item.eventType {
+        case "subscribe":
+            if let id = item.user?.userId {
+                showProfileWithUserId(id)
+            }
+        case "upvote", "reply", "mention":
+            switch item.entityType {
+            case "post":
+                if let userId = item.post?.contentId.userId,
+                    let permlink = item.post?.contentId.permlink,
+                    let communityId = item.post?.contentId.communityId
+                {
+                    let postVC = PostPageVC(userId: userId, permlink: permlink, communityId: communityId)
+                    show(postVC, sender: self)
+                }
+            case "comment":
+                if let userId = item.comment?.parents?.post?.userId,
+                    let permlink = item.comment?.parents?.post?.permlink,
+                    let communityId = item.comment?.parents?.post?.communityId
+                {
+                    let postVC = PostPageVC(userId: userId, permlink: permlink, communityId: communityId)
+                    show(postVC, sender: self)
+                }
+            default:
+                break
+            }
+        case "transfer":
+            if let id = item.from?.userId {
+                showProfileWithUserId(id)
+            }
+        case "reward":
+            if let id = item.community?.communityId {
+                showCommunityWithCommunityId(id)
+            }
+        default:
+            break
+        }
+    }
+    
     func showCommunityWithCommunityId(_ id: String) {
         if let vc = self as? CommunityPageVC, vc.communityId == id {
             vc.view.shake()
             return
         }
         let communityVC = CommunityPageVC(communityId: id)
+        show(communityVC, sender: nil)
+    }
+    
+    func showCommunityWithCommunityAlias(_ alias: String) {
+        if let vc = self as? CommunityPageVC, vc.communityAlias == alias {
+            vc.view.shake()
+            return
+        }
+        let communityVC = CommunityPageVC(communityAlias: alias)
         show(communityVC, sender: nil)
     }
     
@@ -242,12 +291,12 @@ extension UIViewController {
         navigationItem.rightBarButtonItem = rightBarButton
     }
     
-    func setNavBarBackButton(title: String? = nil) {
+    func setNavBarBackButton(title: String? = nil, tintColor: UIColor = .black) {
         let newBackButton = title == nil ?  UIBarButtonItem(image: UIImage(named: "icon-back-bar-button-black-default"), style: .plain, target: self, action: #selector(popToPreviousVC)) :
                                             UIBarButtonItem(title: title!.localized().uppercaseFirst, style: .plain, target: self, action: #selector(popToPreviousVC))
         
         if title == nil {
-            newBackButton.tintColor = .black
+            newBackButton.tintColor = tintColor
         }
         
         self.navigationItem.hidesBackButton = true

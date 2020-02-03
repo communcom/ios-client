@@ -35,4 +35,3 @@ file_length:
 
 type_body_length:
   warning: 400
-  error: 450

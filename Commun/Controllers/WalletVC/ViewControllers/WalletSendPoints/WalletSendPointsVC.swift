@@ -226,6 +226,7 @@ class WalletSendPointsVC: BaseViewController {
 
         // Action view
         let whiteView = UIView(width: CGFloat.adaptive(width: 375.0), height: CGFloat.adaptive(height: 543.0), backgroundColor: .white, cornerRadius: CGFloat.adaptive(width: 25.0))
+        whiteView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         view.addSubview(whiteView)
         whiteView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
                 
@@ -298,8 +299,14 @@ class WalletSendPointsVC: BaseViewController {
     
     private func setSendButton(amount: CGFloat = 0.0, percent: CGFloat) {
         let subtitle1 = String(format: "%@: %@ %@", "send".localized().uppercaseFirst, Double(amount).currencyValueFormatted, dataModel.transaction.symbol.sell.fullName)
-        let subtitle2 = String(format: "%.1f%% %@", percent, "will be burned".localized())
-        let title = NSMutableAttributedString(string: "\(subtitle1)\n\(subtitle2)")
+        var title: NSMutableAttributedString!
+        var subtitle2 = ""
+        if percent > 0 {
+            subtitle2 = String(format: "%.1f%% %@", percent, "will be burned".localized())
+            title = NSMutableAttributedString(string: "\(subtitle1)\n\(subtitle2)")
+        } else {
+            title = NSMutableAttributedString(string: subtitle1)
+        }
 
         let style = NSMutableParagraphStyle()
         style.alignment = .center
@@ -353,17 +360,17 @@ class WalletSendPointsVC: BaseViewController {
     }
     
     private func updateSendInfoByEnteredPoints() {
-        guard let text = pointsTextField.text?.replacingOccurrences(of: ",", with: ".") else { return }
+        guard let text = pointsTextField.text else { return }
         
         let amountEntered = CGFloat(text.toDouble())
         dataModel.transaction.amount = amountEntered
-        setSendButton(amount: dataModel.transaction.amount, percent: 0.1)
+        let isCMN = dataModel.transaction.symbol.sell == Config.defaultSymbol
+        setSendButton(amount: dataModel.transaction.amount, percent: isCMN ? 0.0 : 0.1)
         pointsTextField.placeholder = String(format: "0 %@", dataModel.transaction.symbol.sell.fullName)
 
         sendPointsButton.isEnabled = dataModel.checkEnteredAmounts() && chooseFriendButton.isSelected
     }
-    
-    
+
     // MARK: - Actions
     @objc func chooseRecipientViewTapped(_ sender: UITapGestureRecognizer) {
         let friendsListVC = SendPointListVC { [weak self] user in
@@ -398,21 +405,27 @@ class WalletSendPointsVC: BaseViewController {
 
             self.dataModel.transaction.operationDate = Date()
 
-            self.showIndetermineHudWithMessage("sending".localized().uppercaseFirst + " \(self.dataModel.transaction.symbol.sell.fullName.uppercased())")
+//            self.showIndetermineHudWithMessage("sending".localized().uppercaseFirst + " \(self.dataModel.transaction.symbol.sell.fullName.uppercased())")
 
             // FOR TEST
-//        let completedVC = TransactionCompletedVC(transaction: dataModel.transaction)
-//        show(completedVC, sender: nil)
-            //*/
-                    
+//            if let baseNC = self.navigationController as? BaseNavigationController {
+//                let completedVC = TransactionCompletedVC(transaction: self.dataModel.transaction)
+//                baseNC.shouldResetNavigationBarOnPush = false
+//                self.show(completedVC, sender: nil)
+//            }
+                                
             ///*
             BlockchainManager.instance.transferPoints(to: friendID, number: Double(numberValue), currency: self.dataModel.transaction.symbol.sell)
                 .flatMapCompletable { RestAPIManager.instance.waitForTransactionWith(id: $0) }
                 .subscribe(onCompleted: { [weak self] in
                     guard let strongSelf = self else { return }
                     
-                    let completedVC = TransactionCompletedVC(transaction: strongSelf.dataModel.transaction)
-                    strongSelf.show(completedVC, sender: nil)
+                    if let baseNC = strongSelf.navigationController as? BaseNavigationController {
+                        let completedVC = TransactionCompletedVC(transaction: strongSelf.dataModel.transaction)
+                        baseNC.shouldResetNavigationBarOnPush = false
+                        strongSelf.show(completedVC, sender: nil)
+                    }
+
                     strongSelf.hideHud()
                     strongSelf.sendPointsButton.isSelected = true
                 }) { [weak self] error in
@@ -423,7 +436,7 @@ class WalletSendPointsVC: BaseViewController {
                     strongSelf.sendPointsButton.isSelected = false
             }
             .disposed(by: self.disposeBag)
-                //*/
+            //*/
         }
     }
     

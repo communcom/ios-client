@@ -35,8 +35,8 @@ class PostPageVC: CommentsViewController {
         super.init(viewModel: viewModel)
     }
     
-    init(userId: String, permlink: String, communityId: String) {
-        let viewModel = PostPageViewModel(userId: userId, permlink: permlink, communityId: communityId)
+    init(userId: String? = nil, username: String? = nil, permlink: String, communityId: String? = nil, communityAlias: String? = nil) {
+        let viewModel = PostPageViewModel(userId: userId, username: username, permlink: permlink, communityId: communityId, communityAlias: communityAlias)
         super.init(viewModel: viewModel)
     }
     
@@ -304,9 +304,5 @@ class PostPageVC: CommentsViewController {
     
     @objc func commentsCountButtonDidTouch() {
         tableView.safeScrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
-    }
-    
-    override func refresh() {
-        (viewModel as! PostPageViewModel).reload()
     }
 }

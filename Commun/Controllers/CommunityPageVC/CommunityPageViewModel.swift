@@ -29,14 +29,16 @@ class CommunityPageViewModel: ProfileViewModel<ResponseAPIContentGetCommunity> {
         return profileId
     }
     
+    var communityAlias: String?
+    
     // MARK: - Objects
     var community: BehaviorRelay<ResponseAPIContentGetCommunity?> {
         return profile
     }
     let segmentedItem = BehaviorRelay<SegmentioItem>(value: .posts)
     
-    lazy var postsVM: PostsViewModel = PostsViewModel(filter: PostsListFetcher.Filter(feedTypeMode: .community, feedType: .time, sortType: .all, communityId: communityId))
-    lazy var leadsVM = LeadersViewModel(communityId: communityId ?? "")
+    lazy var postsVM: PostsViewModel = PostsViewModel(filter: PostsListFetcher.Filter(feedTypeMode: .community, feedType: .time, sortType: .all, communityId: communityId, communityAlias: communityAlias))
+    lazy var leadsVM = LeadersViewModel(communityId: communityId, communityAlias: communityAlias)
     
     lazy var aboutSubject = PublishSubject<String?>()
     lazy var rulesSubject = PublishSubject<[ResponseAPIContentGetCommunityRule]>()
@@ -52,9 +54,22 @@ class CommunityPageViewModel: ProfileViewModel<ResponseAPIContentGetCommunity> {
         self.init(profileId: communityId)
     }
     
+    convenience init(communityAlias: String) {
+        self.init()
+        self.communityAlias = communityAlias
+        
+        defer {
+            loadProfile()
+            bind()
+        }
+    }
+    
     // MARK: - Methods
     override var loadProfileRequest: Single<ResponseAPIContentGetCommunity> {
-        RestAPIManager.instance.getCommunity(id: communityId ?? "")
+        if let alias = communityAlias {
+            return RestAPIManager.instance.getCommunity(alias: alias)
+        }
+        return RestAPIManager.instance.getCommunity(id: communityId ?? "")
     }
     
     override var listLoadingStateObservable: Observable<ListFetcherState> {

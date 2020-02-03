@@ -82,7 +82,7 @@ class CMTopTabBar: MyView {
                 button.autoPinEdge(.leading, to: .trailing, of: buttons[i-1], withOffset: spacing)
             }
             
-            if i == buttons.count - 1 {
+            if i == labels.count - 1 {
                 button.autoPinEdge(toSuperviewEdge: .trailing)
             }
             

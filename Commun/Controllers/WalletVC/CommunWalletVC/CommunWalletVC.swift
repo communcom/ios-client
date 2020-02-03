@@ -15,7 +15,9 @@ class CommunWalletVC: TransferHistoryVC {
     var balancesSubject: BehaviorRelay<[ResponseAPIWalletGetBalance]> {
         (viewModel as! WalletViewModel).balancesVM.items
     }
-    
+
+    var isCommunBalance = true
+
     var balances: [ResponseAPIWalletGetBalance] {
         balancesSubject.value
     }
@@ -24,13 +26,12 @@ class CommunWalletVC: TransferHistoryVC {
         tableView.isTracking || tableView.isDragging || tableView.isDecelerating
     }
 
-    var tableTopConstraint: NSLayoutConstraint!
+    var headerTopConstraint: NSLayoutConstraint!
     
     // MARK: - Subviews
     lazy var headerView: CommunWalletHeaderView = createHeaderView()
     func createHeaderView() -> CommunWalletHeaderView {
         let headerView = CommunWalletHeaderView(forAutoLayout: ())
-        headerView.delegate = self
         headerView.dataSource = self
         return headerView
     }
@@ -41,33 +42,40 @@ class CommunWalletVC: TransferHistoryVC {
 
     private var barStyle: UIStatusBarStyle = .lightContent
 
+    var balanceView: UIView {
+        let view = UIView(forAutoLayout: ())
+
+        return view
+    }
+
+    lazy var barTitleLabel = UILabel.with(text: "Equity Value Commun", textSize: 10, weight: .semibold, textColor: .white, textAlignment: .center)
+    lazy var barPointLabel = UILabel.with(text: "167 500.23", textSize: 15, weight: .bold, textColor: .white, textAlignment: .center)
+
+    lazy var barBalanceView = createBalanceView()
+    lazy var logoView = UIView.transparentCommunLogo(size: 40)
+
+    func createBalanceView() -> UIView {
+        let view = UIView(forAutoLayout: ())
+        view.addSubview(barTitleLabel)
+        barTitleLabel.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .bottom)
+        view.addSubview(barPointLabel)
+        barPointLabel.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
+        barPointLabel.autoPinEdge(.top, to: .bottom, of: barTitleLabel, withOffset: 3)
+        return view
+    }
+
     // MARK: - Initializers
     convenience init() {
         self.init(viewModel: WalletViewModel(symbol: "CMN"))
     }
-    
-    override func createTableView() -> UITableView {
-        view.addSubview(headerView)
-        headerView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .bottom)
-        
-        let tableView = UITableView(frame: .zero, style: .grouped)
-        tableView.configureForAutoLayout()
-        tableView.insetsContentViewsToSafeArea = false
-        tableView.contentInsetAdjustmentBehavior = .never
-        tableView.showsVerticalScrollIndicator = false
-        tableView.contentInset.top = 0
 
-        view.addSubview(tableView)
-        tableView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
-        tableTopConstraint = tableView.autoPinEdge(toSuperviewEdge: .top)
-        view.bringSubviewToFront(headerView)
-        return tableView
-    }
-    
     override func viewWillAppear(_ animated: Bool) {
-        self.navigationController?.setNavigationBarHidden(true, animated: animated)
+        setNavBarBackButton(tintColor: .white)
+        self.navigationController?.setNavigationBarHidden(false, animated: animated)
+        self.navigationController?.navigationBar.isTranslucent = false
+        self.navigationController?.navigationBar.barTintColor = .appMainColor
+        self.navigationController?.navigationBar.tintColor = .white
         self.setTabBarHidden(false)
-        
         super.viewWillAppear(animated)
     }
 
@@ -76,48 +84,103 @@ class CommunWalletVC: TransferHistoryVC {
 
         super.viewWillDisappear(animated)
     }
-        
-    
+
     // MARK: - Custom Functions
     override func setUp() {
         super.setUp()
-        headerView.backButton.addTarget(self, action: #selector(back), for: .touchUpInside)
-        
         headerView.sendButton.addTarget(self, action: #selector(sendButtonDidTouch), for: .touchUpInside)
         headerView.convertButton.addTarget(self, action: #selector(convertButtonDidTouch), for: .touchUpInside)
-        
+
         tableHeaderView.sendPointsSeeAllButton.addTarget(self, action: #selector(sendPointsSeeAllDidTouch), for: .touchUpInside)
         tableHeaderView.myPointsSeeAllButton.addTarget(self, action: #selector(myPointsSeeAllDidTouch), for: .touchUpInside)
-        
         tableHeaderView.filterButton.addTarget(self, action: #selector(openFilter), for: .touchUpInside)
         
         tableHeaderView.setMyPointHidden(false)
     }
     
+    override func viewWillSetUpTableView() {
+        super.viewWillSetUpTableView()
+        view.addSubview(headerView)
+        headerTopConstraint = headerView.autoPinEdge(toSuperviewEdge: .top)
+        headerView.autoPinEdge(toSuperviewEdge: .left)
+        headerView.autoPinEdge(toSuperviewEdge: .right)
+//        headerView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .bottom)
+    }
+    
+    override func setUpTableView() {
+        tableView = UITableView(frame: .zero, style: .grouped)
+        tableView.configureForAutoLayout()
+        tableView.insetsContentViewsToSafeArea = false
+        tableView.showsVerticalScrollIndicator = false
+
+        view.addSubview(tableView)
+        tableView.autoPinEdgesToSuperviewEdges(with: .zero)
+        view.bringSubviewToFront(headerView)
+        
+        tableView.rowHeight = UITableView.automaticDimension
+    }
+
     override func bind() {
         super.bind()
         
         // forward delegate
         myPointsCollectionView.rx.setDelegate(self)
             .disposed(by: disposeBag)
-        
+
         sendPointsCollectionView.rx.setDelegate(self)
             .disposed(by: disposeBag)
-        
+
+        headerView.titleLabel.rx.observe(String.self, "text")
+        .subscribe(onNext: { text in
+            self.barTitleLabel.text = text
+        })
+        .disposed(by: disposeBag)
+
+        headerView.pointLabel.rx.observe(String.self, "text")
+        .subscribe(onNext: { text in
+            self.barPointLabel.text = text
+        })
+        .disposed(by: disposeBag)
+
+        headerView.rx.observe(CGRect.self, "bounds")
+        .subscribe(onNext: { bounds in
+            guard let height = bounds?.height else {return}
+            self.tableView.contentInset.top = height
+            self.tableView.contentOffset.y = -height
+        })
+        .disposed(by: disposeBag)
+
         tableView.rx.contentOffset
             .map {$0.y}
-            .filter {_ in self.isUserScrolling}
-            .map({ y -> Bool in
-                return y > 0
-            })
-            .distinctUntilChanged()
-            .observeOn(MainScheduler.asyncInstance)
-            .subscribe(onNext: { (collapse) in
-                self.headerView.setIsCollapsed(collapse)
-                self.changeStatusBarStyle(collapse ? .default : .lightContent)
-            })
-            .disposed(by: disposeBag)
-        
+            .subscribe { (event) in
+                var y = event.element ?? 0
+                y = y >= -self.headerView.height ? y : -self.headerView.height
+                let constant = -y - self.headerView.height
+                self.headerTopConstraint.constant = constant < -(self.headerView.height - 50) ? -(self.headerView.height - 50) : constant
+                let diff = self.headerView.height + y
+                self.headerView.updateYPosition(y: diff)
+
+                if diff >= 50 {
+                    if self.navigationItem.titleView != self.barBalanceView {
+                        self.navigationItem.titleView = self.barBalanceView
+                    }
+                    let alpha = ((100 / 50) / 100 * diff) - 1
+                    self.barBalanceView.alpha = alpha
+                } else {
+                    let alpha = 1 - ((100 / 50) / 100 * diff)
+                    if self.isCommunBalance {
+                        self.logoView.alpha = alpha
+                        if self.navigationItem.titleView != self.logoView {
+                            self.navigationItem.titleView = self.logoView
+                        }
+                    } else if let carousel = self.headerView.carousel {
+                        carousel.alpha = alpha
+                        if self.navigationItem.titleView != carousel {
+                            self.navigationItem.titleView = carousel
+                        }
+                    }
+                }
+        }.disposed(by: disposeBag)
     }
 
     override func bindItems() {
@@ -260,8 +323,12 @@ class CommunWalletVC: TransferHistoryVC {
     private func routeToSendPointsScene(withUser user: ResponseAPIContentGetSubscriptionsUser? = nil) {
         showIndetermineHudWithMessage("loading".localized().uppercaseFirst)
 
-        let walletSendPointsVC = WalletSendPointsVC(withSelectedBalanceSymbol: headerView.sendButton.accessibilityHint ?? Config.defaultSymbol, andUser: user)
-        show(walletSendPointsVC, sender: nil)
+        if let baseNC = navigationController as? BaseNavigationController {
+            let walletSendPointsVC = WalletSendPointsVC(withSelectedBalanceSymbol: headerView.sendButton.accessibilityHint ?? Config.defaultSymbol, andUser: user)
+            baseNC.shouldResetNavigationBarOnPush = false
+            show(walletSendPointsVC, sender: nil)
+        }
+        
         hideHud()
     }
     
@@ -321,31 +388,8 @@ extension CommunWalletVC: UICollectionViewDelegateFlowLayout {
     }
 }
 
-extension CommunWalletVC: CommunWalletHeaderViewDelegate, CommunWalletHeaderViewDatasource {
+extension CommunWalletVC: CommunWalletHeaderViewDatasource {
     func data(forWalletHeaderView headerView: CommunWalletHeaderView) -> [ResponseAPIWalletGetBalance]? {
         balances
-    }
-    
-    func walletHeaderView(_ headerView: CommunWalletHeaderView, willUpdateHeightCollapsed isCollapsed: Bool) {
-//        if isCollapsed {
-//            let height = headerView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
-//            headerViewExpandedHeight = height
-//            tableView.bounds.origin.y = headerViewExpandedHeight
-//        } else {
-            resetTableViewContentInset()
-//        }
-    }
-    
-    private func resetTableViewContentInset() {
-        let height = headerView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
-        if headerViewExpandedHeight == height {return}
-        headerViewExpandedHeight = height
-
-        view.layoutIfNeeded()
-        tableTopConstraint.constant = headerViewExpandedHeight - 30
-        tableView.contentInset.top = 20
-        UIView.animate(withDuration: 0.3) {
-            self.view.layoutIfNeeded()
-        }
     }
 }
