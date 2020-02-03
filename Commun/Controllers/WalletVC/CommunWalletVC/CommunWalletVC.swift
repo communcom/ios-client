@@ -155,8 +155,7 @@ class CommunWalletVC: TransferHistoryVC {
             .subscribe { (event) in
                 var y = event.element ?? 0
                 y = y >= -self.headerView.height ? y : -self.headerView.height
-                let constant = -y - self.headerView.height
-                self.headerTopConstraint.constant = constant < -(self.headerView.height - 50) ? -(self.headerView.height - 50) : constant
+                self.headerTopConstraint.constant = -y - self.headerView.height
                 let diff = self.headerView.height + y
                 self.headerView.updateYPosition(y: diff)
 
@@ -296,10 +295,6 @@ class CommunWalletVC: TransferHistoryVC {
     }
 
     func routeToConvertScene(walletConvertVC: WalletConvertVC) {
-//        walletConvertVC.completion = {
-//            self.viewModel.reload()
-//        }
-
         let nc = navigationController as? BaseNavigationController
         nc?.shouldResetNavigationBarOnPush = false
         show(walletConvertVC, sender: nil)
