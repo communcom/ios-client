@@ -130,19 +130,23 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
                 .bind(to: tableView.rx.items(dataSource: dataSource))
                 .disposed(by: disposeBag)
         } else {
-            Observable.merge(viewModel.items.asObservable(), viewModel.searchResult.filter {$0 != nil}.map {$0!}.asObservable())
-                .map {[ListSection(model: "", items: $0)]}
-                .bind(to: tableView.rx.items(dataSource: dataSource))
-                .disposed(by: disposeBag)
-            
-            viewModel.searchResult
-                .filter {$0 == nil}
-                .subscribe(onNext: { (_) in
-                    self.viewModel.items.accept(self.viewModel.items.value)
-                })
-                .disposed(by: disposeBag)
+            bindItemsWithSearchResult()
         }
         
+    }
+    
+    func bindItemsWithSearchResult() {
+        Observable.merge(viewModel.items.asObservable(), viewModel.searchResult.filter {$0 != nil}.map {$0!}.asObservable())
+            .map {[ListSection(model: "", items: $0)]}
+            .bind(to: tableView.rx.items(dataSource: dataSource))
+            .disposed(by: disposeBag)
+        
+        viewModel.searchResult
+            .filter {$0 == nil}
+            .subscribe(onNext: { (_) in
+                self.viewModel.items.accept(self.viewModel.items.value)
+            })
+            .disposed(by: disposeBag)
     }
     
     func bindState() {
