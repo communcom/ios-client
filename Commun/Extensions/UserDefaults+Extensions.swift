@@ -12,7 +12,7 @@ public let appShareExtensionKey: String = "appShareExtensionKey"
 
 extension UserDefaults {
     static let appGroups = UserDefaults(suiteName: "group.io.commun.eos.ios.CommunShare")!
-    
+
     func loadShareExtensionData() -> ShareExtensionData? {
         guard let decodedObject = UserDefaults.appGroups.object(forKey: appShareExtensionKey) as? Data else { return nil }
         

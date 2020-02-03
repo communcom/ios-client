@@ -14,7 +14,6 @@ public class ShareExtensionData: NSObject, NSCoding {
     var link: String?
     var image: UIImage?
     
-
     // MARK: - Class Functions
     public func encode(with coder: NSCoder) {
         coder.encode(text, forKey: "text")

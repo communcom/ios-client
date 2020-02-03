@@ -158,6 +158,7 @@
 		AC0B05C223A93A1100474628 /* GoogleService-Info-Prod.plist in Resources */ = {isa = PBXBuildFile; fileRef = AC0B05C123A93A1100474628 /* GoogleService-Info-Prod.plist */; };
 		AC0F9C2F237C307300A5002C /* CyberSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC759B97237C15C20069D169 /* CyberSwift.framework */; };
 		AC0F9C30237C307300A5002C /* CyberSwift.framework in CyberSwift */ = {isa = PBXBuildFile; fileRef = AC759B97237C15C20069D169 /* CyberSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		AC2423AA23E866C6006A39B5 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2423A923E866C6006A39B5 /* ShareViewController.swift */; };
 		AC3386A12371D1B6009DB3BB /* EmbedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3386A02371D1B6009DB3BB /* EmbedView.swift */; };
 		AC3386A62371DDEA009DB3BB /* EmbedView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AC3386A52371DDEA009DB3BB /* EmbedView.xib */; };
 		AC5D7D8B2385A1C400EEC5ED /* Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC5D7D8A2385A1C400EEC5ED /* Formatter.swift */; };
@@ -175,13 +176,8 @@
 		B1A6345123E83BE700996375 /* UIApplication+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A6344D23E83BDA00996375 /* UIApplication+Extensions.swift */; };
 		B1A6EE5122D5C8E300A5D6F0 /* GoogleService-Info-Dev.plist in Resources */ = {isa = PBXBuildFile; fileRef = B1A6EE5022D5C8E100A5D6F0 /* GoogleService-Info-Dev.plist */; };
 		B1A8AC1B22E6FF5400032030 /* BlankButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A8AC1A22E6FF5400032030 /* BlankButton.swift */; };
-		B1AB194D23E1B9EB00CAD9EC /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1AB194C23E1B9EB00CAD9EC /* ShareViewController.swift */; };
 		B1AB195023E1B9EB00CAD9EC /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B1AB194E23E1B9EB00CAD9EC /* MainInterface.storyboard */; };
 		B1AB195523E1B9EC00CAD9EC /* CommunShare.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = B1AB194A23E1B9EB00CAD9EC /* CommunShare.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		B1AB197023E2C73A00CAD9EC /* ShareExtensionNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1AB196D23E2C73A00CAD9EC /* ShareExtensionNavigationController.swift */; };
-		B1AB197123E2C73A00CAD9EC /* ShareExtensionNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1AB196D23E2C73A00CAD9EC /* ShareExtensionNavigationController.swift */; };
-		B1AB197323E2C77B00CAD9EC /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1AB197223E2C77B00CAD9EC /* TestViewController.swift */; };
-		B1AB197423E2C77B00CAD9EC /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1AB197223E2C77B00CAD9EC /* TestViewController.swift */; };
 		B1C3712C2383D0F3000BAE2F /* ProfileEdit.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B1C3712A2383D0F2000BAE2F /* ProfileEdit.storyboard */; };
 		B1C3712D2383D0F3000BAE2F /* ProfileEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C3712B2383D0F2000BAE2F /* ProfileEditViewController.swift */; };
 		B1C371362383E43C000BAE2F /* ProfileEditViewController+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C371352383E43C000BAE2F /* ProfileEditViewController+Actions.swift */; };
@@ -713,6 +709,7 @@
 		8F30C81783ED457B84BCC641 /* Pods-Commun.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Commun.release.xcconfig"; path = "Pods/Target Support Files/Pods-Commun/Pods-Commun.release.xcconfig"; sourceTree = "<group>"; };
 		9CD929A7157C80FECCC31E93 /* Pods-CommunTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CommunTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-CommunTests/Pods-CommunTests.release.xcconfig"; sourceTree = "<group>"; };
 		AC0B05C123A93A1100474628 /* GoogleService-Info-Prod.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-Prod.plist"; sourceTree = "<group>"; };
+		AC2423A923E866C6006A39B5 /* ShareViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
 		AC3386A02371D1B6009DB3BB /* EmbedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbedView.swift; sourceTree = "<group>"; };
 		AC3386A52371DDEA009DB3BB /* EmbedView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmbedView.xib; sourceTree = "<group>"; };
 		AC5D7D8A2385A1C400EEC5ED /* Formatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatter.swift; sourceTree = "<group>"; };
@@ -731,12 +728,9 @@
 		B1A6EE5022D5C8E100A5D6F0 /* GoogleService-Info-Dev.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-Dev.plist"; sourceTree = "<group>"; };
 		B1A8AC1A22E6FF5400032030 /* BlankButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlankButton.swift; sourceTree = "<group>"; };
 		B1AB194A23E1B9EB00CAD9EC /* CommunShare.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = CommunShare.appex; sourceTree = BUILT_PRODUCTS_DIR; };
-		B1AB194C23E1B9EB00CAD9EC /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
 		B1AB194F23E1B9EB00CAD9EC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
 		B1AB195123E1B9EB00CAD9EC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B1AB195B23E1BA0900CAD9EC /* CommunShare.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CommunShare.entitlements; sourceTree = "<group>"; };
-		B1AB196D23E2C73A00CAD9EC /* ShareExtensionNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareExtensionNavigationController.swift; sourceTree = "<group>"; };
-		B1AB197223E2C77B00CAD9EC /* TestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
 		B1C3712A2383D0F2000BAE2F /* ProfileEdit.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ProfileEdit.storyboard; sourceTree = "<group>"; };
 		B1C3712B2383D0F2000BAE2F /* ProfileEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileEditViewController.swift; sourceTree = "<group>"; };
 		B1C371352383E43C000BAE2F /* ProfileEditViewController+Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProfileEditViewController+Actions.swift"; sourceTree = "<group>"; };
@@ -1835,11 +1829,9 @@
 		B1AB194B23E1B9EB00CAD9EC /* CommunShare */ = {
 			isa = PBXGroup;
 			children = (
+				AC2423A923E866C6006A39B5 /* ShareViewController.swift */,
 				B1AB195B23E1BA0900CAD9EC /* CommunShare.entitlements */,
-				B1AB197223E2C77B00CAD9EC /* TestViewController.swift */,
-				B1AB194C23E1B9EB00CAD9EC /* ShareViewController.swift */,
 				B101CB6723E4631B00269253 /* ShareExtensionData.swift */,
-				B1AB196D23E2C73A00CAD9EC /* ShareExtensionNavigationController.swift */,
 				B1AB194E23E1B9EB00CAD9EC /* MainInterface.storyboard */,
 				B1AB195123E1B9EB00CAD9EC /* Info.plist */,
 			);
@@ -3196,7 +3188,6 @@
 				B1FA77DB238BF7E0006E57D1 /* WelcomePageVC.swift in Sources */,
 				BC22BBD9236C27C000F40658 /* BaseStackViewController.swift in Sources */,
 				BC016D5A235EB88400F1319F /* PostsVC+Actions.swift in Sources */,
-				B1AB197323E2C77B00CAD9EC /* TestViewController.swift in Sources */,
 				3BE68AAE22EEA1AE00033B81 /* SettingsVC+ButtonDelegate.swift in Sources */,
 				BC619B1823726C180005BB94 /* CommunityCell.swift in Sources */,
 				3B8DDF58234AEA9600B213F0 /* ContentTextView+Draft.swift in Sources */,
@@ -3357,7 +3348,6 @@
 				BC52913823766F080022EC7F /* CommentCell+Actions.swift in Sources */,
 				3BF3817F2331D17900C02123 /* NSRegularExpression.swift in Sources */,
 				BC472D9B23A376CB00822371 /* CardViewController.swift in Sources */,
-				B1AB197023E2C73A00CAD9EC /* ShareExtensionNavigationController.swift in Sources */,
 				3B11911F2302B9B9008D0417 /* BaseNavigationController.swift in Sources */,
 				BCA9711F2360380400AE37E1 /* CommunityPageViewModel.swift in Sources */,
 				BC4AD65E23B1BA6E008546A4 /* BottomMenuVC.swift in Sources */,
@@ -3501,11 +3491,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				B101CB6823E4631B00269253 /* ShareExtensionData.swift in Sources */,
-				B1AB194D23E1B9EB00CAD9EC /* ShareViewController.swift in Sources */,
 				B1A6345123E83BE700996375 /* UIApplication+Extensions.swift in Sources */,
-				B1AB197423E2C77B00CAD9EC /* TestViewController.swift in Sources */,
+				AC2423AA23E866C6006A39B5 /* ShareViewController.swift in Sources */,
 				B1D78C0A23E339C400772BD9 /* UserDefaults+Extensions.swift in Sources */,
-				B1AB197123E2C73A00CAD9EC /* ShareExtensionNavigationController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

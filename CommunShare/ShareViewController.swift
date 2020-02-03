@@ -13,7 +13,6 @@ class ShareViewController: SLComposeServiceViewController {
     // MARK: - Properties
     let shareExtensionData = ShareExtensionData()
 
-    
     // MARK: - Class Functions
     override func isContentValid() -> Bool {
         // Do validation of contentText and/or NSExtensionContext attachments here
@@ -78,15 +77,14 @@ class ShareViewController: SLComposeServiceViewController {
         // To add configuration options via table cells at the bottom of the sheet, return an array of SLComposeSheetConfigurationItem here.
         return []
     }
-    
-    
+
     // MARK: - Custom Functions
     private func saveData() {
         // Save share data
         guard UserDefaults.appGroups.save(shareExtensionData: shareExtensionData) == true else { return }
         
         // URL Scheme
-        guard let url = URL(string: "AppShareExtensionCreatePost://") else { return }
+        guard let url = URL(string: "commun://createPost") else { return }
         
         var responder: UIResponder? = self
         let selectorOpenURL = sel_registerName("openURL:")

@@ -534,12 +534,11 @@ extension AppDelegate {
     }
 }
 
-
 // MARK: - Share Extension pass data
 extension AppDelegate {
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
         switch url.description {
-        case "AppShareExtensionCreatePost://":
+        case "commun://createPost":
             if let tabBar = self.window?.rootViewController as? TabBarVC {
                 tabBar.buttonAddTapped()
             }

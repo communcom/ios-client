@@ -29,7 +29,7 @@ class SplashViewController: UIViewController {
 
         if UserDefaults.appGroups.object(forKey: appShareExtensionKey) != nil {
             DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(5)) {
-                UIApplication.shared.open(URL(string: "AppShareExtensionCreatePost://")!)
+                UIApplication.shared.open(URL(string: "commun://createPost")!)
             }
         }
     }

@@ -80,8 +80,7 @@ class BasicEditorVC: PostEditorVC {
     override var viewModel: PostEditorViewModel {
         return _viewModel
     }
-    
-    
+
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -174,8 +173,7 @@ class BasicEditorVC: PostEditorVC {
             }
         }
     }
-    
-    
+
     // MARK: - GetContentBlock
     override func getContentBlock() -> Single<ResponseAPIContentBlock> {
         // TODO: - Attachments
@@ -206,8 +204,7 @@ class BasicEditorVC: PostEditorVC {
                 return block!
             }
     }
-    
-    
+
     // MARK: - Actions
     @objc func cancelButtonTapped(_ sender: UIBarButtonItem) {
         self.hideExtensionWithCompletionHandler(completion: { (Bool) -> Void in
