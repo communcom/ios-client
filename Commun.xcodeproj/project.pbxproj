@@ -226,6 +226,8 @@
 		BC016D54235EA32600F1319F /* PostsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC016D53235EA32600F1319F /* PostsViewModel.swift */; };
 		BC016D56235EA33C00F1319F /* ListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC016D55235EA33C00F1319F /* ListViewModel.swift */; };
 		BC016D5A235EB88400F1319F /* PostsVC+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC016D59235EB88400F1319F /* PostsVC+Actions.swift */; };
+		BC06A99F23E7CAEE000B690E /* SearchListFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC06A99E23E7CAEE000B690E /* SearchListFetcher.swift */; };
+		BC06A9A323E7FC03000B690E /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC06A9A223E7FC03000B690E /* SearchViewModel.swift */; };
 		BC18FA1923D54D2F005DC7E3 /* CurrenciesListFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC18FA1823D54D2F005DC7E3 /* CurrenciesListFetcher.swift */; };
 		BC18FA2123D54E26005DC7E3 /* CurrencyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC18FA2023D54E26005DC7E3 /* CurrencyCell.swift */; };
 		BC18FA2323D550E4005DC7E3 /* CurrenciesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC18FA2223D550E4005DC7E3 /* CurrenciesVC.swift */; };
@@ -724,6 +726,8 @@
 		BC016D53235EA32600F1319F /* PostsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostsViewModel.swift; sourceTree = "<group>"; };
 		BC016D55235EA33C00F1319F /* ListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewModel.swift; sourceTree = "<group>"; };
 		BC016D59235EB88400F1319F /* PostsVC+Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PostsVC+Actions.swift"; sourceTree = "<group>"; };
+		BC06A99E23E7CAEE000B690E /* SearchListFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchListFetcher.swift; sourceTree = "<group>"; };
+		BC06A9A223E7FC03000B690E /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
 		BC18FA1823D54D2F005DC7E3 /* CurrenciesListFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrenciesListFetcher.swift; sourceTree = "<group>"; };
 		BC18FA2023D54E26005DC7E3 /* CurrencyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyCell.swift; sourceTree = "<group>"; };
 		BC18FA2223D550E4005DC7E3 /* CurrenciesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrenciesVC.swift; sourceTree = "<group>"; };
@@ -2619,6 +2623,7 @@
 			isa = PBXGroup;
 			children = (
 				BCCF8ACB23E517D9004892FF /* SearchViewController.swift */,
+				BC06A9A223E7FC03000B690E /* SearchViewModel.swift */,
 			);
 			path = SearchViewController;
 			sourceTree = "<group>";
@@ -2659,6 +2664,7 @@
 				BC9066F423A9E002000F9A3B /* TransferHistoryListFetcher.swift */,
 				BC40719D23CF0137000027A3 /* NotificationsListFetcher.swift */,
 				BC18FA1823D54D2F005DC7E3 /* CurrenciesListFetcher.swift */,
+				BC06A99E23E7CAEE000B690E /* SearchListFetcher.swift */,
 			);
 			path = Fetchers;
 			sourceTree = "<group>";
@@ -3176,6 +3182,7 @@
 				3B3C8B8E2347876000D8BADB /* ContentTextView+Text.swift in Sources */,
 				BC69F7DA236FFA190097F870 /* SubsItemCell.swift in Sources */,
 				BC469306239677E00064A38B /* MyProfilePageVC+Binding.swift in Sources */,
+				BC06A9A323E7FC03000B690E /* SearchViewModel.swift in Sources */,
 				BC561E85238B9989004C53EB /* ReportVC+Presentation.swift in Sources */,
 				3B25E5BE234C2A0C005BD1B8 /* BasicEditorViewModel.swift in Sources */,
 				BC74F505237957F00018DB8E /* UserProfilePageVC+CommentCellDelegate.swift in Sources */,
@@ -3221,6 +3228,7 @@
 				3B3C8B902347876000D8BADB /* ArticleEditorTextView+Attachment.swift in Sources */,
 				BCB4A4CA237019EF005EDAAD /* SubsViewController.swift in Sources */,
 				3BB342B022CA5CA6009546B2 /* PickupAvatarVC.swift in Sources */,
+				BC06A99F23E7CAEE000B690E /* SearchListFetcher.swift in Sources */,
 				BC597A70238BD03C00103F4F /* FilterCell.swift in Sources */,
 				3B0E9C5E226F02AC002AB1C2 /* ProfileEditCoverVC.swift in Sources */,
 				3B5EDE3722E07DCC00897BF3 /* SettingsVC+SectionHeader.swift in Sources */,
