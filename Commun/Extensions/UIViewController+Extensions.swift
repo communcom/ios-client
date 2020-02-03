@@ -268,7 +268,13 @@ extension UIViewController {
         backButton.tintColor = tintColor
         navigationItem.leftBarButtonItem = backButton
     }
-    
+
+    func setRightBarButtonForGoingBack(tintColor: UIColor = .black) {
+        let backButton = UIBarButtonItem(image: UIImage(named: "icon-back-bar-button-black-default"), style: .plain, target: self, action: #selector(back))
+        backButton.tintColor = tintColor
+        navigationItem.rightBarButtonItem = backButton
+    }
+
     func setLeftNavBarButton(with button: UIButton) {
         // backButton
         let leftButtonView = UIView(frame: CGRect(x: 0, y: 0, width: 36, height: 40))
