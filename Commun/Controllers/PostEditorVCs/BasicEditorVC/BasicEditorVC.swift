@@ -165,9 +165,11 @@ class BasicEditorVC: PostEditorVC {
                 contentTextView.text = text
             }
             
-            if let link = shareExtensionData.link {
-//                contentTextView.lin
-            }
+            let urlString = "https://www.youtube.com/watch?v=NaHI4-FkvNI&list=PLtXyatp5fW31MyvQK7x4B4bBNYzXIpgMJ&index=2" //{
+//                if let urlString = shareExtensionData.link {
+                contentTextView.text += "\n"
+                didAddLink(urlString, placeholder: urlString)
+            //}
             
             if let image = shareExtensionData.image {
 //                contentTextView.image
