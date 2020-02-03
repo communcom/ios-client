@@ -26,9 +26,9 @@ class WalletViewModel: TransferHistoryViewModel {
         super.init(symbol: symbol)
     }
     
-    override func reload() {
-        balancesVM.reload()
-        subscriptionsVM.reload()
-        super.reload()
+    override func reload(clearResult: Bool = true) {
+        balancesVM.reload(clearResult: clearResult)
+        subscriptionsVM.reload(clearResult: clearResult)
+        super.reload(clearResult: clearResult)
     }
 }

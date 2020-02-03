@@ -21,6 +21,9 @@ extension UISearchController {
                 iconView.tintColor = .a5a7bd
             }
         }
+        // Don't hide the navigation bar because the search bar is in it.
+        sc.hidesNavigationBarDuringPresentation = false
+        sc.obscuresBackgroundDuringPresentation = false
         
         return sc
     }

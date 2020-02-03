@@ -31,17 +31,6 @@ class NotificationsPageVC: ListViewController<ResponseAPIGetNotificationItem, No
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func createTableView() -> UITableView {
-        let tableView = UITableView(frame: .zero, style: .grouped)
-        tableView.configureForAutoLayout()
-        tableView.insetsContentViewsToSafeArea = false
-        tableView.contentInsetAdjustmentBehavior = .never
-        tableView.showsVerticalScrollIndicator = false
-        view.addSubview(tableView)
-        tableView.autoPinEdgesToSuperviewSafeArea()
-        return tableView
-    }
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: animated)
@@ -85,10 +74,19 @@ class NotificationsPageVC: ListViewController<ResponseAPIGetNotificationItem, No
     }
     
     override func setUpTableView() {
-        super.setUpTableView()
+        tableView = UITableView(frame: .zero, style: .grouped)
+        tableView.configureForAutoLayout()
+        tableView.insetsContentViewsToSafeArea = false
+        tableView.contentInsetAdjustmentBehavior = .never
+        tableView.showsVerticalScrollIndicator = false
+        
+        view.addSubview(tableView)
+        tableView.autoPinEdgesToSuperviewSafeArea()
         tableView.backgroundColor = .f3f5fa
         tableView.separatorStyle = .none
         tableView.tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: CGFloat.leastNormalMagnitude, height: CGFloat.leastNormalMagnitude))
+        
+        tableView.rowHeight = UITableView.automaticDimension
     }
     
     override func viewDidSetUpTableView() {

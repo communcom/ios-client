@@ -11,7 +11,7 @@ import RxSwift
 import RxDataSources
 import RxCocoa
 
-class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewController, UISearchResultsUpdating {
+class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewController {
     // MARK: - Nested type
     public typealias ListSection = AnimatableSectionModel<String, T>
     
@@ -20,20 +20,14 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
     var dataSource: MyRxTableViewSectionedAnimatedDataSource<ListSection>!
     var tableViewMargin: UIEdgeInsets {.zero}
     var pullToRefreshAdded = false
+    let refreshControl = UIRefreshControl(forAutoLayout: ())
     
     // search
     var isSearchEnabled: Bool {false}
     lazy var searchController = UISearchController.default()
     
     // MARK: - Subviews
-    lazy var tableView = createTableView()
-    
-    func createTableView() -> UITableView {
-        let tableView = UITableView(forAutoLayout: ())
-        view.addSubview(tableView)
-        tableView.autoPinEdgesToSuperviewSafeArea(with: tableViewMargin)
-        return tableView
-    }
+    lazy var tableView = UITableView(forAutoLayout: ())
     
     // MARK: - Initializers
     init(viewModel: ListViewModel<T>) {
@@ -46,6 +40,13 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
     }
     
     // MARK: - Methods
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        if isSearchEnabled {
+            searchController.roundCorner()
+        }
+    }
+    
     override func setUp() {
         super.setUp()
         
@@ -75,6 +76,14 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
         )
         
         dataSource.animationConfiguration = AnimationConfiguration(reloadAnimation: .none)
+
+        // pull to refresh
+        if !pullToRefreshAdded {
+            refreshControl.addTarget(self, action: #selector(refresh), for: UIControl.Event.valueChanged)
+            tableView.addSubview(refreshControl)
+            refreshControl.tintColor = .appGrayColor
+            pullToRefreshAdded = true
+        }
     }
     
     func viewWillSetUpTableView() {
@@ -86,23 +95,9 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
     }
     
     func setUpTableView() {
+        view.addSubview(tableView)
+        tableView.autoPinEdgesToSuperviewSafeArea(with: tableViewMargin)
         tableView.rowHeight = UITableView.automaticDimension
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        // pull to refresh
-        if !pullToRefreshAdded {
-            tableView.es.addPullToRefresh { [unowned self] in
-                self.tableView.es.stopPullToRefresh()
-                self.refresh()
-            }
-            pullToRefreshAdded = true
-        }
-        
-        if isSearchEnabled {
-            searchController.roundCorner()
-        }
     }
     
     func registerCell() {
@@ -123,6 +118,9 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
         bindItems()
         bindItemSelected()
         bindScrollView()
+        if isSearchEnabled {
+            bindSearchBar()
+        }
     }
     
     func bindItems() {
@@ -132,19 +130,23 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
                 .bind(to: tableView.rx.items(dataSource: dataSource))
                 .disposed(by: disposeBag)
         } else {
-            Observable.merge(viewModel.items.asObservable(), viewModel.searchResult.filter {$0 != nil}.map {$0!}.asObservable())
-                .map {[ListSection(model: "", items: $0)]}
-                .bind(to: tableView.rx.items(dataSource: dataSource))
-                .disposed(by: disposeBag)
-            
-            viewModel.searchResult
-                .filter {$0 == nil}
-                .subscribe(onNext: { (_) in
-                    self.viewModel.items.accept(self.viewModel.items.value)
-                })
-                .disposed(by: disposeBag)
+            bindItemsWithSearchResult()
         }
         
+    }
+    
+    func bindItemsWithSearchResult() {
+        Observable.merge(viewModel.items.asObservable(), viewModel.searchResult.filter {$0 != nil}.map {$0!}.asObservable())
+            .map {[ListSection(model: "", items: $0)]}
+            .bind(to: tableView.rx.items(dataSource: dataSource))
+            .disposed(by: disposeBag)
+        
+        viewModel.searchResult
+            .filter {$0 == nil}
+            .subscribe(onNext: { (_) in
+                self.viewModel.items.accept(self.viewModel.items.value)
+            })
+            .disposed(by: disposeBag)
     }
     
     func bindState() {
@@ -249,38 +251,32 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
     
     @objc func refresh() {
         viewModel.reload()
+        refreshControl.endRefreshing()
     }
     
     // MARK: - Search manager
+    func bindSearchBar() {
+        searchController.searchBar.rx.text
+            .distinctUntilChanged()
+            .skip(1)
+            .debounce(0.3, scheduler: MainScheduler.instance)
+            .subscribe(onNext: { (query) in
+                self.search(query)
+            })
+            .disposed(by: disposeBag)
+
+    }
     private func setUpSearchController() {
-        searchController.searchResultsUpdater = self
         self.definesPresentationContext = true
-
         layoutSearchBar()
-
-        // Don't hide the navigation bar because the search bar is in it.
-        searchController.hidesNavigationBarDuringPresentation = false
-        
-        searchController.obscuresBackgroundDuringPresentation = false
     }
 
     func layoutSearchBar() {
         // Place the search bar in the navigation item's title view.
         self.navigationItem.titleView = searchController.searchBar
     }
-
-    func updateSearchResults(for searchController: UISearchController) {
-        // If the search bar contains text, filter our data with the string
-        if let searchText = searchController.searchBar.text,
-            !searchText.isEmpty
-        {
-            search(searchText)
-        } else {
-            viewModel.searchResult.accept(nil)
-        }
-    }
     
-    func search(_ keyword: String) {
+    func search(_ keyword: String?) {
         fatalError("Must override")
     }
 }

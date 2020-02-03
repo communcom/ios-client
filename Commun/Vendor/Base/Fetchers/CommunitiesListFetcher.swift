@@ -29,10 +29,9 @@ class CommunitiesListFetcher: ListFetcher<ResponseAPIContentGetCommunity> {
     }
     
     override func join(newItems items: [ResponseAPIContentGetCommunity]) -> [ResponseAPIContentGetCommunity] {
-        var items = super.join(newItems: items)
         if search != nil {
-            items = items.filter {$0.name.contains(search!)}
+            return items
         }
-        return items
+        return super.join(newItems: items)
     }
 }

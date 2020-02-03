@@ -14,23 +14,19 @@ class ContentHuggingScrollView: UIScrollView {
     var axis: NSLayoutConstraint.Axis = .horizontal
     
     // MARK: - Methods
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(axis: NSLayoutConstraint.Axis, contentInset: UIEdgeInsets = .zero) {
+        self.axis = axis
+        super.init(frame: .zero)
+        self.contentInset = contentInset
         commonInit()
     }
     
     required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        commonInit()
-    }
-    
-    convenience init(axis: NSLayoutConstraint.Axis, contentInset: UIEdgeInsets = .zero) {
-        self.init(forAutoLayout: ())
-        self.axis = axis
-        self.contentInset = contentInset
+        fatalError("init(coder:) has not been implemented")
     }
     
     func commonInit() {
+        configureForAutoLayout()
         addSubview(contentView)
         contentView.autoPinEdgesToSuperviewEdges()
         if axis == .horizontal {

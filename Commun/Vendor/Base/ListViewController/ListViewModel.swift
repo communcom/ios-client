@@ -42,8 +42,8 @@ class ListViewModel<T: ListItemType>: BaseViewModel {
         fetcher.fetchNext(forceRetry: forceRetry)
     }
     
-    func reload() {
-        fetcher.reset()
+    func reload(clearResult: Bool = true) {
+        fetcher.reset(clearResult: clearResult)
         fetchNext()
     }
     

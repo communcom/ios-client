@@ -81,10 +81,6 @@ class PostsViewController: ListViewController<ResponseAPIContentGetPost, PostCel
     func filterChanged(filter: PostsListFetcher.Filter) {
 
     }
-
-    override func refresh() {
-        super.refresh()
-    }
 }
 
 extension PostsViewController: UITableViewDelegate {

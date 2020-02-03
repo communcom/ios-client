@@ -76,8 +76,8 @@ class PostPageViewModel: CommentsViewModel {
         
     }
     
-    override func reload() {
+    override func reload(clearResult: Bool = true) {
         loadPost()
-        super.reload()
+        super.reload(clearResult: clearResult)
     }
 }

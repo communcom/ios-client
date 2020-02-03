@@ -27,8 +27,8 @@ class NotificationsPageViewModel: ListViewModel<ResponseAPIGetNotificationItem> 
         }
     }
     
-    override func reload() {
-        super.reload()
+    override func reload(clearResult: Bool = true) {
+        super.reload(clearResult: clearResult)
         getStatus()
     }
     

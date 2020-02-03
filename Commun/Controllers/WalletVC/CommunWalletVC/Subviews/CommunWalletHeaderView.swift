@@ -12,14 +12,10 @@ protocol CommunWalletHeaderViewDatasource: class {
     func data(forWalletHeaderView headerView: CommunWalletHeaderView) -> [ResponseAPIWalletGetBalance]?
 }
 
-protocol CommunWalletHeaderViewDelegate: class {
-    func walletHeaderView(_ headerView: CommunWalletHeaderView, willUpdateHeightCollapsed isCollapsed: Bool)
-}
-
 class CommunWalletHeaderView: MyView {
     // MARK: - Properties
     var isCollapsed = false
-    weak var delegate: CommunWalletHeaderViewDelegate?
+
     weak var dataSource: CommunWalletHeaderViewDatasource?
     
     // MARK: - ConfigurableConstraints
@@ -29,12 +25,9 @@ class CommunWalletHeaderView: MyView {
     var stackViewTopConstraint: NSLayoutConstraint?
     
     // MARK: - Subviews
+    var carousel: WalletCarousel?
     lazy var shadowView = UIView(forAutoLayout: ())
     lazy var contentView = UIView(backgroundColor: .appMainColor)
-    
-    lazy var backButton = UIButton.back(width: 44, height: 44, tintColor: .white, contentInsets: UIEdgeInsets(top: 11, left: 16, bottom: 11, right: 16))
-    
-    lazy var communLogo = UIView.transparentCommunLogo(size: 40)
 
     lazy var titleLabel = UILabel.with(text: "Equity Value Commun", textSize: 15, weight: .semibold, textColor: .white)
     lazy var pointLabel = UILabel.with(text: "167 500.23", textSize: 30, weight: .bold, textColor: .white, textAlignment: .center)
@@ -55,6 +48,13 @@ class CommunWalletHeaderView: MyView {
     lazy var sendButton = UIButton.circle(size: 30, backgroundColor: UIColor.white.withAlphaComponent(0.2), tintColor: .white, imageName: "upVote", imageEdgeInsets: UIEdgeInsets(top: 6, left: 8, bottom: 6, right: 8))
     
     lazy var convertButton = UIButton.circle(size: 30, backgroundColor: UIColor.white.withAlphaComponent(0.2), tintColor: .white, imageName: "convert", imageEdgeInsets: UIEdgeInsets(inset: 6))
+
+    override func hitTest(_ point: CGPoint,
+                          with event: UIEvent?) -> UIView? {
+        let view = super.hitTest(point, with: event)
+        if ((view as? UIButton) != nil) { return view }
+        return nil
+    }
     
     // MARK: - Methods
     override func commonInit() {
@@ -63,10 +63,6 @@ class CommunWalletHeaderView: MyView {
         shadowView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .bottom)
         shadowView.addSubview(contentView)
         contentView.autoPinEdgesToSuperviewEdges()
-        
-        contentView.addSubview(backButton)
-        backButton.autoPinEdge(toSuperviewSafeArea: .top, withInset: 8)
-        backButton.autoPinEdge(toSuperviewSafeArea: .leading)
         
         contentView.addSubview(titleLabel)
         titleLabel.autoAlignAxis(toSuperviewAxis: .vertical)
@@ -80,6 +76,20 @@ class CommunWalletHeaderView: MyView {
         
         reloadViews()
     }
+
+    func updateYPosition(y: CGFloat) {
+        let alpha = 1 - ((100 / 50) / 100 * y)
+        titleLabel.alpha = alpha < 0 ? 0 : alpha
+        pointLabel.alpha = alpha < 0 ? 0 : alpha
+
+        let startPos = self.bounds.height * 0.24
+        if y > startPos {
+            let alpha = 1 - ((100 / 100) / 100 * (y - startPos))
+            buttonsStackView.alpha = alpha
+        } else {
+            buttonsStackView.alpha = 1
+        }
+    }
     
     func reloadData() {
         guard let balances = dataSource?.data(forWalletHeaderView: self)
@@ -89,91 +99,41 @@ class CommunWalletHeaderView: MyView {
         pointLabel.text = "\(balances.enquityCommunValue.currencyValueFormatted)"
     }
     
-    func setIsCollapsed(_ value: Bool) {
-        if isCollapsed == value {return}
-        isCollapsed = value
-        UIView.animate(withDuration: 0.3) {
-            self.reloadViews()
-        }
-    }
-    
     // MARK: - Private functions
     func reloadViews() {
-        if isCollapsed {
-            collapse()
-        } else {
-            expand()
-        }
-    }
-    
-    private func expand() {
-        // deactivate non-needed constraints
         titleTopConstraint?.isActive = false
         pointBottomConstraint?.isActive = false
         stackViewTopConstraint?.isActive = false
-        
+
         // modify topConstraint
-        titleTopConstraint = titleLabel.autoPinEdge(.top, to: .bottom, of: backButton, withOffset: 25)
-        
+        titleTopConstraint = titleLabel.autoPinEdge(toSuperviewSafeArea: .top, withInset: 25)
+
         // modify space between title and point label
         titleToPointConstraint?.constant = 5
-        
+
         // add stackview
         if !buttonsStackView.isDescendant(of: contentView) {
             contentView.addSubview(buttonsStackView)
             buttonsStackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0, left: 16 * Config.widthRatio, bottom: 30 * Config.heightRatio, right: 16 * Config.widthRatio), excludingEdge: .top)
         }
-        
+
         // add needed views
         layoutBalanceExpanded()
-        
+
         // modify fonts, colors
         self.contentView.backgroundColor = .appMainColor
-        
+
         self.titleLabel.font = .systemFont(ofSize: 15, weight: .semibold)
         self.pointLabel.font = .systemFont(ofSize: 30, weight: .bold)
-        
+
         self.titleLabel.textColor = .white
         self.pointLabel.textColor = .white
-        
-        self.backButton.tintColor = .white
     }
     
     func layoutBalanceExpanded() {
-        if !communLogo.isDescendant(of: contentView) {
-            contentView.addSubview(communLogo)
-            communLogo.autoAlignAxis(toSuperviewAxis: .vertical)
-            communLogo.autoAlignAxis(.horizontal, toSameAxisOf: backButton)
-        }
         stackViewTopConstraint = buttonsStackView.autoPinEdge(.top, to: .bottom, of: pointLabel, withOffset: 30 * Config.heightRatio)
     }
-    
-    func collapse() {
-        // remove unused views
-        communLogo.removeFromSuperview()
-        buttonsStackView.removeFromSuperview()
-        
-        // deactivate non-needed constraints
-        titleTopConstraint?.isActive = false
-        pointBottomConstraint?.isActive = false
-        
-        // modify constraints
-        titleTopConstraint = titleLabel.autoPinEdge(toSuperviewSafeArea: .top, withInset: 6)
-        titleToPointConstraint?.constant = 3
-        pointBottomConstraint = pointLabel.autoPinEdge(toSuperviewEdge: .bottom, withInset: 10)
-        
-        // modify fonts, colors
-        self.contentView.backgroundColor = .white
-        
-        self.titleLabel.font = .systemFont(ofSize: 12, weight: .semibold)
-        self.pointLabel.font = .systemFont(ofSize: 20, weight: .semibold)
-        
-        self.titleLabel.textColor = .black
-        self.pointLabel.textColor = .black
-        
-        self.backButton.tintColor = .black
-    }
-    
+
     // MARK: - Layout
     func startLoading() {
         contentView.hideLoader()
@@ -186,14 +146,13 @@ class CommunWalletHeaderView: MyView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        delegate?.walletHeaderView(self, willUpdateHeightCollapsed: isCollapsed)
         DispatchQueue.main.async {
             self.makeShadowAndRoundCorner()
         }
     }
     
     private func makeShadowAndRoundCorner() {
-        contentView.roundCorners(UIRectCorner(arrayLiteral: .bottomLeft, .bottomRight), radius: 30 * Config.heightRatio)
+        contentView.roundCorners(UIRectCorner(arrayLiteral: .bottomLeft, .bottomRight), radius: 25)
         
         var color = UIColor(red: 106, green: 128, blue: 245)!
         var opacity: Float = 0.3
