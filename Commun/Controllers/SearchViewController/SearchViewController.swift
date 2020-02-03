@@ -9,9 +9,9 @@
 import Foundation
 import RxSwift
 
-class SearchViewController: BaseViewController {
+class SearchViewController: ListViewController<ResponseAPIContentSearchItem, PostCell>, CommunityCellDelegate {
     // MARK: - Properties
-    lazy var searchController = UISearchController.default()
+    override var isSearchEnabled: Bool {true}
     
     // MARK: - Subviews
     lazy var topTabBar = CMTopTabBar(
@@ -26,55 +26,68 @@ class SearchViewController: BaseViewController {
         contentInset: UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
     )
     
-    // MARK: - Methods
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        searchController.roundCorner()
+    // MARK: - Initializers
+    init() {
+        let vm = SearchViewModel()
+        super.init(viewModel: vm)
     }
     
-    override func setUp() {
-        super.setUp()
-        setUpSearchController()
-        
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: - Methods
+    override func viewWillSetUpTableView() {
+        super.viewWillSetUpTableView()
         // topTabBar
         view.addSubview(topTabBar)
         topTabBar.autoPinEdgesToSuperviewSafeArea(with: .zero, excludingEdge: .bottom)
         topTabBar.scrollView.contentOffset.x = -16
     }
     
-    override func bind() {
-        super.bind()
-        bindSearchBar()
+    override func setUpTableView() {
+        view.addSubview(tableView)
+        tableView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
+        tableView.autoPinEdge(.top, to: .bottom, of: topTabBar, withOffset: 10)
     }
     
-    func bindSearchBar() {
-        searchController.searchBar.rx.text
-            .distinctUntilChanged()
-            .skip(1)
-            .debounce(0.3, scheduler: MainScheduler.instance)
-            .subscribe(onNext: { (query) in
-                self.search(query)
-            })
-            .disposed(by: disposeBag)
+    override func registerCell() {
+        tableView.register(BasicPostCell.self, forCellReuseIdentifier: "BasicPostCell")
+        tableView.register(ArticlePostCell.self, forCellReuseIdentifier: "ArticlePostCell")
+        tableView.register(CommunityCell.self, forCellReuseIdentifier: "CommunityCell")
+//        tableView.register(SubscriptionsUserCell.self, forCellReuseIdentifier: "SubscriptionsUserCell")
+    }
+    
+    override func configureCell(with item: ResponseAPIContentSearchItem, indexPath: IndexPath) -> UITableViewCell {
+        if let community = item.communityValue {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "CommunityCell") as! CommunityCell
+            cell.setUp(with: community)
+            cell.delegate = self
+            
+            cell.roundedCorner = []
+            
+            if indexPath.row == 0 {
+                cell.roundedCorner.insert([.topLeft, .topRight])
+            }
+            
+            if indexPath.row == self.viewModel.items.value.count - 1 {
+                cell.roundedCorner.insert([.bottomLeft, .bottomRight])
+            }
 
+            return cell
+        }
+        
+        return UITableViewCell()
     }
     
-    private func setUpSearchController() {
-        self.definesPresentationContext = true
-        layoutSearchBar()
-    }
-    
-    func layoutSearchBar() {
-        // Place the search bar in the navigation item's title view.
-        self.navigationItem.titleView = searchController.searchBar
-    }
-    
-    func search(_ keyword: String?) {
+    override func search(_ keyword: String?) {
         guard let keyword = keyword, !keyword.isEmpty else {
-            // TODO: - Cancel search
             return
         }
         
-        // TODO: - do search
+        if self.viewModel.fetcher.search != keyword {
+            self.viewModel.fetcher.search = keyword
+            self.viewModel.reload(clearResult: false)
+        }
     }
 }
