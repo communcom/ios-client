@@ -231,13 +231,15 @@ extension PostEditorVC {
                 // if editing post
                 if (self.viewModel.postForEdit) != nil {
                     self.dismiss(animated: true, completion: nil)
-                    UserDefaults.appGroups.removeObject(forKey: appShareExtensionKey)
                 }
                     // if creating post
                 else {
                     // show post page
                     guard let communityId = self.viewModel.community.value?.communityId else {return}
                     let postPageVC = PostPageVC(userId: userId, permlink: permlink, communityId: communityId)
+
+                    UserDefaults.appGroups.removeObject(forKey: appShareExtensionKey)
+
                     self.dismiss(animated: true) {
                         UIApplication.topViewController()?.show(postPageVC, sender: nil)
                     }

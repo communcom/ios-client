@@ -171,7 +171,6 @@ class BasicEditorVC: PostEditorVC {
             
             if let image = shareExtensionData.image {
                 didChooseImageFromGallery(image)
-//                contentTextView.image
             }
         }
     }
