@@ -9,7 +9,7 @@
 import Foundation
 import RxSwift
 
-class SearchViewController: ListViewController<ResponseAPIContentSearchItem, PostCell>, CommunityCellDelegate {
+class SearchViewController: ListViewController<ResponseAPIContentSearchItem, PostCell>, CommunityCellDelegate, PostCellDelegate {
     // MARK: - Properties
     override var isSearchEnabled: Bool {true}
     
@@ -49,6 +49,9 @@ class SearchViewController: ListViewController<ResponseAPIContentSearchItem, Pos
         view.addSubview(tableView)
         tableView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
         tableView.autoPinEdge(.top, to: .bottom, of: topTabBar, withOffset: 10)
+        
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.separatorStyle = .none
     }
     
     override func registerCell() {
@@ -77,7 +80,39 @@ class SearchViewController: ListViewController<ResponseAPIContentSearchItem, Pos
             return cell
         }
         
+        if let post = item.postValue {
+            let cell: PostCell
+            switch post.document?.attributes?.type {
+            case "article":
+                cell = self.tableView.dequeueReusableCell(withIdentifier: "ArticlePostCell") as! ArticlePostCell
+                cell.setUp(with: post)
+            case "basic":
+                cell = self.tableView.dequeueReusableCell(withIdentifier: "BasicPostCell") as! BasicPostCell
+                cell.setUp(with: post)
+            default:
+                return UITableViewCell()
+            }
+            
+            cell.delegate = self
+            return cell
+        }
+        
         return UITableViewCell()
+    }
+    
+    override func bind() {
+        super.bind()
+        // forward delegate
+        tableView.rx.setDelegate(self)
+            .disposed(by: disposeBag)
+    }
+    
+    override func handleListEmpty() {
+        let title = "no post"
+        let description = "posts not found"
+        tableView.addEmptyPlaceholderFooterView(title: title.localized().uppercaseFirst, description: description.localized().uppercaseFirst, buttonLabel: "reload".localized().uppercaseFirst + "?") {
+            self.viewModel.reload()
+        }
     }
     
     override func search(_ keyword: String?) {
@@ -89,5 +124,26 @@ class SearchViewController: ListViewController<ResponseAPIContentSearchItem, Pos
             self.viewModel.fetcher.search = keyword
             self.viewModel.reload(clearResult: false)
         }
+    }
+}
+
+extension SearchViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        guard let post = viewModel.items.value[safe: indexPath.row],
+            let height = viewModel.rowHeights[post.identity]
+        else {return UITableView.automaticDimension}
+        return height
+    }
+
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        guard let post = viewModel.items.value[safe: indexPath.row]
+        else {return 200}
+        return viewModel.rowHeights[post.identity] ?? 200
+    }
+
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        guard let post = viewModel.items.value[safe: indexPath.row]
+        else {return}
+        viewModel.rowHeights[post.identity] = cell.bounds.height
     }
 }

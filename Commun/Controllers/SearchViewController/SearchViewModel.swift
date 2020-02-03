@@ -11,6 +11,7 @@ import Foundation
 class SearchViewModel: ListViewModel<ResponseAPIContentSearchItem> {
     init() {
         let fetcher = SearchListFetcher()
+        fetcher.limit = 5
         super.init(fetcher: fetcher)
     }
 }
