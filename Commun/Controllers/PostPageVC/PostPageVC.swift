@@ -305,8 +305,4 @@ class PostPageVC: CommentsViewController {
     @objc func commentsCountButtonDidTouch() {
         tableView.safeScrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
     }
-    
-    override func refresh() {
-        (viewModel as! PostPageViewModel).reload()
-    }
 }
