@@ -69,24 +69,6 @@ class CommunWalletVC: TransferHistoryVC {
         self.init(viewModel: WalletViewModel(symbol: "CMN"))
     }
 
-    override func createTableView() -> UITableView {
-        view.addSubview(headerView)
-        headerTopConstraint = headerView.autoPinEdge(toSuperviewEdge: .top)
-        headerView.autoPinEdge(toSuperviewEdge: .left)
-        headerView.autoPinEdge(toSuperviewEdge: .right)
-//        headerView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .bottom)
-        
-        let tableView = UITableView(frame: .zero, style: .grouped)
-        tableView.configureForAutoLayout()
-        tableView.insetsContentViewsToSafeArea = false
-        tableView.showsVerticalScrollIndicator = false
-
-        view.addSubview(tableView)
-        tableView.autoPinEdgesToSuperviewEdges(with: .zero)
-        view.bringSubviewToFront(headerView)
-        return tableView
-    }
-
     override func viewWillAppear(_ animated: Bool) {
         setNavBarBackButton(tintColor: .white)
         self.navigationController?.setNavigationBarHidden(false, animated: animated)
@@ -114,6 +96,28 @@ class CommunWalletVC: TransferHistoryVC {
         tableHeaderView.filterButton.addTarget(self, action: #selector(openFilter), for: .touchUpInside)
         
         tableHeaderView.setMyPointHidden(false)
+    }
+    
+    override func viewWillSetUpTableView() {
+        super.viewWillSetUpTableView()
+        view.addSubview(headerView)
+        headerTopConstraint = headerView.autoPinEdge(toSuperviewEdge: .top)
+        headerView.autoPinEdge(toSuperviewEdge: .left)
+        headerView.autoPinEdge(toSuperviewEdge: .right)
+//        headerView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .bottom)
+    }
+    
+    override func setUpTableView() {
+        tableView = UITableView(frame: .zero, style: .grouped)
+        tableView.configureForAutoLayout()
+        tableView.insetsContentViewsToSafeArea = false
+        tableView.showsVerticalScrollIndicator = false
+
+        view.addSubview(tableView)
+        tableView.autoPinEdgesToSuperviewEdges(with: .zero)
+        view.bringSubviewToFront(headerView)
+        
+        tableView.rowHeight = UITableView.automaticDimension
     }
 
     override func bind() {
