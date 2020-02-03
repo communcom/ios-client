@@ -34,7 +34,8 @@ class CommunitiesVC: SubsViewController<ResponseAPIContentGetCommunity, Communit
         navigationItem.rightBarButtonItem = nil
     }
     
-    override func bindItems() {
+    override func bindItemsWithSearchResult() {
+        // search result replace items itself
         viewModel.items
             .map {[ListSection(model: "", items: $0)]}
             .bind(to: tableView.rx.items(dataSource: dataSource))
