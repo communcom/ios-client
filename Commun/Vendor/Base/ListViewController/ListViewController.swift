@@ -27,14 +27,7 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
     lazy var searchController = UISearchController.default()
     
     // MARK: - Subviews
-    lazy var tableView = createTableView()
-    
-    func createTableView() -> UITableView {
-        let tableView = UITableView(forAutoLayout: ())
-        view.addSubview(tableView)
-        tableView.autoPinEdgesToSuperviewSafeArea(with: tableViewMargin)
-        return tableView
-    }
+    lazy var tableView = UITableView(forAutoLayout: ())
     
     // MARK: - Initializers
     init(viewModel: ListViewModel<T>) {
@@ -102,6 +95,8 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
     }
     
     func setUpTableView() {
+        view.addSubview(tableView)
+        tableView.autoPinEdgesToSuperviewSafeArea(with: tableViewMargin)
         tableView.rowHeight = UITableView.automaticDimension
     }
     
