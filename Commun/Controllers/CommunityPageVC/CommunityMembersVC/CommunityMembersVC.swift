@@ -41,7 +41,7 @@ class CommunityMembersVC: BaseViewController, LeaderCellDelegate, ProfileCellDel
         tableView.backgroundColor = .clear
         tableView.insetsContentViewsToSafeArea = false
         tableView.contentInsetAdjustmentBehavior = .never
-        tableView.contentInset = UIEdgeInsets(top: 10, left: -10, bottom: 0, right: 0)
+        tableView.contentInset = UIEdgeInsets(top: 10, left: 0, bottom: 0, right: 0)
         tableView.showsVerticalScrollIndicator = false
         return tableView
     }()
@@ -85,7 +85,7 @@ class CommunityMembersVC: BaseViewController, LeaderCellDelegate, ProfileCellDel
         
         // tableView
         view.addSubview(tableView)
-        tableView.autoPinEdgesToSuperviewSafeArea(with: UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 0), excludingEdge: .top)
+        tableView.autoPinEdgesToSuperviewSafeArea(with: UIEdgeInsets(inset: 10), excludingEdge: .top)
         tableView.autoPinEdge(.top, to: .bottom, of: topBarContainerView)
         
         tableView.backgroundColor = .f3f5fa

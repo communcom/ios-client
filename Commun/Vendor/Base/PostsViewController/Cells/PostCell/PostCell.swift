@@ -204,6 +204,12 @@ class PostCell: MyTableViewCell, ListItemCellType {
         self.sharesCountLabel.text = "\(post.stats?.viewCount ?? 0)"
         
         // State action button: set value & button width
+        if let mosaic = post.mosaic {
+            set(mosaic: mosaic)
+        }
+    }
+    
+    private func set(mosaic: ResponseAPIRewardsGetStateBulkMosaic) {
         let state = arc4random_uniform(3)
         
         stateActionButton.isHidden = state == 2
