@@ -22,6 +22,7 @@ class SignInVC: BaseViewController {
     
     lazy var loginTextField: UITextField = {
         let textField = createTextField()
+        textField.textContentType = .username
         textField.attributedPlaceholder = NSAttributedString(string: "login".localized().uppercaseFirst, attributes: [
             NSAttributedString.Key.foregroundColor: UIColor.black.withAlphaComponent(0.3)
         ])
@@ -35,6 +36,7 @@ class SignInVC: BaseViewController {
     
     lazy var passwordTextField: UITextField = {
         let textField = createTextField()
+        textField.textContentType = .password
         textField.attributedPlaceholder = NSAttributedString(string: "key".localized().uppercaseFirst, attributes: [
             NSAttributedString.Key.foregroundColor: UIColor.black.withAlphaComponent(0.3)
         ])
