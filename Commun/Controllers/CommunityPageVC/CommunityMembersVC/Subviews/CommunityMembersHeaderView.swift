@@ -31,7 +31,6 @@ class CommunityMembersHeaderView: MyView {
         label.autoPinEdge(toSuperviewEdge: .leading)
         
         leadersCollectionView.register(LeaderFollowCollectionCell.self, forCellWithReuseIdentifier: "LeaderFollowCollectionCell")
-        leadersCollectionView.contentInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
         addSubview(leadersCollectionView)
         leadersCollectionView.autoPinEdge(.top, to: .bottom, of: label, withOffset: 16)
         leadersCollectionView.autoPinEdge(toSuperviewEdge: .leading)
