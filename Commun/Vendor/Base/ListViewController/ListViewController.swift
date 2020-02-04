@@ -161,13 +161,21 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
                 switch state {
                 case .loading(let isLoading):
                     if isLoading {
-                        self?.handleLoading()
+                        if (self?.viewModel.items.value.count ?? 0) == 0 {
+                            self?.refreshControl.endRefreshing()
+                            self?.handleLoading()
+                        }
+                    } else {
+                        self?.refreshControl.endRefreshing()
                     }
                 case .listEnded:
                     self?.handleListEnded()
+                    self?.refreshControl.endRefreshing()
                 case .listEmpty:
                     self?.handleListEmpty()
+                    self?.refreshControl.endRefreshing()
                 case .error(let error):
+                    self?.refreshControl.endRefreshing()
                     self?.handleListError()
                     #if !APPSTORE
                         self?.showAlert(title: "Error", message: "\(error)")
@@ -250,8 +258,7 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
     }
     
     @objc func refresh() {
-        viewModel.reload()
-        refreshControl.endRefreshing()
+        viewModel.reload(clearResult: false)
     }
     
     // MARK: - Search manager

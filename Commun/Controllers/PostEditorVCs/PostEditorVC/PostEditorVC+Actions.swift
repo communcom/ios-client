@@ -237,6 +237,7 @@ extension PostEditorVC {
                     // show post page
                     guard let communityId = self.viewModel.community.value?.communityId else {return}
                     let postPageVC = PostPageVC(userId: userId, permlink: permlink, communityId: communityId)
+
                     self.dismiss(animated: true) {
                         UIApplication.topViewController()?.show(postPageVC, sender: nil)
                     }

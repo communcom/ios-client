@@ -53,6 +53,8 @@ class ListFetcher<T: ListItemType> {
     var offset: UInt = 0
     var search: String?
     
+    private var reloadClearedResult = true
+    
     // MARK: - Properties
     let disposeBag = DisposeBag()
     let state = BehaviorRelay<ListFetcherState>(value: .loading(false))
@@ -66,7 +68,10 @@ class ListFetcher<T: ListItemType> {
         state.accept(.loading(false))
         if clearResult {
             items.accept([])
+        } else {
+            items.accept(Array(items.value.prefix(Int(limit))))
         }
+        reloadClearedResult = clearResult
         offset = 0
     }
     
@@ -121,11 +126,21 @@ class ListFetcher<T: ListItemType> {
             .disposed(by: disposeBag)
     }
     
-    func join(newItems items: [T]) -> [T] {
-        var newList = items.filter { (item) -> Bool in
+    func filter(items: [T]) -> [T] {
+        items.filter { (item) -> Bool in
             !self.items.value.contains {$0.identity == item.identity}
         }
-        newList = self.items.value + newList
+    }
+    
+    func join(newItems items: [T]) -> [T] {
+        var newList = filter(items: items)
+        if !reloadClearedResult {
+            reloadClearedResult = true
+            newList = newList + self.items.value
+        } else {
+            newList = self.items.value + newList
+        }
+        
         return newList
     }
 }

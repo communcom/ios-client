@@ -7,9 +7,9 @@
 //
 
 import Foundation
-import PureLayout
-import RxCocoa
 import RxSwift
+import RxCocoa
+import PureLayout
 
 class BasicEditorVC: PostEditorVC {
     // MARK: - Constants
@@ -80,12 +80,23 @@ class BasicEditorVC: PostEditorVC {
     override var viewModel: PostEditorViewModel {
         return _viewModel
     }
-    
+
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.loadShareExtensionData()
+        self.navigationItem.title = "Share this"
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(cancelButtonTapped))
     }
     
+    func hideExtensionWithCompletionHandler(completion:@escaping (Bool) -> Void) {
+        // Dismiss
+        UIView.animate(withDuration: 0.20, animations: {
+            self.navigationController!.view.transform = CGAffineTransform(translationX: 0, y: self.navigationController!.view.frame.size.height)
+        }, completion: completion)
+    }
+
     override func setUp() {
         super.setUp()
         //TODO: add Article later
@@ -144,6 +155,25 @@ class BasicEditorVC: PostEditorVC {
         bindAttachments()
     }
     
+    private func loadShareExtensionData() {
+        if let shareExtensionData = UserDefaults.appGroups.loadShareExtensionData() {
+            // TODO: - ADD SHARE TO SCENE
+            print(shareExtensionData.description)
+            
+            if let text = shareExtensionData.text {
+                contentTextView.text = text + "\n"
+            }
+            
+            if let urlString = shareExtensionData.link {
+                didAddLink(urlString, placeholder: urlString)
+            }
+            
+            if let image = shareExtensionData.image {
+                didChooseImageFromGallery(image)
+            }
+        }
+    }
+
     // MARK: - GetContentBlock
     override func getContentBlock() -> Single<ResponseAPIContentBlock> {
         // TODO: - Attachments
@@ -173,5 +203,12 @@ class BasicEditorVC: PostEditorVC {
                 
                 return block!
             }
+    }
+
+    // MARK: - Actions
+    @objc func cancelButtonTapped(_ sender: UIBarButtonItem) {
+        self.hideExtensionWithCompletionHandler(completion: { (Bool) -> Void in
+            self.extensionContext!.completeRequest(returningItems: nil, completionHandler: nil)
+        })
     }
 }

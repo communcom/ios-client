@@ -85,8 +85,8 @@ class PostsListFetcher: ListFetcher<ResponseAPIContentGetPost> {
             })
     }
     
-    override func join(newItems items: [ResponseAPIContentGetPost]) -> [ResponseAPIContentGetPost] {
-        var newList = items.filter { (item) -> Bool in
+    override func filter(items: [ResponseAPIContentGetPost]) -> [ResponseAPIContentGetPost] {
+        items.filter { (item) -> Bool in
             !self.items.value.contains {$0.identity == item.identity} && item.document != nil
         }
         

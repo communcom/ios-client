@@ -55,7 +55,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     // MARK: - Class Functions
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-
+        
         // first fun app
         if !UserDefaults.standard.bool(forKey: firstInstallAppKey) {
             // Analytics
@@ -242,20 +242,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         } else {
             self.window?.rootViewController = rootVC
         }
-        
+
         getConfig { (error) in
             // Animation
             rootVC.view.alpha = 0
             UIView.animate(withDuration: 0.5, animations: {
                 rootVC.view.alpha = 1
-                if error != nil {
-                    if error?.toErrorAPI().caseInfo.message == "Need update application version" {
+                if let error = error {
+                    if error.toErrorAPI().caseInfo.message == "Need update application version" {
                         rootVC.view.showForceUpdate()
                         return
                     }
-                    rootVC.view.showErrorView {
-                        AppDelegate.reloadSubject.onNext(true)
-                    }
+
+                    print("getConfig = \(error)")
                 }
             })
         }
@@ -529,6 +528,24 @@ extension AppDelegate {
                 return true
             }
         }
+
         return false
+    }
+}
+
+// MARK: - Share Extension pass data
+extension AppDelegate {
+    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
+        switch url.description {
+        case "commun://createPost":
+            if let tabBar = self.window?.rootViewController as? TabBarVC {
+                tabBar.buttonAddTapped()
+            }
+       
+        default:
+            return false
+        }
+        
+        return true
     }
 }

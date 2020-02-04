@@ -11,6 +11,9 @@ import RxCocoa
 import Foundation
 
 class SetUserViewModel {
+    // MARK: - Properties
+    let errorMessage = BehaviorRelay<String?>(value: nil)
+    
     // MARK: - Class Functions
     func checkUserName(_ userName: String) -> [Bool] {
         guard !userName.isEmpty else { return [false, false, false, false, false, false] }
@@ -45,7 +48,33 @@ class SetUserViewModel {
             segmentLength = segments.filter({ $0.count < 5}).count == 0
         }
         
-        print("\(segmentLength)")
+        var message: String?
+        if !isBetween5To32Characters {
+            message = "username must be between 5-32 characters"
+        }
+        
+        if message == nil && !containsOnlyAllowedCharacters {
+            message = "only non-uppercased letters, numbers and hyphen are allowed"
+        }
+        
+        if message == nil && !nonAlphanumericCharacterIsNotAtBeginOrEnd {
+            message = "the hyphen character cannot be at the beginning or at the end of the username"
+        }
+        
+        if message == nil && !twoNonAlphanumericCharacterNotSideBySide {
+            message = "the presence of two \"dots\" or two \"hyphens\" in a row is not valid"
+        }
+        
+        if message == nil && !segmentsStartLetter {
+            message = "each username segment should start with a letter"
+        }
+        
+        if message == nil && !segmentLength {
+            message = "each username segment should contains 5 or more letters"
+        }
+        
+        errorMessage.accept(message)
+        
         return [
             isBetween5To32Characters,
             containsOnlyAllowedCharacters,
@@ -57,9 +86,7 @@ class SetUserViewModel {
     }
     
     func isUserNameValid(_ userName: String) -> Bool {
-        return checkUserName(userName).reduce(true, { (result, element) -> Bool in
-            return result && element
-        })
+        checkUserName(userName).allSatisfy {$0}
     }
     
     func set(userName: String) -> Single<String> {

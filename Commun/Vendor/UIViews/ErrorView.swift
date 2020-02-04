@@ -61,7 +61,7 @@ class ErrorView: MyView {
     }
     
     func layoutImageView() {
-        imageView.autoPinEdge(toSuperviewSafeArea: .top, withInset: 10 * Config.heightRatio)
+        imageView.autoPinEdge(toSuperviewSafeArea: .top, withInset: 50 * Config.heightRatio)
         imageView.autoAlignAxis(toSuperviewAxis: .vertical)
         imageView.widthAnchor.constraint(equalTo: imageView.heightAnchor, multiplier: imageRatio)
             .isActive = true
@@ -84,7 +84,7 @@ class ErrorView: MyView {
         retryButton.autoPinEdge(.top, to: .bottom, of: subtitle, withOffset: 40 * Config.heightRatio)
         retryButton.autoPinEdge(toSuperviewEdge: .leading, withInset: 30 * Config.heightRatio)
         retryButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 30 * Config.heightRatio)
-        retryButton.autoPinEdge(toSuperviewSafeArea: .bottom, withInset: 16 * Config.heightRatio + 45)
+        retryButton.autoPinEdge(toSuperviewSafeArea: .bottom, withInset: 50 * Config.heightRatio + 45)
     }
     
     override func layoutSubviews() {
