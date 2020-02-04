@@ -242,20 +242,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         } else {
             self.window?.rootViewController = rootVC
         }
-        
+
         getConfig { (error) in
             // Animation
             rootVC.view.alpha = 0
             UIView.animate(withDuration: 0.5, animations: {
                 rootVC.view.alpha = 1
-                if error != nil {
-                    if error?.toErrorAPI().caseInfo.message == "Need update application version" {
+                if let error = error {
+                    if error.toErrorAPI().caseInfo.message == "Need update application version" {
                         rootVC.view.showForceUpdate()
                         return
                     }
-                    rootVC.view.showErrorView {
-                        AppDelegate.reloadSubject.onNext(true)
-                    }
+
+                    print("getConfig = \(error)")
                 }
             })
         }
