@@ -86,9 +86,7 @@ class SetUserViewModel {
     }
     
     func isUserNameValid(_ userName: String) -> Bool {
-        return checkUserName(userName).reduce(true, { (result, element) -> Bool in
-            return result && element
-        })
+        checkUserName(userName).allSatisfy {$0}
     }
     
     func set(userName: String) -> Single<String> {
