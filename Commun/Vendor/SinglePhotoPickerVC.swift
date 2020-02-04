@@ -14,7 +14,8 @@ import MBProgressHUD
 class SinglePhotoPickerVC: TLPhotosPickerViewController {
     // MARK: - Properties
     var completion: ((UIImage) -> Void)?
-    
+    var hud: MBProgressHUD?
+
     // MARK: - Initializers
     override init() {
         super.init()
@@ -49,7 +50,8 @@ class SinglePhotoPickerVC: TLPhotosPickerViewController {
         hud.label.text = "download image from iCloud".localized().uppercaseFirst + "..."
         hud.backgroundColor = UIColor(white: 0, alpha: 0.2)
         hud.isUserInteractionEnabled = true
-        
+        self.hud = hud
+
         let manager = PHImageManager.default()
         let option = PHImageRequestOptions()
         option.deliveryMode = .highQualityFormat
@@ -72,6 +74,7 @@ class SinglePhotoPickerVC: TLPhotosPickerViewController {
     }
     
     override func cancelButtonTap() {
+        hud?.hide(animated: true)
         self.dismiss(animated: true, completion: nil)
     }
 }
