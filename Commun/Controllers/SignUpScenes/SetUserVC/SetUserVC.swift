@@ -25,6 +25,8 @@ class SetUserVC: BaseViewController, SignUpRouter {
         return tf
     }()
     
+    lazy var errorLabel = UILabel.with(textSize: 12, weight: .semibold, textColor: UIColor(hexString: "#F53D5B")!, numberOfLines: 0, textAlignment: .center)
+    
     lazy var nextButton = StepButton(height: 56 * Config.heightRatio, label: "next".localized().uppercaseFirst, labelFont: UIFont.boldSystemFont(ofSize: 17 * Config.heightRatio), backgroundColor: .appMainColor, textColor: .white, cornerRadius: 8)
     
     // MARK: - Methods
@@ -59,6 +61,11 @@ class SetUserVC: BaseViewController, SignUpRouter {
         textField.rightView = rightView
         textField.rightViewMode = .always
         
+        view.addSubview(errorLabel)
+        errorLabel.autoPinEdge(.top, to: .bottom, of: textField, withOffset: 10)
+        errorLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 32)
+        errorLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 32)
+        
         // button
         view.addSubview(nextButton)
         nextButton.autoPinEdge(toSuperviewEdge: .leading, withInset: 42 * Config.widthRatio)
@@ -77,6 +84,10 @@ class SetUserVC: BaseViewController, SignUpRouter {
         textField.rx.text.orEmpty
             .map {self.viewModel.isUserNameValid($0)}
             .bind(to: nextButton.rx.isEnabled)
+            .disposed(by: disposeBag)
+        
+        viewModel.errorMessage
+            .bind(to: errorLabel.rx.text)
             .disposed(by: disposeBag)
     }
     

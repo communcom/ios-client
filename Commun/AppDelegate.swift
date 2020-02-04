@@ -55,6 +55,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     // MARK: - Class Functions
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        let vc = SetUserVC()
+        let nc = UINavigationController(rootViewController: vc)
+        window?.rootViewController = nc
+        return true
         
         // first fun app
         if !UserDefaults.standard.bool(forKey: firstInstallAppKey) {
