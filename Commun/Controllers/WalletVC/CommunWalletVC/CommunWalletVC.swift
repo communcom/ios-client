@@ -81,7 +81,8 @@ class CommunWalletVC: TransferHistoryVC {
 
     override func viewWillDisappear(_ animated: Bool) {
         self.navigationController?.setNavigationBarHidden(false, animated: animated)
-
+        self.navigationItem.title = ""
+        
         super.viewWillDisappear(animated)
     }
 
