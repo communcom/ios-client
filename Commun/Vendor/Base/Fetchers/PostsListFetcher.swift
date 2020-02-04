@@ -78,15 +78,14 @@ class PostsListFetcher: ListFetcher<ResponseAPIContentGetPost> {
     override var request: Single<[ResponseAPIContentGetPost]> {
 //        return ResponseAPIContentGetPosts.singleWithMockData()
 //            .delay(0.8, scheduler: MainScheduler.instance)
-        return RestAPIManager.instance.getPosts(userId: filter.userId, communityId: filter.communityId, communityAlias: filter.communityAlias, allowNsfw: false, type: filter.feedTypeMode, sortBy: filter.feedType, sortType: filter.sortType, limit: limit, offset: offset)
-        .map {$0.items ?? []}
+        return RestAPIManager.instance.getPosts(userId: filter.userId, communityId: filter.communityId, communityAlias: filter.communityAlias, allowNsfw: false, type: filter.feedTypeMode, sortBy: filter.feedType, sortType: filter.sortType, limit: limit, offset: offset
+        )
+            .map {$0.items ?? []}
     }
     
-    override func join(newItems items: [ResponseAPIContentGetPost]) -> [ResponseAPIContentGetPost] {
-        var newList = items.filter { (item) -> Bool in
+    override func filter(items: [ResponseAPIContentGetPost]) -> [ResponseAPIContentGetPost] {
+        items.filter { (item) -> Bool in
             !self.items.value.contains {$0.identity == item.identity} && item.document != nil
         }
-        newList = self.items.value + newList
-        return newList
     }
 }
