@@ -77,7 +77,7 @@ class CommunitiesVC: SubsViewController<ResponseAPIContentGetCommunity, Communit
         }
         
         if self.viewModel.fetcher.search != keyword {
-            self.viewModel.fetcher.search = keyword
+            self.viewModel.fetcher.search = keyword.uppercaseFirst
             self.viewModel.reload(clearResult: false)
         }
     }
