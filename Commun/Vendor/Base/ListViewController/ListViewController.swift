@@ -161,9 +161,9 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
                 switch state {
                 case .loading(let isLoading):
                     if isLoading {
-                        self?.handleLoading()
                         if (self?.viewModel.items.value.count ?? 0) == 0 {
                             self?.refreshControl.endRefreshing()
+                            self?.handleLoading()
                         }
                     } else {
                         self?.refreshControl.endRefreshing()
@@ -258,7 +258,7 @@ class ListViewController<T: ListItemType, CellType: ListItemCellType>: BaseViewC
     }
     
     @objc func refresh() {
-        viewModel.reload()
+        viewModel.reload(clearResult: false)
     }
     
     // MARK: - Search manager

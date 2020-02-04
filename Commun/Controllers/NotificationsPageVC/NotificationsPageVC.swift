@@ -194,10 +194,6 @@ class NotificationsPageVC: ListViewController<ResponseAPIGetNotificationItem, No
     override func handleLoading() {
         tableView.addNotificationsLoadingFooterView()
     }
-    
-    override func refresh() {
-        viewModel.reload(clearResult: false)
-    }
 }
 
 extension NotificationsPageVC: UITableViewDelegate {
