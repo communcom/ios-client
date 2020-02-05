@@ -12,9 +12,10 @@ import RxCocoa
 import CyberSwift
 
 class PostEditorViewModel {
+    // MARK: - Properties
     var postForEdit: ResponseAPIContentGetPost?
     let community = BehaviorRelay<ResponseAPIContentGetCommunity?>(value: nil)
-    
+
     func sendPost(title: String?, block: ResponseAPIContentBlock) -> Single<SendPostCompletion> {
         // If editing post
         var request: Single<SendPostCompletion>!

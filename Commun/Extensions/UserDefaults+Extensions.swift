@@ -11,57 +11,34 @@ import UIKit
 public let appShareExtensionKey: String = "appShareExtensionKey"
 
 extension UserDefaults {
-    #if APPSTORE
-        private static let groupID = "group.com.commun.ios"
-    #else
+    #if DEBUG
         private static let groupID = "group.io.commun.eos.ios"
+    #else
+        private static let groupID = "group.com.commun.ios"
     #endif
+    
     static let appGroups = UserDefaults(suiteName: groupID)!
 
     func loadShareExtensionData() -> ShareExtensionData? {
-        guard let decodedObject = UserDefaults.appGroups.object(forKey: appShareExtensionKey) as? Data else { return nil }
-        
-        let shareExtensionData = ShareExtensionData()
-        
-        if let dictionary = try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(decodedObject) as? [String: Any] {
-            if let text = dictionary["text"] as? String {
-                shareExtensionData.text = text
-            }
-            
-            if let url = dictionary["url"] as? String {
-                shareExtensionData.link = url
-            }
+        let decoder = JSONDecoder()
 
-            if let image = dictionary["image"] as? UIImage {
-                shareExtensionData.image = image
-            }
-            
-            return shareExtensionData
-        } else {
-            return nil
-        }
+        guard let decodedObject = UserDefaults.appGroups.object(forKey: appShareExtensionKey) as? Data else { return nil }
+                
+        guard let shareExtensionData = try? decoder.decode(ShareExtensionData.self, from: decodedObject) else { return nil }
+        
+        return shareExtensionData
     }
     
     func save(shareExtensionData: ShareExtensionData) -> Bool {
-        var dictionary = [String: Any]()
+        let encoder = JSONEncoder()
         
-        if let image = shareExtensionData.image {
-            dictionary["image"] = image
-        }
-        
-        if let text = shareExtensionData.text {
-            dictionary["text"] = text
-        }
+        UserDefaults.appGroups.removeObject(forKey: appShareExtensionKey)
 
-        if let url = shareExtensionData.link {
-            dictionary["url"] = url
-        }
-
-        guard let encodedData: Data = try? NSKeyedArchiver.archivedData(withRootObject: dictionary) else { return false }
-//        archivedData(withRootObject: dictionary, requiringSecureCoding: false) else { return false }
-//        guard let encodedData: Data = try? NSKeyedArchiver.archivedData(withRootObject: shareExtensionData, requiringSecureCoding: false) else { return false }
+        guard let encodedData = try? encoder.encode(shareExtensionData) else { return false }
 
         UserDefaults.appGroups.set(encodedData, forKey: appShareExtensionKey)
+
+        guard UserDefaults.appGroups.loadShareExtensionData() != nil else { return false }
         
         return true
     }
