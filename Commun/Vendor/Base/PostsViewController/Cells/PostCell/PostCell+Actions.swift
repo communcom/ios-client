@@ -55,9 +55,9 @@ extension PostCell {
         let cardVC = CardViewController(contentView: userNameRulesView)
         parentViewController?.present(cardVC, animated: true, completion: nil)
         
-        userNameRulesView.completionDismissWithAction = {
+        userNameRulesView.completionDismissWithAction = { value in
             self.parentViewController?.dismiss(animated: true, completion: {
-                if let baseVC = self.parentViewController as? BaseViewController {
+                if value, let baseVC = self.parentViewController as? BaseViewController {
                     baseVC.load(url: postLink)
                 }
             })

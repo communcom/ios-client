@@ -53,7 +53,7 @@ class UserNameRulesView: MyCardView {
         actionButton.autoPinEdge(.top, to: .bottom, of: rulesLabel, withOffset: CGFloat.adaptive(height: 20.0))
         actionButton.setTitle(viewParameters.buttonTitle, for: .normal)
         
-        actionButton.addTarget(self, action: #selector(close), for: .touchUpInside)
+        actionButton.addTarget(self, action: #selector(openLink(_:)), for: .touchUpInside)
         closeButton.addTarget(self, action: #selector(close), for: .touchUpInside)
     }
 }

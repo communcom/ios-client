@@ -41,7 +41,7 @@ enum CMCardViewParameters {
 class MyCardView: MyView {
     // MARK: - Properties
     var viewParameters: CMCardViewParameters!
-    var completionDismissWithAction: (() -> Void)?
+    var completionDismissWithAction: ((Bool) -> Void)?
 
     
     // MARK: - Class Initialization
@@ -57,10 +57,10 @@ class MyCardView: MyView {
     
     // MARK: - Actions
     @objc func close() {
-        completionDismissWithAction!()
+        completionDismissWithAction!(false)
     }
     
     @objc func openLink(_ sender: UIButton) {
-        completionDismissWithAction!()
+        completionDismissWithAction!(true)
     }
 }
