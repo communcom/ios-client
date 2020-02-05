@@ -281,10 +281,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
+        UserDefaults.appGroups.removeObject(forKey: appShareExtensionKey)
         SocketManager.shared.disconnect()
         self.saveContext()
     }
 
+    func applicationDidEnterBackground(_ application: UIApplication) {
+        print("MMM")
+    }
+    
+    
     // MARK: - Custom Functions
     private func configureNotifications() {
         // Set delegate for Messaging

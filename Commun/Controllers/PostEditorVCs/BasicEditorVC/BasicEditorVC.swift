@@ -157,9 +157,6 @@ class BasicEditorVC: PostEditorVC {
     
     private func loadShareExtensionData() {
         if let shareExtensionData = UserDefaults.appGroups.loadShareExtensionData() {
-            // TODO: - ADD SHARE TO SCENE
-            print(shareExtensionData.description)
-            
             if let text = shareExtensionData.text {
                 contentTextView.text = text + "\n"
             }
@@ -168,7 +165,7 @@ class BasicEditorVC: PostEditorVC {
                 didAddLink(urlString, placeholder: urlString)
             }
             
-            if let image = shareExtensionData.image {
+            if let imageData = shareExtensionData.imageData, let image = UIImage(data: imageData) {
                 didChooseImageFromGallery(image)
             }
         }

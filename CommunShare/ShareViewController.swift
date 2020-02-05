@@ -11,7 +11,7 @@ import Social
 
 class ShareViewController: SLComposeServiceViewController {
     // MARK: - Properties
-    let shareExtensionData = ShareExtensionData()
+    var shareExtensionData = ShareExtensionData()
 
     // MARK: - Class Functions
     override func isContentValid() -> Bool {
@@ -26,10 +26,20 @@ class ShareViewController: SLComposeServiceViewController {
             shareExtensionData.text = self.contentText
             
             if let itemProvider = attachments.first {
+                let registeredTypeIdentifiers = itemProvider.registeredTypeIdentifiers.filter({ $0 != "public.heic" })
+                
                 // Grab data
-                for registeredTypeIdentifier in itemProvider.registeredTypeIdentifiers {
+                for registeredTypeIdentifier in registeredTypeIdentifiers {
                     if let suffix = registeredTypeIdentifier.components(separatedBy: ".").last {
                         switch suffix {
+                        case "plain-text":
+                            // Grab text from Note app
+                            itemProvider.loadItem(forTypeIdentifier: "public.plain-text", options: nil, completionHandler: { (text, error) -> Void in
+                                guard error == nil, let textValue = text as? String else { return }
+                                self.shareExtensionData.text = textValue
+                                self.saveData()
+                            })
+
                         case "url":
                             // Grab link
                             itemProvider.loadItem(forTypeIdentifier: "public.url", options: nil, completionHandler: { (url, error) -> Void in
@@ -38,34 +48,23 @@ class ShareViewController: SLComposeServiceViewController {
                                 self.saveData()
                             })
 
-                        default:
+                        case "jpeg", "png", "jpg":
                             // Grab image
                             itemProvider.loadItem(forTypeIdentifier: "public." + suffix, options: nil, completionHandler: { (data, error) in
                                 guard error == nil else { return }
-
-                                var image: UIImage?
-                                           
-                                if let someURl = data as? URL {
-                                    image = UIImage(contentsOfFile: someURl.path)
-                                } else if let someImage = data as? UIImage {
-                                    image = someImage
-                                }
                                 
-                                if let someImage = image {
-                                    guard let compressedImagePath = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first?.appendingPathComponent("shareImage.jpg", isDirectory: false) else {
-                                        return
-                                    }
-                                    
-                                    let compressedImageData = someImage.jpegData(compressionQuality: 1)
-
-                                    guard (try? compressedImageData?.write(to: compressedImagePath)) != nil else { return }
-                                    
-                                    self.shareExtensionData.image = someImage
-                                    self.saveData()
-                                } else {
-                                    print("bad share data")
+                                if let imageURl = data as? URL {
+                                    let image = UIImage(contentsOfFile: imageURl.path)
+                                    self.shareExtensionData.imageData = imageURl.path.hasSuffix("png") ? image!.pngData() : image!.jpegData(compressionQuality: 0.9)
+                                } else if let image = data as? UIImage {
+                                    self.shareExtensionData.imageData = image.jpegData(compressionQuality: 0.9)
                                 }
+
+                                self.saveData()
                             })
+                            
+                        default:
+                            break
                         }
                     }
                 }
@@ -82,7 +81,7 @@ class ShareViewController: SLComposeServiceViewController {
     private func saveData() {
         // Save share data
         guard UserDefaults.appGroups.save(shareExtensionData: shareExtensionData) == true else { return }
-        
+                
         // URL Scheme
         guard let url = URL(string: "commun://createPost") else { return }
         
