@@ -158,7 +158,9 @@ class BasicEditorVC: PostEditorVC {
     func loadShareExtensionData() {
         if let shareExtensionData = UserDefaults.appGroups.loadShareExtensionData() {
             contentTextView.clear()
-            
+            _viewModel.attachment.accept(nil)
+            link = nil
+
             if let text = shareExtensionData.text {
                 contentTextView.text = text + "\n"
             }
