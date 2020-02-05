@@ -74,7 +74,7 @@ class WalletSendPointsVC: BaseViewController {
     }()
     
     let sendPointsButton: CommunButton = {
-        let sendPointsButtonInstance = CommunButton.default(height: CGFloat.adaptive(height: 50.0))
+        let sendPointsButtonInstance = CommunButton.default(height: 50.0)
         sendPointsButtonInstance.addTarget(self, action: #selector(sendPointsButtonTapped), for: .touchUpInside)
         sendPointsButtonInstance.isEnabled = false
         
@@ -107,8 +107,7 @@ class WalletSendPointsVC: BaseViewController {
         
         return clearPointsButtonInstance
     }()
-    
-    
+
     // MARK: - Class Initialization
     init(withSelectedBalanceSymbol symbol: String, andUser user: ResponseAPIContentGetSubscriptionsUser?) {
         self.dataModel = SendPointsModel()
@@ -125,7 +124,6 @@ class WalletSendPointsVC: BaseViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
 
     // MARK: - Class Functions
     override func viewDidLoad() {
@@ -311,22 +309,22 @@ class WalletSendPointsVC: BaseViewController {
 
         let style = NSMutableParagraphStyle()
         style.alignment = .center
-        style.paragraphSpacingBefore = CGFloat.adaptive(height: 1.0)
-        style.paragraphSpacing = CGFloat.adaptive(height: 1.0)
+        style.paragraphSpacingBefore = 1.0
+        style.paragraphSpacing = 1.0
         
-        title.addAttributes([NSAttributedString.Key.font: UIFont.systemFont(ofSize: CGFloat.adaptive(width: 15.0), weight: .bold),
+        title.addAttributes([NSAttributedString.Key.font: UIFont.systemFont(ofSize: 15.0, weight: .bold),
                              NSAttributedString.Key.foregroundColor: UIColor.white,
                              NSAttributedString.Key.paragraphStyle: style
                             ], range: NSRange(location: 0, length: subtitle1.count))
 
-        title.addAttributes([NSAttributedString.Key.font: UIFont.systemFont(ofSize: CGFloat.adaptive(width: 12.0), weight: .semibold),
+        title.addAttributes([NSAttributedString.Key.font: UIFont.systemFont(ofSize: 12.0, weight: .semibold),
                              NSAttributedString.Key.foregroundColor: UIColor(hexString: "#ffffff", transparency: 0.7)!,
                              NSAttributedString.Key.paragraphStyle: style
                             ], range: NSRange(location: subtitle1.count + 1, length: subtitle2.count))
 
         sendPointsButton.setAttributedTitle(title, for: .normal)
         sendPointsButton.titleLabel?.lineBreakMode = .byWordWrapping
-        sendPointsButton.titleLabel?.numberOfLines = 2
+        sendPointsButton.titleLabel?.numberOfLines = 0
     }
     
     private func addGesture() {

@@ -25,7 +25,6 @@ class ConfirmPasscodeVC: THPinViewController {
     var completion: (() -> Void)?
     let disposeBag = DisposeBag()
     lazy var context = LAContext()
-
     
     // MARK: - Class Initialization
     init() {
@@ -112,7 +111,6 @@ class ConfirmPasscodeVC: THPinViewController {
         closeButtonTapped(closeButton)
     }
 
-    
     // MARK: - Actions
     @objc func closeButtonTapped(_ sender: UIButton) {
         dismiss(animated: true, completion: nil)
@@ -136,7 +134,6 @@ class ConfirmPasscodeVC: THPinViewController {
         }
     }
 }
-
 
 // NARK: - THPinViewDelegate
 extension ConfirmPasscodeVC: THPinViewDelegate {

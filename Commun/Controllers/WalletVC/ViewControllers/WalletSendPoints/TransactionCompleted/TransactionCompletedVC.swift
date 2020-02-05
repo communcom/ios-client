@@ -28,7 +28,6 @@ class TransactionCompletedVC: BaseViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
 
     // MARK: - Class Functions
     override func viewDidLoad() {
@@ -67,8 +66,7 @@ class TransactionCompletedVC: BaseViewController {
         
         view.backgroundColor = dataModel.transaction.history == nil ? #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1) : #colorLiteral(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.3)
     }
-        
-    
+
     // MARK: - Custom Functions
     private func setupNavBar() {
         title = "send points".localized()
@@ -78,7 +76,6 @@ class TransactionCompletedVC: BaseViewController {
         navigationController?.navigationBar.isTranslucent = true
         navigationController?.navigationBar.shadowImage?.clear()
         navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
-//        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(actionBarButtonTapped))
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: " ", style: .plain, target: nil, action: nil)
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(stopBarButtonTapped))
 
