@@ -89,10 +89,12 @@ lane :release do
 		app_name: APPLICATION_NAME,
 		plist_path: INFO_PLIST_PATH,
 		bundle_id: BUNDLE_ID_RELEASE,
+		share_ext_bundle_id: BUNDLE_ID_SHARE_RELEASE,
 		icon_name: "AppIcon-PROD",
-		profile_name: "match AppStore #{BUNDLE_ID_RELEASE}",
+		app_group: GROUP_ID_RELEASE,
 		team_id: TEAM_ID_RELEASE,
-		subxcodeproj: SUBXCODEPROJ
+		subxcodeproj: SUBXCODEPROJ,
+		codesigning_identity: "iPhone Distribution: CHEINARTSOFT, OOO (E23BKKUH5D)"
 	)
 
 	build_path = ENV['BUILD_PATH']
@@ -316,28 +318,28 @@ end
 desc 'Update profiles and add new devices'
 lane :update_profiles do 
 
-	# match(
-	# 	git_branch: MATCH_GIT_BRANCH_RELEASE,
-	# 	username: APPLE_ID,
-	# 	team_id: TEAM_ID_RELEASE,
-	# 	app_identifier: [BUNDLE_ID_RELEASE, BUNDLE_ID_SHARE_RELEASE],
-	# 	generate_apple_certs: true,
-	# 	type: MATCH_TYPE_RELEASE,
-	# 	readonly: false,
-	# 	force: true
-	# )
-
 	match(
-		git_branch: MATCH_GIT_BRANCH_DEV,
+		git_branch: MATCH_GIT_BRANCH_RELEASE,
 		username: APPLE_ID,
-		team_id: TEAM_ID_DEV,
-		app_identifier: [BUNDLE_ID_DEV, BUNDLE_ID_SHARE_DEV],
+		team_id: TEAM_ID_RELEASE,
+		app_identifier: [BUNDLE_ID_RELEASE, BUNDLE_ID_SHARE_RELEASE],
 		generate_apple_certs: true,
-		type: MATCH_TYPE_DEV,
+		type: MATCH_TYPE_RELEASE,
 		readonly: false,
-		force_for_new_devices: true,
 		force: true
 	)
+
+	# match(
+	# 	git_branch: MATCH_GIT_BRANCH_DEV,
+	# 	username: APPLE_ID,
+	# 	team_id: TEAM_ID_DEV,
+	# 	app_identifier: [BUNDLE_ID_DEV, BUNDLE_ID_SHARE_DEV],
+	# 	generate_apple_certs: true,
+	# 	type: MATCH_TYPE_DEV,
+	# 	readonly: false,
+	# 	force_for_new_devices: true,
+	# 	force: true
+	# )
 end
 
 
