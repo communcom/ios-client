@@ -11,6 +11,9 @@ import CyberSwift
 import RxDataSources
 
 class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile>, PostCellDelegate, CommentCellDelegate {
+    var commentsListViewModel: ListViewModel<ResponseAPIContentGetComment> {
+        (viewModel as! UserProfilePageViewModel).commentsVM
+    }
     
     // MARK: - Nested type
     enum CustomElementType: IdentifiableType, Equatable {
