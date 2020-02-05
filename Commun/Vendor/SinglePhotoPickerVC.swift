@@ -78,6 +78,4 @@ class SinglePhotoPickerVC: TLPhotosPickerViewController {
         hud?.hide(animated: true)
         self.dismiss(animated: true, completion: nil)
     }
-
-
 }
