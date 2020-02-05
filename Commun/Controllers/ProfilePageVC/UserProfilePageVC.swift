@@ -71,8 +71,23 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile>, PostCellDelega
         bindCommunities()
         
         forwardDelegate()
+    }
+    
+    override func bindProfile() {
+        super.bindProfile()
+        ResponseAPIContentGetProfile.observeItemChanged()
+            .filter {$0.identity == self.viewModel.profile.value?.identity}
+            .subscribe(onNext: { [weak self] (profile) in
+                self?.viewModel.profile.accept(profile)
+            })
+            .disposed(by: disposeBag)
         
-        bindProfileBlocked()
+        ResponseAPIContentGetProfile.observeEvent(eventName: ResponseAPIContentGetProfile.blockedEventName)
+            .subscribe(onNext: { (blockedProfile) in
+                guard blockedProfile.userId == self.viewModel.profile.value?.userId else {return}
+                self.back()
+            })
+            .disposed(by: disposeBag)
     }
     
     override func setUp(profile: ResponseAPIContentGetProfile) {
@@ -194,6 +209,8 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile>, PostCellDelega
     }
     
     override func moreActionsButtonDidTouch(_ sender: CommunButton) {
+        guard let profile = viewModel.profile.value else {return}
+        
         let headerView = UIView(height: 40)
         
         let avatarImageView = MyAvatarImageView(size: 40)
@@ -202,28 +219,32 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile>, PostCellDelega
         headerView.addSubview(avatarImageView)
         avatarImageView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .trailing)
         
-        let userNameLabel = UILabel.with(text: viewModel.profile.value?.username, textSize: 15, weight: .semibold)
+        let userNameLabel = UILabel.with(text: profile.username, textSize: 15, weight: .semibold)
         headerView.addSubview(userNameLabel)
         userNameLabel.autoPinEdge(toSuperviewEdge: .top)
         userNameLabel.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 10)
         userNameLabel.autoPinEdge(toSuperviewEdge: .trailing)
 
-        let userIdLabel = UILabel.with(text: "@\(viewModel.profile.value?.userId ?? "")", textSize: 12, textColor: .appMainColor)
+        let userIdLabel = UILabel.with(text: "@\(profile.userId)", textSize: 12, textColor: .appMainColor)
         headerView.addSubview(userIdLabel)
         userIdLabel.autoPinEdge(.top, to: .bottom, of: userNameLabel, withOffset: 3)
         userIdLabel.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 10)
         userIdLabel.autoPinEdge(toSuperviewEdge: .trailing)
         
         showCommunActionSheet(style: .profile, headerView: headerView, actions: [
-            CommunActionSheet.Action(title: "block".localized().uppercaseFirst, icon: UIImage(named: "profile_options_blacklist"), handle: {
+            CommunActionSheet.Action(title: profile.isInBlacklist == true ? "unblock".localized().uppercaseFirst: "block".localized().uppercaseFirst, icon: UIImage(named: "profile_options_blacklist"), handle: {
                 
                 self.showAlert(
-                    title: "block user".localized().uppercaseFirst,
-                    message: "do you really want to block".localized().uppercaseFirst + " \(self.viewModel.profile.value?.username ?? "this user")" + "?",
+                    title: profile.isInBlacklist == true ? "unblock user".localized().uppercaseFirst: "block user".localized().uppercaseFirst,
+                    message: "do you really want to".localized().uppercaseFirst + " " + (profile.isInBlacklist == true ? "unblock".localized(): "block".localized()) + " \(self.viewModel.profile.value?.username ?? "this user")" + "?",
                     buttonTitles: ["yes".localized().uppercaseFirst, "no".localized().uppercaseFirst],
                     highlightedButtonIndex: 1) { (index) in
                         if index != 0 {return}
-                        self.blockUser()
+                        if profile.isInBlacklist == true {
+                            self.unblockUser()
+                        } else {
+                            self.blockUser()
+                        }
                     }
             })
         ]) {
