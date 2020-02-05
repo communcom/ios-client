@@ -27,6 +27,7 @@ class CommunitiesVC: SubsViewController<ResponseAPIContentGetCommunity, Communit
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         baseNavigationController?.changeStatusBarStyle(.default)
+        extendedLayoutIncludesOpaqueBars = true
     }
     
     override func setUp() {
