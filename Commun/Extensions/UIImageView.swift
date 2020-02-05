@@ -37,12 +37,12 @@ extension UIImageView {
             sd_setImage(with: URL(string: avatarUrl), placeholderImage: UIImage(named: "ProfilePageUserAvatar")) { [weak self] (_, error, _, _) in
                 if error != nil {
                     // Placeholder image
-                    self?.setNonAvatarImageWithId(namePlaceHolder)
+                    self?.image = UIImage(named: "empty-avatar")
                 }
             }
         } else {
             // Placeholder image
-            setNonAvatarImageWithId(namePlaceHolder)
+            image = UIImage(named: "empty-avatar")
         }
     }
     
