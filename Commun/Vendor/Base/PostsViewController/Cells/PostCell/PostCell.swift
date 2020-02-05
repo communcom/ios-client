@@ -190,6 +190,7 @@ class PostCell: MyTableViewCell, ListItemCellType {
     func setUp(with post: ResponseAPIContentGetPost) {
         self.post = post
 
+        stateActionButton.isHidden = true
         metaView.setUp(post: post)
         voteContainerView.setUp(with: post.votes, userID: post.author?.userId)
 
@@ -208,21 +209,19 @@ class PostCell: MyTableViewCell, ListItemCellType {
             set(mosaic: mosaic)
         }
     }
-    
-    // isClosed = true && reward > 0: show `reward` value
-    // isClosed = false && topCount > 1: show `Top`
+
     private func set(mosaic: ResponseAPIRewardsGetStateBulkMosaic) {
-        guard mosaic.topCount > 0, let rewardString = mosaic.reward.components(separatedBy: " ").first, let rewardDouble = Double(rewardString), rewardDouble > 0 else { stateActionButton.isHidden = true
+        guard mosaic.topCount > 0, let rewardString = mosaic.reward.components(separatedBy: " ").first, let rewardDouble = Double(rewardString), rewardDouble > 0 else {
             return
         }
         
         let isRewardState = mosaic.isClosed
         stateActionButton.isHidden = false
-        stateActionButton.setTitle(isRewardState ? String(format: "%.2f", rewardDouble) : "top".localized().uppercaseFirst, for: .normal)
+        stateActionButton.setTitle(isRewardState ? rewardDouble.currencyValueFormatted : "top".localized().uppercaseFirst, for: .normal)
         stateActionButton.tag = Int(isRewardState.int)
         stateActionButton.sizeToFit()
         
-        let width = stateActionButton.intrinsicContentSize.width + 15.0
+        let width = stateActionButton.intrinsicContentSize.width + 10.0
         stateActionButtonWidthConstraint?.constant = width
     }
 }
