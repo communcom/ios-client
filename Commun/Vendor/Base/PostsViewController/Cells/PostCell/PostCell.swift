@@ -143,5 +143,13 @@ class PostCell: MyTableViewCell, ListItemCellType {
         // Shares count
         //TODO: change this number later
         self.sharesCountLabel.text = "\(post.stats?.viewCount ?? 0)"
+        
+        if let mosaic = post.mosaic {
+            
+        }
+    }
+    
+    private func set(mosaic: ResponseAPIRewardsGetStateBulkMosaic) {
+        
     }
 }

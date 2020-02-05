@@ -379,14 +379,6 @@ class WalletConvertVC: BaseViewController {
     }
     
     func layoutBottom() {
-        let warningLabel = UILabel.with(textSize: 12, weight: .medium, textColor: .a5a7bd, numberOfLines: 0, textAlignment: .center)
-        warningLabel.attributedText = NSMutableAttributedString()
-            .text("transfer time takes up to".localized().uppercaseFirst, size: 12, weight: .medium, color: .a5a7bd)
-            .text(" 5-30 " + "minutes".localized().uppercaseFirst, size: 12, weight: .medium, color: .appMainColor)
-
-        view.addSubview(warningLabel)
-        warningLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 20)
-        warningLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 20)
         
         // convertButton
         convertButton.addTarget(self, action: #selector(convertButtonDidTouch), for: .touchUpInside)
@@ -394,13 +386,12 @@ class WalletConvertVC: BaseViewController {
         view.addSubview(convertButton)
         convertButton.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
         convertButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
-        convertButton.autoPinEdge(.top, to: .bottom, of: warningLabel, withOffset: 20)
         
         let keyboardViewV = KeyboardLayoutConstraint(item: view!.safeAreaLayoutGuide, attribute: .bottom, relatedBy: .equal, toItem: convertButton, attribute: .bottom, multiplier: 1.0, constant: 16)
         keyboardViewV.observeKeyboardHeight()
         self.view.addConstraint(keyboardViewV)
         
-        scrollView.autoPinEdge(.bottom, to: .top, of: warningLabel)
+        scrollView.autoPinEdge(.bottom, to: .top, of: convertButton)
     }
         
     // MARK: - Updating

@@ -69,7 +69,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let id = UUID().uuidString + "." + "\(Date().timeIntervalSince1970)"
             do {
                 try KeychainManager.save([Config.currentDeviceIdKey: id])
-                SocketManager.shared.deviceIdDidSet()
             } catch {
                 Logger.log(message: error.localizedDescription, event: .debug)
             }
@@ -270,7 +269,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             .disposed(by: bag)
     }
 
-    func applicationWillResignActive(_ application: UIApplication) {
+    func applicationDidEnterBackground(_ application: UIApplication) {
         AnalyticsManger.shared.backgroundApp()
         SocketManager.shared.disconnect()
     }

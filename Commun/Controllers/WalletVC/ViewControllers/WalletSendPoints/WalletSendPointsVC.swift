@@ -117,7 +117,7 @@ class WalletSendPointsVC: BaseViewController {
         if let userValue = user  {
             self.dataModel.transaction.createFriend(from: userValue)
         }
-
+        
         super.init(nibName: nil, bundle: nil)
         view.backgroundColor = .clear
     }
@@ -156,13 +156,13 @@ class WalletSendPointsVC: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
+        setupNavBar()
+        setNeedsStatusBarAppearanceUpdate()
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
     
-        setupNavBar()
-        setNeedsStatusBarAppearanceUpdate()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -279,6 +279,7 @@ class WalletSendPointsVC: BaseViewController {
     
     private func setupNavBar() {
         title = "send points".localized()
+
         setLeftNavBarButtonForGoingBack(tintColor: .white)
         view.backgroundColor = #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1)
         navigationController?.navigationBar.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1) // items color
@@ -405,7 +406,7 @@ class WalletSendPointsVC: BaseViewController {
 
             self.dataModel.transaction.operationDate = Date()
 
-//            self.showIndetermineHudWithMessage("sending".localized().uppercaseFirst + " \(self.dataModel.transaction.symbol.sell.fullName.uppercased())")
+            self.showIndetermineHudWithMessage("sending".localized().uppercaseFirst + " \(self.dataModel.transaction.symbol.sell.fullName.uppercased())")
 
             // FOR TEST
 //            if let baseNC = self.navigationController as? BaseNavigationController {
@@ -421,8 +422,8 @@ class WalletSendPointsVC: BaseViewController {
                     guard let strongSelf = self else { return }
                     
                     if let baseNC = strongSelf.navigationController as? BaseNavigationController {
-                        let completedVC = TransactionCompletedVC(transaction: strongSelf.dataModel.transaction)
                         baseNC.shouldResetNavigationBarOnPush = false
+                        let completedVC = TransactionCompletedVC(transaction: strongSelf.dataModel.transaction)
                         strongSelf.show(completedVC, sender: nil)
                     }
 
