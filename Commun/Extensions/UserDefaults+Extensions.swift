@@ -11,10 +11,10 @@ import UIKit
 public let appShareExtensionKey: String = "appShareExtensionKey"
 
 extension UserDefaults {
-    #if DEBUG
-        private static let groupID = "group.io.commun.eos.ios"
-    #else
+    #if APPSTORE
         private static let groupID = "group.com.commun.ios"
+    #else
+        private static let groupID = "group.io.commun.eos.ios"
     #endif
     
     static let appGroups = UserDefaults(suiteName: groupID)!
