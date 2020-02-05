@@ -41,7 +41,7 @@ class UserProfilePageVC: ProfileVC<ResponseAPIContentGetProfile>, PostCellDelega
     
     // MARK: - Subviews
     lazy var headerView = createHeaderView()
-    override var _headerView: ProfileHeaderView! {
+    override var _headerView: ProfileHeaderView? {
         return headerView
     }
     

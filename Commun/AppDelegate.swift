@@ -280,10 +280,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
+        UserDefaults.appGroups.removeObject(forKey: appShareExtensionKey)
         SocketManager.shared.disconnect()
         self.saveContext()
     }
-
+    
+    
     // MARK: - Custom Functions
     private func configureNotifications() {
         // Set delegate for Messaging
@@ -538,7 +540,11 @@ extension AppDelegate {
         switch url.description {
         case "commun://createPost":
             if let tabBar = self.window?.rootViewController as? TabBarVC {
-                tabBar.buttonAddTapped()
+                if let presentedVC = tabBar.presentedViewController as? BasicEditorVC {
+                    presentedVC.loadShareExtensionData()
+                } else {
+                    tabBar.buttonAddTapped()
+                }
             }
        
         default:

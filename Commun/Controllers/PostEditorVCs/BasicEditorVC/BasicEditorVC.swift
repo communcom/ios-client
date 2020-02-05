@@ -89,7 +89,7 @@ class BasicEditorVC: PostEditorVC {
         self.navigationItem.title = "Share this"
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(cancelButtonTapped))
     }
-    
+        
     func hideExtensionWithCompletionHandler(completion:@escaping (Bool) -> Void) {
         // Dismiss
         UIView.animate(withDuration: 0.20, animations: {
@@ -155,11 +155,12 @@ class BasicEditorVC: PostEditorVC {
         bindAttachments()
     }
     
-    private func loadShareExtensionData() {
+    func loadShareExtensionData() {
         if let shareExtensionData = UserDefaults.appGroups.loadShareExtensionData() {
-            // TODO: - ADD SHARE TO SCENE
-            print(shareExtensionData.description)
-            
+            contentTextView.clear()
+            _viewModel.attachment.accept(nil)
+            link = nil
+
             if let text = shareExtensionData.text {
                 contentTextView.text = text + "\n"
             }
@@ -168,7 +169,7 @@ class BasicEditorVC: PostEditorVC {
                 didAddLink(urlString, placeholder: urlString)
             }
             
-            if let image = shareExtensionData.image {
+            if let imageData = shareExtensionData.imageData, let image = UIImage(data: imageData) {
                 didChooseImageFromGallery(image)
             }
         }
