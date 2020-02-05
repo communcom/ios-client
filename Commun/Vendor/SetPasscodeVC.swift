@@ -135,7 +135,7 @@ class SetPasscodeVC: THPinViewController {
         print("FaceID button tapped")
     }
 
-    @objc func touchIdButtonTapped(_ sender: UIButton) {
+    @objc func touchIdButtonTapped() {
         let reason = "identify yourself!".localized().uppercaseFirst
         context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reason) { [weak self] success, authenticationError in
             guard let strongSelf = self else { return }

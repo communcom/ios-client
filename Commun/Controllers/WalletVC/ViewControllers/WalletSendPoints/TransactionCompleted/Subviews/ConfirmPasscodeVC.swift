@@ -25,6 +25,7 @@ class ConfirmPasscodeVC: THPinViewController {
     var completion: (() -> Void)?
     let disposeBag = DisposeBag()
     lazy var context = LAContext()
+    let biometricsEnabled = UserDefaults.standard.bool(forKey: Config.currentUserBiometryAuthEnabled)
     
     // MARK: - Class Initialization
     init() {
@@ -59,8 +60,11 @@ class ConfirmPasscodeVC: THPinViewController {
         modifyPromtTitle(asError: false)
         
         if !context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
-            showAlert(title: "info".localized().uppercaseFirst, message: "no biometry on your device".localized())
+            touchFaceIdButton.isHidden = true
+        } else {
+            touchFaceIdButtonTapped()
         }
+        
     }
     
     // MARK: - Custom Functions
@@ -103,7 +107,11 @@ class ConfirmPasscodeVC: THPinViewController {
     }
     
     private func didShowVerifyButton(_ value: Bool) {
-        touchFaceIdButton.isHidden = !value
+        if biometricsEnabled {
+            touchFaceIdButton.isHidden = !value
+        } else {
+            touchFaceIdButton.isHidden = true
+        }
     }
     
     private func verificationSuccessful() {
@@ -116,20 +124,17 @@ class ConfirmPasscodeVC: THPinViewController {
         dismiss(animated: true, completion: nil)
     }
     
-     @objc func touchFaceIdButtonTapped(_ sender: UIButton) {
-        guard error == nil else { return }
-        
+     @objc func touchFaceIdButtonTapped() {
+        guard error == nil, biometricsEnabled == true else { return }
+
         let reason = "Identify yourself!"
-        
-        context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reason) { [weak self] success, authenticationError in
+
+        context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reason) { [weak self] success, _ in
             guard let strongSelf = self else { return }
-            
-            if success {
-                DispatchQueue.main.async {
+            DispatchQueue.main.async {
+                if success {
                     strongSelf.verificationSuccessful()
                 }
-            } else {
-                strongSelf.showError(authenticationError!)
             }
         }
     }

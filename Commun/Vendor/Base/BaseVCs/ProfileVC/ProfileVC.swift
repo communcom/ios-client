@@ -181,15 +181,6 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
 
         showTitle(tableView.contentOffset.y >= -43)
     }
-    
-    // TODO: - Temporary solution to fix rightBarButton padding, remove later
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        if let view = self.navigationController?.navigationBar.subviews[safe: 1]
-        {
-            view.constraints.first(where: {$0.constant == -16 && $0.firstAttribute == .trailing})?.constant = 0
-        }
-    }
 
     func showTitle(_ show: Bool, animated: Bool = false) {
         coverImageView.isHidden = show
