@@ -107,16 +107,18 @@ class PostsListFetcher: ListFetcher<ResponseAPIContentGetPost> {
     func loadRewards(fromPosts posts: [ResponseAPIContentGetPost]) {
         let contentIds = posts.map { RequestAPIContentId(responseAPI: $0.contentId) }
         
-        RestAPIManager.instance.rewardsGetStateBulk(posts: contentIds)
-            .map({ $0.mosaics })
-            .subscribe(onSuccess: { (mosaics) in
-                mosaics.forEach({ (mosaic) in
-                    if var post = posts.first(where: { $0.contentId == mosaic.contentId }) {
-                        post.mosaic = mosaic
-                        post.notifyChanged()
-                    }
+        DispatchQueue.main.async {
+            RestAPIManager.instance.rewardsGetStateBulk(posts: contentIds)
+                .map({ $0.mosaics })
+                .subscribe(onSuccess: { (mosaics) in
+                    mosaics.forEach({ (mosaic) in
+                        if var post = posts.first(where: { $0.contentId.userId == mosaic.contentId.userId && $0.contentId.permlink == mosaic.contentId.permlink }) {
+                            post.mosaic = mosaic
+                            post.notifyChanged()
+                        }
+                    })
                 })
-            })
-            .disposed(by: disposeBag)
+                .disposed(by: self.disposeBag)
+        }
     }
 }

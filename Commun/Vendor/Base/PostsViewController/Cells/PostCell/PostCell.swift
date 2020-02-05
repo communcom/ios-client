@@ -28,7 +28,7 @@ class PostCell: MyTableViewCell, ListItemCellType {
     }()
 
     lazy var stateActionButton: UIButton = {
-        let stateActionButtonInstance = UIButton(width: CGFloat.adaptive(width: 78.0),
+        let stateActionButtonInstance = UIButton(width: CGFloat.adaptive(width: 208.0),
                                                  height: CGFloat.adaptive(height: 30.0),
                                                  label: "".localized().uppercaseFirst,
                                                  labelFont: UIFont.systemFont(ofSize: CGFloat.adaptive(width: 12.0), weight: .semibold),
@@ -130,7 +130,7 @@ class PostCell: MyTableViewCell, ListItemCellType {
         actionButtonsStackView.distribution = .fillProportionally
 
         actionButtonsStackView.addArrangedSubviews([stateActionButton, moreActionButton])
-        stateActionButtonWidthConstraint = stateActionButton.widthAnchor.constraint(equalToConstant: CGFloat.adaptive(width: 78.0))
+        stateActionButtonWidthConstraint = stateActionButton.widthAnchor.constraint(equalToConstant: CGFloat.adaptive(width: 208.0))
         stateActionButtonWidthConstraint!.isActive = true
         
         contentView.addSubview(actionButtonsStackView)
@@ -209,12 +209,17 @@ class PostCell: MyTableViewCell, ListItemCellType {
         }
     }
     
+    // isClosed = true && reward > 0: show `reward` value
+    // isClosed = false && topCount > 1: show `Top`
     private func set(mosaic: ResponseAPIRewardsGetStateBulkMosaic) {
-        let state = arc4random_uniform(3)
+        guard mosaic.topCount > 0, let rewardString = mosaic.reward.components(separatedBy: " ").first, let rewardDouble = Double(rewardString), rewardDouble > 0 else { stateActionButton.isHidden = true
+            return
+        }
         
-        stateActionButton.isHidden = state == 2
-        stateActionButton.setTitle((state == 0 ? "top" : "550.30").localized().uppercaseFirst, for: .normal)
-        stateActionButton.tag = Int(state)
+        let isRewardState = mosaic.isClosed
+        stateActionButton.isHidden = false
+        stateActionButton.setTitle(isRewardState ? String(format: "%.2f", rewardDouble) : "top".localized().uppercaseFirst, for: .normal)
+        stateActionButton.tag = Int(isRewardState.int)
         stateActionButton.sizeToFit()
         
         let width = stateActionButton.intrinsicContentSize.width + 15.0
