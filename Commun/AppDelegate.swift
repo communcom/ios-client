@@ -104,11 +104,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             .debounce(0.3, scheduler: MainScheduler.instance)
             .take(1)
             .asSingle()
-            .timeout(5, scheduler: MainScheduler.instance)
+            .timeout(10, scheduler: MainScheduler.instance)
             .subscribe(onSuccess: { (_) in
                 AppDelegate.reloadSubject.onNext(false)
                 self.window?.makeKeyAndVisible()
-            }, onError: {_ in
+            }, onError: { error in
+                print(error)
                 if let vc = self.window?.rootViewController as? SplashViewController {
                     vc.showErrorScreen()
                 }

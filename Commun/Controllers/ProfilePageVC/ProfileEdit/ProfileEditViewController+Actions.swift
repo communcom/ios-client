@@ -103,8 +103,7 @@ extension ProfileEditViewController {
         
         // On deleting
         if delete {
-            self.avatarView.setNonAvatarImageWithId(UserDefaults.standard.string(forKey: Config.currentUserNameKey) ?? UserDefaults.standard.string(forKey: Config.currentUserIDKey) ?? "XXX")
-            
+            self.avatarView.image = UIImage(named: "empty-avatar")
             NetworkService.shared.updateMeta(params: ["avatar_url": ""])
                 .subscribe(onError: {[weak self] error in
                     if let gif = originGif {

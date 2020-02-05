@@ -24,7 +24,12 @@ class NotificationCell: MyTableViewCell, ListItemCellType {
     lazy var contentContainerView = UIView(forAutoLayout: ())
     lazy var contentLabel = UILabel.with(text: "Notification", textSize: 15, numberOfLines: 4)
     lazy var timestampLabel = UILabel.with(text: "ago", textSize: 13, textColor: .a5a7bd)
-    lazy var descriptionImageView = UIImageView(width: 44, height: 44, cornerRadius: 10)
+    lazy var descriptionImageView: UIImageView = {
+        let imageView = UIImageView(width: 44, height: 44, cornerRadius: 10)
+        imageView.contentMode = .scaleAspectFill
+        imageView.backgroundColor = .appGrayColor
+        return imageView
+    }()
     lazy var actionButton = CommunButton.default(label: "follow")
     
     override func setUpViews() {
@@ -129,7 +134,7 @@ class NotificationCell: MyTableViewCell, ListItemCellType {
                 descriptionImageView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
                 descriptionImageView.autoAlignAxis(.horizontal, toSameAxisOf: avatarImageView)
                 
-                descriptionImageView.setImageDetectGif(with: imageUrl)
+                descriptionImageView.setImageDetectGif(with: imageUrl, customWidth: UIScreen.main.bounds.width)
                 
                 contentTrailingConstraint?.isActive = false
                 contentTrailingConstraint = contentContainerView.autoPinEdge(.trailing, to: .leading, of: descriptionImageView, withOffset: -4)

@@ -32,7 +32,7 @@ class WalletHeaderView: CommunWalletHeaderView {
     override func commonInit() {
         // balance
 
-        carousel = WalletCarousel(width: 300, height: 40)
+        carousel = WalletCarousel(width: 200, height: 40)
         carousel!.delegate = self
         carousel!.dataSource = self
 

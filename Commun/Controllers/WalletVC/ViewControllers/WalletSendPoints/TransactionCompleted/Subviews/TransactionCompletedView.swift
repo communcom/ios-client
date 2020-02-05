@@ -23,7 +23,6 @@ class TransactionCompletedView: UIView {
     private var isHistoryMode: Bool = false
     var mode: TransActionType!
 
-    
     var buyerAvatarImageView: UIImageView = UIImageView.circle(size: CGFloat.adaptive(width: 40.0), imageName: "tux")
 
     var boldLabels = [UILabel]() {
@@ -90,35 +89,41 @@ class TransactionCompletedView: UIView {
     }()
     
     let homeButton: UIButton = {
+        let height = CGFloat.adaptive(height: 50.0)
         let homeButtonInstance = UIButton(width: CGFloat.adaptive(width: 335.0),
-                                          height: CGFloat.adaptive(height: 50.0),
+                                          height: height,
                                           label: "home".localized().uppercaseFirst,
                                           labelFont: .systemFont(ofSize: CGFloat.adaptive(width: 15.0), weight: .bold),
                                           backgroundColor: #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.1),
                                           textColor: #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1),
-                                          cornerRadius: CGFloat.adaptive(width: 50.0) / 2)
+                                          cornerRadius: height / 2)
+        homeButtonInstance.heightAnchor.constraint(equalToConstant: height).isActive = true
         return homeButtonInstance
     }()
 
     let backToWalletButton: UIButton = {
+        let height = CGFloat.adaptive(height: 50.0)
         let backToWalletButtonInstance = UIButton(width: CGFloat.adaptive(width: 335.0),
-                                                  height: CGFloat.adaptive(height: 50.0),
+                                                  height: height,
                                                   label: "back to wallet".localized().uppercaseFirst,
                                                   labelFont: .systemFont(ofSize: CGFloat.adaptive(width: 15.0), weight: .bold),
                                                   backgroundColor: #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1),
                                                   textColor: #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1),
-                                                  cornerRadius: CGFloat.adaptive(width: 50.0) / 2)
+                                                  cornerRadius: height / 2)
+        backToWalletButtonInstance.heightAnchor.constraint(equalToConstant: height).isActive = true
         return backToWalletButtonInstance
     }()
 
     let repeatButton: UIButton = {
+        let height = CGFloat.adaptive(height: 50.0)
         let repeatButtonInstance = UIButton(width: CGFloat.adaptive(width: 335.0),
-                                            height: CGFloat.adaptive(height: 50.0),
+                                            height: height,
                                             label: "repeat".localized().uppercaseFirst,
                                             labelFont: .systemFont(ofSize: CGFloat.adaptive(width: 15.0), weight: .bold),
                                             backgroundColor: #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1),
                                             textColor: #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1),
-                                            cornerRadius: CGFloat.adaptive(width: 50.0) / 2)
+                                            cornerRadius: height / 2)
+        repeatButtonInstance.heightAnchor.constraint(equalToConstant: height).isActive = true
         return repeatButtonInstance
     }()
 
@@ -371,7 +376,11 @@ class TransactionCompletedView: UIView {
         case .convert:
             buyerNameLabel.text = transaction.buyBalance!.name
             buyerBalanceOrFriendIDLabel.text = String(Double(transaction.buyBalance!.amount).currencyValueFormatted)
-            buyerAvatarImageView.setAvatar(urlString: transaction.buyBalance?.avatarURL, namePlaceHolder: transaction.buyBalance?.name ?? Config.defaultSymbol)
+            if transaction.symbol.buy == Config.defaultSymbol {
+                buyerAvatarImageView.image = UIImage(named: "CMN")
+            } else {
+                buyerAvatarImageView.setAvatar(urlString: transaction.buyBalance?.avatarURL, namePlaceHolder: transaction.buyBalance?.name ?? Config.defaultSymbol)
+            }
 
         default:
             buyerNameLabel.text = transaction.friend?.name ?? Config.defaultSymbol

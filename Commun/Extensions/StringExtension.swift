@@ -102,6 +102,7 @@ extension String {
     
     func toDouble() -> Double {
         let formatter = NumberFormatter()
+        formatter.locale = Locale(identifier: "ru")
         let selfCopy = self.replacingOccurrences(of: " ", with: "").replacingOccurrences(of: ".", with: ",")
 
         return formatter.number(from: selfCopy)?.doubleValue ?? 0
