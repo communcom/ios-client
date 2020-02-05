@@ -79,27 +79,21 @@ class PostPageVC: CommentsViewController {
         // textView
         let contentSize = commentForm.textView.sizeThatFits(CGSize(width: commentForm.textView.width, height: .greatestFiniteMagnitude))
         
-        var shouldRelayout = false
         if shadowView.frame.minY > commentFormMinPaddingTop || contentSize.height < commentForm.textView.height
         {
-            if commentForm.textView.isScrollEnabled {
-                shouldRelayout = true
+            if contentSize.height < commentForm.textView.height && commentForm.textView.isScrollEnabled {
+                // TODO: - Temporary solution
+                commentForm.textView.text = " "
+                DispatchQueue.main.async {
+                    self.commentForm.textView.text = ""
+                }
             }
             commentForm.textView.isScrollEnabled = false
             
         } else {
             if !commentForm.textView.isScrollEnabled {
-                shouldRelayout = true
             }
             commentForm.textView.isScrollEnabled = true
-        }
-        
-        if shouldRelayout {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                self.commentForm.textView.setNeedsLayout()
-                self.commentForm.setNeedsLayout()
-                self.view.layoutIfNeeded()
-            }
         }
     }
     
