@@ -37,7 +37,7 @@ extension PostCell {
     }
 
     @objc func shareButtonTapped(button: UIButton) {
-        guard let post = post else {return}
+        guard let post = post else { return }
         ShareHelper.share(post: post)
     }
     
@@ -46,5 +46,21 @@ extension PostCell {
         let postPageVC = PostPageVC(post: post)
         postPageVC.scrollToTopAfterLoadingComment = true
         parentViewController?.show(postPageVC, sender: nil)
+    }
+    
+    @objc func stateButtonTapped(_ sender: UIButton) {
+        let postLink = sender.tag == 0 ? "https://dev.commun.com/" : "https://golos.io"
+        let userNameRulesView = UserNameRulesView(withFrame: CGRect(origin: .zero, size: CGSize(width: CGFloat.adaptive(width: 355.0), height: CGFloat.adaptive(height: 193.0))), andParameters: sender.tag == 0 ? .topState : .rewardState)
+        
+        let cardVC = CardViewController(contentView: userNameRulesView)
+        parentViewController?.present(cardVC, animated: true, completion: nil)
+        
+        userNameRulesView.completionDismissWithAction = { value in
+            self.parentViewController?.dismiss(animated: true, completion: {
+                if value, let baseVC = self.parentViewController as? BaseViewController {
+                    baseVC.load(url: postLink)
+                }
+            })
+        }
     }
 }
