@@ -83,7 +83,7 @@ extension PostPageVC {
                  if self.shadowView.frame.minY > self.commentFormMinPaddingTop || contentSize.height < self.commentForm.textView.height
                  {
                      if self.commentForm.textView.isScrollEnabled {
-                        // TODO: - Temporary solution
+                        // TODO: - Temporary solution for fixing textView layout
                         self.commentForm.textView.text = text + " "
                         DispatchQueue.main.async {
                             self.commentForm.textView.text = text
@@ -97,9 +97,6 @@ extension PostPageVC {
                      }
                      self.commentForm.textView.isScrollEnabled = true
                  }
-                
-                 print("ContentSize: \(contentSize.height)")
-                 print("Height: \(self.commentForm.textView.height)")
             })
             .disposed(by: disposeBag)
     }
