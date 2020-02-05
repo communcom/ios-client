@@ -75,26 +75,6 @@ class PostPageVC: CommentsViewController {
         view.bringSubviewToFront(commentForm)
         startContentOffsetY = tableView.contentOffset.y
         navigationBar.addShadow(ofColor: .shadow, radius: 16, offset: CGSize(width: 0, height: 6), opacity: 0.05)
-        
-        // textView
-        let contentSize = commentForm.textView.sizeThatFits(CGSize(width: commentForm.textView.width, height: .greatestFiniteMagnitude))
-        
-        if shadowView.frame.minY > commentFormMinPaddingTop || contentSize.height < commentForm.textView.height
-        {
-            if contentSize.height < commentForm.textView.height && commentForm.textView.isScrollEnabled {
-                // TODO: - Temporary solution
-                commentForm.textView.text = " "
-                DispatchQueue.main.async {
-                    self.commentForm.textView.text = ""
-                }
-            }
-            commentForm.textView.isScrollEnabled = false
-            
-        } else {
-            if !commentForm.textView.isScrollEnabled {
-            }
-            commentForm.textView.isScrollEnabled = true
-        }
     }
     
     // MARK: - Methods

@@ -73,6 +73,35 @@ extension PostPageVC {
 //                })
 //            })
 //            .disposed(by: disposeBag)
+        
+        commentForm.textView.rx.text.orEmpty
+            .subscribe(onNext: { (text) in
+                
+                 // textView
+                 let contentSize = self.commentForm.textView.sizeThatFits(CGSize(width: self.commentForm.textView.width, height: .greatestFiniteMagnitude))
+                 
+                 if self.shadowView.frame.minY > self.commentFormMinPaddingTop || contentSize.height < self.commentForm.textView.height
+                 {
+                     if self.commentForm.textView.isScrollEnabled {
+                        // TODO: - Temporary solution
+                        self.commentForm.textView.text = text + " "
+                        DispatchQueue.main.async {
+                            self.commentForm.textView.text = text
+                        }
+                     }
+                     self.commentForm.textView.isScrollEnabled = false
+                     
+                 } else {
+                     if !self.commentForm.textView.isScrollEnabled {
+//                         self.commentForm.textView.setNeedsLayout()
+                     }
+                     self.commentForm.textView.isScrollEnabled = true
+                 }
+                
+                 print("ContentSize: \(contentSize.height)")
+                 print("Height: \(self.commentForm.textView.height)")
+            })
+            .disposed(by: disposeBag)
     }
     
     func bindPost() {
