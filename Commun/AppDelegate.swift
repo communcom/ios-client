@@ -284,10 +284,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         SocketManager.shared.disconnect()
         self.saveContext()
     }
-
-    func applicationDidEnterBackground(_ application: UIApplication) {
-        print("MMM")
-    }
     
     
     // MARK: - Custom Functions
@@ -544,7 +540,11 @@ extension AppDelegate {
         switch url.description {
         case "commun://createPost":
             if let tabBar = self.window?.rootViewController as? TabBarVC {
-                tabBar.buttonAddTapped()
+                if let presentedVC = tabBar.presentedViewController as? BasicEditorVC {
+                    presentedVC.loadShareExtensionData()
+                } else {
+                    tabBar.buttonAddTapped()
+                }
             }
        
         default:

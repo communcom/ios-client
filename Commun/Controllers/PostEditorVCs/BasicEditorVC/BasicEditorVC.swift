@@ -89,7 +89,7 @@ class BasicEditorVC: PostEditorVC {
         self.navigationItem.title = "Share this"
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(cancelButtonTapped))
     }
-    
+        
     func hideExtensionWithCompletionHandler(completion:@escaping (Bool) -> Void) {
         // Dismiss
         UIView.animate(withDuration: 0.20, animations: {
@@ -155,8 +155,10 @@ class BasicEditorVC: PostEditorVC {
         bindAttachments()
     }
     
-    private func loadShareExtensionData() {
+    func loadShareExtensionData() {
         if let shareExtensionData = UserDefaults.appGroups.loadShareExtensionData() {
+            contentTextView.clear()
+            
             if let text = shareExtensionData.text {
                 contentTextView.text = text + "\n"
             }

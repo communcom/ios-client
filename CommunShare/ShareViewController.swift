@@ -55,9 +55,9 @@ class ShareViewController: SLComposeServiceViewController {
                                 
                                 if let imageURl = data as? URL {
                                     let image = UIImage(contentsOfFile: imageURl.path)
-                                    self.shareExtensionData.imageData = imageURl.path.hasSuffix("png") ? image!.pngData() : image!.jpegData(compressionQuality: 0.9)
+                                    self.shareExtensionData.imageData = imageURl.path.hasSuffix("png") ? image!.resizeWithSideMax()!.pngData() : image!.resizeWithSideMax()!.jpegData(compressionQuality: 1.0)
                                 } else if let image = data as? UIImage {
-                                    self.shareExtensionData.imageData = image.jpegData(compressionQuality: 0.9)
+                                    self.shareExtensionData.imageData = image.resizeWithSideMax()!.jpegData(compressionQuality: 1.0)
                                 }
 
                                 self.saveData()

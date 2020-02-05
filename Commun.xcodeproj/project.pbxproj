@@ -170,6 +170,7 @@
 		ACFA282623AB8A00009B77A6 /* AnalyticsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACFA282523AB8A00009B77A6 /* AnalyticsManager.swift */; };
 		B101CB6823E4631B00269253 /* ShareExtensionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B101CB6723E4631B00269253 /* ShareExtensionData.swift */; };
 		B101CB6B23E4634900269253 /* ShareExtensionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B101CB6723E4631B00269253 /* ShareExtensionData.swift */; };
+		B16EF85623EADCA2002C2050 /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3C8B83234779FE00D8BADB /* UIImage.swift */; };
 		B170AC15228AFBDA00C6FFBC /* SignUpVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5797E0F9225DDA490026C4D5 /* SignUpVC.storyboard */; };
 		B17A970C228002440081B8E0 /* SignUpRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17A970B228002440081B8E0 /* SignUpRouter.swift */; };
 		B1A6344E23E83BDA00996375 /* UIApplication+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A6344D23E83BDA00996375 /* UIApplication+Extensions.swift */; };
@@ -1829,11 +1830,11 @@
 		B1AB194B23E1B9EB00CAD9EC /* CommunShare */ = {
 			isa = PBXGroup;
 			children = (
-				AC2423A923E866C6006A39B5 /* ShareViewController.swift */,
 				B1AB195B23E1BA0900CAD9EC /* CommunShare.entitlements */,
-				B101CB6723E4631B00269253 /* ShareExtensionData.swift */,
-				B1AB194E23E1B9EB00CAD9EC /* MainInterface.storyboard */,
 				B1AB195123E1B9EB00CAD9EC /* Info.plist */,
+				B1AB194E23E1B9EB00CAD9EC /* MainInterface.storyboard */,
+				B101CB6723E4631B00269253 /* ShareExtensionData.swift */,
+				AC2423A923E866C6006A39B5 /* ShareViewController.swift */,
 			);
 			path = CommunShare;
 			sourceTree = "<group>";
@@ -3491,6 +3492,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B101CB6823E4631B00269253 /* ShareExtensionData.swift in Sources */,
+				B16EF85623EADCA2002C2050 /* UIImage.swift in Sources */,
 				B1A6345123E83BE700996375 /* UIApplication+Extensions.swift in Sources */,
 				AC2423AA23E866C6006A39B5 /* ShareViewController.swift in Sources */,
 				B1D78C0A23E339C400772BD9 /* UserDefaults+Extensions.swift in Sources */,
