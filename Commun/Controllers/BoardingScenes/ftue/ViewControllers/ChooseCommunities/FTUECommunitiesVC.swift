@@ -131,7 +131,7 @@ class FTUECommunitiesVC: BaseViewController, BoardingRouter {
                 if string.isEmpty {
                     self.viewModel.fetcher.search = nil
                 } else {
-                    self.viewModel.fetcher.search = string
+                    self.viewModel.fetcher.search = string.uppercaseFirst
                 }
                 self.viewModel.reload()
             })

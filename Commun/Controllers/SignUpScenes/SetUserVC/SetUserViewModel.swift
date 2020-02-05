@@ -17,6 +17,8 @@ class SetUserViewModel {
     // MARK: - Class Functions
     func checkUserName(_ userName: String) -> [Bool] {
         guard !userName.isEmpty else { return [false, false, false, false, false, false] }
+        // Rule 0
+        let isStartWithALetter = userName.matches("^[a-z].*$")
         
         // Rule 1
         // • The number of characters must not exceed 32
@@ -49,7 +51,11 @@ class SetUserViewModel {
         }
         
         var message: String?
-        if !isBetween5To32Characters {
+        if !isStartWithALetter {
+            message = "username should start with a letter"
+        }
+        
+        if message == nil && !isBetween5To32Characters {
             message = "username must be between 5-32 characters"
         }
         
@@ -76,6 +82,7 @@ class SetUserViewModel {
         errorMessage.accept(message)
         
         return [
+            isStartWithALetter,
             isBetween5To32Characters,
             containsOnlyAllowedCharacters,
             twoNonAlphanumericCharacterNotSideBySide,

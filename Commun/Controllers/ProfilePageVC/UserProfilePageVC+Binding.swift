@@ -66,15 +66,6 @@ extension UserProfilePageVC: UICollectionViewDelegateFlowLayout, CommunityCellDe
             .disposed(by: disposeBag)
     }
     
-    func bindProfileBlocked() {
-        ResponseAPIContentGetProfile.observeEvent(eventName: ResponseAPIContentGetProfile.blockedEventName)
-            .subscribe(onNext: { (blockedProfile) in
-                guard blockedProfile.userId == self.viewModel.profile.value?.userId else {return}
-                self.back()
-            })
-            .disposed(by: disposeBag)
-    }
-    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: 140, height: 187)
     }

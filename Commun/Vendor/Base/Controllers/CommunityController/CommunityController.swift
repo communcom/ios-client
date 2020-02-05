@@ -15,7 +15,7 @@ extension ResponseAPIContentGetCommunity {
         guard value != isSubscribed
         else {return}
         isSubscribed = value
-        var subscribersCount: UInt64 = (self.subscribersCount ?? 0)
+        var subscribersCount: Int64 = (self.subscribersCount ?? 0)
         if value == false && subscribersCount == 0 {subscribersCount = 0} else {
             if value == true {
                 subscribersCount += 1
@@ -119,7 +119,7 @@ extension CommunityController {
             value != community?.isSubscribed
         else {return}
         community!.isSubscribed = value
-        var subscribersCount: UInt64 = (community!.subscribersCount ?? 0)
+        var subscribersCount: Int64 = (community!.subscribersCount ?? 0)
         if value == false && subscribersCount == 0 {subscribersCount = 0} else {
             if value == true {
                 subscribersCount += 1

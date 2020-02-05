@@ -54,11 +54,11 @@ extension MyProfilePageVC {
         let walletView = (headerView as! MyProfileHeaderView).walletShadowView
         let label = (headerView as! MyProfileHeaderView).communValueLabel
         (viewModel as! MyProfilePageViewModel).balancesVM.state
-            .subscribe(onNext: {(state) in
-                label.textColor = .white
+            .subscribe(onNext: {[weak self] (state) in
                 switch state {
                 case .loading(let isLoading):
                     if isLoading {
+                        (self?.headerView as? MyProfileHeaderView)?.setUpWalletView()
                         walletView.showLoading(cover: false, spinnerColor: .white, size: 20, centerYOffset: 10)
                     } else {
                         walletView.hideLoading()
@@ -69,8 +69,7 @@ extension MyProfilePageVC {
                     walletView.hideLoading()
                 case .error:
                     walletView.hideLoading()
-                    label.textColor = .red
-                    label.text = "error".localized().uppercaseFirst + "!!!"
+                    (self?.headerView as? MyProfileHeaderView)?.setUpWalletView(withError: true)
                 }
             })
             .disposed(by: disposeBag)

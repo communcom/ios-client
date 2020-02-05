@@ -82,6 +82,15 @@ class SetUserVC: BaseViewController, SignUpRouter {
     override func bind() {
         super.bind()
         textField.rx.text.orEmpty
+            .observeOn(MainScheduler.asyncInstance)
+            .filter { text in
+                if text.lowercased() == text {
+                    return true
+                }
+                self.textField.text = text.lowercased()
+                self.textField.sendActions(for: .valueChanged)
+                return false
+            }
             .map {self.viewModel.isUserNameValid($0)}
             .bind(to: nextButton.rx.isEnabled)
             .disposed(by: disposeBag)

@@ -165,7 +165,6 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
             CMSegmentedControl.Item(name: "comments".localized().uppercaseFirst)
         ]
         
-        observeProfileChange()
     }
 
     private func showCommunities() {

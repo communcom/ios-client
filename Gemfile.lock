@@ -113,6 +113,7 @@ GEM
       xcodeproj (>= 1.8.1, < 2.0.0)
       xcpretty (~> 0.3.0)
       xcpretty-travis-formatter (>= 0.0.3)
+    fastlane-plugin-appcenter (1.8.0)
     fastlane-plugin-firebase_app_distribution (0.1.4)
     fastlane-plugin-slack_upload (0.1.0)
       slack-ruby-client
@@ -234,6 +235,7 @@ PLATFORMS
 DEPENDENCIES
   cocoapods (>= 1.9.0.beta.2)
   fastlane
+  fastlane-plugin-appcenter
   fastlane-plugin-firebase_app_distribution
   fastlane-plugin-slack_upload
 

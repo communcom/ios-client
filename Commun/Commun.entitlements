@@ -8,6 +8,8 @@
 	<array>
 		<string>applinks:dev.commun.com</string>
 		<string>applinks:commun.com</string>
+		<string>webcredentials:commun.com</string>
+		<string>webcredentials:dev.commun.com</string>
 	</array>
 	<key>com.apple.developer.icloud-container-identifiers</key>
 	<array/>

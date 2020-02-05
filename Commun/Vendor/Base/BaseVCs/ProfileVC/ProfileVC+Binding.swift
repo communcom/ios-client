@@ -86,19 +86,6 @@ extension ProfileVC {
             .disposed(by: disposeBag)
     }
     
-    func bindProfile() {
-        viewModel.profile
-            .filter {$0 != nil}
-            .map {$0!}
-            .do(onNext: { (_) in
-                self._headerView.selectedIndex.accept(0)
-            })
-            .subscribe(onNext: { [weak self] (item) in
-                self?.setUp(profile: item)
-            })
-            .disposed(by: disposeBag)
-    }
-    
     func bindList() {
         // bind items
         bindItems()

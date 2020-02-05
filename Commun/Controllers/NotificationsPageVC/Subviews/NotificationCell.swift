@@ -157,13 +157,28 @@ class NotificationCell: MyTableViewCell, ListItemCellType {
         case "transfer":
             avatarUrl = item.from?.avatarUrl
             avatarPlaceholder = item.from?.username ?? "User"
-            iconImageView.isHidden = true
             let aStr = NSMutableAttributedString()
-                .semibold(item.from?.username ?? "a user".localized().uppercaseFirst)
-                .normal(" ")
-                .normal("sent you".localized())
-                .normal(" ")
-                .normal("\(item.amount ?? "0") \(item.pointType ?? "points")")
+                
+            if item.from?.username.lowercased() != "bounty" {
+                iconImageView.isHidden = true
+                
+                aStr.semibold(item.from?.username ?? "a user".localized().uppercaseFirst)
+                    .normal(" ")
+                    .normal("sent you".localized())
+                    .normal(" ")
+                    .text("\(item.amount ?? "0") \(item.pointType ?? "points")", weight: .medium, color: .appMainColor)
+            } else {
+                iconImageView.setAvatar(urlString: item.community?.avatarUrl, namePlaceHolder: item.community?.name ?? "C")
+                iconImageView.borderWidth = 2
+                iconImageView.borderColor = .white
+                
+                aStr.normal("you got a".localized().uppercaseFirst)
+                    .normal(" ")
+                    .text("\(item.amount ?? "0") \(item.pointType ?? "points")", weight: .medium, color: .appMainColor)
+                    .normal(" ")
+                    .normal("bounty")
+            }
+                
             contentLabel.attributedText = aStr
         default:
             iconImageView.isHidden = true

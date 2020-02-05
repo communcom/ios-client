@@ -123,6 +123,19 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
         bindList()
     }
     
+    func bindProfile() {
+        viewModel.profile
+            .filter {$0 != nil}
+            .map {$0!}
+            .do(onNext: { (_) in
+                self._headerView.selectedIndex.accept(0)
+            })
+            .subscribe(onNext: { [weak self] (item) in
+                self?.setUp(profile: item)
+            })
+            .disposed(by: disposeBag)
+    }
+    
     func setUp(profile: ProfileType) {
     }
     
