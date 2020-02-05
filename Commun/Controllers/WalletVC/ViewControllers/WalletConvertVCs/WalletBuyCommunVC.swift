@@ -188,7 +188,7 @@ class WalletBuyCommunVC: WalletConvertVC {
                     communBalance.notifyChanged()
                 }
 
-                let symbol: Symbol = Symbol(sell: Config.defaultSymbol, buy: Config.defaultSymbol)
+                let symbol: Symbol = Symbol(sell: balance.symbol, buy: Config.defaultSymbol)
                 
                 let transaction = Transaction(buyBalance: nil,
                                               sellBalance: nil,

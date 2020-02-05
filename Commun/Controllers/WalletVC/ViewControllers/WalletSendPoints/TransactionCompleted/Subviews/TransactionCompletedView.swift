@@ -376,7 +376,11 @@ class TransactionCompletedView: UIView {
         case .convert:
             buyerNameLabel.text = transaction.buyBalance!.name
             buyerBalanceOrFriendIDLabel.text = String(Double(transaction.buyBalance!.amount).currencyValueFormatted)
-            buyerAvatarImageView.setAvatar(urlString: transaction.buyBalance?.avatarURL, namePlaceHolder: transaction.buyBalance?.name ?? Config.defaultSymbol)
+            if transaction.symbol.buy == Config.defaultSymbol {
+                buyerAvatarImageView.image = UIImage(named: "CMN")
+            } else {
+                buyerAvatarImageView.setAvatar(urlString: transaction.buyBalance?.avatarURL, namePlaceHolder: transaction.buyBalance?.name ?? Config.defaultSymbol)
+            }
 
         default:
             buyerNameLabel.text = transaction.friend?.name ?? Config.defaultSymbol

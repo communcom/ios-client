@@ -133,8 +133,7 @@ class TransactionCompletedVC: BaseViewController {
         completionDismiss!()
         self.dismiss(animated: true, completion: nil)
     }
-    
-    
+
     // MARK: - Actions
     @objc func viewTapped( _ sender: UITapGestureRecognizer) {
         dismiss()

@@ -9,13 +9,11 @@
 import RxSwift
 import Foundation
 
-
 class SendPointsModel {
     // MARK: - Properties
     let disposeBag = DisposeBag()
     var balances = [ResponseAPIWalletGetBalance]()
     var transaction = Transaction()
-    
 
     // MARK: - Custom Functions
     private func convert(balance: ResponseAPIWalletGetBalance) -> Balance {
@@ -48,7 +46,7 @@ class SendPointsModel {
                 self.balances = balances
                 completion(true)
                 },
-                       onError: { error in
+                       onError: { _ in
                         completion(false)
             })
             .disposed(by: disposeBag)

@@ -406,14 +406,6 @@ class WalletSendPointsVC: BaseViewController {
 
             self.showIndetermineHudWithMessage("sending".localized().uppercaseFirst + " \(self.dataModel.transaction.symbol.sell.fullName.uppercased())")
 
-            // FOR TEST
-//            if let baseNC = self.navigationController as? BaseNavigationController {
-//                let completedVC = TransactionCompletedVC(transaction: self.dataModel.transaction)
-//                baseNC.shouldResetNavigationBarOnPush = false
-//                self.show(completedVC, sender: nil)
-//            }
-                                
-            ///*
             BlockchainManager.instance.transferPoints(to: friendID, number: Double(numberValue), currency: self.dataModel.transaction.symbol.sell)
                 .flatMapCompletable { RestAPIManager.instance.waitForTransactionWith(id: $0) }
                 .subscribe(onCompleted: { [weak self] in
