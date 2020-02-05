@@ -27,7 +27,7 @@ extension Double {
         formatter.groupingSize = 3
         formatter.numberStyle = .decimal
         formatter.usesGroupingSeparator = true
-        formatter.locale = Locale(identifier: "ru")
+        formatter.locale = Locale(identifier: "en")
         formatter.maximumFractionDigits = (self < 1000) ? 4 : 2
         
         return formatter.string(from: self as NSNumber) ?? "0"
