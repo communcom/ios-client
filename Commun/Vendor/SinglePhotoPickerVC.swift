@@ -68,6 +68,7 @@ class SinglePhotoPickerVC: TLPhotosPickerViewController {
         }
         
         manager.requestImage(for: asset, targetSize: PHImageManagerMaximumSize, contentMode: .aspectFill, options: option) { [weak self] (image, _) in
+            self?.hud?.hide(animated: true)
             guard let image = image else {return}
             self?.completion?(image)
         }
@@ -77,4 +78,6 @@ class SinglePhotoPickerVC: TLPhotosPickerViewController {
         hud?.hide(animated: true)
         self.dismiss(animated: true, completion: nil)
     }
+
+
 }
