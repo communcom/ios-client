@@ -70,20 +70,13 @@ class CommunWalletVC: TransferHistoryVC {
     }
 
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         setNavBarBackButton(tintColor: .white)
         self.navigationController?.setNavigationBarHidden(false, animated: animated)
         self.navigationController?.navigationBar.isTranslucent = false
         self.navigationController?.navigationBar.barTintColor = .appMainColor
         self.navigationController?.navigationBar.tintColor = .white
         self.setTabBarHidden(false)
-        super.viewWillAppear(animated)
-    }
-
-    override func viewWillDisappear(_ animated: Bool) {
-        self.navigationController?.setNavigationBarHidden(false, animated: animated)
-        self.navigationItem.title = ""
-        
-        super.viewWillDisappear(animated)
     }
 
     // MARK: - Custom Functions
