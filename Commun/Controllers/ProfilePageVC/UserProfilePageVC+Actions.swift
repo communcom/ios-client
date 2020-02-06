@@ -24,8 +24,12 @@ extension UserProfilePageVC {
                 self.showAlert(
                     title: "user blocked".localized().uppercaseFirst,
                     message: "you've blocked".localized().uppercaseFirst + " \(self.viewModel.profile.value?.username ?? "this user".localized())" + ".\n" + "we're sorry that you've had this experience".localized().uppercaseFirst + ".") { _ in
-                        self.viewModel.profile.value?.notifyDeleted()
-                        self.viewModel.profile.value?.notifyEvent(eventName: ResponseAPIContentGetProfile.blockedEventName)
+                        var profile = self.viewModel.profile.value
+                        profile?.isInBlacklist = true
+                        profile?.notifyChanged()
+                        
+                        profile?.notifyDeleted()
+                        profile?.notifyEvent(eventName: ResponseAPIContentGetProfile.blockedEventName)
                     }
             }) { (error) in
                 self.hideHud()

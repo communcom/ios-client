@@ -186,6 +186,7 @@ class ProfileVC<ProfileType: Decodable>: BaseViewController {
         coverImageView.isHidden = show
         showNavigationBar(show, animated: animated) {
             self.optionsButton.tintColor = show ? .black: .white
+            self.navigationItem.leftBarButtonItem?.tintColor = show ? .black: .white
             if !show {
                 self.optionsButton.layer.shadowRadius = 2
                 self.optionsButton.layer.shadowColor = UIColor.black.cgColor

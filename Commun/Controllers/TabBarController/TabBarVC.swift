@@ -10,6 +10,7 @@ import UIKit
 import RxSwift
 import SwifterSwift
 import CyberSwift
+import NotificationView
 
 public let tabBarHeight: CGFloat = .adaptive(height: 60.0) + (UIDevice.hasNotch ? UIDevice.safeAreaInsets.bottom : 0.0)
 
@@ -244,7 +245,7 @@ class TabBarVC: UITabBarController {
     
     func bind() {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        appDelegate.notificationRelay
+        appDelegate.notificationTappedRelay
             .skipWhile {$0 == .empty}
             .subscribe(onNext: { (item) in
                 self.selectedViewController?.navigateWithNotificationItem(item)
@@ -271,6 +272,15 @@ class TabBarVC: UITabBarController {
                 }
             })
             .disposed(by: bag)
+        
+        // in-app notifications
+        SocketManager.shared.newNotificationsRelay
+            .filter {$0.count > 0}
+            .subscribe(onNext: { (items) in
+                guard let notif = items.last else {return}
+                self.showNotificationViewWithNotification(notif)
+            })
+            .disposed(by: disposeBag)
     }
     
     private func navigateWithDeeplinkPath(_ path: [String]) {
@@ -293,5 +303,20 @@ class TabBarVC: UITabBarController {
             let postVC = PostPageVC(username: username, permlink: permlink, communityAlias: communityAlias)
             self.selectedViewController?.show(postVC, sender: nil)
         }
+    }
+    
+    private func showNotificationViewWithNotification(_ notification: ResponseAPIGetNotificationItem) {
+        let notificationView = NotificationView.default
+        notificationView.body = notification.content
+        notificationView.identifier = notification.identity
+        notificationView.delegate = self
+        notificationView.show()
+    }
+}
+
+extension TabBarVC: NotificationViewDelegate {
+    func notificationViewDidTap(_ notificationView: NotificationView) {
+        guard let notif = SocketManager.shared.newNotificationsRelay.value.first(where: {$0.identity == notificationView.identifier}) else {return}
+        (UIApplication.shared.delegate as! AppDelegate).notificationTappedRelay.accept(notif)
     }
 }

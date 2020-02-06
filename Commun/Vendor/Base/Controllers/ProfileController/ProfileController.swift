@@ -37,18 +37,8 @@ extension ProfileType {
     }
 }
 
-extension ResponseAPIContentGetProfile: ProfileType {
-    var subscribersCount: Int64? {
-        get {
-            return subscribers?.usersCount
-        }
-        set {
-            subscribers?.usersCount = newValue
-        }
-    }
-}
+extension ResponseAPIContentGetProfile: ProfileType {}
 extension ResponseAPIContentGetSubscriptionsUser: ProfileType {}
-extension ResponseAPIContentResolveProfile: ProfileType {}
 
 protocol ProfileController: class {
     associatedtype Profile: ProfileType

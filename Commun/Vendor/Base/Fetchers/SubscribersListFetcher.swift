@@ -10,11 +10,11 @@ import Foundation
 import CyberSwift
 import RxSwift
 
-class SubscribersListFetcher: ListFetcher<ResponseAPIContentResolveProfile> {
+class SubscribersListFetcher: ListFetcher<ResponseAPIContentGetProfile> {
     var userId: String?
     var communityId: String?
     
-    override var request: Single<[ResponseAPIContentResolveProfile]> {
+    override var request: Single<[ResponseAPIContentGetProfile]> {
         return RestAPIManager.instance.getSubscribers(userId: userId, communityId: communityId, offset: Int(offset), limit: Int(limit))
 //        return ResponseAPIContentGetSubscribers.singleWithMockData()
 //            .delay(0.8, scheduler: MainScheduler.instance)

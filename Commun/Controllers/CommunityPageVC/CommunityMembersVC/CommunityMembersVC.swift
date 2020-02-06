@@ -13,7 +13,7 @@ import RxDataSources
 class CommunityMembersVC: BaseViewController, LeaderCellDelegate, ProfileCellDelegate {
     // MARK: - Nested type
     enum CustomElementType: IdentifiableType, Equatable {
-        case subscriber(ResponseAPIContentResolveProfile)
+        case subscriber(ResponseAPIContentGetProfile)
         case leader(ResponseAPIContentGetLeader)
         
         var identity: String {

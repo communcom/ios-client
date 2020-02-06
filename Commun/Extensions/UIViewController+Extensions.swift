@@ -146,20 +146,24 @@ extension UIViewController {
     
     func showProfileWithUserId(_ userId: String) {
         // if profile was opened, shake it off!!
-        if let profileVC = self as? UserProfilePageVC, profileVC.userId == userId {
-            profileVC.view.shake()
-            return
-        }
+//        if let profileVC = self as? UserProfilePageVC, profileVC.userId == userId {
+//            profileVC.view.shake()
+//            return
+//        }
         
         // Open other user's profile
         if userId != Config.currentUser?.id {
             let profileVC = UserProfilePageVC(userId: userId)
             show(profileVC, sender: nil)
             return
+        } else {
+            let profileVC = MyProfilePageVC()
+            profileVC.shouldHideBackButton = false 
+            show(profileVC, sender: nil)
         }
         
         // my profile
-        view.shake()
+//        view.shake()
 //        if let profileNC = tabBarController?.viewControllers?.first(where: {($0 as? UINavigationController)?.viewControllers.first is MyProfilePageVC}),
 //            profileNC != tabBarController?.selectedViewController,
 //            let tabBarVC = tabBarController as? TabBarVC

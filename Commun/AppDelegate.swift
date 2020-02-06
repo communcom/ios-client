@@ -35,7 +35,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     static var reloadSubject = PublishSubject<Bool>()
     let notificationCenter = UNUserNotificationCenter.current()
-    let notificationRelay = BehaviorRelay<ResponseAPIGetNotificationItem>(value: ResponseAPIGetNotificationItem.empty)
+    let notificationTappedRelay = BehaviorRelay<ResponseAPIGetNotificationItem>(value: ResponseAPIGetNotificationItem.empty)
     
     let deepLinkPath = BehaviorRelay<[String]>(value: [])
     
@@ -458,19 +458,6 @@ extension AppDelegate {
 // MARK: - UNUserNotificationCenterDelegate
 @available(iOS 10, *)
 extension AppDelegate: UNUserNotificationCenterDelegate {
-    // Receive push-message when App is active/in background
-    func userNotificationCenter(_ center: UNUserNotificationCenter,
-                                willPresent notification: UNNotification,
-                                withCompletionHandler completionHandler:    @escaping (UNNotificationPresentationOptions) -> Void) {
-        // Display Local Notification
-        let notificationContent = notification.request.content
-        
-        // Print full message.
-        Logger.log(message: "UINotificationContent: \(notificationContent)", event: .debug)
-
-        completionHandler([.alert, .sound])
-    }
-    
     // Tap on push message
     func userNotificationCenter(_ center: UNUserNotificationCenter,
                                 didReceive response: UNNotificationResponse,
@@ -490,7 +477,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         {
             do {
                 let notification = try JSONDecoder().decode(ResponseAPIGetNotificationItem.self, from: data)
-                notificationRelay.accept(notification)
+                notificationTappedRelay.accept(notification)
             } catch {
                 Logger.log(message: "Receiving notification error: \(error)", event: .error)
             }

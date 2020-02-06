@@ -19,6 +19,19 @@ class BlacklistFetcher: ListFetcher<ResponseAPIContentGetBlacklistItem> {
     
     override var request: Single<[ResponseAPIContentGetBlacklistItem]> {
         return RestAPIManager.instance.getBlacklist(type: type, offset: Int(offset), limit: Int(limit))
-            .map {$0.items}
+            .map {result in
+                var items = [ResponseAPIContentGetBlacklistItem]()
+                for item in result.items {
+                    switch item {
+                    case .user(var user):
+                        user.isInBlacklist = true
+                        items.append(ResponseAPIContentGetBlacklistItem.user(user))
+                    case .community(var community):
+                        community.isInBlacklist = true
+                        items.append(ResponseAPIContentGetBlacklistItem.community(community))
+                    }
+                }
+                return items
+            }
     }
 }

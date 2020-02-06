@@ -111,7 +111,6 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
         super.bind()
        
         bindSelectedIndex()
-        bindProfileBlocked()
         
         // forward delegate
         tableView.rx.setDelegate(self)
@@ -173,6 +172,19 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
         }
         
         tableView.addEmptyPlaceholderFooterView(title: title.localized().uppercaseFirst, description: description.localized().uppercaseFirst)
+    }
+    
+    override func bindProfile() {
+        super.bindProfile()
+        
+        bindProfileBlocked()
+        
+        ResponseAPIContentGetCommunity.observeItemChanged()
+            .filter {$0.identity == self.viewModel.profile.value?.identity}
+            .subscribe(onNext: {newCommunity in
+                self.viewModel.profile.accept(newCommunity)
+            })
+            .disposed(by: disposeBag)
     }
     
     override func bindItems() {
@@ -277,35 +289,40 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
     }
     
     override func moreActionsButtonDidTouch(_ sender: CommunButton) {
+        guard let profile = viewModel.profile.value else {return}
         let headerView = UIView(height: 40)
         
         let avatarImageView = MyAvatarImageView(size: 40)
-        avatarImageView.setAvatar(urlString: viewModel.profile.value?.avatarUrl, namePlaceHolder: viewModel.profile.value?.name ?? "Community")
+        avatarImageView.setAvatar(urlString: profile.avatarUrl, namePlaceHolder: profile.name)
         headerView.addSubview(avatarImageView)
         avatarImageView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .trailing)
         
-        let userNameLabel = UILabel.with(text: viewModel.profile.value?.name, textSize: 15, weight: .semibold)
+        let userNameLabel = UILabel.with(text: profile.name, textSize: 15, weight: .semibold)
         headerView.addSubview(userNameLabel)
         userNameLabel.autoPinEdge(toSuperviewEdge: .top)
         userNameLabel.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 10)
         userNameLabel.autoPinEdge(toSuperviewEdge: .trailing)
 
-        let userIdLabel = UILabel.with(text: "@\(viewModel.profile.value?.communityId ?? "")", textSize: 12, textColor: .appMainColor)
+        let userIdLabel = UILabel.with(text: profile.communityId, textSize: 12, textColor: .appMainColor)
         headerView.addSubview(userIdLabel)
         userIdLabel.autoPinEdge(.top, to: .bottom, of: userNameLabel, withOffset: 3)
         userIdLabel.autoPinEdge(.leading, to: .trailing, of: avatarImageView, withOffset: 10)
         userIdLabel.autoPinEdge(toSuperviewEdge: .trailing)
         
         showCommunActionSheet(style: .profile, headerView: headerView, actions: [
-            CommunActionSheet.Action(title: "hide".localized().uppercaseFirst, icon: UIImage(named: "profile_options_blacklist"), handle: {
+            CommunActionSheet.Action(title: (profile.isInBlacklist == true ? "unhide": "hide").localized().uppercaseFirst, icon: UIImage(named: "profile_options_blacklist"), handle: {
                 
                 self.showAlert(
-                    title: "hide community".localized().uppercaseFirst,
-                    message: "do you really want to hide all posts of".localized().uppercaseFirst + " \(self.viewModel.profile.value?.name ?? "this community")" + "?",
+                    title: (profile.isInBlacklist == true ? "unhide community": "hide community").localized().uppercaseFirst,
+                    message: (profile.isInBlacklist == true ? "do you really want to unhide all posts of": "do you really want to hide all posts of").localized().uppercaseFirst + " " + profile.name + "?",
                     buttonTitles: ["yes".localized().uppercaseFirst, "no".localized().uppercaseFirst],
                     highlightedButtonIndex: 1) { (index) in
                         if index != 0 {return}
-                        self.hideCommunity()
+                        if profile.isInBlacklist == true {
+                            self.unhideCommunity()
+                        } else {
+                            self.hideCommunity()
+                        }
                     }
             })
         ]) {
