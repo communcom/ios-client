@@ -50,18 +50,18 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
         
         view.addSubview(walletCurrencyValue)
         walletCurrencyValue.autoPinEdge(.leading, to: .trailing, of: walletImageView, withOffset: .adaptive(width: 10.0))
-        walletCurrencyValue.autoPinEdge(.top, to: .top, of: walletImageView)
+        walletCurrencyValue.autoPinEdge(.top, to: .top, of: walletImageView, withOffset: 2.0)
         
         view.addSubview(walletCurrencyLabel)
-        walletCurrencyLabel.autoPinEdge(.leading, to: .trailing, of: walletCurrencyValue, withOffset: 2)
-        walletCurrencyLabel.autoPinEdge(.bottom, to: .bottom, of: walletCurrencyValue, withOffset: 0.0)
+        walletCurrencyLabel.autoPinEdge(.leading, to: .trailing, of: walletCurrencyValue, withOffset: 4.0)
+        walletCurrencyLabel.autoPinEdge(.bottom, to: .bottom, of: walletCurrencyValue, withOffset: -1.0)
         
         let equalLabel = UILabel.with(text: "=", textSize: .adaptive(width: 12.0), weight: .semibold, textColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1))
         equalLabel.alpha = 0.7
         
         view.addSubview(equalLabel)
         equalLabel.autoPinEdge(.leading, to: .trailing, of: walletImageView, withOffset: .adaptive(width: 10.0))
-        equalLabel.autoPinEdge(.top, to: .bottom, of: walletCurrencyValue, withOffset: 2)
+        equalLabel.autoPinEdge(.bottom, to: .bottom, of: walletImageView, withOffset: -2.0)
         
         view.addSubview(communValueLabel)
         communValueLabel.autoPinEdge(.leading, to: .trailing, of: equalLabel, withOffset: 2)
@@ -91,19 +91,21 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
     
     lazy var walletCurrencyValue: UILabel = {
         let label = UILabel.with(text: "1000", textSize: .adaptive(width: 15.0), weight: .semibold, textColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1))
-       
+        label.isHidden = true
+
         return label
     }()
     
     lazy var walletCurrencyLabel: UILabel = {
         let label = UILabel.with(text: "Binance", textSize: .adaptive(width: 12.0), weight: .semibold, textColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1))
+        label.isHidden = true
         label.alpha = 0.7
-        
+
         return label
     }()
     
     lazy var communValueLabel: UILabel = {
-        let label = UILabel.with(text: "1", textSize: .adaptive(width: 12.0), weight: .bold, textColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1))
+        let label = UILabel.with(text: "10", textSize: .adaptive(width: 12.0), weight: .bold, textColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1))
         label.alpha = 0.7
         
         return label
@@ -194,8 +196,17 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
         ]
     }
     
+    // ResponseAPIWalletGetPrice(price: "647.654 BIKE", symbol: Optional("BIKE"), quantity: Optional("10 CMN"))
+    func setUp(walletPrice: ResponseAPIWalletGetPrice) {
+        walletCurrencyValue.text = walletPrice.price.components(separatedBy: " ").first ?? "0.0" // 1000
+        walletCurrencyLabel.text = (walletPrice.symbol ?? "Commun").lowercased().uppercaseFirst // "Binance"
+        walletCurrencyValue.isHidden = false
+        walletCurrencyLabel.isHidden = false
+    }
+    
     func setUp(with community: ResponseAPIContentGetCommunity) {
         self.community = community
+        
         if self.community?.isInBlacklist == true {
             self.community?.isSubscribed = false
         }
@@ -266,6 +277,8 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
         }
     }
     
+    
+    // MARK: - Actions
     @objc func joinButtonDidTouch(_ button: UIButton) {
         toggleJoin()
     }

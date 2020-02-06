@@ -135,6 +135,14 @@ class CommunityPageVC: ProfileVC<ResponseAPIContentGetCommunity>, LeaderCellDele
         
         // header
         headerView.setUp(with: profile)
+        
+        (viewModel as! CommunityPageViewModel).walletGetBuyPriceRequest
+            .subscribe(onSuccess: { (buyPrice) in
+                self.headerView.setUp(walletPrice: buyPrice)
+            }, onError: { (error) in
+                self.showError(error)
+            })
+            .disposed(by: disposeBag)
     }
     
     override func handleListLoading() {
@@ -335,12 +343,15 @@ extension CommunityPageVC: UITableViewDelegate {
     // MARK: - Sorting
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         let viewModel = self.viewModel as! CommunityPageViewModel
+        
         if viewModel.segmentedItem.value == .posts {
             return 48
         }
+        
         if viewModel.segmentedItem.value == .leads {
             return 42
         }
+        
         return 0
     }
     
@@ -358,13 +369,16 @@ extension CommunityPageVC: UITableViewDelegate {
             headerView.addSubview(label)
             label.autoPinEdge(toSuperviewEdge: .leading, withInset: 20)
             label.autoAlignAxis(toSuperviewAxis: .horizontal)
+            
             return headerView
         }
+        
         return nil
     }
     
     func updatePostSortingView() {
         let viewModel = self.viewModel as! CommunityPageViewModel
+       
         if viewModel.segmentedItem.value != .posts {
             return
         }
