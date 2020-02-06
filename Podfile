@@ -69,6 +69,7 @@ def common_pods_commun
   pod "ReCaptcha"
   pod 'SwiftLint'
   pod 'CircularCarousel'
+  pod 'NotificationView'
 
 end
 

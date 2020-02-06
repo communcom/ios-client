@@ -91,26 +91,17 @@ class NotificationCell: MyTableViewCell, ListItemCellType {
         
         var avatarUrl = (item.author ?? item.voter ?? item.user)?.avatarUrl
         var avatarPlaceholder = (item.author ?? item.voter ?? item.user)?.username ?? "User"
+        
+        // content
+        contentLabel.attributedText = item.attributedContent
+        
         switch item.eventType {
         case "mention":
             iconImageView.image = UIImage(named: "notifications-page-mention")
-            let aStr = NSMutableAttributedString()
-                .semibold(item.author?.username ?? "a user".localized().uppercaseFirst)
-                .normal(" ")
-                .normal("mentioned you in a \(item.entityType ?? "comment")".localized())
-                .normal(": \"")
-                .normal(item.comment?.shortText ?? "")
-                .normal("\"")
-            contentLabel.attributedText = aStr
+            
         case "subscribe":
             iconImageView.isHidden = true
-            let aStr = NSMutableAttributedString()
-                .semibold(item.user?.username ?? "a user".localized().uppercaseFirst)
-                .normal(" ")
-                .normal("is following you")
-            contentLabel.attributedText = aStr
-            
-            // TODO: follow ?? unfollow
+            // TODO: - follow ?? unfollow
 //            contentView.addSubview(actionButton)
 //            actionButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
 //            actionButton.autoAlignAxis(.horizontal, toSameAxisOf: avatarImageView)
@@ -118,16 +109,9 @@ class NotificationCell: MyTableViewCell, ListItemCellType {
 //            
 //            contentTrailingConstraint?.isActive = false
 //            contentTrailingConstraint = contentContainerView.autoPinEdge(.trailing, to: .leading, of: actionButton, withOffset: -4)
+            
         case "upvote":
             iconImageView.image = UIImage(named: "notifications-page-upvote")
-            let aStr = NSMutableAttributedString()
-                .semibold(item.voter?.username ?? "a user".localized().uppercaseFirst)
-                .normal(" ")
-                .normal("liked".localized() + " " + "your \(item.entityType ?? "post")".localized())
-                .normal(": \"")
-            
-            aStr.normal((item.comment?.shortText ?? item.post?.shortText ?? "") + "...\"")
-            contentLabel.attributedText = aStr
             
             if let imageUrl = item.comment?.imageUrl ?? item.post?.imageUrl {
                 contentView.addSubview(descriptionImageView)
@@ -139,55 +123,30 @@ class NotificationCell: MyTableViewCell, ListItemCellType {
                 contentTrailingConstraint?.isActive = false
                 contentTrailingConstraint = contentContainerView.autoPinEdge(.trailing, to: .leading, of: descriptionImageView, withOffset: -4)
             }
+            
         case "reply":
             iconImageView.image = UIImage(named: "notifications-page-reply")
-            let aStr = NSMutableAttributedString()
-                .semibold(item.author?.username ?? "a user".localized().uppercaseFirst)
-                .normal(" ")
-                .normal("left a comment".localized())
-                .normal(": \"")
-            aStr.normal((item.comment?.shortText ?? "") + "...\"")
-            contentLabel.attributedText = aStr
+            
         case "reward":
             avatarUrl = item.community?.avatarUrl
             avatarPlaceholder = item.community?.name ?? "Community"
             iconImageView.image = UIImage(named: "notifications-page-reward")
-            let aStr = NSMutableAttributedString()
-                .normal("you got".localized().uppercaseFirst)
-                .normal(" ")
-                .normal("\(item.amount ?? "0") \(item.community?.communityId ?? "POINTS")")
-                .normal(" ")
-                .normal("as a reward".localized())
-            contentLabel.attributedText = aStr
+            
         case "transfer":
             avatarUrl = item.from?.avatarUrl
             avatarPlaceholder = item.from?.username ?? "User"
-            let aStr = NSMutableAttributedString()
                 
             if item.from?.username.lowercased() != "bounty" {
                 iconImageView.isHidden = true
                 
-                aStr.semibold(item.from?.username ?? "a user".localized().uppercaseFirst)
-                    .normal(" ")
-                    .normal("sent you".localized())
-                    .normal(" ")
-                    .text("\(item.amount ?? "0") \(item.pointType ?? "points")", weight: .medium, color: .appMainColor)
             } else {
                 iconImageView.setAvatar(urlString: item.community?.avatarUrl, namePlaceHolder: item.community?.name ?? "C")
                 iconImageView.borderWidth = 2
                 iconImageView.borderColor = .white
-                
-                aStr.normal("you got a".localized().uppercaseFirst)
-                    .normal(" ")
-                    .text("\(item.amount ?? "0") \(item.pointType ?? "points")", weight: .medium, color: .appMainColor)
-                    .normal(" ")
-                    .normal("bounty")
             }
-                
-            contentLabel.attributedText = aStr
+            
         default:
             iconImageView.isHidden = true
-            contentLabel.text = "notification"
         }
         
         avatarImageView.setAvatar(
