@@ -167,15 +167,13 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
         pointsContainerView.autoPinEdge(toSuperviewEdge: .leading, withInset: .adaptive(width: 16.0))
         pointsContainerView.autoPinEdge(toSuperviewEdge: .trailing, withInset: .adaptive(width: 16.0))
         pointsContainerView.autoPinEdge(.top, to: .bottom, of: membersCountLabel, withOffset: .adaptive(height: 22.0))
-    
-//        let firstSeparator = UIView(height: 2, backgroundColor: .appLightGrayColor)
-//        addSubview(firstSeparator)
-//        firstSeparator.autoPinEdge(.top, to: .bottom, of: membersCountLabel, withOffset: .adaptive(height: 20.0))
-//        firstSeparator.autoPinEdge(toSuperviewEdge: .leading)
-//        firstSeparator.autoPinEdge(toSuperviewEdge: .trailing)
         
+        pointsContainerView.addShadow(ofColor: #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 0.3),
+                                      radius: .adaptive(width: 24.0),
+                                      offset: CGSize(width: 0.0, height: .adaptive(height: 14.0)),
+                                      opacity: 1.0)
+
         addSubview(segmentedControl)
-//        segmentedControl.autoPinEdge(.top, to: .bottom, of: firstSeparator)
         segmentedControl.autoPinEdge(.top, to: .bottom, of: pointsContainerView)
         segmentedControl.autoPinEdge(toSuperviewEdge: .leading)
         segmentedControl.autoPinEdge(toSuperviewEdge: .trailing)
@@ -187,10 +185,7 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
         
         // pin bottom
         separator.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
-    
-        // "Don't use in MVP"
-//        pointsContainerView.addShadow(ofColor: UIColor(red: 106, green: 128, blue: 245)!, radius: 19, offset: CGSize(width: 0, height: 14), opacity: 0.3)
-        
+            
         segmentedControl.items = [
             CMSegmentedControl.Item(name: "posts".localized().uppercaseFirst),
             CMSegmentedControl.Item(name: "leaders".localized().uppercaseFirst),
