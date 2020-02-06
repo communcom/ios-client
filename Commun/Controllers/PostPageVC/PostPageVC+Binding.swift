@@ -73,6 +73,32 @@ extension PostPageVC {
 //                })
 //            })
 //            .disposed(by: disposeBag)
+        
+        commentForm.textView.rx.text.orEmpty
+            .subscribe(onNext: { (text) in
+                
+                 // textView
+                 let contentSize = self.commentForm.textView.sizeThatFits(CGSize(width: self.commentForm.textView.width, height: .greatestFiniteMagnitude))
+                 
+                 if self.shadowView.frame.minY > self.commentFormMinPaddingTop || contentSize.height < self.commentForm.textView.height
+                 {
+                     if self.commentForm.textView.isScrollEnabled {
+                        // TODO: - Temporary solution for fixing textView layout
+                        self.commentForm.textView.text = text + " "
+                        DispatchQueue.main.async {
+                            self.commentForm.textView.text = text
+                        }
+                     }
+                     self.commentForm.textView.isScrollEnabled = false
+                     
+                 } else {
+                     if !self.commentForm.textView.isScrollEnabled {
+//                         self.commentForm.textView.setNeedsLayout()
+                     }
+                     self.commentForm.textView.isScrollEnabled = true
+                 }
+            })
+            .disposed(by: disposeBag)
     }
     
     func bindPost() {
@@ -100,7 +126,7 @@ extension PostPageVC {
         // bind post
         let post = viewModel.post
         post
-            .subscribe(onNext: {post in
+            .subscribe(onNext: { post in
                 guard let post = post else {return}
                 self.navigationBar.setUp(with: post)
                 self.commentForm.post = post

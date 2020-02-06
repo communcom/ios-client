@@ -18,24 +18,24 @@ class CommunityLeaderCell: CommunityPageCell {
     }()
     
     lazy var userNameLabel: UILabel = {
-        let label = UILabel.with(text: "Sergey Marchenko", textSize: CGFloat.adaptive(width: 15.0), weight: .semibold)
+        let label = UILabel.with(text: "Sergey Marchenko", textSize: .adaptive(width: 15.0), weight: .semibold)
         return label
     }()
     
     lazy var pointsCountLabel: UILabel = {
-        let label = UILabel.with(text: "12,2k", textSize: CGFloat.adaptive(width: 12.0), weight: .semibold, textColor: .a5a7bd)
+        let label = UILabel.with(text: "12,2k", textSize: .adaptive(width: 12.0), weight: .semibold, textColor: .a5a7bd)
         return label
     }()
     
     lazy var percentsCountLabel: UILabel = {
-        let label = UILabel.with(text: "50", textSize: CGFloat.adaptive(width: 12.0), weight: .semibold, textColor: .appMainColor)
+        let label = UILabel.with(text: "50", textSize: .adaptive(width: 12.0), weight: .semibold, textColor: .appMainColor)
         return label
     }()
     
     lazy var voteButton: CommunButton = CommunButton.default(label: "voted".localized().uppercaseFirst)
     
     lazy var descriptionLabel: UILabel = {
-        let label = UILabel.with(textSize: CGFloat.adaptive(width: 14.0), numberOfLines: 0)
+        let label = UILabel.with(textSize: .adaptive(width: 14.0), numberOfLines: 0)
         return label
     }()
     
@@ -46,38 +46,37 @@ class CommunityLeaderCell: CommunityPageCell {
         contentView.backgroundColor = #colorLiteral(red: 0.9599978328, green: 0.966491878, blue: 0.9829974771, alpha: 1)
         
         // card
-        let cardView = UIView(backgroundColor: .white, cornerRadius: CGFloat.adaptive(width: 10.0))
+        let cardView = UIView(backgroundColor: .white, cornerRadius: .adaptive(width: 10.0))
         contentView.addSubview(cardView)
         cardView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0.0,
-                                                                 left: CGFloat.adaptive(width: 10.0),
-                                                                 bottom: CGFloat.adaptive(height: 20.0),
-                                                                 right: CGFloat.adaptive(width: 10.0)))
-
+                                                                 left: .adaptive(width: 10.0),
+                                                                 bottom: .adaptive(height: 20.0),
+                                                                 right: .adaptive(width: 10.0)))
         
-        let mainVerticalStackView = UIStackView(axis: .vertical, spacing: CGFloat.adaptive(height: 14.0))
+        let mainVerticalStackView = UIStackView(axis: .vertical, spacing: .adaptive(height: 14.0))
         mainVerticalStackView.alignment = .leading
         mainVerticalStackView.distribution = .fillProportionally
         
         cardView.addSubview(mainVerticalStackView)
-        mainVerticalStackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(horizontal: CGFloat.adaptive(width: 30.0), vertical: CGFloat.adaptive(height: 30.0)))
+        mainVerticalStackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(horizontal: .adaptive(width: 30.0), vertical: .adaptive(height: 30.0)))
         
-        let topHorizontalStackView = UIStackView(axis: .horizontal, spacing: CGFloat.adaptive(width: 10.0))
+        let topHorizontalStackView = UIStackView(axis: .horizontal, spacing: .adaptive(width: 10.0))
         topHorizontalStackView.alignment = .center
         topHorizontalStackView.distribution = .fillProportionally
 
-        let middleVerticalStackView = UIStackView(axis: .vertical, spacing: CGFloat.adaptive(height: 5.0))
+        let middleVerticalStackView = UIStackView(axis: .vertical, spacing: .adaptive(height: 5.0))
         middleVerticalStackView.alignment = .leading
         middleVerticalStackView.distribution = .fillProportionally
         middleVerticalStackView.setContentHuggingPriority(251.0, for: .horizontal)
         
-        let pointsHorizontalStackView = UIStackView(axis: .horizontal, spacing: CGFloat.adaptive(width: 4.0))
+        let pointsHorizontalStackView = UIStackView(axis: .horizontal, spacing: .adaptive(width: 4.0))
         pointsHorizontalStackView.alignment = .leading
         pointsHorizontalStackView.distribution = .fillProportionally
         
         pointsHorizontalStackView.addArrangedSubviews([ pointsCountLabel, percentsCountLabel, percentsCountLabel ])
         middleVerticalStackView.addArrangedSubviews([ userNameLabel, pointsHorizontalStackView ])
         
-        voteButton.widthAnchor.constraint(equalToConstant: CGFloat.adaptive(width: 65.0)).isActive = true
+        voteButton.widthAnchor.constraint(equalToConstant: .adaptive(width: 65.0)).isActive = true
         topHorizontalStackView.addArrangedSubviews([ avatarImageView, middleVerticalStackView, voteButton ])
         mainVerticalStackView.addArrangedSubviews([ topHorizontalStackView, descriptionLabel ])
         topHorizontalStackView.autoPinEdge(.trailing, to: .trailing, of: mainVerticalStackView, withOffset: 0.0)

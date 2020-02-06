@@ -74,7 +74,7 @@ class UserProfilePageViewModel: ProfileViewModel<ResponseAPIContentGetProfile> {
     func bindHighlightCommunities() {
         profile
             .filter {$0?.highlightCommunities != nil}
-            .map {$0!.highlightCommunities}
+            .map {$0!.highlightCommunities!}
             .take(1)
             .bind(to: highlightCommunities)
             .disposed(by: disposeBag)

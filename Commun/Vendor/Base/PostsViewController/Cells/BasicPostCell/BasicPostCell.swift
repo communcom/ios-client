@@ -12,10 +12,12 @@ import SafariServices
 final class BasicPostCell: PostCell {
     // MARK: - Properties
     private var centerConstraint: NSLayoutConstraint!
+    
     // MARK: - Subviews
     lazy var contentTextView        = UITextView(forExpandable: ())
     lazy var gridView               = GridView(forAutoLayout: ())
-
+    
+    // MARK: - Custom Functions
     private func configureTextView() {
         contentTextView.textContainerInset = UIEdgeInsets.zero
         contentTextView.textContainer.lineFragmentPadding = 0
@@ -24,7 +26,7 @@ final class BasicPostCell: PostCell {
         contentTextView.isUserInteractionEnabled = false
         contentTextView.delegate = self
     }
-
+    
     // MARK: - Layout
     override func layoutContent() {
         configureTextView()
@@ -45,6 +47,7 @@ final class BasicPostCell: PostCell {
     
     override func setUp(with post: ResponseAPIContentGetPost) {
         super.setUp(with: post)
+       
         self.accessibilityLabel = "PostCardCell"
         centerConstraint.isActive = false
 
@@ -59,14 +62,17 @@ final class BasicPostCell: PostCell {
 
         var texts = NSMutableAttributedString()
         var paragraphsTexts: [NSAttributedString] = []
+        
         for (index, content) in (post.content ?? []).enumerated() where content.type == "paragraph" {
             let attributedText = content.toAttributedString(currentAttributes: defaultAttributes, attachmentType: TextAttachment.self, viewMode: true)
             // remove empty text
             let text = attributedText.string.replacingOccurrences(of: "\n", with: "").replacingOccurrences(of: "\r", with: "").replacingOccurrences(of: "  ", with: "")
+           
             if text != "", text != " " {
                 if index != 0 {
                     texts.append(NSAttributedString(string: "\n"))
                 }
+                
                 texts.append(attributedText)
                 paragraphsTexts.append(attributedText)
             }
@@ -137,10 +143,12 @@ final class BasicPostCell: PostCell {
     }
 }
 
+// MARK: - UITextViewDelegate
 extension BasicPostCell: UITextViewDelegate {
     func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange) -> Bool {
         let safariVC = SFSafariViewController(url: URL)
         parentViewController?.present(safariVC, animated: true, completion: nil)
+        
         return false
     }
 }

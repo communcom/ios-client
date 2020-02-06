@@ -21,7 +21,23 @@ extension MyProfilePageVC {
     
     @objc func settingsButtonDidTouch(_ sender: Any) {
         let settingsVC = controllerContainer.resolve(SettingsVC.self)!
-        self.show(settingsVC, sender: nil)
+        show(settingsVC, sender: nil)
+    }
+    
+    @objc func walletDidTouch() {
+        let state = (viewModel as! MyProfilePageViewModel).balancesVM.state.value
+        switch state {
+        case .error:
+            (viewModel as! MyProfilePageViewModel).balancesVM.reload()
+        case .listEnded, .loading(false):
+            let walletVC = CommunWalletVC()
+            let nc = navigationController as? BaseNavigationController
+            nc?.shouldResetNavigationBarOnPush = false
+            show(walletVC, sender: nil)
+            nc?.shouldResetNavigationBarOnPush = true
+        default:
+            break
+        }
     }
     
     // MARK: - Covers + Avatar
@@ -71,47 +87,45 @@ extension MyProfilePageVC {
         }
         
         // If updating
-        let pickerVC = CustomTLPhotosPickerVC.singleImage
-        self.present(pickerVC, animated: true, completion: nil)
+        let pickerVC = SinglePhotoPickerVC()
+        pickerVC.completion = { image in
+            let coverEditVC = controllerContainer.resolve(ProfileEditCoverVC.self)!
             
-        pickerVC.rx.didSelectAnImage
-            .flatMap { image -> Observable<UIImage> in
-                
-                let coverEditVC = controllerContainer.resolve(ProfileEditCoverVC.self)!
-                
-                self.viewModel.profile.filter {$0 != nil}.map {$0!}
-                    .bind(to: coverEditVC.profile)
-                    .disposed(by: self.disposeBag)
-                
-                pickerVC.present(coverEditVC, animated: true, completion: {
-                        coverEditVC.updateImage(image)
-                })
-                
-                return coverEditVC.didSelectImage
-                    .do(onNext: {_ in
-                        coverEditVC.dismiss(animated: true, completion: {
-                            pickerVC.dismiss(animated: true, completion: nil)
-                        })
-                    })
-            }
-            // Upload image
-            .flatMap {image -> Single<String> in
-                self.coverImageView.image = image
-                self.coverImageView.showLoading(cover: false, spinnerColor: .white)
-                return NetworkService.shared.uploadImage(image)
-            }
-            // Save to db
-            .flatMap { url -> Single<String> in
-                return NetworkService.shared.updateMeta(params: ["cover_url": url]).andThen(Single<String>.just(url))
-            }
-            .subscribe(onNext: { [weak self] (_) in
-                self?.coverImageView.hideLoading()
-            }, onError: { [weak self] (error) in
-                self?.coverImageView.hideLoading()
-                self?.coverImageView.image = originalImage
-                self?.showError(error)
+            self.viewModel.profile.filter {$0 != nil}.map {$0!}
+                .bind(to: coverEditVC.profile)
+                .disposed(by: self.disposeBag)
+            
+            coverEditVC.modalPresentationStyle = .fullScreen
+            pickerVC.present(coverEditVC, animated: true, completion: {
+                    coverEditVC.updateImage(image)
             })
-            .disposed(by: disposeBag)
+            
+            coverEditVC.didSelectImage
+                .do(onNext: { image in
+                    coverEditVC.dismiss(animated: true, completion: {
+                        pickerVC.dismiss(animated: true, completion: nil)
+                    })
+                    self.coverImageView.image = image
+                    self.coverImageView.showLoading(cover: false, spinnerColor: .white)
+                })
+                // Upload image
+                .flatMap {NetworkService.shared.uploadImage($0)}
+                // Save to db
+                .flatMap { url -> Single<String> in
+                    return NetworkService.shared.updateMeta(params: ["cover_url": url]).andThen(Single<String>.just(url))
+                }
+                .subscribe(onNext: { [weak self] (_) in
+                    self?.coverImageView.hideLoading()
+                }, onError: { [weak self] (error) in
+                    self?.coverImageView.hideLoading()
+                    self?.coverImageView.image = originalImage
+                    self?.showError(error)
+                })
+                .disposed(by: self.disposeBag)
+        }
+        
+        pickerVC.modalPresentationStyle = .fullScreen
+        self.present(pickerVC, animated: true, completion: nil)
     }
     
     func onUpdateAvatar(delete: Bool = false) {
@@ -121,7 +135,7 @@ extension MyProfilePageVC {
         
         // On deleting
         if delete {
-            headerView.avatarImageView.setNonAvatarImageWithId(self.viewModel.profile.value!.username)
+            headerView.avatarImageView.image = UIImage(named: "empty-avatar")
             NetworkService.shared.updateMeta(params: ["avatar_url": ""])
                 .subscribe(onError: {[weak self] error in
                     if let gif = originGif {

@@ -11,6 +11,7 @@ import UIKit
 final class BaseNavigationController: UINavigationController {
     weak var tabBarVC: TabBarVC?
     var style: UIStatusBarStyle = .default
+    var shouldResetNavigationBarOnPush = true
 
     // MARK: - Status Bar
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -104,7 +105,10 @@ final class BaseNavigationController: UINavigationController {
     
     override func pushViewController(_ viewController: UIViewController, animated: Bool) {
         duringPushAnimation = true
-        resetNavigationBar()
+        
+        if shouldResetNavigationBarOnPush {
+            resetNavigationBar()
+        }
         
         avoidTabBar(viewController: viewController)
         

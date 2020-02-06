@@ -9,6 +9,9 @@
 import Foundation
 
 class MyProfilePageVC: UserProfilePageVC {
+    // MARK: - Properties
+    var shouldHideBackButton = true
+    
     // MARK: - Subviews
     lazy var changeCoverButton: UIButton = {
         let button = UIButton(width: 24, height: 24, backgroundColor: UIColor.black.withAlphaComponent(0.3), cornerRadius: 12, contentInsets: UIEdgeInsets(top: 6, left: 6, bottom: 6, right: 6))
@@ -36,7 +39,9 @@ class MyProfilePageVC: UserProfilePageVC {
         super.setUp()
         
         // hide back button
-        navigationItem.leftBarButtonItem = nil
+        if shouldHideBackButton {
+            navigationItem.leftBarButtonItem = nil
+        }
         
         // layout subview
         view.addSubview(changeCoverButton)
@@ -44,10 +49,17 @@ class MyProfilePageVC: UserProfilePageVC {
         changeCoverButton.autoPinEdge(.trailing, to: .trailing, of: coverImageView, withOffset: -16)
         
         changeCoverButton.addTarget(self, action: #selector(changeCoverBtnDidTouch(_:)), for: .touchUpInside)
+        
+        // wallet
+        let tap = UITapGestureRecognizer(target: self, action: #selector(walletDidTouch))
+        (headerView as! MyProfileHeaderView).walletView.isUserInteractionEnabled = true
+        (headerView as! MyProfileHeaderView).walletView.addGestureRecognizer(tap)
     }
     
     override func bind() {
         super.bind()
+        
+        bindBalances()
         
         let offSetY = tableView.rx.contentOffset
             .map {$0.y}.share()
@@ -68,15 +80,15 @@ class MyProfilePageVC: UserProfilePageVC {
             .disposed(by: disposeBag)
     }
     
-    override func setHeaderView() {
-        headerView = MyProfileHeaderView(tableView: tableView)
+    override func createHeaderView() -> UserProfileHeaderView {
+        let headerView = MyProfileHeaderView(tableView: tableView)
         
-        let myHeader = headerView as! MyProfileHeaderView
-        myHeader.changeAvatarButton.addTarget(self, action: #selector(changeAvatarBtnDidTouch(_:)), for: .touchUpInside)
-        myHeader.addBioButton.addTarget(self, action: #selector(addBioButtonDidTouch(_:)), for: .touchUpInside)
-        myHeader.descriptionLabel.isUserInteractionEnabled = true
+        headerView.changeAvatarButton.addTarget(self, action: #selector(changeAvatarBtnDidTouch(_:)), for: .touchUpInside)
+        headerView.addBioButton.addTarget(self, action: #selector(addBioButtonDidTouch(_:)), for: .touchUpInside)
+        headerView.descriptionLabel.isUserInteractionEnabled = true
         let tap = UITapGestureRecognizer(target: self, action: #selector(bioLabelDidTouch(_:)))
-        myHeader.descriptionLabel.addGestureRecognizer(tap)
+        headerView.descriptionLabel.addGestureRecognizer(tap)
+        return headerView
     }
     
     override func moreActionsButtonDidTouch(_ sender: CommunButton) {
@@ -118,23 +130,27 @@ class MyProfilePageVC: UserProfilePageVC {
             CommunActionSheet.Action(title: "blacklist".localized().uppercaseFirst, icon: UIImage(named: "profile_options_blacklist"), handle: {
                 self.show(MyProfileBlacklistVC(), sender: self)
             }, style: .profile),
-            CommunActionSheet.Action(title: "log out".localized().uppercaseFirst, icon: nil, handle: {
-                self.showAlert(title: "Logout".localized(), message: "Do you really want to logout?".localized(), buttonTitles: ["Ok".localized(), "cancel".localized().uppercaseFirst], highlightedButtonIndex: 1) { (index) in
-
-                    if index == 0 {
-                        self.navigationController?.showIndetermineHudWithMessage("logging out".localized().uppercaseFirst)
-                        RestAPIManager.instance.logout()
-                            .subscribe(onCompleted: {
-                                self.navigationController?.hideHud()
-                                AppDelegate.reloadSubject.onNext(true)
-                            }, onError: { (error) in
-                                self.navigationController?.hideHud()
-                                self.navigationController?.showError(error)
-                            })
-                            .disposed(by: self.disposeBag)
-                    }
-                }
-            }, tintColor: UIColor(hexString: "#ED2C5B")!, marginTop: 14)
+            CommunActionSheet.Action(title: "settings".localized().uppercaseFirst, icon: UIImage(named: "profile_options_settings"), handle: {
+                let vc = MyProfileSettingsVC()
+                self.show(vc, sender: self)
+            }, marginTop: 14)
+//            CommunActionSheet.Action(title: "logout".localized().uppercaseFirst, icon: nil, handle: {
+//                self.showAlert(title: "Logout".localized(), message: "Do you really want to logout?".localized(), buttonTitles: ["Ok".localized(), "cancel".localized().uppercaseFirst], highlightedButtonIndex: 1) { (index) in
+//
+//                    if index == 0 {
+//                        self.navigationController?.showIndetermineHudWithMessage("logging out".localized().uppercaseFirst)
+//                        RestAPIManager.instance.logout()
+//                            .subscribe(onCompleted: {
+//                                self.navigationController?.hideHud()
+//                                AppDelegate.reloadSubject.onNext(true)
+//                            }, onError: { (error) in
+//                                self.navigationController?.hideHud()
+//                                self.navigationController?.showError(error)
+//                            })
+//                            .disposed(by: self.disposeBag)
+//                    }
+//                }
+//            }, tintColor: UIColor(hexString: "#ED2C5B")!, marginTop: 14)
         ]) {
             
         }

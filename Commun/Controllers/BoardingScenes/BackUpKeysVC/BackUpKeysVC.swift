@@ -14,7 +14,7 @@ class BackUpKeysVC: BoardingVC {
     override var nextStep: CurrentUserSettingStep? {.setPasscode}
 
     lazy var copyButton = UIButton.circle(size: 24, backgroundColor: .a5a7bd, tintColor: .white, imageName: "copy", imageEdgeInsets: UIEdgeInsets(inset: 6))
-    lazy var backUpICloudButton = CommunButton.default(height: 50, label: "backup iCloud".localized().uppercaseFirst)
+    lazy var backUpICloudButton = CommunButton.default(height: 50 * Config.heightRatio, label: "backup iCloud".localized().uppercaseFirst)
 
     lazy var iSavedItButton: UIButton = {
         let button = UIButton(label: "i saved it".localized().uppercaseFirst, textColor: .appMainColor, contentInsets: UIEdgeInsets(top: 10, left: 100, bottom: 10, right: 100))
@@ -105,20 +105,42 @@ class BackUpKeysVC: BoardingVC {
     }
     
     @objc func iSavedItButtonDidTouch() {
-        let masterPasswordAttentionView = MasterPasswordAttention(forAutoLayout: ())
+        let masterPasswordAttentionView = MasterPasswordAttention(withFrame: CGRect(origin: .zero, size: CGSize(width: .adaptive(width: 355.0), height: .adaptive(height: 581.0))))
+            //MasterPasswordAttention(forAutoLayout: ())
         masterPasswordAttentionView.ignoreSavingAction = {
             self.next()
         }
         showCardWithView(masterPasswordAttentionView)
     }
-    
+
+    var backupAlert: UIAlertController?
     @objc func backupIcloudDidTouch() {
         save()
+        if let user = Config.currentUser, let userName = user.name, let password = user.masterKey {
+            var domain = "dev.commun.com"
+            #if APPSTORE
+                domain = "commun.com"
+            #endif
+
+            SecAddSharedWebCredential(domain as CFString, userName as CFString, password as CFString) { [weak self] (error) in
+                DispatchQueue.main.async {
+                    if error != nil {
+                        self?.backupAlert = self?.showAlert(title: "oops, we couldn’t save your password in iCloud!".localized().uppercaseFirst, message: "You need to enable Keychain, then your password will be safe and sound.\nGo to your phone Settings\nthen to Passwords & Accounts > AutoFill Passwords > Enable Keychain".localized().uppercaseFirst, buttonTitles: ["retry".localized().uppercaseFirst, "cancel".localized().uppercaseFirst], highlightedButtonIndex: 0) { (index) in
+                            if index == 0 {
+                                self?.backupIcloudDidTouch()
+                            }
+                            self?.backupAlert?.dismiss(animated: true, completion: nil)
+                        }
+                    } else {
+                        self?.next()
+                        AnalyticsManger.shared.passwordBackuped()
+                    }
+                }
+            }
+        }
     }
     
     func save() {
-        AnalyticsManger.shared.passwordBackuped()
         RestAPIManager.instance.backUpICloud()
-        next()
     }
 }

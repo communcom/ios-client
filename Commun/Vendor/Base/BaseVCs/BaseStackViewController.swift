@@ -23,7 +23,7 @@ class BaseVerticalStackViewController: BaseViewController {
     }
     
     // MARK: - Subviews
-    lazy var scrollView = ContentHuggingScrollView(forAutoLayout: ())
+    lazy var scrollView = ContentHuggingScrollView(axis: .horizontal)
     lazy var stackView = UIStackView(axis: .vertical, spacing: 2)
     
     // MARK: - Properties

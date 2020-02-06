@@ -13,7 +13,7 @@ import RxDataSources
 class CommunityMembersVC: BaseViewController, LeaderCellDelegate, ProfileCellDelegate {
     // MARK: - Nested type
     enum CustomElementType: IdentifiableType, Equatable {
-        case subscriber(ResponseAPIContentResolveProfile)
+        case subscriber(ResponseAPIContentGetProfile)
         case leader(ResponseAPIContentGetLeader)
         
         var identity: String {
@@ -32,7 +32,7 @@ class CommunityMembersVC: BaseViewController, LeaderCellDelegate, ProfileCellDel
     
     // MARK: - Subviews
     lazy var topTabBar = CMTopTabBar(
-        height: 50,
+        height: 35,
         labels: CommunityMembersViewModel.SegmentedItem.allCases.map {$0.rawValue.localized().uppercaseFirst},
         selectedIndex: selectedSegmentedItem.index)
     
@@ -41,7 +41,7 @@ class CommunityMembersVC: BaseViewController, LeaderCellDelegate, ProfileCellDel
         tableView.backgroundColor = .clear
         tableView.insetsContentViewsToSafeArea = false
         tableView.contentInsetAdjustmentBehavior = .never
-        tableView.contentInset = UIEdgeInsets(top: 10, left: -10, bottom: 0, right: 0)
+        tableView.contentInset = UIEdgeInsets(top: 10, left: 0, bottom: 0, right: 0)
         tableView.showsVerticalScrollIndicator = false
         return tableView
     }()
@@ -79,13 +79,13 @@ class CommunityMembersVC: BaseViewController, LeaderCellDelegate, ProfileCellDel
         topBarContainerView.autoPinEdgesToSuperviewSafeArea(with: .zero, excludingEdge: .bottom)
         
         topBarContainerView.addSubview(topTabBar)
-        topTabBar.autoPinEdge(toSuperviewEdge: .leading)
-        topTabBar.autoPinEdge(toSuperviewEdge: .trailing)
+        topTabBar.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
+        topTabBar.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
         topTabBar.autoAlignAxis(toSuperviewAxis: .horizontal)
         
         // tableView
         view.addSubview(tableView)
-        tableView.autoPinEdgesToSuperviewSafeArea(with: UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 0), excludingEdge: .top)
+        tableView.autoPinEdgesToSuperviewSafeArea(with: UIEdgeInsets(inset: 10), excludingEdge: .top)
         tableView.autoPinEdge(.top, to: .bottom, of: topBarContainerView)
         
         tableView.backgroundColor = .f3f5fa

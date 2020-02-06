@@ -24,8 +24,7 @@ class MyAvatarImageView: MyView {
     
     private lazy var imageView: UIImageView = {
         let imageView = UIImageView(forAutoLayout: ())
-        imageView.image = .placeholder
-        imageView.backgroundColor = UIColor(hexString: "#F3F5FA")
+        imageView.image = UIImage(named: "empty-avatar")
         imageView.contentMode = .scaleAspectFill
         return imageView
     }()
@@ -33,6 +32,10 @@ class MyAvatarImageView: MyView {
     convenience init(size: CGFloat) {
         self.init(width: size, height: size)
         originSize = size
+        setCornerRadius(withSize: size)
+    }
+    
+    func setCornerRadius(withSize size: CGFloat) {
         cornerRadius = size / 2
         imageView.cornerRadius = (size - imageViewInsets.top - imageViewInsets.bottom) / 2
     }
@@ -67,22 +70,22 @@ class MyAvatarImageView: MyView {
     }
     
     func setAvatarDetectGif(with urlString: String?, placeholderName: String, completed: SDExternalCompletionBlock? = nil) {
-        setNonAvatarImageWithId(placeholderName)
+        image = UIImage(named: "empty-avatar")
         imageView.setImageDetectGif(with: urlString, completed: completed)
     }
     
     func setAvatar(urlString: String?, namePlaceHolder: String) {
         // profile image
         if let avatarUrl = urlString {
-            imageView.sd_setImage(with: URL(string: avatarUrl), placeholderImage: UIImage(named: "ProfilePageUserAvatar")) { [weak self] (_, error, _, _) in
+            imageView.sd_setImage(with: URL(string: avatarUrl), placeholderImage: UIImage(named: "empty-avatar")) { [weak self] (_, error, _, _) in
                 if error != nil {
                     // Placeholder image
-                    self?.setNonAvatarImageWithId(namePlaceHolder)
+                    self?.image = UIImage(named: "empty-avatar")
                 }
             }
         } else {
             // Placeholder image
-            setNonAvatarImageWithId(namePlaceHolder)
+            image = UIImage(named: "empty-avatar")
         }
     }
     

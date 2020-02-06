@@ -23,7 +23,7 @@ class SettingsVC: UIViewController {
     let currentBiometryType = LABiometryType.current
     
     var sectionHeaders: [UIView]!
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         // Configure views

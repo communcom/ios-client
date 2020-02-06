@@ -179,13 +179,13 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
             CMSegmentedControl.Item(name: "about".localized().uppercaseFirst),
             CMSegmentedControl.Item(name: "rules".localized().uppercaseFirst)
         ]
-        
-        // observe
-        observeCommunityChange()
     }
     
     func setUp(with community: ResponseAPIContentGetCommunity) {
         self.community = community
+        if self.community?.isInBlacklist == true {
+            self.community?.isSubscribed = false
+        }
         
         // avatar
         avatarImageView.setAvatar(urlString: community.avatarUrl, namePlaceHolder: community.name)

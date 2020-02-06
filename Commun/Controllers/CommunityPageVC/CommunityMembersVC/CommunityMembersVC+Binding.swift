@@ -124,7 +124,7 @@ extension CommunityMembersVC: UICollectionViewDelegateFlowLayout {
                     if let item = item as? ResponseAPIContentGetLeader {
                         return .leader(item)
                     }
-                    if let item = item as? ResponseAPIContentResolveProfile {
+                    if let item = item as? ResponseAPIContentGetProfile {
                         return .subscriber(item)
                     }
                     return nil
@@ -138,7 +138,7 @@ extension CommunityMembersVC: UICollectionViewDelegateFlowLayout {
             configureCell: { (_, _, indexPath, leader) -> UICollectionViewCell in
                 
                 if indexPath.row >= self.viewModel.leadersVM.items.value.count - 2 {
-                    self.viewModel.fetchNext()
+                    self.viewModel.leadersVM.fetchNext()
                 }
                 
                 let cell = self.headerView.leadersCollectionView.dequeueReusableCell(withReuseIdentifier: "LeaderFollowCollectionCell", for: indexPath) as! LeaderFollowCollectionCell

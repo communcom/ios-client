@@ -38,7 +38,11 @@ extension UIView {
         }
     }
     
-    func showLoading(cover: Bool = true, spinnerColor: UIColor = #colorLiteral(red: 0.4784313725, green: 0.6470588235, blue: 0.8980392157, alpha: 1)) {
+    var isLoading: Bool {
+        self.viewWithTag(9999) != nil
+    }
+    
+    func showLoading(cover: Bool = true, spinnerColor: UIColor = #colorLiteral(red: 0.4784313725, green: 0.6470588235, blue: 0.8980392157, alpha: 1), size: CGFloat? = nil, centerYOffset: CGFloat? = nil, offsetTop: CGFloat? = nil) {
         // if loading view is existed
         if self.viewWithTag(9999) != nil {return}
         
@@ -57,7 +61,7 @@ extension UIView {
         self.bringSubviewToFront(coverView)
         
         // add spinnerView
-        let size = height > 76 ? 60: height-16
+        let size = size ?? (height > 76 ? 60: height-16)
         let spinnerView = ASSpinnerView()
         spinnerView.translatesAutoresizingMaskIntoConstraints = false
         spinnerView.spinnerLineWidth = size/10
@@ -67,7 +71,12 @@ extension UIView {
         
         // add constraint for spinnerView
         spinnerView.centerXAnchor.constraint(equalTo: coverView.centerXAnchor, constant: 0).isActive = true
-        spinnerView.centerYAnchor.constraint(equalTo: coverView.centerYAnchor, constant: 0).isActive = true
+        if let offsetTop = offsetTop {
+            spinnerView.autoPinEdge(toSuperviewEdge: .top, withInset: offsetTop)
+        } else {
+            spinnerView.centerYAnchor.constraint(equalTo: coverView.centerYAnchor, constant: centerYOffset ?? 0).isActive = true
+        }
+        
         spinnerView.widthAnchor.constraint(equalToConstant: size).isActive = true
         spinnerView.heightAnchor.constraint(equalToConstant: size).isActive = true
     }

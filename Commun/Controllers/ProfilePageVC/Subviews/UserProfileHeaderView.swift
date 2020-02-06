@@ -48,14 +48,12 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
     lazy var communitiesCountLabel = UILabel.with(text: "1,2 k", textSize: 15, weight: .semibold, textColor: .a5a7bd)
     
     lazy var communitiesCollectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.sectionInset = .zero
-        layout.scrollDirection = .horizontal
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.showsHorizontalScrollIndicator = false
-        collectionView.backgroundColor = .clear
-        collectionView.configureForAutoLayout()
-        collectionView.autoSetDimension(.height, toSize: 187)
+        let collectionView = UICollectionView.horizontalFlow(
+            cellType: CommunityCollectionCell.self,
+            height: 187,
+            contentInsets: UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16),
+            backgroundColor: .clear
+        )
         collectionView.layer.masksToBounds = false
         return collectionView
     }()
@@ -68,7 +66,7 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
         
         addSubview(followersCountLabel)
         followersCountLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
-        followersCountLabel.autoPinEdge(.top, to: .bottom, of: descriptionLabel, withOffset: 18)
+        layoutTopOfFollowerCountLabel()
 
         let followersLabel = UILabel.with(text: "followers".localized().uppercaseFirst, textSize: 12, weight: .bold, textColor: .appGrayColor)
         addSubview(followersLabel)
@@ -137,9 +135,6 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
         communitiesView.addSubview(communitiesCountLabel)
         communitiesCountLabel.autoPinEdge(.top, to: .bottom, of: communitiesLabel, withOffset: 5)
         communitiesCountLabel.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
-        
-        communitiesCollectionView.register(CommunityCollectionCell.self, forCellWithReuseIdentifier: "CommunityCollectionCell")
-        communitiesCollectionView.contentInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
 
         communitiesView.addSubview(separatorForCommunities)
 
@@ -170,7 +165,6 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
             CMSegmentedControl.Item(name: "comments".localized().uppercaseFirst)
         ]
         
-        observeProfileChange()
     }
 
     private func showCommunities() {
@@ -183,6 +177,9 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
     
     func setUp(with userProfile: ResponseAPIContentGetProfile) {
         self.profile = userProfile
+        if self.profile?.isInBlacklist == true {
+            self.profile?.isSubscribed = false
+        }
         
         // avatar
         avatarImageView.setAvatar(urlString: userProfile.avatarUrl, namePlaceHolder: userProfile.username)
@@ -191,7 +188,7 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
         nameLabel.text = userProfile.username
         
         // join date
-        joinedDateLabel.text = Formatter.joinedText(with: userProfile.registration.time)
+        joinedDateLabel.text = Formatter.joinedText(with: userProfile.registration?.time)
         
         // followButton
         let isFollowing = userProfile.isSubscribed ?? false
@@ -224,6 +221,10 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
         followButton.addTarget(self, action: #selector(followButtonDidTouch(_:)), for: .touchUpInside)
         followButton.leadingAnchor.constraint(greaterThanOrEqualTo: nameLabel.trailingAnchor, constant: 8)
             .isActive = true
+    }
+    
+    func layoutTopOfFollowerCountLabel() {
+        followersCountLabel.autoPinEdge(.top, to: .bottom, of: descriptionLabel, withOffset: 18)
     }
     
     func setUpFollowButton(isFollowing: Bool) {

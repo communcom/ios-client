@@ -10,8 +10,9 @@ import UIKit
 import RxSwift
 import SwifterSwift
 import CyberSwift
+import NotificationView
 
-public let tabBarHeight: CGFloat = CGFloat.adaptive(height: 60.0) + (UIDevice.hasNotch ? UIDevice.safeAreaInsets.bottom : 0.0)
+public let tabBarHeight: CGFloat = .adaptive(height: 60.0) + (UIDevice.hasNotch ? UIDevice.safeAreaInsets.bottom : 0.0)
 
 class TabBarVC: UITabBarController {
     // MARK: - Constants
@@ -31,6 +32,15 @@ class TabBarVC: UITabBarController {
     private lazy var shadowView = UIView(height: tabBarHeight)
     lazy var tabBarStackView = UIStackView(forAutoLayout: ())
     
+    // Notification
+    private lazy var notificationsItem = buttonTabBarItem(image: UIImage(named: "notifications")!, tag: notificationTabIndex)
+    private lazy var notificationRedMark: UIView = {
+        let notificationRedMark = UIView(width: 10, height: 10, backgroundColor: .ed2c5b, cornerRadius: 5)
+        notificationRedMark.borderColor = .white
+        notificationRedMark.borderWidth = 1
+        return notificationRedMark
+    }()
+    
     // MARK: - Methods
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,7 +52,7 @@ class TabBarVC: UITabBarController {
         configTabs()
         
         // bind view model
-        bindViewModel()
+        bind()
     }
     
     func setTabBarHiden(_ hide: Bool) {
@@ -52,6 +62,19 @@ class TabBarVC: UITabBarController {
         } else {
             shadowView.isHidden = false
             shadowView.heightConstraint?.constant = tabBarHeight
+        }
+    }
+    
+    func setNotificationRedMarkHidden(_ hide: Bool) {
+        if hide {
+            notificationRedMark.removeFromSuperview()
+            return
+        }
+        
+        if !notificationRedMark.isDescendant(of: notificationsItem) {
+            notificationsItem.addSubview(notificationRedMark)
+            notificationRedMark.centerXAnchor.constraint(equalTo: notificationsItem.centerXAnchor, constant: 6).isActive = true
+            notificationRedMark.autoPinEdge(toSuperviewEdge: .top)
         }
     }
     
@@ -101,18 +124,10 @@ class TabBarVC: UITabBarController {
         comunities.accessibilityLabel = "TabBarComunitiesTabBarItem"
         
         // Notifications Tab
-//        let notifications = NotificationsPageVC()
-//        let notificationsNC = BaseNavigationController(rootViewController: notifications, tabBarVC: self)
-//        let notificationsItem = buttonTabBarItem(image: UIImage(named: "notifications")!, tag: notificationTabIndex)
-//        notificationsNC.navigationBar.prefersLargeTitles = true
-//        notifications.accessibilityLabel = "TabBarNotificationsTabBarItem"
-
-        // Following Tab
-        let followings = SubscriptionsVC()
-        let followingsNC = BaseNavigationController(rootViewController: followings, tabBarVC: self)
-        let followingsItem = buttonTabBarItem(image: UIImage(named: "tabbar-community")!, tag: notificationTabIndex)
-        followingsNC.navigationBar.prefersLargeTitles = false
-        followings.accessibilityLabel = "TabBarNotificationsTabBarItem"
+        let notifications = NotificationsPageVC()
+        let notificationsNC = BaseNavigationController(rootViewController: notifications, tabBarVC: self)
+        notificationsNC.navigationBar.prefersLargeTitles = true
+        notifications.accessibilityLabel = "TabBarNotificationsTabBarItem"
 
         // Profile Tab
         let profile = MyProfilePageVC()
@@ -122,13 +137,13 @@ class TabBarVC: UITabBarController {
         profileNC.navigationBar.tintColor = UIColor.appMainColor
 
         // Set up controllers
-        viewControllers = [feedNC, communitiesNC, /* wallet,*/ followingsNC, profileNC]
+        viewControllers = [feedNC, communitiesNC, /* wallet,*/ notificationsNC, profileNC]
         
         tabBarStackView.addArrangedSubviews([
             feedItem,
             communitiesItem,
             tabBarItemAdd,
-            followingsItem,
+            notificationsItem,
             profileItem
         ])
                 
@@ -149,15 +164,18 @@ class TabBarVC: UITabBarController {
     var tabBarItemAdd: UIButton {
         let button = UIButton(type: .system)
         
-        let view = UIView(width: 45, height: 45, backgroundColor: .appMainColor)
-        view.cornerRadius = 45 / 2
+        let itemSize: CGFloat = .adaptive(height: 45)
+        let itemPadding: CGFloat = .adaptive(height: 14)
+        
+        let view = UIView(width: itemSize, height: itemSize, backgroundColor: .appMainColor)
+        view.cornerRadius = itemSize / 2
         
         let imageView = UIImageView(image: UIImage(named: "add"))
         imageView.configureForAutoLayout()
         imageView.tintColor = .white
         
         view.addSubview(imageView)
-        imageView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 14, left: 14, bottom: 14, right: 14))
+        imageView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: itemPadding, left: itemPadding, bottom: itemPadding, right: itemPadding))
         
         button.addSubview(view)
         view.autoAlignAxis(toSuperviewAxis: .vertical)
@@ -199,35 +217,106 @@ class TabBarVC: UITabBarController {
         for item in unselectedItems {
             item.tintColor = unselectedColor
         }
+        
+        // markAllAsViewed
+        if let nc = selectedViewController as? BaseNavigationController,
+            let vc = nc.topViewController as? NotificationsPageVC
+        {
+            let vm = vc.viewModel as! NotificationsPageViewModel
+            vm.items
+                .filter {$0.count > 0}
+                .take(1)
+                .asSingle()
+                .subscribe(onSuccess: { (items) in
+                    guard let timestamp = items.first?.timestamp else {
+                        return
+                    }
+                    vm.markAllAsViewed(timestamp: timestamp)
+                })
+                .disposed(by: bag)
+        }
     }
     
     @objc func buttonAddTapped() {
-        // open basic editor
-        let vc = BasicEditorVC()
-        vc.modalPresentationStyle = .fullScreen
-        self.present(vc, animated: true, completion: nil)
-        
-        // or select editor ???
-//        showActionSheet(title: "choose an editor".localized().uppercaseFirst, actions: [
-//            UIAlertAction(title: "basic editor".localized().uppercaseFirst, style: .default, handler: { (_) in
-//                let vc = BasicEditorVC()
-//                vc.modalPresentationStyle = .fullScreen
-//                self.present(vc, animated: true, completion: nil)
-//            }),
-//            UIAlertAction(title: "article editor".localized().uppercaseFirst, style: .default, handler: { (_) in
-//                let vc = ArticleEditorVC()
-//                vc.modalPresentationStyle = .fullScreen
-//                self.present(vc, animated: true, completion: nil)
-//            }),
-//        ])
+        let basicEditorScene = BasicEditorVC()
+        basicEditorScene.modalPresentationStyle = .fullScreen
+        self.present(basicEditorScene, animated: true, completion: nil)
     }
+    
+    func bind() {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        appDelegate.notificationTappedRelay
+            .skipWhile {$0 == .empty}
+            .subscribe(onNext: { (item) in
+                self.selectedViewController?.navigateWithNotificationItem(item)
+            })
+            .disposed(by: bag)
+        
+        appDelegate.deepLinkPath
+            .filter {!$0.isEmpty}
+            .subscribe(onNext: { (path) in
+                self.navigateWithDeeplinkPath(path)
+            })
+            .disposed(by: bag)
+        
+        SocketManager.shared
+            .unseenNotificationsRelay
+            .subscribe(onNext: { (unseen) in
+                self.setNotificationRedMarkHidden(unseen == 0)
+                
+                if let nc = self.selectedViewController as? BaseNavigationController,
+                    let vc = nc.topViewController as? NotificationsPageVC
+                {
+                    let vm = vc.viewModel as? NotificationsPageViewModel
+                    vm?.markAllAsViewed(timestamp: Date().string())
+                }
+            })
+            .disposed(by: bag)
+        
+        // in-app notifications
+        SocketManager.shared.newNotificationsRelay
+            .filter {$0.count > 0}
+            .subscribe(onNext: { (items) in
+                guard let notif = items.last else {return}
+                self.showNotificationViewWithNotification(notif)
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    private func navigateWithDeeplinkPath(_ path: [String]) {
+        guard path.count == 1 || path.count == 3 else {return}
+        if path.count == 1 {
+            if path[0].starts(with: "@") {
+                // user's profile
+                let userId = String(path[0].dropFirst())
+                self.selectedViewController?.showProfileWithUserId(userId)
+            } else {
+                // community
+                let alias = path[0]
+                self.selectedViewController?.showCommunityWithCommunityAlias(alias)
+            }
+        } else {
+            let communityAlias = path[0]
+            let username = String(path[1].dropFirst())
+            let permlink = path[2]
+            
+            let postVC = PostPageVC(username: username, permlink: permlink, communityAlias: communityAlias)
+            self.selectedViewController?.show(postVC, sender: nil)
+        }
+    }
+    
+    private func showNotificationViewWithNotification(_ notification: ResponseAPIGetNotificationItem) {
+        let notificationView = NotificationView.default
+        notificationView.body = notification.content
+        notificationView.identifier = notification.identity
+        notificationView.delegate = self
+        notificationView.show()
+    }
+}
 
-    func bindViewModel() {
-        // Get number of fresh notifications
-//        viewModel.getFreshCount()
-//            .asDriver(onErrorJustReturn: 0)
-//            .map {$0 > 0 ? "\($0)" : nil}
-//            .drive(tabBar.items!.first(where: {$0.tag == 4})!.rx.badgeValue)
-//            .disposed(by: bag)
+extension TabBarVC: NotificationViewDelegate {
+    func notificationViewDidTap(_ notificationView: NotificationView) {
+        guard let notif = SocketManager.shared.newNotificationsRelay.value.first(where: {$0.identity == notificationView.identifier}) else {return}
+        (UIApplication.shared.delegate as! AppDelegate).notificationTappedRelay.accept(notif)
     }
 }

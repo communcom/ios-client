@@ -13,6 +13,9 @@ import RxSwift
 class CommentsViewController: ListViewController<ResponseAPIContentGetComment, CommentCell>, CommentCellDelegate {
     // MARK: - Properties
     lazy var expandedComments = [ResponseAPIContentGetComment]()
+    var commentsListViewModel: ListViewModel<ResponseAPIContentGetComment> {
+        return viewModel
+    }
     
     // MARK: - Subviews
     override var tableView: UITableView {

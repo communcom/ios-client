@@ -9,8 +9,8 @@
 import Foundation
 import RxSwift
 
-class FriendsViewModel: ListViewModel<ResponseAPIContentResolveProfile> {
-    init(friends: [ResponseAPIContentResolveProfile]) {
+class FriendsViewModel: ListViewModel<ResponseAPIContentGetProfile> {
+    init(friends: [ResponseAPIContentGetProfile]) {
         // dummy fetcher
         let fetcher = SubscribersListFetcher()
         super.init(fetcher: fetcher)
@@ -19,7 +19,7 @@ class FriendsViewModel: ListViewModel<ResponseAPIContentResolveProfile> {
         }
     }
     
-    func accept(_ friends: [ResponseAPIContentResolveProfile]) {
+    func accept(_ friends: [ResponseAPIContentGetProfile]) {
         var friends = friends
         for i in 0..<friends.count {
             friends[i].isSubscribed = true
@@ -27,7 +27,7 @@ class FriendsViewModel: ListViewModel<ResponseAPIContentResolveProfile> {
         items.accept(friends)
     }
     
-    override func updateItem(_ updatedItem: ResponseAPIContentResolveProfile) {
+    override func updateItem(_ updatedItem: ResponseAPIContentGetProfile) {
         var newItems = fetcher.items.value
         guard let index = newItems.firstIndex(where: {$0.identity == updatedItem.identity}) else {
             if updatedItem.isSubscribed == true {
@@ -52,7 +52,7 @@ class FriendsViewModel: ListViewModel<ResponseAPIContentResolveProfile> {
         super.observeItemChange()
         
         ResponseAPIContentGetLeader.observeItemChanged()
-            .map {ResponseAPIContentResolveProfile(leader: $0)}
+            .map {ResponseAPIContentGetProfile(leader: $0)}
             .subscribe(onNext: { (profile) in
                 self.updateItem(profile)
             })

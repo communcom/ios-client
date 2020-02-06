@@ -16,7 +16,7 @@ class ReportVC: BaseVerticalStackViewController {
     
     // MARK: - Initializers
     init() {
-        super.init(actions: RestAPIManager.ReportReason.allCases.map({ (reason) -> Action in
+        super.init(actions: BlockchainManager.ReportReason.allCases.map({ (reason) -> Action in
             Action(title: reason.rawValue, icon: nil)
         }))
     }
@@ -60,7 +60,7 @@ class ReportVC: BaseVerticalStackViewController {
         descriptionLabel.autoAlignAxis(toSuperviewAxis: .horizontal)
         descriptionLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
         
-        let sendButton = CommunButton.default(height: 50, label: "send".localized().uppercaseFirst)
+        let sendButton = CommunButton.default(height: 50 * Config.heightRatio, label: "send".localized().uppercaseFirst)
         scrollView.contentView.addSubview(sendButton)
         sendButton.autoPinEdge(.top, to: .bottom, of: alertView, withOffset: 30)
         sendButton.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)

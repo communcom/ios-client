@@ -17,48 +17,52 @@ class PostCell: MyTableViewCell, ListItemCellType {
     
     // MARK: - Subviews
     private func createDescriptionLabel() -> UILabel {
-        UILabel.with(textSize: 12, weight: .medium, textColor: UIColor(hexString: "#A5A7BD")!, numberOfLines: 1)
+        UILabel.with(textSize: .adaptive(width: 12.0), weight: .medium, textColor: #colorLiteral(red: 0.6470588235, green: 0.6549019608, blue: 0.7411764706, alpha: 1), numberOfLines: 1)
     }
     
-    lazy var metaView: PostMetaView = {
-        // headerView for actionSheet
-        let headerView = PostMetaView(height: 40)
-        return headerView
-    }()
+    lazy var metaView = PostMetaView(height: .adaptive(height: 40.0))
     
-    lazy var moreActionsButton: UIButton = {
-        let button = UIButton(width: 40, height: 40)
-        button.setImage(UIImage(named: "icon-post-cell-more-center-default"), for: .normal)
-        button.addTarget(self, action: #selector(menuButtonTapped(button:)), for: .touchUpInside)
-        return button
+    lazy var moreActionButton: UIButton = {
+        let moreActionButtonInstance = UIButton(width: .adaptive(width: 40.0), height: .adaptive(width: 40.0))
+        moreActionButtonInstance.tintColor = .appGrayColor
+        moreActionButtonInstance.setImage(UIImage(named: "icon-post-cell-more-center-default"), for: .normal)
+        moreActionButtonInstance.addTarget(self, action: #selector(moreActionsButtonTapped), for: .touchUpInside)
+        
+        return moreActionButtonInstance
     }()
-    
+
     lazy var voteContainerView: VoteContainerView = VoteContainerView(height: voteActionsContainerViewHeight, cornerRadius: voteActionsContainerViewHeight / 2)
     
     lazy var sharesCountLabel = self.createDescriptionLabel()
+    
     lazy var shareButton: UIButton = {
         let button = UIButton(width: 20, height: 18)
         button.setImage(UIImage(named: "share-count"), for: .normal)
         button.addTarget(self, action: #selector(shareButtonTapped(button:)), for: .touchUpInside)
         button.touchAreaEdgeInsets = UIEdgeInsets(top: -11, left: -13, bottom: -11, right: -13)
+        
         return button
     }()
     
     // Number of views
     lazy var viewsCountLabel = self.createDescriptionLabel()
+   
     lazy var viewsCountButton: UIButton = {
         let button = UIButton(width: 24, height: 16)
         button.setImage(UIImage(named: "icon-views-count-gray-default"), for: .normal)
         button.touchAreaEdgeInsets = UIEdgeInsets(top: -14, left: -10, bottom: -14, right: -10)
+        
         return button
     }()
 
     // Number of comments
     lazy var commentsCountLabel = self.createDescriptionLabel()
+    
     lazy var commentsCountButton: UIButton = {
         let button = UIButton(width: 20, height: 18)
         button.setImage(UIImage(named: "comment-count"), for: .normal)
         button.touchAreaEdgeInsets = UIEdgeInsets(top: -11, left: -13, bottom: -11, right: -13)
+        
         return button
     }()
     
@@ -70,49 +74,38 @@ class PostCell: MyTableViewCell, ListItemCellType {
         
         // Meta view
         contentView.addSubview(metaView)
-        metaView.autoPinEdge(toSuperviewEdge: .top, withInset: 16)
-        metaView.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
-        
-        // moreActionsButton
-        contentView.addSubview(moreActionsButton)
-        moreActionsButton.autoPinEdge(toSuperviewEdge: .top, withInset: 16)
-        moreActionsButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 0)
-        
-        metaView.autoPinEdge(.trailing, to: .leading, of: moreActionsButton, withOffset: -8)
-        
+        metaView.autoPinEdge(toSuperviewEdge: .top, withInset: .adaptive(height: 16.0))
+        metaView.autoPinEdge(toSuperviewEdge: .leading, withInset: .adaptive(width: 16.0))
+
+        // moreAction buttons
+        contentView.addSubview(moreActionButton)
+        moreActionButton.autoPinTopAndTrailingToSuperView(inset: .adaptive(height: 16.0), xInset: .adaptive(width: 4.0))
+        metaView.autoPinEdge(.trailing, to: .leading, of: moreActionButton, withOffset: .adaptive(width: 4.0))
+
         // action buttons
         contentView.addSubview(voteContainerView)
-        voteContainerView.autoPinEdge(toSuperviewEdge: .leading, withInset: 16)
+        voteContainerView.autoPinEdge(toSuperviewEdge: .leading, withInset: .adaptive(width: 16.0))
 
         voteContainerView.upVoteButton.addTarget(self, action: #selector(upVoteButtonTapped(button:)), for: .touchUpInside)
         voteContainerView.downVoteButton.addTarget(self, action: #selector(downVoteButtonTapped(button:)), for: .touchUpInside)
 
         // Shares
         contentView.addSubview(shareButton)
-        shareButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: 16)
+        shareButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: .adaptive(width: 16.0))
         shareButton.autoAlignAxis(.horizontal, toSameAxisOf: voteContainerView)
 
         // Comments
         contentView.addSubview(commentsCountLabel)
-        commentsCountLabel.autoPinEdge(.trailing, to: .leading, of: shareButton, withOffset: -23)
+        commentsCountLabel.autoPinEdge(.trailing, to: .leading, of: shareButton, withOffset: .adaptive(width: -23.0))
         commentsCountLabel.autoAlignAxis(.horizontal, toSameAxisOf: voteContainerView)
+       
         contentView.addSubview(commentsCountButton)
-        commentsCountButton.autoPinEdge(.trailing, to: .leading, of: commentsCountLabel, withOffset: -8)
+        commentsCountButton.autoPinEdge(.trailing, to: .leading, of: commentsCountLabel, withOffset: .adaptive(width: -8.0))
         commentsCountButton.autoAlignAxis(.horizontal, toSameAxisOf: voteContainerView)
         commentsCountButton.addTarget(self, action: #selector(commentCountsButtonDidTouch), for: .touchUpInside)
-        
-        // Views
-        // temp hide
-//        contentView.addSubview(viewsCountLabel)
-//        viewsCountLabel.autoPinEdge(.trailing, to: .leading, of: commentsCountButton, withOffset: -23)
-//        viewsCountLabel.autoAlignAxis(.horizontal, toSameAxisOf: voteContainerView)
-//        contentView.addSubview(viewsCountButton)
-//        viewsCountButton.autoPinEdge(.trailing, to: .leading, of: viewsCountLabel, withOffset: -8)
-//        viewsCountButton.autoAlignAxis(.horizontal, toSameAxisOf: voteContainerView)
-//        viewsCountButton.addTarget(self, action: #selector(commentCountsButtonDidTouch), for: .touchUpInside)
 
         // separator
-        let separatorView = UIView(height: 10)
+        let separatorView = UIView(height: .adaptive(height: 10.0))
         separatorView.backgroundColor = #colorLiteral(red: 0.9599978328, green: 0.966491878, blue: 0.9829974771, alpha: 1)
         contentView.addSubview(separatorView)
         separatorView.autoPinEdge(.top, to: .bottom, of: voteContainerView, withOffset: 10)
@@ -140,7 +133,14 @@ class PostCell: MyTableViewCell, ListItemCellType {
         self.viewsCountLabel.text = "\(post.stats?.viewCount ?? 0)"
 
         // Shares count
-        //TODO: change this number later
+        // TODO: change this number later
         self.sharesCountLabel.text = "\(post.stats?.viewCount ?? 0)"
+        
+        // State action button: set value & button width
+        metaView.stateButton.isHidden = true
+        
+        if let mosaic = post.mosaic {
+            metaView.set(mosaic: mosaic)
+        }
     }
 }

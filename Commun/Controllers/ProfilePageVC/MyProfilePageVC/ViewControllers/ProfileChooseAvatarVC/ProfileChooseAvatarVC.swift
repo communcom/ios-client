@@ -21,6 +21,7 @@ class ProfileChooseAvatarVC: UIViewController {
     
     var viewModel = ProfileChooseAvatarViewModel()
     private let bag = DisposeBag()
+    var currentAsset: PHAsset?
     
     private let itemsInARow: CGFloat = 4
 
@@ -44,11 +45,24 @@ class ProfileChooseAvatarVC: UIViewController {
     
     func bindUI() {
         // bind avatar
-        viewModel.avatar
-            .filter {$0 != nil}
-            .map {$0!}
-            .bind(to: avatarImageView.rx.image)
-            .disposed(by: bag)
+        if let urlString = UserDefaults.standard.string(forKey: Config.currentUserAvatarUrlKey),
+            let url = URL(string: urlString)
+        {
+            avatarImageView.sd_setImage(with: url, completed: nil)
+        } else {
+            viewModel.phAssets
+                .filter {$0.count > 0}
+                .take(1)
+                .asSingle()
+                .subscribe(onSuccess: { (assets) in
+                    guard let asset = assets.first else {return}
+                    self.currentAsset = asset
+                    self.loadImage(with: asset) { [weak self] (image) in
+                        self?.updateImage(image)
+                    }
+                })
+                .disposed(by: bag)
+        }
         
         // request permission
         viewModel.authorizationStatus
@@ -76,16 +90,11 @@ class ProfileChooseAvatarVC: UIViewController {
                 cell.setUp(with: asset)
             }
             .disposed(by: bag)
-
-        viewModel.phAssets.elementAt(0).subscribe { (event) in
-            self.loadImage(with: event.element?.first) { [weak self] (image) in
-                self?.updateImage(image)
-            }
-        }.disposed(by: bag)
         
         // item selected
         self.collectionView.rx.modelSelected(PHAsset.self)
             .subscribe(onNext: {asset in
+                self.currentAsset = asset
                 self.loadImage(with: asset) { [weak self] (image) in
                     self?.updateImage(image)
                 }
@@ -108,10 +117,19 @@ class ProfileChooseAvatarVC: UIViewController {
         guard let asset = asset else { return }
         let manager = PHImageManager.default()
         let option = PHImageRequestOptions()
-        option.isSynchronous = true
-        option.deliveryMode = .highQualityFormat
+        option.deliveryMode = .opportunistic
+        option.isSynchronous = false
+        option.isNetworkAccessAllowed = true
 
-        manager.requestImage(for: asset, targetSize: PHImageManagerMaximumSize, contentMode: .aspectFill, options: option) { (image, _) in
+        avatarScrollView.showLoading(cover: false, spinnerColor: .white)
+        
+        manager.requestImage(for: asset, targetSize: PHImageManagerMaximumSize, contentMode: .aspectFill, options: option) { [weak self] (image, info) in
+            if asset != self?.currentAsset {return}
+            let degraded = info?[PHImageResultIsDegradedKey] as? NSNumber
+
+            if degraded != nil && !degraded!.boolValue {
+                self?.avatarScrollView.hideLoading()
+            }
             completion(image)
         }
     }

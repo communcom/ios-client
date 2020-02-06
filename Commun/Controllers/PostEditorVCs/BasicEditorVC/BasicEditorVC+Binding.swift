@@ -15,9 +15,9 @@ extension BasicEditorVC {
         
         // Parse link inside text
         contentTextView.rx.text
-            .filter {_ in !self.isParsingPost}
             .debounce(0.3, scheduler: MainScheduler.instance)
             .subscribe(onNext: { (text) in
+                if text == self.contentTextView.originalAttributedString?.string {return}
                 // ignore if one or more attachment existed
                 if self._viewModel.attachment.value != nil ||
                     self.link != nil {return}

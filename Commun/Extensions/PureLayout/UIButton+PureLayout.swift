@@ -33,7 +33,12 @@ extension UIButton {
             self.cornerRadius = cornerRadius
         }
         if let contentInsets = contentInsets {
-            contentEdgeInsets = contentInsets
+            if contentInsets == .zero {
+                // After some experimentation, it appears that if you try and set contentEdgeInsets to all zeros, the default insets are used. However, if you set them to nearly zero, it works:
+                contentEdgeInsets = UIEdgeInsets(top: 0, left: 0.01, bottom: 0.01, right: 0)
+            } else {
+                contentEdgeInsets = contentInsets
+            }
         }
     }
     
@@ -112,18 +117,18 @@ extension UIButton {
         return button
     }
     
-    static func back(tintColor: UIColor = .black, contentInsets: UIEdgeInsets = UIEdgeInsets(top: 11, left: 0, bottom: 11, right: 30)) -> UIButton {
-        let button = UIButton(width: 40, height: 40)
+    static func back(width: CGFloat = 40, height: CGFloat = 40, tintColor: UIColor = .black, contentInsets: UIEdgeInsets = UIEdgeInsets(top: 11, left: 0, bottom: 11, right: 30)) -> UIButton {
+        let button = UIButton(width: width, height: height)
         button.tintColor = tintColor
         button.setImage(UIImage(named: "back-button"), for: .normal)
         button.touchAreaEdgeInsets = UIEdgeInsets(inset: -2)
         return button
     }
     
-    static func option(tintColor: UIColor = .black, contentInsets: UIEdgeInsets = UIEdgeInsets(top: 12, left: 16, bottom: 12, right: 16)) -> UIButton {
+    static func option(tintColor: UIColor = .black, contentInsets: UIEdgeInsets = UIEdgeInsets(top: 8, left: 6, bottom: 8, right: 6)) -> UIButton {
         let button = UIButton(width: 36, height: 40, contentInsets: contentInsets)
         button.tintColor = tintColor
-        button.setImage(UIImage(named: "postpage-more"), for: .normal)
+        button.setImage(UIImage(named: "icon-post-cell-more-center-default"), for: .normal)
         button.touchAreaEdgeInsets = UIEdgeInsets(inset: -2)
         button.contentEdgeInsets = contentInsets
         return button

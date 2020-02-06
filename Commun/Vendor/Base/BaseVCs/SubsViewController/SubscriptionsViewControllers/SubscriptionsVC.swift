@@ -16,7 +16,7 @@ class SubscriptionsVC: SubsViewController<ResponseAPIContentGetSubscriptionsItem
     private var isNeedHideCloseButton = false
     
     // MARK: - Class Initialization
-    init(title: String? = nil, userId: String?, type: GetSubscriptionsType) {
+    init(title: String? = nil, userId: String? = nil, type: GetSubscriptionsType) {
         let viewModel = SubscriptionsViewModel(userId: userId, type: type)
         super.init(viewModel: viewModel)
         defer {self.title = title}
@@ -24,17 +24,6 @@ class SubscriptionsVC: SubsViewController<ResponseAPIContentGetSubscriptionsItem
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-    init() {
-        self.isNeedHideCloseButton = true
-        let viewModel = SubscriptionsViewModel(userId: nil, type: .user)
-        super.init(viewModel: viewModel)
-        defer {self.title = "followings".localized().uppercaseFirst}
-    }
-
-    deinit {
-        Logger.log(message: "Success", event: .severe)
     }
 
     // MARK: - Class Functions

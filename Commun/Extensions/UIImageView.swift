@@ -37,12 +37,12 @@ extension UIImageView {
             sd_setImage(with: URL(string: avatarUrl), placeholderImage: UIImage(named: "ProfilePageUserAvatar")) { [weak self] (_, error, _, _) in
                 if error != nil {
                     // Placeholder image
-                    self?.setNonAvatarImageWithId(namePlaceHolder)
+                    self?.image = UIImage(named: "empty-avatar")
                 }
             }
         } else {
             // Placeholder image
-            setNonAvatarImageWithId(namePlaceHolder)
+            image = UIImage(named: "empty-avatar")
         }
     }
     
@@ -61,20 +61,26 @@ extension UIImageView {
          }
      }
 
-    func setImageDetectGif(with urlString: String?, completed: SDExternalCompletionBlock? = nil) {
+    func setImageDetectGif(with urlString: String?, completed: SDExternalCompletionBlock? = nil, customWidth: CGFloat? = nil) {
         guard let urlString = urlString,
             let url = URL(string: urlString)
         else {return}
         if urlString.lowercased().ends(with: ".gif") {
             setGifFromURL(url)
         } else {
-            downloadImageFromUrl(url, placeholderImage: image)
+            downloadImageFromUrl(url, placeholderImage: image, customWidth: customWidth)
         }
     }
 
-    private func downloadImageFromUrl(_ url: URL, placeholderImage: UIImage?) {
+    private func downloadImageFromUrl(_ url: URL, placeholderImage: UIImage?, customWidth: CGFloat? = nil) {
         var newUrl = url
         var placeholderUrl: URL?
+        var width = bounds.width
+        showBlur(false)
+
+        if let customWidth = customWidth {
+            width = customWidth
+        }
 
         // resize image
         if url.host == "img.commun.com" {
@@ -83,7 +89,7 @@ extension UIImageView {
                 newUrl = url.deletingLastPathComponent()
                 placeholderUrl = newUrl.appendingPathComponent("20x0")
                 placeholderUrl = placeholderUrl?.appendingPathComponent((components.last)!)
-                newUrl = newUrl.appendingPathComponent("\(UInt(bounds.width * 1.5))x0")
+                newUrl = newUrl.appendingPathComponent("\(UInt(width * 1.5))x0")
                 newUrl = newUrl.appendingPathComponent((components.last)!)
             }
         }
@@ -91,8 +97,10 @@ extension UIImageView {
         showLoading(cover: false, spinnerColor: .white)
 
         if let placeholderUrl = placeholderUrl {
+            showBlur(true)
             sd_setImage(with: placeholderUrl, placeholderImage: nil) { [weak self] (image, _, _, _) in
                 self?.sd_setImage(with: newUrl, placeholderImage: image) { [weak self] (image, _, _, _) in
+                    self?.showBlur(false)
                     self?.hideLoading()
                     if image == nil {
                         self?.sd_setImageCachedError(with: newUrl, completion: nil)
@@ -107,12 +115,31 @@ extension UIImageView {
     }
 
     private func showBlur(_ show: Bool) {
+        if !UIAccessibility.isReduceTransparencyEnabled {
+            self.viewWithTag(9435)?.removeFromSuperview()
+            if show {
+                let blurEffect = UIBlurEffect(style: .light)
+                let blurEffectView = UIVisualEffectView(effect: blurEffect)
+                blurEffectView.tag = 9435
+                //always fill the view
+                blurEffectView.frame = self.bounds
+                blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
 
+                addSubview(blurEffectView)
+            }
+        }
+        if let loadingView = viewWithTag(9999) {
+            self.bringSubviewToFront(loadingView)
+        }
     }
     
     func addTapToViewer() {
         self.isUserInteractionEnabled = true
-        setupImageViewer(options: [.theme(ImageViewerTheme.dark), .closeIcon(UIImage(named: "close-x")!)])
+        setupImageViewer(options: [
+            .theme(ImageViewerTheme.dark),
+            .closeIcon(UIImage(named: "close-x")!),
+            .rightNavItemIcon(UIImage(named: "image-share")!, delegate: self)
+        ])
     }
     
     func observeCurrentUserAvatar() -> Disposable {
@@ -137,5 +164,12 @@ extension Reactive where Base: UIImageView {
     var isEmpty: Observable<Bool> {
         return observe(UIImage.self, "image").map { $0 == nil }
             .distinctUntilChanged()
+    }
+}
+
+extension UIImageView: RightNavItemDelegate {
+    public func imageViewer(_ imageViewer: ImageCarouselViewController, didTapRightNavItem index: Int) {
+        guard let image = image else {return}
+        ShareHelper.share(image: image)
     }
 }
