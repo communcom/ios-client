@@ -12,7 +12,7 @@ import RxSwift
 class PostCell: MyTableViewCell, ListItemCellType {
     // MARK: - Properties
     var post: ResponseAPIContentGetPost?
-    let voteActionsContainerViewHeight: CGFloat = CGFloat.adaptive(height: 35.0)
+    let voteActionsContainerViewHeight: CGFloat = 35
     weak var delegate: PostCellDelegate?
     
     // MARK: - Subviews
@@ -22,8 +22,7 @@ class PostCell: MyTableViewCell, ListItemCellType {
     
     lazy var metaView: PostMetaView = {
         // headerView for actionSheet
-        let headerView = PostMetaView(height: CGFloat.adaptive(height: 40.0))
-        
+        let headerView = PostMetaView(height: 40)
         return headerView
     }()
 
@@ -73,43 +72,34 @@ class PostCell: MyTableViewCell, ListItemCellType {
     lazy var sharesCountLabel = self.createDescriptionLabel()
     
     lazy var shareButton: UIButton = {
-        let shareButtonInstance = UIButton(width: CGFloat.adaptive(width: 20.0), height: CGFloat.adaptive(height: 18.0))
-        shareButtonInstance.setImage(UIImage(named: "share-count"), for: .normal)
-        shareButtonInstance.addTarget(self, action: #selector(shareButtonTapped(button:)), for: .touchUpInside)
-        shareButtonInstance.touchAreaEdgeInsets = UIEdgeInsets(top: CGFloat.adaptive(height: -11.0),
-                                                               left: CGFloat.adaptive(width: -13.0),
-                                                               bottom: CGFloat.adaptive(height: -11.0),
-                                                               right: CGFloat.adaptive(width: -13.0))
+        let button = UIButton(width: 20, height: 18)
+        button.setImage(UIImage(named: "share-count"), for: .normal)
+        button.addTarget(self, action: #selector(shareButtonTapped(button:)), for: .touchUpInside)
+        button.touchAreaEdgeInsets = UIEdgeInsets(top: -11, left: -13, bottom: -11, right: -13)
         
-        return shareButtonInstance
+        return button
     }()
     
     // Number of views
     lazy var viewsCountLabel = self.createDescriptionLabel()
    
     lazy var viewsCountButton: UIButton = {
-        let viewsCountButtonInstance = UIButton(width: CGFloat.adaptive(width: 24.0), height: CGFloat.adaptive(height: 16.0))
-        viewsCountButtonInstance.setImage(UIImage(named: "icon-views-count-gray-default"), for: .normal)
-        viewsCountButtonInstance.touchAreaEdgeInsets = UIEdgeInsets(top: CGFloat.adaptive(height: -14.0),
-                                                                    left: CGFloat.adaptive(width: -10.0),
-                                                                    bottom: CGFloat.adaptive(height: -14.0),
-                                                                    right: CGFloat.adaptive(width: -10.0))
+        let button = UIButton(width: 24, height: 16)
+        button.setImage(UIImage(named: "icon-views-count-gray-default"), for: .normal)
+        button.touchAreaEdgeInsets = UIEdgeInsets(top: -14, left: -10, bottom: -14, right: -10)
         
-        return viewsCountButtonInstance
+        return button
     }()
 
     // Number of comments
     lazy var commentsCountLabel = self.createDescriptionLabel()
     
     lazy var commentsCountButton: UIButton = {
-        let commentsCountButtonInstance = UIButton(width: CGFloat.adaptive(width: 20.0), height: CGFloat.adaptive(height: 18.0))
-        commentsCountButtonInstance.setImage(UIImage(named: "comment-count"), for: .normal)
-        commentsCountButtonInstance.touchAreaEdgeInsets = UIEdgeInsets(top: CGFloat.adaptive(height: -11.0),
-                                                                       left: CGFloat.adaptive(width: -13.0),
-                                                                       bottom: CGFloat.adaptive(height: -11.0),
-                                                                       right: CGFloat.adaptive(width: -13.0))
-
-        return commentsCountButtonInstance
+        let button = UIButton(width: 20, height: 18)
+        button.setImage(UIImage(named: "comment-count"), for: .normal)
+        button.touchAreaEdgeInsets = UIEdgeInsets(top: -11, left: -13, bottom: -11, right: -13)
+        
+        return button
     }()
     
     
