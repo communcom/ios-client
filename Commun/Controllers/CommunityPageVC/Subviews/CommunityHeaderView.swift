@@ -45,7 +45,7 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
         view.cornerRadius = .adaptive(width: 10.0)
         
         view.addSubview(walletImageView)
-        walletImageView.autoPinEdge(toSuperviewEdge: .leading, withInset: .adaptive(width: 16.0))
+        walletImageView.autoPinEdge(toSuperviewEdge: .leading, withInset: .adaptive(width: 15.0))
         walletImageView.autoAlignAxis(toSuperviewAxis: .horizontal)
         
         view.addSubview(walletCurrencyValue)
@@ -54,9 +54,11 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
         
         view.addSubview(walletCurrencyLabel)
         walletCurrencyLabel.autoPinEdge(.leading, to: .trailing, of: walletCurrencyValue, withOffset: 2)
-        walletCurrencyLabel.autoPinEdge(.bottom, to: .bottom, of: walletCurrencyValue, withOffset: -2)
+        walletCurrencyLabel.autoPinEdge(.bottom, to: .bottom, of: walletCurrencyValue, withOffset: 0.0)
         
-        let equalLabel = UILabel.with(text: "=", textSize: .adaptive(width: 12.0), weight: .semibold, textColor: .white)
+        let equalLabel = UILabel.with(text: "=", textSize: .adaptive(width: 12.0), weight: .semibold, textColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1))
+        equalLabel.alpha = 0.7
+        
         view.addSubview(equalLabel)
         equalLabel.autoPinEdge(.leading, to: .trailing, of: walletImageView, withOffset: .adaptive(width: 10.0))
         equalLabel.autoPinEdge(.top, to: .bottom, of: walletCurrencyValue, withOffset: 2)
@@ -65,13 +67,15 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
         communValueLabel.autoPinEdge(.leading, to: .trailing, of: equalLabel, withOffset: 2)
         communValueLabel.autoAlignAxis(.horizontal, toSameAxisOf: equalLabel)
         
-        let communLabel = UILabel.with(text: "Commun", textSize: .adaptive(width: 12.0), weight: .semibold, textColor: .white)
+        let communLabel = UILabel.with(text: "Commun", textSize: .adaptive(width: 12.0), weight: .semibold, textColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1))
+        communLabel.alpha = 0.7
+        
         view.addSubview(communLabel)
         communLabel.autoPinEdge(.leading, to: .trailing, of: communValueLabel, withOffset: 2)
         communLabel.autoAlignAxis(.horizontal, toSameAxisOf: equalLabel)
         
         view.addSubview(walletButton)
-        walletButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: .adaptive(width: 16.0))
+        walletButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: .adaptive(width: 15.0))
         walletButton.autoAlignAxis(toSuperviewAxis: .horizontal)
         
         return view
@@ -81,26 +85,42 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
         let imageView = UIImageView(width: .adaptive(width: 40.0), height: .adaptive(width: 40.0), backgroundColor: .clear)
         imageView.cornerRadius = .adaptive(width: 20.0)
         imageView.image = UIImage(named: "community-wallet")
+        
         return imageView
     }()
     
     lazy var walletCurrencyValue: UILabel = {
-        let label = UILabel.with(text: "1000", textSize: .adaptive(width: 20.0), weight: .semibold, textColor: .white)
+        let label = UILabel.with(text: "1000", textSize: .adaptive(width: 15.0), weight: .semibold, textColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1))
+       
         return label
     }()
     
     lazy var walletCurrencyLabel: UILabel = {
-        let label = UILabel.with(text: "Binance", textSize: .adaptive(width: 12.0), weight: .semibold, textColor: .white)
+        let label = UILabel.with(text: "Binance", textSize: .adaptive(width: 12.0), weight: .semibold, textColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1))
+        label.alpha = 0.7
+        
         return label
     }()
     
     lazy var communValueLabel: UILabel = {
-        let label = UILabel.with(text: "1", textSize: .adaptive(width: 12.0), weight: .semibold, textColor: .white)
+        let label = UILabel.with(text: "1", textSize: .adaptive(width: 12.0), weight: .bold, textColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1))
+        label.alpha = 0.7
+        
         return label
     }()
     
     lazy var walletButton: UIButton = {
-        let button = UIButton(height: .adaptive(height: 35.0), label: "get points".localized().uppercaseFirst, labelFont: .boldSystemFont(ofSize: 15), backgroundColor: .white, textColor: .appMainColor, cornerRadius: .adaptive(height: 35.0) / 2, contentInsets: UIEdgeInsets(top: 10, left: 16, bottom: 10, right: 16))
+        let button = UIButton(width: .adaptive(width: 101.0),
+                              height: .adaptive(height: 35.0),
+                              label: "get points".localized().uppercaseFirst,
+                              labelFont: UIFont(name: "SFProDisplay-Semibold", size: .adaptive(width: 15.0)),
+                              backgroundColor: .white,
+                              textColor: .appMainColor,
+                              cornerRadius: .adaptive(height: 35.0) / 2,
+                              contentInsets: UIEdgeInsets(top: .adaptive(height: 10.0),
+                                                          left: .adaptive(width: 15.0),
+                                                          bottom: .adaptive(height: 10.0),
+                                                          right: .adaptive(width: 15.0)))
         return button
     }()
     
@@ -148,11 +168,11 @@ class CommunityHeaderView: ProfileHeaderView, CommunityController {
         pointsContainerView.autoPinEdge(toSuperviewEdge: .trailing, withInset: .adaptive(width: 16.0))
         pointsContainerView.autoPinEdge(.top, to: .bottom, of: membersCountLabel, withOffset: .adaptive(height: 22.0))
     
-        let firstSeparator = UIView(height: 2, backgroundColor: .appLightGrayColor)
-        addSubview(firstSeparator)
-        firstSeparator.autoPinEdge(.top, to: .bottom, of: membersCountLabel, withOffset: .adaptive(height: 20.0))
-        firstSeparator.autoPinEdge(toSuperviewEdge: .leading)
-        firstSeparator.autoPinEdge(toSuperviewEdge: .trailing)
+//        let firstSeparator = UIView(height: 2, backgroundColor: .appLightGrayColor)
+//        addSubview(firstSeparator)
+//        firstSeparator.autoPinEdge(.top, to: .bottom, of: membersCountLabel, withOffset: .adaptive(height: 20.0))
+//        firstSeparator.autoPinEdge(toSuperviewEdge: .leading)
+//        firstSeparator.autoPinEdge(toSuperviewEdge: .trailing)
         
         addSubview(segmentedControl)
 //        segmentedControl.autoPinEdge(.top, to: .bottom, of: firstSeparator)
