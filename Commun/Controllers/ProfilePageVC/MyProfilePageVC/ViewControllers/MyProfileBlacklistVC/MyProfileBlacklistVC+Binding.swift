@@ -79,7 +79,7 @@ extension MyProfileBlacklistVC: BlacklistCellDelegate {
             .subscribe(onNext: { (element) in
                 switch element {
                 case .user(let profile):
-                    if profile.isBlocked == false, !(profile.isBeingUnblocked ?? false) {
+                    if profile.isInBlacklist == false, !(profile.isBeingUnblocked ?? false) {
                         self.showProfileWithUserId(profile.userId)
                     }
                 case .community(let community):

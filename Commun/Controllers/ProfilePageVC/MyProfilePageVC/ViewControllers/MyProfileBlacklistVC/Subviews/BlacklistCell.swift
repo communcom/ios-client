@@ -22,9 +22,9 @@ extension BlacklistCellDelegate where Self: BaseViewController {
         var originIsBlocked: Bool
         switch item {
         case .user(var user):
-            originIsBlocked = user.isBlocked ?? true
+            originIsBlocked = user.isInBlacklist ?? true
             user.isBeingUnblocked = true
-            user.isBlocked = !originIsBlocked
+            user.isInBlacklist = !originIsBlocked
             user.notifyChanged()
         case .community(var community):
             originIsBlocked = community.isBlocked ?? true
@@ -59,7 +59,7 @@ extension BlacklistCellDelegate where Self: BaseViewController {
                 // reset loading to false
                 switch item {
                 case .user(var user):
-                    user.isBlocked = !originIsBlocked
+                    user.isInBlacklist = !originIsBlocked
                     user.isBeingUnblocked = false
                     user.notifyChanged()
                 case .community(var community):
@@ -99,9 +99,9 @@ class BlacklistCell: SubsItemCell, ListItemCellType {
             avatarImageView.setAvatar(urlString: user.avatarUrl, namePlaceHolder: user.username)
             nameLabel.text = user.username
             actionButton.isEnabled = !(user.isBeingUnblocked ?? false)
-            actionButton.setTitle((user.isBlocked ?? true) ? "unblock".localized().uppercaseFirst : "reblock".localized().uppercaseFirst, for: .normal)
-            actionButton.backgroundColor = !(user.isBlocked ?? true) ? #colorLiteral(red: 0.9525656104, green: 0.9605062604, blue: 0.9811610579, alpha: 1) : .appMainColor
-            actionButton.setTitleColor(!(user.isBlocked ?? true) ? .appMainColor : .white, for: .normal)
+            actionButton.setTitle((user.isInBlacklist ?? true) ? "unblock".localized().uppercaseFirst : "reblock".localized().uppercaseFirst, for: .normal)
+            actionButton.backgroundColor = !(user.isInBlacklist ?? true) ? #colorLiteral(red: 0.9525656104, green: 0.9605062604, blue: 0.9811610579, alpha: 1) : .appMainColor
+            actionButton.setTitleColor(!(user.isInBlacklist ?? true) ? .appMainColor : .white, for: .normal)
         case .community(let community):
             avatarImageView.setAvatar(urlString: community.avatarUrl, namePlaceHolder: community.name)
             nameLabel.text = community.name
