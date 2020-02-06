@@ -231,7 +231,7 @@ class WalletConvertVC: BaseViewController {
                     self?.leftTextField.hideLoader()
                     
                     self?.convertButton.isEnabled = self?.shouldEnableConvertButton() ?? false
-                case .error(_):
+                case .error:
                     self?.rightTextField.hideLoader()
                     self?.leftTextField.hideLoader()
                     

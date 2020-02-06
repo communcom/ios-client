@@ -52,7 +52,6 @@ class CommunityLeaderCell: CommunityPageCell {
                                                                  left: .adaptive(width: 10.0),
                                                                  bottom: .adaptive(height: 20.0),
                                                                  right: .adaptive(width: 10.0)))
-
         
         let mainVerticalStackView = UIStackView(axis: .vertical, spacing: .adaptive(height: 14.0))
         mainVerticalStackView.alignment = .leading

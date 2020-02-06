@@ -125,7 +125,6 @@ class PostMetaView: MyView {
         
         addMosaic()
     }
-
     
     // MARK: - Actions
     @objc func userNameTapped(_ sender: TapGesture) {

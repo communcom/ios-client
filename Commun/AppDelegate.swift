@@ -286,7 +286,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.saveContext()
     }
     
-    
     // MARK: - Custom Functions
     private func configureNotifications() {
         // Set delegate for Messaging

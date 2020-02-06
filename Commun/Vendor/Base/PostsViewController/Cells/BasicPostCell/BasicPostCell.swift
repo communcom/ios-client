@@ -12,12 +12,10 @@ import SafariServices
 final class BasicPostCell: PostCell {
     // MARK: - Properties
     private var centerConstraint: NSLayoutConstraint!
-   
     
     // MARK: - Subviews
     lazy var contentTextView        = UITextView(forExpandable: ())
     lazy var gridView               = GridView(forAutoLayout: ())
-
     
     // MARK: - Custom Functions
     private func configureTextView() {
@@ -28,7 +26,6 @@ final class BasicPostCell: PostCell {
         contentTextView.isUserInteractionEnabled = false
         contentTextView.delegate = self
     }
-
     
     // MARK: - Layout
     override func layoutContent() {
@@ -145,7 +142,6 @@ final class BasicPostCell: PostCell {
         gridView.setUp(embeds: post.attachments)
     }
 }
-
 
 // MARK: - UITextViewDelegate
 extension BasicPostCell: UITextViewDelegate {

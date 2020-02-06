@@ -57,7 +57,7 @@ extension Date {
         return "a moment ago"
     }
     
-    func dayDifference(from interval : TimeInterval) -> String
+    func dayDifference(from interval: TimeInterval) -> String
     {
         let calendar = Calendar.current
         let date = Date(timeIntervalSince1970: interval)

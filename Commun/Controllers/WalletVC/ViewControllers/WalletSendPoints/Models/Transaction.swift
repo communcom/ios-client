@@ -39,7 +39,6 @@ struct Transaction {
             history = nil
         }
     }
-
         
     // MARK: - Custom Functions
     mutating func createFriend(from user: ResponseAPIContentGetSubscriptionsUser) {
