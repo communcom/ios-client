@@ -20,7 +20,7 @@ class PostMetaView: MyView {
     lazy var comunityNameLabel = UILabel.with(textSize: 15, weight: .semibold)
     lazy var timeAgoLabel = UILabel.with(textSize: 12, weight: .semibold, textColor: .a5a7bd)
     lazy var byUserLabel = UILabel.with(textSize: 12, weight: .semibold, textColor: .appMainColor)
-    lazy var stateButtonLabel = UILabel.with(textSize: 12, weight: .medium, textColor: .white)
+    lazy var stateButtonLabel = UILabel.with(textSize: 12, weight: .semibold, textColor: .white)
 
     lazy var stateButton: UIView = {
         let view = UIView(height: 30, backgroundColor: .appMainColor, cornerRadius: 30 / 2)
@@ -36,7 +36,6 @@ class PostMetaView: MyView {
         stateButtonLabel.autoAlignAxis(toSuperviewAxis: .horizontal)
         stateButtonLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 10)
         stateButtonLabel.setContentHuggingPriority(.required, for: .horizontal)
-        stateButtonLabel.adjustsFontSizeToFitWidth = true
         
         view.isUserInteractionEnabled = true
         view.tag = 0

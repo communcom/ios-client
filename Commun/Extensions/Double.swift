@@ -28,8 +28,15 @@ extension Double {
         formatter.numberStyle = .decimal
         formatter.usesGroupingSeparator = true
         formatter.locale = Locale(identifier: "en")
-        formatter.maximumFractionDigits = (self < 1000) ? 4 : 2
+
+        if self > 1000 {
+            formatter.maximumFractionDigits = 2
+        } else if self < 100 {
+            formatter.maximumFractionDigits = 3
+        } else {
+            formatter.maximumFractionDigits = 8
+        }
         
-        return formatter.string(from: self as NSNumber) ?? "0"
+        return (formatter.string(from: self as NSNumber) ?? "0").replacingOccurrences(of: ",", with: " ")
     }
 }

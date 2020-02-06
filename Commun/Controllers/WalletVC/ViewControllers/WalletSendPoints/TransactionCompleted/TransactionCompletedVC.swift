@@ -16,7 +16,6 @@ class TransactionCompletedVC: BaseViewController {
     var completionRepeat: (() -> Void)?
     var completionDismiss: (() -> Void)?
 
-    
     // MARK: - Class Initialization
     init(transaction: Transaction) {
         self.dataModel.transaction = transaction
