@@ -48,9 +48,9 @@ extension PostCell {
         parentViewController?.show(postPageVC, sender: nil)
     }
     
-    @objc func stateButtonTapped(_ sender: UIButton) {
+    @objc func stateButtonTapped(_ gesture: UITapGestureRecognizer) {
         let postLink = "https://commun.com/faq?#What%20else%20can%20you%20do%20with%20the%20points?"
-        let userNameRulesView = UserNameRulesView(withFrame: CGRect(origin: .zero, size: CGSize(width: CGFloat.adaptive(width: 355.0), height: CGFloat.adaptive(height: 193.0))), andParameters: sender.tag == 0 ? .topState : .rewardState)
+        let userNameRulesView = UserNameRulesView(withFrame: CGRect(origin: .zero, size: CGSize(width: CGFloat.adaptive(width: 355.0), height: CGFloat.adaptive(height: 193.0))), andParameters: gesture.view?.tag == 0 ? .topState : .rewardState)
         
         let cardVC = CardViewController(contentView: userNameRulesView)
         parentViewController?.present(cardVC, animated: true, completion: nil)

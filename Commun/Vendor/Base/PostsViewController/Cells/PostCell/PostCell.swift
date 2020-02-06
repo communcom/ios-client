@@ -21,38 +21,31 @@ class PostCell: MyTableViewCell, ListItemCellType {
     }
     
     lazy var metaView = PostMetaView(height: 40)
-
-    lazy var stateActionButton: UIButton = {
-        let stateActionButtonInstance = UIButton(width: CGFloat.adaptive(width: 208.0),
-                                                 height: CGFloat.adaptive(height: 30.0),
-                                                 label: "".localized().uppercaseFirst,
-                                                 labelFont: UIFont.systemFont(ofSize: CGFloat.adaptive(width: 12.0), weight: .semibold),
-                                                 backgroundColor: #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1),
-                                                 textColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1),
-                                                 cornerRadius: CGFloat.adaptive(height: 30.0) / 2,
-                                                 contentInsets: nil)
+    
+    lazy var stateButton: UIView = {
+        let view = UIView(height: 30, backgroundColor: .appMainColor, cornerRadius: 30 / 2)
+        let imageView = UIImageView(forAutoLayout: ())
+        imageView.image = UIImage(named: "icon-post-state-default")
+        view.addSubview(imageView)
+        imageView.widthAnchor.constraint(equalTo: imageView.heightAnchor, multiplier: 20/18.95)
+            .isActive = true
+        imageView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 4.74, left: 5, bottom: 4.74, right: 0), excludingEdge: .trailing)
         
-        stateActionButtonInstance.setImage(UIImage(named: "icon-post-state-default"), for: .normal)
+        view.addSubview(stateButtonLabel)
+        stateButtonLabel.autoPinEdge(.leading, to: .trailing, of: imageView, withOffset: 5)
+        stateButtonLabel.autoAlignAxis(toSuperviewAxis: .horizontal)
+        stateButtonLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 5)
+        stateButtonLabel.setContentHuggingPriority(.required, for: .horizontal)
+        stateButtonLabel.adjustsFontSizeToFitWidth = true
         
-        stateActionButtonInstance.contentEdgeInsets = UIEdgeInsets(top: CGFloat.adaptive(height: 5.0),
-                                                                   left: CGFloat.adaptive(width: 5.0),
-                                                                   bottom: CGFloat.adaptive(height: 5.0),
-                                                                   right: CGFloat.adaptive(width: 5.0))
+        view.isUserInteractionEnabled = true
+        view.tag = 0
+        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(stateButtonTapped(_:))))
         
-        stateActionButtonInstance.titleEdgeInsets = UIEdgeInsets(top: CGFloat.adaptive(height: 0.0),
-                                                                 left: CGFloat.adaptive(width: 5.0),
-                                                                 bottom: CGFloat.adaptive(height: 0.0),
-                                                                 right: CGFloat.adaptive(width: 0.0))
-        
-        stateActionButtonInstance.addTarget(self, action: #selector(stateButtonTapped), for: .touchUpInside)
-        stateActionButtonInstance.tag = 0
-        stateActionButtonInstance.contentHorizontalAlignment = .leading
-        stateActionButtonInstance.translatesAutoresizingMaskIntoConstraints = false
-        
-        return stateActionButtonInstance
+        return view
     }()
-
-    var stateActionButtonWidthConstraint: NSLayoutConstraint?
+    
+    lazy var stateButtonLabel = UILabel.with(textSize: 12, weight: .medium, textColor: .white)
     
     lazy var moreActionButton: UIButton = {
         let moreActionButtonInstance = UIButton(width: CGFloat.adaptive(width: 40.0), height: CGFloat.adaptive(width: 40.0))
@@ -110,18 +103,18 @@ class PostCell: MyTableViewCell, ListItemCellType {
         metaView.autoPinEdge(toSuperviewEdge: .leading, withInset: CGFloat.adaptive(width: 16.0))
 
         // state & moreAction buttons
-        let actionButtonsStackView = UIStackView(axis: .horizontal, spacing: CGFloat.adaptive(width: 0.0))
+        let actionButtonsStackView = UIStackView(axis: .horizontal, spacing: 0)
         actionButtonsStackView.alignment = .fill
         actionButtonsStackView.distribution = .fillProportionally
 
-        actionButtonsStackView.addArrangedSubviews([stateActionButton, moreActionButton])
-        stateActionButtonWidthConstraint = stateActionButton.widthAnchor.constraint(equalToConstant: CGFloat.adaptive(width: 208.0))
-        stateActionButtonWidthConstraint!.isActive = true
+        actionButtonsStackView.addArrangedSubviews([stateButton, moreActionButton])
+        stateButton.widthAnchor.constraint(lessThanOrEqualToConstant: .adaptive(width: 208))
+            .isActive = true
         
         contentView.addSubview(actionButtonsStackView)
         actionButtonsStackView.autoPinTopAndTrailingToSuperView(inset: CGFloat.adaptive(height: 21.0), xInset: CGFloat.adaptive(width: 4.0))
 
-        metaView.autoPinEdge(.trailing, to: .leading, of: actionButtonsStackView, withOffset: CGFloat.adaptive(width: 0.0))
+        metaView.autoPinEdge(.trailing, to: .leading, of: actionButtonsStackView, withOffset: 4)
 
         // action buttons
         contentView.addSubview(voteContainerView)
@@ -170,12 +163,10 @@ class PostCell: MyTableViewCell, ListItemCellType {
         fatalError("must override")
     }
     
-    
     // MARK: - Methods
     func setUp(with post: ResponseAPIContentGetPost) {
         self.post = post
 
-        stateActionButton.isHidden = true
         metaView.setUp(post: post)
         voteContainerView.setUp(with: post.votes, userID: post.author?.userId)
 
@@ -190,6 +181,7 @@ class PostCell: MyTableViewCell, ListItemCellType {
         self.sharesCountLabel.text = "\(post.stats?.viewCount ?? 0)"
         
         // State action button: set value & button width
+        stateButton.isHidden = true
         if let mosaic = post.mosaic {
             set(mosaic: mosaic)
         }
@@ -201,12 +193,8 @@ class PostCell: MyTableViewCell, ListItemCellType {
         }
         
         let isRewardState = mosaic.isClosed
-        stateActionButton.isHidden = false
-        stateActionButton.setTitle(isRewardState ? rewardDouble.currencyValueFormatted : "top".localized().uppercaseFirst, for: .normal)
-        stateActionButton.tag = Int(isRewardState.int)
-        stateActionButton.sizeToFit()
-        
-        let width = stateActionButton.intrinsicContentSize.width + 10.0
-        stateActionButtonWidthConstraint?.constant = width
+        stateButton.isHidden = false
+        stateButtonLabel.text = isRewardState ? rewardDouble.currencyValueFormatted : "top".localized().uppercaseFirst
+        stateButton.tag = Int(isRewardState.int)
     }
 }
