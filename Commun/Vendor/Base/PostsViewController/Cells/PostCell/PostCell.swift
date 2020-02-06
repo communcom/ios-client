@@ -76,7 +76,6 @@ class PostCell: MyTableViewCell, ListItemCellType {
         contentView.addSubview(metaView)
         metaView.autoPinEdge(toSuperviewEdge: .top, withInset: .adaptive(height: 16.0))
         metaView.autoPinEdge(toSuperviewEdge: .leading, withInset: .adaptive(width: 16.0))
-        
 
         // moreAction buttons
         contentView.addSubview(moreActionButton)

@@ -14,8 +14,7 @@ class PostMetaView: MyView {
     class TapGesture: UITapGestureRecognizer {
         var post: ResponseAPIContentGetPost!
     }
-    
-    
+
     // MARK: - Subviews
     lazy var avatarImageView = MyAvatarImageView(size: 40)
     lazy var comunityNameLabel = UILabel.with(textSize: 15, weight: .semibold)
@@ -30,12 +29,12 @@ class PostMetaView: MyView {
         view.addSubview(imageView)
         imageView.widthAnchor.constraint(equalTo: imageView.heightAnchor, multiplier: 20/18.95)
             .isActive = true
-        imageView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 4.74, left: 5, bottom: 4.74, right: 0), excludingEdge: .trailing)
+        imageView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 0), excludingEdge: .trailing)
         
         view.addSubview(stateButtonLabel)
         stateButtonLabel.autoPinEdge(.leading, to: .trailing, of: imageView, withOffset: 5)
         stateButtonLabel.autoAlignAxis(toSuperviewAxis: .horizontal)
-        stateButtonLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 5)
+        stateButtonLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 10)
         stateButtonLabel.setContentHuggingPriority(.required, for: .horizontal)
         stateButtonLabel.adjustsFontSizeToFitWidth = true
         
@@ -46,12 +45,10 @@ class PostMetaView: MyView {
         return view
     }()
 
-
     // MARK: - Properties
     var isUserNameTappable = true
     var isCommunityNameTappable = true
-    
-    
+
     // MARK: - Custom Functions
     override func commonInit() {
         super.commonInit()

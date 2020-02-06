@@ -94,7 +94,7 @@ lane :release do
 		app_group: GROUP_ID_RELEASE,
 		team_id: TEAM_ID_RELEASE,
 		subxcodeproj: SUBXCODEPROJ,
-		codesigning_identity: "iPhone Distribution: CHEINARTSOFT, OOO (E23BKKUH5D)"
+		codesigning_identity: "Apple Distribution: CHEINARTSOFT, OOO (E23BKKUH5D)"
 	)
 
 	build_path = ENV['BUILD_PATH']
