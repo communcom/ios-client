@@ -124,7 +124,7 @@ extension CommunityMembersVC: UICollectionViewDelegateFlowLayout {
                     if let item = item as? ResponseAPIContentGetLeader {
                         return .leader(item)
                     }
-                    if let item = item as? ResponseAPIContentResolveProfile {
+                    if let item = item as? ResponseAPIContentGetProfile {
                         return .subscriber(item)
                     }
                     return nil

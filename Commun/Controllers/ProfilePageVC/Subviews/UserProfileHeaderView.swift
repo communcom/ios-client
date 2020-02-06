@@ -188,7 +188,7 @@ class UserProfileHeaderView: ProfileHeaderView, ProfileController, UICollectionV
         nameLabel.text = userProfile.username
         
         // join date
-        joinedDateLabel.text = Formatter.joinedText(with: userProfile.registration.time)
+        joinedDateLabel.text = Formatter.joinedText(with: userProfile.registration?.time)
         
         // followButton
         let isFollowing = userProfile.isSubscribed ?? false
