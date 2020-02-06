@@ -90,6 +90,7 @@ class NotificationCell: MyTableViewCell, ListItemCellType {
         timestampLabel.text = dateString
         
         var avatarUrl = (item.author ?? item.voter ?? item.user)?.avatarUrl
+        var userId = (item.author ?? item.voter ?? item.user)?.userId
         var avatarPlaceholder = (item.author ?? item.voter ?? item.user)?.username ?? "User"
         
         // content
@@ -148,7 +149,11 @@ class NotificationCell: MyTableViewCell, ListItemCellType {
         default:
             iconImageView.isHidden = true
         }
-        
+
+        if let userId = userId {
+            avatarImageView.addTapToOpenUserProfile(profileId: userId)
+        }
+
         avatarImageView.setAvatar(
             urlString: avatarUrl,
             namePlaceHolder: avatarPlaceholder)
