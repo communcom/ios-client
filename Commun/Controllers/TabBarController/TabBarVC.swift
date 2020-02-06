@@ -12,7 +12,7 @@ import SwifterSwift
 import CyberSwift
 import NotificationView
 
-public let tabBarHeight: CGFloat = CGFloat.adaptive(height: 60.0) + (UIDevice.hasNotch ? UIDevice.safeAreaInsets.bottom : 0.0)
+public let tabBarHeight: CGFloat = .adaptive(height: 60.0) + (UIDevice.hasNotch ? UIDevice.safeAreaInsets.bottom : 0.0)
 
 class TabBarVC: UITabBarController {
     // MARK: - Constants
@@ -164,8 +164,8 @@ class TabBarVC: UITabBarController {
     var tabBarItemAdd: UIButton {
         let button = UIButton(type: .system)
         
-        let itemSize = CGFloat.adaptive(height: 45)
-        let itemPadding = CGFloat.adaptive(height: 14)
+        let itemSize: CGFloat = .adaptive(height: 45)
+        let itemPadding: CGFloat = .adaptive(height: 14)
         
         let view = UIView(width: itemSize, height: itemSize, backgroundColor: .appMainColor)
         view.cornerRadius = itemSize / 2

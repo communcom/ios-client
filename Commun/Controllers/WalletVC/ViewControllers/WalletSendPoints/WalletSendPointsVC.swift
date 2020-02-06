@@ -17,25 +17,25 @@ class WalletSendPointsVC: BaseViewController {
     var dataModel: SendPointsModel
         
     lazy var carouselView: CircularCarousel = {
-        let carouselViewInstance = CircularCarousel(width: CGFloat.adaptive(width: 247.0), height: carouselHeight)
+        let carouselViewInstance = CircularCarousel(width: .adaptive(width: 247.0), height: carouselHeight)
         carouselViewInstance.delegate = self
         carouselViewInstance.dataSource = self
         
         return carouselViewInstance
     }()
 
-    let carouselHeight: CGFloat = CGFloat.adaptive(height: 50.0)
+    let carouselHeight: CGFloat = .adaptive(height: 50.0)
 
-    let pointsToolbar: CMToolbarView = CMToolbarView(frame: CGRect(origin: .zero, size: CGSize(width: CGFloat.adaptive(width: 375.0), height: CGFloat.adaptive(height: 50.0))))
+    let pointsToolbar: CMToolbarView = CMToolbarView(frame: CGRect(origin: .zero, size: CGSize(width: .adaptive(width: 375.0), height: .adaptive(height: 50.0))))
 
-    lazy var communLogoImageView = UIView.transparentCommunLogo(size: CGFloat.adaptive(width: 50.0))
+    lazy var communLogoImageView = UIView.transparentCommunLogo(size: .adaptive(width: 50.0))
 
     // Balance
     var sellerNameLabel: UILabel = {
         let balanceNameLabelInstance = UILabel()
         balanceNameLabelInstance.tune(withText: "",
                                       hexColors: whiteColorPickers,
-                                      font: UIFont.systemFont(ofSize: CGFloat.adaptive(width: 17.0), weight: .semibold),
+                                      font: UIFont.systemFont(ofSize: .adaptive(width: 17.0), weight: .semibold),
                                       alignment: .center,
                                       isMultiLines: false)
         
@@ -46,7 +46,7 @@ class WalletSendPointsVC: BaseViewController {
         let balanceCurrencyLabelInstance = UILabel()
         balanceCurrencyLabelInstance.tune(withText: "",
                                           hexColors: whiteColorPickers,
-                                          font: UIFont.systemFont(ofSize: CGFloat.adaptive(width: 30.0), weight: .bold),
+                                          font: UIFont.systemFont(ofSize: .adaptive(width: 30.0), weight: .bold),
                                           alignment: .center,
                                           isMultiLines: false)
         
@@ -54,15 +54,15 @@ class WalletSendPointsVC: BaseViewController {
     }()
 
     // Friend
-    var friendAvatarImageView = UIView.createCircleCommunLogo(side: CGFloat.adaptive(height: 40.0))
+    var friendAvatarImageView = UIView.createCircleCommunLogo(side: .adaptive(height: 40.0))
     
     let friendNameLabel: UILabel = UILabel(text: "select user".localized().uppercaseFirst,
-                                                font: .systemFont(ofSize: CGFloat.adaptive(width: 15.0), weight: .semibold),
+                                                font: .systemFont(ofSize: .adaptive(width: 15.0), weight: .semibold),
                                                 numberOfLines: 1,
                                                 color: .black)
     
     let chooseFriendButton: UIButton = {
-        let chooseRecipientButtonInstance = UIButton.circle(size: CGFloat.adaptive(width: 24.0),
+        let chooseRecipientButtonInstance = UIButton.circle(size: .adaptive(width: 24.0),
                                                             backgroundColor: .clear,
                                                             tintColor: .white,
                                                             imageName: "icon-select-user-grey-cyrcle-default",
@@ -85,7 +85,7 @@ class WalletSendPointsVC: BaseViewController {
         let pointsTextFieldInstance = UITextField()
         pointsTextFieldInstance.tune(withPlaceholder: String(format: "0 %@", "points".localized().uppercaseFirst),
                                      textColors: blackWhiteColorPickers,
-                                     font: .systemFont(ofSize: CGFloat.adaptive(width: 17.0), weight: .semibold),
+                                     font: .systemFont(ofSize: .adaptive(width: 17.0), weight: .semibold),
                                      alignment: .left)
         
         pointsTextFieldInstance.keyboardType = .decimalPad
@@ -96,7 +96,7 @@ class WalletSendPointsVC: BaseViewController {
     }()
 
     let clearPointsButton: UIButton = {
-        let clearPointsButtonInstance = UIButton.circle(size: CGFloat.adaptive(width: 24.0),
+        let clearPointsButtonInstance = UIButton.circle(size: .adaptive(width: 24.0),
                                                         backgroundColor: .clear,
                                                         tintColor: .white,
                                                         imageName: "icon-cancel-grey-cyrcle-default",
@@ -176,7 +176,7 @@ class WalletSendPointsVC: BaseViewController {
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         
-        pointsToolbar.frame.size = CGSize(width: CGFloat.adaptive(width: 375.0), height: CGFloat.adaptive(height: 50.0))
+        pointsToolbar.frame.size = CGSize(width: .adaptive(width: 375.0), height: .adaptive(height: 50.0))
     }
 
     
@@ -194,11 +194,11 @@ class WalletSendPointsVC: BaseViewController {
     }
 
     func setupView() {
-        let balanceContentView = UIView(width: CGFloat.adaptive(width: 375.0), height: CGFloat.adaptive(height: 300.0), backgroundColor: #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1), cornerRadius: 0.0)
+        let balanceContentView = UIView(width: .adaptive(width: 375.0), height: .adaptive(height: 300.0), backgroundColor: #colorLiteral(red: 0.416, green: 0.502, blue: 0.961, alpha: 1), cornerRadius: 0.0)
         view.addSubview(balanceContentView)
         balanceContentView.autoPinEdgesToSuperviewSafeArea(with: .zero, excludingEdge: .bottom)
 
-        let balanceStackView = UIStackView(axis: .vertical, spacing: CGFloat.adaptive(height: 5.0))
+        let balanceStackView = UIStackView(axis: .vertical, spacing: .adaptive(height: 5.0))
         balanceStackView.alignment = .fill
         balanceStackView.distribution = .fillProportionally
         balanceStackView.addArrangedSubviews([sellerNameLabel, sellerAmountLabel])
@@ -208,14 +208,14 @@ class WalletSendPointsVC: BaseViewController {
 
         if dataModel.transaction.symbol.sell == Config.defaultSymbol {
             balanceContentView.addSubview(communLogoImageView)
-            communLogoImageView.autoPinEdge(toSuperviewEdge: .top, withInset: CGFloat.adaptive(height: 20.0))
+            communLogoImageView.autoPinEdge(toSuperviewEdge: .top, withInset: .adaptive(height: 20.0))
             communLogoImageView.autoAlignAxis(toSuperviewAxis: .vertical)
-            balanceStackView.autoPinEdge(.top, to: .bottom, of: communLogoImageView, withOffset: CGFloat.adaptive(height: 20.0))
+            balanceStackView.autoPinEdge(.top, to: .bottom, of: communLogoImageView, withOffset: .adaptive(height: 20.0))
         } else {
             balanceContentView.addSubview(carouselView)
-            carouselView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(horizontal: CGFloat.adaptive(width: 64.0), vertical: CGFloat.adaptive(height: 20.0)), excludingEdge: .bottom)
+            carouselView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(horizontal: .adaptive(width: 64.0), vertical: .adaptive(height: 20.0)), excludingEdge: .bottom)
 
-            balanceStackView.autoPinEdge(.top, to: .bottom, of: carouselView, withOffset: CGFloat.adaptive(height: 20.0))
+            balanceStackView.autoPinEdge(.top, to: .bottom, of: carouselView, withOffset: .adaptive(height: 20.0))
         }
         
         updateBuyerInfo()
@@ -223,19 +223,19 @@ class WalletSendPointsVC: BaseViewController {
         dataModel.transaction.history == nil ? updateSendInfoByEnteredPoints() : updateSendInfoByHistory()
 
         // Action view
-        let whiteView = UIView(width: CGFloat.adaptive(width: 375.0), height: CGFloat.adaptive(height: 543.0), backgroundColor: .white, cornerRadius: CGFloat.adaptive(width: 25.0))
+        let whiteView = UIView(width: .adaptive(width: 375.0), height: .adaptive(height: 543.0), backgroundColor: .white, cornerRadius: .adaptive(width: 25.0))
         whiteView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         view.addSubview(whiteView)
         whiteView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
                 
-        let firstBorderView = UIView(width: CGFloat.adaptive(width: 345.0), height: CGFloat.adaptive(height: 70.0), backgroundColor: .white, cornerRadius: CGFloat.adaptive(width: 10.0))
+        let firstBorderView = UIView(width: .adaptive(width: 345.0), height: .adaptive(height: 70.0), backgroundColor: .white, cornerRadius: .adaptive(width: 10.0))
         setup(borderedView: firstBorderView)
         whiteView.addSubview(firstBorderView)
-        firstBorderView.autoPinTopAndLeadingToSuperView(inset: CGFloat.adaptive(height: 20.0), xInset: CGFloat.adaptive(width: 15.0))
+        firstBorderView.autoPinTopAndLeadingToSuperView(inset: .adaptive(height: 20.0), xInset: .adaptive(width: 15.0))
         firstBorderView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(chooseRecipientViewTapped)))
         firstBorderView.isUserInteractionEnabled = true
 
-        let recipientStackView = UIStackView(axis: .horizontal, spacing: CGFloat.adaptive(width: 10.0))
+        let recipientStackView = UIStackView(axis: .horizontal, spacing: .adaptive(width: 10.0))
         recipientStackView.alignment = .leading
         recipientStackView.distribution = .fill
 
@@ -244,21 +244,21 @@ class WalletSendPointsVC: BaseViewController {
         chooseFriendButton.autoAlignAxis(toSuperviewAxis: .horizontal)
 
         firstBorderView.addSubview(recipientStackView)
-        recipientStackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(horizontal: CGFloat.adaptive(width: 30.0), vertical: CGFloat.adaptive(height: 30.0)))
+        recipientStackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(horizontal: .adaptive(width: 30.0), vertical: .adaptive(height: 30.0)))
         
-        let secondBorderView = UIView(width: CGFloat.adaptive(width: 345.0), height: CGFloat.adaptive(height: 64.0), backgroundColor: .white, cornerRadius: CGFloat.adaptive(width: 10.0))
+        let secondBorderView = UIView(width: .adaptive(width: 345.0), height: .adaptive(height: 64.0), backgroundColor: .white, cornerRadius: .adaptive(width: 10.0))
         setup(borderedView: secondBorderView)
         whiteView.addSubview(secondBorderView)
-        secondBorderView.autoPinTopAndTrailingToSuperView(inset: CGFloat.adaptive(height: 100.0), xInset: CGFloat.adaptive(width: 15.0))
+        secondBorderView.autoPinTopAndTrailingToSuperView(inset: .adaptive(height: 100.0), xInset: .adaptive(width: 15.0))
         
-        let amountStackView = UIStackView(axis: .vertical, spacing: CGFloat.adaptive(height: 8.0))
+        let amountStackView = UIStackView(axis: .vertical, spacing: .adaptive(height: 8.0))
         amountStackView.alignment = .fill
         amountStackView.distribution = .fillProportionally
         
         let amountLabel = UILabel()
         amountLabel.tune(withText: "amount".localized().uppercaseFirst,
                          hexColors: grayishBluePickers,
-                         font: .systemFont(ofSize: CGFloat.adaptive(width: 12.0), weight: .semibold),
+                         font: .systemFont(ofSize: .adaptive(width: 12.0), weight: .semibold),
                          alignment: .left,
                          isMultiLines: false)
         
@@ -266,13 +266,13 @@ class WalletSendPointsVC: BaseViewController {
         pointsTextField.inputAccessoryView = pointsToolbar
 
         secondBorderView.addSubview(amountStackView)
-        amountStackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(horizontal: CGFloat.adaptive(width: 30.0), vertical: CGFloat.adaptive(height: 22.0)))
+        amountStackView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(horizontal: .adaptive(width: 30.0), vertical: .adaptive(height: 22.0)))
         
         secondBorderView.addSubview(clearPointsButton)
-        clearPointsButton.autoPinTopAndTrailingToSuperView(inset: CGFloat.adaptive(height: 20.0), xInset: CGFloat.adaptive(width: 15.0))
+        clearPointsButton.autoPinTopAndTrailingToSuperView(inset: .adaptive(height: 20.0), xInset: .adaptive(width: 15.0))
         
         whiteView.addSubview(sendPointsButton)
-        sendPointsButton.autoPinEdgesToSuperviewSafeArea(with: UIEdgeInsets(horizontal: CGFloat.adaptive(width: 30.0), vertical: CGFloat.adaptive(height: 20.0)), excludingEdge: .top)
+        sendPointsButton.autoPinEdgesToSuperviewSafeArea(with: UIEdgeInsets(horizontal: .adaptive(width: 30.0), vertical: .adaptive(height: 20.0)), excludingEdge: .top)
     }
     
     private func setupNavBar() {
@@ -342,7 +342,7 @@ class WalletSendPointsVC: BaseViewController {
 
         if let friendName = dataModel.transaction.friend?.name {
             friendNameLabel.text = friendName
-            friendAvatarImageView.addCircleImage(byURL: dataModel.transaction.friend?.avatarURL, withPlaceholderName: friendName, andSide: CGFloat.adaptive(height: 40.0))
+            friendAvatarImageView.addCircleImage(byURL: dataModel.transaction.friend?.avatarURL, withPlaceholderName: friendName, andSide: .adaptive(height: 40.0))
         } else {
             friendNameLabel.text = "select user".localized().uppercaseFirst
         }

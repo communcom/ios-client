@@ -85,7 +85,7 @@ class PostPageVC: CommentsViewController {
         view.addSubview(navigationBar)
         navigationBar.autoPinEdgesToSuperviewSafeArea(with: .zero, excludingEdge: .bottom)
         navigationBar.moreButton.addTarget(self, action: #selector(openMorePostActions), for: .touchUpInside)
-
+        
         // top white view
         let topView = UIView(backgroundColor: .white)
         view.addSubview(topView)
@@ -101,7 +101,7 @@ class PostPageVC: CommentsViewController {
 //        postView.sortButton.addTarget(self, action: #selector(sortButtonDidTouch), for: .touchUpInside)
         
         // comment form
-        shadowView.addShadow(ofColor: #colorLiteral(red: 0.221, green: 0.234, blue: 0.279, alpha: 0.07), radius: CGFloat.adaptive(width: 4.0), offset: CGSize(width: 0, height: CGFloat.adaptive(height: -3.0)), opacity: 1.0)
+        shadowView.addShadow(ofColor: #colorLiteral(red: 0.221, green: 0.234, blue: 0.279, alpha: 0.07), radius: .adaptive(width: 4.0), offset: CGSize(width: 0, height: .adaptive(height: -3.0)), opacity: 1.0)
 //        shadowView.addShadow(ofColor: .shadow, radius: 4, offset: CGSize(width: 0, height: -6), opacity: 0.1)
 
         view.addSubview(shadowView)

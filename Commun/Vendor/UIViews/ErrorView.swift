@@ -13,11 +13,11 @@ class ErrorView: MyView {
     
     lazy var imageView = UIImageView(forAutoLayout: ())
     
-    lazy var title = UILabel.with(textSize: CGFloat.adaptive(height: 30), weight: .semibold, textColor: .black, numberOfLines: 0, textAlignment: .center)
+    lazy var title = UILabel.with(textSize: .adaptive(height: 30), weight: .semibold, textColor: .black, numberOfLines: 0, textAlignment: .center)
 
-    lazy var subtitle = UILabel.with(textSize: CGFloat.adaptive(height: 17), weight: .medium, textColor: .a5a7bd, numberOfLines: 0, textAlignment: .center)
+    lazy var subtitle = UILabel.with(textSize: .adaptive(height: 17), weight: .medium, textColor: .a5a7bd, numberOfLines: 0, textAlignment: .center)
     
-    lazy var retryButton = UIButton(height: CGFloat.adaptive(height: 50), labelFont: UIFont.systemFont(ofSize: 15, weight: .bold), backgroundColor: .appMainColor, textColor: .white, cornerRadius: CGFloat.adaptive(height: 25))
+    lazy var retryButton = UIButton(height: .adaptive(height: 50), labelFont: UIFont.systemFont(ofSize: 15, weight: .bold), backgroundColor: .appMainColor, textColor: .white, cornerRadius: .adaptive(height: 25))
 
     var retryAction: (() -> Void)?
     

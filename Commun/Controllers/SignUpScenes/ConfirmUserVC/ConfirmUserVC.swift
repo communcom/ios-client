@@ -100,14 +100,14 @@ class ConfirmUserVC: UIViewController, SignUpRouter {
             self.verify()
         })
         
-        self.pinCodeInputView.set(appearance: .init(itemSize:         CGSize(width: CGFloat.adaptive(width: 48.0), height: CGFloat.adaptive(height: 56.0)),
+        self.pinCodeInputView.set(appearance: .init(itemSize:         CGSize(width: .adaptive(width: 48.0), height: .adaptive(height: 56.0)),
                                                     font:             .init(descriptor:     UIFontDescriptor(name: "SFProText-Regular",
-                                                                                                             size: CGFloat.adaptive(width: 26.0)),
-                                                                            size:           CGFloat.adaptive(height: 26.0)),
+                                                                                                             size: .adaptive(width: 26.0)),
+                                                                            size:           .adaptive(height: 26.0)),
                                                     textColor:        .black,
                                                     backgroundColor:  UIColor(hexString: "F3F5FA")!,
                                                     cursorColor:      UIColor(red: 69/255, green: 108/255, blue: 1, alpha: 1),
-                                                    cornerRadius:     CGFloat.adaptive(height: 8.0)
+                                                    cornerRadius:     .adaptive(height: 8.0)
             )
         )
         
@@ -154,7 +154,7 @@ class ConfirmUserVC: UIViewController, SignUpRouter {
     }
     
     func addAccessoryView(withSmsCode smsCode: String) {
-        let toolBar = UIToolbar(frame: CGRect(x: 0.0, y: 0.0, width: self.view.frame.size.width, height: CGFloat.adaptive(height: 44.0)))
+        let toolBar = UIToolbar(frame: CGRect(x: 0.0, y: 0.0, width: self.view.frame.size.width, height: .adaptive(height: 44.0)))
         let smsCodeButton = UIBarButtonItem(title: smsCode, style: .plain, target: self, action: #selector(smsCodeButtonTapped(button:)))
         let spacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         toolBar.items = [spacer, smsCodeButton, spacer]

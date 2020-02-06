@@ -8,7 +8,7 @@
 
 import UIKit
 
-let inset: CGFloat = CGFloat.adaptive(width: 20.0)
+let inset: CGFloat = .adaptive(width: 20.0)
 let titles: [CGFloat] = [1000, 10000, 100000, 1000000]
 
 class CMToolbarView: UIView {
@@ -26,21 +26,21 @@ class CMToolbarView: UIView {
     }()
     
     var stackView: UIStackView = {
-        let stackViewInstance = UIStackView(axis: .horizontal, spacing: CGFloat.adaptive(width: 5.0))
+        let stackViewInstance = UIStackView(axis: .horizontal, spacing: .adaptive(width: 5.0))
         stackViewInstance.translatesAutoresizingMaskIntoConstraints = false
         stackViewInstance.distribution = .fillProportionally
         stackViewInstance.alignment = .center
 
         // Add buttons
         for (index, title) in titles.enumerated() {
-            let actionButton = UIButton.init(width: CGFloat.adaptive(width: 69.0 + CGFloat(7 * index)),
-                                             height: CGFloat.adaptive(height: 30.0),
+            let actionButton = UIButton.init(width: .adaptive(width: 69.0 + CGFloat(7 * index)),
+                                             height: .adaptive(height: 30.0),
                                              backgroundColor: UIColor(hexString: "#ffffff", transparency: 0.1),
-                                             cornerRadius: CGFloat.adaptive(width: 10.0))
+                                             cornerRadius: .adaptive(width: 10.0))
             
             actionButton.translatesAutoresizingMaskIntoConstraints = false
 
-            actionButton.tune(withTitle: "+\(title.formattedWithSeparator)", hexColors: [whiteColorPickers, lightGrayishBlueBlackColorPickers, lightGrayishBlueBlackColorPickers, lightGrayishBlueBlackColorPickers], font: UIFont.systemFont(ofSize: CGFloat.adaptive(width: 12.0), weight: .semibold), alignment: .center)
+            actionButton.tune(withTitle: "+\(title.formattedWithSeparator)", hexColors: [whiteColorPickers, lightGrayishBlueBlackColorPickers, lightGrayishBlueBlackColorPickers, lightGrayishBlueBlackColorPickers], font: UIFont.systemFont(ofSize: .adaptive(width: 12.0), weight: .semibold), alignment: .center)
             
             actionButton.addTarget(self, action: #selector(selectPointTapped), for: .touchUpInside)
             actionButton.tag = index
@@ -72,21 +72,21 @@ class CMToolbarView: UIView {
         let addLabel = UILabel()
         addLabel.tune(withText: "add".localized().uppercaseFirst + ":",
                       hexColors: whiteColorPickers,
-                      font: UIFont.systemFont(ofSize: CGFloat.adaptive(width: 12.0), weight: .bold),
+                      font: UIFont.systemFont(ofSize: .adaptive(width: 12.0), weight: .bold),
                       alignment: .left,
                       isMultiLines: false)
 
         addSubview(addLabel)
-        addLabel.autoPinTopAndLeadingToSuperView(inset: CGFloat.adaptive(height: 19.0), xInset: CGFloat.adaptive(width: 15.0))
+        addLabel.autoPinTopAndLeadingToSuperView(inset: .adaptive(height: 19.0), xInset: .adaptive(width: 15.0))
         
         scrollView.addSubview(stackView)
         stackView.autoPinEdgesToSuperviewEdges()
         stackView.widthAnchor.constraint(greaterThanOrEqualTo: scrollView.widthAnchor, constant: -inset * 2).isActive = true
 
         addSubview(scrollView)
-        scrollView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: CGFloat.adaptive(height: 10.0),
-                                                                   left: CGFloat.adaptive(width: 59.0),
-                                                                   bottom: CGFloat.adaptive(height: 10.0),
+        scrollView.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: .adaptive(height: 10.0),
+                                                                   left: .adaptive(width: 59.0),
+                                                                   bottom: .adaptive(height: 10.0),
                                                                    right: 0.0))
     }
     
